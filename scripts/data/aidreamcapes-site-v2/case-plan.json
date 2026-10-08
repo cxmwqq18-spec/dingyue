@@ -569,90 +569,90 @@
     ],
     "tpl-beauty": [
       {
-        "ref": "n:gen2:tpl-beauty-c1",
-        "product": "hydrating toner",
-        "title": "Toner soaked into a cotton pad at a sunny vanity"
+        "ref": "n:guide:q11-beauty-case-01-square-r2",
+        "product": "toner",
+        "title": "Toner patted onto skin with a cotton pad"
       },
       {
-        "ref": "n:gen2:tpl-beauty-c2",
+        "ref": "n:guide:q11-beauty-case-02-square-r2",
         "product": "lip balm",
-        "title": "Lip balm ready on a vanity for the morning routine"
+        "title": "Lip balm swipe at the vanity"
       },
       {
-        "ref": "n:gen2:tpl-beauty-c3",
+        "ref": "n:guide:q11-beauty-case-03-square-r2",
         "product": "jade face roller",
-        "title": "Face roller resting beside a jar of cream"
+        "title": "Jade roller used beside a cream jar"
       },
       {
-        "ref": "n:gen2:tpl-beauty-c4",
+        "ref": "n:guide:q11-beauty-case-04-square-r2",
         "product": "sheet mask",
-        "title": "Sheet mask pouch opened on a bathroom counter"
+        "title": "Sheet mask lifted from a travel pouch"
       }
     ],
     "tpl-drink": [
       {
-        "ref": "food-beverage",
+        "ref": "n:guide:q11-drink-case-01-square-r2",
         "product": "citrus soda",
         "title": "Citrus soda poured over ice"
       },
       {
-        "ref": "n:guide:tpl-drink-round4-case-citrus-soda",
+        "ref": "n:guide:q11-drink-case-02-square-r2",
         "product": "lemon soda",
-        "title": "Blank-label lemon soda beside a glass with ice"
+        "title": "Lemon soda first sip in daylight"
       },
       {
-        "ref": "n:gen2:tpl-drink-c3",
+        "ref": "n:guide:q11-drink-case-03-square-r2",
         "product": "kombucha",
-        "title": "Kombucha bottle sweating on a picnic table"
+        "title": "Kombucha creator review"
       },
       {
-        "ref": "n:gen2:tpl-drink-c4",
+        "ref": "n:guide:q11-drink-case-04-square-r2",
         "product": "granola",
-        "title": "Granola tipped into a bowl of yogurt"
+        "title": "Granola poured into berry yogurt"
       }
     ],
     "tpl-home": [
       {
-        "ref": "n:gen2:video-hub-g4",
-        "product": "entryway organizer",
-        "title": "Entryway organized with a slim bench and coat hooks"
+        "ref": "n:guide:q11-home-case-01-square-r2",
+        "product": "pet hair roller",
+        "title": "Pet hair roller on a sofa"
       },
       {
-        "ref": "g:lifestyle-scene/example-05",
-        "product": "linen tote",
-        "title": "Fabric tote hanging in a sunlit entryway"
+        "ref": "n:guide:q11-home-case-02-square-r2",
+        "product": "under-sink caddy",
+        "title": "Under-sink caddy slides into view"
       },
       {
-        "ref": "n:gen2:ind-home-living-c3",
-        "product": "linen bedding",
-        "title": "Freshly made bed with linen layers"
+        "ref": "n:guide:q11-home-case-03-square-r2",
+        "product": "floor scrubber",
+        "title": "Floor scrubber crosses a muddy tile"
       },
       {
-        "ref": "n:guide:tpl-home-round4-case-desk-organizer",
-        "product": "wood desk organizer",
-        "title": "Walnut desk organizer with pens and notes"
+        "ref": "n:guide:q11-home-case-04-square-r3",
+        "product": "bathroom squeegee",
+        "title": "Shower squeegee clears water from glass"
       }
     ],
     "tpl-outfit": [
       {
-        "ref": "g:virtual-try-on/example-05",
+        "ref": "n:guide:q11-outfit-case-01-square-r2",
         "product": "blue jacket",
-        "title": "Blue jacket styled for a casual walking look"
+        "title": "Blue jacket on a city walk"
       },
       {
-        "ref": "n:gen2:tpl-outfit-c2",
-        "product": "denim outfit",
-        "title": "Full-length denim look in a bright hallway"
+        "ref": "n:guide:q11-outfit-case-02-square-r2",
+        "product": "denim jacket",
+        "title": "Denim jacket mirror fit"
       },
       {
-        "ref": "g:fashion-editorial/example-06",
-        "product": "neutral outfit",
-        "title": "Adult styled in a neutral outfit outdoors"
+        "ref": "n:guide:q11-outfit-case-03-square-r2",
+        "product": "puffer coat",
+        "title": "Ivory puffer on a city walk"
       },
       {
-        "ref": "g:on-model-generation/example-05",
-        "product": "canvas backpack",
-        "title": "Canvas backpack shown in a casual desk-side scene"
+        "ref": "n:guide:q11-outfit-case-04-square-r2",
+        "product": "shoulder bag",
+        "title": "Shoulder bag unboxed"
       }
     ],
     "tpl-launch": [

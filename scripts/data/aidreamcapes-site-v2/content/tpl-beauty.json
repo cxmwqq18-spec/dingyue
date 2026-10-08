@@ -172,44 +172,44 @@
     ]
   },
   "examples": {
-    "h2": "More skincare routine photos",
-    "lead": "A travel kit and an open mask jar show two ways to present daily skincare.",
+    "h2": "Skincare Moments in Use",
+    "lead": "A creator presents a face serum while a single face cream jar is unboxed at a bright vanity.",
     "groups": [
       {
-        "label": "Product photo examples",
+        "label": "Beauty Routines",
         "items": [
           {
-            "ref": "n:guide:tpl-beauty-reuse-travel-set",
-            "title": "Skincare set packed into a travel pouch",
-            "kind": "photo",
-            "product": "skincare set"
+            "ref": "n:guide:q11-beauty-example-01-square-r2",
+            "title": "Creator Shows a Face Serum",
+            "kind": "scene",
+            "product": "face serum"
           },
           {
-            "ref": "n:gen2:ind-beauty-skincare-c2",
-            "title": "Open clay-mask jar beside folded towels",
-            "kind": "photo",
-            "product": "clay mask"
+            "ref": "n:guide:q11-beauty-example-02-square-r2",
+            "title": "Face Cream Jar Unboxed at a Vanity",
+            "kind": "scene",
+            "product": "face cream jar"
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "A skincare video can show a bottle in one clear routine moment. Keep the package visible, then add product wording in your editor after download.",
+    "overview": "Create a skincare ad around one clear routine or texture moment. Keep the bottle, jar, or tube easy to recognize while a single action gives the scene its focus.",
     "strip": [
-      "f:beauty-routine",
-      "n:guide:tpl-beauty-round4-m1-cleanser-tube",
-      "g:story-ad-vertical/example-06",
-      "n:guide:tpl-beauty-round4-cream-jar",
-      "n:guide:tpl-beauty-round4-m1-cream-jar",
-      "n:guide:tpl-beauty-round4-open-travel-kit"
+      "n:guide:q11-beauty-strip-square-01",
+      "n:guide:q11-beauty-strip-square-02",
+      "n:guide:q11-beauty-strip-square-03",
+      "n:guide:q11-beauty-strip-square-04",
+      "n:guide:q11-beauty-strip-square-05",
+      "n:guide:q11-beauty-strip-square-06"
     ],
     "steps": {
-      "source": "n:guide:tpl-beauty-m2-source",
+      "source": "n:guide:q11-beauty-step-source-r2",
       "result": "n:guide:tpl-beauty-m2-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Show this amber serum bottle on a bathroom counter as a hand lifts the dropper above it in a bright morning routine.",
+      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand lifts one dropper of serum above the open amber glass bottle. Frame at counter height with a slow push-in. Soft morning window light remains visible behind the bottle. End with the dropper poised above the full bottle. Sound: quiet room tone and one soft glass click. No music.",
       "options": [
         [
           "Size",
@@ -222,128 +222,135 @@
       ]
     },
     "picker": {
-      "title": "Choose a skincare routine scene",
-      "lead": "Pick a setting that keeps the package easy to see.",
+      "title": "Choose a beauty ad style",
+      "lead": "Pick a creator format that shows the skincare product clearly.",
       "chips": [
         {
-          "id": "routine",
-          "label": "Daily routine"
+          "id": "review",
+          "label": "Creator review"
+        },
+        {
+          "id": "application",
+          "label": "Routine demo"
         },
         {
           "id": "texture",
-          "label": "Cream and texture"
+          "label": "Texture close-up"
         },
         {
-          "id": "travel",
-          "label": "Travel kit"
-        },
-        {
-          "id": "shelf",
-          "label": "Bathroom shelf"
+          "id": "unboxing",
+          "label": "Unbox and reveal"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:tpl-beauty-round4-sunscreen-tube",
-          "label": "Plain sunscreen tube on stone",
+          "ref": "n:guide:q11-beauty-picker-01",
+          "label": "Sunscreen First Impression",
           "chips": [
-            "routine"
+            "review",
+            "application"
           ],
-          "prompt": "Set the plain sunscreen tube upright on pale stone and keep its full shape visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator holds the sunscreen tube beside her face and shares a first impression. Use a chest-up creator frame with a gentle handheld drift. Bright bathroom window light falls across the tube. End with the tube front-facing beside her cheek. Sound: soft room tone. Voice: \"I keep this SPF in my morning bag.\". No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-beauty-reuse-vanity-set",
-          "label": "Skincare set arranged on a vanity",
+          "ref": "n:guide:q11-beauty-picker-02",
+          "label": "Lip Tint Try-On Review",
           "chips": [
-            "routine"
+            "review",
+            "application"
           ],
-          "prompt": "Arrange the plain tube, amber dropper, and cream jar beside the mirror on a bright vanity.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator swipes the lip tint once across her lower lip. Hold a close face framing with a small push-in. Soft vanity light shows the tint clearly. End on the finished lip tint and product in hand. Sound: quiet room tone. Voice: \"This shade is easy to wear.\". No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-beauty-reuse-texture",
-          "label": "Serum and cream swatches on glass",
+          "ref": "n:guide:q11-beauty-picker-03",
+          "label": "Moisturizer Routine Demo",
           "chips": [
+            "application",
             "texture"
           ],
-          "prompt": "Show a neat serum swatch and a small cream swatch on a clear glass surface.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A woman dabs one small amount of moisturizer onto her cheek beside the jar. Use a close waist-up frame with a slow push-in. Clean morning window light stays on the jar and skin. End with the jar in the foreground. Sound: soft fingertip tap and room tone. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-beauty-g1",
-          "label": "Cream texture on the hand",
+          "ref": "n:guide:q11-beauty-picker-04",
+          "label": "Serum Dropper Swatch",
           "chips": [
+            "application",
             "texture"
           ],
-          "prompt": "Show a small cream swatch on the back of a hand.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand places one serum drop onto the back of the other hand. Use a macro hand close-up and a slow lateral slide. A bright side light catches the clear serum drop. End with the amber bottle and single swatch together. Sound: one glass click and quiet room tone. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-beauty-reuse-travel-kit",
-          "label": "Skincare set in open pouch",
+          "ref": "n:guide:q11-beauty-picker-05",
+          "label": "Cream Texture ASMR",
           "chips": [
-            "travel"
+            "texture",
+            "unboxing"
           ],
-          "prompt": "Arrange the skincare tube, amber serum, and cream jar inside the open pouch.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A spatula draws one smooth line through the cream in the open jar. Use a macro crop with a gentle push-in. Soft daylight reveals the cream texture. End on the clean groove beside the jar. Sound: soft spatula scrape and room tone. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:plat-youtube-shorts-c2",
-          "label": "Electric toothbrush on bathroom counter",
+          "ref": "n:guide:q11-beauty-picker-06",
+          "label": "Lip Tint Before and After",
           "chips": [
-            "travel"
+            "application",
+            "texture"
           ],
-          "prompt": "Keep the electric toothbrush visible on a clean bathroom counter in a vertical frame.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator turns once from a bare-lip starting look to the finished tint look. Keep a steady face close-up with a short smooth pan. Even vanity light keeps both sides of the face clear. End facing camera with the tint tube beside her chin. Sound: soft room tone. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-beauty-round4-serum-pump",
-          "label": "Amber serum pump",
+          "ref": "n:guide:q11-beauty-picker-07",
+          "label": "Serum Bottle Unboxing",
           "chips": [
-            "shelf"
+            "unboxing"
           ],
-          "prompt": "Show the plain amber serum pump with its full silhouette visible on a light stone counter.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands lift the amber serum bottle once from its open skincare box. Frame the box and bottle from a close overhead angle. Bright window light fills the clean counter scene. End with the full bottle upright beside the open box. Sound: paper tissue rustle and bottle tap. No music.",
+          "kind": "video"
         },
         {
-          "ref": "g:commercial-lighting/example-05",
-          "label": "Cool light with a blue-gray backdrop",
+          "ref": "n:guide:q11-beauty-picker-08",
+          "label": "Skincare Gift Set Review",
           "chips": [
-            "shelf"
+            "review",
+            "unboxing"
           ],
-          "prompt": "Use the cool blue-gray light as a backdrop for the serum bottle, keeping its shape clear.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator presents the open skincare gift set to the camera. Use a chest-up medium frame with a gentle push-in. Soft daylight lights each item in the set. End with the open set centered at chest height. Sound: quiet room tone. Voice: \"This set covers my evening routine.\". No music.",
+          "kind": "video"
         }
       ],
       "button": "Make a skincare video"
     },
     "uses": [
       {
-        "frame": "post",
-        "ref": "n:guide:tpl-beauty-round4-texture-swatch",
-        "h": "Show serum and cream textures in a square post",
-        "d": "Use a clean swatch image to show the serum and cream textures beside the product details."
+        "frame": "browser",
+        "ref": "n:guide:q11-beauty-uses-01-r2",
+        "h": "Show the serum on a product page",
+        "d": "Keep the amber dropper bottle and full package visible beside approved product details."
       },
       {
-        "frame": "browser",
-        "ref": "n:gen2:tpl-beauty-g2",
-        "h": "Pair cleansing balm with a product page",
-        "d": "Show the balm texture beside its clear package photo and the exact product details."
+        "frame": "post",
+        "ref": "n:guide:q11-beauty-uses-02-square-r2",
+        "h": "Feature cream texture in a feed post",
+        "d": "Show one scoop of cream beside its jar before adding ingredient and usage copy."
       }
     ],
     "input": [
       {
-        "good": "n:guide:tpl-beauty-reuse-cream-tube",
-        "bad": "n:guide:tpl-beauty-m5-blur",
-        "good_label": "Hand cream tube stays in sharp focus",
-        "bad_label": "Hand cream tube loses focus"
+        "good": "n:guide:tpl-beauty-m2-source",
+        "bad": "n:guide:q11-beauty-input-01-bad-r2",
+        "good_label": "Amber serum bottle stays sharply focused",
+        "bad_label": "Amber serum bottle falls out of focus"
       },
       {
-        "good": "g:bundle-sets/example-07",
-        "bad": "n:guide:tpl-beauty-m5-crop",
-        "good_label": "Skincare set stays complete",
-        "bad_label": "Skincare items are cut off"
+        "good": "n:guide:q11-beauty-input-02-good-r2",
+        "bad": "n:guide:q11-beauty-input-02-bad-r2",
+        "good_label": "Full amber serum bottle stays in frame",
+        "bad_label": "Amber serum bottle is clipped by frame"
       }
     ],
     "outputs": [
@@ -351,17 +358,17 @@
         "ref": "f:tpl-beauty-r4-opening",
         "frame": "9:16",
         "length": 10,
-        "label": "10-second routine opening frame"
+        "label": "Amber serum bottle routine opening"
       },
       {
         "ref": "f:tpl-beauty-r4-drop",
         "frame": "9:16",
         "length": 10,
-        "label": "10-second dropper close-up frame"
+        "label": "Amber serum dropper close-up"
       }
     ],
     "after": {
-      "ref": "f:tpl-beauty-r4-after",
+      "ref": "f:q11-beauty-after-r2",
       "zones": [
         "Product name",
         "Usage line"

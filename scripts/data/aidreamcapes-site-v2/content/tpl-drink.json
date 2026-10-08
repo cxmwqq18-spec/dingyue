@@ -172,44 +172,44 @@
     ]
   },
   "examples": {
-    "h2": "More drink product examples",
-    "lead": "A sparkling-water can and a tea pouch show two different package styles.",
+    "h2": "Drink Videos for a Pour or First Sip",
+    "lead": "A creator tastes a chilled drink and loose-leaf tea pours into a cup.",
     "groups": [
       {
-        "label": "Product photo examples",
+        "label": "Drink Moments",
         "items": [
           {
-            "ref": "n:gen2:tpl-drink-g1",
-            "title": "Sparkling water can opened beside a glass of ice",
-            "kind": "photo",
-            "product": "sparkling water"
+            "ref": "n:guide:q11-drink-example-01-square-r2",
+            "title": "Creator Tries a Chilled Drink",
+            "kind": "scene",
+            "product": "sparkling drink"
           },
           {
-            "ref": "n:guide:product-tea-dark",
-            "title": "Tea pouch and cup in soft evening light",
-            "kind": "photo",
-            "product": "tea pouch"
+            "ref": "n:guide:q11-drink-example-02-square-r2",
+            "title": "Loose-Leaf Tea Poured into a Cup",
+            "kind": "scene",
+            "product": "loose-leaf tea"
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "A drink video can make the bottle, pour, and serving moment easy to follow. Keep the bottle visible in a vertical frame and add flavor wording after download.",
+    "overview": "Build a food or drink ad around one clear serving action. Keep the package recognizable while a pour, first sip, or simple preparation gives viewers something concrete to watch.",
     "strip": [
-      "n:guide:tpl-drink-round4-cold-brew",
-      "f:tpl-drink-r4-strip",
-      "n:white-mug",
-      "n:gen2:plat-youtube-shorts-c3",
-      "n:gen2:ind-health-wellness-c3",
-      "n:gen2:examples-g3"
+      "n:guide:q11-drink-strip-square-01-r2",
+      "n:guide:q11-drink-strip-square-02-r2",
+      "n:guide:q11-drink-strip-square-03-r2",
+      "n:guide:q11-drink-strip-square-04",
+      "n:guide:q11-drink-strip-square-05",
+      "n:guide:q11-drink-strip-square-06-r2"
     ],
     "steps": {
-      "source": "n:guide:tpl-drink-m2-source",
-      "result": "f:tpl-drink-r4-m2",
+      "source": "n:guide:q11-drink-step-source-r2",
+      "result": "f:q11-drink-step-result-r2",
       "mode": "video",
       "length": 6,
-      "prompt": "Show the clear golden citrus bottle standing beside an ice-filled tumbler on a bright kitchen counter, keeping both in frame.",
+      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand pours citrus soda from the silver can into one ice-filled tumbler. Frame at counter height, then make a slow push-in as the glass fills. Bright window light stays visible beside the can. End with the can and full tumbler in frame. Sound: crisp fizz and a soft pour. No music.",
       "options": [
         [
           "Size",
@@ -222,98 +222,100 @@
       ]
     },
     "picker": {
-      "title": "Choose a drink video moment",
-      "lead": "Pick one action that keeps the drink and package easy to follow.",
+      "title": "Choose a food or drink ad format",
+      "lead": "Select a serving, creator, or tasting moment for your product.",
       "chips": [
         {
-          "id": "pour",
-          "label": "Fresh pour"
+          "id": "serve",
+          "label": "Serve and pour"
         },
         {
-          "id": "chilled",
-          "label": "Serve chilled"
+          "id": "review",
+          "label": "Creator review"
         },
         {
-          "id": "table",
-          "label": "At the table"
+          "id": "taste",
+          "label": "First taste"
         },
         {
-          "id": "package",
-          "label": "Package close-up"
+          "id": "routine",
+          "label": "Daily drink"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-drink-g3",
-          "label": "Berry smoothie poured into a glass",
+          "ref": "n:guide:q11-drink-picker-01",
+          "label": "Citrus Soda Pour Demo",
           "chips": [
-            "pour"
+            "serve"
           ],
-          "prompt": "Pour the berry smoothie into a tall glass.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand pours clear citrus soda into an ice-filled tumbler. Use a waist-height product close-up with a gentle push-in. Bright kitchen window light catches the fizz. End with the silver can beside the full glass. Sound: clear fizz and one soft pour. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-drink-m6-pour",
-          "label": "Golden citrus pour into ice",
+          "ref": "n:guide:q11-drink-picker-02",
+          "label": "Cold Brew Cream Swirl",
           "chips": [
-            "pour"
+            "serve"
           ],
-          "prompt": "Pour the golden citrus drink from a glass bottle into a glass filled with ice.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Milk swirls once into a glass of cold brew. Use a macro glass close-up with a short circular camera move. Warm side light reveals the dark coffee and cream. End as the swirl settles in the glass. Sound: ice clink and gentle pour. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:url-to-video-c3",
-          "label": "Reusable straw beside an iced drink",
+          "ref": "n:guide:q11-drink-picker-03",
+          "label": "Berry Drink First Sip",
           "chips": [
-            "chilled"
+            "review",
+            "taste"
           ],
-          "prompt": "Set the reusable steel straw beside a glass of iced drink in bright summer light.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator takes one first sip of the berry drink and reacts to camera. Use a chest-up creator frame with a slight handheld drift. Soft outdoor daylight keeps the drink and glass visible. End with the glass beside the creator. Sound: light outdoor room tone. Voice: \"That berry flavor is bright and crisp.\". No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-drink-round4-citrus-tea",
-          "label": "Citrus tea with ice",
+          "ref": "n:guide:q11-drink-picker-04",
+          "label": "Cooler Can Grab",
           "chips": [
-            "chilled"
+            "serve",
+            "routine"
           ],
-          "prompt": "Show the clear citrus-tea bottle beside ice and lemon in bright daylight.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand selects one chilled beverage can from the refrigerator shelf. Frame the shelf straight-on with a slow push toward the can. Cool refrigerator light meets soft kitchen daylight. End with the selected can fully visible. Sound: fridge hum and can tap. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:b1-spokesperson-videos-result",
-          "label": "Forest-green bottle held at chest height",
+          "ref": "n:guide:q11-drink-picker-05",
+          "label": "Pale Bottle Creator Review",
           "chips": [
-            "table"
+            "review"
           ],
-          "prompt": "Keep the forest-green bottle centered while the presenter holds it at chest height.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator raises the pale drink bottle beside her face and speaks to camera. Use a chest-up medium shot with a gentle push-in. Bright kitchen window light stays on the bottle. End with the bottle label area facing forward. Sound: quiet kitchen room tone. Voice: \"This bottle is easy to keep chilled.\". No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-drink-g2",
-          "label": "Honey over pancakes",
+          "ref": "n:guide:q11-drink-picker-06",
+          "label": "Protein Bar First Bite",
           "chips": [
-            "table"
+            "taste"
           ],
-          "prompt": "Drizzle honey from the jar over the pancakes.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A woman takes one bite from the protein bar and looks to camera. Use a chest-up gym lounge frame with a slight push-in. Soft gym window light keeps the wrapper and bar visible. End with the bitten bar in frame. Sound: wrapper rustle and one bite. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:coffee-beans",
-          "label": "Coffee bag on a wooden counter",
+          "ref": "n:guide:q11-drink-picker-07",
+          "label": "Matcha Whisk Pour",
           "chips": [
-            "package"
+            "serve"
           ],
-          "prompt": "Show the kraft coffee bag and loose beans on a wooden counter.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A bamboo whisk stirs one smooth circle through bright green matcha. Use a close overhead cup framing with a gentle slide. Soft natural light catches the matcha surface. End on the settled green drink and whisk. Sound: quiet whisking and cup tap. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:plat-instagram-size-wide",
-          "label": "Speckled cup on a sunlit table",
+          "ref": "n:guide:q11-drink-picker-08",
+          "label": "Gym Shake Mix Demo",
           "chips": [
-            "package"
+            "routine"
           ],
-          "prompt": "Set the speckled ceramic cup beside the small plant and linen napkin.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand shakes one clear protein shaker once beside a gym bench. Use a waist-up product frame with a small handheld move. Bright gym window light keeps the shaker contents visible. End with the settled shake held beside the bench. Sound: ice rattle and shaker sound. No music.",
+          "kind": "video"
         }
       ],
       "button": "Make a drink video"
@@ -321,47 +323,47 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "n:gen2:plat-tiktok-c3",
-        "h": "Show a drink selection in a social post",
-        "d": "Frame the stocked mini fridge clearly, then add flavor names as editable text in your editor."
+        "ref": "n:guide:q11-drink-uses-01-phone",
+        "h": "Preview the silver can in a fridge post",
+        "d": "Keep the pale silver can recognizable as the serving scene appears in a phone feed."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:b1-spokesperson-output-coffee",
-        "h": "Pair a drink video with its listing",
-        "d": "Show the coffee being served beside a clear product photo so shoppers recognize the drink."
+        "ref": "n:guide:q11-drink-uses-02-r2",
+        "h": "Pair the citrus can with its listing",
+        "d": "Show the silver citrus can beside clear flavor, serving, and package details."
       }
     ],
     "input": [
       {
-        "good": "n:guide:b1-spokesperson-videos-source",
-        "bad": "n:guide:tpl-drink-m5-blur",
-        "good_label": "Water bottle stays sharp",
-        "bad_label": "Water bottle details lose focus"
+        "good": "n:guide:q11-drink-input-01-good-r2",
+        "bad": "n:guide:q11-drink-input-01-bad-r3",
+        "good_label": "Silver citrus can stays sharp and clear",
+        "bad_label": "Silver citrus can blurs with camera shake"
       },
       {
         "good": "n:guide:tpl-drink-reuse-iced-can",
         "bad": "n:guide:tpl-drink-m5-crop",
-        "good_label": "Iced coffee can stays fully in frame",
-        "bad_label": "Iced coffee can is clipped at the side"
+        "good_label": "Pale silver can fits fully in frame",
+        "bad_label": "Pale silver can is clipped at the edge"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:spokesperson-videos-g1",
+        "ref": "f:q11-drink-output-01-r2",
         "frame": "9:16",
         "length": 6,
-        "label": "Six-second water bottle frame"
+        "label": "Creator presents the silver citrus can"
       },
       {
-        "ref": "f:tpl-drink-r4-m6",
+        "ref": "f:q11-drink-output-02-r2",
         "frame": "9:16",
         "length": 6,
-        "label": "Vertical citrus drink pour frame"
+        "label": "Citrus soda pours into an ice glass"
       }
     ],
     "after": {
-      "ref": "f:tpl-drink-r4-after",
+      "ref": "f:q11-drink-after-r2",
       "zones": [
         "Flavor name",
         "Serving note"

@@ -172,50 +172,44 @@
     ]
   },
   "examples": {
-    "h2": "More home product photos",
-    "lead": "Planters and folded linens show how everyday home products look in different spaces.",
+    "h2": "Home Products in Everyday Use",
+    "lead": "See a scrub brush at the sink and a divider tray sorting kitchen utensils.",
     "groups": [
       {
-        "label": "Product photo examples",
+        "label": "Home Organization and Cleaning",
         "items": [
           {
-            "ref": "n:gen2:ind-home-living-g2",
-            "title": "Planter warms a linen-sofa corner",
-            "kind": "photo",
-            "product": "ceramic planter"
+            "ref": "n:guide:q11-home-example-02-square-r2",
+            "title": "Sink Scrub Brush in Action",
+            "kind": "scene",
+            "product": "sink scrub brush"
           },
           {
-            "ref": "n:gen2:lifestyle-photos-g2",
-            "title": "Plant pot on a sunny shelf",
-            "kind": "photo",
-            "product": "plant pot"
-          },
-          {
-            "ref": "n:gen2:lifestyle-photos-g6",
-            "title": "Folded linen napkins on a dining table",
-            "kind": "photo",
-            "product": "linen napkins"
+            "ref": "n:guide:q11-home-example-03-square-r2",
+            "title": "Utensil Drawer Reset",
+            "kind": "scene",
+            "product": "drawer divider"
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "A home organizer video can show a clear before-and-after change in one space. Start with the product by itself, then describe where it belongs and what it sorts.",
+    "overview": "Show a home product solving one visible task. Keep the organizer, cleaning tool, or storage product easy to identify while one action changes the space around it.",
     "strip": [
       "f:tpl-home-r4-strip-01",
-      "f:tpl-home-r4-strip-02",
-      "n:gen2:tpl-home-c1",
-      "n:planter-shelf",
-      "n:planter-corner",
-      "n:gen2:ind-home-living-g3"
+      "n:guide:q11-home-strip-square-02",
+      "n:guide:q11-home-strip-square-03",
+      "n:guide:q11-home-strip-square-04",
+      "n:guide:q11-home-strip-square-05",
+      "n:guide:q11-home-strip-square-06"
     ],
     "steps": {
-      "source": "n:gen2:tpl-home-g1",
+      "source": "n:guide:q11-home-step-source-r2",
       "result": "f:tpl-home-r4-m2",
       "mode": "video",
       "length": 15,
-      "prompt": "Place this set of gray drawer dividers inside a kitchen drawer and show utensils moving from a loose pile into separate sections in a vertical 9:16 clip.",
+      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand slides this dark gray adjustable divider tray into the open kitchen drawer. Frame overhead, then track the tray with one slow downward move. Bright window light reveals the matte gray compartments. End with the full tray fitted inside the drawer. Sound: soft drawer glide and utensil clink. No music.",
       "options": [
         [
           "Size",
@@ -228,129 +222,133 @@
       ]
     },
     "picker": {
-      "title": "Choose a home organization scene",
-      "lead": "Pick the storage space that matches the organizer.",
+      "title": "Choose a home product ad format",
+      "lead": "Pick a cleaning, storage, or organization action that fits the product.",
       "chips": [
         {
-          "id": "drawers",
-          "label": "Drawer reset"
+          "id": "review",
+          "label": "Creator review"
         },
         {
-          "id": "pantry",
-          "label": "Pantry shelf"
+          "id": "cleaning",
+          "label": "Cleaning demo"
         },
         {
-          "id": "closet",
-          "label": "Closet storage"
+          "id": "reset",
+          "label": "Room reset"
         },
         {
-          "id": "entryway",
-          "label": "Entryway reset"
+          "id": "reveal",
+          "label": "Product reveal"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-home-g2",
-          "label": "Linen closet stacked into woven baskets",
+          "ref": "n:guide:q11-home-picker-01",
+          "label": "Handheld Vacuum Creator Review",
           "chips": [
-            "drawers",
-            "closet"
+            "review",
+            "cleaning"
           ],
-          "prompt": "Keep the stacked baskets and clear shelf spacing visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator holds the handheld vacuum beside her face and speaks to camera. Use a chest-up medium frame with a gentle push-in. Bright living room window light stays on the vacuum. End with the full vacuum beside the creator. Sound: quiet room tone. Voice: \"This little vacuum is easy to grab.\". No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:b1-before-after-videos-result",
-          "label": "Desk cables routed into one organizer",
+          "ref": "n:guide:q11-home-picker-02",
+          "label": "Pet Hair Roller Sofa Pass",
           "chips": [
-            "drawers"
+            "cleaning"
           ],
-          "prompt": "Route the desk cables through the compact black organizer and keep the clear desk visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand makes one long pass with the pet hair roller across the sofa. Use a close side angle with a slow tracking move. Soft living room daylight reveals the fabric and roller. End with the cleared strip visible beside the roller. Sound: roller pass and quiet room tone. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-home-m3-pantry",
-          "label": "Organized pantry jars and bins",
+          "ref": "n:guide:q11-home-picker-03",
+          "label": "Drawer Divider Reset",
           "chips": [
-            "pantry"
+            "reset",
+            "cleaning"
           ],
-          "prompt": "Arrange clear storage jars and plain bins neatly on pantry shelves.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand slides the gray divider tray into the kitchen drawer to separate loose utensils. Use a top-down drawer frame with a slow push-in. Bright window light keeps each compartment visible. End with utensils sorted in the tray. Sound: soft drawer slide and utensil clink. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-home-m3-pantry-alt",
-          "label": "Pantry jars and storage bins",
+          "ref": "n:guide:q11-home-picker-04",
+          "label": "Under Sink Caddy Demo",
           "chips": [
-            "pantry"
+            "reset"
           ],
-          "prompt": "Arrange clear pantry jars and plain storage bins neatly on two shelves.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand pulls the under-sink organizer tray out once to show the stored cleaners. Use a low cabinet-level angle and track the tray outward. Clean cabinet light reveals the storage compartments. End with the tray fully extended. Sound: smooth rail glide. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-home-round4-drawer-organizer",
-          "label": "Drawer organizer with wooden dividers",
+          "ref": "n:guide:q11-home-picker-05",
+          "label": "Grout Brush Cleaning Demo",
           "chips": [
-            "drawers"
+            "cleaning",
+            "reset"
           ],
-          "prompt": "Show the separated utensil sections clearly from above.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand draws one grout brush stroke across a single tile seam. Use a macro floor-level frame with a short lateral slide. Bright side light shows the grout line clearly. End on the cleaned seam beside the brush. Sound: one bristle sweep and soft room tone. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-home-m3-closet",
-          "label": "Organized wardrobe with clothes and shoes",
+          "ref": "n:guide:q11-home-picker-06",
+          "label": "Scrub Brush Kit Reveal",
           "chips": [
-            "closet"
+            "reveal"
           ],
-          "prompt": "Group hanging clothes, folded sweaters, bins, and shoes in a tidy wardrobe.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands lift one scrub brush from its open cleaning kit box. Use a close overhead frame with a gentle push-in. Natural window light fills the counter scene. End with the brush centered beside the open kit. Sound: paper and brush rustle. No music.",
+          "kind": "video"
         },
         {
-          "ref": "g:lifestyle-scene/example-08",
-          "label": "Canvas tote at a market",
+          "ref": "n:guide:q11-home-picker-07",
+          "label": "Cable Organizer Desk Reset",
           "chips": [
-            "entryway"
+            "reset",
+            "cleaning"
           ],
-          "prompt": "Show the natural canvas tote in a bright market scene with the bag fully visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand presses the loose desk cable into one gray cable clip. Use a close desk-level frame with a small push-in. Soft daylight keeps the cable route and clip clear. End with the cable held neatly in the clip. Sound: one light plastic click. No music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:plat-facebook-size-portrait-backpack",
-          "label": "Commuter backpack shown full length",
+          "ref": "n:guide:q11-home-picker-08",
+          "label": "Foldable Closet Bin Review",
           "chips": [
-            "entryway"
+            "review",
+            "reveal"
           ],
-          "prompt": "Show the complete commuter backpack upright against a clean light background.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator raises the foldable closet bin beside his shoulder and speaks to camera. Use a chest-up medium frame with a slow push-in. Bright closet daylight shows the bin shape and fabric. End with the full bin held in front of the shelves. Sound: quiet room tone. Voice: \"This bin keeps the shelf easy to sort.\". No music.",
+          "kind": "video"
         }
       ],
       "button": "Make a home organizer video"
     },
     "uses": [
       {
-        "frame": "phone",
-        "ref": "f:tpl-home-r4-m4",
-        "h": "Show a kitchen drawer reset on a phone",
-        "d": "Show dividers and utensils moving into separate sections so shoppers can see the drawer reset."
+        "frame": "browser",
+        "ref": "n:guide:q11-home-uses-01-r2",
+        "h": "Show the divider beside listing details",
+        "d": "Keep the gray compartments visible beside accurate drawer measurements and product information."
       },
       {
-        "frame": "browser",
-        "ref": "n:gen2:spokesperson-videos-c4",
-        "h": "Show a home work area in a short video",
-        "d": "Keep the open planner and desk visible so viewers can see how the workspace is arranged."
+        "frame": "post",
+        "ref": "n:guide:q11-home-uses-02-square-r3",
+        "h": "Closet Bin Filled with Folded Clothes",
+        "d": "Slide the gray fabric bin onto a wardrobe shelf to keep folded clothes easy to reach."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-home-g3",
-        "bad": "n:guide:tpl-home-m5-blur",
-        "good_label": "Fridge bins stay in focus",
-        "bad_label": "Fridge bins lose focus"
+        "good": "n:guide:q11-home-input-01-good-r2",
+        "bad": "n:guide:q11-home-input-01-bad-r3",
+        "good_label": "Gray drawer divider stays sharp and clear",
+        "bad_label": "Gray drawer divider loses focus"
       },
       {
-        "good": "n:gen2:tpl-home-c2",
-        "bad": "n:guide:tpl-home-m5-crop",
-        "good_label": "Pantry jars stay fully in frame",
-        "bad_label": "The jars are clipped at the frame edge"
+        "good": "n:guide:q11-home-input-02-good-r2",
+        "bad": "n:guide:q11-home-input-02-bad-r3",
+        "good_label": "Full gray organizer fits the frame",
+        "bad_label": "Gray organizer is clipped by the frame"
       }
     ],
     "outputs": [
@@ -358,24 +356,24 @@
         "ref": "f:tpl-home-r4-m6-before",
         "frame": "9:16",
         "length": 10,
-        "label": "10-second drawer reset frame"
+        "label": "Divider tray before the drawer reset"
       },
       {
         "ref": "f:tpl-home-r4-m6-after",
         "frame": "9:16",
         "length": 15,
-        "label": "15-second organized drawer frame"
+        "label": "Utensils sorted in the divider tray"
       }
     ],
     "after": {
-      "ref": "n:gen2:before-after-videos-g3",
+      "ref": "f:q11-home-after-r2",
       "zones": [
         "Before",
         "After"
       ],
       "items": [
         "Add before-and-after labels and the organizer name in your video editor.",
-        "Type the size and storage capacity as text from your product information."
+        "Type the size and storage capacity from your product information."
       ]
     },
     "titles": {

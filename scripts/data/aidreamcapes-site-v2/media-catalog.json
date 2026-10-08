@@ -3891,6 +3891,78 @@
         640,
         1280
       ]
+    },
+    "q11-drink-step-result-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hand pours clear citrus soda from a silver can into an ice-filled glass.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-drink-output-01-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Creator holds the plain silver citrus can beside her face in a bright kitchen.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-drink-output-02-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Silver citrus soda pours into a glass with ice and lemon.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-drink-after-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Plain silver citrus can stands beside a full ice glass with lemon.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-home-after-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Dark gray drawer divider neatly sorts utensils in an open kitchen drawer.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-outfit-output-01-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult wears the beige zip jacket during a full-length studio walk.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-outfit-output-02-r3": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult wears the beige zip jacket in a single clean side-fit frame.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-outfit-after-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult stands in the beige zip jacket and dark trousers in a bright studio.",
+      "variants": [
+        640
+      ]
+    },
+    "q11-beauty-after-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Creator holds the amber dropper bottle beside her face after applying serum.",
+      "variants": [
+        640
+      ]
     }
   },
   "gen": {
@@ -29288,6 +29360,1072 @@
         "variants": [
           640,
           1280
+        ]
+      },
+      "q11-beauty-case-01-square-r2": {
+        "file": "q11-beauty-case-01-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Woman pats toner onto her cheek with a cotton pad beside a clear bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-case-02-square-r2": {
+        "file": "q11-beauty-case-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Woman applies lip balm at the vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-case-03-square-r2": {
+        "file": "q11-beauty-case-03-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Woman uses a jade roller beside an open cream jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-case-04-square-r2": {
+        "file": "q11-beauty-case-04-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands lift a sheet mask from a silver pouch on a bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-case-01-square-r2": {
+        "file": "q11-drink-case-01-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Clear citrus soda pours into an ice-filled glass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-case-02-square-r2": {
+        "file": "q11-drink-case-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator takes a sip from a clear citrus drink bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-case-03-square-r2": {
+        "file": "q11-drink-case-03-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator holds an amber kombucha bottle beside his face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-case-04-square-r2": {
+        "file": "q11-drink-case-04-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Granola falls into berry yogurt from a paper pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-case-01-square-r2": {
+        "file": "q11-home-case-01-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand rolls a lint roller over a sofa beside a cat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-case-02-square-r2": {
+        "file": "q11-home-case-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Pull-out caddy with bottles slides from beneath a sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-case-03-square-r2": {
+        "file": "q11-home-case-03-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cordless scrubber crosses a muddy tile floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-case-04-square-r2": {
+        "file": "q11-home-case-04-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator holds an empty gray fabric closet bin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-case-01-square-r2": {
+        "file": "q11-outfit-case-01-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult walks outdoors wearing a blue jacket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-case-02-square-r2": {
+        "file": "q11-outfit-case-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Denim jacket outfit shown in a mirror fit check.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-case-03-square-r2": {
+        "file": "q11-outfit-case-03-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wears an ivory puffer coat on a city walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-case-04-square-r2": {
+        "file": "q11-outfit-case-04-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands unbox a brown shoulder bag from white tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-example-01-square-r2": {
+        "file": "q11-beauty-example-01-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator holds a frosted serum bottle beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-example-02-square-r2": {
+        "file": "q11-beauty-example-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands lift a single face cream jar from a tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-example-01-square-r2": {
+        "file": "q11-drink-example-01-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator smiles with a chilled drink can and glass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-example-02-square-r2": {
+        "file": "q11-drink-example-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Loose-leaf tea pours from a glass pot into a ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-example-02-square-r2": {
+        "file": "q11-home-example-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand scrubs the edge of a white kitchen sink with a brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-example-03-square-r2": {
+        "file": "q11-home-example-03-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Kitchen drawer divider separates utensils into organized rows.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-example-01-square-r2": {
+        "file": "q11-outfit-example-01-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult checks a black activewear outfit in a full-length mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-example-02-square-r2": {
+        "file": "q11-outfit-example-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult walks by the river in a charcoal overcoat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-example-03-square-r2": {
+        "file": "q11-outfit-example-03-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Gray sweater and black trousers shown in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-strip-square-01": {
+        "file": "q11-beauty-strip-square-01",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Amber serum dropper held beside a face in a bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-strip-square-02": {
+        "file": "q11-beauty-strip-square-02",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator holds a plain white sunscreen tube beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-strip-square-03": {
+        "file": "q11-beauty-strip-square-03",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator applies cream from a white skincare tube to her cheek.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-strip-square-04": {
+        "file": "q11-beauty-strip-square-04",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Before-and-after comparison of a lip tint look.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-strip-square-05": {
+        "file": "q11-beauty-strip-square-05",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cream swatch spread across the back of a hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-strip-square-06": {
+        "file": "q11-beauty-strip-square-06",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Open travel pouch with a compact set of skincare bottles.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-strip-square-01-r2": {
+        "file": "q11-drink-strip-square-01-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Milk swirls into a glass of iced cold brew.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-strip-square-02-r2": {
+        "file": "q11-drink-strip-square-02-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Clear citrus soda pours into a glass with lemon and ice.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-strip-square-03-r2": {
+        "file": "q11-drink-strip-square-03-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand selects a plain silver beverage can from a refrigerator.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-strip-square-04": {
+        "file": "q11-drink-strip-square-04",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand holds a protein shake beside a gym bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-strip-square-05": {
+        "file": "q11-drink-strip-square-05",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator tastes a chilled drink beside a clear bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-strip-square-02": {
+        "file": "q11-home-strip-square-02",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand scrubs a grout line on a tiled floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-strip-square-03": {
+        "file": "q11-home-strip-square-03",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Folded clothes and fabric bins arranged in a closet.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-strip-square-04": {
+        "file": "q11-home-strip-square-04",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Pet hair roller removes lint from a sofa beside a dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-strip-square-05": {
+        "file": "q11-home-strip-square-05",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cable clips organize loose cords on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-strip-square-06": {
+        "file": "q11-home-strip-square-06",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands arrange scrub brushes and cleaning tools in an open box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-strip-square-01": {
+        "file": "q11-outfit-strip-square-01",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Model wears a cream blouse and long green skirt in a studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-strip-square-02": {
+        "file": "q11-outfit-strip-square-02",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Model walks outdoors in a long green dress.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-strip-square-03": {
+        "file": "q11-outfit-strip-square-03",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Model wears a cream blouse with a dark midi skirt.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-strip-square-04": {
+        "file": "q11-outfit-strip-square-04",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator points to the lapel of a neutral blazer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-strip-square-05-r2": {
+        "file": "q11-outfit-strip-square-05-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Close view of charcoal merino sweater knit stitches.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-strip-square-06": {
+        "file": "q11-outfit-strip-square-06",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult adjusts a charcoal hoodie in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-input-01-bad-r2": {
+        "file": "q11-beauty-input-01-bad-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Amber glass serum bottle with black dropper blurred on a vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-input-02-good-r2": {
+        "file": "q11-beauty-input-02-good-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Full amber serum bottle with black dropper in clear focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-input-02-bad-r2": {
+        "file": "q11-beauty-input-02-bad-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Amber serum bottle cropped at the dropper and base.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-step-source-r2": {
+        "file": "q11-beauty-step-source-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Amber glass serum bottle with black dropper on a clean white surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-uses-01-r2": {
+        "file": "q11-beauty-uses-01-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Amber serum bottle beside a folded towel on pale stone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-beauty-uses-02-square-r2": {
+        "file": "q11-beauty-uses-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Spatula lifts a scoop of face cream from an open jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-input-01-good-r2": {
+        "file": "q11-drink-input-01-good-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain silver citrus drink can with condensation, lemon, and ice.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-input-01-bad-r3": {
+        "file": "q11-drink-input-01-bad-r3",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Silver citrus drink can blurred by camera shake on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-input-02-good": {
+        "file": "q11-drink-input-02-good",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain pale silver beverage can upright beside lemon and ice.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-input-02-bad": {
+        "file": "q11-drink-input-02-bad",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Close crop cuts off the side of a plain silver beverage can.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-step-source-r2": {
+        "file": "q11-drink-step-source-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain silver beverage can upright on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-uses-01": {
+        "file": "q11-drink-uses-01",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Woman presents a white coffee mug in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-step-source-r2": {
+        "file": "q11-home-step-source-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Dark gray adjustable drawer divider tray seen from above.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-input-01-good-r2": {
+        "file": "q11-home-input-01-good-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Dark gray drawer divider neatly sorts utensils in a wooden drawer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-input-01-bad-r3": {
+        "file": "q11-home-input-01-bad-r3",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Dark gray drawer divider blurred while the drawer edge stays sharper.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-input-02-good-r2": {
+        "file": "q11-home-input-02-good-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Full gray drawer organizer with utensils in separate compartments.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-input-02-bad-r3": {
+        "file": "q11-home-input-02-bad-r3",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Gray drawer organizer is cropped at the right and bottom edges.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-uses-01-r2": {
+        "file": "q11-home-uses-01-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Dark gray adjustable drawer divider installed in a pale wood drawer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-uses-02-square-r2": {
+        "file": "q11-home-uses-02-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator presents a gray foldable closet bin in front of shelves.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-input-01-good-r2": {
+        "file": "q11-outfit-input-01-good-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Full beige zip-front jacket laid flat with collar and pockets visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-input-01-bad-r3": {
+        "file": "q11-outfit-input-01-bad-r3",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Beige zip-front jacket is strongly out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-input-02-good-r2": {
+        "file": "q11-outfit-input-02-good-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wears the full beige zip-front jacket against a light wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-input-02-bad-r3": {
+        "file": "q11-outfit-input-02-bad-r3",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Beige jacket hem and right sleeve are cropped from the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-uses-02b-square-r2": {
+        "file": "q11-outfit-uses-02b-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Two adults model a light trench coat and a dark midi dress.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-uses-01-phone": {
+        "file": "q11-drink-uses-01-phone",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand holds a chilled silver beverage can in front of a refrigerator.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-04-r2": {
+        "file": "q11-outfit-picker-04-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult wears a pale blue shirt and points to its cuff seam.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-01": {
+        "file": "q11-beauty-picker-01",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator holds a white sunscreen tube beside her face.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-02": {
+        "file": "q11-beauty-picker-02",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator applies lip tint in a bright vanity mirror.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-03": {
+        "file": "q11-beauty-picker-03",
+        "w": 864,
+        "h": 1536,
+        "alt": "Woman presents a moisturizer jar and dabs cream onto her cheek.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-04": {
+        "file": "q11-beauty-picker-04",
+        "w": 864,
+        "h": 1536,
+        "alt": "Serum dropper places a swatch on the back of a hand.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-05": {
+        "file": "q11-beauty-picker-05",
+        "w": 864,
+        "h": 1536,
+        "alt": "Close-up of cream texture spread on a glass surface.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-06": {
+        "file": "q11-beauty-picker-06",
+        "w": 864,
+        "h": 1536,
+        "alt": "Before-and-after lip tint look in a split face view.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-07": {
+        "file": "q11-beauty-picker-07",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands lift an amber serum bottle from its open box.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-beauty-picker-08": {
+        "file": "q11-beauty-picker-08",
+        "w": 864,
+        "h": 1536,
+        "alt": "Skincare gift set arranged in an open presentation box.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-01": {
+        "file": "q11-drink-picker-01",
+        "w": 864,
+        "h": 1536,
+        "alt": "Clear citrus soda pours into a glass filled with ice.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-02": {
+        "file": "q11-drink-picker-02",
+        "w": 864,
+        "h": 1536,
+        "alt": "Milk swirls through a glass of iced coffee.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-03": {
+        "file": "q11-drink-picker-03",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator tastes a berry drink from a chilled glass.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-04": {
+        "file": "q11-drink-picker-04",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain silver drink cans lined up in a refrigerator.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-05": {
+        "file": "q11-drink-picker-05",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator presents a pale beverage bottle to camera.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-06": {
+        "file": "q11-drink-picker-06",
+        "w": 864,
+        "h": 1536,
+        "alt": "Woman takes one bite of a protein bar.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-07": {
+        "file": "q11-drink-picker-07",
+        "w": 864,
+        "h": 1536,
+        "alt": "Bamboo whisk stirs green matcha in a ceramic bowl.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-picker-08": {
+        "file": "q11-drink-picker-08",
+        "w": 864,
+        "h": 1536,
+        "alt": "Protein shake held beside a gym bench.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-01": {
+        "file": "q11-home-picker-01",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator holds a handheld vacuum in a bright living room.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-02": {
+        "file": "q11-home-picker-02",
+        "w": 864,
+        "h": 1536,
+        "alt": "Pet hair roller moves across a sofa beside a dog.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-03": {
+        "file": "q11-home-picker-03",
+        "w": 864,
+        "h": 1536,
+        "alt": "Drawer divider separates utensils in a reset kitchen drawer.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-04": {
+        "file": "q11-home-picker-04",
+        "w": 864,
+        "h": 1536,
+        "alt": "Pull-out organizer tray beneath a kitchen sink.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-05": {
+        "file": "q11-home-picker-05",
+        "w": 864,
+        "h": 1536,
+        "alt": "Grout brush cleans one seam between floor tiles.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-06": {
+        "file": "q11-home-picker-06",
+        "w": 864,
+        "h": 1536,
+        "alt": "Scrub brush lifted from an open cleaning kit.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-07": {
+        "file": "q11-home-picker-07",
+        "w": 864,
+        "h": 1536,
+        "alt": "Cable clip holds loose cords together on a desk.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-home-picker-08": {
+        "file": "q11-home-picker-08",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator holds a gray foldable closet bin beside shelves.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-01": {
+        "file": "q11-outfit-picker-01",
+        "w": 864,
+        "h": 1536,
+        "alt": "Model walks in a camel coat on a city sidewalk.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-02": {
+        "file": "q11-outfit-picker-02",
+        "w": 864,
+        "h": 1536,
+        "alt": "Model checks a charcoal field jacket in a mirror.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-03": {
+        "file": "q11-outfit-picker-03",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator wears a navy blazer in a bright office lobby.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-05": {
+        "file": "q11-outfit-picker-05",
+        "w": 864,
+        "h": 1536,
+        "alt": "Model wears a lilac activewear set in a studio.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-06": {
+        "file": "q11-outfit-picker-06",
+        "w": 864,
+        "h": 1536,
+        "alt": "Model walks in a light denim overshirt on a park path.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-07": {
+        "file": "q11-outfit-picker-07",
+        "w": 864,
+        "h": 1536,
+        "alt": "Model shows the cuff and fit of a cream cardigan.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-outfit-picker-08": {
+        "file": "q11-outfit-picker-08",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator wears an olive shirt dress in a bright bedroom.",
+        "variants": [
+          640
+        ]
+      },
+      "q11-drink-uses-02-r2": {
+        "file": "q11-drink-uses-02-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator holds a silver citrus can beside lemon and ice in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-drink-strip-square-06-r2": {
+        "file": "q11-drink-strip-square-06-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Creator holds a pale green lemonade bottle beside a lemon wedge at an outdoor cafe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-uses-01-r2": {
+        "file": "q11-outfit-uses-01-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wears the beige zip jacket and touches its cuff in a clean studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-case-04-square-r3": {
+        "file": "q11-home-case-04-square-r3",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand uses a black squeegee to clear water from shower glass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-home-uses-02-square-r3": {
+        "file": "q11-home-uses-02-square-r3",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Two gray fabric closet bins sit on a shelf; one holds folded clothes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q11-outfit-picker-02-r3": {
+        "file": "q11-outfit-picker-02-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Man checks a charcoal field jacket in a mirror with a single-camera phone.",
+        "variants": [
+          640
         ]
       }
     }

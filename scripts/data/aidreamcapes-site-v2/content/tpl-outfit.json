@@ -176,142 +176,149 @@
     ]
   },
   "examples": {
-    "h2": "More outfit moments",
-    "lead": "See clothes and accessories in everyday scenes before planning your next reel.",
+    "h2": "Clothing Looks in Motion",
+    "lead": "Try a mirror fit check, a city coat walk, or a close look at a sweater.",
     "groups": [
       {
-        "label": "Looks in motion",
+        "label": "Outfit Scenes",
         "items": [
           {
-            "ref": "n:guide:ind-fashion-clothing-m2-result",
-            "title": "Heather-gray hoodie in a bright studio",
+            "ref": "n:guide:q11-outfit-example-01-square-r2",
+            "title": "Black Activewear Mirror Fit",
             "kind": "scene",
-            "product": "hoodie"
+            "product": "activewear set"
           },
           {
-            "ref": "n:gen2:photo-hub-c3",
-            "title": "Knit beanie on a cold walk",
+            "ref": "n:guide:q11-outfit-example-02-square-r2",
+            "title": "Dark Overcoat on a City Walk",
             "kind": "scene",
-            "product": "knit beanie"
+            "product": "overcoat"
           },
           {
-            "ref": "n:gen2:before-after-videos-g3",
-            "title": "Sweater shelf reset",
+            "ref": "n:guide:q11-outfit-example-03-square-r2",
+            "title": "Gray Sweater Fit Check",
             "kind": "scene",
-            "product": "sweaters"
+            "product": "gray sweater"
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "An AI outfit reel places clothing on a model and gives shoppers a better sense of the full look. Upload a clear garment photo, describe the wearer and setting, then use the vertical result in a social post or product story.",
+    "overview": "Turn one clothing item into a clear outfit reel. Preserve its silhouette, color, and seams while a walk, fit check, or garment detail gives the video one focused action.",
     "strip": [
-      "n:guide:c5-tpl-outfit-m1-blue-blouse-midi",
-      "n:guide:c5-tpl-outfit-m1-cream-blouse",
-      "n:guide:c5-tpl-outfit-m1-green-midi",
-      "n:guide:c5-tpl-outfit-m1-gray-knit-skirt",
-      "n:guide:c3-r3-occ-sale-discount-m5-1",
-      "n:guide:c3-r3-tpl-outfit-hoodie"
+      "n:guide:q11-outfit-strip-square-01",
+      "n:guide:q11-outfit-strip-square-02",
+      "n:guide:q11-outfit-strip-square-03",
+      "n:guide:q11-outfit-strip-square-04",
+      "n:guide:q11-outfit-strip-square-05-r2",
+      "n:guide:q11-outfit-strip-square-06"
     ],
     "steps": {
       "source": "n:guide:tpl-outfit-c3-m2-source",
       "result": "n:guide:tpl-outfit-c3-m2-result-9x16",
       "mode": "video",
-      "prompt": "Show this beige zip jacket on an adult model in a bright neutral studio, with the full jacket and outfit visible."
+      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns once to show the side fit of the beige zip jacket. Use a waist-up medium frame with a slow tracking move. Soft studio daylight keeps the beige jacket and seams clear. End facing forward with the full jacket centered. Sound: quiet room tone and a light fabric rustle. No music."
     },
     "picker": {
-      "title": "Choose a scene for an AI outfit reel",
-      "lead": "Start with a place and a clothing detail that suit the look.",
+      "title": "Choose a clothing reel format",
+      "lead": "Pick a try-on, fit review, or outfit reveal for the garment.",
       "chips": [
         {
-          "id": "city",
-          "label": "City walk"
+          "id": "review",
+          "label": "Creator review"
         },
         {
-          "id": "work",
-          "label": "Workday"
+          "id": "tryon",
+          "label": "Try-on and fit"
         },
         {
-          "id": "casual",
-          "label": "Casual day"
+          "id": "street",
+          "label": "Street style"
         },
         {
           "id": "details",
-          "label": "Finishing details"
+          "label": "Garment details"
         }
       ],
       "cards": [
         {
-          "ref": "f:tpl-outfit-m3-city-camel-coat",
-          "label": "Camel coat on a city walk",
+          "ref": "n:guide:q11-outfit-picker-01",
+          "label": "Camel Coat Street Walk",
           "chips": [
-            "city"
+            "street",
+            "tryon"
           ],
-          "prompt": "Show a plain camel coat on a full-length adult model walking along a quiet city sidewalk.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model walks one measured step along a city sidewalk wearing the camel coat. Use a full-length frame with a gentle side track. Soft overcast daylight keeps the coat color even. End with the coat fully visible against the storefront. Sound: quiet street ambience. No music.",
           "kind": "video"
         },
         {
-          "ref": "f:tpl-outfit-m3-city-field-jacket",
-          "label": "Field jacket on a city walk",
+          "ref": "n:guide:q11-outfit-picker-02-r3",
+          "label": "Field Jacket Mirror Fit Check",
           "chips": [
-            "city"
+            "tryon",
+            "details"
           ],
-          "prompt": "Show a plain charcoal field jacket on a full-length adult model walking past a neutral stone storefront.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A model turns once toward the mirror to show the field jacket shape. Use a three-quarter mirror frame with a slow push-in. Bright natural room light shows the jacket seams. End with the jacket front facing the mirror. Sound: soft room tone. No music.",
           "kind": "video"
         },
         {
-          "ref": "f:tpl-outfit-m3-work-navy-blazer",
-          "label": "Navy suit for a workday",
+          "ref": "n:guide:q11-outfit-picker-03",
+          "label": "Work Blazer Creator Review",
           "chips": [
-            "work"
+            "review",
+            "details"
           ],
-          "prompt": "Show a plain deep navy blazer and matching trousers on an adult model standing in a bright office lobby.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A creator presents the navy blazer to camera and speaks about its fit. Use a chest-up medium frame with a gentle push-in. Even office window light keeps the lapel and shoulders visible. End with the blazer front centered. Sound: quiet office room tone. Voice: \"This blazer keeps a clean workday shape.\". No music.",
           "kind": "video"
         },
         {
-          "ref": "f:tpl-outfit-m3-work-blue-shirt",
-          "label": "Pale blue shirt for a workday",
-          "chips": [
-            "work"
-          ],
-          "prompt": "Show a plain pale blue button-up shirt and charcoal trousers on an adult model in an office hallway.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:tpl-outfit-m3-casual-activewear",
-          "label": "Lilac athletic set",
-          "chips": [
-            "casual"
-          ],
-          "prompt": "Show a plain lilac athletic set and white sneakers on a full-length adult model shifting her stance in a bright studio.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:tpl-outfit-m3-casual-denim-overshirt",
-          "label": "Denim overshirt on a park walk",
-          "chips": [
-            "casual"
-          ],
-          "prompt": "Show a plain light denim overshirt over a white crewneck and black trousers on an adult model in a park.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:tpl-outfit-m3-details-cream-cardigan",
-          "label": "Cream cardigan fit detail",
+          "ref": "n:guide:q11-outfit-picker-04-r2",
+          "label": "Blue Shirt Cuff Detail",
           "chips": [
             "details"
           ],
-          "prompt": "Show the knit texture, cuffs, and fit of a plain cream cardigan on an adult model wearing a dark midi skirt.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult points once to the cuff seam on the pale blue button-up shirt. Use a waist-up frame and a short push toward the sleeve. Soft office window light reveals the cuff stitching. End with the collar and cuff both in view. Sound: quiet room tone. No music.",
           "kind": "video"
         },
         {
-          "ref": "f:tpl-outfit-m3-details-olive-shirt-dress",
-          "label": "Olive shirt dress silhouette",
+          "ref": "n:guide:q11-outfit-picker-05",
+          "label": "Lilac Activewear Fit Check",
           "chips": [
+            "tryon",
+            "street"
+          ],
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns once to show the lilac activewear set. Use a full-length studio frame with a smooth half orbit. Bright softbox light keeps the fabric color even. End facing forward with the full set in frame. Sound: soft shoe step and room tone. No music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q11-outfit-picker-06",
+          "label": "Denim Overshirt Street Look",
+          "chips": [
+            "street",
+            "tryon"
+          ],
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model walks one slow step along a park path in the denim overshirt. Use a full-length side track with a gentle push-in. Filtered daylight shows the denim texture. End with the overshirt open over the white crewneck. Sound: light outdoor ambience. No music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q11-outfit-picker-07",
+          "label": "Cardigan Sleeve Fit Check",
+          "chips": [
+            "tryon",
             "details"
           ],
-          "prompt": "Show the collar, belt, and hem of a plain olive shirt dress on a full-length adult model.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A model turns one shoulder to show the cream cardigan cuff and fit. Use a waist-up frame with a short lateral move. Soft studio window light catches the knit texture. End with the cuff in the foreground. Sound: gentle fabric rustle. No music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q11-outfit-picker-08",
+          "label": "Olive Shirt Dress GRWM",
+          "chips": [
+            "review",
+            "tryon"
+          ],
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A creator faces the camera in the olive shirt dress and introduces the look. Use a three-quarter frame with a gentle push-in. Bright bedroom daylight shows the collar and belt. End with the full dress silhouette visible in the mirror. Sound: quiet room tone. Voice: \"Here is the shirt dress I chose today.\". No music.",
           "kind": "video"
         }
       ],
@@ -320,48 +327,47 @@
     "uses": [
       {
         "frame": "post",
-        "ref": "n:guide:ind-jewelry-accessories-m7-steel-watch",
-        "h": "Show a steel watch as an outfit detail",
-        "d": "A close view of the unbranded steel watch adds a clear accessory detail beside a full outfit reel."
+        "ref": "n:guide:q11-outfit-uses-01-r2",
+        "h": "Show the beige jacket beside listing details",
+        "d": "Keep the zip front, cuffs, and fit clear beside accurate size and fabric details."
       },
       {
-        "frame": "split",
-        "ref": "n:gen2:tpl-outfit-g1",
-        "ref_b": "n:gen2:ind-fashion-clothing-g3",
-        "h": "Compare two full outfit silhouettes",
-        "d": "A long coat and a slip dress show how different silhouettes read in vertical product reels."
+        "frame": "browser",
+        "ref": "n:guide:q11-outfit-uses-02b-square-r2",
+        "h": "Compare two outfit silhouettes on a listing",
+        "d": "Show two complete looks together so shoppers can compare their shapes and layers."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c3-r3-tpl-outfit-m5-0",
-        "bad": "n:guide:c3-tpl-outfit-m5-crop",
-        "good_label": "Full cardigan and cuff visible",
-        "bad_label": "Right cuff leaves the frame"
+        "good": "n:guide:q11-outfit-input-01-good-r2",
+        "bad": "n:guide:q11-outfit-input-01-bad-r3",
+        "good_label": "Full beige zip jacket stays sharp",
+        "bad_label": "Beige zip jacket loses focus"
       },
       {
-        "good": "n:guide:c3-r3-tpl-outfit-walk",
-        "bad": "n:guide:c3-tpl-outfit-m5-blur",
-        "good_label": "Jacket shape and seams stay sharp",
-        "bad_label": "Jacket front and seams blur together"
+        "good": "n:guide:q11-outfit-input-02-good-r2",
+        "bad": "n:guide:q11-outfit-input-02-bad-r3",
+        "good_label": "Beige jacket and hem fit the frame",
+        "bad_label": "Beige jacket is clipped at the edges"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:tpl-outfit-c3-m6-walk-reel",
+        "ref": "f:q11-outfit-output-01-r2",
         "frame": "9:16",
-        "label": "Beige jacket movement reel",
-        "length": 15
+        "length": 15,
+        "label": "Beige jacket street-walk frame"
       },
       {
-        "ref": "n:guide:tpl-outfit-c3-m6-detail-reel",
+        "ref": "f:q11-outfit-output-02-r3",
         "frame": "9:16",
-        "label": "Beige jacket waist-up reel",
-        "length": 15
+        "length": 15,
+        "label": "Beige jacket side-fit frame"
       }
     ],
     "after": {
-      "ref": "n:guide:c4-tpl-outfit-m7-jacket",
+      "ref": "f:q11-outfit-after-r2",
       "zones": [
         "Your size note",
         "Your product name"
