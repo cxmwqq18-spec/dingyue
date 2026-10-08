@@ -138,27 +138,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/lipstick-ad",
-      "rule": "one-page",
-      "pages": [
-        "ind-shoes",
-        "tpl-color"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen/protein-pack",
       "rule": "one-page",
       "pages": [
         "change-background",
         "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/white-shoe",
-      "rule": "one-page",
-      "pages": [
-        "change-background",
-        "ind-shoes"
       ]
     },
     {
@@ -195,27 +179,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2ind-fashion-clothing-c2",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
-        "tpl-color"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2ind-fashion-clothing-g3",
       "rule": "one-page",
       "pages": [
         "ind-fashion-clothing",
         "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2lifestyle-photos-g2",
-      "rule": "one-page",
-      "pages": [
-        "lifestyle-photos",
-        "tpl-size"
       ]
     },
     {
@@ -316,42 +284,10 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-detail-c2",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
-        "tpl-light"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-detail-g4",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
-        "tpl-detail"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-light-g1",
-      "rule": "one-page",
-      "pages": [
-        "ind-beauty-skincare",
-        "tpl-light"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-limited-drop-alert-video-g1",
       "rule": "one-page",
       "pages": [
         "ind-jewelry-accessories",
-        "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-limited-drop-alert-video-g2",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
         "tpl-limited-drop-alert-video"
       ]
     },
@@ -523,7 +459,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-shoes-m2-result",
       "rule": "one-page",
       "pages": [
-        "ind-shoes",
         "tpl-limited-drop-alert-video",
         "tpl-tryon"
       ]
@@ -585,14 +520,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-shoe-blurred",
-      "rule": "one-page",
-      "pages": [
-        "tpl-limited-drop-alert-video",
-        "white-background"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-soap-dispenser",
       "rule": "one-page",
       "pages": [
@@ -623,14 +550,6 @@
       "pages": [
         "home",
         "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/v_launch",
-      "rule": "one-page",
-      "pages": [
-        "ind-shoes",
-        "tpl-spark-ads-style-video"
       ]
     },
     {
