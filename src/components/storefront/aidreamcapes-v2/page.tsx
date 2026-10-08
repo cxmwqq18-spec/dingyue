@@ -25,7 +25,7 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
   const flows: V2Flow[] = [];
   if (value.image && value.output) {
     flows.push({ t: "Smartwatch", d: "Product photo, then a vertical video ad, then three different openings to test.", steps: [
-      { label: "Product photo", image: value.image }, { label: "Video ad · 9:16", image: value.output },
+      { label: "Product photo", image: value.image }, { label: "Video ad", image: value.output },
       ...list<V2Image>(value.versions).map((image, index) => ({ label: `Version ${"ABC"[index]}`, image, tall: true }))] });
   }
   if (value.bottle && value.bottleAd) {
@@ -88,15 +88,14 @@ function HomePage({ data, r }: Props) {
               </div>
             </div>
             {heroMedia?.kind === "loop" ? (
-              <div aria-label={heroMedia.inset ? "Example: product photo to video ad" : "Example video ads for different products"} className="visual-loop"><HeroMedia media={heroMedia} r={r} /></div>
+              <div aria-label={heroMedia.inset ? "Product photo to video ad preview" : "Video ad previews for several products"} className="visual-loop"><HeroMedia media={heroMedia} r={r} /></div>
             ) : (
-            <div aria-label="Example: product photo to video ad" className="visual">
-              <div className="vin"><span className="lbl">Your product photo</span><Img eager image={hero.image} r={r} /></div>
+            <div aria-label="Product photo to video ad preview" className="visual">
+              <div className="vin"><span className="lbl">Your product</span><Img eager image={hero.image} r={r} /></div>
               <div aria-hidden="true" className="arrow">
                 <svg fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5" /></svg>
               </div>
               <div className="vout">
-                <span className="lbl">Video ad · 9:16 · 15s</span>
                 {hero.output ? <Img eager image={hero.output} r={r} /> : null}
               </div>
               <div className="vars">

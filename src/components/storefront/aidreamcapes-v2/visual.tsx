@@ -48,7 +48,6 @@ export function VisualStrip({ visual, r, includeOverview = false }: { visual: V2
             {visual.strip.map((item, index) => (
               <figure className="v-strip-card" data-kind={item.kind} data-ratio={visualRatio(item)} key={`${item.src}-${index}`}>
                 <VisualImage image={item} r={r} />
-                <figcaption>{item.kind === "video" ? `Video · ${visualRatio(item)}` : "Photo"}</figcaption>
               </figure>
             ))}
           </div>

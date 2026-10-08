@@ -252,12 +252,11 @@ export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r:
   return (
     <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
-        <span className={card.kind === "video" ? "kind v" : "kind"}>{card.kind === "video" ? "Video" : "Photo"}</span>
         <Img image={card.image} r={r} />
       </div>
       <div className="tb">
         <h3><a className="card-title" href={r.href(card.href)}>{card.name}</a></h3>
-        <p>{card.line}</p>
+        {card.line ? <p>{card.line}</p> : null}
         {card.tags.length ? <div className="tags">{card.tags.map((tag) => <span key={tag}>{tag}</span>)}</div> : null}
         <span className="use">Use this template →</span>
       </div>
@@ -271,7 +270,6 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
   return (
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
-        <span className={card.kind === "video" ? "kind v" : "kind"}>{card.label ?? (card.kind === "video" ? "Example clip" : "Example photo")}</span>
         {video ? (
           <video aria-label={video.name ?? card.name} autoPlay controls height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
             <source src={r.asset(video.src)} type="video/mp4" />
@@ -280,8 +278,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
       </div>
       <div className="tb">
         <h3>{card.name}</h3>
-        <p>{card.spec ?? card.line}</p>
-        <a className="use" href={r.href(card.href)}>Make a {card.kind === "video" || card.label === "Example scene" ? "video" : "photo"} like this →</a>
+        <a className="use" href={r.href(card.href)}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</a>
       </div>
     </article>
   );
@@ -299,15 +296,13 @@ function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
   return <CaseCard card={{
     key: item.key,
     name: item.title,
-    line: item.spec ?? "Photo",
     kind: item.kind === "clip" ? "video" : "photo",
+    videoExample: item.kind === "clip" || item.kind === "scene",
     href: item.href,
     image: item.image,
     tags: [],
     industries: [],
     platforms: [],
-    label: item.label,
-    spec: item.spec ?? "Photo",
     mediaRef: item.mediaRef,
     ...(item.video ? { video: item.video } : {})
   }} r={r} />;
@@ -508,10 +503,9 @@ export function Collage({ cards, r }: { cards: V2Card[]; r: V2Resolvers }) {
   );
 }
 
-export function Single({ image, r, label = "Example" }: { image: V2Image; r: V2Resolvers; label?: string | null }) {
+export function Single({ image, r }: { image: V2Image; r: V2Resolvers }) {
   return (
     <div className="single">
-      {label ? <span className="lbl">{label}</span> : null}
       <Img eager image={image} r={r} />
     </div>
   );
@@ -524,7 +518,6 @@ export function VideoPlayer({ video, r }: { video: V2Video; r: V2Resolvers }) {
       <video aria-label={video.name ?? video.poster.alt} controls height={video.height} playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
         <source src={r.asset(video.src)} type="video/mp4" />
       </video>
-      <figcaption>Example clip{video.duration ? ` · ${video.duration} seconds` : ""}</figcaption>
     </figure>
   );
 }
@@ -541,8 +534,7 @@ export function HeroMedia({ media, r }: { media: V2HeroMedia; r: V2Resolvers }) 
         <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(media.video.poster.src)} preload="metadata" width={media.video.width}>
           <source src={r.asset(media.video.src)} type="video/mp4" />
         </video>
-        <span className="lbl">{media.inset ? "Example video ad" : "Example video ads"}</span>
-        {media.inset ? <div className="inset"><span className="lbl">Your product photo</span><Img eager image={media.inset} r={r} /></div> : null}
+        {media.inset ? <div className="inset"><span className="lbl">Your product</span><Img eager image={media.inset} r={r} /></div> : null}
       </div>
     );
   }
@@ -551,7 +543,7 @@ export function HeroMedia({ media, r }: { media: V2HeroMedia; r: V2Resolvers }) 
       <figure className="hm hm-pair" data-orient={orientation(media.after)}>
         <Img eager image={media.after} r={r} />
         <span className="lbl">Result</span>
-        <div className="inset"><span className="lbl">Your photo</span><Img eager image={media.before} r={r} /></div>
+        <div className="inset"><span className="lbl">Your product</span><Img eager image={media.before} r={r} /></div>
       </figure>
     );
   }
@@ -566,7 +558,7 @@ export function PairGrid({ pairs, r }: { pairs: { before: V2Image; after: V2Imag
         <figure className="hm hm-pair" data-orient="land" key={pair.after.src}>
           <Img image={pair.after} r={r} />
           <span className="lbl">Result</span>
-          <div className="inset"><span className="lbl">Your photo</span><Img image={pair.before} r={r} /></div>
+          <div className="inset"><span className="lbl">Your product</span><Img image={pair.before} r={r} /></div>
         </figure>
       ))}
     </div>

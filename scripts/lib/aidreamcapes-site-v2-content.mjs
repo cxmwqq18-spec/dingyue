@@ -261,10 +261,15 @@ function mediaImage(model, ref, mode = "hero") {
   return out;
 }
 
+function publicClipName(name, slug) {
+  const title = String(name ?? "").replace(/^Example clip:\s*/i, "").trim();
+  return title || String(slug).replace(/[-_]+/g, " ");
+}
+
 function clipRef(model, slug) {
   const clip = model.media.catalog.clips[slug];
   assert.ok(clip, `unknown clip ${slug}`);
-  return { src: clip.src, width: clip.w, height: clip.h, duration: clip.duration, name: clip.name, description: clip.description, uploadDate: clip.uploadDate, poster: mediaImage(model, `f:${slug}`, "hero") };
+  return { src: clip.src, width: clip.w, height: clip.h, duration: clip.duration, name: publicClipName(clip.name, slug), description: clip.description, uploadDate: clip.uploadDate, poster: mediaImage(model, `f:${slug}`, "hero") };
 }
 
 function heroMediaFor(model, pageId) {
@@ -557,23 +562,16 @@ function caseTarget(model, page, entry, source, isClip, promptOverride) {
   return toolAppHref(model, tool, templateKey, { size, explicitSize: true, ...(promptOverride === undefined ? {} : { promptOverride }) });
 }
 
-const CASE_RATIOS = [["1:1", 1], ["4:5", 4 / 5], ["3:4", 3 / 4], ["4:3", 4 / 3], ["3:2", 3 / 2], ["16:9", 16 / 9], ["9:16", 9 / 16]];
-function closestRatio(width, height) {
-  const value = Number(width) / Number(height);
-  return CASE_RATIOS.reduce((best, item) => Math.abs(item[1] - value) < Math.abs(best[1] - value) ? item : best, CASE_RATIOS[0])[0];
-}
-
 function caseCardFor(model, page, entry, index) {
   const ref = entry.ref;
   const isClip = entry.kind ? entry.kind === "clip" : Boolean(model.media.catalog.clips?.[ref]);
   const source = isClip ? clipRef(model, ref) : mediaImage(model, ref, "card");
   const isVideoExample = isClip || entry.kind === "scene" || (!entry.kind && page.group === "video");
   const kind = isClip ? "video" : "photo";
-  const ratio = closestRatio(source.width, source.height);
-  const spec = isClip ? `Video · ${ratio}` : "Photo";
   return {
-    key: `case-${page.id}-${index + 1}`, cardType: "case", name: entry.title, product: entry.product, mediaRef: ref, line: spec, spec, kind,
-    href: caseTarget(model, page, entry, source, isClip), label: isClip ? "Example clip" : isVideoExample ? "Example scene" : "Example photo",
+    key: `case-${page.id}-${index + 1}`, cardType: "case", name: entry.title, product: entry.product, mediaRef: ref, kind,
+    ...(isVideoExample ? { videoExample: true } : {}),
+    href: caseTarget(model, page, entry, source, isClip),
     image: isClip ? source.poster : source, ...(isClip ? { video: source } : {}), tags: [], industries: [], platforms: []
   };
 }
@@ -601,11 +599,10 @@ function exampleGalleryFor(model, page) {
           title: entry.title,
           product: entry.product,
           kind,
-          label: `Example ${kind}`,
           href: card.href,
           mediaRef: entry.ref,
           image: card.image,
-          ...(kind === "clip" ? { video: card.video, spec: card.spec } : { spec: "Photo" })
+          ...(kind === "clip" ? { video: card.video } : {})
         };
       })
     };
@@ -1121,7 +1118,7 @@ function specLinks(model, ids) {
 // photo tools: a gallery of the tools' own pictures ("g:" files) or the newly generated pictures
 // ("n:" references, a plain product photo first and then scenes made from it).
 const EXAMPLE_FLOWS = {
-  ebike: [null, [["Product photo", "n:guide:plat-youtube-shorts-size-portrait-ebike"], ["Video ad · 9:16", "f:video-hub-h1-bike"]]],
+  ebike: [null, [["Product photo", "n:guide:plat-youtube-shorts-size-portrait-ebike"], ["Video ad", "f:video-hub-h1-bike"]]],
   tote: ["lifestyle-scene", [["Product photo", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
   necklace: ["jewelry-positioning", [["Product photo", "source-input"], ["Worn on a dark top", "example-01"], ["Pendant detail", "example-05"]]],
   jacket: ["sale-campaign-key-visual", [["Product photo", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
@@ -1418,7 +1415,7 @@ function payloadFor(model, page) {
         id: item.id,
         ...flow,
         d: "A green bottle appears in everyday photos and a vertical clip showing water being poured.",
-        steps: [...flow.steps, { label: "Video · 9:16", tall: true, image: { ...bottleClip, alt: "Hands unscrew a sage-green bottle lid and pour water into its open mouth." } }],
+        steps: [...flow.steps, { label: "Video ad", tall: true, image: { ...bottleClip, alt: "Hands unscrew a sage-green bottle lid and pour water into its open mouth." } }],
         filterTags: filterMap[item.id] ?? []
       };
     });
@@ -2021,7 +2018,7 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (Array.isArray(value)) return value.forEach(checkCaseLinks);
       if (!value || typeof value !== "object") return;
       if (value.cardType === "case" && typeof value.href === "string") {
-        checkCaseHref(page.id, value, value.kind === "video" || value.label === "Example scene", value.key ?? "case card");
+        checkCaseHref(page.id, value, value.kind === "video" || value.videoExample === true, value.key ?? "case card");
       } else if (["clip", "scene", "photo"].includes(value.kind) && typeof value.href === "string" && typeof value.mediaRef === "string") {
         checkCaseHref(page.id, value, value.kind === "clip" || value.kind === "scene", value.key ?? "example");
       }
@@ -2353,8 +2350,6 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (card.mediaRef === "social-proof-animation" || card.video?.src?.includes("/social-proof-animation.mp4")) errors.push(`${page.id}: retired social-proof-animation is not allowed in case media`);
       if (card.mediaRef === "ugc-ad-video" || card.video?.src?.includes("ugc-ad-video")) errors.push(`${page.id}: ugc-ad-video is not allowed in case media`);
       if (card.kind === "video" && !validationSource.media.catalog.clips?.[card.mediaRef]) errors.push(`${page.id}: video case is missing from the clip catalog (${card.mediaRef})`);
-      const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)}` : "Photo";
-      if (card.spec !== expected) errors.push(`${page.id}: case spec is not based on actual media dimensions (${card.name})`);
     }
   }
   // Optional example galleries share the case-card media budget and title rules. This
@@ -2393,10 +2388,6 @@ export function validateSiteV2(build = buildSiteV2()) {
       const clip = validationSource.media.catalog.clips?.[item.mediaRef];
       if (item.kind === "clip" && !clip) errors.push(`${page.id}: example clip is missing from the clip catalog (${item.mediaRef})`);
       if (/social-proof-animation/i.test(mediaText) && Number(clip?.w) > Number(clip?.h)) errors.push(`${page.id}: horizontal social-proof-animation is not allowed in examples (${item.mediaRef})`);
-      if (item.kind === "clip") {
-        const expected = `Video · ${closestRatio(item.video.width, item.video.height)}`;
-        if (item.spec !== expected) errors.push(`${page.id}: example spec is not based on actual media dimensions (${title})`);
-      }
     }
   }
   for (const pageId of Object.keys(casePlan.pages ?? {})) if (!build.pages.some((page) => page.id === pageId)) errors.push(`${pageId}: case-plan points to a missing page`);
