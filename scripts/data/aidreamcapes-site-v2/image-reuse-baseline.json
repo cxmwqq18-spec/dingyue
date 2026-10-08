@@ -143,27 +143,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/feature-callout",
-      "rule": "one-page",
-      "pages": [
-        "product-videos",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/clips/food-beverage",
       "rule": "one-page",
       "pages": [
         "ind-food-drinks",
         "tpl-drink"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/home-organization",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-home"
       ]
     },
     {
@@ -207,22 +191,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/before-after-showcases",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-home"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/before-after-showcases-t10",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-compare"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/frames/cinematic-video-t06",
       "rule": "one-page",
       "pages": [
@@ -231,18 +199,9 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/home-organization-t07",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-spark-ads-style-video"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/frames/product-video",
       "rule": "one-page",
       "pages": [
-        "occ-sale-discount",
         "tpl-drink",
         "tpl-product-feature-callout-video"
       ]
@@ -324,7 +283,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2before-after-videos-c3",
       "rule": "one-page",
       "pages": [
-        "before-after-videos",
         "occ-sale-discount",
         "tpl-retargeting-video-ad"
       ]
@@ -350,7 +308,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2examples-g3",
       "rule": "one-page",
       "pages": [
-        "occ-product-launch",
         "tpl-carousel-video-ad",
         "tpl-drink"
       ]
@@ -368,7 +325,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2examples-g7",
       "rule": "one-page",
       "pages": [
-        "occ-sale-discount",
         "tpl-detail",
         "tpl-retargeting-video-ad"
       ]
@@ -465,76 +421,12 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-black-friday-c3",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-bf"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-black-friday-c4",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-bf"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-black-friday-g1",
       "rule": "one-page",
       "pages": [
         "occ-black-friday",
         "tpl-bf",
         "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-black-friday-g2",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-holidays-c4",
-      "rule": "one-page",
-      "pages": [
-        "occ-holidays",
-        "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-product-launch-g1",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "occ-product-launch"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-g1",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "occ-sale-discount"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-g3",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
-        "occ-sale-discount"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-g4",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "occ-sale-discount"
       ]
     },
     {
@@ -554,34 +446,9 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-facebook-g2",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-shopify-g3",
-      "rule": "one-page",
-      "pages": [
-        "lifestyle-photos",
-        "occ-sale-discount"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-youtube-shorts-c2",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "tpl-beauty"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-youtube-shorts-c3",
       "rule": "one-page",
       "pages": [
-        "occ-sale-discount",
         "tpl-carousel-video-ad",
         "tpl-drink"
       ]
@@ -590,7 +457,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2product-videos-g1",
       "rule": "one-page",
       "pages": [
-        "product-videos",
         "tpl-angle",
         "tpl-compare"
       ]
@@ -607,7 +473,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2spokesperson-videos-c4",
       "rule": "one-page",
       "pages": [
-        "occ-product-launch",
         "tpl-home",
         "tpl-product-feature-callout-video"
       ]
@@ -691,22 +556,6 @@
       "pages": [
         "ind-beauty-skincare",
         "tpl-beauty"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-bf-c1",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-bf"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-bf-c3",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-bf"
       ]
     },
     {
@@ -806,22 +655,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-home-c1",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-home"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-home-c2",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-home"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-jewel-g1",
       "rule": "one-page",
       "pages": [
@@ -862,22 +695,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-launch-g2",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-launch"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-launch-g3",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-light-g1",
       "rule": "one-page",
       "pages": [
@@ -891,14 +708,6 @@
       "pages": [
         "ind-jewelry-accessories",
         "tpl-light"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-limited-drop-alert-video-c2",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-limited-drop-alert-video"
       ]
     },
     {
@@ -930,30 +739,6 @@
       "rule": "one-page",
       "pages": [
         "plat-tiktok",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-product-feature-callout-video-g1",
-      "rule": "one-page",
-      "pages": [
-        "product-videos",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-product-feature-callout-video-g2",
-      "rule": "one-page",
-      "pages": [
-        "product-videos",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-product-feature-callout-video-g3",
-      "rule": "one-page",
-      "pages": [
-        "product-videos",
         "tpl-product-feature-callout-video"
       ]
     },
@@ -1017,18 +802,9 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2video-hub-g2",
       "rule": "one-page",
       "pages": [
-        "product-videos",
         "tpl-angle",
         "tpl-box",
         "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2video-hub-g4",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-home"
       ]
     },
     {
@@ -1094,7 +870,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-videos-result",
       "rule": "one-page",
       "pages": [
-        "occ-product-launch",
         "tpl-drink",
         "tpl-launch"
       ]
@@ -1133,27 +908,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-unboxing-videos-source",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-angle"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-black-friday-giftbox-crop",
       "rule": "one-page",
       "pages": [
         "occ-black-friday",
         "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-black-friday-m2-source-use",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-bf"
       ]
     },
     {
@@ -1178,38 +937,6 @@
       "pages": [
         "occ-sale-discount",
         "tpl-outfit"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-tpl-outfit-walk",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-outfit"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-tpl-pack-gift",
-      "rule": "one-page",
-      "pages": [
-        "occ-holidays",
-        "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-occ-holidays-post-gift",
-      "rule": "one-page",
-      "pages": [
-        "occ-holidays",
-        "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c5-occ-holidays-strip-tea-tin",
-      "rule": "one-page",
-      "pages": [
-        "occ-holidays",
-        "tpl-pack"
       ]
     },
     {
@@ -1312,22 +1039,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-product-lunchbox-cut",
-      "rule": "one-page",
-      "pages": [
-        "product-videos",
-        "tpl-bf"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-tpl-pack-c3-m4-retail-shelf",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "tpl-pack"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-tpl-pack-c3-m4-unboxing",
       "rule": "one-page",
       "pages": [
@@ -1364,7 +1075,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-fix-m6-coaster-set",
       "rule": "one-page",
       "pages": [
-        "occ-sale-discount",
         "tpl-box",
         "tpl-color"
       ]
@@ -1441,14 +1151,6 @@
       "pages": [
         "ind-shoes",
         "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/story-ad-vertical-v1/story-ad-vertical/example-06",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-beauty"
       ]
     },
     {
