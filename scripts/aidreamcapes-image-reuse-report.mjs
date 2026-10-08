@@ -36,7 +36,7 @@ const totalViolations = reportViolations.length + duplicateViolations.length;
 
 console.log(`Image reuse violations (${totalViolations})`);
 for (const item of reportViolations) {
-  const rule = item.rule === "max-two-pages" ? "over 2 pages" : `same type: ${item.pageType}`;
+  const rule = "on more than one page";
   const logicalPages = item.pages.join(", ");
   const actualPages = formatPages(item.actualPages);
   const actualSuffix = actualPages === logicalPages ? "" : ` | rendered on ${actualPages}; target-card count on ${logicalPages}`;

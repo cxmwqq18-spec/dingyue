@@ -1783,21 +1783,11 @@ export function analyzeSiteV2ImageReuse(build, source = loadSiteV2Source()) {
     }
   }
 
+  // Each image belongs to one page. The only exception is a link card that shows the page it
+  // links to with that page's own main image, which is counted for the target page above.
   const violations = [];
   for (const [image, pages] of countedPagesByImage) {
-    const pageIds = [...pages].sort();
-    if (pages.size > 2) violations.push({ image, rule: "max-two-pages", pages: pageIds });
-    const byType = new Map();
-    for (const pageId of pageIds) {
-      const type = reusePageType(masterById.get(pageId)?.type);
-      if (!type) continue;
-      const typedPages = byType.get(type) ?? [];
-      typedPages.push(pageId);
-      byType.set(type, typedPages);
-    }
-    for (const [type, typedPages] of byType) {
-      if (typedPages.length > 1) violations.push({ image, rule: "same-page-type", pageType: type, pages: typedPages.sort() });
-    }
+    if (pages.size > 1) violations.push({ image, rule: "one-page", pages: [...pages].sort() });
   }
   violations.sort((a, b) => a.image.localeCompare(b.image) || a.rule.localeCompare(b.rule) || (a.pageType ?? "").localeCompare(b.pageType ?? ""));
 
@@ -2220,7 +2210,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const currentViolations = new Map(imageReuse.violations.map((item) => [imageReuseViolationKey(item), item]));
   const baselineViolations = new Map();
   for (const entry of baselineEntries) {
-    if (!entry || typeof entry.image !== "string" || !["max-two-pages", "same-page-type"].includes(entry.rule) || !Array.isArray(entry.pages) || entry.pages.some((page) => typeof page !== "string")) {
+    if (!entry || typeof entry.image !== "string" || !["one-page"].includes(entry.rule) || !Array.isArray(entry.pages) || entry.pages.some((page) => typeof page !== "string")) {
       errors.push("image reuse baseline contains an invalid entry");
       continue;
     }
