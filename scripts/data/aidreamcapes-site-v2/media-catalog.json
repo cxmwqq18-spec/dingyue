@@ -807,7 +807,7 @@
         "example-02": {
           "w": 3344,
           "h": 1880,
-          "alt": "Simple hoop earring shown on an approved portrait"
+          "alt": "Woman wearing small silver hoop earrings in soft window light"
         },
         "example-03": {
           "w": 3344,
@@ -15736,7 +15736,7 @@
         "file": "gen2guide-tpl-head-m5-crop-r2",
         "w": 1280,
         "h": 720,
-        "alt": "The same approved portrait framed too tightly across the face and shoulders.",
+        "alt": "The same portrait framed too tightly across the face and shoulders.",
         "variants": [
           640,
           1280

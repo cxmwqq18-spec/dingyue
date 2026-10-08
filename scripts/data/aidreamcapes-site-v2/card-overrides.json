@@ -147,9 +147,9 @@
         "ref": "f:q17-ind-home-living-r2-card-compare",
         "alt": "Two plain ceramic table lamps displayed together in a softly styled reading corner."
       },
-      "ba": {
-        "ref": "f:q17-ind-home-living-card-0",
-        "alt": "Cordless vacuum passing over pet hair on a sofa cushion."
+      "demo": {
+        "ref": "f:k7-ind-home-living-picker-02-planter-water",
+        "alt": "Hand pouring water into the reservoir of a self-watering planter."
       }
     }
   },
@@ -311,7 +311,8 @@
   },
   "occ-black-friday": {
     "swap": {
-      "story": "sale"
+      "story": "sale",
+      "howto": "demo"
     },
     "images": {
       "sale": {
@@ -352,6 +353,9 @@
     }
   },
   "tpl-carousel-video-ad": {
+    "swap": {
+      "home": "launch"
+    },
     "images": {
       "outfit": {
         "ref": "g:fashion-editorial/example-06",
@@ -632,6 +636,9 @@
     }
   },
   "plat-youtube-shorts": {
+    "swap": {
+      "unbox": "demo"
+    },
     "images": {
       "howto": {
         "ref": "f:k4-plat-youtube-shorts-01-cards-1-image",
@@ -696,6 +703,9 @@
     }
   },
   "tpl-howto": {
+    "swap": {
+      "demo": "ba"
+    },
     "images": {
       "product-feature-callout-video": {
         "ref": "n:q10-howto-more-feature",
@@ -724,6 +734,9 @@
     }
   },
   "tpl-compare": {
+    "swap": {
+      "howto": "ba"
+    },
     "images": {
       "ba": {
         "ref": "f:before-after-showcases-t10",
@@ -737,6 +750,11 @@
         "ref": "n:hotsauce-tacos",
         "alt": "Red hot sauce being poured from a glass bottle onto tacos on a rustic table"
       }
+    }
+  },
+  "tpl-product-feature-callout-video": {
+    "swap": {
+      "howto": "film"
     }
   }
 }
