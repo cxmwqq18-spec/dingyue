@@ -398,8 +398,8 @@
   "model-photos": {
     "images": {
       "jewel": {
-        "ref": "n:gen2:tpl-jewel-g2",
-        "alt": "Silver cufflinks worn with a white shirt cuff, framed around the accessory."
+        "ref": "n:guide:q5-model-cufflinks-r2",
+        "alt": "Adult wears a polished silver rectangular cufflink with a white French-cuff shirt."
       },
       "model": {
         "ref": "n:guide:k5-model-template-card",
@@ -410,8 +410,8 @@
         "alt": "Tan leather shoulder bag carried across the body by an adult in a neutral outfit, candid pose."
       },
       "tryon": {
-        "ref": "n:guide:k5-model-photos-template-tryon",
-        "alt": "Adult wearing simple dark sunglasses outdoors"
+        "ref": "n:guide:q5-model-tryon-card-r2",
+        "alt": "Adult wearing a forest-green utility jacket with front pockets in a clean studio."
       }
     }
   },
@@ -594,20 +594,20 @@
   "lifestyle-photos": {
     "images": {
       "bg": {
-        "ref": "n:guide:k5-lifestyle-template-bg",
-        "alt": "Brown leather boots on a simple entryway mat beside a wooden door, full pair visible."
+        "ref": "n:guide:q5-life-hiking-template-r2",
+        "alt": "Adult wears brown lace-up hiking boots while stepping along a forest trail."
       },
       "ugc": {
         "ref": "n:guide:k5-lifestyle-template-ugc",
         "alt": "Plain sea-blue protective phone case with one oval camera opening, held loosely in one hand; no phone visible."
       },
       "life": {
-        "ref": "n:guide:k5-lifestyle-photos-template-life",
-        "alt": "White ceramic candle on a bedside table at dusk"
+        "ref": "n:guide:q5-life-serum-routine",
+        "alt": "Adult applies facial serum from an amber dropper bottle during a morning routine."
       },
       "pack": {
-        "ref": "n:guide:k5-lifestyle-photos-template-pack",
-        "alt": "Plain kraft coffee bag with coffee beans"
+        "ref": "n:guide:q5-life-packaging-card-r2",
+        "alt": "Blank kraft supplement pouch and matching carton standing upright on a light studio surface."
       }
     }
   },

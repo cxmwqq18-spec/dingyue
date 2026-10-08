@@ -32667,6 +32667,686 @@
           640,
           1280
         ]
+      },
+      "q5-white-serum-source": {
+        "file": "gen2guide-q5-white-serum-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber facial serum bottle on a pale bathroom counter, photographed as an upload source.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-serum-main": {
+        "file": "gen2guide-q5-white-serum-main-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber glass serum bottle with a gold collar and white dropper centered on a seamless white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-lip-balm": {
+        "file": "gen2guide-q5-white-lip-balm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded coral lip balm tube on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-supplement": {
+        "file": "gen2guide-q5-white-supplement",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber supplement bottle with blank label on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-pet-brush": {
+        "file": "gen2guide-q5-white-pet-brush",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wood-handled pet grooming brush on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-earbuds": {
+        "file": "gen2guide-q5-white-earbuds",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage wireless earbuds and charging case on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-phone-case": {
+        "file": "gen2guide-q5-white-phone-case",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Forest-green phone case with one oval camera opening on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-blurred-shoe": {
+        "file": "gen2guide-q5-white-blurred-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Intentionally soft-focus gray running shoes on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-serum-source-hero-r2": {
+        "file": "gen2guide-q5-white-serum-source-hero-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber dropper serum bottle on a bright bathroom vanity with towel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-serum-result-hero-r2": {
+        "file": "gen2guide-q5-white-serum-result-hero-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same amber serum bottle centered on white with a soft contact shadow.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-serum-use-r2": {
+        "file": "gen2guide-q5-white-serum-use-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber serum bottle centered on seamless white for a listing image.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-phone-case-use-r2": {
+        "file": "gen2guide-q5-white-phone-case-use-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand holds the same forest-green phone case with one oval camera opening on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-phone-case-template-r2": {
+        "file": "gen2guide-q5-white-phone-case-template-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Forest-green phone case with one oval camera opening, centered on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-supplement-output-r2": {
+        "file": "gen2guide-q5-white-supplement-output-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber supplement bottle with blank label centered on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-daypack-cropped-r2": {
+        "file": "gen2guide-q5-white-daypack-cropped-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Olive daypack with its top handle cropped by the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-output-daypack-r2": {
+        "file": "gen2guide-q5-white-output-daypack-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same open olive daypack centered on pure white with a soft shadow.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-shoe-blur-r2": {
+        "file": "gen2guide-q5-white-shoe-blur-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Same gray mesh running shoe as the source, intentionally out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-white-shoe-output-r2": {
+        "file": "gen2guide-q5-white-shoe-output-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same single gray mesh running shoe centered on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-serum-routine": {
+        "file": "gen2guide-q5-life-serum-routine",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman applies facial serum during a morning skincare routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-pet-demo": {
+        "file": "gen2guide-q5-life-pet-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Person brushes a golden retriever with a grooming brush; loose fur is visible on the sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-sandal-tryon": {
+        "file": "gen2guide-q5-life-sandal-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears cognac sandals while walking on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-skincare-unbox": {
+        "file": "gen2guide-q5-life-skincare-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal a moisturizer jar from a skincare box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-sauce-recipe": {
+        "file": "gen2guide-q5-life-sauce-recipe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pours red sauce over a plated taco meal.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-scarf-ootd": {
+        "file": "gen2guide-q5-life-scarf-ootd",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a patterned scarf with a neutral jacket and tote on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-fitness-supplement": {
+        "file": "gen2guide-q5-life-fitness-supplement",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Athlete takes a first sip from a shaker bottle after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-earbuds-review": {
+        "file": "gen2guide-q5-life-earbuds-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Commuter wears wireless earbuds and shows the charging case.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-tote-market": {
+        "file": "gen2guide-q5-life-tote-market",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Shopper carries a canvas tote of produce through a farmers market.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-laundry-before-after": {
+        "file": "gen2guide-q5-life-laundry-before-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Person shows a stained shirt and clean shirt beside an unbranded detergent bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-hiking-tryon": {
+        "file": "gen2guide-q5-life-hiking-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears hiking boots while walking along a forest trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-skincare-apply": {
+        "file": "gen2guide-q5-life-skincare-apply",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman applies plain moisturizer to her cheek while holding the jar during a morning routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-case-unbox": {
+        "file": "gen2guide-q5-life-case-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift an unbranded moisturizer jar from its open skincare carton.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-case-tote-market": {
+        "file": "gen2guide-q5-life-case-tote-market",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Shopper carries a full canvas tote of produce through a farmers market.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-case-sauce-pour": {
+        "file": "gen2guide-q5-life-case-sauce-pour",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pours unbranded red sauce from a glass bottle over tacos.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-picker-unboxing": {
+        "file": "gen2guide-q5-life-picker-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift the same white-lidded moisturizer jar from an open skincare carton.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-tote-source-r2": {
+        "file": "gen2guide-q5-life-tote-source-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream canvas tote upright on a pale neutral surface, both handles visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-tote-hero-r2": {
+        "file": "gen2guide-q5-life-tote-hero-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult shopper carries a cream canvas tote filled with produce through a market.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-tote-example-r2": {
+        "file": "gen2guide-q5-life-tote-example-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult places apples into the same cream canvas tote at a farm stand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-pet-example-r2": {
+        "file": "gen2guide-q5-life-pet-example-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult brushes a golden retriever with the same wooden grooming brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-pet-use-r2": {
+        "file": "gen2guide-q5-life-pet-use-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close view of a hand brushing the golden retriever with a wooden pin brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-pet-gallery-r2": {
+        "file": "gen2guide-q5-life-pet-gallery-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand lifts the wooden pin brush after grooming a golden retriever.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-scarf-picker-r2": {
+        "file": "gen2guide-q5-life-scarf-picker-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult adjusts a cream silk scarf with muted botanical print on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-scarf-example-r2": {
+        "file": "gen2guide-q5-life-scarf-example-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears the same patterned silk scarf while walking along a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-pack-picker-r2": {
+        "file": "gen2guide-q5-life-pack-picker-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand measures loose tea from the same plain kraft pouch into an infuser.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-pack-example-r2": {
+        "file": "gen2guide-q5-life-pack-example-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pours tea from an infuser beside the same plain kraft tea pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-fitness-example-r2": {
+        "file": "gen2guide-q5-life-fitness-example-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Athlete takes a sip from the same clear shaker with black lid after training.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-fitness-template-r2": {
+        "file": "gen2guide-q5-life-fitness-template-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Athlete holds the same clear shaker with black lid at a gym.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-sauce-picker-r2": {
+        "file": "gen2guide-q5-life-sauce-picker-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pours red sauce from a clear glass bottle over tacos.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-sauce-example-r2": {
+        "file": "gen2guide-q5-life-sauce-example-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult takes a taco bite beside a clear bottle of red sauce.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-laundry-strip-r2": {
+        "file": "gen2guide-q5-life-laundry-strip-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult treats a stained shirt with the same plain white detergent jug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-serum-template-r2": {
+        "file": "gen2guide-q5-life-serum-template-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies a drop from the same amber facial serum bottle in a bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-serum-gallery-r2": {
+        "file": "gen2guide-q5-life-serum-gallery-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult taps in facial serum while holding the same amber dropper bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-sandal-gallery-r2": {
+        "file": "gen2guide-q5-life-sandal-gallery-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears cognac leather ankle-strap sandals on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-hiking-template-r2": {
+        "file": "gen2guide-q5-life-hiking-template-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult steps on a forest trail wearing brown lace-up hiking boots.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-unbox-gallery-r2": {
+        "file": "gen2guide-q5-life-unbox-gallery-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift the same white-lidded moisturizer jar from tissue in a kraft box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-storage-output-r2": {
+        "file": "gen2guide-q5-life-storage-output-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands place folded sweaters into the light-beige fabric storage cube set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-storage-cropped-r2": {
+        "file": "gen2guide-q5-life-storage-cropped-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Same light-gray fabric storage cubes, with the main cube cropped at the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-storage-cropped-r3": {
+        "file": "gen2guide-q5-life-storage-cropped-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Light beige fabric storage cubes with the main cube cut off at the right edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-life-packaging-card-r2": {
+        "file": "gen2guide-q5-life-packaging-card-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank kraft supplement pouch and matching carton standing upright on a light studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-mirror-fitcheck": {
+        "file": "gen2guide-q5-model-mirror-fitcheck",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult checking a navy blazer outfit in a fitting-room mirror without a phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-jeans-output-r2": {
+        "file": "gen2guide-q5-model-jeans-output-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wears the same mid-blue straight-leg jeans with rolled cuffs.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-hoops-output-r2": {
+        "file": "gen2guide-q5-model-hoops-output-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears the same polished gold hoop earrings from the flat product image.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-brooch-r2": {
+        "file": "gen2guide-q5-model-brooch-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a cream enamel flower brooch on a charcoal coat lapel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-cufflinks-r2": {
+        "file": "gen2guide-q5-model-cufflinks-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a polished silver rectangular cufflink with a white French cuff.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-jeans-cropped-r2": {
+        "file": "gen2guide-q5-model-jeans-cropped-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Mid-blue straight-leg jeans with the waistband cropped at the top edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-hoops-blur-r2": {
+        "file": "gen2guide-q5-model-hoops-blur-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Thick polished gold hoop earrings, softened by deliberate focus blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-tryon-card-r2": {
+        "file": "gen2guide-q5-model-tryon-card-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a forest-green utility jacket with front pockets in a clean studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-backpack-back-r2": {
+        "file": "gen2guide-q5-model-backpack-back-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears the olive canvas backpack from behind on a quiet city walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q5-model-backpack-pocket-r2": {
+        "file": "gen2guide-q5-model-backpack-pocket-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears the olive canvas backpack, with its front pocket and leather straps in close view.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

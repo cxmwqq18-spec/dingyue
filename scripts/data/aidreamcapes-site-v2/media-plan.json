@@ -3,27 +3,26 @@
     "white-background": {
       "hero": {
         "kind": "pair",
-        "before": "g:ecommerce-main-image/source-input",
-        "after": "n:guide:k2-white-hero-cream-mug"
+        "before": "n:guide:q5-white-serum-source-hero-r2",
+        "after": "n:guide:q5-white-serum-result-hero-r2"
       },
       "pairs": [],
-      "og": "n:guide:k2-white-hero-cream-mug"
+      "og": "n:guide:q5-white-supplement"
     },
     "lifestyle-photos": {
       "hero": {
         "kind": "pair",
         "before": "n:guide:k5-lifestyle-gallery-source",
-        "after": "n:guide:k5-lifestyle-gallery-hero"
+        "after": "n:guide:q5-life-tote-market"
       },
       "gallery": [
-        "n:guide:k5-lifestyle-gallery-01",
-        "n:guide:k5-lifestyle-gallery-02",
+        "n:guide:q5-life-serum-gallery-r2",
+        "n:guide:q5-life-pet-example-r2",
         "n:guide:k5-lifestyle-gallery-03",
-        "n:guide:k5-lifestyle-gallery-04",
-        "n:guide:k5-lifestyle-gallery-05",
-        "n:guide:k5-lifestyle-gallery-06"
+        "n:guide:q5-life-skincare-unbox",
+        "n:guide:q5-life-skincare-apply"
       ],
-      "og": "g:lifestyle-scene/og",
+      "og": "n:guide:q5-life-skincare-unbox",
       "pairs": []
     },
     "model-photos": {
@@ -35,12 +34,12 @@
       "gallery": [
         "n:guide:k5-model-gallery-01",
         "n:guide:k5-model-gallery-02",
-        "n:guide:k5-model-gallery-03",
-        "n:guide:k5-model-gallery-04",
+        "n:guide:q5-model-backpack-back-r2",
+        "n:guide:q5-model-backpack-pocket-r2",
         "n:guide:k5-model-gallery-05",
         "n:guide:k5-model-gallery-06"
       ],
-      "og": "g:on-model-generation/og",
+      "og": "n:guide:k5-model-photos-after-image",
       "pairs": []
     },
     "change-background": {

@@ -3,7 +3,7 @@
   "title": "White Background Product Photos | AIVideosUGC",
   "description": "Create a clean white-background product image from one phone photo for your Amazon, Shopify or Etsy listing, with square framing for product grids.",
   "h1": "White Background Product Photos for Amazon, Shopify and Etsy",
-  "eyebrow": "Photo tool",
+  "eyebrow": "For marketplace listings",
   "lead": "Turn a phone photo of your product into a clean white-background image for your Amazon, Shopify or Etsy listing.",
   "secondary_keywords": [
     "white background product photo maker",
@@ -69,32 +69,32 @@
   ],
   "examples": {
     "h2": "More white background product photos",
-    "lead": "Wallets, bottles, shoes and bag details shown against an even white field for product listings.",
+    "lead": "Browse listing heroes, shoe profiles and close product details on a clean white field.",
     "groups": [
       {
-        "label": "Main image ready",
+        "label": "Listing and Detail Formats",
         "items": [
           {
             "ref": "n:guide:k2-white-example-wallet",
-            "title": "Leather bifold wallet on a clean white backdrop",
+            "title": "Listing Hero: leather bifold wallet on white",
             "kind": "photo",
             "product": "leather bifold wallet"
           },
           {
             "ref": "n:guide:k2-white-example-spray-bottle",
-            "title": "Clear spray bottle with a soft shadow on white",
+            "title": "Listing Hero: clear cleaning spray on white",
             "kind": "photo",
             "product": "clear spray bottle"
           },
           {
             "ref": "n:guide:k2-white-example-running-shoe",
-            "title": "Running shoe in full side profile on white",
+            "title": "Side Profile: gray running shoe on white",
             "kind": "photo",
             "product": "running shoe"
           },
           {
             "ref": "n:guide:k2-white-example-bag-buckle",
-            "title": "Bag buckle detail cropped on white",
+            "title": "Detail Macro: leather bag buckle on white",
             "kind": "photo",
             "product": "bag buckle"
           }
@@ -127,15 +127,15 @@
       "n:guide:k2-white-strip-wallet",
       "n:guide:k2-white-strip-house-slippers",
       "n:guide:k2-white-strip-backpack",
-      "n:guide:k2-white-strip-planter",
+      "n:guide:q5-white-phone-case-template-r2",
       "n:guide:k2-white-strip-rectangular-speaker",
       "n:guide:k2-white-strip-insulated-bottle"
     ],
     "steps": {
-      "source": "n:guide:k2-white-step-wallet-source",
-      "result": "n:guide:k2-white-step-wallet-result",
+      "source": "n:guide:q5-white-serum-source",
+      "result": "n:guide:q5-white-serum-main",
       "mode": "photo",
-      "prompt": "Put this brown leather wallet on pure white, centered, with the stitching sharp and a soft shadow underneath.",
+      "prompt": "Use the uploaded photo as the serum bottle and preserve its exact amber glass, narrow shape, black dropper cap and blank label area. Center the complete bottle on seamless white with a soft contact shadow. Bright even studio light, crisp ecommerce product photography, three-quarter close framing, no text or logo.",
       "options": [
         [
           "Photo",
@@ -152,99 +152,102 @@
       ]
     },
     "picker": {
-      "title": "White background examples by product",
-      "lead": "Browse square product photos with clear edges and a plain white field.",
+      "title": "White Background Product Display Formats",
+      "lead": "Choose a listing hero, pair layout or close detail that keeps the product fully in frame.",
       "chips": [
         {
-          "id": "home",
-          "label": "Home"
+          "id": "hero",
+          "label": "Listing Hero"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "pair",
+          "label": "Pair Layout"
         },
         {
-          "id": "accessories",
-          "label": "Accessories"
+          "id": "feature",
+          "label": "Feature View"
         },
         {
-          "id": "office",
-          "label": "Office"
+          "id": "detail",
+          "label": "Detail Macro"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:k2-white-picker-soap-dispenser",
-          "label": "Sage soap dispenser",
+          "label": "Soap Dispenser Hero",
           "chips": [
-            "home"
+            "hero"
           ],
-          "prompt": "Place the sage ceramic dispenser on pure white, showing its full pump and base with a soft contact shadow.",
+          "prompt": "Use the uploaded photo as the ceramic dispenser and preserve its exact sage color, pump, shape and finish. Center the complete dispenser on seamless white with a soft contact shadow. Bright diffused studio light, clean ecommerce catalog framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k2-white-picker-desk-lamp",
-          "label": "Curved brass desk lamp",
+          "ref": "n:guide:q5-white-lip-balm",
+          "label": "Lip Balm Hero",
           "chips": [
-            "home",
-            "office"
+            "hero",
+            "detail"
           ],
-          "prompt": "Center the complete brass lamp on pure white and keep its curved neck and base inside the frame.",
+          "prompt": "Use the uploaded photo as the lip balm and preserve its white tube, coral balm and cap shape. Stand the complete tube on seamless white with the cap and product fully visible. Soft studio light, crisp ecommerce framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k2-white-picker-tea-kettle",
-          "label": "Sea glass tea kettle",
+          "ref": "n:guide:q5-white-supplement-output-r2",
+          "label": "Supplement Bottle Hero",
           "chips": [
-            "kitchen"
+            "hero",
+            "feature"
           ],
-          "prompt": "Show the full sea-glass kettle against pure white, with the handle, spout and lid visible.",
+          "prompt": "Use the uploaded photo as the supplement bottle and preserve its amber glass, black cap, blank label and proportions. Center the full bottle on pure white with a soft contact shadow. Bright even studio light, clean catalog framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k2-white-picker-serving-bowl",
-          "label": "Cream stoneware bowl",
+          "ref": "n:guide:q5-white-pet-brush",
+          "label": "Grooming Brush Feature",
           "chips": [
-            "kitchen"
+            "feature",
+            "detail"
           ],
-          "prompt": "Set the complete stoneware bowl on pure white with its rim and base clearly outlined.",
+          "prompt": "Use the uploaded photo as the grooming brush and preserve the wood handle, oval head and bristles. Show the full brush on seamless white in a clear three-quarter view. Soft studio highlights reveal the bristle face, clean product photography, no text or logo.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k2-white-picker-leather-sandals",
-          "label": "Cognac leather sandals",
+          "label": "Sandals Pair Layout",
           "chips": [
-            "accessories"
+            "pair"
           ],
-          "prompt": "Arrange both leather sandals on pure white with every strap and sole inside the frame.",
+          "prompt": "Use the uploaded photo as the sandals and preserve both cognac leather shoes, every strap and each sole. Arrange the complete pair on seamless white with a soft shadow. Bright softbox light, balanced catalog framing, no text or logo.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k2-white-picker-canvas-tote",
-          "label": "Natural canvas tote",
+          "label": "Canvas Tote Hero",
           "chips": [
-            "accessories"
+            "hero"
           ],
-          "prompt": "Center the canvas tote on pure white and keep both handles and its full base visible.",
+          "prompt": "Use the uploaded photo as the canvas tote and preserve its fabric, handles, seams and full shape. Stand the complete tote on seamless white with both handles visible. Bright softbox light, straight-on catalog framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k2-white-picker-desk-organizer",
-          "label": "Walnut desk organizer",
+          "ref": "n:guide:q5-white-earbuds",
+          "label": "Earbuds Set Layout",
           "chips": [
-            "office"
+            "pair",
+            "feature"
           ],
-          "prompt": "Show the complete walnut organizer on pure white with its compartments and outer edges in focus.",
+          "prompt": "Use the uploaded photo as the earbuds set and preserve the sage color, stemless buds and case shape. Arrange the complete set on seamless white with both buds and open case visible. Bright studio light, clean digital-accessory framing, no text or logo.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k2-white-picker-reading-glasses",
-          "label": "Tortoiseshell reading glasses",
+          "label": "Glasses Hinge Detail",
           "chips": [
-            "accessories",
-            "office"
+            "detail",
+            "feature"
           ],
-          "prompt": "Place the open glasses on pure white, showing both lenses, bridge and folded arms clearly.",
+          "prompt": "Use the uploaded photo as the tortoiseshell glasses and preserve the frame pattern, bridge and hinges. Place the open glasses on seamless white with both lenses and hinge detail sharp. Controlled studio highlights, macro catalog framing, no text or logo.",
           "kind": "photo"
         }
       ],
@@ -253,41 +256,41 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:guide:k2-white-use-mug",
-        "h": "Main listing image",
-        "d": "Amazon asks for a pure white background on the main image, and a clean cut-out keeps your Shopify collection grid even."
+        "ref": "n:guide:q5-white-serum-use-r2",
+        "h": "Listing Hero: serum bottle on white",
+        "d": "A centered bottle image keeps the serum easy to recognize in a product listing or collection grid."
       },
       {
         "frame": "listing",
-        "ref": "n:guide:k2-white-use-vase",
-        "h": "Collection pages",
-        "d": "Products shot on ten different tables still line up as one set on white."
+        "ref": "n:guide:q5-white-phone-case-use-r2",
+        "h": "Phone Case Detail: green case on white",
+        "d": "A clean background keeps the case outline and single camera opening easy to inspect."
       }
     ],
     "input": [
       {
         "good": "n:guide:k2-white-input-daypack-open",
-        "bad": "n:guide:white-background-daypack-cropped",
-        "good_label": "Open bag, full handle in frame",
-        "bad_label": "Top handle cropped by the frame edge"
+        "bad": "n:guide:q5-white-daypack-cropped-r2",
+        "good_label": "Daypack fully in frame",
+        "bad_label": "Daypack handle cropped"
       },
       {
         "good": "n:guide:k2-white-input-running-shoe",
-        "bad": "n:guide:white-background-shoe-blurred",
-        "good_label": "Shoe outline and laces in focus",
-        "bad_label": "Shoe details softened by blur"
+        "bad": "n:guide:q5-white-shoe-blur-r2",
+        "good_label": "Running shoe details sharp",
+        "bad_label": "Running shoe softened by blur"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:k2-white-output-crossbody-bag",
+        "ref": "n:guide:q5-white-output-daypack-r2",
         "frame": "1:1",
-        "label": "Pure white listing image"
+        "label": "Olive daypack on white"
       },
       {
-        "ref": "n:guide:k2-white-output-coaster-set",
+        "ref": "n:guide:q5-white-shoe-output-r2",
         "frame": "1:1",
-        "label": "Square catalog product photo"
+        "label": "Gray running shoe on white"
       }
     ],
     "after": {
@@ -304,8 +307,8 @@
         "h2": "How to make a white background product photo in 3 steps"
       },
       "m3": {
-        "h2": "White background photo ideas by product type",
-        "lead": "Choose a product and keep its complete shape visible on white."
+        "h2": "White background product photo formats",
+        "lead": "Choose a single product view, set layout or feature detail on white."
       },
       "m4": {
         "h2": "Where white background product photos work well"
@@ -325,7 +328,7 @@
       "examples": {
         "h2": "More white background product photos"
       },
-      "examplesLead": "Browse wallets, bottles, shoes and bag details photographed on a plain white field.",
+      "examplesLead": "Browse listing views for bags, skincare, shoes and everyday product details.",
       "templates": {
         "h2": "White background photo templates",
         "lead": "Choose a square product layout that keeps the item and its edges in view."

@@ -134,51 +134,51 @@
       {
         "ref": "n:guide:k2-white-case-steel-bottle",
         "product": "steel water bottle",
-        "title": "Steel water bottle cut out on pure white"
+        "title": "Listing Hero: steel water bottle on white"
       },
       {
-        "ref": "n:guide:k2-white-case-linen-shade-lamp",
-        "product": "ceramic table lamp",
-        "title": "Ceramic table lamp on a pure white background"
+        "ref": "n:guide:q5-white-phone-case",
+        "product": "green phone case",
+        "title": "Single-Item Display: green phone case on white"
       },
       {
         "ref": "n:guide:k2-white-case-wood-train",
         "product": "wooden toy train",
-        "title": "Wooden toy train ready for a main listing image"
+        "title": "Product Set: wooden toy train on white"
       }
     ],
     "lifestyle-photos": [
       {
-        "ref": "n:guide:k5-lifestyle-case-1",
-        "product": "soy candle",
-        "title": "Soy candle glowing on a bedside table at dusk"
+        "ref": "n:guide:q5-life-case-unbox",
+        "product": "moisturizer jar",
+        "title": "ASMR Unboxing: hands lift moisturizer from tissue"
       },
       {
-        "ref": "n:guide:k5-lifestyle-case-2",
-        "product": "bamboo cutting board",
-        "title": "Bamboo board with sliced fruit on a kitchen counter"
+        "ref": "n:guide:q5-life-case-sauce-pour",
+        "product": "red sauce bottle",
+        "title": "Taco Sauce Demo: hand pours over tacos"
       },
       {
-        "ref": "n:guide:k5-lifestyle-case-3",
-        "product": "canvas weekender bag",
-        "title": "Canvas weekender bag ready on a car's back seat"
+        "ref": "n:guide:q5-life-case-tote-market",
+        "product": "canvas market tote",
+        "title": "Market Tote Review: shopper carries a full bag"
       }
     ],
     "model-photos": [
       {
         "ref": "n:guide:k5-model-case-1",
         "product": "camel wool coat",
-        "title": "Camel wool coat worn on a city sidewalk"
+        "title": "Fashion Style OOTD: camel coat on a city walk"
       },
       {
         "ref": "n:guide:k5-model-case-2",
         "product": "leather messenger bag",
-        "title": "Leather messenger bag carried across the body"
+        "title": "Crossbody Try-On: leather messenger bag"
       },
       {
         "ref": "n:guide:k5-model-case-3",
         "product": "layered gold necklaces",
-        "title": "Layered gold necklaces on a model's neckline"
+        "title": "Jewelry Try-On: layered gold necklaces"
       }
     ],
     "change-background": [

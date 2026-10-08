@@ -3,7 +3,7 @@
   "title": "Lifestyle Product Photos for Ecommerce | AIVideosUGC",
   "description": "Create a lifestyle product photo from one plain product image by choosing a table, room or café setting for your online shop or social feed.",
   "h1": "Lifestyle Product Photos for Product Pages and Social Posts",
-  "eyebrow": "Photo tool",
+  "eyebrow": "For product ads",
   "lead": "Put your product on a breakfast table, a reading corner or a café counter, starting from one plain product photo. No props, no photoshoot.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
@@ -68,52 +68,52 @@
     }
   ],
   "examples": {
-    "h2": "More lifestyle product photos",
-    "lead": "See a handbag, planter, hoodie, mug or linen product placed in a recognizable everyday setting.",
+    "h2": "Lifestyle Ads in Use",
+    "lead": "Browse product-led routines, demonstrations, reviews, try-ons and unboxing scenes.",
     "groups": [
       {
-        "label": "Everyday settings",
+        "label": "In-Use Demos",
         "items": [
           {
-            "ref": "n:gen2:lifestyle-photos-g1",
-            "title": "Leather handbag hung on a cafe chair",
+            "ref": "n:guide:q5-life-tote-example-r2",
+            "title": "Market Tote Demo: shopper packs fresh produce",
             "kind": "photo",
-            "product": "leather handbag"
+            "product": "canvas market tote"
           },
           {
-            "ref": "n:gen2:lifestyle-photos-g2",
-            "title": "Terracotta pot on a sunny plant shelf",
+            "ref": "n:guide:q5-life-pet-gallery-r2",
+            "title": "Pet Tool Demo: brush a golden retriever",
             "kind": "photo",
-            "product": "terracotta pot"
+            "product": "wooden grooming brush"
           },
           {
-            "ref": "n:gen2:lifestyle-photos-g3",
-            "title": "Gray hoodie folded on a park bench",
+            "ref": "n:guide:q5-life-scarf-example-r2",
+            "title": "Fashion Style OOTD: patterned scarf on a city walk",
             "kind": "photo",
-            "product": "gray hoodie"
+            "product": "silk scarf"
           }
         ]
       },
       {
-        "label": "One product, two seasons",
+        "label": "Reviews and Unboxing",
         "items": [
           {
-            "ref": "n:guide:k5-lifestyle-example-g4",
-            "title": "Enamel mug on a snowy cabin porch",
+            "ref": "n:guide:q5-life-unbox-gallery-r2",
+            "title": "ASMR Unboxing: moisturizer jar reveal",
             "kind": "photo",
-            "product": "enamel camping mug"
+            "product": "moisturizer jar"
           },
           {
-            "ref": "n:guide:k5-lifestyle-example-g5",
-            "title": "Enamel mug on a summer picnic blanket",
+            "ref": "n:guide:q5-life-fitness-example-r2",
+            "title": "Post-Workout Review: first sip from a shaker",
             "kind": "photo",
-            "product": "enamel camping mug"
+            "product": "supplement shaker"
           },
           {
-            "ref": "n:gen2:lifestyle-photos-g6",
-            "title": "Linen napkins with quiet space for a headline",
+            "ref": "n:guide:q5-life-sauce-example-r2",
+            "title": "First-Bite Review: taco with red sauce",
             "kind": "photo",
-            "product": "linen napkins"
+            "product": "red sauce bottle"
           }
         ]
       }
@@ -141,18 +141,18 @@
   },
   "visual": {
     "strip": [
-      "n:guide:k5-lifestyle-photos-strip-0",
-      "n:guide:k5-lifestyle-photos-strip-1",
-      "n:guide:k5-lifestyle-photos-strip-2",
-      "n:guide:k5-lifestyle-photos-strip-3",
-      "n:guide:k5-lifestyle-photos-strip-4",
-      "n:guide:k5-lifestyle-photos-strip-5"
+      "n:guide:q5-life-scarf-picker-r2",
+      "n:guide:q5-life-sauce-picker-r2",
+      "n:guide:q5-life-laundry-strip-r2",
+      "n:guide:q5-life-fitness-template-r2",
+      "n:guide:q5-life-sandal-tryon",
+      "n:guide:k5-lifestyle-gallery-06"
     ],
     "steps": {
-      "source": "n:guide:k5-lifestyle-photos-steps-source",
-      "result": "n:guide:k5-lifestyle-photos-steps-result",
+      "source": "n:guide:q5-life-tote-source-r2",
+      "result": "n:guide:q5-life-tote-hero-r2",
       "mode": "photo",
-      "prompt": "Put this tan leather handbag on a marble café table next to a cappuccino, keeping the handle and gold clasp exactly as they are.",
+      "prompt": "Use the uploaded photo as the cream canvas tote and preserve its exact color, rectangular shape, long handles and plain woven fabric. Show an adult carrying this tote through a farmers market with a few groceries visible inside. Soft daylight, authentic product-review framing, no text or logo.",
       "options": [
         [
           "Photo",
@@ -166,100 +166,103 @@
           "Size",
           "Square"
         ]
-      ]
+      ],
+      "sourceTitle": "Cream canvas tote photo",
+      "sourceHint": "Keep the complete bag and handles visible."
     },
     "picker": {
-      "title": "Choose a lifestyle scene by product type",
-      "lead": "Pick a table, room or outdoor setting that fits an item in your shop.",
+      "title": "Lifestyle Ad Formats in Use",
+      "lead": "Choose a hands-on demo, routine, review, try-on or unboxing scene for your product.",
       "chips": [
         {
-          "id": "home",
-          "label": "Home"
+          "id": "routine",
+          "label": "Skincare Routine"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "pack",
+          "label": "Pack With Me"
         },
         {
-          "id": "style",
-          "label": "Style"
+          "id": "demo",
+          "label": "Product Demo"
         },
         {
-          "id": "outdoors",
-          "label": "Outdoors"
+          "id": "tryon",
+          "label": "Try-On Walk"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-0-image",
-          "label": "Planter beside a sofa",
+          "ref": "n:guide:q5-life-pet-demo",
+          "label": "Pet Brush Demo",
           "chips": [
-            "home"
+            "demo"
           ],
-          "prompt": "Place the planter by a linen sofa in soft window light, keeping its rim and full outline clear.",
+          "prompt": "Use the uploaded photo as the grooming brush and preserve its wood handle, oval head and bristles. An adult brushes a golden retriever on a living-room rug, ending with the brush against the coat and the relaxed dog in view. Soft window light, natural home-care campaign framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-1-image",
-          "label": "Pillowcase on an unmade bed",
+          "ref": "n:guide:q5-life-serum-template-r2",
+          "label": "Skincare Routine",
           "chips": [
-            "home"
+            "routine"
           ],
-          "prompt": "Set the product on relaxed linen bedding with gentle morning light and uncluttered surroundings.",
+          "prompt": "Use the uploaded photo as the serum bottle and preserve its amber glass, narrow shape, black dropper cap and blank label. An adult applies one drop to her cheek beside a bathroom mirror, ending with the bottle visible near her face. Soft morning light, authentic skincare campaign framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-2-image",
-          "label": "Snack bag with fresh fruit",
+          "ref": "n:guide:q5-life-pack-example-r2",
+          "label": "Tea Pouch Demo",
           "chips": [
-            "kitchen"
+            "pack"
           ],
-          "prompt": "Arrange the package beside fresh fruit on a calm kitchen surface, leaving the front easy to read.",
+          "prompt": "Use the uploaded photo as the tea pouch and preserve its plain kraft front, stand-up shape and seams. Hands measure loose leaves into an infuser beside a ceramic cup, ending with the pouch fully visible. Warm kitchen daylight, natural product-demo framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-3-image",
-          "label": "Sauce jar beside dinner",
+          "ref": "n:guide:q5-life-sauce-recipe",
+          "label": "Taco Sauce Demo",
           "chips": [
-            "kitchen"
+            "demo"
           ],
-          "prompt": "Place the jar near a finished pasta dish on a warm kitchen table and keep its label visible.",
+          "prompt": "Use the uploaded photo as the sauce bottle and preserve its clear glass, bottle shape and red sauce. A hand pours sauce over a freshly plated taco, ending with the bottle and meal together. Warm kitchen light, appetizing creator-style food framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-4-image",
-          "label": "Suede loafers by the door",
+          "ref": "n:guide:q5-life-sandal-gallery-r2",
+          "label": "Sandals Try-On Walk",
           "chips": [
-            "style"
+            "tryon"
           ],
-          "prompt": "Set both loafers on a quiet entryway floor with their stitching and full shape visible.",
+          "prompt": "Use the uploaded photo as the sandals and preserve their cognac color, ankle straps and soles. An adult takes a sidewalk step wearing the uploaded pair, ending with both sandals visible. Natural daylight, close fashion try-on framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-5-image",
-          "label": "Silk scarf on a handbag",
+          "ref": "n:guide:q5-life-scarf-ootd",
+          "label": "Scarf OOTD Look",
           "chips": [
-            "style"
+            "tryon",
+            "routine"
           ],
-          "prompt": "Tie the scarf on a simple handbag handle with soft light and enough space to see its pattern.",
+          "prompt": "Use the uploaded photo as the scarf and preserve its cream silk, muted botanical pattern and colors. An adult adjusts it over a neutral jacket on a city sidewalk, ending with the pattern centered in frame. Soft daylight, candid OOTD campaign style, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-6-image",
-          "label": "Hiking boot above a lake",
+          "ref": "n:guide:q5-life-hiking-tryon",
+          "label": "Hiking Boot Try-On",
           "chips": [
-            "outdoors"
+            "tryon"
           ],
-          "prompt": "Show the boot on a mossy rock above a distant lake, keeping its laces and sole clear.",
+          "prompt": "Use the uploaded photo as the hiking boots and preserve their brown leather, ankle height and dark laces. An adult walks along a forest trail wearing them, ending with both boots in view. Dappled daylight, close footwear try-on framing, no text or logo.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-7-image",
-          "label": "Market tote with produce",
+          "ref": "n:guide:q5-life-picker-unboxing",
+          "label": "Moisturizer Unboxing",
           "chips": [
-            "outdoors"
+            "pack"
           ],
-          "prompt": "Place the tote at a farmers market stall with a few fresh items and its handles visible.",
+          "prompt": "Use the uploaded photo as the moisturizer jar and preserve its short round shape, clear lower glass and wide white lid. Hands lift it from white tissue in an open kraft skincare box, ending with the jar centered. Warm daylight, tactile ecommerce unboxing framing, no text or logo.",
           "kind": "photo"
         }
       ],
@@ -268,45 +271,45 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:guide:k5-lifestyle-photos-uses-0-image",
-        "h": "Product page, second image",
-        "d": "After the white-background shot, a scene shows the size and where the product belongs."
+        "ref": "n:guide:q5-life-pet-use-r2",
+        "h": "Pet Grooming Demo",
+        "d": "Show the wooden brush in use so shoppers can see how it reaches the coat."
       },
       {
         "frame": "post",
-        "ref": "n:guide:k5-lifestyle-photos-uses-1-image",
-        "h": "Instagram and Facebook posts",
-        "d": "A product in a real setting gets noticed faster than a cut-out. Put the caption and link in the post."
+        "ref": "n:guide:q5-life-earbuds-review",
+        "h": "Wireless Earbud Review",
+        "d": "A creator can show the earbuds in use with the charging case beside them, so shoppers see both parts together."
       }
     ],
     "input": [
       {
         "good": "n:guide:k5-lifestyle-photos-input-0-good",
-        "bad": "n:guide:lifestyle-photos-storage-box-cropped",
-        "good_label": "Whole storage set, shelf in view",
-        "bad_label": "Storage set cut off at the frame edge"
+        "bad": "n:guide:q5-life-storage-cropped-r3",
+        "good_label": "Beige storage cubes fully in frame",
+        "bad_label": "Same beige storage cube cut off at the edge"
       },
       {
         "good": "n:guide:k5-lifestyle-photos-input-1-good",
         "bad": "n:guide:k5-lifestyle-photos-input-1-bad",
-        "good_label": "Tea pouch and label stay sharp",
-        "bad_label": "Pouch details lost in soft focus"
+        "good_label": "Kraft tea pouch and cup in focus",
+        "bad_label": "Kraft tea pouch softened by blur"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:k5-lifestyle-photos-outputs-0-image",
+        "ref": "n:guide:q5-life-storage-output-r2",
         "frame": "1:1",
-        "label": "Skincare on a morning counter"
+        "label": "Beige storage cubes holding folded sweaters"
       },
       {
-        "ref": "n:guide:k5-lifestyle-photos-outputs-1-image",
+        "ref": "n:guide:q5-life-pack-picker-r2",
         "frame": "1:1",
-        "label": "Candle styled on a shelf"
+        "label": "Loose-leaf tea poured beside its pouch"
       }
     ],
     "after": {
-      "ref": "n:gen2:plat-shopify-g3",
+      "ref": "n:guide:q5-life-laundry-before-after",
       "zones": [
         "Your caption",
         "Shop link"
@@ -322,8 +325,8 @@
         "h2": "How to make lifestyle product photos in 3 steps"
       },
       "m3": {
-        "h2": "Lifestyle product photo ideas for everyday settings",
-        "lead": "Choose a scene that feels natural for the item and your shoppers."
+        "h2": "Lifestyle product photo formats in use",
+        "lead": "Choose a routine, review, food demo, unboxing or try-on for the product."
       },
       "m4": {
         "h2": "Where lifestyle product photos help you sell"
@@ -343,7 +346,7 @@
       "examples": {
         "h2": "More lifestyle product photos"
       },
-      "examplesLead": "Browse product scenes for breakfast tables, reading corners, cafés and outdoor settings.",
+      "examplesLead": "Browse routines, product demos, outfit checks and food scenes with products in use.",
       "templates": {
         "h2": "Lifestyle photo templates",
         "lead": "Start from a table, room or café scene and adapt it to your product photo."

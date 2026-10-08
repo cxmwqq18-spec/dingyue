@@ -3,7 +3,7 @@
   "title": "AI Model Photos for Clothes, Bags and Jewelry | AIVideosUGC",
   "description": "Create a styled model photo of your clothing, bag or jewelry from one flat product photo, without booking a model, a photographer or a studio.",
   "h1": "Show Clothes and Accessories on a Model",
-  "eyebrow": "Photo tool",
+  "eyebrow": "Clothing and accessories",
   "lead": "See your clothes, bags and jewelry on a model, starting from one flat product photo. No model booking, no studio.",
   "secondary_keywords": [
     "on-model photos for clothing",
@@ -69,32 +69,32 @@
   ],
   "examples": {
     "h2": "More model photos for clothes, bags and jewelry",
-    "lead": "See hoodies, sunglasses, boots and earrings worn in a studio, on a street or in context.",
+    "lead": "Browse OOTD, fit checks and worn accessory details in real settings.",
     "groups": [
       {
         "label": "Worn and in context",
         "items": [
           {
             "ref": "n:guide:k5-model-example-g1",
-            "title": "Oversized hoodie worn in a bright studio",
+            "title": "Hoodie OOTD: oversized fit in studio",
             "kind": "photo",
             "product": "oversized hoodie"
           },
           {
             "ref": "n:guide:k5-model-example-g2",
-            "title": "Tortoiseshell sunglasses worn on a sunny street",
+            "title": "Sunglasses Try-On: tortoiseshell frames outdoors",
             "kind": "photo",
             "product": "tortoiseshell sunglasses"
           },
           {
             "ref": "n:guide:k5-model-example-g3",
-            "title": "Ankle boots worn mid-step on a sidewalk",
+            "title": "Boot Try-On: ankle boots mid-stride",
             "kind": "photo",
             "product": "leather ankle boots"
           },
           {
             "ref": "n:guide:k5-model-example-g4",
-            "title": "Small stud earrings worn, shown close up",
+            "title": "Stud Earrings Display: close-up on ear",
             "kind": "photo",
             "product": "stud earrings"
           }
@@ -124,7 +124,7 @@
   },
   "visual": {
     "strip": [
-      "n:guide:k5-model-photos-strip-0",
+      "n:guide:q5-model-mirror-fitcheck",
       "n:guide:k5-model-photos-strip-1",
       "n:guide:k5-model-photos-strip-2",
       "n:guide:k5-model-photos-strip-3",
@@ -135,7 +135,7 @@
       "source": "n:guide:k5-model-photos-steps-source",
       "result": "n:guide:k5-model-photos-steps-result",
       "mode": "photo",
-      "prompt": "Show this gray hoodie on an adult walking down a tree-lined street, face turned away, with the pocket and drawstrings visible.",
+      "prompt": "Use the uploaded photo as the garment and preserve its color, cut, seams and blank label area. Show an adult wearing it for a full-length outfit check, ending with the garment and silhouette easy to see. Natural fitting-room light, mirror-view framing.",
       "options": [
         [
           "Photo",
@@ -152,97 +152,98 @@
       ]
     },
     "picker": {
-      "title": "Choose a model photo style for clothes and accessories",
-      "lead": "Browse clothing, outerwear, jewelry and lookbook scenes with the product in focus.",
+      "title": "On-model photo formats",
+      "lead": "Choose a try-on, outfit check, lookbook or jewelry display that keeps the item visible.",
       "chips": [
         {
-          "id": "clothing",
-          "label": "Clothing"
+          "id": "lookbook",
+          "label": "OOTD and Lookbook"
         },
         {
-          "id": "outerwear",
-          "label": "Outerwear"
+          "id": "fit",
+          "label": "Fit Check"
+        },
+        {
+          "id": "tryon",
+          "label": "Try-On"
         },
         {
           "id": "jewelry",
-          "label": "Jewelry"
-        },
-        {
-          "id": "lookbook",
-          "label": "Lookbook"
+          "label": "Jewelry Display"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:k5-model-photos-picker-cards-0-image",
-          "label": "Floral dress by a window",
+          "label": "Floral Dress OOTD",
           "chips": [
-            "clothing"
+            "lookbook"
           ],
-          "prompt": "Show the floral dress worn in a bright room, keeping its pattern, neckline and full shape easy to see.",
+          "prompt": "Use the uploaded photo as the dress and preserve its print, neckline and hem. An adult wears it beside a bright window, ending with the full silhouette visible. Soft daylight, natural OOTD framing.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-1-image",
-          "label": "Athletic set in a studio",
+          "label": "Weekend Fit Check: matching athletic set",
           "chips": [
-            "clothing"
+            "fit"
           ],
-          "prompt": "Style the matching set in a bright studio and keep the garment silhouette central in the frame.",
+          "prompt": "Use the uploaded photo as the athletic set and preserve its color, seams and shape. An adult wears it in a bright studio for a full outfit check, ending with the set fully visible. Clean studio daylight, full-length fit-check framing.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-2-image",
-          "label": "Puffer jacket on a snowy street",
+          "label": "Puffer Jacket OOTD",
           "chips": [
-            "outerwear"
+            "tryon"
           ],
-          "prompt": "Show the jacket worn outdoors in winter, with its hood, closure and full length visible.",
+          "prompt": "Use the uploaded photo as the puffer jacket and preserve its quilting, closure and hood. An adult wears it on a snowy sidewalk, ending with the jacket front clear. Cool winter daylight, full-length OOTD framing.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-3-image",
-          "label": "Long coat in motion",
+          "label": "Fit Check: long coat in motion",
           "chips": [
-            "outerwear"
+            "tryon",
+            "fit"
           ],
-          "prompt": "Show the coat worn while walking past a neutral wall, keeping its hem and shape in view.",
+          "prompt": "Use the uploaded photo as the coat and preserve its color, cut and hem. An adult wears it while walking past a neutral wall, ending with the full coat visible. Soft overcast light, full-length try-on framing.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-jewel-g1",
-          "label": "Enamel brooch on a coat",
+          "ref": "n:guide:q5-model-brooch-r2",
+          "label": "Brooch Lapel Try-On",
           "chips": [
             "jewelry"
           ],
-          "prompt": "Pin the brooch to a wool coat lapel with its colors and outline sharp in the frame.",
+          "prompt": "Use the uploaded photo as the brooch and preserve its cream enamel petals, gold-tone outline, thin stem and muted green leaves. An adult wears it on a charcoal coat lapel, ending with the flower centered and sharp. Soft window light, close accessory styling, no text or logo.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-5-image",
-          "label": "Gold anklet on the shore",
+          "label": "Gold Anklet Try-On",
           "chips": [
             "jewelry"
           ],
-          "prompt": "Show the anklet worn at the ankle on sand, keeping the jewelry and clasp visible.",
+          "prompt": "Use the uploaded photo as the anklet and preserve its chain and clasp. An adult wears it above the ankle on a sandy path, ending with the jewelry clear. Warm daylight, close accessory try-on framing.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-6-image",
-          "label": "Streetwear against concrete",
+          "label": "Streetwear OOTD: concrete backdrop",
           "chips": [
             "lookbook"
           ],
-          "prompt": "Style the clothing against a concrete wall with the garment taking focus over the model’s face.",
+          "prompt": "Use the uploaded photo as the outfit and preserve its color, construction and details. An adult wears it against a concrete wall for an OOTD, ending with the full silhouette visible. Open-shade light, full-length lookbook framing.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-7-image",
-          "label": "Evening dress on stone steps",
+          "label": "Evening Dress Fit Check",
           "chips": [
             "lookbook"
           ],
-          "prompt": "Show the evening dress worn on stone steps, keeping the full outfit and fabric details visible.",
+          "prompt": "Use the uploaded photo as the dress and preserve its color, fabric and hem. An adult wears it on stone steps for a full outfit check, ending with the complete silhouette visible. Warm late-afternoon light, full-length fashion framing.",
           "kind": "photo"
         }
       ],
@@ -265,27 +266,27 @@
     "input": [
       {
         "good": "n:guide:k5-model-photos-input-0-good",
-        "bad": "n:guide:k5-model-photos-input-0-bad",
-        "good_label": "Jeans waistband and cuffs visible",
-        "bad_label": "Waistband and hems cropped from frame"
+        "bad": "n:guide:q5-model-jeans-cropped-r2",
+        "good_label": "Mid-blue jeans waistband and cuffs in view",
+        "bad_label": "Mid-blue jeans waistband cropped at the top edge"
       },
       {
         "good": "n:guide:k5-model-photos-input-1-good",
-        "bad": "n:guide:k5-model-photos-input-1-bad",
-        "good_label": "Hoop edges and pair stay sharp",
-        "bad_label": "Small earring details softened by blur"
+        "bad": "n:guide:q5-model-hoops-blur-r2",
+        "good_label": "Thick gold hoop pair sharp and complete",
+        "bad_label": "Thick gold hoops softened by blur"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:k5-model-photos-outputs-0-image",
+        "ref": "n:guide:q5-model-jeans-output-r2",
         "frame": "1:1",
-        "label": "Styled clothing preview"
+        "label": "Same cuffed jeans on a model"
       },
       {
-        "ref": "n:guide:k5-model-photos-outputs-1-image",
+        "ref": "n:guide:q5-model-hoops-output-r2",
         "frame": "1:1",
-        "label": "Accessory worn in context"
+        "label": "Same gold hoops worn on a model"
       }
     ],
     "after": {
@@ -302,8 +303,8 @@
         "h2": "How to make an on-model clothing photo in 3 steps"
       },
       "m3": {
-        "h2": "AI model photo ideas for clothing and accessories",
-        "lead": "Choose an item category and keep the garment or accessory easy to see."
+        "h2": "On-model photo ideas for try-ons and lookbooks",
+        "lead": "Choose a fit check, outfit lookbook or jewelry display that keeps details visible."
       },
       "m4": {
         "h2": "Where AI model photos help you sell"
