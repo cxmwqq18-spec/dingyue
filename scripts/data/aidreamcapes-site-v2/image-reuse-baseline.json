@@ -30,8 +30,7 @@
       "rule": "one-page",
       "pages": [
         "tpl-carousel-video-ad",
-        "tpl-look",
-        "tpl-outfit"
+        "tpl-look"
       ]
     },
     {
@@ -61,20 +60,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/lifestyle-scene-v1/lifestyle-scene/example-05",
-      "rule": "one-page",
-      "pages": [
-        "tpl-home",
-        "tpl-retargeting-video-ad"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/lifestyle-scene-v1/lifestyle-scene/example-08",
       "rule": "one-page",
       "pages": [
         "photo-hub",
-        "tpl-carousel-video-ad",
-        "tpl-home"
+        "tpl-carousel-video-ad"
       ]
     },
     {
@@ -98,8 +88,7 @@
       "rule": "one-page",
       "pages": [
         "tpl-compare",
-        "tpl-look",
-        "tpl-outfit"
+        "tpl-look"
       ]
     },
     {
@@ -140,14 +129,6 @@
       "pages": [
         "ind-fashion-clothing",
         "tpl-outfit"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/food-beverage",
-      "rule": "one-page",
-      "pages": [
-        "ind-food-drinks",
-        "tpl-drink"
       ]
     },
     {
@@ -212,14 +193,6 @@
       "pages": [
         "tpl-bf",
         "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/coffee-beans",
-      "rule": "one-page",
-      "pages": [
-        "tpl-box",
-        "tpl-drink"
       ]
     },
     {
@@ -288,28 +261,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2before-after-videos-g3",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-home",
-        "tpl-outfit"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2change-background-c1",
       "rule": "one-page",
       "pages": [
         "tpl-color",
         "tpl-launch"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2examples-g3",
-      "rule": "one-page",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-drink"
       ]
     },
     {
@@ -382,8 +338,7 @@
       "rule": "one-page",
       "pages": [
         "ind-fashion-clothing",
-        "tpl-angle",
-        "tpl-outfit"
+        "tpl-angle"
       ]
     },
     {
@@ -391,7 +346,6 @@
       "rule": "one-page",
       "pages": [
         "ind-health-wellness",
-        "tpl-drink",
         "tpl-spark-ads-style-video"
       ]
     },
@@ -400,16 +354,7 @@
       "rule": "one-page",
       "pages": [
         "lifestyle-photos",
-        "tpl-home",
         "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2lifestyle-photos-g6",
-      "rule": "one-page",
-      "pages": [
-        "lifestyle-photos",
-        "tpl-home"
       ]
     },
     {
@@ -430,27 +375,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2photo-hub-c3",
-      "rule": "one-page",
-      "pages": [
-        "tpl-look",
-        "tpl-outfit"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-g2",
       "rule": "one-page",
       "pages": [
         "product-videos",
         "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-youtube-shorts-c3",
-      "rule": "one-page",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-drink"
       ]
     },
     {
@@ -467,22 +396,6 @@
       "pages": [
         "occ-black-friday",
         "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2spokesperson-videos-c4",
-      "rule": "one-page",
-      "pages": [
-        "tpl-home",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2spokesperson-videos-g1",
-      "rule": "one-page",
-      "pages": [
-        "tpl-drink",
-        "tpl-spark-ads-style-video"
       ]
     },
     {
@@ -524,30 +437,6 @@
       "pages": [
         "ind-electronics",
         "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-beauty-c4",
-      "rule": "one-page",
-      "pages": [
-        "ind-beauty-skincare",
-        "tpl-beauty"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-beauty-g1",
-      "rule": "one-page",
-      "pages": [
-        "ind-beauty-skincare",
-        "tpl-beauty"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-beauty-g2",
-      "rule": "one-page",
-      "pages": [
-        "image-to-video",
-        "tpl-beauty"
       ]
     },
     {
@@ -639,22 +528,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-drink-c4",
-      "rule": "one-page",
-      "pages": [
-        "ind-food-drinks",
-        "tpl-drink"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-drink-g3",
-      "rule": "one-page",
-      "pages": [
-        "ind-food-drinks",
-        "tpl-drink"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-jewel-g1",
       "rule": "one-page",
       "pages": [
@@ -727,14 +600,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-outfit-c2",
-      "rule": "one-page",
-      "pages": [
-        "plat-tiktok",
-        "tpl-outfit"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-product-feature-callout-video-c3",
       "rule": "one-page",
       "pages": [
@@ -772,14 +637,6 @@
       "pages": [
         "tpl-bf",
         "tpl-carousel-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2url-to-video-c3",
-      "rule": "one-page",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-drink"
       ]
     },
     {
@@ -837,7 +694,6 @@
       "rule": "one-page",
       "pages": [
         "before-after-videos",
-        "tpl-home",
         "tpl-retargeting-video-ad"
       ]
     },
@@ -851,14 +707,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-output-coffee",
-      "rule": "one-page",
-      "pages": [
-        "tpl-drink",
-        "tpl-size"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-strip",
       "rule": "one-page",
       "pages": [
@@ -867,18 +715,9 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-videos-result",
-      "rule": "one-page",
-      "pages": [
-        "tpl-drink",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-videos-source",
       "rule": "one-page",
       "pages": [
-        "tpl-drink",
         "tpl-limited-drop-alert-video",
         "tpl-pack"
       ]
@@ -916,27 +755,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-occ-sale-discount-m5-1",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-outfit"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-plat-shopify-m5-0",
       "rule": "one-page",
       "pages": [
         "plat-shopify",
         "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-tpl-outfit-hoodie",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-outfit"
       ]
     },
     {
@@ -954,7 +777,6 @@
       "pages": [
         "ind-fashion-clothing",
         "tpl-look",
-        "tpl-outfit",
         "tpl-product-feature-callout-video"
       ]
     },
@@ -999,8 +821,7 @@
       "rule": "one-page",
       "pages": [
         "ind-jewelry-accessories",
-        "tpl-jewel",
-        "tpl-outfit"
+        "tpl-jewel"
       ]
     },
     {
@@ -1011,14 +832,6 @@
         "tpl-bf",
         "tpl-limited-drop-alert-video",
         "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-plat-facebook-size-portrait-backpack",
-      "rule": "one-page",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-home"
       ]
     },
     {
@@ -1151,14 +964,6 @@
       "pages": [
         "ind-shoes",
         "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on/example-05",
-      "rule": "one-page",
-      "pages": [
-        "examples",
-        "tpl-outfit"
       ]
     },
     {
