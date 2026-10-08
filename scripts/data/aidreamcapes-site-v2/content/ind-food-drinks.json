@@ -178,25 +178,35 @@
     "lead": "Packaged food and drinks shown with real food, ready for a listing or a feed.",
     "groups": [
       {
-        "label": "With real food",
+        "label": "POV Hooks",
         "items": [
           {
             "ref": "n:gen2:ind-food-drinks-g1",
             "title": "Iced tea can opened on a sunny balcony",
             "kind": "photo",
             "product": "iced tea can"
-          },
+          }
+        ]
+      },
+      {
+        "label": "Lunchbox Hauls",
+        "items": [
           {
             "ref": "n:guide:k7-ind-food-drinks-examples-0-items-1-ref-n-gen2-ind-food-drinks-g2",
-            "title": "A ready-to-go snack beside fresh fruit",
+            "title": "Snack pouch packed for work",
             "kind": "photo",
-            "product": "snack bag"
-          },
+            "product": "snack pouch"
+          }
+        ]
+      },
+      {
+        "label": "Recipe Demos",
+        "items": [
           {
             "ref": "n:guide:k7-ind-food-drinks-examples-0-items-2-ref-n-gen2-ind-food-drinks-g3",
-            "title": "Pasta sauce set out for a weeknight dinner",
+            "title": "Hot sauce drizzled over rigatoni",
             "kind": "photo",
-            "product": "pasta sauce jar"
+            "product": "pasta sauce"
           }
         ]
       }
@@ -223,17 +233,17 @@
     "strip": [
       "n:guide:ind-food-drinks-m2-source",
       "f:k7-ind-food-drinks-strip-1-f-food-video-t06",
-      "n:guide:k7-ind-food-drinks-strip-2-n-gen2-tpl-pack-c2",
-      "n:guide:k7-ind-food-drinks-strip-3-n-gen2-tpl-drink-c3",
-      "n:guide:k7-ind-food-drinks-strip-4-n-gen2-tpl-pack-c1",
-      "n:guide:k7-ind-food-drinks-strip-5-n-gen2-tpl-pack-c3"
+      "n:guide:q17-ind-food-drinks-strip-2",
+      "n:guide:q17-ind-food-drinks-strip-3",
+      "n:guide:q17-ind-food-drinks-strip-4",
+      "n:guide:q17-ind-food-drinks-strip-5"
     ],
     "steps": {
       "source": "n:guide:ind-food-drinks-m2-source",
       "result": "f:k7-ind-food-drinks-steps-result-f-food-video-t06",
       "mode": "video",
       "length": 10,
-      "prompt": "Pour this golden citrus drink over ice and finish with the bottle beside an orange slice.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand tilts the citrus bottle and pours once into an ice-filled glass, ending when the stream stops and the full bottle remains beside the glass. Bright morning window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. Sound: clear pour and ice clink; no music.",
       "options": [
         [
           "Size",
@@ -246,96 +256,96 @@
       ]
     },
     "picker": {
-      "title": "Choose a food video around one product moment",
-      "lead": "Pick one serving or package moment that reads clearly at a glance.",
+      "title": "Choose a food ad format around one product",
+      "lead": "Pick a recipe, first bite, unboxing, or creator routine that makes one product benefit clear.",
       "chips": [
         {
-          "id": "pour",
-          "label": "Pour or serve"
+          "id": "recipe",
+          "label": "Recipes & Meal Prep"
         },
         {
-          "id": "pack",
-          "label": "Show the package"
+          "id": "taste",
+          "label": "Taste Tests"
         },
         {
-          "id": "breakfast",
-          "label": "Morning coffee"
+          "id": "hook",
+          "label": "Discovery Hooks"
         },
         {
-          "id": "snack",
-          "label": "Packed food for a trip"
+          "id": "routine",
+          "label": "UGC Routines"
         }
       ],
       "cards": [
         {
           "ref": "n:gen2:tpl-drink-c4",
-          "label": "Granola poured into yogurt",
-          "prompt": "Tip the granola pouch into a bowl of yogurt and keep the texture visible.",
+          "label": "Recipe Demo: granola over yogurt",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright breakfast kitchen, a hand tips the granola pouch and lets a small stream fall into yogurt, ending with the clusters resting on top. Soft window light, natural creator-video look. Overhead close-up with a gentle push-in. Sound: dry crunch and pouch rustle; no music.",
           "chips": [
-            "pour"
+            "recipe"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-drink-g2",
-          "label": "Honey poured over pancakes",
-          "prompt": "Drizzle honey from a small jar over pancakes and keep the food in view.",
+          "ref": "f:q17-ind-food-drinks-picker-2",
+          "label": "Taste Test: protein bar first bite",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult woman breaks a protein bar and takes one bite, then holds the bitten bar beside its plain wrapper and says to camera: “The crisp outside and chewy center make this easy to pack.” Candid UGC style, natural skin texture. Chest-up eye-level handheld shot with slight sway. Sound: wrapper crinkle, one crisp bite, her voice; no music.",
           "chips": [
-            "pour"
+            "taste"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-food-drinks-picker-2-coffee-pouch",
-          "label": "Coffee pouch on a grocery shelf",
-          "prompt": "Place the coffee pouch on a grocery shelf with its front panel easy to see.",
+          "ref": "f:q17-ind-food-drinks-picker-3",
+          "label": "POV Hook: iced tea can opens",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand lifts a chilled tea can from an open cooler and snaps its tab, ending with condensation and the open can centered in frame. Bright daylight, energetic phone-video look. Tight handheld close-up with one quick tilt to the can. Sound: tab snap and ice shift; no music.",
           "chips": [
-            "pack"
+            "hook"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:unboxing-videos-g3",
-          "label": "Tea and honey from a box",
-          "prompt": "Arrange the tea tin, honey jar, and biscuits beside the open subscription box.",
+          "ref": "f:q17-ind-food-drinks-picker-4",
+          "label": "ASMR Unboxing: snack sampler reveal",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a clean table, adult hands peel tissue from a snack sampler box and lift one pouch toward the lens, ending with the assortment visible below it. Soft morning window light, natural creator-video style. Top-down close-up with one slow push-in. Sound: tissue rustle and cardboard creak; no music.",
           "chips": [
-            "pack"
+            "hook"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-food-drinks-picker-cards-4-ref-n-gen2-tpl-box-c2",
-          "label": "Coffee starter kit on a table",
-          "prompt": "Arrange the coffee bag, hand grinder, and mug as one simple starter set.",
+          "ref": "f:q17-ind-food-drinks-picker-5",
+          "label": "ASMR Crunch: oat cracker snap",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright dining nook, an adult hand snaps an oat cracker over a bowl and lets the pieces fall, ending on the crisp crumb texture. Soft side light, clean food-macro look. Extreme close-up at table height with one short rack focus. Sound: one sharp crunch and light crumbs; no music.",
           "chips": [
-            "breakfast"
+            "taste"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-food-drinks-picker-cards-5-ref-n-gen2-image-to-video-c2",
-          "label": "Coffee dripper on a sunny counter",
-          "prompt": "Let a little steam rise beside the ceramic dripper in morning light.",
+          "ref": "f:q17-ind-food-drinks-picker-6",
+          "label": "GRWM: hydration mix before workout",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in workout clothes holds a hydration mix sachet beside her face and says to camera: “I mix one sachet into my bottle before I head out.” She pours it into a clear bottle and ends holding both products still. Soft morning daylight, natural GRWM creator style. Chest-up front-facing handheld framing with slight sway. Sound: her voice, powder pour, bottle cap click; no music.",
           "chips": [
-            "breakfast"
+            "routine"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-box-g1",
-          "label": "Camping breakfast kit",
-          "prompt": "Lay out the enamel mugs, coffee pouch, spork, and small pan as one compact breakfast kit.",
+          "ref": "f:q17-ind-food-drinks-picker-7",
+          "label": "Creator Review: protein shake to camera",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult presenter stands at a home counter holding a plain protein tub beside a glass and says to camera: “I add a scoop to cold water, then shake until smooth.” She pours once and ends with the glass beside the tub. Soft daylight, straightforward creator-demo look. Chest-up handheld framing with a gentle push-in. Sound: her voice, powder tap, shaker rattle; no music.",
           "chips": [
-            "snack"
+            "routine"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-spark-ads-style-video-c2",
-          "label": "Snack pouch on a road trip",
-          "prompt": "Place the opened snack pouch beside the dashboard on a parked drive.",
+          "ref": "f:q17-ind-food-drinks-picker-8",
+          "label": "Meal Prep: pack work snacks",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright office break room, two hands slide a snack pouch into an open lunch tote beside fruit, ending with the package front visible above the zipper. Natural daylight, relaxed day-in-the-life phone-video look. Waist-level close-up with a gentle push-in. Sound: pouch crinkle and zipper; no music.",
           "chips": [
-            "snack"
+            "recipe"
           ],
           "kind": "video"
         }
@@ -351,9 +361,9 @@
       },
       {
         "frame": "post",
-        "ref": "f:k7-ind-food-drinks-uses-1-ref-n-gen2-url-to-video-g1",
-        "h": "Show the bottle with fresh ingredients",
-        "d": "Fresh herbs and olive oil make the cooking use clear in one frame."
+        "ref": "f:q17-ind-food-drinks-uses-1",
+        "h": "Show the product in a serving scene",
+        "d": "A hand pours olive oil over salad so shoppers can see how the bottle is used."
       }
     ],
     "input": [
@@ -372,9 +382,9 @@
     ],
     "outputs": [
       {
-        "ref": "f:k7-ind-food-drinks-outputs-0-ref-f-product-video-t09",
+        "ref": "f:q17-ind-food-drinks-output-0",
         "frame": "16:9",
-        "label": "Espresso poured beside coffee beans",
+        "label": "Protein drink mixed beside the tub",
         "length": 6
       },
       {
@@ -385,14 +395,14 @@
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-retargeting-video-ad-c4",
+      "ref": "f:q17-ind-food-drinks-after",
       "zones": [
-        "Ingredients",
-        "Serving idea"
+        "Package",
+        "Ingredient details"
       ],
       "items": [
-        "Enter ingredients and allergen details from the package in the product description.",
-        "Add serving notes beside the clip after you download it."
+        "Keep ingredient and allergen details true to the real package.",
+        "Add any serving guidance after download in your editor."
       ]
     },
     "titles": {
@@ -400,7 +410,7 @@
         "h2": "Make a food and drink video in three steps"
       },
       "m3": {
-        "h2": "Choose a food video around one product moment"
+        "h2": "Choose a food video format"
       },
       "m4": {
         "h2": "Use food videos on product pages and social feeds"
@@ -416,7 +426,7 @@
       },
       "examples": {
         "h2": "More food and drink examples",
-        "lead": "Packaged foods and drinks beside the ingredients or serving ideas shoppers recognize."
+        "lead": "Recipe demos, taste tests, and packable snacks show products in useful moments."
       },
       "faq": {
         "h2": "Questions about food and drink videos"

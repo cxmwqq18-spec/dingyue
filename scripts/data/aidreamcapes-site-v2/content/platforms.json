@@ -34,18 +34,18 @@
   "visual": {
     "strip": [
       "n:guide:k8-platforms-gen2-plat-tiktok-g1",
-      "n:guide:k8-platforms-gen2-plat-tiktok-g2",
-      "n:guide:k8-platforms-gen2-ind-jewelry-accessories-g4",
-      "n:guide:k8-platforms-gen2-ind-fashion-clothing-g2",
+      "n:guide:q17-platforms-strip-1",
+      "n:guide:q17-platforms-strip-2",
+      "n:guide:q17-platforms-strip-3",
       "n:guide:k8-platforms-gen2-tpl-size-g3",
-      "n:guide:k8-platforms-gen2-tpl-bf-g2"
+      "n:guide:q17-platforms-strip-5"
     ],
     "steps": {
       "source": "n:guide:b1-url-to-video-source",
       "sourceAlt": "Sage-green lunch container with a smooth lid on a pale kitchen counter.",
       "result": "n:guide:b1-url-to-video-result",
       "mode": "photo",
-      "prompt": "This sage-green lunch container sits open with its lid beside it on a pale kitchen counter.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the skincare tube upright on a pale studio surface, front facing and fully visible, with a soft natural shadow. Clean commercial product-photo styling, diffuse window light. Three-quarter close-up, fixed camera.",
       "options": [
         [
           "Platform",
@@ -103,7 +103,8 @@
       "itemImages": {
         "/platforms/tiktok-ads": "n:guide:k8-platforms-gen2-plat-tiktok-g3",
         "/platforms/instagram-ads": "n:guide:k8-platforms-gen2-plat-shopify-c2",
-        "/platforms/shopify-product-photos": "g:ecommerce-main-image/example-02"
+        "/platforms/shopify-product-photos": "n:guide:q17-platforms-shopify-main",
+        "/platforms/amazon-product-photos": "n:guide:q17-platforms-amazon-main"
       }
     }
   },

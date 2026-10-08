@@ -3540,6 +3540,258 @@
         640,
         1280
       ]
+    },
+    "q17-ind-food-drinks-picker-2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult taking a first bite of a plain protein bar.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-picker-3": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Hand opening a chilled plain iced tea can beside a cooler.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-picker-4": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands revealing snack pouches from a plain sampler box.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-picker-5": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Close macro of a hand snapping a crisp oat cracker over berries.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-picker-6": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult holding a hydration sachet and mixing it into a bottle before a workout.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-picker-7": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult presenter holding a plain protein powder tub and a shaker glass.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-picker-8": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hands packing a plain snack pouch into a lunch tote beside fruit.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-uses-1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Hand drizzling olive oil over a fresh salad with the bottle visible.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-output-0": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand mixing a protein drink in a clear shaker beside a plain tub.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-after": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult holding a plain snack pouch at chest height and pointing to its blank ingredient panel.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-food-drinks-card-drink": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand pouring sparkling citrus drink into an ice-filled glass.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-strip-1": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Cordless vacuum clearing crumbs from a sofa in one pass.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-picker-0": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Cordless vacuum clearing crumbs from a sofa cushion.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-picker-1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult creator holding a pet hair roller and speaking to camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-picker-2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands opening a pet-care kit and revealing a paw-cleaning glove.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-picker-3": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand spraying a stain remover and blotting a shirt cuff.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-uses-0": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Hand wearing a pet grooming glove brushing loose fur from a dog.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-uses-1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Handheld vacuum picking up crumbs from a couch seam.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-after": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Stain remover lifting a small mark from fabric in a clear before-and-after view.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-card-0": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Cordless vacuum passing over pet hair on a sofa cushion.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-case-0": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Cordless vacuum clearing crumbs from a sofa in a before-and-after frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-r2-steps-pillow": {
+      "w": 1536,
+      "h": 864,
+      "alt": "The same ivory and sage linen throw pillow pair arranged on a cream reading chair.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-r2-picker-4": {
+      "w": 1536,
+      "h": 864,
+      "alt": "A hand styling the same ivory and sage linen throw pillow set on a reading chair.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-r2-picker-5": {
+      "w": 1536,
+      "h": 864,
+      "alt": "A plain ceramic table lamp switched on beside a reading chair in a calm living room.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-r2-picker-6": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult creator demonstrates a plain washable pet sofa cover while a calm dog sits nearby.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-r2-output-pillow-0": {
+      "w": 1536,
+      "h": 864,
+      "alt": "The same ivory and sage linen throw pillow set styled on a cream reading chair.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-r2-output-pillow-1": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Close view of the same ivory and sage woven throw pillow pair on the reading chair.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q17-ind-home-living-r2-card-compare": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Two plain ceramic table lamps with linen shades displayed side by side in a reading corner.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -24894,6 +25146,296 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult runner holds a plain running belt and speaks to camera at a trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-strip-2": {
+        "file": "q17-ind-food-drinks-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holding a plain cereal pouch beside a bowl of granola.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-strip-3": {
+        "file": "q17-ind-food-drinks-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult tasting kombucha from a clear glass beside its bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-strip-4": {
+        "file": "q17-ind-food-drinks-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening a plain tea pouch beside a cup and infuser.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-strip-5": {
+        "file": "q17-ind-food-drinks-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holding a plain hot sauce bottle at a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-card-packaging": {
+        "file": "q17-ind-food-drinks-card-packaging",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain protein powder tub and scoop on a seamless white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-case-granola": {
+        "file": "q17-ind-food-drinks-case-granola",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand breaking granola clusters over berries beside a plain pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-case-tea": {
+        "file": "q17-ind-food-drinks-case-tea",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand lifting a tea infuser from a cup beside a plain tea pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-example-lunch": {
+        "file": "q17-ind-food-drinks-example-lunch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand packing a plain snack pouch into a lunch tote beside fruit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-food-drinks-example-pasta": {
+        "file": "q17-ind-food-drinks-example-pasta",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pouring plain tomato sauce over rigatoni on a plate.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-strip-0": {
+        "file": "q17-ind-home-living-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Handheld cordless vacuum cleaning crumbs from a sofa cushion.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-strip-3": {
+        "file": "q17-ind-home-living-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult using a soft pet grooming glove on a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-strip-5": {
+        "file": "q17-ind-home-living-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand applying a plain stain remover pen to a small shirt cuff mark.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-card-bg": {
+        "file": "q17-ind-home-living-card-bg",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holding a compact cordless vacuum in a lived-in lounge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-case-2": {
+        "file": "q17-ind-home-living-case-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult using a pet grooming glove on a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-example-1": {
+        "file": "q17-ind-home-living-example-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holding a pet grooming glove beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-example-3": {
+        "file": "q17-ind-home-living-example-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand applying a stain remover pen to a shirt cuff mark.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-example-4": {
+        "file": "q17-ind-home-living-example-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cordless vacuum lifting small crumbs from a sofa cushion.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-platforms-strip-1": {
+        "file": "q17-platforms-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand fitting a plain silicone case onto a generic smartphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-platforms-strip-2": {
+        "file": "q17-platforms-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold hoop earring detail catching soft natural light on an adult ear.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-platforms-strip-3": {
+        "file": "q17-platforms-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a plain olive jacket and checking sleeve fit in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-platforms-strip-5": {
+        "file": "q17-platforms-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand snapping a plain silicone phone case onto a generic smartphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-platforms-amazon-main": {
+        "file": "q17-platforms-amazon-main",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sunscreen tube upright on a seamless pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-platforms-shopify-main": {
+        "file": "q17-platforms-shopify-main",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber skincare serum bottle with a simple dropper cap on a pale studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-r2-source-pillow": {
+        "file": "q17-ind-home-living-r2-source-pillow",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same two solid linen throw pillows in warm ivory and muted sage on a cream reading chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-r2-strip-2": {
+        "file": "q17-ind-home-living-r2-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A hand smoothing ivory linen bedding with a muted sage throw in a bright bedroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-r2-strip-4": {
+        "file": "q17-ind-home-living-r2-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain wooden kitchen utensils and ceramic jars neatly arranged in a kitchen drawer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-r2-case-3": {
+        "file": "q17-ind-home-living-r2-case-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain ceramic table lamp switched on beside a reading chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-r2-case-4": {
+        "file": "q17-ind-home-living-r2-case-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain ivory linen bedding and a muted sage throw arranged neatly across a bed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q17-ind-home-living-r2-example-2": {
+        "file": "q17-ind-home-living-r2-example-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A thick woven neutral throw blanket draped over a cream armchair.",
         "variants": [
           640,
           1280

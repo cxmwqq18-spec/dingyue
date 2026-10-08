@@ -4,7 +4,7 @@
   "description": "Make AI product videos for home brands: real room scenes, before-and-after organizing clips, and quick how-to demos from one product photo. Start with yours.",
   "h1": "AI Product Videos for Home Brands, Shown in Real Rooms",
   "eyebrow": "Home & living",
-  "lead": "AI product videos for home brands show your lamp, storage bin, or throw blanket in a lived-in room at a believable scale, and what a cluttered shelf looks like once your organizer moves in.",
+  "lead": "Show how home goods work in everyday rooms. Clear styling and hands-on demos help shoppers judge texture, scale, storage, and the finished result.",
   "card": "Products in lived-in rooms, plus before-and-after clips for organizers.",
   "secondary_keywords": [
     "home decor product videos",
@@ -14,21 +14,21 @@
     "storage product video ads"
   ],
   "intro": [
-    "Home shoppers are buying for a specific space. They want to know whether a planter suits a small apartment windowsill, whether a shoe rack fits a narrow hallway, and what a set of drawer dividers does to a junk drawer. Room scenes and before-and-after clips answer those questions in a way a cutout photo can't.",
-    "Pick the room your buyer lives in and describe it alongside your product photo: a sunlit Scandinavian living room, a rental kitchen with little counter space, a kid's closet. For organizers, a 10- or 15-second clip that opens on clutter and ends tidy shows the payoff. Square photos fill out a listing gallery, and the same item can be restaged in a bedroom, an entryway, or a dorm for different buyers."
+    "A visible in-room result helps shoppers understand a product quickly. Show a cordless vacuum lifting crumbs, a grooming glove collecting loose fur, or a throw pillow set styled on a reading chair.",
+    "For textiles, lighting, kitchen organization, and pet-home products, keep the material, scale, and useful action in clear view."
   ],
   "ideas": [
     {
-      "t": "Real room scenes",
-      "d": "Place a side table beside a reading chair or a rug under a dining set so buyers can judge scale against furniture they already know."
+      "t": "Before and after cleaning",
+      "d": "Keep the camera angle steady and show one realistic cleaning result."
     },
     {
-      "t": "Quick how-to demos",
-      "d": "Show a shelf bracket clicking into place or a vacuum storage bag shrinking down a duvet. A 10-second vertical clip covers one clear step."
+      "t": "Pet product demos",
+      "d": "Show the product in use with a calm animal and a clear view of the tool."
     },
     {
-      "t": "Seasonal refreshes",
-      "d": "Restage the same throw pillow on a summer patio chair and then on a cozy fall sofa, giving you fresh visuals for each season without a new shoot."
+      "t": "Room styling for textiles and lighting",
+      "d": "Place a throw pillow set, fold a blanket, or switch on a lamp so shoppers can judge scale and texture."
     }
   ],
   "faq": [
@@ -175,34 +175,49 @@
   },
   "examples": {
     "h2": "More home and living examples",
-    "lead": "Furniture and decor shown next to familiar pieces, so size and style are easy to judge.",
+    "lead": "Room styling, cleaning demos, pet-care scenes, and useful home-product details.",
     "groups": [
       {
-        "label": "In the room",
+        "label": "Pet Demos",
         "items": [
           {
-            "ref": "n:guide:k7-ind-home-living-example-storage-boxes",
-            "title": "Fabric storage boxes on a tidy shelf",
+            "ref": "n:guide:q17-ind-home-living-example-1",
+            "title": "Pet grooming glove in use",
             "kind": "photo",
-            "product": "fabric storage boxes"
-          },
+            "product": "pet grooming glove"
+          }
+        ]
+      },
+      {
+        "label": "Room Styling",
+        "items": [
           {
-            "ref": "n:guide:k7-ind-home-living-example-planter-sofa",
-            "title": "Ceramic planter beside a linen sofa",
+            "ref": "n:guide:q17-ind-home-living-r2-example-2",
+            "title": "Woven throw blanket styled over an armchair",
             "kind": "photo",
-            "product": "ceramic planter"
-          },
+            "product": "throw blanket"
+          }
+        ]
+      },
+      {
+        "label": "Cleaning Demos",
+        "items": [
           {
-            "ref": "n:guide:k7-ind-home-living-example-side-table",
-            "title": "Round side table beside an armchair",
+            "ref": "n:guide:q17-ind-home-living-example-3",
+            "title": "Stain remover pen on a shirt cuff",
             "kind": "photo",
-            "product": "round side table"
-          },
+            "product": "stain remover pen"
+          }
+        ]
+      },
+      {
+        "label": "Before & After",
+        "items": [
           {
-            "ref": "n:gen2:ind-home-living-g4",
-            "title": "Floating shelf bracket mounted on a wall",
+            "ref": "n:guide:q17-ind-home-living-example-4",
+            "title": "Cordless vacuum lifting sofa crumbs",
             "kind": "photo",
-            "product": "floating shelf bracket"
+            "product": "cordless vacuum"
           }
         ]
       }
@@ -212,34 +227,34 @@
   "cta_lead": "Select the room or use scene where your home product belongs.",
   "steps": [
     {
-      "t": "Photograph the whole lamp",
-      "d": "Include this white table lamp's shade, stem, and base in one clean product shot."
+      "t": "Photograph the full pillow set",
+      "d": "Show both throw pillows together, with their warm ivory and muted sage colors and woven texture clear."
     },
     {
-      "t": "Choose one room action",
-      "d": "Switch on this lamp on a small desk beside a book, keeping its shape clear."
+      "t": "Style the pillows in one room",
+      "d": "Place both pillows on a reading chair and make one simple adjustment to show their shape and texture."
     },
     {
-      "t": "Add room measurements",
-      "d": "After download, place the height, material, or price beside the finished clip."
+      "t": "Add accurate product details",
+      "d": "After download, add the real pillow dimensions, fabric, care details, or offer terms."
     }
   ],
   "visual": {
-    "overview": "Home shoppers judge scale, materials, and how a piece fits the room. Start from a full product photo, then show one useful action such as switching on, opening, or placing the item.",
+    "overview": "Home shoppers judge scale, texture, and how a piece fits the room. Start with a clear photo of this two-pillow set, then show it styled on a reading chair.",
     "strip": [
-      "n:guide:k7-ind-home-living-strip-00-room-lamp",
-      "f:k7-ind-home-living-strip-01-lamp-switch",
-      "n:guide:k7-ind-home-living-strip-02-closet-rail",
-      "n:guide:k7-ind-home-living-strip-03-folded-blankets",
-      "n:guide:k7-ind-home-living-strip-04-storage-bins",
-      "n:guide:k7-ind-home-living-strip-05-entry-shoe-rack"
+      "n:guide:q17-ind-home-living-strip-0",
+      "f:q17-ind-home-living-strip-1",
+      "n:guide:q17-ind-home-living-r2-strip-2",
+      "n:guide:q17-ind-home-living-strip-3",
+      "n:guide:q17-ind-home-living-r2-strip-4",
+      "n:guide:q17-ind-home-living-strip-5"
     ],
     "steps": {
-      "source": "n:guide:k7-ind-home-living-step-source-lamp",
-      "result": "f:k7-ind-home-living-step-result-lamp-glow",
+      "source": "n:guide:q17-ind-home-living-r2-source-pillow",
+      "result": "f:q17-ind-home-living-r2-steps-pillow",
       "mode": "video",
       "length": 10,
-      "prompt": "Switch on this white table lamp beside a book, keeping its shade, stem, and base visible.",
+      "prompt": "Use the uploaded photo as the exact product reference. Keep this two-piece set of solid linen throw pillows unchanged: one warm ivory-beige square pillow and one muted sage-green square pillow, preserving their woven texture, seams, proportions, and colors. In a calm living room, hands place this pair on a reading chair and make one gentle adjustment, ending with both pillows fully visible. Soft window light, natural home product-video style. Medium close framing with one slow push-in. Sound: fabric rustle and quiet room tone; no music.",
       "options": [
         [
           "Size",
@@ -249,99 +264,114 @@
           "Length",
           "10 seconds"
         ]
+      ],
+      "items": [
+        {
+          "t": "Start with a clear product photo",
+          "d": "Keep both pillows fully in frame so their matching set, colors, seams, and fabric texture are easy to see."
+        },
+        {
+          "t": "Describe one room action",
+          "d": "Show this matching pair placed on a chair, then make one small adjustment to reveal the woven texture."
+        },
+        {
+          "t": "Add accurate product details",
+          "d": "After download, add the actual dimensions, fabric composition, care instructions, or offer terms."
+        }
       ]
     },
     "picker": {
-      "title": "Choose a home scene with a useful action",
-      "lead": "Pick a room action that helps shoppers picture the product in use.",
+      "title": "Choose a home-product ad format",
+      "lead": "Show a clear result, a hands-on demo, or a creator explaining the product.",
       "chips": [
         {
-          "id": "lighting",
-          "label": "Room lighting"
+          "id": "before-after",
+          "label": "Before & After"
         },
         {
-          "id": "storage",
-          "label": "Plant care and display"
+          "id": "creator",
+          "label": "Creator Reviews"
         },
         {
-          "id": "decor",
-          "label": "Decor details"
+          "id": "demo",
+          "label": "Unboxing & Product Demos"
         },
         {
-          "id": "setup",
-          "label": "Organizing and cleaning"
+          "id": "fit-setup",
+          "label": "Room Setup / Styling"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:product-videos-g2",
-          "label": "Desk lamp switched on",
-          "prompt": "Let the lamp switch on and spread a warm pool of light across the desk.",
+          "ref": "f:q17-ind-home-living-picker-0",
+          "label": "Before & After: vacuum clears crumbs",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A compact cordless vacuum crosses a sofa cushion with scattered crumbs in one pass, ending on the cleaned strip beside the untouched area. Soft daylight, satisfying home-demo style. Low close-up at cushion height with one slow lateral move. Sound: vacuum motor and fabric brush; no music.",
           "chips": [
-            "lighting"
+            "before-after"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:guide:ind-home-living-m3-lit-lamp",
-          "label": "Lit brass lamp beside a book",
-          "prompt": "Show a brass lamp glowing beside an open book in a warm, lived-in room.",
+          "ref": "f:q17-ind-home-living-picker-1",
+          "label": "Creator Review: pet roller demo",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds a pet-hair roller beside their face and says to camera: “This lifts loose fur from the sofa in a single pass.” They roll once across a dark cushion and end with the clean strip visible. Soft natural room light, straightforward UGC demo, natural skin texture. Chest-up handheld framing with a slight push-in. Sound: voice, roller peel, fabric brush; no music.",
           "chips": [
-            "lighting"
+            "creator"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-home-living-picker-02-planter-water",
-          "label": "Watering a self-watering planter",
-          "prompt": "Pour water into the planter reservoir before setting it by a window.",
+          "ref": "f:q17-ind-home-living-picker-2",
+          "label": "ASMR Unboxing: paw-cleaning glove",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain pet-care mailer, lift a soft paw-cleaning glove from the tissue and hold it beside the open package, ending with its texture visible. Bright window light, natural creator-video style. Top-down close-up with a slow push-in. Sound: tissue rustle and carton creak; no music.",
           "chips": [
-            "storage"
+            "demo"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
-          "label": "Small vases on a gallery shelf",
-          "prompt": "Arrange the ceramic vases with space between each silhouette.",
+          "ref": "f:q17-ind-home-living-picker-3",
+          "label": "Cleaning Demo: stain spray",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand sprays a plain stain remover onto a small mark on a shirt cuff and blots once with a white cloth, ending with the treated patch beside the untreated edge. Clean daylight, natural product-demo look. Close side view with a gentle push-in. Sound: spray and cloth dab; no music.",
           "chips": [
-            "storage"
+            "demo"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-home-living-picker-04-candle-bedside",
-          "label": "Candle on a bedside table",
-          "prompt": "Set the candle on a bedside table as evening light fades.",
+          "ref": "f:q17-ind-home-living-r2-picker-4",
+          "label": "Style the throw pillow set",
+          "prompt": "Use the uploaded photo as the exact product reference. Keep this pair of two solid linen throw pillows unchanged: one warm ivory-beige and one muted sage-green, with identical woven texture, seams, proportions, and colors. In a bright reading corner, a hand arranges the matching pair on a chair, ending with both pillows fully visible beside the floor lamp. Natural window light, realistic home styling video. Medium shot with a gentle lateral move. Sound: fabric rustle; no music.",
           "chips": [
-            "decor"
+            "fit-setup"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-film-g3",
-          "label": "Ceramic vase in late-day light",
-          "prompt": "Place the ceramic vase where a beam of late-day light picks out its shape.",
+          "ref": "f:q17-ind-home-living-r2-picker-5",
+          "label": "Switch on a table lamp",
+          "prompt": "Use the uploaded photo as the exact product reference. In a calm reading corner, a hand switches on a plain ceramic table lamp beside a chair with a folded neutral throw. Keep the lamp shape and shade clear, end on its warm pool of light across the room. No people, text, logo, or unrelated products. Soft evening ambience with realistic home-product video framing, one slow push-in. Sound: switch click and quiet room tone; no music.",
           "chips": [
-            "decor"
+            "demo",
+            "fit-setup"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:product-videos-g3",
-          "label": "Filling a drawer organizer",
-          "prompt": "Sort cutlery into the drawer organizer, keeping each utensil in its own section.",
+          "ref": "f:q17-ind-home-living-r2-picker-6",
+          "label": "Creator Review: washable pet sofa cover",
+          "prompt": "Use the uploaded photo as the exact product reference. In a calm living room, an adult creator presents a plain washable sofa cover, spreads it flat across the sofa cushion, and shows its quilted surface while a relaxed dog settles beside them. Keep the household pet cover and its texture clearly visible. Natural window light, straightforward creator review framing. No car, phone, wearable, text, logo, or unrelated product.",
           "chips": [
-            "setup"
+            "creator"
           ],
           "kind": "video"
         },
         {
           "ref": "f:k7-ind-home-living-picker-07-cushion-clean",
-          "label": "Sofa cushion cleaned with a roller",
-          "prompt": "Show the lint roller moving across the sofa cushion in one clear pass.",
+          "label": "Pet Hair Demo: clean sofa",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a charcoal sofa, a hand rolls a lint roller across pet hair in one straight pass, ending with a clean strip beside the untouched area. Soft natural room light, satisfying short-form video look. Low close-up with one lateral move. Sound: roller peel and fabric brush; no music.",
           "chips": [
-            "setup"
+            "before-after"
           ],
           "kind": "video"
         }
@@ -351,15 +381,15 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "f:k7-ind-home-living-uses-00-linen-pillow",
-        "h": "Show a soft furnishing in its room",
-        "d": "A linen pillow on a sofa gives shoppers a sense of color and texture."
+        "ref": "f:q17-ind-home-living-uses-0",
+        "h": "Show a pet product in use",
+        "d": "A grooming glove lifts loose fur while the dog stays calm."
       },
       {
         "frame": "post",
-        "ref": "f:k7-ind-home-living-uses-01-pantry-jars",
-        "h": "Show matching jars in a kitchen post",
-        "d": "A neat pantry shelf shows the glass jars together in a home setting."
+        "ref": "f:q17-ind-home-living-uses-1",
+        "h": "Show a cleaning tool solving a problem",
+        "d": "A compact vacuum picks crumbs from a sofa seam."
       }
     ],
     "input": [
@@ -378,27 +408,27 @@
     ],
     "outputs": [
       {
-        "ref": "f:k7-ind-home-living-output-candle",
+        "ref": "f:q17-ind-home-living-r2-output-pillow-0",
         "frame": "16:9",
-        "label": "Candle in warm evening light",
+        "label": "Ivory and sage throw pillows on a reading chair",
         "length": 6
       },
       {
-        "ref": "n:gen2:product-videos-c2",
+        "ref": "f:q17-ind-home-living-r2-output-pillow-1",
         "frame": "16:9",
-        "label": "Vacuum lifting crumbs from a sofa",
+        "label": "Close view of matching woven throw pillows",
         "length": 10
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-launch-c4",
+      "ref": "f:q17-ind-home-living-after",
       "zones": [
-        "Dimensions",
-        "Finish"
+        "Before",
+        "After"
       ],
       "items": [
-        "Place the exact dimensions beside the scene in your store editor.",
-        "Add material and finish details as text so the photo stays uncluttered."
+        "Use a clear, consistent view of the fabric mark.",
+        "Keep the result realistic for the cleaning product shown."
       ]
     },
     "titles": {
@@ -406,7 +436,7 @@
         "h2": "Make a home product video in three steps"
       },
       "m3": {
-        "h2": "Choose a home scene with a useful action"
+        "h2": "Choose a home-product ad format"
       },
       "m4": {
         "h2": "Use home videos on product pages and social feeds"
@@ -422,7 +452,7 @@
       },
       "examples": {
         "h2": "More home and living examples",
-        "lead": "Furniture, storage, and decor shown beside pieces that help shoppers judge scale."
+        "lead": "Room styling, cleaning demos, pet-care scenes, and useful home-product details."
       },
       "faq": {
         "h2": "Questions about home product videos"

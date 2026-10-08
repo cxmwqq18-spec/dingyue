@@ -974,9 +974,9 @@
         "title": "Sparkling citrus drink poured into a glass"
       },
       {
-        "ref": "n:gen2:ind-food-drinks-20",
-        "product": "granola jar",
-        "title": "Berry granola jar on a breakfast table"
+        "ref": "n:guide:q17-ind-food-drinks-case-granola",
+        "product": "granola",
+        "title": "ASMR crunch as granola falls over berries"
       },
       {
         "ref": "n:guide:k7-ind-food-drinks-case-plan-2-ref-n-gen2-ind-food-drinks-c3",
@@ -984,31 +984,31 @@
         "title": "A spicy finishing touch for a taco plate"
       },
       {
-        "ref": "n:gen2:ind-food-drinks-c4",
+        "ref": "n:guide:q17-ind-food-drinks-case-tea",
         "product": "loose-leaf tea",
-        "title": "Loose-leaf tea pouch beside a steaming cup"
+        "title": "Tea steeped after the pouch is opened"
       }
     ],
     "ind-home-living": [
       {
-        "ref": "k7-ind-home-living-case-drawer-divider-r2",
-        "product": "drawer dividers",
-        "title": "Drawer dividers bringing order to a kitchen drawer"
+        "ref": "f:q17-ind-home-living-case-0",
+        "product": "cordless vacuum",
+        "title": "Vacuum clears crumbs from a sofa cushion"
       },
       {
-        "ref": "n:guide:k7-ind-home-living-case-desk-lamp",
-        "product": "oak desk lamp",
-        "title": "Oak desk lamp lit in a reading nook"
+        "ref": "n:guide:q17-ind-home-living-case-2",
+        "product": "pet grooming glove",
+        "title": "Pet grooming glove lifts loose fur"
       },
       {
-        "ref": "n:guide:k7-ind-home-living-case-linen-bed",
+        "ref": "n:guide:q17-ind-home-living-r2-case-3",
+        "product": "table lamp",
+        "title": "A ceramic table lamp switched on beside a reading chair"
+      },
+      {
+        "ref": "n:guide:q17-ind-home-living-r2-case-4",
         "product": "linen bedding",
-        "title": "Linen bedding on a freshly made bed"
-      },
-      {
-        "ref": "n:guide:k7-ind-home-living-case-wall-shelf",
-        "product": "wall shelf",
-        "title": "Wall shelf styled with plants and books"
+        "title": "Linen bedding arranged neatly across a made bed"
       }
     ],
     "plat-tiktok": [

@@ -54,6 +54,14 @@
       "spark-ads-style-video": {
         "ref": "n:gen2:tpl-drink-c2",
         "alt": "Cold brew coffee poured from a glass bottle into a tumbler with ice."
+      },
+      "pack": {
+        "ref": "n:guide:q17-ind-food-drinks-card-packaging",
+        "alt": "Plain protein powder tub and scoop on a seamless white background."
+      },
+      "drink": {
+        "ref": "f:q17-ind-food-drinks-card-drink",
+        "alt": "Hand pouring sparkling citrus drink into an ice-filled glass."
       }
     }
   },
@@ -80,16 +88,16 @@
   "ind-home-living": {
     "images": {
       "bg": {
-        "ref": "n:gen2:video-hub-g6",
-        "alt": "Pendant lamp glowing above a dining table at dusk."
+        "ref": "n:guide:q17-ind-home-living-card-bg",
+        "alt": "Adult hand holding a compact cordless vacuum in a lived-in lounge."
       },
       "compare": {
-        "ref": "f:k7-ind-home-living-card-compare",
-        "alt": "Two plain ceramic mugs side by side on a neutral kitchen counter."
+        "ref": "f:q17-ind-home-living-r2-card-compare",
+        "alt": "Two plain ceramic table lamps displayed together in a softly styled reading corner."
       },
       "ba": {
-        "ref": "f:k7-ind-home-living-card-before-after",
-        "alt": "Hands measuring a home storage shelf with folded sweaters and jeans."
+        "ref": "f:q17-ind-home-living-card-0",
+        "alt": "Cordless vacuum passing over pet hair on a sofa cushion."
       }
     }
   },
