@@ -11,15 +11,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/bundle-sets-v1/bundle-sets/example-03",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-beauty-skincare",
-        "occ-product-launch",
-        "tpl-box"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/colorway-variations-v1/colorway-variations/example-02",
       "rule": "max-two-pages",
       "pages": [
@@ -138,60 +129,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/packshot-multi-angle-v1/packshot-multi-angle/example-08",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-electronics",
-        "plat-amazon",
-        "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-01",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-sale",
-        "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-02",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-look",
-        "tpl-sale"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-03",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-sale",
-        "tpl-story"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-06",
-      "rule": "max-two-pages",
-      "pages": [
-        "occ-holidays",
-        "occ-sale-discount",
-        "tpl-sale"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-06",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-holidays",
-        "occ-sale-discount"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/clips/black-friday-countdown-v",
       "rule": "max-two-pages",
       "pages": [
@@ -219,15 +156,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/discount-free-shipping",
-      "rule": "max-two-pages",
-      "pages": [
-        "occ-sale-discount",
-        "plat-facebook",
-        "product-videos"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/clips/home-organization",
       "rule": "max-two-pages",
       "pages": [
@@ -243,15 +171,6 @@
       "pages": [
         "plat-tiktok",
         "plat-youtube-shorts"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/promo-launch-sale",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-home-living",
-        "occ-product-launch",
-        "tpl-launch"
       ]
     },
     {
@@ -401,24 +320,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/black-friday-countdown-t09",
-      "rule": "max-two-pages",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-bf",
-        "video-ads"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/black-friday-countdown-t11",
-      "rule": "max-two-pages",
-      "pages": [
-        "occ-holidays",
-        "tpl-bf",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/frames/black-friday-countdown-t11",
       "rule": "same-page-type",
       "pageType": "template",
@@ -478,28 +379,10 @@
     {
       "image": "/assets/sites/site_aidreamcapes/site-v2/frames/competitor-comparison-t10",
       "rule": "same-page-type",
-      "pageType": "platform",
-      "pages": [
-        "plat-amazon",
-        "plat-youtube-shorts"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/competitor-comparison-t10",
-      "rule": "same-page-type",
       "pageType": "tool",
       "pages": [
         "before-after-videos",
         "image-to-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/fashion-try-on-reel-t15",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-launch",
-        "tpl-outfit"
       ]
     },
     {
@@ -729,27 +612,6 @@
       "pages": [
         "change-background",
         "lifestyle-photos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/coffee-breakfast",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "home",
-        "occ-holidays",
-        "tpl-look"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/coffee-counter",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "home",
-        "industries",
-        "plat-shopify",
-        "tpl-detail"
       ]
     },
     {
@@ -1137,33 +999,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-black-friday-g2",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-black-friday",
-        "occ-holidays"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-holidays-c2",
-      "rule": "max-two-pages",
-      "pages": [
-        "occ-black-friday",
-        "occ-holidays",
-        "unboxing-videos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-holidays-c2",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-black-friday",
-        "occ-holidays"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-product-launch-c2",
       "rule": "max-two-pages",
       "pages": [
@@ -1171,15 +1006,6 @@
         "occ-black-friday",
         "occ-product-launch",
         "social-ad-photos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-product-launch-c2",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-black-friday",
-        "occ-product-launch"
       ]
     },
     {
@@ -1221,15 +1047,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-c2",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-black-friday",
-        "occ-sale-discount"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-c3",
       "rule": "max-two-pages",
       "pages": [
@@ -1237,24 +1054,6 @@
         "occ-black-friday",
         "occ-sale-discount",
         "social-ad-photos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-c3",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-black-friday",
-        "occ-sale-discount"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-c4",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-black-friday",
-        "occ-sale-discount"
       ]
     },
     {
@@ -1268,15 +1067,6 @@
     },
     {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-g1",
-      "rule": "same-page-type",
-      "pageType": "occasion",
-      "pages": [
-        "occ-black-friday",
-        "occ-sale-discount"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-sale-discount-g2",
       "rule": "same-page-type",
       "pageType": "occasion",
       "pages": [
@@ -1337,15 +1127,6 @@
       "pages": [
         "photo-hub",
         "spokesperson-videos",
-        "white-background"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-c1",
-      "rule": "max-two-pages",
-      "pages": [
-        "home",
-        "plat-amazon",
         "white-background"
       ]
     },
@@ -2146,42 +1927,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-outfit-c1",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-outfit"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-outfit-c3",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-fashion-clothing",
-        "model-photos",
-        "tpl-outfit"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-outfit-c4",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-fashion-clothing",
-        "model-photos",
-        "tpl-outfit"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-pack-c1",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-food-drinks",
-        "ind-health-wellness",
-        "tpl-pack"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-pack-c1",
       "rule": "same-page-type",
       "pageType": "industry",
@@ -2333,15 +2078,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-sale-c4",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-home-living",
-        "social-ad-photos",
-        "tpl-sale"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-sale-g1",
       "rule": "max-two-pages",
       "pages": [
@@ -2357,24 +2093,6 @@
         "ind-shoes",
         "social-ad-photos",
         "tpl-sale"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-size-c1",
-      "rule": "max-two-pages",
-      "pages": [
-        "plat-facebook",
-        "spokesperson-videos",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-size-c2",
-      "rule": "max-two-pages",
-      "pages": [
-        "plat-facebook",
-        "plat-instagram",
-        "tpl-size"
       ]
     },
     {
@@ -2514,33 +2232,6 @@
       "pages": [
         "tpl-story",
         "tpl-ugc"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-tryon-c1",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-fashion-clothing",
-        "model-photos",
-        "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-tryon-c2",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-fashion-clothing",
-        "model-photos",
-        "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-tryon-c4",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-fashion-clothing",
-        "model-photos",
-        "tpl-tryon"
       ]
     },
     {
@@ -2796,29 +2487,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/size-reference-v1/size-reference/example-01",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-color",
-        "tpl-size"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/size-reference-v1/size-reference/example-02",
       "rule": "max-two-pages",
       "pages": [
         "blog",
         "blog-ai-video-review-checklist",
-        "tpl-light",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/size-reference-v1/size-reference/example-02",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
         "tpl-light",
         "tpl-size"
       ]
@@ -2903,33 +2576,6 @@
       "pages": [
         "tpl-story",
         "tpl-ugc"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on/example-01",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-detail",
-        "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on/example-02",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-pack",
-        "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on/example-03",
-      "rule": "same-page-type",
-      "pageType": "template",
-      "pages": [
-        "tpl-sale",
-        "tpl-tryon"
       ]
     }
   ]

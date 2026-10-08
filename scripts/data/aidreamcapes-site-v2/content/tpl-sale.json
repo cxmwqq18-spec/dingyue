@@ -18,16 +18,16 @@
   "tip": "Say where you want the empty space, for example \"open sky across the left third,\" so your offer text has a calm area to sit on.",
   "steps": [
     {
-      "t": "Upload the sale item",
-      "d": "Pick a crisp photo of the jacket, bag, or shoes you're discounting."
+      "t": "Choose the item for the sale",
+      "d": "Use a clear product photo that shows the full shape, color, and main details."
     },
     {
-      "t": "Describe the season and the gap",
-      "d": "Write the scene and where the empty area should be, like \"snowy mountains, chalet, clear sky upper left.\""
+      "t": "Set the scene and open area",
+      "d": "Place the product to one side if the offer needs a clear space beside it."
     },
     {
-      "t": "Type the offer last",
-      "d": "Download the image and type your discount, dates, and code over the open space in your design tool."
+      "t": "Download and add the deal",
+      "d": "Enter the discount, code, and end date in your editor."
     }
   ],
   "ideas": [
@@ -72,7 +72,7 @@
     },
     {
       "q": "Can I reuse one image for different offers?",
-      "a": "Yes. Since the offer is added afterward, the same image can carry a percent-off headline in one ad and a free-shipping line in another."
+      "a": "Yes. Since the offer is added afterward, this image can carry a percent-off headline in one ad and a free-shipping line in another."
     },
     {
       "q": "Can I make a sale banner in a vertical format?",
@@ -119,7 +119,7 @@
       },
       {
         "t": "A reusable background",
-        "d": "Carry the same visual into a percent-off post, free-shipping message, or reminder by changing the overlay."
+        "d": "Carry this visual into a percent-off post, free-shipping message, or reminder by changing the overlay."
       },
       {
         "t": "A square campaign asset",
@@ -161,7 +161,7 @@
       },
       {
         "t": "Preview every crop",
-        "d": "Review feed and mobile placements so the product and offer remain visible at the same time."
+        "d": "Review feed and mobile placements so the product and offer remain visible together."
       }
     ]
   },
@@ -199,13 +199,219 @@
             "product": "summer sandals"
           },
           {
-            "ref": "n:gen2:tpl-sale-g3",
-            "title": "Kitchen gift set with space on the left for text",
+            "ref": "g:feed-ad-still/example-07",
+            "title": "Square running shoe feed crop",
             "kind": "photo",
-            "product": "kitchen gift set"
+            "product": "running shoe"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "Create sale product photos with room for the current offer, using a clear source and a scene that fits the item.",
+    "strip": [
+      "n:gen2:change-background-c1",
+      "n:gen2:examples-g8",
+      "n:guide:c3-r3-occ-sale-bedding",
+      "n:gen2:occ-sale-discount-g2",
+      "n:gen2:lifestyle-photos-g6",
+      "g:sale-campaign-key-visual/example-07"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-sale-c3-m2-source",
+      "result": "n:guide:tpl-sale-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Place this blue hard-shell suitcase beside a pale wall and a small leafy plant, with all wheels visible.",
+      "options": [
+        [
+          "Template",
+          "Sale product photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Feed or product page"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose the product for your sale photo",
+      "lead": "Select a product category and set the mood for the offer image.",
+      "chips": [
+        {
+          "id": "travel",
+          "label": "Travel goods"
+        },
+        {
+          "id": "home",
+          "label": "Linen and home goods"
+        },
+        {
+          "id": "beauty",
+          "label": "Beauty and wellness"
+        },
+        {
+          "id": "clothing",
+          "label": "Apparel and accessories"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:plat-youtube-shorts-g1",
+          "label": "Daypack lifted by its top handle",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Show this daypack lifted by its top handle against a clean background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:size-reference/example-03",
+          "label": "Backpack beside a carry-on",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Show this backpack beside a closed carry-on suitcase, with both items fully in view.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:lifestyle-scene/example-08",
+          "label": "Linen tote in sunlight",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show this linen tote in a calm, sunlit lifestyle scene with its full outline visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:plat-shopify-c3-m2-source-angle",
+          "label": "Ceramic bowls from a lower angle",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show these four coordinated ceramic bowls from a lower three-quarter angle.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c4-tpl-sale-beauty-tube",
+          "label": "Skincare tube on pale stone",
+          "chips": [
+            "beauty"
+          ],
+          "prompt": "Show this plain skincare tube on a pale stone vanity with its full shape visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:protein-pack",
+          "label": "Protein tub on a gym bench",
+          "chips": [
+            "beauty"
+          ],
+          "prompt": "Place this unbranded protein tub on a clean gym bench with its plain front facing forward.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:fashion-editorial/example-08",
+          "label": "Editorial apparel for a seasonal offer",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "Create a polished fashion-editorial sale scene with the outfit fully visible and open room around it.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-spokesperson-output-bag",
+          "label": "Crossbody bag for a sale post",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "Show a person holding this plain tan canvas crossbody bag at chest height in a bright, simple setting.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a sale product photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:b1-unboxing-output",
+        "h": "Present a small gift item in a feed post",
+        "d": "A leather wallet lifted from a plain gift box gives the sale post a clear product focus."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:b1-unboxing-videos-result",
+        "h": "Connect a packaged item to its product page",
+        "d": "A plain candle jar revealed from a carton links the promotion to a specific product listing."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-tpl-sale-m5-0",
+        "bad": "n:guide:tpl-sale-c3-bad-crop",
+        "good_label": "Both planter silhouettes stay in view",
+        "bad_label": "Small planter edge is cut off on the left"
+      },
+      {
+        "good": "n:guide:tpl-sale-c3-m5-board-clean",
+        "bad": "n:guide:c5-tpl-sale-m5-board-blur",
+        "good_label": "The whole board, handle, and grain stay clear",
+        "bad_label": "Board grain and edge soften into blur"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:white-background-fix-m1-planter",
+        "frame": "1:1",
+        "label": "Square white-background planter sale photo"
+      },
+      {
+        "ref": "n:guide:c3-r3-occ-sale-skincare-set",
+        "frame": "1:1",
+        "label": "Square skincare-set sale photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c4-occ-sale-m7-ugc-photo",
+      "zones": [
+        "Offer",
+        "End date"
+      ],
+      "items": [
+        "Add the discount, code, and end date as editable text.",
+        "Update or remove the offer when the sale ends."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make sale product photos in three steps"
+      },
+      "m3": {
+        "h2": "Choose a product for your sale photo"
+      },
+      "m4": {
+        "h2": "Use sale photos in a feed or product page"
+      },
+      "m5": {
+        "h2": "Start a sale photo with the whole product in view"
+      },
+      "m6": {
+        "h2": "Square sale photos for social and listings"
+      },
+      "m7": {
+        "h2": "Add the sale offer after download"
+      },
+      "faq": {
+        "h2": "Questions about sale product photos"
+      },
+      "templates": {
+        "h2": "More sale product photo templates",
+        "lead": "Choose another product and keep the offer area clear."
+      }
+    }
   }
 }

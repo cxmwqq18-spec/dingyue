@@ -12,22 +12,22 @@
     "tea packaging design preview"
   ],
   "intro": [
-    "The example puts a tea brand on a wooden shelf in morning sun: a tall carton and a stand-up pouch, both printed with a misty mountain watercolor, next to a cup of tea and a jar of loose leaves.",
-    "It's handy in the gap between finished artwork and finished stock. Show the new packaging on your Shopify product page or in a coming-soon post while the boxes are still at the printer, or compare two label designs in the same scene before you commit to one. For food and drink products, check that the printed pack still matches what you will ship."
+    "The example places a kraft coffee pouch on a grocery shelf beside simple pantry staples, with its blank front panel facing forward.",
+    "It's handy in the gap between finished artwork and finished stock. Show the new packaging on your Shopify product page or in a coming-soon post while the boxes are still at the printer, or compare two label designs in one scene before you commit to one. For food and drink products, check that the printed pack still matches what you will ship."
   ],
   "tip": "Upload a flat, high-resolution image of your design or label, and keep tiny text like ingredient lists off the front, since fine print may not come out as designed.",
   "steps": [
     {
-      "t": "Upload your design or label",
-      "d": "Use the flat artwork for the front panel, or a photo of a printed sample if you have one."
+      "t": "Upload a clear pouch photo",
+      "d": "Show the whole coffee pouch and its sealed top against a plain background."
     },
     {
-      "t": "Name the shape and setting",
-      "d": "Say what the packaging is and where it sits, for example \"tall carton and stand-up pouch on a wooden kitchen shelf.\""
+      "t": "Choose the shelf setting",
+      "d": "Describe the surface, nearby items, and light while keeping the package front easy to see."
     },
     {
-      "t": "Try a second setting",
-      "d": "Download the result, then run it again with a different scene, like a coffee shop counter, to see which one feels right for your brand."
+      "t": "Download and add label details",
+      "d": "Add the finished label wording and required product information in your design file."
     }
   ],
   "ideas": [
@@ -185,31 +185,223 @@
   },
   "examples": {
     "h2": "More packaging mockups",
-    "lead": "See your packaging in a shop setting before you print. Fine print is left out, so add it in your design file.",
+    "lead": "Explore different package types and settings before you prepare artwork for print.",
     "groups": [
       {
         "label": "Packaging in place",
         "items": [
           {
-            "ref": "n:gen2:tpl-pack-g1",
-            "title": "Coffee pouch standing on a cafe counter",
+            "ref": "n:gen2:unboxing-videos-c2",
+            "title": "Candle inside a kraft mailer",
             "kind": "photo",
-            "product": "coffee pouch"
+            "product": "candle"
           },
           {
-            "ref": "n:gen2:tpl-pack-g2",
-            "title": "Same coffee pouch on a grocery shelf",
+            "ref": "n:guide:occ-holidays-c3-m3-gift-set",
+            "title": "White candle jar nestled in a gift box",
             "kind": "photo",
-            "product": "coffee pouch"
+            "product": "white candle jar"
           },
           {
-            "ref": "n:gen2:tpl-pack-g3",
-            "title": "Carton, pouch and bottle lined up together",
+            "ref": "n:guide:c4-occ-holidays-browser-giftset",
+            "title": "Blank cocoa pouch and gift box with holiday details",
             "kind": "photo",
-            "product": "carton, pouch and bottle"
+            "product": "cocoa pouch and gift box"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "Packaging preview images place a product design into a setting before you prepare final artwork. Upload a clear package photo, describe the shape and scene, then add exact label text in your design file.",
+    "strip": [
+      "n:gen2:tpl-pack-g1",
+      "n:gen2:tpl-pack-g2",
+      "n:guide:b1-spokesperson-videos-source",
+      "n:gen2:occ-product-launch-c4",
+      "n:guide:c4-occ-holidays-post-gift",
+      "n:guide:c5-occ-holidays-strip-tea-tin"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-pack-c3-m2-source",
+      "result": "n:gen2:tpl-pack-g2",
+      "mode": "photo",
+      "prompt": "Place this kraft coffee pouch on a grocery shelf beside plain pantry staples, with the blank front panel facing forward."
+    },
+    "picker": {
+      "title": "Choose a setting for your packaging preview",
+      "lead": "Choose a product context that helps shoppers picture where the package belongs.",
+      "chips": [
+        {
+          "id": "counter",
+          "label": "Countertop"
+        },
+        {
+          "id": "launch",
+          "label": "New arrival"
+        },
+        {
+          "id": "shelf",
+          "label": "Shelf display"
+        },
+        {
+          "id": "catalog",
+          "label": "Catalog view"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-pack-g3",
+          "label": "Carton pouch and bottle",
+          "chips": [
+            "counter"
+          ],
+          "prompt": "Line up a plain carton, pouch, and bottle on a bright counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:h1-photo-hub-candle-source",
+          "label": "Candle jar with a lid",
+          "chips": [
+            "counter"
+          ],
+          "prompt": "Show this plain ceramic candle jar with its matching lid on a neutral surface.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:h1-photo-hub-candle-result",
+          "label": "Candle jar in a carton",
+          "chips": [
+            "launch"
+          ],
+          "prompt": "Show this candle jar revealed in an open kraft carton with pale tissue.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c4-tpl-pack-coffee-pouch-unbox",
+          "label": "Coffee pouch with beans",
+          "chips": [
+            "launch"
+          ],
+          "prompt": "Set this blank kraft coffee pouch beside a small scoop of coffee beans on a pale counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-pack-c3-m3-shelf-boxes",
+          "label": "Coffee pouch on a plain shelf",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Place this blank coffee pouch on a grocery shelf beside plain kraft cartons and jars.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-pack-c3-m3-shelf-bags",
+          "label": "Coffee pouch with pantry refill bags",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Place this blank coffee pouch on a pantry shelf beside simple unbranded refill bags.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-pack-c3-m3-catalog-lineup",
+          "label": "Coffee pouch in a catalog",
+          "chips": [
+            "catalog"
+          ],
+          "prompt": "Show this blank coffee pouch centered with plain packaging pieces arranged for a catalog.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-pack-c3-m3-catalog-arrangement",
+          "label": "Coffee pouch with carton and tissue",
+          "chips": [
+            "catalog"
+          ],
+          "prompt": "Arrange this blank coffee pouch beside a plain carton and folded tissue in a catalog-style square photo.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Preview packaging in a scene"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:guide:tpl-pack-c3-m4-retail-shelf",
+        "h": "Show the pouch in a retail shelf setting",
+        "d": "A simple shelf scene helps shoppers see how this plain package stands beside similar goods."
+      },
+      {
+        "frame": "listing",
+        "ref": "n:guide:tpl-pack-c3-m4-unboxing",
+        "h": "Show the package during unboxing",
+        "d": "An open carton and protective tissue give a clear view of how the pouch arrives."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-tpl-pack-m5-0",
+        "bad": "n:guide:c3-tpl-pack-m5-crop",
+        "good_label": "Package front and sealed edge visible",
+        "bad_label": "Sealed edge cut by frame"
+      },
+      {
+        "good": "n:granola-m5-clean",
+        "bad": "n:guide:b1-image-to-video-bad-blur",
+        "good_label": "Granola jar and berries stay clear",
+        "bad_label": "Granola jar and package edge blur"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c3-r3-tpl-pack-lineup",
+        "frame": "1:1",
+        "label": "Coffee pouch and package lineup preview"
+      },
+      {
+        "ref": "n:guide:c3-r3-tpl-pack-gift",
+        "frame": "1:1",
+        "label": "Gift set package view"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c3-r3-plat-shopify-m5-0",
+      "zones": [
+        "Product name",
+        "Required label text"
+      ],
+      "items": [
+        "Add exact wording and product details in your design editor after download.",
+        "Place required ingredients and cautions outside the generated scene."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Preview packaging in three clear steps"
+      },
+      "m3": {
+        "h2": "Choose a setting for an AI packaging preview"
+      },
+      "m4": {
+        "h2": "Use packaging previews in a listing or product page"
+      },
+      "m5": {
+        "h2": "Start with a clear package photo"
+      },
+      "m6": {
+        "h2": "Square packaging preview images for product pages"
+      },
+      "m7": {
+        "h2": "Add final package text in your editor"
+      },
+      "faq": {
+        "h2": "Questions about AI packaging previews"
+      },
+      "templates": {
+        "h2": "More packaging preview templates",
+        "lead": "Choose another package scene for your product design."
+      }
+    }
   }
 }

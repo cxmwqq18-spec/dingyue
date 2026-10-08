@@ -1,10 +1,10 @@
 {
   "id": "plat-amazon",
   "title": "Amazon Product Photos on White and in Use | AIVideosUGC",
-  "description": "Make Amazon product photos from pictures you already have: clean white-background main images plus lifestyle and detail shots for your gallery. Try it now.",
+  "description": "Create square Amazon product photos from one upload, including a white-background main image, a lifestyle view, and detail shots.",
   "h1": "Amazon Product Photos for Your Main Image and Listing Gallery",
   "eyebrow": "Amazon listings",
-  "lead": "Amazon product photos start with a clean white main image, then add photos that show size, detail and real use, so shoppers can judge the product without holding it.",
+  "lead": "Plan an Amazon gallery around a square white-background main image, a square lifestyle secondary, and a square detail or size image.",
   "card": "A clean white main image, then photos for size, detail and use.",
   "secondary_keywords": [
     "Amazon main image white background",
@@ -13,7 +13,7 @@
     "Amazon lifestyle product photos"
   ],
   "intro": [
-    "On Amazon, your photos do the work a store shelf would do. The main image has to be clean and plain so it looks right in search results, and the rest of the gallery has to answer what a shopper would ask in person: How big is it? What's in the box? What does it look like on a counter? AIVideosUGC turns the product photos you already have into new square images, from a white-background main shot to lifestyle and close-up scenes.",
+    "Amazon listings start with a square white-background image, followed by square lifestyle, detail, or size photos of this item. Keep the product recognizable from one view to the next, and use each image to answer a shopper’s next question.",
     "It's made for sellers who need a fuller gallery without reshooting every item. Upload a phone photo of your product, pick a white background or describe a setting, and download the result. For front, side and back views, photograph each side and use the Every Angle template to keep the gallery consistent. You can also make a short 16:9 or 1:1 video if your listing has room for one. Callouts and text labels go on afterward in Canva or another design tool."
   ],
   "specs": [
@@ -56,7 +56,7 @@
   "faq": [
     {
       "q": "Does this work for Amazon main images?",
-      "a": "Yes. Upload your product photo and choose a white background to get a square image of the item on plain white. Look it over closely before you upload, as you would with any photo."
+      "a": "Use square images by default: a white-background main image, a lifestyle secondary, and a detail or size view. Keep the product recognizable across the gallery and check the current category requirements before uploading."
     },
     {
       "q": "Can I add text callouts to my gallery images?",
@@ -74,7 +74,7 @@
   "overview": [
     {
       "h2": "Treat the main image as a proof of the item",
-      "d": "Amazon shoppers meet the product first in the main image. Start with a photo that shows the complete item, then use a pure white background and a centered composition with no extra words, badges, or props. Amazon's current guide says the product should fill at least 85% of the frame, the longest side should be 500–10,000 pixels, and 1,000 or more pixels enables zoom. Compare the downloaded result with the live requirement for your category before uploading."
+      "d": "A listing gallery works best when its square images answer different questions about this item. Lead with a clean white-background main image, then show a lifestyle view and a useful detail or size cue."
     },
     {
       "h2": "Use the gallery to answer the next questions",
@@ -99,19 +99,19 @@
     ]
   },
   "results": {
-    "h2": "A gallery with a job for every frame",
+    "h2": "One product, three square uses",
     "items": [
       {
-        "t": "Main image",
-        "d": "A pure-white product view that follows the current Amazon category rules and leaves out promotional text."
+        "t": "White-background main image",
+        "d": "A square product view on clean white, with no extra words, badges, or props."
       },
       {
-        "t": "Detail frame",
-        "d": "A close view of the material, mechanism, finish, or label that cannot be judged from the first shot."
+        "t": "Lifestyle secondary image",
+        "d": "A square scene that shows this product in a familiar setting."
       },
       {
-        "t": "Scale frame",
-        "d": "A scene with a familiar object or a clearly stated real dimension added by you, so shoppers are not asked to guess."
+        "t": "Detail or size image",
+        "d": "A square close view that shows a useful feature or size reference for this product."
       }
     ]
   },
@@ -184,14 +184,14 @@
             "product": "ceramic mug"
           },
           {
-            "ref": "n:gen2:plat-amazon-g2",
-            "title": "Same mug held in one hand to show size",
+            "ref": "n:guide:plat-amazon-c3-size-square-detail",
+            "title": "This mug rim in close detail",
             "kind": "photo",
             "product": "ceramic mug"
           },
           {
             "ref": "n:gen2:plat-amazon-g3",
-            "title": "Same mug in use beside a kettle",
+            "title": "This mug in use beside a kettle",
             "kind": "photo",
             "product": "ceramic mug"
           }
@@ -217,5 +217,247 @@
     ]
   },
   "templates_lead": "Choose a listing image purpose: a clean main view, a detail, or a product-use scene.",
-  "cta_lead": "Build a listing photo set around the main view, useful details, and product use."
+  "cta_lead": "Build a listing photo set around the main view, useful details, and product use.",
+  "steps": [
+    {
+      "t": "Choose the product for the gallery",
+      "d": "Start with a clear photo that shows the full item and its important parts."
+    },
+    {
+      "t": "Pick the placement and frame",
+      "d": "Choose a square main, lifestyle, or close-detail image for the product listing."
+    },
+    {
+      "t": "Download and add listing details",
+      "d": "Enter current product details in your seller tools or image editor."
+    }
+  ],
+  "visual": {
+    "overview": "Use this mug in three square images: a white-background main image, a familiar setting, and a close rim detail.",
+    "strip": [
+      "n:guide:c3-r3-occ-product-drink",
+      "n:guide:tpl-pack-c3-m2-source",
+      "n:gen2:white-background-g2",
+      "n:gen2:white-background-g1",
+      "n:guide:white-background-soap-dispenser",
+      "n:guide:white-background-desk-organizer"
+    ],
+    "steps": {
+      "source": "n:guide:plat-amazon-c3-m2-source",
+      "result": "n:guide:plat-amazon-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Place this plain white ceramic mug beside a folded linen napkin and a small plate on a bright kitchen table.",
+      "options": [
+        [
+          "Template",
+          "Amazon listing photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Main · lifestyle · detail"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose an Amazon product view",
+      "lead": "Pick the image role that answers a shopper’s next question.",
+      "chips": [
+        {
+          "id": "main",
+          "label": "Main image"
+        },
+        {
+          "id": "detail",
+          "label": "Product detail"
+        },
+        {
+          "id": "use",
+          "label": "In use"
+        },
+        {
+          "id": "bundle",
+          "label": "Product packaging"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:white-background-kettle",
+          "label": "Green kettle on white",
+          "chips": [
+            "main"
+          ],
+          "prompt": "Show this sea-glass green kettle alone on a seamless white background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-serving-bowl",
+          "label": "Stoneware bowl on white",
+          "chips": [
+            "main"
+          ],
+          "prompt": "Show this cream stoneware bowl alone on a white background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-04",
+          "label": "Travel mug rim detail",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Show the complete ceramic rim and handle in a sharp square detail photo.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m3-gem-prongs",
+          "label": "Gold gemstone prongs in close detail",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Show the simple gold prongs holding this clear gemstone in sharp macro detail.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:white-mug",
+          "label": "Cream travel mug on white",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Show this matte cream travel mug with its lid on a pure white background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:plat-amazon-c3-size-square-main",
+          "label": "White ceramic mug on white",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Show this plain white ceramic mug centered on a seamless white square background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-electronics-m3-headphones",
+          "label": "Headphones with an open box",
+          "chips": [
+            "main",
+            "bundle"
+          ],
+          "prompt": "Show these plain gray over-ear headphones beside their open box.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-pack-c3-m3-shelf-boxes",
+          "label": "Coffee pouch on a grocery shelf",
+          "chips": [
+            "use",
+            "bundle"
+          ],
+          "prompt": "Show this plain kraft coffee pouch beside related goods on a grocery shelf.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make an Amazon product photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:guide:c4-amazon-phone-case",
+        "h": "Show an empty phone case beside listing details",
+        "d": "A square case photo keeps the tan leather pockets and stitching clear without depicting a handset."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:c4-amazon-notebook-square",
+        "h": "Show another view near product details",
+        "d": "A supporting photo can show material, setting, or scale beside the listing information."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-plat-amazon-m5-0",
+        "bad": "n:guide:plat-amazon-c3-bad-crop",
+        "good_label": "Backpack body and straps fit the frame",
+        "bad_label": "Backpack edges and straps are clipped"
+      },
+      {
+        "good": "n:gen2:white-background-c3",
+        "bad": "n:guide:plat-amazon-c3-bad-blur",
+        "good_label": "All train cars stay easy to see",
+        "bad_label": "Train details blur on white"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c3-r3-plat-amazon-m8-0",
+        "frame": "1:1",
+        "label": "Square white-background backpack main image"
+      },
+      {
+        "ref": "n:guide:c3-r3-plat-amazon-m8-1",
+        "frame": "1:1",
+        "label": "Square backpack trail-lifestyle image"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c3-r3-plat-amazon-m8-2",
+      "zones": [
+        "Product details",
+        "Callout"
+      ],
+      "items": [
+        "Add real dimensions and feature labels in your seller tools or design editor.",
+        "Keep the price and current availability in the product listing."
+      ]
+    },
+    "sizes": [
+      {
+        "frame": "1:1",
+        "ref": "n:guide:c4-amazon-mug-main-white",
+        "label": "White-background mug main image"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:plat-amazon-c3-size-square-lifestyle",
+        "label": "Lifestyle secondary image"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:c4-amazon-mug-rim-detail",
+        "label": "Mug rim detail"
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "Plan Amazon product photos in three steps"
+      },
+      "m3": {
+        "h2": "Choose an Amazon product image role"
+      },
+      "m4": {
+        "h2": "Use Amazon photos in a listing or storefront"
+      },
+      "m5": {
+        "h2": "Start Amazon images with a clear product photo"
+      },
+      "m6": {
+        "h2": "Square product photos for Amazon listings"
+      },
+      "m7": {
+        "h2": "Add Amazon listing details after download"
+      },
+      "m8": {
+        "h2": "Three square Amazon listing photos from one product"
+      },
+      "faq": {
+        "h2": "Questions about Amazon product photos"
+      },
+      "templates": {
+        "h2": "More Amazon product photo templates",
+        "lead": "Choose a clean listing view or a lifestyle scene for your product."
+      }
+    }
+  }
 }

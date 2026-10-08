@@ -4,7 +4,7 @@
   "description": "Create Shopify product photos with AI: matching square images for collection pages, lifestyle shots for product pages and short videos. Start with one photo.",
   "h1": "Shopify Product Photos and Videos From One Upload",
   "eyebrow": "Shopify stores",
-  "lead": "Shopify product photos work best as a matching set: square photos, a lifestyle shot or two, and a short clip for each product page, all starting from a picture you already took.",
+  "lead": "Plan Shopify product photos as square images for product pages, collection or home cards, and social feed posts.",
   "card": "Matching square photos, lifestyle shots and a short clip for each product page.",
   "secondary_keywords": [
     "Shopify product images",
@@ -13,7 +13,7 @@
     "Shopify product page video"
   ],
   "intro": [
-    "A Shopify store looks more polished when every product photo feels like it came from the same shoot. Mixed backgrounds and odd crops make a collection page look unfinished, even when the products themselves are great. AIVideosUGC helps you even things out: upload the photos you have, choose a clean background or describe a setting, and get square images that sit neatly side by side.",
+    "A Shopify store looks more polished when every product photo feels like part of one coordinated shoot. Mixed backgrounds and odd crops make a collection page look unfinished, even when the products themselves are great. AIVideosUGC helps you even things out: upload the photos you have, choose a clean background or describe a setting, and get square images that sit neatly side by side.",
     "Product pages also need something that keeps shoppers scrolling. Add a lifestyle photo, such as a throw blanket on a reading chair or a water bottle in a gym bag, and a 6, 10, 15 or 30-second video in 1:1 or 16:9 for the media gallery. Everything stays private in your account until you download it and add it in your Shopify admin. For your store's About page, team headshots in one shared setting help a small team look consistent."
   ],
   "specs": [
@@ -31,18 +31,18 @@
     ],
     [
       "Clip length",
-      "Short: 6, 10, 15 or 30 seconds"
+      "Short: 6, 10 or 15 seconds"
     ]
   ],
   "tips": [
-    "Use the same shape for every product photo in a collection so the grid lines up neatly.",
+    "Use a consistent shape for every product photo in a collection so the grid lines up neatly.",
     "Put your clearest, simplest photo first, because it's usually the one shown on collection pages.",
     "Write short alt text for each image so shoppers using screen readers know what's pictured."
   ],
   "ideas": [
     {
       "t": "Matching collection grid",
-      "d": "Give every candle, mug or tee in a collection the same plain background so the page reads as one set."
+      "d": "Give every candle, mug or tee in a collection a consistent plain background so the page reads as one set."
     },
     {
       "t": "Lifestyle shot for the product page",
@@ -56,7 +56,7 @@
   "faq": [
     {
       "q": "What size should Shopify product photos be?",
-      "a": "Shopify accepts several shapes; what matters most is keeping them consistent. Our photos are square by default, which keeps collection pages tidy."
+      "a": "Square by default. Pair this product with a consistent background and camera height across product-page photos and collection or home cards."
     },
     {
       "q": "Can I add a video to my Shopify product page?",
@@ -64,7 +64,7 @@
     },
     {
       "q": "Will all my product photos look consistent?",
-      "a": "Describing the same background each time helps a lot. Results can still vary slightly, so review each image before it goes on your store."
+      "a": "Describing a consistent background each time helps a lot. Results can still vary slightly, so review each image before it goes on your store."
     },
     {
       "q": "What are Shopify product video limits?",
@@ -74,7 +74,7 @@
   "overview": [
     {
       "h2": "Make a catalog feel like one store",
-      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Pick one visual rule for a collection—such as a warm neutral surface with the item centered—and repeat that rule in each prompt. AIVideosUGC creates square stills by default, which gives you a practical starting point for a tidy grid."
+      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Use square images for the product page, collection or home card, and social feed post around this product."
     },
     {
       "h2": "Choose media for the page job",
@@ -89,7 +89,7 @@
         "d": "Photograph each item from a comparable front or three-quarter angle so the collection grid does not jump from product to product."
       },
       {
-        "t": "Use the same background words",
+        "t": "Use consistent background wording",
         "d": "Reuse a short description such as matte stone, warm daylight, and soft shadow, then change only the product and action."
       },
       {
@@ -99,19 +99,19 @@
     ]
   },
   "results": {
-    "h2": "A Shopify media sequence that earns its space",
+    "h2": "One product, three square uses",
     "items": [
       {
-        "t": "Collection anchor",
-        "d": "A square image with the product clearly isolated enough to scan beside its neighbors."
+        "t": "Product-page image",
+        "d": "A square product view that sits clearly beside its collection neighbors."
       },
       {
-        "t": "Context image",
-        "d": "A lifestyle scene that shows where the item sits, hangs, or gets used without hiding its important parts."
+        "t": "Collection or home card",
+        "d": "A square image that makes this product easy to scan in a grid."
       },
       {
-        "t": "Movement proof",
-        "d": "A short product-page clip that demonstrates opening, packing, pouring, folding, or another visible action."
+        "t": "Social feed post",
+        "d": "A square scene that gives this product a clear social post without changing its shape."
       }
     ]
   },
@@ -120,7 +120,7 @@
     "items": [
       {
         "t": "Coordinated candle row",
-        "d": "Place three candle vessels on the same pale wood surface with matching daylight and enough space for each label to be reviewed later."
+        "d": "Place three candle vessels on one pale wood surface with matching daylight and enough space for each label to be reviewed later."
       },
       {
         "t": "Blanket in use",
@@ -179,18 +179,18 @@
         "items": [
           {
             "ref": "n:gen2:plat-shopify-g1",
-            "title": "Four ceramic bowls shot at the same height",
+            "title": "Four ceramic bowls shot from one consistent height",
             "kind": "photo",
             "product": "ceramic bowls"
           },
           {
-            "ref": "n:gen2:plat-shopify-g2",
+            "ref": "n:guide:tpl-size-c3-m7-tote-reference",
             "title": "Linen tote packed at a market stall",
             "kind": "photo",
             "product": "linen tote"
           },
           {
-            "ref": "n:gen2:plat-shopify-g3",
+            "ref": "n:guide:c3-r3-occ-holidays-pillow",
             "title": "Throw pillows on a sofa for a collection header",
             "kind": "photo",
             "product": "throw pillows"
@@ -200,5 +200,245 @@
     ]
   },
   "templates_lead": "Pick matching looks for your product grid, detail page, and short product video.",
-  "cta_lead": "Start with one product and plan matching images for its collection and detail pages."
+  "cta_lead": "Start with one product and plan matching images for its collection and detail pages.",
+  "steps": [
+    {
+      "t": "Choose the product for the store",
+      "d": "Start with a clear photo of the item you want to feature across the store."
+    },
+    {
+      "t": "Choose the placement and frame",
+      "d": "Choose square product, collection, or social images for the storefront."
+    },
+    {
+      "t": "Download and add store details",
+      "d": "Add the product name, price, and collection details in Shopify admin."
+    }
+  ],
+  "visual": {
+    "overview": "Use this four-bowl set in three square images: a product page image, a collection or home card, and a social post.",
+    "strip": [
+      "n:sunglasses-pack",
+      "n:guide:c4-tpl-sale-beauty-tube",
+      "n:gen2:tpl-size-g2",
+      "n:guide:c4-shopify-strip-bedding-square",
+      "n:guide:c4-shopify-strip-pillowcase-square",
+      "n:gen2:spokesperson-videos-g3"
+    ],
+    "steps": {
+      "source": "n:guide:plat-shopify-c3-m2-source",
+      "result": "n:guide:plat-shopify-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Arrange this set of four ceramic bowls on a light dining table, keeping their colors and relative sizes clear.",
+      "options": [
+        [
+          "Template",
+          "Shopify product photos"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Product page · home · social"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a Shopify square image placement",
+      "lead": "Pick a square scene for the product page, collection or home card, or social feed.",
+      "chips": [
+        {
+          "id": "product",
+          "label": "Product page"
+        },
+        {
+          "id": "home",
+          "label": "Collection or home card"
+        },
+        {
+          "id": "collection",
+          "label": "Collection grid"
+        },
+        {
+          "id": "social",
+          "label": "Square social post"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:c4-shopify-m3-planter-square",
+          "label": "Planter beside plain books",
+          "chips": [
+            "product"
+          ],
+          "prompt": "Place this small ceramic planter on a bookshelf beside plain spines.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c4-shopify-m3-shelf-square",
+          "label": "Wall shelf with simple styling",
+          "chips": [
+            "product"
+          ],
+          "prompt": "Show this mounted wall shelf with a small plant and plain-spined books in a square composition.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-size-storage",
+          "label": "Fabric storage boxes on a shelf",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Place these fabric storage boxes neatly on an open shelf.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:h1-photo-hub-lamp",
+          "label": "Ivory lamp on white",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show this matte ivory table lamp with its full shade, stem, and base visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c4-shopify-m4-reusable-bottle",
+          "label": "Reusable bottle on a desk",
+          "chips": [
+            "collection"
+          ],
+          "prompt": "Show this blue-gray silicone water bottle on a tidy work desk beside a closed laptop.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-before-after-videos-result",
+          "label": "Cables routed through an organizer",
+          "chips": [
+            "collection"
+          ],
+          "prompt": "Show these three desk cables routed through this black organizer on a clear desk.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:plat-shopify-c3-m3-social-brunch",
+          "label": "Four bowls at brunch",
+          "chips": [
+            "social"
+          ],
+          "prompt": "Show this set of four ceramic bowls in a bright brunch-table scene composed for a square social feed post.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:plat-shopify-c3-m3-social-window",
+          "label": "Four bowls by a bright window",
+          "chips": [
+            "social"
+          ],
+          "prompt": "Arrange this set of four ceramic bowls on a bright windowside table for a square social feed post.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a Shopify product photo"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:guide:c3-r3-tpl-pack-m5-0",
+        "h": "Show a plain coffee pouch in a store scene",
+        "d": "A simple package photo gives shoppers a clear view of the pouch and its blank label area."
+      },
+      {
+        "frame": "post",
+        "ref": "n:guide:ind-jewelry-accessories-m3-necklace-clasp",
+        "h": "Make a social post for a collection",
+        "d": "A simple accessory scene gives a collection post a clear product focus."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-plat-shopify-m5-0",
+        "bad": "n:guide:plat-shopify-c3-bad-crop",
+        "good_label": "Coffee pouch and seal stay in the frame",
+        "bad_label": "Pouch edge is clipped by the frame"
+      },
+      {
+        "good": "n:guide:c3-r3-plat-shopify-m5-1",
+        "bad": "n:guide:plat-shopify-c3-bad-blur",
+        "good_label": "Lunchbox shape and handle stay clear",
+        "bad_label": "Lunchbox details blur into the counter"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c3-r3-plat-shopify-m8-0",
+        "frame": "1:1",
+        "label": "Square ceramic-bowl product image"
+      },
+      {
+        "ref": "n:guide:plat-shopify-c3-m6-square-use",
+        "frame": "1:1",
+        "label": "Square ceramic-bowl lifestyle image"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c3-r3-plat-shopify-m8-2",
+      "zones": [
+        "Product name",
+        "Price"
+      ],
+      "items": [
+        "Add the product name and price in Shopify admin after download.",
+        "Use the square image for a product page, collection card, or social post."
+      ]
+    },
+    "sizes": [
+      {
+        "frame": "1:1",
+        "ref": "n:guide:c4-shopify-bowls-main-angle",
+        "label": "Low three-quarter bowl product image"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:plat-shopify-c3-m8-square-collection",
+        "label": "Collection or home card"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:plat-shopify-c3-m8-square-social",
+        "label": "Social feed post"
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "Plan Shopify product photos in three steps"
+      },
+      "m3": {
+        "h2": "Choose a square Shopify image placement"
+      },
+      "m4": {
+        "h2": "Use Shopify photos on product and social pages"
+      },
+      "m5": {
+        "h2": "Start Shopify images with a clear product photo"
+      },
+      "m6": {
+        "h2": "Square product images for Shopify pages"
+      },
+      "m7": {
+        "h2": "Add Shopify details after download"
+      },
+      "m8": {
+        "h2": "Three square Shopify product photos from one upload"
+      },
+      "faq": {
+        "h2": "Questions about Shopify product photos"
+      },
+      "templates": {
+        "h2": "More Shopify product photo templates",
+        "lead": "Choose a product-page, homepage, or social scene for your store."
+      }
+    }
+  }
 }

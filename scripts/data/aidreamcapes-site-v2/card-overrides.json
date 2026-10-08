@@ -114,14 +114,30 @@
       "white": {
         "ref": "n:gen2:white-background-c2",
         "alt": "Ceramic table lamp with linen shade on a pure white background."
+      },
+      "bg": {
+        "ref": "g:background-remove-replace/hero-output",
+        "alt": "Ceramic vase isolated against a clean warm studio background."
+      },
+      "compare": {
+        "ref": "f:competitor-comparison",
+        "alt": "Hand holding a black insulated mug next to a cream one on a wooden table."
       }
     }
   },
   "plat-shopify": {
     "images": {
       "color": {
-        "ref": "n:gen2:tpl-color-g3",
-        "alt": "Rain jacket in three colors on matching hangers."
+        "ref": "g:colorway-variations/hero-output",
+        "alt": "Four canvas sneakers shown together in distinct color options."
+      },
+      "model": {
+        "ref": "g:on-model-generation/hero-output",
+        "alt": "Person wearing a canvas backpack on a city walk."
+      },
+      "pack": {
+        "ref": "g:packaging-mockup/hero-output",
+        "alt": "Tea packaging arranged on a realistic kitchen shelf."
       }
     }
   },
@@ -195,8 +211,16 @@
     },
     "images": {
       "unbox": {
-        "ref": "n:gen2:occ-black-friday-g2",
-        "alt": "Gift set arranged piece by piece on a dark table."
+        "ref": "f:unboxing-experience",
+        "alt": "Hands open a gray headphone package and remove the headphones and charging case."
+      },
+      "bf": {
+        "ref": "f:black-friday-countdown",
+        "alt": "Hands unfold a black folding electric bicycle and inspect its hinge."
+      },
+      "ugc": {
+        "ref": "g:ugc-still-ad/hero-output",
+        "alt": "Person naturally holding a reusable water bottle in a home setting."
       }
     }
   },
@@ -245,6 +269,34 @@
       "jewel": {
         "ref": "n:gen2:tpl-jewel-g2",
         "alt": "Silver cufflinks worn with a white shirt cuff, framed around the accessory."
+      }
+    }
+  },
+  "occ-product-launch": {
+    "images": {
+      "unbox": {
+        "ref": "f:unboxing-experience",
+        "alt": "Hands open a gray headphone package and remove the headphones and charging case."
+      },
+      "pack": {
+        "ref": "g:packaging-mockup/hero-output",
+        "alt": "Tea packaging arranged on a realistic kitchen shelf."
+      },
+      "look": {
+        "ref": "g:fashion-editorial/hero-output",
+        "alt": "Fashion editorial image of an adult wearing a tailored neutral outfit in a sculptural space."
+      }
+    }
+  },
+  "occ-sale-discount": {
+    "images": {
+      "limited-drop-alert-video": {
+        "ref": "f:limited-drop-alert",
+        "alt": "Hands tie coral trail shoes, show the sole, and step along a mountain path."
+      },
+      "bf": {
+        "ref": "f:black-friday-countdown",
+        "alt": "Hands unfold a black folding electric bicycle and inspect its hinge."
       }
     }
   }

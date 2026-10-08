@@ -18,16 +18,16 @@
   "tip": "Name the comparison object in your description, such as \"next to a carry-on suitcase\" or \"held in an adult hand,\" and choose one your buyers already own.",
   "steps": [
     {
-      "t": "Upload the product alone",
-      "d": "Use a clear photo of just the item, so the comparison object is added to the scene rather than pulled from your background."
+      "t": "Upload the item you will measure",
+      "d": "Photograph the whole product, including handles, closures, and attached parts."
     },
     {
-      "t": "Choose a familiar object",
-      "d": "Describe one everyday thing to stand beside it: a phone, a coffee mug, a hand, or luggage for travel gear."
+      "t": "Add a familiar size reference",
+      "d": "Place it beside a common object or show it in a person’s hand."
     },
     {
-      "t": "Pair it with real numbers",
-      "d": "Download the photo and add it to your listing near the dimensions and weight in your product description."
+      "t": "Download and add real dimensions",
+      "d": "Type the measurements and units in your product listing."
     }
   ],
   "ideas": [
@@ -136,7 +136,7 @@
       },
       {
         "t": "Desk accessory",
-        "d": "A compact charger or speaker next to a laptop corner and a coffee mug on the same desk."
+        "d": "A compact charger or speaker next to a laptop corner and a coffee mug on this desk."
       },
       {
         "t": "Travel pouch",
@@ -183,20 +183,20 @@
         "label": "Scale at a glance",
         "items": [
           {
-            "ref": "n:gen2:tpl-size-g1",
-            "title": "Small pendant resting on an open palm",
+            "ref": "g:size-reference/example-06",
+            "title": "Folded backpack beside its full-size version",
             "kind": "photo",
-            "product": "small pendant"
+            "product": "travel backpack"
           },
           {
-            "ref": "n:gen2:tpl-size-g2",
+            "ref": "n:guide:c3-r3-tpl-size-tote-laptop",
             "title": "Tote bag shown with a laptop inside",
             "kind": "photo",
             "product": "canvas tote bag"
           },
           {
-            "ref": "n:gen2:tpl-size-g3",
-            "title": "Same tote beside a carry-on suitcase",
+            "ref": "n:guide:c3-r3-tpl-size-tote-travel",
+            "title": "This tote beside a carry-on suitcase",
             "kind": "photo",
             "product": "canvas tote bag"
           },
@@ -209,5 +209,211 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A size guide image works best when the complete product appears beside a familiar object or in a clear everyday setting.",
+    "strip": [
+      "n:gen2:home-g5",
+      "n:guide:c4-amazon-mug-rim-detail",
+      "n:guide:ind-jewelry-accessories-m2-result",
+      "n:guide:plat-shopify-c3-m2-source",
+      "n:guide:plat-amazon-c3-m2-result",
+      "n:gen2:occ-black-friday-g2"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-size-c3-m2-source",
+      "result": "n:guide:tpl-size-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Set this natural canvas tote upright beside a closed notebook on a light wooden bench.",
+      "options": [
+        [
+          "Template",
+          "Product size photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Product page or listing"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a product scale scene",
+      "lead": "Show the item beside something familiar so its size feels easier to picture.",
+      "chips": [
+        {
+          "id": "hand",
+          "label": "In a person’s hand"
+        },
+        {
+          "id": "shelf",
+          "label": "On a shelf"
+        },
+        {
+          "id": "carry",
+          "label": "Packed to carry"
+        },
+        {
+          "id": "home",
+          "label": "At home"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:plat-amazon-g2",
+          "label": "Ceramic mug held in one hand",
+          "chips": [
+            "hand"
+          ],
+          "prompt": "Hold this ceramic mug in one hand to show its size.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:video-hub-g2",
+          "label": "Bento box on a counter",
+          "chips": [
+            "hand"
+          ],
+          "prompt": "Show this closed bento lunch box on a kitchen counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:lifestyle-photos-g2",
+          "label": "Terracotta planter on a sunlit shelf",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Place this terracotta planter on a bright plant shelf with the full pot in view.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-size-shelf",
+          "label": "Floating shelf on a wall",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Place this floating shelf on a pale wall above a small plant.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-04",
+          "label": "Travel mug rim detail",
+          "chips": [
+            "carry"
+          ],
+          "prompt": "Show the complete rim and handle of this ceramic travel mug in clear light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-size-g3",
+          "label": "Canvas tote by luggage",
+          "chips": [
+            "carry"
+          ],
+          "prompt": "Show this canvas tote beside a carry-on suitcase, with the full bag in view.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-size-storage",
+          "label": "Storage boxes on a home shelf",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show these fabric storage boxes on a tidy home shelf.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-fix-m1-house-slippers",
+          "label": "Oatmeal house slippers on white",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show both oatmeal felt house slippers fully in frame on white.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product size photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-size-g1",
+        "h": "Show a pendant at wearable scale",
+        "d": "A small pendant on an open palm gives shoppers a familiar size cue beside exact dimensions."
+      },
+      {
+        "frame": "browser",
+        "ref": "g:jewelry-positioning/example-07",
+        "h": "Show a necklace at the neckline",
+        "d": "A side view keeps the necklace visible while shoppers compare its length and position."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-tpl-size-m5-0",
+        "bad": "n:guide:tpl-size-c3-bad-crop",
+        "good_label": "Tote, handles, and contents fit the frame",
+        "bad_label": "Tote handles and contents are clipped"
+      },
+      {
+        "good": "n:guide:c3-r3-tpl-size-m5-1",
+        "bad": "n:guide:tpl-size-c3-bad-blur",
+        "good_label": "Backpack shape and straps stay sharp",
+        "bad_label": "Backpack seams and straps soften into blur"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:white-background-canvas-tote",
+        "frame": "1:1",
+        "label": "Square canvas tote size photo"
+      },
+      {
+        "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
+        "frame": "1:1",
+        "label": "Square folding e-bike photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:tpl-size-c3-m7-tote-reference",
+      "zones": [
+        "Product dimensions",
+        "Unit"
+      ],
+      "items": [
+        "Type real measurements and units in the product listing after download.",
+        "Use one unit system in every size note."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a product size guide in three steps"
+      },
+      "m3": {
+        "h2": "Choose a product size scene"
+      },
+      "m4": {
+        "h2": "Use size photos beside listing measurements"
+      },
+      "m5": {
+        "h2": "Start a size guide with the whole item in frame"
+      },
+      "m6": {
+        "h2": "Square product size photos for listings"
+      },
+      "m7": {
+        "h2": "Add real measurements after download"
+      },
+      "faq": {
+        "h2": "Questions about product size guide photos"
+      },
+      "templates": {
+        "h2": "More product size guide templates",
+        "lead": "Choose a familiar reference object for another product."
+      }
+    }
   }
 }

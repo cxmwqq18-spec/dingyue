@@ -14,7 +14,7 @@
   ],
   "intro": [
     "For a sale creative, keep the product easy to recognize and leave a clear area for the confirmed offer. Put the exact price, code, and end date in an editable text layer.",
-    "AIVideosUGC makes the visual part. Choose a square image with your product on one side and open space on the other, or a short promo clip in 9:16 or 1:1. The numbers, like the amount off, a code or \"ends Sunday,\" get added in Canva, CapCut or Ads Manager. That keeps AI typos off your ads, and the same visual is ready to use again for the next sale."
+    "AIVideosUGC makes the visual part. Choose a square image with your product on one side and open space on the other, or a short promo clip in 9:16 or 1:1. The numbers, like the amount off, a code or \"ends Sunday,\" get added in Canva, CapCut or Ads Manager. That keeps AI typos off your ads, and this visual is ready to use again for the next sale."
   ],
   "ideas": [
     {
@@ -51,7 +51,7 @@
     },
     {
       "q": "Can I reuse a sale visual for my next promotion?",
-      "a": "Yes. Since the price isn't part of the image, the same background works again. Swap the text layer and it's ready."
+      "a": "Yes. Since the price is added separately, this background can work for another offer. Swap the text layer and it's ready."
     },
     {
       "q": "Can I show the original price next to the sale price?",
@@ -69,7 +69,7 @@
     },
     {
       "h2": "Make each sale version answer a different question",
-      "d": "Use a clean square image when the feed needs a fast product read, a 9:16 clip when the sale is phone-first, and a 16:9 composition when the same visual belongs on a wide page; 4:3 and 3:4 are also available. AIVideosUGC offers 6, 10, 15, and 30 second jobs and shows their credit cost before generation. A second version can change the product action or camera angle; it should not invent a new discount."
+      "d": "Use a clean square image when the feed needs a fast product read, a 9:16 clip when the sale is phone-first, and a 16:9 composition when this visual belongs on a wide page; 4:3 and 3:4 are also available. AIVideosUGC offers 6, 10, 15, and 30 second jobs and shows their credit cost before generation. A second version can change the product action or camera angle; it should not invent a new discount."
     }
   ],
   "input_guide": {
@@ -175,10 +175,10 @@
             "product": "wool socks"
           },
           {
-            "ref": "n:gen2:occ-sale-discount-g2",
-            "title": "Three-piece bath bundle on a counter",
+            "ref": "n:guide:c3-r3-tpl-sale-m5-0",
+            "title": "Two plain planters of different sizes on a pale counter",
             "kind": "photo",
-            "product": "bath bundle"
+            "product": "pair of ceramic planters"
           }
         ]
       },
@@ -202,5 +202,228 @@
     ]
   },
   "templates_lead": "Choose a product scene with room for the offer details you will add later.",
-  "cta_lead": "Stage the product on one side and leave room to add confirmed offer details."
+  "cta_lead": "Stage the product on one side and leave room to add confirmed offer details.",
+  "steps": [
+    {
+      "t": "Pick the product in the offer",
+      "d": "Upload a clear photo of the item or bundle shoppers can buy during the sale."
+    },
+    {
+      "t": "Leave room for the offer",
+      "d": "Choose a scene with open space for the price, code, or end date."
+    },
+    {
+      "t": "Download and add sale details",
+      "d": "Enter the current offer terms in an editable layer after download."
+    }
+  ],
+  "visual": {
+    "overview": "Build sale ad creatives around a recognizable product, then add the current price, code, and end date in an editable layer.",
+    "strip": [
+      "n:gen2:plat-shopify-g3",
+      "f:retargeting-urgency",
+      "n:gen2:plat-shopify-c3",
+      "n:gen2:examples-g7",
+      "n:guide:c4-tpl-pack-coffee-pouch-unbox",
+      "n:gen2:tpl-sale-g3"
+    ],
+    "steps": {
+      "source": "n:guide:occ-sale-discount-c3-m2-source",
+      "result": "n:guide:occ-sale-discount-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Arrange these pastel skincare bottles and jars together on a simple sale-photo surface, keeping the full products clear.",
+      "options": [
+        [
+          "Template",
+          "Sale product photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Feed ad or product page"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a product for the sale creative",
+      "lead": "Pick a category and leave space for the offer details you will add later.",
+      "chips": [
+        {
+          "id": "clothing",
+          "label": "Clothing"
+        },
+        {
+          "id": "skincare",
+          "label": "Skincare"
+        },
+        {
+          "id": "home",
+          "label": "Home goods"
+        },
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:tpl-tryon-c3-m3-knitwear-model",
+          "label": "Cream cardigan on a bench",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "Fold this cream cardigan neatly on a wooden bench beside a leafy plant.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-outfit-walk",
+          "label": "Beige jacket on a park walk",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "Show this beige zip jacket being worn on a quiet park walk.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-occ-sale-skincare-set",
+          "label": "Skincare set on a vanity",
+          "chips": [
+            "skincare"
+          ],
+          "prompt": "Line up these three plain skincare bottles and jars on a clean vanity surface.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-occ-sale-serum",
+          "label": "Serum and cream texture swatches",
+          "chips": [
+            "skincare"
+          ],
+          "prompt": "Arrange these serum and cream textures as clean swatches on glass.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-fix-m6-coaster-set",
+          "label": "Slate coasters with offer space",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Arrange three slate-blue felt coasters on white with open space above for sale details.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-facebook-g2",
+          "label": "Cat resting in a pet bed",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show this cat resting in its round pet bed in a sunny corner.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-youtube-shorts-c3",
+          "label": "Camping stove at a campsite",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Show this camping stove boiling water at a campsite.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c4-shopify-m3-planter-square",
+          "label": "Planter with offer space",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Place this small ceramic planter on a clear kitchen surface with room for sale details.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a sale ad photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:c3-r3-tpl-outfit-hoodie",
+        "h": "Feature a plain hoodie before the offer",
+        "d": "A clear full outfit view can introduce an apparel offer before its price and end date are added."
+      },
+      {
+        "frame": "browser",
+        "ref": "f:pas-formula-ads",
+        "h": "Create a calm moment for a wellness offer",
+        "d": "A person taking a quiet pause at a sunlit desk gives a wellness promotion a relaxed, everyday setting."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:before-after-videos-c3",
+        "bad": "n:guide:occ-sale-discount-c3-bad-crop",
+        "good_label": "Cutting board and handle stay in frame",
+        "bad_label": "Board edge and handle are clipped"
+      },
+      {
+        "good": "n:guide:c3-r3-occ-sale-discount-m5-1",
+        "bad": "n:guide:occ-sale-discount-c3-bad-blur",
+        "good_label": "Knit rows and fibers remain sharp",
+        "bad_label": "Knit texture softens into a blur"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c4-occ-sale-m6-skincare",
+        "frame": "1:1",
+        "label": "Square moisturizer offer photo"
+      },
+      {
+        "ref": "n:guide:c4-shopify-strip-bedding-square",
+        "frame": "1:1",
+        "label": "Square bedding offer photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c4-occ-sale-m7-ugc-photo",
+      "zones": [
+        "Offer",
+        "End date"
+      ],
+      "items": [
+        "Add the deal amount, code, and end date in a text layer after download.",
+        "Update or remove the image when the current offer ends."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Plan sale ad creatives in three steps"
+      },
+      "m3": {
+        "h2": "Choose a product for your sale ad"
+      },
+      "m4": {
+        "h2": "Use sale creatives in a feed or product page"
+      },
+      "m5": {
+        "h2": "Start sale ads with a clear product photo"
+      },
+      "m6": {
+        "h2": "Square sale ad photos for feeds and listings"
+      },
+      "m7": {
+        "h2": "Add sale details after download"
+      },
+      "plan": {
+        "h2": "When to prepare your sale ad creatives"
+      },
+      "faq": {
+        "h2": "Questions about sale ad creatives"
+      },
+      "templates": {
+        "h2": "More sale ad photo templates",
+        "lead": "Choose another product and leave room for the offer."
+      }
+    }
+  }
 }

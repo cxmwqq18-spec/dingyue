@@ -20,21 +20,21 @@
   "steps": [
     {
       "t": "Upload the clothing photo",
-      "d": "A flat lay or hanger shot with even light keeps the color and cut close to the real piece."
+      "d": "A full garment with even light gives the model room to show its cut and color."
     },
     {
       "t": "Describe the model and backdrop",
-      "d": "Say who is wearing it, how they stand, and where. Pick 6 seconds for a quick look, 15 for a slower reveal, or 30 for a full outfit sequence."
+      "d": "Describe the wearer and pose. Pick 6 seconds for a quick look, 10 for a guided detail pass, or 15 for a full outfit sequence."
     },
     {
-      "t": "Add sizes and a sound",
-      "d": "After downloading, put a track, the price, and size notes on the clip in TikTok or CapCut."
+      "t": "Add captions and sizing notes",
+      "d": "After download, add captions, price, and sizing notes in your editor or social app."
     }
   ],
   "ideas": [
     {
       "t": "One jacket, three outfits",
-      "d": "Style the same jacket with jeans, tailored trousers, and shorts in separate reels to show its range."
+      "d": "Style this jacket with jeans, tailored trousers, and shorts in separate reels to show its range."
     },
     {
       "t": "Season switch",
@@ -42,14 +42,14 @@
     },
     {
       "t": "Womenswear and activewear",
-      "d": "Describe a different model to show dresses, matching sets, or leggings the same way."
+      "d": "Describe a different model to show dresses, matching sets, or leggings in a similar way."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -60,8 +60,8 @@
   },
   "faq": [
     {
-      "q": "Can I use the same model in every reel?",
-      "a": "There's no saved model to pick from. Each reel is made on its own, so the model's face and build can change between videos, even with the same description."
+      "q": "Can one model appear in every reel?",
+      "a": "There's no saved model to pick from. Each reel is made on its own, so the model's face and build can change between videos, even when you reuse a description."
     },
     {
       "q": "Will the clothes look exactly like mine?",
@@ -141,7 +141,7 @@
       },
       {
         "t": "Three looks from one piece",
-        "d": "The same overshirt appears over a tee, a knit, and a dress in separate clips with the backdrop held consistent."
+        "d": "This overshirt appears over a tee, a knit, and a dress in separate clips with the backdrop held consistent."
       }
     ]
   },
@@ -171,37 +171,232 @@
       "One garment with a clear silhouette"
     ],
     "not_ideal": [
-      "Sizing decisions that depend on a real model\u2019s measurements",
+      "Sizing decisions that depend on a real model’s measurements",
       "Garments whose key details are hidden in a cropped input"
     ]
   },
   "examples": {
-    "h2": "More outfit scenes",
-    "lead": "Full looks in motion, so shoppers see how the fabric moves.",
+    "h2": "More outfit moments",
+    "lead": "See clothes and accessories in everyday scenes before planning your next reel.",
     "groups": [
       {
         "label": "Looks in motion",
         "items": [
           {
-            "ref": "n:gen2:tpl-outfit-g1",
-            "title": "Long coat hem swinging past a neutral wall",
+            "ref": "n:guide:ind-fashion-clothing-m2-result",
+            "title": "Heather-gray hoodie in a bright studio",
             "kind": "scene",
-            "product": "long coat"
+            "product": "hoodie"
           },
           {
-            "ref": "n:gen2:tpl-outfit-g2",
-            "title": "Matching athletic set in a bright studio",
+            "ref": "n:gen2:photo-hub-c3",
+            "title": "Knit beanie on a cold walk",
             "kind": "scene",
-            "product": "athletic set"
+            "product": "knit beanie"
           },
           {
-            "ref": "n:gen2:tpl-outfit-g3",
-            "title": "Slip dress outfit on a rooftop at sunset",
+            "ref": "n:gen2:before-after-videos-g3",
+            "title": "Sweater shelf reset",
             "kind": "scene",
-            "product": "slip dress"
+            "product": "sweaters"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "An AI outfit reel places clothing on a model and gives shoppers a better sense of the full look. Upload a clear garment photo, describe the wearer and setting, then use the vertical result in a social post or product story.",
+    "strip": [
+      "n:guide:c5-tpl-outfit-m1-blue-blouse-midi",
+      "n:guide:c5-tpl-outfit-m1-cream-blouse",
+      "n:guide:c5-tpl-outfit-m1-green-midi",
+      "n:guide:c5-tpl-outfit-m1-gray-knit-skirt",
+      "n:guide:c3-r3-occ-sale-discount-m5-1",
+      "n:guide:c3-r3-tpl-outfit-hoodie"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-outfit-c3-m2-source",
+      "result": "n:guide:tpl-outfit-c3-m2-result-9x16",
+      "mode": "video",
+      "prompt": "Show this beige zip jacket on an adult model in a bright neutral studio, with the full jacket and outfit visible."
+    },
+    "picker": {
+      "title": "Choose a scene for an AI outfit reel",
+      "lead": "Start with a place and a clothing detail that suit the look.",
+      "chips": [
+        {
+          "id": "city",
+          "label": "City walk"
+        },
+        {
+          "id": "work",
+          "label": "Workday"
+        },
+        {
+          "id": "casual",
+          "label": "Casual day"
+        },
+        {
+          "id": "details",
+          "label": "Finishing details"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "f:tpl-outfit-m3-city-camel-coat",
+          "label": "Camel coat on a city walk",
+          "chips": [
+            "city"
+          ],
+          "prompt": "Show a plain camel coat on a full-length adult model walking along a quiet city sidewalk.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:tpl-outfit-m3-city-field-jacket",
+          "label": "Field jacket on a city walk",
+          "chips": [
+            "city"
+          ],
+          "prompt": "Show a plain charcoal field jacket on a full-length adult model walking past a neutral stone storefront.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:tpl-outfit-m3-work-navy-blazer",
+          "label": "Navy suit for a workday",
+          "chips": [
+            "work"
+          ],
+          "prompt": "Show a plain deep navy blazer and matching trousers on an adult model standing in a bright office lobby.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:tpl-outfit-m3-work-blue-shirt",
+          "label": "Pale blue shirt for a workday",
+          "chips": [
+            "work"
+          ],
+          "prompt": "Show a plain pale blue button-up shirt and charcoal trousers on an adult model in an office hallway.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:tpl-outfit-m3-casual-activewear",
+          "label": "Lilac athletic set",
+          "chips": [
+            "casual"
+          ],
+          "prompt": "Show a plain lilac athletic set and white sneakers on a full-length adult model shifting her stance in a bright studio.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:tpl-outfit-m3-casual-denim-overshirt",
+          "label": "Denim overshirt on a park walk",
+          "chips": [
+            "casual"
+          ],
+          "prompt": "Show a plain light denim overshirt over a white crewneck and black trousers on an adult model in a park.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:tpl-outfit-m3-details-cream-cardigan",
+          "label": "Cream cardigan fit detail",
+          "chips": [
+            "details"
+          ],
+          "prompt": "Show the knit texture, cuffs, and fit of a plain cream cardigan on an adult model wearing a dark midi skirt.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:tpl-outfit-m3-details-olive-shirt-dress",
+          "label": "Olive shirt dress silhouette",
+          "chips": [
+            "details"
+          ],
+          "prompt": "Show the collar, belt, and hem of a plain olive shirt dress on a full-length adult model.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make an outfit reel like this"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:ind-jewelry-accessories-m7-steel-watch",
+        "h": "Show a steel watch as an outfit detail",
+        "d": "A close view of the unbranded steel watch adds a clear accessory detail beside a full outfit reel."
+      },
+      {
+        "frame": "split",
+        "ref": "n:gen2:tpl-outfit-g1",
+        "ref_b": "n:gen2:ind-fashion-clothing-g3",
+        "h": "Compare two full outfit silhouettes",
+        "d": "A long coat and a slip dress show how different silhouettes read in vertical product reels."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-tpl-outfit-m5-0",
+        "bad": "n:guide:c3-tpl-outfit-m5-crop",
+        "good_label": "Full cardigan and cuff visible",
+        "bad_label": "Right cuff leaves the frame"
+      },
+      {
+        "good": "n:guide:c3-r3-tpl-outfit-walk",
+        "bad": "n:guide:c3-tpl-outfit-m5-blur",
+        "good_label": "Jacket shape and seams stay sharp",
+        "bad_label": "Jacket front and seams blur together"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-outfit-c3-m6-walk-reel",
+        "frame": "9:16",
+        "label": "Beige jacket movement reel",
+        "length": 15
+      },
+      {
+        "ref": "n:guide:tpl-outfit-c3-m6-detail-reel",
+        "frame": "9:16",
+        "label": "Beige jacket waist-up reel",
+        "length": 15
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c4-tpl-outfit-m7-jacket",
+      "zones": [
+        "Your size note",
+        "Your product name"
+      ],
+      "items": [
+        "Add the product name and size notes in an editor after downloading.",
+        "Keep captions and price away from the garment details."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "See an outfit reel take shape in three steps"
+      },
+      "m3": {
+        "h2": "Choose a scene for an AI outfit reel"
+      },
+      "m4": {
+        "h2": "Use fashion outfit reels in a feed or listing"
+      },
+      "m5": {
+        "h2": "Start an AI outfit reel with a clear clothing photo"
+      },
+      "m6": {
+        "h2": "AI outfit reels in the 9:16 format"
+      },
+      "m7": {
+        "h2": "Finish your outfit reel in an editor"
+      },
+      "faq": {
+        "h2": "Questions about AI outfit reels"
+      },
+      "templates": {
+        "h2": "More templates for AI outfit reels",
+        "lead": "Pick another clothing scene, then add your garment photo."
+      }
+    }
   }
 }

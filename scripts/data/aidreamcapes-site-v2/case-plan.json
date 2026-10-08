@@ -261,19 +261,19 @@
     ],
     "tpl-size": [
       {
-        "ref": "n:gen2:tpl-size-c1",
-        "product": "mini backpack",
-        "title": "Mini backpack held at hip height for scale"
+        "ref": "g:ecommerce-main-image/example-06",
+        "product": "ceramic travel mug",
+        "title": "Travel mug shown in hand to suggest its size"
       },
       {
-        "ref": "n:gen2:tpl-size-c2",
-        "product": "travel candle",
-        "title": "Travel candle beside a coffee cup for size"
+        "ref": "n:guide:b1-spokesperson-output-coffee",
+        "product": "speckled ceramic mug",
+        "title": "Presenter holding a mug with both hands"
       },
       {
-        "ref": "n:gen2:tpl-size-c3",
-        "product": "phone stand",
-        "title": "Phone stand holding a phone to show its size"
+        "ref": "n:gen2:url-to-video-g4",
+        "product": "ceramic teapot set",
+        "title": "Teapot and cups arranged together on a wooden tray"
       },
       {
         "ref": "n:gen2:tpl-size-c4",
@@ -327,24 +327,24 @@
     ],
     "tpl-pack": [
       {
-        "ref": "n:gen2:tpl-pack-c1",
-        "product": "tea tin",
-        "title": "Tea tin design shown on a cafe shelf"
+        "ref": "n:guide:b1-unboxing-card",
+        "product": "headphones",
+        "title": "Headphones lifted from a plain kraft box"
       },
       {
-        "ref": "n:gen2:tpl-pack-c2",
-        "product": "cereal box",
-        "title": "Cereal box mockup on a pantry shelf"
+        "ref": "g:bundle-sets/example-07",
+        "product": "skincare collection",
+        "title": "Complete skincare collection arranged on a shelf"
       },
       {
-        "ref": "n:gen2:tpl-pack-c3",
-        "product": "hot sauce bottle",
-        "title": "Hot sauce bottle mockup on a market shelf"
+        "ref": "g:ecommerce-main-image/example-05",
+        "product": "travel mug bundle",
+        "title": "Travel mug shown with its matching lid"
       },
       {
-        "ref": "n:gen2:tpl-pack-c4",
-        "product": "shipping box",
-        "title": "Printed shipping boxes stacked by a front door"
+        "ref": "f:unboxing-experience",
+        "product": "gray headphone package",
+        "title": "Hands opening a box to reveal headphones and a case"
       }
     ],
     "tpl-light": [
@@ -371,14 +371,14 @@
     ],
     "tpl-tryon": [
       {
-        "ref": "n:gen2:tpl-tryon-c1",
-        "product": "denim jacket",
-        "title": "Denim jacket tried on by a model in a studio"
+        "ref": "g:sale-campaign-key-visual/example-05",
+        "product": "winter jacket",
+        "title": "Winter jacket featured in a snowy city scene"
       },
       {
-        "ref": "n:gen2:tpl-tryon-c2",
-        "product": "floral summer dress",
-        "title": "Floral summer dress on a model by a window"
+        "ref": "g:sale-campaign-key-visual/example-06",
+        "product": "gift-style jacket",
+        "title": "Winter jacket shown in a gift-inspired product scene"
       },
       {
         "ref": "n:gen2:tpl-tryon-c3",
@@ -386,9 +386,9 @@
         "title": "Hoodie fit shown on a model from the side"
       },
       {
-        "ref": "n:gen2:tpl-tryon-c4",
-        "product": "tailored trousers",
-        "title": "Tailored trousers on a model, full length"
+        "ref": "g:on-model-generation/example-06",
+        "product": "canvas backpack",
+        "title": "Canvas backpack shown during an outdoor walk"
       }
     ],
     "tpl-jewel": [
@@ -508,19 +508,19 @@
         "title": "Winter coat key visual with space for the offer"
       },
       {
-        "ref": "n:gen2:tpl-sale-c2",
-        "product": "running sneakers",
-        "title": "Sneaker sale visual on a bold red backdrop"
+        "ref": "g:feed-ad-still/example-05",
+        "product": "running shoe",
+        "title": "Running shoe sale scene with a clear tread detail"
       },
       {
-        "ref": "n:gen2:tpl-sale-c3",
-        "product": "skincare set",
-        "title": "Skincare promo scene with an empty headline area"
+        "ref": "n:guide:c3-r3-occ-sale-serum",
+        "product": "serum and cream",
+        "title": "Serum and cream texture swatches arranged on glass"
       },
       {
-        "ref": "n:gen2:tpl-sale-c4",
-        "product": "wool blanket",
-        "title": "Wool blanket stack framed for a sale banner"
+        "ref": "g:lifestyle-scene/example-05",
+        "product": "linen tote",
+        "title": "Linen tote hanging in a bright home entryway"
       }
     ],
     "tpl-howto": [
@@ -635,9 +635,9 @@
     ],
     "tpl-outfit": [
       {
-        "ref": "n:gen2:tpl-outfit-c1",
-        "product": "knit sweater outfit",
-        "title": "Knit sweater outfit shown head to toe at home"
+        "ref": "g:virtual-try-on/example-05",
+        "product": "blue jacket",
+        "title": "Blue jacket styled for a casual walking look"
       },
       {
         "ref": "n:gen2:tpl-outfit-c2",
@@ -645,14 +645,14 @@
         "title": "Full-length denim look in a bright hallway"
       },
       {
-        "ref": "n:gen2:tpl-outfit-c3",
-        "product": "linen suit",
-        "title": "Linen suit shown head to toe on a terrace"
+        "ref": "g:fashion-editorial/example-06",
+        "product": "neutral outfit",
+        "title": "Adult styled in a neutral outfit outdoors"
       },
       {
-        "ref": "n:gen2:tpl-outfit-c4",
-        "product": "puffer jacket",
-        "title": "Puffer jacket outfit on a snowy street"
+        "ref": "g:on-model-generation/example-05",
+        "product": "canvas backpack",
+        "title": "Canvas backpack shown in a casual desk-side scene"
       }
     ],
     "tpl-launch": [
@@ -1097,9 +1097,9 @@
     ],
     "plat-amazon": [
       {
-        "ref": "n:gen2:plat-amazon-c1",
-        "product": "bluetooth speaker",
-        "title": "Speaker main image on pure white"
+        "ref": "n:guide:plat-amazon-c3-m2-source-angle",
+        "product": "ceramic mug",
+        "title": "Square white mug main image on a seamless background"
       },
       {
         "ref": "n:gen2:plat-amazon-c2",
@@ -1119,9 +1119,9 @@
     ],
     "plat-shopify": [
       {
-        "ref": "n:gen2:plat-shopify-c1",
-        "product": "ceramic planter",
-        "title": "Ceramic planter styled for a store banner"
+        "ref": "n:guide:b1-spokesperson-strip",
+        "product": "compact espresso maker",
+        "title": "Compact espresso maker shown in a bright kitchen"
       },
       {
         "ref": "n:gen2:plat-shopify-c2",
@@ -1129,26 +1129,26 @@
         "title": "Linen apron worn in a home kitchen"
       },
       {
-        "ref": "n:gen2:plat-shopify-c3",
-        "product": "candle trio",
-        "title": "Candle trio for a collection tile"
+        "ref": "n:candle-pack",
+        "product": "ceramic candle",
+        "title": "Square candle photo with its lid placed beside it"
       },
       {
-        "ref": "n:gen2:plat-shopify-c4",
-        "product": "leather notebook",
-        "title": "Leather notebook flat lay for a product page"
+        "ref": "n:guide:white-background-reading-glasses",
+        "product": "reading glasses",
+        "title": "Square reading glasses product photo on white"
       }
     ],
     "occ-product-launch": [
       {
-        "ref": "promo-launch-sale",
+        "ref": "n:guide:white-background-desk-lamp",
         "product": "table lamp",
-        "title": "Table lamp revealed for launch day"
+        "title": "Portable lamp shown alone on a white background"
       },
       {
-        "ref": "n:gen2:occ-product-launch-c2",
-        "product": "new sneaker colorway",
-        "title": "New sneaker colorway on a spotlit plinth"
+        "ref": "n:guide:white-background-leather-sandals",
+        "product": "leather sandals",
+        "title": "Leather sandals introduced as a new product colorway"
       },
       {
         "ref": "n:gen2:occ-product-launch-c3",
@@ -1156,31 +1156,31 @@
         "title": "Debut fragrance unwrapped from tissue paper"
       },
       {
-        "ref": "n:gen2:occ-product-launch-c4",
-        "product": "coffee bags",
-        "title": "First-batch coffee bags lined up on a counter"
+        "ref": "g:packaging-mockup/example-04",
+        "product": "tea pouch",
+        "title": "Tea pouch held for a product debut"
       }
     ],
     "occ-sale-discount": [
       {
-        "ref": "discount-free-shipping",
-        "product": "coffee beans",
-        "title": "Coffee beans weighed into a steel cup"
+        "ref": "n:guide:b1-unboxing-videos-source",
+        "product": "white candle jar",
+        "title": "Plain candle jar styled for a seasonal offer"
       },
       {
-        "ref": "n:gen2:occ-sale-discount-c2",
-        "product": "skincare minis",
-        "title": "Skincare minis bundled on a tray for a sale"
+        "ref": "g:story-ad-vertical/example-06",
+        "product": "sunscreen bottle",
+        "title": "Sunscreen bottle staged for a Story discount offer"
       },
       {
-        "ref": "n:gen2:occ-sale-discount-c3",
-        "product": "summer dresses",
-        "title": "Summer dresses on a rail for an end-of-season sale"
+        "ref": "g:lifestyle-scene/example-04",
+        "product": "linen tote",
+        "title": "Linen tote on a beach picnic blanket for a sale"
       },
       {
-        "ref": "n:gen2:occ-sale-discount-c4",
-        "product": "kitchen knife set",
-        "title": "Knife set on a board with room for the offer"
+        "ref": "f:product-video",
+        "product": "espresso machine",
+        "title": "Compact espresso machine on a kitchen counter"
       }
     ],
     "occ-black-friday": [
@@ -1212,9 +1212,9 @@
         "title": "Scented candle on a holiday table with pine"
       },
       {
-        "ref": "n:gen2:occ-holidays-c2",
-        "product": "gift box",
-        "title": "Ribboned gift box waiting by the fireplace"
+        "ref": "g:packaging-mockup/example-03",
+        "product": "holiday gift packaging",
+        "title": "Stacked packages staged for holiday gift giving"
       },
       {
         "ref": "n:gen2:occ-holidays-c3",

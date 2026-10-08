@@ -18,16 +18,16 @@
   "tip": "Hang the garment on a plain wall or spread it out flat, zipped and smoothed, then describe the model and room, such as \"man in his twenties, light fitting room.\"",
   "steps": [
     {
-      "t": "Photograph the garment",
-      "d": "Shoot one item at a time from the front, with the collar, pockets, and zipper in full view."
+      "t": "Photograph the full garment",
+      "d": "Show the collar, closures, pockets, sleeves, and hem in one clear view."
     },
     {
-      "t": "Describe the person and pose",
-      "d": "Add the model's look, the pose, and what they wear with it, for example \"hands in pockets, white tee, beige chinos.\""
+      "t": "Choose the model and setting",
+      "d": "Describe the pose, base layer, light, and room for the on-model photo."
     },
     {
-      "t": "Make the next look",
-      "d": "Download the photo, then upload the back of the garment for a rear view, or move on to the next item in your collection."
+      "t": "Download and add size details",
+      "d": "Add the real size chart and garment notes to the product listing."
     }
   ],
   "ideas": [
@@ -67,8 +67,8 @@
       "a": "No. This is for you as the seller: it turns your garment photo into a photo of the item being worn, which you then post on your store or social pages."
     },
     {
-      "q": "Will the model look the same in every photo?",
-      "a": "There's no saved model to reuse, so the person can look different from one photo to the next. Describing age, hair, and build in the same words each time helps the set feel related."
+      "q": "Can one model appear in every photo?",
+      "a": "There's no saved model to reuse, so the person can look different from one photo to the next. Describing age, hair, and build consistently helps the set feel related."
     },
     {
       "q": "Does the photo show the true fit?",
@@ -198,7 +198,7 @@
           },
           {
             "ref": "n:gen2:tpl-tryon-g2",
-            "title": "Same bomber jacket from the back",
+            "title": "This bomber jacket from the back",
             "kind": "photo",
             "product": "bomber jacket"
           },
@@ -217,5 +217,211 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "An on-model clothing photo gives shoppers a clearer view of a garment’s silhouette when it stays recognizably like the source item.",
+    "strip": [
+      "n:guide:tpl-tryon-c3-strip-bomber-front",
+      "n:guide:tpl-tryon-c3-strip-cardigan-side",
+      "n:guide:ind-shoes-m2-result",
+      "n:guide:c3-r3-tpl-tryon-streetwear",
+      "n:guide:tpl-tryon-c3-strip-overshirt",
+      "g:virtual-try-on/example-07"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-tryon-c3-m2-source",
+      "result": "n:guide:tpl-tryon-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Show this olive bomber jacket worn over a plain white shirt in a bright studio, front three-quarter view.",
+      "options": [
+        [
+          "Template",
+          "On-model product photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Product page or social"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose an on-model clothing scene",
+      "lead": "Pick the garment type and styling context that fits the collection.",
+      "chips": [
+        {
+          "id": "outerwear",
+          "label": "Outerwear"
+        },
+        {
+          "id": "knitwear",
+          "label": "Knitwear"
+        },
+        {
+          "id": "dresses",
+          "label": "Dresses and skirts"
+        },
+        {
+          "id": "sets",
+          "label": "Coordinated sets"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:tpl-tryon-c3-m3-camel-coat",
+          "label": "Camel coat on a sidewalk",
+          "chips": [
+            "outerwear"
+          ],
+          "prompt": "Show this camel wool coat on a city sidewalk in soft daylight.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-tryon-trench",
+          "label": "Trench coat under an arch",
+          "chips": [
+            "outerwear"
+          ],
+          "prompt": "Style this trench coat beneath a stone archway in warm light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-tryon-c3-m3-knitwear-model",
+          "label": "Cream cardigan on a bench",
+          "chips": [
+            "knitwear"
+          ],
+          "prompt": "Show this cream cardigan with its button front and knit texture visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-tryon-knitdress",
+          "label": "Knit dress in warm natural light",
+          "chips": [
+            "knitwear"
+          ],
+          "prompt": "Show this plain cream knit dress in warm natural light, with the full silhouette visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-tryon-evening",
+          "label": "Evening dress on stairs",
+          "chips": [
+            "dresses"
+          ],
+          "prompt": "Show this evening dress on a stone staircase with the full hem visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-fashion-clothing-c3",
+          "label": "Pleated skirt on a sidewalk",
+          "chips": [
+            "dresses"
+          ],
+          "prompt": "Show this pleated skirt on a sunny sidewalk with the full length visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-tryon-linen",
+          "label": "Linen two-piece in a studio",
+          "chips": [
+            "sets"
+          ],
+          "prompt": "Show this linen two-piece set in a sunlit studio.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c3-r3-tpl-tryon-suit",
+          "label": "Wide-leg suit beneath an arch",
+          "chips": [
+            "sets"
+          ],
+          "prompt": "Style this wide-leg suit beneath a stone archway in warm light.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make an on-model clothing photo"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:guide:tpl-tryon-c3-m4-product-page",
+        "h": "Show an olive bomber on a product page",
+        "d": "A square front view keeps its collar, zipper, hem, and pockets visible beside listing details."
+      },
+      {
+        "frame": "listing",
+        "ref": "n:guide:tpl-tryon-c3-m4-seasonal-listing",
+        "h": "Feature outerwear in seasonal browsing",
+        "d": "A square city scene places the bomber in context beside its product details."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-tpl-tryon-m5-0",
+        "bad": "n:guide:tpl-tryon-c3-bad-crop",
+        "good_label": "Hoodie sleeves and hem are visible",
+        "bad_label": "Sleeves and hem extend past the frame"
+      },
+      {
+        "good": "n:guide:c3-r3-tpl-tryon-m5-1",
+        "bad": "n:guide:tpl-tryon-c3-bad-blur",
+        "good_label": "Jacket zipper and denim seams stay sharp",
+        "bad_label": "Zipper teeth and seams soften out of focus"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-tryon-c3-m6-front-model",
+        "frame": "1:1",
+        "label": "Square olive bomber front view"
+      },
+      {
+        "ref": "n:guide:tpl-tryon-c3-m6-back-model",
+        "frame": "1:1",
+        "label": "Square olive bomber back view"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:tpl-tryon-c3-m7-back-detail",
+      "zones": [
+        "Garment name",
+        "Size details"
+      ],
+      "items": [
+        "Add the garment name and real size details to the listing.",
+        "Choose a crop that keeps the collar, sleeves, and hem in view."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create an on-model try-on in three steps"
+      },
+      "m3": {
+        "h2": "Choose a virtual try-on scene for your garment"
+      },
+      "m4": {
+        "h2": "Use try-on photos on a listing or product page"
+      },
+      "m5": {
+        "h2": "Start try-on photos with a clear garment image"
+      },
+      "m6": {
+        "h2": "Square on-model clothing photos for listings"
+      },
+      "m7": {
+        "h2": "Add garment details after download"
+      },
+      "faq": {
+        "h2": "Questions about on-model try-on photos"
+      },
+      "templates": {
+        "h2": "More on-model try-on templates",
+        "lead": "Choose another garment type and styling direction."
+      }
+    }
   }
 }

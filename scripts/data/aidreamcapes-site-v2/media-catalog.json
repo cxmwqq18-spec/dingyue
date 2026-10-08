@@ -1608,6 +1608,67 @@
         640,
         1280
       ]
+    },
+    "tpl-outfit-m3-city-camel-coat": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult woman in a plain camel coat and dark trousers, full outfit visible on a city sidewalk.",
+      "variants": [
+        640
+      ]
+    },
+    "tpl-outfit-m3-city-field-jacket": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult man wearing a plain charcoal field jacket and dark trousers with brown leather boots on a city sidewalk.",
+      "variants": [
+        640
+      ]
+    },
+    "tpl-outfit-m3-work-navy-blazer": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult woman wearing a plain deep navy tailored blazer and trousers in a bright office lobby.",
+      "variants": [
+        640
+      ]
+    },
+    "tpl-outfit-m3-work-blue-shirt": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult man wearing a plain pale blue shirt and charcoal trousers in an office hallway.",
+      "variants": [
+        640
+      ]
+    },
+    "tpl-outfit-m3-casual-activewear": {
+      "w": 640,
+      "h": 1138,
+      "alt": "Adult model in a plain lilac athletic set and white sneakers, full body visible against a bright studio background."
+    },
+    "tpl-outfit-m3-casual-denim-overshirt": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult man wearing a plain light denim overshirt and black trousers in a park.",
+      "variants": [
+        640
+      ]
+    },
+    "tpl-outfit-m3-details-cream-cardigan": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult woman wearing a cream knit cardigan and black midi skirt, full look and knit detail visible.",
+      "variants": [
+        640
+      ]
+    },
+    "tpl-outfit-m3-details-olive-shirt-dress": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult woman wearing an olive shirt dress with a self-fabric belt, complete silhouette visible.",
+      "variants": [
+        640
+      ]
     }
   },
   "gen": {
@@ -2117,6 +2178,20 @@
         640,
         1280
       ]
+    },
+    "granola-m5-clean": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Clear glass jar of granola with berries on a bright breakfast counter, full product in frame, no readable text.",
+      "variants": [],
+      "source": "C3 M5 pairing refresh"
+    },
+    "occ-product-launch-phonecase-g7": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Unbranded sage silicone phone case shown by itself, with a generic single oval camera opening and no recognizable phone model cues.",
+      "variants": [],
+      "source": "gen.sh"
     }
   },
   "clips": {
@@ -8669,6 +8744,1514 @@
         "variants": [
           640,
           1280
+        ]
+      },
+      "tpl-outfit-c3-m2-source": {
+        "file": "gen2guide-tpl-outfit-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Beige zip jacket laid flat on a light background with its full outline visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-outfit-c3-m2-result": {
+        "file": "gen2guide-tpl-outfit-c3-m2-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Adult model wearing the beige zip jacket with a white shirt and blue jeans.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-tpl-outfit-m5-crop": {
+        "file": "gen2guide-c3-tpl-outfit-m5-crop",
+        "w": 1280,
+        "h": 960,
+        "alt": "Cream cardigan enlarged so its right cuff and lower hem leave the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-tpl-outfit-m5-blur": {
+        "file": "gen2guide-c3-tpl-outfit-m5-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Field jacket front and pocket seams softened out of focus on a neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-tpl-pack-m5-crop": {
+        "file": "gen2guide-c3-tpl-pack-m5-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Coffee pouch enlarged until its sealed top leaves the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-tpl-pack-m5-blur": {
+        "file": "gen2guide-c3-tpl-pack-m5-blur",
+        "w": 1280,
+        "h": 960,
+        "alt": "Granola jar and berries softened out of focus so the package edge blurs.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-pack-c3-m2-source": {
+        "file": "gen2guide-tpl-pack-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft coffee pouch standing alone on a light neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-bad-blur": {
+        "file": "gen2guide-occ-holidays-c3-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Painted mug and box softened out of focus so the rim and pattern blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-bad-crop": {
+        "file": "gen2guide-occ-holidays-c3-bad-crop",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Pillar candle enlarged so its base is cut by the lower frame edge while the flame remains inside.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m2-result": {
+        "file": "gen2guide-occ-holidays-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White candle jar on a warm holiday table beside pine branches and soft lights.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m2-source": {
+        "file": "gen2guide-occ-holidays-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White ceramic candle jar with an open rim, visible wax, wick, and lid on a warm-white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-product-launch-c3-bad-blur": {
+        "file": "gen2guide-occ-product-launch-c3-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Coffee grinder and beans softened out of focus on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-product-launch-c3-bad-crop": {
+        "file": "gen2guide-occ-product-launch-c3-bad-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Canvas tote enlarged until its handles and lower edge are clipped.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-product-launch-c3-m2-result": {
+        "file": "gen2guide-occ-product-launch-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue water bottle upright on a pale stone ledge beside a folded towel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-product-launch-c3-m2-source": {
+        "file": "gen2guide-occ-product-launch-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue water bottle standing alone on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-sale-discount-c3-bad-blur": {
+        "file": "gen2guide-occ-sale-discount-c3-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Sweater knit softened until the fibers and rows lose definition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-sale-discount-c3-bad-crop": {
+        "file": "gen2guide-occ-sale-discount-c3-bad-crop",
+        "w": 1280,
+        "h": 960,
+        "alt": "Cutting board enlarged until its handle and outer edges are clipped by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-sale-discount-c3-m2-source": {
+        "file": "gen2guide-occ-sale-discount-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pastel skincare bottles and jars arranged together on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-bad-blur": {
+        "file": "gen2guide-plat-amazon-c3-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Wooden toy train softened out of focus on a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-bad-crop": {
+        "file": "gen2guide-plat-amazon-c3-bad-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Backpack body and shoulder straps clipped by a tight frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-m2-result": {
+        "file": "gen2guide-plat-amazon-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White ceramic mug beside a folded linen napkin and plate on a bright kitchen table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-m2-source": {
+        "file": "gen2guide-plat-amazon-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic mug standing alone on a seamless white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-size-square-lifestyle": {
+        "file": "gen2guide-plat-amazon-c3-size-square-lifestyle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White ceramic mug in a bright kitchen lifestyle scene with its handle visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-size-square-main": {
+        "file": "gen2guide-plat-amazon-c3-size-square-main",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic mug centered on a clean white main-image background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-bad-blur": {
+        "file": "gen2guide-plat-shopify-c3-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Lunchbox handle and compartments softened out of focus on the counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-bad-crop": {
+        "file": "gen2guide-plat-shopify-c3-bad-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Coffee pouch enlarged until its top and side edge are cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m2-result": {
+        "file": "gen2guide-plat-shopify-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four coordinated ceramic bowls arranged with fruit on a light dining table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m2-source": {
+        "file": "gen2guide-plat-shopify-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four ceramic bowls in cream, blue, green, and charcoal glazes on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-size-square-product": {
+        "file": "gen2guide-plat-shopify-c3-size-square-product",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four coordinated ceramic bowls grouped together in a square product image.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-sale-c3-bad-blur": {
+        "file": "gen2guide-tpl-sale-c3-bad-blur",
+        "w": 1280,
+        "h": 960,
+        "alt": "Cutting board softened out of focus so the grain and edge blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-sale-c3-bad-crop": {
+        "file": "gen2guide-tpl-sale-c3-bad-crop",
+        "w": 1280,
+        "h": 720,
+        "alt": "Small ceramic planter enlarged until its left edge is clipped by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-sale-c3-m2-result": {
+        "file": "gen2guide-tpl-sale-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue hard-shell suitcase beside a pale wall and small leafy plant.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-sale-c3-m2-source": {
+        "file": "gen2guide-tpl-sale-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue hard-shell suitcase shown alone with its handle and wheels visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-size-c3-bad-blur": {
+        "file": "gen2guide-tpl-size-c3-bad-blur",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Backpack and packing details softened out of focus beside a coat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-size-c3-bad-crop": {
+        "file": "gen2guide-tpl-size-c3-bad-crop",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Canvas tote enlarged until its handles and packed items are clipped.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-size-c3-m2-result": {
+        "file": "gen2guide-tpl-size-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote upright on a wooden bench beside a closed notebook.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-size-c3-m2-source": {
+        "file": "gen2guide-tpl-size-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag standing alone on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-bad-blur": {
+        "file": "gen2guide-tpl-tryon-c3-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Close detail of the denim jacket zipper and seams blurred from the paired sharp image.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-bad-crop": {
+        "file": "gen2guide-tpl-tryon-c3-bad-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Heather gray hoodie enlarged until sleeves and hem fall outside the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m2-result": {
+        "file": "gen2guide-tpl-tryon-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing the olive bomber jacket over a plain white shirt in a studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m2-source": {
+        "file": "gen2guide-tpl-tryon-c3-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Olive bomber jacket laid flat with its collar, zipper, cuffs, and pockets visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-gift-set": {
+        "file": "gen2guide-occ-holidays-c3-m3-gift-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white candle jar nestled in a small open gift box with natural tissue and pine sprigs.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-table": {
+        "file": "gen2guide-occ-holidays-c3-m3-table",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white candle jar on a holiday dining table with evergreen branches and folded linen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-fireplace": {
+        "file": "gen2guide-occ-holidays-c3-m3-fireplace",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white candle jar on a winter mantel beside understated greenery and warm lights.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-snowy-window": {
+        "file": "gen2guide-occ-holidays-c3-m3-snowy-window",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white candle jar on a windowsill beside softly falling winter snow.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-gift-box": {
+        "file": "gen2guide-occ-holidays-c3-m3-gift-box",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white candle jar beside a wrapped kraft gift box and a simple ribbon.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-holiday-brunch": {
+        "file": "gen2guide-occ-holidays-c3-m3-holiday-brunch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white candle jar as part of a restrained holiday brunch table setting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-packaging-ribbon": {
+        "file": "gen2guide-occ-holidays-c3-m3-packaging-ribbon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white candle jar partially revealed from a gift box with ribbon and pine accents.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-holidays-c3-m3-packaging-shipping": {
+        "file": "gen2guide-occ-holidays-c3-m3-packaging-shipping",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white candle jar packed in a protective kraft shipping box with tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-product-launch-c3-m3-first-use": {
+        "file": "gen2guide-occ-product-launch-c3-m3-first-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte blue water bottle beside a folded towel in a calm outdoor first-use scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-product-launch-c3-m7-release": {
+        "file": "gen2guide-occ-product-launch-c3-m7-release",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte blue water bottle on a clean studio surface, ready for a product-release image.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-m2-source-angle": {
+        "file": "gen2guide-plat-amazon-c3-m2-source-angle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic mug seen from a distinct three-quarter angle on a seamless white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-amazon-c3-size-square-detail": {
+        "file": "gen2guide-plat-amazon-c3-size-square-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close square detail of the same white ceramic mug showing the complete rim and handle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m2-source-angle": {
+        "file": "gen2guide-plat-shopify-c3-m2-source-angle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four coordinated cream, blue, green, and charcoal ceramic bowls from a lower three-quarter angle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m8-square-collection": {
+        "file": "gen2guide-plat-shopify-c3-m8-square-collection",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same four coordinated ceramic bowls arranged as a square collection-page image.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m8-square-social": {
+        "file": "gen2guide-plat-shopify-c3-m8-square-social",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same four coordinated ceramic bowls arranged on a bright table for a square social post.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m3-social-brunch": {
+        "file": "gen2guide-plat-shopify-c3-m3-social-brunch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same four coordinated ceramic bowls in a square weekend brunch table scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m3-social-window": {
+        "file": "gen2guide-plat-shopify-c3-m3-social-window",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same four coordinated ceramic bowls in a square bright-window breakfast scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-shopify-c3-m6-square-use": {
+        "file": "gen2guide-plat-shopify-c3-m6-square-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same four cream, blue, green, and charcoal ceramic bowls on a small breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-size-c3-m7-tote-reference": {
+        "file": "gen2guide-tpl-size-c3-m7-tote-reference",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same natural canvas tote fully visible on a wooden bench beside a plain closed notebook.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-pack-c3-m3-shelf-boxes": {
+        "file": "gen2guide-tpl-pack-c3-m3-shelf-boxes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same plain kraft coffee pouch displayed on a grocery shelf among plain cartons and jars.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-pack-c3-m3-shelf-bags": {
+        "file": "gen2guide-tpl-pack-c3-m3-shelf-bags",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same plain kraft coffee pouch displayed on a pantry shelf beside blank refill bags.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-pack-c3-m3-catalog-lineup": {
+        "file": "gen2guide-tpl-pack-c3-m3-catalog-lineup",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same plain kraft coffee pouch centered with a blank carton and packaging pieces for a catalog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-pack-c3-m3-catalog-arrangement": {
+        "file": "gen2guide-tpl-pack-c3-m3-catalog-arrangement",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same plain kraft coffee pouch beside a blank carton, folded tissue, and scoop in a catalog-style arrangement.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-pack-c3-m4-unboxing": {
+        "file": "gen2guide-tpl-pack-c3-m4-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift the same plain kraft coffee pouch from an open carton lined with tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-pack-c3-m4-retail-shelf": {
+        "file": "gen2guide-tpl-pack-c3-m4-retail-shelf",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same plain kraft coffee pouch stands on a grocery shelf beside plain cartons and jars.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "occ-sale-discount-c3-m2-result": {
+        "file": "gen2guide-occ-sale-discount-c3-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same three pastel skincare containers grouped in a clean square product scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-sale-c3-m5-board-clean": {
+        "file": "gen2guide-tpl-sale-c3-m5-board-clean",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The complete light wooden cutting board with its full handle and grain sharply visible on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-outfit-c3-m2-result-9x16": {
+        "file": "gen2guide-tpl-outfit-c3-m2-result-9x16",
+        "w": 864,
+        "h": 1536,
+        "alt": "The same beige zip jacket worn by an adult model with a white shirt and blue jeans in a full-length studio portrait.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-outfit-c3-m6-walk-reel": {
+        "file": "gen2guide-tpl-outfit-c3-m6-walk-reel",
+        "w": 864,
+        "h": 1536,
+        "alt": "The same beige zip jacket worn by an adult model walking through a quiet stone courtyard.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-outfit-c3-m6-detail-reel": {
+        "file": "gen2guide-tpl-outfit-c3-m6-detail-reel",
+        "w": 864,
+        "h": 1536,
+        "alt": "Close on-model view of the same beige zip jacket showing its zipper, lower pockets, and cuff.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m3-knitwear-model": {
+        "file": "gen2guide-tpl-tryon-c3-m3-knitwear-model",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman wearing a cream knit cardigan with its button front and knit texture visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m6-front-model": {
+        "file": "gen2guide-tpl-tryon-c3-m6-front-model",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing the plain olive field jacket, front view, with the collar, zipper, cuffs, and pockets visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m6-back-model": {
+        "file": "gen2guide-tpl-tryon-c3-m6-back-model",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing the same plain olive field jacket from the back, showing its shoulders and hem.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m4-product-page": {
+        "file": "gen2guide-tpl-tryon-c3-m4-product-page",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing a plain olive bomber jacket in a bright fitting-room studio, upper-thigh view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m4-seasonal-listing": {
+        "file": "gen2guide-tpl-tryon-c3-m4-seasonal-listing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing a plain olive bomber jacket in a quiet city courtyard.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m3-camel-coat": {
+        "file": "gen2guide-tpl-tryon-c3-m3-camel-coat",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman wearing a camel wool coat on a city sidewalk in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-strip-bomber-front": {
+        "file": "gen2guide-tpl-tryon-c3-strip-bomber-front",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing a plain olive bomber jacket in a fitting-room studio, front three-quarter view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-strip-cardigan-side": {
+        "file": "gen2guide-tpl-tryon-c3-strip-cardigan-side",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman seated in a cream knit cardigan in a warm minimalist living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-strip-overshirt": {
+        "file": "gen2guide-tpl-tryon-c3-strip-overshirt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing a plain muted-blue linen overshirt over a white shirt in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-tryon-c3-m7-back-detail": {
+        "file": "gen2guide-tpl-tryon-c3-m7-back-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing the same plain olive bomber jacket from a rear three-quarter angle in a neutral studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-holidays-m5-0": {
+        "file": "gen2guide-c3-r3-occ-holidays-m5-0",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Tall white pillar candle with the full candle visible in a warm seasonal setting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-holidays-m5-1": {
+        "file": "gen2guide-c3-r3-occ-holidays-m5-1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain ceramic mug beside its gift box on a light table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-holidays-pillow": {
+        "file": "gen2guide-c3-r3-occ-holidays-pillow",
+        "w": 1280,
+        "h": 960,
+        "alt": "Light linen throw pillow styled on a pale sofa in gentle morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-product-drink": {
+        "file": "gen2guide-c3-r3-occ-product-drink",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain iced tea can opened on a sunny balcony table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-product-launch-m5-0": {
+        "file": "gen2guide-c3-r3-occ-product-launch-m5-0",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Natural canvas tote holding a laptop, shown fully on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-product-launch-m5-1": {
+        "file": "gen2guide-c3-r3-occ-product-launch-m5-1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Compact burr coffee grinder viewed from above on a studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-sale-bedding": {
+        "file": "gen2guide-c3-r3-occ-sale-bedding",
+        "w": 1280,
+        "h": 960,
+        "alt": "Neutral linen bedding on a freshly made bed in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-sale-discount-m5-1": {
+        "file": "gen2guide-c3-r3-occ-sale-discount-m5-1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Close view of the knit texture of a merino sweater.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-sale-serum": {
+        "file": "gen2guide-c3-r3-occ-sale-serum",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Serum and cream textures arranged as clean swatches on glass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-occ-sale-skincare-set": {
+        "file": "gen2guide-c3-r3-occ-sale-skincare-set",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Three plain skincare bottles and jars grouped together on a vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-amazon-m5-0": {
+        "file": "gen2guide-c3-r3-plat-amazon-m5-0",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Olive hiking backpack shown from the back with its straps visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-amazon-m8-0": {
+        "file": "gen2guide-c3-r3-plat-amazon-m8-0",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Olive hiking backpack centered on a clean white square background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-amazon-m8-1": {
+        "file": "gen2guide-c3-r3-plat-amazon-m8-1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same olive hiking backpack in a square mountain trail scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-amazon-m8-2": {
+        "file": "gen2guide-c3-r3-plat-amazon-m8-2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same olive hiking backpack shown in a square close detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-shopify-m5-0": {
+        "file": "gen2guide-c3-r3-plat-shopify-m5-0",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain kraft coffee pouch centered on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-shopify-m5-1": {
+        "file": "gen2guide-c3-r3-plat-shopify-m5-1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Sage lunch container open on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-shopify-m8-0": {
+        "file": "gen2guide-c3-r3-plat-shopify-m8-0",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Four coordinated cream, blue, green, and charcoal ceramic bowls in a square product scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-shopify-m8-2": {
+        "file": "gen2guide-c3-r3-plat-shopify-m8-2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same four ceramic bowls arranged for a square social post.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-plat-shopify-pillowcase": {
+        "file": "gen2guide-c3-r3-plat-shopify-pillowcase",
+        "w": 1280,
+        "h": 1600,
+        "alt": "Ivory silk pillowcase on a neatly made bed in soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-outfit-camelcoat": {
+        "file": "gen2guide-c3-r3-tpl-outfit-camelcoat",
+        "w": 1280,
+        "h": 1707,
+        "alt": "Adult wearing a plain camel coat on a city sidewalk, full outfit in view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-outfit-hoodie": {
+        "file": "gen2guide-c3-r3-tpl-outfit-hoodie",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wearing a plain charcoal oversized hoodie against a light background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-outfit-m5-0": {
+        "file": "gen2guide-c3-r3-tpl-outfit-m5-0",
+        "w": 1280,
+        "h": 960,
+        "alt": "Cream cardigan laid flat with the full outline and cuffs visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-outfit-walk": {
+        "file": "gen2guide-c3-r3-tpl-outfit-walk",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wearing the same beige zip jacket while walking through a quiet park.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-pack-gift": {
+        "file": "gen2guide-c3-r3-tpl-pack-gift",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain kraft coffee pouch inside an open gift box with simple tissue and no print.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-pack-lineup": {
+        "file": "gen2guide-c3-r3-tpl-pack-lineup",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain kraft coffee pouch beside a blank carton, folded tissue, and scoop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-pack-m5-0": {
+        "file": "gen2guide-c3-r3-tpl-pack-m5-0",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain kraft coffee pouch standing alone on a light neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-sale-m5-0": {
+        "file": "gen2guide-c3-r3-tpl-sale-m5-0",
+        "w": 1280,
+        "h": 720,
+        "alt": "Two plain ceramic planters of different sizes, both fully visible on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-size-m5-0": {
+        "file": "gen2guide-c3-r3-tpl-size-m5-0",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Canvas tote packed with everyday items, shown fully from handles to base.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-size-m5-1": {
+        "file": "gen2guide-c3-r3-tpl-size-m5-1",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Commuter backpack shown fully from the front with its straps visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-size-shelf": {
+        "file": "gen2guide-c3-r3-tpl-size-shelf",
+        "w": 1280,
+        "h": 960,
+        "alt": "Simple wall shelf with a small plant and plain-spined books, fully in view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-size-storage": {
+        "file": "gen2guide-c3-r3-tpl-size-storage",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain fabric storage boxes arranged on a tidy shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-size-tote-laptop": {
+        "file": "gen2guide-c3-r3-tpl-size-tote-laptop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Natural canvas tote with a laptop inside, shown fully on a wooden bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-size-tote-travel": {
+        "file": "gen2guide-c3-r3-tpl-size-tote-travel",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same natural canvas tote beside a closed carry-on suitcase.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-evening": {
+        "file": "gen2guide-c3-r3-tpl-tryon-evening",
+        "w": 1280,
+        "h": 1707,
+        "alt": "Adult wearing a plain evening dress on a stone staircase, full silhouette visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-knitdress": {
+        "file": "gen2guide-c3-r3-tpl-tryon-knitdress",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wearing a plain cream knit dress in warm natural light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-linen": {
+        "file": "gen2guide-c3-r3-tpl-tryon-linen",
+        "w": 1280,
+        "h": 1707,
+        "alt": "Adult wearing a plain linen two-piece set in a sunlit studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-m5-0": {
+        "file": "gen2guide-c3-r3-tpl-tryon-m5-0",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wearing the same plain heather-gray hoodie, sleeves and hem fully visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-m5-1": {
+        "file": "gen2guide-c3-r3-tpl-tryon-m5-1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Close detail of the same denim jacket zipper and stitching, sharp and fully in view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-streetwear": {
+        "file": "gen2guide-c3-r3-tpl-tryon-streetwear",
+        "w": 1280,
+        "h": 1707,
+        "alt": "Adult wearing a plain streetwear outfit against a concrete wall, full silhouette visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-suit": {
+        "file": "gen2guide-c3-r3-tpl-tryon-suit",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wearing a plain wide-leg suit under a stone archway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c3-r3-tpl-tryon-trench": {
+        "file": "gen2guide-c3-r3-tpl-tryon-trench",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult wearing a plain trench coat under a stone archway in warm daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c4-occ-holidays-post-gift": {
+        "file": "gen2guide-c4-occ-holidays-post-gift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream wool mittens beside a kraft gift box with red ribbon and evergreen branches on a holiday table.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-occ-holidays-browser-giftset": {
+        "file": "gen2guide-c4-occ-holidays-browser-giftset",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank kraft hot-cocoa pouch and small gift box with evergreen, dried orange, and warm holiday lights.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-occ-holidays-output-mug": {
+        "file": "gen2guide-c4-occ-holidays-output-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream ceramic mug on a holiday brunch table with evergreen and red berries.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-occ-holidays-output-scarf-gift": {
+        "file": "gen2guide-c4-occ-holidays-output-scarf-gift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded forest-green wool scarf beside a red-ribbon gift box and evergreen branches.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-occ-launch-appliance": {
+        "file": "gen2guide-c4-occ-launch-appliance",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded matte ivory compact countertop air purifier with a rounded cylindrical body and vented base.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-occ-sale-m6-skincare": {
+        "file": "gen2guide-c4-occ-sale-m6-skincare",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain pale-amber moisturizing balm in a rounded jar on a light stone vanity.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-occ-sale-m7-ugc-photo": {
+        "file": "gen2guide-c4-occ-sale-m7-ugc-photo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain pale-amber moisturizing jar in a bright bathroom setting, square photo without text.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-amazon-phone-case": {
+        "file": "gen2guide-c4-amazon-phone-case",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Empty unbranded tan leather phone folio case with card slots and stitching on a light desk; no device inside.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-amazon-mug-main-white": {
+        "file": "gen2guide-c4-amazon-mug-main-white",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic mug isolated on white in a three-quarter elevated view with its opening visible.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-amazon-mug-rim-detail": {
+        "file": "gen2guide-c4-amazon-mug-rim-detail",
+        "w": 660,
+        "h": 660,
+        "alt": "Close crop of the plain white ceramic mug rim and opening, with part of its handle at the edge.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-amazon-notebook-square": {
+        "file": "gen2guide-c4-amazon-notebook-square",
+        "w": 960,
+        "h": 960,
+        "alt": "Brown leather notebook and pen on a wooden desk in a square flat lay.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-shopify-strip-bedding-square": {
+        "file": "gen2guide-c4-shopify-strip-bedding-square",
+        "w": 960,
+        "h": 960,
+        "alt": "Neutral linen bedding on a freshly made bed in soft daylight, square crop.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-shopify-strip-pillowcase-square": {
+        "file": "gen2guide-c4-shopify-strip-pillowcase-square",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Ivory silk pillowcase on a neatly made bed in soft morning light, square crop.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-shopify-m3-planter-square": {
+        "file": "gen2guide-c4-shopify-m3-planter-square",
+        "w": 960,
+        "h": 960,
+        "alt": "Small ceramic planter on a bookshelf beside plain books, square crop.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-shopify-m3-shelf-square": {
+        "file": "gen2guide-c4-shopify-m3-shelf-square",
+        "w": 960,
+        "h": 960,
+        "alt": "Simple wall shelf with a small plant and plain-spined books, square crop.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-shopify-m4-reusable-bottle": {
+        "file": "gen2guide-c4-shopify-m4-reusable-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Collapsible blue-gray silicone water bottle on a work desk beside a closed laptop.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-shopify-bowls-main-angle": {
+        "file": "gen2guide-c4-shopify-bowls-main-angle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four coordinated ceramic bowls in cream, blue, sage, and charcoal glazes, photographed from a low three-quarter angle.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-tpl-sale-beauty-tube": {
+        "file": "gen2guide-c4-tpl-sale-beauty-tube",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain pale-green skincare tube standing on a light stone vanity beside a folded washcloth.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-tpl-outfit-m3-outerwear": {
+        "file": "gen2guide-c4-tpl-outfit-m3-outerwear",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman wearing a plain charcoal field jacket on a city walk, full length in a vertical frame.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-tpl-outfit-m7-jacket": {
+        "file": "gen2guide-c4-tpl-outfit-m7-jacket",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult model wearing a beige zip jacket in a full-length vertical outfit reel frame.",
+        "variants": [
+          640
+        ]
+      },
+      "c4-tpl-pack-coffee-pouch-unbox": {
+        "file": "gen2guide-c4-tpl-pack-coffee-pouch-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank kraft coffee pouch with coffee beans on a pale counter.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-tpl-outfit-m1-cream-blouse": {
+        "file": "gen2guide-c5-tpl-outfit-m1-cream-blouse",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model in a plain cream blouse and charcoal trousers, full outfit visible in a neutral studio.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-tpl-outfit-m1-green-midi": {
+        "file": "gen2guide-c5-tpl-outfit-m1-green-midi",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model in a plain muted green midi dress in a courtyard.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-tpl-outfit-m1-gray-knit-skirt": {
+        "file": "gen2guide-c5-tpl-outfit-m1-gray-knit-skirt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model in a plain light gray knit sweater and sand midi skirt in a studio.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-tpl-sale-m5-board-blur": {
+        "file": "gen2guide-c5-tpl-sale-m5-board-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Light wooden cutting board softened out of focus with its handle and outline still discernible.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-tpl-outfit-m1-blue-blouse-midi": {
+        "file": "gen2guide-c5-tpl-outfit-m1-blue-blouse-midi",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model in a plain pale blue blouse and charcoal pleated midi skirt with dark brown leather flats.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-occ-holidays-strip-tea-tin": {
+        "file": "gen2guide-c5-occ-holidays-strip-tea-tin",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream tea tin with a blank kraft gift box, evergreen, dried orange and cinnamon on a holiday table.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-occ-holidays-strip-honey-jar": {
+        "file": "gen2guide-c5-occ-holidays-strip-honey-jar",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear honey jar and wooden dipper on a winter brunch table with evergreen, pomegranate and folded linen.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-occ-holidays-strip-berry-bowl": {
+        "file": "gen2guide-c5-occ-holidays-strip-berry-bowl",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream serving bowl with cranberries, pomegranate and orange on an evergreen-trimmed winter dinner table.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-occ-holidays-strip-soap-gift": {
+        "file": "gen2guide-c5-occ-holidays-strip-soap-gift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three plain handmade soaps in a kraft gift box with ribbon, evergreen and dried orange.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-occ-holidays-strip-fireplace-throw": {
+        "file": "gen2guide-c5-occ-holidays-strip-fireplace-throw",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded forest-green wool throw with red ribbon beside a fireplace and evergreen branches.",
+        "variants": [
+          640
+        ]
+      },
+      "c5-occ-holidays-strip-cranberry-preserves": {
+        "file": "gen2guide-c5-occ-holidays-strip-cranberry-preserves",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cranberry preserves in a clear jar with blank band on a holiday breakfast table with evergreen.",
+        "variants": [
+          640
         ]
       }
     }

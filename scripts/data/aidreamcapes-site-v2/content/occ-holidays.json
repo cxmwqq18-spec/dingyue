@@ -15,7 +15,7 @@
   ],
   "intro": [
     "Holiday shoppers are usually buying for someone else, so they want to picture the product as a gift: wrapped under a tree, opened at the table, or sitting on a loved one's shelf. Plain catalog shots don't give them that picture.",
-    "AIVideosUGC puts your existing product photo into seasonal scenes. Make square images for gift guides and product pages, vertical Story and Reels clips with warm light, and fresh versions for the winter holidays, Valentine's Day, Mother's Day or Father's Day from the same starting photo. Shipping cutoffs, prices and codes go on afterward in Canva or CapCut, where you can update them as the season moves."
+    "AIVideosUGC puts your existing product photo into seasonal scenes. Make square images for gift guides and product pages, vertical Story and Reels clips with warm light, and fresh versions for the winter holidays, Valentine's Day, Mother's Day or Father's Day from this starting photo. Shipping cutoffs, prices and codes go on afterward in Canva or CapCut, where you can update them as the season moves."
   ],
   "ideas": [
     {
@@ -27,7 +27,7 @@
       "d": "Candles, pine branches and soft lights around the product for a cozy winter mood."
     },
     {
-      "t": "Same product, new season",
+      "t": "This product in a new season",
       "d": "Move one photo from a winter scene to a Valentine's breakfast or a Mother's Day brunch without a new shoot."
     }
   ],
@@ -192,5 +192,228 @@
     ]
   },
   "templates_lead": "Pick a gift setting, seasonal table, or unwrapping scene for the product.",
-  "cta_lead": "Choose the seasonal moment, then add shipping dates and offers after download."
+  "cta_lead": "Choose the seasonal moment, then add shipping dates and offers after download.",
+  "steps": [
+    {
+      "t": "Choose the gift-ready product",
+      "d": "Start with a clear photo of the candle, set, or item you plan to feature."
+    },
+    {
+      "t": "Describe the seasonal setting",
+      "d": "Name a table, mantel, or wrapped-gift scene and keep the product easy to see."
+    },
+    {
+      "t": "Download and add current details",
+      "d": "Add the delivery cutoff, offer, and seasonal message in your editor."
+    }
+  ],
+  "visual": {
+    "overview": "Build holiday product photos around one clear gift moment, then add dates or offers once those details are ready.",
+    "strip": [
+      "n:guide:c5-occ-holidays-strip-tea-tin",
+      "n:guide:c5-occ-holidays-strip-honey-jar",
+      "n:guide:c5-occ-holidays-strip-berry-bowl",
+      "n:guide:c5-occ-holidays-strip-soap-gift",
+      "n:guide:c5-occ-holidays-strip-fireplace-throw",
+      "n:guide:c5-occ-holidays-strip-cranberry-preserves"
+    ],
+    "steps": {
+      "source": "n:guide:occ-holidays-c3-m2-source",
+      "result": "n:guide:occ-holidays-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Place this white candle jar on a warm winter table beside a small pine sprig and soft lights.",
+      "options": [
+        [
+          "Template",
+          "Holiday product photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Gift guide or product page"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a holiday product scene",
+      "lead": "Pick a setting that helps shoppers picture the item as a seasonal gift.",
+      "chips": [
+        {
+          "id": "gift-set",
+          "label": "Gift sets"
+        },
+        {
+          "id": "table",
+          "label": "Table moments"
+        },
+        {
+          "id": "home",
+          "label": "Cozy home"
+        },
+        {
+          "id": "packaging",
+          "label": "Package display"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-gift-set",
+          "label": "Candle in a pine gift box",
+          "chips": [
+            "gift-set"
+          ],
+          "prompt": "Place this candle jar in a shallow gift box with natural tissue and pine sprigs.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-table",
+          "label": "Candle on a holiday table",
+          "chips": [
+            "table"
+          ],
+          "prompt": "Set this candle jar on a holiday dining table beside evergreen and folded linen.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-fireplace",
+          "label": "Candle on a winter mantel",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Place this candle jar on a winter mantel with restrained greenery and warm lights.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-snowy-window",
+          "label": "Candle beside a snowy window",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Set this candle jar on a windowsill with soft winter snow visible outside.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-gift-box",
+          "label": "Candle beside a wrapped gift",
+          "chips": [
+            "gift-set"
+          ],
+          "prompt": "Place this candle jar beside a kraft gift box tied with a simple ribbon.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-holiday-brunch",
+          "label": "Candle at a holiday brunch",
+          "chips": [
+            "table"
+          ],
+          "prompt": "Set this candle jar at a quiet holiday brunch table with winter greenery.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-packaging-ribbon",
+          "label": "Candle revealed from gift packaging",
+          "chips": [
+            "packaging"
+          ],
+          "prompt": "Partly reveal this candle jar from a gift box with ribbon and pine accents.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-holidays-c3-m3-packaging-shipping",
+          "label": "Candle protected in a shipping box",
+          "chips": [
+            "packaging"
+          ],
+          "prompt": "Pack this candle jar in a clean kraft shipping box with tissue and no lettering.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a holiday product photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:c4-occ-holidays-post-gift",
+        "h": "Add a warm gift moment to a holiday post",
+        "d": "Wool mittens, ribbon, and evergreen create a seasonal feed image with clear gift cues."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:c4-occ-holidays-browser-giftset",
+        "h": "Build a holiday gift-guide product page",
+        "d": "A plain cocoa pouch beside a small gift box helps shoppers picture a seasonal set."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-occ-holidays-m5-0",
+        "bad": "n:guide:occ-holidays-c3-bad-crop",
+        "good_label": "Tall candle stays fully inside the frame",
+        "bad_label": "Candle base is cut at the frame edge"
+      },
+      {
+        "good": "n:guide:c3-r3-occ-holidays-m5-1",
+        "bad": "n:guide:occ-holidays-c3-bad-blur",
+        "good_label": "Ceramic mug rim and handle stay clear",
+        "bad_label": "Mug edges soften into blurred shapes"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c4-occ-holidays-output-mug",
+        "frame": "1:1",
+        "label": "Square holiday brunch mug photo"
+      },
+      {
+        "ref": "n:guide:c4-occ-holidays-output-scarf-gift",
+        "frame": "1:1",
+        "label": "Square scarf gift photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c3-r3-tpl-pack-gift",
+      "zones": [
+        "Offer",
+        "Shipping date"
+      ],
+      "items": [
+        "Add the shipping cutoff and seasonal offer in an editable text layer after download.",
+        "Change or remove the message when the delivery date passes."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make holiday product photos in three steps"
+      },
+      "m3": {
+        "h2": "Choose a holiday product photo scene"
+      },
+      "m4": {
+        "h2": "Use holiday photos in a post or gift guide"
+      },
+      "m5": {
+        "h2": "Start holiday ads with a clear product photo"
+      },
+      "m6": {
+        "h2": "Square holiday product photos for gift guides"
+      },
+      "m7": {
+        "h2": "Add holiday offers after download"
+      },
+      "plan": {
+        "h2": "When to prepare your holiday gift photos and ads"
+      },
+      "faq": {
+        "h2": "Questions about holiday product photos"
+      },
+      "templates": {
+        "h2": "More holiday product photo templates",
+        "lead": "Choose another seasonal scene for the product you plan to feature."
+      }
+    }
+  }
 }

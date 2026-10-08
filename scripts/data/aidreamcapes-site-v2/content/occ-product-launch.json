@@ -195,5 +195,228 @@
     ]
   },
   "templates_lead": "Choose a teaser, reveal, or product-page scene for the launch stage.",
-  "cta_lead": "Plan the teaser or reveal first, then add launch details after download."
+  "cta_lead": "Plan the teaser or reveal first, then add launch details after download.",
+  "steps": [
+    {
+      "t": "Choose the current product sample",
+      "d": "Use a clear photo of the sample customers will recognize when it launches."
+    },
+    {
+      "t": "Pick a teaser or reveal scene",
+      "d": "Describe one action, surface, and light direction for each launch placement."
+    },
+    {
+      "t": "Download and add launch details",
+      "d": "Add the product name, date, and final price in your editor."
+    }
+  ],
+  "visual": {
+    "overview": "Plan a product launch from a clear sample photo, with separate scenes for packaging, first use, and the store listing.",
+    "strip": [
+      "n:gen2:examples-g3",
+      "n:gen2:spokesperson-videos-g4",
+      "n:guide:plat-shopify-c3-size-square-product",
+      "n:guide:c4-shopify-m3-shelf-square",
+      "n:guide:c4-occ-launch-appliance",
+      "n:gen2:tpl-launch-g3"
+    ],
+    "steps": {
+      "source": "n:guide:occ-product-launch-c3-m2-source",
+      "result": "n:guide:occ-product-launch-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Show this matte blue water bottle upright on a pale stone ledge beside one folded towel.",
+      "options": [
+        [
+          "Template",
+          "Product launch photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Reveal or product page"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Pick a product launch direction",
+      "lead": "Choose the scene that fits the product stage you want to show.",
+      "chips": [
+        {
+          "id": "package",
+          "label": "Packaging preview"
+        },
+        {
+          "id": "reveal",
+          "label": "Product reveal"
+        },
+        {
+          "id": "use",
+          "label": "First use"
+        },
+        {
+          "id": "listing",
+          "label": "Store listing"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-pack-c4",
+          "label": "Printed boxes by a door",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Stack these printed boxes beside a bright entry door.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-pack-c2",
+          "label": "Cereal box in a pantry",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Place this patterned cereal box on a clear pantry shelf.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:spokesperson-videos-c4",
+          "label": "Open planner at a desk",
+          "chips": [
+            "reveal"
+          ],
+          "prompt": "Show this hardcover planner open to blank pages at a tidy home desk.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-youtube-shorts-c2",
+          "label": "Electric toothbrush on a bathroom counter",
+          "chips": [
+            "reveal"
+          ],
+          "prompt": "Place this electric toothbrush on a clear bathroom counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-spokesperson-videos-result",
+          "label": "Green bottle held for first use",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Show this plain green bottle held at chest height during a calm first-use moment.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-product-launch-c3-m3-first-use",
+          "label": "Matte blue bottle at first use",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Show this matte blue water bottle during a calm outdoor first-use moment, with its shape and cap unchanged.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:occ-product-launch-phonecase-g7",
+          "label": "Sage silicone phone case",
+          "chips": [
+            "listing"
+          ],
+          "prompt": "Show this unbranded sage silicone phone case on a light desk, with no phone visible and only a simple generic oval camera opening.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-pack-c3-m3-catalog-lineup",
+          "label": "Coffee pouch with blank package pieces",
+          "chips": [
+            "listing"
+          ],
+          "prompt": "Center this plain kraft coffee pouch beside blank packaging pieces for a catalog image.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product launch photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:guide:tpl-pack-c3-m4-retail-shelf",
+        "h": "Preview a product in its retail setting",
+        "d": "A shelf view can help a launch team discuss how a package reads beside related goods."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:tpl-pack-c3-m4-unboxing",
+        "h": "Add a launch image to a store page",
+        "d": "Place a clear product view near the listing details shoppers will use to decide."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c3-r3-occ-product-launch-m5-0",
+        "bad": "n:guide:occ-product-launch-c3-bad-crop",
+        "good_label": "Tote body and handles fit the frame",
+        "bad_label": "Tote handle and lower edge are clipped"
+      },
+      {
+        "good": "n:guide:c3-r3-occ-product-launch-m5-1",
+        "bad": "n:guide:occ-product-launch-c3-bad-blur",
+        "good_label": "Grinder handle and beans stay clear",
+        "bad_label": "Grinder details turn soft"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c3-r3-occ-product-drink",
+        "frame": "1:1",
+        "label": "Square new-drink product photo"
+      },
+      {
+        "ref": "n:guide:c4-amazon-phone-case",
+        "frame": "1:1",
+        "label": "Square leather-folio product photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:occ-product-launch-c3-m7-release",
+      "zones": [
+        "Product name",
+        "Launch date"
+      ],
+      "items": [
+        "Add the launch date and final price after download.",
+        "Keep the product name and availability in a separate editable text layer."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Prepare a product launch photo in three steps"
+      },
+      "m3": {
+        "h2": "Choose a product launch scene"
+      },
+      "m4": {
+        "h2": "Use launch photos in a listing or retail preview"
+      },
+      "m5": {
+        "h2": "Start a product launch with a clear sample photo"
+      },
+      "m6": {
+        "h2": "Square product launch photos for a store page"
+      },
+      "m7": {
+        "h2": "Add product launch details after download"
+      },
+      "plan": {
+        "h2": "When to prepare your product launch photos and clips"
+      },
+      "faq": {
+        "h2": "Questions about product launch photos"
+      },
+      "templates": {
+        "h2": "More product launch photo templates",
+        "lead": "Choose another scene for the product you are preparing to launch."
+      }
+    }
+  }
 }
