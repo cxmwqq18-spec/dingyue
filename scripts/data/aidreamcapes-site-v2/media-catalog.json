@@ -1849,6 +1849,159 @@
         640,
         1280
       ]
+    },
+    "k2-url-picker-picnic-basket": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Woven picnic basket opened on a blanket with a few simple picnic foods arranged beside it.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-picker-tote-commute": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Natural canvas tote bag with a water bottle and notebook arranged beside it on a station bench.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-picker-sneaker-doorstep": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Dark gray technical running shoe resting by a front door on a small mat.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-picker-throw-chair": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Soft rust-colored knit throw draped over an empty light wood armchair.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-picker-hot-sauce": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain glass hot sauce bottle with a completely blank cream label on a market shelf.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-picker-vase": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "A hand gently lifting a pale ceramic vase from plain tissue paper in a box.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-picker-water-bottle-desk": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain brushed steel water bottle standing on a tidy desk beside a notebook and plant.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-picker-charging-pad": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Simple round wireless charging pad on dark fabric with its cable visible, no phone.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-use-open-bento": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Open sage lunch container showing its compartments on an office desk beside a folded napkin.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-use-snack-pouch": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain blank snack pouch beside a lunch container on a clean office desk.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-output-bottle-gymbag": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Plain steel bottle lifted from an open dark gym bag on a locker-room bench.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-output-mouse-laptop": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Compact black wireless mouse beside a closed laptop on a pale desk, viewed wide.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k2-url-after-serum-bathroom": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Amber serum bottle standing on a tidy bathroom shelf beside a folded towel.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-card-shelf-organizer": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "A hand slides a plain wooden shelf organizer into a wardrobe with clothes neatly arranged.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-card-beauty-serum": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Hands hold a plain amber serum bottle beside a bathroom sink and folded robe.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-card-sparkling-drink": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Golden sparkling citrus drink pours from a clear bottle into a glass with ice.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-card-drawer-trays": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Gray organizer trays fitted neatly inside an open wooden kitchen drawer.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-case-mug-laptop": {
+      "w": 864,
+      "h": 1536,
+      "alt": "A hand lifts a plain beige ceramic mug beside an open laptop on a bright desk.",
+      "variants": [
+        640
+      ]
+    },
+    "k2-url-case-desk-organizer": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain walnut desk organizer with pencils and a blank notebook on a tidy workspace.",
+      "variants": [
+        640
+      ]
     }
   },
   "gen": {
@@ -14221,6 +14374,456 @@
         "variants": [
           640,
           1280
+        ]
+      },
+      "k2-white-example-wallet": {
+        "file": "k2-white-example-wallet",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cognac leather bifold wallet photographed closed on a seamless white background.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-example-spray-bottle": {
+        "file": "k2-white-example-spray-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear glass spray bottle with a white trigger on a seamless white background.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-example-running-shoe": {
+        "file": "k2-white-example-running-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray technical mesh running shoe in full side profile on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-example-bag-buckle": {
+        "file": "k2-white-example-bag-buckle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brushed brass rectangular buckle on a tan leather bag strap, fully visible on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-strip-wallet": {
+        "file": "k2-white-strip-wallet",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark brown leather bifold wallet shown at a slight angle on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-strip-house-slippers": {
+        "file": "k2-white-strip-house-slippers",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of oatmeal felt house slippers on seamless white, both fully visible.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-strip-backpack": {
+        "file": "k2-white-strip-backpack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Olive canvas backpack with brown leather trim on seamless white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-strip-planter": {
+        "file": "k2-white-strip-planter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wide terracotta ceramic planter with a simple open rim on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-strip-rectangular-speaker": {
+        "file": "k2-white-strip-rectangular-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact rectangular black Bluetooth speaker with tactile buttons on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-strip-insulated-bottle": {
+        "file": "k2-white-strip-insulated-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain brushed stainless steel insulated bottle with a screw cap on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-step-wallet-source": {
+        "file": "k2-white-step-wallet-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather bifold wallet as a square starting product photo on a warm neutral surface.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-step-wallet-result": {
+        "file": "k2-white-step-wallet-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather bifold wallet centered on a pure white field with a gentle shadow.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-soap-dispenser": {
+        "file": "k2-white-picker-soap-dispenser",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale sage ceramic soap dispenser with a brushed metal pump on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-desk-lamp": {
+        "file": "k2-white-picker-desk-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Curved brass desk lamp with a simple shade on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-tea-kettle": {
+        "file": "k2-white-picker-tea-kettle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sea-glass green stovetop kettle with a plain handle on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-serving-bowl": {
+        "file": "k2-white-picker-serving-bowl",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream stoneware serving bowl with a softly rounded rim on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-leather-sandals": {
+        "file": "k2-white-picker-leather-sandals",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of cognac leather sandals with both straps fully visible on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-canvas-tote": {
+        "file": "k2-white-picker-canvas-tote",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag with sturdy handles, upright on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-desk-organizer": {
+        "file": "k2-white-picker-desk-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Walnut desk organizer with several empty compartments on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-picker-reading-glasses": {
+        "file": "k2-white-picker-reading-glasses",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tortoiseshell reading glasses opened and centered on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-use-mug": {
+        "file": "k2-white-use-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream ceramic mug with a broad handle on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-use-vase": {
+        "file": "k2-white-use-vase",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale blue matte ceramic bud vase with a simple rounded neck on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-input-daypack-open": {
+        "file": "k2-white-input-daypack-open",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Olive daypack opened to show its inner pocket, fully in frame on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-input-running-shoe": {
+        "file": "k2-white-input-running-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray technical running shoe in a clear front three-quarter view on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-output-crossbody-bag": {
+        "file": "k2-white-output-crossbody-bag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain dark brown leather crossbody bag, front view on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-output-coaster-set": {
+        "file": "k2-white-output-coaster-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three slate-blue felt coasters arranged in a neat stack on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-after-daypack": {
+        "file": "k2-white-after-daypack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Olive canvas daypack shown closed from the front on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-card-shoe": {
+        "file": "k2-white-card-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray mesh running shoe with a cream sole in side profile on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-card-colorways": {
+        "file": "k2-white-card-colorways",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three matching technical running shoes in charcoal, blue and muted green colorways on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-card-speaker-top": {
+        "file": "k2-white-card-speaker-top",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Top view of a compact rectangular speaker with simple physical controls on white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-card-gray-hoodie": {
+        "file": "k2-white-card-gray-hoodie",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain gray cotton pullover hoodie laid flat on pure white with its seams visible.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-case-steel-bottle": {
+        "file": "k2-white-case-steel-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brushed stainless steel water bottle with a plain screw cap on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-case-linen-shade-lamp": {
+        "file": "k2-white-case-linen-shade-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic table lamp with an ivory linen shade on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-case-wood-train": {
+        "file": "k2-white-case-wood-train",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural wooden toy train set arranged together on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-white-hero-cream-mug": {
+        "file": "k2-white-hero-cream-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte cream ceramic travel mug with a plain fitted lid on pure white.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-hero-link-to-video": {
+        "file": "k2-url-hero-link-to-video",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open laptop beside a plain ceramic mug on a bright desk, with an abstract product listing on screen.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-example-olive-oil": {
+        "file": "k2-url-example-olive-oil",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear olive oil bottle beside fresh herbs and a wooden cutting board on a kitchen counter.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-example-pillow": {
+        "file": "k2-url-example-pillow",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two muted linen throw pillows on a reading chair beside a floor lamp.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-example-yoga-mat-bag": {
+        "file": "k2-url-example-yoga-mat-bag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Rolled yoga mat in a plain canvas carrier hanging by a bright front door.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-example-teapot": {
+        "file": "k2-url-example-teapot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream ceramic teapot and two cups on a wooden tray.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-strip-lunchbox-closed": {
+        "file": "k2-url-strip-lunchbox-closed",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage-green insulated lunch container closed on a bright kitchen counter.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-strip-lunchbox-open": {
+        "file": "k2-url-strip-lunchbox-open",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open sage-green lunch container with divided compartments and the lid beside it.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-strip-sunglasses": {
+        "file": "k2-url-strip-sunglasses",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tortoiseshell sunglasses on a sun-bleached wooden deck in warm daylight.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-strip-running-shoe": {
+        "file": "k2-url-strip-running-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray technical running shoe in full side profile against a clean white background.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-strip-ceramic-jars": {
+        "file": "k2-url-strip-ceramic-jars",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three plain ceramic storage jars in sage, cream and terracotta on a kitchen shelf.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-strip-water-bottle": {
+        "file": "k2-url-strip-water-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain brushed steel water bottle on a park bench beside a folded running jacket.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-step-lunchbox-source": {
+        "file": "k2-url-step-lunchbox-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Closed sage-green insulated lunch container photographed from a front-left angle.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-step-lunchbox-result": {
+        "file": "k2-url-step-lunchbox-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open sage-green lunch container viewed from above with the lid set aside.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-input-headphones": {
+        "file": "k2-url-input-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain black over-ear headphones shown front-on on a light gray studio sweep.",
+        "variants": [
+          640
+        ]
+      },
+      "k2-url-input-backpack": {
+        "file": "k2-url-input-backpack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Olive hiking backpack turned to show its back panel and shoulder straps on white.",
+        "variants": [
+          640
         ]
       }
     }

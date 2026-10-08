@@ -4,10 +4,10 @@
       "hero": {
         "kind": "pair",
         "before": "g:ecommerce-main-image/source-input",
-        "after": "n:white-mug"
+        "after": "n:guide:k2-white-hero-cream-mug"
       },
       "pairs": [],
-      "og": "n:white-mug"
+      "og": "n:guide:k2-white-hero-cream-mug"
     },
     "lifestyle-photos": {
       "hero": {
@@ -334,9 +334,9 @@
     "url-to-video": {
       "hero": {
         "kind": "image",
-        "image": "n:url-to-video-concept"
+        "image": "n:guide:k2-url-hero-link-to-video"
       },
-      "og": "n:url-to-video-concept"
+      "og": "n:guide:k2-url-hero-link-to-video"
     },
     "tpl-howto": {
       "hero": {

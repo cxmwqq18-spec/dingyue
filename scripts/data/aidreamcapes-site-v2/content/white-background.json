@@ -75,25 +75,25 @@
         "label": "Main image ready",
         "items": [
           {
-            "ref": "n:gen2:white-background-g1",
+            "ref": "n:guide:k2-white-example-wallet",
             "title": "Leather bifold wallet on a clean white backdrop",
             "kind": "photo",
             "product": "leather bifold wallet"
           },
           {
-            "ref": "n:gen2:white-background-g2",
+            "ref": "n:guide:k2-white-example-spray-bottle",
             "title": "Clear spray bottle with a soft shadow on white",
             "kind": "photo",
             "product": "clear spray bottle"
           },
           {
-            "ref": "n:gen2:white-background-g3",
+            "ref": "n:guide:k2-white-example-running-shoe",
             "title": "Running shoe in full side profile on white",
             "kind": "photo",
             "product": "running shoe"
           },
           {
-            "ref": "n:gen2:white-background-g4",
+            "ref": "n:guide:k2-white-example-bag-buckle",
             "title": "Bag buckle detail cropped on white",
             "kind": "photo",
             "product": "bag buckle"
@@ -124,16 +124,16 @@
   },
   "visual": {
     "strip": [
-      "n:white-wallet",
-      "n:guide:white-background-fix-m1-house-slippers",
-      "n:white-backpack",
-      "n:guide:white-background-fix-m1-planter",
-      "n:gen2:plat-amazon-c1",
-      "n:gen2:plat-facebook-g3"
+      "n:guide:k2-white-strip-wallet",
+      "n:guide:k2-white-strip-house-slippers",
+      "n:guide:k2-white-strip-backpack",
+      "n:guide:k2-white-strip-planter",
+      "n:guide:k2-white-strip-rectangular-speaker",
+      "n:guide:k2-white-strip-insulated-bottle"
     ],
     "steps": {
-      "source": "g:macro-details/source-input",
-      "result": "n:white-wallet",
+      "source": "n:guide:k2-white-step-wallet-source",
+      "result": "n:guide:k2-white-step-wallet-result",
       "mode": "photo",
       "prompt": "Put this brown leather wallet on pure white, centered, with the stitching sharp and a soft shadow underneath.",
       "options": [
@@ -174,7 +174,7 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:white-background-soap-dispenser",
+          "ref": "n:guide:k2-white-picker-soap-dispenser",
           "label": "Sage soap dispenser",
           "chips": [
             "home"
@@ -183,7 +183,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-desk-lamp",
+          "ref": "n:guide:k2-white-picker-desk-lamp",
           "label": "Curved brass desk lamp",
           "chips": [
             "home",
@@ -193,7 +193,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-kettle",
+          "ref": "n:guide:k2-white-picker-tea-kettle",
           "label": "Sea glass tea kettle",
           "chips": [
             "kitchen"
@@ -202,7 +202,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-serving-bowl",
+          "ref": "n:guide:k2-white-picker-serving-bowl",
           "label": "Cream stoneware bowl",
           "chips": [
             "kitchen"
@@ -211,7 +211,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-leather-sandals",
+          "ref": "n:guide:k2-white-picker-leather-sandals",
           "label": "Cognac leather sandals",
           "chips": [
             "accessories"
@@ -220,7 +220,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-canvas-tote",
+          "ref": "n:guide:k2-white-picker-canvas-tote",
           "label": "Natural canvas tote",
           "chips": [
             "accessories"
@@ -229,7 +229,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-desk-organizer",
+          "ref": "n:guide:k2-white-picker-desk-organizer",
           "label": "Walnut desk organizer",
           "chips": [
             "office"
@@ -238,7 +238,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-reading-glasses",
+          "ref": "n:guide:k2-white-picker-reading-glasses",
           "label": "Tortoiseshell reading glasses",
           "chips": [
             "accessories",
@@ -253,26 +253,26 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:gen2:plat-amazon-g1",
+        "ref": "n:guide:k2-white-use-mug",
         "h": "Main listing image",
         "d": "Amazon asks for a pure white background on the main image, and a clean cut-out keeps your Shopify collection grid even."
       },
       {
         "frame": "listing",
-        "ref": "n:gen2:home-g1",
+        "ref": "n:guide:k2-white-use-vase",
         "h": "Collection pages",
         "d": "Products shot on ten different tables still line up as one set on white."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:plat-amazon-g5",
+        "good": "n:guide:k2-white-input-daypack-open",
         "bad": "n:guide:white-background-daypack-cropped",
         "good_label": "Open bag, full handle in frame",
         "bad_label": "Top handle cropped by the frame edge"
       },
       {
-        "good": "n:gen2:ind-shoes-g1",
+        "good": "n:guide:k2-white-input-running-shoe",
         "bad": "n:guide:white-background-shoe-blurred",
         "good_label": "Shoe outline and laces in focus",
         "bad_label": "Shoe details softened by blur"
@@ -280,18 +280,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:photo-hub-c1",
+        "ref": "n:guide:k2-white-output-crossbody-bag",
         "frame": "1:1",
         "label": "Pure white listing image"
       },
       {
-        "ref": "n:guide:white-background-fix-m6-coaster-set",
+        "ref": "n:guide:k2-white-output-coaster-set",
         "frame": "1:1",
         "label": "Square catalog product photo"
       }
     ],
     "after": {
-      "ref": "n:gen2:plat-amazon-g4",
+      "ref": "n:guide:k2-white-after-daypack",
       "zones": [],
       "items": [
         "Keep the main image free of text, badges and watermarks if you sell on Amazon.",

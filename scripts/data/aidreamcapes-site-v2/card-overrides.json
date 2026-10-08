@@ -399,5 +399,45 @@
         "alt": "Charcoal trail running shoe with visible mesh and laces on a pale stone surface."
       }
     }
+  },
+  "white-background": {
+    "images": {
+      "white": {
+        "ref": "n:guide:k2-white-card-shoe",
+        "alt": "Gray mesh running shoe with a cream sole in side profile on white."
+      },
+      "color": {
+        "ref": "n:guide:k2-white-card-colorways",
+        "alt": "Three matching technical running shoes in charcoal, blue and muted green colorways on white."
+      },
+      "angle": {
+        "ref": "n:guide:k2-white-card-speaker-top",
+        "alt": "Top view of a compact rectangular speaker with simple physical controls on white."
+      },
+      "detail": {
+        "ref": "n:guide:k2-white-card-gray-hoodie",
+        "alt": "Plain gray cotton pullover hoodie laid flat on pure white with its seams visible."
+      }
+    }
+  },
+  "url-to-video": {
+    "images": {
+      "ba": {
+        "ref": "f:k2-url-card-shelf-organizer",
+        "alt": "A hand slides a plain wooden shelf organizer into a wardrobe with clothes neatly arranged."
+      },
+      "beauty": {
+        "ref": "f:k2-url-card-beauty-serum",
+        "alt": "Hands hold a plain amber serum bottle beside a bathroom sink and folded robe."
+      },
+      "drink": {
+        "ref": "f:k2-url-card-sparkling-drink",
+        "alt": "Golden sparkling citrus drink pours from a clear bottle into a glass with ice."
+      },
+      "home": {
+        "ref": "f:k2-url-card-drawer-trays",
+        "alt": "Gray organizer trays fitted neatly inside an open wooden kitchen drawer."
+      }
+    }
   }
 }

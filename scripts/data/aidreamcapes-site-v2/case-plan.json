@@ -132,17 +132,17 @@
     ],
     "white-background": [
       {
-        "ref": "n:gen2:white-background-c1",
+        "ref": "n:guide:k2-white-case-steel-bottle",
         "product": "steel water bottle",
         "title": "Steel water bottle cut out on pure white"
       },
       {
-        "ref": "n:gen2:white-background-c2",
+        "ref": "n:guide:k2-white-case-linen-shade-lamp",
         "product": "ceramic table lamp",
         "title": "Ceramic table lamp on a pure white background"
       },
       {
-        "ref": "n:gen2:white-background-c3",
+        "ref": "n:guide:k2-white-case-wood-train",
         "product": "wooden toy train",
         "title": "Wooden toy train ready for a main listing image"
       }
@@ -1229,14 +1229,16 @@
     ],
     "url-to-video": [
       {
-        "ref": "url-to-ad-a-v",
+        "ref": "f:k2-url-case-mug-laptop",
         "product": "beige mug",
-        "title": "Mug picked up beside an open laptop"
+        "title": "Mug picked up beside an open laptop",
+        "kind": "scene"
       },
       {
-        "ref": "n:gen2:url-to-video-c2",
+        "ref": "f:k2-url-case-desk-organizer",
         "product": "desk organizer",
-        "title": "Desk organizer shown on a tidy workspace"
+        "title": "Desk organizer shown on a tidy workspace",
+        "kind": "scene"
       },
       {
         "ref": "n:gen2:url-to-video-c3",

@@ -75,19 +75,19 @@
         "label": "From listing to scene",
         "items": [
           {
-            "ref": "n:gen2:url-to-video-g1",
+            "ref": "n:guide:k2-url-example-olive-oil",
             "title": "Olive oil bottle placed on a kitchen counter",
             "kind": "scene",
             "product": "olive oil bottle"
           },
           {
-            "ref": "n:gen2:url-to-video-g2",
+            "ref": "n:guide:k2-url-example-pillow",
             "title": "Throw pillow set on a reading chair by a lamp",
             "kind": "scene",
             "product": "throw pillow"
           },
           {
-            "ref": "n:gen2:url-to-video-g3",
+            "ref": "n:guide:k2-url-example-yoga-mat-bag",
             "title": "Yoga mat bag hung by the front door",
             "kind": "scene",
             "product": "yoga mat bag"
@@ -98,7 +98,7 @@
         "label": "More listed products",
         "items": [
           {
-            "ref": "n:gen2:url-to-video-g4",
+            "ref": "n:guide:k2-url-example-teapot",
             "title": "Ceramic teapot set on a tray with two cups",
             "kind": "scene",
             "product": "ceramic teapot"
@@ -115,17 +115,17 @@
   },
   "visual": {
     "strip": [
-      "n:guide:b1-url-to-video-source",
-      "n:guide:b1-url-to-video-result",
-      "n:gen2:photo-hub-g4",
-      "n:gen2:white-background-g3",
-      "n:gen2:tpl-color-g1",
-      "n:gen2:occ-product-launch-g3"
+      "n:guide:k2-url-strip-lunchbox-closed",
+      "n:guide:k2-url-strip-lunchbox-open",
+      "n:guide:k2-url-strip-sunglasses",
+      "n:guide:k2-url-strip-running-shoe",
+      "n:guide:k2-url-strip-ceramic-jars",
+      "n:guide:k2-url-strip-water-bottle"
     ],
     "steps": {
-      "source": "n:guide:b1-url-to-video-source",
-      "sourceAlt": "Sage-green insulated lunch container photographed closed on a bright kitchen counter.",
-      "result": "n:guide:b1-url-to-video-result",
+      "source": "n:guide:k2-url-step-lunchbox-source",
+      "sourceAlt": "Closed sage-green insulated lunch container on a pale counter, viewed from the front.",
+      "result": "n:guide:k2-url-step-lunchbox-result",
       "mode": "video",
       "length": 15,
       "prompt": "Open this sage-green lunch container to show the compartments, then set the lid beside it.",
@@ -155,7 +155,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-carousel-video-ad-g3",
+          "ref": "f:k2-url-picker-picnic-basket",
           "label": "Picnic basket set out",
           "chips": [
             "travel",
@@ -166,7 +166,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-carousel-video-ad-c4",
+          "ref": "f:k2-url-picker-tote-commute",
           "label": "Tote packed for commute",
           "chips": [
             "travel"
@@ -175,7 +175,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-retargeting-video-ad-c1",
+          "ref": "f:k2-url-picker-sneaker-doorstep",
           "label": "Sneaker turned by doorstep",
           "chips": [
             "home",
@@ -185,7 +185,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-retargeting-video-ad-c3",
+          "ref": "f:k2-url-picker-throw-chair",
           "label": "Throw blanket smoothed on chair",
           "chips": [
             "home"
@@ -194,7 +194,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-pack-c3",
+          "ref": "f:k2-url-picker-hot-sauce",
           "label": "Hot sauce bottle on counter",
           "chips": [
             "food"
@@ -203,7 +203,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
+          "ref": "f:k2-url-picker-vase",
           "label": "Ceramic vase lifted from tissue",
           "chips": [
             "home",
@@ -213,7 +213,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-launch-c2",
+          "ref": "f:k2-url-picker-water-bottle-desk",
           "label": "Water bottle turned on a desk",
           "chips": [
             "travel",
@@ -223,7 +223,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-launch-c3",
+          "ref": "f:k2-url-picker-charging-pad",
           "label": "Charging pad revealed",
           "chips": [
             "personal",
@@ -238,26 +238,26 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:gen2:tpl-carousel-video-ad-c3",
+        "ref": "f:k2-url-use-open-bento",
         "h": "Product page",
         "d": "A clip next to your listing photos shows what photos can't, like how the lid comes off."
       },
       {
         "frame": "listing",
-        "ref": "n:gen2:video-ads-g3",
+        "ref": "f:k2-url-use-snack-pouch",
         "h": "Ads for your best sellers",
         "d": "Turn your top products into short ads straight from their links."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-angle-c1",
+        "good": "n:guide:k2-url-input-headphones",
         "bad": "n:guide:b1-url-to-video-bad-crop",
         "good_label": "Headphones shown front-on and fully in frame",
         "bad_label": "Left ear cup clipped by the edge"
       },
       {
-        "good": "n:gen2:tpl-angle-c2",
+        "good": "n:guide:k2-url-input-backpack",
         "bad": "n:guide:b1-url-to-video-bad-blur",
         "good_label": "Backpack straps and seams in focus",
         "bad_label": "Blur softens the backpack straps and seams"
@@ -265,20 +265,20 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:video-hub-g1",
+        "ref": "f:k2-url-output-bottle-gymbag",
         "frame": "9:16",
         "label": "Bottle lifted from gym bag",
         "length": 15
       },
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-g2",
+        "ref": "f:k2-url-output-mouse-laptop",
         "frame": "16:9",
         "label": "Mouse shown beside a laptop",
         "length": 15
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+      "ref": "f:k2-url-after-serum-bathroom",
       "zones": [
         "Product name",
         "Caption"
