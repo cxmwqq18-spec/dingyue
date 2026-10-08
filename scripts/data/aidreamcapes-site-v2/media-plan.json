@@ -577,36 +577,36 @@
         "image": "n:drink-vertical"
       },
       "gallery": [
-        "n:sunglasses-worn",
-        "n:hotsauce-peppers",
-        "n:k4-plat-youtube-shorts-phonecase-safe"
+        "n:guide:q19-yt-gallery-sunglasses",
+        "n:guide:q19-yt-gallery-first-taste",
+        "n:guide:q19-yt-gallery-phonecase-demo"
       ],
       "og": "n:drink-vertical",
-      "card": "f:food-video"
+      "card": "n:guide:q19-yt-media-card-first-sip"
     },
     "plat-amazon": {
       "hero": {
         "kind": "image",
-        "image": "n:white-sneaker"
+        "image": "n:guide:q19-amz-hero-vitamin"
       },
       "gallery": [
-        "g:ecommerce-main-image/example-01",
+        "n:guide:q19-amz-gallery-protein",
         "g:packshot-multi-angle/example-08",
         "n:handbag-detail"
       ],
-      "og": "n:white-sneaker"
+      "og": "n:guide:q19-amz-og-trailshoe"
     },
     "plat-shopify": {
       "hero": {
         "kind": "image",
-        "image": "n:candle-bath"
+        "image": "n:guide:q19-shop-hero-serum"
       },
       "gallery": [
-        "n:planter-window",
-        "n:coffee-counter",
-        "n:boots-doorway"
+        "n:guide:q19-shop-gallery-planter-hand",
+        "n:guide:q19-shop-gallery-protein-pour",
+        "n:guide:q19-shop-gallery-boot-tryon"
       ],
-      "og": "n:candle-bath"
+      "og": "n:guide:q19-shop-og-shoe-walk"
     },
     "occ-product-launch": {
       "hero": {

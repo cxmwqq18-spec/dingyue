@@ -132,28 +132,28 @@
         "alt": "Ceramic table lamp with linen shade on a pure white background."
       },
       "bg": {
-        "ref": "g:background-remove-replace/hero-output",
-        "alt": "Ceramic vase isolated against a clean warm studio background."
+        "ref": "n:guide:q19-amz-override-background-serum",
+        "alt": "Plain amber serum bottle and blank carton on a pale blush studio background."
       },
       "compare": {
-        "ref": "f:competitor-comparison",
-        "alt": "Hand holding a black insulated mug next to a cream one on a wooden table."
+        "ref": "n:guide:q19-amz-override-compare-lipbalm",
+        "alt": "Hand compares two plain tinted lip balms in muted rose and berry."
       }
     }
   },
   "plat-shopify": {
     "images": {
       "color": {
-        "ref": "g:colorway-variations/hero-output",
-        "alt": "Four canvas sneakers shown together in distinct color options."
+        "ref": "n:guide:q19-shop-override-shoe-colors",
+        "alt": "Three generic trail shoes in muted colors arranged for comparison."
       },
       "model": {
-        "ref": "g:on-model-generation/hero-output",
-        "alt": "Person wearing a canvas backpack on a city walk."
+        "ref": "n:guide:q19-shop-override-model",
+        "alt": "Adult wearing generic charcoal trail shoes with muted coral laces on a city sidewalk."
       },
       "pack": {
-        "ref": "g:packaging-mockup/hero-output",
-        "alt": "Tea packaging arranged on a realistic kitchen shelf."
+        "ref": "n:guide:q19-shop-override-tea-unbox",
+        "alt": "Hands lift a plain tea carton from tissue in a kraft mailer."
       }
     }
   },
@@ -562,12 +562,12 @@
         "alt": "Close view of a handheld garment steamer and its glowing button"
       },
       "compare": {
-        "ref": "f:k4-plat-youtube-shorts-02-cards-2-image",
-        "alt": "Coffee poured into a black insulated mug and a cream one held side by side"
+        "ref": "n:guide:q19-yt-override-shoe-compare",
+        "alt": "Hands compare two generic charcoal trail shoes in different muted colors."
       },
       "demo": {
-        "ref": "f:k4-plat-youtube-shorts-30-template-demo",
-        "alt": "Hand placing a small glass cup under a compact generic espresso maker on a kitchen counter."
+        "ref": "n:guide:q19-yt-override-phone-demo",
+        "alt": "Adult creator shows a plain sage phone case beside a generic phone."
       }
     }
   },

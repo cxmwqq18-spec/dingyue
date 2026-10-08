@@ -178,22 +178,22 @@
         "label": "Store-ready sets",
         "items": [
           {
-            "ref": "n:gen2:plat-shopify-g1",
-            "title": "Four ceramic bowls shot from one consistent height",
+            "ref": "n:guide:q19-shop-example-bowls-serve",
+            "title": "Berries served in a coordinated bowl set",
             "kind": "photo",
             "product": "ceramic bowls"
           },
           {
-            "ref": "n:guide:tpl-size-c3-m7-tote-reference",
-            "title": "Linen tote packed at a market stall",
+            "ref": "n:guide:q19-shop-example-tote-market",
+            "title": "Produce packed into a canvas tote",
             "kind": "photo",
-            "product": "linen tote"
+            "product": "canvas tote"
           },
           {
-            "ref": "n:guide:c3-r3-occ-holidays-pillow",
-            "title": "Throw pillows on a sofa for a collection header",
+            "ref": "n:guide:q19-shop-example-pet-sofa",
+            "title": "Pet hair cleared from a sofa cushion",
             "kind": "photo",
-            "product": "throw pillows"
+            "product": "lint brush"
           }
         ]
       }
@@ -218,18 +218,18 @@
   "visual": {
     "overview": "Use this four-bowl set in three square images: a product page image, a collection or home card, and a social post.",
     "strip": [
-      "n:sunglasses-pack",
-      "n:guide:c4-tpl-sale-beauty-tube",
-      "n:gen2:tpl-size-g2",
-      "n:guide:c4-shopify-strip-bedding-square",
-      "n:guide:c4-shopify-strip-pillowcase-square",
-      "n:gen2:spokesperson-videos-g3"
+      "n:guide:q19-shop-strip-glasses-tryon",
+      "n:guide:q19-shop-strip-serum-apply",
+      "n:guide:q19-shop-strip-tote-commute",
+      "n:guide:q19-shop-strip-linen-before-after",
+      "n:guide:q19-shop-strip-pet-brush",
+      "n:guide:q19-shop-strip-snack-bite"
     ],
     "steps": {
-      "source": "n:guide:plat-shopify-c3-m2-source",
-      "result": "n:guide:plat-shopify-c3-m2-result",
+      "source": "n:guide:q19-shop-step-bowl-source",
+      "result": "n:guide:q19-shop-step-bowl-serve",
       "mode": "photo",
-      "prompt": "Arrange this set of four ceramic bowls on a light dining table, keeping their colors and relative sizes clear.",
+      "prompt": "Still square lifestyle photograph of an adult hand serving berries into one bowl from a coordinated ceramic set at a bright dining table; capture the frozen moment as the berries fall into the bowl, soft window light, centered close composition with the bowl set visible, no text or logos.",
       "options": [
         [
           "Template",
@@ -246,97 +246,99 @@
       ]
     },
     "picker": {
-      "title": "Choose a Shopify square image placement",
-      "lead": "Pick a square scene for the product page, collection or home card, or social feed.",
+      "title": "Choose a Shopify campaign image",
+      "lead": "Create a consistent square gallery with creator routines, try-ons and clear product demos.",
       "chips": [
         {
-          "id": "product",
-          "label": "Product page"
+          "id": "hook",
+          "label": "Hook & reveal"
         },
         {
-          "id": "home",
-          "label": "Collection or home card"
+          "id": "demo",
+          "label": "Hands-on demo"
         },
         {
-          "id": "collection",
-          "label": "Collection grid"
+          "id": "before",
+          "label": "Before & after"
         },
         {
-          "id": "social",
-          "label": "Square social post"
+          "id": "lifestyle",
+          "label": "Lifestyle & try-on"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:c4-shopify-m3-planter-square",
-          "label": "Planter beside plain books",
+          "ref": "n:guide:q19-shop-picker-01-skincare-routine",
+          "label": "GRWM: serum before the commute",
           "chips": [
-            "product"
+            "lifestyle"
           ],
-          "prompt": "Place this small ceramic planter on a bookshelf beside plain spines.",
+          "prompt": "Still square lifestyle photograph of an adult woman smoothing one drop of plain serum onto her cheek at a bright bathroom mirror, amber bottle held beside her face; freeze the application moment, soft morning window light, close centered composition with natural skin texture, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c4-shopify-m3-shelf-square",
-          "label": "Wall shelf with simple styling",
+          "ref": "n:guide:q19-shop-picker-02-shoe-tryon",
+          "label": "Try-on: trail shoes by the door",
           "chips": [
-            "product"
+            "lifestyle"
           ],
-          "prompt": "Show this mounted wall shelf with a small plant and plain-spined books in a square composition.",
+          "prompt": "Still square try-on photograph of an adult woman tying generic charcoal trail shoes with muted coral laces beside a bright doorway; freeze the knot being pulled snug, soft daylight from the open door, low three-quarter composition with both shoes visible, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-size-storage",
-          "label": "Fabric storage boxes on a shelf",
+          "ref": "n:guide:q19-shop-picker-03-pet-hair-before-after",
+          "label": "Before-after: pet hair off the sofa",
           "chips": [
-            "home"
+            "before",
+            "demo"
           ],
-          "prompt": "Place these fabric storage boxes neatly on an open shelf.",
+          "prompt": "Still square before-and-after-style photograph of an adult hand drawing a plain reusable lint brush across pet hair on a sofa, leaving one clean strip beside the brushed area; calm living room in soft window light, close diagonal composition, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:h1-photo-hub-lamp",
-          "label": "Ivory lamp on white",
+          "ref": "n:guide:q19-shop-picker-04-lamp-product-hero",
+          "label": "Product hero: ivory lamp on white",
           "chips": [
-            "home"
+            "hook"
           ],
-          "prompt": "Show this matte ivory table lamp with its full shade, stem, and base visible.",
+          "prompt": "Still square product hero photograph of a complete matte ivory table lamp with a simple linen shade on seamless pure white; lamp upright in a calm still pose, bright diffused studio light and a faint grounded shadow, centered full silhouette with generous margins, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c4-shopify-m4-reusable-bottle",
-          "label": "Reusable bottle on a desk",
+          "ref": "n:guide:q19-shop-picker-05-protein-shaker",
+          "label": "Post-workout: protein shaker in hand",
           "chips": [
-            "collection"
+            "lifestyle"
           ],
-          "prompt": "Show this blue-gray silicone water bottle on a tidy work desk beside a closed laptop.",
+          "prompt": "Still square lifestyle photograph of an adult athlete holding a plain protein shaker after a workout in a bright gym; freeze the shaker at chest height with condensation visible, soft side daylight, centered medium close composition, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:b1-before-after-videos-result",
-          "label": "Cables routed through an organizer",
+          "ref": "n:guide:q19-shop-picker-06-cable-fix",
+          "label": "Problem-to-fix: charging cables secured",
           "chips": [
-            "collection"
+            "before",
+            "demo"
           ],
-          "prompt": "Show these three desk cables routed through this black organizer on a clear desk.",
+          "prompt": "Still square desk photograph of adult hands pressing two charging cables into small plain silicone clips on a tidy wooden work surface; freeze the second cable being secured, soft directional daylight, close overhead composition with cables and clips clear, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:plat-shopify-c3-m3-social-brunch",
-          "label": "Four bowls at brunch",
+          "ref": "n:guide:q19-shop-picker-07-snack-first-bite",
+          "label": "First bite: oat bar taste reaction",
           "chips": [
-            "social"
+            "hook"
           ],
-          "prompt": "Show this set of four ceramic bowls in a bright brunch-table scene composed for a square social feed post.",
+          "prompt": "Still square food photograph of an adult woman taking the first bite from a plain oat-and-fruit snack bar, with a natural pleased reaction and blank wrapper nearby; cozy cafe window light, close eye-level composition focused on face and bar, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:plat-shopify-c3-m3-social-window",
-          "label": "Four bowls by a bright window",
+          "ref": "n:guide:q19-shop-picker-08-glasses-tryon",
+          "label": "Mirror try-on: round acetate glasses",
           "chips": [
-            "social"
+            "lifestyle"
           ],
-          "prompt": "Arrange this set of four ceramic bowls on a bright windowside table for a square social feed post.",
+          "prompt": "Still square mirror try-on photograph of an adult man checking simple round dark acetate glasses in a bright bedroom mirror; freeze his hand adjusting the temple, soft natural daylight, chest-up composition with the reflection and frames sharp, no text, logo or watermark.",
           "kind": "photo"
         }
       ],
@@ -345,15 +347,15 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:guide:c3-r3-tpl-pack-m5-0",
-        "h": "Show a plain coffee pouch in a store scene",
-        "d": "A simple package photo gives shoppers a clear view of the pouch and its blank label area."
+        "ref": "n:guide:q19-shop-use-protein-pour",
+        "h": "Show a protein drink being prepared",
+        "d": "An adult pours plain powder into a clear shaker at a gym, showing how the product is used before a workout."
       },
       {
         "frame": "post",
-        "ref": "n:guide:ind-jewelry-accessories-m3-necklace-clasp",
-        "h": "Make a social post for a collection",
-        "d": "A simple accessory scene gives a collection post a clear product focus."
+        "ref": "n:guide:q19-shop-use-ring-tryon",
+        "h": "Show a ring during a try-on",
+        "d": "An adult slides a simple gold ring onto one finger beside a mirror, with the hand and ring clearly framed."
       }
     ],
     "input": [
@@ -377,13 +379,13 @@
         "label": "Square ceramic-bowl product image"
       },
       {
-        "ref": "n:guide:plat-shopify-c3-m6-square-use",
+        "ref": "n:guide:q19-shop-output-bowl-pickup",
         "frame": "1:1",
-        "label": "Square ceramic-bowl lifestyle image"
+        "label": "Square bowl lifted from a breakfast table"
       }
     ],
     "after": {
-      "ref": "n:guide:c3-r3-plat-shopify-m8-2",
+      "ref": "n:guide:q19-shop-after-bowl-use",
       "zones": [
         "Product name",
         "Price"

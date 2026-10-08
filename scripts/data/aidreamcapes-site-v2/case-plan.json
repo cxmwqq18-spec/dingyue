@@ -1083,19 +1083,19 @@
         "title": "Steam iron smoothing a shirt in a vertical cut"
       },
       {
-        "ref": "n:guide:k4-plat-youtube-shorts-04-cards-4-image",
+        "ref": "n:guide:q19-yt-case-toothbrush",
         "product": "electric toothbrush",
-        "title": "Electric toothbrush on a bathroom counter"
+        "title": "Electric toothbrush demo at a bathroom mirror"
       },
       {
-        "ref": "n:guide:k4-plat-youtube-shorts-05-cards-5-image",
-        "product": "camping stove",
-        "title": "Camping stove boiling water at a campsite"
+        "ref": "n:guide:q19-yt-case-camp-cook",
+        "product": "camp stove",
+        "title": "Camper heats a pot on a compact camp stove outdoors"
       },
       {
-        "ref": "n:guide:k4-plat-youtube-shorts-31-case-bike-pump",
+        "ref": "n:guide:q19-yt-case-bike-pump",
         "product": "mini bike pump",
-        "title": "Mini bike pump topping up a tire"
+        "title": "Cyclist tops up a trail-bike tire with a hand pump"
       }
     ],
     "plat-amazon": [
@@ -1105,26 +1105,26 @@
         "title": "Square white mug main image on a seamless background"
       },
       {
-        "ref": "n:gen2:plat-amazon-c2",
+        "ref": "n:guide:q19-amz-case-blanket-texture",
         "product": "throw blanket",
-        "title": "Throw blanket folded to show its texture"
+        "title": "Hand checks the weave of a forest-green throw blanket"
       },
       {
-        "ref": "n:gen2:plat-amazon-c3",
+        "ref": "n:guide:q19-amz-case-kitchen-scale",
         "product": "kitchen scale",
-        "title": "Kitchen scale in use with a bowl of flour"
+        "title": "Adult adds flour to a bowl on a digital kitchen scale"
       },
       {
-        "ref": "n:gen2:plat-amazon-c4",
+        "ref": "n:guide:q19-amz-case-dog-harness",
         "product": "dog harness",
-        "title": "Dog harness worn on a walk in the park"
+        "title": "Adult clips a plain harness onto a dog before a walk"
       }
     ],
     "plat-shopify": [
       {
-        "ref": "n:guide:b1-spokesperson-strip",
-        "product": "compact espresso maker",
-        "title": "Compact espresso maker shown in a bright kitchen"
+        "ref": "n:guide:q19-shop-case-espresso-demo",
+        "product": "espresso maker",
+        "title": "Adult pours coffee from a compact espresso maker"
       },
       {
         "ref": "n:gen2:plat-shopify-c2",
@@ -1132,14 +1132,14 @@
         "title": "Linen apron worn in a home kitchen"
       },
       {
-        "ref": "n:candle-pack",
-        "product": "ceramic candle",
-        "title": "Square candle photo with its lid placed beside it"
+        "ref": "n:guide:q19-shop-case-supplement-routine",
+        "product": "supplement pouch",
+        "title": "Supplement pouch prepared with water before a walk"
       },
       {
-        "ref": "n:guide:white-background-reading-glasses",
+        "ref": "n:guide:q19-shop-case-glasses",
         "product": "reading glasses",
-        "title": "Square reading glasses product photo on white"
+        "title": "Adult adjusts reading glasses in a bedroom mirror"
       }
     ],
     "occ-product-launch": [

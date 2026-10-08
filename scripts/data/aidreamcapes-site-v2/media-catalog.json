@@ -2956,6 +2956,15 @@
         640,
         1280
       ]
+    },
+    "q19-yt-wide-demo": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult creator stretches a plain resistance band in a bright home gym.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -21107,6 +21116,946 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult wearing a linen overshirt and navy trousers on a city walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-01-white-sunscreen": {
+        "file": "gen2guide-q19-amz-picker-01-white-sunscreen",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain pale-green sunscreen tube centered on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-02-white-protein": {
+        "file": "gen2guide-q19-amz-picker-02-white-protein",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain protein powder pouch centered on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-03-gold-hoop-detail": {
+        "file": "gen2guide-q19-amz-picker-03-gold-hoop-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of plain gold hoop earrings in sharp macro detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-04-trail-shoe-detail": {
+        "file": "gen2guide-q19-amz-picker-04-trail-shoe-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded charcoal trail shoe shown with its textured sole.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-05-size-bottle-hand": {
+        "file": "gen2guide-q19-amz-picker-05-size-bottle-hand",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a compact pet water bottle beside a dog outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-06-cleanser-use": {
+        "file": "gen2guide-q19-amz-picker-06-cleanser-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands pump plain cleanser into a palm beside a sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-07-headphone-unbox": {
+        "file": "gen2guide-q19-amz-picker-07-headphone-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift plain charcoal over-ear headphones from an open gray box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-picker-08-pet-bundle": {
+        "file": "gen2guide-q19-amz-picker-08-pet-bundle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pet grooming brush, comb and glove arranged beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-01-skincare-routine": {
+        "file": "gen2guide-q19-shop-picker-01-skincare-routine",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies serum at a bright bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-02-shoe-tryon": {
+        "file": "gen2guide-q19-shop-picker-02-shoe-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman ties unbranded charcoal trail shoes near a doorway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-03-pet-hair-before-after": {
+        "file": "gen2guide-q19-shop-picker-03-pet-hair-before-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand removes pet hair from a sofa with a reusable lint brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-04-lamp-product-hero": {
+        "file": "gen2guide-q19-shop-picker-04-lamp-product-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte ivory table lamp with linen shade on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-05-protein-shaker": {
+        "file": "gen2guide-q19-shop-picker-05-protein-shaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult athlete holds a plain protein shaker after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-06-cable-fix": {
+        "file": "gen2guide-q19-shop-picker-06-cable-fix",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands route charging cables through plain silicone desk clips.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-07-snack-first-bite": {
+        "file": "gen2guide-q19-shop-picker-07-snack-first-bite",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman reacts to a first bite from a plain oat snack bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-picker-08-glasses-tryon": {
+        "file": "gen2guide-q19-shop-picker-08-glasses-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man checks generic round acetate glasses in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-01-serum-review": {
+        "file": "gen2guide-q19-yt-picker-01-serum-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator speaking to camera while holding a plain amber serum bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-02-protein-street-interview": {
+        "file": "gen2guide-q19-yt-picker-02-protein-street-interview",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man reacts to a first bite of a plain protein bar in a gym lobby.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-03-grwm-lip-balm": {
+        "file": "gen2guide-q19-yt-picker-03-grwm-lip-balm",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman applies tinted lip balm while getting ready in front of a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-04-sunscreen-fix": {
+        "file": "gen2guide-q19-yt-picker-04-sunscreen-fix",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman applies plain sunscreen to her forearm in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-05-phone-case-demo": {
+        "file": "gen2guide-q19-yt-picker-05-phone-case-demo",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands fit a plain sage phone case onto a generic phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-06-pet-hair-fix": {
+        "file": "gen2guide-q19-yt-picker-06-pet-hair-fix",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hand rolls a reusable lint brush over pet hair on a sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-07-earring-unboxing": {
+        "file": "gen2guide-q19-yt-picker-07-earring-unboxing",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands lift plain gold hoop earrings from a tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-picker-08-fitness-demo": {
+        "file": "gen2guide-q19-yt-picker-08-fitness-demo",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator speaks to camera while holding a fabric resistance band.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-case-blanket-texture": {
+        "file": "gen2guide-q19-amz-case-blanket-texture",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand checks the weave of a plain forest-green throw blanket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-case-dog-harness": {
+        "file": "gen2guide-q19-amz-case-dog-harness",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult clips a plain teal harness onto a calm dog before a walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-example-daypack-main": {
+        "file": "gen2guide-q19-amz-example-daypack-main",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark olive daypack with full outline and straps visible on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-example-daypack-pocket": {
+        "file": "gen2guide-q19-amz-example-daypack-pocket",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a dark olive daypack to show its inner pocket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-example-pet-water": {
+        "file": "gen2guide-q19-amz-example-pet-water",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a plain pet water bottle beside a dog at a trail stop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-example-trail-sole": {
+        "file": "gen2guide-q19-amz-example-trail-sole",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Generic charcoal trail shoe angled to show its tread and side mesh.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-example-vitamin-main": {
+        "file": "gen2guide-q19-amz-example-vitamin-main",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber vitamin bottle with a white cap on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-gallery-protein": {
+        "file": "gen2guide-q19-amz-gallery-protein",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain protein powder pouch with a blank label on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-hero-vitamin": {
+        "file": "gen2guide-q19-amz-hero-vitamin",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber vitamin bottle with a white cap on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-og-trailshoe": {
+        "file": "gen2guide-q19-amz-og-trailshoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Generic charcoal trail shoe with muted coral laces on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-output-backpack-walk": {
+        "file": "gen2guide-q19-amz-output-backpack-walk",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a dark olive daypack on a forest trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-override-background-serum": {
+        "file": "gen2guide-q19-amz-override-background-serum",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber serum bottle and blank carton on a pale blush studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-override-compare-lipbalm": {
+        "file": "gen2guide-q19-amz-override-compare-lipbalm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand compares two plain tinted lip balms in muted rose and berry.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-size-bottle-in-use": {
+        "file": "gen2guide-q19-amz-size-bottle-in-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a compact pet water bottle beside a dog on a walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-size-ring-macro": {
+        "file": "gen2guide-q19-amz-size-ring-macro",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple gold ring with a clear stone in sharp square macro detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-step-mug-use": {
+        "file": "gen2guide-q19-amz-step-mug-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand lifts a plain ceramic mug at a bright breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-strip-cable-demo": {
+        "file": "gen2guide-q19-amz-strip-cable-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands clip charging cables into a walnut desk organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-strip-first-sip": {
+        "file": "gen2guide-q19-amz-strip-first-sip",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman takes a first sip from a plain iced tea can on a sunny balcony.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-strip-soap-use": {
+        "file": "gen2guide-q19-amz-strip-soap-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand dispenses plain soap into the other palm above a sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-use-notebook-write": {
+        "file": "gen2guide-q19-amz-use-notebook-write",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand writes in a plain leather notebook at a bright desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-use-phonefolio": {
+        "file": "gen2guide-q19-amz-use-phonefolio",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands insert a card and generic device into a tan leather phone folio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-after-bowl-use": {
+        "file": "gen2guide-q19-shop-after-bowl-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult enjoys berries from a ceramic bowl at a sunny table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-case-espresso-demo": {
+        "file": "gen2guide-q19-shop-case-espresso-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult uses a compact unbranded espresso maker to pour coffee.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-case-supplement-routine": {
+        "file": "gen2guide-q19-shop-case-supplement-routine",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holds a blank supplement pouch beside water before a walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-example-bowls-serve": {
+        "file": "gen2guide-q19-shop-example-bowls-serve",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult serves berries from coordinated ceramic bowls at a bright table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-example-pet-sofa": {
+        "file": "gen2guide-q19-shop-example-pet-sofa",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult clears pet hair from one sofa cushion with a lint brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-example-tote-market": {
+        "file": "gen2guide-q19-shop-example-tote-market",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult packs produce into a canvas tote at a market.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-gallery-boot-tryon": {
+        "file": "gen2guide-q19-shop-gallery-boot-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pulls on plain brown leather ankle boots before a walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-gallery-planter-hand": {
+        "file": "gen2guide-q19-shop-gallery-planter-hand",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands place a leafy plant into a ceramic planter on a sunny table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-og-shoe-walk": {
+        "file": "gen2guide-q19-shop-og-shoe-walk",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears generic charcoal trail shoes with coral laces on a city walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-output-bowl-pickup": {
+        "file": "gen2guide-q19-shop-output-bowl-pickup",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a ceramic bowl of berries from a breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-override-shoe-colors": {
+        "file": "gen2guide-q19-shop-override-shoe-colors",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three generic trail shoes in muted colors arranged for comparison.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-override-tea-unbox": {
+        "file": "gen2guide-q19-shop-override-tea-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift a plain tea carton from tissue in a kraft mailer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-step-bowl-serve": {
+        "file": "gen2guide-q19-shop-step-bowl-serve",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand serves berries into a coordinated ceramic bowl at a bright table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-strip-glasses-tryon": {
+        "file": "gen2guide-q19-shop-strip-glasses-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman tries simple round dark acetate glasses in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-strip-linen-before-after": {
+        "file": "gen2guide-q19-shop-strip-linen-before-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands smooth a simple linen bed cover from rumpled to neat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-strip-pet-brush": {
+        "file": "gen2guide-q19-shop-strip-pet-brush",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult uses a plain soft brush on a calm dog beside a sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-strip-serum-apply": {
+        "file": "gen2guide-q19-shop-strip-serum-apply",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman smooths plain lotion onto her cheek beside an unmarked tube.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-strip-tote-commute": {
+        "file": "gen2guide-q19-shop-strip-tote-commute",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult places a plain water bottle in a canvas tote before work.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-use-protein-pour": {
+        "file": "gen2guide-q19-shop-use-protein-pour",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pours plain protein powder into a clear shaker at a gym.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-use-ring-tryon": {
+        "file": "gen2guide-q19-shop-use-ring-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult slides a simple gold ring onto one finger beside a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-case-bike-pump": {
+        "file": "gen2guide-q19-yt-case-bike-pump",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult cyclist uses a plain hand pump on a trail-bike tire.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-case-camp-cook": {
+        "file": "gen2guide-q19-yt-case-camp-cook",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult camper uses a compact stove to heat a pot outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-case-toothbrush": {
+        "file": "gen2guide-q19-yt-case-toothbrush",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult uses a plain electric toothbrush at a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-example-pet-clean": {
+        "file": "gen2guide-q19-yt-example-pet-clean",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand clears pet hair from a sofa cushion with a lint brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-gallery-first-taste": {
+        "file": "gen2guide-q19-yt-gallery-first-taste",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man tastes hot sauce on a taco and reacts to the first bite.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-gallery-phonecase-demo": {
+        "file": "gen2guide-q19-yt-gallery-phonecase-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands fit a plain sage phone case onto a generic phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-gallery-sunglasses": {
+        "file": "gen2guide-q19-yt-gallery-sunglasses",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman tries on generic round acetate sunglasses in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-media-card-first-sip": {
+        "file": "gen2guide-q19-yt-media-card-first-sip",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman takes a sip from a plain citrus drink bottle at a sunny cafe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-output-tote-pack": {
+        "file": "gen2guide-q19-yt-output-tote-pack",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman packs a plain canvas tote with a notebook and water bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-override-phone-demo": {
+        "file": "gen2guide-q19-yt-override-phone-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator shows a plain sage phone case beside a generic phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-override-shoe-compare": {
+        "file": "gen2guide-q19-yt-override-shoe-compare",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands compare two generic charcoal trail shoes in different muted colors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-strip-charger-demo": {
+        "file": "gen2guide-q19-yt-strip-charger-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand plugs a compact charger beside a generic phone on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-strip-jewelry-unbox": {
+        "file": "gen2guide-q19-yt-strip-jewelry-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal plain gold hoop earrings from a tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-strip-phonecase-demo": {
+        "file": "gen2guide-q19-yt-strip-phonecase-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands fit a plain sage case with one round camera opening onto a generic phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-strip-shoe-tryon": {
+        "file": "gen2guide-q19-yt-strip-shoe-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult ties generic charcoal trail shoes with muted coral laces.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-strip-skincare-use": {
+        "file": "gen2guide-q19-yt-strip-skincare-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies plain sunscreen to her forearm beside a window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-wide-demo": {
+        "file": "gen2guide-q19-yt-wide-demo",
+        "w": 1536,
+        "h": 864,
+        "alt": "Adult creator stretches a plain resistance band in a bright home gym.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-hero-serum": {
+        "file": "gen2guide-q19-shop-hero-serum",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies a plain amber serum at a bright bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-gallery-protein-pour": {
+        "file": "gen2guide-q19-shop-gallery-protein-pour",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pours plain protein powder into a clear shaker at a gym.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-strip-snack-bite": {
+        "file": "gen2guide-q19-shop-strip-snack-bite",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman takes a first bite of a plain oat snack bar at a cafe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-step-steamer-source": {
+        "file": "gen2guide-q19-yt-step-steamer-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white handheld garment steamer standing beside a folded blue shirt on a bright laundry counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-yt-size-square-example": {
+        "file": "gen2guide-q19-yt-size-square-example",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands compare two generic charcoal trail shoes with muted coral laces in a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-case-kitchen-scale": {
+        "file": "gen2guide-q19-amz-case-kitchen-scale",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand adds flour to a bowl on a compact digital kitchen scale in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-strip-coffee-pouch": {
+        "file": "gen2guide-q19-amz-strip-coffee-pouch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte kraft coffee pouch centered on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-strip-white-lamp": {
+        "file": "gen2guide-q19-amz-strip-white-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte ivory table lamp with a linen shade centered on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-amz-strip-white-bottle": {
+        "file": "gen2guide-q19-amz-strip-white-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain brushed stainless steel bottle on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-step-bowl-source": {
+        "file": "gen2guide-q19-shop-step-bowl-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four coordinated cream and pale-blue ceramic bowls arranged as a set on a bright table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-override-model": {
+        "file": "gen2guide-q19-shop-override-model",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing generic charcoal trail shoes with muted coral laces on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q19-shop-case-glasses": {
+        "file": "gen2guide-q19-shop-case-glasses",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man adjusts plain dark acetate reading glasses while looking into a bedroom mirror.",
         "variants": [
           640,
           1280

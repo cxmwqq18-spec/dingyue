@@ -175,25 +175,25 @@
     "lead": "A white main image, then the size and use shots that answer shoppers' questions.",
     "groups": [
       {
-        "label": "One mug, full listing",
+        "label": "A varied listing gallery",
         "items": [
           {
-            "ref": "n:gen2:plat-amazon-g1",
-            "title": "Ceramic mug filling the frame on pure white",
+            "ref": "n:guide:q19-amz-example-vitamin-main",
+            "title": "Vitamin bottle centered on pure white",
             "kind": "photo",
-            "product": "ceramic mug"
+            "product": "vitamin bottle"
           },
           {
-            "ref": "n:guide:plat-amazon-c3-size-square-detail",
-            "title": "This mug rim in close detail",
+            "ref": "n:guide:q19-amz-example-trail-sole",
+            "title": "Trail shoe tread and mesh in detail",
             "kind": "photo",
-            "product": "ceramic mug"
+            "product": "trail shoe"
           },
           {
-            "ref": "n:gen2:plat-amazon-g3",
-            "title": "This mug in use beside a kettle",
+            "ref": "n:guide:q19-amz-example-pet-water",
+            "title": "Pet water bottle held beside a dog",
             "kind": "photo",
-            "product": "ceramic mug"
+            "product": "pet water bottle"
           }
         ]
       },
@@ -201,14 +201,14 @@
         "label": "Inside view",
         "items": [
           {
-            "ref": "n:gen2:plat-amazon-g4",
-            "title": "Daypack front view on pure white",
+            "ref": "n:guide:q19-amz-example-daypack-main",
+            "title": "Daypack on pure white",
             "kind": "photo",
             "product": "daypack"
           },
           {
-            "ref": "n:gen2:plat-amazon-g5",
-            "title": "Daypack opened to show the inner pocket",
+            "ref": "n:guide:q19-amz-example-daypack-pocket",
+            "title": "Daypack pocket opened by hand",
             "kind": "photo",
             "product": "daypack"
           }
@@ -235,18 +235,18 @@
   "visual": {
     "overview": "Use this mug in three square images: a white-background main image, a familiar setting, and a close rim detail.",
     "strip": [
-      "n:guide:c3-r3-occ-product-drink",
-      "n:guide:tpl-pack-c3-m2-source",
-      "n:gen2:white-background-g2",
-      "n:gen2:white-background-g1",
-      "n:guide:white-background-soap-dispenser",
-      "n:guide:white-background-desk-organizer"
+      "n:guide:q19-amz-strip-first-sip",
+      "n:guide:q19-amz-strip-coffee-pouch",
+      "n:guide:q19-amz-strip-white-lamp",
+      "n:guide:q19-amz-strip-white-bottle",
+      "n:guide:q19-amz-strip-soap-use",
+      "n:guide:q19-amz-strip-cable-demo"
     ],
     "steps": {
       "source": "n:guide:plat-amazon-c3-m2-source",
-      "result": "n:guide:plat-amazon-c3-m2-result",
+      "result": "n:guide:q19-amz-step-mug-use",
       "mode": "photo",
-      "prompt": "Place this plain white ceramic mug beside a folded linen napkin and a small plate on a bright kitchen table.",
+      "prompt": "Still square product photograph of an adult hand lifting a plain ceramic mug at a bright breakfast table, the mug held at the frozen moment just above the table; soft morning window light, close composition with the mug and hand centered, crisp product detail, no text or logos.",
       "options": [
         [
           "Template",
@@ -263,12 +263,12 @@
       ]
     },
     "picker": {
-      "title": "Choose an Amazon product view",
-      "lead": "Pick the image role that answers a shopper’s next question.",
+      "title": "Choose an Amazon listing image",
+      "lead": "Build a square gallery with a main image, useful detail and product-in-use views.",
       "chips": [
         {
           "id": "main",
-          "label": "Main image"
+          "label": "White-background main"
         },
         {
           "id": "detail",
@@ -280,82 +280,80 @@
         },
         {
           "id": "bundle",
-          "label": "Product packaging"
+          "label": "Bundle and packaging"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:white-background-kettle",
-          "label": "Green kettle on white",
+          "ref": "n:guide:q19-amz-picker-01-white-sunscreen",
+          "label": "Main image: sunscreen tube on white",
           "chips": [
             "main"
           ],
-          "prompt": "Show this sea-glass green kettle alone on a seamless white background.",
+          "prompt": "Still square listing photograph of the complete pale-green sunscreen tube standing upright on a seamless pure-white studio surface, its blank label area facing forward; frozen clean product pose, bright diffused studio light with a soft grounded shadow, centered full silhouette with generous margins, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-serving-bowl",
-          "label": "Stoneware bowl on white",
+          "ref": "n:guide:q19-amz-picker-02-white-protein",
+          "label": "Main image: protein pouch on white",
           "chips": [
             "main"
           ],
-          "prompt": "Show this cream stoneware bowl alone on a white background.",
+          "prompt": "Still square listing photograph of the complete plain protein pouch standing upright on seamless pure white, blank front label facing camera; crisp studio packshot under bright even softbox light, centered full package with a faint grounded shadow and open margins, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "g:ecommerce-main-image/example-04",
-          "label": "Travel mug rim detail",
+          "ref": "n:guide:q19-amz-picker-03-gold-hoop-detail",
+          "label": "Detail macro: gold hoop earrings",
           "chips": [
             "detail"
           ],
-          "prompt": "Show the complete ceramic rim and handle in a sharp square detail photo.",
+          "prompt": "Still square macro product photograph of a pair of simple gold hoop earrings with one hinge visible, resting on a warm ivory surface; polished metal caught in a frozen glint under soft directional window light, tight balanced composition with both hoops in focus, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:ind-jewelry-accessories-m3-gem-prongs",
-          "label": "Gold gemstone prongs in close detail",
+          "ref": "n:guide:q19-amz-picker-04-trail-shoe-detail",
+          "label": "Detail view: trail shoe sole",
           "chips": [
             "detail"
           ],
-          "prompt": "Show the simple gold prongs holding this clear gemstone in sharp macro detail.",
+          "prompt": "Still square secondary product photograph of an unbranded charcoal trail shoe angled to show the full side profile and textured sole; clean neutral studio floor, soft directional light revealing mesh and tread, shoe centered and fully inside the frame, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:white-mug",
-          "label": "Cream travel mug on white",
+          "ref": "n:guide:q19-amz-picker-05-size-bottle-hand",
+          "label": "Size in hand: pet water bottle",
           "chips": [
             "use"
           ],
-          "prompt": "Show this matte cream travel mug with its lid on a pure white background.",
+          "prompt": "Still square lifestyle photograph of an adult hand holding a compact plain pet water bottle beside a calm dog at a trail stop; frozen moment with bottle at the dog’s shoulder height, open-shade daylight, close balanced composition that makes the bottle scale clear, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:plat-amazon-c3-size-square-main",
-          "label": "White ceramic mug on white",
+          "ref": "n:guide:q19-amz-picker-06-cleanser-use",
+          "label": "Pump demo: cleanser in palm",
           "chips": [
             "use"
           ],
-          "prompt": "Show this plain white ceramic mug centered on a seamless white square background.",
+          "prompt": "Still square use photograph of adult hands pressing a plain cleanser pump and catching one small dose in an open palm beside a bright sink; freeze the drop just above the palm, soft bathroom daylight, close composition focused on pump and hand, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:ind-electronics-m3-headphones",
-          "label": "Headphones with an open box",
+          "ref": "n:guide:q19-amz-picker-07-headphone-unbox",
+          "label": "ASMR unboxing: over-ear headphones",
           "chips": [
-            "main",
             "bundle"
           ],
-          "prompt": "Show these plain gray over-ear headphones beside their open box.",
+          "prompt": "Still square unboxing photograph of adult hands lifting plain charcoal over-ear headphones from an open gray box on a clean table; freeze the headphones halfway above the tissue, gentle warm window light, centered close composition with the full headphones visible, no text, logo or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:tpl-pack-c3-m3-shelf-boxes",
-          "label": "Coffee pouch on a grocery shelf",
+          "ref": "n:guide:q19-amz-picker-08-pet-bundle",
+          "label": "Bundle view: dog grooming kit",
           "chips": [
-            "use",
             "bundle"
           ],
-          "prompt": "Show this plain kraft coffee pouch beside related goods on a grocery shelf.",
+          "prompt": "Still square bundle photograph of a plain pet grooming brush, comb and glove arranged together beside a calm dog; all pieces held in a neat frozen display on a light floor, soft natural daylight, balanced composition with each item fully visible, no text, logo or watermark.",
           "kind": "photo"
         }
       ],
@@ -364,15 +362,15 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:guide:c4-amazon-phone-case",
-        "h": "Show an empty phone case beside listing details",
-        "d": "A square case photo keeps the tan leather pockets and stitching clear without depicting a handset."
+        "ref": "n:guide:q19-amz-use-phonefolio",
+        "h": "Show a leather phone folio holding a card",
+        "d": "Hands slide a card into the tan folio beside a generic phone so shoppers can see its pockets and stitching."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:c4-amazon-notebook-square",
-        "h": "Show another view near product details",
-        "d": "A supporting photo can show material, setting, or scale beside the listing information."
+        "ref": "n:guide:q19-amz-use-notebook-write",
+        "h": "Show the notebook being used",
+        "d": "An adult hand writes in the plain leather notebook at a bright desk, making its cover and scale easy to see."
       }
     ],
     "input": [
@@ -396,9 +394,9 @@
         "label": "Square white-background backpack main image"
       },
       {
-        "ref": "n:guide:c3-r3-plat-amazon-m8-1",
+        "ref": "n:guide:q19-amz-output-backpack-walk",
         "frame": "1:1",
-        "label": "Square backpack trail-lifestyle image"
+        "label": "Square daypack worn on a forest trail"
       }
     ],
     "after": {
@@ -420,13 +418,13 @@
       },
       {
         "frame": "1:1",
-        "ref": "n:guide:plat-amazon-c3-size-square-lifestyle",
-        "label": "Lifestyle secondary image"
+        "ref": "n:guide:q19-amz-size-bottle-in-use",
+        "label": "Scale in hand: pet water bottle"
       },
       {
         "frame": "1:1",
-        "ref": "n:guide:c4-amazon-mug-rim-detail",
-        "label": "Mug rim detail"
+        "ref": "n:guide:q19-amz-size-ring-macro",
+        "label": "Ring detail in square macro"
       }
     ],
     "titles": {

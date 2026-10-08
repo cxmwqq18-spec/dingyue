@@ -42,14 +42,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/background-remove-replace-v1/background-remove-replace/hero-output",
-      "rule": "one-page",
-      "pages": [
-        "plat-amazon",
-        "tpl-detail"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/bundle-sets-v1/bundle-sets/example-07",
       "rule": "one-page",
       "pages": [
@@ -235,14 +227,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/on-model-generation-v1/on-model-generation/hero-output",
-      "rule": "one-page",
-      "pages": [
-        "plat-shopify",
-        "tpl-look"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-07",
       "rule": "one-page",
       "pages": [
@@ -250,14 +234,6 @@
         "tpl-beauty",
         "tpl-sale",
         "tpl-story"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/black-friday-countdown",
-      "rule": "one-page",
-      "pages": [
-        "plat-youtube-shorts",
-        "tpl-bf"
       ]
     },
     {
@@ -427,14 +403,6 @@
       "pages": [
         "image-to-video",
         "plat-facebook"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/food-video",
-      "rule": "one-page",
-      "pages": [
-        "platforms",
-        "tpl-drink"
       ]
     },
     {
@@ -905,51 +873,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-c3",
-      "rule": "one-page",
-      "pages": [
-        "examples",
-        "plat-amazon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-c4",
-      "rule": "one-page",
-      "pages": [
-        "examples",
-        "plat-amazon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-g1",
-      "rule": "one-page",
-      "pages": [
-        "home",
-        "plat-amazon"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-g2",
       "rule": "one-page",
       "pages": [
         "product-videos",
         "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-g3",
-      "rule": "one-page",
-      "pages": [
-        "photo-hub",
-        "plat-amazon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-g4",
-      "rule": "one-page",
-      "pages": [
-        "home",
-        "plat-amazon"
       ]
     },
     {
@@ -966,14 +894,6 @@
       "pages": [
         "change-background",
         "occ-sale-discount"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-shopify-g1",
-      "rule": "one-page",
-      "pages": [
-        "photo-hub",
-        "plat-shopify"
       ]
     },
     {
@@ -1262,14 +1182,6 @@
       "pages": [
         "image-to-video",
         "tpl-light"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-detail-g3",
-      "rule": "one-page",
-      "pages": [
-        "plat-youtube-shorts",
-        "tpl-detail"
       ]
     },
     {
@@ -1585,14 +1497,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-size-g2",
-      "rule": "one-page",
-      "pages": [
-        "home",
-        "plat-shopify"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-spark-ads-style-video-g1",
       "rule": "one-page",
       "pages": [
@@ -1881,14 +1785,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-occ-product-drink",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "plat-amazon"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-occ-sale-discount-m5-1",
       "rule": "one-page",
       "pages": [
@@ -1945,43 +1841,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-tpl-pack-m5-0",
-      "rule": "one-page",
-      "pages": [
-        "plat-shopify",
-        "tpl-pack"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-tpl-sale-m5-0",
       "rule": "one-page",
       "pages": [
         "occ-sale-discount",
         "tpl-sale"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-tpl-size-storage",
-      "rule": "one-page",
-      "pages": [
-        "plat-shopify",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-amazon-mug-rim-detail",
-      "rule": "one-page",
-      "pages": [
-        "plat-amazon",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-amazon-phone-case",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "plat-amazon"
       ]
     },
     {
@@ -2009,43 +1873,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-shopify-m3-planter-square",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "plat-shopify"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-shopify-m3-shelf-square",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "plat-shopify"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-shopify-strip-bedding-square",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "plat-shopify"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-tpl-pack-coffee-pouch-unbox",
       "rule": "one-page",
       "pages": [
         "occ-sale-discount",
         "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c4-tpl-sale-beauty-tube",
-      "rule": "one-page",
-      "pages": [
-        "plat-shopify",
-        "tpl-sale"
       ]
     },
     {
@@ -2151,27 +1983,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-plat-amazon-c3-m2-result",
-      "rule": "one-page",
-      "pages": [
-        "plat-amazon",
-        "tpl-size"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-plat-facebook-size-portrait-backpack",
       "rule": "one-page",
       "pages": [
         "tpl-carousel-video-ad",
         "tpl-home"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-plat-shopify-c3-m2-source",
-      "rule": "one-page",
-      "pages": [
-        "plat-shopify",
-        "tpl-size"
       ]
     },
     {
@@ -2211,26 +2027,10 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-tpl-pack-c3-m2-source",
-      "rule": "one-page",
-      "pages": [
-        "plat-amazon",
-        "tpl-pack"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-tpl-pack-c3-m3-catalog-lineup",
       "rule": "one-page",
       "pages": [
         "occ-product-launch",
-        "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-tpl-pack-c3-m3-shelf-boxes",
-      "rule": "one-page",
-      "pages": [
-        "plat-amazon",
         "tpl-pack"
       ]
     },
@@ -2248,14 +2048,6 @@
       "pages": [
         "occ-product-launch",
         "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-tpl-size-c3-m7-tote-reference",
-      "rule": "one-page",
-      "pages": [
-        "plat-shopify",
-        "tpl-size"
       ]
     },
     {
