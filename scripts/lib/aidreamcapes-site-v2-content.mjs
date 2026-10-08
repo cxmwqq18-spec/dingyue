@@ -1135,6 +1135,11 @@ function articleTry(model, page) {
     href: toolAppHref(model, tool), label: video ? "Make my video" : "Make my photo", more: { label: `How ${tool.label} works`, href: tool.url } } };
 }
 
+// Template and collection pages with a visual guide do not render the hero picture, gallery or collage.
+function guideReplacesHero(page, payload) {
+  return Boolean(payload.visual) && ["template", "collection"].includes(layoutFor(page));
+}
+
 function layoutFor(page) {
   return { home: "home", hub: "video-hub", "hub-tool": "tool", tool: "tool", template: "template", industry: "collection", platform: "collection", occasion: "collection",
     index: "index", glossary: "glossary", article: "article", pricing: "pricing", faq: "faq", contact: "contact", about: "about", examples: "examples", trust: "trust", "ai-info": "ai-info" }[page.type];
@@ -1366,8 +1371,11 @@ function jsonLdFor(model, page, c, payload, ogImage) {
   if (page.id === "home") graph.push({ "@type": "WebSite", "@id": `${BASE}/#website`, name: "AIVideosUGC", url: `${BASE}/`, inLanguage: "en", publisher: { "@id": `${BASE}/#organization` } });
   else graph.push({ "@type": "BreadcrumbList", itemListElement: payload.breadcrumbs.map((crumb, index) => ({ "@type": "ListItem", position: index + 1, name: crumb.label, item: `${BASE}${crumb.href === "/" ? "/" : crumb.href}` })) });
   const absolute = (src) => `${BASE}${src}`;
-  const primary = heroImageOf(payload.heroMedia) ?? ogImage;
-  const videoNode = payload.heroMedia?.kind === "video" ? payload.heroMedia.video : undefined;
+  // Template and collection pages with a visual guide show the guide instead of the hero picture or video.
+  const hero = guideReplacesHero(page, payload) ? undefined : payload.heroMedia;
+  const firstVisual = visualPayloadImages(payload.visual)[0];
+  const primary = heroImageOf(hero) ?? (firstVisual ? { src: firstVisual.src, width: firstVisual.w, height: firstVisual.h } : ogImage);
+  const videoNode = hero?.kind === "video" ? hero.video : undefined;
   const videoId = `${canonical(page)}#video`;
   const webpageType = { hub: "CollectionPage", index: "CollectionPage", industry: "CollectionPage", platform: "CollectionPage", occasion: "CollectionPage", examples: "CollectionPage", contact: "ContactPage", about: "AboutPage" }[page.type] || "WebPage";
   if (page.type === "article") {
@@ -1452,6 +1460,10 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const group of [...(payload.examples?.groups ?? []), ...(payload.exampleGallery?.groups ?? [])]) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
     for (const image of visualPayloadImages(payload.visual)) pushMedia({ src: image.src, alt: image.alt, width: image.w, height: image.h });
+    if (guideReplacesHero(page, payload)) {
+      const shown = new Set([...renderedImages(layoutFor(page), payload), ...visualPayloadImages(payload.visual).map((image) => image.src)]);
+      media.splice(0, media.length, ...media.filter((item) => shown.has(item.src)));
+    }
     const { pageType, templateKey } = livePageTypeFor(page);
     return {
       id: page.id, slug: page.url, title: c.h1, pageType, templateKey, status: page.status,
