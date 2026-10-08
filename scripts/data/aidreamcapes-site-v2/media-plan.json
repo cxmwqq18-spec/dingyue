@@ -319,10 +319,10 @@
     "spokesperson-videos": {
       "hero": {
         "kind": "image",
-        "image": "s:presenter"
+        "image": "n:guide:k8-spokesperson-presenter"
       },
       "gallery": [],
-      "og": "n:guide:b1-spokesperson-videos-result"
+      "og": "f:k8-spokesperson-guide-b1-spokesperson-videos-result"
     },
     "image-to-video": {
       "hero": {
@@ -562,14 +562,14 @@
     "plat-facebook": {
       "hero": {
         "kind": "image",
-        "image": "n:yogamat-rolled"
+        "image": "n:guide:k8-platforms-yogamat-rolled"
       },
       "gallery": [
         "n:planter-shelf",
         "n:protein-scoop",
         "n:boots-doorway"
       ],
-      "og": "n:yogamat-rolled"
+      "og": "n:guide:k8-platforms-yogamat-rolled"
     },
     "plat-youtube-shorts": {
       "hero": {
@@ -658,72 +658,72 @@
     "guide-product-photo-tips": {
       "hero": {
         "kind": "image",
-        "image": "n:boots-detail"
+        "image": "n:guide:k8-guide-photo-tips-boots-detail"
       },
-      "og": "n:boots-detail"
+      "og": "n:guide:k8-guide-photo-tips-boots-detail"
     },
     "guide-white-background-amazon": {
       "hero": {
         "kind": "image",
-        "image": "n:white-backpack"
+        "image": "n:guide:k8-guide-amazon-white-white-backpack"
       },
-      "og": "n:white-backpack"
+      "og": "n:guide:k8-guide-amazon-white-white-backpack"
     },
     "guide-first-tiktok-video-ad": {
       "hero": {
         "kind": "image",
-        "image": "u:hook"
+        "image": "n:guide:k8-guide-tiktok-hook"
       },
-      "og": "u:hook"
+      "og": "n:guide:k8-guide-tiktok-hook"
     },
     "guide-ad-sizes-by-platform": {
       "hero": {
         "kind": "image",
-        "image": "g:story-ad-vertical/example-05"
+        "image": "n:guide:k8-guide-ad-sizes-story-ad-vertical-example-05"
       },
-      "og": "g:story-ad-vertical/example-05"
+      "og": "n:guide:k8-guide-ad-sizes-story-ad-vertical-example-05"
     },
     "guide-testing-ad-versions": {
       "hero": {
         "kind": "image",
-        "image": "g:colorway-variations/example-02"
+        "image": "n:guide:k8-guide-testing-colorway-variations-example-02"
       },
-      "og": "g:colorway-variations/example-02"
+      "og": "n:guide:k8-guide-testing-colorway-variations-example-02"
     },
     "blog-ai-product-photography-guide": {
       "hero": {
         "kind": "image",
-        "image": "n:handbag-cafe"
+        "image": "n:guide:k8-blog-product-photo-handbag-cafe"
       },
-      "og": "n:handbag-cafe"
+      "og": "n:guide:k8-blog-product-photo-handbag-cafe"
     },
     "blog-ai-ugc-video-ads-guide": {
       "hero": {
         "kind": "image",
-        "image": "u:review"
+        "image": "n:guide:k8-blog-ugc-video-review"
       },
-      "og": "u:review"
+      "og": "n:guide:k8-blog-ugc-video-review"
     },
     "blog-ai-video-review-checklist": {
       "hero": {
         "kind": "image",
-        "image": "g:size-reference/example-02"
+        "image": "n:guide:k8-blog-review-size-reference-example-02"
       },
-      "og": "g:size-reference/example-02"
+      "og": "n:guide:k8-blog-review-size-reference-example-02"
     },
     "blog-unboxing-videos-for-launches": {
       "hero": {
         "kind": "image",
-        "image": "u:unboxing"
+        "image": "n:guide:k8-blog-unboxing-unboxing"
       },
-      "og": "u:unboxing"
+      "og": "n:guide:k8-blog-unboxing-unboxing"
     },
     "blog-model-photos-without-a-photoshoot": {
       "hero": {
         "kind": "image",
-        "image": "n:hoodie-street"
+        "image": "n:guide:k8-blog-model-photo-hoodie-street"
       },
-      "og": "n:hoodie-street"
+      "og": "n:guide:k8-blog-model-photo-hoodie-street"
     },
     "faq": {
       "hero": {
@@ -749,9 +749,9 @@
     "trust": {
       "hero": {
         "kind": "image",
-        "image": "g:commercial-lighting/example-05"
+        "image": "n:guide:k8-trust-commercial-lighting-example-05"
       },
-      "og": "g:commercial-lighting/example-05"
+      "og": "n:guide:k8-trust-commercial-lighting-example-05"
     },
     "pricing": {
       "og": "g:ecommerce-main-image/og"

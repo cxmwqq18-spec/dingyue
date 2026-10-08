@@ -184,7 +184,7 @@
             "product": "lunch box"
           },
           {
-            "ref": "n:gen2:plat-facebook-g2",
+            "ref": "n:guide:k8-facebook-gen2-plat-facebook-g2",
             "title": "Cat asleep in a round pet bed",
             "kind": "photo",
             "product": "round pet bed"
@@ -195,7 +195,7 @@
         "label": "Seasonal and color choices",
         "items": [
           {
-            "ref": "n:gen2:occ-holidays-11",
+            "ref": "n:guide:k8-facebook-gen2-occ-holidays-11",
             "title": "Scented candle on a holiday table",
             "kind": "photo",
             "product": "scented candle"
@@ -229,16 +229,16 @@
   "visual": {
     "overview": "Facebook ads can appear in Feed, Stories, and Reels. Start with a clear product image, then choose a crop and setting that leave room around the item.",
     "strip": [
-      "n:gen2:plat-facebook-g3",
-      "n:gen2:plat-facebook-g4",
-      "n:gen2:tpl-box-c2",
-      "n:gen2:occ-black-friday-c2",
-      "n:gen2:tpl-size-c2",
+      "n:guide:k8-facebook-gen2-plat-facebook-g3",
+      "n:guide:k8-facebook-gen2-plat-facebook-g4",
+      "n:guide:k8-facebook-gen2-tpl-box-c2",
+      "n:guide:k8-facebook-gen2-occ-black-friday-c2",
+      "n:guide:k8-facebook-gen2-tpl-size-c2",
       "n:gen2:tpl-ugc-g1"
     ],
     "steps": {
-      "source": "n:gen2:plat-facebook-g3",
-      "result": "n:gen2:plat-facebook-g4",
+      "source": "n:guide:k8-facebook-gen2-plat-facebook-g3",
+      "result": "n:guide:k8-facebook-gen2-plat-facebook-g4",
       "mode": "photo",
       "prompt": "Place this insulated bottle on a sunny desk, keeping the cap and full body visible.",
       "options": [
@@ -275,16 +275,16 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-compare-c2",
+          "ref": "n:guide:k8-facebook-gen2-tpl-compare-c2",
           "label": "Two backpack sizes side by side",
-          "prompt": "Lay out both backpack sizes with the same items beside each one.",
+          "prompt": "Lay out both backpack sizes, with a travel kit beside each one.",
           "chips": [
             "feed"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-carousel-video-ad-c3",
+          "ref": "n:guide:k8-facebook-gen2-tpl-carousel-video-ad-c3",
           "label": "Bento box opened on a counter",
           "prompt": "Open the lunch box and show each compartment clearly.",
           "chips": [
@@ -293,7 +293,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-box-c4",
+          "ref": "n:guide:k8-facebook-gen2-tpl-box-c4",
           "label": "Baby bath set ready to use",
           "prompt": "Arrange the towel, sponge, and wash bottle together on a shelf.",
           "chips": [
@@ -302,7 +302,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+          "ref": "n:guide:k8-facebook-gen2-tpl-spark-ads-style-video-c4",
           "label": "Brush on a relaxed dog",
           "prompt": "Brush the dog's coat in a calm living room scene.",
           "chips": [
@@ -311,7 +311,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-ugc-case-81",
+          "ref": "n:guide:k8-facebook-gen2-tpl-ugc-case-81",
           "label": "Reusable bottle on a work desk",
           "prompt": "Place the bottle near a notebook in a casual phone photo.",
           "chips": [
@@ -320,7 +320,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-home-c2",
+          "ref": "n:guide:k8-facebook-gen2-tpl-home-c2",
           "label": "Matching jars on a pantry shelf",
           "prompt": "Line up the glass pantry jars with their lids easy to see.",
           "chips": [
@@ -329,7 +329,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-light-c4",
+          "ref": "n:guide:k8-facebook-gen2-tpl-light-c4",
           "label": "Crystal tumbler on a clean backdrop",
           "prompt": "Let the tumbler catch a crisp reflection against a soft gradient.",
           "chips": [
@@ -352,20 +352,20 @@
     "uses": [
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-launch-c2",
+        "ref": "n:guide:k8-facebook-gen2-tpl-launch-c2",
         "h": "Use a new product in a feed post",
         "d": "A colored bottle on a styled desk keeps the object easy to spot."
       },
       {
-        "frame": "phone",
-        "ref": "n:gen2:tpl-ugc-case-83",
+        "frame": "post",
+        "ref": "n:guide:k8-facebook-gen2-tpl-ugc-case-83",
         "h": "Show an everyday morning moment",
-        "d": "A ceramic mug at breakfast feels at home in a casual feed."
+        "d": "A ceramic mug beside breakfast suits a casual Facebook feed post."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-angle-c1",
+        "good": "n:guide:k8-facebook-gen2-tpl-angle-c1",
         "bad": "n:guide:plat-facebook-m5-soft-focus",
         "good_label": "The headphone shape stays sharp and complete",
         "bad_label": "The headphone edges fade into soft focus"
@@ -379,18 +379,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-light-c2",
+        "ref": "n:guide:k8-facebook-gen2-tpl-light-c2",
         "frame": "1:1",
         "label": "Chrome espresso cup on a clean gradient"
       },
       {
-        "ref": "n:gen2:tpl-pack-c3",
+        "ref": "n:guide:k8-facebook-gen2-tpl-pack-c3",
         "frame": "1:1",
         "label": "Hot sauce bottle on a market shelf"
       }
     ],
     "after": {
-      "ref": "f:discount-free-shipping",
+      "ref": "n:guide:k8-facebook-discount-free-shipping",
       "zones": [
         "Price",
         "Call to action"
@@ -408,13 +408,13 @@
       },
       {
         "frame": "1:1",
-        "ref": "n:guide:plat-facebook-size-square-backpack",
+        "ref": "n:guide:k8-facebook-guide-plat-facebook-size-square-backpack",
         "label": "1:1 · Square Feed placements"
       },
       {
         "frame": "9:16",
-        "ref": "n:guide:plat-facebook-size-portrait-backpack",
-        "label": "9:16 · Stories and Reels"
+        "ref": "f:k8-facebook-guide-plat-facebook-size-portrait-backpack",
+        "label": "9:16 video · Stories and Reels"
       }
     ],
     "titles": {

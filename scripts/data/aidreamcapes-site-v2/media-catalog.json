@@ -2425,6 +2425,105 @@
         640,
         1280
       ]
+    },
+    "k8-spokesperson-tiktok-hand-vertical": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hand turns a compact black portable charger at a bright desk, with one USB-C port visible.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-gen2-spokesperson-videos-g3": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult in a bright kitchen holds a plain snack pouch at chest height, looking at the product.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-gen2-spokesperson-videos-g4": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult holds a small unbranded handbag at chest height against a pale wall, looking at the bag.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-gen2-tpl-jewel-70": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Gold ring on an adult hand beside a ceramic coffee cup in soft window light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-gen2-tpl-size-c1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult shown from shoulders down holding a compact backpack at hip height in a bright entryway.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-gen2-tpl-ugc-g1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Hand gently rotates a plain ceramic travel cup on a morning train beside a window.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-guide-b1-spokesperson-videos-result": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Presenter holds a plain forest-green water bottle at chest height, lips closed and eyes on the bottle.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-facebook-guide-plat-facebook-size-portrait-backpack": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hands place a black commuter backpack on a bench in a vertical video frame, the full bag and straps visible.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-gen2-spokesperson-videos-g2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Presenter holds an empty sage green phone case with one round open camera cutout, no phone inside.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-gen2-tpl-size-g4": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Compact charcoal portable charger held between two fingers with its USB-C port visible.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k8-spokesperson-output-audio-safe": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Presenter holds a plain skincare bottle at chest height, with lips closed and eyes on the bottle.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -18188,6 +18287,656 @@
         "w": 1024,
         "h": 1024,
         "alt": "Hand presses the side latch of a clear glass lunch container with a plain white lid.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-guide-testing-colorway-variations-example-02": {
+        "file": "gen2guide-k8-guide-testing-colorway-variations-example-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Navy knit running shoe with a dark sole shown in a clean product photo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-trust-commercial-lighting-example-05": {
+        "file": "gen2guide-k8-trust-commercial-lighting-example-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte ceramic bottle under cool studio light against a clean blue-gray background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-guide-photo-tips-boots-detail": {
+        "file": "gen2guide-k8-guide-photo-tips-boots-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up of brown leather Chelsea boots showing the elastic side panel, the pull tab and the toe",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blog-product-photo-handbag-cafe": {
+        "file": "gen2guide-k8-blog-product-photo-handbag-cafe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tan leather handbag on a marble cafe table beside a latte and a pair of sunglasses",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blog-model-photo-hoodie-street": {
+        "file": "gen2guide-k8-blog-model-photo-hoodie-street",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Person in a gray hoodie and jeans walking along a tree-lined city street in autumn, face turned away",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-lipstick-ad": {
+        "file": "gen2guide-k8-spokesperson-lipstick-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand holding a coral lipstick and its cap against a soft pink backdrop with open space on the left",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-phonecase-hand": {
+        "file": "gen2guide-k8-spokesperson-phonecase-hand",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Empty sage green phone case with one round open camera cutout, held against a soft park background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-guide-amazon-white-white-backpack": {
+        "file": "gen2guide-k8-guide-amazon-white-white-backpack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Olive canvas backpack with brown leather details on a pure white background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-yogamat-rolled": {
+        "file": "gen2guide-k8-platforms-yogamat-rolled",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Rolled teal yoga mat with a carrying strap on a doorstep beside a green water bottle",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-ind-electronics-c3": {
+        "file": "gen2guide-k8-blackfriday-gen2-ind-electronics-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact rectangular graphite speaker with a narrow front grille on a warm kitchen shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-ind-fashion-clothing-g2": {
+        "file": "gen2guide-k8-platforms-gen2-ind-fashion-clothing-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Muted olive field jacket shown from the back, with collar and seam details visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-ind-jewelry-accessories-g4": {
+        "file": "gen2guide-k8-platforms-gen2-ind-jewelry-accessories-g4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Polished belt buckle under soft light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-occ-black-friday-c2": {
+        "file": "gen2guide-k8-facebook-gen2-occ-black-friday-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black headset with a boom microphone sits on a desk beside a keyboard under blue light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-occ-holidays-11": {
+        "file": "gen2guide-k8-facebook-gen2-occ-holidays-11",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Scented candle on a holiday table with pine branches",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-occ-product-launch-c2": {
+        "file": "gen2guide-k8-blackfriday-gen2-occ-product-launch-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Muted olive technical running shoe with a dark sole on a round plinth under a focused spotlight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-occ-sale-discount-c3": {
+        "file": "gen2guide-k8-blackfriday-gen2-occ-sale-discount-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pastel floral dresses hang on wooden hangers before a bright window beside a leafy plant",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-occ-sale-discount-g3": {
+        "file": "gen2guide-k8-blackfriday-gen2-occ-sale-discount-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Denim jacket on a hanger against a plain wall with open space on the left",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-gen2-photo-hub-c1": {
+        "file": "gen2guide-k8-spokesperson-gen2-photo-hub-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Leather crossbody bag, front view, on a pure white background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-plat-amazon-g1": {
+        "file": "gen2guide-k8-blackfriday-gen2-plat-amazon-g1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic mug filling the frame on a pure white background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-plat-facebook-c2": {
+        "file": "gen2guide-k8-facebook-gen2-plat-facebook-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Garden hose nozzle spraying over a green lawn",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-plat-facebook-c3": {
+        "file": "gen2guide-k8-facebook-gen2-plat-facebook-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Kids' yellow rain boots beside a puddle",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-plat-facebook-c4": {
+        "file": "gen2guide-k8-facebook-gen2-plat-facebook-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cast-iron skillet with eggs on a stovetop",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-plat-facebook-g2": {
+        "file": "gen2guide-k8-facebook-gen2-plat-facebook-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cat asleep in a round pet bed in a sunny corner",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-plat-facebook-g3": {
+        "file": "gen2guide-k8-facebook-gen2-plat-facebook-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Insulated bottle on a pure white background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-plat-facebook-g4": {
+        "file": "gen2guide-k8-facebook-gen2-plat-facebook-g4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "insulated bottle on a sunny desk",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-plat-shopify-c2": {
+        "file": "gen2guide-k8-platforms-gen2-plat-shopify-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen apron worn in a home kitchen",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-plat-tiktok-g1": {
+        "file": "gen2guide-k8-platforms-gen2-plat-tiktok-g1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small bottle picked off a bathroom shelf",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-plat-tiktok-g2": {
+        "file": "gen2guide-k8-platforms-gen2-plat-tiktok-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Desk fan switched on at a home office desk",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-plat-tiktok-g3": {
+        "file": "gen2guide-k8-platforms-gen2-plat-tiktok-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Muted blue running sneaker turned to show its textured sole on a plain floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-product-videos-g2": {
+        "file": "gen2guide-k8-blackfriday-gen2-product-videos-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Desk lamp just switched on in a dark room, a warm pool of light on the desk",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-gen2-spokesperson-videos-c3": {
+        "file": "gen2guide-k8-spokesperson-gen2-spokesperson-videos-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holding a protein shaker bottle in a gym after a workout, lips closed",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-gen2-spokesperson-videos-c4": {
+        "file": "gen2guide-k8-spokesperson-gen2-spokesperson-videos-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holding an open hardcover planner with blank pages at a home desk, lips closed",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-angle-c1": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-angle-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Over-ear headphones, straight-on front view on a light gray studio sweep",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-tpl-bf-c1": {
+        "file": "gen2guide-k8-blackfriday-gen2-tpl-bf-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Robot vacuum on a dark wood floor under dramatic low light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-box-c2": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-box-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee starter kit: bag of beans, hand grinder and mug together",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-tpl-box-g3": {
+        "file": "gen2guide-k8-blackfriday-gen2-tpl-box-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea gift set with a tin, an infuser and a cup",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-home-c2": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-home-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matching glass pantry jars lined up on a cleared shelf",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-gen2-tpl-jewel-g3": {
+        "file": "gen2guide-k8-spokesperson-gen2-tpl-jewel-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Thin gold anklet worn on an ankle on sand",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-light-c2": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-light-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Chrome espresso cup with controlled, clean reflections on a gradient",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-pack-c3": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-pack-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce bottle with a blank graphic label on a farmers market shelf",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-tpl-sale-c2": {
+        "file": "gen2guide-k8-blackfriday-gen2-tpl-sale-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark mesh running shoes on a vivid red studio backdrop with clear open space.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-ugc-case-81": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-ugc-case-81",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Reusable water bottle snapped on a cluttered work desk, phone-camera look",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-ugc-case-83": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-ugc-case-83",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic mug at breakfast, shot from across the table",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-gen2-white-background-c1": {
+        "file": "gen2guide-k8-spokesperson-gen2-white-background-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brushed steel water bottle on a pure white background, soft contact shadow",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-guide-b1-spokesperson-strip": {
+        "file": "gen2guide-k8-spokesperson-guide-b1-spokesperson-strip",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Presenter holding a compact espresso maker at chest height, looking at the product",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-guide-plat-facebook-size-square-backpack": {
+        "file": "gen2guide-k8-facebook-guide-plat-facebook-size-square-backpack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black commuter backpack, front view, centered on a pale studio background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-spokesperson-presenter": {
+        "file": "gen2guide-k8-spokesperson-presenter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult presenter holding a plain skincare bottle at chest height, lips closed and gaze on the product.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blog-review-size-reference-example-02": {
+        "file": "gen2guide-k8-blog-review-size-reference-example-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Travel backpack next to a dining chair",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-guide-ad-sizes-story-ad-vertical-example-05": {
+        "file": "gen2guide-k8-guide-ad-sizes-story-ad-vertical-example-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sunscreen tube and cap photographed close on a bright neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-guide-tiktok-hook": {
+        "file": "gen2guide-k8-guide-tiktok-hook",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain peach skincare tube on a tidy bedroom vanity with a small ring light softly out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blog-ugc-video-review": {
+        "file": "gen2guide-k8-blog-ugc-video-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands demonstrate a plain gray skincare jar on a sunlit living-room table, with no face or camera visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blog-unboxing-unboxing": {
+        "file": "gen2guide-k8-blog-unboxing-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a blank kraft parcel to reveal a plain ceramic travel mug on a wooden table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-size-c2": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-size-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small travel candle beside a ceramic coffee cup on a wooden table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-compare-c2": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-compare-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two hiking backpacks in different sizes, each beside a neatly arranged travel kit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-carousel-video-ad-c3": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-carousel-video-ad-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain bento lunch box opened on a counter with each compartment visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-box-c4": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-box-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Baby bath set with a folded hooded towel, sponge and plain wash bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-spark-ads-style-video-c4": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-spark-ads-style-video-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand uses a plain pet brush on a relaxed dog resting on a couch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-light-c4": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-light-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear crystal tumbler catching crisp reflections against a soft neutral gradient.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-gen2-tpl-launch-c2": {
+        "file": "gen2guide-k8-facebook-gen2-tpl-launch-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain muted teal insulated bottle on a styled desk under a soft spotlight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-occ-holidays-c2": {
+        "file": "gen2guide-k8-blackfriday-gen2-occ-holidays-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wrapped blank kraft gift box with a plain ribbon beside a fireplace.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-tpl-size-g3": {
+        "file": "gen2guide-k8-platforms-gen2-tpl-size-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag beside a compact dark travel case.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-facebook-discount-free-shipping": {
+        "file": "gen2guide-k8-facebook-discount-free-shipping",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands pack a blank kraft shipping box beside a coffee bag and cup on a bright counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-platforms-gen2-tpl-bf-g2": {
+        "file": "gen2guide-k8-platforms-gen2-tpl-bf-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact matte-black two-slot toaster under a warm spotlight on a pale kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-occ-sale-discount-c2": {
+        "file": "gen2guide-k8-blackfriday-gen2-occ-sale-discount-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare gift set arranged neatly on a pale tray with each plain bottle visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k8-blackfriday-gen2-occ-sale-discount-c4": {
+        "file": "gen2guide-k8-blackfriday-gen2-occ-sale-discount-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact kitchen knife set in a dark block on a pale counter, with the handles visible.",
         "variants": [
           640,
           1280

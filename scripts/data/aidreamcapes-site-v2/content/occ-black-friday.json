@@ -209,12 +209,12 @@
   "visual": {
     "overview": "Make your Black Friday product photos and clips before prices are locked. Leave clear space beside the product, then drop in the discount, code, and end date once they are set.",
     "strip": [
-      "n:gen2:tpl-bf-c1",
-      "n:gen2:plat-amazon-g1",
-      "n:gen2:occ-product-launch-c2",
-      "n:gen2:product-videos-g2",
-      "n:gen2:occ-sale-discount-g3",
-      "n:gen2:tpl-sale-c2"
+      "n:guide:k8-blackfriday-gen2-tpl-bf-c1",
+      "n:guide:k8-blackfriday-gen2-plat-amazon-g1",
+      "n:guide:k8-blackfriday-gen2-occ-product-launch-c2",
+      "n:guide:k8-blackfriday-gen2-product-videos-g2",
+      "n:guide:k8-blackfriday-gen2-occ-sale-discount-g3",
+      "n:guide:k8-blackfriday-gen2-tpl-sale-c2"
     ],
     "steps": {
       "source": "n:guide:black-friday-m2-source",
@@ -255,7 +255,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:occ-holidays-c2",
+          "ref": "n:guide:k8-blackfriday-gen2-occ-holidays-c2",
           "label": "Wrapped gift by a fireplace",
           "chips": [
             "gift"
@@ -264,7 +264,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-box-g3",
+          "ref": "n:guide:k8-blackfriday-gen2-tpl-box-g3",
           "label": "Tea set ready to gift",
           "chips": [
             "gift"
@@ -273,12 +273,12 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-electronics-c3",
-          "label": "Fabric speaker on a shelf",
+          "ref": "n:guide:k8-blackfriday-gen2-ind-electronics-c3",
+          "label": "Compact rectangular speaker on a shelf",
           "chips": [
             "home-tech"
           ],
-          "prompt": "Show the smart speaker on a shelf with its front fabric visible.",
+          "prompt": "Show the compact graphite speaker on a shelf with its narrow front grille visible.",
           "kind": "photo"
         },
         {
@@ -300,7 +300,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-sale-discount-c3",
+          "ref": "n:guide:k8-blackfriday-gen2-occ-sale-discount-c3",
           "label": "Dresses ready for a sale",
           "chips": [
             "apparel"
@@ -309,7 +309,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-sale-discount-c2",
+          "ref": "n:guide:k8-blackfriday-gen2-occ-sale-discount-c2",
           "label": "Skincare bundle on a tray",
           "chips": [
             "featured"
@@ -318,7 +318,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-sale-discount-c4",
+          "ref": "n:guide:k8-blackfriday-gen2-occ-sale-discount-c4",
           "label": "Knife set with offer space",
           "chips": [
             "featured"
@@ -331,15 +331,15 @@
     },
     "uses": [
       {
-        "frame": "phone",
+        "frame": "post",
         "ref": "n:gen2:occ-product-launch-g1",
         "h": "Tease the product before the sale starts",
-        "d": "Post the product on its own a week ahead, then reuse the same photo with the discount on launch day."
+        "d": "Tease the product before the sale, then add confirmed offer details on launch day."
       },
       {
         "frame": "browser",
         "ref": "n:guide:black-friday-m2-source-use",
-        "h": "Use the same photo on the ad and the listing",
+        "h": "Keep the ad and listing aligned",
         "d": "Shoppers who click a Black Friday ad should land on the product they just saw."
       }
     ],
@@ -377,7 +377,7 @@
       ],
       "items": [
         "Keep the price, code, and end date as editable text layers instead of baking them into the photo.",
-        "Use the same discount wording as your store banner, so shoppers see one offer everywhere."
+        "Match the discount wording to your store banner so shoppers see one clear offer everywhere."
       ]
     },
     "titles": {

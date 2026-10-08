@@ -33,12 +33,12 @@
   ],
   "visual": {
     "strip": [
-      "n:gen2:plat-tiktok-g1",
-      "n:gen2:plat-tiktok-g2",
-      "n:gen2:ind-jewelry-accessories-g4",
-      "n:gen2:ind-fashion-clothing-g2",
-      "n:gen2:tpl-size-g3",
-      "n:gen2:tpl-bf-g2"
+      "n:guide:k8-platforms-gen2-plat-tiktok-g1",
+      "n:guide:k8-platforms-gen2-plat-tiktok-g2",
+      "n:guide:k8-platforms-gen2-ind-jewelry-accessories-g4",
+      "n:guide:k8-platforms-gen2-ind-fashion-clothing-g2",
+      "n:guide:k8-platforms-gen2-tpl-size-g3",
+      "n:guide:k8-platforms-gen2-tpl-bf-g2"
     ],
     "steps": {
       "source": "n:guide:b1-url-to-video-source",
@@ -101,8 +101,8 @@
         ]
       },
       "itemImages": {
-        "/platforms/tiktok-ads": "n:gen2:plat-tiktok-g3",
-        "/platforms/instagram-ads": "n:gen2:plat-shopify-c2",
+        "/platforms/tiktok-ads": "n:guide:k8-platforms-gen2-plat-tiktok-g3",
+        "/platforms/instagram-ads": "n:guide:k8-platforms-gen2-plat-shopify-c2",
         "/platforms/shopify-product-photos": "g:ecommerce-main-image/example-02"
       }
     }

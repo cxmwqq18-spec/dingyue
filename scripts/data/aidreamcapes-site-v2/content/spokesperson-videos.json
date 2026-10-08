@@ -65,16 +65,16 @@
   "visual": {
     "strip": [
       "n:guide:b1-spokesperson-videos-source",
-      "n:guide:b1-spokesperson-videos-result",
-      "n:lipstick-ad",
-      "n:phonecase-hand",
-    "n:guide:b1-spokesperson-strip",
-      "n:gen2:tpl-jewel-g3"
+      "f:k8-spokesperson-guide-b1-spokesperson-videos-result",
+      "n:guide:k8-spokesperson-lipstick-ad",
+      "n:guide:k8-spokesperson-phonecase-hand",
+      "n:guide:k8-spokesperson-guide-b1-spokesperson-strip",
+      "n:guide:k8-spokesperson-gen2-tpl-jewel-g3"
     ],
     "steps": {
       "source": "n:guide:b1-spokesperson-videos-source",
       "sourceAlt": "Matte forest-green water bottle standing alone on a bright kitchen counter.",
-      "result": "n:guide:b1-spokesperson-videos-result",
+      "result": "f:k8-spokesperson-guide-b1-spokesperson-videos-result",
       "mode": "video",
       "length": 10,
       "prompt": "At a bright kitchen counter, a presenter holds this forest-green bottle at chest height and turns its blank front toward the viewer."
@@ -112,17 +112,17 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:spokesperson-videos-g2",
-          "label": "Phone case at a desk",
+          "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g2",
+          "label": "Empty case with round camera opening",
           "chips": [
             "tech",
             "everyday"
           ],
-          "prompt": "Hold the phone case beside the phone and tilt it to show the camera opening.",
+          "prompt": "Turn the empty sage-green case once to show its single round opening; no phone is inside.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:spokesperson-videos-g3",
+          "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g3",
           "label": "Snack pouch in the kitchen",
           "chips": [
             "everyday",
@@ -132,7 +132,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:spokesperson-videos-g4",
+          "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g4",
           "label": "Handbag held at chest height",
           "chips": [
             "accessories",
@@ -142,17 +142,17 @@
           "kind": "video"
         },
         {
-      "ref": "n:guide:b1-spokesperson-card",
-      "label": "Headphones shown at chest height",
-      "chips": [
-        "tech",
-        "everyday"
-      ],
-      "prompt": "Hold the headphones at chest height, then turn them once to show both ear cups.",
+          "ref": "n:guide:b1-spokesperson-card",
+          "label": "Headphones shown at chest height",
+          "chips": [
+            "tech",
+            "everyday"
+          ],
+          "prompt": "Hold the headphones at chest height, then turn them once to show both ear cups.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-ugc-g1",
+          "ref": "f:k8-spokesperson-gen2-tpl-ugc-g1",
           "label": "Travel cup on the train",
           "chips": [
             "drinkware",
@@ -162,23 +162,23 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-size-g4",
-          "label": "Earbuds case between fingers",
+          "ref": "f:k8-spokesperson-gen2-tpl-size-g4",
+          "label": "Compact portable charger held between fingers",
           "chips": [
             "tech",
             "accessories"
           ],
-          "prompt": "Turn the compact earbuds case between your fingers so its hinge is visible.",
+          "prompt": "Turn the compact charger so its USB-C port is visible.",
           "kind": "video"
         },
         {
-          "ref": "n:tiktok-hand-vertical",
-          "label": "Earbuds case opened at desk",
+          "ref": "f:k8-spokesperson-tiktok-hand-vertical",
+          "label": "Compact charger in vertical video",
           "chips": [
             "tech",
             "everyday"
           ],
-          "prompt": "Open the case once and hold it steady so the earbuds remain in focus.",
+          "prompt": "Rotate the compact charger once at a bright desk, keeping its port and full shape visible.",
           "kind": "video"
         }
       ],
@@ -186,27 +186,27 @@
     },
     "uses": [
       {
-        "frame": "listing",
-        "ref": "n:gen2:tpl-size-c1",
+        "frame": "1:1",
+        "ref": "f:k8-spokesperson-gen2-tpl-size-c1",
         "h": "Product page",
         "d": "A product in someone's hands shows its real size better than a photo on white."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-jewel-70",
+        "ref": "f:k8-spokesperson-gen2-tpl-jewel-70",
         "h": "Social post",
         "d": "A person holding the item makes a small product easy to read in the feed."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:white-background-c1",
+        "good": "n:guide:k8-spokesperson-gen2-white-background-c1",
         "bad": "n:guide:b1-spokesperson-videos-bad-crop",
         "good_label": "Full bottle shape in clear light",
         "bad_label": "Bottle cap cut off at the edge"
       },
       {
-        "good": "n:gen2:photo-hub-c1",
+        "good": "n:guide:k8-spokesperson-gen2-photo-hub-c1",
         "bad": "n:guide:b1-spokesperson-videos-bad-blur",
         "good_label": "Bag silhouette clear against white",
         "bad_label": "Blurred seams hide the bag shape"
@@ -214,9 +214,9 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:b1-spokesperson-output-audio",
+        "ref": "f:k8-spokesperson-output-audio-safe",
         "frame": "9:16",
-        "label": "Presenter holds earbuds case",
+        "label": "Presenter holds a skincare bottle",
         "length": 10
       },
       {
