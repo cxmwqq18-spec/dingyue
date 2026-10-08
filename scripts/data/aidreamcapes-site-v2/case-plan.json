@@ -838,19 +838,19 @@
         "title": "Amber serum dropped onto fingertips"
       },
       {
-        "ref": "n:guide:k7-ind-beauty-skincare-case-plan-1-ref-n-gen2-ind-beauty-skincare-c2",
+        "ref": "n:guide:q15-beauty-case1-clay-mask",
         "product": "clay mask",
-        "title": "A calming clay mask reset in a bright bathroom"
+        "title": "Evening routine: clay mask applied by hand"
       },
       {
-        "ref": "n:gen2:ind-beauty-skincare-c3",
+        "ref": "n:guide:q15-beauty-case2-lipsticks",
         "product": "lipsticks",
-        "title": "Lipstick bullets in a row on pink acrylic"
+        "title": "Shade swatches: lipstick on varied skin tones"
       },
       {
-        "ref": "n:gen2:ind-beauty-skincare-c4",
+        "ref": "n:guide:q15-beauty-case3-sunscreen",
         "product": "sunscreen tube",
-        "title": "Sunscreen tube on a striped beach towel"
+        "title": "Sun care demo: sunscreen applied outdoors"
       }
     ],
     "ind-fashion-clothing": [
@@ -860,9 +860,9 @@
         "title": "Overshirt checked in a fitting-room mirror"
       },
       {
-        "ref": "n:gen2:ind-fashion-clothing-c2",
+        "ref": "n:guide:q15-fashion-case1-knit-cardigan",
         "product": "knit cardigan",
-        "title": "Knit cardigan folded on a wooden bench"
+        "title": "Fit check: knit cardigan worn and buttoned"
       },
       {
         "ref": "n:gen2:ind-fashion-clothing-c3",
@@ -870,9 +870,9 @@
         "title": "Pleated skirt worn on a sunny sidewalk"
       },
       {
-        "ref": "n:gen2:ind-fashion-clothing-c4",
+        "ref": "n:guide:q15-fashion-case3-denim-jeans",
         "product": "denim jeans",
-        "title": "Denim jeans laid flat with rolled cuffs"
+        "title": "Fit check: denim jeans waist and cuff"
       }
     ],
     "ind-shoes": [
@@ -887,14 +887,14 @@
         "title": "Tan hiking boot on a mossy rock"
       },
       {
-        "ref": "n:gen2:ind-shoes-74",
+        "ref": "n:guide:q15-shoes-case2-court-sneaker",
         "product": "court sneaker",
-        "title": "White court sneaker in a clean side profile"
+        "title": "Product hero: colored court sneaker in use"
       },
       {
-        "ref": "n:guide:k7-ind-shoes-case-plan-3-ref-n-gen2-ind-shoes-c4",
+        "ref": "n:guide:q15-shoes-case3-suede-loafers",
         "product": "suede loafers",
-        "title": "Suede loafers with a textured floor for scale"
+        "title": "Fit check: suede loafers worn outdoors"
       }
     ],
     "ind-jewelry-accessories": [

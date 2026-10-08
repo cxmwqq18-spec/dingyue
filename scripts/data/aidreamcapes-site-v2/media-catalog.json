@@ -33347,6 +33347,656 @@
           640,
           1280
         ]
+      },
+      "q15-beauty-hero": {
+        "file": "gen2guide-q15-beauty-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lipstick swatch at vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-hero-gallery-0": {
+        "file": "gen2guide-q15-beauty-hero-gallery-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a skincare set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-template-what-s-in-the-box": {
+        "file": "gen2guide-q15-beauty-template-what-s-in-the-box",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare set lifted from carton.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-template-studio-lighting": {
+        "file": "gen2guide-q15-beauty-template-studio-lighting",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Serum revealed in spotlight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-case1-clay-mask": {
+        "file": "gen2guide-q15-beauty-case1-clay-mask",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clay mask applied by hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-case2-lipsticks": {
+        "file": "gen2guide-q15-beauty-case2-lipsticks",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lipstick on varied skin tones.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-case3-sunscreen": {
+        "file": "gen2guide-q15-beauty-case3-sunscreen",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sunscreen applied outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-examples-1": {
+        "file": "gen2guide-q15-beauty-examples-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands arrange skincare set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-examples-2": {
+        "file": "gen2guide-q15-beauty-examples-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Moisturizer packed for commute.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-examples-3": {
+        "file": "gen2guide-q15-beauty-examples-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Toner pressed onto cotton pad.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-strip-1": {
+        "file": "gen2guide-q15-beauty-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lip balm applied before makeup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-strip-2": {
+        "file": "gen2guide-q15-beauty-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult rolls serum into skin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-strip-3": {
+        "file": "gen2guide-q15-beauty-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Serum drop applied to hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-strip-5": {
+        "file": "gen2guide-q15-beauty-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman holding a frosted glass dropper bottle indoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-steps-source": {
+        "file": "gen2guide-q15-beauty-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick source.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-0": {
+        "file": "gen2guide-q15-beauty-picker-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Serum patted onto skin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-1": {
+        "file": "gen2guide-q15-beauty-picker-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Sunscreen applied to forearm.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-2": {
+        "file": "gen2guide-q15-beauty-picker-2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Balm lifted with spatula.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-3": {
+        "file": "gen2guide-q15-beauty-picker-3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Lipstick swept onto wrist.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-4": {
+        "file": "gen2guide-q15-beauty-picker-4",
+        "w": 864,
+        "h": 1536,
+        "alt": "Serum shown to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-7": {
+        "file": "gen2guide-q15-beauty-picker-7",
+        "w": 864,
+        "h": 1536,
+        "alt": "Serum picked up at vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-template-retargeting-video-ad": {
+        "file": "gen2guide-q15-fashion-template-retargeting-video-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "New jacket shown in mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-case1-knit-cardigan": {
+        "file": "gen2guide-q15-fashion-case1-knit-cardigan",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cardigan worn and buttoned.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-case3-denim-jeans": {
+        "file": "gen2guide-q15-fashion-case3-denim-jeans",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Jeans rise and cuff shown.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-examples-1": {
+        "file": "gen2guide-q15-fashion-examples-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wearer shows jacket back length.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-strip-0": {
+        "file": "gen2guide-q15-fashion-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Creator lifts hoodie into frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-strip-5": {
+        "file": "gen2guide-q15-fashion-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen shirt worn outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-steps-source-blue-set-r2": {
+        "file": "gen2guide-q15-fashion-steps-source-blue-set-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matching pale blue hoodie and sweatpants laid flat side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-0": {
+        "file": "gen2guide-q15-fashion-picker-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Coat reveal on city walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-1": {
+        "file": "gen2guide-q15-fashion-picker-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Trousers shown from waist to ankle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-3": {
+        "file": "gen2guide-q15-fashion-picker-3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Zipper pull and jacket seam.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-4": {
+        "file": "gen2guide-q15-fashion-picker-4",
+        "w": 864,
+        "h": 1536,
+        "alt": "Jacket fit shown to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-5": {
+        "file": "gen2guide-q15-fashion-picker-5",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holding a green dress toward the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-6": {
+        "file": "gen2guide-q15-fashion-picker-6",
+        "w": 864,
+        "h": 1536,
+        "alt": "Bomber cuff and snap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-7": {
+        "file": "gen2guide-q15-fashion-picker-7",
+        "w": 864,
+        "h": 1536,
+        "alt": "Model wearing a floral dress in a bright lookbook pose.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-hero-gallery-2": {
+        "file": "gen2guide-q15-shoes-hero-gallery-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Technical sneaker in city.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-template-limited-drop-alert-video": {
+        "file": "gen2guide-q15-shoes-template-limited-drop-alert-video",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Trail shoe on runner.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-template-feed-ad": {
+        "file": "gen2guide-q15-shoes-template-feed-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sneaker steps off curb.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-case2-court-sneaker": {
+        "file": "gen2guide-q15-shoes-case2-court-sneaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Colored court shoe in use.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-case3-suede-loafers": {
+        "file": "gen2guide-q15-shoes-case3-suede-loafers",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Suede loafers worn outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-strip-0": {
+        "file": "gen2guide-q15-shoes-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult laces a trail shoe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-strip-1": {
+        "file": "gen2guide-q15-shoes-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Runner lands in trail shoes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-strip-4": {
+        "file": "gen2guide-q15-shoes-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult steps into leather boots.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-steps-source": {
+        "file": "gen2guide-q15-shoes-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lace-up boot source.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-0": {
+        "file": "gen2guide-q15-shoes-picker-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Running shoe hits pavement.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-1": {
+        "file": "gen2guide-q15-shoes-picker-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Sandal strap fastened by hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-3": {
+        "file": "gen2guide-q15-shoes-picker-3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Creator reviews a leather loafer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-4": {
+        "file": "gen2guide-q15-shoes-picker-4",
+        "w": 864,
+        "h": 1536,
+        "alt": "Trail shoe splashes through puddle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-5": {
+        "file": "gen2guide-q15-shoes-picker-5",
+        "w": 864,
+        "h": 1536,
+        "alt": "Brush mud from hiking boot.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-6": {
+        "file": "gen2guide-q15-shoes-picker-6",
+        "w": 864,
+        "h": 1536,
+        "alt": "Rain boot detail to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-uses-0": {
+        "file": "gen2guide-q15-shoes-uses-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult walks in casual sneakers.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-output-hair-oil-r1": {
+        "file": "gen2guide-q15-beauty-output-hair-oil-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber hair oil bottle with a black pump on a clean studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-output-denim-jacket-r1": {
+        "file": "gen2guide-q15-fashion-output-denim-jacket-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a mid-blue denim jacket in a simple studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-output-gray-running-shoe-r1": {
+        "file": "gen2guide-q15-shoes-output-gray-running-shoe-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Light-gray knit running shoe worn on a runner.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-output-gray-pair-r1": {
+        "file": "gen2guide-q15-shoes-output-gray-pair-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of light-gray knit running shoes on a path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-steps-result-blue-set-r2": {
+        "file": "gen2guide-q15-fashion-steps-result-blue-set-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult wearing a pale blue hoodie with matching sweatpants.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-steps-result-laceup-r2": {
+        "file": "gen2guide-q15-shoes-steps-result-laceup-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Brown lace-up hiking boots shown in a walking stride.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-6-unboxing-r1": {
+        "file": "gen2guide-q15-beauty-picker-6-unboxing-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands lift a cream jar from an open beauty mailer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-picker-2-fabric-demo-r2": {
+        "file": "gen2guide-q15-fashion-picker-2-fabric-demo-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands stretch pale blue knit fabric for a close-up.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-2-unboxing-r1": {
+        "file": "gen2guide-q15-shoes-picker-2-unboxing-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands lift a charcoal and forest-green trail sneaker from tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-picker-5-review-r2": {
+        "file": "gen2guide-q15-beauty-picker-5-review-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman speaking to camera while holding a coral lipstick.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-shoes-picker-7-review-r2": {
+        "file": "gen2guide-q15-shoes-picker-7-review-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man shows the tread of a dark trail shoe to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-steps-result-center-r1": {
+        "file": "gen2guide-q15-beauty-steps-result-center-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand swatches lipstick in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-beauty-output-hair-oil-r2": {
+        "file": "gen2guide-q15-beauty-output-hair-oil-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber hair oil bottle with a black pump held upright beside dark hair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q15-fashion-output-denim-jacket-r2": {
+        "file": "gen2guide-q15-fashion-output-denim-jacket-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model showing the back of a mid-blue denim jacket.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

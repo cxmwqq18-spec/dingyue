@@ -443,13 +443,13 @@
     "ind-beauty-skincare": {
       "hero": {
         "kind": "image",
-        "image": "n:lipstick-vanity"
+        "image": "n:guide:q15-beauty-hero"
       },
       "gallery": [
-        "g:bundle-sets/example-02",
+        "n:guide:q15-beauty-hero-gallery-0",
         "n:lipstick-swatch"
       ],
-      "og": "n:lipstick-vanity"
+      "og": "n:guide:q15-beauty-hero"
     },
     "ind-fashion-clothing": {
       "hero": {
@@ -471,7 +471,7 @@
       "gallery": [
         "n:boots-detail",
         "g:feed-ad-still/example-02",
-        "g:colorway-variations/example-03"
+        "n:guide:q15-shoes-hero-gallery-2"
       ],
       "og": "n:boots-street"
     },

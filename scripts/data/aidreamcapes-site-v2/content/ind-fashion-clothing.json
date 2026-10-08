@@ -1,11 +1,11 @@
 {
   "id": "ind-fashion-clothing",
-  "title": "AI Model Photos and Videos for Fashion Brands | AIVideosUGC",
-  "description": "Create AI model photos and videos for fashion brands from garment photos laid flat or on a hanger: on-body shots, lookbook scenes, and outfit reels.",
-  "h1": "AI Model Photos and Videos for Fashion Brands and Boutiques",
-  "eyebrow": "Fashion & clothing",
-  "lead": "For fashion catalogs, combine on-model previews with garment detail photos, collection scenes, and short outfit videos from your product photos.",
-  "card": "Garment photos to on-model views, lookbook scenes, and short outfit clips.",
+  "title": "Fashion UGC Video Ads for Clothing Brands | AIVideosUGC",
+  "description": "Create fashion ad videos from a garment photo. Explore try-on transitions, fit checks, creator reviews, and fabric details for social campaigns.",
+  "h1": "Fashion UGC Ads for Try-Ons, Fit Checks, and Styling",
+  "eyebrow": "Fashion UGC ads",
+  "lead": "Turn a clear garment photo into a short video concept: show a try-on, fit check, fabric detail, or adult creator review. Keep measurements and fabric details tied to the actual garment.",
+  "card": "Try-on, fit-check, creator-review, and fabric-detail formats for clothing ads.",
   "secondary_keywords": [
     "AI on-model clothing photos",
     "AI lookbook for clothing brands",
@@ -14,21 +14,21 @@
     "clothing product photos for Shopify"
   ],
   "intro": [
-    "Clothing shoppers compare hem length, fabric drape, print, and what to pair with a piece. Photos of a garment laid flat or on a hanger show its cut; an on-model view adds a styling reference, which shoppers can compare with the listed measurements.",
-    "Upload a clean photo of the garment and describe how it should be worn: walking down a city street, seated on a stool in a bright studio, or styled as a full look for a lookbook page. For motion, a short vertical clip of someone turning in the outfit shows swing and drape in a way a still can't. On-model photos give a collection a consistent way to show the cut. Let your size chart and measurements do the job of explaining fit."
+    "Clothing shoppers compare length, drape, print, and styling. A try-on or fit check can show how a piece appears on an adult model; use the listed measurements to describe actual sizing.",
+    "Choose a try-on transition, fit check, lookbook walk, or creator review for a short social ad. Upload a clear garment photo, then review patterns, closures, and garment proportions before publishing."
   ],
   "ideas": [
     {
-      "t": "Lookbook scenes",
-      "d": "Style a trench coat on a rainy street or a sundress on a boardwalk for a collection page, a newsletter, or Instagram posts announcing the drop."
+      "t": "Try-on transitions",
+      "d": "Reveal one outfit in a clean vertical frame, then show the garment clearly from the front and side."
     },
     {
-      "t": "Outfit reels",
-      "d": "A 6- to 15-second vertical clip of the outfit turning, walking, or sitting shows movement. Add music and captions afterward in TikTok or CapCut."
+      "t": "Fit checks",
+      "d": "Show the waist, sleeve, hem, or full silhouette so shoppers can see how the garment is styled."
     },
     {
-      "t": "Sale graphics",
-      "d": "Ask for a styled image with open space to one side, then type your discount and end date over it in Canva or Ads Manager so the numbers are exactly right."
+      "t": "Creator reviews and fabric details",
+      "d": "An adult creator can share a product overview; close detail shots can show fabric, seams, or closures."
     }
   ],
   "faq": [
@@ -50,15 +50,15 @@
     }
   ],
   "overview": {
-    "h2": "Show the cut, then show the life around it",
+    "h2": "Show the garment, then show it in motion",
     "items": [
       {
-        "t": "Give the garment a dependable starting point",
-        "d": "Photograph the whole piece laid flat or hanging, then add a close view of any print, embroidery, hardware, or unusual hem. A clean source helps the result keep the details that make the item yours."
+        "t": "Keep the clothing easy to inspect",
+        "d": "Show the full garment or a close detail of its fabric, seams, print, or hardware. Compare the result with the actual item before publishing."
       },
       {
-        "t": "Use context without inventing fit",
-        "d": "An on-body image can show styling, length, and the mood of a collection. Keep your size chart, garment measurements, and fabric notes beside it; a generated model cannot replace those references."
+        "t": "Use fit scenes as styling references",
+        "d": "A try-on or creator review can show one way to wear a piece. Keep the size chart and garment measurements beside the ad."
       }
     ]
   },
@@ -88,40 +88,40 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Fashion scenes you can describe",
+    "h2": "Fashion ad formats shoppers recognize",
     "items": [
       {
-        "t": "Studio silhouette",
-        "d": "A full-length model in a bright studio wearing the black linen dress, standing still with the hem and sleeves fully visible against a pale wall."
+        "t": "Try-on transition",
+        "d": "An adult model reveals a layered outfit, then turns once to show the garment from the side."
       },
       {
-        "t": "Street-layered look",
-        "d": "A cropped denim jacket over a white tee, walking past a brick storefront with the jacket open so the collar, pockets, and back yoke show."
+        "t": "Fit check",
+        "d": "An adult model steps back to show a pair of trousers from waist to ankle."
       },
       {
-        "t": "Desk-to-evening styling",
-        "d": "A tailored blazer over a knit top at a café table, then a close crop of the cuff and button beside a notebook."
+        "t": "Creator review",
+        "d": "An adult creator wears a jacket, shows the shoulder and cuff, and speaks directly to the camera."
       },
       {
-        "t": "Color option lineup",
-        "d": "Three hoodies in charcoal, oat, and forest green folded on the same bench, one person lifting the forest green version to show the front graphic."
+        "t": "Fabric detail",
+        "d": "A hand stretches a knit section gently, then releases it to show the fabric settling."
       }
     ]
   },
   "results": {
-    "h2": "What a clothing set can include",
+    "h2": "Create fashion ads and product views",
     "items": [
       {
-        "t": "Listing-ready stills",
-        "d": "Use an on-body frame beside your photo of the garment laid flat and a detail photo so shoppers connect silhouette with construction."
+        "t": "Try-on and fit scenes",
+        "d": "Use a vertical frame for a turn, a short walk, or an adult creator review."
       },
       {
-        "t": "Collection context",
-        "d": "A consistent lookbook scene lets pieces share light, crop, and styling language."
+        "t": "Fabric and construction details",
+        "d": "Square stills can show a seam, cuff, closure, or surface texture beside the full garment view."
       },
       {
         "t": "Short movement",
-        "d": "Choose 9:16 for an outfit reel, 1:1 for a feed, or 16:9, 4:3, or 3:4 for a wider or taller placement; clip lengths are 6, 10, or 15 seconds."
+        "d": "Choose 9:16 for an outfit ad, 1:1 for a feed, or 16:9, 4:3, or 3:4 for another placement; clip lengths are 6, 10, or 15 seconds."
       },
       {
         "t": "Visible pricing",
@@ -213,157 +213,163 @@
       }
     ]
   },
-  "templates_lead": "Pick a garment view, an on-model look, or a collection scene for this apparel range.",
-  "cta_lead": "Upload a garment photo and select a styling view to review.",
+  "templates_lead": "Choose a fashion ad format for try-ons, fit checks, creator reviews, or fabric details.",
+  "cta_lead": "Choose a fashion ad format and review the garment details before posting.",
   "steps": [
     {
-      "t": "Photograph the full garment",
-      "d": "Lay the heather-gray hoodie flat with its sleeves, drawstrings, and front pocket visible."
+      "t": "Upload a clear garment photo",
+      "d": "Show the full item in even light, including sleeves, hems, closures, and visible construction."
     },
     {
-      "t": "Describe the fit and setting",
-      "d": "Show this hoodie on a person in a bright studio, cropped from neck to hips."
+      "t": "Choose a fashion ad format",
+      "d": "Select a try-on, fit check, creator review, or fabric detail and describe one movement."
     },
     {
-      "t": "Finish the listing",
-      "d": "Add the fabric name, size range, or care details after you download the photo."
+      "t": "Review garment details",
+      "d": "Compare the result with the item and its measurements before using it in an ad or listing."
     }
   ],
   "visual": {
-    "overview": "Fashion photos help shoppers judge fabric, fit, and how a piece works in an outfit. Use a clean garment image first, then choose a setting that keeps the clothing in view.",
+    "overview": "Show clothing through try-on transitions, fit checks, creator reviews, fabric details, and lookbook movement. Use real measurements for sizing information.",
     "strip": [
-      "n:guide:k7-ind-fashion-clothing-strip-0-n-hoodie-pack",
+      "n:guide:q15-fashion-strip-0",
       "n:guide:ind-fashion-clothing-m2-result",
       "n:guide:k7-ind-fashion-clothing-strip-2-n-gen2-tpl-tryon-c1",
       "n:guide:k7-ind-fashion-clothing-strip-3-n-gen2-tpl-tryon-c2",
       "n:guide:k7-ind-fashion-clothing-strip-4-n-gen2-tpl-look-c1",
-      "n:guide:k7-ind-fashion-clothing-strip-5-n-gen2-image-to-video-g3"
+      "n:guide:q15-fashion-strip-5"
     ],
     "steps": {
-      "source": "n:guide:k7-ind-fashion-clothing-steps-source-n-hoodie-pack",
-      "result": "n:guide:ind-fashion-clothing-m2-result",
-      "mode": "photo",
-      "prompt": "Show this heather-gray hoodie worn in a bright studio, with its drawstrings and front pocket clearly visible.",
+      "source": "n:guide:q15-fashion-steps-source-blue-set-r2",
+      "result": "n:guide:q15-fashion-steps-result-blue-set-r2",
+      "mode": "video",
+      "prompt": "Use the uploaded photo as the product and keep the pale blue hoodie and matching sweatpants exactly. In a bright fitting room, an adult model turns once and smooths the front pocket, ending front-facing with the full matching set visible. Natural try-on creator look, soft window light. Full-length eye-level handheld shot with a gentle push-in. Sound: fabric rustle and quiet room tone; no music.",
       "options": [
         [
-          "Template",
-          "Lifestyle photo"
+          "Format",
+          "Video"
         ],
         [
-          "Size",
-          "Square"
+          "Aspect ratio",
+          "9:16"
         ]
       ]
     },
     "picker": {
-      "title": "Pick a clothing scene for fit and fabric",
-      "lead": "Choose a scene that helps shoppers judge fit, fabric, or layering.",
+      "title": "Choose a fashion ad format",
+      "lead": "Pick a try-on, fit check, creator review, or fabric detail for a clothing ad.",
       "chips": [
         {
-          "id": "fit",
-          "label": "Show the fit"
+          "id": "try-on",
+          "label": "Try-On Transition"
         },
         {
-          "id": "fabric",
-          "label": "Show the fabric"
+          "id": "fit-detail",
+          "label": "Fit & Fabric Detail"
         },
         {
-          "id": "outfit",
-          "label": "Build an outfit"
+          "id": "creator-review",
+          "label": "Creator Review"
         },
         {
-          "id": "season",
-          "label": "Set the scene"
+          "id": "feature-detail",
+          "label": "Feature Close-Up"
+        },
+        {
+          "id": "lookbook-pose",
+          "label": "Lookbook Pose"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-0-ref-n-gen2-model-photos-c1",
-          "label": "Camel coat on a sidewalk",
-          "prompt": "Show the coat from shoulder to hem on a quiet city sidewalk.",
+          "ref": "n:guide:q15-fashion-picker-0",
+          "label": "Coat try-on in city",
           "chips": [
-            "season"
+            "try-on",
+            "lookbook-pose"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. On a quiet city sidewalk, an adult woman walks two steps toward camera in the coat and turns once to show its shape, ending in a relaxed front pose. Street-style lookbook, soft overcast daylight. Full-length eye-level handheld shot with a slow backward track. Sound: footsteps and light city ambience; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-1-ref-n-gen2-tpl-tryon-c4",
-          "label": "Trousers in a studio",
-          "prompt": "Frame the trousers from waist to ankle against a plain studio wall.",
+          "ref": "n:guide:q15-fashion-picker-1",
+          "label": "Trousers fit check",
           "chips": [
-            "fit"
+            "try-on",
+            "fit-detail"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. In a simple fitting room, an adult model adjusts the waistband once and steps back to show the trousers from waist to ankle, ending with both hems in frame. Honest fit-check style, even daylight. Full-length eye-level shot with a small handheld pullback. Sound: fabric movement and room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-detail-c2",
-          "label": "Merino sweater knit close up",
-          "prompt": "Move close enough to show the sweater's knit texture and soft edge.",
+          "ref": "n:guide:q15-fashion-picker-2-fabric-demo-r2",
+          "label": "Knit stretch detail",
           "chips": [
-            "fabric"
+            "fit-detail"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its color and knit texture exactly. Two adult hands gently stretch one section of the fabric and release it, ending on the settled weave. Tactile clothing-ad look, soft side light. Extreme close-up from above with a slow push-in. Sound: quiet fabric stretch; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-detail-g4",
-          "label": "Denim zipper teeth in focus",
-          "prompt": "Show the zipper and denim stitching under even daylight.",
+          "ref": "n:guide:q15-fashion-picker-3",
+          "label": "Jacket zipper detail",
           "chips": [
-            "fabric"
+            "feature-detail"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its color, stitching and hardware exactly. An adult hand pulls the denim jacket zipper up once and rests beside the seam, ending with the stitching and zipper sharp in frame. Natural product-detail ad, window daylight. Tight close-up with a slow lateral slide. Sound: zipper movement and room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-4-ref-n-gen2-tpl-look-c3",
-          "label": "Streetwear by a concrete wall",
-          "prompt": "Style the outfit against a simple concrete wall with room around the silhouette.",
+          "ref": "n:guide:q15-fashion-picker-4",
+          "label": "Jacket fit review",
           "chips": [
-            "outfit"
+            "creator-review"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. An adult man wearing the jacket faces the camera, holds its lapel at chest level and says, \"Here is how this jacket sits at the shoulder.\" He pauses with the garment visible. Relaxed creator-review look, soft daylight. Chest-up eye-level handheld framing with a gentle push-in. Sound: his voice and quiet room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-5-ref-n-gen2-tpl-look-c4",
-          "label": "Evening dress on stone steps",
-          "prompt": "Keep the full evening dress visible as the model stands on stone steps.",
+          "ref": "n:guide:q15-fashion-picker-5",
+          "label": "Green dress review",
           "chips": [
-            "outfit"
+            "creator-review"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its green color, shape and details exactly. An adult woman wearing the dress faces the camera, lightly lifts one side of the skirt and says, \"The drape is easy to see in daylight.\" She settles the fabric and holds still. Natural fashion-creator look, warm window light. Waist-up eye-level handheld shot with a gentle push-in. Sound: her voice and soft fabric movement; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-tryon-g1",
-          "label": "Olive bomber jacket, front view",
-          "prompt": "Show the bomber jacket from the front with its full shape visible.",
+          "ref": "n:guide:q15-fashion-picker-6",
+          "label": "Bomber cuff detail",
           "chips": [
-            "fit"
+            "feature-detail"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its color, cuff and snap exactly. An adult hand fastens the jacket cuff snap once and smooths the fabric, ending with the snap and stitching sharp in frame. Tactile apparel-detail ad, soft window light. Tight close-up from a slight side angle with a slow push-in. Sound: one quiet snap and fabric rustle; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-7-ref-n-gen2-occ-sale-discount-c3",
-          "label": "Dresses beside a bright window",
-          "prompt": "Hang the floral dresses near the window and keep each hem visible.",
+          "ref": "n:guide:q15-fashion-picker-7",
+          "label": "Floral dress lookbook",
           "chips": [
-            "season"
+            "lookbook-pose"
           ],
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the garment and keep its print, color and shape exactly. An adult model wearing the floral dress turns once beside a bright window, then settles into a relaxed lookbook pose with the full outfit visible. Soft daylight and natural fabric movement. Full-length eye-level shot with a gentle side track. Sound: light fabric rustle and quiet room tone; no music.",
+          "kind": "video"
         }
       ],
-      "button": "Make a product photo"
+      "button": "Make a fashion ad video"
     },
     "uses": [
       {
-        "frame": "listing",
+        "frame": "browser",
         "ref": "n:gen2:tpl-tryon-g2",
-        "h": "Show the jacket from the back",
-        "d": "A back view makes the jacket length and shoulder seams easy to see."
+        "h": "Show a fit check on a product page",
+        "d": "Keep the garment measurements and size chart beside the on-body view."
       },
       {
         "frame": "post",
         "ref": "n:guide:k7-ind-fashion-clothing-uses-1-ref-n-gen2-tpl-outfit-c3",
-        "h": "Show a lighter outfit in a feed post",
-        "d": "A linen suit on a sunny terrace feels distinct from a plain catalog image."
+        "h": "Use a lookbook clip in a social post",
+        "d": "A short walk or turn gives an outfit movement while keeping the garment visible."
       }
     ],
     "input": [
@@ -382,14 +388,14 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:model-photos-g1",
+        "ref": "n:guide:q15-fashion-output-denim-jacket-r1",
         "frame": "1:1",
-        "label": "Hoodie photo in a bright studio"
+        "label": "Mid-blue denim jacket try-on"
       },
       {
-        "ref": "n:gen2:tpl-tryon-g3",
+        "ref": "n:guide:q15-fashion-output-denim-jacket-r2",
         "frame": "1:1",
-        "label": "Ribbed top styled for a listing"
+        "label": "Mid-blue denim jacket back view"
       }
     ],
     "after": {
@@ -405,29 +411,29 @@
     },
     "titles": {
       "m2": {
-        "h2": "Create a fashion clothing photo with three clear steps"
+        "h2": "Create a fashion ad from a garment photo"
       },
       "m3": {
-        "h2": "Pick a clothing scene for fit and fabric"
+        "h2": "Choose a fashion ad format"
       },
       "m4": {
-        "h2": "Use clothing photos on listings and social feeds"
+        "h2": "Use fashion ads in product and social campaigns"
       },
       "m5": {
-        "h2": "Keep the whole clothing item in the frame"
+        "h2": "Start with a clear garment photo"
       },
       "m6": {
-        "h2": "Square clothing photos for product listings"
+        "h2": "Square clothing photos for product pages"
       },
       "m7": {
-        "h2": "Add size and color details after download"
+        "h2": "Add size and fit details after download"
       },
       "examples": {
-        "h2": "More fashion and clothing examples",
-        "lead": "Front, back, fabric, and outfit views that help shoppers picture a garment."
+        "h2": "More fashion ad scenes",
+        "lead": "Try-ons, fit checks, fabric details, and creator reviews for clothing campaigns."
       },
       "faq": {
-        "h2": "Questions about fashion clothing photos"
+        "h2": "Questions about fashion UGC ads"
       }
     }
   }

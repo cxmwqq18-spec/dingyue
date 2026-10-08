@@ -92,8 +92,8 @@
   "ind-fashion-clothing": {
     "images": {
       "retargeting-video-ad": {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-g2",
-        "alt": "Jacket folded into a shipping box."
+        "ref": "n:guide:q15-fashion-template-retargeting-video-ad",
+        "alt": "Adult wearing a jacket in front of a fitting-room mirror."
       },
       "life": {
         "ref": "n:guide:k7-ind-fashion-clothing-card-life-linen-outfit",
@@ -168,12 +168,16 @@
   "ind-beauty-skincare": {
     "images": {
       "light": {
-        "ref": "n:gen2:tpl-light-g1",
-        "alt": "Amber glass bottle in warm side light."
+        "ref": "n:guide:q15-beauty-template-studio-lighting",
+        "alt": "Amber serum bottle revealed in a warm beam of light."
       },
       "beauty": {
         "ref": "n:gen2:tpl-beauty-g1",
         "alt": "Cream pumped onto the back of a hand beside a mirror and folded towel."
+      },
+      "box": {
+        "ref": "n:guide:q15-beauty-template-what-s-in-the-box",
+        "alt": "Hands lift a skincare set from an open carton."
       }
     }
   },
@@ -181,11 +185,15 @@
     "images": {
       "color": {
         "ref": "n:gen2:tpl-color-g2",
-        "alt": "The same running shoe in three colorways side by side."
+        "alt": "Black and light-gray running shoes shown side by side."
+      },
+      "limited-drop-alert-video": {
+        "ref": "n:guide:q15-shoes-template-limited-drop-alert-video",
+        "alt": "Trail shoe shown in motion on a runner."
       },
       "feed": {
-        "ref": "n:lipstick-ad",
-        "alt": "Hand holding a coral lipstick and its cap against a soft pink backdrop with open space on the left"
+        "ref": "n:guide:q15-shoes-template-feed-ad",
+        "alt": "Running shoe steps down from a city curb."
       }
     }
   },

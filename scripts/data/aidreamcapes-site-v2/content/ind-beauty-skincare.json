@@ -1,11 +1,11 @@
 {
   "id": "ind-beauty-skincare",
-  "title": "AI Product Videos & Photos for Beauty Brands | AIVideosUGC",
-  "description": "Make AI product videos and photos for beauty brands: texture close-ups, routine clips, and kit shots from one photo of your bottle or jar. Try it today.",
-  "h1": "AI Product Videos and Photos for Beauty Brands, From Swatch to Shelf",
-  "eyebrow": "Beauty & skincare",
-  "lead": "AI product videos and photos for beauty brands show the texture, the packaging, and where your product fits in a morning or evening routine, starting from one photo of your bottle, jar, or tube.",
-  "card": "Texture close-ups, routine clips and kit shots from one photo of your bottle or jar.",
+  "title": "Beauty UGC Video Ads for Skincare and Makeup | AIVideosUGC",
+  "description": "Create AI skincare and makeup ads from product photos. Explore GRWM, texture demos, creator reviews, shade swatches, and unboxings for short social placements.",
+  "h1": "Beauty UGC Ads for Skincare and Makeup",
+  "eyebrow": "Beauty UGC ads",
+  "lead": "Turn a clear product photo into a short ad concept that shows a serum, lipstick, or skincare set in use. Choose a routine, shade or texture demo, creator review, or unboxing.",
+  "card": "Short beauty ad formats for creator reviews, shade demos, routines, and unboxings.",
   "secondary_keywords": [
     "skincare product video ideas",
     "AI cosmetics product photos",
@@ -14,21 +14,21 @@
     "makeup product photos"
   ],
   "intro": [
-    "Show a cream’s texture in a separate swatch photo and place the bottle in a hand for scale. A routine scene can add context, while clear product-only photos still suit a product page or marketplace listing.",
-    "Pair a photo of your serum or balm with a sentence about the setting you picture: a marble vanity in soft morning light, toner pressed onto a cotton pad, a travel kit laid out on a folded towel. Videos can run 6, 10, 15, or 30 seconds, vertical for TikTok and Reels or square for feeds. Every photo comes out square by default, a good fit for listings and carousel posts."
+    "A hand demo can show how a product is applied, and a swatch can put a shade beside its tube. Keep ingredient and result claims consistent with approved product details.",
+    "Use GRWM, creator-review, unboxing, and hand-demo formats for short feed ads. Upload a clear photo of the item you want to show, then review packaging, shade, and label details before publishing."
   ],
   "ideas": [
     {
-      "t": "Routine clips",
-      "d": "Put your product into a quick morning or night routine: cap off, a pump into the palm, back on the shelf. Vertical 9:16 fits Stories, Reels, and TikTok without awkward cropping."
+      "t": "GRWM and routine ads",
+      "d": "Show one clear step, such as applying a balm before makeup or patting a serum into the skin. A vertical frame suits short-form placements."
     },
     {
-      "t": "Kit and bundle shots",
-      "d": "If you sell a set, show the included pieces together in a square image. Lay them out in your upload photo so you can check the item count."
+      "t": "Texture and shade demos",
+      "d": "Use a close view of a cream, lipstick, or swatch so shoppers can see the finish. Check color against a real sample before publishing."
     },
     {
-      "t": "Vanity and bag scenes",
-      "d": "Place a moisturizer on a bathroom shelf, a lipstick in a makeup bag, or a sunscreen in a beach tote. Scenes like these give your gallery a sense of everyday use beyond the white background."
+      "t": "Creator reviews and unboxings",
+      "d": "An adult creator can introduce the product in their own words, or hands can open a set and reveal its contents."
     }
   ],
   "faq": [
@@ -50,15 +50,15 @@
     }
   ],
   "overview": {
-    "h2": "Show the formula, the finish, and the routine",
+    "h2": "Show what the product looks like in use",
     "items": [
       {
-        "t": "Let the product answer the first questions",
-        "d": "A bottle or jar photo establishes the pack. A close crop can show a serum, balm, or lipstick finish. Keep shade names and ingredient claims in product details your team has approved; generated imagery supplies context."
+        "t": "Put texture, shade, and packaging in focus",
+        "d": "A close view can show a lipstick swatch, cream texture, or serum applicator. Keep ingredient and shade claims in approved product details."
       },
       {
-        "t": "Build a small set of useful views",
-        "d": "Use one result for the listing, one for a vanity or travel scene, and one short clip for a pump, dropper, or opened compact. That sequence gives shoppers context without pretending a generated face proves a skincare result."
+        "t": "Build each short ad around one action",
+        "d": "Show a routine step, open a set, or let an adult creator discuss the item. Review the package and any visible product details before you publish."
       }
     ]
   },
@@ -88,36 +88,36 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Beauty scenes you can describe",
+    "h2": "Beauty ad formats shoppers recognize",
     "items": [
       {
-        "t": "Dropper and morning light",
-        "d": "An amber serum bottle beside a white sink, cap off, one dropper hovering above the back of a hand, with soft morning window light."
+        "t": "GRWM shade check",
+        "d": "An adult creator holds a lipstick beside a fresh wrist swatch in daylight."
       },
       {
-        "t": "Swatches on a clean card",
-        "d": "Three lipstick swatches on a warm ivory card beside the closed tubes, cropped close enough to show the different finishes."
+        "t": "Texture demo",
+        "d": "A small spatula lifts one ribbon of balm from its jar for a close view of the finish."
       },
       {
-        "t": "Routine shelf",
-        "d": "A cleanser, toner, and moisturizer lined up on a small stone vanity with a folded towel and no extra brand marks."
+        "t": "Creator review",
+        "d": "An adult creator holds a serum near the camera and describes the product in their own words."
       },
       {
-        "t": "Travel pouch",
-        "d": "A sunscreen tube and two minis inside an open canvas toiletry pouch on a hotel bathroom counter, labels facing out."
+        "t": "ASMR unboxing",
+        "d": "Hands lift a cream jar from folded tissue and hold it centered in the opened carton."
       }
     ]
   },
   "results": {
-    "h2": "What the page can show",
+    "h2": "Create beauty ads and product views",
     "items": [
       {
-        "t": "Product and texture views",
-        "d": "Use a square photo for a gallery, then pair it with a close detail of the finish or applicator."
+        "t": "Vertical ad scenes",
+        "d": "Use a 9:16 frame for GRWM routines, creator reviews, and short product demos."
       },
       {
-        "t": "Routine context",
-        "d": "A vertical 9:16 clip can follow one simple action, while 1:1, 16:9, 4:3, and 3:4 frames cover other placements."
+        "t": "Product and texture views",
+        "d": "Square product images can support a listing alongside close details of the finish or applicator."
       },
       {
         "t": "Credit visibility",
@@ -204,157 +204,157 @@
       }
     ]
   },
-  "templates_lead": "Choose a serum, jar, or set for your next texture or routine scene.",
-  "cta_lead": "Choose the next view for your serum, jar, or skincare set.",
+  "templates_lead": "Choose a beauty ad format for a routine, texture demo, creator review, or unboxing.",
+  "cta_lead": "Choose a beauty ad format and review the result before posting.",
   "steps": [
     {
       "t": "Upload a clear product photo",
-      "d": "Show the whole bottle, jar, or tube in good light, with the label and package shape visible."
+      "d": "Show the complete bottle, jar, or tube in even light, with the package shape and label area visible."
     },
     {
-      "t": "Choose a routine or display scene",
-      "d": "Name the surface, light, and one simple action while keeping the package and shade easy to see."
+      "t": "Choose a short ad format",
+      "d": "Select a routine, swatch, creator review, or unboxing and describe one main action."
     },
     {
-      "t": "Download and add the shade name",
-      "d": "Type the shade name and key ingredients as text in your editor, so small print stays sharp."
+      "t": "Review the result",
+      "d": "Check the package, shade, and visible details, then add approved product details in your editing app."
     }
   ],
   "visual": {
-    "overview": "Beauty shoppers look at the package, shade, texture, and place in a routine. Use clear product photos for the listing, then add a vanity, shelf, or travel scene for context.",
+    "overview": "Show beauty products through routines, texture demos, shade checks, unboxings, and adult creator reviews. Keep packaging and claims easy to verify.",
     "strip": [
       "n:guide:k7-ind-beauty-skincare-strip-0-n-gen2-tpl-beauty-c1",
-      "n:guide:k7-ind-beauty-skincare-strip-1-n-gen2-tpl-beauty-c2",
-      "n:guide:k7-ind-beauty-skincare-strip-2-n-gen2-tpl-beauty-c3",
-      "n:guide:k7-ind-beauty-skincare-strip-3-n-skincare-vertical",
+      "n:guide:q15-beauty-strip-1",
+      "n:guide:q15-beauty-strip-2",
+      "n:guide:q15-beauty-strip-3",
       "n:guide:k7-ind-beauty-skincare-strip-4-n-gen2-tpl-beauty-g2",
-      "n:guide:k7-ind-beauty-skincare-strip-5-n-gen2-tpl-light-g2"
+      "n:guide:q15-beauty-strip-5"
     ],
     "steps": {
-      "source": "n:guide:k7-ind-beauty-skincare-steps-source-n-lipstick-pack",
-      "result": "n:guide:k7-ind-beauty-skincare-steps-result-n-lipstick-vanity",
-      "mode": "photo",
-      "prompt": "Place the coral lipstick upright on a white marble vanity beside a pink flower and round mirror, with the tube and cap visible.",
+      "source": "n:guide:q15-beauty-steps-source",
+      "result": "n:guide:q15-beauty-steps-result-center-r1",
+      "mode": "video",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman sweeps the lipstick once across the back of her hand, ending with the product and fresh swatch held together in frame. Natural makeup-demo look, soft window light. Tight over-shoulder close-up with a gentle push-in. Sound: cap click and quiet room tone; no music.",
       "options": [
         [
-          "Template",
-          "Lifestyle photo"
+          "Format",
+          "Video"
         ],
         [
-          "Size",
-          "Square"
+          "Aspect ratio",
+          "9:16"
         ]
       ]
     },
     "picker": {
-      "title": "Choose a beauty product scene",
-      "lead": "Pick whether shoppers should see the shade, the texture, or where the product sits in a routine.",
+      "title": "Choose a beauty ad format",
+      "lead": "Pick a routine, texture demo, creator review, or unboxing for your next short ad.",
       "chips": [
         {
           "id": "routine",
-          "label": "Daily routine"
+          "label": "GRWM Routine"
         },
         {
           "id": "texture",
-          "label": "Shade and texture"
+          "label": "Texture Demo"
         },
         {
-          "id": "travel",
-          "label": "Travel kit"
+          "id": "creator-review",
+          "label": "Creator Review"
         },
         {
-          "id": "shelf",
-          "label": "Shelf display"
+          "id": "unboxing-discovery",
+          "label": "Unboxing & Discovery"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-0-ref-n-gen2-image-to-video-c3",
-          "label": "Uncapped coral lipstick",
+          "ref": "n:guide:q15-beauty-picker-0",
+          "label": "GRWM demo: serum patted onto skin",
           "chips": [
             "routine"
           ],
-          "prompt": "Stand the uncapped coral lipstick on a bright vanity with its shade visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult woman presses one drop of serum into her palm and pats it onto one cheek, ending with the bottle beside her face. Natural morning routine, soft window light and real skin texture. Chest-up mirror-level handheld shot with a slow push-in. Sound: dropper tap and quiet bathroom ambience; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:social-ad-photos-c3",
-          "label": "Hand cream with lavender",
+          "ref": "n:guide:q15-beauty-picker-1",
+          "label": "Routine demo: sunscreen applied to forearm",
           "chips": [
             "routine"
           ],
-          "prompt": "Place the hand cream tube beside lavender sprigs in soft light.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a sunny window, an adult woman squeezes a small amount of sunscreen onto her forearm and smooths it once, ending with the tube held beside the application. Everyday routine in natural daylight. Close handheld shot from above with a slow tilt down. Sound: tube squeeze and soft room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-2-ref-n-gen2-tpl-compare-c3",
-          "label": "Matte and glossy lipstick",
+          "ref": "n:guide:q15-beauty-picker-2",
+          "label": "Texture macro: balm lifted with spatula",
           "chips": [
             "texture"
           ],
-          "prompt": "Show matte and glossy lipstick shades side by side with both bullets visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean vanity, an adult hand scoops one ribbon of balm from the jar with a small spatula, ending with the glossy texture on the tip. Tactile beauty-ad look, soft side light. Extreme close-up from a slight overhead angle with a slow push-in. Sound: soft spatula scrape; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:social-ad-photos-g1",
-          "label": "Red lipstick on a pink backdrop",
+          "ref": "n:guide:q15-beauty-picker-3",
+          "label": "Shade swatch: lipstick swept onto wrist",
           "chips": [
             "texture"
           ],
-          "prompt": "Place the red lipstick on a clean pink backdrop in even light.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In soft daylight, an adult hand draws one clean lipstick swatch across the wrist beside the tube, ending with the fresh color centered in frame. True-to-life shade, minimal beauty creator style. Macro top-down shot with a slow lateral slide. Sound: quiet skin contact and room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-4-ref-n-gen2-tpl-story-c1",
-          "label": "Sunscreen in beach light",
+          "ref": "n:guide:q15-beauty-picker-4",
+          "label": "Creator review: serum shown to camera",
           "chips": [
-            "travel"
+            "creator-review"
           ],
-          "prompt": "Set the sunscreen tube beside a striped towel in beach light.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult woman holds the serum bottle beside her face and says, \"Here is a closer look at the bottle.\" She points toward the dropper and keeps the package in view. Casual creator-review style, soft window light. Chest-up eye-level handheld framing with a gentle push-in. Sound: her voice and quiet room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-story-g2",
-          "label": "Travel-size skincare kit",
+          "ref": "n:guide:q15-beauty-picker-5-review-r2",
+          "label": "Lipstick shade to camera",
           "chips": [
-            "travel"
+            "creator-review"
           ],
-          "prompt": "Arrange the travel-size bottles inside an open toiletry pouch.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman faces the camera, holds the lipstick beside her face and says, \"This is how the shade looks in daylight.\" She pauses with the tube and color visible. Relaxed makeup-creator look, soft natural light. Chest-up eye-level handheld shot with a gentle push-in. Sound: her voice and quiet room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-6-ref-n-gen2-tpl-retargeting-video-ad-c2",
-          "label": "Serum on a bathroom shelf",
+          "ref": "n:guide:q15-beauty-picker-6-unboxing-r1",
+          "label": "Cream jar unboxing",
           "chips": [
-            "shelf"
+            "unboxing-discovery"
           ],
-          "prompt": "Place the serum bottle on a tidy bathroom shelf with the label facing forward.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a bright table, adult hands open a small beauty mailer, peel back tissue and lift the cream jar into the center, ending with it held still. Clean unboxing look, soft daylight. Top-down close-up with a slow push-in as the jar rises. Sound: carton flap and tissue rustle; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-7-ref-n-gen2-home-g4",
-          "label": "Skincare bottle on wet stone",
+          "ref": "n:guide:q15-beauty-picker-7",
+          "label": "Serum pickup at vanity",
           "chips": [
-            "shelf"
+            "unboxing-discovery"
           ],
-          "prompt": "Set the skincare bottle on a wet stone surface with the full shape visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand reaches into an open makeup pouch on a vanity, picks up the serum and brings it close to the lens, ending with the bottle centered and steady. Everyday discovery hook, natural morning light. First-person handheld close-up with one smooth lift. Sound: pouch zip and bottle tap; no music.",
+          "kind": "video"
         }
       ],
-      "button": "Make a beauty product photo"
+      "button": "Make a beauty ad video"
     },
     "uses": [
       {
         "frame": "browser",
         "ref": "n:guide:k7-ind-beauty-skincare-uses-0-ref-n-gen2-plat-instagram-g5",
-        "h": "Add a routine photo to a product page",
-        "d": "Show the serum or cream where it is used, next to the plain pack shot on your listing."
+        "h": "Place a routine clip on a product page",
+        "d": "Keep the product details beside the clip so shoppers can compare packaging and product information."
       },
       {
         "frame": "post",
         "ref": "n:guide:k7-ind-beauty-skincare-uses-1-ref-n-lipstick-ad",
-        "h": "Show a shade in a social post",
-        "d": "A close view of the bullet shows the shade; type the shade name over it in your editor."
+        "h": "Show a lipstick shade in a social ad",
+        "d": "A close frame keeps the tube and color together; add a verified shade name in the final edit."
       }
     ],
     "input": [
@@ -373,14 +373,14 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:k7-ind-beauty-skincare-outputs-0-ref-n-gen2-tpl-sale-c3",
+        "ref": "n:guide:q15-beauty-output-hair-oil-r2",
         "frame": "1:1",
-        "label": "Square skincare set photo"
+        "label": "Amber hair oil bottle in hand"
       },
       {
-        "ref": "n:guide:k7-ind-beauty-skincare-outputs-1-ref-n-gen2-tpl-light-c3",
+        "ref": "n:guide:q15-beauty-output-hair-oil-r1",
         "frame": "1:1",
-        "label": "Square single-product photo"
+        "label": "Amber hair-oil bottle on a studio surface"
       }
     ],
     "after": {
@@ -396,25 +396,29 @@
     },
     "titles": {
       "m2": {
-        "h2": "Show a lipstick color beside its shade swatch"
+        "h2": "Create a beauty ad from a product photo"
       },
       "m3": {
-        "h2": "Choose a scene for your beauty product"
+        "h2": "Choose a beauty ad format"
       },
       "m4": {
-        "h2": "Use beauty photos on listings and social"
+        "h2": "Use beauty ads across product and social channels"
       },
       "m5": {
-        "h2": "Start with a photo that shows the package"
+        "h2": "Start with a clear product photo"
       },
       "m6": {
-        "h2": "Square skincare photos for sets and single products"
+        "h2": "Square product photos for a listing"
       },
       "m7": {
-        "h2": "Add shade names and ingredients after download"
+        "h2": "Add shade and ingredient details after download"
       },
       "faq": {
-        "h2": "Questions about beauty product photos"
+        "h2": "Questions about beauty UGC ads"
+      },
+      "examples": {
+        "h2": "More beauty ad scenes",
+        "lead": "Texture, unboxing, creator review, and routine formats for product campaigns."
       }
     }
   }
