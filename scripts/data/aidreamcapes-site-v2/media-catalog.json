@@ -31727,6 +31727,946 @@
           640,
           1280
         ]
+      },
+      "q12-tpl-launch-card-01-serum-review": {
+        "file": "q12-tpl-launch-card-01-serum-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds an amber serum bottle to camera in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-card-02-supplement-review": {
+        "file": "q12-tpl-launch-card-02-supplement-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator reviews a plain supplement tub in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-card-03-earring-unboxing": {
+        "file": "q12-tpl-launch-card-03-earring-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal plain gold hoop earrings from a small jewelry box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-card-04-protein-first-bite": {
+        "file": "q12-tpl-launch-card-04-protein-first-bite",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator reacts to a first bite of a protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-card-05-sneaker-try-on": {
+        "file": "q12-tpl-launch-card-05-sneaker-try-on",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner wears trail sneakers on a city path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-card-06-pet-harness-demo": {
+        "file": "q12-tpl-launch-card-06-pet-harness-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult clips a plain harness on a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-card-07-sunscreen-grwm": {
+        "file": "q12-tpl-launch-card-07-sunscreen-grwm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator applies sunscreen in a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-card-08-earbuds-review": {
+        "file": "q12-tpl-launch-card-08-earbuds-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds two plain wireless earbuds to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-01-serum-review": {
+        "file": "q12-tpl-compare-card-01-serum-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator compares two plain serum finishes to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-02-headphone-review": {
+        "file": "q12-tpl-compare-card-02-headphone-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator compares two over-ear headphone fits to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-03-skincare-bottles": {
+        "file": "q12-tpl-compare-card-03-skincare-bottles",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands hold two skincare bottles side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-04-athletic-fits": {
+        "file": "q12-tpl-compare-card-04-athletic-fits",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Split-screen shows two athletic legging fits.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-05-sneaker-colors": {
+        "file": "q12-tpl-compare-card-05-sneaker-colors",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two runners wear trail sneaker colorways on a city path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-06-pet-harness-sizes": {
+        "file": "q12-tpl-compare-card-06-pet-harness-sizes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult compares two pet harness sizes beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-07-supplement-flavors": {
+        "file": "q12-tpl-compare-card-07-supplement-flavors",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two protein drink flavors are held side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-card-08-package-refresh": {
+        "file": "q12-tpl-compare-card-08-package-refresh",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands compare earlier and refreshed skincare bottle designs.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-01-serum-offer-review": {
+        "file": "q12-tpl-bf-card-01-serum-offer-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a skincare serum to camera in a seasonal setting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-02-jacket-try-on-review": {
+        "file": "q12-tpl-bf-card-02-jacket-try-on-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator speaks to camera while showing a plain jacket cuff.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-03-earring-gift-unboxing": {
+        "file": "q12-tpl-bf-card-03-earring-gift-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal plain gold hoop earrings from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-04-sneaker-try-on": {
+        "file": "q12-tpl-bf-card-04-sneaker-try-on",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears plain running sneakers on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-05-headphone-demo": {
+        "file": "q12-tpl-bf-card-05-headphone-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult demonstrates how plain over-ear headphones fold.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-06-resistance-band-unboxing": {
+        "file": "q12-tpl-bf-card-06-resistance-band-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands unbox a set of muted resistance bands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-07-protein-first-bite": {
+        "file": "q12-tpl-bf-card-07-protein-first-bite",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult athlete reacts to a first bite of a protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-card-08-pet-lint-demo": {
+        "file": "q12-tpl-bf-card-08-pet-lint-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult removes pet hair from a sofa with a reusable lint tool.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-guide-product-photo-tips-shoe": {
+        "file": "q12-guide-product-photo-tips-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult adjusts the laces of a plain running shoe for a close product photo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-guide-first-tiktok-sunscreen": {
+        "file": "q12-guide-first-tiktok-sunscreen",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator applies sunscreen while looking toward a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-guide-ad-sizes-sunscreen": {
+        "file": "q12-guide-ad-sizes-sunscreen",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds plain sunscreen beside her face for a social ad.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-guide-testing-sneaker-split": {
+        "file": "q12-guide-testing-sneaker-split",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two trail shoes in contrasting colorways on an adult runner’s feet.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-strip-result-r2": {
+        "file": "q12-tpl-launch-strip-result-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds an amber serum beside her face in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-strip-supplement-demo-r2": {
+        "file": "q12-tpl-launch-strip-supplement-demo-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator presents a plain supplement tub at a gym.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-strip-runner-r2": {
+        "file": "q12-tpl-compare-strip-runner-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two adult runners show different trail shoe colorways side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-strip-unboxing-r2": {
+        "file": "q12-tpl-bf-strip-unboxing-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a plain skincare gift set on a holiday table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-strip-headphones-r2": {
+        "file": "q12-tpl-bf-strip-headphones-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator reviews over-ear headphones to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-strip-jacket-tryon-r2": {
+        "file": "q12-tpl-bf-strip-jacket-tryon-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator tries on a plain navy jacket in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-strip-sunscreen-r2": {
+        "file": "q12-tpl-launch-strip-sunscreen-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator introduces a plain sunscreen tube to camera in a bright bedroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-case-earbuds-r2": {
+        "file": "q12-tpl-launch-case-earbuds-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds two wireless earbuds to camera in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-case-sunscreen-r2": {
+        "file": "q12-tpl-launch-case-sunscreen-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies a plain sunscreen tube before work.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-case-jewelry-r2": {
+        "file": "q12-tpl-launch-case-jewelry-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal gold hoop earrings from a plain jewelry box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-example-unboxing-r2": {
+        "file": "q12-tpl-launch-example-unboxing-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands unbox two plain skincare products from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-example-first-bite-r2": {
+        "file": "q12-tpl-launch-example-first-bite-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator reacts to a first bite of a protein snack bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-example-tryon-r2": {
+        "file": "q12-tpl-launch-example-tryon-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator tries on a plain running jacket in front of a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-case-phone-case-r2": {
+        "file": "q12-tpl-launch-case-phone-case-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand shows a sage phone case with one small round camera opening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-strip-pet-clean-r2": {
+        "file": "q12-tpl-launch-strip-pet-clean-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult uses a lint brush to clear pet hair from a sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-demo-source-r3": {
+        "file": "q12-tpl-launch-demo-source-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber glass dropper bottle with black pipette and blank white label, centered on a bright neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-demo-blur-r3": {
+        "file": "q12-tpl-launch-demo-blur-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber glass dropper bottle in soft focus, with its shape and label area difficult to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-demo-crop-r3": {
+        "file": "q12-tpl-launch-demo-crop-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close crop cuts off the top and base of an amber glass dropper bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-demo-output-01-r3": {
+        "file": "q12-tpl-launch-demo-output-01-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds an amber glass dropper bottle beside her face in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-demo-output-02-r3": {
+        "file": "q12-tpl-launch-demo-output-02-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator applies one drop from an amber glass dropper bottle in soft window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-demo-source-r3": {
+        "file": "q12-tpl-bf-demo-source-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale frosted cylindrical serum dropper bottle with a white cap and blank label, shown on a dark neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-demo-blur-r3": {
+        "file": "q12-tpl-bf-demo-blur-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale frosted serum dropper bottle in soft focus, with its cap and silhouette difficult to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-demo-crop-r3": {
+        "file": "q12-tpl-bf-demo-crop-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close crop cuts off the cap and base of a pale frosted serum dropper bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-demo-output-01-r3": {
+        "file": "q12-tpl-bf-demo-output-01-r3",
+        "w": 1536,
+        "h": 864,
+        "alt": "Adult creator holds a pale frosted serum dropper bottle toward the camera in a warm vanity scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-demo-output-02-r3": {
+        "file": "q12-tpl-bf-demo-output-02-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator demonstrates one drop from a pale frosted serum bottle in a warm vanity scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-example-jewelry-r2": {
+        "file": "q12-tpl-compare-example-jewelry-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two pairs of plain gold hoop earrings held side by side against a softly lit neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-strip-pet-fit-r2": {
+        "file": "q12-tpl-compare-strip-pet-fit-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult owner comparing two plain dog harness sizes beside a calm dog in a living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-strip-skincare-talk-r2": {
+        "file": "q12-tpl-compare-strip-skincare-talk-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holding two plain skincare bottles side by side in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-case-phone-colors-r2": {
+        "file": "q12-tpl-compare-case-phone-colors-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage and blush phone cases, each with one circular camera opening, shown side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-demo-size-source-r4": {
+        "file": "q12-tpl-compare-demo-size-source-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two amber glass dropper bottles in matching design and color, one small and one large, with white caps and blank labels.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-demo-size-blur-r4": {
+        "file": "q12-tpl-compare-demo-size-blur-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small and large amber glass dropper bottles in soft focus, with their shapes and labels difficult to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-demo-size-crop-r4": {
+        "file": "q12-tpl-compare-demo-size-crop-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close crop cuts off the caps and bases of two amber glass dropper bottles.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-demo-size-output-01-r4": {
+        "file": "q12-tpl-compare-demo-size-output-01-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds small and large amber glass dropper bottles side by side for a review.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-demo-size-output-02-r4": {
+        "file": "q12-tpl-compare-demo-size-output-02-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift small and large amber glass dropper bottles together in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-case-headphone-finishes-r1": {
+        "file": "q12-tpl-compare-case-headphone-finishes-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds matching matte-black and brushed-silver over-ear headphones at shoulder height.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-case-legging-colors-r1": {
+        "file": "q12-tpl-compare-case-legging-colors-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two adult creators show charcoal and navy versions of an athletic legging fit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-case-harness-sizes-r1": {
+        "file": "q12-tpl-compare-case-harness-sizes-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dog owner holds two matching green harness sizes beside a dog wearing one.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-case-earbud-colors-r1": {
+        "file": "q12-tpl-compare-case-earbud-colors-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator compares matching black and white wireless earbud sets on camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-case-skincare-set-unboxing-r1": {
+        "file": "q12-tpl-bf-case-skincare-set-unboxing-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal a plain skincare gift set inside an open dark gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-case-supplement-review-r1": {
+        "file": "q12-tpl-bf-case-supplement-review-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult fitness creator holds a green supplement tub toward the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-case-pet-lint-demo-r1": {
+        "file": "q12-tpl-bf-case-pet-lint-demo-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult owner brushes pet hair from a sofa with a reusable lint tool beside a dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-case-trail-shoe-tryon-r1": {
+        "file": "q12-tpl-bf-case-trail-shoe-tryon-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner wears charcoal trail shoes with orange trim on a city park path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-use-social-r1": {
+        "file": "q12-tpl-launch-use-social-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds an amber serum bottle toward the camera in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-input-good-r1": {
+        "file": "q12-tpl-compare-input-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two amber glass dropper bottles in matching designs, one small and one large, on a pale surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-input-good-r1": {
+        "file": "q12-tpl-bf-input-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale frosted cylindrical serum dropper bottle with a white cap and blank label on a bright surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-case-phone-colors-r1": {
+        "file": "q12-tpl-compare-case-phone-colors-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage and blush silicone phone cases, each with one circular camera opening, lie side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-demo-size-output-03-r1": {
+        "file": "q12-tpl-compare-demo-size-output-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds two amber glass dropper bottles side by side in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-demo-output-03-r1": {
+        "file": "q12-tpl-bf-demo-output-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a pale frosted serum dropper bottle beside her face in a warm vanity scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-use-social-r1": {
+        "file": "q12-tpl-bf-use-social-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a pale frosted serum bottle toward the camera in a bright bedroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-after-offer-r1": {
+        "file": "q12-tpl-bf-after-offer-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A hand sets a pale frosted serum bottle on a vanity beside open space for offer details.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-input-good-02-r1": {
+        "file": "q12-tpl-launch-input-good-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber glass dropper bottle with black pipette and blank label, shown fully on a pale surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-strip-extra-01-r1": {
+        "file": "q12-tpl-launch-strip-extra-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a sage silicone phone case with one circular camera opening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-strip-extra-02-r1": {
+        "file": "q12-tpl-launch-strip-extra-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal a simple haircare gift set from a kraft box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-strip-extra-03-r1": {
+        "file": "q12-tpl-launch-strip-extra-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult owner checks a teal harness on a calm dog in a bright living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-input-good-02-r1": {
+        "file": "q12-tpl-compare-input-good-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small and large amber glass dropper bottles with matching white caps and blank labels.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-strip-extra-01-r1": {
+        "file": "q12-tpl-compare-strip-extra-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two adult creators show charcoal and navy athletic leggings in matched poses.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-strip-extra-02-r1": {
+        "file": "q12-tpl-compare-strip-extra-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two adult runners show trail shoes in muted charcoal-orange and slate-teal colorways.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-strip-extra-03-r1": {
+        "file": "q12-tpl-compare-strip-extra-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult owner compares two green harness sizes beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-strip-extra-04-r1": {
+        "file": "q12-tpl-compare-strip-extra-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds sage and blush phone cases, each with one circular camera opening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-input-good-02-r1": {
+        "file": "q12-tpl-bf-input-good-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale frosted cylindrical serum dropper bottle with white cap and blank label on a bright surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-strip-extra-01-r1": {
+        "file": "q12-tpl-bf-strip-extra-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator shows the cuff and fit of a plain navy jacket in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-strip-extra-02-r1": {
+        "file": "q12-tpl-bf-strip-extra-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds plain over-ear headphones at chest height in a warm home studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-strip-extra-03-r1": {
+        "file": "q12-tpl-bf-strip-extra-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult athlete opens a gift box containing a muted resistance band set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-bf-strip-extra-04-r1": {
+        "file": "q12-tpl-bf-strip-extra-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult owner removes pet hair from a sofa with a reusable lint tool beside a dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-launch-after-offer-r1": {
+        "file": "q12-tpl-launch-after-offer-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand sets an amber serum bottle on a bright vanity beside open space for launch details.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q12-tpl-compare-after-bottle-sizes-r1": {
+        "file": "q12-tpl-compare-after-bottle-sizes-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small and large matching amber glass dropper bottles with white caps and blank labels side by side on a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

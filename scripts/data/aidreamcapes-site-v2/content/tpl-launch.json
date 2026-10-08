@@ -4,7 +4,7 @@
   "description": "Use this AI promo video maker to announce a new product with a warm, polished clip. Upload one photo, choose 9:16 or 1:1, and make your launch video today.",
   "h1": "AI Promo Video Maker for Your Next Product Launch",
   "eyebrow": "Launch video template",
-  "lead": "This AI promo video maker announces something new with a warm, styled clip. Start from a shot of the product, describe the room it belongs in, and get a short video for Facebook and Instagram. Clips run 6, 10, 15, or 30 seconds.",
+  "lead": "Create a short product-launch video from a clear photo. Choose a creator review, unboxing, try-on or hands-on demo, then add the verified release date and offer after download.",
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -13,10 +13,10 @@
     "home decor promo video"
   ],
   "intro": [
-    "Your new product appears in the room where it belongs, styled like an ad on launch day. The sample clip features a slim white cordless lamp glowing on a wooden side table beside a stack of books, a mug, and a potted plant in a cozy, dim room.",
-    "A styled room scene shows one place where shoppers could use the product. It works for decor, small appliances, gadgets, and gift items. Use 9:16 for Stories and Reels, or 1:1 for the Facebook and Instagram feed."
+    "A launch video can introduce an item with a creator review, product demo, unboxing, try-on or first-bite reaction. Keep the featured product visible from the opening frame.",
+    "Use 9:16 for Stories and Reels, 1:1 for feeds and listings, or 16:9 for a wide placement. Add the confirmed date, price and product link as editable text after generation."
   ],
-  "tip": "Describe the time of day and the room, like \"evening living room, warm light, lamp on a side table,\" so the product looks lived with rather than staged.",
+  "tip": "Choose one clear product moment, such as holding a bottle toward the camera, opening a gift box or showing a new item in use. Keep final launch facts editable.",
   "steps": [
     {
       "t": "Upload the new product",
@@ -33,16 +33,16 @@
   ],
   "ideas": [
     {
-      "t": "Coming-soon teaser",
-      "d": "Make a 6-second version with darker light and post it before release day."
+      "t": "Creator first look",
+      "d": "Show the new item to camera and introduce the release in a short review."
     },
     {
       "t": "Launch-week offer",
-      "d": "Generate a second version in the same kind of room and add your intro discount in your editor."
+      "d": "Add the confirmed price and introductory offer in your editor after generation."
     },
     {
-      "t": "Gift table",
-      "d": "Place the product on a table set for a birthday or the holidays to pitch it as a present."
+      "t": "Try-on release",
+      "d": "Show the fit and details of a new jacket or shoe before linking to its product page."
     }
   ],
   "maker": {
@@ -116,32 +116,32 @@
       },
       {
         "t": "Five usable frames",
-        "d": "Pick 9:16 for Stories and Reels, 1:1 for a feed, 16:9 for a wide launch placement, or 4:3 and 3:4 when needed."
+        "d": "Choose 9:16 for Stories and Reels, 1:1 for a feed or listing, or 16:9 for a wide placement."
       },
       {
         "t": "A visible spend before testing",
-        "d": "Six, ten, fifteen, and thirty seconds cost 24, 40, 60, and 120 credits; the exact charge appears before generation."
+        "d": "Add the release date, introductory offer and product link after generation so each detail stays easy to update."
       }
     ]
   },
   "scene_recipes": {
-    "h2": "Launch scenes to describe",
+    "h2": "Product-launch scenes to describe",
     "items": [
       {
-        "t": "Lamp reveal",
-        "d": "A slim lamp turns on beside books and a plant as evening light falls across the side table."
+        "t": "Creator review",
+        "d": "An adult creator holds a skincare bottle at eye level and describes the first look."
       },
       {
-        "t": "Kitchen arrival",
-        "d": "A new espresso machine sits on a clean counter while a cup enters the frame and the camera moves to its control panel."
+        "t": "First-bite reaction",
+        "d": "A creator takes one bite of a protein bar and shows the bitten bar to camera."
       },
       {
-        "t": "Desk upgrade",
-        "d": "A compact speaker or monitor is unboxed onto a calm work desk, ending with a clear front view."
+        "t": "Hands-on demo",
+        "d": "A person shows a product detail clearly, then holds the full item in frame."
       },
       {
-        "t": "Gift-season opener",
-        "d": "A small device rests on a wrapped gift table with one slow pass across the package and product."
+        "t": "Gift unboxing",
+        "d": "Hands open a small gift box and reveal the new item against a clean background."
       }
     ]
   },
@@ -176,51 +176,45 @@
     ]
   },
   "examples": {
-    "h2": "More launch scenes",
-    "lead": "Reveal moments and clean hero frames with room for your launch line.",
+    "h2": "More launch scene examples",
+    "lead": "Creator reviews, product reveals, and hands-on moments for a launch post.",
     "groups": [
       {
         "label": "Reveal and hero",
         "items": [
           {
-            "ref": "n:gen2:tpl-launch-g1",
-            "title": "Speaker revealed as a cloth slides off",
+            "ref": "n:guide:q12-tpl-launch-example-unboxing-r2",
+            "title": "Hands reveal two skincare bottles from a gift box",
             "kind": "scene",
-            "product": "speaker"
+            "product": "skincare"
           },
           {
-            "ref": "n:gen2:tpl-launch-g2",
-            "title": "New toaster on a counter with room for launch text",
+            "ref": "n:guide:q12-tpl-launch-example-first-bite-r2",
+            "title": "Creator reacts to a protein snack bar",
             "kind": "scene",
-            "product": "toaster"
-          },
-          {
-            "ref": "n:gen2:tpl-launch-g3",
-            "title": "New backpack on a single wall hook",
-            "kind": "scene",
-            "product": "backpack"
+            "product": "protein snack"
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "A launch video gives a new product a first reveal in the setting where it belongs. Keep the item visible as the light or camera introduces it, then add launch details after download.",
+    "overview": "A launch ad should show the product in a moment a buyer can understand. Choose a creator review, demo, unboxing, try-on, or first-bite reaction, then add dates and pricing after download.",
     "strip": [
-      "n:guide:c1-tpl-launch-m2-source",
-      "n:guide:c1-tpl-launch-m2-result",
-      "n:guide:c1-tpl-launch-reuse-strip3-square",
-      "n:gen2:h1-photo-hub-lamp",
-      "n:gen2:change-background-c1",
-      "n:guide:white-background-fix-m1-planter"
+      "n:guide:q12-tpl-launch-use-social-r1",
+      "n:guide:q12-tpl-launch-strip-result-r2",
+      "n:guide:q12-tpl-launch-strip-pet-clean-r2",
+      "n:guide:q12-tpl-launch-strip-extra-01-r1",
+      "n:guide:q12-tpl-launch-strip-extra-02-r1",
+      "n:guide:q12-tpl-launch-strip-extra-03-r1"
     ],
     "steps": {
-      "source": "n:guide:c1-tpl-launch-m2-source",
-      "sourceTitle": "Finished product photo",
-      "sourceHint": "Use the final item so its shape and color stay clear.",
-      "result": "n:guide:c1-tpl-launch-m2-result-video-916",
+      "source": "n:guide:q12-tpl-launch-use-social-r1",
+      "sourceTitle": "Creator holding an amber serum bottle",
+      "sourceHint": "Show the amber bottle and blank label clearly before adding the launch message.",
+      "result": "n:guide:q12-tpl-launch-strip-result-r2",
       "mode": "video",
-      "prompt": "Switch on this portable table lamp beside an open book, then move the camera toward its warm glow.",
+      "prompt": "Use the uploaded photo as the exact product: an amber glass dropper bottle with a black pipette and blank white label. Preserve its shape, glass color, cap and label area. In a bright bathroom, an adult creator holds the bottle beside her face and says, \"Here is the serum I am showing today.\" She tilts the bottle once and finishes with the full bottle beside her cheek. Soft morning window light, natural skin texture. Chest-up front-facing framing with slight handheld sway. Sound: her voice and a cap click; no music.",
       "options": [
         [
           "Size",
@@ -237,97 +231,98 @@
       ]
     },
     "picker": {
-      "title": "Choose a product-launch video scene",
-      "lead": "Pick a reveal that introduces the item before the date and price appear.",
+      "title": "Choose a product-launch ad format",
+      "lead": "Pick a creator review, demo, unboxing, try-on or first-bite format that opens with the product.",
       "chips": [
         {
-          "id": "tease",
-          "label": "Preview a new product"
+          "id": "creator-review",
+          "label": "Creator Reviews"
         },
         {
-          "id": "unbox",
-          "label": "Open the package"
+          "id": "first-impression",
+          "label": "First Impressions"
         },
         {
-          "id": "setting",
-          "label": "Show the product in context"
+          "id": "in-use-demo",
+          "label": "Hands-On Demos"
         },
         {
-          "id": "color",
-          "label": "Reveal a new color"
+          "id": "routine",
+          "label": "GRWM Routines"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:h1-photo-hub-candle-source",
-          "label": "White candle jar and matching lid",
+          "ref": "n:guide:q12-tpl-launch-card-01-serum-review",
+          "label": "Talking-Head Review: serum held to lens",
           "chips": [
-            "tease"
+            "creator-review"
           ],
-          "prompt": "Preview the plain white ceramic candle jar with its matching lid on a neutral surface.",
+          "prompt": "Photorealistic square UGC ad still: an adult creator holds an amber serum dropper bottle beside her face in a bright bathroom, with the blank label facing the lens. Soft morning window light, natural skin texture, chest-up composition. Freeze a clear product-review moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:b1-spokesperson-videos-result",
-          "label": "Presenter holds a green water bottle",
+          "ref": "n:guide:q12-tpl-launch-card-02-supplement-review",
+          "label": "Car Selfie Review: supplement tub",
           "chips": [
-            "tease"
+            "creator-review",
+            "routine"
           ],
-          "prompt": "Show the presenter holding the bottle at chest height with a relaxed expression.",
+          "prompt": "Photorealistic square UGC ad still: an adult man in a parked car holds a plain supplement tub beside his face with the front label visible. Soft daylight through the window, relaxed chest-up selfie framing. Freeze a friendly first-look moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-desk-lamp",
-          "label": "Brass lamp in an open box",
+          "ref": "n:guide:q12-tpl-launch-card-03-earring-unboxing",
+          "label": "ASMR Unboxing: gold hoop earrings revealed",
           "chips": [
-            "unbox"
+            "first-impression"
           ],
-          "prompt": "Unwrap the curved brass desk lamp from a plain box and keep its full outline visible.",
+          "prompt": "Photorealistic square product-launch ad still: two hands lift a pair of gold hoop earrings from an open small jewelry box. Warm window light, tactile tissue detail, close overhead composition with the pair centered and fully visible. Freeze the reveal moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "f:unboxing-experience",
-          "label": "Headphones lifted from a gray package",
+          "ref": "n:guide:q12-tpl-launch-card-04-protein-first-bite",
+          "label": "First-Bite Reaction: protein bar taste test",
           "chips": [
-            "unbox"
+            "first-impression"
           ],
-          "prompt": "Open the plain gray package to reveal the headphones and charging case.",
+          "prompt": "Photorealistic square UGC ad still: an adult creator holds a protein bar after one bite, with the bite edge and package both visible, smiling toward the camera. Bright kitchen daylight, natural chest-up framing. Freeze the first-bite reaction. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-launch-c4",
-          "label": "New candle on a styled shelf",
+          "ref": "n:guide:q12-tpl-launch-card-05-sneaker-try-on",
+          "label": "Try-On Transition: trail sneakers on walk",
           "chips": [
-            "setting"
+            "in-use-demo"
           ],
-          "prompt": "Show the new candle on a shelf with dried flowers in soft window light.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:gen2:tpl-film-g3",
-          "label": "Ceramic vase in window light",
-          "chips": [
-            "setting"
-          ],
-          "prompt": "Place the ceramic vase where a beam of late-day light crosses the shelf.",
+          "prompt": "Photorealistic square sportswear ad still: an adult runner wears charcoal trail sneakers with subtle orange trim on a city path, both shoes fully visible. Cool morning daylight, low close framing, natural pavement detail. Freeze a planted step. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-launch-color-variants-square",
-          "label": "Navy, rust, and charcoal beanie colors",
+          "ref": "n:guide:q12-tpl-launch-card-06-pet-harness-demo",
+          "label": "Pet Demo: harness on dog",
           "chips": [
-            "color"
+            "in-use-demo"
           ],
-          "prompt": "Arrange three knit beanie colors side by side for a new color release.",
+          "prompt": "Photorealistic square pet-product ad still: an adult owner checks the fit of a simple harness on a calm dog in a bright living room. Show the buckle and the dog’s full upper body clearly. Natural window light, medium close framing. Freeze the fit-check moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-launch-picker-phonecase-oval-cutout-square",
-          "label": "Sage case, single oval opening",
+          "ref": "n:guide:q12-tpl-launch-card-07-sunscreen-grwm",
+          "label": "GRWM: sunscreen applied before work",
           "chips": [
-            "color"
+            "routine"
           ],
-          "prompt": "Show the plain sage silicone case from the back, with its single oval opening clearly visible.",
+          "prompt": "Photorealistic square UGC ad still: an adult creator applies a small amount of sunscreen to her cheek while the plain tube remains visible near her face. Bright bathroom mirror light, natural skin texture, chest-up composition. Freeze the morning routine moment. No text, logos, or watermark.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q12-tpl-launch-card-08-earbuds-review",
+          "label": "Talking-Head Review: earbuds held to lens",
+          "chips": [
+            "creator-review"
+          ],
+          "prompt": "Photorealistic square UGC ad still: an adult creator holds two small rounded wireless earbuds in an open palm beside their face, both earbuds clearly visible without any charging case. Soft window light, casual streamer-style framing. No stems, text, logos, or watermark.",
           "kind": "photo"
         }
       ],
@@ -335,46 +330,46 @@
     },
     "uses": [
       {
-        "frame": "phone",
-        "ref": "n:guide:c1-tpl-launch-use-social-video-916",
+        "frame": "post",
+        "ref": "n:guide:q12-tpl-launch-strip-sunscreen-r2",
         "h": "Share a launch video in Stories and Reels",
-        "d": "Keep the product centered in the vertical clip and add the launch date in your post editor."
+        "d": "Keep the sunscreen tube in view and add the release date in your post editor."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:c1-tpl-launch-use-product-page-video-169",
+        "ref": "n:guide:q12-tpl-launch-strip-supplement-demo-r2",
         "h": "Add a launch video to a product page",
-        "d": "Place the clip beside the final product details so shoppers can see the item before launch."
+        "d": "Place the supplement clip beside its final product details so shoppers can see the item before launch."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c1-tpl-launch-package-lamp-square",
-        "bad": "n:guide:c1-reuse-launch-m5-1-blur",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
+        "good": "n:guide:q12-tpl-launch-demo-source-r3",
+        "bad": "n:guide:q12-tpl-launch-demo-blur-r3",
+        "good_label": "The full amber bottle is sharp",
+        "bad_label": "Soft focus hides the bottle details"
       },
       {
-        "good": "n:guide:c1-tpl-launch-strip-launch-lamp-square",
-        "bad": "n:guide:tpl-launch-input-2-crop",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
+        "good": "n:guide:q12-tpl-launch-input-good-02-r1",
+        "bad": "n:guide:q12-tpl-launch-demo-crop-r3",
+        "good_label": "The complete bottle fits in frame",
+        "bad_label": "The crop cuts off the bottle ends"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:c1-tpl-launch-output-1",
+        "ref": "n:guide:q12-tpl-launch-demo-output-01-r3",
         "frame": "9:16",
-        "label": "9:16 product-launch video"
+        "label": "9:16 serum creator review"
       },
       {
-        "ref": "n:guide:c1-tpl-launch-output-2",
+        "ref": "n:guide:q12-tpl-launch-demo-output-02-r3",
         "frame": "9:16",
-        "label": "9:16 vertical launch reveal"
+        "label": "9:16 dropper application demo"
       }
     ],
     "after": {
-      "ref": "n:guide:c1-tpl-launch-reuse-strip2-square",
+      "ref": "n:guide:q12-tpl-launch-after-offer-r1",
       "zones": [
         "Launch date",
         "Price",

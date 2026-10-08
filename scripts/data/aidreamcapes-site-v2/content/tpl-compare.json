@@ -12,10 +12,10 @@
     "product size comparison video"
   ],
   "intro": [
-    "Two of your products stand next to each other so buyers can compare them at a glance. Our sample pairs a charcoal travel tumbler with a cream one on a light counter: same shape, different finish.",
-    "Comparison clips settle the small questions that hold up a sale, like which color, which size, or which lid. Use it for your own range only, such as two bottle capacities, a standard and a deluxe kit, or old packaging next to new. Pick 1:1 or 16:9 for a product listing, or 9:16 for YouTube Shorts. When size is what sets the two apart, add a still size comparison photo next to an object shoppers know."
+    "A comparison ad can help shoppers choose between two finishes, fits, or sizes. Show both options in one frame or have a creator explain the visible difference while holding them.",
+    "Comparison clips answer practical questions about color, size, fit and packaging. Show your own options together, then add variant names and current prices in an editable layer. Use 1:1, 16:9 or 9:16 for the placement you need."
   ],
-  "tip": "Shoot both products together in one photo, then spell out the difference in plain words, like \"black tumbler on the left, cream on the right, same size.\"",
+  "tip": "Photograph both options together and describe one visible difference, such as color, size, finish or included pieces.",
   "steps": [
     {
       "t": "Upload both options in one photo",
@@ -115,32 +115,32 @@
       },
       {
         "t": "Flexible placements",
-        "d": "Use 1:1 for a listing or feed, 16:9 for a wide product section, 9:16 for Shorts, or 4:3 and 3:4 for other crops."
+        "d": "Use 1:1 for a listing or feed, 16:9 for a wide product section, or 9:16 for Stories and Reels."
       },
       {
         "t": "A transparent test cost",
-        "d": "Six, ten, fifteen, and thirty seconds cost 24, 40, 60, and 120 credits; you see that amount before creating a version."
+        "d": "Use current listing data for prices, capacities, dimensions and included pieces."
       }
     ]
   },
   "scene_recipes": {
-    "h2": "Comparisons you can describe",
+    "h2": "Comparison scenes to describe",
     "items": [
       {
         "t": "Two bottle sizes",
-        "d": "A small and large bottle stand on a counter at the same distance, with the height difference visible from base to cap."
+        "d": "An adult creator holds a small and large bottle side by side, with both full silhouettes visible."
       },
       {
-        "t": "Two finishes",
-        "d": "Matte black and brushed steel headphones rotate on matching stands while the ear-cup finish catches light."
+        "t": "Two headphone finishes",
+        "d": "A creator holds matte black and brushed silver headphones at equal height."
       },
       {
-        "t": "New and previous pack",
-        "d": "Two boxes sit side by side on a shelf, then the camera passes across the changed front panel."
+        "t": "Legging color test",
+        "d": "Two creators wear charcoal and navy versions of the same legging cut in matched poses."
       },
       {
-        "t": "Single item versus set",
-        "d": "One mug stays left while the gift set opens on the right to reveal its extra pieces."
+        "t": "Two phone-case colors",
+        "d": "Show sage and blush cases together, each with one circular camera opening."
       }
     ]
   },
@@ -175,29 +175,23 @@
     ]
   },
   "examples": {
-    "h2": "More side-by-side scenes",
-    "lead": "Two versions in one frame, so shoppers can see the difference for themselves.",
+    "h2": "More side-by-side comparison examples",
+    "lead": "Show two versions together so shoppers can see the difference for themselves.",
     "groups": [
       {
         "label": "Side by side",
         "items": [
           {
-            "ref": "n:gen2:tpl-compare-g1",
-            "title": "Two phone case finishes shown side by side",
+            "ref": "n:guide:q12-tpl-compare-case-phone-colors-r2",
+            "title": "Sage and blush phone cases with one circular camera opening",
             "kind": "scene",
             "product": "phone cases"
           },
           {
-            "ref": "n:gen2:tpl-compare-c2",
-            "title": "Two backpack sizes shown side by side",
+            "ref": "n:guide:q12-tpl-compare-strip-pet-fit-r2",
+            "title": "Two harness sizes compared beside a dog",
             "kind": "scene",
-            "product": "backpacks"
-          },
-          {
-            "ref": "g:jewelry-positioning/example-07",
-            "title": "Two knife lengths laid side by side on a board",
-            "kind": "scene",
-            "product": "chef's knives"
+            "product": "dog harnesses"
           }
         ]
       }
@@ -205,22 +199,22 @@
   },
   "cta_lead": "Upload one photo that shows both options. See the cost before you start.",
   "visual": {
-    "overview": "A product comparison video gives shoppers a clear view of two options at once. Keep the products side by side and name one visible difference, such as size, color, or finish.",
+    "overview": "A comparison ad lets shoppers see one difference between two options. Use a side-by-side view, wear test, or creator review, and keep claims to what the image can show.",
     "strip": [
-      "n:guide:c1-tpl-compare-m2-source",
-      "n:guide:c1-tpl-compare-m2-result",
-      "g:on-model-generation/example-05",
-      "n:guide:white-background-serving-bowl",
-      "n:guide:b1-spokesperson-strip",
-      "n:guide:c1-tpl-compare-reuse-strip5-square"
+      "n:guide:q12-tpl-compare-demo-size-source-r4",
+      "n:guide:q12-tpl-compare-demo-size-output-02-r4",
+      "n:guide:q12-tpl-compare-strip-extra-01-r1",
+      "n:guide:q12-tpl-compare-strip-extra-02-r1",
+      "n:guide:q12-tpl-compare-strip-extra-03-r1",
+      "n:guide:q12-tpl-compare-strip-extra-04-r1"
     ],
     "steps": {
-      "source": "n:guide:c1-tpl-compare-m2-source",
-      "sourceTitle": "Two product options",
-      "sourceHint": "Place both options side by side on one surface.",
-      "result": "n:guide:c1-tpl-compare-m2-result",
+      "source": "n:guide:q12-tpl-compare-demo-size-source-r4",
+      "sourceTitle": "Two sizes of an amber glass bottle",
+      "sourceHint": "Keep the small and large amber bottles, white droppers and blank labels fully visible.",
+      "result": "n:guide:q12-tpl-compare-demo-size-output-02-r4",
       "mode": "video",
-      "prompt": "Move across these matte-black and cream insulated tumblers, pausing with both visible.",
+      "prompt": "Use the uploaded pair as the exact options: one small and one large amber glass dropper bottle with white rubber bulbs, ribbed white caps and blank white labels. Preserve each bottle silhouette, cap and relative size. An adult creator holds one bottle in each hand beside her face and says, \"Here are the two sizes side by side.\" She raises both equally and finishes with the full bottles facing the lens. Bright vanity daylight, natural skin texture. Chest-up front-facing handheld framing. Sound: her voice and two soft bottle taps; no music.",
       "options": [
         [
           "Size",
@@ -237,97 +231,98 @@
       ]
     },
     "picker": {
-      "title": "Choose a comparison for your product video",
-      "lead": "Pick one difference shoppers can see without extra explanation.",
+      "title": "Choose a product-comparison ad format",
+      "lead": "Show a visible difference between two of your own options in one clear frame or creator review.",
       "chips": [
         {
-          "id": "capacity",
-          "label": "Compare capacity"
+          "id": "talk-through",
+          "label": "Talk-Through Reviews"
         },
         {
-          "id": "color",
-          "label": "Compare color"
+          "id": "side-by-side",
+          "label": "Side-by-Side"
         },
         {
-          "id": "appearance",
-          "label": "Compare finish or color"
+          "id": "fit-test",
+          "label": "Fit Tests"
         },
         {
-          "id": "home",
-          "label": "Compare home sizes"
+          "id": "wear-test",
+          "label": "Wear Tests"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:c1-tpl-compare-card-water-sizes",
-          "label": "Small and large bottle sizes",
+          "ref": "n:guide:q12-tpl-compare-card-01-serum-review",
+          "label": "Talking-Head Compare: serum finishes",
           "chips": [
-            "capacity"
+            "talk-through"
           ],
-          "prompt": "Place the two stainless bottles side by side to show the size difference.",
+          "prompt": "Photorealistic square comparison ad still: an adult creator holds two amber serum bottles with different finishes at equal height, fronts facing the camera. Bright vanity daylight, natural skin texture, chest-up composition. Freeze a clear side-by-side review moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-compare-card-backpack-sizes",
-          "label": "Two backpack sizes side by side",
+          "ref": "n:guide:q12-tpl-compare-card-02-headphone-review",
+          "label": "Talking-Head Compare: headphone fit",
           "chips": [
-            "capacity"
+            "talk-through"
           ],
-          "prompt": "Arrange both packed backpacks together at different sizes.",
+          "prompt": "Photorealistic square comparison ad still: an adult creator wears one plain over-ear headphone fit and holds a matching second pair beside his shoulder. Show both ear cups and headbands clearly. Soft desk daylight, chest-up tech-demo composition. No brand marks, text, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-compare-card-tumbler-colors",
-          "label": "Charcoal and cream tumbler colors",
+          "ref": "n:guide:q12-tpl-compare-card-03-skincare-bottles",
+          "label": "Side-by-Side Demo: skincare bottles",
           "chips": [
-            "color"
+            "side-by-side"
           ],
-          "prompt": "Place both insulated tumblers together to compare their colors.",
+          "prompt": "Photorealistic square comparison ad still: two hands hold plain skincare bottles side by side, showing the visible packaging and finish difference. Bright bathroom vanity light, close composition, both full bottles in frame. Freeze the comparison moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-compare-card-beanie-colors",
-          "label": "Navy and rust beanie colors",
+          "ref": "n:guide:q12-tpl-compare-card-04-athletic-fits",
+          "label": "Wear Test: two athletic fits",
           "chips": [
-            "color"
+            "fit-test",
+            "wear-test"
           ],
-          "prompt": "Arrange both knit beanies side by side in even light.",
+          "prompt": "Photorealistic square split-screen fitness ad still: two adult creators wear a matching athletic legging cut in charcoal and navy, shown from waist to ankle in matched poses. Bright studio daylight, balanced side-by-side framing. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-compare-card-lipstick-finish",
-          "label": "Matte and glossy lipstick finish",
+          "ref": "n:guide:q12-tpl-compare-card-05-sneaker-colors",
+          "label": "Side-by-Side Demo: sneaker colorways",
           "chips": [
-            "appearance"
+            "wear-test"
           ],
-          "prompt": "Show the two rose lipstick finishes side by side in soft light.",
+          "prompt": "Photorealistic square sports comparison ad still: two adult runners wear charcoal trail sneakers in two colorways on a city path, both pairs fully visible. Cool natural daylight, low close framing, matched planted steps. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-compare-card-phone-case-colors",
-          "label": "Sage and blush phone case colors",
+          "ref": "n:guide:q12-tpl-compare-card-06-pet-harness-sizes",
+          "label": "Fit Compare: pet harness sizes",
           "chips": [
-            "appearance"
+            "fit-test"
           ],
-          "prompt": "Place the sage and blush phone cases side by side from the back.",
+          "prompt": "Photorealistic square pet comparison ad still: an adult owner holds two green harness sizes beside a calm dog wearing the smaller fit. Show the straps, buckles and dog clearly in a bright living room. Freeze the fit comparison. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-compare-card-candle-sizes",
-          "label": "Travel and standard candle sizes",
+          "ref": "n:guide:q12-tpl-compare-card-07-supplement-flavors",
+          "label": "Mix Compare: two supplement flavors",
           "chips": [
-            "home"
+            "side-by-side"
           ],
-          "prompt": "Place the small travel candle beside the standard jar on one table.",
+          "prompt": "Photorealistic square beverage comparison ad still: two hands hold vanilla and cocoa protein drinks in plain shaker cups side by side, with the color difference clear. Bright gym lounge daylight, close counter-height framing. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-compare-card-planter-sizes",
-          "label": "Small and large planter sizes",
+          "ref": "n:guide:q12-tpl-compare-card-08-package-refresh",
+          "label": "Package Compare: skincare refresh",
           "chips": [
-            "home"
+            "side-by-side"
           ],
-          "prompt": "Arrange both terracotta planters on one windowsill to compare their size.",
+          "prompt": "Photorealistic square skincare comparison ad still: hands hold an earlier and refreshed skincare bottle design side by side, both front labels blank and fully visible. Bright vanity light, clean close composition. Freeze the packaging comparison. No text, logos, or watermark.",
           "kind": "photo"
         }
       ],
@@ -335,46 +330,46 @@
     },
     "uses": [
       {
-        "frame": "browser",
-        "ref": "n:guide:c1-tpl-compare-reuse-strip4-square",
-        "h": "Add a comparison video to a product page",
-        "d": "Place the clip near the variant selector so shoppers can see the visible difference between options."
+        "frame": "post",
+        "ref": "n:guide:q12-tpl-compare-strip-runner-r2",
+        "h": "Share two sneaker colorways in a social post",
+        "d": "Show both trail shoe colors at an equal scale, then add the variant names and current prices."
       },
       {
-        "frame": "post",
-        "ref": "n:guide:c1-tpl-compare-m4-tumbler-pair-square",
-        "h": "Use a comparison video in a social post",
-        "d": "Show both options together, then add variant names and current prices as text."
+        "frame": "browser",
+        "ref": "n:guide:q12-tpl-compare-strip-skincare-talk-r2",
+        "h": "Show two skincare finishes on a product page",
+        "d": "Keep both bottle finishes together so shoppers can inspect the visible difference."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c1-tpl-compare-reuse-strip3-square",
-        "bad": "n:guide:c1-reuse-compare-m5-1-blur",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
+        "good": "n:guide:q12-tpl-compare-input-good-r1",
+        "bad": "n:guide:q12-tpl-compare-demo-size-blur-r4",
+        "good_label": "Both bottle sizes and caps stay sharp",
+        "bad_label": "Soft focus hides both bottle sizes"
       },
       {
-        "good": "n:gen2:product-videos-g1",
-        "bad": "n:guide:tpl-compare-input-2-crop",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
+        "good": "n:guide:q12-tpl-compare-input-good-02-r1",
+        "bad": "n:guide:q12-tpl-compare-demo-size-crop-r4",
+        "good_label": "Both complete bottles fit in frame",
+        "bad_label": "The crop cuts off both bottle ends"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:c1-tpl-compare-output-1",
+        "ref": "n:guide:q12-tpl-compare-demo-size-output-01-r4",
         "frame": "1:1",
-        "label": "1:1 product-comparison video"
+        "label": "Creator compares two amber bottle sizes"
       },
       {
-        "ref": "n:guide:c1-tpl-compare-output-2",
+        "ref": "n:guide:q12-tpl-compare-demo-size-output-03-r1",
         "frame": "1:1",
-        "label": "1:1 product-variant video"
+        "label": "Both amber bottle sizes stay in view"
       }
     ],
     "after": {
-      "ref": "n:guide:c1-tpl-compare-m7-tumbler-variants-square",
+      "ref": "n:guide:q12-tpl-compare-after-bottle-sizes-r1",
       "zones": [
         "Variant names",
         "Price",

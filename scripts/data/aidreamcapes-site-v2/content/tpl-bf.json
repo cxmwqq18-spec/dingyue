@@ -4,7 +4,7 @@
   "description": "Create Black Friday video ads from a single product photo and add your discount in your editor. Get a 9:16 or 1:1 clip for Facebook and Instagram today.",
   "h1": "Black Friday Video Ads Ready for Your Deal",
   "eyebrow": "Black Friday template",
-  "lead": "Black Friday video ads start with a bold product clip made before the sale rush. Upload a photo, describe a striking scene, then add your discount, dates, and countdown in your own editor.",
+  "lead": "Create a Black Friday ad from a clear product photo. Choose a creator review, try-on, unboxing or hands-on demo, then add the confirmed offer and end date after download.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -13,10 +13,10 @@
     "Facebook Black Friday ads"
   ],
   "intro": [
-    "A moving product scene gives your Black Friday offer a visual setting. The sample shows a silver folding e-bike with fat tires standing on a city plaza at golden hour, with glass towers glowing behind it.",
-    "The video supplies the moving picture, and you add the deal. You lay prices, percentages, dates, and countdown timers on yourself in CapCut or Ads Manager, so every number is right and easy to change. Make your clips early, then drop in the offer when it's final. It suits bigger-ticket items like bikes, electronics, and appliances."
+    "A Black Friday ad can open with a creator showing the product, a try-on, a gift reveal or a clear product demo. Add the confirmed price and end date after download.",
+    "Prepare a short creator clip for a skincare set, jacket, fitness item or snack. Keep the product clear and leave prices, codes and dates editable so the offer can be checked before publishing."
   ],
-  "tip": "Leave space for your offer by describing an open area beside the product, like \"e-bike on the right, empty plaza and sky on the left.\"",
+  "tip": "Leave open space beside the product when you plan to add an offer. Keep the final price, code and end date as editable text.",
   "steps": [
     {
       "t": "Upload the featured sale item",
@@ -34,15 +34,15 @@
   "ideas": [
     {
       "t": "Cyber Monday follow-up",
-      "d": "Make a second clip with a night-city or neon look to keep the sale going into Monday."
+      "d": "Make a second product clip and update the offer after its terms are confirmed."
     },
     {
       "t": "Early-access teaser",
-      "d": "Share a 6-second clip with your email list a week ahead, with \"coming soon\" added in your editor."
+      "d": "Share a short creator review with your email list before the sale begins."
     },
     {
       "t": "Gift picks",
-      "d": "Run the same idea for smaller items like earbuds or smart lights, set on a festive gift table."
+      "d": "Show a skincare gift set or jewelry reveal, then link to the current offer page."
     }
   ],
   "maker": {
@@ -112,15 +112,15 @@
     "items": [
       {
         "t": "Create a visual hook",
-        "d": "A city glow, spotlight, or gift setting makes the product ready for a seasonal ad without embedding changing numbers."
+        "d": "A creator review, gift reveal, try-on or product demo gives the sale clip a clear opening hook."
       },
       {
         "t": "Fit common placements",
-        "d": "Use 9:16 for Stories and Reels, 1:1 for a feed, 16:9 for a wider placement, or 4:3 and 3:4 when the crop calls for it."
+        "d": "Use 9:16 for Stories and Reels, 1:1 for a feed or listing, or 16:9 for a wide placement."
       },
       {
         "t": "Show the spend upfront",
-        "d": "A six-, ten-, fifteen-, or thirty-second version costs 24, 40, 60, or 120 credits; the charge appears before generation."
+        "d": "Add the confirmed price, code, end date and stock wording after generation so the terms stay editable."
       }
     ]
   },
@@ -128,20 +128,20 @@
     "h2": "Black Friday scenes to describe",
     "items": [
       {
-        "t": "Neon electronics",
-        "d": "A gaming headset rests on a dark desk while red and blue light moves across the ear cups and cable."
+        "t": "Serum review",
+        "d": "An adult creator holds a skincare bottle toward the camera in a warm vanity scene."
       },
       {
-        "t": "Golden-hour bike",
-        "d": "A folding bike stands on an open city plaza with warm light and clear sky beside the frame for an offer."
+        "t": "Jacket try-on",
+        "d": "A creator shows the jacket cuff and fit in a mirror before the offer appears."
       },
       {
-        "t": "Appliance spotlight",
-        "d": "A countertop appliance turns slightly under one bright studio beam, ending on its control panel."
+        "t": "Protein bar reaction",
+        "d": "An athlete takes a bite and shows the bar and package to camera."
       },
       {
-        "t": "Gift pick",
-        "d": "Earbuds or a smart light sit on a wrapped gift table with one slow pass for a seasonal bundle."
+        "t": "Pet-cleaning demo",
+        "d": "A reusable lint tool clears pet hair from one strip of a sofa cushion."
       }
     ]
   },
@@ -176,50 +176,44 @@
     ]
   },
   "examples": {
-    "h2": "More Black Friday product scenes",
-    "lead": "Product and gift-set images can leave room for a seasonal offer.",
+    "h2": "More Black Friday ad examples",
+    "lead": "Creator hooks and product demonstrations for seasonal offers.",
     "groups": [
       {
-        "label": "Product photo examples",
+        "label": "Offer-ready product scenes",
         "items": [
           {
-            "ref": "n:guide:pv-mug-lift",
-            "title": "White ceramic mug lifted from a counter",
-            "kind": "photo",
-            "product": "ceramic mug"
+            "ref": "n:guide:q12-tpl-bf-strip-unboxing-r2",
+            "title": "Hands reveal a skincare gift set",
+            "kind": "scene",
+            "product": "skincare gift set"
           },
           {
-            "ref": "n:candle-pack",
-            "title": "White ceramic candle jar with its lid",
-            "kind": "photo",
-            "product": "ceramic candle"
-          },
-          {
-            "ref": "n:guide:plat-youtube-shorts-example-trail-square",
-            "title": "Coral trail shoes on a stone plinth",
-            "kind": "photo",
-            "product": "trail shoes"
+            "ref": "n:guide:q12-tpl-bf-strip-headphones-r2",
+            "title": "Creator reviews over-ear headphones",
+            "kind": "scene",
+            "product": "headphones"
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "Build a Black Friday product video around one clear item and leave open space for the offer. Add the price and end date as text after download.",
+    "overview": "A Black Friday ad opens with a product action or a creator showing the item. Add the confirmed offer, code, and end date after download so every detail stays accurate.",
     "strip": [
-      "n:gen2:unboxing-videos-c2",
-      "n:guide:tpl-bf-reuse-headset",
-      "n:gen2:occ-black-friday-c4",
-      "n:sunglasses-pack",
-      "n:guide:plat-youtube-shorts-m2-source",
-      "n:gen2:spokesperson-videos-g3"
+      "n:guide:q12-tpl-bf-demo-source-r3",
+      "n:guide:q12-tpl-bf-demo-output-02-r3",
+      "n:guide:q12-tpl-bf-strip-extra-01-r1",
+      "n:guide:q12-tpl-bf-strip-extra-02-r1",
+      "n:guide:q12-tpl-bf-strip-extra-03-r1",
+      "n:guide:q12-tpl-bf-strip-extra-04-r1"
     ],
     "steps": {
-      "source": "n:guide:tpl-bf-m2-source",
-      "result": "f:black-friday-countdown-v",
+      "source": "n:guide:q12-tpl-bf-demo-source-r3",
+      "result": "n:guide:q12-tpl-bf-demo-output-02-r3",
       "mode": "video",
       "length": 15,
-      "prompt": "Show this black folding bicycle fully open in a bright garage, with its folding hinge visible, in a vertical 9:16 frame.",
+      "prompt": "Use the uploaded photo as the exact product: a pale frosted cylindrical serum dropper bottle with a white cap and blank label. Preserve its shape, pale color, cap and label area. An adult creator holds the bottle beside her face and says, \"This serum is featured in this week’s offer.\" She turns it once and finishes with the full bottle facing the lens. Warm vanity light, natural skin texture. Chest-up front-facing handheld framing. Sound: her voice and a cap click; no music.",
       "options": [
         [
           "Size",
@@ -236,98 +230,97 @@
       ]
     },
     "picker": {
-      "title": "Choose a Black Friday product",
-      "lead": "Pick the product group that fits your offer.",
+      "title": "Choose a Black Friday ad format",
+      "lead": "Choose a creator hook, product demo, gift unboxing or try-on. Add the confirmed offer after download.",
       "chips": [
         {
-          "id": "featured",
-          "label": "Featured products"
+          "id": "creator-review",
+          "label": "Creator Reviews"
         },
         {
-          "id": "gifts",
-          "label": "Gift bundles"
+          "id": "gift-reveal",
+          "label": "Gift Reveals"
         },
         {
-          "id": "home",
-          "label": "Home and tech"
+          "id": "product-demo",
+          "label": "Product Demos"
         },
         {
-          "id": "apparel",
-          "label": "Apparel"
+          "id": "product-tryout",
+          "label": "Product Tryouts"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:tpl-bf-m6-square",
-          "label": "Folding electric bike with offer space",
+          "ref": "n:guide:q12-tpl-bf-card-01-serum-offer-review",
+          "label": "Talking-Head Offer: serum held to camera",
           "chips": [
-            "featured"
+            "creator-review"
           ],
-          "prompt": "Show the black folding electric bicycle clearly under warm garage light, leaving open space beside it for the offer.",
+          "prompt": "Photorealistic square Black Friday UGC ad still: an adult creator holds a plain serum bottle toward the camera in a warmly lit seasonal bathroom. Keep the full bottle and blank label sharp, chest-up framing. Freeze a confident offer introduction. No text, prices, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:ind-shoes-m2-result",
-          "label": "Brown boots for a fall offer",
+          "ref": "n:guide:q12-tpl-bf-card-02-jacket-try-on-review",
+          "label": "Talking-Head Offer: creator shows jacket",
           "chips": [
-            "featured"
+            "creator-review"
           ],
-          "prompt": "Show the full pair of brown boots clearly against a quiet outdoor setting.",
+          "prompt": "Photorealistic square fashion ad still: an adult creator wears a plain navy jacket and raises one cuff toward the camera, with the fit and fabric visible in a mirror. Warm indoor daylight, chest-up composition. Freeze a try-on review moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "f:unboxing-experience",
-          "label": "Product box opened on a table",
+          "ref": "n:guide:q12-tpl-bf-card-03-earring-gift-unboxing",
+          "label": "Jewelry Haul: earrings from gift box",
           "chips": [
-            "gifts"
+            "gift-reveal"
           ],
-          "prompt": "Show hands opening a plain product box on a wooden table, with clear space for the seasonal offer.",
+          "prompt": "Photorealistic square gift ad still: hands lift plain gold hoop earrings from a small open gift box lined with tissue. Warm window light, close overhead composition with the pair centered. Freeze the reveal moment. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:url-to-video-g4",
-          "label": "Ceramic teapot set ready to gift",
+          "ref": "n:guide:q12-tpl-bf-card-04-sneaker-try-on",
+          "label": "Try-On Offer: sneakers for weekend",
           "chips": [
-            "gifts"
+            "product-tryout"
           ],
-          "prompt": "Arrange the ceramic teapot and two cups together on a wooden tray.",
+          "prompt": "Photorealistic square sportswear ad still: an adult runner wears plain charcoal running sneakers with muted orange trim on a city sidewalk, both shoes fully visible. Natural morning light, low close framing. Freeze a planted step. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-drink-c2",
-          "label": "Cold brew poured over ice",
+          "ref": "n:guide:q12-tpl-bf-card-05-headphone-demo",
+          "label": "Product Demo: over-ear headphones fold",
           "chips": [
-            "home"
+            "product-demo"
           ],
-          "prompt": "Show cold brew pouring into a tumbler with ice, leaving clear space for the sale price.",
+          "prompt": "Photorealistic square tech-demo ad still: an adult creator folds one ear cup of plain over-ear headphones inward, with the full headband and hinge visible. Soft desk light, close natural framing. Freeze the fold demonstration. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:video-ads-g3",
-          "label": "Snack pouch beside a lunch box",
+          "ref": "n:guide:q12-tpl-bf-card-06-resistance-band-unboxing",
+          "label": "Gift Unboxing: resistance bands from box",
           "chips": [
-            "gifts",
-            "home"
+            "gift-reveal"
           ],
-          "prompt": "Show the plain snack pouch and lunch container together on a bright desk.",
+          "prompt": "Photorealistic square fitness gift ad still: hands lift muted resistance bands from a plain open gift box, with the full set centered above tissue paper. Warm window light, close overhead composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-black-friday-g1",
-          "label": "Leather duffel on a dark backdrop",
+          "ref": "n:guide:q12-tpl-bf-card-07-protein-first-bite",
+          "label": "First-Bite Reaction: protein bar offer",
           "chips": [
-            "apparel"
+            "product-tryout"
           ],
-          "prompt": "Show the unbranded leather duffel clearly with open space beside it for sale details.",
+          "prompt": "Photorealistic square UGC ad still: an adult athlete holds a protein bar after one bite and smiles toward the camera, with the bite and wrapper both visible. Bright gym lounge daylight, chest-up framing. Freeze the first-bite reaction. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-leather-sandals",
-          "label": "Leather sandals for an apparel offer",
+          "ref": "n:guide:q12-tpl-bf-card-08-pet-lint-demo",
+          "label": "Problem-to-Solution: lint tool clears pet hair",
           "chips": [
-            "apparel"
+            "product-demo"
           ],
-          "prompt": "Show both cognac sandals fully in frame, with the straps clearly visible.",
+          "prompt": "Photorealistic square pet-cleaning ad still: an adult owner presses a reusable lint tool to a pet-hair-covered sofa cushion, with the cleared strip visible beside the tool and a calm dog nearby. Natural living-room daylight, close framing. No text, logos, or watermark.",
           "kind": "photo"
         }
       ],
@@ -335,48 +328,48 @@
     },
     "uses": [
       {
-        "frame": "phone",
-        "ref": "f:tpl-bf-r4-m4",
-        "h": "Preview a folding bicycle before sale day",
-        "d": "Show the generic folding bicycle hinge clearly, then add the sale offer when the dates are confirmed."
+        "frame": "post",
+        "ref": "n:guide:q12-tpl-bf-strip-jacket-tryon-r2",
+        "h": "Preview a jacket offer before sale day",
+        "d": "Show the jacket fit clearly, then add the confirmed offer and dates in your editor."
       },
       {
-        "frame": "browser",
-        "ref": "n:gen2:tpl-bf-g3",
-        "h": "Carry the sale offer to a product page",
-        "d": "Keep the featured espresso machine visible when shoppers open the product page from the offer."
+        "frame": "post",
+        "ref": "n:guide:q12-tpl-bf-use-social-r1",
+        "h": "Share a serum offer in a social video",
+        "d": "Keep the serum bottle in view and add the confirmed offer details before posting."
       }
     ],
     "input": [
       {
-        "good": "g:ecommerce-main-image/hero-output",
-        "bad": "n:guide:tpl-bf-m5-blur",
-        "good_label": "Mug rim stays sharp",
-        "bad_label": "The mug rim blurs into the surface"
+        "good": "n:guide:q12-tpl-bf-input-good-r1",
+        "bad": "n:guide:q12-tpl-bf-demo-blur-r3",
+        "good_label": "Bottle shape and cap stay clear",
+        "bad_label": "Soft focus hides the bottle details"
       },
       {
-        "good": "g:ecommerce-main-image/example-06",
-        "bad": "n:guide:tpl-bf-m5-crop",
-        "good_label": "Travel mug fits in frame",
-        "bad_label": "The mug is clipped at the side"
+        "good": "n:guide:q12-tpl-bf-input-good-02-r1",
+        "bad": "n:guide:q12-tpl-bf-demo-crop-r3",
+        "good_label": "The full bottle fits in frame",
+        "bad_label": "The crop cuts off the bottle ends"
       }
     ],
     "outputs": [
       {
-        "ref": "f:black-friday-countdown",
+        "ref": "n:guide:q12-tpl-bf-demo-output-01-r3",
         "frame": "16:9",
         "length": 15,
-        "label": "15-second folding e-bike offer frame"
+        "label": "15-second serum offer creator clip"
       },
       {
-        "ref": "n:guide:b1-unboxing-videos-result",
+        "ref": "n:guide:q12-tpl-bf-demo-output-03-r1",
         "frame": "1:1",
         "length": 15,
-        "label": "15-second candle gift reveal"
+        "label": "15-second serum offer close-up"
       }
     ],
     "after": {
-      "ref": "n:guide:product-lunchbox-cut",
+      "ref": "n:guide:q12-tpl-bf-after-offer-r1",
       "zones": [
         "Discount",
         "End date"

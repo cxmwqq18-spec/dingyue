@@ -657,68 +657,68 @@
     ],
     "tpl-launch": [
       {
-        "ref": "f:ugc-ad-video",
-        "product": "smartwatch creator ad",
-        "title": "New smartwatch shown in a bright living room"
+        "ref": "n:guide:q12-tpl-launch-case-phone-case-r2",
+        "product": "phone case",
+        "title": "Plain phone case held up for a camera-opening check"
       },
       {
-        "ref": "n:gen2:home-g5",
-        "product": "running smartwatch",
-        "title": "Smartwatch shown ready for a morning run"
+        "ref": "n:guide:q12-tpl-launch-case-earbuds-r2",
+        "product": "wireless earbuds",
+        "title": "Creator reviews two round wireless earbuds"
       },
       {
-        "ref": "n:guide:white-background-kettle",
-        "product": "sea-glass kettle",
-        "title": "Sea-glass kettle on a bright kitchen counter"
+        "ref": "n:guide:q12-tpl-launch-case-sunscreen-r2",
+        "product": "sunscreen",
+        "title": "Creator applies sunscreen before work"
       },
       {
-        "ref": "n:guide:b1-unboxing-videos-result",
-        "product": "white candle jar",
-        "title": "Plain white candle jar with its matching lid"
+        "ref": "n:guide:q12-tpl-launch-case-jewelry-r2",
+        "product": "gold hoop earrings",
+        "title": "Hands reveal gold hoop earrings from a gift box"
       }
     ],
     "tpl-compare": [
       {
-        "ref": "g:feed-ad-still/example-04",
-        "product": "road running shoe",
-        "title": "Road shoe pictured beside a sunlit running path"
+        "ref": "n:guide:q12-tpl-compare-case-headphone-finishes-r1",
+        "product": "over-ear headphones",
+        "title": "Creator compares black and silver headphone finishes"
       },
       {
-        "ref": "g:feed-ad-still/example-05",
-        "product": "trail shoe tread",
-        "title": "Trail shoe outsole and tread captured in close detail"
+        "ref": "n:guide:q12-tpl-compare-case-legging-colors-r1",
+        "product": "athletic leggings",
+        "title": "Two legging colors shown in matched try-on views"
       },
       {
-        "ref": "g:feed-ad-still/hero-output",
-        "product": "training running shoe",
-        "title": "Training shoe centered in a clean feed composition"
+        "ref": "n:guide:q12-tpl-compare-case-harness-sizes-r1",
+        "product": "dog harnesses",
+        "title": "Dog owner compares two green harness sizes"
       },
       {
-        "ref": "n:gen2:tpl-compare-c4",
-        "product": "planters",
-        "title": "Small and large planters on the same windowsill"
+        "ref": "n:guide:q12-tpl-compare-case-phone-colors-r1",
+        "product": "phone cases",
+        "title": "Compare sage and blush phone cases with one round opening"
       }
     ],
     "tpl-bf": [
       {
-        "ref": "n:gen2:tpl-bf-c1",
-        "product": "robot vacuum",
-        "title": "Robot vacuum on a dark floor in dramatic light"
+        "ref": "n:guide:q12-tpl-bf-case-skincare-set-unboxing-r1",
+        "product": "skincare gift set",
+        "title": "Gift Unboxing: Hands Reveal a Skincare Set"
       },
       {
-        "ref": "n:gen2:tpl-bf-c2",
-        "product": "over-ear headphones",
-        "title": "Headphones under sharp deal-day lighting"
+        "ref": "n:guide:q12-tpl-bf-case-supplement-review-r1",
+        "product": "supplement tub",
+        "title": "Talking-Head Offer: Supplement Tub Held to Camera"
       },
       {
-        "ref": "n:gen2:tpl-bf-c3",
-        "product": "gift boxes",
-        "title": "Gift boxes stacked beside a laptop at night"
+        "ref": "n:guide:q12-tpl-bf-case-pet-lint-demo-r1",
+        "product": "pet lint tool",
+        "title": "Problem-to-Solution Demo: Pet Hair Lifted from a Sofa"
       },
       {
-        "ref": "n:protein-pack",
-        "product": "protein powder",
-        "title": "Plain protein tub staged for a seasonal offer"
+        "ref": "n:guide:q12-tpl-bf-case-trail-shoe-tryon-r1",
+        "product": "trail shoes",
+        "title": "Trail-Shoe Try-On: Runner Steps into View"
       }
     ],
     "tpl-limited-drop-alert-video": [

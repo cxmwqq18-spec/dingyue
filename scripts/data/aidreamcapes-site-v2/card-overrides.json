@@ -441,9 +441,17 @@
   },
   "tpl-launch": {
     "images": {
+      "howto": {
+        "ref": "f:how-to-video",
+        "alt": "Portable garment steamer next to a folded blue shirt on a wooden table"
+      },
+      "film": {
+        "ref": "f:cinematic-video",
+        "alt": "Dark compact speaker lit by soft window light"
+      },
       "outfit": {
-        "ref": "g:fashion-editorial/example-08",
-        "alt": "Plain sand-colored suit shown full length in a light studio."
+        "ref": "f:fashion-try-on-reel",
+        "alt": "A model puts on a beige overshirt, turns, and examines its fabric."
       }
     }
   },
@@ -466,16 +474,16 @@
   "tpl-bf": {
     "images": {
       "limited-drop-alert-video": {
-        "ref": "n:gen2:occ-black-friday-c3",
-        "alt": "Air fryer on a sleek counter in moody evening light."
+        "ref": "f:limited-drop-alert",
+        "alt": "Hands tie coral trail shoes, show the sole, and step along a mountain path."
       },
       "product-feature-callout-video": {
-        "ref": "n:guide:black-friday-m2-source-use",
-        "alt": "Leather duffel filling more of the frame on a dark backdrop."
+        "ref": "f:feature-callout",
+        "alt": "A hand presses a white foaming cleanser pump and spreads foam while washing a face."
       },
       "carousel-video-ad": {
-        "ref": "n:gen2:tpl-bf-g1",
-        "alt": "Unbranded gaming monitor and stand on a dark desk with open space for an offer."
+        "ref": "f:carousel-storytelling",
+        "alt": "Hands open a black commuter backpack in a cafe, show its compartments, and put it on."
       }
     }
   },
@@ -734,13 +742,18 @@
     }
   },
   "tpl-compare": {
-    "swap": {
-      "howto": "ba"
-    },
     "images": {
       "ba": {
-        "ref": "f:before-after-showcases-t10",
-        "alt": "Person fitting a wooden shelf organizer into a wardrobe"
+        "ref": "n:guide:q3-before-after-videos-hero-pet-hair",
+        "alt": "An adult creator presents a pet-hair roller beside a partly cleared sofa."
+      },
+      "unbox": {
+        "ref": "n:guide:q3-unboxing-videos-hero-serum-box",
+        "alt": "Adult hands reveal an unmarked serum bottle from a tissue-lined box."
+      },
+      "demo": {
+        "ref": "n:guide:q3-product-videos-hero-serum",
+        "alt": "An adult creator presents an unmarked amber serum bottle in soft bathroom light."
       }
     }
   },

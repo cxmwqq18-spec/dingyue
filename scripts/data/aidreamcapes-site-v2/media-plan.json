@@ -392,30 +392,41 @@
     "tpl-launch": {
       "hero": {
         "kind": "image",
-        "image": "f:promo-video"
+        "image": "n:guide:q12-tpl-launch-demo-source-r3"
       },
-      "og": "f:promo-video",
+      "og": "n:guide:q12-tpl-launch-demo-source-r3",
       "gallery": [
-        "f:promo-video-t03",
-        "f:promo-video-t05",
-        "f:promo-video-t11",
-        "f:promo-video-t14"
+        "n:guide:q12-tpl-launch-card-01-serum-review",
+        "n:guide:q12-tpl-launch-card-04-protein-first-bite",
+        "n:guide:q12-tpl-launch-card-07-sunscreen-grwm",
+        "n:guide:q12-tpl-launch-card-08-earbuds-review"
       ]
     },
     "tpl-compare": {
       "hero": {
         "kind": "image",
-        "image": "f:competitor-comparison"
+        "image": "n:guide:q12-tpl-compare-demo-size-source-r4"
       },
-      "og": "f:competitor-comparison"
+      "og": "n:guide:q12-tpl-compare-demo-size-source-r4",
+      "gallery": [
+        "n:guide:q12-tpl-compare-card-01-serum-review",
+        "n:guide:q12-tpl-compare-card-02-headphone-review",
+        "n:guide:q12-tpl-compare-card-06-pet-harness-sizes",
+        "n:guide:q12-tpl-compare-card-08-package-refresh"
+      ]
     },
     "tpl-bf": {
       "hero": {
         "kind": "image",
-        "image": "f:black-friday-countdown"
+        "image": "n:guide:q12-tpl-bf-card-01-serum-offer-review"
       },
-      "og": "f:black-friday-countdown",
-      "gallery": []
+      "og": "n:guide:q12-tpl-bf-card-01-serum-offer-review",
+      "gallery": [
+        "n:guide:q12-tpl-bf-card-03-earring-gift-unboxing",
+        "n:guide:q12-tpl-bf-card-04-sneaker-try-on",
+        "n:guide:q12-tpl-bf-card-05-headphone-demo",
+        "n:guide:q12-tpl-bf-card-07-protein-first-bite"
+      ]
     },
     "home": {
       "hero": {
@@ -650,9 +661,9 @@
     "guide-product-photo-tips": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-guide-photo-tips-boots-detail"
+        "image": "n:guide:q12-guide-product-photo-tips-shoe"
       },
-      "og": "n:guide:k8-guide-photo-tips-boots-detail"
+      "og": "n:guide:q12-guide-product-photo-tips-shoe"
     },
     "guide-white-background-amazon": {
       "hero": {
@@ -664,23 +675,23 @@
     "guide-first-tiktok-video-ad": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-guide-tiktok-hook"
+        "image": "n:guide:q12-guide-first-tiktok-sunscreen"
       },
-      "og": "n:guide:k8-guide-tiktok-hook"
+      "og": "n:guide:q12-guide-first-tiktok-sunscreen"
     },
     "guide-ad-sizes-by-platform": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-guide-ad-sizes-story-ad-vertical-example-05"
+        "image": "n:guide:q12-guide-ad-sizes-sunscreen"
       },
-      "og": "n:guide:k8-guide-ad-sizes-story-ad-vertical-example-05"
+      "og": "n:guide:q12-guide-ad-sizes-sunscreen"
     },
     "guide-testing-ad-versions": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-guide-testing-colorway-variations-example-02"
+        "image": "n:guide:q12-guide-testing-sneaker-split"
       },
-      "og": "n:guide:k8-guide-testing-colorway-variations-example-02"
+      "og": "n:guide:q12-guide-testing-sneaker-split"
     },
     "blog-ai-product-photography-guide": {
       "hero": {
