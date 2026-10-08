@@ -107,13 +107,13 @@
             "product": "folding camp chair"
           },
           {
-            "ref": "n:gen2:product-videos-g2",
+            "ref": "n:guide:k1-product-videos-example-lamp",
             "title": "Desk lamp switched on in a dark room",
             "kind": "scene",
             "product": "desk lamp"
           },
           {
-            "ref": "n:gen2:product-videos-g3",
+            "ref": "n:guide:k1-product-videos-example-cutlery",
             "title": "Cutlery tray filled one slot at a time",
             "kind": "scene",
             "product": "cutlery drawer organizer"
@@ -130,7 +130,7 @@
             "product": "collapsible water bottle"
           },
           {
-            "ref": "n:gen2:product-videos-g5",
+            "ref": "n:guide:k1-product-videos-example-frother",
             "title": "Milk frother foaming milk in a glass cup",
             "kind": "scene",
             "product": "milk frother"
@@ -141,17 +141,17 @@
   },
   "visual": {
     "strip": [
-      "f:discount-free-shipping",
-      "n:gen2:plat-amazon-g2",
-      "f:tiktok-reels-shorts-v",
-      "n:gen2:plat-youtube-shorts-c4",
-      "n:gen2:ind-shoes-g1",
-      "f:url-to-ad-a-v"
+      "f:k1-product-videos-strip-shipping",
+      "n:guide:k1-product-videos-strip-lunchbox-latch",
+      "f:k1-product-videos-strip-running-shoes",
+      "n:guide:k1-product-videos-strip-bike-pump",
+      "n:guide:k1-product-videos-strip-trail-shoe",
+      "f:k1-product-videos-strip-mug-demo"
     ],
     "steps": {
       "source": "n:gen2:plat-amazon-g2",
       "sourceAlt": "Ceramic mug held in one hand to show its size.",
-      "result": "n:guide:pv-mug-lift",
+      "result": "n:guide:k1-product-videos-step-mug-lift",
       "mode": "video",
       "length": 10,
       "prompt": "Lift the mug off the counter, take a slow sip, then set it back down with the handle facing the camera."
@@ -188,7 +188,7 @@
           "kind": "video"
         },
         {
-          "ref": "f:black-friday-countdown-v",
+          "ref": "n:guide:k1-product-videos-picker-folding-bike",
           "label": "Folding bike opened",
           "chips": [
             "outdoor"
@@ -197,7 +197,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:ind-home-living-19",
+          "ref": "n:guide:k1-product-videos-picker-lamp",
           "label": "Warm lamp on a desk",
           "chips": [
             "home"
@@ -206,7 +206,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-home-g1",
+          "ref": "n:guide:k1-product-videos-picker-drawer",
           "label": "Drawer trays filled",
           "chips": [
             "home"
@@ -215,7 +215,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:ind-electronics-g3",
+          "ref": "n:guide:k1-product-videos-picker-charger",
           "label": "Charger packed in pouch",
           "chips": [
             "travel"
@@ -224,7 +224,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c1",
+          "ref": "n:guide:k1-product-videos-picker-bottle-cap",
           "label": "Bottle cap opens",
           "chips": [
             "kitchen"
@@ -233,7 +233,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c2",
+          "ref": "n:guide:k1-product-videos-picker-laptop-sleeve",
           "label": "Laptop sleeve opened",
           "chips": [
             "travel"
@@ -242,7 +242,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c4",
+          "ref": "n:guide:k1-product-videos-picker-umbrella",
           "label": "Compact umbrella opened",
           "chips": [
             "outdoor"
@@ -256,8 +256,8 @@
     "uses": [
       {
         "frame": "split",
-        "ref": "n:gen2:plat-facebook-g3",
-        "ref_b": "n:gen2:plat-facebook-g4",
+        "ref": "n:guide:k1-product-videos-use-bottle-white",
+        "ref_b": "n:guide:k1-product-videos-use-bottle-desk",
         "h": "Test a clean shot against an in-use shot",
         "d": "Run the bottle on white in one ad and on a desk in the other. Keep the one that gets more clicks."
       },
@@ -270,14 +270,14 @@
     ],
     "input": [
       {
-        "good": "n:gen2:plat-facebook-g1",
+        "good": "n:guide:k1-product-videos-input-lunchbox",
         "bad": "n:guide:product-lunchbox-cut",
         "good_label": "Whole lid and latch in frame",
         "bad_label": "Lid and latch cut off at the edge"
       },
       {
-        "good": "n:gen2:ind-food-drinks-c4",
-        "bad": "n:guide:product-tea-dark",
+        "good": "n:guide:k1-product-videos-input-tea",
+        "bad": "n:guide:k1-product-videos-input-tea-bad-dark",
         "good_label": "Pouch front, evenly lit",
         "bad_label": "Low light hides the pouch front"
       }
@@ -297,7 +297,7 @@
       }
     ],
     "after": {
-      "ref": "n:gen2:ind-electronics-g1",
+      "ref": "n:guide:k1-product-videos-after-speaker",
       "zones": [
         "Your feature",
         "Your product name"

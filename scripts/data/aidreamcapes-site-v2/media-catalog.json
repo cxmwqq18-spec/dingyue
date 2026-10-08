@@ -3393,6 +3393,15 @@
       "uploadDate": "2026-10-06T00:00:00Z",
       "name": "Example clip: Hands fill a portable steam iron, switch it on, and press a blue shirt.",
       "description": "An example clip showing hands fill a portable steam iron, switch it on, and press a blue shirt. AIVideosUGC does not add voiceover, music, or captions."
+    },
+    "k1-unboxing-videos-hero": {
+      "src": "/assets/sites/site_aidreamcapes/site-v2/clips/unboxing-experience.mp4",
+      "w": 1280,
+      "h": 720,
+      "duration": 15,
+      "uploadDate": "2026-10-06T00:00:00Z",
+      "name": "Example clip: Over-ear headphones removed from simple packaging.",
+      "description": "A short product unboxing clip showing over-ear headphones removed from their packaging."
     }
   },
   "loop": {
@@ -3863,6 +3872,48 @@
       "alt": "Hands lift a sage-green bottle and pour water from it.",
       "variants": [
         540
+      ],
+      "clipPoster": true
+    },
+    "k1-unboxing-videos-hero": {
+      "w": 1280,
+      "h": 720,
+      "alt": "Open kraft headphone box with over-ear headphones on a light wood desk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "clipPoster": true
+    },
+    "k1-product-videos-strip-shipping": {
+      "w": 1280,
+      "h": 720,
+      "alt": "Hands weigh coffee beans and pour coffee beside a small blank shipping box.",
+      "variants": [
+        640,
+        1280
+      ],
+      "clipPoster": true
+    },
+    "k1-product-videos-strip-running-shoes": {
+      "w": 540,
+      "h": 960,
+      "alt": "Hands tie charcoal mesh trail-running shoes before a run outdoors.",
+      "variants": [
+        540,
+        640,
+        1280
+      ],
+      "clipPoster": true
+    },
+    "k1-product-videos-strip-mug-demo": {
+      "w": 540,
+      "h": 960,
+      "alt": "Hand lifts a plain beige ceramic mug from a counter for a short product demo.",
+      "variants": [
+        540,
+        640,
+        1280
       ],
       "clipPoster": true
     }
@@ -17427,6 +17478,716 @@
         "w": 1024,
         "h": 1024,
         "alt": "Round analog watch on a dark stand softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-example-diffuser": {
+        "file": "k1-unboxing-example-diffuser",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open kraft mailer with tissue folded around a plain ceramic reed diffuser.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-example-skincare-minis": {
+        "file": "k1-unboxing-example-skincare-minis",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ribbon gift box open with three skincare bottles inside.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-example-tea-set": {
+        "file": "k1-unboxing-example-tea-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Subscription box with a tea tin, honey jar and biscuits arranged beside it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-example-ring-box": {
+        "file": "k1-unboxing-example-ring-box",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small jewelry box opened to a simple gold ring on velvet.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-example-headphones": {
+        "file": "k1-unboxing-example-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Over-ear headphones lifted from a fitted foam insert.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-step-source-candle": {
+        "file": "k1-unboxing-step-source-candle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic candle jar standing alone on a pale neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-step-result-candle": {
+        "file": "k1-unboxing-step-result-candle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal a plain white candle jar from a kraft carton and cream tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-strip-coffee-counter": {
+        "file": "k1-unboxing-strip-coffee-counter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank coffee pouch standing on a cafe counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-strip-coffee-shelf": {
+        "file": "k1-unboxing-strip-coffee-shelf",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank coffee pouch displayed on a bright grocery shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-strip-skincare-gift": {
+        "file": "k1-unboxing-strip-skincare-gift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded skincare gift set on a softly styled winter dinner table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-strip-candle-brunch": {
+        "file": "k1-unboxing-strip-candle-brunch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain pillar candle on a bright spring brunch table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-camping-kit": {
+        "file": "k1-unboxing-picker-camping-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Camping breakfast kit with enamel mug, coffee pouch, spork and small pan revealed in a box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-pet-kit": {
+        "file": "k1-unboxing-picker-pet-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pet grooming kit with brush, folded towel and plain shampoo bottle revealed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-tea-set": {
+        "file": "k1-unboxing-picker-tea-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea gift set opened with a plain tin, infuser and cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-scarf": {
+        "file": "k1-unboxing-picker-scarf",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Soft wool scarf lifted from a plain mailer onto a bed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-headphones": {
+        "file": "k1-unboxing-picker-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte-black over-ear headphones lifted from an open kraft box with pale tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-speaker": {
+        "file": "k1-unboxing-picker-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain rectangular tabletop speaker beside its open box and coiled cable.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-packages": {
+        "file": "k1-unboxing-picker-packages",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank carton, soft pouch and plain bottle arranged in a row.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-picker-mugs": {
+        "file": "k1-unboxing-picker-mugs",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Handmade ceramic mugs lined up on a drying rack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-use-launch-mug": {
+        "file": "k1-unboxing-use-launch-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain ceramic mug beside a gift box holding a matching mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-use-product-page-boxes": {
+        "file": "k1-unboxing-use-product-page-boxes",
+        "w": 1536,
+        "h": 864,
+        "alt": "Plain shipping boxes and a small product box arranged by a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-input-candle-shelf": {
+        "file": "k1-unboxing-input-candle-shelf",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full plain candle jar on a styled shelf with soft even light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-input-coffee-kit": {
+        "file": "k1-unboxing-input-coffee-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee starter kit with beans, hand grinder and mug arranged clearly.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-output-wallet": {
+        "file": "k1-unboxing-output-wallet",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather wallet presented above an open kraft gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-output-tablet-stand": {
+        "file": "k1-unboxing-output-tablet-stand",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain adjustable tablet stand holding a dark-screen tablet on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-after-fireplace-gift": {
+        "file": "k1-unboxing-after-fireplace-gift",
+        "w": 1536,
+        "h": 864,
+        "alt": "Blank wrapped gift box with a ribbon beside a warm fireplace.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-template-creator-bottle": {
+        "file": "k1-unboxing-template-creator-bottle",
+        "w": 1536,
+        "h": 864,
+        "alt": "Plain clear bottle with a sage lid beside a rolled teal exercise mat near a window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-template-unbox-bottle": {
+        "file": "k1-unboxing-template-unbox-bottle",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hands lift a plain bottle from an open gift box with tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-template-demo-espresso": {
+        "file": "k1-unboxing-template-demo-espresso",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hand places a small glass cup beneath a compact black espresso machine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-template-film-speaker": {
+        "file": "k1-unboxing-template-film-speaker",
+        "w": 1536,
+        "h": 864,
+        "alt": "Plain rectangular black speaker on a console beside a large window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-case-mug-set": {
+        "file": "k1-unboxing-case-mug-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift a coordinated ceramic mug set from a gift box with paper filling.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-case-candle": {
+        "file": "k1-unboxing-case-candle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open kraft mailer reveals a cylindrical candle wrapped in tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-case-watch": {
+        "file": "k1-unboxing-case-watch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple round analog wristwatch in an open box on a walnut desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-gallery-shipping-box": {
+        "file": "k1-unboxing-gallery-shipping-box",
+        "w": 1536,
+        "h": 864,
+        "alt": "Cardboard shipping box beside an open gray product box on a wooden table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-gallery-headphones-box": {
+        "file": "k1-unboxing-gallery-headphones-box",
+        "w": 1536,
+        "h": 864,
+        "alt": "Plain over-ear headphones arranged inside an open gray box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-gallery-headphones-hands": {
+        "file": "k1-unboxing-gallery-headphones-hands",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hands hold plain over-ear headphones above an open box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-gallery-box-reveal-t13": {
+        "file": "k1-unboxing-gallery-box-reveal-t13",
+        "w": 1536,
+        "h": 864,
+        "alt": "Open kraft box with pale tissue and a simple white home accessory partly revealed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-input-candle-bad-crop": {
+        "file": "k1-unboxing-input-candle-bad-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain candle jar with its upper edge cropped from a pale tabletop photograph.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-input-coffee-bad-dark": {
+        "file": "k1-unboxing-input-coffee-bad-dark",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch, hand grinder and ceramic cup in dim light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-example-lamp": {
+        "file": "k1-product-videos-example-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple desk lamp switched on, casting a warm pool of light on a dark desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-example-cutlery": {
+        "file": "k1-product-videos-example-cutlery",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Top-down view of a divided drawer organizer being filled with cutlery.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-example-frother": {
+        "file": "k1-product-videos-example-frother",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain handheld milk frother creating foam in a clear glass cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-strip-bike-pump": {
+        "file": "k1-product-videos-strip-bike-pump",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact generic bicycle tire pump attached to a wheel outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-strip-trail-shoe": {
+        "file": "k1-product-videos-strip-trail-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal mesh trail shoe shown clearly from the front three-quarter angle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-step-mug-lift": {
+        "file": "k1-product-videos-step-mug-lift",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hand lifts a plain white ceramic mug of coffee from a wooden counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-picker-folding-bike": {
+        "file": "k1-product-videos-picker-folding-bike",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands unfold a plain dark folding bicycle and inspect its central hinge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-picker-lamp": {
+        "file": "k1-product-videos-picker-lamp",
+        "w": 1536,
+        "h": 864,
+        "alt": "Warm oak desk lamp turns on beside a book and a plain ceramic mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-picker-drawer": {
+        "file": "k1-product-videos-picker-drawer",
+        "w": 1536,
+        "h": 864,
+        "alt": "Divided drawer trays slide into a drawer and hold a few everyday items.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-picker-charger": {
+        "file": "k1-product-videos-picker-charger",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain compact charger and coiled cable packed inside a fabric travel pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-picker-bottle-cap": {
+        "file": "k1-product-videos-picker-bottle-cap",
+        "w": 1536,
+        "h": 864,
+        "alt": "Thumb presses a plain flip-top bottle cap and opens it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-picker-laptop-sleeve": {
+        "file": "k1-product-videos-picker-laptop-sleeve",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hands open a padded laptop sleeve to show its plain interior.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-picker-umbrella": {
+        "file": "k1-product-videos-picker-umbrella",
+        "w": 1536,
+        "h": 864,
+        "alt": "Compact plain umbrella opens fully on a rainy sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-use-bottle-desk": {
+        "file": "k1-product-videos-use-bottle-desk",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The brushed steel bottle stands on a sunny desk beside a closed notebook.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-input-lunchbox": {
+        "file": "k1-product-videos-input-lunchbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain lunch box open on a kitchen counter with the complete lid and latch visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-input-tea": {
+        "file": "k1-product-videos-input-tea",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank loose-leaf tea pouch beside a steaming cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-after-speaker": {
+        "file": "k1-product-videos-after-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain compact rectangular speaker sits beside its open kraft box and cable.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-template-coffee-maker": {
+        "file": "k1-product-videos-template-coffee-maker",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hands demonstrate a compact coffee maker in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-template-citrus-drink": {
+        "file": "k1-product-videos-template-citrus-drink",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain glass bottle of golden citrus drink beside iced citrus water on a sunny counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-template-table-lamp": {
+        "file": "k1-product-videos-template-table-lamp",
+        "w": 1536,
+        "h": 864,
+        "alt": "Plain white portable table lamp glows on a desk beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-case-vacuum": {
+        "file": "k1-product-videos-case-vacuum",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cordless handheld vacuum lifts crumbs from a dark fabric sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-case-kettle": {
+        "file": "k1-product-videos-case-kettle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte gooseneck kettle pours a steady stream into a ceramic mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-hero-espresso": {
+        "file": "k1-product-videos-hero-espresso",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact geometric espresso machine with a clear water tank on a tidy kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-gallery-espresso-cup": {
+        "file": "k1-product-videos-gallery-espresso-cup",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hand places a small clear glass cup under a compact black espresso maker.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-gallery-espresso-shot": {
+        "file": "k1-product-videos-gallery-espresso-shot",
+        "w": 1536,
+        "h": 864,
+        "alt": "Fresh espresso in a small glass beside a plain jar of coffee beans.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-use-bottle-white": {
+        "file": "k1-product-videos-use-bottle-white",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain brushed steel insulated bottle standing against a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-template-howto-steamer": {
+        "file": "k1-product-videos-template-howto-steamer",
+        "w": 1536,
+        "h": 864,
+        "alt": "Plain handheld garment steamer beside a neutral linen shirt on a rail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-gallery-feature-action-t06": {
+        "file": "k1-product-videos-gallery-feature-action-t06",
+        "w": 1536,
+        "h": 864,
+        "alt": "Compact countertop coffee maker pouring coffee into a white ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-input-tea-bad-dark": {
+        "file": "k1-product-videos-input-tea-bad-dark",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea pouch and cup in dim light, with their shapes still visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-strip-dripper-box": {
+        "file": "k1-unboxing-strip-dripper-box",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte cream ceramic pour-over dripper nestled in an open kraft box with ivory tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-unboxing-strip-compact-mirror": {
+        "file": "k1-unboxing-strip-compact-mirror",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain round brass compact mirror nestled in a navy box with cream tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k1-product-videos-strip-lunchbox-latch": {
+        "file": "k1-product-videos-strip-lunchbox-latch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand presses the side latch of a clear glass lunch container with a plain white lid.",
         "variants": [
           640,
           1280

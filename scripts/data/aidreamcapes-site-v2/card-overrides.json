@@ -176,12 +176,20 @@
   "unboxing-videos": {
     "images": {
       "creator": {
-        "ref": "g:ugc-still-ad/example-07",
-        "alt": "Clear bottle with a sage lid stands beside a rolled teal mat near a window."
+        "ref": "n:guide:k1-unboxing-template-creator-bottle",
+        "alt": "Plain clear bottle with a sage lid beside a rolled teal exercise mat near a window."
       },
       "unbox": {
-        "ref": "n:gen2:occ-holidays-g2",
-        "alt": "Gift unwrapped to a bottle held in both hands."
+        "ref": "n:guide:k1-unboxing-template-unbox-bottle",
+        "alt": "Hands lift a plain bottle from an open gift box with tissue."
+      },
+      "demo": {
+        "ref": "n:guide:k1-unboxing-template-demo-espresso",
+        "alt": "Hand places a small glass cup beneath a compact black espresso machine."
+      },
+      "film": {
+        "ref": "n:guide:k1-unboxing-template-film-speaker",
+        "alt": "Plain rectangular black speaker on a console beside a large window."
       }
     }
   },
@@ -545,6 +553,26 @@
       "demo": {
         "ref": "f:k4-plat-youtube-shorts-30-template-demo",
         "alt": "Hand placing a small glass cup under a compact generic espresso maker on a kitchen counter."
+      }
+    }
+  },
+  "product-videos": {
+    "images": {
+      "demo": {
+        "ref": "n:guide:k1-product-videos-template-coffee-maker",
+        "alt": "Hands demonstrate a compact unbranded coffee maker in a bright kitchen."
+      },
+      "howto": {
+        "ref": "n:guide:k1-product-videos-template-howto-steamer",
+        "alt": "Plain handheld garment steamer beside a neutral linen shirt on a rail."
+      },
+      "drink": {
+        "ref": "n:guide:k1-product-videos-template-citrus-drink",
+        "alt": "Plain glass bottle of golden citrus drink beside iced citrus water on a sunny counter."
+      },
+      "launch": {
+        "ref": "n:guide:k1-product-videos-template-table-lamp",
+        "alt": "Plain white portable table lamp glows on a desk beside a closed laptop."
       }
     }
   }

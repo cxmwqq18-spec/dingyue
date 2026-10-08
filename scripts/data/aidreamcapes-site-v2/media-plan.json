@@ -282,26 +282,26 @@
     "unboxing-videos": {
       "hero": {
         "kind": "video",
-        "clip": "unboxing-experience"
+        "clip": "k1-unboxing-videos-hero"
       },
-      "og": "f:unboxing-experience",
+      "og": "f:k1-unboxing-videos-hero",
       "gallery": [
-        "f:unboxing-experience-t05",
-        "f:unboxing-experience-t08",
-        "f:unboxing-experience-t10",
-        "f:unboxing-experience-t13"
+        "n:guide:k1-unboxing-gallery-shipping-box",
+        "n:guide:k1-unboxing-gallery-headphones-box",
+        "n:guide:k1-unboxing-gallery-headphones-hands",
+        "n:guide:k1-unboxing-gallery-box-reveal-t13"
       ]
     },
     "product-videos": {
       "hero": {
         "kind": "image",
-        "image": "f:product-video"
+        "image": "n:guide:k1-product-videos-hero-espresso"
       },
-      "og": "f:product-video",
+      "og": "n:guide:k1-product-videos-hero-espresso",
       "gallery": [
-        "f:product-video-t03",
-        "f:product-video-t06",
-        "f:product-video-t09"
+        "n:guide:k1-product-videos-gallery-espresso-cup",
+        "n:guide:k1-product-videos-gallery-feature-action-t06",
+        "n:guide:k1-product-videos-gallery-espresso-shot"
       ]
     },
     "before-after-videos": {

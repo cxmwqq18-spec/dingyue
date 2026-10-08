@@ -70,19 +70,19 @@
         "label": "Box and reveal ideas",
         "items": [
           {
-            "ref": "n:gen2:unboxing-videos-g1",
+            "ref": "n:guide:k1-unboxing-example-diffuser",
             "title": "Rigid mailer opened to a ceramic reed diffuser",
             "kind": "scene",
             "product": "ceramic reed diffuser"
           },
           {
-            "ref": "n:gen2:unboxing-videos-g2",
+            "ref": "n:guide:k1-unboxing-example-skincare-minis",
             "title": "Ribbon gift box opened to three skincare minis",
             "kind": "scene",
             "product": "skincare minis"
           },
           {
-            "ref": "n:gen2:unboxing-videos-g3",
+            "ref": "n:guide:k1-unboxing-example-tea-set",
             "title": "Subscription box with three items laid out",
             "kind": "scene",
             "product": "subscription box"
@@ -93,13 +93,13 @@
         "label": "Small-box reveals",
         "items": [
           {
-            "ref": "n:gen2:unboxing-videos-g4",
+            "ref": "n:guide:k1-unboxing-example-ring-box",
             "title": "Jewelry box opened to a ring on velvet",
             "kind": "scene",
             "product": "jewelry box"
           },
           {
-            "ref": "n:gen2:unboxing-videos-g5",
+            "ref": "n:guide:k1-unboxing-example-headphones",
             "title": "Headphones lifted from a fitted foam insert",
             "kind": "scene",
             "product": "headphones"
@@ -110,17 +110,17 @@
   },
   "visual": {
     "strip": [
-      "n:guide:b1-unboxing-videos-source",
-      "n:guide:b1-unboxing-videos-result",
-      "n:gen2:tpl-pack-g1",
-      "n:gen2:tpl-pack-g2",
-      "n:gen2:occ-holidays-g1",
-      "n:gen2:occ-holidays-g3"
+      "n:guide:k1-unboxing-strip-dripper-box",
+      "n:guide:k1-unboxing-strip-compact-mirror",
+      "n:guide:k1-unboxing-strip-coffee-counter",
+      "n:guide:k1-unboxing-strip-coffee-shelf",
+      "n:guide:k1-unboxing-strip-skincare-gift",
+      "n:guide:k1-unboxing-strip-candle-brunch"
     ],
     "steps": {
-      "source": "n:guide:b1-unboxing-videos-source",
+      "source": "n:guide:k1-unboxing-step-source-candle",
       "sourceAlt": "Plain white ceramic candle jar standing by itself on a neutral surface.",
-      "result": "n:guide:b1-unboxing-videos-result",
+      "result": "n:guide:k1-unboxing-step-result-candle",
       "mode": "video",
       "length": 10,
       "prompt": "Open a kraft box, fold back cream tissue paper and lift out this plain white candle jar."
@@ -148,7 +148,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-box-g1",
+          "ref": "n:guide:k1-unboxing-picker-camping-kit",
           "label": "Camping breakfast kit",
           "chips": [
             "gift",
@@ -158,7 +158,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-box-g2",
+          "ref": "n:guide:k1-unboxing-picker-pet-kit",
           "label": "Pet grooming kit revealed",
           "chips": [
             "gift",
@@ -168,7 +168,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-box-g3",
+          "ref": "n:guide:k1-unboxing-picker-tea-set",
           "label": "Tea gift set opened",
           "chips": [
             "gift",
@@ -178,7 +178,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-ugc-g2",
+          "ref": "n:guide:k1-unboxing-picker-scarf",
           "label": "Scarf pulled from mailer",
           "chips": [
             "gift",
@@ -188,17 +188,17 @@
           "kind": "video"
         },
         {
-      "ref": "n:guide:b1-unboxing-card",
-      "label": "Headphones lifted from a box",
-      "chips": [
-        "gift",
-        "small"
-      ],
-      "prompt": "Lift the headphones from the open box, then turn them to show both ear cups.",
+          "ref": "n:guide:k1-unboxing-picker-headphones",
+          "label": "Headphones lifted from a box",
+          "chips": [
+            "gift",
+            "small"
+          ],
+          "prompt": "Lift the headphones from the open box, then turn them to show both ear cups.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:ind-electronics-g1",
+          "ref": "n:guide:k1-unboxing-picker-speaker",
           "label": "Speaker beside open box",
           "chips": [
             "small",
@@ -208,7 +208,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-pack-g3",
+          "ref": "n:guide:k1-unboxing-picker-packages",
           "label": "Three package types together",
           "chips": [
             "small",
@@ -218,7 +218,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-limited-drop-alert-video-g3",
+          "ref": "n:guide:k1-unboxing-picker-mugs",
           "label": "Handmade mugs unboxed",
           "chips": [
             "gift",
@@ -233,47 +233,47 @@
     "uses": [
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-compare-g2",
+        "ref": "n:guide:k1-unboxing-use-launch-mug",
         "h": "Launch post",
         "d": "Show the box and the product together before launch day."
       },
       {
         "frame": "browser",
-        "ref": "n:gen2:tpl-pack-c4",
+        "ref": "n:guide:k1-unboxing-use-product-page-boxes",
         "h": "Product page",
         "d": "Shoppers see what arrives at their door, box and all."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-launch-c4",
-        "bad": "n:guide:b1-unboxing-videos-bad-crop",
+        "good": "n:guide:k1-unboxing-input-candle-shelf",
+        "bad": "n:guide:k1-unboxing-input-candle-bad-crop",
         "good_label": "Full candle jar in even light",
         "bad_label": "Top of candle jar cut by frame"
       },
       {
-        "good": "n:gen2:tpl-box-c2",
-        "bad": "n:guide:b1-unboxing-videos-bad-dark",
+        "good": "n:guide:k1-unboxing-input-coffee-kit",
+        "bad": "n:guide:k1-unboxing-input-coffee-bad-dark",
         "good_label": "Kit parts visible with clear spacing",
         "bad_label": "Low light hides items in the set"
       }
     ],
     "outputs": [
       {
-      "ref": "n:guide:b1-unboxing-output",
-      "frame": "1:1",
-      "label": "Wallet lifted from a gift box",
+        "ref": "n:guide:k1-unboxing-output-wallet",
+        "frame": "1:1",
+        "label": "Wallet lifted from a gift box",
         "length": 10
       },
       {
-        "ref": "n:gen2:ind-electronics-g2",
+        "ref": "n:guide:k1-unboxing-output-tablet-stand",
         "frame": "1:1",
         "label": "Tablet stand beside a desk",
         "length": 10
       }
     ],
     "after": {
-      "ref": "n:gen2:occ-holidays-c2",
+      "ref": "n:guide:k1-unboxing-after-fireplace-gift",
       "zones": [
         "Product name",
         "Caption"
