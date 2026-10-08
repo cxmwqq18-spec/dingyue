@@ -18,16 +18,16 @@
   "tip": "Describe one everyday action in a familiar setting, then complete TikTok authorization and campaign setup before publishing.",
   "steps": [
     {
-      "t": "Add a product photo",
-      "d": "Use one clear image where the product shape and color are visible."
+      "t": "Upload a clear product photo",
+      "d": "Choose an item with its color and full outline visible."
     },
     {
-      "t": "Describe the everyday action",
-      "d": "Say where the item is used and what the hands do, such as filling a bottle at a desk and taking it outside."
+      "t": "Describe one everyday action",
+      "d": "Say where the hand moves and what the product does in the scene."
     },
     {
-      "t": "Finish in TikTok",
-      "d": "Review the finished video, then set up authorization and campaign details in TikTok Ads Manager."
+      "t": "Download and finish the post",
+      "d": "Add your caption, sound, and offer in TikTok or your editor."
     }
   ],
   "ideas": [
@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok"
+        "9:16 · TikTok"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "1:1 \u00b7 Feed"
+        "1:1 · Feed"
       ]
     ],
     "cta": "Make my Spark-style video"
@@ -202,5 +202,221 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A Spark Ads-style video starts with a natural product moment that can sit inside a creator's post. Keep one everyday action in focus, then finish the caption and sound in TikTok.",
+    "strip": [
+      "n:guide:home-steamer-frame",
+      "n:guide:black-friday-giftbox-crop",
+      "u:try-on",
+      "n:guide:c1-tpl-spark-phonecase-hands-vertical",
+      "n:gen2:tpl-spark-ads-style-video-c1",
+      "n:guide:white-background-desk-organizer"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-spark-ads-style-video-m2-source",
+      "sourceAlt": "Sage-green insulated bottle photographed alone on a pale background.",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Show the full bottle and its lid in natural light.",
+      "result": "n:guide:c1-tpl-spark-ads-style-video-m2-result-video-916",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "1:1 · Feed"
+        ]
+      ],
+      "length": 15,
+      "prompt": "Fill this sage-green bottle at a desk, close the lid, then lift it as you head out.",
+      "mode": "video"
+    },
+    "picker": {
+      "title": "Pick a natural Spark Ads-style scene",
+      "lead": "Choose a product moment that fits easily into a creator post.",
+      "chips": [
+        {
+          "id": "creator",
+          "label": "Creator-style demo"
+        },
+        {
+          "id": "desk",
+          "label": "At a desk"
+        },
+        {
+          "id": "outside",
+          "label": "Active routines"
+        },
+        {
+          "id": "quick",
+          "label": "One quick action"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:spokesperson-videos-g3",
+          "label": "Creator snack demo",
+          "chips": [
+            "creator"
+          ],
+          "prompt": "Show a creator lifting the snack pouch and reacting to it.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-tpl-spark-hair-claw-mirror-vertical",
+          "label": "Hair-claw mirror try-on",
+          "chips": [
+            "creator"
+          ],
+          "prompt": "Show a creator clipping the plain hair claw into place in a bathroom mirror.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:video-hub-h1-headset-in-hand",
+          "label": "Headphones lifted from a bag",
+          "chips": [
+            "desk"
+          ],
+          "prompt": "Lift the dark blue over-ear headphones from the open commuter bag.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-fix-spark-phonecase-desk",
+          "label": "Hands turn a phone case",
+          "chips": [
+            "desk"
+          ],
+          "prompt": "Turn the sage phone case over on a clear desk, keeping the hands and case in frame.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:video-hub-h1-carry",
+          "label": "Tablet packed into a commuter bag",
+          "chips": [
+            "outside"
+          ],
+          "prompt": "Arrange the tablet and accessories in the black commuter bag before heading out.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+          "label": "Dog brush on a couch",
+          "chips": [
+            "outside"
+          ],
+          "prompt": "Brush the relaxed dog once while keeping the plain pet brush in view.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:plat-youtube-shorts-g3",
+          "label": "Balcony lights at dusk",
+          "chips": [
+            "quick"
+          ],
+          "prompt": "Switch on the balcony lights at dusk.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-carousel-video-ad-g2",
+          "label": "Backpack packed",
+          "chips": [
+            "quick"
+          ],
+          "prompt": "Pack the commuter backpack beside a coat.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make a Spark Ads-style video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "h": "Share the bottle demo as a creator video",
+        "d": "Keep the sage-green bottle centered in the vertical social frame.",
+        "ref": "n:guide:c1-tpl-spark-ads-style-video-m4-bottle-video-916"
+      },
+      {
+        "frame": "post",
+        "h": "Use the square bottle video in a Spark Ads post",
+        "d": "Add the caption and selected sound in TikTok before promoting the post.",
+        "ref": "n:guide:c1-tpl-spark-ads-style-video-use-post-video-square"
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-spark-ads-style-video-reuse-strip4-square",
+        "bad": "n:guide:c1-reuse-spark-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:gen2:ind-health-wellness-c3",
+        "bad": "n:guide:tpl-spark-ads-style-video-input-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "label": "9:16 creator-style product video",
+        "frame": "9:16",
+        "length": 15,
+        "ref": "n:gen2:spokesperson-videos-g1"
+      },
+      {
+        "label": "9:16 vertical product demo",
+        "frame": "9:16",
+        "length": 15,
+        "ref": "n:guide:c1-tpl-spark-ads-style-video-reuse-strip3-vertical"
+      }
+    ],
+    "after": {
+      "ref": "g:story-ad-vertical/example-01",
+      "zones": [
+        "Caption",
+        "Sound",
+        "Offer"
+      ],
+      "items": [
+        "Add the caption and offer in TikTok or CapCut after download.",
+        "Choose a sound in TikTok before promoting the post."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a Spark Ads-style video from a product photo"
+      },
+      "m3": {
+        "h2": "Choose a Spark Ads-style product moment"
+      },
+      "m4": {
+        "h2": "Use Spark Ads-style videos in creator posts"
+      },
+      "m5": {
+        "h2": "Start a Spark Ads video with a clear product photo"
+      },
+      "m6": {
+        "h2": "Choose a vertical Spark Ads video format"
+      },
+      "m7": {
+        "h2": "Add a caption and sound after download"
+      },
+      "faq": {
+        "h2": "Questions about Spark Ads-style videos"
+      },
+      "examples": {
+        "h2": "TikTok Spark Ads video examples"
+      },
+      "templates": {
+        "h2": "More Spark Ads video templates",
+        "lead": "Browse more vertical video formats for creator-style product ads."
+      }
+    }
   }
 }

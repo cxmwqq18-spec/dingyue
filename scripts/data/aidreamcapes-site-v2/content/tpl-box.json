@@ -23,7 +23,7 @@
     },
     {
       "t": "List what's inside",
-      "d": "Write the count and names, such as \"one serum bottle, one cream jar, one gift box, on a stone tray,\" so nothing is added or dropped."
+      "d": "List each item and quantity exactly as shown in the photo."
     },
     {
       "t": "Use it as image two",
@@ -48,7 +48,7 @@
     "options": [
       [
         "Template",
-        "What's in the Box"
+        "What's in the box"
       ],
       [
         "Size",
@@ -123,7 +123,7 @@
       },
       {
         "t": "A clean square asset",
-        "d": "Use the downloaded frame in a product gallery, feed post, or bundle announcement after checking it."
+        "d": "Use the downloaded frame in a product gallery, feed post, or bundle announcement."
       }
     ]
   },
@@ -153,7 +153,7 @@
     "items": [
       {
         "t": "Compare with the bundle you sell",
-        "d": "Check lids, refills, tools, and packaging against the actual kit before publishing."
+        "d": "Match lids, refills, tools, and packaging to the actual kit before publishing."
       },
       {
         "t": "List the bundle contents in your product description",
@@ -207,5 +207,217 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A what's-in-the-box photo shows what ships as one set. Arrange each item so shoppers can count the pieces and see their size before they open the package.",
+    "strip": [
+      "n:guide:c1-tpl-box-m2-source",
+      "n:guide:c1-tpl-box-m2-result-square",
+      "n:guide:c1-tpl-story-gift-kit-square",
+      "n:guide:c1-reuse-tpl-box-case-coffee",
+      "n:gen2:occ-holidays-c3",
+      "n:guide:ind-electronics-m3-headphones"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-box-m2-source",
+      "sourceTitle": "Full set photo",
+      "sourceHint": "Include every item and package that ships with the bundle.",
+      "result": "n:guide:c1-tpl-box-m2-result-square",
+      "mode": "photo",
+      "prompt": "Arrange this skincare kit—cleanser, serum, and cream—on a vanity, keeping every item visible.",
+      "options": [
+        [
+          "Template",
+          "What's in the box"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Upload",
+          "Every item in the set"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a what's-in-the-box photo setup",
+      "lead": "Show every included item in a clear, countable arrangement.",
+      "chips": [
+        {
+          "id": "beauty",
+          "label": "Skincare and beauty sets"
+        },
+        {
+          "id": "pantry",
+          "label": "Coffee and pantry kits"
+        },
+        {
+          "id": "packaging",
+          "label": "Product packaging"
+        },
+        {
+          "id": "gift",
+          "label": "Gift-box arrangements"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:c1-reuse-tpl-box-case-bath",
+          "label": "Hooded towel and bath set",
+          "chips": [
+            "gift"
+          ],
+          "prompt": "Arrange the towel, washcloth, sponge, and plain pump bottle together as one bath set.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:bundle-sets/example-04",
+          "label": "Complete skincare bundle",
+          "chips": [
+            "beauty"
+          ],
+          "prompt": "Arrange the complete skincare bundle so every item can be counted.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-box-card-pantry-set",
+          "label": "Tea tin, honey, and cup",
+          "chips": [
+            "pantry"
+          ],
+          "prompt": "Arrange the tea tin, honey jar, and ceramic cup on a kitchen counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:bundle-sets/example-06",
+          "label": "Gift-ready skincare bundle",
+          "chips": [
+            "gift",
+            "beauty"
+          ],
+          "prompt": "Arrange the gift-ready skincare bundle with every piece in view.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:packaging-mockup/example-07",
+          "label": "Close view of package material",
+          "chips": [
+            "packaging"
+          ],
+          "prompt": "Show the package material in close view before opening the box.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:unboxing-experience-v",
+          "label": "Headphones lifted from a gray package",
+          "chips": [
+            "packaging"
+          ],
+          "prompt": "Open the gray headphone package and lift out the headphones and charging case.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-canvas-tote",
+          "label": "Canvas tote gift set",
+          "chips": [
+            "gift"
+          ],
+          "prompt": "Arrange the unbranded canvas tote with its included everyday items clearly visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-unboxing-videos-source",
+          "label": "Candle jar and matching lid",
+          "chips": [
+            "pantry"
+          ],
+          "prompt": "Arrange the plain candle jar and its lid together as a simple gift set.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a what's-in-the-box photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:guide:white-background-fix-m6-coaster-set",
+        "h": "Show the full set in a product listing",
+        "d": "Place the image near the item count and sizes so shoppers know what ships together."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:b1-unboxing-output",
+        "h": "Photograph a gift-ready wallet bundle",
+        "d": "Keep the leather wallet and its box in view so shoppers see the included presentation."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-box-reuse-picker-beauty-square",
+        "bad": "n:guide:c1-reuse-box-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "g:bundle-sets/example-05",
+        "bad": "n:guide:c1-reuse-box-m5-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:b1-unboxing-card",
+        "frame": "1:1",
+        "label": "Square headphones-and-box contents photo"
+      },
+      {
+        "ref": "n:gen2:video-hub-g2",
+        "frame": "1:1",
+        "label": "Square lunch-container-and-lid photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c1-tpl-box-card-gift-set",
+      "zones": [
+        "Item count",
+        "Contents",
+        "Sizes"
+      ],
+      "items": [
+        "For a candle and linen set, list each included item and size after download.",
+        "Name every piece so shoppers can compare the set with the package."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create a what's-in-the-box photo from one set image"
+      },
+      "m3": {
+        "h2": "Choose a what's-in-the-box photo arrangement"
+      },
+      "m4": {
+        "h2": "Use a box-contents photo in listings and product pages"
+      },
+      "m5": {
+        "h2": "Start with a clear photo of every set item"
+      },
+      "m6": {
+        "h2": "Choose a square what's-in-the-box photo format"
+      },
+      "m7": {
+        "h2": "Add item counts and sizes after download"
+      },
+      "faq": {
+        "h2": "Questions about what's-in-the-box photos"
+      },
+      "examples": {
+        "h2": "What's in the box photo examples"
+      },
+      "templates": {
+        "h2": "More box-contents photo templates"
+      }
+    }
   }
 }

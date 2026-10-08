@@ -10253,6 +10253,1736 @@
         "variants": [
           640
         ]
+      },
+      "c1-tpl-product-feature-callout-video-m2-source": {
+        "file": "c1-tpl-product-feature-callout-video-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white cleanser pump bottle photographed alone on a light background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-vertical-result": {
+        "file": "c1-tpl-product-feature-callout-video-vertical-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Portrait 9:16 illustrative still of a hand pressing a white cleanser pump beside a sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-m2-source": {
+        "file": "c1-tpl-spark-ads-style-video-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage-green insulated bottle photographed alone on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-vertical-result": {
+        "file": "c1-tpl-spark-ads-style-video-vertical-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Portrait 9:16 illustrative still of a hand lifting a sage-green insulated bottle from a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-m2-source": {
+        "file": "c1-tpl-film-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact black speaker photographed alone on a dark display plinth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-m2-source": {
+        "file": "c1-tpl-story-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single hot sauce bottle photographed upright on a pale seamless background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-product-feature-callout-video-input-1-blur": {
+        "file": "tpl-product-feature-callout-video-input-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain white foaming cleanser pump softened so its pump head and bottle details are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-product-feature-callout-video-input-2-crop": {
+        "file": "tpl-product-feature-callout-video-input-2-crop",
+        "w": 1880,
+        "h": 3344,
+        "alt": "Tight crop of Skincare bottle, cream jar, and matching box bundle as the starting photo with one edge cut off",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-spark-ads-style-video-input-1-blur": {
+        "file": "tpl-spark-ads-style-video-input-1-blur",
+        "w": 1280,
+        "h": 1600,
+        "alt": "Soft-focus version of Face mist bottle on a gym bench after a workout, phone-camera look.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-spark-ads-style-video-input-2-crop": {
+        "file": "tpl-spark-ads-style-video-input-2-crop",
+        "w": 1280,
+        "h": 960,
+        "alt": "Tight crop of Vitamin bottle beside a glass of water at breakfast. with one edge cut off",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-film-input-1-blur": {
+        "file": "tpl-film-input-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Soft-focus version of The same portable speaker turned to show the ports on its back.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-film-input-2-crop": {
+        "file": "tpl-film-input-2-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close crop of the compact egg-shaped black speaker with its side and top edges cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-story-input-1-blur": {
+        "file": "tpl-story-input-1-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Soft-focus version of Glass bottle of red hot sauce with a black cap and a blank cream label on a light studio background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-story-input-2-crop": {
+        "file": "tpl-story-input-2-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close crop of the hot sauce bottle with its cap and lower edge cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-m2-source": {
+        "file": "c1-tpl-carousel-video-ad-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black commuter backpack with its front organizer compartment open and travel items inside.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-m2-source": {
+        "file": "c1-tpl-limited-drop-alert-video-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of coral trail shoes with lugged soles photographed against a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-m2-source": {
+        "file": "c1-tpl-retargeting-video-ad-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones photographed alone on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-m2-source": {
+        "file": "c1-tpl-howto-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White handheld garment steamer photographed upright on a light background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-m2-source": {
+        "file": "c1-tpl-launch-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White sculptural desk lamp with a saucer-shaped shade photographed alone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-box-m2-source": {
+        "file": "c1-tpl-box-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cleanser, serum, and cream arranged together as a three-piece skincare set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-m2-source": {
+        "file": "c1-tpl-compare-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black and cream insulated tumblers shown side by side on a clean surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-m2-result-square": {
+        "file": "c1-tpl-carousel-video-ad-m2-result-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black commuter backpack opened on a clean cafe table with its laptop sleeve facing the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-m2-result": {
+        "file": "c1-tpl-limited-drop-alert-video-m2-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Coral trail shoes tied on a rocky mountain path in portrait composition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-m2-result-square": {
+        "file": "c1-tpl-retargeting-video-ad-m2-result-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones folded beside a commuter bag on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-m2-result": {
+        "file": "c1-tpl-howto-m2-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "White garment steamer making a pass over a blue shirt in portrait composition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-m2-result": {
+        "file": "c1-tpl-launch-m2-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "White saucer-shade lamp glowing on a bedside table in warm evening light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-m2-result": {
+        "file": "c1-tpl-compare-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black and cream insulated tumblers shown together on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-m2-result-square": {
+        "file": "c1-tpl-story-m2-result-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce bottle with a black cap and blank cream label beside fresh chilies on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-output-1": {
+        "file": "c1-tpl-limited-drop-alert-video-output-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Coral trail shoes shown in full on a rocky trail in portrait light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-output-2": {
+        "file": "c1-tpl-limited-drop-alert-video-output-2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Coral trail shoes stepping onto a rocky path with both shoes in frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-output-1": {
+        "file": "c1-tpl-retargeting-video-ad-output-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy headphones folded beside a commuter bag on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-output-2": {
+        "file": "c1-tpl-retargeting-video-ad-output-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy headphones beside a laptop with the ear cushions visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-output-1": {
+        "file": "c1-tpl-howto-output-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "White garment steamer beside a blue shirt in a bright laundry corner.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-output-2": {
+        "file": "c1-tpl-howto-output-2",
+        "w": 864,
+        "h": 1536,
+        "alt": "White garment steamer smoothing a wrinkle from a blue shirt.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-output-1": {
+        "file": "c1-tpl-launch-output-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "White saucer-shade desk lamp glowing in a calm living room at dusk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-output-2": {
+        "file": "c1-tpl-launch-output-2",
+        "w": 864,
+        "h": 1536,
+        "alt": "White saucer-shade desk lamp glowing on a pale side table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-output-1": {
+        "file": "c1-tpl-compare-output-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black and cream insulated tumblers standing side by side on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-output-2": {
+        "file": "c1-tpl-compare-output-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black and cream insulated tumblers standing side by side on a pale studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-use-social": {
+        "file": "c1-tpl-howto-use-social",
+        "w": 1024,
+        "h": 1536,
+        "alt": "White garment steamer and blue shirt in a bright home laundry corner.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-use-product-page": {
+        "file": "c1-tpl-howto-use-product-page",
+        "w": 1536,
+        "h": 1024,
+        "alt": "White garment steamer beside a blue shirt on a clean laundry counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-use-social": {
+        "file": "c1-tpl-launch-use-social",
+        "w": 1024,
+        "h": 1536,
+        "alt": "White saucer-shade lamp glowing on a side table with open space above.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-use-product-page": {
+        "file": "c1-tpl-launch-use-product-page",
+        "w": 1536,
+        "h": 1024,
+        "alt": "White saucer-shade lamp switched on beside a chair and side table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-box-card-pantry-set": {
+        "file": "c1-tpl-box-card-pantry-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea tin, honey jar, and ceramic cup arranged together on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-box-card-gift-set": {
+        "file": "c1-tpl-box-card-gift-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small candle, folded linen, and ceramic dish arranged in an open gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-box-reuse-picker-beauty-square": {
+        "file": "c1-tpl-box-reuse-picker-beauty-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white cleanser tube, amber serum dropper bottle, and cream jar arranged together on a pale stone vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-water-sizes": {
+        "file": "c1-tpl-compare-card-water-sizes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small and large stainless bottles standing side by side on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-backpack-sizes": {
+        "file": "c1-tpl-compare-card-backpack-sizes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two packed backpacks of different sizes shown side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-tumbler-colors": {
+        "file": "c1-tpl-compare-card-tumbler-colors",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal and cream insulated tumblers standing side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-beanie-colors": {
+        "file": "c1-tpl-compare-card-beanie-colors",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Navy and rust knit beanies shown side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-lipstick-finish": {
+        "file": "c1-tpl-compare-card-lipstick-finish",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte and glossy rose lipstick finishes shown side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-phone-case-colors": {
+        "file": "c1-tpl-compare-card-phone-case-colors",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage and blush phone cases shown side by side from the rear.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-candle-sizes": {
+        "file": "c1-tpl-compare-card-candle-sizes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small travel and standard candle jars shown side by side on a table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-card-planter-sizes": {
+        "file": "c1-tpl-compare-card-planter-sizes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small and large terracotta planters arranged on a windowsill.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-carousel-video-ad-input-1-blur": {
+        "file": "tpl-carousel-video-ad-input-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Soft-focus version of a leather crossbody bag with small product details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-carousel-video-ad-input-2-crop": {
+        "file": "tpl-carousel-video-ad-input-2-crop",
+        "w": 1280,
+        "h": 960,
+        "alt": "Tight crop of linen bedding with one product edge outside the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-limited-drop-alert-video-input-1-blur": {
+        "file": "tpl-limited-drop-alert-video-input-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Coral trail shoes softened so their tread, laces, and upper details are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-limited-drop-alert-video-input-2-crop": {
+        "file": "tpl-limited-drop-alert-video-input-2-crop",
+        "w": 1280,
+        "h": 960,
+        "alt": "Tight crop of first-batch coffee bags with one bag edge cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-retargeting-video-ad-input-1-blur": {
+        "file": "tpl-retargeting-video-ad-input-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Soft-focus burr coffee grinder with small product details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-retargeting-video-ad-input-2-crop": {
+        "file": "tpl-retargeting-video-ad-input-2-crop",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Tight crop of a white lip balm tube with one product edge cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-howto-input-1-blur": {
+        "file": "tpl-howto-input-1-blur",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Soft-focus collapsible water bottle with its ridges and cap details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-howto-input-2-crop": {
+        "file": "tpl-howto-input-2-crop",
+        "w": 1280,
+        "h": 960,
+        "alt": "Tight crop of a linen throw pillow with one edge outside the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-launch-input-1-blur": {
+        "file": "tpl-launch-input-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Soft-focus black office chair with its mesh and frame details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-launch-input-2-crop": {
+        "file": "tpl-launch-input-2-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tight square crop of the same glowing white saucer-shade lamp, with its base cut off by the lower frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-box-input-1-blur": {
+        "file": "tpl-box-input-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Soft-focus skincare set with small container details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-box-input-2-crop": {
+        "file": "tpl-box-input-2-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Tight crop of a travel skincare set with one pouch edge cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-compare-input-1-blur": {
+        "file": "tpl-compare-input-1-blur",
+        "w": 1280,
+        "h": 960,
+        "alt": "Soft-focus travel candle and mug with small product details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-compare-input-2-crop": {
+        "file": "tpl-compare-input-2-crop",
+        "w": 1280,
+        "h": 720,
+        "alt": "Tight crop of a camp chair with one foot cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-fix-feature-m6-speaker-vertical": {
+        "file": "c1-fix-feature-m6-speaker-vertical",
+        "w": 864,
+        "h": 1536,
+        "alt": "Black woven portable speaker with a loop shown upright on a light surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-fix-spark-phonecase-desk": {
+        "file": "c1-fix-spark-phonecase-desk",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Hands turning a sage phone case over a clean desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-fix-film-tumbler-indoor": {
+        "file": "c1-fix-film-tumbler-indoor",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Stainless travel tumbler on an indoor kitchen windowsill beside a visible window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-fix-film-m5-good": {
+        "file": "c1-fix-film-m5-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact egg-shaped black speaker fully in frame on a dark display plinth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-fix-film-m6-output-1": {
+        "file": "c1-fix-film-m6-output-1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Compact egg-shaped black speaker on a dark plinth in cool side light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-fix-film-m6-output-2": {
+        "file": "c1-fix-film-m6-output-2",
+        "w": 1536,
+        "h": 864,
+        "alt": "Compact egg-shaped black speaker on a dark stone surface in warm side light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-fix-story-m5-good": {
+        "file": "c1-fix-story-m5-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full hot sauce bottle with black cap and blank cream label on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-m7-bottle-scene": {
+        "file": "c1-tpl-story-m7-bottle-scene",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce bottle with a black cap and blank cream label among fresh chilies on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-box-m2-result-square": {
+        "file": "c1-tpl-box-m2-result-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white cleanser tube, amber dropper bottle, and white cream jar arranged as a three-piece skincare set on a light counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-blanket-action": {
+        "file": "c1-tpl-retargeting-video-ad-blanket-action",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands smoothing a sage-green wool throw across a cream armchair in a bright living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-carousel-m5-1-blur": {
+        "file": "c1-reuse-carousel-m5-1-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same black commuter backpack from the clear reference, softened by blur so its pockets and seams are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-carousel-m5-2-crop": {
+        "file": "c1-reuse-carousel-m5-2-crop",
+        "w": 640,
+        "h": 1138,
+        "alt": "Black commuter backpack enlarged until one side edge is cut off by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-limited-m5-2-crop": {
+        "file": "c1-reuse-limited-m5-2-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral trail shoes enlarged until one shoe edge is cut off by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-retarget-m5-1-blur": {
+        "file": "c1-reuse-retarget-m5-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Dark navy over-ear headphones and an unbranded laptop softened by blur so their details are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-retarget-m5-2-crop": {
+        "file": "c1-reuse-retarget-m5-2-crop",
+        "w": 1280,
+        "h": 720,
+        "alt": "Dark blue headphones enlarged until an ear cup edge is cut off by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-howto-m5-1-blur": {
+        "file": "c1-reuse-howto-m5-1-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White handheld garment steamer softened so its controls are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-howto-m5-2-crop": {
+        "file": "c1-reuse-howto-m5-2-crop",
+        "w": 1024,
+        "h": 1536,
+        "alt": "White handheld garment steamer enlarged until one side edge is cut off by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-launch-m5-1-blur": {
+        "file": "c1-reuse-launch-m5-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "White saucer-shade desk lamp softened so its shade and base details are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-box-m5-1-blur": {
+        "file": "c1-reuse-box-m5-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Three-piece skincare set softened so the cleanser, serum, and cream details are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-box-m5-2-crop": {
+        "file": "c1-reuse-box-m5-2-crop",
+        "w": 640,
+        "h": 360,
+        "alt": "Travel skincare set enlarged until one pouch edge is cut off by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-compare-m5-1-blur": {
+        "file": "c1-reuse-compare-m5-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Matte black and warm cream tumblers softened by blur so their lids and finish are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-spark-m5-1-blur": {
+        "file": "c1-reuse-spark-m5-1-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same square green-bottle scene softened by blur so its surface details are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-film-m5-1-blur": {
+        "file": "c1-reuse-film-m5-1-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Compact black egg-shaped speaker softened so its grille and controls are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-story-m5-1-blur": {
+        "file": "c1-reuse-story-m5-1-blur",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Hot sauce bottle softened so its cap and blank label are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-tpl-box-case-coffee": {
+        "file": "c1-reuse-tpl-box-case-coffee",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Coffee beans, a burr grinder, ceramic mug, and scoop arranged as a kit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-reuse-tpl-box-case-bath": {
+        "file": "c1-reuse-tpl-box-case-bath",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Cream hooded towel, washcloth, sponge, and plain pump bottle arranged as a baby bath set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-reuse-strip5-square": {
+        "file": "c1-tpl-retargeting-video-ad-reuse-strip5-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones beside a keyboard under soft blue light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-reuse-strip2-square": {
+        "file": "c1-tpl-launch-reuse-strip2-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White sculptural saucer-shade desk lamp shown in a clean studio setting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-reuse-strip3-square": {
+        "file": "c1-tpl-launch-reuse-strip3-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White saucer-shade desk lamp glowing on a side table in a calm living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-reuse-strip2-square": {
+        "file": "c1-tpl-compare-reuse-strip2-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black and warm cream insulated tumblers side by side on a pale kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-reuse-strip3-square": {
+        "file": "c1-tpl-compare-reuse-strip3-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte black and warm cream insulated tumblers standing on a walnut desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-reuse-strip4-square": {
+        "file": "c1-tpl-compare-reuse-strip4-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte black and warm cream insulated tumblers on a light stone shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-reuse-strip5-square": {
+        "file": "c1-tpl-compare-reuse-strip5-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte black and warm cream insulated tumblers on a pale stone countertop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-reuse-strip0-square": {
+        "file": "c1-tpl-film-reuse-strip0-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact black egg-shaped portable speaker with a woven front grille on a dark plinth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-reuse-strip5-wide": {
+        "file": "c1-tpl-film-reuse-strip5-wide",
+        "w": 1536,
+        "h": 864,
+        "alt": "Black egg-shaped portable speaker on a dark shelf beside a tall window at dusk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-reuse-strip0-square": {
+        "file": "c1-tpl-product-feature-callout-video-reuse-strip0-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white foaming cleanser pump bottle on a pale bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-reuse-strip1-square": {
+        "file": "c1-tpl-product-feature-callout-video-reuse-strip1-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white foaming cleanser pump bottle on a bright sink shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-reuse-strip2-wide": {
+        "file": "c1-tpl-product-feature-callout-video-reuse-strip2-wide",
+        "w": 1536,
+        "h": 864,
+        "alt": "A hand presses the pump of the same plain white cleanser bottle over a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-reuse-strip3-wide": {
+        "file": "c1-tpl-product-feature-callout-video-reuse-strip3-wide",
+        "w": 1536,
+        "h": 864,
+        "alt": "The same plain white cleanser bottle beside a bathroom sink and folded towel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-reuse-strip4-wide": {
+        "file": "c1-tpl-product-feature-callout-video-reuse-strip4-wide",
+        "w": 1536,
+        "h": 864,
+        "alt": "The same cleanser bottle with a hand beside its pump on a bright bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-reuse-strip5-wide": {
+        "file": "c1-tpl-product-feature-callout-video-reuse-strip5-wide",
+        "w": 1536,
+        "h": 864,
+        "alt": "The same plain white cleanser pump bottle beside a small amount of foam on a stone counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-reuse-strip1-wide": {
+        "file": "c1-tpl-spark-ads-style-video-reuse-strip1-wide",
+        "w": 1536,
+        "h": 864,
+        "alt": "Sage green insulated bottle standing upright on an office desk with its loop handle visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-reuse-strip3-vertical": {
+        "file": "c1-tpl-spark-ads-style-video-reuse-strip3-vertical",
+        "w": 864,
+        "h": 1536,
+        "alt": "Sage green insulated bottle with its integrated loop handle standing upright on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-reuse-strip4-square": {
+        "file": "c1-tpl-spark-ads-style-video-reuse-strip4-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage green insulated bottle with its hinged loop handle on a soft blue-gray background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-reuse-strip5-square": {
+        "file": "c1-tpl-story-reuse-strip5-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Red hot sauce bottle with a black cap and blank cream label beside fresh red chili peppers.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-picker-unbox-square": {
+        "file": "c1-tpl-carousel-video-ad-picker-unbox-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open cardboard packaging with the same black commuter backpack from the product photo, shown by hands during an unboxing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-dark-lunch-container-square": {
+        "file": "c1-tpl-film-dark-lunch-container-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Closed sage-green insulated lunch container on a dark kitchen counter, edged by a narrow cool highlight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-strip-speaker-vertical": {
+        "file": "c1-tpl-film-strip-speaker-vertical",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Compact black egg-shaped speaker with a woven loop on a dark shelf in vertical low-light composition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-picker-kettle-action-square": {
+        "file": "c1-tpl-howto-picker-kettle-action-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pouring hot water from a plain white gooseneck kettle into a ceramic mug beside a bright kitchen window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-picker-steamer-detail-square": {
+        "file": "c1-tpl-howto-picker-steamer-detail-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close product detail of a white handheld garment steamer, showing its controls and water reservoir.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-color-variants-square": {
+        "file": "c1-tpl-launch-color-variants-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three plain knit beanies in navy, rust, and charcoal arranged together on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-package-lamp-square": {
+        "file": "c1-tpl-launch-package-lamp-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White saucer-shade desk lamp nestled in plain kraft packaging, without branding or text.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-picker-outsole-square": {
+        "file": "c1-tpl-limited-drop-alert-video-picker-outsole-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of coral trail shoes with lugged coral outsoles, showing the tread and matching upper.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-strip-shoes-square": {
+        "file": "c1-tpl-limited-drop-alert-video-strip-shoes-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of coral trail shoes shown fully in frame on a rocky outdoor path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-m6-output-2-vertical": {
+        "file": "c1-tpl-product-feature-callout-video-m6-output-2-vertical",
+        "w": 864,
+        "h": 1536,
+        "alt": "Black woven portable speaker with a carry loop, upright on a pale surface in portrait framing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-picker-speaker-controls-square": {
+        "file": "c1-tpl-product-feature-callout-video-picker-speaker-controls-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close detail of the tactile controls on an unbranded black loop speaker.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-after-headphones-wide": {
+        "file": "c1-tpl-retargeting-video-ad-after-headphones-wide",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones beside the same commuter bag on a desk in wide composition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-use-phone-vertical": {
+        "file": "c1-tpl-retargeting-video-ad-use-phone-vertical",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Dark navy over-ear headphones beside a commuter bag in a portrait lifestyle composition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-hair-claw-mirror-vertical": {
+        "file": "c1-tpl-spark-hair-claw-mirror-vertical",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman shown from behind clipping a plain tortoiseshell hair claw into her hair in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-phonecase-hands-vertical": {
+        "file": "c1-tpl-spark-phonecase-hands-vertical",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Hands-only view turning a plain sage-green phone case over on a clear desk, with no face visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-m6-output-1-square": {
+        "file": "c1-tpl-story-m6-output-1-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Red hot sauce bottle with black cap and blank cream label beside fresh chilies on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-m6-output-2-square": {
+        "file": "c1-tpl-story-m6-output-2-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same red hot sauce bottle with black cap and blank cream label in a warm kitchen scene with chilies.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-use-backpack-square": {
+        "file": "c1-tpl-carousel-video-ad-use-backpack-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black commuter backpack on a cafe table beside a notebook, photographed in soft window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-strip-speaker-dark-square": {
+        "file": "c1-tpl-film-strip-speaker-dark-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded black egg-shaped portable speaker with a woven loop on a dark stone plinth under a narrow side light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-output-1-square": {
+        "file": "c1-tpl-carousel-video-ad-output-1-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Same black commuter backpack from the product photo, open on a cafe table with its organizer pockets and notebook visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-output-2-square": {
+        "file": "c1-tpl-carousel-video-ad-output-2-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same black commuter backpack open on a pale desk with its laptop sleeve and a plain laptop visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-m2-result-video-916": {
+        "file": "c1-tpl-howto-m2-result-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "White garment steamer pressing a blue shirt in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-use-social-video-916": {
+        "file": "c1-tpl-howto-use-social-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "White garment steamer smoothing a blue shirt in a vertical social video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-howto-use-product-page-video-169": {
+        "file": "c1-tpl-howto-use-product-page-video-169",
+        "w": 1536,
+        "h": 864,
+        "alt": "White garment steamer beside a blue shirt in a widescreen product video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-m2-result-video-916": {
+        "file": "c1-tpl-launch-m2-result-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "White saucer-shade desk lamp glowing beside a book in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-use-social-video-916": {
+        "file": "c1-tpl-launch-use-social-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "White saucer-shade lamp in a vertical social video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-use-product-page-video-169": {
+        "file": "c1-tpl-launch-use-product-page-video-169",
+        "w": 1536,
+        "h": 864,
+        "alt": "White saucer-shade lamp beside a chair in a widescreen product video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-m2-result-video-916": {
+        "file": "c1-tpl-limited-drop-alert-video-m2-result-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Coral trail shoes on a rocky mountain path in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-m2-result-video-916": {
+        "file": "c1-tpl-product-feature-callout-video-m2-result-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand pressing a plain white cleanser pump in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-use-phone-video-916": {
+        "file": "c1-tpl-retargeting-video-ad-use-phone-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Dark navy over-ear headphones beside a commuter bag in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-m2-result-video-916": {
+        "file": "c1-tpl-spark-ads-style-video-m2-result-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Sage-green insulated bottle lifted from a desk in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-use-post-video-square": {
+        "file": "c1-tpl-spark-ads-style-video-use-post-video-square",
+        "w": 864,
+        "h": 864,
+        "alt": "Sage-green insulated bottle centered on a pale background in a square video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-m4-backpack-video-916": {
+        "file": "c1-tpl-carousel-video-ad-m4-backpack-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain black commuter backpack open on a cafe table in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-product-page-backpack-square": {
+        "file": "c1-tpl-carousel-video-ad-product-page-backpack-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain black commuter backpack with its organizer open in a square video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-m4-shoe-video-916": {
+        "file": "c1-tpl-limited-drop-alert-video-m4-shoe-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Coral trail shoes on a rocky mountain path in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-listing-shoe-video-square": {
+        "file": "c1-tpl-limited-drop-alert-video-listing-shoe-video-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral trail shoes on a mountain path in a square video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-m4-cleanser-video-916": {
+        "file": "c1-tpl-product-feature-callout-video-m4-cleanser-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand pressing a plain white cleanser pump in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-m6-cleanser-output-1-916": {
+        "file": "c1-tpl-product-feature-callout-video-m6-cleanser-output-1-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain white cleanser pump on a bathroom shelf in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-product-feature-callout-video-m6-cleanser-output-2-916": {
+        "file": "c1-tpl-product-feature-callout-video-m6-cleanser-output-2-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand pressing a plain white cleanser pump above a bathroom counter in a vertical video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-spark-ads-style-video-m4-bottle-video-916": {
+        "file": "c1-tpl-spark-ads-style-video-m4-bottle-video-916",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand lifting a sage-green insulated bottle in a vertical creator video frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-m4-tumbler-pair-square": {
+        "file": "c1-tpl-compare-m4-tumbler-pair-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black and warm cream insulated tumblers standing side by side on a counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-compare-m7-tumbler-variants-square": {
+        "file": "c1-tpl-compare-m7-tumbler-variants-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black and warm cream insulated tumblers standing side by side on a stone shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-m3-headphones-texture-square": {
+        "file": "c1-tpl-retargeting-video-ad-m3-headphones-texture-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones with padded fabric ear cups on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-m3-headphones-detail-square": {
+        "file": "c1-tpl-retargeting-video-ad-m3-headphones-detail-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones from a three-quarter side angle on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-after-headphones-square": {
+        "file": "c1-tpl-retargeting-video-ad-after-headphones-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones beside an unbranded laptop on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-m4-use-photo-square-1": {
+        "file": "c1-tpl-story-m4-use-photo-square-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Red hot sauce bottle with blank cream label and black cap beside fresh chilies.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-m4-use-photo-square-2": {
+        "file": "c1-tpl-story-m4-use-photo-square-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Red hot sauce bottle with blank cream label beside a bowl of sauce and fresh chilies.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-video-ad-skillet-square": {
+        "file": "c1-tpl-carousel-video-ad-skillet-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain black cast-iron skillet with two eggs on an induction cooktop; single smooth handle with no maker marks or lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-strip-launch-lamp-square": {
+        "file": "c1-tpl-launch-strip-launch-lamp-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Warm white saucer-shade lamp glowing beside a plain shipping box on a wood side table at dusk; no brand marks or lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-headphones-square": {
+        "file": "c1-tpl-retargeting-video-ad-headphones-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded navy over-ear headphones on a wooden shelf beside a plain black travel bag; no logos or lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-limited-drop-alert-video-shoe-square": {
+        "file": "c1-tpl-limited-drop-alert-video-shoe-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded coral trail shoe in side profile on a neutral studio background, plain panels and no lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-carousel-backpack-pair-square": {
+        "file": "c1-tpl-carousel-backpack-pair-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two unbranded charcoal commuter backpacks in matching fabric, one compact and one larger, arranged side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-story-gift-kit-square": {
+        "file": "c1-tpl-story-gift-kit-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream cleanser tube and two rounded cream jars arranged on folded natural linen in warm window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-mug-square": {
+        "file": "c1-tpl-retargeting-video-ad-mug-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded speckled cream ceramic travel mug with a fitted lid and soft steam on a warm wooden breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-feature-laptop-stand-square": {
+        "file": "c1-tpl-feature-laptop-stand-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded charcoal aluminum laptop stand with a visible adjustable side hinge and open support arms on a pale studio desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-feature-gold-band-square": {
+        "file": "c1-tpl-feature-gold-band-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain polished yellow-gold band ring beside a small neutral metal coin on a warm pale stone surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-retargeting-video-ad-throw-square": {
+        "file": "c1-tpl-retargeting-video-ad-throw-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded sage-green wool throw draped over a warm brown lounge chair in a calm living room, woven texture in clear view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-strip-perfume-ceramic-round-square": {
+        "file": "c1-tpl-film-strip-perfume-ceramic-round-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Opaque ivory ceramic fragrance bottle with a broad rounded body and brushed-brass cap, reflected on dark water; no label or lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-strip-watch-field-square": {
+        "file": "c1-tpl-film-strip-watch-field-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple round ivory-dial wristwatch with a plain narrow steel bezel and brown leather strap on dark slate; no brand or markings.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-film-picker-perfume-metal-round-square": {
+        "file": "c1-tpl-film-picker-perfume-metal-round-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Rounded pale-bronze aluminum fragrance atomizer beside dark water; fully opaque with no label, logo, or lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "c1-tpl-launch-picker-phonecase-oval-cutout-square": {
+        "file": "c1-tpl-launch-picker-phonecase-oval-cutout-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage-green silicone phone case shown from the back with exactly one vertical oval camera opening and no branding.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

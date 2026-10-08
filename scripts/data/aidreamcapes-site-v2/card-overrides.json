@@ -235,16 +235,16 @@
   "tpl-limited-drop-alert-video": {
     "images": {
       "creator": {
-        "ref": "n:gen2:tpl-bf-c2",
-        "alt": "Over-ear headphones on a black backdrop with sharp deal-day lighting."
+        "ref": "f:ugc-ad-video",
+        "alt": "Creator holding a white smartwatch toward the camera in a bright living room"
       }
     }
   },
   "tpl-carousel-video-ad": {
     "images": {
       "outfit": {
-        "ref": "n:gen2:tpl-outfit-c1",
-        "alt": "Knit sweater and wide-leg trousers outfit shown head to toe in a living room."
+        "ref": "g:fashion-editorial/example-06",
+        "alt": "Model wearing a plain sand-colored suit beside a stone terrace in natural light."
       }
     }
   },
@@ -297,6 +297,14 @@
       "bf": {
         "ref": "f:black-friday-countdown",
         "alt": "Hands unfold a black folding electric bicycle and inspect its hinge."
+      }
+    }
+  },
+  "tpl-launch": {
+    "images": {
+      "outfit": {
+        "ref": "g:fashion-editorial/example-08",
+        "alt": "Plain sand-colored suit shown full length in a light studio."
       }
     }
   }

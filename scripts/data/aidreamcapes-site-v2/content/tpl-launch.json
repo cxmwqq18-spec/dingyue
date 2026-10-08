@@ -24,11 +24,11 @@
     },
     {
       "t": "Choose the room and size",
-      "d": "Describe the space and mood, then pick 9:16 or 1:1. Six seconds suits a teaser; 10 or 15 gives a fuller scene, while 30 seconds gives room for a sequence."
+      "d": "Describe the space and mood, then choose 9:16 or 1:1 and a 6-, 10-, or 15-second clip."
     },
     {
       "t": "Add the launch details",
-      "d": "Type \u201cNew,\u201d the release date, and any offer in Canva or Ads Manager, where you can check each detail before publishing."
+      "d": "Type “New,” the release date, and any offer in Canva or Ads Manager, where you can review each detail before publishing."
     }
   ],
   "ideas": [
@@ -49,15 +49,15 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 Stories & Reels"
+        "9:16 · Stories & Reels"
       ],
       [
         "Length",
-        "10 seconds"
+        "15 seconds"
       ],
       [
         "Also try",
-        "1:1 \u00b7 Feed"
+        "1:1 · Feed"
       ]
     ],
     "cta": "Make my launch video"
@@ -150,7 +150,7 @@
     "items": [
       {
         "t": "Add the release date",
-        "d": "Type the confirmed day, time, and timezone in a layer you can edit when plans change."
+        "d": "Type the planned date, time, and timezone in a layer you can edit when plans change."
       },
       {
         "t": "Place the offer and URL",
@@ -203,5 +203,216 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A launch video gives a new product a first reveal in the setting where it belongs. Keep the item visible as the light or camera introduces it, then add launch details after download.",
+    "strip": [
+      "n:guide:c1-tpl-launch-m2-source",
+      "n:guide:c1-tpl-launch-m2-result",
+      "n:guide:c1-tpl-launch-reuse-strip3-square",
+      "n:gen2:h1-photo-hub-lamp",
+      "n:gen2:change-background-c1",
+      "n:guide:white-background-fix-m1-planter"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-launch-m2-source",
+      "sourceTitle": "Finished product photo",
+      "sourceHint": "Use the final item so its shape and color stay clear.",
+      "result": "n:guide:c1-tpl-launch-m2-result-video-916",
+      "mode": "video",
+      "prompt": "Switch on this portable table lamp beside an open book, then move the camera toward its warm glow.",
+      "options": [
+        [
+          "Size",
+          "9:16 · Stories & Reels"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "1:1 · Feed"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a product-launch video scene",
+      "lead": "Pick a reveal that introduces the item before the date and price appear.",
+      "chips": [
+        {
+          "id": "tease",
+          "label": "Preview a new product"
+        },
+        {
+          "id": "unbox",
+          "label": "Open the package"
+        },
+        {
+          "id": "setting",
+          "label": "Show the product in context"
+        },
+        {
+          "id": "color",
+          "label": "Reveal a new color"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:h1-photo-hub-candle-source",
+          "label": "White candle jar and matching lid",
+          "chips": [
+            "tease"
+          ],
+          "prompt": "Preview the plain white ceramic candle jar with its matching lid on a neutral surface.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-spokesperson-videos-result",
+          "label": "Presenter holds a green water bottle",
+          "chips": [
+            "tease"
+          ],
+          "prompt": "Show the presenter holding the bottle at chest height with a relaxed expression.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-desk-lamp",
+          "label": "Brass lamp in an open box",
+          "chips": [
+            "unbox"
+          ],
+          "prompt": "Unwrap the curved brass desk lamp from a plain box and keep its full outline visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:unboxing-experience",
+          "label": "Headphones lifted from a gray package",
+          "chips": [
+            "unbox"
+          ],
+          "prompt": "Open the plain gray package to reveal the headphones and charging case.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-launch-c4",
+          "label": "New candle on a styled shelf",
+          "chips": [
+            "setting"
+          ],
+          "prompt": "Show the new candle on a shelf with dried flowers in soft window light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-film-g3",
+          "label": "Ceramic vase in window light",
+          "chips": [
+            "setting"
+          ],
+          "prompt": "Place the ceramic vase where a beam of late-day light crosses the shelf.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-launch-color-variants-square",
+          "label": "Navy, rust, and charcoal beanie colors",
+          "chips": [
+            "color"
+          ],
+          "prompt": "Arrange three knit beanie colors side by side for a new color release.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-launch-picker-phonecase-oval-cutout-square",
+          "label": "Sage case, single oval opening",
+          "chips": [
+            "color"
+          ],
+          "prompt": "Show the plain sage silicone case from the back, with its single oval opening clearly visible.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product-launch video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:guide:c1-tpl-launch-use-social-video-916",
+        "h": "Share a launch video in Stories and Reels",
+        "d": "Keep the product centered in the vertical clip and add the launch date in your post editor."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:c1-tpl-launch-use-product-page-video-169",
+        "h": "Add a launch video to a product page",
+        "d": "Place the clip beside the final product details so shoppers can see the item before launch."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-launch-package-lamp-square",
+        "bad": "n:guide:c1-reuse-launch-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:guide:c1-tpl-launch-strip-launch-lamp-square",
+        "bad": "n:guide:tpl-launch-input-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c1-tpl-launch-output-1",
+        "frame": "9:16",
+        "label": "9:16 product-launch video"
+      },
+      {
+        "ref": "n:guide:c1-tpl-launch-output-2",
+        "frame": "9:16",
+        "label": "9:16 vertical launch reveal"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c1-tpl-launch-reuse-strip2-square",
+      "zones": [
+        "Launch date",
+        "Price",
+        "Product link"
+      ],
+      "items": [
+        "Add the launch date and price as editable text after download.",
+        "Link the video to the product page where the item will be available."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create a vertical product-launch video from one photo"
+      },
+      "m3": {
+        "h2": "Choose a scene for a product-launch video"
+      },
+      "m4": {
+        "h2": "Use a product-launch video in Stories and on listings"
+      },
+      "m5": {
+        "h2": "Start a product-launch video with a clear photo"
+      },
+      "m6": {
+        "h2": "Choose a 9:16 product-launch video format"
+      },
+      "m7": {
+        "h2": "Add the launch date and price after download"
+      },
+      "faq": {
+        "h2": "Questions about product-launch videos"
+      },
+      "examples": {
+        "h2": "Product launch video examples"
+      },
+      "templates": {
+        "h2": "More product-launch video templates"
+      }
+    }
   }
 }

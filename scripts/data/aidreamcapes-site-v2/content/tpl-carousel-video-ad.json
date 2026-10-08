@@ -1,10 +1,10 @@
 {
   "id": "tpl-carousel-video-ad",
   "title": "Carousel Video Ad Template for Product Stories | AIVideosUGC",
-  "description": "Create a carousel video ad as one downloadable product-story video. Plan short scenes, then add verified on-screen text and product details in your editor.",
+  "description": "Create a carousel video ad as one downloadable product-story video. Plan short scenes, then add on-screen text and product details in your editor.",
   "h1": "Carousel Video Ads That Tell One Product Story",
   "eyebrow": "Carousel video ad template",
-  "lead": "This template creates one product-story video from a few short scenes, not a published carousel post. Upload one product photo, describe the sequence, then review the video before adding prices and verified product details.",
+  "lead": "This template creates one product-story video from a few short scenes, not a published carousel post. Upload one product photo, describe the sequence, then review the video before adding prices and product details.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -13,7 +13,7 @@
   ],
   "intro": [
     "This format is built around a sequence rather than a talking presenter. The sample opens a black commuter backpack in a cafe, shows its compartments, and ends with the bag on a person.",
-    "A short sequence can show what is inside, how a product fits a routine, or why a visible detail matters. Product position, size, and small lettering can vary between scenes, so review the video and add verified on-screen text in your editor."
+    "A short sequence can show what is inside, how a product fits a routine, or why a visible detail matters. Product position, size, and small lettering can vary between scenes, so review the video and add on-screen text in your editor."
   ],
   "tip": "Write three or four short beats in order and describe the product in each one so the transitions have a clear job.",
   "steps": [
@@ -41,7 +41,7 @@
     },
     {
       "t": "Three reasons",
-      "d": "Give each scene one visual reason to keep watching, then add the verified wording yourself."
+      "d": "Give each scene one visual reason to keep watching, then add the wording yourself."
     }
   ],
   "maker": {
@@ -52,7 +52,7 @@
       ],
       [
         "Length",
-        "10 seconds"
+        "15 seconds"
       ],
       [
         "Also try",
@@ -149,7 +149,7 @@
     "items": [
       {
         "t": "Add one headline per scene",
-        "d": "Use short, verified wording that matches each scene rather than repeating a general benefit."
+        "d": "Use short wording that matches each scene rather than repeating a general benefit."
       },
       {
         "t": "Place prices and dimensions",
@@ -188,7 +188,7 @@
             "product": "wristwatch"
           },
           {
-            "ref": "n:gen2:tpl-carousel-video-ad-g2",
+            "ref": "f:carousel-storytelling",
             "title": "Commuter backpack packed beside a coat",
             "kind": "scene",
             "product": "commuter backpack"
@@ -202,5 +202,216 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A carousel video ad uses a short sequence to answer one shopper question at a time. Keep the product in view from the opening reveal through the final scene.",
+    "strip": [
+      "n:guide:c1-tpl-carousel-video-ad-m2-source",
+      "n:guide:c1-tpl-carousel-video-ad-m2-result-square",
+      "n:gen2:tpl-compare-g2",
+      "n:guide:c1-tpl-product-feature-callout-video-reuse-strip4-wide",
+      "n:gen2:white-background-c3",
+      "n:gen2:url-to-video-c3"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-carousel-video-ad-m2-source",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Show the whole backpack and its main compartments.",
+      "result": "n:guide:c1-tpl-carousel-video-ad-m2-result-square",
+      "mode": "video",
+      "prompt": "Open this black commuter backpack on a clean cafe table and angle the laptop sleeve toward the camera.",
+      "options": [
+        [
+          "Size",
+          "1:1 · Feed"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "9:16 · Reels"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Pick a beat for your carousel video ad",
+      "lead": "Choose a moment that helps shoppers understand the product.",
+      "chips": [
+        {
+          "id": "unbox",
+          "label": "Open the package"
+        },
+        {
+          "id": "detail",
+          "label": "Show a detail"
+        },
+        {
+          "id": "use",
+          "label": "Put it to use"
+        },
+        {
+          "id": "finish",
+          "label": "End the story"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:unboxing-videos-c2",
+          "label": "Candle inside an open mailer",
+          "chips": [
+            "unbox"
+          ],
+          "prompt": "Open a kraft mailer to reveal one candle wrapped in tissue.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-carousel-video-ad-picker-unbox-square",
+          "label": "Black backpack in an open box",
+          "chips": [
+            "unbox"
+          ],
+          "prompt": "Open a plain shipping box to reveal a black commuter backpack with its organizer compartment.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:virtual-try-on/example-07",
+          "label": "Blue jacket fabric close-up",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Move close to the blue jacket weave and keep the fabric texture in focus.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:white-background-g1",
+          "label": "Leather wallet on a white surface",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Show the wallet exterior and edge stitching clearly against the white background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-carousel-backpack-pair-square",
+          "label": "Two commuter backpack sizes",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Compare the compact daypack and larger travel backpack with their matching charcoal fabric and front pockets visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:lifestyle-scene/example-08",
+          "label": "Linen tote in soft daylight",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Set the linen tote beside a bench and show it ready for daily use.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:model-photos-c2",
+          "label": "Messenger bag carried in a lobby",
+          "chips": [
+            "finish"
+          ],
+          "prompt": "Carry the leather messenger bag across a bright office lobby.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:examples-g3",
+          "label": "Green glass bottle on a desk",
+          "chips": [
+            "finish"
+          ],
+          "prompt": "Set the green bottle on the desk to finish the sequence.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a carousel video ad"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:guide:c1-tpl-carousel-video-ad-m4-backpack-video-916",
+        "h": "Post a 9:16 commuter-backpack video in a Reel",
+        "d": "Show the backpack compartments and how it fits a daily commute."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:c1-tpl-carousel-video-ad-product-page-backpack-square",
+        "h": "Add the backpack video to a product page",
+        "d": "Pair the clip with listing photos so shoppers can see the backpack compartments before choosing a size or color."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-carousel-video-ad-use-backpack-square",
+        "bad": "n:guide:c1-reuse-carousel-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:guide:plat-facebook-size-portrait-backpack",
+        "bad": "n:guide:c1-reuse-carousel-m5-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c1-tpl-carousel-video-ad-output-1-square",
+        "frame": "1:1",
+        "label": "1:1 commuter backpack sequence"
+      },
+      {
+        "ref": "n:guide:c1-tpl-carousel-video-ad-output-2-square",
+        "frame": "1:1",
+        "label": "1:1 open backpack reveal"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-compare-g3",
+      "zones": [
+        "Headline",
+        "Price",
+        "CTA"
+      ],
+      "items": [
+        "Add the headline, price, and product link as editable text in your ad editor.",
+        "Choose a licensed audio track before publishing the finished video."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a carousel video ad from one product photo"
+      },
+      "m3": {
+        "h2": "Plan each scene in a carousel video ad"
+      },
+      "m4": {
+        "h2": "Use a carousel video ad on product pages and social"
+      },
+      "m5": {
+        "h2": "Keep carousel video ad scenes anchored to one product"
+      },
+      "m6": {
+        "h2": "Choose a carousel video ad format"
+      },
+      "m7": {
+        "h2": "Add captions and offer details after download"
+      },
+      "faq": {
+        "h2": "Questions about carousel video ads"
+      },
+      "examples": {
+        "h2": "Carousel video ad examples"
+      },
+      "templates": {
+        "h2": "More carousel video ad templates"
+      }
+    }
   }
 }

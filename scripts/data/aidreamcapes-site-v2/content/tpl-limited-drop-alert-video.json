@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "16:9 \u00b7 Product page"
+        "1:1 · Feed"
       ]
     ],
     "cta": "Make my drop video"
@@ -72,17 +72,17 @@
     },
     {
       "q": "What video length fits a limited drop alert?",
-      "a": "Use 6 seconds for one product-and-date beat or 10\u201315 seconds for a reveal plus call to action. Add the exact stock count and drop date after download."
+      "a": "Use 6 seconds for one product-and-date beat or 10–15 seconds for a reveal plus call to action. Add the exact stock count and drop date after download."
     }
   ],
   "overview": [
     {
       "h2": "Give a small release one clear reveal",
-      "d": "A drop alert is strongest when the product moves once in a way that identifies the release: a sole turn, a color reveal, a zip, or a package opening. Let that movement carry the excitement while your verified availability details stay editable."
+      "d": "A drop alert is strongest when the product moves once in a way that identifies the release: a sole turn, a color reveal, a zip, or a package opening. Let that movement carry the excitement while your availability details stay editable."
     },
     {
       "h2": "Use the asset for several release moments",
-      "d": "Make one visual for coming soon, another for release day, or a third for a confirmed restock. Keep the scene consistent and change only the date, stock note, and link you add after download."
+      "d": "Make one visual for coming soon, another for release day, or a third for a planned restock. Keep the scene consistent and change only the date, stock note, and link you add after download."
     }
   ],
   "input_guide": {
@@ -149,7 +149,7 @@
     "items": [
       {
         "t": "Type date and quantity",
-        "d": "Add the confirmed launch time, inventory note, and timezone in a layer you can revise."
+        "d": "Add the scheduled launch time, inventory note, and timezone in a layer you can revise."
       },
       {
         "t": "Add the product link",
@@ -165,7 +165,7 @@
     "h2": "A good fit for a drop alert",
     "good": [
       "Limited sneakers, apparel, and accessories",
-      "New colorways and confirmed restocks",
+      "New colorways and planned restocks",
       "Subscriber previews and launch-day posts",
       "Products with a visible side or detail"
     ],
@@ -202,5 +202,216 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A limited-drop alert video gives a new or restocked item a quick reveal. Keep the product prominent, then add release timing and availability as editable text.",
+    "strip": [
+      "n:guide:c1-tpl-limited-drop-alert-video-m2-source",
+      "n:guide:c1-tpl-limited-drop-alert-video-m2-result",
+      "n:guide:white-background-shoe-blurred",
+      "n:guide:c1-tpl-product-feature-callout-video-reuse-strip3-wide",
+      "n:candle-pack",
+      "n:gen2:occ-holidays-c4"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-limited-drop-alert-video-m2-source",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Show the full shoe shape and color in a clear view.",
+      "result": "n:guide:c1-tpl-limited-drop-alert-video-m2-result-video-916",
+      "mode": "video",
+      "prompt": "Place this pair of coral trail shoes on a rocky mountain path and slowly turn them so the laces and tread face the camera.",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok & Reels"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "1:1 · Feed"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a scene for a limited-drop alert video",
+      "lead": "Show the new item clearly before adding its release details.",
+      "chips": [
+        {
+          "id": "first",
+          "label": "Show a first look"
+        },
+        {
+          "id": "detail",
+          "label": "Reveal a detail"
+        },
+        {
+          "id": "use",
+          "label": "Show it in use"
+        },
+        {
+          "id": "ready",
+          "label": "Set up the release"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:protein-pack",
+          "label": "Protein tub on a studio counter",
+          "chips": [
+            "first"
+          ],
+          "prompt": "Reveal the unbranded tub with its lid and front surface fully visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-limited-drop-alert-video-c3",
+          "label": "Canvas tote first look",
+          "chips": [
+            "first"
+          ],
+          "prompt": "Reveal the plain canvas tote with its full shape and handles visible.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-tpl-limited-drop-alert-video-shoe-square",
+          "label": "Coral trail shoe profile",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Show the complete unbranded coral trail shoe from the side, including its lugged sole.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-shoes-m2-result",
+          "label": "Brown Chelsea boot side view",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Show the elastic side panel and stitching on the brown leather boot.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:video-hub-g3",
+          "label": "Sneakers revealed inside a shoebox",
+          "chips": [
+            "ready"
+          ],
+          "prompt": "Lift the lid to reveal the unbranded sneakers in their box.",
+          "kind": "video"
+        },
+        {
+          "ref": "g:feed-ad-still/example-07",
+          "label": "Light trail shoe on rocky path",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Show the light trail shoe on a rocky path, keeping its tread and upper visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-leather-sandals",
+          "label": "Cognac leather sandals on stone",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Show both plain leather sandals with their straps and soles visible on a rocky path.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
+          "label": "Small-run ceramic vases on a shelf",
+          "chips": [
+            "ready"
+          ],
+          "prompt": "Arrange the plain ceramic vases on a gallery shelf before the limited release.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make a limited-drop alert video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:guide:c1-tpl-limited-drop-alert-video-m4-shoe-video-916",
+        "h": "Announce the coral trail-shoe drop in a Reel",
+        "d": "Use the 9:16 clip for the reveal, then add the release time and link in your post editor."
+      },
+      {
+        "frame": "listing",
+        "ref": "n:guide:c1-tpl-limited-drop-alert-video-listing-shoe-video-square",
+        "h": "Add the shoe release video to the product listing",
+        "d": "Place the clip near the item details so shoppers can see the coral trail shoes before the drop opens."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-limited-drop-alert-video-picker-outsole-square",
+        "bad": "n:guide:tpl-limited-drop-alert-video-input-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:guide:plat-youtube-shorts-example-trail-square",
+        "bad": "n:guide:c1-reuse-limited-m5-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-1",
+        "frame": "9:16",
+        "label": "9:16 limited-drop reveal"
+      },
+      {
+        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-2",
+        "frame": "9:16",
+        "label": "9:16 product-release video"
+      }
+    ],
+    "after": {
+      "ref": "g:on-model-generation/example-06",
+      "zones": [
+        "Release time",
+        "Quantity",
+        "Product link"
+      ],
+      "items": [
+        "Add the release time and available quantity after download.",
+        "Place the product link and any offer in your ad editor."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a limited-drop alert video for a new product"
+      },
+      "m3": {
+        "h2": "Choose a limited-drop alert video scene"
+      },
+      "m4": {
+        "h2": "Use a limited-drop video in social ads and listings"
+      },
+      "m5": {
+        "h2": "Start a limited-drop video with a clear product photo"
+      },
+      "m6": {
+        "h2": "Choose a limited-drop video format"
+      },
+      "m7": {
+        "h2": "Add release timing after download"
+      },
+      "faq": {
+        "h2": "Questions about limited-drop alert videos"
+      },
+      "examples": {
+        "h2": "Limited-drop alert video examples"
+      },
+      "templates": {
+        "h2": "More limited-drop video templates"
+      }
+    }
   }
 }

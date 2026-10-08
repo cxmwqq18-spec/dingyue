@@ -4,7 +4,7 @@
   "description": "Make a cinematic product video from a single photo, with soft light, deep shadows, and a slow camera move. Choose 16:9 or 9:16 and create your first clip.",
   "h1": "Create a Cinematic Product Video From One Photo",
   "eyebrow": "Cinematic video template",
-  "lead": "A cinematic product video gives your product the dark, slow, big-screen look of a brand film. Upload one photo, describe the light and the setting, and get a clip that runs 10, 15 or 30 seconds.",
+  "lead": "A cinematic product video gives your product the dark, slow, big-screen look of a brand film. Upload one photo, describe the light and the setting, and get a clip that runs 6, 10, or 15 seconds.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -19,16 +19,16 @@
   "tip": "Name one light source and one surface, such as \"cool light from a tall window, dark stone plinth,\" so the scene stays simple and the product stays in focus.",
   "steps": [
     {
-      "t": "Start with a sharp product shot",
-      "d": "A crisp photo on a plain background helps the product keep its shape and finish inside a dark scene."
+      "t": "Upload a clear product photo",
+      "d": "A sharp outline gives the light and camera move a clear subject."
     },
     {
-      "t": "Set the light and camera",
-      "d": "Describe the surface, the light, and the move, like \"blue dusk light, slow push-in.\" Pick 16:9 for widescreen or 9:16 for phones."
+      "t": "Describe the light and movement",
+      "d": "Name a surface, light source, and one camera move."
     },
     {
-      "t": "Add music in your editor",
-      "d": "Download the clip, then lay in music and your brand name in CapCut so the mood carries through."
+      "t": "Download and add licensed sound",
+      "d": "Add a licensed track and product name in your editor."
     }
   ],
   "ideas": [
@@ -87,7 +87,7 @@
     },
     {
       "h2": "Keep atmosphere separate from product facts",
-      "d": "The scene can feel quiet, warm, or dramatic, while your verified name, price, release date, and specifications remain your own overlay. This keeps the film expressive without asking generated lettering to carry information it may distort."
+      "d": "The scene can feel quiet, warm, or dramatic, while your product name, price, release date, and specifications remain your own overlay. This keeps the film expressive without asking generated lettering to carry information it may distort."
     }
   ],
   "input_guide": {
@@ -124,7 +124,7 @@
       },
       {
         "t": "A testable credit cost",
-        "d": "A six-, ten-, fifteen-, or thirty-second version costs 24, 40, 60, or 120 credits; the amount is visible before generation."
+        "d": "A six-, ten-, or fifteen-second version costs 24, 40, or 60 credits; the amount is visible before generation."
       }
     ]
   },
@@ -161,7 +161,7 @@
         "d": "Add the product name, date, offer, or URL in a readable area that the camera does not cross."
       },
       {
-        "t": "Check the crop",
+        "t": "Preview the crop",
         "d": "Review the chosen ratio on the real placement so the hero detail remains visible on phones and wide screens."
       }
     ]
@@ -199,7 +199,7 @@
             "product": "headphones"
           },
           {
-            "ref": "n:gen2:tpl-film-g3",
+            "ref": "g:background-remove-replace/example-06",
             "title": "Ceramic vase in a beam of late-day light",
             "kind": "scene",
             "product": "ceramic vase"
@@ -207,5 +207,220 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A cinematic product video uses light, surface, and a measured camera move to shape the reveal. Keep the product outline clear while the setting adds atmosphere.",
+    "strip": [
+      "n:guide:c1-tpl-film-strip-perfume-ceramic-round-square",
+      "n:guide:c1-tpl-film-strip-watch-field-square",
+      "n:guide:c1-tpl-film-strip-speaker-vertical",
+      "n:guide:c1-tpl-film-strip-speaker-dark-square",
+      "f:pas-formula-ads",
+      "n:gen2:examples-g5"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-film-m2-source",
+      "sourceAlt": "Compact black speaker photographed alone on a dark display plinth.",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Keep the product silhouette crisp against its background.",
+      "result": "f:cinematic-video",
+      "options": [
+        [
+          "Size",
+          "16:9 · YouTube & web"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "9:16 · Shorts & Reels"
+        ]
+      ],
+      "length": 15,
+      "prompt": "Light this compact black speaker with cool window light and make one slow camera move toward its grille.",
+      "mode": "video"
+    },
+    "picker": {
+      "title": "Choose a cinematic product-video treatment",
+      "lead": "Pick a light and camera move that keep the product easy to recognize.",
+      "chips": [
+        {
+          "id": "window",
+          "label": "Use window light"
+        },
+        {
+          "id": "dark",
+          "label": "Build a dark scene"
+        },
+        {
+          "id": "detail",
+          "label": "Move in on a detail"
+        },
+        {
+          "id": "reveal",
+          "label": "Make a slow reveal"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:c1-tpl-film-picker-perfume-metal-round-square",
+          "label": "Metal perfume bottle on dark water",
+          "chips": [
+            "window"
+          ],
+          "prompt": "Move a narrow highlight across the rounded opaque metal fragrance bottle as it rests on dark water.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-fix-film-tumbler-indoor",
+          "label": "Tumbler beside a kitchen window",
+          "chips": [
+            "window"
+          ],
+          "prompt": "Set the stainless travel tumbler on an indoor windowsill beside the visible window.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-tpl-film-reuse-strip5-wide",
+          "label": "Portable speaker on a dark shelf",
+          "chips": [
+            "dark"
+          ],
+          "prompt": "Move a narrow highlight across the black speaker grille in the low-light scene.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-tpl-film-dark-lunch-container-square",
+          "label": "Sage lunch container in dim light",
+          "chips": [
+            "dark"
+          ],
+          "prompt": "Let the closed sage lunch container catch a thin strip of light in a dark kitchen.",
+          "kind": "video"
+        },
+        {
+          "ref": "g:macro-details/example-07",
+          "label": "Open wallet with visible card slots",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Move across the wallet interior so its card slots and stitching are clear.",
+          "kind": "video"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-04",
+          "label": "Close ceramic mug rim",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Hold on the travel mug rim and matte ceramic surface.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-limited-drop-alert-video-c1",
+          "label": "Sneakers on a plinth",
+          "chips": [
+            "reveal"
+          ],
+          "prompt": "Reveal the limited sneakers under a single spotlight.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:white-background-g2",
+          "label": "Clear spray bottle reveal",
+          "chips": [
+            "reveal"
+          ],
+          "prompt": "Reveal the clear spray bottle against a bright uncluttered background.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make a cinematic product video"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "h": "Use a cinematic product video in an ad",
+        "d": "Let the light and product movement set the mood, then add the headline and offer as text.",
+        "ref": "n:guide:ind-jewelry-accessories-m7-steel-watch"
+      },
+      {
+        "frame": "browser",
+        "h": "Add a cinematic clip to a product page",
+        "d": "Pair the scene with a clear listing image so the product details remain easy to find.",
+        "ref": "g:lifestyle-scene/example-04"
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-film-reuse-strip0-square",
+        "bad": "n:guide:c1-reuse-film-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:guide:c1-fix-film-m5-good",
+        "bad": "n:guide:tpl-film-input-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "label": "16:9 cinematic product video",
+        "frame": "16:9",
+        "length": 15,
+        "ref": "n:guide:c1-fix-film-m6-output-1"
+      },
+      {
+        "label": "16:9 wide product reveal",
+        "frame": "16:9",
+        "length": 15,
+        "ref": "n:guide:c1-fix-film-m6-output-2"
+      }
+    ],
+    "after": {
+      "ref": "g:background-remove-replace/example-02",
+      "zones": [
+        "Headline",
+        "Product name"
+      ],
+      "items": [
+        "Add the product name and headline as editable text after download.",
+        "Choose licensed audio in your editor before publishing the clip."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create a cinematic product video from one photo"
+      },
+      "m3": {
+        "h2": "Choose a cinematic product-video treatment"
+      },
+      "m4": {
+        "h2": "Use cinematic product videos in ads and listings"
+      },
+      "m5": {
+        "h2": "Start a cinematic video with a clear product photo"
+      },
+      "m6": {
+        "h2": "Choose a cinematic 16:9 video format"
+      },
+      "m7": {
+        "h2": "Add the product name and sound after download"
+      },
+      "faq": {
+        "h2": "Questions about cinematic product videos"
+      },
+      "examples": {
+        "h2": "Cinematic product video examples"
+      },
+      "templates": {
+        "h2": "More cinematic product video templates",
+        "lead": "Try another product video style to control the light, pace, and reveal."
+      }
+    }
   }
 }

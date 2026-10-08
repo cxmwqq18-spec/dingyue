@@ -305,14 +305,14 @@
     ],
     "tpl-box": [
       {
-        "ref": "n:gen2:tpl-box-c1",
-        "product": "skincare trio",
-        "title": "Skincare trio arranged with its gift box"
+        "ref": "g:bundle-sets/example-07",
+        "product": "skincare collection",
+        "title": "Skincare bottles arranged as a collection on a shelf"
       },
       {
-        "ref": "n:gen2:tpl-box-c2",
-        "product": "coffee starter kit",
-        "title": "Coffee kit with beans, grinder and mug in one frame"
+        "ref": "n:white-mug",
+        "product": "matte ceramic travel mug",
+        "title": "Matte travel mug on a clean studio surface"
       },
       {
         "ref": "n:gen2:tpl-box-c3",
@@ -320,9 +320,9 @@
         "title": "Notebook, pen and organizer sold as one desk set"
       },
       {
-        "ref": "n:gen2:tpl-box-c4",
-        "product": "baby bath set",
-        "title": "Baby bath set with towel, sponge and wash"
+        "ref": "n:guide:black-friday-m2-source-use",
+        "product": "leather duffel",
+        "title": "Leather duffel with visible handles and stitching"
       }
     ],
     "tpl-pack": [
@@ -481,24 +481,24 @@
     ],
     "tpl-story": [
       {
-        "ref": "n:gen2:tpl-story-c1",
-        "product": "sunscreen",
-        "title": "Sunscreen shot with open space for your Story text"
+        "ref": "n:guide:b1-spokesperson-output-bag",
+        "product": "canvas bag",
+        "title": "Tan canvas bag held up in a bright room"
       },
       {
-        "ref": "n:gen2:tpl-story-c2",
+        "ref": "n:gen2:social-ad-photos-g5",
         "product": "canvas sneakers",
-        "title": "Sneakers on steps with room for a swipe-up line"
+        "title": "Canvas sneakers on a gym floor with open space"
       },
       {
-        "ref": "n:gen2:tpl-story-c3",
-        "product": "tall pillar candle",
-        "title": "Pillar candle with blank wall space above it"
+        "ref": "g:sale-campaign-key-visual/example-07",
+        "product": "winter jacket",
+        "title": "Seasonal jacket framed for a Story offer"
       },
       {
-        "ref": "n:gen2:tpl-story-c4",
-        "product": "smoothie bottle",
-        "title": "Smoothie bottle on a counter with room for an offer"
+        "ref": "n:guide:white-background-fix-m1-house-slippers",
+        "product": "felt house slippers",
+        "title": "Felt slippers on a clean surface"
       }
     ],
     "tpl-sale": [
@@ -540,26 +540,26 @@
         "title": "Bike light clipped onto the handlebars"
       },
       {
-        "ref": "n:gen2:tpl-howto-c4",
-        "product": "self-watering planter",
-        "title": "Self-watering planter filled at the reservoir"
+        "ref": "n:gen2:url-to-video-g4",
+        "product": "ceramic teapot",
+        "title": "Teapot and cups arranged for a simple tea-pouring scene"
       }
     ],
     "tpl-film": [
       {
-        "ref": "trending-audio-sync",
-        "product": "transparent synth",
-        "title": "Clear synth keys glowing under neon light"
+        "ref": "g:ecommerce-main-image/hero-output",
+        "product": "matte ceramic travel mug",
+        "title": "Matte ceramic travel mug on a neutral studio surface"
       },
       {
-        "ref": "n:gen2:tpl-film-c2",
-        "product": "perfume bottle",
-        "title": "Perfume bottle on dark water in moody light"
+        "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
+        "product": "folding electric bicycle",
+        "title": "Unbranded folding electric bicycle in a clean studio scene"
       },
       {
-        "ref": "n:gen2:tpl-film-c3",
-        "product": "dive watch",
-        "title": "Dive watch on a rock at sunrise"
+        "ref": "n:gen2:examples-g6",
+        "product": "cork yoga block",
+        "title": "Close-up of cork grain and edge in soft cinematic light"
       },
       {
         "ref": "n:gen2:tpl-film-c4",
@@ -657,41 +657,41 @@
     ],
     "tpl-launch": [
       {
-        "ref": "promo-launch-sale",
-        "product": "table lamp",
-        "title": "Table lamp switched on beside a reading chair"
+        "ref": "f:ugc-ad-video",
+        "product": "smartwatch creator ad",
+        "title": "New smartwatch shown in a bright living room"
       },
       {
-        "ref": "n:gen2:tpl-launch-c2",
-        "product": "water bottle new color",
-        "title": "New bottle color on a spotlit launch-day desk"
+        "ref": "n:gen2:home-g5",
+        "product": "running smartwatch",
+        "title": "Smartwatch shown ready for a morning run"
       },
       {
-        "ref": "n:gen2:tpl-launch-c3",
-        "product": "wireless charger",
-        "title": "Wireless charger revealed under a soft spotlight"
+        "ref": "n:guide:white-background-kettle",
+        "product": "sea-glass kettle",
+        "title": "Sea-glass kettle on a bright kitchen counter"
       },
       {
-        "ref": "n:gen2:tpl-launch-c4",
-        "product": "new candle scent",
-        "title": "New candle scent placed on a styled shelf"
+        "ref": "n:guide:b1-unboxing-videos-result",
+        "product": "white candle jar",
+        "title": "Plain white candle jar with its matching lid"
       }
     ],
     "tpl-compare": [
       {
-        "ref": "n:gen2:tpl-compare-c1",
-        "product": "water bottles",
-        "title": "Two water bottle sizes side by side on a gym bench"
+        "ref": "g:feed-ad-still/example-04",
+        "product": "road running shoe",
+        "title": "Road shoe pictured beside a sunlit running path"
       },
       {
-        "ref": "n:gen2:tpl-compare-c2",
-        "product": "backpacks",
-        "title": "Two backpack sizes packed with the same gear"
+        "ref": "g:feed-ad-still/example-05",
+        "product": "trail shoe tread",
+        "title": "Trail shoe outsole and tread captured in close detail"
       },
       {
-        "ref": "n:gen2:tpl-compare-c3",
-        "product": "lipstick finishes",
-        "title": "Matte and gloss lipstick finishes side by side"
+        "ref": "g:feed-ad-still/hero-output",
+        "product": "training running shoe",
+        "title": "Training shoe centered in a clean feed composition"
       },
       {
         "ref": "n:gen2:tpl-compare-c4",
@@ -723,9 +723,9 @@
     ],
     "tpl-limited-drop-alert-video": [
       {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-c1",
-        "product": "limited sneakers",
-        "title": "Limited sneaker pair on a concrete plinth"
+        "ref": "n:guide:c1-tpl-limited-drop-alert-video-strip-shoes-square",
+        "product": "sneaker",
+        "title": "Sneaker turned to show its sole before a limited drop"
       },
       {
         "ref": "n:gen2:tpl-limited-drop-alert-video-c2",
@@ -733,26 +733,26 @@
         "title": "Small-batch hot sauce lined up on a counter"
       },
       {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-c3",
-        "product": "canvas tote",
-        "title": "Restocked tote bags hanging on a studio rail"
+        "ref": "n:guide:b1-spokesperson-videos-source",
+        "product": "forest-green bottle",
+        "title": "Matte forest-green bottle standing alone on a light surface"
       },
       {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
-        "product": "ceramic vases",
-        "title": "Small-run ceramic vases on a gallery shelf"
+        "ref": "g:background-remove-replace/example-04",
+        "product": "ceramic vase",
+        "title": "Ceramic vase shown against a dark editorial background"
       }
     ],
     "tpl-product-feature-callout-video": [
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-c1",
-        "product": "flip-top bottle",
-        "title": "Flip-top cap opened with one thumb"
+        "ref": "n:guide:white-background-soap-dispenser",
+        "product": "soap dispenser",
+        "title": "Soap dispenser pump shown in close detail"
       },
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-c2",
-        "product": "laptop backpack",
-        "title": "Backpack's hidden laptop sleeve pulled open"
+        "ref": "g:on-model-generation/example-04",
+        "product": "backpack pocket",
+        "title": "Backpack pocket shown in a close-up"
       },
       {
         "ref": "n:gen2:tpl-product-feature-callout-video-c3",
@@ -760,26 +760,26 @@
         "title": "Kettle lid popping open at the press of a button"
       },
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-c4",
-        "product": "auto-open umbrella",
-        "title": "Auto-open umbrella caught mid-bloom"
+        "ref": "n:guide:c1-tpl-feature-gold-band-square",
+        "product": "plain gold band ring",
+        "title": "Plain polished gold band beside a small scale coin"
       }
     ],
     "tpl-carousel-video-ad": [
       {
-        "ref": "n:gen2:tpl-carousel-video-ad-c1",
-        "product": "skincare routine set",
-        "title": "Skincare steps laid out from cleanser to cream"
+        "ref": "g:bundle-sets/example-02",
+        "product": "skincare set",
+        "title": "Skincare bottle and cream arranged side by side"
       },
       {
-        "ref": "n:gen2:tpl-carousel-video-ad-c2",
-        "product": "camping lantern",
-        "title": "Camping lantern lit beside a tent at dusk"
+        "ref": "n:gen2:plat-youtube-shorts-c3",
+        "product": "camping stove",
+        "title": "Portable camp stove heating a pot beside a tent"
       },
       {
-        "ref": "n:gen2:tpl-carousel-video-ad-c3",
-        "product": "bento lunch box",
-        "title": "Lunch box opened to show each compartment"
+        "ref": "n:guide:c1-tpl-carousel-video-ad-skillet-square",
+        "product": "cast-iron skillet",
+        "title": "Unbranded cast-iron skillet with two eggs on a cooktop"
       },
       {
         "ref": "n:gen2:tpl-carousel-video-ad-c4",
@@ -789,46 +789,46 @@
     ],
     "tpl-spark-ads-style-video": [
       {
-        "ref": "n:gen2:tpl-spark-ads-style-video-c1",
-        "product": "phone tripod",
-        "title": "Phone tripod set up on a bedroom desk"
+        "ref": "n:gen2:spokesperson-videos-g4",
+        "product": "small handbag",
+        "title": "Creator holding a small handbag at chest height"
       },
       {
-        "ref": "n:gen2:tpl-spark-ads-style-video-c2",
-        "product": "snack pouch",
-        "title": "Snack pouch opened on a road-trip dashboard"
+        "ref": "n:gen2:examples-g4",
+        "product": "cork yoga block",
+        "title": "Cork yoga block ready on a plain table"
       },
       {
-        "ref": "n:gen2:tpl-spark-ads-style-video-c3",
-        "product": "lip oil",
-        "title": "Lip oil tucked into a gym bag pocket"
+        "ref": "n:guide:ind-jewelry-accessories-m2-result",
+        "product": "gold band",
+        "title": "Polished gold band centered on a plain display card"
       },
       {
-        "ref": "n:gen2:tpl-spark-ads-style-video-c4",
-        "product": "pet brush",
-        "title": "Pet brush used on a dog on the couch"
+        "ref": "n:gen2:plat-facebook-g2",
+        "product": "cat bed",
+        "title": "Cat relaxing in a sunny corner"
       }
     ],
     "tpl-retargeting-video-ad": [
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-c1",
-        "product": "white sneakers",
-        "title": "Sneakers waiting by the door to be worn"
+        "ref": "n:gen2:social-ad-photos-g4",
+        "product": "canvas sneakers",
+        "title": "Canvas sneakers waiting on a city curb"
       },
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-c2",
-        "product": "serum bottle",
-        "title": "Serum bottle back on the bathroom shelf"
+        "ref": "n:guide:c1-tpl-retargeting-video-ad-mug-square",
+        "product": "speckled ceramic mug",
+        "title": "Speckled ceramic travel mug steaming in warm morning light"
       },
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-c3",
-        "product": "knit throw blanket",
-        "title": "Knit throw draped on an empty armchair"
+        "ref": "n:gen2:examples-g8",
+        "product": "wool throw",
+        "title": "Wool throw back on a garden bench in spring"
       },
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-c4",
-        "product": "hand coffee grinder",
-        "title": "Hand grinder ready on a morning counter"
+        "ref": "g:lifestyle-scene/example-05",
+        "product": "herbal tea tin",
+        "title": "Herbal tea tin beside an evening cup"
       }
     ],
     "ind-beauty-skincare": [

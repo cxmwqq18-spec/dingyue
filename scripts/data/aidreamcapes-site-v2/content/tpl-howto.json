@@ -24,7 +24,7 @@
     },
     {
       "t": "Describe a single task",
-      "d": "Say who is using it, where, and what they do. Choose 10 seconds for a quick demo, 15 to slow it down, or 30 for a full walkthrough."
+      "d": "Name one action, then show the steamer passing over a blue shirt."
     },
     {
       "t": "Add step labels after download",
@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 YouTube Shorts"
+        "9:16 · YouTube Shorts"
       ],
       [
         "Length",
@@ -57,7 +57,7 @@
       ],
       [
         "Also try",
-        "16:9 \u00b7 Product page"
+        "16:9 · Product page"
       ]
     ],
     "cta": "Make my how-to video"
@@ -153,7 +153,7 @@
         "d": "Place short labels such as Fill, Press, and Rinse beside the matching moment."
       },
       {
-        "t": "Check claims and measurements",
+        "t": "Add claims and measurements",
         "d": "Type capacity, temperature, or cleaning directions from your product information rather than relying on generated lettering."
       },
       {
@@ -203,5 +203,215 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A how-to video is easiest to follow when it shows one task from setup to result. Keep the tool and the part being worked on visible throughout the clip.",
+    "strip": [
+      "n:guide:c1-tpl-howto-m2-source",
+      "n:guide:c1-tpl-howto-m2-result",
+      "n:gen2:plat-youtube-shorts-g1",
+      "n:gen2:plat-youtube-shorts-g2",
+      "n:gen2:before-after-videos-g1",
+      "n:gen2:ind-home-living-c3"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-howto-m2-source",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Show the full tool and the surface it works on.",
+      "result": "n:guide:c1-tpl-howto-m2-result-video-916",
+      "mode": "video",
+      "prompt": "Switch on this white handheld steamer beside a blue shirt, then press the fabric in one steady pass.",
+      "options": [
+        [
+          "Size",
+          "9:16 · YouTube Shorts"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "16:9 · Product page"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose one task for a how-to video",
+      "lead": "Pick a short action that viewers can follow from start to finish.",
+      "chips": [
+        {
+          "id": "prepare",
+          "label": "Prepare the tool or surface"
+        },
+        {
+          "id": "action",
+          "label": "Show one clear action"
+        },
+        {
+          "id": "detail",
+          "label": "Show a useful detail"
+        },
+        {
+          "id": "result",
+          "label": "Show the visible result"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:ind-health-wellness-c4",
+          "label": "Resistance bands ready on a door",
+          "chips": [
+            "prepare"
+          ],
+          "prompt": "Loop the resistance bands over the door handle before exercising.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-youtube-shorts-c2",
+          "label": "Toothbrush beside the sink",
+          "chips": [
+            "prepare"
+          ],
+          "prompt": "Set the electric toothbrush beside the sink before brushing.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-product-feature-callout-video-reuse-strip2-wide",
+          "label": "Hand presses a cleanser pump",
+          "chips": [
+            "action"
+          ],
+          "prompt": "Press the pump once over a sink to show the product action.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-howto-picker-kettle-action-square",
+          "label": "Kettle pours water into a mug",
+          "chips": [
+            "action"
+          ],
+          "prompt": "Pour from the gooseneck kettle into the mug on a clear counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-howto-picker-steamer-detail-square",
+          "label": "Steamer button and handle seam",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Move in close on the steamer button and handle seam.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-fashion-clothing-g3",
+          "label": "Field jacket fabric close up",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Move closer to the field jacket fabric to show its weave.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:before-after-videos-g2",
+          "label": "Grout after one brush pass",
+          "chips": [
+            "result"
+          ],
+          "prompt": "Show the cleaned grout beside the brush and tile.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-02",
+          "label": "Ceramic mug ready on a counter",
+          "chips": [
+            "result"
+          ],
+          "prompt": "Finish with the mug resting on a clean counter after pouring.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a how-to video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:guide:c1-tpl-howto-use-social-video-916",
+        "h": "Post a how-to video as a Short",
+        "d": "Keep the tool and action in the vertical frame, then add a short label for each step."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:c1-tpl-howto-use-product-page-video-169",
+        "h": "Add the how-to clip to a product page",
+        "d": "Place the demonstration near the instructions so shoppers can see the tool in use."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:plat-youtube-shorts-m2-source",
+        "bad": "n:guide:c1-reuse-howto-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:guide:plat-youtube-shorts-m2-result-vertical",
+        "bad": "n:guide:c1-reuse-howto-m5-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c1-tpl-howto-output-1",
+        "frame": "9:16",
+        "label": "9:16 how-to demonstration"
+      },
+      {
+        "ref": "n:guide:c1-tpl-howto-output-2",
+        "frame": "9:16",
+        "label": "9:16 vertical product tutorial"
+      }
+    ],
+    "after": {
+      "ref": "f:video-hub-h1-steamer",
+      "zones": [
+        "Step label",
+        "Product name"
+      ],
+      "items": [
+        "Add short step labels such as Fill, Press, or Rinse in your editor.",
+        "Place the product name beside the final result after download."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a vertical how-to video from one product photo"
+      },
+      "m3": {
+        "h2": "Choose a clear action for a how-to video"
+      },
+      "m4": {
+        "h2": "Use a how-to video on product pages and Shorts"
+      },
+      "m5": {
+        "h2": "Start a how-to video with a clear tool photo"
+      },
+      "m6": {
+        "h2": "Choose a 9:16 how-to video format"
+      },
+      "m7": {
+        "h2": "Add step labels after download"
+      },
+      "faq": {
+        "h2": "Questions about product how-to videos"
+      },
+      "examples": {
+        "h2": "Product how-to video examples"
+      },
+      "templates": {
+        "h2": "More how-to video templates"
+      }
+    }
   }
 }

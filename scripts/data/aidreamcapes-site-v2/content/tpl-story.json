@@ -18,16 +18,16 @@
   "tip": "Keep the product clear in the square image, then reserve the top and bottom of the Story canvas for your account name, headline, price, and ad button.",
   "steps": [
     {
-      "t": "Upload your product",
-      "d": "Use a straight-on photo of the tube, bottle, or box with the label readable and the whole item inside the square frame."
+      "t": "Upload one square product photo",
+      "d": "Keep the whole product centered with room around it for a tall Story layout."
     },
     {
-      "t": "Describe the square scene",
-      "d": "Choose a calm setting such as a pool deck, shelf, doorway, or wall, and leave room around the product for a Story layout."
+      "t": "Describe a simple setting",
+      "d": "Name a surface, light, and one prop while leaving room for your headline."
     },
     {
-      "t": "Add text after download",
-      "d": "Download the square image, place it on your Story canvas, and add your headline, price, or code in Canva or Ads Manager."
+      "t": "Download and add Story text",
+      "d": "Place the photo on a 9:16 canvas, then add the date, price, and link."
     }
   ],
   "ideas": [
@@ -153,7 +153,7 @@
       },
       {
         "t": "Preview the placement",
-        "d": "Check the Story with its account header and action button before publishing. Choose the Video Ads tool for full-screen motion."
+        "d": "Preview the Story with its account header and action button before publishing. Choose the Video Ads tool for full-screen motion."
       }
     ]
   },
@@ -198,5 +198,218 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A Story ad pairs one clear product photo with a setting that leaves room for a short message. Place the price, date, and link on the Story canvas after you download the image.",
+    "strip": [
+      "n:gen2:tpl-box-c4",
+      "g:ecommerce-main-image/example-06",
+      "n:gen2:lifestyle-photos-g2",
+      "n:gen2:ind-health-wellness-21",
+      "n:gen2:h1-video-hub-socks-source",
+      "n:guide:c1-tpl-compare-reuse-strip2-square"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-story-m2-source",
+      "sourceAlt": "Single hot sauce bottle photographed upright on a pale seamless background.",
+      "sourceTitle": "Square product photo",
+      "sourceHint": "Center the full product with open space around it.",
+      "result": "n:guide:c1-tpl-story-m2-result-square",
+      "options": [
+        [
+          "Template",
+          "Story ad photo"
+        ],
+        [
+          "Output",
+          "Square 1:1 product photo"
+        ],
+        [
+          "Text",
+          "Add after download"
+        ]
+      ],
+      "prompt": "Place this hot sauce bottle beside fresh chilies on a pale counter, leaving open space above for a Story headline.",
+      "mode": "photo"
+    },
+    "picker": {
+      "title": "Choose a product scene for a Story ad",
+      "lead": "Pick a setting that leaves enough open space for your message.",
+      "chips": [
+        {
+          "id": "space",
+          "label": "Leave headline space"
+        },
+        {
+          "id": "gift",
+          "label": "Show a gift idea"
+        },
+        {
+          "id": "everyday",
+          "label": "Use an everyday scene"
+        },
+        {
+          "id": "offer",
+          "label": "Make room for an offer"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "g:story-ad-vertical/hero-output",
+          "label": "Sunscreen with room for a headline",
+          "chips": [
+            "space"
+          ],
+          "prompt": "Leave clear space beside the sunscreen for a short headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:lifestyle-photos-g6",
+          "label": "Linen table setting",
+          "chips": [
+            "space"
+          ],
+          "prompt": "Arrange the linen napkins with quiet space for an offer.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-black-friday-c4",
+          "label": "Cashmere gift boxes",
+          "chips": [
+            "gift"
+          ],
+          "prompt": "Stack the cashmere gift boxes in soft shadow.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:h1-photo-hub-candle-result",
+          "label": "Candle jar in an open carton",
+          "chips": [
+            "gift"
+          ],
+          "prompt": "Open a plain carton to reveal the white ceramic candle jar and its matching lid.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-spokesperson-output-coffee",
+          "label": "Presenter with a ceramic coffee mug",
+          "chips": [
+            "everyday"
+          ],
+          "prompt": "Hold the speckled ceramic mug in a relaxed morning setting.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:url-to-video-g5",
+          "label": "Cap before a run",
+          "chips": [
+            "everyday"
+          ],
+          "prompt": "Pull on the running cap before a morning jog.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-story-reuse-strip5-square",
+          "label": "Hot sauce bottle with fresh chilies",
+          "chips": [
+            "offer"
+          ],
+          "prompt": "Show the bottle beside chilies and leave clear space for an offer.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:story-ad-vertical/example-06",
+          "label": "Sunscreen with Story space",
+          "chips": [
+            "offer"
+          ],
+          "prompt": "Leave open room beside the sunscreen for an offer and price.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a Story ad photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "h": "Place a square product photo on a Story canvas",
+        "d": "Keep the hot sauce bottle visible on the 9:16 canvas, then add the date, price, and link as editable text.",
+        "ref": "n:guide:c1-tpl-story-m4-use-photo-square-1"
+      },
+      {
+        "frame": "post",
+        "h": "Adapt the product photo for a feed post",
+        "d": "Keep the hot sauce bottle centered in the square feed image so its label and silhouette remain visible.",
+        "ref": "n:guide:c1-tpl-story-m4-use-photo-square-2"
+      }
+    ],
+    "input": [
+      {
+        "good": "n:hotsauce-drip",
+        "bad": "n:guide:c1-reuse-story-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:guide:c1-fix-story-m5-good",
+        "bad": "n:guide:tpl-story-input-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "label": "Square hot sauce product photo for a Story ad",
+        "frame": "1:1",
+        "ref": "n:guide:c1-tpl-story-m6-output-1-square"
+      },
+      {
+        "label": "Square hot sauce photo ready for a 9:16 canvas",
+        "frame": "1:1",
+        "ref": "n:guide:c1-tpl-story-m6-output-2-square"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c1-tpl-story-m7-bottle-scene",
+      "zones": [
+        "Headline",
+        "Date",
+        "Price"
+      ],
+      "items": [
+        "Add the date, price, and link as editable text on the 9:16 canvas.",
+        "Keep the headline above the product so the bottle stays clear."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Turn a product photo into a Story ad"
+      },
+      "m3": {
+        "h2": "Choose a scene for your product Story ad"
+      },
+      "m4": {
+        "h2": "Use Story ad photos in vertical social placements"
+      },
+      "m5": {
+        "h2": "Start a Story ad with a clear product photo"
+      },
+      "m6": {
+        "h2": "Prepare a square product photo for a 9:16 Story"
+      },
+      "m7": {
+        "h2": "Add the Story date and offer after download"
+      },
+      "faq": {
+        "h2": "Questions about Story ad photos"
+      },
+      "examples": {
+        "h2": "Instagram Story ad image examples"
+      },
+      "templates": {
+        "h2": "More Instagram Story ad templates",
+        "lead": "Choose another square ad layout for your Instagram Story campaign."
+      }
+    }
   }
 }

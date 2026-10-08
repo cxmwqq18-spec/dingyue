@@ -52,7 +52,7 @@
       ],
       [
         "Length",
-        "10 seconds"
+        "15 seconds"
       ],
       [
         "Also try",
@@ -78,7 +78,7 @@
   "overview": [
     {
       "h2": "Compare what the camera can actually show",
-      "d": "A side-by-side clip is useful for color, size, finish, included pieces, or packaging. Keep the two items in one stable composition and let viewers inspect the difference; put performance claims and exact specifications in your verified product listing."
+      "d": "A side-by-side clip is useful for color, size, finish, included pieces, or packaging. Keep the two items in one stable composition and let viewers inspect the difference; put performance claims and exact specifications in your product listing."
     },
     {
       "h2": "Keep the comparison about your range",
@@ -145,7 +145,7 @@
     ]
   },
   "after_download": {
-    "h2": "Add the facts the scene cannot verify",
+    "h2": "Add facts the scene cannot show",
     "items": [
       {
         "t": "Label each option",
@@ -188,13 +188,13 @@
             "product": "phone cases"
           },
           {
-            "ref": "n:gen2:tpl-compare-g2",
-            "title": "Single mug next to its gift box version",
+            "ref": "n:gen2:tpl-compare-c2",
+            "title": "Two backpack sizes shown side by side",
             "kind": "scene",
-            "product": "mug and gift box"
+            "product": "backpacks"
           },
           {
-            "ref": "n:gen2:tpl-compare-g3",
+            "ref": "g:jewelry-positioning/example-07",
             "title": "Two knife lengths laid side by side on a board",
             "kind": "scene",
             "product": "chef's knives"
@@ -203,5 +203,216 @@
       }
     ]
   },
-  "cta_lead": "Upload one photo that shows both options. See the cost before you start."
+  "cta_lead": "Upload one photo that shows both options. See the cost before you start.",
+  "visual": {
+    "overview": "A product comparison video gives shoppers a clear view of two options at once. Keep the products side by side and name one visible difference, such as size, color, or finish.",
+    "strip": [
+      "n:guide:c1-tpl-compare-m2-source",
+      "n:guide:c1-tpl-compare-m2-result",
+      "g:on-model-generation/example-05",
+      "n:guide:white-background-serving-bowl",
+      "n:guide:b1-spokesperson-strip",
+      "n:guide:c1-tpl-compare-reuse-strip5-square"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-compare-m2-source",
+      "sourceTitle": "Two product options",
+      "sourceHint": "Place both options side by side on one surface.",
+      "result": "n:guide:c1-tpl-compare-m2-result",
+      "mode": "video",
+      "prompt": "Move across these matte-black and cream insulated tumblers, pausing with both visible.",
+      "options": [
+        [
+          "Size",
+          "1:1 · Product listing"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "16:9 · Widescreen"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a comparison for your product video",
+      "lead": "Pick one difference shoppers can see without extra explanation.",
+      "chips": [
+        {
+          "id": "capacity",
+          "label": "Compare capacity"
+        },
+        {
+          "id": "color",
+          "label": "Compare color"
+        },
+        {
+          "id": "appearance",
+          "label": "Compare finish or color"
+        },
+        {
+          "id": "home",
+          "label": "Compare home sizes"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:c1-tpl-compare-card-water-sizes",
+          "label": "Small and large bottle sizes",
+          "chips": [
+            "capacity"
+          ],
+          "prompt": "Place the two stainless bottles side by side to show the size difference.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-compare-card-backpack-sizes",
+          "label": "Two backpack sizes side by side",
+          "chips": [
+            "capacity"
+          ],
+          "prompt": "Arrange both packed backpacks together at different sizes.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-compare-card-tumbler-colors",
+          "label": "Charcoal and cream tumbler colors",
+          "chips": [
+            "color"
+          ],
+          "prompt": "Place both insulated tumblers together to compare their colors.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-compare-card-beanie-colors",
+          "label": "Navy and rust beanie colors",
+          "chips": [
+            "color"
+          ],
+          "prompt": "Arrange both knit beanies side by side in even light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-compare-card-lipstick-finish",
+          "label": "Matte and glossy lipstick finish",
+          "chips": [
+            "appearance"
+          ],
+          "prompt": "Show the two rose lipstick finishes side by side in soft light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-compare-card-phone-case-colors",
+          "label": "Sage and blush phone case colors",
+          "chips": [
+            "appearance"
+          ],
+          "prompt": "Place the sage and blush phone cases side by side from the back.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-compare-card-candle-sizes",
+          "label": "Travel and standard candle sizes",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Place the small travel candle beside the standard jar on one table.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-compare-card-planter-sizes",
+          "label": "Small and large planter sizes",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Arrange both terracotta planters on one windowsill to compare their size.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product-comparison video"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:guide:c1-tpl-compare-reuse-strip4-square",
+        "h": "Add a comparison video to a product page",
+        "d": "Place the clip near the variant selector so shoppers can see the visible difference between options."
+      },
+      {
+        "frame": "post",
+        "ref": "n:guide:c1-tpl-compare-m4-tumbler-pair-square",
+        "h": "Use a comparison video in a social post",
+        "d": "Show both options together, then add variant names and current prices as text."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-compare-reuse-strip3-square",
+        "bad": "n:guide:c1-reuse-compare-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "n:gen2:product-videos-g1",
+        "bad": "n:guide:tpl-compare-input-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c1-tpl-compare-output-1",
+        "frame": "1:1",
+        "label": "1:1 product-comparison video"
+      },
+      {
+        "ref": "n:guide:c1-tpl-compare-output-2",
+        "frame": "1:1",
+        "label": "1:1 product-variant video"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c1-tpl-compare-m7-tumbler-variants-square",
+      "zones": [
+        "Variant names",
+        "Price",
+        "Product link"
+      ],
+      "items": [
+        "Add each variant name and price as editable text after download.",
+        "Link the comparison to the product page with both options available."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a product-comparison video from one photo"
+      },
+      "m3": {
+        "h2": "Choose a product-comparison video scene"
+      },
+      "m4": {
+        "h2": "Use comparison videos on product pages and social"
+      },
+      "m5": {
+        "h2": "Start a product-comparison video with a clear image"
+      },
+      "m6": {
+        "h2": "Choose a square product-comparison video format"
+      },
+      "m7": {
+        "h2": "Add variant names and prices after download"
+      },
+      "faq": {
+        "h2": "Questions about product-comparison videos"
+      },
+      "examples": {
+        "h2": "Product comparison video examples"
+      },
+      "templates": {
+        "h2": "More comparison video templates"
+      }
+    }
+  }
 }

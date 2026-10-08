@@ -1,10 +1,10 @@
 {
   "id": "tpl-product-feature-callout-video",
   "title": "Product Feature Callout Video Template | AIVideosUGC",
-  "description": "Create a product feature callout video from one photo. Show one useful detail in a short scene, then add the verified feature name or label in your editor.",
+  "description": "Create a product feature callout video from one photo. Show one useful detail in a short scene, then add the feature name or label in your editor.",
   "h1": "Product Feature Callout Videos for One Clear Detail",
   "eyebrow": "Feature callout video template",
-  "lead": "Product feature callout video ads keep one useful detail in view. Upload a product photo, describe the action, and get a focused clip for a product page, TikTok, or Reels; add the verified feature name yourself.",
+  "lead": "Product feature callout video ads keep one useful detail in view. Upload a product photo, describe the action, and get a focused clip for a product page, TikTok, or Reels; add the feature name yourself.",
   "secondary_keywords": [
     "feature callout ad",
     "product feature video",
@@ -13,21 +13,21 @@
   ],
   "intro": [
     "A feature callout works when shoppers can see one thing happen. The sample presses a white cleanser pump, spreads the foam, and keeps the action close enough to understand without a presenter.",
-    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action, but it cannot verify ingredients, measurements, or small package text; add those facts in your editor after you check them."
+    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action; use the product listing to add ingredients, measurements, and small package details in your editor."
   ],
   "tip": "Describe one visible feature and one action, then leave any ingredient, size, or performance statement for text you add yourself.",
   "steps": [
     {
-      "t": "Choose the feature",
-      "d": "Upload a photo where the pump, texture, clasp, or control you want to show is easy to see."
+      "t": "Upload a clear product photo",
+      "d": "Show the whole item and the part shoppers need to see in use."
     },
     {
-      "t": "Describe one action",
-      "d": "Write a short scene such as a hand pressing the pump and spreading the foam in clean bathroom light."
+      "t": "Describe one visible action",
+      "d": "Name what moves and where, such as pressing a pump beside a sink."
     },
     {
-      "t": "Add the checked label",
-      "d": "Download the clip and add your product name, feature wording, and any required disclosure yourself."
+      "t": "Download and add the feature name",
+      "d": "Type exact dimensions, ingredients, and feature wording in your editor."
     }
   ],
   "ideas": [
@@ -48,15 +48,15 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
-        "10 seconds"
+        "15 seconds"
       ],
       [
         "Also try",
-        "16:9 \u00b7 Product page"
+        "16:9 · Product page"
       ]
     ],
     "cta": "Make my feature video"
@@ -64,7 +64,7 @@
   "faq": [
     {
       "q": "Will the video write my feature label correctly?",
-      "a": "No. The generated scene may not render small words accurately. Add the checked feature name, ingredients, measurements, and disclosures after downloading."
+      "a": "No. The generated scene may not render small words accurately. Add the feature name, ingredients, measurements, and disclosures in your editor after downloading."
     },
     {
       "q": "Can I show more than one feature?",
@@ -76,7 +76,7 @@
     },
     {
       "q": "How should I describe a product feature?",
-      "a": "Name one visible feature and one action, such as \u201cpresses the locking tab.\u201d"
+      "a": "Name one visible feature and one action, such as “presses the locking tab.”"
     }
   ],
   "overview": [
@@ -85,8 +85,8 @@
       "d": "A callout clip should have one subject and one visible action: a pump pressed, a clasp closed, a hinge opened, or a texture spread. Start with the detail a shopper needs to inspect, then keep the scene close enough to follow."
     },
     {
-      "h2": "Let the overlay carry verified wording",
-      "d": "The generated motion can show what happens, but verify ingredients, measurements, compatibility, and performance statements before adding them as text."
+      "h2": "Keep overlay wording accurate",
+      "d": "Use the product listing for ingredients, measurements, compatibility, and performance statements before adding them as text."
     }
   ],
   "input_guide": {
@@ -123,7 +123,7 @@
       },
       {
         "t": "A measured test cost",
-        "d": "Six, ten, fifteen, and thirty seconds use 24, 40, 60, and 120 credits; the cost is visible before creation."
+        "d": "Six, ten, and fifteen seconds use 24, 40, and 60 credits; the cost is visible before creation."
       }
     ]
   },
@@ -149,7 +149,7 @@
     ]
   },
   "after_download": {
-    "h2": "Write the checked feature layer",
+    "h2": "Add the feature details",
     "items": [
       {
         "t": "Name the feature",
@@ -157,7 +157,7 @@
       },
       {
         "t": "Add measurements or ingredients",
-        "d": "Type capacity, dimensions, ingredients, or compatibility only after checking the source listing."
+        "d": "Use the product listing when adding capacity, dimensions, ingredients, or compatibility."
       },
       {
         "t": "Choose sound",
@@ -206,5 +206,221 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A product-feature callout video puts one visible function in focus. Describe a single movement, then add the feature name and any exact measurements in your editor.",
+    "strip": [
+      "n:guide:c1-tpl-product-feature-callout-video-reuse-strip1-square",
+      "g:background-remove-replace/example-07",
+      "f:product-video",
+      "n:guide:white-background-reading-glasses",
+      "g:background-remove-replace/example-05",
+      "n:guide:c1-tpl-feature-laptop-stand-square"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-product-feature-callout-video-m2-source",
+      "sourceAlt": "Plain white cleanser pump bottle photographed alone on a light background.",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Keep the full bottle and pump head visible.",
+      "result": "n:guide:c1-tpl-product-feature-callout-video-m2-result-video-916",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok & Reels"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "16:9 · Product page"
+        ]
+      ],
+      "length": 15,
+      "prompt": "Press this white cleanser pump once, let a little foam appear, and keep the bottle in view.",
+      "mode": "video"
+    },
+    "picker": {
+      "title": "Pick one feature for your product video",
+      "lead": "Choose a part shoppers can see move, open, or catch the light.",
+      "chips": [
+        {
+          "id": "press",
+          "label": "Press a control"
+        },
+        {
+          "id": "open",
+          "label": "Open a moving part"
+        },
+        {
+          "id": "surface",
+          "label": "Show a surface detail"
+        },
+        {
+          "id": "hardware",
+          "label": "Highlight product hardware"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "f:trending-audio-sync",
+          "label": "Synthesizer controls",
+          "chips": [
+            "press"
+          ],
+          "prompt": "Press the synth controls, then hold on the transparent keys.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-tpl-product-feature-callout-video-picker-speaker-controls-square",
+          "label": "Speaker control buttons",
+          "chips": [
+            "press"
+          ],
+          "prompt": "Show the simple speaker buttons from above.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:spokesperson-videos-c4",
+          "label": "Planner cover opens",
+          "chips": [
+            "open"
+          ],
+          "prompt": "Open the planner cover to reveal its blank pages.",
+          "kind": "video"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-05",
+          "label": "Travel mug lid comes off",
+          "chips": [
+            "open"
+          ],
+          "prompt": "Remove the clear lid from the ceramic travel mug and set it beside the cup.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:b1-before-after-videos-source",
+          "label": "Compact cable organizer slots",
+          "chips": [
+            "hardware"
+          ],
+          "prompt": "Show how the three front slots guide and separate the charging cables.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m3-gem-prongs",
+          "label": "Gold prongs around a clear stone",
+          "chips": [
+            "surface"
+          ],
+          "prompt": "Move in on the simple gold prongs holding the clear stone.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m3-necklace-clasp",
+          "label": "Gold necklace clasp and chain",
+          "chips": [
+            "hardware"
+          ],
+          "prompt": "Turn the necklace so its clasp and chain links are visible.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:ind-fashion-clothing-m2-result",
+          "label": "Hoodie pocket and fabric detail",
+          "chips": [
+            "surface"
+          ],
+          "prompt": "Show the front pocket and knit texture of the heather-gray pullover hoodie.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make a feature callout video"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "h": "Show one feature on a product page",
+        "d": "Place the clip beside the feature description so shoppers can connect the action with its label.",
+        "ref": "f:feature-callout"
+      },
+      {
+        "frame": "phone",
+        "h": "Share the cleanser feature demo in a Reel",
+        "d": "Show the pump action close up, then add the feature name and dimensions as text.",
+        "ref": "n:guide:c1-tpl-product-feature-callout-video-m4-cleanser-video-916"
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-product-feature-callout-video-reuse-strip0-square",
+        "bad": "n:guide:tpl-product-feature-callout-video-input-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "g:bundle-sets/source-input",
+        "bad": "n:guide:tpl-product-feature-callout-video-input-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "label": "9:16 cleanser pump feature video",
+        "frame": "9:16",
+        "length": 15,
+        "ref": "n:guide:c1-tpl-product-feature-callout-video-m6-cleanser-output-1-916"
+      },
+      {
+        "label": "9:16 cleanser foam demonstration",
+        "frame": "9:16",
+        "length": 15,
+        "ref": "n:guide:c1-tpl-product-feature-callout-video-m6-cleanser-output-2-916"
+      }
+    ],
+    "after": {
+      "ref": "g:ugc-still-ad/source-input",
+      "zones": [
+        "Feature name",
+        "Measurement",
+        "Link"
+      ],
+      "items": [
+        "Add the feature name and exact measurement as editable text.",
+        "Keep the product link and ingredient details in your editor."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create a product-feature callout video from one photo"
+      },
+      "m3": {
+        "h2": "Show a product feature in a short video"
+      },
+      "m4": {
+        "h2": "Use product-feature videos on listings and social"
+      },
+      "m5": {
+        "h2": "Start with a clear product-feature photo"
+      },
+      "m6": {
+        "h2": "Choose a product-feature video format"
+      },
+      "m7": {
+        "h2": "Add feature details after download"
+      },
+      "faq": {
+        "h2": "Questions about product-feature callout videos"
+      },
+      "examples": {
+        "h2": "Product feature callout video examples"
+      },
+      "templates": {
+        "h2": "More product feature callout video templates",
+        "lead": "Explore another video style for showing one useful product feature."
+      }
+    }
   }
 }

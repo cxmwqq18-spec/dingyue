@@ -23,11 +23,11 @@
     },
     {
       "t": "Describe the second look",
-      "d": "Write a moment such as checking the ear cups and placing the headphones into a commuter bag."
+      "d": "Write a moment such as inspecting the ear cups and placing the headphones into a commuter bag."
     },
     {
       "t": "Set the audience yourself",
-      "d": "Add your verified offer and product page, then choose visitors, cart users, exclusions, and frequency in your ad platform."
+      "d": "Add your offer and product page, then choose visitors, cart users, exclusions, and frequency in your ad platform."
     }
   ],
   "ideas": [
@@ -52,7 +52,7 @@
       ],
       [
         "Length",
-        "10 seconds"
+        "15 seconds"
       ],
       [
         "Also try",
@@ -72,7 +72,7 @@
     },
     {
       "q": "Will it add the offer or price?",
-      "a": "No. Add the current offer, price, dates, and disclosure yourself after checking them in your editor or ad platform."
+      "a": "No. Add the current offer, price, dates, and disclosure in your editor or ad platform."
     }
   ],
   "overview": [
@@ -136,7 +136,7 @@
       },
       {
         "t": "Headphones into a bag",
-        "d": "Dark headphones are checked at the ear cup, folded, and placed into a commuter bag."
+        "d": "Show the ear cups close up, fold the headphones, and place them into a commuter bag."
       },
       {
         "t": "Phone stand return",
@@ -149,7 +149,7 @@
     "items": [
       {
         "t": "Add the current offer",
-        "d": "Place the verified price, promotion, or product link in your editor."
+        "d": "Place the current price, promotion, or product link in your editor."
       },
       {
         "t": "Choose the audience",
@@ -170,7 +170,7 @@
       "Offers that the seller controls outside the asset"
     ],
     "not_ideal": [
-      "Audience claims the platform cannot verify",
+      "Audience and policy limits",
       "A campaign that needs automatic inventory or cart data inside the clip"
     ]
   },
@@ -202,5 +202,218 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A retargeting video ad gives returning shoppers a useful second look at a product. Show a detail, a routine, or a practical use moment before adding the current offer.",
+    "strip": [
+      "n:guide:c1-tpl-retargeting-video-ad-m2-source",
+      "n:guide:c1-tpl-retargeting-video-ad-m2-result-square",
+      "n:guide:c1-tpl-retargeting-video-ad-reuse-strip5-square",
+      "n:gen2:occ-black-friday-g1",
+      "n:guide:c1-tpl-retargeting-video-ad-headphones-square",
+      "n:gen2:before-after-videos-c3"
+    ],
+    "steps": {
+      "source": "n:guide:c1-tpl-retargeting-video-ad-m2-source",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Keep the full headphones and ear cups visible.",
+      "result": "n:guide:c1-tpl-retargeting-video-ad-m2-result-square",
+      "mode": "video",
+      "prompt": "Fold these dark blue headphones and place them into a commuter bag after showing one ear cup.",
+      "options": [
+        [
+          "Size",
+          "1:1 · Feed"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "9:16 · Reels"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a useful second look for a retargeting video ad",
+      "lead": "Give returning shoppers one more clear product moment.",
+      "chips": [
+        {
+          "id": "home",
+          "label": "Refresh a home scene"
+        },
+        {
+          "id": "texture",
+          "label": "Show texture"
+        },
+        {
+          "id": "routine",
+          "label": "Return to a routine"
+        },
+        {
+          "id": "detail",
+          "label": "Revisit a detail"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:c1-tpl-retargeting-video-ad-blanket-action",
+          "label": "Hands smooth a wool throw",
+          "chips": [
+            "texture"
+          ],
+          "prompt": "Smooth the sage-green wool throw across the armchair seat.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-home-living-m5-soft-focus",
+          "label": "Throw pillow beside a floor lamp",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Bring the throw pillow into focus beside the floor lamp.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-before-after-videos-result",
+          "label": "Desk cables returned to order",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Tidy the desk cables into a cable box after use.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-c4",
+          "label": "Hand grinder ready on a counter",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Set the hand grinder beside a cup and beans before the morning routine.",
+          "kind": "video"
+        },
+        {
+          "ref": "g:on-model-generation/example-07",
+          "label": "Backpack handle shown close up",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Turn the backpack to show its handle and stitching.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+          "label": "Serum bottle back on a shelf",
+          "chips": [
+            "home",
+            "texture"
+          ],
+          "prompt": "Return the serum bottle to its tidy bathroom shelf and hold on the translucent surface catching light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:examples-g7",
+          "label": "Wool throw on an armchair",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Set the wool throw over an armchair beside a snowy window.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-retargeting-video-ad-throw-square",
+          "label": "Sage wool throw on an armchair",
+          "chips": [
+            "texture",
+            "detail"
+          ],
+          "prompt": "Set the sage wool throw over the lounge chair and keep its woven texture visible.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make a retargeting video ad"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:guide:c1-tpl-retargeting-video-ad-use-phone-video-916",
+        "h": "Bring the headphone reminder back to a social feed",
+        "d": "Use a vertical clip to show dark blue headphones folded beside a commuter bag."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:c1-tpl-retargeting-video-ad-m3-headphones-detail-square",
+        "h": "Pair a retargeting clip with its product page",
+        "d": "Keep the offer and product page consistent so shoppers can return to the item they viewed."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:c1-tpl-retargeting-video-ad-after-headphones-square",
+        "bad": "n:guide:c1-reuse-retarget-m5-1-blur",
+        "good_label": "Product shape and details stay sharp",
+        "bad_label": "Soft focus hides small product details"
+      },
+      {
+        "good": "f:retargeting-urgency",
+        "bad": "n:guide:c1-reuse-retarget-m5-2-crop",
+        "good_label": "Whole product fits inside the frame",
+        "bad_label": "Tight framing cuts off a product edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:c1-tpl-retargeting-video-ad-output-1",
+        "frame": "1:1",
+        "label": "1:1 retargeting feed video"
+      },
+      {
+        "ref": "n:guide:c1-tpl-retargeting-video-ad-output-2",
+        "frame": "1:1",
+        "label": "1:1 product reminder video"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:c1-tpl-retargeting-video-ad-m3-headphones-texture-square",
+      "zones": [
+        "Current price",
+        "Offer",
+        "Product link"
+      ],
+      "items": [
+        "Add the current price and offer as editable text after download.",
+        "Link the clip to the product page shoppers visited."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a retargeting video ad from one product photo"
+      },
+      "m3": {
+        "h2": "Choose a useful scene for a retargeting video ad"
+      },
+      "m4": {
+        "h2": "Place a retargeting video in social ads and product pages"
+      },
+      "m5": {
+        "h2": "Start a retargeting video with a clear product photo"
+      },
+      "m6": {
+        "h2": "Choose a retargeting video format"
+      },
+      "m7": {
+        "h2": "Add the current offer after download"
+      },
+      "faq": {
+        "h2": "Questions about retargeting video ads"
+      },
+      "examples": {
+        "h2": "Retargeting video ad examples"
+      },
+      "templates": {
+        "h2": "More retargeting video templates"
+      }
+    }
   }
 }
