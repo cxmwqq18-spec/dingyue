@@ -401,7 +401,7 @@ function CollectionPage({ data, r }: Props) {
         <Maker note={text(data.startNote)} maker={visualMaker ?? { options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
       <VisualStrip includeOverview visual={visual} r={r} />
-      {kind === "occasion" && list<V2Item>(data.plan).length ? <Section eyebrow="Plan your campaign" title="When to prepare your Black Friday ads"><Steps items={list<V2Item>(data.plan)} /></Section> : null}
+      {kind === "occasion" && list<V2Item>(data.plan).length ? <Section eyebrow="Plan your campaign" title={visual.titles?.plan?.h2 ?? ""}><Steps items={list<V2Item>(data.plan)} /></Section> : null}
       <VisualSteps buttonLabel={visualMaker?.cta ?? "Get started"} visual={visual} r={r} />
       <VisualPicker pageId={data.id} visual={visual} r={r} />
       <VisualUses visual={visual} r={r} />

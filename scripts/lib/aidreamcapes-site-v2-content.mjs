@@ -1314,6 +1314,7 @@ function payloadFor(model, page) {
         href: collectionHref
       };
       visual = visualFor(model, page, c.visual, visualMaker, visualMode, collectionHref, c);
+      assert.ok(!(t === "occasion" && (c.plan || []).length) || String(c.visual.titles?.plan?.h2 || "").trim(), `${page.id}: an occasion page with a plan needs visual.titles.plan.h2`);
     }
     return { ...base, kind: t, intro: linkedCopy.intro, ideas: linkedCopy.groups[0], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
       cards: [...listed, ...caseCards], heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
