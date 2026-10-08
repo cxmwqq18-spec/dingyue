@@ -61,6 +61,7 @@ export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "unboxing-experience",
   "before-after-showcases",
   "ai-actor-product-ads",
+  "ai-actors",
   "how-to-video",
   "cinematic-video",
   "beauty-routine",
