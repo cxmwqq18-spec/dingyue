@@ -319,10 +319,10 @@
     "spokesperson-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-spokesperson-presenter"
+        "image": "n:guide:q4-spokesperson-hero"
       },
       "gallery": [],
-      "og": "f:k8-spokesperson-guide-b1-spokesperson-videos-result"
+      "og": "n:guide:q4-spokesperson-hero"
     },
     "image-to-video": {
       "hero": {

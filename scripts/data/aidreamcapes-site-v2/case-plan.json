@@ -113,24 +113,24 @@
     ],
     "spokesperson-videos": [
       {
-        "ref": "n:gen2:spokesperson-videos-c1",
+        "ref": "n:guide:q4-spokesperson-case-01",
         "product": "toner bottle",
-        "title": "Presenter holding a toner bottle at eye level"
+        "title": "Bathroom routine demo: toner before makeup"
       },
       {
-        "ref": "n:gen2:spokesperson-videos-1",
-        "product": "black smart speaker",
-        "title": "Presenter showing a smart speaker at home"
+        "ref": "n:guide:q4-spokesperson-case-02",
+        "product": "over-ear headphones",
+        "title": "Podcast feature review: headphone controls"
       },
       {
-        "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c3",
+        "ref": "n:guide:q4-spokesperson-case-03",
         "product": "protein shaker",
-        "title": "Presenter holding a shaker bottle after a workout"
+        "title": "Gym use demo: shaker cap and grip"
       },
       {
-        "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c4",
-        "product": "hardcover planner",
-        "title": "Presenter showing a planner's open spread at a desk"
+        "ref": "n:guide:q4-spokesperson-case-04",
+        "product": "folding phone stand",
+        "title": "Office problem solver: stable phone calls"
       }
     ],
     "white-background": [
