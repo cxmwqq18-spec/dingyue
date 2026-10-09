@@ -159,11 +159,12 @@ export function loadSiteV2Source() {
     casePlan: readJson(path.join(DATA_DIR, "case-plan.json"))
   };
   const cardOverrides = readJson(path.join(DATA_DIR, "card-overrides.json"));
-  return { master, images, content, media, cardOverrides };
+  const cardAssignmentDocument = readJson(path.join(DATA_DIR, "dynamic-card-assignments.json"));
+  return { master, images, content, media, cardOverrides, cardAssignmentDocument };
 }
 
 function buildModel(source) {
-  const { master, images, content, media, cardOverrides = {} } = source;
+  const { master, images, content, media, cardOverrides = {}, cardAssignmentDocument = {} } = source;
   const pages = master.pages.map((page) => ({ ...page, url: page.url === "/" ? "/" : page.url.replace(/\/+$/, "") }));
   const byId = Object.fromEntries(pages.map((page) => [page.id, page]));
   const ind = Object.fromEntries(master.industries.map(([slug, label]) => [slug, label]));
@@ -180,9 +181,9 @@ function buildModel(source) {
   }
   cards.sort((a, b) => CARD_ORDER.indexOf(a.key) - CARD_ORDER.indexOf(b.key));
   const cardByKey = Object.fromEntries(cards.map((card) => [card.key, card]));
-  // Which pictures are already on the page being built, and how often each has been used on the
-  // site so far. Cards use these to pick a picture that is not repeated (see cardRef).
-  return { pages, byId, content, images, media, cardOverrides, cardOverrideErrors: [], cardOverrideCardKeys: new Map(), ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
+  // Page assignments choose each dynamic card image. The counters preserve the existing
+  // cross-page card-list ranking; pageUse prevents same-page repeats.
+  return { pages, byId, content, images, media, cardOverrides, cardAssignmentDocument, cardAssignments: cardAssignmentDocument.pages ?? {}, cardAssignmentErrors: [], cardAssignmentUse: new Map(), cardOverrideErrors: [], cardOverrideCardKeys: new Map(), ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
 }
 
 function imageRef(model, key, alt) {
@@ -316,9 +317,9 @@ function pageCardImage(model, pageId) {
 
 // ---------------------------------------------------------------------------
 // Picture variety. A template card has one curated picture and, where its gallery or the media
-// plan offers them, other examples of the same template. The curated picture is used on the main
-// lists (templates, home, hubs); everywhere else a card shows the example used least so far, and
-// never one that is already on the page. A card with no unused picture is left out of that list.
+// plan offers them, other examples of the same template. Current pages use explicit per-card
+// assignments; an unassigned call falls back to the first locally unused candidate and is reported
+// by the validator so it can be added to the assignment data before release.
 export const imageBase = (src) => String(src).replace(/\/_responsive\//, "/").replace(/--\d+(?=\.\w+$)/, "").replace(/\.\w+$/, "");
 
 function cardChoices(model, key) {
@@ -334,6 +335,18 @@ function cardChoices(model, key) {
 function cardRef(model, key, role = "alt", force = false) {
   const card = model.cardByKey[key];
   assert.ok(card, `unknown card ${key}`);
+  const assignmentKey = `${model.currentPageId}\u0000${key}`;
+  const assignmentIndex = model.cardAssignmentUse.get(assignmentKey) ?? 0;
+  model.cardAssignmentUse.set(assignmentKey, assignmentIndex + 1);
+  const assigned = model.cardAssignments?.[model.currentPageId]?.[key];
+  const hasAssignment = Array.isArray(assigned) && assignmentIndex < assigned.length;
+  const assignedRef = hasAssignment ? assigned[assignmentIndex] : undefined;
+  const fallbackAssignment = Boolean(hasAssignment && assignedRef && typeof assignedRef === "object" && assignedRef.fallback === true && Object.keys(assignedRef).length === 1);
+  if (!hasAssignment) model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} call ${assignmentIndex + 1} has no explicit image assignment`);
+  if (hasAssignment && assignedRef === null) return null;
+  if (hasAssignment && typeof assignedRef !== "string" && !fallbackAssignment) {
+    model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} call ${assignmentIndex + 1} has an invalid image assignment`);
+  }
   const reserveForUrl = model.spreadEnabled && !model.currentPageIsTool && model.currentPageId !== "url-to-video" && TOOL_REL["url-to-video"].includes(key);
   const reserveForOccasion = model.spreadEnabled && !model.currentPageIsTool && !model.currentPageIsOccasion && OCCASION_SPREAD_KEYS.has(key);
   const reserveForPlatform = model.spreadEnabled && !model.currentPageIsTool && !model.currentPageIsPlatform && !model.currentPageIsOccasion && PLATFORM_SPREAD_KEYS.has(key);
@@ -341,17 +354,34 @@ function cardRef(model, key, role = "alt", force = false) {
   const reserveForHoliday = model.spreadEnabled && model.currentPageId !== "occ-holidays" && OCCASION_SPREAD_KEYS.has(key);
   const limit = reserveForBlackFriday || reserveForOccasion ? 4 : reserveForHoliday ? 5 : reserveForUrl || reserveForPlatform ? 5 : 6;
   const preserveMinimum = model.currentPageIsCollection && model.currentPageCardCount < 3 && (model.spreadUse.get(key) ?? 0) < 6 && !reserveForUrl && !reserveForOccasion && !reserveForBlackFriday && !reserveForHoliday && (!reserveForPlatform || model.currentPageIsPlatform);
-  if (!force && model.spreadEnabled && (model.spreadUse.get(key) ?? 0) >= limit && !preserveMinimum) return null;
+  if (!hasAssignment && !force && model.spreadEnabled && (model.spreadUse.get(key) ?? 0) >= limit && !preserveMinimum) return null;
   const choices = cardChoices(model, key);
-  let ref = choices[0];
-  if (role === "alt" && choices.length > 1) {
-    const others = choices.slice(1);
-    const free = others.filter((candidate) => !model.pageUse.has(candidate));
-    const pool = free.length ? free : others;
-    ref = [...pool].sort((a, b) => (model.globalUse.get(a) ?? 0) - (model.globalUse.get(b) ?? 0) || choices.indexOf(a) - choices.indexOf(b))[0];
+  const pool = role === "alt" && choices.length > 1 ? choices.slice(1) : choices;
+  const free = pool.filter((candidate) => !model.pageUse.has(candidate));
+  let ref = hasAssignment && typeof assignedRef === "string" ? assignedRef : undefined;
+  let accountingRef = hasAssignment ? (typeof assignedRef === "string" ? assignedRef : null) : undefined;
+  if (!ref || model.pageUse.has(ref)) ref = free[0] ?? pool[0];
+  if (hasAssignment && typeof assignedRef === "string" && !knownMediaRef(model, assignedRef)) {
+    model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} has an unknown assigned image ${assignedRef}`);
+    ref = free[0] ?? pool[0];
   }
-  if (ref && model.pageUse.has(ref)) return null;
-  if (ref) { model.pageUse.add(ref); model.globalUse.set(ref, (model.globalUse.get(ref) ?? 0) + 1); }
+  if (!hasAssignment) accountingRef = ref;
+  if (ref && model.pageUse.has(ref)) {
+    // A page-local media edit can make an old allocation unavailable. Keep the
+    // shared card-spread ledger tied to the explicit allocation so this local
+    // change cannot reshuffle other pages.
+    if (hasAssignment && typeof assignedRef === "string") {
+      model.globalUse.set(assignedRef, (model.globalUse.get(assignedRef) ?? 0) + 1);
+      model.cardUse.set(key, (model.cardUse.get(key) ?? 0) + 1);
+      if (model.spreadEnabled) model.spreadUse.set(key, (model.spreadUse.get(key) ?? 0) + 1);
+      model.currentPageCardCount += 1;
+    }
+    return null;
+  }
+  if (ref) {
+    model.pageUse.add(ref);
+    if (accountingRef) model.globalUse.set(accountingRef, (model.globalUse.get(accountingRef) ?? 0) + 1);
+  }
   model.cardUse.set(key, (model.cardUse.get(key) ?? 0) + 1);
   if (model.spreadEnabled) model.spreadUse.set(key, (model.spreadUse.get(key) ?? 0) + 1);
   model.currentPageCardCount += 1;
@@ -361,12 +391,11 @@ function cardRef(model, key, role = "alt", force = false) {
     tags: [...card.ind.map((slug) => model.ind[slug]), ...card.plat.map((slug) => model.plat[slug])],
     industries: card.ind, platforms: card.plat
   };
-  model.cardRefInfo.set(result, { key, ref });
+  model.cardRefInfo.set(result, { key, ref, accountingRef });
   return result;
 }
 
-// How much its freshest available picture has been used so far; cards whose pictures are all
-// worn out come last, so lists lean on cards that can still show something new.
+// Rank candidate card keys by their assigned pictures; the chosen image itself is page-specific.
 function pictureUse(model, key, role) {
   const choices = cardChoices(model, key);
   const pool = role === "alt" && choices.length > 1 ? choices.slice(1) : choices;
@@ -414,12 +443,16 @@ function adjustUseCount(map, key, amount) {
   else map.delete(key);
 }
 
+function cardAccountingRef(info) {
+  return info.accountingRef === null ? undefined : (info.accountingRef ?? info.ref);
+}
+
 function releaseCardRef(model, card) {
   const info = model.cardRefInfo.get(card);
   if (!info) return;
   if (info.ref) {
     model.pageUse.delete(info.ref);
-    adjustUseCount(model.globalUse, info.ref, -1);
+    adjustUseCount(model.globalUse, cardAccountingRef(info), -1);
   }
   adjustUseCount(model.cardUse, info.key, -1);
   if (model.spreadEnabled) adjustUseCount(model.spreadUse, info.key, -1);
@@ -464,12 +497,12 @@ function applyCardOverrides(model, page, cards) {
     if (alreadyVisible || repeatedCard) model.cardOverrideErrors.push(`${page.id}: image override repeats media on the same page (${imageOverride.ref})`);
     if (info.ref) {
       model.pageUse.delete(info.ref);
-      adjustUseCount(model.globalUse, info.ref, -1);
+      adjustUseCount(model.globalUse, cardAccountingRef(info), -1);
     }
     card.image = { ...nextImage, alt: imageOverride.alt };
     model.pageUse.add(imageOverride.ref);
     adjustUseCount(model.globalUse, imageOverride.ref, 1);
-    model.cardRefInfo.set(card, { ...info, ref: imageOverride.ref });
+    model.cardRefInfo.set(card, { ...info, ref: imageOverride.ref, accountingRef: imageOverride.ref });
   }
   for (const card of result) cardKeys.rendered.add(card.key);
   model.cardOverrideCardKeys.set(page.id, cardKeys);
@@ -484,6 +517,19 @@ function finalizeCardOverrides(model) {
     }
     for (const key of Object.keys(override?.images ?? {})) {
       if (!keys.rendered.has(key)) model.cardOverrideErrors.push(`${pageId}: image override card ${key} is not in rendered template cards`);
+    }
+  }
+}
+
+function finalizeCardAssignments(model) {
+  for (const [pageId, byKey] of Object.entries(model.cardAssignments ?? {})) {
+    for (const [key, entries] of Object.entries(byKey ?? {})) {
+      if (!Array.isArray(entries)) {
+        model.cardAssignmentErrors.push(`${pageId}: dynamic card assignments for ${key} must be an array`);
+        continue;
+      }
+      const consumed = model.cardAssignmentUse.get(`${pageId}\u0000${key}`) ?? 0;
+      if (consumed < entries.length) model.cardAssignmentErrors.push(`${pageId}: dynamic card ${key} has ${entries.length - consumed} unused image assignment(s)`);
     }
   }
 }
@@ -1577,7 +1623,8 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     };
   });
   finalizeCardOverrides(model);
-  return { pages, navigation: buildNavigation(model), redirects: SITE_V2_REDIRECTS, llms: buildLlmsText(model), cardOverrideErrors: model.cardOverrideErrors };
+  finalizeCardAssignments(model);
+  return { pages, navigation: buildNavigation(model), redirects: SITE_V2_REDIRECTS, llms: buildLlmsText(model), cardOverrideErrors: model.cardOverrideErrors, cardAssignmentErrors: model.cardAssignmentErrors };
 }
 
 function buildNavigation(model) {
@@ -1856,6 +1903,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const errors = [];
   const seen = { title: new Map(), description: new Map(), h1: new Map(), slug: new Map() };
   const validationSource = loadSiteV2Source();
+  if (validationSource.cardAssignmentDocument?.version !== 1 || !validationSource.cardAssignmentDocument.pages || typeof validationSource.cardAssignmentDocument.pages !== "object" || Array.isArray(validationSource.cardAssignmentDocument.pages)) errors.push("dynamic card assignments are malformed (expected version 1 and a pages map)");
   const technicalKeys = new Set(["href", "src", "srcset", "sizes", "key", "kind", "industries", "platforms", "id", "section", "tool_id", "mediaref", "ref", "url", "width", "height", "duration", "uploaddate", "w", "h"]);
   const publicText = (value, key = "") => {
     if (typeof value === "string") return [value];
@@ -2236,6 +2284,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     }
   }
   for (const message of build.cardOverrideErrors ?? []) errors.push(message);
+  for (const message of build.cardAssignmentErrors ?? []) errors.push(message);
   const imageReuse = analyzeSiteV2ImageReuse(build, validationSource);
   let baselineEntries = [];
   try {
