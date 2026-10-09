@@ -306,7 +306,7 @@
     "input": [
       {
         "good": "n:guide:k3-social-input-bottle-good",
-        "bad": "n:guide:q6-social-bad-bottle-r2",
+        "bad": "n:guide:t23-social-ad-photos-bad-bottle",
         "good_label": "Bottle outline and cap in focus",
         "bad_label": "Bottle details softened by blur"
       },
@@ -321,7 +321,7 @@
       {
         "ref": "n:guide:q6-social-output-bottle-r1",
         "frame": "1:1",
-        "label": "First Sip: Turquoise insulated bottle"
+        "label": "First Sip: Pale Blue Insulated Bottle"
       },
       {
         "ref": "n:guide:q6-social-output-tea-r1",

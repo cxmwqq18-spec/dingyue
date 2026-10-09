@@ -23728,7 +23728,7 @@
         "file": "k3-social-input-bottle-good",
         "w": 1024,
         "h": 1024,
-        "alt": "Green insulated bottle and cap in sharp focus on a sunny desk.",
+        "alt": "Pale blue insulated bottle with steel cap in sharp focus on a sunny desk.",
         "variants": [
           640,
           1280
@@ -28706,7 +28706,7 @@
         "file": "q6-social-output-bottle-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "An adult drinks from a pale turquoise insulated bottle at a sunny park workout stop.",
+        "alt": "An adult drinks from a pale blue insulated bottle with steel cap at a sunny park workout stop.",
         "variants": [
           640,
           1280
@@ -41643,6 +41643,66 @@
         "w": 1024,
         "h": 1024,
         "alt": "Older East Asian man adjusts a plain teal dog harness on a black-and-white border collie at a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "t23-video-hub-input-bad-shoe": {
+        "file": "t23-video-hub-input-bad-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same unbranded charcoal road-running shoe photographed too dark to inspect its details.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "t23-video-hub-output-shoe-runner": {
+        "file": "t23-video-hub-output-shoe-runner",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult runner wears an unbranded deep charcoal road-running shoe on a tree-lined path in soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "t23-video-hub-output-socks-morning": {
+        "file": "t23-video-hub-output-socks-morning",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pulls on plain cream merino wool socks with visible ribbed knit texture at home in morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "t23-video-hub-output-shoe-laces": {
+        "file": "t23-video-hub-output-shoe-laces",
+        "w": 1536,
+        "h": 864,
+        "alt": "Adult runner tightens the laces of an unbranded deep charcoal road-running shoe on a park trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "t23-social-ad-photos-bad-bottle": {
+        "file": "t23-social-ad-photos-bad-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same pale blue insulated bottle with steel cap photographed too dim and soft to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "t23-ind-fashion-output-ivory-puffer": {
+        "file": "t23-ind-fashion-output-ivory-puffer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wears a warm ivory long hooded puffer coat on a snowy city sidewalk.",
         "variants": [
           640,
           1280

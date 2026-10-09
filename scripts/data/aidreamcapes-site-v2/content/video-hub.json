@@ -491,11 +491,11 @@
     "input": [
       {
         "good": "n:guide:k6-video-hub-input-runner",
-        "bad": "n:guide:q1-video-input-bad-shoe",
+        "bad": "n:guide:t23-video-hub-input-bad-shoe",
         "good_label": "Clear running shoe, full shape in focus",
         "bad_label": "Running shoe too dark to inspect",
         "darkened": true,
-        "bad_alt": "A plain gray running shoe photographed on a neutral surface."
+        "bad_alt": "The same unbranded charcoal road-running shoe photographed too dark to inspect its details."
       },
       {
         "good": "n:guide:q1-video-input-good-socks",
@@ -507,21 +507,21 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:q1-video-output-selfie",
+        "ref": "n:guide:t23-video-hub-output-shoe-runner",
         "frame": "9:16",
-        "label": "Car Selfie Review: Electrolyte Drink",
+        "label": "Running Shoe Demo: Worn on a Trail",
         "length": 6
       },
       {
-        "ref": "n:guide:q1-video-output-serum",
+        "ref": "n:guide:t23-video-hub-output-socks-morning",
         "frame": "1:1",
-        "label": "Creator Review: Serum Held to Camera",
+        "label": "Wool Sock Demo: Pulled On at Home",
         "length": 10
       },
       {
-        "ref": "n:guide:q1-video-output-cases",
+        "ref": "n:guide:t23-video-hub-output-shoe-laces",
         "frame": "16:9",
-        "label": "Product Comparison: Phone Cases Side by Side",
+        "label": "Running Shoe Detail: Laces Tightened",
         "length": 15
       }
     ],
