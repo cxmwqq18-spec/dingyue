@@ -7553,6 +7553,14 @@
       "variants": [
         1200
       ]
+    },
+    "t33-tpl-carousel-video-ad-og-r2": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Black commuter backpack opened on a cafe table.",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {
