@@ -337,20 +337,20 @@
         },
         {
           "ref": "n:guide:k4-before-after-videos-m5-round-watch-bad",
-          "label": "Watch Demo: Analog Box Reveal",
+          "label": "Watch Detail: Analog Dial",
           "chips": [
             "demo"
           ],
-          "prompt": "Use the uploaded photo as a simple round analog wristwatch with a plain leather strap and keep the watch face and box visible. Adult hands open the matte kraft box and angle the watch toward the camera to show the dial and strap. Hands-only UGC product demo, square framing, no text or logos.",
+          "prompt": "Use the uploaded photo as a simple round analog wristwatch and keep the softened dial and dark stand visible. A hands-only close-up holds on the watch detail for a calm UGC product look. Square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-05-r2",
-          "label": "Try-On: Green Midi Dress",
+          "label": "Try-On: Party Dress",
           "chips": [
             "tryon"
           ],
-          "prompt": "Use the uploaded photo as a plain muted green midi dress and keep its silhouette visible. An adult model checks the fit in a bright courtyard, turning slightly to show the launch outfit naturally. UGC try-on photo, square framing, no text or logos.",
+          "prompt": "Use the uploaded photo as a plain red party dress and keep its silhouette visible. An adult model checks the fit in a bright courtyard, turning slightly to show the launch outfit naturally. UGC try-on photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {

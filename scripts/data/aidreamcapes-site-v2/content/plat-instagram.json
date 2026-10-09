@@ -436,20 +436,20 @@
         },
         {
           "ref": "n:guide:k5-home-hoodie-flatlay",
-          "label": "Silk Scarf — Styling Detail",
+          "label": "Hoodie Flatlay — Styling Detail",
           "chips": [
             "styling"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain silk scarf and handbag handle. An adult hand tightens the scarf knot on the handle beside a mirror, ending with the knot centered. Soft daylight, square styling frame, no text or logos.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the folded gray hoodie, knit beanie and scarf. An adult hand smooths the hoodie beside the beanie and scarf on a wooden bench, ending with the fabric centered. Soft daylight, square styling frame, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k9-retargeting-creator-smartwatch",
-          "label": "Round Watch — Unbox Reaction",
+          "label": "Smartwatch — Unbox Reaction",
           "chips": [
             "unbox"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the simple round analog watch and plain leather strap. Adult hands open the kraft box and lift the watch toward camera, ending with the dial centered. Warm window light, square unboxing composition, no text or logos.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain round-faced smartwatch and its screen. An adult creator holds it toward the camera during an unbox reaction, ending with the watch face centered. Soft daylight, square creator composition, no text or logos.",
           "kind": "photo"
         },
         {

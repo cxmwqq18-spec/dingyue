@@ -453,12 +453,12 @@
         },
         {
           "ref": "n:guide:c1-tpl-film-strip-speaker-vertical",
-          "label": "Table Speaker — Unbox Demo",
+          "label": "Table Speaker — Shelf Film",
           "chips": [
             "creator",
             "hands"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain rectangular tabletop speaker. Adult hands lift it from an open box beside the coiled cable, ending with the speaker centered for a clear product view. Soft window light, square unboxing framing, natural phone-photo look. No text or logos.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the compact black speaker and woven loop. On a dark shelf, a slow camera move reveals the speaker in low light, ending with the front grille centered. Cinematic low-light framing, no text or logos.",
           "kind": "photo"
         },
         {

@@ -302,11 +302,11 @@
         },
         {
           "ref": "n:guide:c4-occ-holidays-output-mug",
-          "label": "Unboxing Offer: Mug Set",
+          "label": "Holiday Mug — Offer Scene",
           "chips": [
             "offer"
           ],
-          "prompt": "Use the uploaded photo as a plain ceramic mug set and keep each handle visible. Adult hands lift the mugs from a kraft gift box with paper filling, leaving clear space for a seasonal offer. Natural unboxing ad photo, square framing, no text or logos.",
+          "prompt": "Use the uploaded photo as a plain cream ceramic mug and keep its handle visible. Place it on a holiday brunch table with clear space for a seasonal offer. Natural sale ad photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {

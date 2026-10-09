@@ -209,11 +209,11 @@
         },
         {
           "ref": "n:guide:k5-background-gallery-pair-protein",
-          "label": "Protein powder: mixed drink",
+          "label": "Protein Powder — Tub Detail",
           "chips": [
             "quickfix"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. After a workout, an adult scoops the powder into water and shakes the bottle once. End with the mixed drink beside the open tub. Bright gym daylight, straightforward demonstration style. Waist-up framing with one small push-in. Sound: scoop tap, shaker rattle and room tone; no music.",
+          "prompt": "Use the uploaded photo as the plain protein powder tub and keep its lid and label area visible. Place it in a quiet home gym beside a scoop, ending with the tub centered for a clear product detail. Bright gym daylight, straightforward product style. Medium framing with one small push-in. Sound: scoop tap and room tone; no music.",
           "kind": "video"
         },
         {

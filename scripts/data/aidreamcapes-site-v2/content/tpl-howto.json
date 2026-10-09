@@ -369,11 +369,11 @@
         },
         {
           "ref": "n:guide:k7-ind-shoes-strip-4-n-boots-doorway",
-          "label": "Before/After: Boot brush clears scuff",
+          "label": "Boots — Doorway Use",
           "chips": [
-            "beforeafter"
+            "use"
           ],
-          "prompt": "Use the uploaded photo as the plain shoe brush and keep its bristles and handle visible. An adult brushes one scuffed leather boot, ending with the boot showing a cleaner toe beside the untreated scuff. Product how-to before-and-after ad still, close entryway framing, soft daylight, no text or logos.",
+          "prompt": "Use the uploaded photo as the plain brown leather boots and keep both boots fully visible. An adult steps into the boots beside a doorway, ending with the pair planted beside a folded coat. Practical try-on style, square framing, no text or logos.",
           "kind": "photo"
         }
       ],

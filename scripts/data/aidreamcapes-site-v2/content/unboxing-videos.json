@@ -218,20 +218,20 @@
         },
         {
           "ref": "n:guide:q19-yt-picker-06-pet-hair-fix",
-          "label": "Pet care set: brush reveal",
+          "label": "Pet Hair Brush — Sofa Fix",
           "chips": [
             "soft"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain pet brush from an open kraft box, then place the folded towel and bottle beside it. End with the complete care set in view. Soft daylight, calm home style. Overhead medium framing with one gentle tilt. Sound: tissue rustle, brush tap and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the reusable lint brush and keep its handle visible. Adult hands lift the brush from a small package and roll it once over pet hair on a sofa, ending with a clear clean strip. Soft daylight, practical pet-care style. Medium framing with one slow push-in. Sound: paper crinkle, brush pass and quiet room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:k5-home-example-home-g3",
-          "label": "Wool scarf: unbox and unfold",
+          "label": "Silk Scarf — Creator Walk",
           "chips": [
             "package"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the wool scarf from a plain mailer and unfold one corner over the tissue. End with the full texture and edge visible beside the open package. Soft bedroom daylight, tactile package style. Top-down framing with one slow pull-back. Sound: paper crinkle, fabric movement and room tone; no music.",
+          "prompt": "Use the uploaded photo as the silk scarf and keep its drape visible. An adult wears the scarf on a breezy park walk, turning once so the pattern and knot are clear. Soft daylight, calm package-to-lifestyle reveal style. Medium framing with one gentle turn. Sound: fabric rustle and quiet room tone; no music.",
           "kind": "video"
         },
         {
