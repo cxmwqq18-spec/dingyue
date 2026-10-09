@@ -6553,6 +6553,518 @@
         1280
       ],
       "source": "Codex image generation"
+    },
+    "t33-home-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "An adult woman in a parked car holds a plain amber serum bottle beside her face and speaks directly to camera.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-video-hub-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "An adult woman holds a plain serum bottle in a bright bathroom and speaks to the lens.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-photo-hub-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "An adult woman applies a plain tinted lip balm at a bright vanity mirror, the tube held clearly in one hand.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-image-to-video-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same speckled ceramic mug with a curl of steam in morning light.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-video-ads-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand lifts a green glass bottle at a bright kitchen counter.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-product-videos-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand lifts a plain white ceramic mug of coffee from a wooden counter.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-unboxing-videos-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hands reveal a plain white candle jar from a kraft carton and cream tissue.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-before-after-videos-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Three desk cables routed through the same black organizer on a clear desk.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-spokesperson-videos-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Presenter holding the same forest-green water bottle at chest height.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-white-background-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Amber glass serum bottle with a gold collar and white dropper centered on a seamless white background.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-lifestyle-photos-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult shopper carries a cream canvas tote filled with produce through a market.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-model-photos-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Person in a gray hoodie and jeans walking along a tree-lined city street in autumn, face turned away",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-change-background-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult woman in a white textured bathrobe applies a plain amber serum dropper at a bathroom mirror with a soft sage-green background.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-social-ad-photos-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same charcoal hiking shoe resting on a warm wood entryway floor.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-angle-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Rear view of the same compact rectangular black portable speaker showing its charging and audio ports.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-detail-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Close macro view of brown leather wallet stitching and grain.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-size-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult commuter wears a canvas tote beside a carry-on suitcase.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-color-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Sage ceramic soap dispenser stands on a clean white background.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-box-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same white cleanser tube, amber dropper bottle, and white cream jar arranged as a three-piece skincare set on a light counter.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-pack-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult hands open a plain kraft coffee pouch on a cafe counter.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-light-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Amber glass bottle in warm side light.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-tryon-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult model wearing the olive bomber jacket over a plain white shirt in a studio.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-jewel-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Silver teardrop pendant worn at the collarbone above an ivory linen neckline.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-look-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Model wearing a light beige tailored blazer and trousers in a neutral studio.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-head-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same adult woman from the source portrait in a black blazer against a soft light-gray background.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-ugc-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Sage-lidded reusable water bottle with a light curl of condensation in a calm after-workout home setting.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-story-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult drizzles sauce over a finished taco plate.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-sale-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult pulls the same blue hard-shell suitcase through a bright airport terminal; the full suitcase, handle, ridges, and wheels are visible.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-howto-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "White garment steamer pressing a blue shirt in a vertical video frame.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-film-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same rounded pebble-shaped black speaker catches a cool cinematic highlight on a dark sideboard.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-beauty-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Amber serum bottle on a bathroom counter as a hand lifts the dropper.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-drink-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand pours clear citrus soda from a silver can into an ice-filled glass.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-home-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hands organize gray drawer dividers and utensils in a vertical home organization video frame.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-outfit-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same beige zip jacket worn by an adult model with a white shirt and blue jeans in a full-length studio portrait.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-launch-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult creator holds an amber serum beside her face in a bright bathroom.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-compare-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hands lift small and large amber glass dropper bottles together in a bright bathroom.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-bf-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult creator demonstrates one drop from a pale frosted serum bottle in a warm vanity scene.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-limited-drop-alert-video-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult ties coral trail shoes on a rocky mountain trail.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-product-feature-callout-video-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult spreads cleanser foam on her cheek beside a white pump bottle.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-carousel-video-ad-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Black commuter backpack opened on a cafe table.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-spark-ads-style-video-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult hiker taking a drink from a sage-green insulated bottle.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-tpl-retargeting-video-ad-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult commuter wearing dark navy over-ear headphones on a station platform.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-templates-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult sets a dark brown leather duffel on a station bench.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-industries-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult packing lunch in a soft sage insulated bag and lifting it by the handle.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-beauty-skincare-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand swatches lipstick in daylight.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-fashion-clothing-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult wearing a pale blue hoodie with matching sweatpants.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-shoes-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Brown lace-up hiking boots shown in a walking stride.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-jewelry-accessories-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Silver solitaire ring worn beside a ceramic cup.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-electronics-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand presses a button on a compact black speaker beside a cup.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-health-wellness-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult stretches on a teal yoga mat in a bright room.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-food-drinks-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Golden sparkling drink poured from a glass bottle into a glass with ice and an orange slice",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-ind-home-living-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same ivory and sage linen throw pillow pair arranged on a cream reading chair.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-platforms-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same sage-green lunch container open with its lid beside it.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-plat-tiktok-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult hands lift black over-ear headphones from a plain box on a bright desk.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-plat-instagram-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "An adult applies white hand cream while holding the tube beside a bathroom mirror.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-plat-facebook-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "An adult hand pours water from a pale-blue insulated bottle into a glass on a sunny desk.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-plat-youtube-shorts-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "White handheld steamer smoothing a blue shirt.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-plat-amazon-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand lifts a plain ceramic mug at a bright breakfast table.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-plat-shopify-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Four coordinated ceramic bowls arranged with fruit on a light dining table.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-occ-product-launch-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult holds a matte turquoise bottle beside their face after a sip.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-occ-sale-discount-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult applies cream from a jar while two pastel skincare bottles remain visible.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-occ-black-friday-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult hands pack a charcoal travel duffel with a shirt and toiletry pouch.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-occ-holidays-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult lifts generic matte graphite over-ear headphones with round leather pads from a gift box.",
+      "variants": [
+        1200
+      ]
+    },
+    "t33-url-to-video-og": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult hands open a sage divided lunch container on a bright kitchen counter.",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {

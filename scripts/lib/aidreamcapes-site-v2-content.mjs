@@ -1893,7 +1893,11 @@ function jsonLdFor(model, page, c, payload, ogImage) {
   // Template and collection pages with a visual guide show the guide instead of the hero picture or video.
   const hero = guideReplacesHero(page, payload) ? undefined : payload.heroMedia;
   const firstVisual = visualPayloadImages(payload.visual)[0];
-  const primary = heroImageOf(hero) ?? (firstVisual ? { src: firstVisual.src, width: firstVisual.w, height: firstVisual.h } : ogImage);
+  // Visual guide pages render the three-step result as their primary example. Keep
+  // social metadata and page structured data on that same result share image instead
+  // of falling back to the legacy hero or the first strip card.
+  const visualResult = payload.visual?.steps?.result;
+  const primary = visualResult ? { src: ogImage.src, width: ogImage.width, height: ogImage.height } : (heroImageOf(hero) ?? (firstVisual ? { src: firstVisual.src, width: firstVisual.w, height: firstVisual.h } : ogImage));
   const videoNode = hero?.kind === "video" ? hero.video : undefined;
   const videoId = `${canonical(page)}#video`;
   const webpageType = { hub: "CollectionPage", index: "CollectionPage", industry: "CollectionPage", platform: "CollectionPage", occasion: "CollectionPage", examples: "CollectionPage", contact: "ContactPage", about: "AboutPage" }[page.type] || "WebPage";
