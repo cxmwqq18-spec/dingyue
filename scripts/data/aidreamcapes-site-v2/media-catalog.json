@@ -39626,6 +39626,16 @@
           640,
           1280
         ]
+      },
+      "f18-change-bg-steps-result-r2": {
+        "file": "f18-change-bg-steps-result-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman in a white textured bathrobe applies a plain amber serum dropper at a bathroom mirror with a soft sage-green background.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
