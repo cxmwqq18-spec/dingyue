@@ -73,6 +73,18 @@
     {
       "q": "Where should each variation image go?",
       "a": "Attach the downloaded image to the matching product option so the chosen finish is shown."
+    },
+    {
+      "q": "Do I need a photo for each color?",
+      "a": "A clear photo of one color plus the listed color names is enough; the tool keeps the same shape across variations."
+    },
+    {
+      "q": "Will the generated colors match my real products?",
+      "a": "Keep each color name exact and review the image against your swatch before publishing; use the real product photos when exact shade matters most."
+    },
+    {
+      "q": "How are variation photos credited?",
+      "a": "Each variation photo costs 24 credits and the total appears before you create the set."
     }
   ],
   "overview": [
