@@ -278,7 +278,7 @@
       "cards": [
         {
           "ref": "n:guide:f5-r10-carousel-card-0-folding-umbrella",
-          "label": "Folding umbrella — open → reveal → use → finish",
+          "label": "Folding umbrella open→reveal→use→finish",
           "chips": [
             "unbox"
           ],
@@ -287,7 +287,7 @@
         },
         {
           "ref": "n:guide:q13-carousel-picker-1",
-          "label": "Cable organizer — open → reveal → use → finish",
+          "label": "Cable organizer open→reveal→use→finish",
           "chips": [
             "detail"
           ],
@@ -296,7 +296,7 @@
         },
         {
           "ref": "n:guide:q13-carousel-picker-2",
-          "label": "Jacket fit check — open → reveal → use → finish",
+          "label": "Jacket fit check open→reveal→use→finish",
           "chips": [
             "use"
           ],
@@ -305,7 +305,7 @@
         },
         {
           "ref": "n:guide:q13-carousel-picker-3",
-          "label": "Serum morning routine — open → reveal → use → finish",
+          "label": "Serum morning routine open→reveal→use→finish",
           "chips": [
             "use"
           ],
@@ -314,7 +314,7 @@
         },
         {
           "ref": "n:guide:q13-carousel-picker-4",
-          "label": "Commuter backpack — open → reveal → use → finish",
+          "label": "Commuter backpack open→reveal→use→finish",
           "chips": [
             "use",
             "unbox",
@@ -325,7 +325,7 @@
         },
         {
           "ref": "n:guide:q13-carousel-picker-5",
-          "label": "Headphones feature review — open → reveal → use → finish",
+          "label": "Headphones feature review open→reveal→use→finish",
           "chips": [
             "detail"
           ],
@@ -334,7 +334,7 @@
         },
         {
           "ref": "n:guide:q13-carousel-picker-6",
-          "label": "Dog leash walk — open → reveal → use → finish",
+          "label": "Dog leash walk open→reveal→use→finish",
           "chips": [
             "use"
           ],
@@ -343,7 +343,7 @@
         },
         {
           "ref": "n:guide:f5-r10-carousel-card-7-water-bottle",
-          "label": "Insulated water bottle — open → reveal → use → finish",
+          "label": "Insulated water bottle open→reveal→use→finish",
           "chips": [
             "finish"
           ],
