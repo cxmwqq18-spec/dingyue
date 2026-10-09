@@ -212,12 +212,12 @@
   "visual": {
     "overview": "Show a creator using the product in a clear, believable ad moment. Start with a clean product image, then choose a format that fits its strongest selling point.",
     "strip": [
-      "n:guide:k6-tpl-ugc-strip-01",
-      "n:guide:k6-tpl-ugc-strip-02",
-      "n:guide:k6-tpl-ugc-strip-03",
-      "n:guide:k6-tpl-ugc-strip-04",
-      "n:guide:k6-tpl-ugc-strip-05",
-      "n:guide:k6-tpl-ugc-strip-06"
+      "n:guide:g1-ugc-running-shoe-review",
+      "n:guide:g1-ugc-hoop-earring-review",
+      "n:guide:g1-ugc-phone-stand-review",
+      "n:guide:g1-ugc-protein-bar-reaction",
+      "n:guide:g1-ugc-pet-grooming-review",
+      "n:guide:g1-ugc-supplement-selfie"
     ],
     "steps": {
       "source": "n:guide:tpl-ugc-m2-source",
