@@ -32063,6 +32063,56 @@
           1280
         ]
       },
+      "f17-home-vacuum-demo": {
+        "file": "f17-home-vacuum-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand using a compact cordless vacuum to clear crumbs from a charcoal sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f17-home-pet-roller-review": {
+        "file": "f17-home-pet-roller-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man using a plain pet-hair roller on a charcoal sofa with a clean strip visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f17-jewelry-wrist-cuff-tryon": {
+        "file": "f17-jewelry-wrist-cuff-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wrist wearing a plain brushed silver cuff over a charcoal knit sleeve.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f17-jewelry-output-watch-caseback": {
+        "file": "f17-jewelry-output-watch-caseback",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holding the same matte analog watch to show its brushed caseback on a walnut desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f17-home-output-fern-planter": {
+        "file": "f17-home-output-fern-planter",
+        "w": 1536,
+        "h": 864,
+        "alt": "Adult hand touching a fern in the same muted sage planter on a styled wooden shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "q16-electronics-picker-headphones-talk": {
         "file": "q16-electronics-picker-headphones-talk",
         "w": 1280,
