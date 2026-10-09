@@ -38076,6 +38076,248 @@
           640,
           1280
         ]
+      },
+      "g1-limited-skincare-restock": {
+        "file": "g1-limited-skincare-restock",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a blank-label amber serum bottle from tissue inside an open mailer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-limited-jewelry-reveal": {
+        "file": "g1-limited-jewelry-reveal",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a gold pendant necklace from an open jewelry box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-limited-apparel-fit-check": {
+        "file": "g1-limited-apparel-fit-check",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman checks the cuff of a teal jacket in a fitting-room mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-limited-phone-case-reveal": {
+        "file": "g1-limited-phone-case-reveal",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a sage phone case with one circular camera opening from a box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-limited-citrus-first-sip": {
+        "file": "g1-limited-citrus-first-sip",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator takes a first sip of sparkling citrus drink beside a blank can.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-ugc-running-shoe-review": {
+        "file": "g1-ugc-running-shoe-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner holds a charcoal trail shoe toward the camera after a run.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-ugc-hoop-earring-review": {
+        "file": "g1-ugc-hoop-earring-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman reviews a gold hoop earring beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-ugc-phone-stand-review": {
+        "file": "g1-ugc-phone-stand-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a compact folding phone stand beside his face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-ugc-protein-bar-reaction": {
+        "file": "g1-ugc-protein-bar-reaction",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator reacts after taking a bite of a protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-ugc-pet-grooming-review": {
+        "file": "g1-ugc-pet-grooming-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pet owner holds a grooming brush beside a calm dog while speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-ugc-supplement-selfie": {
+        "file": "g1-ugc-supplement-selfie",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a blank supplement tub beside her face after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-serum-application": {
+        "file": "g1-retarget-serum-application",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies serum to her cheek while holding the bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-shoe-tread-detail": {
+        "file": "g1-retarget-shoe-tread-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner shows the tread of a charcoal trail shoe after a walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-pet-grooming-glove": {
+        "file": "g1-retarget-pet-grooming-glove",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand brushes a brown dog with a plain grooming glove.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-box-shoe-unboxing": {
+        "file": "g1-box-shoe-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift two charcoal trail shoes from a tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-box-earring-unboxing": {
+        "file": "g1-box-earring-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a jewelry box to reveal gold hoop earrings on a blank card.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-box-baby-care-unboxing": {
+        "file": "g1-box-baby-care-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a blank-label baby wash bottle from an open bath set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-box-snack-box-unboxing": {
+        "file": "g1-box-snack-box-unboxing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts an unbranded snack pouch from an open sampler box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-shoe-fit-check": {
+        "file": "g1-launch-shoe-fit-check",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman models dark trail sneakers in a fitting-room mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-jewelry-reveal": {
+        "file": "g1-launch-jewelry-reveal",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman wears a gold pendant necklace while showing its open jewelry box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-citrus-first-sip": {
+        "file": "g1-launch-citrus-first-sip",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man takes a first sip of sparkling citrus drink from a clear bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-snack-first-bite": {
+        "file": "g1-retarget-snack-first-bite",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner takes a bite of a plain protein snack bar after exercise.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f6-tpl-box-output-skincare-unbox": {
+        "file": "f6-tpl-box-output-skincare-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain cleanser tube, amber serum bottle, and white cream jar from an open kraft box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "f6-tpl-box-output-pouch-kit": {
+        "file": "f6-tpl-box-output-pouch-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold an open beige canvas travel pouch with a white tube, clear pump bottle, amber dropper bottle, and cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

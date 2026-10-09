@@ -77,6 +77,18 @@
     {
       "q": "Can I use a packaging mockup as my product listing photo?",
       "a": "Use the mockup to show a setting or concept. Use a clear photo of the real package for ingredients, measurements, or other details a buyer must verify."
+    },
+    {
+      "q": "Can I preview the design before printing?",
+      "a": "The mockup shows how the artwork sits on the package; confirm colors and layout against your print file before ordering."
+    },
+    {
+      "q": "Which package types can be mocked up?",
+      "a": "Pouches, boxes, bottles, and bags with a clear reference photo work; upload the packaging shape you actually use."
+    },
+    {
+      "q": "What does a packaging mockup cost?",
+      "a": "Each generated mockup costs 24 credits."
     }
   ],
   "overview": [

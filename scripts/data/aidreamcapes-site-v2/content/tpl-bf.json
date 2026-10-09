@@ -74,6 +74,18 @@
     {
       "q": "Can I use the same video on a store page?",
       "a": "Use the same featured product in the video and the destination page so the offer feels connected."
+    },
+    {
+      "q": "How long should a Black Friday offer clip be?",
+      "a": "Six seconds works for a single price beat; 10 to 15 seconds gives room for the product and the offer. The costs are 24, 40, or 60 credits."
+    },
+    {
+      "q": "Can I change the offer after the ad is approved?",
+      "a": "Edit the editable text layer in your ad platform. Keeping the deal text separate from the video means the same clip can carry an updated price."
+    },
+    {
+      "q": "Can the video include the discount burned in?",
+      "a": "Keep the percentage and dates as a text layer you add after download, so every number stays exact."
     }
   ],
   "overview": [

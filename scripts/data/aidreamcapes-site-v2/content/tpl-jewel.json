@@ -70,6 +70,18 @@
     {
       "q": "Which jewelry works for an on-model photo?",
       "a": "Necklaces, earrings, rings, bracelets, and small accessories can all be shown in their worn position."
+    },
+    {
+      "q": "What source photo works for jewelry?",
+      "a": "A sharp, evenly lit photo of the full piece on a plain background works best."
+    },
+    {
+      "q": "Can the clip show scale on a person?",
+      "a": "Yes. Ask for the necklace, ring, or earring worn on a model so shoppers can judge the size."
+    },
+    {
+      "q": "How are jewelry photos credited?",
+      "a": "Each photo costs 24 credits, with the total shown before creation."
     }
   ],
   "overview": [

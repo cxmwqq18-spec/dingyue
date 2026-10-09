@@ -74,6 +74,18 @@
     {
       "q": "What length works for an AI fashion reel?",
       "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and 30 seconds only when the public option is available. Choose 9:16 for Reels."
+    },
+    {
+      "q": "Can the clothes be shown head to toe?",
+      "a": "Yes. Ask for a full-body frame so the fit, length, and shoes stay in view."
+    },
+    {
+      "q": "How do I keep the garment accurate?",
+      "a": "Upload a flat photo that shows the whole piece and its details, and the generated model shot keeps that garment."
+    },
+    {
+      "q": "What does a fashion reel cost?",
+      "a": "A 6-, 10-, or 15-second reel costs 24, 40, or 60 credits."
     }
   ],
   "overview": [

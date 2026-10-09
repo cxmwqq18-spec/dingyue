@@ -4,7 +4,7 @@
   "description": "Make a square bundle photo from clear images of items in your set. Compare each object with the kit, then list exact contents in your product description.",
   "h1": "Product Bundle Photos for Items Sold Together",
   "eyebrow": "Product photo template",
-  "lead": "Lay out every item in your kit, take one clear photo, and turn it into a bundle photo in one square scene. Review each object against your actual kit and list the exact contents in your product description.",
+  "lead": "Lay out every item in your kit, take one clear photo, and turn it into a bundle photo in one square scene. Review each object against your actual kit and list the exact contents in your product description. List the included pieces before you start so the arrangement can keep every item visible and your final contents statement stays accurate.",
   "secondary_keywords": [
     "what's in the box photo",
     "skincare set product photo",
@@ -19,15 +19,15 @@
   "steps": [
     {
       "t": "Gather the whole kit",
-      "d": "Lay out the full set together and take one photo, so every item you ship is in your upload."
+      "d": "Photograph every item, the box, and any insert so the source represents the complete bundle rather than a hero item alone."
     },
     {
       "t": "List what's inside",
-      "d": "List each item and quantity exactly as shown in the photo."
+      "d": "Describe an arrangement that keeps each piece visible, such as a top-down reveal on a bright table, and state which items belong to the set."
     },
     {
       "t": "Use it as image two",
-      "d": "Save the square photo and place it right after your main image, where shoppers look for what the bundle includes."
+      "d": "Download the square result, compare every object with the packed kit, and place it beside the item count and contents list on your product page."
     }
   ],
   "ideas": [
@@ -64,15 +64,27 @@
   "faq": [
     {
       "q": "Why did an extra item show up in my bundle photo?",
-      "a": "That usually happens when a piece is missing from your upload or the description leaves room for guessing. Upload every item, state the exact count, and run it again."
+      "a": "That usually happens when a piece is missing from your upload or the description leaves room for guessing. Upload every item, state the exact count, and run it again. Include every item that ships in the source photo and keep each piece visible; a missing accessory can make the bundle promise inaccurate."
     },
     {
       "q": "Can I add the bundle price to the photo?",
-      "a": "Put the price and any savings line on later, using Canva or a similar app. Text generated inside the image can come out with typos, so the photo is made without it."
+      "a": "Put the price and any savings line on later, using Canva or a similar app. Text generated inside the image can come out with typos, so the photo is made without it. A top-down reveal works for counted sets, while a review or demo works when shoppers also need to see how the pieces are used."
     },
     {
       "q": "Can the photo show results like glowing skin?",
-      "a": "Keep the photo about the products themselves. Showing the set is fine, but results such as clearer or younger-looking skin shouldn't be promised in the image or the listing text."
+      "a": "Keep the photo about the products themselves. Showing the set is fine, but results such as clearer or younger-looking skin shouldn't be promised in the image or the listing text. Put the finished image beside the contents list and item count on the product page, then compare it with the packed kit before publishing."
+    },
+    {
+      "q": "How should I photograph a multi-piece set?",
+      "a": "Lay every piece together in one clear photo with even light, so the generated image keeps the correct items and count. Add counts, sizes, and names as editable text in your listing or editor so the information can be corrected without replacing the image."
+    },
+    {
+      "q": "Can I show the bundle on a white background?",
+      "a": "Yes. Ask for a plain background when the photo is for a listing, or a bright table for a lifestyle shot.  If an item ships in multiple colors or sizes, list each option separately and do not imply that every variation appears in one box image."
+    },
+    {
+      "q": "How many credits does a bundle photo cost?",
+      "a": "Each bundle photo costs 24 credits. You see the charge before running it, and failed jobs are refunded.  Check the source against the packed kit after generation; the photo can show arrangement, but the seller remains responsible for the exact contents statement."
     }
   ],
   "overview": [
@@ -209,13 +221,13 @@
     ]
   },
   "visual": {
-    "overview": "A what's-in-the-box photo shows what ships as one set. Arrange each item so shoppers can count the pieces and see their size before they open the package.",
+    "overview": "A what’s-in-the-box photo shows what ships as one set. Arrange every item so shoppers can count the pieces, recognize their sizes, and see the packaging they will receive. Keep the products fully visible and use one viewpoint rather than hiding smaller pieces behind the largest object. A skincare starter kit can show its cleanser, serum, and cream together; a canvas travel pouch kit can show the pouch and its accessories. Add item names and quantities in editable listing text after checking the physical package. Leave a gap between pieces so shoppers can count them quickly, and keep the box or pouch recognizable when packaging is part of the offer. This is a contents check, not a promise of extras.",
     "strip": [
-      "n:guide:c1-tpl-box-m2-source",
-      "n:guide:c1-tpl-box-m2-result-square",
-      "n:guide:c1-tpl-story-gift-kit-square",
+      "n:guide:g1-box-shoe-unboxing",
+      "n:guide:g1-box-earring-unboxing",
+      "n:guide:g1-box-baby-care-unboxing",
       "f:q8-tpl-box-strip-04",
-      "f:q8-tpl-box-strip-05",
+      "n:guide:g1-box-snack-box-unboxing",
       "n:guide:ind-electronics-m3-headphones"
     ],
     "steps": {
@@ -224,7 +236,7 @@
       "sourceHint": "Include every item and package that ships with the bundle.",
       "result": "n:guide:c1-tpl-box-m2-result-square",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the full set from a plain box on a bright table, ending with every item visible. Natural window light, candid UGC look. Top-down handheld close-up with one slow push-in. Sound: tissue rustle, no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the full set from a plain box on a bright table, with every item visible. Natural window light, candid UGC photo, top-down framing, no text or logos.",
       "options": [
         [
           "Template",
@@ -242,7 +254,7 @@
     },
     "picker": {
       "title": "Choose a bundle ad scene",
-      "lead": "Preview how a creator can reveal, compare, or use the full set.",
+      "lead": "Choose the bundle scene that matches the promise you make: an unboxing reveal for packaging, a review for the complete set, a first bite for a variety box, or a demo that shows the kit in use.",
       "chips": [
         {
           "id": "unbox",
@@ -254,7 +266,7 @@
         },
         {
           "id": "bite",
-          "label": "First Bite"
+          "label": "First Use"
         },
         {
           "id": "demo",
@@ -276,6 +288,7 @@
           "label": "GRWM: Skincare Starter Kit",
           "chips": [
             "review",
+            "bite",
             "demo"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A woman in her late twenties holds the skincare kit beside a bright bathroom mirror and says to camera, “Here is everything I set out for a simple morning routine.” Natural window light, candid UGC look. Chest-up front-facing handheld shot with slight sway. Sound: her voice and a cap click, no music. End with the kit beside her face.",
@@ -285,7 +298,9 @@
           "ref": "f:q8-tpl-box-pick-03",
           "label": "Pet Parent Review: Grooming Set",
           "chips": [
-            "review"
+            "review",
+            "bite",
+            "demo"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult pet owner holds a plain grooming kit toward the camera in a bright living room and says, “Let’s look at what comes in this set.” Soft daylight, natural UGC look. Eye-level chest-up handheld framing with one small push-in. Sound: clear voice and a dog collar jingle, no music. End with the kit centered.",
           "kind": "video"
@@ -294,6 +309,7 @@
           "ref": "f:q8-tpl-box-pick-04",
           "label": "First Bite: Snack Variety Box",
           "chips": [
+            "unbox",
             "bite"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a plain snack variety box at a sunny work table, takes one bite from a single snack and smiles. Bright natural light, candid UGC look. Handheld close-up with one gentle tilt from box to reaction. Sound: wrapper tear and a crisp bite, no music. End on the open box and snack in hand.",
@@ -303,7 +319,8 @@
           "ref": "f:q8-tpl-box-pick-05-r2",
           "label": "Tech Unboxing: Headphone Set",
           "chips": [
-            "unbox"
+            "unbox",
+            "review"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain over-ear headset from a fitted carton, keeping the headphones, carry pouch, charging cable and audio cable visible together. Soft window light, tactile UGC look. Top-down handheld close-up with one slow push-in. Sound: cardboard and fabric rustle, no music. End with all four included pieces displayed beside the headset.",
           "kind": "video"
@@ -312,6 +329,8 @@
           "ref": "f:q8-tpl-box-pick-06-r2",
           "label": "Street Interview: Protein Bar Variety Pack",
           "chips": [
+            "unbox",
+            "review",
             "bite"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny park entrance, an adult interviewer holds a microphone as an adult creator presents a plain protein-bar variety box with several wrapped flavors and one opened bar. The creator takes a bite and says to camera, “I like having a few flavors ready after a workout.” Natural daylight, candid street UGC look. Eye-level chest-up handheld shot with a slight approach. Sound: voice, wrapper rustle and light outdoor ambience; no music. End with the box and bitten bar in frame.",
@@ -343,13 +362,13 @@
         "frame": "listing",
         "ref": "n:guide:white-background-fix-m6-coaster-set",
         "h": "Show the full set in a product listing",
-        "d": "Place the image near the item count and sizes so shoppers know what ships together."
+        "d": "Place the bundle image near the item count and dimensions so shoppers can confirm what ships together before they add the set to a cart. Keep every piece visible. Place the complete kit near the written count and dimensions, then check the thumbnail at mobile size to make sure no small piece disappears behind the larger one."
       },
       {
         "frame": "browser",
         "ref": "n:guide:b1-unboxing-output",
         "h": "Photograph a gift-ready wallet bundle",
-        "d": "Keep the leather wallet and its box in view so shoppers see the included presentation."
+        "d": "Keep the leather wallet and its presentation box in view for a gift-ready bundle. This frame works on a product page when packaging is part of the purchase decision. Keep the wallet and its presentation box fully visible and state whether the box ships with the purchase; packaging can change a gift buyer’s decision."
       }
     ],
     "input": [
@@ -368,26 +387,33 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:b1-unboxing-card",
+        "ref": "n:guide:f6-tpl-box-output-skincare-unbox",
         "frame": "1:1",
-        "label": "Headphones Unboxed"
+        "label": "1:1 Skincare starter kit, every bottle visible"
       },
       {
-        "ref": "n:gen2:video-hub-g2",
+        "ref": "n:guide:f6-tpl-box-output-pouch-kit",
         "frame": "1:1",
-        "label": "Lunch Set Closure"
+        "label": "1:1 Canvas travel pouch kit with accessories"
       }
     ],
     "after": {
       "ref": "n:guide:c1-tpl-box-card-gift-set",
+      "mock": {
+        "type": "callout",
+        "tag1": "3-piece set",
+        "tag2": "Full size",
+        "tag3": "Gift boxed"
+      },
       "zones": [
         "Item count",
         "Contents",
         "Sizes"
       ],
       "items": [
-        "For a candle and linen set, list each included item and size after download.",
-        "Name every piece so shoppers can compare the set with the package."
+        "The frame shows callout tags you add in your editor so each included item and size stays labeled without words burned into the image.",
+        "Name every piece and count quantities against the packed set before publishing the listing.",
+        "Compare the box, inserts, colors, and accessories with the physical package, then use the image beside an editable contents list for exact names."
       ]
     },
     "titles": {

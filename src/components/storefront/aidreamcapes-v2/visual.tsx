@@ -207,12 +207,54 @@ export function VisualOutputs({ visual, r, includeLimitations = false }: { visua
   return <Section eyebrow="Your result" title={visual.titles?.m6?.h2 ?? "See the format and cost"}><div className="v-output-grid">{visual.outputs.map((item, index) => <OutputCard item={item} key={`${item.image.src}-${index}`} r={r} />)}</div>{includeLimitations ? <VisualLimitations asSubsection visual={visual} /> : null}</Section>;
 }
 
+function MockOverlay({ mock }: { mock: V2AfterMock }) {
+  if (!mock || typeof mock !== "object") return null;
+  const t = String(mock.type ?? "");
+  if (t === "limited") {
+    return <div className="v-mock v-mock-limited">
+      <span className="v-mock-badge">{mock.badge ?? "LIMITED DROP"}</span>
+      <div className="v-mock-count"><b>{mock.countdown ?? "23:59:16"}</b><span>left to order</span></div>
+      <div className="v-mock-foot"><span>{mock.caption ?? "Small batch"}</span><b className="v-mock-cta">{mock.cta ?? "Get notified"}</b></div>
+    </div>;
+  }
+  if (t === "tiktok") {
+    return <div className="v-mock v-mock-tiktok">
+      <div className="v-mock-tt-top"><i /><b>@your.store</b><span>Sponsored</span></div>
+      <div className="v-mock-tt-actions"><i className="is-heart" /><i /><i /><i /><i /></div>
+      <div className="v-mock-tt-cap"><b>@your.store</b><span>{mock.caption ?? "Real creator post"}</span><div className="v-mock-tt-sound"><i />Original sound</div></div>
+    </div>;
+  }
+  if (t === "carousel") {
+    return <div className="v-mock v-mock-carousel">
+      <span className="v-mock-panel">1/4</span>
+      <b className="v-mock-car-title">{mock.title ?? "Panel one"}</b>
+      <div className="v-mock-dots"><i className="is-active" /><i /><i /><i /></div>
+    </div>;
+  }
+  if (t === "callout") {
+    return <div className="v-mock v-mock-callout">
+      <span className="v-mock-tag t1">{mock.tag1 ?? "Feature"}</span>
+      <span className="v-mock-tag t2">{mock.tag2 ?? "Detail"}</span>
+      <span className="v-mock-tag t3">{mock.tag3 ?? "Benefit"}</span>
+    </div>;
+  }
+  if (t === "steps") {
+    return <div className="v-mock v-mock-steps">
+      <span className="v-mock-step s1">Step 1</span>
+      <span className="v-mock-step s2">Step 2</span>
+      <span className="v-mock-step s3">Step 3</span>
+    </div>;
+  }
+  return null;
+}
+
 export function VisualAfter({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
   if (!visual.after) return null;
-  return <Section eyebrow="After download" title={visual.titles?.m7?.h2 ?? "Add your final details in an editor"}><div className="v-after"><div className="v-after-art"><VisualImage image={visual.after.image} r={r} /><div className="v-after-zones">{visual.after.zones.map((zone, index) => {
+  const after = visual.after;
+  return <Section eyebrow="After download" title={visual.titles?.m7?.h2 ?? "Add your final details in an editor"}><div className="v-after"><div className="v-after-art"><VisualImage image={after.image} r={r} />{after.mock ? <MockOverlay mock={after.mock} /> : <div className="v-after-zones">{after.zones.map((zone, index) => {
     const role = /headline/i.test(zone) ? "headline" : /price/i.test(zone) ? "price" : `zone-${index}`;
     return <span data-zone-index={index} data-zone-role={role} key={`${zone}-${index}`}>{zone}</span>;
-  })}</div></div><div className="v-after-copy"><p>These details are added in your editor after download.</p><ul>{visual.after.items.map((item, index) => <li key={`${item}-${index}`}>{item}</li>)}</ul></div></div></Section>;
+  })}</div>}</div><div className="v-after-copy"><p>These details are added in your editor after download.</p><ul>{after.items.map((item, index) => <li key={`${item}-${index}`}>{item}</li>)}</ul></div></div></Section>;
 }
 
 export function VisualSizes({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {

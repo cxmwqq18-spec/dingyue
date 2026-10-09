@@ -917,7 +917,8 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
     ...(source.after ? { after: {
       image: visualImage(model, source.after.ref, video ? "video" : "photo"),
       zones: Array.isArray(source.after.zones) ? source.after.zones.map(String) : [],
-      items: Array.isArray(source.after.items) ? source.after.items.map(String) : []
+      items: Array.isArray(source.after.items) ? source.after.items.map(String) : [],
+      ...(source.after.mock && typeof source.after.mock === "object" ? { mock: source.after.mock } : {})
     } } : {}),
     ...(Array.isArray(source.sizes) ? { sizes: source.sizes.map((item) => ({
       frame: item.frame, image: visualImage(model, item.ref), label: item.label ?? ""

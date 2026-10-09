@@ -4,7 +4,7 @@
   "description": "Create product detail photos that bring stitching, leather grain, and hardware up close. Upload a sharp shot of your item and make your first close-up now.",
   "h1": "Close-Up Product Detail Photos of Stitching, Grain, and Finish",
   "eyebrow": "Product photo template",
-  "lead": "Product detail photos start with a sharp source photo where the stitching, texture, clasp, or finish is clearly visible. The square close-up can frame that detail; compare the result with the real item before publishing.",
+  "lead": "Product detail photos start with a sharp source photo where the stitching, texture, clasp, or finish is clearly visible. The square close-up can frame that detail; compare the result with the real item before publishing. Call out the one material or mechanism the image should prove, so a shopper can connect the close-up with a specific quality question.",
   "secondary_keywords": [
     "close-up product photos",
     "macro product photography",
@@ -19,15 +19,15 @@
   "steps": [
     {
       "t": "Choose one detail to show",
-      "d": "Pick a seam, clasp, material, or finish that helps explain how the product is made."
+      "d": "Keep the item steady and make the named seam, texture, or hardware fill the frame without losing edges that show its position."
     },
     {
       "t": "Frame that feature clearly",
-      "d": "Move close enough to show the detail while keeping its edge and surrounding material in view."
+      "d": "Describe one feature and one setting, such as vegetable-tanned grain beside a window, and avoid mixing a second material into the request."
     },
     {
       "t": "Place the photo in your gallery",
-      "d": "Download the square close-up, then add it after the full product view in your listing."
+      "d": "Download the close-up, check color and construction against the source, and place it after the full product image for shoppers to zoom."
     }
   ],
   "ideas": [
@@ -64,15 +64,27 @@
   "faq": [
     {
       "q": "Which product details work well in close-up?",
-      "a": "Show a material, stitch, clasp, zipper, rim, or finish that shoppers cannot see in the main product image."
+      "a": "Show a material, stitch, clasp, zipper, rim, or finish that shoppers cannot see in the main product image. Start with a source that is sharp at the feature you want to show; a soft seam cannot become reliable evidence after enlargement."
     },
     {
       "q": "How close should the source photo be?",
-      "a": "Keep the named feature in focus and leave enough surrounding product to show where it sits."
+      "a": "Keep the named feature in focus and leave enough surrounding product to show where it sits. Name one material or fastening at a time and keep the surrounding context in frame so shoppers know where the detail sits."
     },
     {
       "q": "Where should a detail photo go?",
-      "a": "Place it after a clear main image so shoppers can first understand the whole product."
+      "a": "Place it after a clear main image so shoppers can first understand the whole product. Close-ups are useful after the full product image in a listing gallery, in a carousel slide, or in a social post built around one quality claim."
+    },
+    {
+      "q": "How do I get a sharp close-up?",
+      "a": "Start with a clear, well-lit product photo and name the detail, such as stitching, a port, or material texture. Compare the result with the physical product because color, stitch count, and hardware placement remain seller responsibilities."
+    },
+    {
+      "q": "Can the macro shot be used on a listing?",
+      "a": "Yes. Close-up photos answer material and quality questions in a product gallery.  Do not ask one close-up to prove several unrelated features; create a separate frame for the material, fastener, or finish that matters most."
+    },
+    {
+      "q": "What does a detail photo cost?",
+      "a": "Each detail photo costs 24 credits, shown before the job starts.  Use the full item first and the detail second in a listing so shoppers know which product the texture or hardware belongs to."
     }
   ],
   "overview": [
@@ -203,7 +215,7 @@
     ]
   },
   "visual": {
-    "overview": "Close product photos help shoppers see the material, stitching, fasteners, and finish. Start from a sharp source photo and name one detail at a time.",
+    "overview": "Close product photos let shoppers inspect the material, stitching, fasteners, grain, and finish that a full product view cannot show. Start with a sharp source frame and choose one detail at a time: the wallet edge, a collar buckle, a shoe seam, or a pump. Keep the camera close without clipping the feature, and use soft side light that reveals texture without hiding color. A detail image supports a listing gallery, a product-page carousel, or a social post that answers one concrete quality question. Compare every result with the physical item before publishing. Leave a small border around the feature so the result can sit beside a full product view. This keeps the detail readable.",
     "strip": [
       "n:guide:q7-detail-strip-0",
       "n:guide:q7-detail-strip-1",
@@ -234,7 +246,7 @@
     },
     "picker": {
       "title": "Choose a product detail ad format",
-      "lead": "Bring a material, fastener, or everyday feature into a clear close view.",
+      "lead": "Pick a close-up format that answers a buyer’s quality question: show grain or weave, demonstrate a fastener, reveal a small accessory, or isolate a feature that changes how the product is used.",
       "chips": [
         {
           "id": "material",
@@ -258,7 +270,8 @@
           "ref": "n:guide:q7-detail-picker-cards-0",
           "label": "Wallet Grain Macro",
           "chips": [
-            "material"
+            "material",
+            "accessory"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact brown leather wallet, grain, and stitching. A fingertip rests along the stitched edge while the leather grain fills a crisp macro frame. Warm side light, tactile close composition, shallow depth of field. No text, logos, or watermark.",
           "kind": "photo"
@@ -268,7 +281,8 @@
           "label": "Pet Collar Buckle Demo",
           "chips": [
             "hardware",
-            "accessory"
+            "accessory",
+            "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact olive-green pet collar, buckle, width, weave, and color. A hand holds the complete buckle close to the lens with the release clearly visible. Soft daylight, tight macro composition, clean product-demo style. No text, logos, or watermark.",
           "kind": "photo"
@@ -277,6 +291,8 @@
           "ref": "n:guide:q7-detail-picker-cards-2",
           "label": "Gold Hoop Unboxing",
           "chips": [
+            "material",
+            "hardware",
             "accessory"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the plain gold hoop earrings and their shape and finish. Hands lift both hoops above an open kraft jewelry case with the pair centered. Warm window light, close overhead composition, refined natural styling. No text, logos, or watermark.",
@@ -286,6 +302,8 @@
           "ref": "n:guide:q7-detail-picker-cards-3",
           "label": "Headphones Box Reveal",
           "chips": [
+            "hardware",
+            "accessory",
             "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal over-ear headphones, cushion shape, and color. Adult hands lift the headphones from an open padded box with both ear cups visible. Soft studio daylight, close overhead composition. No text, logos, or watermark.",
@@ -325,6 +343,7 @@
           "label": "Serum Pump Review",
           "chips": [
             "hardware",
+            "accessory",
             "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain serum bottle, pump, silhouette, and color. An adult creator holds the full bottle beside their face with the pump turned toward the lens. Bright bathroom daylight, chest-up framing, natural skin texture. No text, logos, or watermark.",
@@ -338,13 +357,13 @@
         "frame": "listing",
         "ref": "n:guide:q7-detail-uses-0",
         "h": "Show a wallet in a crossbody bag",
-        "d": "A close carry view shows how a slim wallet fits into an everyday bag pocket."
+        "d": "A close carry view shows how the slim wallet fits inside a crossbody pocket, with the stitched edge and leather grain still clear enough for a shopper to judge thickness. Keep enough of the crossbody pocket around the wallet to show scale, then let the stitched edge carry the quality message for a mobile shopper who zooms in."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q7-detail-uses-1",
         "h": "Review a pet grooming brush",
-        "d": "An adult pet owner turns the bristle side toward the camera so shoppers can see the brush head and grip."
+        "d": "An adult pet owner turns the bristle side of a grooming brush toward the camera and keeps the grip visible. Use this frame on a product page when brush head shape matters. Turn the brush once to show bristles and grip together, and place the close-up after the full brush image so the feature has context."
       }
     ],
     "input": [
@@ -380,8 +399,9 @@
         "Product details"
       ],
       "items": [
-        "Place the close-up after the full product photo in your store gallery.",
-        "Type material names and dimensions as text in the product listing."
+        "Place the close-up after the full product photo so the detail has a clear reference.",
+        "Check grain, stitch spacing, hardware color, and edge shape against the item before uploading.",
+        "Type material names, dimensions, and care notes as editable text, and use one detail per frame so shoppers know what to inspect."
       ]
     },
     "titles": {

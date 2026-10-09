@@ -4,7 +4,7 @@
   "description": "Create a coordinated square photo for each product color. Upload each actual shade and compare the result with the item before adding it to a swatch.",
   "h1": "Product Color Variations for a Coordinated Photo Set",
   "eyebrow": "Product photo template",
-  "lead": "Product color variations start with a photo of each actual shade and the same scene description to aim for a coordinated set. Separate results can still vary, so compare each image with the item you sell.",
+  "lead": "Product color variations start with a photo of each actual shade and the same scene description to aim for a coordinated set. Separate results can still vary, so compare each image with the item you sell. Name the decision your set supports, such as choosing a warm shade or matching a fabric option, before you attach the source photos.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -19,15 +19,15 @@
   "steps": [
     {
       "t": "Photograph one color clearly",
-      "d": "Keep the whole product in frame and use a consistent camera angle for each color."
+      "d": "Keep the whole product and its surface texture in frame. Consistent distance and light make the color differences easier to compare."
     },
     {
       "t": "Choose the finish and setting",
-      "d": "Name the color and background while keeping the product shape and light consistent."
+      "d": "Describe the palette and setting once, then attach a source photo of each actual shade so the option names do not drift between results."
     },
     {
       "t": "Link each image to its option",
-      "d": "Download each variation, then assign it to the matching color choice in your listing."
+      "d": "Download each variation, compare hue and shape with the real item, and attach the correct file to the matching color option in your store."
     }
   ],
   "ideas": [
@@ -64,15 +64,27 @@
   "faq": [
     {
       "q": "How do I keep color options consistent?",
-      "a": "Use the same view, light, and background for each source photo so shoppers can compare the finish."
+      "a": "Use the same view, light, and background for each source photo so shoppers can compare the finish. Upload one clear source for each actual shade when the options differ in dye, glaze, fabric, or finish; recoloring one image can hide those differences."
     },
     {
       "q": "Can the tool create a different product color?",
-      "a": "Describe the color change while keeping the silhouette, hardware, and material visible."
+      "a": "Describe the color change while keeping the silhouette, hardware, and material visible. Keep the product silhouette, camera angle, and light consistent so shoppers compare color instead of a changing setup."
     },
     {
       "q": "Where should each variation image go?",
-      "a": "Attach the downloaded image to the matching product option so the chosen finish is shown."
+      "a": "Attach the downloaded image to the matching product option so the chosen finish is shown. A color set works in a listing gallery, a feed post, or a carousel that helps a shopper choose one option."
+    },
+    {
+      "q": "Do I need a photo for each color?",
+      "a": "A clear photo of one color plus the listed color names is enough; the tool keeps the same shape across variations. Always compare a generated variation with the physical item and connect the file to the right option before publishing."
+    },
+    {
+      "q": "Will the generated colors match my real products?",
+      "a": "Keep each color name exact and review the image against your swatch before publishing; use the real product photos when exact shade matters most.  Attach each file to the correct option before publishing and check the swatch or thumbnail beside the generated image so a shopper sees the intended shade."
+    },
+    {
+      "q": "How are variation photos credited?",
+      "a": "Each variation photo costs 24 credits and the total appears before you create the set.  If fabric or glaze changes how light reflects, provide a real source for each option and review the result against the physical samples."
     }
   ],
   "overview": [
@@ -209,7 +221,7 @@
     ]
   },
   "visual": {
-    "overview": "Color variation photos work best when the product shape, camera angle, and light stay consistent. Start from a clean photo and keep each color tied to the correct listing option.",
+    "overview": "Color variation photos help shoppers compare options when the product shape, camera angle, backdrop, and light stay consistent. Start from a clear photo of each actual shade instead of recoloring one source, because fabric, glaze, and pigment can change how a surface catches light. Keep the product silhouette easy to recognize and show color choices in a useful setting, such as a skincare lineup or a garment try-on. Link every downloaded image to the matching option, then verify the result against the physical item before publishing. Leave a little room around each product for a consistent crop and check that the light does not shift the apparent hue. The goal is comparison, not a new claim.",
     "strip": [
       "n:guide:tpl-color-round4-01",
       "n:guide:tpl-color-round4-02",
@@ -240,7 +252,7 @@
     },
     "picker": {
       "title": "Choose a product color ad format",
-      "lead": "Keep each item easy to recognize while showing color choices in a useful shopping scene.",
+      "lead": "Choose a color comparison format that serves a real shopping decision: line up warm shades, compare cool cases, show soft neutrals on a garment, or demonstrate bold accents in use.",
       "chips": [
         {
           "id": "warm",
@@ -348,13 +360,13 @@
         "frame": "post",
         "ref": "n:guide:q7-color-uses-0",
         "h": "Compare skincare shade options in a feed",
-        "d": "Three plain bottles held together keep the color differences easy to judge at a glance."
+        "d": "Three plain skincare bottles held together keep shade differences easy to judge at a glance. Use the frame in a feed post when a shopper is choosing between tones. Keep the three bottles close enough for a quick feed comparison but leave each silhouette clear; shoppers should be able to name the shade they want. Keep the bottle spacing and camera height fixed while you compare shades, and place the color name beside each option in editable text. This lets a shopper connect the visible hue with the correct variant without relying on words inside the image."
       },
       {
         "frame": "post",
         "ref": "n:guide:q7-color-uses-1",
         "h": "Compare protein drink flavors by color",
-        "d": "An adult athlete holds two plain pouches side by side so shoppers can distinguish the flavor options."
+        "d": "An adult athlete holds two plain protein pouches side by side so flavor options can be distinguished by color while the product shape stays clear. Show two pouches at one distance and use editable flavor names in the listing, because color alone cannot prove ingredients or taste."
       }
     ],
     "input": [
@@ -390,8 +402,9 @@
         "Material"
       ],
       "items": [
-        "Link each downloaded image to the matching color option in your product listing.",
-        "Type the color and material names from your product information so shoppers can compare the finishes."
+        "Link each downloaded image to the matching color option in your listing and double-check the filename before publishing.",
+        "Type color and material names from your product information so shoppers can compare finishes without words burned into the image.",
+        "Keep camera angle, backdrop, and light consistent across shades, then review every variation beside the physical item because the tool cannot verify a finish."
       ]
     },
     "titles": {
