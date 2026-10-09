@@ -91,7 +91,7 @@
     },
     {
       "q": "Can I create another carousel video from the same source photo?",
-      "a": "Yes. Keep the commuter backpack as the reference, then change one panel, crop, or camera move at a time. Check that the pockets, straps, and carry position match the physical item. Add the current price, size, and product link after download so each panel stays easy to update."
+      "a": "Yes. Keep the commuter backpack as the reference, then change one panel, crop, or camera move at a time. Check that the pockets, straps, and carry position match the physical item. Add the current price, size, and product link after download so each panel stays easy to update. Keep panel order stable when you make a second version so shoppers can compare storage, access, and carry comfort without relearning the sequence. A second version should answer a different backpack question, not repeat the same pocket view with new wording."
     }
   ],
   "overview": [
@@ -223,7 +223,7 @@
     ]
   },
   "visual": {
-    "overview": "A carousel video ad uses a short sequence to answer one shopper question at a time. Keep the product in view from the opening reveal through the final scene. Use this format when a commuter backpack needs separate proof for storage, access, and carry comfort. Keep one shopper question across several beats, then leave room for the panel label, price, and product link you add after download. Review the pockets, straps, and scale against your source before publishing.",
+    "overview": "A carousel video ad uses a short sequence to answer one shopper question at a time. Keep the product in view from the opening reveal through the final scene. Use this format when a commuter backpack needs separate proof for storage, access, and carry comfort. Keep one shopper question across several beats, then leave room for the panel label, price, and product link you add after download. Review the pockets, straps, and scale against your source before publishing. The opening beat should name the question, while the middle beats show evidence and the final beat leaves a calm frame for the link or offer.",
     "strip": [
       "n:guide:q13-carousel-strip-0",
       "n:guide:q13-carousel-strip-1-r2",
@@ -358,13 +358,13 @@
         "frame": "phone",
         "ref": "n:guide:q13-carousel-uses-0",
         "h": "Post a 9:16 commuter-backpack video in a Reel",
-        "d": "Show the backpack compartments and how it fits a daily commute. Give each beat one proof point, such as the laptop sleeve, bottle pocket, or shoulder strap, so the sequence is easy to follow on a phone."
+        "d": "Show the backpack compartments and how it fits a daily commute. Give each beat one proof point, such as the laptop sleeve, bottle pocket, or shoulder strap, so the sequence is easy to follow on a phone. Keep the laptop sleeve, bottle pocket, and shoulder strap in separate beats so none is hidden by the next crop."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q13-carousel-uses-1",
         "h": "Add the backpack video to a product page",
-        "d": "Pair the clip with listing photos so shoppers can see the backpack compartments before choosing a size or color. Keep the panel order consistent with the product page and leave the price and link readable."
+        "d": "Pair the clip with listing photos so shoppers can see the backpack compartments before choosing a size or color. Keep the panel order consistent with the product page and leave the price and link readable. If a color or size changes, update the panel labels and listing photos together."
       }
     ],
     "input": [
@@ -406,8 +406,8 @@
         "Swipe dots & CTA"
       ],
       "items": [
-        "The frame shows the 1-2-3-4 panel treatment you assemble after download. Check that the commuter backpack, pocket order, and carry position stayed accurate before adding panel labels.",
-        "Add one headline, the price, and the product link per panel in your ad editor. Read the finished frame at mobile size and keep text away from the backpack pockets and straps."
+        "The frame shows the 1-2-3-4 panel treatment you assemble after download. Check that the commuter backpack, pocket order, and carry position stayed accurate before adding panel labels. Give every panel one readable job; a crowded frame makes the sequence harder to scan. Keep the panel crop consistent so the backpack does not jump in size between beats.",
+        "Add one headline, the price, and the product link per panel in your ad editor. Read the finished frame at mobile size and keep text away from the backpack pockets and straps. Check that the final card leaves the product silhouette clear beside the link. Use the final panel for the clear product silhouette, then place the destination link in the open area."
       ]
     },
     "titles": {
