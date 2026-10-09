@@ -256,7 +256,7 @@
     },
     "picker": {
       "title": "Pick a beat for your carousel video ad",
-      "lead": "Choose a moment that helps shoppers understand the product. Start with one question about the commuter backpack, then choose beats that show its pockets, carry, or everyday access in order.",
+      "lead": "Use a four-beat sequence—open, reveal, use, finish—to answer one product question. Start with the item, then keep the final frame clear for the details you add after download.",
       "chips": [
         {
           "id": "unbox",
@@ -277,77 +277,77 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:q13-carousel-picker-0",
-          "label": "Gold hoops unboxing",
+          "ref": "n:guide:f5-r10-carousel-card-0-folding-umbrella",
+          "label": "Folding umbrella — open → reveal → use → finish",
           "chips": [
             "unbox"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands open a plain jewelry box, lift both gold hoops and hold them above the lining. End with the pair centered. Overhead close-up. Soft window light. Sound: soft box hinge and room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open a plain shipping box, reveal the folded charcoal umbrella, extend it slightly to show the ribs, then finish holding it centered beside the open box. Close vertical framing with a gentle push-in. Soft entryway daylight. Sound: box movement and one soft umbrella click; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q13-carousel-picker-1",
-          "label": "Cable organizer in use",
+          "label": "Cable organizer — open → reveal → use → finish",
           "chips": [
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. Top-down close-up with a gentle push. Broad desk-side window light. End on the organizer holding the charging cable, other cables beside it. Sound: cable taps and room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the organizer slot, reveal one loose charging cable, guide the cable into place, then finish with the organizer holding it while the other cables remain beside it. Top-down desk close-up with a gentle push. Broad window light. Sound: cable taps and room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q13-carousel-picker-2",
-          "label": "Jacket fit check",
+          "label": "Jacket fit check — open → reveal → use → finish",
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a fitting room, an adult turns once toward the mirror, then faces the camera and says, “The cuffs and hem are easy to see.” Keep the jacket front visible. Mirror-height medium framing. Even fitting-room light. End in the fitting-room mirror with the jacket front and cuffs visible. Sound: spoken line and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the fitting-room curtain, reveal the jacket front in the mirror, turn once to show the cuffs and hem, then finish facing the camera with the jacket centered. Mirror-height medium framing. Even fitting-room light. Sound: curtain movement and quiet room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q13-carousel-picker-3",
-          "label": "Serum morning routine",
+          "label": "Serum morning routine — open → reveal → use → finish",
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult uses the dropper to place one small drop of serum on her cheek, then lowers the bottle beside her face. Close mirror framing. Diffused bathroom window light. End with the bottle beside her cheek after the drop, label facing camera. Sound: soft cap click, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the dropper cap, reveal the serum bottle and pipette, place one small drop on the cheek, then finish with the bottle beside the face and label facing camera. Close bathroom mirror framing. Diffused window light. Sound: cap click and quiet room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q13-carousel-picker-4",
-          "label": "Backpack commute story",
+          "label": "Commuter backpack — open → reveal → use → finish",
           "chips": [
             "use",
             "unbox",
             "finish"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black backpack organizer, places a notebook inside and closes the flap. End with the full backpack visible. Eye-level medium close-up. Warm cafe-window light. Sound: zipper and room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the commuter backpack, reveal its organizer, place a notebook inside, then finish with the full backpack closed and ready to carry. Eye-level cafe close-up. Warm window light. Sound: zipper and room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q13-carousel-picker-5",
-          "label": "Headphone feature review",
+          "label": "Headphones feature review — open → reveal → use → finish",
           "chips": [
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator turns the headphones toward the lens, points to the visible ear cushions and says, “The padding and folding hinges are right here.” Front-facing chest-up framing. Soft window light. End with both ear cups facing camera and the hinge visible. Sound: spoken line and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the canvas tote, reveal the dark navy headphones, turn the ear cups toward the lens, then finish holding both cups and the folding hinge steady above the tote. Close over-shoulder framing with one slow push-in. Desk-side daylight. Sound: fabric rustle and a soft hinge click; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q13-carousel-picker-6",
-          "label": "Dog leash reaction",
+          "label": "Dog leash walk — open → reveal → use → finish",
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a garden path, an adult offers the leash handle to a dog, then walks forward as the dog follows. Keep the clip and handle visible. Eye-level tracking shot. End with the dog and leash clip both visible in a steady walking pose. Sound: footsteps and light outdoor ambience, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the leash clasp, reveal the clip and handle, walk forward with the calm dog, then finish with the dog and clip together in a clear walking pose. Eye-level tracking shot. Natural garden-path light. Sound: footsteps and light outdoor ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q13-carousel-picker-7",
-          "label": "Protein bar first bite",
+          "ref": "n:guide:f5-r10-carousel-card-7-water-bottle",
+          "label": "Insulated water bottle — open → reveal → use → finish",
           "chips": [
             "finish"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the crisp pieces inside.” Chest-up close framing. Soft kitchen window light. End with the bar cut-side forward and its plain wrapper beside it. Sound: spoken line, one crisp bite and room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the cap, reveal the matte green insulated bottle mouth, pour into the clear glass, then finish with the bottle upright beside the filled glass on the trail table. Close outdoor framing. Natural morning light. Sound: cap click and a soft pour; no music.",
           "kind": "video"
         }
       ],
