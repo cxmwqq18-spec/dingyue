@@ -417,6 +417,26 @@ function TemplatePage({ data, r }: Props) {
   );
 }
 
+function RelatedLinks({ links, r }: { links?: { label: string; href: string }[]; r: V2Resolvers }) {
+  const items = list<{ label: string; href: string }>(links);
+  if (!items.length) return null;
+  return (
+    <section className="v-related-links-section">
+      <div className="wrap">
+        <h2>Related links</h2>
+        <style dangerouslySetInnerHTML={{ __html: `
+        .v-related-links-section{padding:14px 0 64px}
+        .v-related-links-section h2{font-size:clamp(20px,2.2vw,26px);margin:0 0 16px}
+        .v-related-links-section ul{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 24px;list-style:none;margin:0;padding:0}
+        .v-related-links-section a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+        @media(max-width:900px){.v-related-links-section ul{grid-template-columns:repeat(3,minmax(0,1fr))}}
+        @media(max-width:560px){.v-related-links-section ul{grid-template-columns:repeat(2,minmax(0,1fr))}}` }} />
+        <ul>{items.map((item) => <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>)}</ul>
+      </div>
+    </section>
+  );
+}
+
 function CollectionPage({ data, r }: Props) {
   const kind = text(data.kind);
   const overview = kind === "industry" ? `What ${data.label} sellers need` : kind === "platform" ? `Making ads for ${data.label}` : `Getting ready for ${data.label}`;
@@ -447,6 +467,7 @@ function CollectionPage({ data, r }: Props) {
       ) : null}
       <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
       {list<V2Tool>(data.tools).length ? <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section> : null}
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions"} r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and choose a look for your next campaign."} r={r} title={`Make ${data.label} content today`} />
@@ -481,6 +502,7 @@ function CollectionPage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title="Questions" r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and pick a template."} r={r} title={`Make ${data.label} content today`} />
@@ -524,6 +546,7 @@ function IndexPage({ data, r }: Props) {
             })}
           </div>
         </VisualDirectoryFilter> : null}
+        <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
         <Faq items={data.faq} title="Questions" r={r} />
         {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
       </> : <>
