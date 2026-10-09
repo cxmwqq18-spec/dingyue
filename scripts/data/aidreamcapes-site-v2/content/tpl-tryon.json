@@ -4,7 +4,7 @@
   "description": "Preview one garment on a model with AI virtual try-on for clothing. Upload a flat lay or hanger photo, then use size charts for fit details.",
   "h1": "AI Virtual Try-On for Clothing: Your Garment on a Model",
   "eyebrow": "Model photo template",
-  "lead": "Use AI virtual try-on for clothing to create a visual preview of one garment on a model. It does not measure or verify fit.",
+  "lead": "Use AI virtual try-on for clothing to create a model view of one garment. Upload a flat lay or hanger photo, choose a believable setting, then add verified size facts beside the image.",
   "secondary_keywords": [
     "clothing on model from flat lay",
     "AI fashion model photos",
@@ -19,15 +19,15 @@
   "steps": [
     {
       "t": "Photograph the full garment",
-      "d": "Show the collar, closures, pockets, sleeves, and hem in one clear view."
+      "d": "Show collar, closures, pockets, sleeves, and hem in one clear view; smooth non-design folds so shape and true color remain visible."
     },
     {
       "t": "Choose the model and setting",
-      "d": "Describe the pose, base layer, light, and room for the on-model photo."
+      "d": "Describe model, base layer, pose, light, and room; choose a view that leaves the garment unobstructed and makes no fit promise."
     },
     {
       "t": "Download and add size details",
-      "d": "Add the real size chart and garment notes to the product listing."
+      "d": "Compare the download with the real piece, then add the approved size chart, measurements, fabric notes, and care details to your listing."
     }
   ],
   "ideas": [
@@ -64,19 +64,35 @@
   "faq": [
     {
       "q": "Can my shoppers try clothes on themselves with this?",
-      "a": "No. This is for you as the seller: it turns your garment photo into a photo of the item being worn, which you then post on your store or social pages."
+      "a": "No. This tool is for you as the seller: it turns your garment photo into a model view that you can review and place on your store, launch email or social feed. Shoppers still use your size chart for fit decisions."
     },
     {
       "q": "Can one model appear in every photo?",
-      "a": "There's no saved model to reuse, so the person can look different from one photo to the next. Describing age, hair, and build consistently helps the set feel related."
+      "a": "There is no saved model to reuse. The person can look different from one image to the next, so describe age range, hair, build, pose and light consistently when you want a related collection."
     },
     {
       "q": "Does the photo show the true fit?",
-      "a": "It shows the style and how the fabric drapes, not an exact fit for every body. List your size chart and garment measurements alongside the photo so buyers can pick the right size."
+      "a": "It shows the style and how the fabric drapes, not an exact fit for every body. Publish real garment measurements and a size chart beside the image, and avoid wording that promises a measured result."
     },
     {
       "q": "What garment photo gives the cleanest virtual try-on?",
-      "a": "Lay the garment flat or hang it straight, show the full outline, and use even light. A clear front view gives the model photo more reliable shape and color."
+      "a": "Lay the garment flat or hang it straight, show the full outline, smooth non-design folds, and use even light. A clear front view gives the model frame more reliable shape, color, closures and pocket placement."
+    },
+    {
+      "q": "Will the model wear my exact garment?",
+      "a": "The output is guided by the uploaded garment and keeps its visible shape, color and details on the model. Review buttons, seams, prints and hem against the real item before publishing the photo."
+    },
+    {
+      "q": "Can I see both front and back fit?",
+      "a": "Yes. Run a front and a back version when construction matters. Use a separate rear source or a clear back description rather than asking a front photo to invent hidden seams or closures."
+    },
+    {
+      "q": "What does a virtual try-on photo cost?",
+      "a": "Each photo costs 24 credits; a front-and-back pair uses 48 credits. The current total is shown before creation, so you can decide how many views the listing needs. Plan the pair when a collar, back seam or closure matters to the product story."
+    },
+    {
+      "q": "How should I compare the generated view with stock?",
+      "a": "Keep the approved flat or hanger photo open beside the result. Check the collar, closures, pocket placement, sleeve length, hem and visible color, then publish the model view only when those details still describe the item in stock. Compare the shoulder line and garment length at the same zoom, and retain the source photo beside the model view so a shopper can check both references."
     }
   ],
   "overview": [
@@ -194,32 +210,36 @@
             "ref": "f:q8-tpl-tryon-example-01",
             "title": "Fit Check: Bomber Front",
             "kind": "photo",
-            "product": "bomber jacket"
+            "product": "bomber jacket",
+            "prompt": "Front view: adult model wears the plain bomber jacket square to camera with collar, zipper and hem visible for a fit check."
           },
           {
             "ref": "f:q8-tpl-tryon-example-02",
             "title": "Lookbook Walk: Bomber Back",
             "kind": "photo",
-            "product": "bomber jacket"
+            "product": "bomber jacket",
+            "prompt": "Back view: adult model walks away in the same bomber jacket and pauses to show the shoulder seams and back hem."
           },
           {
             "ref": "f:q8-tpl-tryon-example-03",
             "title": "Knit top try-on review",
             "kind": "photo",
-            "product": "knit top"
+            "product": "knit top",
+            "prompt": "Creator review: adult model wears the knit top and turns one shoulder toward camera to show sleeve length and fabric drape."
           },
           {
             "ref": "f:q8-tpl-tryon-example-04",
             "title": "Lookbook Walk: Satin Skirt",
             "kind": "photo",
-            "product": "satin skirt"
+            "product": "satin skirt",
+            "prompt": "Lookbook walk: adult model takes three steps in the satin skirt and turns once so the hem and movement are visible."
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "An on-model clothing photo gives shoppers a clearer view of a garment’s silhouette when it stays recognizably like the source item.",
+    "overview": "Treat a try-on image as a merchandising aid, not a measurement. A clear model frame lets shoppers judge the collar, sleeve length, hem, layering and overall silhouette before they open the size chart. Keep one garment as the subject, describe a pose that leaves its construction visible, and use consistent light and crop across a new-arrivals set. Review the generated frame against the real item, then place the approved image beside measurements, fabric information and care notes on your product page. Record which angle passed review, keep the source and result together, and use the image only where a shopper can still reach the size chart.",
     "strip": [
       "n:guide:tpl-tryon-c3-strip-bomber-front",
       "n:guide:tpl-tryon-c3-strip-cardigan-side",
@@ -232,7 +252,7 @@
       "source": "n:guide:tpl-tryon-c3-m2-source",
       "result": "n:guide:tpl-tryon-c3-m2-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult model wears the garment and turns once in soft daylight to show its full silhouette. Natural fashion UGC look. Full-body eye-level handheld shot with one gentle push-in. Sound: fabric movement, no music. End facing camera with the full garment silhouette visible.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult model wears the garment and turns once in soft daylight to show the full silhouette, collar, sleeves, pockets and hem. Keep the pose relaxed and leave enough space for the complete outline. Natural fashion UGC look, eye-level handheld framing, one gentle push-in. Sound: fabric movement, no music. End facing camera with the garment centered for a listing review. Keep the background quiet and leave a clean edge around the garment for a listing crop.",
       "options": [
         [
           "Template",
@@ -251,7 +271,7 @@
     },
     "picker": {
       "title": "Choose a try-on ad scene",
-      "lead": "Preview a fit check, outfit transition, or lookbook moment on a model.",
+      "lead": "Choose the ad moment that answers one clothing question: how the garment fits, moves, layers or looks in a real shopping scene. Keep the item and its key seams visible. For a collection, keep the camera height and background steady while changing only the approved garment.",
       "chips": [
         {
           "id": "tryon",
@@ -268,81 +288,98 @@
         {
           "id": "walk",
           "label": "Lookbook Walk"
+        },
+        {
+          "id": "mirror",
+          "label": "Mirror Selfies"
+        },
+        {
+          "id": "multiangle",
+          "label": "Multi-Angle Whip-Pan"
         }
       ],
       "cards": [
         {
-          "ref": "f:q8-tpl-tryon-pick-01",
-          "label": "Try-On Transition: Weekend Denim",
+          "ref": "n:guide:f7-r10-tryon-mirror-selfie",
+          "label": "Mirror Selfie: Navy Overshirt Fit",
           "chips": [
+            "fit",
+            "grwm",
+            "mirror"
+          ],
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult gets dressed and checks a navy overshirt in a full-length fitting-room mirror selfie, holding the phone low so the shirt stays visible. Bright retail daylight, honest GRWM fit-check photo, full-body square framing. End with the collar, cuffs and hem clear for comparison. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f7-r10-tryon-mirror-denim",
+          "label": "Mirror Fit Check: Denim Jacket",
+          "chips": [
+            "fit"
+          ],
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult South Asian man checks a plain denim jacket in a full-length bedroom mirror, turning once to show the shoulder seams, pockets and hem. Bright natural daylight, honest fit-check photo, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f7-r10-tryon-walk-blue-jacket",
+          "label": "Walk Fit Check: Blue Jacket",
+          "chips": [
+            "fit",
+            "multiangle"
+          ],
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult Latina woman walks one step in a plain cobalt blue utility jacket, then turns slightly to show the collar, pockets and hem. Soft overcast daylight, full-body square fit-check photo, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f7-r10-tryon-whip-pan",
+          "label": "Multi-Angle Whip-Pan: Cream Cardigan",
+          "chips": [
+            "multiangle",
             "tryon"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult steps into a plain denim jacket in front of a full-length mirror, finishing with one turn to show the fit. Bright bedroom daylight, candid fashion UGC look. Full-body handheld shot with one smooth push-in. Sound: fabric movement, no music. End on the complete outfit facing the mirror.",
-          "kind": "video"
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. An adult model makes a quick whip-pan turn in a cream cardigan over a pale blue shirt; show front, side and back angles in one readable sequence. Soft studio daylight, full-body square fashion photo with the cuffs, buttons and hem visible. No text or logos.",
+          "kind": "photo"
         },
         {
-          "ref": "f:q8-tpl-tryon-pick-02",
-          "label": "Fit Check: Running Jacket",
-          "chips": [
-            "fit"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wears a plain running jacket, raises both arms once to show sleeve movement, then faces camera. Outdoor overcast light, authentic fit-check look. Full-body eye-level handheld shot with a short step closer. Sound: fabric rustle and light outdoor ambience, no music. End on the jacket silhouette.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-tryon-pick-03",
-          "label": "Creator Fit Check: Office Blazer",
-          "chips": [
-            "fit"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator wears a plain blazer, holds its lapel, looks into camera and says, “Here’s how the shoulder and sleeve sit when I move.” Bright office window light, natural UGC look. Chest-up handheld shot with slight sway. Sound: voice and fabric brush, no music. End facing camera with the blazer shoulder and sleeve in view.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-tryon-pick-04",
-          "label": "Try-On Transition: Knit Dress",
-          "chips": [
-            "tryon",
-            "grwm"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult in a plain knit dress changes from a robe to the finished look with one clean hand-cover transition. Warm natural window light, relaxed UGC style. Full-body static eye-level framing with one gentle push-in after the reveal. Sound: soft fabric movement, no music. End with the dress silhouette centered.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-tryon-pick-05",
-          "label": "Lookbook Walk: Evening Dress",
+          "ref": "n:guide:f7-r10-tryon-walk-ivory-puffer",
+          "label": "Lookbook Walk: Ivory Puffer",
           "chips": [
             "walk"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks three measured steps in a plain evening dress through a bright stone corridor and turns once to show the hem. Soft daylight, polished lookbook UGC style. Full-body tracking shot with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a still three-quarter pose with the evening-dress hem visible.",
-          "kind": "video"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An older East Asian woman walks three measured steps in a plain ivory puffer coat and turns once to show the hem. Soft daylight, polished lookbook UGC style, full-body square framing, no text or logos.",
+          "kind": "photo"
         },
         {
-          "ref": "f:q8-tpl-tryon-pick-06",
-          "label": "Fit Check: Pleated Skirt",
+          "ref": "n:guide:c5-tpl-outfit-m1-green-midi",
+          "label": "Fit Check: Green Midi Dress",
           "chips": [
-            "fit"
+            "fit",
+            "grwm",
+            "mirror",
+            "multiangle",
+            "tryon"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wears a plain pleated skirt and turns once beside a full-length mirror so the hem moves naturally. Soft daylight, honest fit-check look. Full-body handheld shot with one small arc. Sound: fabric swish and quiet room tone, no music. End with the skirt fully visible.",
-          "kind": "video"
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. An adult gets ready beside a full-length mirror and gives a quick front-side-back turn in a muted-green midi dress, keeping the sleeve and hem readable. Soft daylight, full-body square GRWM fit-check photo, no text or logos.",
+          "kind": "photo"
         },
         {
-          "ref": "f:q8-tpl-tryon-pick-07",
-          "label": "GRWM: Linen Set for Work",
+          "ref": "n:guide:f7-r10-tryon-grwm-field-jacket",
+          "label": "GRWM: Field Jacket Layering",
           "chips": [
-            "grwm"
+            "grwm",
+            "multiangle"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult holds a plain linen jacket over a matching set, looks into camera and says, “This is the set I’m styling for a warm workday.” Bright studio daylight, casual GRWM look. Chest-up eye-level handheld shot with slight sway. Sound: voice and fabric movement, no music. End with the matching set held beside the outfit.",
-          "kind": "video"
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult Black woman layers a plain charcoal field jacket in a bright bedroom mirror, then turns through three quick angles to show the shoulder, pockets and hem before heading outside. Cool morning light, full-body square GRWM photo, no text or logos.",
+          "kind": "photo"
         },
         {
-          "ref": "f:q8-tpl-tryon-pick-08",
-          "label": "Lookbook Walk: Wide-Leg Suit",
+          "ref": "n:guide:q9-look-pleated-skirt-walk",
+          "label": "Lookbook Walk: Pleated Skirt",
           "chips": [
-            "walk"
+            "walk",
+            "multiangle"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks toward camera in a plain wide-leg suit, pauses and turns slightly to show the drape. Soft courtyard daylight, clean fashion UGC look. Full-body handheld tracking with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a full-length front pose showing the wide-leg suit drape.",
-          "kind": "video"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks toward camera in a plain pleated skirt, pauses and turns slightly so the drape and hem stay visible. Soft courtyard daylight, full-body square lookbook frame, no text or logos.",
+          "kind": "photo"
         }
       ],
       "button": "Start with your product"
@@ -352,13 +389,13 @@
         "frame": "browser",
         "ref": "n:guide:tpl-tryon-c3-m4-product-page",
         "h": "Show an olive bomber on a product page",
-        "d": "A square front view keeps its collar, zipper, hem, and pockets visible beside listing details."
+        "d": "Place a square front or three-quarter view beside the garment name, verified measurements, and stock details. Keep the collar, zipper, pockets and hem visible so shoppers can connect the styled image to the item they can buy. Add a back view only when construction or closure details are important. Keep the size chart one click away from the image on mobile."
       },
       {
         "frame": "listing",
         "ref": "n:guide:tpl-tryon-c3-m4-seasonal-listing",
         "h": "Feature outerwear in seasonal browsing",
-        "d": "A square city scene places the bomber in context beside its product details."
+        "d": "Use a consistent crop and light across a seasonal collection. A city walk or fitting-room frame adds context while the listing text carries the real size, fabric and availability information. Keep the approved source beside each result during your stock review. Name each view by angle so a merchandiser can update the collection without confusing front and back files. Add the garment color to filenames so the right approved view is easy to find."
       }
     ],
     "input": [
@@ -377,25 +414,32 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:tpl-tryon-c3-m6-front-model",
+        "ref": "n:guide:f7-r10-tryon-output-gray-hoodie",
         "frame": "1:1",
-        "label": "Bomber Front Fit"
+        "label": "Gray Hoodie Front Fit"
       },
       {
-        "ref": "n:guide:tpl-tryon-c3-m6-back-model",
+        "ref": "n:guide:f7-r10-tryon-output-denim-jacket",
         "frame": "1:1",
-        "label": "Bomber Back Fit"
+        "label": "Denim Jacket Back Fit"
       }
     ],
     "after": {
       "ref": "n:guide:tpl-tryon-c3-m7-back-detail",
+      "mock": {
+        "type": "steps",
+        "tag1": "1 Lay flat",
+        "tag2": "2 On model",
+        "tag3": "3 Check fit"
+      },
       "zones": [
+        "Try-on tags",
         "Garment name",
         "Size details"
       ],
       "items": [
-        "Add the garment name and real size details to the listing.",
-        "Choose a crop that keeps the collar, sleeves, and hem in view."
+        "The frame shows the 1-2-3 tags you add to walk buyers through the try-on.",
+        "Add the garment name and real size details to the listing."
       ]
     },
     "titles": {

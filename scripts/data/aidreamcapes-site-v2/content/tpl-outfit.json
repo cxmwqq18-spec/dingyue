@@ -1,10 +1,10 @@
 {
   "id": "tpl-outfit",
   "title": "AI Fashion Reels: Show the Full Outfit | AIVideosUGC",
-  "description": "Create AI fashion reels from a photo of your jacket, jeans, or full outfit. Get a head-to-toe 9:16 video in 6, 10, 15, or 30 seconds for TikTok.",
+  "description": "Create AI fashion reels from a photo of your jacket, jeans, or full outfit. Get a head-to-toe 9:16 video in 6, 10, or 15 seconds for TikTok and Instagram.",
   "h1": "AI Fashion Reels That Show the Whole Look, Head to Toe",
   "eyebrow": "Fashion video template",
-  "lead": "AI fashion reels put your jacket, jeans, or full outfit on a model, head to toe. Upload your clothing photo, describe the look and the pose, and receive a 9:16 reel ready for TikTok and Instagram.",
+  "lead": "AI fashion reels put your jacket, jeans or full outfit on a model from one clothing photo. Describe the look and one readable action, choose a 9:16 duration, then add verified size and offer details after review.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -20,15 +20,15 @@
   "steps": [
     {
       "t": "Upload the clothing photo",
-      "d": "A full garment with even light gives the model room to show its cut and color."
+      "d": "Keep the hem, collar, closures, and seams inside one well-lit source frame so the model can show the garment clearly."
     },
     {
       "t": "Describe the model and backdrop",
-      "d": "Describe the wearer and pose. Pick 6 seconds for a quick look, 10 for a guided detail pass, or 15 for a full outfit sequence."
+      "d": "Describe wearer, backdrop, and one pose; pick 6 seconds for a reveal, 10 for detail, or 15 for a full sequence."
     },
     {
       "t": "Add captions and sizing notes",
-      "d": "After download, add captions, price, and sizing notes in your editor or social app."
+      "d": "After download, compare with the real item, then add verified sizes, price, product link, licensed audio, and disclosure in your editor."
     }
   ],
   "ideas": [
@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 · TikTok & Instagram"
       ],
       [
         "Length",
@@ -61,19 +61,35 @@
   "faq": [
     {
       "q": "Can one model appear in every reel?",
-      "a": "There's no saved model to pick from. Each reel is made on its own, so the model's face and build can change between videos, even when you reuse a description."
+      "a": "There is no saved model to pick from. Each reel is made on its own, so the face and build can change between videos even when you reuse a description. Keep the garment and action consistent instead."
     },
     {
       "q": "Will the clothes look exactly like mine?",
-      "a": "The video follows your photo, but small details like buttons, stitching, or prints can shift. Watch each clip before you post, and generate a fresh one if a detail looks off."
+      "a": "The video follows your photo, but small details such as buttons, stitching or prints can shift. Watch each clip before posting and regenerate or edit when a product detail is not accurate."
     },
     {
       "q": "Which clothes come out well?",
-      "a": "Garments with a strong outline and solid color, such as jackets, denim, knitwear, and dresses. Very fine patterns or tiny logos may lose sharpness, so shoot close and in good light."
+      "a": "Garments with a strong outline and solid color, such as jackets, denim, knitwear and dresses, give the model clear cues. Fine patterns or tiny logos may lose sharpness, so shoot close and use good light."
     },
     {
       "q": "What length works for an AI fashion reel?",
-      "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and 30 seconds only when the public option is available. Choose 9:16 for Reels."
+      "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and choose 9:16 for Instagram or TikTok."
+    },
+    {
+      "q": "Can the clothes be shown head to toe?",
+      "a": "Yes. Ask for a full-body frame and leave floor space so the fit, length and footwear stay in view. A head-to-toe composition is useful for styling, not a substitute for measurements."
+    },
+    {
+      "q": "How do I keep the garment accurate?",
+      "a": "Upload a flat, mannequin or hanger photo that shows the whole piece and its details. Review the generated model shot beside that source and keep only a version whose garment remains recognizable."
+    },
+    {
+      "q": "What does a fashion reel cost?",
+      "a": "A 6-, 10- or 15-second reel costs 24, 40 or 60 credits. The cost is shown before creation, so choose the shortest duration that can show the action your placement needs. Review the export before it reaches a paid feed."
+    },
+    {
+      "q": "How do I check a reel before posting?",
+      "a": "Watch the full export with the source photo beside it. Check collar, closures, prints, seams, hem, face, hands and footwear, then add the verified size, material, price and disclosure in the platform editor. Check the opening and closing frames at phone size, confirm the garment remains visible during motion, and trim any pause that hides the fit or the product details."
     }
   ],
   "overview": [
@@ -120,7 +136,7 @@
       },
       {
         "t": "Known credit options",
-        "d": "A six-, ten-, fifteen-, or thirty-second clip uses 24, 40, 60, or 120 credits; you see the cost before submitting."
+        "d": "A six-, ten-, or fifteen-second clip uses 24, 40, or 60 credits; you see the cost before submitting."
       }
     ]
   },
@@ -167,7 +183,7 @@
     "good": [
       "Jackets, dresses, sets, and activewear",
       "New-arrival styling ideas",
-      "Full-length looks for Reels and TikTok",
+      "Full-length looks for Instagram and TikTok",
       "One garment with a clear silhouette"
     ],
     "not_ideal": [
@@ -186,26 +202,29 @@
             "ref": "n:guide:q11-outfit-example-01-square-r2",
             "title": "Black Activewear Mirror Fit",
             "kind": "scene",
-            "product": "activewear set"
+            "product": "activewear set",
+            "prompt": "Mirror fit: adult model checks the black activewear set in a full-length mirror, then shifts one shoulder to show the waistband and side seam."
           },
           {
             "ref": "n:guide:q11-outfit-example-02-square-r2",
             "title": "Dark Overcoat on a City Walk",
             "kind": "scene",
-            "product": "overcoat"
+            "product": "overcoat",
+            "prompt": "City walk: adult model takes three measured steps in the dark overcoat beside the river, keeping the hem and shoes visible."
           },
           {
             "ref": "n:guide:q11-outfit-example-03-square-r2",
             "title": "Gray Sweater Fit Check",
             "kind": "scene",
-            "product": "gray sweater"
+            "product": "gray sweater",
+            "prompt": "Fabric check: adult model wears the gray sweater and black trousers in a bright studio, gently pinching one sleeve to show the knit texture."
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "Turn one clothing item into a clear outfit reel. Preserve its silhouette, color, and seams while a walk, fit check, or garment detail gives the video one focused action.",
+    "overview": "An outfit reel should help a shopper see the silhouette, the relationship between pieces and the setting where the clothes make sense. Choose one hero garment and one simple action before adding accessories or a second look. A full-length walk, mirror fit check, creator review or detail pass can show movement and styling; it cannot verify a person’s measurements. Keep the product visible in the safe frame, review buttons, prints and seams against the source, and add your real size range, material, price and disclosure in the platform editor. Save the approved export with the source item and use a separate listing image for details the motion clip cannot hold still.",
     "strip": [
       "n:guide:q11-outfit-strip-square-01",
       "n:guide:q11-outfit-strip-square-02",
@@ -218,11 +237,11 @@
       "source": "n:guide:tpl-outfit-c3-m2-source",
       "result": "n:guide:tpl-outfit-c3-m2-result-9x16",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns once to show the side fit of the beige zip jacket. Use a waist-up medium frame with a slow tracking move. Soft studio daylight keeps the beige jacket and seams clear. End facing forward with the full jacket centered. Sound: quiet room tone and a light fabric rustle. No music."
+      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns once to show the side fit of the beige zip jacket. Use a full-length medium frame with a slow tracking move so the collar, cuffs, hem and shoes stay visible. Soft studio daylight keeps the beige jacket and seams clear. End facing forward with the full jacket centered. Sound: quiet room tone and a light fabric rustle. No music. Keep the final pose steady for a thumbnail and leave safe space for platform controls."
     },
     "picker": {
       "title": "Choose a clothing reel format",
-      "lead": "Pick a try-on, fit review, or outfit reveal for the garment.",
+      "lead": "Pick one feed-native action for the garment: a creator review, a mirror fit check, a street walk or a detail pass. Keep the hero item visible and end on a frame shoppers can compare. Choose the shortest duration that leaves the garment readable at the feed size. Leave room for the platform controls and caption when framing the action.",
       "chips": [
         {
           "id": "review",
@@ -239,37 +258,44 @@
         {
           "id": "details",
           "label": "Garment details"
+        },
+        {
+          "id": "multiangle",
+          "label": "Multi-Angle Whip-Pan"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:q11-outfit-picker-01",
-          "label": "Camel Coat Street Walk",
+          "ref": "n:guide:f7-r10-outfit-whip-pan",
+          "label": "Multi-Angle Whip-Pan: Charcoal Bomber",
           "chips": [
-            "street",
+            "multiangle",
             "tryon"
           ],
-          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model walks one measured step along a city sidewalk wearing the camel coat. Use a full-length frame with a gentle side track. Soft overcast daylight keeps the coat color even. End with the coat fully visible against the storefront. Sound: quiet street ambience. No music.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult East Asian man turns in a three-angle whip-pan sequence wearing a charcoal bomber, white tee, blue jeans and plain sneakers. Keep collar, cuffs, hem and shoes readable in the square frame. Sound: quiet room tone. No music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q11-outfit-picker-02-r3",
-          "label": "Field Jacket Mirror Fit Check",
+          "ref": "n:guide:q11-outfit-picker-01",
+          "label": "Camel Coat Mirror Fit Check",
           "chips": [
             "tryon",
-            "details"
+            "details",
+            "review",
+            "multiangle"
           ],
-          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A model turns once toward the mirror to show the field jacket shape. Use a three-quarter mirror frame with a slow push-in. Bright natural room light shows the jacket seams. End with the jacket front facing the mirror. Sound: soft room tone. No music.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A model turns from front to side in a camel coat at a full-length mirror to show the lapel, pockets and hem. Use a three-quarter mirror frame with a slow push-in. Bright natural room light shows the coat seams. End with the coat front facing the mirror. Sound: soft room tone. No music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q11-outfit-picker-03",
-          "label": "Work Blazer Creator Review",
+          "ref": "n:guide:q11-outfit-picker-08",
+          "label": "Wide-Leg Suit Slow Turn",
           "chips": [
-            "review",
-            "details"
+            "tryon",
+            "details",
+            "review"
           ],
-          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A creator presents the navy blazer to camera and speaks about its fit. Use a chest-up medium frame with a gentle push-in. Even office window light keeps the lapel and shoulders visible. End with the blazer front centered. Sound: quiet office room tone. Voice: \"This blazer keeps a clean workday shape.\". No music.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model makes one slow turn in a plain wide-leg suit so the drape, waistband and trouser hem remain readable. Full-length medium frame with a gentle orbit, bright natural light, quiet room tone, no music.",
           "kind": "video"
         },
         {
@@ -295,30 +321,31 @@
           "ref": "n:guide:q11-outfit-picker-06",
           "label": "Denim Overshirt Street Look",
           "chips": [
+            "tryon",
             "street",
-            "tryon"
+            "multiangle"
           ],
-          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model walks one slow step along a park path in the denim overshirt. Use a full-length side track with a gentle push-in. Filtered daylight shows the denim texture. End with the overshirt open over the white crewneck. Sound: light outdoor ambience. No music.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model makes a three-angle whip-pan in a denim overshirt on a park path, keeping the shirt open over the white crewneck and the hem readable. Filtered daylight, full-length side track, light outdoor ambience, no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q11-outfit-picker-07",
-          "label": "Cardigan Sleeve Fit Check",
+          "label": "Lilac Activewear Multi-Angle Fit",
           "chips": [
             "tryon",
-            "details"
+            "multiangle"
           ],
-          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A model turns one shoulder to show the cream cardigan cuff and fit. Use a waist-up frame with a short lateral move. Soft studio window light catches the knit texture. End with the cuff in the foreground. Sound: gentle fabric rustle. No music.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns through three quick angles in a lilac activewear set, keeping waistband and full silhouette readable. Full-length studio frame with a smooth half orbit, softbox light, no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q11-outfit-picker-08",
-          "label": "Olive Shirt Dress GRWM",
+          "ref": "n:guide:q9-look-fabric-blazer-detail",
+          "label": "Fabric Detail: Navy Blazer Cuff",
           "chips": [
-            "review",
-            "tryon"
+            "details",
+            "review"
           ],
-          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. A creator faces the camera in the olive shirt dress and introduces the look. Use a three-quarter frame with a gentle push-in. Bright bedroom daylight shows the collar and belt. End with the full dress silhouette visible in the mirror. Sound: quiet room tone. Voice: \"Here is the shirt dress I chose today.\". No music.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and details exactly. Show a close detail of an adult hand pinching a navy blazer cuff so the woven texture and one button stay sharp. Tight square detail frame, soft side light, quiet room tone, no music.",
           "kind": "video"
         }
       ],
@@ -329,13 +356,13 @@
         "frame": "post",
         "ref": "n:guide:q11-outfit-uses-01-r2",
         "h": "Show the beige jacket beside listing details",
-        "d": "Keep the zip front, cuffs, and fit clear beside accurate size and fabric details."
+        "d": "Place the reel beside listing details or in a product feed. Keep the zip front, cuffs, hem and fit visible while the surrounding copy carries accurate sizes, fabric and stock information. Put a still detail beside the reel when hardware or stitching needs close inspection. Keep a thumbnail frame where the garment is unobstructed by feed controls."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q11-outfit-uses-02b-square-r2",
         "h": "Compare two outfit silhouettes on a listing",
-        "d": "Show two complete looks together so shoppers can compare their shapes and layers."
+        "d": "Use two complete looks on a collection page only when shoppers are comparing silhouettes. Give each garment its own clip and label so a fast feed view does not merge products or offers. Check that each visible layer is available before scheduling the collection post. Keep the first frame distinct for each look so the collection grid stays scannable. Put the size and color beside each clip instead of inside the moving frame."
       }
     ],
     "input": [

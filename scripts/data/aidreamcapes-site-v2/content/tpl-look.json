@@ -2,9 +2,9 @@
   "id": "tpl-look",
   "title": "Fashion Lookbook Photos and Outfit Ads",
   "description": "Create fashion lookbook photos for full outfits, fit and fabric detail. Choose try-ons, street walks or creator reviews for ads and product pages.",
-  "h1": "Show complete looks in a fashion ad scene",
+  "h1": "AI Fashion Lookbook Photos for Complete Outfits",
   "eyebrow": "Model photo template",
-  "lead": "Use street-walk, try-on and creator-review formats to show how a collection fits and moves in real settings.",
+  "lead": "Use street-walk, try-on and creator-review formats to show how a collection fits, moves and belongs together. Build each source as a complete outfit, keep the visual language consistent, then add launch details after download.",
   "secondary_keywords": [
     "fashion editorial photos",
     "collection launch lookbook",
@@ -16,15 +16,15 @@
   "steps": [
     {
       "t": "Lay out the complete outfit",
-      "d": "Include every garment you want to show and keep the full look inside the frame."
+      "d": "Include every garment you want to show and keep the complete look inside the frame; separate layers so details stay visible."
     },
     {
       "t": "Choose a setting and mood",
-      "d": "Name the location, light, and stance so each outfit belongs to the collection."
+      "d": "Name one location, light direction, stance, and crop that can repeat across the collection without promising identical fit."
     },
     {
       "t": "Build the collection after download",
-      "d": "Download each photo, then add the collection name and garment details as text."
+      "d": "Download each photo, check outfit inventory against stock, then add collection name, verified details, date, price, and links in your editor."
     }
   ],
   "ideas": [
@@ -61,15 +61,35 @@
   "faq": [
     {
       "q": "What should be in a lookbook source photo?",
-      "a": "Include the garments that make up the outfit and keep their shapes visible in the photo."
+      "a": "Include the garments that make up the outfit, with top, bottom, outer layer, shoes and any featured accessory visible. A complete source helps the result read as one look instead of disconnected pieces."
     },
     {
       "q": "How can a collection look connected?",
-      "a": "Reuse a location, light style, and crop across the outfits while showing each look clearly."
+      "a": "Reuse a location, light style and crop across the outfits while letting each garment stay distinct. Open the carousel with the hero look, then sequence supporting silhouettes or color families for comparison."
     },
     {
       "q": "Can the setting change between outfits?",
-      "a": "Yes. Choose a location that suits each collection and keep the framing consistent within it."
+      "a": "Yes, when each location serves the collection. Keep the crop and light direction consistent within a set, and label the location change so shoppers understand the images are a styled campaign."
+    },
+    {
+      "q": "How many outfits can one clip show?",
+      "a": "Focus on one full look per image so the outfit reads clearly. Make a second image or clip for another look instead of shrinking several outfits until the garment details disappear."
+    },
+    {
+      "q": "How do I keep colors and crops consistent across looks?",
+      "a": "Set one crop, camera height and color direction for the collection, then keep those choices while changing the outfit. Compare neighboring images at the same size and correct white balance or framing before publishing the carousel."
+    },
+    {
+      "q": "What does a lookbook clip cost?",
+      "a": "A 10- or 15-second clip costs 40 or 60 credits when you choose the video version. For this square lookbook photo template, review the image first and add launch details in your own editor. Choose the shorter format when one silhouette is enough."
+    },
+    {
+      "q": "Should a lookbook use one crop?",
+      "a": "Use one repeatable crop and light direction for a collection, then vary the garment or location with a clear reason. Keep the full silhouette and featured accessories inside every frame so shoppers can compare looks without guessing what changed."
+    },
+    {
+      "q": "Can I mix lookbook photos and clips?",
+      "a": "You can mix them in a campaign when the collection language stays consistent. Label the stills and motion pieces by look, keep product facts in the listing, and choose the format that gives each garment enough room to read. Keep the same season, color story and styling notes beside the gallery so visitors can follow the collection from the first square image to the final clip."
     }
   ],
   "overview": [
@@ -183,26 +203,29 @@
             "ref": "n:guide:tpl-look-round4-streetwear",
             "title": "Neutral coat styled for a city walk",
             "kind": "photo",
-            "product": "beige coat outfit"
+            "product": "beige coat outfit",
+            "prompt": "City walk: adult model wears the neutral coat outfit and takes a measured step along a quiet sidewalk, keeping the full silhouette and shoes visible."
           },
           {
             "ref": "n:guide:q9-look-example-gray-hoodie",
             "title": "Gray pullover hoodie cropped from chin to hips",
             "kind": "photo",
-            "product": "gray pullover hoodie"
+            "product": "gray pullover hoodie",
+            "prompt": "Studio crop: adult model wears the gray pullover hoodie from chin to hips, with the neckline and fabric texture clear against a pale background."
           },
           {
-            "ref": "n:guide:tpl-look-reuse-jacket-hanger",
-            "title": "Denim jacket on a plain hanger",
+            "ref": "n:guide:q9-look-jacket-three-looks",
+            "title": "Denim jacket styled for a back view",
             "kind": "photo",
-            "product": "denim jacket"
+            "product": "denim jacket",
+            "prompt": "Back view: adult model wears the denim jacket on a simple city walk and turns away so the yoke seam, collar and hem are visible."
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "Show a complete outfit on an adult model in a believable ad moment, with fit, movement or fabric detail easy to see.",
+    "overview": "A lookbook frame gives a collection a setting and point of view, so shoppers can compare separate pieces as one wardrobe. Build each source as a complete outfit with the top, bottom, outer layer and key accessory visible. Choose one campaign location or light direction, then use a street walk, try-on, creator review or fabric detail that leaves the silhouette readable. The square image can support a collection page, carousel or launch email; your listing still carries exact product names, inventory and material facts. Keep an outfit inventory beside approved images so the launch team can match each visible layer to stock and care information. Name the campaign and season in the gallery.",
     "strip": [
       "n:guide:q9-look-alt-pleated-skirt",
       "n:guide:q9-look-alt-knit-beanie",
@@ -215,7 +238,7 @@
       "source": "g:fashion-editorial/source-input",
       "result": "n:guide:tpl-look-m2-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the garment and preserve its shape, color, and details. An adult wears the light beige tailored suit, smooths the jacket lapel once, and faces the camera with the full outfit visible. Full-body fashion photo, bright studio daylight, natural styling, no text or logos.",
+      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and details. An adult wears the light beige tailored suit, smooths the jacket lapel once, and faces the camera with the full outfit visible. Keep the jacket, trousers, shoes and bag inside the frame, with bright studio daylight and natural styling. Full-body fashion-ad still, clean neutral background, no text or logos. End in a calm pose that lets a shopper compare the complete silhouette. Leave clean space around the outfit for a collection crop and keep accessory details unobstructed.",
       "options": [
         [
           "Template",
@@ -233,7 +256,7 @@
     },
     "picker": {
       "title": "Choose a fashion ad format",
-      "lead": "Pick a street walk, try-on or creator review to show how the outfit fits and moves.",
+      "lead": "Choose the collection moment you need: a walk that shows movement, a review that explains styling, a try-on that shows proportion or a detail frame that makes fabric and construction easier to compare. Keep the chosen crop and light readable across neighboring looks. Let each card answer one styling question for the shopper.",
       "chips": [
         {
           "id": "street",
@@ -250,80 +273,127 @@
         {
           "id": "fabric",
           "label": "Fabric Details"
+        },
+        {
+          "id": "mirror",
+          "label": "Mirror Selfies"
+        },
+        {
+          "id": "multiangle",
+          "label": "Multi-Angle Whip-Pan"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:q9-look-pleated-skirt-walk",
-          "label": "Street Walk: Pleated Skirt in Motion",
+          "ref": "n:guide:f7-r10-look-mirror-selfie",
+          "label": "Mirror Selfie: Olive Trench Look",
           "chips": [
+            "mirror",
+            "tryon"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the outfit and preserve its colors, layers and silhouette. An adult Black woman shows an olive trench, cream knit and charcoal trouser look in a bright apartment mirror selfie, holding the phone low so the full outfit remains visible. Square fashion photo, soft morning light, no text or logos."
+        },
+        {
+          "ref": "n:guide:f7-r10-look-whip-pan",
+          "label": "Multi-Angle Whip-Pan: Denim Overshirt",
+          "chips": [
+            "multiangle",
             "street"
           ],
           "kind": "photo",
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. An adult wears the pleated skirt mid-step on a sunlit city sidewalk, with the full outfit visible and the pleats lightly in motion. Full-body street-style still, natural daylight, clean storefront background, no text or logos."
-        },
-        {
-          "ref": "n:guide:q9-look-messenger-bag-looks",
-          "label": "Creator Review: Work Bag Fit",
-          "chips": [
-            "review"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the bag and keep its shape, color and details exactly. An adult creator wears the messenger bag crossbody and turns slightly so the strap length and bag scale are clear. Three-quarter portrait, bright office daylight, casual creator-review still, no text or logos."
+          "prompt": "Use the uploaded photo as the outfit and preserve its color, layers and silhouette. An adult Latino man turns on a quiet city sidewalk in a quick front-side-back whip-pan sequence wearing a blue denim overshirt, white tee and black trousers. Keep seams and all layers readable in the square photo, no text or logos."
         },
         {
           "ref": "n:guide:q9-look-beanie-grwm",
-          "label": "GRWM: Knit Beanie for a Commute",
+          "label": "GRWM: Knit Beanie Commute",
           "chips": [
-            "tryon"
+            "tryon",
+            "mirror"
           ],
           "kind": "photo",
-          "prompt": "Use the uploaded photo as the beanie and keep its shape, color and details exactly. An adult wears the knit beanie and adjusts its edge before heading outside, with the fit around the face clear. Chest-up portrait, cool morning light, relaxed creator-style still, no text or logos."
+          "prompt": "Use the uploaded photo as the accessory and preserve its shape, color and details. An adult man adjusts a plain knit beanie in a mirror before a commute, with the fit around the face clear. Chest-up square fashion photo, cool morning light, no text or logos."
         },
         {
           "ref": "n:guide:q9-look-beige-suit-transition",
-          "label": "Outfit Transition: Beige Suit Fit",
+          "label": "Outfit Transition: Beige Tailored Suit",
           "chips": [
+            "fabric",
+            "multiangle",
+            "review",
             "tryon"
           ],
           "kind": "photo",
-          "prompt": "Use the uploaded photo as the suit and keep its shape, color and details exactly. An adult model stands front-facing in the beige suit with the full silhouette and tailoring visible. Full-body eye-level fashion still, soft studio daylight, clean neutral background, no text or logos."
+          "prompt": "Use the uploaded photo as the complete outfit and preserve its shape, color and details. An adult model moves through a clean front-side-back transition in a plain beige tailored suit, keeping the fabric drape and tailoring visible. Square studio fashion photo, soft daylight, no text or logos."
         },
         {
-          "ref": "n:guide:q9-look-fabric-blazer-detail",
-          "label": "Fabric Detail: Navy Blazer Cuff",
+          "ref": "n:guide:q9-look-knit-texture",
+          "label": "Fabric Detail: Knit Sleeve",
           "chips": [
-            "fabric"
+            "fabric",
+            "review"
           ],
-          "prompt": "Use the uploaded garment as the exact product. Show a close detail of its navy blazer cuff, preserving the original fabric color and weave. Tight square crop with the seam and one button in focus, soft side daylight, no text or logos.",
+          "prompt": "Use the uploaded garment as the exact product. Show a close detail of an adult hand pinching the knit sleeve to reveal its weave and edge, preserving the original color and texture. Tight square crop, soft side daylight, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q9-look-workwear-street",
           "label": "Street Walk: Layered Workwear Look",
           "chips": [
-            "street"
+            "street",
+            "multiangle"
           ],
           "kind": "photo",
-          "prompt": "Use the uploaded photo as the outfit and keep its shape, color and details exactly. An adult wears the layered workwear look on a city block, pausing mid-stride so each garment remains visible. Full-body street-style still, soft overcast light, no text or logos."
+          "prompt": "Use the uploaded photo as the outfit and keep its shape, color and details exactly. An adult moves through a front-side-back whip-pan on a city block in the layered workwear look, pausing so each garment remains visible. Full-body street-style square photo, soft overcast light, no text or logos."
         },
         {
-          "ref": "n:guide:q9-look-slip-dress-review",
-          "label": "Creator Review: Navy Dress Fit",
+          "ref": "n:guide:f7-r10-look-review-navy-suit",
+          "label": "Creator Review: Navy Suit",
           "chips": [
-            "review"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the dress and keep its shape, color and details exactly. An adult creator wears the navy slip dress and turns slightly to show its drape and neckline. Three-quarter portrait, warm late-day light, natural creator-review still, no text or logos."
-        },
-        {
-          "ref": "n:guide:q9-look-knit-texture",
-          "label": "Product Detail: Knit Sleeve",
-          "chips": [
+            "review",
+            "tryon",
             "fabric"
           ],
           "kind": "photo",
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. A hand gently pinches the knit sleeve so the weave and fabric drape are clear, with part of the worn outfit visible. Close fabric-detail still, soft directional daylight, no text or logos."
+          "prompt": "Use the uploaded photo as the outfit and preserve its shape, color and silhouette. An older man with short silver hair presents a plain navy suit in a bright studio, gently pinching the lapel and turning slightly to show the jacket drape and trouser fabric. Three-quarter square fashion photo, no text or logos."
+        },
+        {
+          "ref": "n:guide:q9-look-slip-dress-review",
+          "label": "Creator Review: Navy Slip Dress",
+          "chips": [
+            "review",
+            "tryon"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the outfit and preserve its shape, color and silhouette. An adult creator presents a plain navy slip dress and turns once to show the drape and hem. Three-quarter square fashion photo, soft window light, no text or logos."
+        },
+        {
+          "ref": "n:guide:q9-look-messenger-bag-looks",
+          "label": "Office Walk: Canvas Shoulder Bag",
+          "chips": [
+            "street",
+            "review"
+          ],
+          "prompt": "Use the uploaded outfit photo as the product and preserve its colors, layers and silhouette. An adult woman walks through a bright office lobby carrying a plain messenger bag, with the bag, shoes and tailored layers visible. Full-body square editorial photo, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:k2-url-picker-sneaker-doorstep",
+          "label": "Creator Review: Running Shoe Styling",
+          "chips": [
+            "review"
+          ],
+          "prompt": "Use the uploaded outfit photo as the product and preserve its colors, layers and silhouette. An adult creator presents a plain running shoe beside a complete travel look and points once to the sole and upper. Bright outdoor daylight, three-quarter fashion framing, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:k8-spokesperson-gen2-tpl-size-c1",
+          "label": "Try-On: Backpack Outfit Proportion",
+          "chips": [
+            "tryon"
+          ],
+          "prompt": "Use the uploaded outfit photo as the product and preserve its colors, layers and silhouette. An adult wears a plain compact backpack with a complete outfit and turns once so the straps, bag body and proportions remain visible. Bright entryway daylight, full-body square framing, no text or logos.",
+          "kind": "photo"
         }
       ],
       "button": "Create a fashion ad scene"
@@ -333,13 +403,13 @@
         "frame": "post",
         "ref": "n:guide:tpl-look-m4-use-square",
         "h": "Show a practical bag in a workday look",
-        "d": "Use a natural office scene to show how the backpack fits into an everyday outfit."
+        "d": "Use a square lookbook frame on a social post or collection page with the garment name, color, stock and size information nearby. Keep the full outfit visible so the image works as a useful browsing cue. Sequence the hero look first, then add supporting silhouettes shoppers can compare. Keep each card tied to one inventory record so a shopper can move from inspiration to the correct item. Keep the first row easy to scan on a narrow screen."
       },
       {
         "frame": "listing",
         "ref": "n:guide:q9-look-alt-messenger-bag",
         "h": "Build a collection page around a work bag",
-        "d": "Pair the outfit with a plain messenger bag so shoppers can see how it works in a commute look."
+        "d": "Build a collection page around one visual language: repeat the crop and location while changing the outfit. Let the page copy explain fabric, price, availability and the work-bag or accessory details shoppers need. Confirm every visible layer is in stock before the campaign goes live. Put the collection date and launch link near the image so the styled scene has useful shopping context. Keep the gallery order stable when a new color is added."
       }
     ],
     "input": [
@@ -358,25 +428,32 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:tpl-look-m6-output-01-square",
+        "ref": "n:guide:c3-r3-tpl-tryon-trench",
         "frame": "1:1",
-        "label": "Square light linen outfit photo"
+        "label": "Square trench-coat look"
       },
       {
-        "ref": "n:guide:tpl-look-m6-output-02-square",
+        "ref": "n:guide:c3-r3-tpl-tryon-suit",
         "frame": "1:1",
-        "label": "Square muted sage outfit photo"
+        "label": "Square wide-leg suit look"
       }
     ],
     "after": {
       "ref": "n:guide:tpl-look-after-square-r2",
+      "mock": {
+        "type": "steps",
+        "tag1": "1 Prep",
+        "tag2": "2 Style",
+        "tag3": "3 Full look"
+      },
       "zones": [
+        "Look tags",
         "Garment preparation",
         "Final outfit"
       ],
       "items": [
-        "Steam the garment, then show how it sits in the finished look.",
-        "Use one location and crop for each outfit in the set."
+        "The frame shows the 1-2-3 tags you add to show how the look comes together.",
+        "Steam the garment, then show how it sits in the finished look."
       ]
     },
     "titles": {

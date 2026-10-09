@@ -19,15 +19,15 @@
   "steps": [
     {
       "t": "Upload both options in one photo",
-      "d": "Set the two products side by side on a plain surface so the video keeps them at the right scale."
+      "d": "Photograph both options together with full silhouettes visible, using one camera angle and even light so the difference is not caused by distance."
     },
     {
       "t": "Name the difference",
-      "d": "Describe what sets them apart: color, size, lid, or finish. Use 6 seconds for a fast glance or 15 for a slow pan across both."
+      "d": "Name one difference to show, such as capacity, color, finish, included pieces, or package size, and describe the action that proves it."
     },
     {
       "t": "Label each side",
-      "d": "Add names, sizes, and prices above each product in Canva or CapCut after you download."
+      "d": "Add variant names, measurements, prices, or links after download; choose 1:1 for a product page, 16:9 for wide placement, or 15 seconds for detail."
     }
   ],
   "ideas": [
@@ -73,6 +73,38 @@
     {
       "q": "Which aspect ratio should I choose?",
       "a": "Square 1:1 works well in product galleries and feeds. Widescreen 16:9 suits a video in your product description. Vertical 9:16 is for YouTube Shorts and other phone-first feeds."
+    },
+    {
+      "q": "Can the clip show measurements on screen?",
+      "a": "Numbers are added as a text layer after download so they stay exact. The clip can show both options side by side as you demonstrate them."
+    },
+    {
+      "q": "What length fits a comparison?",
+      "a": "A 10-second clip usually covers both options; choose 15 seconds when each one needs a demonstration. They cost 40 or 60 credits."
+    },
+    {
+      "q": "Can I compare two of my own products?",
+      "a": "Yes. Upload both options together and describe which feature each side should show."
+    },
+    {
+      "q": "Should both products be in one source photo?",
+      "a": "Yes. A single photo with both options fully visible gives the comparison a shared scale and light reference. Leave space between them, keep caps and bases inside the frame, and avoid props that could make one option look larger or more important than the other."
+    },
+    {
+      "q": "Can I compare features instead of sizes?",
+      "a": "Yes. Compare a visible, supportable difference such as a finish, colorway, closure, included accessory, or capacity marking. Describe one action that reveals it, then add the exact feature name and any measurement as editable text after download."
+    },
+    {
+      "q": "Can I use one source photo for both variants?",
+      "a": "Yes. One frame with both options fully visible gives the generator a shared scale and light reference, as long as both caps, bases, and edges stay inside the frame."
+    },
+    {
+      "q": "How do I keep the two products at the same scale?",
+      "a": "Place both products on one level surface or hold them at equal height, leave space between them, and describe the shared camera distance. Add exact measurements later as editable text."
+    },
+    {
+      "q": "Which variant should the comparison link to?",
+      "a": "Link to the product page that lists both options, then use the final text layer or CTA to name the tested size, finish, or color. Do not imply that one option is available if it is out of stock."
     }
   ],
   "overview": [
@@ -199,7 +231,7 @@
   },
   "cta_lead": "Upload one photo that shows both options. See the cost before you start.",
   "visual": {
-    "overview": "A comparison ad lets shoppers see one difference between two options. Use a side-by-side view, wear test, or creator review, and keep claims to what the image can show.",
+    "overview": "A comparison video helps a seller answer one visible shopping question: which size, finish, color, or package option is right for this customer? Upload both of your own options, describe the difference, and use the result on a [product page](/ai-video-generation/product-video), in a [Shorts placement](/platforms/youtube-shorts-ads), or alongside [Amazon product photos](/platforms/amazon-product-photos). Keep both products at a comparable scale, name each side in your editor, and do not use a generated comparison to make an unverified performance claim. A clear comparison is about the choice the shopper must make, not a general review.",
     "strip": [
       "n:guide:q12-tpl-compare-demo-size-source-r4",
       "n:guide:q12-tpl-compare-demo-size-output-02-r4",
@@ -232,7 +264,7 @@
     },
     "picker": {
       "title": "Choose a product-comparison ad format",
-      "lead": "Show a visible difference between two of your own options in one clear frame or creator review.",
+      "lead": "Choose a comparison scene that makes one buyer decision visible in the first seconds. Keep both options in one frame, match their scale, and use a side-by-side hold, fit check, or feature demonstration that your own product information can support. Use the prompt as a shot list: identify the two options, state the visible difference, then end with both products held still. Add a third option only in a separate version so the viewer does not lose track of the first two. Keep the pair in one visual system, use a matching camera distance, and let the product information you already publish decide which differences deserve a label. Use the product information you already publish to decide which differences deserve a label, and avoid unsupported performance claims in the comparison.",
       "chips": [
         {
           "id": "talk-through",
@@ -333,13 +365,13 @@
         "frame": "post",
         "ref": "n:guide:q12-tpl-compare-strip-runner-r2",
         "h": "Share two sneaker colorways in a social post",
-        "d": "Show both trail shoe colors at an equal scale, then add the variant names and current prices."
+        "d": "A side-by-side social post can show two colors or finishes without forcing the shopper to open separate listings. Keep the pair at equal height, label each option after download, and link to the page where both variants are in stock."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q12-tpl-compare-strip-skincare-talk-r2",
         "h": "Show two skincare finishes on a product page",
-        "d": "Keep both bottle finishes together so shoppers can inspect the visible difference."
+        "d": "A product-page comparison works when the viewer can inspect one measurable difference, such as size or included pieces. Show both items in one steady action, add exact measurements yourself, and keep the clip focused on the choice rather than an unsupported result claim."
       }
     ],
     "input": [

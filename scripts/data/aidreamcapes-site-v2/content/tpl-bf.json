@@ -43,6 +43,18 @@
     {
       "t": "Gift picks",
       "d": "Show a skincare gift set or jewelry reveal, then link to the current offer page."
+    },
+    {
+      "t": "Offer layer check",
+      "d": "Leave clean space beside the product, then add the confirmed discount, code, and end date only after the terms are approved."
+    },
+    {
+      "t": "Gift reveal",
+      "d": "Use hands lifting a generic gift item from a box when the sale hook is the unboxing beat rather than a spoken claim."
+    },
+    {
+      "t": "Try-on fit check",
+      "d": "Show the fit and texture of a wearable item first, then add the exact offer wording in the editor."
     }
   ],
   "maker": {
@@ -74,6 +86,38 @@
     {
       "q": "Can I use the same video on a store page?",
       "a": "Use the same featured product in the video and the destination page so the offer feels connected."
+    },
+    {
+      "q": "How long should a Black Friday offer clip be?",
+      "a": "Six seconds works for a single price beat; 10 to 15 seconds gives room for the product and the offer. The costs are 24, 40, or 60 credits."
+    },
+    {
+      "q": "Can I change the offer after the ad is approved?",
+      "a": "Edit the editable text layer in your ad platform. Keeping the deal text separate from the video means the same clip can carry an updated price."
+    },
+    {
+      "q": "Can the video include the discount burned in?",
+      "a": "Keep the percentage and dates as a text layer you add after download, so every number stays exact."
+    },
+    {
+      "q": "How do I keep a Black Friday claim accurate?",
+      "a": "Keep the generated scene neutral, then add only the confirmed percentage, price, code, end date, and stock wording in your editor."
+    },
+    {
+      "q": "Can the creator show a face or only hands?",
+      "a": "Use a face for a creator review or try-on; use hands for a gift reveal and product demo when the item or hinge needs the close-up."
+    },
+    {
+      "q": "Which shot works for a gift reveal?",
+      "a": "Use an overhead or three-quarter frame with the full gift item and box visible, then leave open space for the offer layer."
+    },
+    {
+      "q": "How do I choose 9:16 versus 1:1?",
+      "a": "Choose 9:16 for Stories and Reels; choose 1:1 for a feed or listing when the product and offer need equal space."
+    },
+    {
+      "q": "What should I remove after the event?",
+      "a": "Remove or update the discount, code, countdown, and end date after the event; the reusable product action can stay if its wording remains accurate."
     }
   ],
   "overview": [
@@ -142,6 +186,14 @@
       {
         "t": "Pet-cleaning demo",
         "d": "A reusable lint tool clears pet hair from one strip of a sofa cushion."
+      },
+      {
+        "t": "Beanie try-on",
+        "d": "A mature creator adjusts a plain rust knit beanie in a mirror, leaving one side of the frame open for the final offer."
+      },
+      {
+        "t": "Headphone hinge demo",
+        "d": "Hands fold a plain over-ear headphone hinge on a warm desk, with the offer layer added after the product action is approved."
       }
     ]
   },
@@ -189,8 +241,8 @@
             "product": "skincare gift set"
           },
           {
-            "ref": "n:guide:q12-tpl-bf-strip-headphones-r2",
-            "title": "Creator reviews over-ear headphones",
+            "ref": "n:guide:f16-r10-bf-example-headphones-r1",
+            "title": "Hands Fold Over-Ear Headphones",
             "kind": "scene",
             "product": "headphones"
           }
@@ -202,7 +254,7 @@
     "overview": "A Black Friday ad opens with a product action or a creator showing the item. Add the confirmed offer, code, and end date after download so every detail stays accurate.",
     "strip": [
       "n:guide:q12-tpl-bf-demo-source-r3",
-      "n:guide:q12-tpl-bf-demo-output-02-r3",
+      "n:guide:q12-tpl-bf-after-offer-r1",
       "n:guide:q12-tpl-bf-strip-extra-01-r1",
       "n:guide:q12-tpl-bf-strip-extra-02-r1",
       "n:guide:q12-tpl-bf-strip-extra-03-r1",
@@ -252,19 +304,20 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:q12-tpl-bf-card-01-serum-offer-review",
-          "label": "Talking-Head Offer: serum held to camera",
+          "ref": "n:guide:f16-r10-bf-serum-review-r1",
+          "label": "Serum Offer Creator Review",
           "chips": [
             "creator-review"
           ],
-          "prompt": "Photorealistic square Black Friday UGC ad still: an adult creator holds a plain serum bottle toward the camera in a warmly lit seasonal bathroom. Keep the full bottle and blank label sharp, chest-up framing. Freeze a confident offer introduction. No text, prices, logos, or watermark.",
+          "prompt": "Photorealistic square Black Friday UGC ad still: an adult creator with short dark hair holds a plain pale frosted serum bottle toward the camera in a warm bathroom vanity. Keep the full bottle and blank label sharp, chest-up framing, with open wall space for an offer overlay added later. No text, prices, logos, or watermark.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q12-tpl-bf-card-02-jacket-try-on-review",
           "label": "Talking-Head Offer: creator shows jacket",
           "chips": [
-            "creator-review"
+            "creator-review",
+            "product-tryout"
           ],
           "prompt": "Photorealistic square fashion ad still: an adult creator wears a plain navy jacket and raises one cuff toward the camera, with the fit and fabric visible in a mirror. Warm indoor daylight, chest-up composition. Freeze a try-on review moment. No text, logos, or watermark.",
           "kind": "photo"
@@ -291,7 +344,8 @@
           "ref": "n:guide:q12-tpl-bf-card-05-headphone-demo",
           "label": "Product Demo: over-ear headphones fold",
           "chips": [
-            "product-demo"
+            "product-demo",
+            "creator-review"
           ],
           "prompt": "Photorealistic square tech-demo ad still: an adult creator folds one ear cup of plain over-ear headphones inward, with the full headband and hinge visible. Soft desk light, close natural framing. Freeze the fold demonstration. No text, logos, or watermark.",
           "kind": "photo"
@@ -306,22 +360,33 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q12-tpl-bf-card-07-protein-first-bite",
-          "label": "First-Bite Reaction: protein bar offer",
+          "ref": "n:guide:f16-r10-bf-card-07-beanie-tryon-r1",
+          "label": "Knit beanie try-on fit check",
           "chips": [
             "product-tryout"
           ],
-          "prompt": "Photorealistic square UGC ad still: an adult athlete holds a protein bar after one bite and smiles toward the camera, with the bite and wrapper both visible. Bright gym lounge daylight, chest-up framing. Freeze the first-bite reaction. No text, logos, or watermark.",
+          "prompt": "Photorealistic square seasonal UGC ad still: a mature creator with short silver hair adjusts a plain rust knit beanie in an entryway mirror. Keep the knit texture and fit visible, with open wall space for an offer overlay added later. No text, prices, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q12-tpl-bf-card-08-pet-lint-demo",
-          "label": "Problem-to-Solution: lint tool clears pet hair",
+          "ref": "n:guide:f16-r10b-bf-card-07-desk-lamp-demo-r1",
+          "label": "Desk Lamp Gift Reveal",
           "chips": [
+            "gift-reveal",
             "product-demo"
           ],
-          "prompt": "Photorealistic square pet-cleaning ad still: an adult owner presses a reusable lint tool to a pet-hair-covered sofa cushion, with the cleared strip visible beside the tool and a calm dog nearby. Natural living-room daylight, close framing. No text, logos, or watermark.",
+          "prompt": "Photorealistic square Black Friday ad still: adult hands lift a plain cordless desk lamp from an open kraft gift box on a warm seasonal tabletop, then touch its single switch as the lamp glows. The matte cream cylindrical shade and wooden base stay fully visible, with space for an offer overlay added later. No text, prices, logos, or watermark.",
           "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f16-tpl-bf-picker-gift-demo-r1",
+          "label": "Gift Reveal: Coffee Grinder Demo",
+          "chips": [
+            "gift-reveal",
+            "product-demo"
+          ],
+          "kind": "photo",
+          "prompt": "Photorealistic square Black Friday gift ad still: hands lift a plain compact coffee grinder from an open kraft gift box, with the clear lid and single dial visible. Warm seasonal window light, dark tabletop, close three-quarter composition with space for an offer overlay added later. Freeze the reveal and first product demonstration moment. No text, prices, logos, or watermark."
         }
       ],
       "button": "Make a Black Friday video"
@@ -356,20 +421,20 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:q12-tpl-bf-demo-output-01-r3",
-        "frame": "16:9",
+        "ref": "n:guide:f16-r10b-bf-output-01-review-older-man-r1",
+        "frame": "9:16",
         "length": 15,
-        "label": "15-second serum offer creator clip"
+        "label": "15-second serum offer review with an older creator"
       },
       {
-        "ref": "n:guide:q12-tpl-bf-demo-output-03-r1",
+        "ref": "n:guide:f16-r10b-bf-output-03-hands-bottle-r1",
         "frame": "1:1",
         "length": 15,
-        "label": "15-second serum offer close-up"
+        "label": "15-second serum offer hands-only close-up"
       }
     ],
     "after": {
-      "ref": "n:guide:q12-tpl-bf-after-offer-r1",
+      "ref": "n:guide:f16-r10-bf-after-offer-r1",
       "zones": [
         "Discount",
         "End date"

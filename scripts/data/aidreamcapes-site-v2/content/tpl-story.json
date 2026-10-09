@@ -19,15 +19,15 @@
   "steps": [
     {
       "t": "Upload one square product photo",
-      "d": "Keep the whole product centered with room around it for a tall Story layout."
+      "d": "Show one complete product with breathing room, keeping its cap, base, and important label area visible inside the square crop."
     },
     {
       "t": "Describe a simple setting",
-      "d": "Name a surface, light, and one prop while leaving room for your headline."
+      "d": "Name a simple surface, light direction, and one prop while reserving calm space above or below for your headline and offer."
     },
     {
       "t": "Download and add Story text",
-      "d": "Place the photo on a 9:16 canvas, then add the date, price, and link."
+      "d": "Place the square download on a 9:16 canvas, add exact headline, price, date, code, and button, then preview account controls before publishing."
     }
   ],
   "ideas": [
@@ -77,6 +77,34 @@
     {
       "q": "What dimensions should an Instagram Story image use?",
       "a": "This template outputs a square still, not a finished Story-size file. Place it on a 9:16 canvas in your design tool."
+    },
+    {
+      "q": "How much room should I leave for Story text?",
+      "a": "Ask for open space across the top or bottom third so your headline fits without covering the product."
+    },
+    {
+      "q": "Can a Story photo be reused for other offers?",
+      "a": "Yes. Keep the text separate and update the headline or date for different campaigns."
+    },
+    {
+      "q": "What does a Story-ready photo cost?",
+      "a": "Each photo costs 24 credits."
+    },
+    {
+      "q": "Can I use the square result in Facebook Stories too?",
+      "a": "Yes. Place the square image inside a 9:16 Facebook or Instagram Story layout and add the platform text, price, date, and action button yourself. Keep the product away from the header and lower controls, and preview both placements before publishing."
+    },
+    {
+      "q": "What is the safe area for an Instagram Story?",
+      "a": "Keep the square product and any critical detail inside the center of the 9:16 canvas. Leave the top and bottom zones open for the account header, headline, stickers, and action controls, then check the platform preview."
+    },
+    {
+      "q": "Could a sticker or CTA cover the product?",
+      "a": "Yes. Place the product away from the top header and lower action area, and preview the finished Story with stickers and the button visible before publishing."
+    },
+    {
+      "q": "Can I reuse the square image in a feed or carousel?",
+      "a": "Yes. The same square download can run in a feed post, carousel, or listing gallery. Change the surrounding text in your editor while keeping the product and offer details accurate."
     }
   ],
   "overview": [
@@ -200,7 +228,7 @@
     ]
   },
   "visual": {
-    "overview": "A Story ad pairs one clear product photo with a setting that leaves room for a short message. Place the price, date, and link on the Story canvas after you download the image.",
+    "overview": "A Story ad works when one product remains easy to find while the surrounding canvas leaves room for an exact message. Create a square scene, place it on a 9:16 layout, and finish the offer in your editor for [Instagram ads](/platforms/instagram-ads), [Facebook Stories](/platforms/facebook-ads), or a seasonal [holiday campaign](/occasions/holidays). Keep the product away from the account header and action controls, and use the source label for claims, dates, prices, and codes instead of asking the image generator to typeset them. The square asset is a component of the finished Story, so plan the empty space before you choose a scene.",
     "strip": [
       "n:q10-story-strip-1",
       "n:q10-story-strip-2",
@@ -229,12 +257,12 @@
           "Add after download"
         ]
       ],
-      "prompt": "Place this hot sauce bottle beside fresh chilies on a pale counter, leaving open space above for a Story headline.",
+      "prompt": "Use the uploaded hot sauce bottle as the product and preserve its bottle shape, black cap, blank label area and color. An adult hand tilts the bottle and drizzles sauce over a finished taco plate on a pale counter, with fresh chilies nearby and open space above for a Story headline. Square ad-photo composition, natural daylight, no text or logos.",
       "mode": "photo"
     },
     "picker": {
       "title": "Choose a product scene for a Story ad",
-      "lead": "Pick a setting that leaves enough open space for your message.",
+      "lead": "Choose a Story scene by the message you need to add later: a product demo, a gift reveal, a creator review, or a simple problem-to-fix moment. Keep one adult action and a quiet area for the headline so the finished frame remains readable on a phone. The prompt examples cover common ad openings, while the uploaded product remains consistent: describe the single action, leave the quiet area visible, and stop on a frame where the label can be read. Add any seasonal wording, discount, or disclaimer only after download. A calm background keeps the product legible behind stickers and buttons, while separate text layers let you change a date or offer without regenerating the image. Keep seasonal wording, discounts, disclaimers, and platform text in separate layers so you can update the offer without regenerating the product scene.",
       "chips": [
         {
           "id": "demo",
@@ -273,12 +301,12 @@
           "kind": "photo"
         },
         {
-          "ref": "n:q10-story-picker-3",
-          "label": "ASMR Unboxing: Gold hoop earrings",
+          "ref": "n:f15-r10-tpl-story-gift-jar-r1",
+          "label": "Skincare Jar, Gift-Box Reveal",
           "chips": [
             "unbox"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit vanity, adult hands lift plain gold hoop earrings from a small gift box and hold them toward the lens, ending with both hoops centered. Warm side light, natural phone-video look. Top-down handheld close-up with a slow push-in. Sound: tissue rustle, box tap; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a plain lavender face-cream jar from tissue in a small gift box on a pale vanity, ending with the jar centered and open space above for a Story headline. Square product-ad composition, no text or logos.",
           "kind": "photo"
         },
         {
@@ -309,21 +337,21 @@
           "kind": "photo"
         },
         {
-          "ref": "n:q10-story-picker-7",
-          "label": "Taste Test: Protein bar first bite",
+          "ref": "n:f15-r10-tpl-story-stain-pen-r1",
+          "label": "Stain Pen, Coffee-Mark Fix",
           "chips": [
             "response"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny trail rest stop, an adult opens a plain protein bar wrapper, takes one bite and turns the bar toward the lens, ending with a quick surprised smile. Natural phone-video ad look, clear morning light. Chest-up handheld close-up with a small push-in. Sound: wrapper crinkle, bite, outdoor ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands dab one small coffee mark on a white shirt cuff with a plain stain-remover pen, leaving a clean strip beside the mark. Square close composition with open space above for a Story headline and below for a CTA, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:q10-story-picker-8",
-          "label": "Problem to Fix: Sofa hair removal",
+          "ref": "n:f15-r10-tpl-story-handcream-r1",
+          "label": "Hand Cream, Dry-Hands Application",
           "chips": [
             "response"
           ],
-          "prompt": "Use the uploaded photo as the lint roller and preserve its shape and color. On a light sofa, an adult rolls once across a pet-hair-covered cushion, ending with a clean strip beside the remaining fur. Clear before-and-after cleaning ad, close square framing, natural daylight. Sound: roller pass and fabric movement; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands squeeze a small amount of cream onto the back of one hand beside a clean bathroom sink, with the plain tube upright nearby. Keep calm space above for a Story headline and below for a CTA. Square close composition, no text or logos.",
           "kind": "photo"
         }
       ],
@@ -333,13 +361,13 @@
       {
         "frame": "post",
         "h": "Place a sauce photo on a Story canvas",
-        "d": "Keep the bottle and plated meal clear, then add the exact date, price, and link as editable text.",
+        "d": "Place the square image in the middle of a 9:16 Story canvas when the offer needs room above or below. Add the exact date, price, and link in Ads Manager or your design tool, then preview the account header and button over the layout.",
         "ref": "n:q10-story-uses-1"
       },
       {
         "frame": "post",
         "h": "Use a sauce photo in a feed post",
-        "d": "Keep the bottle and meal centered in the square image so shoppers can see the serving idea.",
+        "d": "Reuse the clear square view in a feed post or carousel when shoppers need to inspect the product before they tap. Keep the bottle, meal, or accessory centered, change only the surrounding copy, and use the Video Ads tool for full-screen motion.",
         "ref": "n:q10-story-uses-2"
       }
     ],

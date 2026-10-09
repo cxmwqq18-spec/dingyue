@@ -4,7 +4,7 @@
   "description": "Create AI spokesperson videos for UGC ads. Choose a speaking actor, add your product and write a clear line for a selfie-style product ad.",
   "h1": "AI Spokesperson Videos With a Speaking Actor",
   "eyebrow": "On-camera product video",
-  "lead": "Choose an adult AI actor who holds your product and speaks to camera in a familiar setting. Add one useful line, then review the voice, visuals and claims.",
+  "lead": "Choose an adult AI actor who holds your product and speaks to camera in a familiar setting. Add one useful line, then review the voice, visuals and claims. Use the presenter to explain a feature clearly, not to invent a customer story. A short line works best when the actor can hold the item steady, show one detail and finish on a clear pose.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload your product",
-      "d": "Start with a clear view of the full item and its real details."
+      "d": "Upload a clear full view with shape, color and label area visible so the presenter can hold the item at a believable scale."
     },
     {
       "t": "Choose an actor and format",
-      "d": "Pick a scene and delivery style that fit your product and audience."
+      "d": "Pick a scene and delivery style that fit your audience; give the presenter one simple action shoppers can follow."
     },
     {
       "t": "Write your spoken line",
-      "d": "Use accurate, supportable wording, then review the voice and visuals before publishing."
+      "d": "Write a supportable line, then review the voice and visuals before adding captions in your editor."
     }
   ],
   "maker": {
@@ -41,23 +41,35 @@
   "faq": [
     {
       "q": "Can an AI actor speak in a product ad?",
-      "a": "Yes. Add a short spoken line and the generated presenter can deliver it while showing your product."
+      "a": "Yes. Add a short spoken line and the generated presenter can deliver it while showing your product. Keep the line short enough for a calm delivery and a clear product hold. Read the line at normal speed before generation so the final hold does not feel rushed."
     },
     {
       "q": "Can I choose the actor’s appearance and setting?",
-      "a": "Choose from the available adults, age ranges and scenes. The presenter may vary slightly between generated results."
+      "a": "Choose from the available adults, age ranges and scenes. The presenter may vary slightly between generated results. A neutral setting and steady framing keep attention on the item."
     },
     {
       "q": "Is the presenter a real customer?",
-      "a": "No. The presenter is AI-generated. Do not describe the actor as a real buyer or user."
+      "a": "No. The presenter is AI-generated. Do not describe the actor as a real buyer or user. Use a disclosure label where required and avoid implying personal use."
     },
     {
       "q": "Can an AI actor give a testimonial?",
-      "a": "Do not invent a customer testimonial. Use only real, authorized customer words, or write a brand-led product explanation."
+      "a": "Do not invent a customer testimonial. Use only real, authorized customer words, or write a brand-led product explanation. A brand explanation can describe the feature without inventing a review. Keep the wording factual and tie each benefit to a product detail you can support."
     },
     {
       "q": "Which products work well in these videos?",
-      "a": "Handheld products such as skincare, apparel accessories, jewelry, pet supplies, snacks, drinks, fitness items and phone accessories are easy to show clearly."
+      "a": "Handheld products such as skincare, apparel accessories, jewelry, pet supplies, snacks, drinks, fitness items and phone accessories are easy to show clearly. Choose a product with a shape or action that stays visible in one hand."
+    },
+    {
+      "q": "Can the presenter hold the exact product?",
+      "a": "Yes. Provide a clear product reference and describe how the presenter should hold or demonstrate it. Describe the hand position and final pose to reduce product drift."
+    },
+    {
+      "q": "Can I avoid a script burned into the image?",
+      "a": "Yes. Keep spoken copy and any captions in your video or page layer rather than the source image. Add subtitles after generation so you can correct names, prices and timing."
+    },
+    {
+      "q": "How long should the spoken line be?",
+      "a": "Use one short sentence that names the product and one useful feature. A focused line leaves time for the presenter to hold the item steady, show its action and finish without rushing the viewer. Read the line aloud before generation and check the final audio against the written copy."
     }
   ],
   "overview": [
@@ -66,6 +78,23 @@
       "p": "A presenter can show a product’s size and shape in a familiar setting. Keep the item near the center of the shot, with room for its details to show."
     }
   ],
+  "examples": {
+    "h2": "Presenter scenes for product ads",
+    "lead": "Use one presenter, one product detail and one short line so the scene stays easy to review.",
+    "groups": [
+      {
+        "label": "Product demonstrations",
+        "items": [
+          {
+            "ref": "n:gen2:spokesperson-videos-c4",
+            "title": "Planner Hold: Product Detail",
+            "kind": "scene",
+            "product": "hardcover planner"
+          }
+        ]
+      }
+    ]
+  },
   "visual": {
     "strip": [
       "n:guide:q4-spokesperson-strip-01",
@@ -80,14 +109,14 @@
       "sourceAlt": "Plain forest-green bottle shown fully from cap to base on a light neutral background.",
       "sourceTitle": "Your product",
       "sourceHint": "Start with a clear view of the full item.",
-      "result": "n:guide:q4-spokesperson-strip-01",
+      "result": "n:guide:b1-spokesperson-videos-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded product image and preserve its shape, colors and label. In a parked car, an adult Latina woman holds a plain serum bottle beside her face and says: “Here is the pump detail I wanted to show.” She turns the bottle once so the pump faces the lens. Handheld front-camera chest-up framing, natural light and skin texture, slight natural sway. End with the pump turned toward the lens beside her cheek. Sound: her voice and soft parked-car room tone; no music."
+      "prompt": "Use the uploaded plain forest-green bottle as the exact product reference. Preserve its matte green body and black cap while a presenter holds it at chest height and explains its everyday use. No labels or logos."
     },
     "picker": {
       "title": "Choose a format and setting",
-      "lead": "Browse speaking actors across common product-ad scenes and delivery styles.",
+      "lead": "Browse speaking actors across common product-ad scenes and delivery styles. Choose the setting that makes your product easy to demonstrate, then edit the line so it matches the facts you can support.",
       "chips": [
         {
           "id": "creator-reviews",
@@ -178,6 +207,56 @@
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, an adult creator opens a folding phone stand and says: “If your phone keeps sliding on calls, this stand holds the angle in place.” They set a phone into the cradle. Handheld eye-level selfie, window light. End with the phone seated upright in the open stand cradle. Sound: speech and a light hinge click; no music, text or logos.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-output-01",
+          "label": "Moisturizer Review: Held to Camera",
+          "chips": [
+            "creator-reviews"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c3",
+          "label": "Gym Shaker: Product Hold",
+          "chips": [
+            "routine-tryon"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f2-r10b-spokesperson-card-10",
+          "label": "Snack Pouch: Presenter Review",
+          "chips": [
+            "creator-reviews"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f2-r10b-spokesperson-card-11",
+          "label": "Charger Detail: Held to Camera",
+          "chips": [
+            "hands-on"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "f:k8-spokesperson-output-audio-safe",
+          "label": "Skincare Bottle: Unboxing Reaction",
+          "chips": [
+            "unboxing-reactions"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
         }
       ],
       "button": "Use this idea"
@@ -187,13 +266,13 @@
         "frame": "1:1",
         "ref": "n:guide:q4-spokesperson-use-01",
         "h": "Product-page review",
-        "d": "An adult presenter speaks to camera while holding a useful everyday product at a clear scale."
+        "d": "An adult presenter speaks to camera while holding a useful everyday product at a clear scale. Keep the item beside the face or hands so its size, finish and one feature are easy to see. Keep the frame steady while the presenter names one supported feature. Choose a crop close enough to inspect the finish, but leave the actor’s hands visible for scale."
       },
       {
         "frame": "post",
         "ref": "n:guide:q4-spokesperson-use-02",
         "h": "Paid-social post",
-        "d": "A direct-to-camera line makes a product feature easy to follow in a feed."
+        "d": "A direct-to-camera line makes a product feature easy to follow in a feed. Add captions, price and offer text after download, and identify the AI actor where the platform requires disclosure. Keep the opening claim short enough to read before the feed moves on. Use a short caption that repeats the supported feature and keeps the disclosure easy to find."
       }
     ],
     "input": [
@@ -212,9 +291,9 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:q4-spokesperson-output-01",
+        "ref": "f:f2-spokesperson-output-bottle-r2",
         "frame": "9:16",
-        "label": "Bathroom skincare routine",
+        "label": "Bottle Review: Presenter Holds Green Bottle",
         "length": 10
       },
       {
@@ -225,14 +304,15 @@
       }
     ],
     "after": {
-      "ref": "n:guide:q4-spokesperson-after",
+      "ref": "n:guide:f2-r10b-spokesperson-after-bottle",
       "zones": [
         "Caption",
         "Price"
       ],
       "items": [
-        "Add accurate brand messaging after generation.",
-        "Identify the presenter as AI-generated where your platform requires it."
+        "Add accurate brand messaging after generation, including the exact product name and offer.",
+        "Identify the presenter as AI-generated where your platform requires it, and never frame the actor as a real buyer.",
+        "Listen for pronunciation and check that the spoken line matches the caption before you publish."
       ]
     },
     "titles": {
@@ -261,6 +341,39 @@
       "examples": {
         "h2": "More on-camera product formats"
       }
-    }
+    },
+    "overview": "Choose an actor look and setting in the scene prompt, then give the presenter one short product line. The generated clip can show the product in hand or in a simple action; add captions, prices, and any music after download, and review the spoken line before publishing."
+  },
+  "limitations": {
+    "h2": "Spokesperson setup boundaries",
+    "items": [
+      {
+        "t": "Actor look and setting",
+        "d": "Describe the presenter and location in the scene prompt.",
+        "supported": true,
+        "status": "can"
+      },
+      {
+        "t": "Spoken product line",
+        "d": "Give the presenter one short line to say in the prompt.",
+        "supported": true,
+        "status": "can"
+      },
+      {
+        "t": "Language selector",
+        "d": "The create flow has no separate language selector.",
+        "supported": false
+      },
+      {
+        "t": "B-roll insertion",
+        "d": "The create flow has no separate B-roll insertion control.",
+        "supported": false
+      },
+      {
+        "t": "Captions or music",
+        "d": "Add captions and licensed music after download.",
+        "supported": false
+      }
+    ]
   }
 }

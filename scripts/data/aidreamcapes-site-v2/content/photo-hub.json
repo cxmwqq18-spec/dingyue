@@ -4,7 +4,7 @@
   "description": "Make square listing, lifestyle, on-model, and detail images with an AI product photo generator. Start from a product photo; review results before publishing.",
   "h1": "AI Product Photo Generator for Listing, Lifestyle, and Detail Photos",
   "eyebrow": "AI photo tools",
-  "lead": "Use an AI product photo generator to make listing, lifestyle, on-model, or detail photos from one product image. Choose the photo tool that fits where you need to show the item.",
+  "lead": "Use an AI product photo generator to make listing, lifestyle, on-model, or detail photos from one product image. Choose the photo tool that fits where you need to show the item, then build a small set that answers the questions shoppers ask before they buy. Build the set around a listing question such as scale, texture, fit or daily use, so every frame earns its place.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -32,15 +32,15 @@
   "steps": [
     {
       "t": "Your product",
-      "d": "Start with a clear item image where the whole product stays in frame."
+      "d": "Upload a clear item image with the whole product in frame, including its surface, hardware and important opening."
     },
     {
       "t": "Choose a visual direction",
-      "d": "Pick a clean product hero, everyday use, or a model try-on."
+      "d": "Choose a clean hero, everyday-use scene or model try-on based on whether shoppers need shape, scale, context or fit."
     },
     {
       "t": "Download your result",
-      "d": "Save the square image and add any exact wording in your editor."
+      "d": "Save the square image, check it against stock, then add exact wording in your editor before placing it in your gallery."
     }
   ],
   "uses": [
@@ -77,19 +77,35 @@
   "faq": [
     {
       "q": "What kinds of product photos can I make?",
-      "a": "White background shots, lifestyle scenes, on-model photos, new backgrounds, feed ad images, and close-ups such as color variants or what's in the box. Each one starts from a photo of your product."
+      "a": "White background shots, lifestyle scenes, on-model photos, new backgrounds, feed ad images, and close-ups such as color variants or what's in the box. Each one starts from a photo of your product. For a listing, keep the main view simple enough to compare with other products."
     },
     {
       "q": "What kind of photo should I upload?",
-      "a": "Use a sharp photo where the whole product is visible and nothing is cut off at the edges. Even light and a plain background help, but a clear phone photo works too."
+      "a": "Use a sharp photo where the whole product is visible and nothing is cut off at the edges. Even light and a plain background help, but a clear phone photo works too. Avoid reflections and filters that hide the product finish."
     },
     {
       "q": "Which product photo type should I make first?",
-      "a": "Start with a clean product view for the listing. Add a lifestyle, detail, on-model, or feed image when shoppers need context or a closer look."
+      "a": "Start with a clean product view for the listing. Add a lifestyle, detail, on-model, or feed image when shoppers need context or a closer look. Use context only after the basic shape and color are clear. Check the crop on mobile before you publish it, because small details can disappear at feed width."
     },
     {
       "q": "Can I put a price or sale text on the photo?",
-      "a": "Add text after you download. Canva works well for prices, discount codes, and headlines. AI-generated lettering can contain typos, so typing it yourself keeps it accurate."
+      "a": "Add text after you download. Canva works well for prices, discount codes, and headlines. AI-generated lettering can contain typos, so typing it yourself keeps it accurate. Keep legal offer wording outside the generated image."
+    },
+    {
+      "q": "Can I keep my logo or packaging text?",
+      "a": "You can ask for visible marks to stay, but generated lettering can shift. Start from a close, sharp source image and compare the result with the item you ship; add exact packaging wording in your editor when it must be correct."
+    },
+    {
+      "q": "Can I show an item in use?",
+      "a": "Yes. Describe a believable hand or person interaction that helps shoppers understand the item. A natural hand or person can make scale easier to judge."
+    },
+    {
+      "q": "How many views should a small product listing have?",
+      "a": "Start with a clear primary view, then add one context scene and one useful detail or worn view. Choose the next image based on a real shopper question such as scale, fit, texture or how the item is used. A detail view can answer texture or closure questions without replacing the hero."
+    },
+    {
+      "q": "What size and crop should a product photo use?",
+      "a": "The photo hub makes square images by default. Keep the full product inside the source frame, then check the square crop on mobile so handles, straps, lids, and small details do not disappear at feed width."
     }
   ],
   "overview": [
@@ -219,7 +235,7 @@
   },
   "examples": {
     "h2": "Product ad formats for common placements",
-    "lead": "Browse recognizable product scenes, from clean hero shots to try-ons and reviews.",
+    "lead": "Browse recognizable product scenes, from clean hero shots to try-ons and reviews. Each example uses a familiar advertising format so you can choose a shot for a listing, a social feed or a campaign page.",
     "groups": [
       {
         "label": "Product Hero",
@@ -295,7 +311,7 @@
     },
     "picker": {
       "title": "Choose a photo tool",
-      "lead": "Open the process that matches the product image you need.",
+      "lead": "Open the process that matches the product image you need. Start with the placement and shopper question, then choose a tool that keeps the product recognizable while changing only the scene, styling or camera distance.",
       "chips": [
         {
           "id": "listing",
@@ -356,6 +372,17 @@
           "prompt": "Use the uploaded product image and preserve its shape, color and label area. An adult wears a plain warm coat on a city walk and turns slightly to show the fit and front fastening. Soft winter daylight, clean seasonal retail campaign, full coat visible in a natural street setting, no text.",
           "kind": "photo",
           "tool": "social-ad-photos"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-04",
+          "label": "Listing Detail: Travel Mug Rim",
+          "chips": [
+            "listing"
+          ],
+          "href": "/ai-image-generation/ecommerce-main-image",
+          "prompt": "",
+          "kind": "photo",
+          "tool": "white-background"
         }
       ],
       "button": "Open the photo creator"
@@ -365,13 +392,13 @@
         "frame": "post",
         "ref": "n:guide:q1-photo-use-review",
         "h": "Creator Review: Face Serum Held to Camera",
-        "d": "Show the product beside the speaker’s face while they share one clear feature."
+        "d": "Show the product beside the speaker’s face while they share one clear feature. Keep the item large enough to read in a feed and leave your exact claim for the caption layer. Place the claim in the caption and keep the still focused on the product. Keep the face and product balanced in the square crop so the bottle remains easy to inspect."
       },
       {
         "frame": "post",
         "ref": "n:guide:q1-photo-use-recipe",
         "h": "Recipe Demo: Eggs Lifted From Cast-Iron Pan",
-        "d": "Show the ingredient and the cooking action together in a clear frame."
+        "d": "Show the ingredient and the cooking action together in a clear frame. A hand, pan or serving moment gives the still a useful reason to appear in a recipe or food campaign. Leave enough open space for a headline without covering the item. A square crop leaves room for a short headline while keeping the hand, pan and food action visible."
       }
     ],
     "input": [
@@ -390,19 +417,14 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:k6-photo-hub-output-ring",
+        "ref": "n:guide:f2-photo-hub-output-backpack",
         "frame": "1:1",
-        "label": "Ring Macro: Prong and Polished Band"
+        "label": "Backpack Carry: Handle Lift by the Window"
       },
       {
-        "ref": "n:guide:q1-photo-output-duffel",
+        "ref": "n:guide:f2-photo-hub-output-shoe",
         "frame": "1:1",
-        "label": "Duffel Demo: Bag Lifted for Weekend Trip"
-      },
-      {
-        "ref": "n:guide:k6-photo-hub-output-outfit",
-        "frame": "1:1",
-        "label": "Street Try-On: Navy Set in Motion"
+        "label": "Trail Fit: Charcoal Running Shoe in Use"
       }
     ],
     "titles": {
@@ -411,7 +433,7 @@
       },
       "m3": {
         "h2": "Choose a product photo tool",
-        "lead": "Select the type of photo you need for your listing or campaign."
+        "lead": "Select the type of photo you need for your listing or campaign. Use a clean listing view for shape, a lifestyle view for context, and an on-model or feed view when shoppers need to picture the item in use."
       },
       "m4": {
         "h2": "Where to use product photos"
@@ -436,8 +458,9 @@
         "Your headline"
       ],
       "items": [
-        "Add exact prices and offers in your editor.",
-        "Compare labels, color, and small details with the source photo."
+        "Add exact prices and offers in your editor, where you can check the date, currency and wording before publishing.",
+        "Compare labels, color, and small details with the source photo, then confirm the image shows the product you actually ship.",
+        "Choose the clearest view for the first slot and use the scene or detail image to answer the next shopper question."
       ]
     }
   }

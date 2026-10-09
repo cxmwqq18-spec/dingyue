@@ -43,6 +43,14 @@
     {
       "t": "Desk and cables",
       "d": "Turn a tangle of chargers into a tidy cable box for shoppers setting up a home office."
+    },
+    {
+      "t": "Room makeover reveal",
+      "d": "Hold the camera on one entryway shelf before and after so baskets, trays, and the cleared surface show the change without a full renovation."
+    },
+    {
+      "t": "Home-office daily use",
+      "d": "Show one cable entering a desk organizer beside the laptop and notebook so the product has a clear weekday job."
     }
   ],
   "maker": {
@@ -70,6 +78,34 @@
     {
       "q": "How can I explain the change?",
       "a": "Add before-and-after labels in your editor and describe the storage space in the caption."
+    },
+    {
+      "q": "Should I show before and after in one photo?",
+      "a": "Upload the current space and describe the organized result; the generated photo keeps the same room and organizer."
+    },
+    {
+      "q": "What should the source photo include?",
+      "a": "Show the drawer, shelf, or room as it is, with the organizing product clearly visible."
+    },
+    {
+      "q": "What does an organization video cost?",
+      "a": "A 6-second video costs 24 credits; 10 seconds costs 40, and 15 seconds costs 60. The charge is shown before you create the clip."
+    },
+    {
+      "q": "Can I show a drawer, closet, or storage shelf?",
+      "a": "Yes. Name the exact destination, such as a kitchen drawer, closet shelf, pantry bin, or entryway console, and list the items that create the clutter."
+    },
+    {
+      "q": "How do I make a room makeover before-and-after?",
+      "a": "Keep one camera angle and describe the same room before and after; use the organizer to explain the visible change instead of claiming a full renovation."
+    },
+    {
+      "q": "Can the video show home-office daily use?",
+      "a": "Yes. Ask for one cable, tray, or desk organizer action beside the laptop and notebook, with the product visible through the final tidy beat."
+    },
+    {
+      "q": "When should I remove a seasonal offer layer?",
+      "a": "Remove or update sale wording after the activity ends; keep before-and-after labels and product dimensions separate so the scene remains reusable."
     }
   ],
   "overview": [
@@ -138,6 +174,14 @@
       {
         "t": "Home-office cables",
         "d": "Chargers disappear into a cable box beneath a desk while the laptop and notebook remain in place."
+      },
+      {
+        "t": "Entryway reveal",
+        "d": "Loose mail, keys, and shoes fill one shelf first; a plain woven basket and tray organize the same shelf in the reveal."
+      },
+      {
+        "t": "Home-office routine",
+        "d": "A charging cable clicks into a desk organizer beside a laptop and notebook while the camera stays at desk height."
       }
     ]
   },
@@ -319,6 +363,36 @@
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator raises the foldable closet bin beside his shoulder and speaks to camera. Use a chest-up medium frame with a slow push-in. Bright closet daylight shows the bin shape and fabric. End with the full bin held in front of the shelves. Sound: quiet room tone. Voice: \"This bin keeps the shelf easy to sort.\". No music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:f16-tpl-home-picker-review-reveal-r1",
+          "label": "Storage Bin Creator Reveal",
+          "chips": [
+            "review",
+            "reveal"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator opens the plain woven storage bin and lifts the lid toward the camera to show the empty interior. Use a waist-up entryway frame with a gentle push-in. Natural daylight keeps the fabric texture and handles clear. End with the open bin centered in front of the shelves. Sound: lid hinge and quiet room tone. No music."
+        },
+        {
+          "ref": "n:guide:f16-r10-home-room-reveal-r1",
+          "label": "Woven basket entryway reveal",
+          "chips": [
+            "reset",
+            "reveal"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Show the same entryway shelf before and after: loose mail, keys, and shoes on the first beat, then a plain woven basket and tray organizing the same shelf. Keep the camera angle fixed with a slow reveal. End on the organized shelf. Sound: soft room tone. No music."
+        },
+        {
+          "ref": "n:guide:f16-r10-home-office-daily-r1",
+          "label": "Cable organizer home-office use",
+          "chips": [
+            "review",
+            "reset"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. An older creator guides one loose charging cable into the plain gray organizer beside a laptop and notebook. Use a desk-level home-office frame with a gentle push-in. Keep the organizer and cable visible. End with the cable seated in the clip. Sound: one light plastic click and room tone. No music."
         }
       ],
       "button": "Make a home organizer video"

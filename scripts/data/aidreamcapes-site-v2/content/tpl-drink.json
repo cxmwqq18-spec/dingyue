@@ -43,6 +43,18 @@
     {
       "t": "Square for your store",
       "d": "Make a 1:1 version to sit next to your still photos in a Shopify product gallery."
+    },
+    {
+      "t": "Street taste test",
+      "d": "Use a market-side sip when the seller needs a quick reaction, keeping the clear glass and the bottle together in the frame."
+    },
+    {
+      "t": "Kitchen tutorial",
+      "d": "Show one preparation step, such as oat milk swirling into iced coffee, with the receiving glass and package easy to inspect."
+    },
+    {
+      "t": "ASMR can opening",
+      "d": "Use a macro hand shot for the pull tab, condensation, and first fizz when the sound of opening is the hook."
     }
   ],
   "maker": {
@@ -70,6 +82,38 @@
     {
       "q": "Where can I add flavor names?",
       "a": "Type flavor names, prices, and serving notes in your editor after download."
+    },
+    {
+      "q": "Can the clip show ice and condensation?",
+      "a": "Yes. Describe the glass, ice, and pour in the scene and the generated clip keeps your can as the product."
+    },
+    {
+      "q": "What length fits a pour clip?",
+      "a": "Six seconds covers one pour; use 10 to 15 seconds for a pour plus a tasting beat, for 24 to 60 credits."
+    },
+    {
+      "q": "Should the can label be blank?",
+      "a": "Use a clean product photo without a date sticker; add brand or flavor text as a separate layer when needed."
+    },
+    {
+      "q": "Can I use a street taste test for a drink ad?",
+      "a": "Yes. Keep the creator chest-up, show one small sip, and hold the bottle or can beside the glass so the serving context is clear."
+    },
+    {
+      "q": "What should a kitchen tutorial show?",
+      "a": "Show one preparation step, such as pouring oat milk into iced coffee, with the package, receiving glass, and liquid color visible."
+    },
+    {
+      "q": "How do I make an ASMR can-opening clip?",
+      "a": "Ask for a close hand shot of the pull tab, condensation, and first fizz, then add licensed sound or keep the recorded click after download."
+    },
+    {
+      "q": "Where do flavor and allergen details go?",
+      "a": "Add the exact flavor, ingredient, and allergen wording as editable text after download from your approved package information."
+    },
+    {
+      "q": "How do I choose 6 seconds versus 10 to 15 seconds?",
+      "a": "Choose 6 seconds for one pour, sip, or opening click; choose 10 to 15 seconds when the clip needs preparation plus a final glass or tasting beat."
     }
   ],
   "overview": [
@@ -138,6 +182,18 @@
       {
         "t": "Honey on toast",
         "d": "Golden honey trails from a jar onto warm toast, ending with the jar and crumbs in the same frame."
+      },
+      {
+        "t": "Street berry taste",
+        "d": "An older creator takes one small sip from a clear glass at an outdoor market while holding the plain berry bottle at chest height."
+      },
+      {
+        "t": "Iced coffee tutorial",
+        "d": "Hands pour oat milk into an ice-filled glass beside the bottle, ending when the pale swirl settles through the coffee."
+      },
+      {
+        "t": "ASMR can opening",
+        "d": "A hand lifts the tab on a chilled cream-colored can over a dark counter, with the first fizz visible beside an empty glass."
       }
     ]
   },
@@ -256,7 +312,8 @@
           "ref": "n:guide:q11-drink-picker-02",
           "label": "Cold Brew Cream Swirl",
           "chips": [
-            "serve"
+            "serve",
+            "routine"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Milk swirls once into a glass of cold brew. Use a macro glass close-up with a short circular camera move. Warm side light reveals the dark coffee and cream. End as the swirl settles in the glass. Sound: ice clink and gentle pour. No music.",
           "kind": "video"
@@ -291,12 +348,13 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q11-drink-picker-06",
-          "label": "Protein Bar First Bite",
+          "ref": "n:guide:f16-r10b-drink-picker-iced-tea-pour-r1",
+          "label": "Peach Iced Tea Picnic Pour",
           "chips": [
-            "taste"
+            "serve",
+            "routine"
           ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A woman takes one bite from the protein bar and looks to camera. Use a chest-up gym lounge frame with a slight push-in. Soft gym window light keeps the wrapper and bar visible. End with the bitten bar in frame. Sound: wrapper rustle and one bite. No music.",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands pour plain peach iced tea from a clear bottle into an ice-filled glass on an outdoor picnic table. Use a vertical product close-up with a gentle push-in. Bright midday light catches the amber drink. End with the bottle and full glass together. Sound: soft pour and ice clink. No music.",
           "kind": "video"
         },
         {
@@ -316,6 +374,46 @@
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand shakes one clear protein shaker once beside a gym bench. Use a waist-up product frame with a small handheld move. Bright gym window light keeps the shaker contents visible. End with the settled shake held beside the bench. Sound: ice rattle and shaker sound. No music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:f16-tpl-drink-picker-taste-r1",
+          "label": "Berry Soda Taste Test",
+          "chips": [
+            "taste",
+            "review"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator takes one small sip of berry soda from a clear glass while holding the plain bottle beside her. Use a chest-up kitchen frame with a gentle handheld drift. Bright window light keeps the bottle and red drink visible. End with the glass and bottle together in frame. Sound: one sip and quiet kitchen room tone. No music."
+        },
+        {
+          "ref": "n:guide:f16-r10-drink-street-taste-r1",
+          "label": "Street Berry Soda Taste Test",
+          "chips": [
+            "review",
+            "taste"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. An older creator takes one small sip of berry soda from a clear glass at an outdoor market while holding the plain bottle. Use a chest-up street frame with a gentle handheld drift. End with the glass and bottle together. Sound: one sip and quiet market room tone. Voice: \"The berry flavor is bright and crisp.\". No music."
+        },
+        {
+          "ref": "n:guide:f16-r10-drink-kitchen-tutorial-r1",
+          "label": "Iced Coffee Kitchen Tutorial",
+          "chips": [
+            "serve",
+            "routine"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands pour plain oat milk into iced coffee in a clear glass beside the bottle. Use a close kitchen counter frame with a slow push-in. Morning window light catches the swirl and ice. End with the bottle and finished glass in frame. Sound: ice clink and soft pour. No music."
+        },
+        {
+          "ref": "n:guide:f16-r10-drink-asmr-can-r1",
+          "label": "Sparkling Drink ASMR Can Opening",
+          "chips": [
+            "serve",
+            "routine"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands pull the tab on the plain cream-colored sparkling drink can beside a clear glass. Use a macro wood-counter frame and hold on the condensation and first fizz. End with the opened can and glass together. Sound: crisp tab click and fizz. No music."
         }
       ],
       "button": "Make a drink video"
@@ -344,8 +442,8 @@
       {
         "good": "n:guide:tpl-drink-reuse-iced-can",
         "bad": "n:guide:tpl-drink-m5-crop",
-        "good_label": "Pale silver can fits fully in frame",
-        "bad_label": "Pale silver can is clipped at the edge"
+        "good_label": "Cream iced coffee can stays fully in frame",
+        "bad_label": "Cream iced coffee can is clipped at the edge"
       }
     ],
     "outputs": [
@@ -356,10 +454,10 @@
         "label": "Creator presents the silver citrus can"
       },
       {
-        "ref": "f:q11-drink-output-02-r2",
+        "ref": "f:f16-drink-output-cream-can-r2",
         "frame": "9:16",
         "length": 6,
-        "label": "Citrus soda pours into an ice glass"
+        "label": "Cream iced coffee pours into an ice glass"
       }
     ],
     "after": {

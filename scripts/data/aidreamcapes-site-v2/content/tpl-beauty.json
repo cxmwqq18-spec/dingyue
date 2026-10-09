@@ -43,6 +43,14 @@
     {
       "t": "Body and hair care",
       "d": "Use the same idea for a body oil after a shower or a hair serum worked through damp ends."
+    },
+    {
+      "t": "Dryness problem to solution",
+      "d": "Show the dry patch first and one cream-spread beat next; keep treatment wording and any result claim in your approved text."
+    },
+    {
+      "t": "Street interview review",
+      "d": "Use a sidewalk chest-up review when shoppers need a quick product reaction, with the tube or jar held beside the speaker."
     }
   ],
   "maker": {
@@ -70,6 +78,38 @@
     {
       "q": "Can I add a shade or ingredient name?",
       "a": "Add your own product claims as editable text in your video editor after download."
+    },
+    {
+      "q": "How long is a skincare routine clip?",
+      "a": "Choose 6 seconds for one application beat or 10 to 15 seconds for a short routine. These cost 24, 40, or 60 credits, shown before you create the clip."
+    },
+    {
+      "q": "Can the video show the texture without a face?",
+      "a": "Yes. Ask for a close shot of a hand, cotton pad, or the product itself when you do not want a face in frame."
+    },
+    {
+      "q": "Do I need a professional filming setup?",
+      "a": "No. A clear product photo and a written scene are enough; the clip is generated from your photo and description."
+    },
+    {
+      "q": "How do I show dry skin before and after?",
+      "a": "Use a close shot of a hand or cheek and describe one application beat; keep verified benefits and treatment wording in your own text."
+    },
+    {
+      "q": "Can a beauty ad use a street interview?",
+      "a": "Yes. Ask for a chest-up creator, the product beside the face, and one short question while the tube or jar stays fully visible."
+    },
+    {
+      "q": "Should I show the full face or only hands?",
+      "a": "Choose a full face when the application or shade matters; choose hands for swatches, drops, and texture so details stay clear."
+    },
+    {
+      "q": "How do I describe texture without exaggerating?",
+      "a": "Name what the camera can show, such as a cream spread, clear drop, or matte finish, and avoid promises about results."
+    },
+    {
+      "q": "Can the scene show an ingredient or shade?",
+      "a": "Add the exact ingredient or shade text after download from approved product information; do not ask the generated scene to invent a claim."
     }
   ],
   "overview": [
@@ -138,6 +178,14 @@
       {
         "t": "Body mist",
         "d": "A fine spray catches window light above a folded towel while the bottle remains centered and upright."
+      },
+      {
+        "t": "Dry knuckles",
+        "d": "Frame a dry hand beside an open cream jar, then show one slow spread across the same patch without implying a medical result."
+      },
+      {
+        "t": "Sidewalk sunscreen",
+        "d": "A creator answers one short question on a quiet street while holding a plain sunscreen tube at chest height and facing the camera."
       }
     ]
   },
@@ -179,8 +227,8 @@
         "label": "Beauty Routines",
         "items": [
           {
-            "ref": "n:guide:q11-beauty-example-01-square-r2",
-            "title": "Creator Shows a Face Serum",
+            "ref": "n:guide:tpl-beauty-m6-opening",
+            "title": "Amber Serum Bottle at a Vanity",
             "kind": "scene",
             "product": "face serum"
           },
@@ -198,9 +246,9 @@
     "overview": "Create a skincare ad around one clear routine or texture moment. Keep the bottle, jar, or tube easy to recognize while a single action gives the scene its focus.",
     "strip": [
       "n:guide:q11-beauty-strip-square-01",
-      "n:guide:q11-beauty-strip-square-02",
-      "n:guide:q11-beauty-strip-square-03",
-      "n:guide:q11-beauty-strip-square-04",
+      "n:guide:tpl-beauty-round4-sunscreen-tube",
+      "n:guide:tpl-beauty-round4-cream-jar",
+      "n:guide:tpl-beauty-round4-texture-swatch",
       "n:guide:q11-beauty-strip-square-05",
       "n:guide:q11-beauty-strip-square-06"
     ],
@@ -244,17 +292,16 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:q11-beauty-picker-01",
-          "label": "Sunscreen First Impression",
+          "ref": "n:guide:f16-r10-beauty-street-review-r1",
+          "label": "Sunscreen street interview",
           "chips": [
-            "review",
-            "application"
+            "review"
           ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator holds the sunscreen tube beside her face and shares a first impression. Use a chest-up creator frame with a gentle handheld drift. Bright bathroom window light falls across the tube. End with the tube front-facing beside her cheek. Sound: soft room tone. Voice: \"I keep this SPF in my morning bag.\". No music.",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. An adult creator answers a quick street interview while holding the plain sunscreen tube beside his face. Use a chest-up sidewalk frame with a small handheld drift. Daylight keeps the tube front-facing and easy to inspect. End with the tube and creator together in frame. Sound: quiet street room tone. Voice: \"I keep this sunscreen ready for a quick morning routine.\". No music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q11-beauty-picker-02",
+          "ref": "n:guide:f16-tpl-beauty-picker-lip-tint-r1",
           "label": "Lip Tint Try-On Review",
           "chips": [
             "review",
@@ -264,13 +311,13 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q11-beauty-picker-03",
-          "label": "Moisturizer Routine Demo",
+          "ref": "n:guide:f16-r10-beauty-problem-solution-r1",
+          "label": "Moisturizer dry-skin problem to solution",
           "chips": [
             "application",
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A woman dabs one small amount of moisturizer onto her cheek beside the jar. Use a close waist-up frame with a slow push-in. Clean morning window light stays on the jar and skin. End with the jar in the foreground. Sound: soft fingertip tap and room tone. No music.",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands show a dry knuckle close-up, then spread one small amount of plain moisturizer over the same area beside the cream jar. Use a macro vanity frame with a slow push-in. Soft window light keeps the skin texture and cream visible. End with the moisturized hand and jar together. Sound: quiet bathroom room tone. No music.",
           "kind": "video"
         },
         {
@@ -313,7 +360,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q11-beauty-picker-08",
+          "ref": "n:guide:f16-tpl-beauty-picker-gift-review-r1",
           "label": "Skincare Gift Set Review",
           "chips": [
             "review",
@@ -321,6 +368,25 @@
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator presents the open skincare gift set to the camera. Use a chest-up medium frame with a gentle push-in. Soft daylight lights each item in the set. End with the open set centered at chest height. Sound: quiet room tone. Voice: \"This set covers my evening routine.\". No music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:f16-r10-beauty-problem-solution-alt-r1",
+          "label": "Moisturizer dry-hand application",
+          "chips": [
+            "application",
+            "texture"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands apply one small amount of plain moisturizer to a dry patch on the back of the hand beside the open cream jar. Use a close bathroom counter frame with a gentle lateral slide. Bright daylight shows the change in surface sheen without promising a result. End with the jar and treated hand in frame. Sound: one soft jar tap and room tone. No music."
+        },
+        {
+          "ref": "n:guide:f16-r10-beauty-street-review-alt-r1",
+          "label": "Sunscreen sidewalk interview",
+          "chips": [
+            "review"
+          ],
+          "kind": "video",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. An older creator answers one short question on a quiet sidewalk while holding the plain sunscreen tube at chest height. Use a chest-up interview frame with a small handheld drift. Keep the tube and face fully visible. End with the tube front-facing beside the creator. Sound: light street ambience. Voice: \"The tube fits in my everyday bag.\". No music."
         }
       ],
       "button": "Make a skincare video"
@@ -368,7 +434,7 @@
       }
     ],
     "after": {
-      "ref": "f:q11-beauty-after-r2",
+      "ref": "n:guide:tpl-beauty-m6-drop",
       "zones": [
         "Product name",
         "Usage line"

@@ -19,15 +19,15 @@
   "steps": [
     {
       "t": "Upload a clear product photo",
-      "d": "Show the whole item in focus and keep strong glare away from its main surface."
+      "d": "Show the whole product in focus with its cap, base, and reflective edges inside the frame; a neutral wall helps shape a clean highlight."
     },
     {
       "t": "Describe the light direction",
-      "d": "Name a light source, direction, and surface, such as soft light from the left."
+      "d": "Describe the light direction, shadow softness, and supporting surface, then say whether glass should glow, metal should edge, or a label should stay legible."
     },
     {
       "t": "Choose a version for your store",
-      "d": "Download the photo, then add any product name or finish note in your editor."
+      "d": "Download the square version, compare its silhouette and color with the real item, then add the product name or finish note in your editor."
     }
   ],
   "ideas": [
@@ -73,6 +73,38 @@
     {
       "q": "Do I need a studio setup?",
       "a": "No. Start with a clear phone photo and describe the lighting look you want to try."
+    },
+    {
+      "q": "Can I fix glare on glass or metal?",
+      "a": "Describe softer or warmer light and the generated photo keeps the same product with controlled highlights."
+    },
+    {
+      "q": "Do I need real studio lights?",
+      "a": "No. The lighting is generated; a clear product photo and a written direction are enough."
+    },
+    {
+      "q": "What does a relit photo cost?",
+      "a": "Each photo costs 24 credits, shown before you run the job."
+    },
+    {
+      "q": "Which light direction should I describe?",
+      "a": "Describe the direction that reveals the surface you need shoppers to see: soft window light from the left for a bottle edge, a broad front fill for a label, or a narrow side highlight for brushed metal. Name the shadow direction too so the result stays believable."
+    },
+    {
+      "q": "Will relighting change my product shape or color?",
+      "a": "The brief asks the image to keep the uploaded product, but generated highlights can still shift a reflective surface. Compare the result with the real item, especially around caps, glass edges, and metallic finishes, and use your source photo for any detail that must be exact. If a reflection hides a label, move the light in the brief rather than asking for extra decoration. The goal is a controlled highlight that leaves the product identity and finish easy to compare."
+    },
+    {
+      "q": "How do I reduce glare on glass or glossy plastic?",
+      "a": "Ask for broad side light, a soft front fill, and a controlled reflection that leaves the label and rim visible. Check the result at full size because a bright hotspot can still hide a curved edge."
+    },
+    {
+      "q": "Can I choose the exact direction of the light?",
+      "a": "Yes. Name left, right, front, or back light and state where the shadow should fall. A direction plus a visible edge or label gives the generator a concrete lighting target."
+    },
+    {
+      "q": "Which lighting scene belongs in an Amazon listing?",
+      "a": "Use even front fill and a readable product face for a listing image, then reserve macro or orbit highlights for ads and detail pages. Keep the approved source photo for any finish or color detail that must be exact."
     }
   ],
   "overview": [
@@ -209,7 +241,7 @@
     ]
   },
   "visual": {
-    "overview": "Product lighting changes how glass, metal, and ceramic surfaces read in a photo. Start with the whole product in focus, then describe one light source and direction.",
+    "overview": "Relighting helps a seller make reflective products easier to inspect without renting a studio. Upload a clear source photo, describe the direction and softness of the light, and use the square result for a [clean product listing photo](/ai-image-generation/ecommerce-main-image), an [Amazon product photo](/platforms/amazon-product-photos), or a [beauty product campaign](/industries/beauty-skincare). Compare the generated highlight with the real bottle, cap, glass edge, and metal finish before publishing; the source photo remains the reference for color and shape. Keep one lighting change in each version so a buyer can tell what improved. A soft highlight may reveal the curve of a bottle, while a darker edge can separate clear glass from a pale background.",
     "strip": [
       "n:gen2:h1-photo-hub-candle-result",
       "n:gen2:tpl-light-g4",
@@ -241,15 +273,15 @@
     },
     "picker": {
       "title": "Choose a lighting ad scene",
-      "lead": "Show the finish in natural light while a creator uses the product.",
+      "lead": "Choose a lighting scene by the surface you need shoppers to inspect: a soft highlight on glass, a controlled reflection on metal, or a clean finish on glossy packaging. Each example keeps the product central and uses one readable light change instead of adding a new prop story. The card prompts are useful when you need a repeatable brief for a collection: state the product material first, then the direction, softness, and surface. If the source has a blown-out reflection or a hidden edge, take a better source photo before asking for another light treatment. Treat the result as a merchandising image, not a color-calibration proof. Keep an unedited source image for any detail the generated light cannot prove, and compare reflective edges before publishing a listing image.",
       "chips": [
         {
           "id": "texture",
           "label": "Texture Macro"
         },
         {
-          "id": "grwm",
-          "label": "GRWM"
+          "id": "metal-glass",
+          "label": "Metal & Glass"
         },
         {
           "id": "review",
@@ -262,76 +294,101 @@
       ],
       "cards": [
         {
-          "ref": "f:q8-tpl-light-pick-01",
-          "label": "Texture Macro: Vitamin C Serum",
+          "ref": "f:f15-r10-tpl-light-jar-macro-r1",
+          "label": "Ceramic Cream Jar, Rim Highlight",
           "chips": [
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand dispenses one drop of serum onto the back of a hand beside a bright bathroom mirror. Soft directional daylight, realistic beauty UGC look. Macro handheld shot with one slow push-in. Sound: pump click, no music. End with the serum bead catching a clean highlight.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Only adult hands hold a plain ivory ceramic cream jar beside a vanity mirror and rotate it slightly so the glazed rim shows a soft controlled highlight. Close handheld macro, no face appears. Sound: lid tap and room tone, no music.",
           "kind": "video"
         },
         {
-          "ref": "f:q8-tpl-light-pick-02",
-          "label": "Texture Macro: Gold Hoop Earrings",
+          "ref": "f:f15-r10-tpl-light-glass-jar-r1",
+          "label": "Glass Cream Jar, Reflection Check",
           "chips": [
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand lifts a plain gold hoop beside an ear and rotates it once so the polished edge catches the window light. Minimal jewelry UGC look, warm side light. Tight handheld macro with one small arc. Sound: a light metal chime, no music. End on the hoop held still beside the ear.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Only adult hands hold a plain clear-glass cream jar with a matte sage lid beside a vanity mirror and turn it once to show a soft window reflection along the curved glass. Close handheld macro, no face appears. Sound: lid tap and room tone, no music.",
           "kind": "video"
         },
         {
-          "ref": "f:q8-tpl-light-pick-03",
-          "label": "GRWM: Makeup Stick Before Work",
+          "ref": "f:f15-r2-tpl-light-pick-03-makeup-hands-r1",
+          "label": "Makeup Stick GRWM, Hands Only",
           "chips": [
-            "grwm"
+            "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A woman in her late twenties holds a plain makeup stick beside a vanity mirror and says, “Here’s the finish I check in daylight before heading out.” Soft window light, honest UGC look. Chest-up front-facing handheld shot with slight sway. Sound: her voice and a cap click, no music. End with the product beside her cheek.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Only an adult hand holds a plain makeup stick beside a blank vanity mirror and shows its smooth casing catching the window light. Soft window light, honest UGC look. Close handheld product shot with one slow push-in. Sound: cap click and room tone, no music. End with the product held still; no face appears.",
           "kind": "video"
         },
         {
-          "ref": "f:q8-tpl-light-pick-04-rework",
-          "label": "GRWM: Glass Serum Routine",
-          "chips": [
-            "grwm"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A woman in her late twenties holds a round glass serum bottle beside her face at a bright bathroom mirror, applies one drop to her cheek and says, “This is my last step before I head out.” Morning window light passes through the serum and catches a clean highlight on the curved glass. Natural skincare creator look. Chest-up front-facing handheld shot with slight sway. Sound: her voice, a dropper tap and room tone; no music. End with the bottle beside her face.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-light-pick-05-r2",
-          "label": "Review: Stainless Steel Bottle",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman holds a plain brushed-stainless-steel bottle beside her face in a bright gym lounge and says, “Here’s a close look at the finish I carry every day.” A crisp window reflection runs down the curved metal. Candid creator-review look. Chest-up eye-level handheld shot with one small push-in. Even overhead gym light. Sound: voice, a cap click and quiet room tone; no music. End with the reflective bottle facing camera.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-light-pick-06",
-          "label": "Car Selfie Review: Electrolyte Drink",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult holds a plain electrolyte drink bottle in a parked car, looks into camera and says, “Let’s take a look at the bottle and serving details.” Soft daylight, casual car-selfie UGC look. Chest-up front-facing handheld framing with slight natural sway. Sound: voice and quiet street ambience, no music. End with the bottle beside the face.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-light-pick-07-r2",
-          "label": "Texture Macro: Nail Polish",
+          "ref": "f:f15-r10-tpl-light-compact-hand-r1",
+          "label": "Peach Compact, Lid Highlight",
           "chips": [
             "texture",
             "demo"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand applies one smooth stroke of deep berry polish to a nail, ending as the wet glossy coat catches a clean window highlight. Keep the plain clear-glass bottle fully visible beside the hand; its curved edges reflect soft daylight. Realistic beauty macro look. Tight handheld macro with one slow push-in. Sound: brush sweep and cap tap; no music. End on the glossy nail and bottle.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Only adult hands hold a plain peach cream compact beside a blank vanity mirror and open the lid once to show the matte surface catching a soft window highlight. Tight handheld product framing, no face appears. Sound: compact click and room tone, no music.",
           "kind": "video"
         },
         {
-          "ref": "f:q8-tpl-light-pick-08-r2",
-          "label": "Product Demo: Chrome Eyelash Curler",
+          "ref": "f:f15-r10-tpl-light-frosted-jar-review-r1",
+          "label": "Frosted Glass Jar, Finish Review",
           "chips": [
-            "demo"
+            "review"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman opens a plain chrome eyelash curler once beside her eye, showing the curved clamp and hinge, then angles it so a bright window reflection travels along the metal. Bright vanity daylight, natural beauty creator look. Tight chest-up handheld framing with one small push-in. Sound: hinge click and quiet room tone; no music. End with the curler held beside her cheek.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult man with short natural curls holds a plain frosted glass cosmetic jar beside a bright studio window and turns it once so a broad reflection travels across the glass. Chest-up eye-level handheld review, natural voice and room tone, no text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f15-r10-tpl-light-black-jar-review-r1",
+          "label": "Matte Cosmetic Jar, Finish Review",
+          "chips": [
+            "review"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An older woman with a short silver bob holds a plain matte-black cosmetic jar beside a bright bathroom window and turns it once to show a controlled side highlight on the lid. Chest-up eye-level handheld review, natural voice and room tone, no text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f15-r2-tpl-light-pick-07-eyelash-hands-r1",
+          "label": "Chrome Eyelash Curler Demo, Hands Only",
+          "chips": [
+            "texture",
+            "demo",
+            "metal-glass"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Only an adult hand opens a plain chrome eyelash curler once beside a vanity mirror, showing its curved clamp and hinge as a clean window reflection travels along the metal. Bright vanity daylight, natural beauty creator look. Tight handheld product framing with one small push-in. Sound: hinge click and room tone, no music. End with the curler held still; no face appears.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f15-r10-tpl-light-blue-bottle-hand-r1",
+          "label": "Blue Glass Bottle, Side Reflection",
+          "chips": [
+            "texture",
+            "demo",
+            "metal-glass"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Only adult hands place a plain cobalt-blue glass skincare bottle with a flat screw cap on a pale stone counter and rotate it slightly, showing a clean side highlight and a soft shadow. Close handheld product framing, no face appears. Sound: bottle set-down and room tone, no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f15-r10-tpl-light-watch-macro-r1",
+          "label": "Steel Watch, Bezel Macro",
+          "chips": [
+            "texture",
+            "metal-glass"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Show a plain brushed-steel watch in an extreme macro close-up while a narrow window highlight traces the bezel and crown. No wrist or person appears. Controlled side light, realistic product shot, no text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f15-r10-tpl-light-compact-orbit-r1",
+          "label": "Silver Compact, Orbit Light",
+          "chips": [
+            "texture",
+            "demo",
+            "metal-glass"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Show a plain silver compact case on a neutral turntable as a studio light orbits around it, moving a clean highlight along the curved edge and shifting the soft shadow behind. Three-quarter close-up, no person, no text or logos.",
           "kind": "video"
         }
       ],
@@ -342,13 +399,13 @@
         "frame": "listing",
         "ref": "n:gen2:tpl-light-g3",
         "h": "Use a clean relight on a product page",
-        "d": "Add a bright product view beside your main image when shoppers need to see the surface finish."
+        "d": "A clean relight can make a product-page image easier to compare with the other listing photos. Use one consistent background direction for a serum, bottle, or metal tool, then check every edge and color against the real item before publishing."
       },
       {
         "frame": "browser",
         "ref": "n:gen2:tpl-angle-g2",
         "h": "Show consistent light across a collection",
-        "d": "Use a similar highlight direction across related products so the collection page feels connected."
+        "d": "A consistent lighting brief helps a collection look related even when the original phone snapshots were taken in different rooms. Keep the product shape and label area fixed, describe one repeatable light setup, and place any claims or prices in your editor."
       }
     ],
     "input": [
@@ -367,24 +424,31 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:tpl-light-m6-output-01-square",
+        "ref": "n:guide:f15-r2-tpl-light-output-white-mug-r1",
         "frame": "1:1",
-        "label": "Serum Surface Highlight"
+        "label": "White Ceramic Mug Window Highlight"
       },
       {
-        "ref": "n:guide:tpl-light-m6-output-02-square",
+        "ref": "n:guide:f15-r2-tpl-light-output-sage-mug-r1",
         "frame": "1:1",
-        "label": "Glass Pendant Glow"
+        "label": "Sage Mug and Bamboo Lid Window Highlight"
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-angle-c3",
+      "ref": "n:f15-r10b-tpl-light-after-amber-bottle-r1",
+      "mock": {
+        "type": "callout",
+        "tag1": "Soft window light",
+        "tag2": "No glare",
+        "tag3": "True color"
+      },
       "zones": [
+        "Lighting tag",
         "Product name",
         "Material"
       ],
       "items": [
-        "Download two lighting versions and choose the one that shows the material clearly.",
+        "The frame shows the lighting tags you add to mark which setup was used.",
         "Type any product label or finish name as editable text in your editor."
       ]
     },

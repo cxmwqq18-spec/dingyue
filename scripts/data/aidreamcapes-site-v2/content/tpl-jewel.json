@@ -2,9 +2,9 @@
   "id": "tpl-jewel",
   "title": "AI Jewelry Model Photos and Ad Scenes",
   "description": "Create AI jewelry model photos showing fit and detail on adult models. Choose a creator review, try-on or hand demonstration for social ads and product pages.",
-  "h1": "Show jewelry in a clear ad scene",
+  "h1": "AI Jewelry Model Photos for On-Model Ad Scenes",
   "eyebrow": "Model photo template",
-  "lead": "Use try-on, close-detail and creator-review formats to help shoppers see how a jewelry piece looks and fits.",
+  "lead": "Use try-on, close-detail and creator-review formats to help shoppers see how a jewelry piece sits, catches light and scales on a person. Start from one clean product photo and add exact material details after download.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
@@ -16,15 +16,15 @@
   "steps": [
     {
       "t": "Photograph the piece on its own",
-      "d": "Use a plain light surface and keep the full jewelry piece in focus."
+      "d": "Use a plain light surface and keep the full piece, clasp, chain, stones, and setting in focus."
     },
     {
       "t": "Describe where it is worn",
-      "d": "Name the placement, clothing, and light while keeping the jewelry design visible."
+      "d": "Name placement, clothing, light, and crop; say collarbone, earlobe, hand, or wrist when that is the purchase question."
     },
     {
       "t": "Add details beside the photo",
-      "d": "Download the image, then add the piece name and material as text."
+      "d": "Download, compare visible details with the real item, then add approved name, material, measurements, care, and regulated claims as text."
     }
   ],
   "ideas": [
@@ -61,15 +61,35 @@
   "faq": [
     {
       "q": "What jewelry photo should I start with?",
-      "a": "Use one clear photo of the piece by itself so its shape, finish, and stones are easy to see."
+      "a": "Use one clear photo of the piece by itself on a calm surface. Show the full outline, clasp and setting so the source records the shape and finish before you choose a worn scene."
     },
     {
       "q": "Can I show how a necklace sits?",
-      "a": "Describe the chain length and neckline, then keep the pendant centered in the scene."
+      "a": "Yes. Describe the chain length, neckline, crop and light, then keep the pendant centered and the full chain curve visible. Add the exact length in your listing rather than implying a measurement from the image."
     },
     {
       "q": "Which jewelry works for an on-model photo?",
-      "a": "Necklaces, earrings, rings, bracelets, and small accessories can all be shown in their worn position."
+      "a": "Necklaces, earrings, rings, bracelets, brooches and small accessories can be shown in their worn position. Choose a crop that answers the relevant scale question without hiding the jewelry behind hair or clothing."
+    },
+    {
+      "q": "What source photo works for jewelry?",
+      "a": "A sharp, evenly lit photo of the full piece on a plain background works best. Separate tangled links, remove distracting reflections and include the stone or clasp when it matters to the purchase decision."
+    },
+    {
+      "q": "Can a photo show jewelry scale on a person?",
+      "a": "Yes. Ask for the necklace, ring or earring worn on an adult model, or use a hand demonstration, so shoppers get a practical sense of placement. Keep the exact measurements in nearby text."
+    },
+    {
+      "q": "How are jewelry photos credited?",
+      "a": "Each photo costs 24 credits, with the total shown before creation. Use one clear source and select the format that fits the piece; review the result before using it in a paid post. Keep a standalone product record beside every styled frame."
+    },
+    {
+      "q": "Should I show a clasp or stone close-up?",
+      "a": "Yes when that detail affects a purchase decision. Use the full piece as the source, then make a separate close view that keeps the clasp, setting, stone or fastening sharp without claiming a measurement the image cannot prove."
+    },
+    {
+      "q": "Can I use the image beside a product listing?",
+      "a": "Yes. Place the styled view beside the standalone product photo, material, measurements, price and care information. The worn image supplies context while the listing text remains the source for exact item facts. Keep the metal color, stone count, clasp type and chain length in the written details, and use a close crop only when it clarifies a visible feature."
     }
   ],
   "overview": [
@@ -177,7 +197,7 @@
     ]
   },
   "visual": {
-    "overview": "Show a jewelry piece worn or handled by an adult, with its scale and key detail easy to see. Begin with a clear product image and choose a format for the ad.",
+    "overview": "A useful jewelry ad answers scale and placement quickly while keeping the piece recognizable. Start with a clean source photo, then choose a worn view or hand demonstration that matches the design. Keep the pendant, clasp, stone or setting inside the crop, use soft light to control reflections, and avoid inventing a carat, metal or size claim. Pair the downloaded image with the standalone product photo and the approved measurements so shoppers can see both the styling context and the exact item record. Save the chosen crop with the product record, and use a separate detail frame when a setting or fastening deserves a closer look. Label the image by piece and angle before it enters a campaign.",
     "strip": [
       "n:guide:q9-jewel-alt-gold-hoop",
       "n:guide:tpl-jewel-m1-hoop",
@@ -190,7 +210,7 @@
       "source": "n:guide:tpl-jewel-m2-source",
       "result": "n:guide:tpl-jewel-m2-square",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Chest-up portrait, soft window light, natural skin texture, clean styling, no text or logos.",
+      "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Keep the full pendant and chain curve inside the crop, with soft window light and natural skin texture. Chest-up product-ad framing, clean styling, no text or logos. End with the piece still enough for a shopper to compare with the source image. Leave room around the neckline so the result can sit beside material, length and care details in a listing.",
       "options": [
         [
           "Template",
@@ -208,7 +228,7 @@
     },
     "picker": {
       "title": "Choose a jewelry ad format",
-      "lead": "Pick a try-on, creator review or hand demonstration that makes the piece easy to judge.",
+      "lead": "Pick the ad moment that makes the piece easy to judge: a creator review, a fastening action, an on-model try-on or a tight detail of the clasp, stone or setting. Keep one clear purchase question in each frame so shine and styling do not hide the item. Use a quiet background when the finish or stone is the main decision.",
       "chips": [
         {
           "id": "review",
@@ -225,79 +245,97 @@
         {
           "id": "texture",
           "label": "Texture Details"
+        },
+        {
+          "id": "unboxing",
+          "label": "Jewelry Unboxing ASMR"
+        },
+        {
+          "id": "macro",
+          "label": "Orbit & Macro"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:q9-jewel-hoop-review",
-          "label": "Creator Review: Gold Hoop Earrings",
+          "ref": "n:guide:f7-r10-jewel-unboxing",
+          "label": "Unboxing ASMR: Silver Pendant Box",
           "chips": [
-            "review"
+            "unboxing"
           ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult creator wears the gold hoop earrings and turns her head slightly so both hoops catch the light. Chest-up portrait, natural skin texture, soft window light, candid creator-review still, uncluttered background, no text or logos.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult opens a plain linen jewelry box at a table and reveals the silver teardrop pendant on tissue, with hands and pendant sharp for a quiet unboxing ASMR moment. Warm window light, square product photo, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q9-jewel-brooch-demo",
-          "label": "Hand Demo: Brooch on Coat",
+          "ref": "n:guide:q9-jewel-pendant-review",
+          "label": "Creator Review: Silver Pendant",
           "chips": [
-            "hands"
+            "review",
+            "texture"
           ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult pins the enamel brooch to a wool coat lapel, with the hand and finished placement clearly visible. Chest-up three-quarter portrait, soft daylight, natural creator-ad still, no text or logos.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult creator holds a silver pendant beside her face, then points once to the chain length and pendant scale. Soft window light, chest-up square review photo, natural skin texture, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q9-jewel-necklace-tryon",
-          "label": "Try-On: Silver Pendant at the Neckline",
+          "ref": "n:guide:f7-r10-jewel-orbit-macro",
+          "label": "Orbit Macro: Silver Pendant Detail",
           "chips": [
+            "macro",
+            "texture",
             "tryon"
           ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Chest-up portrait, soft window light, natural skin texture, clean styling, no text or logos.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. A tight macro crop shows an adult Black woman rotating the silver teardrop pendant at her collarbone so its front, edge and chain catch the light. Preserve natural skin and fabric texture, square photo, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q9-jewel-bracelet-clasp",
           "label": "Product Detail: Bracelet Clasp",
           "chips": [
+            "hands",
+            "macro",
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. A hand holds the bracelet clasp near the wrist so the fastening and metal finish are sharply visible. Tight macro crop, directional daylight, crisp product detail, neutral background, no text or logos.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. A hand closes the silver bracelet clasp around a wrist, keeping the fastening and metal finish sharply visible. Tight macro square product photo, directional daylight, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q9-jewel-pendant-review",
-          "label": "Spokesperson Read: Pendant Fit",
+          "ref": "n:guide:f7-r10-jewel-cufflinks-unboxing",
+          "label": "Unboxing ASMR: Silver Cufflinks",
           "chips": [
+            "unboxing",
             "review"
           ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult creator wears the pendant and holds it beside the neckline to show its scale. Chest-up portrait with direct eye contact, soft daylight, honest creator-ad still, natural skin texture, no text or logos.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult opens a plain jewelry box and reveals polished silver cufflinks on tissue, then lifts the box toward camera for a quiet unboxing ASMR review. Bright window light, square product photo, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f7-r10-jewel-silver-stud",
+          "label": "Try-On: Silver Stud at the Ear",
+          "chips": [
+            "tryon",
+            "review"
+          ],
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult East Asian woman tucks hair behind one ear to show a single silver stud and its placement. Chest-up square portrait, soft window light, natural skin texture, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q9-jewel-bracelet-tryon",
-          "label": "Try-On: Silver Bracelet Stack",
+          "label": "Try-On: Silver Bracelet Placement",
           "chips": [
-            "tryon"
+            "tryon",
+            "texture",
+            "macro"
           ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver bracelet stack and turns the wrist slightly to show how the pieces sit together. Close wrist-and-sleeve framing, soft side light, clean fashion-ad still, no text or logos.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult woman turns her wrist to show a slim silver bracelet and its placement over a pale knit sleeve. Tight square on-model detail, soft window light, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q9-jewel-cufflinks-demo",
-          "label": "Hand Demo: Fasten Silver Cufflinks",
+          "ref": "n:guide:f7-r10-jewel-hoop-unboxing",
+          "label": "Unboxing ASMR: Silver Hoops",
           "chips": [
+            "unboxing",
             "hands"
           ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult fastens the silver cufflinks on a white shirt cuff, with the fingers and finished fastening clear. Tight hand close-up, bright window light, clean product-demo still, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-jewel-ring-macro",
-          "label": "Product Detail: Gold Ring",
-          "chips": [
-            "texture"
-          ],
-          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. A hand tilts the gold ring slightly so the setting and gemstone catch a narrow beam of light. Extreme macro, crisp metal and stone detail, controlled studio light, neutral background, no text or logos.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult Middle Eastern woman opens a plain jewelry box and reveals delicate silver hoop earrings on tissue, holding the box and hoops clearly in frame. Warm window light, square unboxing photo, no text or logos.",
           "kind": "photo"
         }
       ],
@@ -308,13 +346,13 @@
         "frame": "post",
         "ref": "n:guide:tpl-jewel-m4-use-square",
         "h": "Show a necklace worn at the neckline",
-        "d": "Keep the necklace and pendant visible against a simple outfit so shoppers can judge its scale."
+        "d": "Place a worn necklace or pendant frame beside the plain product shot, material and measurements. Keep the chain curve and pendant visible against a simple neckline so shoppers can judge where the piece lands. Use the standalone shot for exact shape and the worn shot for placement context. Keep the crop generous enough for mobile shoppers to see the neckline without losing the pendant. Keep the link between both images clear in the product gallery order."
       },
       {
         "frame": "listing",
         "ref": "n:guide:q9-jewel-use-silver-bracelet",
         "h": "Add a silver bracelet worn on a wrist",
-        "d": "Place the bracelet photo beside a clear product shot so shoppers can see how the chain and bar charm sit."
+        "d": "Use a wrist detail as a secondary listing image or social post. Show the bracelet, clasp and focal charm clearly, then let the surrounding listing text carry the exact length, material and care information. Check that the hand pose does not cover the fastening or imply a measured fit. Name the crop as a detail so it is not mistaken for the standalone product shot. Keep the image next to the source when a buyer compares finish and shape."
       }
     ],
     "input": [
@@ -333,18 +371,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:tpl-jewel-m6-output-01-square",
-        "frame": "1:1",
-        "label": "Square silver ring photo"
-      },
-      {
-        "ref": "n:guide:tpl-jewel-m6-output-02-square",
+        "ref": "n:guide:q9-media-jewel-output",
         "frame": "1:1",
         "label": "Square silver pendant photo"
+      },
+      {
+        "ref": "n:guide:q9-jewel-ring-macro",
+        "frame": "1:1",
+        "label": "Square gold ring photo"
       }
     ],
     "after": {
-      "ref": "n:guide:tpl-jewel-after-square",
+      "ref": "n:guide:q9-jewel-necklace-tryon",
       "zones": [
         "Piece name",
         "Material"

@@ -4,7 +4,7 @@
   "description": "Use AI image to video to add gentle motion to a product photo you already like. Download a short clip for Reels, TikTok, or your shop. Upload a shot to start.",
   "h1": "Turn a Product Photo Into Motion With AI Image to Video",
   "eyebrow": "Photo to video",
-  "lead": "Turn one product photo into a short video: steam rising from a mug, light sliding across a bottle, a slow push-in on a shoe.",
+  "lead": "Turn one product photo into a short video: steam rising from a mug, light sliding across a bottle, or a slow push-in on a shoe. Keep the motion focused on one selling detail so a shopper can understand the product in the first seconds.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload your product",
-      "d": "Sharp, with a little space around the product and nothing crossing it."
+      "d": "Upload a sharp photo with space around the product; a clear outline gives the camera room while color and key details stay recognizable."
     },
     {
       "t": "Describe one movement",
-      "d": "One motion per idea, like \"slow push-in\" or \"steam rising\". Pick 6, 10 or 15 seconds."
+      "d": "Describe one movement, name the setting and final frame, then choose 6, 10 or 15 seconds."
     },
     {
       "t": "Download, or try another motion",
-      "d": "If a label or edge shifts, ask for a simpler movement and make another."
+      "d": "Watch the result; if a label, edge or hand shifts, simplify the movement and compare the new clip with your source."
     }
   ],
   "maker": {
@@ -45,19 +45,35 @@
   "faq": [
     {
       "q": "What kind of photo works for image to video?",
-      "a": "A sharp, well-lit photo with the product fully in frame. Leave some background around it, because tight crops give the camera nowhere to go."
+      "a": "A sharp, well-lit photo with the product fully in frame. Leave some background around it, because tight crops give the camera nowhere to go. A front-facing product with a little room around it gives the motion a stable base."
     },
     {
       "q": "Can I choose how the camera moves?",
-      "a": "Yes. Describe one move, such as a slow push-in, a pan across the table or a gentle orbit around a bottle. Each generation can vary, so simple directions are easiest to follow."
+      "a": "Yes. Describe one move, such as a slow push-in, a pan across the table or a gentle orbit around a bottle. Each generation can vary, so simple directions are easiest to follow. Name where the move starts and stops so the product stays readable."
     },
     {
       "q": "Will the product stay close to my photo?",
-      "a": "Motion can shift fine details such as label text, buttons or edges while the product moves through the scene. A simpler movement leaves fewer details changing at once."
+      "a": "Motion can shift fine details such as label text, buttons or edges while the product moves through the scene. A simpler movement leaves fewer details changing at once. Inspect the first and last frames before using a clip in a listing."
     },
     {
       "q": "Can I make several clips from the same photo?",
-      "a": "Yes. Change the movement or clip length for each run. The editor shows the credit cost before generation."
+      "a": "Yes. Change the movement or clip length for each run. The editor shows the credit cost before generation. Keep each variation focused on one change so you can compare results."
+    },
+    {
+      "q": "What input should I start with?",
+      "a": "Use a clear photo where the product shape and key details are easy to see. Avoid glare or a busy background when a surface detail matters."
+    },
+    {
+      "q": "Can the motion stay subtle?",
+      "a": "Yes. Describe a small action such as a turn, lift, pour or steam moment. A small controlled movement is easier to compare with the original photo."
+    },
+    {
+      "q": "What motion is safest for a printed label?",
+      "a": "Use a slow push-in, a gentle light change or a small turn while keeping the label facing the camera. Avoid fast spins and crowded hands when the label, cap or fine edge is a key buying detail. Preview the label at full size before publishing."
+    },
+    {
+      "q": "Can I use the clip on a product page?",
+      "a": "Yes. Review the product, color and proportions first, then place the clip beside your listing photos or in a feed placement. Add exact prices, claims and captions in your editor after download. Keep claims in a caption you can update."
     }
   ],
   "overview": [
@@ -68,34 +84,22 @@
   ],
   "examples": {
     "h2": "Product ad formats",
-    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after.",
+    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after. Each format keeps one action in view so you can test a useful hook without losing the product reference.",
     "groups": [
       {
         "label": "Product motion ideas",
         "items": [
           {
             "ref": "n:gen2:image-to-video-g1",
-            "title": "Watch detail with a light sweep",
+            "title": "Watch Detail: dial light sweep",
             "kind": "scene",
             "product": "wristwatch"
           },
           {
-            "ref": "n:guide:q2-image-to-video-example-01",
-            "title": "Hand applies peptide balm to skin",
-            "kind": "scene",
-            "product": "peptide balm"
-          },
-          {
             "ref": "n:guide:q2-image-to-video-example-02",
-            "title": "Runner tries on a trail sneaker",
+            "title": "Fabric Detail: linen shirt drape",
             "kind": "scene",
-            "product": "trail sneaker"
-          },
-          {
-            "ref": "n:guide:q2-image-to-video-example-03",
-            "title": "Pet hair remover clears a sofa",
-            "kind": "scene",
-            "product": "pet hair remover"
+            "product": "linen shirt"
           }
         ]
       }
@@ -113,10 +117,10 @@
     "steps": {
       "source": "n:guide:b1-image-to-video-source",
       "sourceAlt": "Your product: cream ceramic mug with blue flecks on a wooden counter.",
-      "result": "n:guide:q2-image-to-video-steps-result",
+      "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand applies one drop of the serum to the back of a hand at a bright vanity, then stops with the bottle in frame. Soft window light, natural skincare-ad look. Tight overhead close-up with one gentle push-in. End with the serum bottle beside the hand showing the single fresh drop. Sound: dropper click and soft room tone; no music."
+      "prompt": "Use the uploaded speckled ceramic mug as the exact product reference. Preserve its cream glaze, blue flecks, handle and shape while adding a subtle curl of steam in the uploaded kitchen setting."
     },
     "picker": {
       "title": "Choose a product ad format",
@@ -137,6 +141,10 @@
         {
           "id": "before-after",
           "label": "Problem & Solution"
+        },
+        {
+          "id": "product-motion",
+          "label": "Product Motion"
         }
       ],
       "cards": [
@@ -211,6 +219,76 @@
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy desk, an adult hand routes a tangled charging cable through the phone-accessory organizer, ending with the cable neatly held in its slot. Soft daylight, practical creator-ad look. Three-quarter desk close-up with one slow push-in following the cable. Sound: cable taps and quiet room tone; no music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:f2-r10-i2v-card-08",
+          "label": "Turntable Spin: Ceramic Lamp",
+          "chips": [
+            "product-motion"
+          ],
+          "prompt": "Use the uploaded plain ceramic lamp as the exact product reference. Keep its shade, base and neutral color unchanged while the lamp makes one slow turn on a wooden turntable. Bright studio light, centered vertical product shot, one gentle camera hold. End with the lamp facing front. Sound: a soft turntable hum; no music.",
+          "kind": "video",
+          "href": "/app/create?tool=image-to-video&size=9%3A16&length=15"
+        },
+        {
+          "ref": "n:guide:q2-image-to-video-example-03",
+          "label": "Cleanser Pump: Vanity Routine",
+          "chips": [
+            "grwm"
+          ],
+          "href": "/app/create?tool=image-to-video&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "f:k5-image-to-video-steps-result",
+          "label": "Steam Bloom: Ceramic Mug",
+          "chips": [
+            "product-motion"
+          ],
+          "href": "/app/create?tool=image-to-video&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q2-image-to-video-example-01",
+          "label": "Hydration Mix: Creator Demo",
+          "chips": [
+            "reviews"
+          ],
+          "href": "/app/create?tool=image-to-video&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f2-r10-i2v-light-sweep",
+          "label": "Light Sweep: Steel Bottle",
+          "chips": [
+            "product-motion"
+          ],
+          "prompt": "Use the uploaded plain stainless steel bottle as the exact product reference. Preserve its shape and brushed finish while one narrow band of light sweeps from cap to base. Neutral studio, vertical product frame, no redesign. End with the bottle centered and still. Sound: quiet room tone; no music.",
+          "kind": "video",
+          "href": "/app/create?tool=image-to-video&size=9%3A16&length=15"
+        },
+        {
+          "ref": "n:guide:f2-r10-i2v-liquid-steam",
+          "label": "Pour and Steam: Glass Teapot",
+          "chips": [
+            "product-motion"
+          ],
+          "prompt": "Use the uploaded clear glass teapot as the exact product reference. Preserve the handle and spout while tea pours into the plain cup and one small curl of steam rises. Bright kitchen table, vertical close-up, one restrained pour. End with the cup and teapot still. Sound: pour and soft room tone; no music.",
+          "kind": "video",
+          "href": "/app/create?tool=image-to-video&size=9%3A16&length=15"
+        },
+        {
+          "ref": "n:guide:f2-r10-i2v-push-in",
+          "label": "Slow Push-In: Speckled Vase",
+          "chips": [
+            "product-motion"
+          ],
+          "prompt": "Use the uploaded speckled ceramic vase as the exact product reference. Preserve its glaze and green stem while the camera makes one slow push toward the surface detail. Soft side daylight, vertical three-quarter product shot. End close on the glaze and rim. Sound: quiet room tone; no music.",
+          "kind": "video",
+          "href": "/app/create?tool=image-to-video&size=9%3A16&length=15"
         }
       ],
       "button": "Try this video idea"
@@ -220,18 +298,18 @@
         "frame": "listing",
         "ref": "n:guide:q2-image-to-video-uses-00",
         "h": "Product page",
-        "d": "A short product scene beside your listing can show texture, fit or a useful detail."
+        "d": "A short product scene beside your listing can show texture, fit or a useful detail. Keep the clip beside the static gallery so shoppers can compare the moving edge, finish and scale with the product photo. Use a short clip beside the main still when a texture, hinge or pour is easier to understand in motion."
       },
       {
         "frame": "post",
         "ref": "f:k5-image-to-video-uses-1-image",
         "h": "Feed post",
-        "d": "Show a product detail in motion to give a feed post a clear visual hook."
+        "d": "Show a product detail in motion to give a feed post a clear visual hook. A restrained turn or texture movement leaves room for your own headline and lets the item read before the viewer scrolls. Keep the first frame clean and choose a crop that leaves room for your headline."
       }
     ],
     "input": [
       {
-        "good": "n:guide:q2-image-to-video-input-00-good",
+        "good": "n:guide:f2-r10-i2v-input-00-good",
         "bad": "n:guide:q2-image-to-video-input-00-bad",
         "good_label": "Your product, fully in frame with soft highlights",
         "bad_label": "Your product is cropped at the left edge"
@@ -245,15 +323,15 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:q2-image-to-video-output-00",
+        "ref": "n:guide:f2-image-to-video-output-serum",
         "frame": "16:9",
-        "label": "Gold jewelry light sweep",
+        "label": "Serum Drop: Amber Bottle in Motion",
         "length": 6
       },
       {
-        "ref": "n:gen2:tpl-beauty-g2",
+        "ref": "n:guide:f2-image-to-video-output-shoe",
         "frame": "9:16",
-        "label": "Cleansing balm texture close-up",
+        "label": "Trail Step: Charcoal Shoe in Motion",
         "length": 6
       }
     ],
@@ -266,12 +344,12 @@
       "items": [
         "Add captions and prices in CapCut or Canva. AI-made letters can come out wrong.",
         "Review the result next to your product: labels, color and shape.",
-        "Check it where it will run: feed, product page or story."
+        "Check it where it will run: feed, product page or story, and keep the first frame clear when the placement autoplays."
       ]
     },
     "titles": {
       "m2": {
-        "h2": "How to turn a product product into a video in 3 steps"
+        "h2": "How to turn a product into a video in 3 steps"
       },
       "m3": {
         "h2": "Product ad formats to animate",
@@ -295,6 +373,7 @@
       "examples": {
         "h2": "Product motion ideas"
       }
-    }
+    },
+    "overview": "Animate a static product photo with one restrained motion: a turntable spin, a light sweep, liquid or steam, or a slow push-in. Choose the movement that answers a shopper question, such as finish, pour, texture, or shape, and keep the product unchanged while the camera or one physical detail moves."
   }
 }

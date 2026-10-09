@@ -4,7 +4,7 @@
   "description": "Make a short product video from the photo and name on a public product page. If the page can't be read, upload a product photo and describe the scene.",
   "h1": "URL to Video: Turn a Product Link into a Video Ad",
   "eyebrow": "Video tool",
-  "lead": "Paste your product page link and get a short product video made from the photo and name on that page.",
+  "lead": "Paste your product page link and get a short product video made from the photo and name on that page. Check the captured reference before you describe the action, so the clip starts from the same color, size and variant you sell.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Paste your product link",
-      "d": "A public product page for an item you sell."
+      "d": "Paste a public product page; the tool reads its main image and name when access is allowed. Use a page that loads without sign-in."
     },
     {
-      "t": "Check the product and name it found",
-      "d": "If the page has several colors or sizes, make sure it picked the right one."
+      "t": "Review the captured image and name",
+      "d": "Check the image, name, color and variant. Choose the one selling point you want to show."
     },
     {
-      "t": "Describe one action and download",
-      "d": "One everyday action, like \"open the lid and show the compartments\"."
+      "t": "Write the scene and download",
+      "d": "Describe one action or spoken line, choose the final pose, generate the 15-second clip, then review it before adding your offer."
     }
   ],
   "maker": {
@@ -46,19 +46,35 @@
   "faq": [
     {
       "q": "Which product links work?",
-      "a": "A public product page can still block access or require a login. If it does, upload the product photo instead."
+      "a": "A public product page can still block access or require a login. If it does, upload the product photo instead. Use a page that loads without a sign-in and shows the variant you want."
     },
     {
       "q": "What do you take from the page?",
-      "a": "Only the main product photo and the product name. Prices, reviews and other text on the page are not used."
+      "a": "Only the main product photo and the product name. Prices, reviews and other text on the page are not used. The captured image may differ from the gallery image, so compare it manually."
     },
     {
       "q": "Can I use a link to someone else's product?",
-      "a": "Only use links to products you own or are allowed to advertise, and only photos you have the rights to use."
+      "a": "Only use links to products you own or are allowed to advertise, and only photos you have the rights to use. Confirm that your rights cover the product image, name and advertising use."
     },
     {
       "q": "Can I change the photo you picked?",
-      "a": "Yes. If the photo isn't the best one, replace it with your own upload before you generate."
+      "a": "Yes. If the photo isn't the best one, replace it with your own upload before you generate. Check the replacement photo before writing the action prompt."
+    },
+    {
+      "q": "What does a product URL provide?",
+      "a": "It reads public page metadata and available product imagery from the URL, then uses that reference for the clip. Use a stable product photo when the page offers several gallery variants."
+    },
+    {
+      "q": "What if the page cannot be read?",
+      "a": "Use a direct product photo in the upload flow when the page blocks access or exposes no usable image. A direct upload avoids a blocked page and gives you more control over the starting frame."
+    },
+    {
+      "q": "Does the link include prices or reviews?",
+      "a": "No. The tool uses the available product image and product name as the visual reference. Add your own price, review wording and offer in the editor after generation so every public claim is current. Recheck wording after generation because product facts can change."
+    },
+    {
+      "q": "Can I choose a different variant after capture?",
+      "a": "Yes. Replace the captured image with a clear upload when the page selected the wrong color, size or angle. Check the replacement against the item you ship before you describe the motion. Save the chosen variant before you describe motion so color and scale stay consistent."
     }
   ],
   "overview": [
@@ -69,7 +85,7 @@
   ],
   "examples": {
     "h2": "Product ad formats",
-    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after.",
+    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after. Each format turns the page reference into one visible action that can carry a specific hook in a paid placement.",
     "groups": [
       {
         "label": "Creator-led product scenes",
@@ -79,18 +95,6 @@
             "title": "Runner mixes a hydration drink",
             "kind": "scene",
             "product": "electrolyte drink mix"
-          },
-          {
-            "ref": "n:guide:q2-url-to-video-example-02",
-            "title": "Sofa fur stripe cleared in one pass",
-            "kind": "scene",
-            "product": "pet hair remover"
-          },
-          {
-            "ref": "n:guide:q2-url-to-video-example-03",
-            "title": "Creator wears a crossbody bag",
-            "kind": "scene",
-            "product": "crossbody bag"
           }
         ]
       },
@@ -134,7 +138,7 @@
     },
     "picker": {
       "title": "Choose a product ad format",
-      "lead": "Choose a scene that shows a product in use, on camera or in a creator-led ad.",
+      "lead": "Choose a scene that shows a product in use, on camera or in a creator-led ad. Match the action to the shopper question, then keep one product, one setting and one final pose in the prompt.",
       "chips": [
         {
           "id": "reviews",
@@ -155,48 +159,66 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:q2-url-to-video-card-01",
-          "label": "Car Selfie Review: Face Sunscreen",
+          "ref": "n:guide:f2-r10-url-card-00",
+          "label": "Living Room Review: Air Purifier",
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in daylight, holds the sunscreen beside her face and says: “Watch how this spreads in one pass.” She smooths one dab over her cheek and ends facing camera with the tube visible. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. Sound: her voice, cap click and soft street ambience; no music.",
+          "prompt": "Use the uploaded plain white air purifier as the exact product reference. A middle-aged man stands in a bright living room, holds it beside his chest and says: “Here is the filter size I check first.” He points to the vents and ends with the purifier centered. Natural creator-review framing, chest-up vertical shot. Sound: spoken line and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q2-url-to-video-card-02",
-          "label": "GRWM: Tinted Lip Balm Before Work",
+          "ref": "n:guide:f2-r10-url-card-01",
+          "label": "Kitchen Routine: Linen Apron",
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one smooth pass of tinted lip balm and says to camera: “A quick tint before I head out.” She lowers the balm and holds still. Soft morning window light, natural skin, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. End facing the mirror with the lip balm tube beside her lips. Sound: her voice and a small cap click; no music.",
+          "prompt": "Use the uploaded plain linen apron as the exact product reference. An older woman puts it on in a sunny kitchen, adjusts one shoulder strap and says: “The cross-back tie keeps the front clear.” She turns once and ends facing the counter. Waist-up routine framing, natural daylight. Sound: spoken line and fabric movement; no music.",
           "kind": "video"
         },
-        {
-          "ref": "n:guide:q2-url-to-video-card-03",
-          "label": "ASMR Unboxing: Gold Hoop Earrings",
+      {
+        "ref": "n:guide:f2-r10-url-card-02",
+        "label": "Unboxing: Ceramic Spice Jars",
           "chips": [
             "unboxing"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean dressing table, adult hands open a small jewelry box and lift the gold hoop earrings, ending with the pair centered and still. Warm diffused light, tactile unboxing-ad look. Top-down close-up with one slow push-in. Sound: box hinge and tissue rustle; no music.",
-          "kind": "video"
-        },
+          "prompt": "Use the uploaded plain ceramic spice jars as the exact product reference. Adult hands open a kraft box, lift the three jars and place them in a row on the kitchen counter. Top-down vertical unboxing shot with one gentle push-in. Sound: box hinge, paper rustle and ceramic taps; no music.",
+        "kind": "video"
+      },
+      {
+        "ref": "n:gen2:unboxing-videos-c1",
+        "label": "Unboxing: Ceramic Mug Set",
+        "chips": [
+          "unboxing"
+        ],
+        "prompt": "Use the captured product image and name as the reference. Adult hands lift the ceramic mug set from a gift box, remove the paper filling and place the pieces on a table. Keep the product centered in a top-down tabletop shot, then hold on the full set. Sound: paper rustle and ceramic taps; no music.",
+        "kind": "video"
+      },
+      {
+        "ref": "n:gen2:unboxing-videos-c2",
+        "label": "Unboxing: Wrapped Candle",
+        "chips": [
+          "unboxing"
+        ],
+        "prompt": "Use the captured product image and name as the reference. Adult hands open a kraft mailer, fold back the tissue and lift the candle onto the table. Keep the package and product fully visible in a top-down tabletop shot, ending with the candle centered. Sound: mailer fold and tissue rustle; no music.",
+        "kind": "video"
+      },
         {
-          "ref": "n:guide:q2-url-to-video-card-04",
-          "label": "Problem to Fix: Pet Hair Removal",
+          "ref": "n:guide:f2-r10-url-card-03",
+          "label": "Demo: Fabric Shaver Clean Stripe",
           "chips": [
-            "unboxing"
+            "demo"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sofa cushion in a bright living room, an adult hand draws the pet-hair remover once across loose fur, leaving a clear clean stripe and stopping with the tool visible. Soft daylight, realistic home-ad look. Tight side close-up with a steady lateral slide. End on the cleared sofa stripe with the remover just beyond its edge. Sound: brush over fabric and quiet room tone; no music.",
+          "prompt": "Use the uploaded plain fabric shaver as the exact product reference. Adult hands pull it once across a navy wool sweater, leaving a visibly smoother stripe beside the untouched fabric. Tight side close-up, one steady lateral move, clear final pose. Sound: fabric brush and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q2-url-to-video-card-05",
-          "label": "Try-On: Crossbody Bag for Errands",
+          "ref": "n:guide:f2-r10-url-card-04",
+          "label": "Try-On: Woven Sun Hat",
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunlit apartment mirror, an adult woman puts on the crossbody bag, adjusts its strap once and turns to a relaxed side profile, ending still with the bag centered. Natural daylight, casual fashion try-on look. Waist-up mirror framing with one slow tilt from shoulder to bag. End in a waist-up side pose with the strap and front pocket visible. Sound: strap slide and room tone; no music.",
+          "prompt": "Use the uploaded plain woven sun hat as the exact product reference. An older woman with short silver hair tries it on in an entryway mirror, adjusts the brim once and turns to a relaxed side angle. Waist-up mirror framing, natural daylight, final pose with the hat centered. Sound: room tone and light fabric movement; no music.",
           "kind": "video"
         },
         {
@@ -225,6 +247,46 @@
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a park trailhead, an adult runner places the hydration-chew pouch into a running belt and closes the pocket, ending with the belt held at waist height. Natural morning light, candid fitness-routine ad look. Waist-level close-up with one gentle tilt from pouch to belt. Sound: fabric zip and birds; no music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:q2-url-to-video-output-01",
+          "label": "Phone Stand: Desk Review",
+          "chips": [
+            "reviews"
+          ],
+          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f2-r10-url-card-09",
+          "label": "Demo: Compost Caddy Lid",
+          "chips": [
+            "demo"
+          ],
+          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
+          "prompt": "Use the uploaded plain stainless-steel compost caddy as the exact product reference. Adult hands open the lid, place a few vegetable scraps inside and hold the charcoal filter toward the camera. Three-quarter kitchen close-up, one clear action and stable ending. Sound: lid click and quiet kitchen tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:k2-url-case-desk-organizer",
+          "label": "Desk Organizer: Daily Demo",
+          "chips": [
+            "demo"
+          ],
+          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q2-url-to-video-example-03",
+          "label": "Commuter Backpack Try-On",
+          "chips": [
+            "grwm"
+          ],
+          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
         }
       ],
       "button": "Try this video idea"
@@ -234,13 +296,19 @@
         "frame": "browser",
         "ref": "n:guide:q2-url-to-video-uses-00",
         "h": "Product page",
-        "d": "A product page video can show how a useful item opens, fits or works in a daily routine."
+        "d": "Start with a public product page that includes a clear product image and name. Confirm the URL is public and points to the exact item or variant you want to advertise. Record the captured page state before you request another variant."
       },
       {
-        "frame": "listing",
+        "frame": "browser",
+        "ref": "n:guide:k2-url-strip-lunchbox-open",
+        "h": "Reference captured",
+        "d": "The product image and name become the starting reference for the video request. Review both before generation so the action does not begin with a mismatched color, size or product family. Keep one final pose so the product remains easy to compare with the source."
+      },
+      {
+        "frame": "post",
         "ref": "n:guide:q2-url-to-video-uses-01",
-        "h": "Ads for your best sellers",
-        "d": "Turn a product link into a short creator-led ad for a best seller."
+        "h": "Generated clip",
+        "d": "Turn that product reference into an action scene for a listing or social post. Keep the product visible, compare the result with the captured reference, and add your exact offer in the editor. A clear final pose also gives the editor a useful thumbnail."
       }
     ],
     "input": [
@@ -259,27 +327,28 @@
     ],
     "outputs": [
       {
-        "ref": "f:k2-url-output-bottle-gymbag",
+        "ref": "f:f2-url-to-video-output-headphones-r4",
         "frame": "9:16",
-        "label": "Hand lifts bottle from gym bag",
+        "label": "Unboxing: Headphones Lifted From Box",
         "length": 15
       },
       {
-        "ref": "n:guide:q2-url-to-video-output-01",
+        "ref": "f:f2-url-to-video-output-backpack",
         "frame": "16:9",
-        "label": "Foldable phone stand demonstration",
+        "label": "Trail Pack: Backpack Adjusted at Overlook",
         "length": 15
       }
     ],
     "after": {
-      "ref": "n:guide:q2-url-to-video-after",
+      "ref": "n:guide:f2-r10b-url-to-video-after-headphones",
       "zones": [
         "Product name",
         "Caption"
       ],
       "items": [
-        "Make sure the video shows the color and size you sell.",
-        "Add prices and offers in your editor. AI-made letters can come out wrong."
+        "Make sure the video shows the color and size you sell, then compare its first frame with the captured product reference.",
+        "Add prices and offers in your editor. AI-made letters can come out wrong, so type the final wording yourself.",
+        "Check the action and final pose on mute before you post to a listing, feed or story placement."
       ]
     },
     "titles": {
@@ -308,6 +377,7 @@
       "examples": {
         "h2": "Product scenes from your catalog"
       }
-    }
+    },
+    "overview": "A public product URL supplies a starting image and name when the page can be read. Review that captured reference, add the selling point and scene script yourself, then generate a short clip with one action and a stable final pose."
   }
 }
