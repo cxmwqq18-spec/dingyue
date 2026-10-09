@@ -7153,6 +7153,14 @@
       "variants": [
         1200
       ]
+    },
+    "t33-tpl-light-og-r2": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Amber glass bottle in warm side light.",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {
