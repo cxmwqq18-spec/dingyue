@@ -336,12 +336,13 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-before-after-videos-m5-round-watch-bad",
-          "label": "Watch Detail: Analog Dial",
+          "ref": "n:guide:f17-jewelry-output-watch-caseback",
+          "label": "Watch Caseback: Hands-On Review",
           "chips": [
-            "demo"
+            "demo",
+            "review"
           ],
-          "prompt": "Use the uploaded photo as a simple round analog wristwatch and keep the softened dial and dark stand visible. A hands-only close-up holds on the watch detail for a calm UGC product look. Square framing, no text or logos.",
+          "prompt": "Use the uploaded photo as a simple round analog wristwatch and keep its dial, strap and caseback visible. An adult hand turns the watch to show the brushed caseback on a walnut desk. Hands-on UGC product review, square framing, no text or logos.",
           "kind": "photo"
         },
         {

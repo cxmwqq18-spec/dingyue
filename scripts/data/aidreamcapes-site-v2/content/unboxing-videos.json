@@ -217,21 +217,21 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q19-yt-picker-06-pet-hair-fix",
-          "label": "Pet Hair Brush — Sofa Fix",
-          "chips": [
-            "soft"
-          ],
-          "prompt": "Use the uploaded photo as the reusable lint brush and keep its handle visible. Adult hands lift the brush from a small package and roll it once over pet hair on a sofa, ending with a clear clean strip. Soft daylight, practical pet-care style. Medium framing with one slow push-in. Sound: paper crinkle, brush pass and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k5-home-example-home-g3",
-          "label": "Silk Scarf — Creator Walk",
+          "ref": "n:guide:g1-box-burgundy-sandal-unboxing-r2",
+          "label": "Sandal Unbox: Pair Revealed",
           "chips": [
             "package"
           ],
-          "prompt": "Use the uploaded photo as the silk scarf and keep its drape visible. An adult wears the scarf on a breezy park walk, turning once so the pattern and knot are clear. Soft daylight, calm package-to-lifestyle reveal style. Medium framing with one gentle turn. Sound: fabric rustle and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as a pair of plain burgundy sandals and keep both shoes and straps visible. Adult hands lift the pair from a tissue-lined box and hold them above the open packaging. Clean unboxing reveal, square framing, no text or logos. Sound: tissue rustle and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:g1-box-shoe-unboxing",
+          "label": "Trail Shoes: Box Reveal",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Use the uploaded photo as two plain charcoal trail shoes and keep both shoes, laces and soles visible. Adult hands lift the pair from a tissue-lined box and set them beside the open packaging. Clean unboxing reveal, square framing, no text or logos. Sound: tissue rustle, shoe set-down and room tone; no music.",
           "kind": "video"
         },
         {

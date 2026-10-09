@@ -353,12 +353,13 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-retargeting-video-ad-input-1-blur",
-          "label": "In-Use Demo: Coffee Grinder Turn",
+          "ref": "n:guide:c3-r3-occ-product-launch-m5-1",
+          "label": "Product Detail: Burr Coffee Grinder",
           "chips": [
-            "inuse"
+            "cinematic",
+            "texture"
           ],
-          "prompt": "Use the uploaded photo as a compact plain metal coffee grinder and keep its handle and body visible. An adult hand turns the handle beside a ceramic cup on a bright counter, ending with the grinder and cup in clear focus. Cinematic hands-on demo, square framing, no text or logos. Sound: handle clicks and room tone; no music.",
+          "prompt": "Use the uploaded photo as a compact burr coffee grinder and keep its hopper, crank and metal body visible. An adult hand turns the handle on a dark stone counter, ending with the grinder in crisp focus. Cinematic product-film look, square framing, no text or logos. Sound: handle clicks and room tone; no music.",
           "kind": "video"
         },
         {
