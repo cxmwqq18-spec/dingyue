@@ -11863,10 +11863,10 @@
         ]
       },
       "b1-image-to-video-result": {
-        "file": "gen2guide-b1-image-to-video-result",
+        "file": "f2-image-to-video-result-r1",
         "w": 1280,
         "h": 1280,
-        "alt": "The same speckled ceramic mug with a curl of steam in morning light.",
+        "alt": "Steam rising from the same cream ceramic mug with blue flecks on a wooden kitchen counter.",
         "variants": [
           640,
           1280
@@ -26298,10 +26298,10 @@
         ]
       },
       "q6-cbg-hero-result": {
-        "file": "q6-cbg-hero-result",
+        "file": "f2-change-background-hero-result-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "an adult woman applies one drop to her cheek while holding the bottle beside her face in a bright bathroom mirror scene.",
+        "alt": "The same amber serum dropper and adult woman against a warm beige bathroom background.",
         "variants": [
           640,
           1280
@@ -26618,10 +26618,10 @@
         ]
       },
       "q6-social-hero-result": {
-        "file": "q6-social-hero-result",
+        "file": "f2-social-hero-result-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "an adult wears the shoes and plants one foot on a forest path, tread and fit clearly visible.",
+        "alt": "The same charcoal hiking shoe on a softly blurred forest trail.",
         "variants": [
           640,
           1280
@@ -37842,6 +37842,126 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult hand presses the button on a compact espresso maker as espresso pours into a glass cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-image-to-video-result-r1": {
+        "file": "f2-image-to-video-result-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Steam rising from the same cream ceramic mug with blue flecks on a wooden kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-product-videos-hero-open-jar": {
+        "file": "f2-product-videos-hero-open-jar",
+        "w": 941,
+        "h": 1672,
+        "alt": "Hands open a plain amber glass skincare jar to reveal the cream inside on a bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-change-background-hero-result-r1": {
+        "file": "f2-change-background-hero-result-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "The same amber serum dropper and adult woman against a warm beige bathroom background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-social-hero-result-r1": {
+        "file": "f2-social-hero-result-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "The same charcoal hiking shoe on a softly blurred forest trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-change-background-steps-result-r1": {
+        "file": "f2-change-background-steps-result-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "The same amber serum dropper and adult woman against a muted green bathroom background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-social-steps-result-r1": {
+        "file": "f2-social-steps-result-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "The same charcoal hiking shoe resting on a warm wood entryway floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-product-operation-strip-1": {
+        "file": "f2-product-operation-strip-1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hand opens a plain flip-top reusable bottle cap in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-product-operation-strip-2": {
+        "file": "f2-product-operation-strip-2",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands open a plain laptop sleeve on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-product-operation-strip-3": {
+        "file": "f2-product-operation-strip-3",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hand opens a plain flip-top reusable bottle cap in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-product-operation-strip-4": {
+        "file": "f2-product-operation-strip-4",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands open a plain laptop sleeve on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-product-operation-strip-5": {
+        "file": "f2-product-operation-strip-5",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hand opens a plain flip-top reusable bottle cap in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-product-operation-strip-6": {
+        "file": "f2-product-operation-strip-6",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands open a plain laptop sleeve on a tidy desk.",
         "variants": [
           640,
           1280
