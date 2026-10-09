@@ -73,6 +73,18 @@
     {
       "q": "What video length fits a limited drop alert?",
       "a": "Use 6 seconds for one product-and-date beat or 10–15 seconds for a reveal plus call to action. Add the exact stock count and drop date after download."
+    },
+    {
+      "q": "Can I show a live countdown?",
+      "a": "Add the countdown as an editable text layer or platform element after download, so the time is always current."
+    },
+    {
+      "q": "What ratio works for a drop alert?",
+      "a": "9:16 fits TikTok and Reels; make a 1:1 version for feeds. A 15-second clip costs 60 credits."
+    },
+    {
+      "q": "Can the video include the stock quantity?",
+      "a": "Keep the quantity as a text layer you add yourself, so it can be updated as stock changes."
     }
   ],
   "overview": [
@@ -372,24 +384,31 @@
       {
         "ref": "n:guide:q13-limited-outputs-0-r3",
         "frame": "1:1",
-        "label": "1:1 coral trail shoes on a rocky trail"
+        "label": "1:1 coral trail shoes on a rocky path"
       },
       {
-        "ref": "n:guide:q13-limited-outputs-1-r1",
-        "frame": "1:1",
-        "label": "1:1 coral trail shoes on a rocky trail"
+        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-2",
+        "frame": "9:16",
+        "label": "9:16 coral trail shoes stepping onto a rocky path"
       }
     ],
     "after": {
       "ref": "n:guide:q13-limited-after-r3",
+      "mock": {
+        "type": "limited",
+        "badge": "LIMITED DROP",
+        "countdown": "23:59:16",
+        "caption": "Only 48 pairs",
+        "cta": "Get notified"
+      },
       "zones": [
-        "Release time",
-        "Quantity",
-        "Product link"
+        "Limited badge",
+        "Countdown timer",
+        "Quantity & notify link"
       ],
       "items": [
-        "Add the release time and available quantity after download.",
-        "Place the product link and any offer in your ad editor."
+        "Add the limited badge, countdown, and available quantity after download.",
+        "Place the notify link and any offer in your ad editor."
       ]
     },
     "titles": {
