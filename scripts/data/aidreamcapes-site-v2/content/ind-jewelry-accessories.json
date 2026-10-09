@@ -29,6 +29,18 @@
     {
       "t": "Sparkle clips",
       "d": "A slow 6-second turn under soft light shows how a stone throws light around. Square 1:1 fits feed posts, and 9:16 fits Stories."
+    },
+    {
+      "t": "Fastener proof",
+      "d": "Give the clasp, hinge, or closure its own close-up against a plain background, then link the finished image to a [detail template](page:tpl-detail) so shoppers can inspect how it works."
+    },
+    {
+      "t": "Try-on scale",
+      "d": "Show the piece on an adult hand, ear, neckline, or shoulder at a natural distance, then pair the scene with [model photos](page:model-photos) while keeping exact measurements in the listing."
+    },
+    {
+      "t": "Gift reveal",
+      "d": "Use a plain box and one deliberate lid lift to show the first impression without hiding the jewelry. A [box template](page:tpl-box) can keep the reveal clean while the product remains the focus."
     }
   ],
   "faq": [
@@ -47,6 +59,14 @@
     {
       "q": "Does this work for bags, watches, and sunglasses?",
       "a": "Yes. Show the hardware up close, then show the item carried or worn so its size is obvious. A tote on a shoulder or sunglasses pushed up on someone's head does that in one frame."
+    },
+    {
+      "q": "Can I show ring size without printing numbers into the image?",
+      "a": "Yes. Place the ring beside a familiar coin or card, or show it on an adult hand as a visual cue. Add the exact inner diameter and available sizes in the listing, and use a [size template](page:tpl-size) for a consistent close-up."
+    },
+    {
+      "q": "Which format works for a jewelry listing and a social post?",
+      "a": "Use a sharp square close-up for a product gallery, then make a 9:16 worn or unboxing scene for Stories. Keep the same metal tone and stone count in both, and check the final [Instagram format](page:plat-instagram) before posting."
     }
   ],
   "overview": {
@@ -337,8 +357,44 @@
             "close"
           ],
           "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f17-jewelry-wrist-cuff-tryon",
+          "label": "Try-on: silver cuff on wrist",
+          "prompt": "Use the uploaded photo as the exact product reference. Show an adult wrist wearing the plain brushed silver cuff over a charcoal knit sleeve, keeping the full cuff curve, brushed finish, and natural scale visible. Soft side daylight on a neutral stone surface, square try-on photo, no face, text, or logo.",
+          "chips": [
+            "worn"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m2-result",
+          "label": "Size Check: gold band",
+          "prompt": "Use the uploaded photo as the exact product reference. Show a polished gold band beside one familiar coin on an ivory card so shoppers can judge scale. Keep the band profile, finish, and coin edge sharply focused. Square macro product photo, soft neutral light, no text or logo.",
+          "chips": [
+            "close"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k8-platforms-gen2-ind-jewelry-accessories-g4",
+          "label": "Cinematic Detail: silver buckle on leather",
+          "prompt": "Use the uploaded photo as the exact product reference. Frame the silver buckle on a plain leather belt under one soft highlight, keeping the buckle edge and leather grain crisp. Square cinematic product photo, neutral background, no text or logo.",
+          "chips": [
+            "gift"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q16-jewelry-tote-cafe",
+          "label": "Daily Carry: taupe tote",
+          "prompt": "Use the uploaded photo as the exact product reference. An adult lifts a plain taupe tote from a cafe chair, keeping the handles, opening, and full bag shape visible at a natural carry scale. Soft window light, square daily-carry photo, no text or logo.",
+          "chips": [
+            "daily"
+          ],
+          "kind": "photo"
         }
-      ],
+        ],
       "button": "Make a product photo"
     },
     "uses": [
@@ -376,9 +432,9 @@
         "label": "Solitaire ring revealed in an ivory box"
       },
       {
-        "ref": "n:guide:q16-jewelry-ring-macro",
+        "ref": "n:guide:f17-jewelry-output-watch-caseback",
         "frame": "1:1",
-        "label": "Silver solitaire ring setting in soft light"
+        "label": "Matte watch caseback in hand"
       }
     ],
     "after": {

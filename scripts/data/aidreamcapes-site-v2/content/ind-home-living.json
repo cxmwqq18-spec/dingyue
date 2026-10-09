@@ -14,8 +14,8 @@
     "storage product video ads"
   ],
   "intro": [
-    "A visible in-room result helps shoppers understand a product quickly. Show a cordless vacuum lifting crumbs, a grooming glove collecting loose fur, or a throw pillow set styled on a reading chair.",
-    "For textiles, lighting, kitchen organization, and pet-home products, keep the material, scale, and useful action in clear view."
+    "A visible in-room result helps shoppers understand a product quickly. Show a cordless vacuum lifting crumbs, a grooming glove collecting loose fur, or a throw pillow set styled on a reading chair. Link the finished still to [room-styled product photos](page:lifestyle-photos) when the listing needs a calm context shot.",
+    "For textiles, lighting, kitchen organization, and pet-home products, keep the material, scale, and useful action in clear view. Use [background replacement](page:change-background) for a setting change and [white-background product photos](page:white-background) when the listing needs an uncluttered main image."
   ],
   "ideas": [
     {
@@ -29,6 +29,18 @@
     {
       "t": "Room styling for textiles and lighting",
       "d": "Place a throw pillow set, fold a blanket, or switch on a lamp so shoppers can judge scale and texture."
+    },
+    {
+      "t": "Storage capacity check",
+      "d": "Show one drawer, shelf, or bin opening before and after the product is placed, then keep the final view within its stated capacity."
+    },
+    {
+      "t": "Pet-hair problem to fix",
+      "d": "Start with visible fur on one sofa section, make a single cleaning pass, and leave both surfaces in frame so the result is easy to judge."
+    },
+    {
+      "t": "Small-room product review",
+      "d": "Have an adult hold the home tool beside the problem area and explain one useful detail before showing the result in the same room."
     }
   ],
   "faq": [
@@ -47,6 +59,14 @@
     {
       "q": "Can I start from a photo on a white background?",
       "a": "Yes, a white background or cutout photo is a good starting point. Keep the whole product in frame, including legs, handles, and cords, since the AI won't add parts it can't see."
+    },
+    {
+      "q": "Can I make a short cleaning demo for a product page?",
+      "a": "Yes. Use one visible mark or strip of crumbs, keep the camera angle steady, and show the treated area beside the untouched area. The [before-and-after video tool](page:before-after-videos) is suited to this comparison."
+    },
+    {
+      "q": "Which room details should I add to a generated scene?",
+      "a": "Name the room, nearby furniture, light direction, and the one action shoppers need to see. For a listing, pair the scene with a [home template](page:tpl-home) and keep exact dimensions in the listing details."
     }
   ],
   "overview": {
@@ -374,6 +394,51 @@
             "before-after"
           ],
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:f17-home-vacuum-demo",
+          "label": "Before & After: vacuum crumbs",
+          "prompt": "Use the uploaded photo as the exact product reference. An adult hand guides a compact cordless vacuum across crumbs on a charcoal sofa cushion in one straight pass, ending with a clean strip beside the untouched area. Keep the tool shape and neutral color clear. Soft window light, realistic home product photo, square crop, no text or logo.",
+          "chips": [
+            "before-after"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f17-home-pet-roller-review",
+          "label": "Creator Review: pet roller",
+          "prompt": "Use the uploaded photo as the exact product reference. An adult Black man with short natural hair holds a plain pet-hair roller beside a charcoal sofa, then rolls once across a visible patch of fur so the clean strip remains in frame. Keep the roller shape and sofa texture clear. Soft natural room light, square creator-review photo, no text or logo.",
+          "chips": [
+            "creator"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k7-ind-home-living-case-desk-lamp",
+          "label": "Room Demo: table lamp",
+          "prompt": "Use the uploaded photo as the exact product reference. Show the oak table lamp glowing beside a reading chair and open book in a calm nook. Keep the lamp shade, base, and warm pool of light clear at a natural room scale. Square home styling photo, soft daylight, no text or logo.",
+          "chips": [
+            "demo"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k7-ind-home-living-case-wall-shelf",
+          "label": "Room Setup: floating shelf with plants",
+          "prompt": "Use the uploaded photo as the exact product reference. Show a floating oak shelf with books and a small plant on a pale wall above a simple console. Keep the shelf shape, plant leaves, and wall spacing clear. Square room setup photo in bright window light, no text or logo.",
+          "chips": [
+            "fit-setup"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k7-ind-home-living-case-linen-bed",
+          "label": "Room Styling: linen bedding in daylight",
+          "prompt": "Use the uploaded photo as the exact product reference. Show a neatly made bed with soft linen bedding and a folded oatmeal throw in daylight. Keep the fabric texture, folds, and full bed scale visible. Square room styling photo, calm neutral palette, no text or logo.",
+          "chips": [
+            "fit-setup"
+          ],
+          "kind": "photo"
         }
       ],
       "button": "Make a product video"
@@ -414,9 +479,9 @@
         "length": 6
       },
       {
-        "ref": "f:q17-ind-home-living-r2-output-pillow-1",
+        "ref": "n:guide:f17-home-output-fern-planter",
         "frame": "16:9",
-        "label": "Close view of matching woven throw pillows",
+        "label": "Hand touches fern in a sage planter",
         "length": 10
       }
     ],
