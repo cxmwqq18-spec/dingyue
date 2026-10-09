@@ -588,7 +588,7 @@
         "f:before-after-showcases"
       ],
       "size": [
-        "g:size-reference/hero-output"
+        "n:guide:f3-template-size"
       ],
       "beauty": [
         "f:beauty-routine"
@@ -600,7 +600,7 @@
         "f:k1-unboxing-videos-hero"
       ],
       "color": [
-        "g:colorway-variations/hero-output"
+        "n:guide:f3-template-color"
       ],
       "demo": [
         "n:guide:k1-product-videos-hero-espresso"
@@ -609,7 +609,7 @@
         "n:guide:k5-lifestyle-gallery-hero"
       ],
       "angle": [
-        "g:packshot-multi-angle/example-02"
+        "n:guide:f3-template-angle"
       ],
       "detail": [
         "g:macro-details/hero-output"
@@ -654,7 +654,7 @@
         "f:cinematic-video"
       ],
       "drink": [
-        "f:food-video"
+        "n:guide:f3-template-drink"
       ],
       "home": [
         "f:home-organization"
@@ -663,13 +663,13 @@
         "f:fashion-try-on-reel"
       ],
       "launch": [
-        "f:promo-video"
+        "n:guide:f3-template-launch"
       ],
       "compare": [
         "f:competitor-comparison"
       ],
       "bf": [
-        "f:black-friday-countdown"
+        "n:guide:f3-template-black-friday"
       ],
       "head": [
         "g:professional-headshot/hero-output"
