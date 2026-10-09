@@ -38126,6 +38126,36 @@
           640,
           1280
         ]
+      },
+      "g1-retarget-brown-boot-tread-r2": {
+        "file": "g1-retarget-brown-boot-tread-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man points to the tread of a brown hiking boot outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-coral-lip-balm-use-r2": {
+        "file": "g1-retarget-coral-lip-balm-use-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies a coral lip balm while looking into a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-electrolyte-gummy-r2": {
+        "file": "g1-retarget-electrolyte-gummy-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman eats an electrolyte gummy after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
