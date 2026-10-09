@@ -95,7 +95,7 @@
     },
     {
       "q": "Can I create another creator ad video from the same source photo?",
-      "a": "Yes. Keep the sage-green bottle as the reference, then change one setting or camera move at a time. Check that the creator review, first sip, or hands-on demo matches the physical bottle. Add the caption, current offer, and product link after download so the post stays easy to update."
+      "a": "Yes. Keep the sage-green bottle as the reference, then change one setting or camera move at a time. Check that the creator review, first sip, or hands-on demo matches the physical bottle. Add the caption, current offer, and product link after download so the post stays easy to update. Keep the creator action natural and short; a cap click, first sip, or close hold is enough to explain why the bottle is in the post. If the account changes its sound or caption, recheck the first frame and the bottle color before promoting."
     }
   ],
   "overview": [
@@ -223,7 +223,7 @@
     ]
   },
   "visual": {
-    "overview": "Show a product in an ad format shoppers recognize: a creator review, first bite, hands-on demo, or everyday routine. Use this format when a sage-green bottle needs a creator review, first sip, or hands-on demonstration that feels at home in a social feed. Keep a person, product, and one reason to watch visible from the first frame, then leave room for the caption, sound, and offer you add after download. Review the cap, finish, and label area against your source before publishing.",
+    "overview": "Show a product in an ad format shoppers recognize: a creator review, first bite, hands-on demo, or everyday routine. Use this format when a sage-green bottle needs a creator review, first sip, or hands-on demonstration that feels at home in a social feed. Keep a person, product, and one reason to watch visible from the first frame, then leave room for the caption, sound, and offer you add after download. Review the cap, finish, and label area against your source before publishing. The first beat should feel like a real post, with the creator handling the bottle before any offer or caption competes for attention.",
     "strip": [
       "n:guide:q14-spark-strip-steamer",
       "n:guide:q14-spark-strip-espresso-r2",
@@ -357,13 +357,13 @@
       {
         "frame": "phone",
         "h": "Share the bottle demo as a creator video",
-        "d": "Keep the sage-green bottle centered in a vertical social post. Let the creator show one handling moment, such as lifting the cap or taking a sip, before the final hold.",
+        "d": "Keep the sage-green bottle centered in a vertical social post. Let the creator show one handling moment, such as lifting the cap or taking a sip, before the final hold. Let the creator finish the bottle action before the cut so the reason to watch is visible.",
         "ref": "n:guide:c1-tpl-spark-ads-style-video-m4-bottle-video-916"
       },
       {
         "frame": "post",
         "h": "Use the bottle review in a Spark Ads post",
-        "d": "Add a caption and choose a sound in TikTok before promoting the creator post. Keep the bottle and creator visible together so the post still reads as a product demonstration.",
+        "d": "Add a caption and choose a sound in TikTok before promoting the creator post. Keep the bottle and creator visible together so the post still reads as a product demonstration. Keep the spoken claim limited to what the bottle and the product page can support.",
         "ref": "n:guide:q14-spark-uses-post-r2"
       }
     ],
@@ -407,8 +407,8 @@
         "Sound & offer"
       ],
       "items": [
-        "The frame shows the TikTok post chrome you add when promoting an existing post. Check the sage-green bottle, cap, and label area, then review the caption, sound choice, and offer in TikTok before promoting the post.",
-        "Add the caption, sound, and offer in TikTok Ads Manager after download. Read the finished frame at mobile size and keep the bottle unobstructed during the first beat."
+        "The frame shows the TikTok post chrome you add when promoting an existing post. Check the sage-green bottle, cap, and label area, then review the caption, sound choice, and offer in TikTok before promoting the post. Leave the creator face and bottle in the first frame so the post reads as human-made. Keep the bottle label area and the creator mouth visible whenever a spoken review is used.",
+        "Add the caption, sound, and offer in TikTok Ads Manager after download. Read the finished frame at mobile size and keep the bottle unobstructed during the first beat. Check the caption and sound against the account where the Spark placement will run. Place the offer after the product moment so the post still feels like a useful recommendation."
       ]
     },
     "titles": {
