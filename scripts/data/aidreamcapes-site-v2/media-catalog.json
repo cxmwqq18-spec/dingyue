@@ -38066,6 +38066,28 @@
           640,
           1280
         ]
+      },
+      "f6-tpl-box-output-skincare-unbox": {
+        "file": "f6-tpl-box-output-skincare-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain cleanser tube, amber serum bottle, and white cream jar from an open kraft box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "f6-tpl-box-output-pouch-kit": {
+        "file": "f6-tpl-box-output-pouch-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold an open beige canvas travel pouch with a white tube, clear pump bottle, amber dropper bottle, and cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
