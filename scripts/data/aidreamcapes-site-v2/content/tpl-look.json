@@ -70,6 +70,18 @@
     {
       "q": "Can the setting change between outfits?",
       "a": "Yes. Choose a location that suits each collection and keep the framing consistent within it."
+    },
+    {
+      "q": "How many outfits can one clip show?",
+      "a": "Focus on one full look per clip so the outfit reads clearly; make a second clip for another look."
+    },
+    {
+      "q": "Can the setting change between looks?",
+      "a": "Use one location and light direction across the collection so the outfits feel like a set."
+    },
+    {
+      "q": "What does a lookbook clip cost?",
+      "a": "A 10- or 15-second clip costs 40 or 60 credits."
     }
   ],
   "overview": [
@@ -370,13 +382,20 @@
     ],
     "after": {
       "ref": "n:guide:tpl-look-after-square-r2",
+      "mock": {
+        "type": "steps",
+        "tag1": "1 Prep",
+        "tag2": "2 Style",
+        "tag3": "3 Full look"
+      },
       "zones": [
+        "Look tags",
         "Garment preparation",
         "Final outfit"
       ],
       "items": [
-        "Steam the garment, then show how it sits in the finished look.",
-        "Use one location and crop for each outfit in the set."
+        "The frame shows the 1-2-3 tags you add to show how the look comes together.",
+        "Steam the garment, then show how it sits in the finished look."
       ]
     },
     "titles": {
