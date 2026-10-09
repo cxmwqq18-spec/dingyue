@@ -798,10 +798,11 @@ function caseCardFor(model, page, entry, index) {
   const source = isClip ? clipRef(model, ref) : mediaImage(model, ref, "card");
   const isVideoExample = isClip || entry.kind === "scene" || (!entry.kind && page.group === "video");
   const kind = isClip ? "video" : "photo";
+  const promptOverride = typeof entry.prompt === "string" && entry.prompt.trim() ? entry.prompt : undefined;
   return {
     key: `case-${page.id}-${index + 1}`, cardType: "case", name: entry.title, product: entry.product, mediaRef: ref, kind,
     ...(isVideoExample ? { videoExample: true } : {}),
-    href: caseTarget(model, page, entry, source, isClip, entry.prompt),
+    href: caseTarget(model, page, entry, source, isClip, promptOverride),
     image: isClip ? source.poster : source, ...(isClip ? { video: source } : {}), tags: [], industries: [], platforms: []
   };
 }
