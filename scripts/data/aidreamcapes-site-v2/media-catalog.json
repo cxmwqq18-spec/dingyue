@@ -7569,6 +7569,14 @@
       "variants": [
         1200
       ]
+    },
+    "t33-tpl-retargeting-video-ad-og-r2": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult commuter wearing dark navy over-ear headphones on a station platform.",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {
