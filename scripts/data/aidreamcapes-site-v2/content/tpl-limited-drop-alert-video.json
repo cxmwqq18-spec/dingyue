@@ -88,6 +88,10 @@
     {
       "q": "Can the video include the stock quantity?",
       "a": "Keep the quantity as a text layer you add yourself, so it can be updated as stock changes."
+    },
+    {
+      "q": "Can I create a second limited-drop video from the same source photo?",
+      "a": "Yes. Keep the coral trail shoe as the reference, then change one setting or camera move at a time. Check the shown color, size note, release time, and available quantity against the live offer. Add the current date, price, and notify link after download so those details stay easy to update."
     }
   ],
   "overview": [
@@ -219,7 +223,7 @@
     ]
   },
   "visual": {
-    "overview": "A limited-drop alert video gives a new or restocked item a quick reveal. Keep the product prominent, then add release timing and availability as editable text.",
+    "overview": "A limited-drop alert video gives a new or restocked item a quick reveal. Keep the product prominent, then add release timing and availability as editable text. Use this format when a restock or first release needs a clear trail-shoe reveal and a precise release moment. Keep the shoe, release time, and availability note visible from the first frame, then leave room for the date, price, and notify link you add after download. Review the sole, panels, and color against your source before publishing.",
     "strip": [
       "n:guide:g1-limited-skincare-restock",
       "n:guide:g1-limited-jewelry-reveal",
@@ -252,7 +256,7 @@
     },
     "picker": {
       "title": "Choose a scene for a limited-drop alert video",
-      "lead": "Show the new item clearly before adding its release details.",
+      "lead": "Show the new item clearly before adding its release details. Start with a clean product view, then choose the scene that makes the drop date and available quantity easy to notice.",
       "chips": [
         {
           "id": "first",
@@ -360,13 +364,13 @@
         "frame": "phone",
         "ref": "n:guide:q13-limited-uses-0",
         "h": "Announce the coral trail-shoe drop in a Reel",
-        "d": "Use the 9:16 clip for the reveal, then add the release time and link in your post editor."
+        "d": "Use the 9:16 clip for the reveal, then add the release time and link in your post editor. Keep the coral trail shoe large enough to inspect while the drop date stays easy to read."
       },
       {
         "frame": "listing",
         "ref": "n:guide:q13-limited-uses-1",
         "h": "Add the shoe release video to the product listing",
-        "d": "Place the clip near the item details so shoppers can see the coral trail shoes before the drop opens."
+        "d": "Place the clip near the item details so shoppers can see the coral trail shoes before the drop opens. Keep the product photo, release time, and available quantity together so the offer is easy to verify."
       }
     ],
     "input": [
@@ -410,8 +414,8 @@
         "Quantity & notify link"
       ],
       "items": [
-        "Add the limited badge, countdown, and available quantity after download.",
-        "Place the notify link and any offer in your ad editor."
+        "Add the limited badge, countdown, and available quantity after download. Check the coral trail shoe, release date, and stock line against the live offer before you publish.",
+        "Place the notify link and any offer in your ad editor. Read the finished frame at mobile size and keep the badge clear of the shoe and its sole."
       ]
     },
     "titles": {
