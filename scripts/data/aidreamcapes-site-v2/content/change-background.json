@@ -18,28 +18,16 @@
   ],
   "benefits": [
     {
-      "t": "Keep the product reference",
-      "d": "Use a sharp source to keep the angle, scale, and edges; compare with White Background Photos for a plain lead."
+      "t": "Save the shot you have",
+      "d": "Start with a sharp photo that shows the angle you want to use. Review the generated details before publishing the new setting."
     },
     {
-      "t": "Match a collection palette",
-      "d": "Choose one surface or color, then use Studio Lighting to keep light direction consistent."
+      "t": "Match your brand colors",
+      "d": "Set backgrounds in your store's palette so product pages, ads and posts look like they belong together."
     },
     {
-      "t": "Refresh seasonal listings",
-      "d": "Give an existing photo a new setting for a new product launch or sale campaign without a second shoot."
-    },
-    {
-      "t": "Make room for campaign text",
-      "d": "Leave one side quiet for an offer added later, then pair the result with social ad photos and a Facebook feed placement."
-    },
-    {
-      "t": "Support worn products",
-      "d": "Change the setting around a garment or accessory, then send it to Model Photos, [Clothing Try-On](page:tpl-tryon), or [Jewelry On Model](page:tpl-jewel)."
-    },
-    {
-      "t": "Review details before publishing",
-      "d": "Check labels, closures, and color against the source, then use the product photo guide and [the AI content checklist](page:blog-ai-video-review-checklist)."
+      "t": "Refresh old listings",
+      "d": "Give last year's photos a new season's backdrop without unpacking stock and setting up again."
     }
   ],
   "steps": [
@@ -376,31 +364,5 @@
         "h2": "Background replacement examples with the product kept in view"
       }
     }
-  },
-  "uses": [
-    {
-      "t": "Consistent store backgrounds",
-      "d": "Align a mixed phone-photo catalog for Shopify product photos or an Amazon gallery, keeping the lead simple."
-    },
-    {
-      "t": "Beauty and wellness settings",
-      "d": "Move a bottle to a calm surface for beauty and skincare or health and wellness."
-    },
-    {
-      "t": "Food and drink refreshes",
-      "d": "Keep package shape and label placement while changing the table for food and drinks; use [Drink Pour](page:tpl-drink) when video is needed."
-    },
-    {
-      "t": "Home product collections",
-      "d": "Use one wall or shelf for home and living, then show the item in use with a lifestyle photo."
-    },
-    {
-      "t": "Fashion campaign variations",
-      "d": "Give a bag or shoe a consistent setting for fashion and clothing or shoes, then show wear with [Lookbook](page:tpl-look)."
-    },
-    {
-      "t": "Platform-specific handoff",
-      "d": "Export the square result for Instagram ads, TikTok ads, or a Facebook feed ad, and add words in the ad tool. For the next campaign, compare [Packaging Preview](page:tpl-pack), [Creator-Style Photo](page:tpl-ugc), [Story Ad](page:tpl-story), [Sale Banner](page:tpl-sale), [Brand Film](page:tpl-film), [Home Organizing](page:tpl-home), [Outfit Reel](page:tpl-outfit), Launch Promo, Your First TikTok Video Ad, Ad Sizes for Every Platform."
-    }
-  ]
+  }
 }
