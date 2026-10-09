@@ -116,23 +116,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Instagram scenes with a clear focal point",
+    "h2": "Instagram Still-Photo Prompts",
     "items": [
       {
-        "t": "Sink-side skincare",
-        "d": "A serum bottle stands beside a folded towel and a stone sink, while a hand turns the label toward the camera."
+        "t": "Routine Still — Serum at the Sink",
+        "d": "Square still photo of an adult hand holding a serum bottle beside a bright sink while a single drop rests on the back of the other hand. Soft window light, natural beauty-photo detail, bottle and drop in sharp focus."
       },
       {
-        "t": "Weekend tote",
-        "d": "A canvas tote rests on a cafe chair, then moves to a shoulder in a 9:16 clip with the front pocket facing out."
+        "t": "Try-On Still — Canvas Tote on Shoulder",
+        "d": "Square still photo of an adult wearing a plain canvas tote over one shoulder at a cafe doorway, turning slightly so the front pocket is visible. Soft daylight, casual fashion styling, full tote in frame."
       },
       {
-        "t": "Quiet desk light",
-        "d": "A small lamp switches on beside a notebook at dusk, leaving the glow and the product silhouette easy to read."
+        "t": "Product Detail Still — Single-Hole Phone Case",
+        "d": "Square still photo of a plain dark silicone phone case with one small circular camera opening, held by an adult hand over a neutral surface. Keep the case edges, soft finish, and single opening clear in bright window light; no device or text."
       },
       {
-        "t": "Carousel detail set",
-        "d": "Create square frames for the front view, a zipper or clasp close-up, and the item in its everyday room."
+        "t": "Unboxing Still — Over-Ear Headphones",
+        "d": "Square still photo of adult hands lifting over-ear headphones from a plain box on a bright desk. Keep the headband and both earcups visible, with soft daylight and a clean top-down composition."
       }
     ]
   },
@@ -171,46 +171,51 @@
     ]
   },
   "examples": {
-    "h2": "More Instagram examples",
-    "lead": "Product details, routines, and a two-card view of one skincare set.",
+    "h2": "More Instagram Examples",
+    "lead": "Beauty routines, product texture, unboxing, and travel use.",
     "groups": [
       {
-        "label": "Feed and Reels",
+        "label": "Beauty Routines",
         "items": [
           {
-            "ref": "n:guide:k4-plat-instagram-05-examples-groups-0-items-0-image",
-            "title": "Skincare minis arranged on a tray",
+            "ref": "f:q18-instagram-example-grwm-minis",
+            "title": "GRWM — Travel Skincare Minis Before Makeup",
             "kind": "photo",
-            "product": "skincare minis"
-          },
+            "product": "travel skincare minis"
+          }
+        ]
+      },
+      {
+        "label": "Product Close-Ups",
+        "items": [
           {
             "ref": "n:guide:k4-plat-instagram-06-examples-groups-0-items-1-image",
-            "title": "Skincare bottles on pastel podiums",
+            "title": "Skincare Bottles on Pastel Podiums",
             "kind": "photo",
             "product": "skincare bottles"
           },
           {
             "ref": "n:guide:k4-plat-instagram-07-examples-groups-0-items-2-image",
-            "title": "Cream jar on wet stone",
+            "title": "Face Cream Jar on Wet Stone",
             "kind": "photo",
-            "product": "cream jar"
+            "product": "face cream jar"
           }
         ]
       },
       {
-        "label": "Carousel pair",
+        "label": "Unbox & Travel",
         "items": [
           {
-            "ref": "n:guide:k4-plat-instagram-08-examples-groups-1-items-0-image",
-            "title": "Skincare bottles together on a vanity",
+            "ref": "f:q18-instagram-example-skincare-unbox",
+            "title": "Unboxing — Serum Mini Lifted from Tissue",
             "kind": "photo",
-            "product": "skincare set"
+            "product": "serum mini"
           },
           {
-            "ref": "n:guide:k4-plat-instagram-09-examples-groups-1-items-1-image",
-            "title": "Same skincare set packed for travel",
+            "ref": "f:q18-instagram-example-travel-routine",
+            "title": "Travel Routine — Serum Applied at a Vanity",
             "kind": "photo",
-            "product": "skincare set"
+            "product": "serum and travel pouch"
           }
         ]
       }
@@ -236,17 +241,17 @@
     "overview": "Instagram supports product photos, Stories, and Reels. Show the package first, then match the frame to the placement and leave breathing room for the interface.",
     "strip": [
       "n:guide:k4-plat-instagram-25-visual-strip-0",
-      "n:guide:k4-plat-instagram-27-visual-strip-1",
-      "n:guide:k4-plat-instagram-28-visual-strip-2",
+      "f:q18-instagram-strip-hand-cream-grwm",
+      "f:q18-instagram-strip-mask-texture",
       "n:guide:k4-plat-instagram-29-visual-strip-3",
-      "n:guide:k4-plat-instagram-30-visual-strip-4",
+      "f:q18-instagram-strip-sunscreen-routine",
       "n:guide:k4-plat-instagram-31-visual-strip-5"
     ],
     "steps": {
       "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
-      "result": "n:guide:k4-plat-instagram-26-visual-strip-1",
+      "result": "f:q18-instagram-steps-hand-cream",
       "mode": "photo",
-      "prompt": "Place this hand-cream tube beside a bathroom sink, with its package facing forward.",
+      "prompt": "Create a square product photo of the plain white hand-cream tube shown in the uploaded image. An adult applies a small amount of cream to the back of one hand while keeping the tube fully visible. Soft natural window light, realistic skin, clean vanity composition.",
       "options": [
         [
           "Template",
@@ -264,91 +269,91 @@
       "chips": [
         {
           "id": "routine",
-          "label": "Daily routine"
+          "label": "Beauty Routines"
         },
         {
           "id": "texture",
-          "label": "Skin-care product scenes"
+          "label": "Texture & ASMR"
         },
         {
-          "id": "feed",
-          "label": "Feed photo"
+          "id": "styling",
+          "label": "Try-On Styling"
         },
         {
-          "id": "carousel",
-          "label": "Carousel card"
+          "id": "unbox",
+          "label": "Unbox & Reactions"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k4-plat-instagram-14-visual-picker-cards-0-image",
-          "label": "Hand cream beside lavender",
-          "prompt": "Set the tube beside a few lavender sprigs on a soft purple surface.",
+          "ref": "f:q18-instagram-picker-hand-cream-grwm",
+          "label": "GRWM — Hand Cream Before Makeup",
+          "prompt": "Square still photo: an adult woman at a bright vanity applies hand cream to one hand and holds the plain white tube beside her face. Natural daylight, relaxed getting-ready routine, tube fully visible, uncluttered crop.",
           "chips": [
             "routine"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-plat-instagram-15-visual-picker-cards-1-image",
-          "label": "Face roller on a vanity",
-          "prompt": "Place the jade roller beside a cream jar on a tidy bathroom shelf.",
+          "ref": "f:q18-instagram-picker-sunscreen-walk",
+          "label": "Routine — Sunscreen Before Walk",
+          "prompt": "Square still photo: an adult woman at a sunlit doorway rubs sunscreen onto her forearm before going outside, with a simple white sunscreen tube clearly visible in her other hand. Natural morning light, candid routine, clean composition.",
           "chips": [
             "routine"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-plat-instagram-16-visual-picker-cards-2-image",
-          "label": "Sheet mask on a counter",
-          "prompt": "Lay the opened mask pouch beside a folded white towel.",
+          "ref": "f:q18-instagram-picker-mask-texture",
+          "label": "Mask Texture — Cream on Hand",
+          "prompt": "Square close-up still: an adult hand spreads a swipe of muted green clay mask cream across the back of another hand; an open plain green mask jar sits nearby. Show creamy texture sharply in soft bathroom daylight with realistic skin detail.",
           "chips": [
             "texture"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-plat-instagram-17-visual-picker-cards-3-image",
-          "label": "Sunscreen in beach light",
-          "prompt": "Stand the sunscreen tube beside a striped towel in bright beach light.",
+          "ref": "f:q18-instagram-picker-iced-pour",
+          "label": "Pour — Sparkling Water over Ice",
+          "prompt": "Square still photo: an adult hand pours sparkling water from a plain silver can into a clear glass filled with ice. Freeze the bubbles and splash in bright cafe window light; keep the can and glass clear.",
           "chips": [
             "texture"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-plat-instagram-77-visual-picker-4",
-          "label": "Lip balm from a jacket pocket",
-          "prompt": "Show lip balm being taken from a jacket pocket on a city street.",
+          "ref": "f:q18-instagram-picker-necklace-clasp",
+          "label": "Try-On — Necklace Fastened",
+          "prompt": "Square portrait still: an adult woman fastens a delicate gold necklace against a plain cream blouse, with the small pendant visible at her neckline. Soft window light, natural skin detail, refined but candid crop.",
           "chips": [
-            "feed"
+            "styling"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-plat-instagram-18-visual-picker-cards-5-image",
-          "label": "Chrome espresso cup on a gradient",
-          "prompt": "Place the cup against a clean gradient and keep its rim reflective.",
+          "ref": "f:q18-instagram-picker-canvas-tote",
+          "label": "Styling — Canvas Tote on Shoulder",
+          "prompt": "Square still photo: an adult woman wears a plain natural canvas tote outside a bright neighborhood cafe, turning slightly so the full tote and front pocket are visible. Soft late-morning daylight, relaxed everyday styling.",
           "chips": [
-            "feed"
+            "styling"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-plat-instagram-19-visual-picker-cards-6-image",
-          "label": "Gold necklaces in soft daylight",
-          "prompt": "Show layered chains against a plain neckline with a close crop.",
+          "ref": "f:q18-instagram-picker-skincare-unbox",
+          "label": "Unbox — Travel Skincare Minis",
+          "prompt": "Square still photo: adult hands open a small kraft gift box and lift three coordinated travel-size skincare minis from cream tissue. Show the tubes and jars together on a clean tabletop in soft daylight.",
           "chips": [
-            "carousel"
+            "unbox"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k4-plat-instagram-20-visual-picker-cards-7-image",
-          "label": "Sleep mask on a nightstand",
-          "prompt": "Set the sleep mask on a nightstand in soft evening light.",
+          "ref": "f:q18-instagram-picker-iced-tea-reaction",
+          "label": "First Sip — Iced Tea Reaction",
+          "prompt": "Square still photo: an adult woman holds amber iced tea just after a sip and reacts with a natural smile toward camera. Keep the glass, condensation, and ice visible at a bright cafe table in soft window light.",
           "chips": [
-            "carousel"
+            "unbox"
           ],
           "kind": "photo"
         }
@@ -358,15 +363,15 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:guide:k4-plat-instagram-32-visual-uses-0-image",
-        "h": "Give a product photo room to breathe",
-        "d": "A travel candle beside a cup gives a small item a familiar scale."
+        "ref": "f:q18-instagram-uses-face-mist-scale",
+        "h": "Product Scale — Compact Face Mist in Hand",
+        "d": "A hand beside the clear face-mist bottle makes its compact size easy to judge."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-color-g1",
-        "h": "Use a color set in a feed carousel",
-        "d": "Three ceramic jars make a simple sequence of color choices."
+        "ref": "f:q18-instagram-uses-lip-shade-compare",
+        "h": "Shade Comparison — Three Lip Colors",
+        "d": "Three muted swatches beside matching lip-balm tubes show the shade choices together."
       }
     ],
     "input": [
@@ -385,18 +390,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:k4-plat-instagram-13-visual-outputs-0-image",
+        "ref": "f:q18-instagram-output-face-mist",
         "frame": "1:1",
-        "label": "Necklace in soft daylight"
+        "label": "Matched Clear Face-Mist Bottle with White Pump"
       },
       {
-        "ref": "n:gen2:unboxing-videos-g2",
+        "ref": "f:q18-instagram-output-toner",
         "frame": "1:1",
-        "label": "Skincare minis in a gift box"
+        "label": "Matched Tall Clear Toner Bottle with White Cap"
       }
     ],
     "after": {
-      "ref": "n:guide:k4-plat-instagram-10-visual-after-image",
+      "ref": "f:q18-instagram-after-face-mist-offer",
       "zones": [
         "Caption",
         "Offer"
@@ -409,17 +414,17 @@
     "sizes": [
       {
         "frame": "1:1",
-        "ref": "n:guide:k4-plat-instagram-21-visual-sizes-0-image",
+        "ref": "f:q18-instagram-size-square-mascara",
         "label": "1:1 · Instagram Feed"
       },
       {
         "frame": "9:16",
-        "ref": "f:k4-plat-instagram-22-visual-sizes-1-image",
+        "ref": "f:q18-instagram-size-vertical-crossbody",
         "label": "9:16 · Instagram Stories and Reels"
       },
       {
         "frame": "16:9",
-        "ref": "f:k4-plat-instagram-23-visual-sizes-2-image",
+        "ref": "f:q18-instagram-size-landscape-running-shoe",
         "label": "16:9 · Landscape placements"
       }
     ],
@@ -440,7 +445,7 @@
       "m7": {
         "h2": "Add the caption and offer after download"
       },
-      "m8": "One cup, three Instagram product frames",
+      "m8": "Instagram Ad Images by Placement",
       "examples": {
         "h2": "More Instagram examples",
         "lead": "Square skincare details, a routine image, and a two-card carousel with one product."

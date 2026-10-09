@@ -1010,67 +1010,67 @@
     "plat-tiktok": [
       {
         "ref": "k4-plat-tiktok-03-cards-3-image",
-        "product": "running shoes",
-        "title": "Running shoes laced up for a quick vertical hook"
+        "product": "white running shoes",
+        "title": "Lacing Demo — White Running Shoes"
       },
       {
-        "ref": "n:guide:k4-plat-tiktok-26-case-hair-claws",
-        "product": "hair claw set",
-        "title": "Hair claws tried on in a bathroom mirror"
+        "ref": "f:q18-tiktok-case-hair-claw-grwm",
+        "product": "tortoiseshell claw clip",
+        "title": "GRWM — Tortoiseshell Hair Claw"
       },
       {
-        "ref": "n:guide:k4-plat-tiktok-04-cards-5-image",
-        "product": "mini fridge",
-        "title": "Mini fridge stocked in a dorm room"
+        "ref": "f:q18-tiktok-case-lip-tint-shade",
+        "product": "rose lip tint",
+        "title": "Shade Comparison — Rose Lip Tint"
       },
       {
         "ref": "n:guide:k4-plat-tiktok-27-case-phone-case",
-        "product": "glow phone case",
-        "title": "Glow-in-the-dark phone case in a dim room"
+        "product": "glow-in-the-dark phone case",
+        "title": "Product Close-Up — Glow-in-the-Dark Phone Case"
       }
     ],
     "plat-instagram": [
       {
         "ref": "k4-plat-instagram-01-cards-3-image",
         "product": "commuter backpack",
-        "title": "Commuter backpack opened in a cafe, vertical cut"
+        "title": "Day-in-the-Life — Commuter Backpack Packed"
       },
       {
-        "ref": "n:guide:k4-plat-instagram-02-cards-4-image",
-        "product": "silk pillowcase",
-        "title": "Silk pillowcase on an unmade bed in soft light"
+        "ref": "f:q18-instagram-uses-skincare-set-scale",
+        "product": "travel skincare minis",
+        "title": "Product Scale — Travel Skincare Minis in Hand"
       },
       {
-        "ref": "n:guide:k4-plat-instagram-03-cards-5-image",
+        "ref": "f:q18-instagram-case-matcha-whisk",
         "product": "matcha set",
-        "title": "Matcha set arranged on a linen tablecloth"
+        "title": "Recipe Demo — Matcha Whisked in a Bowl"
       },
       {
         "ref": "n:guide:k4-plat-instagram-04-cards-6-image",
-        "product": "eyeglasses",
-        "title": "Gold-rim eyeglasses on a wooden tray"
+        "product": "gold-rim eyeglasses",
+        "title": "Close-Up Detail — Gold-Rim Eyeglasses on a Tray"
       }
     ],
     "plat-facebook": [
       {
         "ref": "retargeting-urgency-v",
-        "product": "headphones",
-        "title": "Headphones packed into a bag for the commute"
+        "product": "dark blue over-ear headphones",
+        "title": "Daily-Carry Demo — Dark Blue Headphones Packed"
       },
       {
-        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c2",
-        "product": "hose nozzle",
-        "title": "Garden hose nozzle spraying over a lawn"
+        "ref": "f:q18-facebook-case-hose-demo",
+        "product": "garden hose nozzle",
+        "title": "Product Demo — Garden Hose Nozzle Spraying the Lawn"
       },
       {
-        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c3",
-        "product": "kids rain boots",
-        "title": "Kids' rain boots beside a puddle"
+        "ref": "f:q18-facebook-case-boots-cleanup",
+        "product": "yellow rain boot",
+        "title": "Mud Clean-Up — Yellow Rain Boot Wiped Clean"
       },
       {
-        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c4",
+        "ref": "f:q18-facebook-case-skillet-eggs",
         "product": "cast-iron skillet",
-        "title": "Cast-iron skillet with eggs on the stove"
+        "title": "Recipe Demo — Eggs Turned in a Cast-Iron Skillet"
       }
     ],
     "plat-youtube-shorts": [

@@ -115,23 +115,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Scenes to describe in one sentence",
+    "h2": "TikTok Scene Prompts",
     "items": [
       {
-        "t": "Desk reset",
-        "d": "A hand places a compact cable organizer beside a laptop, then closes the case on a tidy desk."
+        "t": "Problem-Solution — Cable Organizer",
+        "d": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a cluttered desk, an adult hand guides loose charging cables into the organizer, ending with the tidy desk and organizer centered. Warm task light, casual creator-video look, overhead close-up with a slow push-in. Sound: cable clicks and quiet room tone; no music."
       },
       {
-        "t": "Morning pour",
-        "d": "A chilled tea can opens beside a glass with ice, and the amber drink pours across the center of the frame."
+        "t": "ASMR Pour — Iced Tea",
+        "d": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. Beside a sunny kitchen window, a hand opens the tea can shown in the uploaded photo and pours amber tea over ice, ending on the full glass. Bright natural light, crisp tabletop video, tight side close-up with a slow tilt. Sound: can pop, ice clink, and liquid pour; no music."
       },
       {
-        "t": "Shoe detail",
-        "d": "A sneaker rotates slowly on a clean bench, revealing the side stitching before the toe points toward camera."
+        "t": "Whip-Pan Detail — Running Shoe",
+        "d": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. On a clean bench, an adult hand turns the running shoe shown in the uploaded photo once to reveal the sole tread, ending with the tread held still. Crisp side light, energetic phone-video look, low close-up with one whip-pan that settles. Sound: soft shoe contact and room tone; no music."
       },
       {
-        "t": "Bag in use",
-        "d": "A canvas tote moves from a cafe chair to a shoulder, with the handles and front pocket visible."
+        "t": "Try-On — Canvas Tote",
+        "d": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a cafe doorway, an adult lifts the canvas tote shown in the uploaded photo onto one shoulder and turns slightly so the front pocket faces camera, ending still. Soft daylight, candid creator-video look, waist-up handheld framing with a gentle follow. Sound: fabric rustle and quiet cafe ambience; no music."
       }
     ]
   },
@@ -173,25 +173,35 @@
     "h2": "More TikTok-style examples",
     "groups": [
       {
-        "label": "Product action examples",
+        "label": "Creator Reactions",
         "items": [
           {
-            "ref": "n:guide:k4-plat-tiktok-24-example-bottle",
-            "title": "Small bottle picked off a bathroom shelf",
-            "kind": "photo",
-            "product": "small bottle"
-          },
+            "ref": "f:q18-tiktok-strip-serum-review",
+            "title": "Creator Review — Amber Serum at Home",
+            "kind": "scene",
+            "product": "amber serum"
+          }
+        ]
+      },
+      {
+        "label": "Hands-On Demos",
+        "items": [
           {
             "ref": "n:gen2:plat-tiktok-g2",
-            "title": "Desk fan switched on at a home office desk",
+            "title": "Hands-On Demo — Desk Fan in Use",
             "kind": "photo",
             "product": "desk fan"
-          },
+          }
+        ]
+      },
+      {
+        "label": "Product Details",
+        "items": [
           {
             "ref": "n:guide:k4-plat-tiktok-25-example-shoe",
-            "title": "Sneaker turned to show the sole on a plain floor",
+            "title": "Product Detail — Gray Running Shoe Tread",
             "kind": "photo",
-            "product": "sneaker"
+            "product": "gray running shoe"
           }
         ]
       }
@@ -221,14 +231,14 @@
       "f:k4-plat-tiktok-14-visual-strip-2",
       "f:k4-plat-tiktok-15-visual-strip-3",
       "f:k4-plat-tiktok-16-visual-strip-4",
-      "f:url-to-ad-a-v"
+      "f:q18-tiktok-strip-protein-powder"
     ],
     "steps": {
       "source": "n:guide:k4-plat-tiktok-12-visual-steps-source",
-      "result": "f:unboxing-experience-v",
+      "result": "f:q18-tiktok-steps-black-headphones-unboxing",
       "mode": "video",
       "length": 15,
-      "prompt": "Open the headphone box, lift the gray headphones from the fitted insert, and keep them in the middle of a vertical 9:16 frame.",
+      "prompt": "Use the uploaded photo as the exact reference for the black over-ear headphones. Preserve their black finish, padded earcup shape, and headband. Adult hands lift them from a plain box on a bright desk and turn them toward camera; end with the headphones centered. Soft window light, natural phone-video look, top-down close framing. Sound: box flap and tissue rustle; no music.",
       "options": [
         [
           "Size",
@@ -245,93 +255,94 @@
       "lead": "Choose a simple movement that reads quickly in a vertical feed.",
       "chips": [
         {
-          "id": "open",
-          "label": "Open or unbox"
+          "id": "hook",
+          "label": "Opening Hooks"
         },
         {
-          "id": "use",
-          "label": "Show it in use"
+          "id": "creator",
+          "label": "Creator Reviews"
         },
         {
-          "id": "detail",
-          "label": "Show a detail"
+          "id": "transition",
+          "label": "Transitions"
         },
         {
-          "id": "routine",
-          "label": "Daily routine"
+          "id": "proof",
+          "label": "Product Demos"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c1",
-          "label": "Bottle cap opens with a press",
+          "ref": "f:q18-tiktok-picker-speaker-review",
+          "label": "Review — Parked-Car Speaker",
           "chips": [
-            "open"
+            "creator",
+            "hook"
           ],
-          "prompt": "Press the flip-top cap and show it pop open.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the rounded black woven speaker’s shape, finish, and proportions. In a parked car, an adult creator faces camera holding the speaker and says, “I bring this one on weekend walks.” End with the speaker beside the face. Soft daylight, candid phone-video look, chest-up front-facing framing with a gentle push-in. Sound: spoken line and quiet car ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k4-plat-tiktok-09-visual-picker-cards-1-image",
-          "label": "Kettle filled at the sink",
+          "ref": "f:q18-tiktok-picker-cable-organizer",
+          "label": "Cable Fix — Organizer at Desk",
           "chips": [
-            "routine"
+            "proof"
           ],
-          "prompt": "Fill the kettle at the sink, then set it on the counter.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a cluttered desk, adult hands guide loose charging cables into the compact organizer, ending with the tidy channels centered. Warm desk light and window fill, casual creator-video look, overhead close-up with one quick push-in. Sound: cable clicks and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c2",
-          "label": "Backpack sleeve opened",
+          "ref": "f:q18-tiktok-picker-lip-tint-grwm-r2",
+          "label": "GRWM — Lip Tint in Mirror",
           "chips": [
-            "use"
+            "transition"
           ],
-          "prompt": "Open the backpack sleeve and show its padded interior.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a bright bathroom mirror, an adult woman applies one smooth swipe of lip tint while holding its tube beside her face, ending still. Soft daylight, natural skin texture, casual get-ready look, chest-up mirror framing with slight handheld sway. Sound: cap click and quiet bathroom ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-howto-g2",
-          "label": "Fabric shaver in use",
+          "ref": "f:q18-tiktok-picker-protein-bar-review",
+          "label": "Taste Test — Protein Bar Review",
           "chips": [
-            "use"
+            "creator"
           ],
-          "prompt": "Move the fabric shaver across the sweater sleeve.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the oat protein bar’s wrapper color, shape, and label area. At a sunny kitchen counter, an adult creator faces camera holding it and says, “That crunch is louder than I expected.” End with the bar in frame. Natural phone-video look, soft window light, front-facing chest-up shot with a small push-in. Sound: wrapper rustle, spoken line and kitchen room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c3",
-          "label": "Kettle lid opens with a press",
+          "ref": "f:q18-tiktok-picker-sneaker-detail",
+          "label": "Whip-Pan — Gray Shoe Tread",
           "chips": [
-            "detail"
+            "hook"
           ],
-          "prompt": "Press the kettle button and show the lid opening.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the gray-and-white running shoe’s shape, sole pattern, and color. On a clean bench, an adult hand sweeps the shoe across frame and turns it to reveal the tread, ending with the sole held toward camera. Crisp side light, energetic phone-video look, low close-up with one quick whip-pan that settles. Sound: shoe contact and soft room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-howto-g3",
-          "label": "Filter clicks into pitcher",
+          "ref": "f:q18-tiktok-picker-crossbody-turn",
+          "label": "Outfit Turn — Tan Crossbody Bag",
           "chips": [
-            "detail"
+            "transition"
           ],
-          "prompt": "Fit the filter cartridge into the water pitcher.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the tan canvas crossbody bag’s shape, front pocket, and color. In a bright apartment doorway, an adult wearing it makes one quick turn so the front pocket faces camera, ending centered and still. Clean daylight, casual fashion-creator look, full-length framing with a single snap pan. Sound: fabric movement and quiet room ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c4",
-          "label": "Umbrella opens on a rainy street",
+          "ref": "f:q18-tiktok-picker-sweater-shaver",
+          "label": "Shaver Demo — Sweater Pills Removed",
           "chips": [
-            "open"
+            "proof"
           ],
-          "prompt": "Open the compact umbrella and show its canopy settle.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the compact white fabric shaver’s shape and finish. Adult hands move it once across a navy sweater sleeve, revealing a visibly smoother strip beside the pilled area, then hold. Bright soft window light, realistic creator phone-video framing, tight close-up with one gentle push-in. Sound: shaver hum and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k4-plat-tiktok-10-visual-picker-cards-7-image",
-          "label": "Skincare steps on a vanity",
+          "ref": "f:q18-tiktok-picker-dog-brush",
+          "label": "Pet Demo — Golden Retriever Brush",
           "chips": [
-            "routine"
+            "proof"
           ],
-          "prompt": "Lay cleanser, serum, and cream out in order on a clean vanity.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the black grooming brush’s shape and finish. On a living-room rug, an adult gently brushes a calm golden retriever’s coat in one smooth pass, ending with the brush and dog visible together. Soft afternoon window light, warm candid phone-video look, floor-level close-up with a small handheld drift. Sound: brush through fur and quiet home ambience; no music.",
           "kind": "video"
         }
       ],
@@ -340,9 +351,9 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "f:k4-plat-tiktok-17-visual-uses-0-image",
-        "h": "Use 9:16 for full-screen In-Feed",
-        "d": "Keep the product in the middle of the frame; TikTok's caption, buttons, and profile icon sit along the bottom and right edges."
+        "ref": "f:q18-tiktok-uses-serum-selfie",
+        "h": "Creator Review — Amber Serum at Home",
+        "d": "A creator holds an amber serum bottle beside her face while speaking to camera, a familiar format for a personal product review."
       },
       {
         "frame": "post",
@@ -367,20 +378,20 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-spark-ads-style-video-c3",
+        "ref": "f:q18-tiktok-output-shoe-tread",
         "frame": "9:16",
         "length": 6,
-        "label": "6-second vertical product hook"
+        "label": "Matched Gray-and-White Running Shoe"
       },
       {
-        "ref": "f:k4-plat-tiktok-08-visual-outputs-1-image",
+        "ref": "f:q18-tiktok-output-speaker-demo",
         "frame": "9:16",
         "length": 10,
-        "label": "10-second vertical product demo"
+        "label": "Matched Rounded Black Woven Speaker"
       }
     ],
     "after": {
-      "ref": "f:k4-plat-tiktok-05-visual-after-image",
+      "ref": "f:q18-tiktok-after-speaker-offer",
       "zones": [
         "Caption",
         "Sound",

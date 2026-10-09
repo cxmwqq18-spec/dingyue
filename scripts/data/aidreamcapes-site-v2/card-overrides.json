@@ -374,8 +374,8 @@
   "plat-tiktok": {
     "images": {
       "outfit": {
-        "ref": "n:gen2:tpl-outfit-c2",
-        "alt": "Full-length denim outfit in a hallway, head to toe."
+        "ref": "f:q18-tiktok-card-outfit-reel",
+        "alt": "A woman walks through a full-length mirror view in a medium-blue denim jacket and jeans with white sneakers."
       },
       "product-feature-callout-video": {
         "ref": "f:k4-plat-tiktok-01-cards-0-image",
@@ -642,8 +642,12 @@
         "alt": "Model in a light trouser suit carrying a small brown handbag in a bright courtyard."
       },
       "launch": {
-        "ref": "f:k4-plat-instagram-76-template-launch",
-        "alt": "A warm portable table lamp glowing beside a leafy plant in a dim living room."
+        "ref": "f:q18-instagram-card-launch-lamp-use",
+        "alt": "An adult woman reads a paperback beside a lit table lamp on a bedside table."
+      },
+      "retargeting-video-ad": {
+        "ref": "f:q18-instagram-card-retargeting-serum",
+        "alt": "An adult creator speaks to camera while holding an amber serum bottle with a blank label area."
       }
     }
   },
@@ -792,6 +796,22 @@
       "retargeting-video-ad": {
         "ref": "n:guide:q13-limited-card-retarget-r1",
         "alt": "Adult wearing coral trail shoes while stepping onto a rocky path."
+      }
+    }
+  },
+  "plat-facebook": {
+    "images": {
+      "feed": {
+        "ref": "f:q18-facebook-card-feed-jar",
+        "alt": "A small matte white insulated food jar with a pale sage lid beside a packed lunch on a bright kitchen counter."
+      },
+      "film": {
+        "ref": "f:q18-facebook-card-brand-film-speaker",
+        "alt": "A rounded black woven portable speaker with a soft blue edge light on a walnut console at dusk."
+      },
+      "launch": {
+        "ref": "f:q18-facebook-card-launch-lamp-before-after",
+        "alt": "An adult writes in a planner under a compact black table lamp in the bright half of a split before-and-after desk scene."
       }
     }
   }

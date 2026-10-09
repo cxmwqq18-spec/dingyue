@@ -116,23 +116,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Product moments for a Facebook scroll",
+    "h2": "Facebook Still-Photo Prompts",
     "items": [
       {
-        "t": "Packed lunch",
-        "d": "A reusable lunch box opens on a bright counter, the compartments fill, and the lid closes in one square sequence."
+        "t": "Hands-On Demo — Lunch Box Packed",
+        "d": "Square still photo of adult hands placing cut fruit into a reusable lunch box with visible compartments on a bright kitchen counter. Keep the lid open and the food neatly arranged in clean morning light."
       },
       {
-        "t": "Dog-walk clip",
-        "d": "A dog harness is clipped on near a front door, with the product hardware visible before the walk begins."
+        "t": "Pet Demo — Harness Clipped On",
+        "d": "Square still photo of an adult clipping a plain harness onto a calm dog beside a bright front doorway. Show the buckle and harness fit clearly in natural morning light; keep the dog relaxed."
       },
       {
-        "t": "Desk organization",
-        "d": "A cable tray moves under a desk, then the cords settle into separate channels with the item still in view."
+        "t": "Problem-Solution — Desk Cable Tray",
+        "d": "Square still photo under a home-office desk: adult hands guide two loose cords into a compact cable tray fixed beneath the tabletop. Show the tidy channel and tray in soft window light."
       },
       {
-        "t": "Gift bundle still",
-        "d": "Two matching products sit beside plain wrapping paper and a ribbon, leaving a quiet area for your seasonal offer."
+        "t": "Gift Reveal — Matching Set Unboxed",
+        "d": "Square still photo of adult hands lifting a plain gift-box lid to reveal a matching product set nestled in cream tissue on a bright dining table. Keep the full set centered in warm window light."
       }
     ]
   },
@@ -171,40 +171,50 @@
     ]
   },
   "examples": {
-    "h2": "More Facebook ad examples",
-    "lead": "Products in bright, familiar settings for a busy Facebook feed.",
+    "h2": "More Facebook Ad Examples",
+    "lead": "Clear product use, pet life, gifts, and color choices for busy feeds.",
     "groups": [
       {
-        "label": "Feed-ready frames",
+        "label": "Hands-On Demo",
         "items": [
           {
-            "ref": "n:gen2:plat-facebook-g1",
-            "title": "Lunch box opened on a kitchen counter",
+            "ref": "f:q18-facebook-example-lunchbox-pack",
+            "title": "Lunch Prep — Reusable Lunch Box Packed",
             "kind": "photo",
-            "product": "lunch box"
-          },
+            "product": "reusable lunch box"
+          }
+        ]
+      },
+      {
+        "label": "Pet Product Lifestyle",
+        "items": [
           {
             "ref": "n:guide:k8-facebook-gen2-plat-facebook-g2",
-            "title": "Cat asleep in a round pet bed",
+            "title": "Pet Lifestyle — Cat in Pet Bed",
             "kind": "photo",
             "product": "round pet bed"
           }
         ]
       },
       {
-        "label": "Seasonal and color choices",
+        "label": "Gift Scenario",
         "items": [
           {
-            "ref": "n:guide:k8-facebook-gen2-occ-holidays-11",
-            "title": "Scented candle on a holiday table",
+            "ref": "f:q18-facebook-example-earring-gift",
+            "title": "Gift Reveal — Gold Hoop Earrings",
             "kind": "photo",
-            "product": "scented candle"
-          },
+            "product": "gold hoop earrings"
+          }
+        ]
+      },
+      {
+        "label": "Color Comparison",
+        "items": [
           {
-            "ref": "n:gen2:tpl-color-c1",
-            "title": "Insulated tumblers in four colors",
+            "ref": "f:q18-facebook-example-lip-shades",
+            "title": "Shade Comparison — Three Lip Balms",
             "kind": "photo",
-            "product": "insulated tumblers"
+            "product": "lip balms"
           }
         ]
       }
@@ -229,18 +239,18 @@
   "visual": {
     "overview": "Facebook ads can appear in Feed, Stories, and Reels. Start with a clear product image, then choose a crop and setting that leave room around the item.",
     "strip": [
-      "n:guide:k8-facebook-gen2-plat-facebook-g3",
-      "n:guide:k8-facebook-gen2-plat-facebook-g4",
-      "n:guide:k8-facebook-gen2-tpl-box-c2",
-      "n:guide:k8-facebook-gen2-occ-black-friday-c2",
-      "n:guide:k8-facebook-gen2-tpl-size-c2",
+      "f:q18-facebook-strip-serum-review",
+      "f:q18-facebook-strip-pet-hair-roller",
+      "f:q18-facebook-strip-headphone-unbox",
+      "f:q18-facebook-strip-headphone-review",
+      "f:q18-facebook-strip-baby-bath-unbox",
       "n:gen2:tpl-ugc-g1"
     ],
     "steps": {
       "source": "n:guide:k8-facebook-gen2-plat-facebook-g3",
-      "result": "n:guide:k8-facebook-gen2-plat-facebook-g4",
+      "result": "f:q18-facebook-steps-bottle-pour",
       "mode": "photo",
-      "prompt": "Place this insulated bottle on a sunny desk, keeping the cap and full body visible.",
+      "prompt": "Create a square still photo using the pale-blue insulated bottle shown in the uploaded image as the exact product reference. Preserve its body shape, blue color, loop cap, and metal collar. An adult hand pours water from it into a clear glass on a sunny breakfast desk; keep bottle and glass fully visible in soft morning light.",
       "options": [
         [
           "Template",
@@ -257,92 +267,93 @@
       "lead": "Pick a product moment that suits the space in a Facebook placement.",
       "chips": [
         {
+          "id": "problem",
+          "label": "Problem-Solution"
+        },
+        {
+          "id": "hands",
+          "label": "Hands-On Demos"
+        },
+        {
+          "id": "creator",
+          "label": "Creator Reactions"
+        },
+        {
           "id": "feed",
-          "label": "Feed photo"
-        },
-        {
-          "id": "unbox",
-          "label": "Bath and grooming"
-        },
-        {
-          "id": "daily",
-          "label": "Daily use"
-        },
-        {
-          "id": "feature",
-          "label": "Product feature"
+          "label": "Product Proof"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k8-facebook-gen2-tpl-compare-c2",
-          "label": "Two backpack sizes side by side",
-          "prompt": "Lay out both backpack sizes, with a travel kit beside each one.",
+          "ref": "f:q18-facebook-picker-backpack-fit-check",
+          "label": "Fit Check — Sage Mini Backpack",
+          "prompt": "Square still photo using the pale sage-green mini backpack shown in the uploaded image as the exact product reference. Preserve its rounded shape, front pocket, straps, zippers, and color. An adult wears it over one shoulder at a bright entryway and turns so the whole bag is visible.",
           "chips": [
             "feed"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-facebook-gen2-tpl-carousel-video-ad-c3",
-          "label": "Bento box opened on a counter",
-          "prompt": "Open the lunch box and show each compartment clearly.",
+          "ref": "f:q18-facebook-picker-lunchbox-pack",
+          "label": "Lunch Demo — Box Packed",
+          "prompt": "Square still photo: adult hands place fruit and a sandwich into the compartments of an open reusable lunch box on a sunny kitchen counter. Show the lunch box and dividers clearly in bright morning light.",
           "chips": [
-            "feed"
+            "feed",
+            "hands"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-facebook-gen2-tpl-box-c4",
-          "label": "Baby bath set ready to use",
-          "prompt": "Arrange the towel, sponge, and wash bottle together on a shelf.",
+          "ref": "f:q18-facebook-picker-baby-bath-set",
+          "label": "Unbox — Baby Bath Set",
+          "prompt": "Square still photo: adult hands open a plain kraft carton and lift a folded hooded baby towel, with a washcloth and unbranded baby-wash bottle arranged beside it. Soft daylight on a changing table; no baby in frame.",
           "chips": [
-            "unbox"
+            "hands"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-facebook-gen2-tpl-spark-ads-style-video-c4",
-          "label": "Brush on a relaxed dog",
-          "prompt": "Brush the dog's coat in a calm living room scene.",
+          "ref": "f:q18-facebook-picker-headphone-review",
+          "label": "Review — Black Headphones at Desk",
+          "prompt": "Square still photo using the matte black over-ear headphones shown in the uploaded image as the exact product reference. Preserve their rounded earcups, headband, proportions, and finish. An adult man faces camera mid-sentence in a tidy home office while holding them fully visible at chest height.",
           "chips": [
-            "unbox"
+            "creator"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-facebook-gen2-tpl-ugc-case-81",
-          "label": "Reusable bottle on a work desk",
-          "prompt": "Place the bottle near a notebook in a casual phone photo.",
+          "ref": "f:q18-facebook-picker-cable-tray",
+          "label": "Desk Fix — Cable Tray",
+          "prompt": "Square still photo: adult hands guide loose charging cords into a compact black cable tray clipped beneath a home-office desk. Show a tidy channel and the product clearly in natural window light.",
           "chips": [
-            "daily"
+            "problem"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-facebook-gen2-tpl-home-c2",
-          "label": "Matching jars on a pantry shelf",
-          "prompt": "Line up the glass pantry jars with their lids easy to see.",
+          "ref": "f:q18-facebook-picker-protein-bar",
+          "label": "First Bite — Oat Protein Bar",
+          "prompt": "Square still photo: an adult woman at a sunny kitchen table takes a first bite of an unbranded oat protein bar and smiles naturally toward camera. Keep the bar visible with soft window light and a casual breakfast setting.",
           "chips": [
-            "daily"
+            "creator"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-facebook-gen2-tpl-light-c4",
-          "label": "Crystal tumbler on a clean backdrop",
-          "prompt": "Let the tumbler catch a crisp reflection against a soft gradient.",
+          "ref": "f:q18-facebook-picker-dog-brush",
+          "label": "Pet Demo — Golden Retriever Brush",
+          "prompt": "Square still photo: an adult kneels beside a calm golden retriever on a living-room rug and brushes its coat with a plain black grooming brush. Show the brush head touching the dog’s coat and the dog relaxed in warm window light.",
           "chips": [
-            "feature"
+            "hands"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-angle-c2",
-          "label": "Backpack turned to show its straps",
-          "prompt": "Turn the backpack around so its padded straps face the camera.",
+          "ref": "f:q18-facebook-picker-travel-pouch",
+          "label": "Pouch Test — Water Wiped Away",
+          "prompt": "Square still photo: an adult hand wipes a small stream of water from a compact gray travel pouch on an outdoor picnic table, with the damp and wiped areas visible. Overcast daylight, practical product close-up.",
           "chips": [
-            "feature"
+            "problem"
           ],
           "kind": "photo"
         }
@@ -352,15 +363,15 @@
     "uses": [
       {
         "frame": "post",
-        "ref": "n:guide:k8-facebook-gen2-tpl-launch-c2",
-        "h": "Use a new product in a feed post",
-        "d": "A colored bottle on a styled desk keeps the object easy to spot."
+        "ref": "f:q18-facebook-uses-backpack-scale",
+        "h": "Product Scale — Pale Sage Mini Backpack",
+        "d": "A pale sage-green mini backpack beside an adult torso gives shoppers a useful size reference."
       },
       {
         "frame": "post",
-        "ref": "n:guide:k8-facebook-gen2-tpl-ugc-case-83",
-        "h": "Show an everyday morning moment",
-        "d": "A ceramic mug beside breakfast suits a casual Facebook feed post."
+        "ref": "f:q18-facebook-uses-protein-bar",
+        "h": "Gym-Bag Moment — Oat Protein Bar",
+        "d": "A bar held beside an open gym bag connects the snack to a post-workout routine."
       }
     ],
     "input": [
@@ -379,18 +390,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:k8-facebook-gen2-tpl-light-c2",
+        "ref": "f:q18-facebook-output-headphones",
         "frame": "1:1",
-        "label": "Chrome espresso cup on a clean gradient"
+        "label": "Matched Matte Black Over-Ear Headphones"
       },
       {
-        "ref": "n:guide:k8-facebook-gen2-tpl-pack-c3",
+        "ref": "f:q18-facebook-output-backpack-matched",
         "frame": "1:1",
-        "label": "Hot sauce bottle on a market shelf"
+        "label": "Matched Pale Sage-Green Mini Backpack"
       }
     ],
     "after": {
-      "ref": "n:guide:k8-facebook-discount-free-shipping",
+      "ref": "f:q18-facebook-after-bottle-offer",
       "zones": [
         "Price",
         "Call to action"
@@ -403,7 +414,7 @@
     "sizes": [
       {
         "frame": "16:9",
-        "ref": "f:carousel-storytelling",
+        "ref": "f:q18-facebook-size-landscape-backpack",
         "label": "16:9 · Facebook video placements"
       },
       {
