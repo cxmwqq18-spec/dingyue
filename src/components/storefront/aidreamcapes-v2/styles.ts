@@ -97,6 +97,39 @@ export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 @media (max-width:900px){.adc2 .v-steps{grid-template-columns:minmax(0,1fr)}.adc2 .v-step-art{max-width:560px;aspect-ratio:4/3;margin-inline:auto}.adc2 .v-step-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}.adc2 .v-step-copy{display:flex;flex-direction:column;justify-content:center}.adc2 .v-use-art{height:330px}.adc2 .v-use-copy{padding:30px}.adc2 .v-output-grid{justify-content:flex-start}.adc2 .v-size-grid{justify-content:flex-start}}
 @media (max-width:760px){.adc2 .v-steps{grid-template-columns:minmax(0,1fr)}.adc2 .v-step-card{display:flex}.adc2 .v-step-art{width:100%;max-width:none;aspect-ratio:4/3;margin:0}.adc2 .v-step-copy{display:block}.adc2 .v-use-row{grid-template-columns:minmax(0,1fr)}.adc2 .v-use-row:nth-child(even) .v-use-art{order:0}.adc2 .v-use-art{height:330px;padding:12px}.adc2 .v-use-copy{padding:26px 24px}.adc2 .v-use-copy h3{font-size:25px}.adc2 .v-after{grid-template-columns:minmax(0,1fr);gap:22px}.adc2 .v-strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity;overscroll-behavior-inline:contain}.adc2 .v-strip-card{flex:0 0 140px;height:220px;scroll-snap-align:start}.adc2 .v-strip-card img{height:100%}}
 @media (max-width:560px){.adc2 .v-picker-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adc2 .v-input-grid{grid-template-columns:minmax(0,1fr)}.adc2 .v-after{grid-template-columns:minmax(0,1fr);gap:20px}.adc2 .v-step-art{padding:13px}.adc2 .v-step-source .v-step-drop{gap:10px;padding:11px}.adc2 .v-step-drop b{font-size:14px}.adc2 .v-step-drop span{font-size:11px}.adc2 .v-step-maker{padding:11px}.adc2 .v-step-maker .opt{font-size:11px}.adc2 .v-step-submit{font-size:12px}.adc2 .v-use-art{height:310px}.adc2 .v-after-zones span{min-height:40px;font-size:12px}.adc2 .v-output-grid,.adc2 .v-size-grid{margin-inline:-16px;padding-inline:16px}}
+.adc2 .v-mock{position:absolute;inset:0;pointer-events:none;font-family:inherit}
+.adc2 .v-mock-limited{display:flex;flex-direction:column;justify-content:space-between;padding:10px 12px;text-align:center;color:#fff}
+.adc2 .v-mock-limited .v-mock-badge{align-self:flex-start;padding:5px 10px;border-radius:6px;background:#e11d48;font-size:11px;font-weight:800;letter-spacing:.08em}
+.adc2 .v-mock-limited .v-mock-count{display:flex;flex-direction:column;align-items:center;gap:2px;text-shadow:0 1px 8px rgba(0,0,0,.55)}
+.adc2 .v-mock-limited .v-mock-count b{font-size:26px;font-weight:800;letter-spacing:.06em}
+.adc2 .v-mock-limited .v-mock-count span{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.adc2 .v-mock-limited .v-mock-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.adc2 .v-mock-limited .v-mock-foot span{padding:4px 8px;border-radius:6px;background:rgba(0,0,0,.5);font-size:11px;font-weight:700}
+.adc2 .v-mock-limited .v-mock-cta{padding:6px 12px;border-radius:7px;background:#fff;color:#0b0b0d;font-size:11px;font-weight:800}
+.adc2 .v-mock-tiktok{color:#fff}
+.adc2 .v-mock-tiktok .v-mock-tt-top{display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:12px}
+.adc2 .v-mock-tiktok .v-mock-tt-top i{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.55)}
+.adc2 .v-mock-tiktok .v-mock-tt-top span{margin-left:auto;padding:2px 8px;border:1px solid rgba(255,255,255,.7);border-radius:4px;font-size:10px;font-weight:700}
+.adc2 .v-mock-tiktok .v-mock-tt-actions{position:absolute;right:8px;bottom:64px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.adc2 .v-mock-tiktok .v-mock-tt-actions i{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.82)}
+.adc2 .v-mock-tiktok .v-mock-tt-actions i.is-heart{background:#fe2c55}
+.adc2 .v-mock-tiktok .v-mock-tt-cap{position:absolute;left:12px;right:56px;bottom:12px;display:flex;flex-direction:column;gap:3px;font-size:12px}
+.adc2 .v-mock-tiktok .v-mock-tt-sound{display:flex;align-items:center;gap:6px;font-size:11px;opacity:.92}
+.adc2 .v-mock-tiktok .v-mock-tt-sound i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.8)}
+.adc2 .v-mock-carousel{display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:12px;color:#fff}
+.adc2 .v-mock-carousel .v-mock-panel{align-self:flex-end;padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);font-size:11px;font-weight:700}
+.adc2 .v-mock-carousel .v-mock-car-title{padding:8px 16px;border-radius:8px;background:rgba(0,0,0,.5);font-size:15px;font-weight:800}
+.adc2 .v-mock-carousel .v-mock-dots{display:flex;gap:6px}
+.adc2 .v-mock-carousel .v-mock-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55)}
+.adc2 .v-mock-carousel .v-mock-dots i.is-active{width:20px;border-radius:999px;background:#fff}
+.adc2 .v-mock-callout span.v-mock-tag{position:absolute;padding:5px 10px;border:1.5px solid #fff;border-radius:6px;background:rgba(12,12,16,.62);color:#fff;font-size:11px;font-weight:800}
+.adc2 .v-mock-callout .t1{top:10%;left:8%}
+.adc2 .v-mock-callout .t2{top:42%;right:8%}
+.adc2 .v-mock-callout .t3{bottom:10%;left:14%}
+.adc2 .v-mock-steps span.v-mock-step{position:absolute;padding:5px 12px;border-radius:999px;background:rgba(12,12,16,.66);color:#fff;font-size:12px;font-weight:800}
+.adc2 .v-mock-steps .s1{top:12%;left:8%}
+.adc2 .v-mock-steps .s2{top:44%;right:8%}
+.adc2 .v-mock-steps .s3{bottom:12%;left:10%}
 `;
 export const AIDREAMCAPES_V2_VISUAL_CSS = `
 .adc2 .v-strip-section{padding-block:42px;border-top:0}.adc2 .v-strip{display:flex;gap:12px;overflow-x:auto;padding:2px 0 10px;scroll-snap-type:x proximity;overscroll-behavior-inline:contain}.adc2 .v-strip-card{position:relative;flex:0 0 176px;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--card);scroll-snap-align:start}.adc2 .v-strip-card img{width:100%;height:176px;object-fit:cover}.adc2 .v-strip-card figcaption{position:absolute;left:8px;top:8px;padding:4px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(5,5,5,.8);font-size:11px;font-weight:600}

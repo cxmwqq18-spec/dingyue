@@ -13,7 +13,13 @@ export type V2VisualPicker = { title: string; lead?: string; chips: { id: string
 export type V2VisualUse = { frame: "phone" | "browser" | "listing" | "post" | "split"; image: V2VisualImage; imageB?: V2VisualImage; h: string; d: string };
 export type V2VisualInput = { good: V2VisualImage; bad: V2VisualImage; good_label: string; bad_label: string; darkened?: boolean };
 export type V2VisualOutput = { image: V2VisualImage; frame: V2VisualFrame; label: string; length?: 6 | 10 | 15; spec: string };
-export type V2VisualAfter = { image: V2VisualImage; zones: string[]; items: string[] };
+export type V2AfterMock = {
+  type: "limited" | "tiktok" | "carousel" | "callout" | "steps";
+  badge?: string; countdown?: string; caption?: string; cta?: string;
+  title?: string; tag1?: string; tag2?: string; tag3?: string;
+  [key: string]: unknown;
+};
+export type V2VisualAfter = { image: V2VisualImage; zones: string[]; items: string[]; mock?: V2AfterMock };
 export type V2VisualSize = { frame: V2VisualFrame; image: V2VisualImage; label: string };
 export type V2VisualLimitation = { label: string; detail?: string; supported: boolean };
 export type V2Visual = {
