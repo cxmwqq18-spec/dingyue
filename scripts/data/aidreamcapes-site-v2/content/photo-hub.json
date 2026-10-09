@@ -90,6 +90,14 @@
     {
       "q": "Can I put a price or sale text on the photo?",
       "a": "Add text after you download. Canva works well for prices, discount codes, and headlines. AI-generated lettering can contain typos, so typing it yourself keeps it accurate."
+    },
+    {
+      "q": "What kinds of product photos can I create?",
+      "a": "Create listing, lifestyle, detail and in-use photos from a clear product reference."
+    },
+    {
+      "q": "Can I show an item in use?",
+      "a": "Yes. Describe a believable hand or person interaction that helps shoppers understand the item."
     }
   ],
   "overview": [
