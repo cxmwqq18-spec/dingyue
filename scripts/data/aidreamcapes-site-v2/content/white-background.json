@@ -59,6 +59,14 @@
     {
       "q": "Will my product photos be public?",
       "a": "Your uploads are private to your account. Avoid including personal information or unrelated items in a product photo."
+    },
+    {
+      "q": "What makes a white-background photo useful?",
+      "a": "Use even light, a complete product silhouette and a soft contact shadow on a clean white field."
+    },
+    {
+      "q": "Can I show a single product at a time?",
+      "a": "Yes. A single centered item keeps edges, shape and details easy to inspect."
     }
   ],
   "overview": [
