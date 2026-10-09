@@ -243,323 +243,311 @@
       ]
     },
     "tpl-angle": {
-      "box": [
-        "n:sunglasses-flatlay"
+      "white": [
+        "n:white-perfume"
       ],
-      "detail": [
-        "n:hoodie-detail"
-      ],
-      "light": [
-        "n:candle-flame"
-      ]
-    },
-    "tpl-detail": {
-      "box": [
-        "n:coffee-counter"
-      ],
-      "tryon": [
-        "n:sunglasses-worn"
-      ],
-      "jewel": [
-        "g:jewelry-positioning/example-01"
-      ]
-    },
-    "tpl-size": {
       "color": [
-        "g:colorway-variations/example-01"
-      ],
-      "angle": [
-        "g:packshot-multi-angle/example-04"
+        "g:colorway-variations/example-03"
       ],
       "detail": [
         "n:handbag-detail"
       ]
     },
-    "tpl-color": {
-      "feed": [
-        "n:lipstick-ad"
-      ],
+    "tpl-detail": {
       "size": [
-        "n:phonecase-hand"
+        "g:size-reference/example-01"
       ],
-      "box": [
-        "g:bundle-sets/example-01"
+      "jewel": [
+        "g:jewelry-positioning/example-02"
+      ],
+      "white": [
+        "n:white-sneaker"
+      ]
+    },
+    "tpl-size": {
+      "detail": [
+        "n:boots-detail"
+      ],
+      "jewel": [
+        "f:k7-ind-home-living-card-compare"
+      ],
+      "white": [
+        "f:ugc-ad-video"
+      ]
+    },
+    "tpl-color": {
+      "white": [
+        "f:unboxing-experience"
+      ],
+      "feed": [
+        "n:sunglasses-cafe"
+      ],
+      "angle": [
+        "g:packshot-multi-angle/example-06"
       ]
     },
     "tpl-box": {
-      "story": [
-        "g:story-ad-vertical/example-02"
-      ],
-      "pack": [
-        "n:coffee-beans"
-      ],
       "light": [
-        "n:sunglasses-cafe"
+        "g:commercial-lighting/example-01"
+      ],
+      "story": [
+        "g:story-ad-vertical/example-03"
+      ],
+      "white": [
+        "f:product-video"
       ]
     },
     "tpl-pack": {
       "look": [
-        "n:handbag-carry"
+        "g:fashion-editorial/example-01"
       ],
-      "bg": [
-        "n:boots-doorway"
+      "white": [
+        "f:food-video-t06"
+      ],
+      "model": [
+        "g:on-model-generation/example-02"
+      ]
+    },
+    "tpl-light": {
+      "box": [
+        "n:sunglasses-flatlay"
+      ],
+      "story": [
+        "g:story-ad-vertical/example-04"
+      ],
+      "white": [
+        "f:food-video-t13"
+      ]
+    },
+    "tpl-tryon": {
+      "model": [
+        "g:on-model-generation/example-04"
+      ],
+      "life": [
+        "n:yogamat-room"
+      ],
+      "look": [
+        "g:fashion-editorial/example-03"
+      ]
+    },
+    "tpl-jewel": {
+      "size": [
+        "g:size-reference/example-03"
+      ],
+      "detail": [
+        "n:hotsauce-drip"
+      ],
+      "model": [
+        "g:on-model-generation/example-05"
+      ]
+    },
+    "tpl-look": {
+      "model": [
+        "g:on-model-generation/example-06"
+      ],
+      "life": [
+        "f:product-video-t09"
       ],
       "tryon": [
         "g:virtual-try-on/example-01"
       ]
     },
-    "tpl-light": {
-      "story": [
-        "g:story-ad-vertical/example-03"
+    "tpl-head": {
+      "white": [
+        "f:before-after-showcases-t11"
       ],
       "size": [
-        "g:size-reference/example-01"
-      ],
-      "color": [
-        "g:colorway-variations/example-02"
-      ]
-    },
-    "tpl-tryon": {
-      "sale": [
-        "n:hoodie-flatlay"
-      ],
-      "jewel": [
-        "g:jewelry-positioning/example-02"
-      ],
-      "look": [
-        "g:fashion-editorial/example-01"
-      ]
-    },
-    "tpl-jewel": {
-      "feed": [
-        "n:hotsauce-tacos"
-      ],
-      "ugc": [
-        "g:ugc-still-ad/example-01"
-      ],
-      "story": [
-        "g:story-ad-vertical/example-04"
-      ]
-    },
-    "tpl-look": {
-      "sale": [
-        "n:candle-table"
+        "g:size-reference/example-04"
       ],
       "model": [
-        "g:on-model-generation/example-01"
-      ],
-      "life": [
-        "n:planter-window"
-      ]
-    },
-    "tpl-head": {
-      "angle": [
-        "g:packshot-multi-angle/example-06"
-      ],
-      "detail": [
-        "n:boots-detail"
-      ],
-      "box": [
-        "g:bundle-sets/example-01"
+        "g:on-model-generation/example-07"
       ]
     },
     "tpl-ugc": {
+      "model": [
+        "f:how-to-video-t10"
+      ],
+      "life": [
+        "f:cinematic-video-t14"
+      ],
       "jewel": [
-        "g:jewelry-positioning/example-03"
-      ],
-      "look": [
-        "g:fashion-editorial/example-02"
-      ],
-      "feed": [
-        "n:hotsauce-tacos"
+        "g:jewelry-positioning/example-06"
       ]
     },
     "tpl-story": {
-      "light": [
-        "g:commercial-lighting/example-01"
+      "box": [
+        "n:coffee-counter"
       ],
-      "ugc": [
-        "n:hotsauce-tacos"
+      "light": [
+        "g:commercial-lighting/example-03"
       ],
       "sale": [
         "g:sale-campaign-key-visual/example-01"
       ]
     },
     "tpl-sale": {
+      "model": [
+        "f:beauty-routine-t10"
+      ],
+      "life": [
+        "f:beauty-routine-t14"
+      ],
       "tryon": [
         "g:virtual-try-on/example-02"
-      ],
-      "story": [
-        "g:story-ad-vertical/example-05"
-      ],
-      "model": [
-        "g:on-model-generation/example-02"
       ]
     },
     "tpl-howto": {
-      "product-feature-callout-video": [
-        "s:v_demo"
-      ],
-      "home": [
-        "f:home-organization-t07"
+      "ba": [
+        "f:home-organization-t10"
       ],
       "demo": [
-        "f:product-video-t03"
+        "u:demo"
       ],
-      "ba": [
-        "f:before-after-showcases-t04"
+      "home": [
+        "f:home-organization-t15"
       ]
     },
     "tpl-film": {
+      "product-feature-callout-video": [
+        "f:fashion-try-on-reel-t15"
+      ],
       "carousel-video-ad": [
-        "s:v_film"
+        "f:promo-video-t05"
       ],
       "spark-ads-style-video": [
-        "s:v_creator_ad"
-      ],
-      "retargeting-video-ad": [
-        "s:v_compare"
+        "f:promo-video-t14"
       ]
     },
     "tpl-beauty": {
-      "limited-drop-alert-video": [
-        "s:v_launch"
-      ],
-      "drink": [
-        "n:drink-vertical"
-      ],
       "product-feature-callout-video": [
-        "s:v_demo"
-      ]
-    },
-    "tpl-drink": {
-      "limited-drop-alert-video": [
-        "s:v_launch"
-      ],
-      "carousel-video-ad": [
-        "s:v_film"
-      ],
-      "spark-ads-style-video": [
-        "s:v_creator_ad"
-      ]
-    },
-    "tpl-home": {
-      "retargeting-video-ad": [
-        "s:v_compare"
-      ],
-      "beauty": [
-        "f:beauty-routine-t10"
-      ],
-      "demo": [
-        "f:product-video-t03"
-      ]
-    },
-    "tpl-outfit": {
-      "drink": [
-        "n:drink-vertical"
-      ],
-      "home": [
-        "f:home-organization-t10"
-      ],
-      "launch": [
-        "f:promo-video-t03"
-      ]
-    },
-    "tpl-launch": {
-      "howto": [
-        "f:how-to-video-t07"
-      ],
-      "film": [
-        "f:cinematic-video-t11"
-      ],
-      "outfit": [
-        "f:fashion-try-on-reel-t08"
-      ]
-    },
-    "tpl-compare": {
-      "unbox": [
-        "f:unboxing-experience-t08"
-      ],
-      "demo": [
-        "f:product-video-t06"
-      ],
-      "howto": [
-        "f:how-to-video-t07"
-      ],
-      "ba": [
-        "f:before-after-showcases-t04"
-      ]
-    },
-    "tpl-bf": {
-      "limited-drop-alert-video": [
-        "s:v_launch"
-      ],
-      "product-feature-callout-video": [
-        "s:v_demo"
-      ],
-      "carousel-video-ad": [
-        "s:v_film"
-      ]
-    },
-    "tpl-limited-drop-alert-video": {
-      "bf": [
-        "f:black-friday-countdown-t09"
-      ],
-      "spark-ads-style-video": [
-        "s:v_creator_ad"
-      ],
-      "retargeting-video-ad": [
-        "s:v_compare"
-      ]
-    },
-    "tpl-product-feature-callout-video": {
-      "creator": [
-        "n:gen2:product-videos-g5"
-      ],
-      "beauty": [
-        "f:beauty-routine-t14"
-      ],
-      "howto": [
-        "f:how-to-video-t07"
-      ],
-      "film": [
-        "f:cinematic-video-t14"
-      ]
-    },
-    "tpl-carousel-video-ad": {
-      "drink": [
-        "f:food-video-t13"
-      ],
-      "home": [
-        "f:home-organization-t15"
-      ],
-      "outfit": [
-        "f:fashion-try-on-reel-t08"
-      ],
-      "launch": [
-        "f:promo-video-t05"
-      ]
-    },
-    "tpl-spark-ads-style-video": {
-      "home": [
-        "f:home-organization-t15"
-      ],
-      "bf": [
         "f:black-friday-countdown-t11"
       ],
       "limited-drop-alert-video": [
-        "s:v_launch"
+        "f:tpl-outfit-m3-city-camel-coat"
+      ],
+      "creator": [
+        "n:gen2:tpl-howto-c2"
+      ]
+    },
+    "tpl-drink": {
+      "spark-ads-style-video": [
+        "f:tpl-outfit-m3-city-field-jacket"
+      ],
+      "limited-drop-alert-video": [
+        "f:tpl-outfit-m3-work-navy-blazer"
+      ],
+      "product-feature-callout-video": [
+        "f:tpl-outfit-m3-work-blue-shirt"
+      ]
+    },
+    "tpl-home": {
+      "ba": [
+        "f:tpl-outfit-m3-casual-activewear"
+      ],
+      "demo": [
+        "f:tpl-outfit-m3-casual-denim-overshirt"
+      ],
+      "howto": [
+        "f:tpl-outfit-m3-details-cream-cardigan"
+      ]
+    },
+    "tpl-outfit": {
+      "limited-drop-alert-video": [
+        "f:tpl-outfit-m3-details-olive-shirt-dress"
+      ],
+      "carousel-video-ad": [
+        "f:k7-ind-home-living-step-result-lamp-glow"
+      ],
+      "retargeting-video-ad": [
+        "f:tpl-home-r4-strip-02"
+      ]
+    },
+    "tpl-launch": {
+      "ba": [
+        "f:k7-ind-home-living-output-candle"
+      ],
+      "demo": [
+        "f:k7-ind-home-living-strip-01-lamp-switch"
+      ],
+      "howto": [
+        "f:tpl-home-r4-m6-after"
+      ]
+    },
+    "tpl-compare": {
+      "ba": [
+        "f:tpl-home-r4-m4"
+      ],
+      "demo": [
+        "f:tpl-drink-r4-m2"
+      ],
+      "howto": [
+        "f:tpl-drink-r4-m6"
+      ]
+    },
+    "tpl-bf": {
+      "product-feature-callout-video": [
+        "f:tpl-bf-r4-m4"
+      ],
+      "carousel-video-ad": [
+        "f:tpl-beauty-r4-opening"
+      ],
+      "spark-ads-style-video": [
+        "f:k7-ind-home-living-case-drawer-divider-r2"
+      ]
+    },
+    "tpl-limited-drop-alert-video": {
+      "carousel-video-ad": [
+        "f:tpl-beauty-r4-after"
+      ],
+      "retargeting-video-ad": [
+        "f:tpl-drink-r4-strip"
+      ],
+      "outfit": [
+        "u:try-on"
+      ]
+    },
+    "tpl-product-feature-callout-video": {
+      "carousel-video-ad": [
+        "f:tpl-drink-r4-after"
+      ],
+      "spark-ads-style-video": [
+        "f:k6-video-hub-frame-bottle-pour"
+      ],
+      "retargeting-video-ad": [
+        "f:k6-video-hub-frame-headphone-unbox"
+      ]
+    },
+    "tpl-carousel-video-ad": {
+      "retargeting-video-ad": [
+        "f:k6-video-hub-frame-square-demo"
+      ],
+      "limited-drop-alert-video": [
+        "f:k6-video-hub-frame-wide-compare"
+      ],
+      "product-feature-callout-video": [
+        "f:k6-video-hub-use-rounded-fragrance"
+      ]
+    },
+    "tpl-spark-ads-style-video": {
+      "product-feature-callout-video": [
+        "f:k6-video-hub-frame-bike"
+      ],
+      "carousel-video-ad": [
+        "f:k2-url-picker-picnic-basket"
+      ],
+      "retargeting-video-ad": [
+        "f:k2-url-picker-tote-commute"
       ]
     },
     "tpl-retargeting-video-ad": {
-      "product-feature-callout-video": [
-        "s:v_demo"
-      ],
       "carousel-video-ad": [
-        "s:v_film"
+        "f:k2-url-picker-sneaker-doorstep"
       ],
-      "spark-ads-style-video": [
-        "s:v_creator_ad"
+      "limited-drop-alert-video": [
+        "f:k2-url-picker-throw-chair"
+      ],
+      "product-feature-callout-video": [
+        "f:k2-url-picker-hot-sauce"
       ]
     },
     "templates": {
@@ -912,10 +900,7 @@
         null
       ],
       "howto": [
-        "f:how-to-video-t07"
-      ],
-      "demo": [
-        "f:product-video-t06"
+        "f:k7-ind-home-living-card-before-after"
       ]
     },
     "occ-holidays": {

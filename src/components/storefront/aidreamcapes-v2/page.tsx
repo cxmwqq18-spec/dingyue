@@ -194,6 +194,7 @@ function HomePage({ data, r }: Props) {
         <Plans plans={list<V2Plan>(data.plans)} r={r} />
         <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/pricing")}>See full pricing →</a></div>
       </Section>
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />
       <CtaBand href="/app/create" lead={text(data.ctaLead) || "Upload a photo, pick a template and get a video ad or store-ready photos."} r={r} title="Your next ad starts with one product photo" />
       <AidreamcapesV2HeroTabs />
@@ -249,6 +250,7 @@ function VideoHubPage({ data, r }: Props) {
     <VisualInput visual={visual} r={r} />
     <VisualOutputs visual={visual} r={r} />
     <VisualAfter visual={visual} r={r} />
+    <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
     <Faq items={data.faq} title="Questions about AI video" r={r} />
     <Reading items={list<V2Article>(data.reading)} r={r} />
     <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
@@ -275,6 +277,7 @@ function VideoHubPage({ data, r }: Props) {
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title="Questions about AI video" r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
@@ -350,6 +353,7 @@ function ToolPage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       </>}
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
@@ -383,6 +387,7 @@ function TemplatePage({ data, r }: Props) {
         </Section>
       ) : null}
       <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions about this template"} r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand href={maker.href} lead={text(data.ctaLead) || "Upload one product photo. See the cost before you start."} r={r} title={`Try ${data.label} with your product`} />
@@ -410,6 +415,7 @@ function TemplatePage({ data, r }: Props) {
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section>
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title="Questions about this template" r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand href={maker.href} lead={text(data.ctaLead) || "Upload one product photo. See the cost before you start."} r={r} title={`Try ${data.label} with your product`} />
@@ -595,6 +601,7 @@ function IndexPage({ data, r }: Props) {
           </div>
         </section>
       ) : null}
+      <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title="Questions" r={r} />
       {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
       </>}
