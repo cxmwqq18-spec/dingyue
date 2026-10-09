@@ -7081,6 +7081,14 @@
       "variants": [
         1200
       ]
+    },
+    "t33-model-photos-og-r2": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Person in a gray hoodie and jeans walking along a tree-lined city street in autumn, face turned away",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {
