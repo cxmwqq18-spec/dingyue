@@ -4,7 +4,7 @@
   "description": "Make product packshot photos that show the front, back, and buttons of your item on a clean backdrop. Upload one photo per side and build your gallery today.",
   "h1": "Product Packshot Photos for Multiple Views of Your Item",
   "eyebrow": "Product photo template",
-  "lead": "Product packshot photos start with a separate source photo for each side you want to show. Build a square set around the front, back, top, or base views buyers need in your gallery.",
+  "lead": "Product packshot photos start with a separate source photo for each side you want to show. Build a square set around the front, back, top, or base views buyers need in your gallery. Mention the view a buyer needs, such as rear ports or a base label, so each run has one clear job and the gallery remains easy to scan.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -20,15 +20,15 @@
   "steps": [
     {
       "t": "Upload one clear side",
-      "d": "Keep the whole item in frame and face the camera toward the surface you want to show."
+      "d": "Keep the entire item in frame and point the camera at the surface you want to preserve. Avoid cutting off ports, handles, or corners."
     },
     {
       "t": "Name the view and backdrop",
-      "d": "Describe one side, such as the rear ports, then reuse the backdrop wording for the next photo."
+      "d": "Name the side and backdrop, such as rear ports on pale gray, then reuse that description so each angle shares one setting."
     },
     {
       "t": "Add each angle to the gallery",
-      "d": "Download the view, then place it after the main image in your store gallery."
+      "d": "Download the view, compare openings and controls with the source, and place it after the hero image where shoppers look for that answer."
     }
   ],
   "ideas": [
@@ -65,27 +65,27 @@
   "faq": [
     {
       "q": "Should I photograph each side separately?",
-      "a": "Yes. Give the back, base, and close details their own sharp source photos when shoppers need to see them."
+      "a": "Yes. Give the back, base, and close details their own sharp source photos when shoppers need to see them. A separate source for each side keeps ports, controls, and labels tied to the real surface instead of asking the tool to invent a hidden view."
     },
     {
       "q": "Can one photo reveal a hidden port?",
-      "a": "Use a real photo of that side so the port and its placement come from your item."
+      "a": "Use a real photo of that side so the port and its placement come from your item. Keep the front hero first, then put the view that answers the most frequent question, such as connector type or closure, before less important angles."
     },
     {
       "q": "Where do multi-angle photos belong?",
-      "a": "Add the front first, then use side views to show controls, connectors, closures, or other product details."
+      "a": "Add the front first, then use side views to show controls, connectors, closures, or other product details. A clear JPG, PNG, or WebP is sufficient; use matching light and a stable camera distance so the set looks consistent."
     },
     {
       "q": "What file format and size should the source photos be?",
-      "a": "JPG, PNG, or Web Photos that clearly show the whole product work best. Shoot the front, back, and any port or button in similar light so the gallery reads as one set."
+      "a": "JPG, PNG, or Web Photos that clearly show the whole product work best. Shoot the front, back, and any port or button in similar light so the gallery reads as one set. Three or four views cover many small listings, but add a base or control view when it resolves a question buyers regularly ask."
     },
     {
       "q": "How many angle photos do I need?",
-      "a": "Three to four cover most listings: a front hero, a back view, and one or two detail angles. Start with the views shoppers ask about most."
+      "a": "Three to four cover most listings: a front hero, a back view, and one or two detail angles. Start with the views shoppers ask about most.  Check the full item and its controls in the source before generating; hidden ports should come from a real view, not an invented angle."
     },
     {
       "q": "How many credits does each angle photo cost?",
-      "a": "Each generated angle photo costs 24 credits, and the cost appears before you run it. A failed job returns its credits to your balance."
+      "a": "Each generated angle photo costs 24 credits, and the cost appears before you run it. A failed job returns its credits to your balance.  Use one front hero, one rear or side view, and one detail view when the product has controls or connectors buyers need to inspect."
     }
   ],
   "overview": [
@@ -222,7 +222,7 @@
     ]
   },
   "visual": {
-    "overview": "Show the front, back, top, and useful details from separate photos of the real item. Use a steady backdrop so a product gallery reads as one set.",
+    "overview": "Show the front, rear, top, and base from separate photos of the real item so shoppers can inspect the parts they cannot turn over online. Keep the camera height, distance, backdrop, and shadow direction consistent across the set. A speaker can show its grille, controls, strap, ports, and feet; a charger can show its connector and rating panel. Use the front as the gallery lead, then put the view that answers the most common question next. Every generated angle still needs a check against the supplied product before it goes live. Keep reflections controlled on glossy electronics and leave enough margin around corners for a consistent crop. This approach helps sellers answer fit, connection, and construction questions with real views.",
     "strip": [
       "n:guide:tpl-angle-round4-speaker-controls",
       "n:guide:q7-angle-strip-1",
@@ -253,7 +253,7 @@
     },
     "picker": {
       "title": "Choose a multi-angle ad format",
-      "lead": "Use a clear product view, detail, or creator moment to answer a shopper’s question.",
+      "lead": "Choose an advertising moment that makes one side worth inspecting. Use a hands-on reveal for ports, a creator review for a clasp, or a texture close-up when the surface itself sells the item.",
       "chips": [
         {
           "id": "hands",
@@ -355,13 +355,13 @@
         "frame": "listing",
         "ref": "n:guide:q7-angle-picker-cards-3",
         "h": "Show a daypack back panel in a listing",
-        "d": "A hand lifts the pack by its top handle so shoppers can inspect the straps and back padding."
+        "d": "A hand lifts the daypack by its top handle and turns the back toward a listing camera, keeping the straps, padding, seams, and pocket openings visible so a buyer can judge construction before ordering. For a listing, follow the hero with the rear or base view that confirms compatibility, then keep a detail angle for shoppers who zoom on mobile."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q7-angle-uses-1-r3",
         "h": "Review a compact USB-C charger",
-        "d": "An adult creator holds the charger near their face with its port turned toward the camera."
+        "d": "An adult creator holds a compact USB-C charger near their face and turns its port toward the camera. This works for a product-page detail or a feed post that answers a compatibility question. For a product-page or feed post, turn the charger slowly enough for the port to remain legible and use editable text for compatibility details."
       }
     ],
     "input": [
@@ -397,8 +397,9 @@
         "Product details"
       ],
       "items": [
-        "Place the clearest front image first, then add the back and detail views.",
-        "Type dimensions and compatibility notes in your listing so they stay editable."
+        "Place the clearest front image first, then add the side that answers the main buying question before rear and base views.",
+        "Compare ports, labels, openings, and button counts with the real item before publishing; an angle image cannot verify a hidden feature.",
+        "Type dimensions and compatibility notes in your listing, and keep one crop and background treatment across the set so it reads as one shoot."
       ]
     },
     "titles": {
