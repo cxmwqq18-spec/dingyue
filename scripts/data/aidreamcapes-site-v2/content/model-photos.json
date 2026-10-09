@@ -59,6 +59,14 @@
     {
       "q": "Can I ask for a celebrity or a well-known model?",
       "a": "Describe a general look, pose and setting instead of requesting a real person or suggesting a public figure endorses your product."
+    },
+    {
+      "q": "What should I provide for a try-on?",
+      "a": "Provide a flat garment photo or a clear accessory photo with the whole item visible."
+    },
+    {
+      "q": "Will the output replace measurements?",
+      "a": "No. Keep verified measurements and size information in the product listing."
     }
   ],
   "overview": [
