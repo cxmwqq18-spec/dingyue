@@ -7257,6 +7257,14 @@
       "variants": [
         1200
       ]
+    },
+    "t33-image-to-video-og-r2": {
+      "w": 1200,
+      "h": 630,
+      "alt": "The same speckled ceramic mug with a curl of steam in morning light.",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {
