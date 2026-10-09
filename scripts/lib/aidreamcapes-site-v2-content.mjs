@@ -497,6 +497,110 @@ function pickRelatedCards(model, direct, fallback, count) {
   return [...chosen, ...pickCards(model, fallback.filter((key) => !used.has(key)), count - chosen.length)];
 }
 
+// Template detail pages use a stricter relevance order than collection pages. Keep the
+// source card order for ties, and only move to a weaker relationship when the stronger
+// relationship does not provide all three cards. The spread ledger is restored to the
+// existing template allocations below so this local More change cannot reshuffle cards on
+// collection pages that still use the shared ledger.
+const TEMPLATE_MORE_CARD_USAGE_BASELINE = Object.freeze({
+  "tpl-angle": ["detail", "box", "light"],
+  "tpl-detail": ["box", "tryon", "jewel"],
+  "tpl-size": ["color", "angle", "detail"],
+  "tpl-color": ["size", "box", "feed"],
+  "tpl-box": ["pack", "light", "story"],
+  "tpl-pack": ["bg", "tryon", "look"],
+  "tpl-light": ["size", "color", "story"],
+  "tpl-tryon": ["jewel", "look", "sale"],
+  "tpl-jewel": ["feed", "ugc", "story"],
+  "tpl-look": ["model", "life", "sale"],
+  "tpl-head": ["angle", "detail", "box"],
+  "tpl-ugc": ["jewel", "look", "feed"],
+  "tpl-story": ["light", "ugc", "sale"],
+  "tpl-sale": ["model", "tryon", "story"],
+  "tpl-howto": ["product-feature-callout-video", "ba", "home"],
+  "tpl-film": ["carousel-video-ad", "spark-ads-style-video", "retargeting-video-ad"],
+  "tpl-beauty": ["limited-drop-alert-video", "product-feature-callout-video", "drink"],
+  "tpl-drink": ["limited-drop-alert-video", "carousel-video-ad", "spark-ads-style-video"],
+  "tpl-home": ["retargeting-video-ad", "beauty", "demo"],
+  "tpl-outfit": ["drink", "home", "launch"],
+  "tpl-launch": ["howto", "film", "outfit"],
+  "tpl-compare": ["unbox", "demo", "ba"],
+  "tpl-bf": ["limited-drop-alert-video", "product-feature-callout-video", "carousel-video-ad"],
+  "tpl-limited-drop-alert-video": ["spark-ads-style-video", "retargeting-video-ad", "bf"],
+  "tpl-product-feature-callout-video": ["creator", "beauty", "film"],
+  "tpl-carousel-video-ad": ["drink", "launch", "outfit"],
+  "tpl-spark-ads-style-video": ["limited-drop-alert-video", "home", "bf"],
+  "tpl-retargeting-video-ad": ["product-feature-callout-video", "carousel-video-ad", "spark-ads-style-video"]
+});
+
+function pickTemplateMoreCards(model, page, sameKind, count) {
+  const industries = new Set(page.industries ?? []);
+  const platforms = new Set(page.platforms ?? []);
+  const occasions = new Set(page.occasions ?? []);
+  const seen = new Set();
+  const ordered = [];
+
+  const uniqueCards = sameKind.filter((card) => {
+    if (seen.has(card.key)) return false;
+    seen.add(card.key);
+    return true;
+  });
+  const originalOrder = new Map(uniqueCards.map((card, index) => [card.key, index]));
+  const sharedCount = (values, wanted) => values.filter((value) => wanted.has(value)).length;
+  const industryCards = [];
+  const occasionCards = [];
+  const platformCards = [];
+  const fallbackCards = [];
+
+  for (const card of uniqueCards) {
+    const industryCount = sharedCount(card.ind, industries);
+    if (industryCount) {
+      industryCards.push({ card, score: industryCount });
+      continue;
+    }
+    const occasionCount = sharedCount(card.occ, occasions);
+    if (occasionCount) {
+      occasionCards.push({ card, score: occasionCount });
+      continue;
+    }
+    const platformCount = sharedCount(card.plat, platforms);
+    if (platformCount) {
+      platformCards.push({ card, score: platformCount });
+      continue;
+    }
+    fallbackCards.push(card);
+  }
+
+  const byScoreThenSource = (a, b) => b.score - a.score || originalOrder.get(a.card.key) - originalOrder.get(b.card.key);
+  industryCards.sort(byScoreThenSource);
+  occasionCards.sort(byScoreThenSource);
+  platformCards.sort(byScoreThenSource);
+  ordered.push(...industryCards.map(({ card }) => card), ...occasionCards.map(({ card }) => card), ...platformCards.map(({ card }) => card), ...fallbackCards);
+
+  const chosen = [];
+  for (const card of ordered) {
+    if (chosen.length >= count) break;
+    const result = cardRef(model, card.key);
+    if (result) chosen.push(result);
+  }
+  return chosen;
+}
+
+function restoreTemplateMoreCardUsage(model, page, cards) {
+  const baseline = TEMPLATE_MORE_CARD_USAGE_BASELINE[page.id];
+  if (!baseline) return;
+  const counts = (keys) => keys.reduce((result, key) => result.set(key, (result.get(key) ?? 0) + 1), new Map());
+  const actual = counts(cards.map((card) => card.key));
+  const expected = counts(baseline);
+  const keys = new Set([...actual.keys(), ...expected.keys()]);
+  for (const key of keys) {
+    const delta = (expected.get(key) ?? 0) - (actual.get(key) ?? 0);
+    if (!delta) continue;
+    adjustUseCount(model.cardUse, key, delta);
+    if (model.spreadEnabled) adjustUseCount(model.spreadUse, key, delta);
+  }
+}
+
 function adjustUseCount(map, key, amount) {
   if (!key) return;
   const next = (map.get(key) ?? 0) + amount;
@@ -1579,14 +1683,13 @@ function payloadFor(model, page) {
     const key = page.id.slice(4);
     const tool = model.byId[page.made_with];
     const sameKind = model.cards.filter((card) => card.key !== key && card.kind === page.group);
-    const related = sameKind.filter((card) => card.ind.some((x) => page.industries.includes(x)) || card.plat.some((x) => page.platforms.includes(x)) || card.occ.some((x) => (page.occasions ?? []).includes(x))).map((card) => card.key);
-    const fallback = sameKind.map((card) => card.key).filter((k) => !related.includes(k));
     const platformIds = page.platforms.map((slug) => `plat-${slug}`);
     const industryIds = page.industries.map((slug) => `ind-${slug}`);
     const occasionIds = (page.occasions ?? []).map((slug) => `occ-${slug}`);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
-    const moreCards = applyCardOverrides(model, page, pickRelatedCards(model, related, fallback, 3));
+    const moreCards = applyCardOverrides(model, page, pickTemplateMoreCards(model, page, sameKind, 3));
+    restoreTemplateMoreCardUsage(model, page, moreCards);
     const caseCards = caseCardsFor(model, page, moreCards);
     const maker = { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c);

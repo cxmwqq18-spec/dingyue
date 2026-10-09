@@ -301,26 +301,11 @@
       }
     }
   },
-  "tpl-color": {
-    "images": {
-      "box": {
-        "ref": "n:guide:k9-tpl-color-box-headphones",
-        "alt": "Matte-black headphones lifted from an open kraft box."
-      }
-    }
-  },
-  "tpl-jewel": {
-    "images": {
-      "feed": {
-        "ref": "g:feed-ad-still/example-06",
-        "alt": "Pair of running shoes arranged together in a clean product photo."
-      }
-    }
-  },
+  "tpl-color": {},
+  "tpl-jewel": {},
   "occ-black-friday": {
     "swap": {
-      "story": "sale",
-      "howto": "demo"
+      "story": "sale"
     },
     "images": {
       "sale": {
@@ -330,10 +315,6 @@
       "creator": {
         "ref": "n:guide:q20-occ-bf-override-creator",
         "alt": "Adult creator holds a plain hot-sauce bottle and explains it to camera."
-      },
-      "demo": {
-        "ref": "n:gen2:product-videos-g5",
-        "alt": "Handheld milk frother foaming milk in a glass cup."
       }
     }
   },
@@ -360,17 +341,7 @@
       }
     }
   },
-  "tpl-carousel-video-ad": {
-    "swap": {
-      "home": "launch"
-    },
-    "images": {
-      "outfit": {
-        "ref": "n:guide:q13-carousel-card-outfit-r1",
-        "alt": "Adult wearing a bright blue zip-front jacket and jeans in a home entryway."
-      }
-    }
-  },
+  "tpl-carousel-video-ad": {},
   "plat-tiktok": {
     "images": {
       "outfit": {
@@ -452,19 +423,11 @@
       "howto": {
         "ref": "f:how-to-video",
         "alt": "Portable garment steamer next to a folded blue shirt on a wooden table"
-      },
-      "outfit": {
-        "ref": "f:fashion-try-on-reel",
-        "alt": "A model puts on a beige overshirt, turns, and examines its fabric."
       }
     }
   },
   "tpl-beauty": {
     "images": {
-      "drink": {
-        "ref": "f:food-video-t06",
-        "alt": "Golden sparkling drink poured from a glass bottle into a glass with ice and an orange slice"
-      },
       "limited-drop-alert-video": {
         "ref": "g:sale-campaign-key-visual/example-07",
         "alt": "Square seasonal campaign crop with open space for an offer."
@@ -477,10 +440,6 @@
   },
   "tpl-bf": {
     "images": {
-      "limited-drop-alert-video": {
-        "ref": "n:guide:q13-limited-hero",
-        "alt": "Get-ready-with-me try-on: hiker ties trail shoes"
-      },
       "product-feature-callout-video": {
         "ref": "n:guide:q13-feature-hero-r3",
         "alt": "Adult applies cleanser foam beside a plain white pump bottle."
@@ -497,53 +456,20 @@
         "ref": "n:gen2:examples-g2",
         "alt": "Green glass bottle filled at a kitchen tap in a vertical frame."
       },
-      "carousel-video-ad": {
-        "ref": "f:product-video",
-        "alt": "Compact espresso machine shown on a kitchen counter."
-      },
       "spark-ads-style-video": {
         "ref": "n:gen2:ind-food-drinks-g3",
         "alt": "Pasta sauce jar beside a finished plate of pasta."
       }
     }
   },
-  "tpl-home": {
-    "images": {
-      "retargeting-video-ad": {
-        "ref": "f:before-after-showcases",
-        "alt": "Wardrobe shelves arranged with neatly folded clothes."
-      }
-    }
-  },
-  "tpl-light": {
-    "images": {
-      "color": {
-        "ref": "n:gen2:examples-g8",
-        "alt": "Wool throw styled on a garden bench in spring."
-      }
-    }
-  },
-  "tpl-head": {
-    "images": {
-      "box": {
-        "ref": "n:guide:tpl-head-round4-01",
-        "alt": "Square headshot of an adult Black woman with short natural curls against a warm taupe studio backdrop."
-      }
-    }
-  },
+  "tpl-home": {},
+  "tpl-light": {},
+  "tpl-head": {},
   "tpl-ugc": {
     "images": {
       "jewel": {
         "ref": "n:guide:k6-tpl-ugc-card-jewel",
         "alt": "Plain gold bracelet on an adult wrist beside a neutral knit sleeve, close view."
-      },
-      "look": {
-        "ref": "n:guide:k6-tpl-ugc-card-look",
-        "alt": "Close view of blue cotton fabric with visible plain stitching and soft folds."
-      },
-      "feed": {
-        "ref": "n:guide:k6-tpl-ugc-card-feed",
-        "alt": "Charcoal trail running shoe with visible mesh and laces on a pale stone surface."
       }
     }
   },
@@ -710,23 +636,9 @@
       }
     }
   },
-  "tpl-story": {
-    "images": {
-      "ugc": {
-        "ref": "n:q10-story-more-ugc",
-        "alt": "Adult creator speaks to camera while holding an amber serum bottle."
-      }
-    }
-  },
+  "tpl-story": {},
   "tpl-howto": {
-    "swap": {
-      "demo": "ba"
-    },
     "images": {
-      "product-feature-callout-video": {
-        "ref": "n:q10-howto-more-feature",
-        "alt": "Adult uses a white electric toothbrush in a bright bathroom."
-      },
       "ba": {
         "ref": "n:q10-howto-more-before-after",
         "alt": "Adult steams one side of a hanging blue shirt to show the smooth result."
@@ -742,60 +654,18 @@
       "spark-ads-style-video": {
         "ref": "n:q10-film-more-creator",
         "alt": "Adult speaks to camera while wearing plain cream over-ear headphones."
-      },
-      "retargeting-video-ad": {
-        "ref": "n:q10-film-more-retargeting",
-        "alt": "Adult shows a plain running shoe while speaking to camera."
       }
     }
   },
   "tpl-compare": {
-    "swap": {
-      "howto": "ba"
-    },
     "images": {
       "ba": {
         "ref": "n:guide:q3-before-after-videos-hero-pet-hair",
         "alt": "An adult creator presents a pet-hair roller beside a partly cleared sofa."
       },
-      "unbox": {
-        "ref": "n:guide:q3-unboxing-videos-hero-serum-box",
-        "alt": "Adult hands reveal an unmarked serum bottle from a tissue-lined box."
-      },
       "demo": {
         "ref": "n:guide:q3-product-videos-hero-serum",
         "alt": "An adult creator presents an unmarked amber serum bottle in soft bathroom light."
-      }
-    }
-  },
-  "plat-facebook": {
-    "images": {
-      "feed": {
-        "ref": "n:hotsauce-tacos",
-        "alt": "Red hot sauce being poured from a glass bottle onto tacos on a rustic table"
-      }
-    }
-  },
-  "tpl-product-feature-callout-video": {
-    "swap": {
-      "howto": "film"
-    },
-    "images": {
-      "creator": {
-        "ref": "n:guide:q13-feature-card-creator-r1",
-        "alt": "Adult presenter holds a plain white cleanser pump bottle beside their face."
-      }
-    }
-  },
-  "tpl-limited-drop-alert-video": {
-    "images": {
-      "spark-ads-style-video": {
-        "ref": "n:guide:q13-limited-card-spark-r1",
-        "alt": "Adult creator holds a coral trail shoe and points to its tread outdoors."
-      },
-      "retargeting-video-ad": {
-        "ref": "n:guide:q13-limited-card-retarget-r1",
-        "alt": "Adult wearing coral trail shoes while stepping onto a rocky path."
       }
     }
   },
@@ -812,6 +682,15 @@
       "launch": {
         "ref": "f:q18-facebook-card-launch-lamp-before-after",
         "alt": "An adult writes in a planner under a compact black table lamp in the bright half of a split before-and-after desk scene."
+      }
+    }
+  },
+  "tpl-product-feature-callout-video": {},
+  "tpl-limited-drop-alert-video": {
+    "images": {
+      "retargeting-video-ad": {
+        "ref": "n:guide:q13-limited-card-retarget-r1",
+        "alt": "Adult wearing coral trail shoes while stepping onto a rocky path."
       }
     }
   },
@@ -833,25 +712,9 @@
   },
   "tpl-retargeting-video-ad": {
     "images": {
-      "spark-ads-style-video": {
-        "ref": "n:guide:k9-retargeting-creator-smartwatch",
-        "alt": "Adult creator holds a round-faced smartwatch toward the camera during a casual review."
-      },
       "product-feature-callout-video": {
         "ref": "n:guide:k9-retargeting-demo-espresso",
         "alt": "Adult hand presses the button on a compact espresso maker as espresso pours into a glass cup."
-      }
-    }
-  },
-  "tpl-launch": {
-    "images": {
-      "howto": {
-        "ref": "f:how-to-video",
-        "alt": "Portable garment steamer next to a folded blue shirt on a wooden table"
-      },
-      "outfit": {
-        "ref": "n:guide:k9-tpl-outfit-hero",
-        "alt": "Adult model adjusts the cuff of a beige overshirt while checking the fit in a mirror."
       }
     }
   }
