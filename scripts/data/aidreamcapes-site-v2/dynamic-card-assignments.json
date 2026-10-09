@@ -398,9 +398,7 @@
     },
     "tpl-howto": {
       "product-feature-callout-video": [
-        {
-          "fallback": true
-        }
+        "s:v_demo"
       ],
       "home": [
         "f:home-organization-t07"
@@ -414,58 +412,40 @@
     },
     "tpl-film": {
       "carousel-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_film"
       ],
       "spark-ads-style-video": [
-        {
-          "fallback": true
-        }
+        "s:v_creator_ad"
       ],
       "retargeting-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_compare"
       ]
     },
     "tpl-beauty": {
       "limited-drop-alert-video": [
-        {
-          "fallback": true
-        }
+        "s:v_launch"
       ],
       "drink": [
         "n:drink-vertical"
       ],
       "product-feature-callout-video": [
-        {
-          "fallback": true
-        }
+        "s:v_demo"
       ]
     },
     "tpl-drink": {
       "limited-drop-alert-video": [
-        {
-          "fallback": true
-        }
+        "s:v_launch"
       ],
       "carousel-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_film"
       ],
       "spark-ads-style-video": [
-        {
-          "fallback": true
-        }
+        "s:v_creator_ad"
       ]
     },
     "tpl-home": {
       "retargeting-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_compare"
       ],
       "beauty": [
         "f:beauty-routine-t10"
@@ -512,19 +492,13 @@
     },
     "tpl-bf": {
       "limited-drop-alert-video": [
-        {
-          "fallback": true
-        }
+        "s:v_launch"
       ],
       "product-feature-callout-video": [
-        {
-          "fallback": true
-        }
+        "s:v_demo"
       ],
       "carousel-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_film"
       ]
     },
     "tpl-limited-drop-alert-video": {
@@ -532,14 +506,10 @@
         "f:black-friday-countdown-t09"
       ],
       "spark-ads-style-video": [
-        {
-          "fallback": true
-        }
+        "s:v_creator_ad"
       ],
       "retargeting-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_compare"
       ]
     },
     "tpl-product-feature-callout-video": {
@@ -578,53 +548,35 @@
         "f:black-friday-countdown-t11"
       ],
       "limited-drop-alert-video": [
-        {
-          "fallback": true
-        }
+        "s:v_launch"
       ]
     },
     "tpl-retargeting-video-ad": {
       "product-feature-callout-video": [
-        {
-          "fallback": true
-        }
+        "s:v_demo"
       ],
       "carousel-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_film"
       ],
       "spark-ads-style-video": [
-        {
-          "fallback": true
-        }
+        "s:v_creator_ad"
       ]
     },
     "templates": {
       "limited-drop-alert-video": [
-        {
-          "fallback": true
-        }
+        "s:v_launch"
       ],
       "product-feature-callout-video": [
-        {
-          "fallback": true
-        }
+        "s:v_demo"
       ],
       "carousel-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_film"
       ],
       "spark-ads-style-video": [
-        {
-          "fallback": true
-        }
+        "s:v_creator_ad"
       ],
       "retargeting-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_compare"
       ],
       "creator": [
         "n:gen2:product-videos-c2"
@@ -736,9 +688,7 @@
     },
     "ind-fashion-clothing": {
       "retargeting-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_compare"
       ],
       "life": [
         "n:coffee-breakfast"
@@ -755,9 +705,7 @@
         "n:hotsauce-tacos"
       ],
       "limited-drop-alert-video": [
-        {
-          "fallback": true
-        }
+        "s:v_launch"
       ]
     },
     "ind-jewelry-accessories": {
@@ -803,9 +751,7 @@
         null
       ],
       "carousel-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_film"
       ],
       "howto": [
         "f:how-to-video-t07"
@@ -819,9 +765,7 @@
         "u:broll"
       ],
       "spark-ads-style-video": [
-        {
-          "fallback": true
-        }
+        "s:v_creator_ad"
       ]
     },
     "ind-home-living": {
@@ -843,9 +787,7 @@
         "f:home-organization-t07"
       ],
       "product-feature-callout-video": [
-        {
-          "fallback": true
-        }
+        "s:v_demo"
       ]
     },
     "plat-instagram": {
@@ -865,9 +807,7 @@
         null
       ],
       "retargeting-video-ad": [
-        {
-          "fallback": true
-        }
+        "s:v_compare"
       ]
     },
     "plat-facebook": {
@@ -948,9 +888,7 @@
         "f:black-friday-countdown-t02"
       ],
       "limited-drop-alert-video": [
-        {
-          "fallback": true
-        }
+        "s:v_launch"
       ]
     },
     "occ-black-friday": {

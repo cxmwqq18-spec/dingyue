@@ -183,7 +183,7 @@ function buildModel(source) {
   const cardByKey = Object.fromEntries(cards.map((card) => [card.key, card]));
   // Page assignments choose each dynamic card image. The counters preserve the existing
   // cross-page card-list ranking; pageUse prevents same-page repeats.
-  return { pages, byId, content, images, media, cardOverrides, cardAssignmentDocument, cardAssignments: cardAssignmentDocument.pages ?? {}, cardAssignmentErrors: [], cardAssignmentUse: new Map(), cardOverrideErrors: [], cardOverrideCardKeys: new Map(), ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
+  return { pages, byId, content, images, media, cardOverrides, cardAssignmentDocument, cardAssignments: cardAssignmentDocument.pages ?? {}, cardAssignmentErrors: [], cardAssignmentUse: new Map(), cardOverrideErrors: [], cardOverrideCardKeys: new Map(), ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), siteImageOwnersByBase: new Map(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
 }
 
 function imageRef(model, key, alt) {
@@ -332,6 +332,61 @@ function cardChoices(model, key) {
   return [...new Set([primary, ...planned, ...fromGallery])];
 }
 
+function targetMainImageBase(model, pageId) {
+  const image = heroImageOf(heroMediaFor(model, pageId));
+  return image?.src ? imageBase(image.src) : undefined;
+}
+
+function reservationOwner(model, pageId, key, ref) {
+  const targetId = model.cardByKey[key]?.pageId;
+  if (!targetId || !knownMediaRef(model, ref)) return pageId;
+  const base = imageBase(mediaImage(model, ref, "card").src);
+  return base === targetMainImageBase(model, targetId) ? targetId : pageId;
+}
+
+function reserveSiteImage(model, ownersByBase, pageId, ref) {
+  if (!knownMediaRef(model, ref)) return;
+  const base = imageBase(mediaImage(model, ref, "card").src);
+  const owners = ownersByBase.get(base) ?? new Set();
+  owners.add(pageId);
+  ownersByBase.set(base, owners);
+}
+
+function buildSiteImageOwners(model) {
+  const ownersByBase = new Map();
+  for (const page of model.pages) {
+    for (const ref of plannedRefs(model, page.id)) reserveSiteImage(model, ownersByBase, page.id, ref);
+    for (const [key, entries] of Object.entries(model.cardAssignments[page.id] ?? {})) {
+      if (!Array.isArray(entries)) continue;
+      for (const ref of entries) {
+        if (typeof ref === "string") reserveSiteImage(model, ownersByBase, reservationOwner(model, page.id, key, ref), ref);
+      }
+    }
+    const override = model.cardOverrides[page.id] ?? {};
+    for (const [key, image] of Object.entries(override.images ?? {})) {
+      if (typeof image?.ref === "string") reserveSiteImage(model, ownersByBase, reservationOwner(model, page.id, key, image.ref), image.ref);
+    }
+    for (const image of Object.values(override.tools ?? {})) {
+      if (typeof image?.ref === "string") reserveSiteImage(model, ownersByBase, page.id, image.ref);
+    }
+  }
+  return ownersByBase;
+}
+
+function fallbackCardChoices(model, key, pool) {
+  const targetId = model.cardByKey[key]?.pageId;
+  const targetBase = targetId ? targetMainImageBase(model, targetId) : undefined;
+  return pool.filter((candidate) => {
+    if (model.pageUse.has(candidate)) return false;
+    const base = imageBase(mediaImage(model, candidate, "card").src);
+    const otherOwners = [...(model.siteImageOwnersByBase.get(base) ?? [])].filter((pageId) => pageId !== model.currentPageId);
+    if (!otherOwners.length) return true;
+    // A linked card may show its target page's main image; the reuse validator attributes that
+    // picture to the target page instead of the page containing the link card.
+    return Boolean(targetBase && base === targetBase && otherOwners.every((pageId) => pageId === targetId));
+  });
+}
+
 function cardRef(model, key, role = "alt", force = false) {
   const card = model.cardByKey[key];
   assert.ok(card, `unknown card ${key}`);
@@ -357,16 +412,22 @@ function cardRef(model, key, role = "alt", force = false) {
   if (!hasAssignment && !force && model.spreadEnabled && (model.spreadUse.get(key) ?? 0) >= limit && !preserveMinimum) return null;
   const choices = cardChoices(model, key);
   const pool = role === "alt" && choices.length > 1 ? choices.slice(1) : choices;
-  const free = pool.filter((candidate) => !model.pageUse.has(candidate));
+  const fallbackPool = role === "alt" ? [...pool, ...choices.slice(0, 1)] : pool;
+  const free = fallbackCardChoices(model, key, fallbackPool);
   let ref = hasAssignment && typeof assignedRef === "string" ? assignedRef : undefined;
   let accountingRef = hasAssignment ? (typeof assignedRef === "string" ? assignedRef : null) : undefined;
-  if (!ref || model.pageUse.has(ref)) ref = free[0] ?? pool[0];
+  const assignedImageConflictsWithPage = typeof assignedRef === "string" && model.pageUse.has(assignedRef);
+  if (!ref || assignedImageConflictsWithPage) ref = free[0];
   if (hasAssignment && typeof assignedRef === "string" && !knownMediaRef(model, assignedRef)) {
     model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} has an unknown assigned image ${assignedRef}`);
-    ref = free[0] ?? pool[0];
+    ref = free[0];
+  }
+  if (!ref) {
+    model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} call ${assignmentIndex + 1} needs an explicit image assignment; no unused site-wide candidate remains`);
+    return null;
   }
   if (!hasAssignment) accountingRef = ref;
-  if (ref && model.pageUse.has(ref)) {
+  if (model.pageUse.has(ref)) {
     // A page-local media edit can make an old allocation unavailable. Keep the
     // shared card-spread ledger tied to the explicit allocation so this local
     // change cannot reshuffle other pages.
@@ -1555,6 +1616,7 @@ function livePageTypeFor(page) {
 
 export function buildSiteV2(source = loadSiteV2Source()) {
   const model = buildModel(source);
+  model.siteImageOwnersByBase = buildSiteImageOwners(model);
   const pages = model.pages.map((page) => {
     const c = model.content[page.id];
     // The total video hub, examples gallery, and /templates directory are
