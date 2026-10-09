@@ -47,6 +47,7 @@ function HomePage({ data, r }: Props) {
   const ugc = data.ugc as { eyebrow?: string; title?: string; paras?: string[]; formats?: V2Item[] } | undefined;
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   return (
     <>
       <section className="hero">
@@ -163,7 +164,7 @@ function HomePage({ data, r }: Props) {
         </div>
       </Section> : null}
       {visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} visual={visual} r={r} /> : <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>}
-      {visual ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />}
+      {visual ? <VisualPicker pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />}
       {visual ? <VisualSizes visual={visual} r={r} /> : <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />}
       {visual ? <VisualInput visual={visual} r={r} /> : <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />}
       {visual ? <VisualOutputs includeLimitations={data.id === "home" && Boolean(visual.limitations.items.length)} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />}
@@ -613,6 +614,7 @@ function ActorDirectoryPage({ data, r }: Props) {
   const howTo = list<V2Item>(data.howTo);
   const honesty = data.honesty as { h2: string; items: V2Item[] } | undefined;
   const cta = data.cta as { title: string; lead: string; href: string } | undefined;
+  const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const filterOptions = [
     { key: "scene", label: "Scene", values: scenes },
     { key: "gender", label: "Gender", values: genders },
@@ -666,6 +668,14 @@ function ActorDirectoryPage({ data, r }: Props) {
     <section className="actor-support-copy"><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
     {howTo.length ? <Section eyebrow="How it works" title="Make a spoken product ad"><Steps items={howTo} /></Section> : null}
     {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
+    {relatedGroups.length ? <Section eyebrow="Related tools and guides" title="Plan the placement for your actor ad">
+      <div className="related">
+        {relatedGroups.map((group) => <div key={group.title}>
+          <h3>{group.title}</h3>
+          <ul>{group.links.map((item) => <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>)}</ul>
+        </div>)}
+      </div>
+    </Section> : null}
     <Faq items={data.faq} title="Questions" r={r} />
     {cta?.href ? <CtaBand href={r.href(cta.href)} lead={cta.lead} r={r} title={cta.title} /> : null}
   </>;

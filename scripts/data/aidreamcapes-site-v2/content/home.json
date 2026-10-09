@@ -366,7 +366,8 @@
           "label": "Earbud Demo: Wireless Earbud Fit",
           "chips": [
             "demo"
-          ],          "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult fits a small matte sage-green, stemless bean-shaped wireless earbud into one ear while holding its matching low, flat pill-shaped case in the other hand. Keep the earbud and case clearly visible in a bright everyday setting, tight side view, natural tech-ad style, no text, no logos.",
+          ],
+          "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult fits a small matte sage-green, stemless bean-shaped wireless earbud into one ear while holding its matching low, flat pill-shaped case in the other hand. Keep the earbud and case clearly visible in a bright everyday setting, tight side view, natural tech-ad style, no text, no logos.",
           "kind": "photo"
         },
         {
@@ -411,7 +412,36 @@
           "label": "Pet Problem: Brush Hair From Sofa",
           "chips": [
             "problem"
-          ],          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult uses a plain pet-hair remover across a sofa cushion while a calm dog sits nearby. Show the cleaned path and collected fur clearly, bright home light, close practical-ad composition, no text.",
+          ],
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult uses a plain pet-hair remover across a sofa cushion while a calm dog sits nearby. Show the cleaned path and collected fur clearly, bright home light, close practical-ad composition, no text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-pet-kit",
+          "label": "Unboxing: Pet Grooming Kit Reveal",
+          "chips": [
+            "unboxing"
+          ],
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Reveal a plain pet grooming kit from an open kraft box: a wood-handled brush, folded towel and blank shampoo bottle sit clearly in the box. Bright soft window light, clean overhead product-ad framing, no text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-scarf",
+          "label": "POV Hook: Scarf Pulled From Mailer",
+          "chips": [
+            "hooks",
+            "unboxing"
+          ],
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands pull a soft plain wool scarf from a white mailer onto a neatly made bed, revealing its texture and full length as the opening hook. Bright window light, overhead unboxing-ad composition, no text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-case-vacuum",
+          "label": "Problem to Fix: Crumbs Off Sofa",
+          "chips": [
+            "problem"
+          ],
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. A plain cordless handheld vacuum lifts visible crumbs from a dark fabric sofa, leaving a clean path beside the nozzle. Bright home light, close practical product-demo framing, show the tool and result clearly, no text.",
           "kind": "photo"
         }
       ],
@@ -448,21 +478,21 @@
       {
         "good": "n:gen2:white-background-c1",
         "bad": "n:guide:home-bottle-cropped",
-        "good_label": "Clear, complete bottle on plain surface",
-        "bad_label": "Bottle cap cropped out of frame"
+        "good_label": "Brushed steel bottle fully visible",
+        "bad_label": "Brushed steel bottle cap cropped"
       },
       {
-        "good": "n:gen2:plat-amazon-g4",
-        "bad": "n:guide:home-daypack-blurred",
-        "good_label": "Sharp, complete backpack on light background",
-        "bad_label": "Backpack details blurred and unclear"
+        "good": "n:guide:home-steamer-frame",
+        "bad": "n:guide:c1-tpl-howto-output-1",
+        "good_label": "Steamer control lit before the pass",
+        "bad_label": "Steamer beside shirt with no visible pass"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:q1-home-output-bite",
+        "ref": "f:k2-url-picker-water-bottle-desk",
         "frame": "1:1",
-        "label": "Street Interview: Protein Bar First Bite"
+        "label": "Bottle Demo: Brushed Steel Bottle on Desk"
       },
       {
         "ref": "n:guide:q1-home-output-steamer",
@@ -472,7 +502,7 @@
       }
     ],
     "after": {
-      "ref": "n:guide:q1-home-after-pet",
+      "ref": "n:guide:c1-tpl-howto-picker-steamer-detail-square",
       "zones": [
         "Your price",
         "Your headline"
@@ -480,7 +510,7 @@
       "items": [
         "Add approved prices and offer dates in your editor after download.",
         "Place captions and music yourself in an editor after download.",
-        "Compare labels and small product details with the real item before posting."
+        "Compare steam head, water tank and garment result with the real item before posting."
       ]
     },
     "sizes": [
@@ -504,10 +534,10 @@
       "m2": {
         "h2": "How to make AI product photos and videos in 3 steps"
       },
-  "m3": {
-    "h2": "AI ad moments organized by what each one is built to do",
-    "lead": "Filter by ad purpose. Each card shows one product in one moment you can actually run."
-  },
+      "m3": {
+        "h2": "AI ad moments organized by what each one is built to do",
+        "lead": "Filter by ad purpose. Each card shows one product in one moment you can actually run."
+      },
       "m4": {
         "h2": "Where to use your AI product photos and videos"
       },

@@ -7,7 +7,10 @@
   "lead": "Browse on-camera actors by setting and style. Each presenter holds a sample product and delivers a short line straight to camera.",
   "intro": [
     "These generated adult presenters are designed for product ads. Choose a setting and a delivery format, then replace the sample product and line with details you can support.",
-    "Every card opens the spokesperson workspace with a Seedance-style prompt. The people shown are AI-generated actors, not customers or independent reviewers."
+    "Every card opens the spokesperson workspace with a Seedance-style prompt. The people shown are AI-generated actors, not customers or independent reviewers.",
+    "Use the directory when the product needs a person to explain one visible detail: a pump, hinge, cap, fit, texture or package reveal. Match the setting to the shopping moment. A kitchen works for a drink ritual, while a desk or podcast room gives a small electronic feature enough space to read on a phone.",
+    "The actor links start with a vertical 9:16 composition and a 10-second delivery so you can review a focused first draft. Keep the spoken line to one claim and one action. If you need a six-second hook, a square placement or a longer edit, make that choice in your editor after checking the first result.",
+    "Before publishing, compare the generated hands, labels, color and moving parts with the real item. The actor can demonstrate what your source photo supports, but it cannot prove measurements, performance, safety or a result that the photo never showed."
   ],
   "actor_scenes": [
     "Car",
@@ -412,15 +415,15 @@
   "how_to": [
     {
       "t": "Add your product",
-      "d": "Start with a clear view of the product and keep its real details intact."
+      "d": "Start with a clear view of the product and keep its real details intact. Include the full item, the side a shopper needs to see and a label area that can be checked after rendering."
     },
     {
       "t": "Choose an actor and format",
-      "d": "Pick a scene and delivery style that fits the product and audience."
+      "d": "Pick a scene and delivery style that fits the product and audience. Use a close-up for jewelry or skincare details, a room with context for a home tool, and the preset 9:16, 10-second format for a first mobile ad draft."
     },
     {
       "t": "Write one spoken line",
-      "d": "Use a specific, supportable detail, then review the generated result before publishing."
+      "d": "Use a specific, supportable detail, then review the generated result before publishing. Write one observable feature, one action and a plain next step; read the line against the product page so a generated gesture does not turn into an unsupported promise."
     }
   ],
   "honesty": {
@@ -428,15 +431,15 @@
     "items": [
       {
         "t": "AI actors are not customers.",
-        "d": "Do not present a generated person as someone who bought or used the product."
+        "d": "Do not present a generated person as someone who bought or used the product. Say that the presenter is AI-generated when the ad or platform disclosure rules call for it."
       },
       {
         "t": "Keep endorsements accurate.",
-        "d": "A testimonial must reflect a real, authorized customer statement; do not invent personal experience."
+        "d": "A testimonial must reflect a real, authorized customer statement; do not invent personal experience. For a brand-written line, describe the feature or setup instead of claiming that the actor loved, tested or purchased it."
       },
       {
         "t": "Avoid false credentials or claims.",
-        "d": "Do not portray an actor as a doctor or make unsupported health or performance claims."
+        "d": "Do not portray an actor as a doctor or make unsupported health or performance claims. Keep health, fit and performance language tied to evidence in your approved product information, and remove any line you cannot verify."
       }
     ]
   },
@@ -456,6 +459,18 @@
     {
       "q": "How do I create an AI actor product ad?",
       "a": "Add your product, choose an actor and delivery style, write a supportable line, then review the result."
+    },
+    {
+      "q": "What format should I use for a first actor ad?",
+      "a": "Start with the directory's 9:16, 10-second preset for a mobile placement. Review the product details and spoken line first, then make a shorter cut or a different aspect ratio in your editor if the channel needs it."
+    },
+    {
+      "q": "How do I write a safe line for an AI actor?",
+      "a": "Name one visible feature, show one action and use only a claim you can support. Say what the product does or how it is set up; do not write a fictional review, medical promise or result that requires testing."
+    },
+    {
+      "q": "What should I check before publishing the actor clip?",
+      "a": "Compare the hands, product shape, label area, color and moving parts with the real item. Check the spoken words against the approved listing language, then add any required AI disclosure, price, caption or offer date in your editor."
     }
   ]
 }

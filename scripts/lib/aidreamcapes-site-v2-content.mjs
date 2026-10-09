@@ -1354,6 +1354,10 @@ function payloadFor(model, page) {
       templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
+      relatedGroups: [
+        { title: "Photo and listing prep", links: pageLinksFor(model, ["platforms", "guide-product-photo-tips", "guide-white-background-amazon", "blog-ai-product-photography-guide"]) },
+        { title: "Ad sizes and testing", links: pageLinksFor(model, ["guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-ugc-video-ads-guide"]) }
+      ],
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
       ...(c.audience ? { audience: { ...c.audience, items: (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) })) } } : {}),
       exampleGallery: examples,
@@ -1504,6 +1508,10 @@ function payloadFor(model, page) {
         image: mediaImage(model, actor.ref, "card"),
         href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10", promptOverride: actorSeedancePrompt(actor) })
       }));
+      out.relatedGroups = [
+        { title: "Formats for an actor-led ad", links: pageLinksFor(model, ["tpl-ugc", "tpl-howto", "tpl-film", "tpl-drink", "tpl-home", "tpl-outfit"]) },
+        { title: "Placement and review", links: pageLinksFor(model, ["tpl-launch", "tpl-compare", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
+      ];
       out.cta = { title: "Create a product ad with an AI actor", lead: "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true }) };
     } else if (page.id === "templates") {
       const chips = c.visual?.picker ?? [];
