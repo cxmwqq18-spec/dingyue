@@ -39516,6 +39516,116 @@
           640,
           1280
         ]
+      },
+      "f14-sale-steps-result-r2": {
+        "file": "f14-sale-steps-result-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult pulls the same blue hard-shell suitcase through a bright airport terminal; the full suitcase, handle, ridges, and wheels are visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-film-steps-result-r2": {
+        "file": "f14-film-steps-result-r2",
+        "w": 1280,
+        "h": 720,
+        "alt": "The same rounded pebble-shaped black speaker catches a cool cinematic highlight on a dark sideboard.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-ugc-output-0-r2-alt": {
+        "file": "f14-ugc-output-0-r2-alt",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same pale blue matte metal bottle rests on a gym bench beside a towel and bag after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10-ugc-pov-discovery": {
+        "file": "f14-r10-ugc-pov-discovery",
+        "w": 1280,
+        "h": 1280,
+        "alt": "First-person view of an adult hand lifting a matte blue reusable bottle from a canvas tote beside a cafe table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10-film-360-multi-angle": {
+        "file": "f14-r10-film-360-multi-angle",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Three views of the same rounded black portable speaker arranged on a turntable for a 360-degree reveal.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10-launch-kinetic-reveal": {
+        "file": "f14-r10-launch-kinetic-reveal",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Two adult hands pull cream paper wrap open to reveal a cobalt-blue ceramic travel mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10-launch-multi-angle-hero": {
+        "file": "f14-r10-launch-multi-angle-hero",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Olive canvas backpack shown in front, side, and back views on studio plinths.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10b-launch-hands-hold": {
+        "file": "f14-r10b-launch-hands-hold",
+        "w": 941,
+        "h": 1672,
+        "alt": "Two dark-skinned adult hands hold a plain amber glass dropper bottle with a blank white label in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10b-launch-hands-drop": {
+        "file": "f14-r10b-launch-hands-drop",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands hold a plain amber glass dropper bottle with a blank white label while lifting its black dropper above the open bottle at a bright bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10b-launch-card3-mug": {
+        "file": "f14-r10b-launch-card3-mug",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Older Black man holds a plain speckled ceramic mug with both hands in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f14-r10b-launch-card7-earbuds": {
+        "file": "f14-r10b-launch-card7-earbuds",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Older South Asian woman holds an open plain matte-black wireless-earbud case with both earbuds visible in a home office.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
