@@ -1,7 +1,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, normalizeStepLabel
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
@@ -556,6 +556,8 @@ function IndexPage({ data, r }: Props) {
         {list<V2Item>(data.features).length ? <Section eyebrow="What you can do" title="What the industry pages help you make">
           <Boxes items={list<V2Item>(data.features)} r={r} />
         </Section> : null}
+        {data.directorySpecs ? <DirectorySpecs specs={data.directorySpecs as never} /> : null}
+        {list<{ t: string; d: string; href?: string }>(data.directoryScenes).length ? <DirectoryScenes items={list<{ t: string; d: string; href?: string }>(data.directoryScenes)} r={r} /> : null}
         <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
         <Faq items={data.faq} title="Questions" r={r} />
         {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
