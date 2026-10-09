@@ -263,32 +263,38 @@
     {
       "t": "Unboxing: reveal the package",
       "d": "Use the box, tissue, and hands to show what arrives before the product is used.",
-      "href": "/ai-image-generation/bundle-sets"
+      "href": "/ai-image-generation/bundle-sets",
+      "image": "n:guide:q1-photo-template-pack"
     },
     {
       "t": "Detail: answer one product question",
       "d": "Fill the frame with texture, finish, or a useful component so a shopper can judge it quickly.",
-      "href": "/ai-image-generation/macro-details"
+      "href": "/ai-image-generation/macro-details",
+      "image": "n:q10-film-more-retargeting"
     },
     {
       "t": "Try-on: show fit in motion",
       "d": "Put the garment or accessory on a person and keep one natural movement visible.",
-      "href": "/ai-image-generation/virtual-try-on"
+      "href": "/ai-image-generation/virtual-try-on",
+      "image": "n:guide:c3-r3-tpl-tryon-knitdress"
     },
     {
       "t": "How-to: demonstrate one action",
       "d": "Show the product completing one useful step, with the starting and ending states easy to follow.",
-      "href": "/ai-video-generation/how-to-video"
+      "href": "/ai-video-generation/how-to-video",
+      "image": "n:guide:c1-tpl-howto-picker-kettle-action-square"
     },
     {
       "t": "Launch: reveal the new item",
       "d": "Build a clean reveal for launch day, then add the confirmed price or date in your editor.",
-      "href": "/ai-video-generation/promo-video"
+      "href": "/ai-video-generation/promo-video",
+      "image": "n:guide:q20-occ-holiday-steps-result-r2"
     },
     {
       "t": "Creator-style: hold and explain",
       "d": "Use an adult presenter with the product in hand and keep the spoken claim tied to a fact you can support.",
-      "href": "/ai-image-generation/ugc-still-ad"
+      "href": "/ai-image-generation/ugc-still-ad",
+      "image": "n:guide:q14-retarget-strip-talk"
     }
   ]
 }
