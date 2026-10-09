@@ -70,6 +70,18 @@
     {
       "q": "How can I explain the change?",
       "a": "Add before-and-after labels in your editor and describe the storage space in the caption."
+    },
+    {
+      "q": "Should I show before and after in one photo?",
+      "a": "Upload the current space and describe the organized result; the generated photo keeps the same room and organizer."
+    },
+    {
+      "q": "What should the source photo include?",
+      "a": "Show the drawer, shelf, or room as it is, with the organizing product clearly visible."
+    },
+    {
+      "q": "What does an organization photo cost?",
+      "a": "Each photo costs 24 credits, charged only when the job completes."
     }
   ],
   "overview": [
