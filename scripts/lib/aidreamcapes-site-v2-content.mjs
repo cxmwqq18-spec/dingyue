@@ -1547,6 +1547,7 @@ function payloadFor(model, page) {
       const imageOverrides = c.visual?.directoryFilters?.itemImages ?? {};
       out.items = model.pages.filter((p) => p.id.startsWith(prefix)).map((p) => ({ label: p.label, href: p.url, text: model.content[p.id].card || snippet(model.content[p.id].lead, 140), image: imageOverrides[p.url] ? mediaImage(model, imageOverrides[p.url], "card") : pageCardImage(model, p.id), filterTags: filterMap[p.url] ?? [] }));
       if (page.id === "industries") {
+        out.features = (c.features || []).map((entry) => ({ t: entry.t, d: inlineLinks(model, entry.d, page.id) }));
         const industryIndexLinks = relatedLinksFor(model, page, [
           ...model.pages.filter((p) => p.type === "tool" && ["photo", "video"].includes(p.group)).map((p) => p.id),
           "templates", "photo-hub", "video-hub"

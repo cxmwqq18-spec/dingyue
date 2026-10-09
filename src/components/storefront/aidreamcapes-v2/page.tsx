@@ -546,6 +546,9 @@ function IndexPage({ data, r }: Props) {
             })}
           </div>
         </VisualDirectoryFilter> : null}
+        {list<V2Item>(data.features).length ? <Section eyebrow="What you can do" title="What the industry pages help you make">
+          <Boxes items={list<V2Item>(data.features)} r={r} />
+        </Section> : null}
         <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
         <Faq items={data.faq} title="Questions" r={r} />
         {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
