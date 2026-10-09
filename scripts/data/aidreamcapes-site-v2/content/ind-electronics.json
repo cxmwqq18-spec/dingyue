@@ -47,6 +47,18 @@
     {
       "q": "My glossy device shows glare and fingerprints. How do I fix that?",
       "a": "Wipe off dust and fingerprints, peel away any shipping film, and shoot at a slight angle so the device's depth shows. Switch off overhead lights that leave hot spots on glossy cases."
+    },
+    {
+      "q": "What should a product video for electronics show?",
+      "a": "Show one real action: a button press, a port close-up, a device being unboxed, or a hand placing it next to a generic laptop or phone. Avoid naming another brand and keep the scene focused on how your device works."
+    },
+    {
+      "q": "Can I make an unboxing video without filming it myself?",
+      "a": "Yes. Upload a clear photo of the product and choose an unboxing format; adult hands can lift the item from a plain box and hold it in view. The generated video keeps the device shape, ports and color from your photo."
+    },
+    {
+      "q": "Which size works for product pages versus feed ads?",
+      "a": "Use a square 1:1 video or photo for Amazon, Shopify and most product carousels, and a vertical 9:16 video for TikTok, Reels, Shorts and other in-feed placements. The format selector shows both before you run the job."
     }
   ],
   "overview": {
