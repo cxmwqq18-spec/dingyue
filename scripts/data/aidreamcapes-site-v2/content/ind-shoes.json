@@ -47,6 +47,18 @@
     {
       "q": "My sneakers look flat or creased in the results. What should I change?",
       "a": "Photograph the laces arranged the way you want them shown, then review the result for loose or uneven laces."
+    },
+    {
+      "q": "What angles should I shoot for shoe ads?",
+      "a": "Start with one full side profile, then add a top view and a sole or heel shot. Those three uploads answer fit, shape and tread questions without asking the generated image to invent details it cannot see."
+    },
+    {
+      "q": "Can one shoe photo produce both a listing image and a walking video?",
+      "a": "Yes. A clear side-profile photo can become a white background or lifestyle still and also feed a short stride video. Keep the full toe, heel and collar visible so the reframe does not crop the shape."
+    },
+    {
+      "q": "How do I avoid a branded look when selling unbranded shoes?",
+      "a": "Describe the shoe by its materials and colors, such as gray knit or tan suede, and avoid stripes, sole shapes and stitching that match a known brand. Keep logos and text off both the upload and the scene."
     }
   ],
   "overview": {
