@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
+  V2AfterMock,
   V2Resolvers,
   V2Visual,
   V2VisualImage,
