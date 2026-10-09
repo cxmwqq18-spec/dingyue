@@ -266,7 +266,7 @@
         },
         {
           "id": "bite",
-          "label": "First Bite"
+          "label": "First Use"
         },
         {
           "id": "demo",
@@ -288,6 +288,7 @@
           "label": "GRWM: Skincare Starter Kit",
           "chips": [
             "review",
+            "bite",
             "demo"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A woman in her late twenties holds the skincare kit beside a bright bathroom mirror and says to camera, “Here is everything I set out for a simple morning routine.” Natural window light, candid UGC look. Chest-up front-facing handheld shot with slight sway. Sound: her voice and a cap click, no music. End with the kit beside her face.",
@@ -297,7 +298,9 @@
           "ref": "f:q8-tpl-box-pick-03",
           "label": "Pet Parent Review: Grooming Set",
           "chips": [
-            "review"
+            "review",
+            "bite",
+            "demo"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult pet owner holds a plain grooming kit toward the camera in a bright living room and says, “Let’s look at what comes in this set.” Soft daylight, natural UGC look. Eye-level chest-up handheld framing with one small push-in. Sound: clear voice and a dog collar jingle, no music. End with the kit centered.",
           "kind": "video"
@@ -306,6 +309,7 @@
           "ref": "f:q8-tpl-box-pick-04",
           "label": "First Bite: Snack Variety Box",
           "chips": [
+            "unbox",
             "bite"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a plain snack variety box at a sunny work table, takes one bite from a single snack and smiles. Bright natural light, candid UGC look. Handheld close-up with one gentle tilt from box to reaction. Sound: wrapper tear and a crisp bite, no music. End on the open box and snack in hand.",
@@ -315,7 +319,8 @@
           "ref": "f:q8-tpl-box-pick-05-r2",
           "label": "Tech Unboxing: Headphone Set",
           "chips": [
-            "unbox"
+            "unbox",
+            "review"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain over-ear headset from a fitted carton, keeping the headphones, carry pouch, charging cable and audio cable visible together. Soft window light, tactile UGC look. Top-down handheld close-up with one slow push-in. Sound: cardboard and fabric rustle, no music. End with all four included pieces displayed beside the headset.",
           "kind": "video"
@@ -324,6 +329,8 @@
           "ref": "f:q8-tpl-box-pick-06-r2",
           "label": "Street Interview: Protein Bar Variety Pack",
           "chips": [
+            "unbox",
+            "review",
             "bite"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny park entrance, an adult interviewer holds a microphone as an adult creator presents a plain protein-bar variety box with several wrapped flavors and one opened bar. The creator takes a bite and says to camera, “I like having a few flavors ready after a workout.” Natural daylight, candid street UGC look. Eye-level chest-up handheld shot with a slight approach. Sound: voice, wrapper rustle and light outdoor ambience; no music. End with the box and bitten bar in frame.",
