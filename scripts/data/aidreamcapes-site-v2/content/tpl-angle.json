@@ -74,6 +74,18 @@
     {
       "q": "Where do multi-angle photos belong?",
       "a": "Add the front first, then use side views to show controls, connectors, closures, or other product details."
+    },
+    {
+      "q": "What file format and size should the source photos be?",
+      "a": "JPG, PNG, or Web Photos that clearly show the whole product work best. Shoot the front, back, and any port or button in similar light so the gallery reads as one set."
+    },
+    {
+      "q": "How many angle photos do I need?",
+      "a": "Three to four cover most listings: a front hero, a back view, and one or two detail angles. Start with the views shoppers ask about most."
+    },
+    {
+      "q": "How many credits does each angle photo cost?",
+      "a": "Each generated angle photo costs 24 credits, and the cost appears before you run it. A failed job returns its credits to your balance."
     }
   ],
   "overview": [
