@@ -58,6 +58,14 @@
     {
       "q": "Which products work well in these videos?",
       "a": "Handheld products such as skincare, apparel accessories, jewelry, pet supplies, snacks, drinks, fitness items and phone accessories are easy to show clearly."
+    },
+    {
+      "q": "Can the presenter hold the exact product?",
+      "a": "Yes. Provide a clear product reference and describe how the presenter should hold or demonstrate it."
+    },
+    {
+      "q": "Can I avoid a script burned into the image?",
+      "a": "Yes. Keep spoken copy and any captions in your video or page layer rather than the source image."
     }
   ],
   "overview": [
@@ -80,10 +88,10 @@
       "sourceAlt": "Plain forest-green bottle shown fully from cap to base on a light neutral background.",
       "sourceTitle": "Your product",
       "sourceHint": "Start with a clear view of the full item.",
-      "result": "n:guide:q4-spokesperson-strip-01",
+      "result": "n:guide:b1-spokesperson-videos-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded product image and preserve its shape, colors and label. In a parked car, an adult Latina woman holds a plain serum bottle beside her face and says: “Here is the pump detail I wanted to show.” She turns the bottle once so the pump faces the lens. Handheld front-camera chest-up framing, natural light and skin texture, slight natural sway. End with the pump turned toward the lens beside her cheek. Sound: her voice and soft parked-car room tone; no music."
+      "prompt": "Use the uploaded plain forest-green bottle as the exact product reference. Preserve its matte green body and black cap while a presenter holds it at chest height and explains its everyday use. No labels or logos."
     },
     "picker": {
       "title": "Choose a format and setting",
