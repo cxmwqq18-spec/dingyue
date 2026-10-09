@@ -236,7 +236,7 @@
         ]
       },
       {
-        "label": "Run Prep",
+        "label": "Fitness & wellness",
         "items": [
           {
             "ref": "n:guide:q1-home-example-watch",
@@ -247,14 +247,8 @@
         ]
       },
       {
-        "label": "Creator Review",
+        "label": "Creator and review ads",
         "items": [
-          {
-            "ref": "n:guide:q1-home-example-review",
-            "title": "Creator Review: Face Serum Held to Camera",
-            "kind": "scene",
-            "product": "face serum"
-          },
           {
             "ref": "n:guide:q1-home-example-harness",
             "title": "Dog harness review from a pet parent",
@@ -262,8 +256,8 @@
             "product": "dog walking harness"
           },
           {
-            "ref": "n:guide:q1-home-example-earbuds",
-            "title": "Tech Review: Wireless Earbuds Held to Camera",
+            "ref": "n:guide:f3-home-earbuds",
+            "title": "Tech Review: Stemless Earbuds in Use",
             "kind": "scene",
             "product": "wireless earbuds"
           }
@@ -327,24 +321,24 @@
       ]
     },
     "picker": {
-      "title": "Choose a scene for your product",
-      "lead": "Start with a product and choose a setting that fits its next use.",
+      "title": "Choose an ad moment for your product",
+      "lead": "Start with the product moment that matches your next ad placement.",
       "chips": [
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "hooks",
+          "label": "Opening hooks"
         },
         {
-          "id": "desk",
-          "label": "Desk"
+          "id": "unboxing",
+          "label": "Unboxing"
         },
         {
-          "id": "bathroom",
-          "label": "Bathroom"
+          "id": "demo",
+          "label": "Product demos"
         },
         {
-          "id": "outdoor",
-          "label": "Outdoor"
+          "id": "problem",
+          "label": "Problem / solution"
         }
       ],
       "cards": [
@@ -352,7 +346,7 @@
           "ref": "n:guide:q1-home-picker-runner",
           "label": "POV Hook: Trail Shoe Hits Path",
           "chips": [
-            "outdoor"
+            "hooks"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile visible. Freeze the moment just before the next stride in late-afternoon light, candid sports-ad style, low close angle, full shoe in frame, no text.",
           "kind": "photo"
@@ -361,7 +355,8 @@
           "ref": "n:guide:q1-home-picker-earrings",
           "label": "ASMR Unboxing: Gold Hoop Earrings",
           "chips": [
-            "kitchen"
+            "unboxing",
+            "demo"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands lift plain gold hoop earrings from a small jewelry box lined with cream tissue. Hold the reveal above the open box in soft window light, overhead close framing, realistic jewelry campaign, no text.",
           "kind": "photo"
@@ -370,16 +365,16 @@
           "ref": "n:guide:q1-home-picker-earbuds-v2",
           "label": "Earbud Demo: Wireless Earbud Fit",
           "chips": [
-            "desk"
-          ],
-          "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult fits a small matte sage-green, stemless bean-shaped wireless earbud into one ear while holding its matching low, flat pill-shaped case in the other hand. Keep the earbud and case clearly visible in a bright everyday setting, tight side view, natural tech-ad style, no text, no logos.",
+            "demo"
+          ],          "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult fits a small matte sage-green, stemless bean-shaped wireless earbud into one ear while holding its matching low, flat pill-shaped case in the other hand. Keep the earbud and case clearly visible in a bright everyday setting, tight side view, natural tech-ad style, no text, no logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q1-home-picker-mask",
           "label": "Mask Macro: Clay Lifted by Spatula",
           "chips": [
-            "bathroom"
+            "hooks",
+            "demo"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. A clean spatula lifts a smooth ribbon of pale green clay mask from a plain open jar, with the texture suspended above the rim. Soft window light, realistic skincare macro, overhead close composition, no text.",
           "kind": "photo"
@@ -388,7 +383,7 @@
           "ref": "n:guide:q1-home-picker-lipbalm",
           "label": "GRWM: Tinted Lip Balm Before Work",
           "chips": [
-            "bathroom"
+            "demo"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult applies tinted balm in a mirror before leaving home, with the balm held beside the face and the color visible on the lips. Natural morning light, close candid beauty-campaign framing, no text.",
           "kind": "photo"
@@ -397,7 +392,7 @@
           "ref": "n:gen2:tpl-size-g2",
           "label": "Bag Demo: Laptop Into Canvas Tote",
           "chips": [
-            "outdoor"
+            "problem"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult slides a laptop into a plain canvas tote and lifts the bag by its handles, showing the full tote and open capacity. Bright natural light, practical lifestyle-ad composition at waist height, no text.",
           "kind": "photo"
@@ -406,7 +401,7 @@
           "ref": "n:guide:q1-home-picker-hot-sauce",
           "label": "Taco Recipe: Hot Sauce Drizzle",
           "chips": [
-            "kitchen"
+            "unboxing"
           ],
           "prompt": "Use the uploaded product image and keep its bottle shape, color, and label area exactly. An adult hand squeezes a thin ribbon of plain hot sauce from a blank-label bottle onto a fresh taco on a clean plate. Keep the taco and bottle clearly visible. Bright kitchen light, close food-ad composition, no text.",
           "kind": "photo"
@@ -415,39 +410,38 @@
           "ref": "n:guide:q1-home-picker-pet-hair",
           "label": "Pet Problem: Brush Hair From Sofa",
           "chips": [
-            "desk"
-          ],
-          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult uses a plain pet-hair remover across a sofa cushion while a calm dog sits nearby. Show the cleaned path and collected fur clearly, bright home light, close practical-ad composition, no text.",
+            "problem"
+          ],          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult uses a plain pet-hair remover across a sofa cushion while a calm dog sits nearby. Show the cleaned path and collected fur clearly, bright home light, close practical-ad composition, no text.",
           "kind": "photo"
         }
       ],
-      "button": "Make an image like this"
+      "button": "Start a video ad like this"
     },
     "uses": [
       {
-        "frame": "browser",
+        "frame": "amazon",
         "ref": "n:gen2:plat-amazon-c1",
-        "h": "Speaker Hero: Clean Front View on White",
-        "d": "Use a clean full view when shoppers need to inspect the product shape."
+        "h": "Amazon product gallery",
+        "d": "Put a clean full-view image in the product gallery so shoppers can inspect the shape."
       },
       {
-        "frame": "post",
-        "ref": "n:guide:q1-home-use-speaker-review-v2",
-        "h": "Creator Review: Speaker Held to Camera",
-        "d": "Use this format when a personal recommendation fits the placement."
+        "frame": "tiktok",
+        "ref": "n:guide:f3-home-speaker-review",
+        "h": "TikTok in-feed ad",
+        "d": "Run the creator review as a vertical in-feed ad with your own caption and button."
       },
       {
-        "frame": "post",
-        "ref": "n:guide:q1-home-use-electrolyte-review",
-        "h": "Street Interview: Electrolyte Drink First Sip",
-        "d": "Use this format when a personal recommendation fits the placement."
+        "frame": "reels",
+        "ref": "n:guide:f3-home-street-interview",
+        "h": "Instagram Reels placement",
+        "d": "Use the street-interview first bite in Reels and keep your text inside Reels' safe area."
       },
       {
-        "frame": "split",
+        "frame": "browser",
         "ref": "n:gen2:plat-facebook-g3",
-        "ref_b": "n:guide:q1-home-use-ab-review",
-        "h": "A/B Hook: Serum Held to Camera",
-        "d": "Compare two opening moments for one product and one audience."
+        "ref_b": "n:guide:f3-home-ab-bottle-review",
+        "h": "Product page with two hook options",
+        "d": "A/B test two opening moments, then feature the winner on your own product page."
       }
     ],
     "input": [
@@ -510,10 +504,10 @@
       "m2": {
         "h2": "How to make AI product photos and videos in 3 steps"
       },
-      "m3": {
-        "h2": "AI product photo scenes for the kitchen, desk, bathroom and outdoors",
-        "lead": "Tap a room to see examples. Each card shows one product in one real setting."
-      },
+  "m3": {
+    "h2": "AI ad moments organized by what each one is built to do",
+    "lead": "Filter by ad purpose. Each card shows one product in one moment you can actually run."
+  },
       "m4": {
         "h2": "Where to use your AI product photos and videos"
       },

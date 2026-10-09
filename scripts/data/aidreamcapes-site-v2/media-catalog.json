@@ -37846,6 +37846,136 @@
           640,
           1280
         ]
+      },
+      "f3-home-hero-trailshoe-a": {
+        "file": "f3-home-hero-trailshoe-a",
+        "w": 941,
+        "h": 1672,
+        "alt": "Unbranded charcoal trail shoe on a damp forest trail at dawn.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-home-hero-trailshoe-b": {
+        "file": "f3-home-hero-trailshoe-b",
+        "w": 941,
+        "h": 1672,
+        "alt": "Unbranded charcoal trail shoe on a wet rock beside a forest path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-home-hero-trailshoe-c": {
+        "file": "f3-home-hero-trailshoe-c",
+        "w": 941,
+        "h": 1672,
+        "alt": "Unbranded charcoal trail shoe taking a first step on a rocky forest path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-home-street-interview": {
+        "file": "f3-home-street-interview",
+        "w": 1254,
+        "h": 1254,
+        "alt": "An adult interviewer holds a small microphone toward an adult runner taking a bite of a plain protein bar in a park.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-home-ab-bottle-review": {
+        "file": "f3-home-ab-bottle-review",
+        "w": 1254,
+        "h": 1254,
+        "alt": "An adult creator holds a plain pale-blue insulated bottle beside his face in a park.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-home-earbuds": {
+        "file": "f3-home-earbuds",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Two plain matte graphite stemless earbuds rest on stone beside one fitted in an adult ear.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-home-speaker-review": {
+        "file": "f3-home-speaker-review",
+        "w": 1254,
+        "h": 1254,
+        "alt": "An adult creator holds a plain compact rectangular charcoal speaker toward the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-template-size": {
+        "file": "f3-template-size",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Two plain canvas totes in different sizes are shown side by side with a hand holding the smaller tote.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-template-color": {
+        "file": "f3-template-color",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Three identical blank lipstick tubes show coral, berry, and rose shades side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-template-angle": {
+        "file": "f3-template-angle",
+        "w": 1254,
+        "h": 1254,
+        "alt": "A plain compact rectangular speaker is shown from the front with its rear reflected in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-template-drink": {
+        "file": "f3-template-drink",
+        "w": 1254,
+        "h": 1254,
+        "alt": "A plain glass bottle pours citrus sparkling water into an iced tumbler; no text is visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-template-launch": {
+        "file": "f3-template-launch",
+        "w": 1254,
+        "h": 1254,
+        "alt": "A plain ivory desk lamp is revealed beside an open kraft presentation box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-template-black-friday": {
+        "file": "f3-template-black-friday",
+        "w": 1254,
+        "h": 1254,
+        "alt": "An adult Black creator holds a blank-label amber serum bottle beside a lit evergreen tree.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
