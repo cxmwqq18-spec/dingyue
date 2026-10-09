@@ -246,9 +246,9 @@
     "overview": "Create a skincare ad around one clear routine or texture moment. Keep the bottle, jar, or tube easy to recognize while a single action gives the scene its focus.",
     "strip": [
       "n:guide:q11-beauty-strip-square-01",
-      "n:guide:tpl-beauty-round4-sunscreen-tube",
+      "n:guide:tpl-beauty-round4-serum-pump",
       "n:guide:tpl-beauty-round4-cream-jar",
-      "n:guide:tpl-beauty-round4-texture-swatch",
+      "n:guide:k6-industries-card-skincare",
       "n:guide:q11-beauty-strip-square-05",
       "n:guide:q11-beauty-strip-square-06"
     ],

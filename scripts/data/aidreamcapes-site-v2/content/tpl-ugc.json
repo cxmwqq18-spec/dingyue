@@ -336,13 +336,13 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:f17-jewelry-output-watch-caseback",
-          "label": "Watch Caseback: Hands-On Review",
+          "ref": "n:guide:g1-ugc-hair-clip-review-r2",
+          "label": "Hair Clip: Creator Review",
           "chips": [
             "demo",
             "review"
           ],
-          "prompt": "Use the uploaded photo as a simple round analog wristwatch and keep its dial, strap and caseback visible. An adult hand turns the watch to show the brushed caseback on a walnut desk. Hands-on UGC product review, square framing, no text or logos.",
+          "prompt": "Use the uploaded photo as a plain matte hair clip and keep its shape, hinge and finish visible. An adult creator demonstrates the clip in their hair, then turns slightly to show how it holds without pulling. Hands-on UGC product review, square framing, no text or logos.",
           "kind": "photo"
         },
         {

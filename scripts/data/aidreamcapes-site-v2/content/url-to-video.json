@@ -176,33 +176,33 @@
           "prompt": "Use the uploaded plain linen apron as the exact product reference. An older woman puts it on in a sunny kitchen, adjusts one shoulder strap and says: “The cross-back tie keeps the front clear.” She turns once and ends facing the counter. Waist-up routine framing, natural daylight. Sound: spoken line and fabric movement; no music.",
           "kind": "video"
         },
-      {
-        "ref": "n:guide:f2-r10-url-card-02",
-        "label": "Unboxing: Ceramic Spice Jars",
+        {
+          "ref": "n:guide:f2-r10-url-card-02",
+          "label": "Unboxing: Ceramic Spice Jars",
           "chips": [
             "unboxing"
           ],
           "prompt": "Use the uploaded plain ceramic spice jars as the exact product reference. Adult hands open a kraft box, lift the three jars and place them in a row on the kitchen counter. Top-down vertical unboxing shot with one gentle push-in. Sound: box hinge, paper rustle and ceramic taps; no music.",
-        "kind": "video"
-      },
-      {
-        "ref": "n:gen2:unboxing-videos-c1",
-        "label": "Unboxing: Ceramic Mug Set",
-        "chips": [
-          "unboxing"
-        ],
-        "prompt": "Use the captured product image and name as the reference. Adult hands lift the ceramic mug set from a gift box, remove the paper filling and place the pieces on a table. Keep the product centered in a top-down tabletop shot, then hold on the full set. Sound: paper rustle and ceramic taps; no music.",
-        "kind": "video"
-      },
-      {
-        "ref": "n:gen2:unboxing-videos-c2",
-        "label": "Unboxing: Wrapped Candle",
-        "chips": [
-          "unboxing"
-        ],
-        "prompt": "Use the captured product image and name as the reference. Adult hands open a kraft mailer, fold back the tissue and lift the candle onto the table. Keep the package and product fully visible in a top-down tabletop shot, ending with the candle centered. Sound: mailer fold and tissue rustle; no music.",
-        "kind": "video"
-      },
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:unboxing-videos-c1",
+          "label": "Unboxing: Ceramic Mug Set",
+          "chips": [
+            "unboxing"
+          ],
+          "prompt": "Use the captured product image and name as the reference. Adult hands lift the ceramic mug set from a gift box, remove the paper filling and place the pieces on a table. Keep the product centered in a top-down tabletop shot, then hold on the full set. Sound: paper rustle and ceramic taps; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:unboxing-videos-c2",
+          "label": "Unboxing: Wrapped Candle",
+          "chips": [
+            "unboxing"
+          ],
+          "prompt": "Use the captured product image and name as the reference. Adult hands open a kraft mailer, fold back the tissue and lift the candle onto the table. Keep the package and product fully visible in a top-down tabletop shot, ending with the candle centered. Sound: mailer fold and tissue rustle; no music.",
+          "kind": "video"
+        },
         {
           "ref": "n:guide:f2-r10-url-card-03",
           "label": "Demo: Fabric Shaver Clean Stripe",
@@ -269,8 +269,8 @@
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-case-desk-organizer",
-          "label": "Desk Organizer: Daily Demo",
+          "ref": "f:k2-url-picker-hot-sauce",
+          "label": "Hot Sauce: Daily Demo",
           "chips": [
             "demo"
           ],
@@ -300,7 +300,7 @@
       },
       {
         "frame": "browser",
-        "ref": "n:guide:k2-url-strip-lunchbox-open",
+        "ref": "n:guide:k2-url-example-teapot",
         "h": "Reference captured",
         "d": "The product image and name become the starting reference for the video request. Review both before generation so the action does not begin with a mismatched color, size or product family. Keep one final pose so the product remains easy to compare with the source."
       },

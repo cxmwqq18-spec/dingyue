@@ -217,12 +217,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:g1-box-burgundy-sandal-unboxing-r2",
-          "label": "Sandal Unbox: Pair Revealed",
+          "ref": "n:guide:b1-unboxing-card",
+          "label": "Headphones Unbox: Box Lift",
           "chips": [
             "package"
           ],
-          "prompt": "Use the uploaded photo as a pair of plain burgundy sandals and keep both shoes and straps visible. Adult hands lift the pair from a tissue-lined box and hold them above the open packaging. Clean unboxing reveal, square framing, no text or logos. Sound: tissue rustle and room tone; no music.",
+          "prompt": "Use the uploaded photo as plain matte-black headphones and keep both ear cups and the charging case visible. Adult hands lift the headphones from an open kraft box and hold them above the tissue. Clean unboxing reveal, square framing, no text or logos. Sound: tissue rustle and room tone; no music.",
           "kind": "video"
         },
         {

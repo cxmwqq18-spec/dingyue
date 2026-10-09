@@ -349,16 +349,14 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c5-tpl-outfit-m1-green-midi",
-          "label": "Fit Check: Green Midi Dress",
+          "ref": "n:guide:f7-r10-look-review-navy-suit",
+          "label": "Suit Fit Review: Navy Lapel",
           "chips": [
             "fit",
-            "grwm",
             "mirror",
-            "multiangle",
             "tryon"
           ],
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. An adult gets ready beside a full-length mirror and gives a quick front-side-back turn in a muted-green midi dress, keeping the sleeve and hem readable. Soft daylight, full-body square GRWM fit-check photo, no text or logos.",
+          "prompt": "Use the uploaded photo as a plain navy suit and keep the lapel, shoulders and fit visible. An older adult man presents the suit in a bright studio and pinches the lapel for a creator fit review. Full-body square framing, no text or logos.",
           "kind": "photo"
         },
         {

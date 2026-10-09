@@ -347,15 +347,15 @@
           "prompt": "Use the uploaded photo as the outfit and keep its shape, color and details exactly. An adult moves through a front-side-back whip-pan on a city block in the layered workwear look, pausing so each garment remains visible. Full-body street-style square photo, soft overcast light, no text or logos."
         },
         {
-          "ref": "n:guide:f7-r10-look-review-navy-suit",
-          "label": "Creator Review: Navy Suit",
+          "ref": "n:guide:q9-look-fabric-blazer-detail",
+          "label": "Fabric Detail: Tailored Blazer",
           "chips": [
             "review",
             "tryon",
             "fabric"
           ],
           "kind": "photo",
-          "prompt": "Use the uploaded photo as the outfit and preserve its shape, color and silhouette. An older man with short silver hair presents a plain navy suit in a bright studio, gently pinching the lapel and turning slightly to show the jacket drape and trouser fabric. Three-quarter square fashion photo, no text or logos."
+          "prompt": "Use the uploaded photo as the outfit and preserve its shape, color and texture. An adult creator pinches the plain blazer sleeve and turns slightly to show the weave, cuff and shoulder line. Soft studio daylight, square fashion detail framing, no text or logos."
         },
         {
           "ref": "n:guide:q9-look-slip-dress-review",
@@ -378,12 +378,12 @@
           "kind": "photo"
         },
         {
-          "ref": "f:k2-url-picker-sneaker-doorstep",
-          "label": "Creator Review: Running Shoe Styling",
+          "ref": "n:guide:q9-head-phone-grip-demo",
+          "label": "Phone Grip: Look Review",
           "chips": [
             "review"
           ],
-          "prompt": "Use the uploaded outfit photo as the product and preserve its colors, layers and silhouette. An adult creator presents a plain running shoe beside a complete travel look and points once to the sole and upper. Bright outdoor daylight, three-quarter fashion framing, no text or logos.",
+          "prompt": "Use the uploaded photo as the accessory and preserve its shape, color and details. An adult creator presents a plain phone grip with a complete outfit, turning slightly so the scale and finish stay clear. Bright studio daylight, three-quarter square fashion framing, no text or logos.",
           "kind": "photo"
         },
         {

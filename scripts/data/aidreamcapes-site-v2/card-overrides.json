@@ -302,14 +302,7 @@
     }
   },
   "tpl-color": {},
-  "tpl-jewel": {
-    "images": {
-      "feed": {
-        "ref": "g:feed-ad-still/example-06",
-        "alt": "Pair of running shoes arranged together in a clean product photo."
-      }
-    }
-  },
+  "tpl-jewel": {},
   "occ-black-friday": {
     "swap": {
       "story": "sale"
@@ -435,10 +428,6 @@
   },
   "tpl-beauty": {
     "images": {
-      "drink": {
-        "ref": "f:food-video-t06",
-        "alt": "Golden sparkling drink poured from a glass bottle into a glass with ice and an orange slice"
-      },
       "limited-drop-alert-video": {
         "ref": "g:sale-campaign-key-visual/example-07",
         "alt": "Square seasonal campaign crop with open space for an offer."
@@ -451,10 +440,6 @@
   },
   "tpl-bf": {
     "images": {
-      "limited-drop-alert-video": {
-        "ref": "n:guide:q13-limited-hero",
-        "alt": "Get-ready-with-me try-on: hiker ties trail shoes"
-      },
       "product-feature-callout-video": {
         "ref": "n:guide:q13-feature-hero-r3",
         "alt": "Adult applies cleanser foam beside a plain white pump bottle."
@@ -471,40 +456,15 @@
         "ref": "n:gen2:examples-g2",
         "alt": "Green glass bottle filled at a kitchen tap in a vertical frame."
       },
-      "carousel-video-ad": {
-        "ref": "f:product-video",
-        "alt": "Compact espresso machine shown on a kitchen counter."
-      },
       "spark-ads-style-video": {
         "ref": "n:gen2:ind-food-drinks-g3",
         "alt": "Pasta sauce jar beside a finished plate of pasta."
       }
     }
   },
-  "tpl-home": {
-    "images": {
-      "retargeting-video-ad": {
-        "ref": "f:before-after-showcases",
-        "alt": "Wardrobe shelves arranged with neatly folded clothes."
-      }
-    }
-  },
-  "tpl-light": {
-    "images": {
-      "color": {
-        "ref": "n:gen2:examples-g8",
-        "alt": "Wool throw styled on a garden bench in spring."
-      }
-    }
-  },
-  "tpl-head": {
-    "images": {
-      "box": {
-        "ref": "n:guide:tpl-head-round4-01",
-        "alt": "Square headshot of an adult Black woman with short natural curls against a warm taupe studio backdrop."
-      }
-    }
-  },
+  "tpl-home": {},
+  "tpl-light": {},
+  "tpl-head": {},
   "tpl-ugc": {
     "images": {
       "jewel": {
@@ -676,14 +636,7 @@
       }
     }
   },
-  "tpl-story": {
-    "images": {
-      "ugc": {
-        "ref": "n:q10-story-more-ugc",
-        "alt": "Adult creator speaks to camera while holding an amber serum bottle."
-      }
-    }
-  },
+  "tpl-story": {},
   "tpl-howto": {
     "images": {
       "ba": {
@@ -701,25 +654,6 @@
       "spark-ads-style-video": {
         "ref": "n:q10-film-more-creator",
         "alt": "Adult speaks to camera while wearing plain cream over-ear headphones."
-      }
-    }
-  },
-  "tpl-compare": {
-    "swap": {
-      "howto": "ba"
-    },
-    "images": {
-      "ba": {
-        "ref": "n:guide:q3-before-after-videos-hero-pet-hair",
-        "alt": "An adult creator presents a pet-hair roller beside a partly cleared sofa."
-      },
-      "unbox": {
-        "ref": "n:guide:q3-unboxing-videos-hero-serum-box",
-        "alt": "Adult hands reveal an unmarked serum bottle from a tissue-lined box."
-      },
-      "demo": {
-        "ref": "n:guide:q3-product-videos-hero-serum",
-        "alt": "An adult creator presents an unmarked amber serum bottle in soft bathroom light."
       }
     }
   },

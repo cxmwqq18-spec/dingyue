@@ -339,13 +339,13 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q9-look-fabric-blazer-detail",
-          "label": "Fabric Detail: Navy Blazer Cuff",
+          "ref": "n:guide:q11-outfit-picker-02-r3",
+          "label": "Mirror Fit: Charcoal Field Jacket",
           "chips": [
             "details",
             "review"
           ],
-          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and details exactly. Show a close detail of an adult hand pinching a navy blazer cuff so the woven texture and one button stay sharp. Tight square detail frame, soft side light, quiet room tone, no music.",
+          "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult checks a plain charcoal field jacket in a bright bedroom mirror, turning once to show the shoulder, pockets and hem. Full-length creator try-on frame, no text or logos.",
           "kind": "video"
         }
       ],

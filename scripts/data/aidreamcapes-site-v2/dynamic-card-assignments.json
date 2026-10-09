@@ -299,68 +299,68 @@
     },
     "tpl-pack": {
       "look": [
-        "n:handbag-carry"
+        "g:fashion-editorial/example-03"
       ],
-      "bg": [
-        "n:boots-doorway"
+      "model": [
+        "n:sunglasses-worn"
       ],
-      "tryon": [
-        "g:virtual-try-on/example-01"
+      "white": [
+        "n:guide:k2-white-hero-cream-mug"
       ]
     },
     "tpl-light": {
+      "box": [
+        "g:bundle-sets/example-07"
+      ],
       "story": [
-        "g:story-ad-vertical/example-03"
+        "n:guide:f3-home-ab-bottle-review"
       ],
-      "size": [
-        "g:size-reference/example-01"
-      ],
-      "color": [
-        "g:colorway-variations/example-02"
+      "white": [
+        "n:guide:q5-white-supplement"
       ]
     },
     "tpl-tryon": {
-      "sale": [
-        "n:hoodie-flatlay"
-      ],
-      "jewel": [
-        "g:jewelry-positioning/example-02"
-      ],
-      "look": [
-        "g:fashion-editorial/example-01"
-      ]
-    },
-    "tpl-jewel": {
-      "feed": [
-        "n:hotsauce-tacos"
-      ],
-      "ugc": [
-        "g:ugc-still-ad/example-01"
-      ],
-      "story": [
-        "g:story-ad-vertical/example-04"
-      ]
-    },
-    "tpl-look": {
-      "sale": [
-        "n:candle-table"
-      ],
       "model": [
         "g:on-model-generation/example-01"
       ],
+      "look": [
+        "g:fashion-editorial/example-01"
+      ],
       "life": [
-        "n:planter-window"
+        "n:candle-table"
+      ]
+    },
+    "tpl-jewel": {
+      "detail": [
+        "g:macro-details/example-02"
+      ],
+      "model": [
+        "g:on-model-generation/example-03"
+      ],
+      "size": [
+        "n:phonecase-hand"
+      ]
+    },
+    "tpl-look": {
+      "model": [
+        "g:on-model-generation/example-04"
+      ],
+      "tryon": [
+        "n:guide:k3-social-og"
+      ],
+      "life": [
+        "n:yogamat-room"
       ]
     },
     "tpl-head": {
-      "angle": [
-        "g:packshot-multi-angle/example-06"
+      "model": [
+        "g:on-model-generation/example-05"
       ],
-      "detail": [
-        "n:boots-detail"
+      "white": [
+        "g:packshot-multi-angle/og"
       ],
-      "box": [
-        "g:bundle-sets/example-01"
+      "size": [
+        "g:macro-details/og"
       ]
     },
     "tpl-ugc": {
@@ -375,14 +375,14 @@
       ]
     },
     "tpl-story": {
-      "light": [
-        "g:commercial-lighting/example-01"
+      "box": [
+        "g:bundle-sets/og"
       ],
-      "ugc": [
-        "n:hotsauce-tacos"
+      "light": [
+        "g:commercial-lighting/example-03"
       ],
       "sale": [
-        "g:sale-campaign-key-visual/example-01"
+        "g:packaging-mockup/og"
       ]
     },
     "tpl-sale": {
@@ -419,47 +419,47 @@
       ]
     },
     "tpl-beauty": {
-      "limited-drop-alert-video": [
-        "s:v_launch"
-      ],
-      "drink": [
-        "n:drink-vertical"
+      "creator": [
+        "n:gen2:product-videos-c2"
       ],
       "product-feature-callout-video": [
-        "s:v_demo"
+        "g:commercial-lighting/og"
+      ],
+      "limited-drop-alert-video": [
+        "g:virtual-try-on/og"
       ]
     },
     "tpl-drink": {
-      "limited-drop-alert-video": [
-        "s:v_launch"
-      ],
-      "carousel-video-ad": [
-        "s:v_film"
-      ],
       "spark-ads-style-video": [
-        "s:v_creator_ad"
+        "g:jewelry-positioning/og"
+      ],
+      "limited-drop-alert-video": [
+        "g:fashion-editorial/og"
+      ],
+      "product-feature-callout-video": [
+        "g:professional-headshot/og"
       ]
     },
     "tpl-home": {
-      "retargeting-video-ad": [
-        "s:v_compare"
-      ],
-      "beauty": [
-        "f:beauty-routine-t10"
+      "ba": [
+        "f:before-after-showcases"
       ],
       "demo": [
-        "f:product-video-t03"
+        "n:guide:k1-product-videos-hero-espresso"
+      ],
+      "howto": [
+        "g:ugc-still-ad/og"
       ]
     },
     "tpl-outfit": {
-      "drink": [
-        "n:drink-vertical"
+      "limited-drop-alert-video": [
+        "g:sale-campaign-key-visual/og"
       ],
-      "home": [
-        "f:home-organization-t10"
+      "carousel-video-ad": [
+        "f:k3-video-ads-og"
       ],
-      "launch": [
-        "f:promo-video-t03"
+      "retargeting-video-ad": [
+        "g:ecommerce-main-image/og"
       ]
     },
     "tpl-launch": {
@@ -474,28 +474,25 @@
       ]
     },
     "tpl-compare": {
-      "unbox": [
-        "f:unboxing-experience-t08"
+      "ba": [
+        "f:before-after-showcases-t10"
       ],
       "demo": [
-        "f:product-video-t06"
+        "f:product-video-t03"
       ],
       "howto": [
-        "f:how-to-video-t07"
-      ],
-      "ba": [
-        "f:before-after-showcases-t04"
+        "n:guide:q19-amz-og-trailshoe"
       ]
     },
     "tpl-bf": {
-      "limited-drop-alert-video": [
-        "s:v_launch"
-      ],
       "product-feature-callout-video": [
-        "s:v_demo"
+        "g:feed-ad-still/example-01"
       ],
       "carousel-video-ad": [
-        "s:v_film"
+        "n:guide:q13-limited-og-r1"
+      ],
+      "spark-ads-style-video": [
+        "n:guide:q13-feature-og-r1"
       ]
     },
     "tpl-limited-drop-alert-video": {
