@@ -47,6 +47,18 @@
     {
       "q": "How do I make a TikTok video of my clothes being worn?",
       "a": "Choose 9:16 and a length of 6, 10, or 15 seconds, then describe a slow turn or short walk. Run another version when you want a different setting."
+    },
+    {
+      "q": "What photo works best for putting my garment on a model?",
+      "a": "Use a flat-lay or hanger shot with the whole garment visible, front side up and even light. The outline, color, print and fastenings have to be clear in the upload because the generated model keeps those details."
+    },
+    {
+      "q": "Can I show the same outfit as separate photo and video ads?",
+      "a": "Yes. One clear garment photo can produce a model photo and a short fit or turn video. Use the still for the listing or a square feed ad, and use the moving version for in-feed placements where the walk or turn shows the fit."
+    },
+    {
+      "q": "How do I keep fabric color accurate?",
+      "a": "Shoot in soft daylight without a warm lamp, and name the color plainly in your description, such as charcoal, ivory or navy. Check the result against the real garment before publishing; if the tone drifts, generate another version."
     }
   ],
   "overview": {
