@@ -73,9 +73,9 @@
       "n:guide:q14-industries-strip-hiker",
       "n:guide:q14-industries-strip-protein-unbox",
       "n:guide:q14-industries-strip-headphones-unbox",
-      "n:guide:q14-industries-strip-speaker",
-      "n:guide:q14-industries-strip-counter-clean",
-      "n:guide:q14-industries-strip-drawer"
+      "n:guide:f4-industries-strip-serum-r1",
+      "n:guide:f4-industries-strip-denim-r1",
+      "n:guide:f4-industries-strip-running-shoe-r1"
     ],
     "steps": {
       "source": "n:guide:b1-video-ads-source",

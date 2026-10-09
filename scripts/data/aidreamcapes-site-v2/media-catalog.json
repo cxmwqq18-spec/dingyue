@@ -37866,6 +37866,46 @@
           640,
           1280
         ]
+      },
+      "f4-beauty-output-sheet-mask-r2": {
+        "file": "f4-beauty-output-sheet-mask-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a white sheet mask from a plain silver foil pouch on a bright bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f4-industries-strip-serum-r1": {
+        "file": "f4-industries-strip-serum-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand pats a clear serum drop onto the back of a hand beside a plain dropper bottle at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f4-industries-strip-denim-r1": {
+        "file": "f4-industries-strip-denim-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model smooths the front of an open mid-blue denim jacket over a plain tee in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f4-industries-strip-running-shoe-r1": {
+        "file": "f4-industries-strip-running-shoe-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand ties the laces of a plain gray knit running shoe on a clean entry bench.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
