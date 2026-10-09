@@ -109,6 +109,32 @@ export function AidreamcapesV2TemplateFilters() {
   return null;
 }
 
+export function AidreamcapesV2ActorFilters() {
+  useEffect(() => {
+    const root = document.querySelector<HTMLElement>(".actor-directory-shell");
+    if (!root) return;
+    const controls = Array.from(root.querySelectorAll<HTMLSelectElement>(".actor-filter-control"));
+    const cards = Array.from(root.querySelectorAll<HTMLElement>(".actor-card"));
+    const groups = Array.from(root.querySelectorAll<HTMLElement>(".actor-scene-group"));
+    const count = root.querySelector<HTMLElement>(".actor-filter-count");
+    const apply = () => {
+      const state = Object.fromEntries(controls.map((control) => [control.dataset.actorFilter ?? "", control.value]));
+      let shown = 0;
+      cards.forEach((card) => {
+        const matches = Object.entries(state).every(([key, value]) => !value || card.dataset[key] === value);
+        card.hidden = !matches;
+        if (matches) shown += 1;
+      });
+      groups.forEach((group) => { group.hidden = !group.querySelector(".actor-card:not([hidden])"); });
+      if (count) count.textContent = `${shown} actor${shown === 1 ? "" : "s"}`;
+    };
+    controls.forEach((control) => control.addEventListener("change", apply));
+    apply();
+    return () => controls.forEach((control) => control.removeEventListener("change", apply));
+  }, []);
+  return null;
+}
+
 export function AidreamcapesV2HeroTabs() {
   useEffect(() => {
     const box = document.getElementById("adc2-home-maker");

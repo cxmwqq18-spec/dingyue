@@ -403,7 +403,7 @@
       "cards": [
         {
           "ref": "n:guide:q1-video-picker-workout",
-          "label": "Workout Demo: Protein Scooped Into Shaker",
+          "label": "Image to Video: Protein Shake",
           "chips": [
             "product-moment"
           ],
@@ -413,7 +413,7 @@
         },
         {
           "ref": "n:guide:q1-video-picker-car",
-          "label": "Car Review: Electrolyte Held to Lens",
+          "label": "Video Ads: Electrolyte Held to Lens",
           "chips": [
             "creator-ad"
           ],
@@ -423,17 +423,17 @@
         },
         {
           "ref": "n:guide:q1-video-picker-phone-v2",
-          "label": "Phone Case Demo: Two Cases Compared",
+          "label": "Product Videos: Phone Case Fit Demo",
           "chips": [
             "product-moment"
           ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color, and label area. Adult hands fit a plain muted sage-green silicone case with exactly one small circular camera opening onto a generic smartphone with one camera. The action ends with the single camera opening aligned and the product clearly visible. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music. Avoid square camera islands and multi-lens clusters.",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color, and label area. Adult hands fit a plain muted sage-green silicone case onto a generic smartphone with one camera. The action ends with the single camera opening aligned and the product clearly visible. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music. Avoid square camera islands and multi-lens clusters.",
           "kind": "video",
           "tool": "product-videos"
         },
         {
           "ref": "n:guide:q1-video-picker-jewel",
-          "label": "ASMR Unboxing: Gold Hoop Earrings",
+          "label": "Unboxing Videos: Gold Hoop Earrings",
           "chips": [
             "product-moment"
           ],
@@ -443,7 +443,7 @@
         },
         {
           "ref": "n:guide:q1-video-picker-closet-v2",
-          "label": "Before/After: Closet Organizer Clears Shelf",
+          "label": "Before-and-After Videos: Closet Organizer",
           "chips": [
             "product-moment"
           ],
@@ -453,7 +453,7 @@
         },
         {
           "ref": "n:guide:q1-video-picker-headphones",
-          "label": "Tech Review: Headphones Held to Camera",
+          "label": "AI Spokesperson: Headphones Review",
           "chips": [
             "creator-ad"
           ],
@@ -463,7 +463,7 @@
         },
         {
           "ref": "n:guide:q1-video-picker-serum",
-          "label": "Creator Review: Serum From Product Page",
+          "label": "URL to Video: Serum Review",
           "chips": [
             "creator-ad"
           ],
@@ -476,16 +476,16 @@
     },
     "uses": [
       {
-        "frame": "phone",
+        "frame": "tiktok",
         "ref": "n:guide:q1-video-use-selfie",
-        "h": "Car Selfie Review: Face Serum in Daylight",
-        "d": "Use this format when a personal product review fits the placement."
+        "h": "TikTok in-feed ad",
+        "d": "Run the car selfie review as a vertical in-feed ad and add your caption after download."
       },
       {
-        "frame": "browser",
+        "frame": "amazon",
         "ref": "n:guide:q1-video-use-necklace",
-        "h": "Creator Review: Necklace Held to Camera",
-        "d": "Use this format when a personal product review fits the placement."
+        "h": "Amazon product gallery",
+        "d": "Use a clean held-to-camera review clip in the product gallery where shoppers compare options."
       }
     ],
     "input": [

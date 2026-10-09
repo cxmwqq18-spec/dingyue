@@ -172,11 +172,21 @@ function MockFrame({ item, r }: { item: V2VisualUse; r: V2Resolvers }) {
   if (item.frame === "split") {
     return <div className="v-frame v-split"><figure><VisualImage image={item.image} r={r} /><figcaption>A</figcaption></figure><figure><VisualImage image={item.imageB!} r={r} /><figcaption>B</figcaption></figure></div>;
   }
+  if (item.frame === "tiktok") {
+    return <div className="v-frame v-tiktok"><div className="v-tiktok-screen"><VisualImage image={item.image} r={r} /><div className="v-tiktok-ui"><span className="v-tiktok-actions"><i /><i /><i /><i /></span><span className="v-tiktok-meta"><b /><b /><i /></span></div></div></div>;
+  }
+  if (item.frame === "reels") {
+    return <div className="v-frame v-reels"><div className="v-reels-screen"><VisualImage image={item.image} r={r} /><div className="v-reels-ui"><span className="v-reels-top"><i /><i /></span><span className="v-reels-actions"><i /><i /><i /><i /></span><span className="v-reels-meta"><b /><b /></span></div></div></div>;
+  }
+  if (item.frame === "amazon") {
+    return <div className="v-frame v-amazon"><div className="v-amazon-bar"><i /><span /></div><div className="v-amazon-grid"><figure><VisualImage image={item.image} r={r} /></figure><div className="v-amazon-thumbs"><i /><i /><i /><i /></div></div></div>;
+  }
   if (item.frame === "phone") {
     return <div className="v-frame v-phone"><div className="v-phone-screen"><VisualImage image={item.image} r={r} /><div className="v-placeholder-lines"><i /><i /><i /></div></div></div>;
   }
   if (item.frame === "browser") {
-    return <div className="v-frame v-browser"><div className="v-browser-bar"><i /><i /><i /><span /></div><div className="v-product-page"><VisualImage image={item.image} r={r} /><div className="v-product-skeleton"><i /><i /><i /><b /></div></div></div>;
+    const body = item.imageB ? <div className="v-browser-split"><figure><VisualImage image={item.image} r={r} /><figcaption>A</figcaption></figure><figure><VisualImage image={item.imageB} r={r} /><figcaption>B</figcaption></figure></div> : <VisualImage image={item.image} r={r} />;
+    return <div className="v-frame v-browser"><div className="v-browser-bar"><i /><i /><i /><span /></div><div className="v-product-page">{body}<div className="v-product-skeleton"><i /><i /><i /><b /></div></div></div>;
   }
   if (item.frame === "listing") {
     return <div className="v-frame v-listing"><VisualImage image={item.image} r={r} /><i /><i /><i /></div>;
