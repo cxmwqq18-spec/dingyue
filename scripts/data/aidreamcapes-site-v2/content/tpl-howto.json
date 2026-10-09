@@ -74,6 +74,18 @@
     {
       "q": "Does the video have to match how my product really works?",
       "a": "Yes. Describe the real way your product is used and watch the clip before you post it. If it shows something your product can't do, generate it again with a clearer description."
+    },
+    {
+      "q": "How many steps fit in one tutorial?",
+      "a": "Keep it to one clear task with a starting state, the product action, and the finished state. Extra steps are easier to follow in a second clip."
+    },
+    {
+      "q": "What length should a tutorial be?",
+      "a": "Ten seconds covers most single tasks; use 15 seconds for a slower demonstration, for 40 or 60 credits."
+    },
+    {
+      "q": "Can viewers read the steps without sound?",
+      "a": "Add short step tags as a text layer after download, so the tutorial works with the sound off."
     }
   ],
   "overview": [
@@ -375,13 +387,16 @@
     ],
     "after": {
       "ref": "n:q10-howto-after",
+      "mock": {
+        "type": "steps"
+      },
       "zones": [
-        "Step label",
+        "Step tags",
         "Product name"
       ],
       "items": [
-        "Add short step labels such as Fill, Press, or Rinse in your editor.",
-        "Place the product name beside the final result after download."
+        "The frame shows the Step 1-2-3 tags you add so viewers can follow each move.",
+        "Add short step labels such as Fill, Press, or Rinse, and the product name, in your editor."
       ]
     },
     "titles": {
