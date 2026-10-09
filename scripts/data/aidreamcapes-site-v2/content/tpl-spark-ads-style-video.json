@@ -77,6 +77,18 @@
     {
       "q": "What size should a Spark Ads style video use?",
       "a": "Use 9:16 for a full-screen TikTok placement. TikTok lists 9:16, 1:1, and 16:9 as standard sizes."
+    },
+    {
+      "q": "Does this authorize my TikTok account?",
+      "a": "No. The template creates a style-matched video; authorization and boosting are done in TikTok Ads Manager."
+    },
+    {
+      "q": "What makes a post ready for Spark Ads?",
+      "a": "Use an existing organic-style post, add captions and sound, then boost it following TikTok's authorization steps."
+    },
+    {
+      "q": "What does the style clip cost?",
+      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits."
     }
   ],
   "overview": [
@@ -378,14 +390,18 @@
     ],
     "after": {
       "ref": "n:guide:q14-spark-after-r2",
+      "mock": {
+        "type": "tiktok",
+        "caption": "How I keep water cold all hike"
+      },
       "zones": [
+        "Post frame",
         "Caption",
-        "Sound",
-        "Offer"
+        "Sound & offer"
       ],
       "items": [
-        "Add the caption and offer in TikTok or CapCut after download.",
-        "Choose a sound in TikTok before promoting the post."
+        "The frame shows the TikTok post chrome you add when promoting an existing post.",
+        "Add the caption, sound, and offer in TikTok Ads Manager after download."
       ]
     },
     "titles": {
