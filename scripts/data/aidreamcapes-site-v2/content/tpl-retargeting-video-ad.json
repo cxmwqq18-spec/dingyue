@@ -91,7 +91,7 @@
     },
     {
       "q": "Can I create another retargeting video from the same source photo?",
-      "a": "Yes. Keep the dark navy headphones as the reference, then change one routine or camera move at a time. Check that the ear cups, controls, and fit match the physical item. Add the current offer, reminder, and product link after download so the second-look ad stays easy to update."
+      "a": "Yes. Keep the dark navy headphones as the reference, then change one routine or camera move at a time. Check that the ear cups, controls, and fit match the physical item. Add the current offer, reminder, and product link after download so the second-look ad stays easy to update. Keep routine and detail versions tied to the same product variant so a returning shopper does not see a different color or control layout. If the offer or destination changes, recheck every exported variant against the same product page and color."
     }
   ],
   "overview": [
@@ -223,7 +223,7 @@
     ]
   },
   "visual": {
-    "overview": "A retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see. Use this format when shoppers need to bring dark navy headphones back with a specific reminder about fit, controls, or comfort. Keep one second-look detail visible from the first frame, then leave room for the offer and product link you add after download. Review the ear cups, controls, and color against your source before publishing.",
+    "overview": "A retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see. Use this format when shoppers need to bring dark navy headphones back with a specific reminder about fit, controls, or comfort. Keep one second-look detail visible from the first frame, then leave room for the offer and product link you add after download. Review the ear cups, controls, and color against your source before publishing. A returning shopper should see the product detail they may still be weighing before the reminder, offer, and destination compete for space.",
     "strip": [
       "n:guide:g1-retarget-serum-application",
       "n:guide:g1-retarget-shoe-tread-detail",
@@ -359,13 +359,13 @@
         "frame": "phone",
         "ref": "n:guide:q14-retarget-use-phone",
         "h": "Bring a headphone routine into a social feed",
-        "d": "Show dark navy over-ear headphones worn during a city commute. Keep the ear cups and fit visible while the reminder stays easy to read on a phone."
+        "d": "Show dark navy over-ear headphones worn during a city commute. Keep the ear cups and fit visible while the reminder stays easy to read on a phone. Keep the ear cup profile and head fit visible so the commute scene answers a comfort question."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q14-retarget-use-browser",
         "h": "Pair a headphone detail with its product page",
-        "d": "Keep the product details and current offer consistent on the linked page. Use a close view of the controls or ear cushion so the second-look proof stays clear."
+        "d": "Keep the product details and current offer consistent on the linked page. Use a close view of the controls or ear cushion so the second-look proof stays clear. Match the close control view to the same model and color shown on the linked product page."
       }
     ],
     "input": [
@@ -402,8 +402,8 @@
         "Product link"
       ],
       "items": [
-        "Add the current price and offer as editable text after download. Check the dark navy headphones, ear cups, and one remaining shopper question against the product page before publishing.",
-        "Link the video to the relevant product page. Read the finished frame at mobile size and move any added text away from the ear cups and controls."
+        "Add the current price and offer as editable text after download. Check the dark navy headphones, ear cups, and one remaining shopper question against the product page before publishing. Use one reminder per frame so the ear cups and controls remain easy to inspect. Keep the headphones large enough to inspect while the reminder stays outside the ear cup outline. Confirm the ear cup controls and the destination before every scheduled run.",
+        "Link the video to the relevant product page. Read the finished frame at mobile size and move any added text away from the ear cups and controls. Check the destination and offer together before scheduling the second-look placement. Use a calm final hold for the offer so the product detail does not disappear at the end."
       ]
     },
     "titles": {
