@@ -270,7 +270,8 @@
           "ref": "n:guide:q7-detail-picker-cards-0",
           "label": "Wallet Grain Macro",
           "chips": [
-            "material"
+            "material",
+            "accessory"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact brown leather wallet, grain, and stitching. A fingertip rests along the stitched edge while the leather grain fills a crisp macro frame. Warm side light, tactile close composition, shallow depth of field. No text, logos, or watermark.",
           "kind": "photo"
@@ -280,7 +281,8 @@
           "label": "Pet Collar Buckle Demo",
           "chips": [
             "hardware",
-            "accessory"
+            "accessory",
+            "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact olive-green pet collar, buckle, width, weave, and color. A hand holds the complete buckle close to the lens with the release clearly visible. Soft daylight, tight macro composition, clean product-demo style. No text, logos, or watermark.",
           "kind": "photo"
@@ -289,6 +291,8 @@
           "ref": "n:guide:q7-detail-picker-cards-2",
           "label": "Gold Hoop Unboxing",
           "chips": [
+            "material",
+            "hardware",
             "accessory"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the plain gold hoop earrings and their shape and finish. Hands lift both hoops above an open kraft jewelry case with the pair centered. Warm window light, close overhead composition, refined natural styling. No text, logos, or watermark.",
@@ -298,6 +302,8 @@
           "ref": "n:guide:q7-detail-picker-cards-3",
           "label": "Headphones Box Reveal",
           "chips": [
+            "hardware",
+            "accessory",
             "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal over-ear headphones, cushion shape, and color. Adult hands lift the headphones from an open padded box with both ear cups visible. Soft studio daylight, close overhead composition. No text, logos, or watermark.",
@@ -337,6 +343,7 @@
           "label": "Serum Pump Review",
           "chips": [
             "hardware",
+            "accessory",
             "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain serum bottle, pump, silhouette, and color. An adult creator holds the full bottle beside their face with the pump turned toward the lens. Bright bathroom daylight, chest-up framing, natural skin texture. No text, logos, or watermark.",
