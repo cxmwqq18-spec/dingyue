@@ -211,11 +211,11 @@
   "visual": {
     "overview": "A what's-in-the-box photo shows what ships as one set. Arrange each item so shoppers can count the pieces and see their size before they open the package.",
     "strip": [
-      "n:guide:c1-tpl-box-m2-source",
-      "n:guide:c1-tpl-box-m2-result-square",
-      "n:guide:c1-tpl-story-gift-kit-square",
+      "n:guide:g1-box-shoe-unboxing",
+      "n:guide:g1-box-earring-unboxing",
+      "n:guide:g1-box-baby-care-unboxing",
       "f:q8-tpl-box-strip-04",
-      "f:q8-tpl-box-strip-05",
+      "n:guide:g1-box-snack-box-unboxing",
       "n:guide:ind-electronics-m3-headphones"
     ],
     "steps": {
