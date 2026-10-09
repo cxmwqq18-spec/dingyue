@@ -92,6 +92,10 @@
     {
       "q": "What does the style clip cost?",
       "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits."
+    },
+    {
+      "q": "Can I create another creator ad video from the same source photo?",
+      "a": "Yes. Keep the sage-green bottle as the reference, then change one setting or camera move at a time. Check that the creator review, first sip, or hands-on demo matches the physical bottle. Add the caption, current offer, and product link after download so the post stays easy to update."
     }
   ],
   "overview": [
@@ -219,7 +223,7 @@
     ]
   },
   "visual": {
-    "overview": "Show a product in an ad format shoppers recognize: a creator review, first bite, hands-on demo, or everyday routine.",
+    "overview": "Show a product in an ad format shoppers recognize: a creator review, first bite, hands-on demo, or everyday routine. Use this format when a sage-green bottle needs a creator review, first sip, or hands-on demonstration that feels at home in a social feed. Keep a person, product, and one reason to watch visible from the first frame, then leave room for the caption, sound, and offer you add after download. Review the cap, finish, and label area against your source before publishing.",
     "strip": [
       "n:guide:q14-spark-strip-steamer",
       "n:guide:q14-spark-strip-espresso-r2",
@@ -254,7 +258,7 @@
     },
     "picker": {
       "title": "Choose a creator ad format",
-      "lead": "Pick a format that shows what the product does in a natural social post.",
+      "lead": "Pick a format that shows what the product does in a natural social post. Start with one creator action, then choose the scene that keeps the person, product, and reason to watch together.",
       "chips": [
         {
           "id": "reviews",
@@ -353,13 +357,13 @@
       {
         "frame": "phone",
         "h": "Share the bottle demo as a creator video",
-        "d": "Keep the sage-green bottle centered in a vertical social post.",
+        "d": "Keep the sage-green bottle centered in a vertical social post. Let the creator show one handling moment, such as lifting the cap or taking a sip, before the final hold.",
         "ref": "n:guide:c1-tpl-spark-ads-style-video-m4-bottle-video-916"
       },
       {
         "frame": "post",
         "h": "Use the bottle review in a Spark Ads post",
-        "d": "Add a caption and choose a sound in TikTok before promoting the creator post.",
+        "d": "Add a caption and choose a sound in TikTok before promoting the creator post. Keep the bottle and creator visible together so the post still reads as a product demonstration.",
         "ref": "n:guide:q14-spark-uses-post-r2"
       }
     ],
@@ -403,8 +407,8 @@
         "Sound & offer"
       ],
       "items": [
-        "The frame shows the TikTok post chrome you add when promoting an existing post.",
-        "Add the caption, sound, and offer in TikTok Ads Manager after download."
+        "The frame shows the TikTok post chrome you add when promoting an existing post. Check the sage-green bottle, cap, and label area, then review the caption, sound choice, and offer in TikTok before promoting the post.",
+        "Add the caption, sound, and offer in TikTok Ads Manager after download. Read the finished frame at mobile size and keep the bottle unobstructed during the first beat."
       ]
     },
     "titles": {
