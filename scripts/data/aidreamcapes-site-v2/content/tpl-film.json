@@ -353,13 +353,13 @@
           "kind": "video"
         },
         {
-          "ref": "n:q10-film-picker-8",
-          "label": "Cinematic Lip Balm Closeup",
+          "ref": "n:q10-film-after",
+          "label": "Cinematic Fragrance Reflection",
           "chips": [
             "cinematic",
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and cap details exactly. An adult creator applies plain tinted lip balm at a mirror, then holds the tube beside their face while speaking to camera. Cinematic creator-film look, macro-to-medium move, no text or logos. Sound: cap click and room tone; no music.",
+          "prompt": "Use the uploaded photo as a plain rounded fragrance bottle and keep its shape, cap and finish exactly. On a dark stone surface beside still black water, a narrow amber highlight sweeps across the bottle and its reflection in one slow controlled move. Cinematic product-film look, square framing, no text or logos. Sound: quiet room tone and a soft water ripple; no music.",
           "kind": "video"
         },
         {

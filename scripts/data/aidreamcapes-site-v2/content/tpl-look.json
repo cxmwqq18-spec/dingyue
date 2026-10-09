@@ -378,12 +378,12 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q9-head-phone-grip-demo",
-          "label": "Phone Grip: Look Review",
+          "ref": "n:guide:b9-look-older-east-asian-full-look",
+          "label": "Street Walk: Charcoal Linen Suit",
           "chips": [
-            "review"
+            "street"
           ],
-          "prompt": "Use the uploaded photo as the accessory and preserve its shape, color and details. An adult creator presents a plain phone grip with a complete outfit, turning slightly so the scale and finish stay clear. Bright studio daylight, three-quarter square fashion framing, no text or logos.",
+          "prompt": "Use the uploaded photo as the outfit and preserve its color, layers and silhouette. An older East Asian man with short silver hair walks naturally across a quiet stone plaza in a charcoal linen blazer and matching trousers, an ivory knit shirt, brown loafers and an olive canvas tote. Keep his full body and shoes inside the square frame, with soft overcast daylight and clear fabric texture. Editorial lookbook photo, no text or logos.",
           "kind": "photo"
         },
         {
