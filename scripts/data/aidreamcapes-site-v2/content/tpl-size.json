@@ -73,6 +73,18 @@
     {
       "q": "What object should I use to show a product’s size?",
       "a": "Choose a familiar object with a stable size, such as a standard card or common bottle. Generated scale may vary, so include exact measurements in your product description."
+    },
+    {
+      "q": "How do shoppers see the real size?",
+      "a": "Place the product beside a common object or a model, and add any dimensions as text after download."
+    },
+    {
+      "q": "Can I use these images for Amazon?",
+      "a": "Yes. Size-comparison photos belong in a product gallery as long as they show the real item."
+    },
+    {
+      "q": "What does a size photo cost?",
+      "a": "Each photo costs 24 credits."
     }
   ],
   "overview": [
