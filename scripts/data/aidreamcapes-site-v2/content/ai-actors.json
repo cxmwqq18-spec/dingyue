@@ -7,7 +7,7 @@
   "lead": "Browse on-camera actors by setting and style. Each presenter holds a sample product and delivers a short line straight to camera.",
   "intro": [
     "These generated adult presenters are designed for product ads. Choose a setting and a delivery format, then replace the sample product and line with details you can support.",
-    "Every card opens the spokesperson workspace with a Seedance-style prompt. The people shown are AI-generated actors, not customers or independent reviewers.",
+    "Every card opens the spokesperson workspace with the product photo, sample product description and spoken line prefilled for editing. The people shown are AI-generated actors, not customers or independent reviewers.",
     "Use the directory when the product needs a person to explain one visible detail: a pump, hinge, cap, fit, texture or package reveal. Match the setting to the shopping moment. A kitchen works for a drink ritual, while a desk or podcast room gives a small electronic feature enough space to read on a phone.",
     "The actor links start with a vertical 9:16 composition and a 10-second delivery so you can review a focused first draft. Keep the spoken line to one claim and one action. If you need a six-second hook, a square placement or a longer edit, make that choice in your editor after checking the first result.",
     "Before publishing, compare the generated hands, labels, color and moving parts with the real item. The actor can demonstrate what your source photo supports, but it cannot prove measurements, performance, safety or a result that the photo never showed."
@@ -30,7 +30,7 @@
     {
       "id": "maya",
       "name": "Maya",
-      "style": "Why-I-switched",
+      "style": "Pump detail demo",
       "scene": "Car",
       "age": "25–34",
       "gender": "Women",
@@ -150,15 +150,15 @@
       "category": "Fitness",
       "talent": "an adult Latino nonbinary person in their early twenties",
       "product": "plain black gym duffel",
-      "line": "The bottle and band fit beside my training gear.",
-      "action": "They open the duffel and lift its shoulder strap into view.",
+      "line": "The padded shoulder strap sits against the side of the bag.",
+      "action": "They lift the padded shoulder strap and open the main compartment into view.",
       "ambient": "their voice and soft gym ambience",
       "ref": "n:guide:q4-actor-javier"
     },
     {
       "id": "henry",
       "name": "Henry",
-      "style": "Three features in 20 seconds",
+      "style": "Three features in 10 seconds",
       "scene": "Podcast",
       "age": "35–49",
       "gender": "Men",
@@ -174,7 +174,7 @@
     {
       "id": "charlie",
       "name": "Charlie",
-      "style": "Three reasons",
+      "style": "Wrapper, size and ingredient check",
       "scene": "Podcast",
       "age": "25–34",
       "gender": "Nonbinary",
@@ -424,6 +424,22 @@
     {
       "t": "Write one spoken line",
       "d": "Use a specific, supportable detail, then review the generated result before publishing. Write one observable feature, one action and a plain next step; read the line against the product page so a generated gesture does not turn into an unsupported promise."
+    },
+    {
+      "t": "Paid social ads",
+      "d": "Use the vertical 9:16, 10-second actor draft for TikTok, Reels or Shorts, then check hands, labels and claims before adding captions in your ad editor."
+    },
+    {
+      "t": "Product pages",
+      "d": "Ask the actor to explain one visible feature or answer one product question. Write the line from approved listing text instead of inventing a customer story."
+    },
+    {
+      "t": "Social channel cut",
+      "d": "Start with one hook and one action, then adapt the downloaded clip to the channel crop and add your approved call to action in your editor."
+    },
+    {
+      "t": "Product guides",
+      "d": "Show one setup or use step with the actor and keep the spoken line tied to the action your source photo supports."
     }
   ],
   "honesty": {
@@ -471,6 +487,14 @@
     {
       "q": "What should I check before publishing the actor clip?",
       "a": "Compare the hands, product shape, label area, color and moving parts with the real item. Check the spoken words against the approved listing language, then add any required AI disclosure, price, caption or offer date in your editor."
+    },
+    {
+      "q": "Can I use an AI actor on a product page?",
+      "a": "Yes. Use the presenter to explain one visible feature or setup step, and label the presenter as AI-generated when your channel requires it."
+    },
+    {
+      "q": "Can I add captions and an offer after the actor clip?",
+      "a": "Yes. Download the clip, then add approved captions, prices and offer dates in your editor so the final words match your listing."
     }
   ]
 }
