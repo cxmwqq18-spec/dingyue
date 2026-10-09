@@ -18,16 +18,44 @@
   ],
   "faq": [
     {
-      "q": "How do I adapt a product ad template to my item?",
-      "a": "Upload a sharp product photo and describe the action, setting, and crop you need. Templates set a starting composition; review each result for product drift."
+      "q": "How do I choose a product ad template?",
+      "a": "Choose by the buyer moment you need: unboxing for a reveal, close-up for a detail, try-on for fit, demo for use, or a promotion template when you will add an offer after download."
     },
     {
-      "q": "Can I adjust a template to suit my product?",
-      "a": "Yes. Add a line of text, like \"on a marble counter\" or \"soft evening light,\" and the result leans that way while keeping the template's overall look."
+      "q": "Can I adapt a template to my own product?",
+      "a": "Yes. Upload a sharp product photo and describe the action and setting you need. The template provides a starting composition; review every result for product drift."
     },
     {
-      "q": "How do I choose a template for my product?",
-      "a": "Choose by the buyer moment you need: white background for a listing, lifestyle for context, demo for use, or a creator-style ad with an AI-generated person."
+      "q": "Which video lengths can I choose?",
+      "a": "Video jobs are available in 6, 10 or 15 seconds. Choose the length that gives one action enough time to read."
+    },
+    {
+      "q": "Are product photos square?",
+      "a": "Photos are square by default. Crop a downloaded still for a specific placement such as a 4:5 Meta Feed image."
+    },
+    {
+      "q": "Which template works for an Amazon listing?",
+      "a": "Start with a white-background or close-up photo template for the gallery, then check the current category rules before uploading the main image."
+    },
+    {
+      "q": "Can I add a price, code, or headline in the template?",
+      "a": "Add exact prices, codes, headlines, and countdowns after download in your editor so the wording stays correct and easy to update."
+    },
+    {
+      "q": "Will the generated result keep my product shape and color?",
+      "a": "Use a clear source photo with the full item visible, then compare the result with the source before publishing. AI output can still need a correction or another run."
+    },
+    {
+      "q": "Can I use one template for both a photo and a video?",
+      "a": "Pick the template's photo or video version. Photos are square; videos can use 9:16, 1:1, or 16:9 and last 6, 10, or 15 seconds."
+    },
+    {
+      "q": "Can templates link to the platform where I sell?",
+      "a": "Yes. Use the platform filters to find TikTok, Instagram, Facebook, YouTube Shorts, Amazon, or Shopify guidance, then open the linked page before you publish."
+    },
+    {
+      "q": "Do I need editing experience to start?",
+      "a": "No. Upload one product photo, choose a template, and review the generated result. You can add final text or sound in your usual editor after download."
     }
   ],
   "visual": {
@@ -181,6 +209,92 @@
     {
       "t": "Start from your product photo",
       "d": "Open the linked tool and add a clear image of the item you sell."
+    }
+  ],
+  "directory_specs": {
+    "title": "Pick a template by the ad moment",
+    "lead": "Start with the moment you need to show, then open the linked template for its full example and tool settings.",
+    "columns": [
+      "Use",
+      "What the viewer sees",
+      "Starting format",
+      "Related template"
+    ],
+    "rows": [
+      [
+        "Unboxing",
+        "Hands reveal the item and packaging",
+        "9:16 video",
+        "What's in the Box"
+      ],
+      [
+        "Product detail",
+        "A texture, finish, or component fills the frame",
+        "Square photo",
+        "Close-Up Details"
+      ],
+      [
+        "Try-on",
+        "A person wears or holds the item so scale and fit are clear",
+        "Square photo or 9:16 video",
+        "Clothing Try-On"
+      ],
+      [
+        "How-to demo",
+        "One focused action explains how the product is used",
+        "9:16 video",
+        "How-To Video"
+      ],
+      [
+        "Launch or offer",
+        "A product reveal leaves room for exact offer text added later",
+        "9:16 video or square photo",
+        "Launch Promo / Sale Banner"
+      ],
+      [
+        "Creator-style review",
+        "An adult holds the item and explains one supported detail",
+        "Square photo",
+        "Creator-Style Photo"
+      ]
+    ]
+  },
+  "directory_scenes": [
+    {
+      "t": "Unboxing: reveal the package",
+      "d": "Use the box, tissue, and hands to show what arrives before the product is used.",
+      "href": "/ai-image-generation/bundle-sets",
+      "image": "n:guide:q1-photo-template-pack"
+    },
+    {
+      "t": "Detail: answer one product question",
+      "d": "Fill the frame with texture, finish, or a useful component so a shopper can judge it quickly.",
+      "href": "/ai-image-generation/macro-details",
+      "image": "n:q10-film-more-retargeting"
+    },
+    {
+      "t": "Try-on: show fit in motion",
+      "d": "Put the garment or accessory on a person and keep one natural movement visible.",
+      "href": "/ai-image-generation/virtual-try-on",
+      "image": "n:guide:c3-r3-tpl-tryon-knitdress"
+    },
+    {
+      "t": "How-to: demonstrate one action",
+      "d": "Show the product completing one useful step, with the starting and ending states easy to follow.",
+      "href": "/ai-video-generation/how-to-video",
+      "image": "n:guide:c1-tpl-howto-picker-kettle-action-square"
+    },
+    {
+      "t": "Launch: reveal the new item",
+      "d": "Build a clean reveal for launch day, then add the confirmed price or date in your editor.",
+      "href": "/ai-video-generation/promo-video",
+      "image": "n:guide:q20-occ-holiday-steps-result-r2"
+    },
+    {
+      "t": "Creator-style: hold and explain",
+      "d": "Use an adult presenter with the product in hand and keep the spoken claim tied to a fact you can support.",
+      "href": "/ai-image-generation/ugc-still-ad",
+      "image": "n:guide:q14-retarget-strip-talk"
     }
   ]
 }

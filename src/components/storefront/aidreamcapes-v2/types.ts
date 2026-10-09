@@ -61,6 +61,8 @@ export type V2CompareBlock = { h2: string; items: V2Item[] };
 export type V2GlossaryEntry = { term: string; definition: string; related: { label: string; href: string }[] };
 // A row of facts. When `links` is present each name in `value` also leads to its own page.
 export type V2SpecRow = [label: string, value: string, links?: { label: string; href: string }[]];
+export type V2DirectorySpecs = { title: string; lead?: string; columns: string[]; rows: string[][] };
+export type V2DirectoryScene = { t: string; d: string; href?: string; image?: V2Image };
 export type V2Article = { title: string; href: string; text: string; minutes: number; section: string };
 
 export type V2Base = {

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry } from "./types";
+import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
 import type { V2Company } from "./company";
 
 export function normalizeStepLabel(label: string): string {
@@ -138,6 +138,36 @@ export function Steps({ items }: { items: V2Item[] }) {
         </div>
       ))}
     </div>
+  );
+}
+
+export function DirectorySpecs({ specs }: { specs: V2DirectorySpecs }) {
+  if (!specs?.columns?.length || !specs.rows?.length) return null;
+  return (
+    <Section eyebrow="Format guide" lead={specs.lead} title={specs.title}>
+      <div className="cmp-wrap">
+        <table className="cmp directory-specs">
+          <caption className="sr-only">{specs.title}</caption>
+          <thead><tr>{specs.columns.map((column) => <th key={column} scope="col">{column}</th>)}</tr></thead>
+          <tbody>{specs.rows.map((row, rowIndex) => <tr key={`${row[0] ?? "row"}-${rowIndex}`}>{specs.columns.map((_, columnIndex) => <td key={columnIndex}>{row[columnIndex] ?? ""}</td>)}</tr>)}</tbody>
+        </table>
+      </div>
+    </Section>
+  );
+}
+
+export function DirectoryScenes({ items, r }: { items: V2DirectoryScene[]; r: V2Resolvers }) {
+  if (!items.length) return null;
+  return (
+    <Section eyebrow="Ad moments" lead="Choose a format by the moment you need to show, then open the related page for its examples and tool settings." title="Scenes sellers can put to work">
+      <div className="ideas directory-scenes">
+        {items.map((item) => <div key={item.t}>
+          {item.image ? <Img image={item.image} r={r} className="directory-scene-media" /> : null}
+          <b>{item.href ? <a href={r.href(item.href)}>{item.t} →</a> : item.t}</b>
+          <p><RichText r={r} text={item.d} /></p>
+        </div>)}
+      </div>
+    </Section>
   );
 }
 

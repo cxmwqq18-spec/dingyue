@@ -1786,9 +1786,27 @@ function payloadFor(model, page) {
   }
   if (t === "index") {
     const relatedLinks = relatedLinksFor(model, page);
+    const directorySpecs = c.directory_specs && typeof c.directory_specs === "object" && Array.isArray(c.directory_specs.columns) && Array.isArray(c.directory_specs.rows)
+      ? {
+          title: String(c.directory_specs.title || "Format guide"),
+          ...(typeof c.directory_specs.lead === "string" ? { lead: c.directory_specs.lead } : {}),
+          columns: c.directory_specs.columns.map(String),
+          rows: c.directory_specs.rows.map((row) => Array.isArray(row) ? row.map(String) : [])
+        }
+      : undefined;
+    const directoryScenes = Array.isArray(c.directory_scenes)
+      ? c.directory_scenes.map((item) => ({
+          t: String(item.t || ""),
+          d: inlineLinks(model, String(item.d || ""), page.id),
+          ...(typeof item.href === "string" ? { href: item.href } : {}),
+          ...(typeof item.image === "string" ? { image: mediaImage(model, item.image, "card") } : {})
+        })).filter((item) => item.t && item.d)
+      : [];
     const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro,
       ...(INDEX_CTA[page.id] ? { cta: { ...INDEX_CTA[page.id], href: "/app/create" } } : {}),
-      ...(relatedLinks ? { relatedLinks } : {}) };
+      ...(relatedLinks ? { relatedLinks } : {}),
+      ...(directorySpecs ? { directorySpecs } : {}),
+      ...(directoryScenes.length ? { directoryScenes } : {}) };
     const visual = visualFor(model, page, c.visual, { photoOptions: HOME_PHOTO_OPTIONS }, "photo", "/app/create", c);
     if (visual) out.visual = visual;
     if (page.id === "ai-actors") {
@@ -2122,7 +2140,12 @@ export function renderedImages(layout, data) {
     if (!data.visual) { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); addExamples(); }
     else { addCards(data.cards); addTools(data.tools); addExamples(); }
   }
-  else if (layout === "index") { addCards(data.cards); (data.items ?? []).forEach((item) => add(item.image)); (data.articles ?? []).forEach((article) => add(article.image)); }
+  else if (layout === "index") {
+    addCards(data.cards);
+    (data.items ?? []).forEach((item) => add(item.image));
+    (data.articles ?? []).forEach((article) => add(article.image));
+    (data.directoryScenes ?? []).forEach((item) => add(item.image));
+  }
   else if (layout === "article") add(data.image);
   else if (layout === "examples") { addFlows(data.flows); if (!data.visual) { addPairs(); addCards(data.cards); addExamples(); } }
   else add(data.image);

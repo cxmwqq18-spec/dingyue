@@ -1,11 +1,11 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, normalizeStepLabel
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
-import { list, text, type V2Article, type V2Card, type V2Data, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
+import { list, text, type V2Article, type V2Card, type V2Data, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual } from "./types";
 
@@ -556,6 +556,8 @@ function IndexPage({ data, r }: Props) {
         {list<V2Item>(data.features).length ? <Section eyebrow="What you can do" title="What the industry pages help you make">
           <Boxes items={list<V2Item>(data.features)} r={r} />
         </Section> : null}
+        {data.directorySpecs ? <DirectorySpecs specs={data.directorySpecs as never} /> : null}
+        {list<V2DirectoryScene>(data.directoryScenes).length ? <DirectoryScenes items={list<V2DirectoryScene>(data.directoryScenes)} r={r} /> : null}
         <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
         <Faq items={data.faq} title="Questions" r={r} />
         {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
