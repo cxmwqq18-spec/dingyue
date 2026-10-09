@@ -4656,6 +4656,69 @@
         640,
         1280
       ]
+    },
+    "f2-video-ads-output-socks-r2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult hands lift a stack of neutral wool socks to show the knit texture.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "f2-url-to-video-output-backpack": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult adjusts a plain olive commuter backpack on a mountain overlook.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "f2-video-ads-output-shoe-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult wears a charcoal running shoe on a forest trail.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "f2-spokesperson-output-bottle-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult presenter holds a plain forest-green bottle toward the camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "f2-url-to-video-output-headphones-r4": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult hand lifts plain black over-ear headphones from a lined box.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "f2-r10b-spokesperson-card-10": {
+      "w": 1254,
+      "h": 1254,
+      "alt": "Older East Asian man holds a plain white snack pouch at a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "f2-r10b-spokesperson-card-11": {
+      "w": 1254,
+      "h": 1254,
+      "alt": "Older Black woman with short silver hair examines a plain charcoal portable charger with its USB-C port visible.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -32081,56 +32144,6 @@
           1280
         ]
       },
-      "f17-home-vacuum-demo": {
-        "file": "f17-home-vacuum-demo",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand using a compact cordless vacuum to clear crumbs from a charcoal sofa.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f17-home-pet-roller-review": {
-        "file": "f17-home-pet-roller-review",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult Black man using a plain pet-hair roller on a charcoal sofa with a clean strip visible.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f17-jewelry-wrist-cuff-tryon": {
-        "file": "f17-jewelry-wrist-cuff-tryon",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult wrist wearing a plain brushed silver cuff over a charcoal knit sleeve.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f17-jewelry-output-watch-caseback": {
-        "file": "f17-jewelry-output-watch-caseback",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand holding the same matte analog watch to show its brushed caseback on a walnut desk.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f17-home-output-fern-planter": {
-        "file": "f17-home-output-fern-planter",
-        "w": 1536,
-        "h": 864,
-        "alt": "Adult hand touching a fern in the same muted sage planter on a styled wooden shelf.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
       "q16-electronics-picker-headphones-talk": {
         "file": "q16-electronics-picker-headphones-talk",
         "w": 1280,
@@ -37915,66 +37928,6 @@
           1280
         ]
       },
-      "f4-beauty-output-sheet-mask-r1": {
-        "file": "f4-beauty-output-sheet-mask-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand holds a plain coral sheet mask pouch with the white mask visible in a bright bathroom.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f4-fashion-output-puffer-jacket-r1": {
-        "file": "f4-fashion-output-puffer-jacket-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult model adjusts a light gray puffer jacket on a snowy city sidewalk.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f4-beauty-output-sheet-mask-r2": {
-        "file": "f4-beauty-output-sheet-mask-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand lifts a white sheet mask from a plain silver foil pouch on a bright bathroom vanity.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f4-industries-strip-serum-r1": {
-        "file": "f4-industries-strip-serum-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand dispenses a clear serum drop onto the back of a hand beside a plain dropper bottle at a bright vanity.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f4-industries-strip-denim-r1": {
-        "file": "f4-industries-strip-denim-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult model smooths the front of an open mid-blue denim jacket over a plain tee in daylight.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f4-industries-strip-running-shoe-r1": {
-        "file": "f4-industries-strip-running-shoe-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand ties the laces of a plain gray knit running shoe on a clean entry bench.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
       "f2-image-to-video-result-r1": {
         "file": "f2-image-to-video-result-r1",
         "w": 1254,
@@ -38090,358 +38043,6 @@
         "w": 1254,
         "h": 1254,
         "alt": "Adult hands open a plain laptop sleeve on a tidy desk.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-limited-skincare-restock": {
-        "file": "g1-limited-skincare-restock",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands lift a blank-label amber serum bottle from tissue inside an open mailer.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-limited-jewelry-reveal": {
-        "file": "g1-limited-jewelry-reveal",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands lift a gold pendant necklace from an open jewelry box.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-limited-apparel-fit-check": {
-        "file": "g1-limited-apparel-fit-check",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman checks the cuff of a teal jacket in a fitting-room mirror.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-limited-phone-case-reveal": {
-        "file": "g1-limited-phone-case-reveal",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands lift a sage phone case with one circular camera opening from a box.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-limited-citrus-first-sip": {
-        "file": "g1-limited-citrus-first-sip",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult creator takes a first sip of sparkling citrus drink beside a blank can.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-ugc-running-shoe-review": {
-        "file": "g1-ugc-running-shoe-review",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult runner holds a charcoal trail shoe toward the camera after a run.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-ugc-hoop-earring-review": {
-        "file": "g1-ugc-hoop-earring-review",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman reviews a gold hoop earring beside her face.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-ugc-phone-stand-review": {
-        "file": "g1-ugc-phone-stand-review",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult creator holds a compact folding phone stand beside his face.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-ugc-protein-bar-reaction": {
-        "file": "g1-ugc-protein-bar-reaction",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult creator reacts after taking a bite of a protein bar.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-ugc-pet-grooming-review": {
-        "file": "g1-ugc-pet-grooming-review",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult pet owner holds a grooming brush beside a calm dog while speaking to camera.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-ugc-supplement-selfie": {
-        "file": "g1-ugc-supplement-selfie",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult creator holds a blank supplement tub beside her face after a workout.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-retarget-serum-application": {
-        "file": "g1-retarget-serum-application",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman applies serum to her cheek while holding the bottle.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-retarget-shoe-tread-detail": {
-        "file": "g1-retarget-shoe-tread-detail",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult runner shows the tread of a charcoal trail shoe after a walk.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-retarget-pet-grooming-glove": {
-        "file": "g1-retarget-pet-grooming-glove",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand brushes a brown dog with a plain grooming glove.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-box-shoe-unboxing": {
-        "file": "g1-box-shoe-unboxing",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands lift two charcoal trail shoes from a tissue-lined box.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-box-earring-unboxing": {
-        "file": "g1-box-earring-unboxing",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands open a jewelry box to reveal gold hoop earrings on a blank card.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-box-baby-care-unboxing": {
-        "file": "g1-box-baby-care-unboxing",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand lifts a blank-label baby wash bottle from an open bath set.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-box-snack-box-unboxing": {
-        "file": "g1-box-snack-box-unboxing",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hand lifts an unbranded snack pouch from an open sampler box.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-shoe-fit-check": {
-        "file": "g1-launch-shoe-fit-check",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman models dark trail sneakers in a fitting-room mirror.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-jewelry-reveal": {
-        "file": "g1-launch-jewelry-reveal",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman wears a gold pendant necklace while showing its open jewelry box.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-citrus-first-sip": {
-        "file": "g1-launch-citrus-first-sip",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult man takes a first sip of sparkling citrus drink from a clear bottle.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-retarget-snack-first-bite": {
-        "file": "g1-retarget-snack-first-bite",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult runner takes a bite of a plain protein snack bar after exercise.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "f6-tpl-box-output-skincare-unbox": {
-        "file": "f6-tpl-box-output-skincare-unbox",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands lift a plain cleanser tube, amber serum bottle, and white cream jar from an open kraft box.",
-        "variants": [
-          640,
-          1280
-        ],
-        "source": "Codex imagegen"
-      },
-      "f6-tpl-box-output-pouch-kit": {
-        "file": "f6-tpl-box-output-pouch-kit",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands hold an open beige canvas travel pouch with a white tube, clear pump bottle, amber dropper bottle, and cream jar.",
-        "variants": [
-          640,
-          1280
-        ],
-        "source": "Codex imagegen"
-      },
-      "g1-launch-berry-sparkling-sip-r2": {
-        "file": "g1-launch-berry-sparkling-sip-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult man takes a first sip of a sparkling berry drink beside a blank bottle.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-face-mist-spray-r2": {
-        "file": "g1-launch-face-mist-spray-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman sprays a blank-label face mist beside her face.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-graphite-keyboard-demo-r2": {
-        "file": "g1-launch-graphite-keyboard-demo-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult man points to a compact graphite keyboard in a home office.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-olive-sandal-first-look-r2": {
-        "file": "g1-launch-olive-sandal-first-look-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult man presents an olive sandal in a sunlit entryway.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-silver-bracelet-reveal-r2": {
-        "file": "g1-launch-silver-bracelet-reveal-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman holds an open jewelry box while wearing a silver bracelet.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-ugc-hair-clip-review-r2": {
-        "file": "g1-ugc-hair-clip-review-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Older adult woman reviews a hair clip beside her face.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-retarget-brown-boot-tread-r2": {
-        "file": "g1-retarget-brown-boot-tread-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult man points to the tread of a brown hiking boot outdoors.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-retarget-coral-lip-balm-use-r2": {
-        "file": "g1-retarget-coral-lip-balm-use-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman applies a coral lip balm while looking into a mirror.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-retarget-electrolyte-gummy-r2": {
-        "file": "g1-retarget-electrolyte-gummy-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult woman eats an electrolyte gummy after a workout.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-box-burgundy-sandal-unboxing-r2": {
-        "file": "g1-box-burgundy-sandal-unboxing-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult hands lift burgundy sandals from a tissue-lined box.",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "g1-launch-dog-harness-fit-r2": {
-        "file": "g1-launch-dog-harness-fit-r2",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Older East Asian man adjusts a plain teal dog harness on a black-and-white border collie at a bright entryway.",
         "variants": [
           640,
           1280
@@ -39632,6 +39233,236 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult woman in a white textured bathrobe applies a plain amber serum dropper at a bathroom mirror with a soft sage-green background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-photo-hub-output-backpack": {
+        "file": "f2-photo-hub-output-backpack",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hand lifts a black commuter backpack by its handle beside a bright window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-photo-hub-output-shoe": {
+        "file": "f2-photo-hub-output-shoe",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult wears a charcoal running shoe on a forest trail in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-image-to-video-output-serum": {
+        "file": "f2-image-to-video-output-serum",
+        "w": 1672,
+        "h": 941,
+        "alt": "Adult hand holds an amber serum bottle over a bathroom sink as a drop falls.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-image-to-video-output-shoe": {
+        "file": "f2-image-to-video-output-shoe",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult steps into a charcoal hiking shoe at a forest trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-i2v-card-08": {
+        "file": "f2-r10-i2v-card-08",
+        "w": 941,
+        "h": 1672,
+        "alt": "Plain ceramic table lamp turning on a wooden turntable in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-i2v-input-00-good": {
+        "file": "f2-r10-i2v-input-00-good",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Plain amber skincare dropper bottle fully visible on a pale vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-i2v-light-sweep": {
+        "file": "f2-r10-i2v-light-sweep",
+        "w": 941,
+        "h": 1672,
+        "alt": "Plain stainless steel insulated bottle with a narrow light sweep across its surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-i2v-liquid-steam": {
+        "file": "f2-r10-i2v-liquid-steam",
+        "w": 941,
+        "h": 1672,
+        "alt": "Clear glass teapot pours tea into a plain cup with a curl of steam.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-i2v-push-in": {
+        "file": "f2-r10-i2v-push-in",
+        "w": 941,
+        "h": 1672,
+        "alt": "Speckled ceramic vase and green stem in a close three-quarter product view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-url-card-00": {
+        "file": "f2-r10-url-card-00",
+        "w": 941,
+        "h": 1672,
+        "alt": "Middle-aged Black man reviews a plain white air purifier in a bright living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-url-card-01": {
+        "file": "f2-r10-url-card-01",
+        "w": 941,
+        "h": 1672,
+        "alt": "Older East Asian woman adjusts a plain linen apron in a sunny kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-url-card-02": {
+        "file": "f2-r10-url-card-02",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands lift plain ceramic spice jars from a kraft box on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-url-card-03": {
+        "file": "f2-r10-url-card-03",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands use a plain fabric shaver across a navy wool sweater.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-url-card-04": {
+        "file": "f2-r10-url-card-04",
+        "w": 941,
+        "h": 1672,
+        "alt": "Older Black woman with short silver hair tries a plain woven sun hat in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-url-card-09": {
+        "file": "f2-r10-url-card-09",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands demonstrate a plain stainless steel compost caddy on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-video-ads-card-00": {
+        "file": "f2-r10-video-ads-card-00",
+        "w": 941,
+        "h": 1672,
+        "alt": "Older man reviews a plain stainless steel coffee grinder at a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-video-ads-card-05": {
+        "file": "f2-r10-video-ads-card-05",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands brush a brown leather boot on an entryway bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-video-ads-card-09": {
+        "file": "f2-r10-video-ads-card-09",
+        "w": 941,
+        "h": 1672,
+        "alt": "Young Black woman reviews a plain ceramic travel mug at an outdoor market.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-video-ads-unboxing": {
+        "file": "f2-r10-video-ads-unboxing",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands unbox a plain glass food container with a bamboo lid.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10-video-ads-before-after": {
+        "file": "f2-r10-video-ads-before-after",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands wipe a scuffed white sneaker to reveal a cleaner stripe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10b-video-ads-after-shoe": {
+        "file": "f2-r10b-video-ads-after-shoe",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Plain charcoal running shoe is lifted by the heel on a forest trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10b-spokesperson-after-bottle": {
+        "file": "f2-r10b-spokesperson-after-bottle",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Older presenter holds a plain forest-green insulated bottle beside a brown crossbody bag in a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f2-r10b-url-to-video-after-headphones": {
+        "file": "f2-r10b-url-to-video-after-headphones",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Plain black over-ear headphones are checked by hand beside an olive backpack on a wooden desk.",
         "variants": [
           640,
           1280
