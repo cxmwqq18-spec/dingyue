@@ -438,8 +438,8 @@
   "occ-sale-discount": {
     "images": {
       "limited-drop-alert-video": {
-        "ref": "f:limited-drop-alert",
-        "alt": "Hands tie coral trail shoes, show the sole, and step along a mountain path."
+        "ref": "n:guide:q13-limited-hero",
+        "alt": "Get-ready-with-me try-on: hiker ties trail shoes"
       },
       "bf": {
         "ref": "n:guide:q20-occ-sale-bf-card",
@@ -478,16 +478,16 @@
   "tpl-bf": {
     "images": {
       "limited-drop-alert-video": {
-        "ref": "f:limited-drop-alert",
-        "alt": "Hands tie coral trail shoes, show the sole, and step along a mountain path."
+        "ref": "n:guide:q13-limited-hero",
+        "alt": "Get-ready-with-me try-on: hiker ties trail shoes"
       },
       "product-feature-callout-video": {
-        "ref": "f:feature-callout",
-        "alt": "A hand presses a white foaming cleanser pump and spreads foam while washing a face."
+        "ref": "n:guide:q13-feature-hero-r3",
+        "alt": "Adult applies cleanser foam beside a plain white pump bottle."
       },
       "carousel-video-ad": {
-        "ref": "f:carousel-storytelling",
-        "alt": "Hands open a black commuter backpack in a cafe, show its compartments, and put it on."
+        "ref": "n:guide:q13-carousel-hero",
+        "alt": "Day-in-the-life integration: backpack for the commute"
       }
     }
   },
