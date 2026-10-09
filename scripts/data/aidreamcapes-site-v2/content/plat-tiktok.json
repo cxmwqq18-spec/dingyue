@@ -412,7 +412,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:c1-tpl-howto-picker-steamer-detail-square",
+          "ref": "n:guide:c1-tpl-howto-m2-result",
           "label": "Garment Steamer — Hands-On Demo",
           "chips": [
             "proof"
@@ -421,7 +421,7 @@
           "kind": "photo"
         },
         {
-          "ref": "f:k2-url-picker-charging-pad",
+          "ref": "n:guide:k3-social-template-case-speaker",
           "label": "Charging Pad — Control Detail",
           "chips": [
             "proof"

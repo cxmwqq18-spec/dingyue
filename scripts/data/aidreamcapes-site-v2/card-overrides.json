@@ -685,7 +685,14 @@
       }
     }
   },
-  "tpl-product-feature-callout-video": {},
+  "tpl-product-feature-callout-video": {
+    "images": {
+      "retargeting-video-ad": {
+        "ref": "n:guide:k6-industries-card-headphones",
+        "alt": "Generic charcoal over-ear headphones on a wood desk, no logos or charging case."
+      }
+    }
+  },
   "tpl-limited-drop-alert-video": {
     "images": {
       "retargeting-video-ad": {
@@ -715,6 +722,26 @@
       "product-feature-callout-video": {
         "ref": "n:guide:k9-retargeting-demo-espresso",
         "alt": "Adult hand presses the button on a compact espresso maker as espresso pours into a glass cup."
+      },
+      "carousel-video-ad": {
+        "ref": "n:guide:k7-ind-shoes-picker-cards-2-ref-n-gen2-video-hub-g3",
+        "alt": "Shoebox lid lifted to show a new pair of sneakers wrapped in tissue paper."
+      }
+    }
+  },
+  "tpl-spark-ads-style-video": {
+    "images": {
+      "retargeting-video-ad": {
+        "ref": "n:guide:k3-video-example-tote",
+        "alt": "Canvas tote bag with a book, wallet and bottle on a hallway bench."
+      }
+    }
+  },
+  "tpl-outfit": {
+    "images": {
+      "carousel-video-ad": {
+        "ref": "n:guide:ind-home-living-m2-source",
+        "alt": "White portable table lamp with shade, stem, and base visible on white."
       }
     }
   }

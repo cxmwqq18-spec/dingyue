@@ -296,7 +296,7 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:k1-product-videos-picker-laptop-sleeve",
+          "ref": "n:guide:c1-tpl-carousel-video-ad-m2-result-square",
           "label": "Texture Macro: Laptop Sleeve",
           "chips": [
             "cinematic",
@@ -353,7 +353,7 @@
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-coffee-grinder",
+          "ref": "n:guide:tpl-retargeting-video-ad-input-1-blur",
           "label": "In-Use Demo: Coffee Grinder Turn",
           "chips": [
             "inuse"
