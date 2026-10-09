@@ -160,8 +160,9 @@ export function DirectoryScenes({ items, r }: { items: V2DirectoryScene[]; r: V2
   if (!items.length) return null;
   return (
     <Section eyebrow="Ad moments" lead="Choose a format by the moment you need to show, then open the related page for its examples and tool settings." title="Scenes sellers can put to work">
-      <div className="ideas">
+      <div className="ideas directory-scenes">
         {items.map((item) => <div key={item.t}>
+          {item.image ? <Img image={item.image} r={r} className="directory-scene-media" /> : null}
           <b>{item.href ? <a href={r.href(item.href)}>{item.t} →</a> : item.t}</b>
           <p><RichText r={r} text={item.d} /></p>
         </div>)}

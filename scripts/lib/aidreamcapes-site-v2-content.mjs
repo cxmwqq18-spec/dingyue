@@ -1798,7 +1798,8 @@ function payloadFor(model, page) {
       ? c.directory_scenes.map((item) => ({
           t: String(item.t || ""),
           d: inlineLinks(model, String(item.d || ""), page.id),
-          ...(typeof item.href === "string" ? { href: item.href } : {})
+          ...(typeof item.href === "string" ? { href: item.href } : {}),
+          ...(typeof item.image === "string" ? { image: mediaImage(model, item.image, "card") } : {})
         })).filter((item) => item.t && item.d)
       : [];
     const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro,
@@ -2135,7 +2136,12 @@ export function renderedImages(layout, data) {
     if (!data.visual) { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); addExamples(); }
     else { addCards(data.cards); addTools(data.tools); addExamples(); }
   }
-  else if (layout === "index") { addCards(data.cards); (data.items ?? []).forEach((item) => add(item.image)); (data.articles ?? []).forEach((article) => add(article.image)); }
+  else if (layout === "index") {
+    addCards(data.cards);
+    (data.items ?? []).forEach((item) => add(item.image));
+    (data.articles ?? []).forEach((article) => add(article.image));
+    (data.directoryScenes ?? []).forEach((item) => add(item.image));
+  }
   else if (layout === "article") add(data.image);
   else if (layout === "examples") { addFlows(data.flows); if (!data.visual) { addPairs(); addCards(data.cards); addExamples(); } }
   else add(data.image);

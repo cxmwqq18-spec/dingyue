@@ -5,7 +5,7 @@ import {
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
-import { list, text, type V2Article, type V2Card, type V2Data, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
+import { list, text, type V2Article, type V2Card, type V2Data, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual } from "./types";
 
@@ -557,7 +557,7 @@ function IndexPage({ data, r }: Props) {
           <Boxes items={list<V2Item>(data.features)} r={r} />
         </Section> : null}
         {data.directorySpecs ? <DirectorySpecs specs={data.directorySpecs as never} /> : null}
-        {list<{ t: string; d: string; href?: string }>(data.directoryScenes).length ? <DirectoryScenes items={list<{ t: string; d: string; href?: string }>(data.directoryScenes)} r={r} /> : null}
+        {list<V2DirectoryScene>(data.directoryScenes).length ? <DirectoryScenes items={list<V2DirectoryScene>(data.directoryScenes)} r={r} /> : null}
         <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
         <Faq items={data.faq} title="Questions" r={r} />
         {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}

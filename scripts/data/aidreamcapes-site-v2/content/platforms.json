@@ -198,32 +198,38 @@
     {
       "t": "TikTok in-feed hook",
       "d": "Open with the product entering frame, then finish one clear use moment in a vertical clip.",
-      "href": "/platforms/tiktok-ads"
+      "href": "/platforms/tiktok-ads",
+      "image": "n:guide:g1-launch-graphite-keyboard-demo-r2"
     },
     {
       "t": "Instagram Reels demo",
       "d": "Show one tactile action close to the camera so the product reads before the viewer scrolls.",
-      "href": "/platforms/instagram-ads"
+      "href": "/platforms/instagram-ads",
+      "image": "n:guide:g1-launch-face-mist-spray-r2"
     },
     {
       "t": "Facebook Feed detail",
       "d": "Use a 4:5 product view that leaves room for the offer you add in Ads Manager.",
-      "href": "/platforms/facebook-ads"
+      "href": "/platforms/facebook-ads",
+      "image": "n:guide:q14-retarget-og"
     },
     {
       "t": "Shorts first-second reveal",
       "d": "Put the product and the start of its main action in the opening beat of a 9:16 Short.",
-      "href": "/platforms/youtube-shorts-ads"
+      "href": "/platforms/youtube-shorts-ads",
+      "image": "n:guide:g1-launch-berry-sparkling-sip-r2"
     },
     {
       "t": "Amazon listing gallery",
       "d": "Lead with a plain-white main image, then answer a shopper question with a lifestyle or detail view.",
-      "href": "/platforms/amazon-product-photos"
+      "href": "/platforms/amazon-product-photos",
+      "image": "n:guide:g1-launch-olive-sandal-first-look-r2"
     },
     {
       "t": "Shopify product gallery",
       "d": "Keep square collection images consistent, then add a separate short product video when motion explains the item.",
-      "href": "/platforms/shopify-product-photos"
+      "href": "/platforms/shopify-product-photos",
+      "image": "n:guide:g1-launch-dog-harness-fit-r2"
     }
   ]
 }
