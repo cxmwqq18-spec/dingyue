@@ -957,6 +957,7 @@ function templateFilterTags(card, chips, groups) {
   return chips.filter((chip) => {
     if (chip.id === card.kind) return true;
     const group = groups[chip.id] ?? {};
+    if ((group.templates ?? []).includes(card.key)) return true;
     return (group.industries ?? []).some((id) => card.industries.includes(id)) ||
       (group.platforms ?? []).some((id) => card.platforms.includes(id));
   }).map((chip) => chip.id);
@@ -1497,6 +1498,8 @@ function payloadFor(model, page) {
         style: actor.style,
         scene: actor.scene,
         age: actor.age,
+        gender: actor.gender,
+        use: actor.use,
         category: actor.category,
         image: mediaImage(model, actor.ref, "card"),
         href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10", promptOverride: actorSeedancePrompt(actor) })
