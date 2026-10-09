@@ -23,6 +23,15 @@
     },
     "v_launch": {
       "alt": "White desk lamp glows beside a laptop"
+    },
+    "f3-home-hero-serum-dropper-a": {
+      "alt": "Plain amber dropper bottle standing on wet black stone beside an amber droplet"
+    },
+    "f3-home-hero-serum-dropper-b": {
+      "alt": "Plain amber dropper bottle held over a vanity while a drop falls from the pipette"
+    },
+    "f3-home-hero-serum-dropper-c2": {
+      "alt": "Plain amber dropper bottle resting on a folded cream towel beside a vanity"
     }
   },
   "galleries": {
@@ -3820,15 +3829,24 @@
         1280
       ]
     },
-    "q1-home-size-headphones": {
-      "w": 1536,
-      "h": 864,
-      "alt": "An adult commuter looks into the camera and speaks while holding plain over-ear headphones beside their face in a bright train station.",
-      "variants": [
-        640,
-        1280
-      ]
-    },
+      "q1-home-size-headphones": {
+        "w": 1536,
+        "h": 864,
+        "alt": "An adult commuter looks into the camera and speaks while holding plain over-ear headphones beside their face in a bright train station.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f3-home-size-headphones-generic": {
+        "w": 1536,
+        "h": 864,
+        "alt": "An adult commuter holds dark over-ear headphones with leather ear pads and visible metal adjustment sliders in a train station.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
     "q1-video-strip-protein": {
       "w": 864,
       "h": 1536,

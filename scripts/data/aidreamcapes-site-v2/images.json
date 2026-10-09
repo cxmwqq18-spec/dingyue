@@ -162,5 +162,17 @@
  "var2": {
   "w": 240,
   "h": 900
+ },
+ "f3-home-hero-serum-dropper-a": {
+  "w": 240,
+  "h": 900
+ },
+ "f3-home-hero-serum-dropper-b": {
+  "w": 240,
+  "h": 900
+ },
+ "f3-home-hero-serum-dropper-c2": {
+  "w": 240,
+  "h": 900
  }
 }

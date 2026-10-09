@@ -72,6 +72,21 @@ const TEMPLATE_PROMPTS = {
 };
 const VIDEO_TOOLS = ["image-to-video", "url-to-video", "video-ads", "product-videos", "unboxing-videos", "before-after-videos", "spokesperson-videos"];
 const PHOTO_TOOLS = ["photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"];
+const HOME_TOOL_ALTS = {
+  "image-to-video": "Plain cream travel mug on a stone counter in a warm room.",
+  "url-to-video": "Product page and phone video preview for a plain cream travel mug.",
+  "video-ads": "Adult creator holds a generic square-faced watch with a white band toward the camera.",
+  "product-videos": "Hand operates a compact black espresso machine to pour coffee into a glass.",
+  "unboxing-videos": "Adult opens a kraft box to reveal a new product.",
+  "before-after-videos": "Closet changes from scattered clothes to neatly arranged shelves.",
+  "spokesperson-videos": "Adult presenter holds a plain white pump bottle toward the camera.",
+  "photo-hub": "White ceramic vase filled with daisies on a stone table.",
+  "white-background": "Red unbranded running shoe on a white background.",
+  "lifestyle-photos": "Clear square perfume bottle on a sunlit stone vanity.",
+  "model-photos": "Adult woman holds a plain white pump bottle in a bright kitchen.",
+  "change-background": "Plain taupe backpack on a city sidewalk.",
+  "social-ad-photos": "Gray trail shoe on a rock beside a blue lake."
+};
 const TOOL_DESC = {
   "image-to-video": "Turn any product photo into a video", "url-to-video": "Paste a product link, get a video", "video-ads": "Short ads for TikTok, Reels and Shorts",
   "product-videos": "Show how your product looks and works", "unboxing-videos": "The first-look moment, no filming", "before-after-videos": "Show the difference your product makes",
@@ -654,6 +669,7 @@ function caseTarget(model, page, entry, source, isClip, promptOverride) {
   const isVideoExample = isClip || entry.kind === "scene" || (!entry.kind && page.group === "video");
   if (!isVideoExample) {
     const promptOptions = promptOverride === undefined ? undefined : { promptOverride };
+    if (entry.tool && model.byId[entry.tool]) return toolAppHref(model, model.byId[entry.tool], entry.template, promptOptions);
     if (page.id === "home") return toolAppHref(model, model.byId["white-background"], "white", promptOptions);
     if (page.id === "photo-hub") return toolAppHref(model, page, TOOL_REL[page.id]?.[0], promptOptions);
     if (page.type === "tool" && page.group === "photo") return toolAppHref(model, page, undefined, promptOptions ?? { prompt: DEFAULT_PHOTO_PROMPT });
@@ -681,7 +697,7 @@ function caseCardFor(model, page, entry, index) {
   return {
     key: `case-${page.id}-${index + 1}`, cardType: "case", name: entry.title, product: entry.product, mediaRef: ref, kind,
     ...(isVideoExample ? { videoExample: true } : {}),
-    href: caseTarget(model, page, entry, source, isClip),
+    href: caseTarget(model, page, entry, source, isClip, entry.prompt),
     image: isClip ? source.poster : source, ...(isClip ? { video: source } : {}), tags: [], industries: [], platforms: []
   };
 }
@@ -882,10 +898,15 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
         const cardKind = card.kind;
         assert.ok(cardKind === "photo" || cardKind === "video", `${page.id}: visual picker card kind must be photo or video`);
         const image = visualImage(model, card.ref, cardKind);
-        const target = card.tool ? model.byId[card.tool] : undefined;
-        assert.ok(!card.tool || target, `${page.id}: visual picker tool ${card.tool} does not exist`);
+        const routeTool = card.videoTool ?? card.tool;
+        const target = routeTool ? model.byId[routeTool] : undefined;
+        assert.ok(!routeTool || target, `${page.id}: visual picker tool ${routeTool} does not exist`);
         const entry = { kind: cardKind === "video" ? "scene" : "photo" };
-        const href = target?.url ?? caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", card.prompt);
+        const href = target
+          ? card.videoTool && cardKind === "video"
+            ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? "15", promptOverride: card.prompt })
+            : target.url
+          : caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", card.prompt);
         return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}) };
       }),
       button: picker.button ?? "",
@@ -1348,9 +1369,20 @@ function payloadFor(model, page) {
       ...(visual ? { visual } : {}),
       // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
       hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
-        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)) }),
+        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["f3-home-hero-serum-dropper-a", "f3-home-hero-serum-dropper-b", "f3-home-hero-serum-dropper-c2"].map((key) => imageRef(model, key, "Plain amber dropper bottle in a product scene")) }),
         videoHref, photoHref },
-      make: { title: c.make_title, lead: c.make_lead, video: VIDEO_TOOLS.map((id) => toolRef(model, id)), photo: PHOTO_TOOLS.map((id) => toolRef(model, id)) },
+      make: {
+        title: c.make_title,
+        lead: c.make_lead,
+        video: VIDEO_TOOLS.map((id) => {
+          const card = toolRef(model, id);
+          return { ...card, image: { ...card.image, alt: HOME_TOOL_ALTS[id] } };
+        }),
+        photo: PHOTO_TOOLS.map((id) => {
+          const card = toolRef(model, id);
+          return { ...card, image: { ...card.image, alt: HOME_TOOL_ALTS[id] } };
+        })
+      },
       templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
@@ -1505,7 +1537,10 @@ function payloadFor(model, page) {
         gender: actor.gender,
         use: actor.use,
         category: actor.category,
-        image: mediaImage(model, actor.ref, "card"),
+        image: (() => {
+          const image = mediaImage(model, actor.ref, "card");
+          return { ...image, alt: String(image.alt ?? "").replace(/\bplain plain\b/gi, "plain").replace(/\bplain pair of plain sunglasses\b/gi, "plain sunglasses").replace(/\ba plain over-ear headphones\b/gi, "a pair of plain over-ear headphones").replace(/\ba office\b/gi, "an office").replace(/\ba outdoor\b/gi, "an outdoor") };
+        })(),
         href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10", promptOverride: actorSeedancePrompt(actor) })
       }));
       out.relatedGroups = [

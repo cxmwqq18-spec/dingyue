@@ -2,7 +2,7 @@
   "id": "home",
   "title": "AI Product Videos & Photos for Online Stores | AIVideosUGC",
   "description": "Turn one product photo into short video ads, white-background photos and lifestyle shots for TikTok, Instagram, Amazon and Shopify. See the cost first.",
-  "h1": "Turn One Product Photo into Video Ads and Store-Ready Images",
+  "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "AI video ads & product photos for online stores",
   "lead": "Upload one photo of your product and get a short video ad, a clean white-background photo or a lifestyle scene for your online store. You see the cost before anything is made.",
   "secondary_keywords": [
@@ -13,9 +13,9 @@
     "AI ads for ecommerce"
   ],
   "make_title": "Choose a product video or photo",
-  "make_lead": "Start with the result you need. Every option begins with your own product photo.",
+  "make_lead": "Choose the result you need: a product demo, unboxing or ad clip, or a listing and social photo. Every option starts with your own product photo.",
   "templates_title": "Pick an idea. Add your product.",
-  "templates_lead": "Ready-made looks for videos and photos. Choose one, upload your product photo and get the same style with your product.",
+  "templates_lead": "Choose a product demo, unboxing, before-and-after or lifestyle template, upload your product photo and review the result before you publish.",
   "platforms_title": "The right size for every platform",
   "steps": [
     {
@@ -28,7 +28,7 @@
     },
     {
       "t": "Download your result",
-      "d": "Save the version that looks right, then make another variation if needed."
+      "d": "Check the product shape, color, label area and chosen aspect ratio before you download or make another variation."
     }
   ],
   "example_flows": [
@@ -107,7 +107,7 @@
   },
   "audience": {
     "title": "Who AIVideosUGC is for",
-    "lead": "Anyone who sells products online and needs new ads and product images often.",
+    "lead": "Shop owners and marketing teams use one product photo to make a listing image, a short ad or a product-use demo.",
     "items": [
       {
         "t": "Shopify stores and brands selling through their own websites",
@@ -124,6 +124,18 @@
       {
         "t": "Agencies and freelancers",
         "d": "Several versions for every client, with the cost of each job shown up front so you can price your work."
+      },
+      {
+        "t": "Small online stores",
+        "d": "Make a clean [product photo](page:photo-hub) for a new listing, then test a short [video ad](page:video-ads) without booking a shoot."
+      },
+      {
+        "t": "Content creators",
+        "d": "Turn a product photo into a [creator-style ad](page:video-ads) or a product-use clip for a brief you can edit before posting."
+      },
+      {
+        "t": "App and SaaS teams",
+        "d": "Use a presenter or product demo to explain one visible feature, then add approved captions and a call to action in your editor."
       }
     ]
   },
@@ -189,7 +201,7 @@
   ],
   "examples": {
     "h2": "Ad scenes across product categories",
-    "lead": "Each scene uses a real ad format for a product shoppers already recognize.",
+    "lead": "See a product hero, a try-on, a creator-style review and a cinematic scene, each matched to a real ad job.",
     "groups": [
       {
         "label": "Product Hero",
@@ -231,7 +243,10 @@
             "ref": "n:guide:q1-home-example-serum",
             "title": "Cinematic Hero: Serum Bottle on Wet Stone",
             "kind": "photo",
-            "product": "face serum"
+            "product": "face serum",
+            "tool": "lifestyle-photos",
+            "template": "life",
+            "prompt": "Keep the uploaded serum bottle shape, color and label area exactly. Place the plain amber serum bottle on wet black stone with one amber droplet beside it, soft warm side light and a cinematic close-up, no text."
           }
         ]
       },
@@ -349,7 +364,9 @@
             "hooks"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile visible. Freeze the moment just before the next stride in late-afternoon light, candid sports-ad style, low close angle, full shoe in frame, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "creator",
+          "videoTool": "video-ads"
         },
         {
           "ref": "n:guide:q1-home-picker-earrings",
@@ -359,7 +376,9 @@
             "demo"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands lift plain gold hoop earrings from a small jewelry box lined with cream tissue. Hold the reveal above the open box in soft window light, overhead close framing, realistic jewelry campaign, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "unbox",
+          "videoTool": "unboxing-videos"
         },
         {
           "ref": "n:guide:q1-home-picker-earbuds-v2",
@@ -368,7 +387,9 @@
             "demo"
           ],
           "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult fits a small matte sage-green, stemless bean-shaped wireless earbud into one ear while holding its matching low, flat pill-shaped case in the other hand. Keep the earbud and case clearly visible in a bright everyday setting, tight side view, natural tech-ad style, no text, no logos.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "demo",
+          "videoTool": "product-videos"
         },
         {
           "ref": "n:guide:q1-home-picker-mask",
@@ -378,7 +399,9 @@
             "demo"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. A clean spatula lifts a smooth ribbon of pale green clay mask from a plain open jar, with the texture suspended above the rim. Soft window light, realistic skincare macro, overhead close composition, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "beauty",
+          "videoTool": "product-videos"
         },
         {
           "ref": "n:guide:q1-home-picker-lipbalm",
@@ -387,25 +410,31 @@
             "demo"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult applies tinted balm in a mirror before leaving home, with the balm held beside the face and the color visible on the lips. Natural morning light, close candid beauty-campaign framing, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "beauty",
+          "videoTool": "video-ads"
         },
         {
           "ref": "n:gen2:tpl-size-g2",
           "label": "Bag Demo: Laptop Into Canvas Tote",
           "chips": [
-            "problem"
+            "demo"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult slides a laptop into a plain canvas tote and lifts the bag by its handles, showing the full tote and open capacity. Bright natural light, practical lifestyle-ad composition at waist height, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "demo",
+          "videoTool": "product-videos"
         },
         {
           "ref": "n:guide:q1-home-picker-hot-sauce",
           "label": "Taco Recipe: Hot Sauce Drizzle",
           "chips": [
-            "unboxing"
+            "demo"
           ],
           "prompt": "Use the uploaded product image and keep its bottle shape, color, and label area exactly. An adult hand squeezes a thin ribbon of plain hot sauce from a blank-label bottle onto a fresh taco on a clean plate. Keep the taco and bottle clearly visible. Bright kitchen light, close food-ad composition, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "drink",
+          "videoTool": "product-videos"
         },
         {
           "ref": "n:guide:q1-home-picker-pet-hair",
@@ -414,7 +443,9 @@
             "problem"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult uses a plain pet-hair remover across a sofa cushion while a calm dog sits nearby. Show the cleaned path and collected fur clearly, bright home light, close practical-ad composition, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "ba",
+          "videoTool": "before-after-videos"
         },
         {
           "ref": "n:guide:k1-unboxing-picker-pet-kit",
@@ -423,7 +454,9 @@
             "unboxing"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Reveal a plain pet grooming kit from an open kraft box: a wood-handled brush, folded towel and blank shampoo bottle sit clearly in the box. Bright soft window light, clean overhead product-ad framing, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "unbox",
+          "videoTool": "unboxing-videos"
         },
         {
           "ref": "n:guide:k1-unboxing-picker-scarf",
@@ -433,7 +466,9 @@
             "unboxing"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands pull a soft plain wool scarf from a white mailer onto a neatly made bed, revealing its texture and full length as the opening hook. Bright window light, overhead unboxing-ad composition, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "unbox",
+          "videoTool": "unboxing-videos"
         },
         {
           "ref": "n:guide:k1-product-videos-case-vacuum",
@@ -442,7 +477,9 @@
             "problem"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. A plain cordless handheld vacuum lifts visible crumbs from a dark fabric sofa, leaving a clean path beside the nozzle. Bright home light, close practical product-demo framing, show the tool and result clearly, no text.",
-          "kind": "photo"
+          "kind": "video",
+          "template": "ba",
+          "videoTool": "before-after-videos"
         }
       ],
       "button": "Start a video ad like this"
@@ -470,8 +507,8 @@
         "frame": "browser",
         "ref": "n:gen2:plat-facebook-g3",
         "ref_b": "n:guide:f3-home-ab-bottle-review",
-        "h": "Product page with two hook options",
-        "d": "A/B test two opening moments, then feature the winner on your own product page."
+        "h": "Amazon white-background product image",
+        "d": "Use a clean full-view bottle image on the product page so shoppers can inspect its shape before purchase."
       }
     ],
     "input": [
@@ -526,7 +563,7 @@
       },
       {
         "frame": "16:9",
-        "ref": "f:q1-home-size-headphones",
+        "ref": "f:f3-home-size-headphones-generic",
         "label": "Tech Review: Headphones for the Commute"
       }
     ],
