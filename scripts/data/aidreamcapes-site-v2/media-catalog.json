@@ -4879,6 +4879,16 @@
         1280
       ],
       "source": "Codex image generation"
+    },
+    "f16-drink-output-cream-can-r2": {
+      "w": 941,
+      "h": 1672,
+      "alt": "The same blank cream matte can pours pale iced coffee into a glass on a lakeside picnic blanket.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "codex-imagegen"
     }
   },
   "gen": {
@@ -39599,6 +39609,248 @@
         ],
         "source": "Codex image generation",
         "file": "f15-r2-tpl-light-output-sage-mug-r1"
+      },
+      "f16-tpl-beauty-picker-lip-tint-r1": {
+        "file": "f16-tpl-beauty-picker-lip-tint-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator applies a plain lip tint in a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-tpl-beauty-picker-gift-review-r1": {
+        "file": "f16-tpl-beauty-picker-gift-review-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator reviews a plain skincare gift set in a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-tpl-drink-picker-taste-r1": {
+        "file": "f16-tpl-drink-picker-taste-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A creator takes a small sip of a plain berry soda in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-tpl-home-picker-review-reveal-r1": {
+        "file": "f16-tpl-home-picker-review-reveal-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator opens a plain woven storage bin and shows its interior to camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-tpl-bf-picker-gift-demo-r1": {
+        "file": "f16-tpl-bf-picker-gift-demo-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal a plain compact coffee grinder from a gift box on a warm seasonal table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-beauty-problem-solution-r1": {
+        "file": "f16-r10-beauty-problem-solution-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands spread plain moisturizer over visibly dry knuckles beside a cream jar at a bright bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-beauty-street-review-r1": {
+        "file": "f16-r10-beauty-street-review-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black creator holds a plain sunscreen tube during a street interview.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-drink-street-taste-r1": {
+        "file": "f16-r10-drink-street-taste-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Older creator takes a sip of plain berry soda from a clear glass at an outdoor market.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-drink-kitchen-tutorial-r1": {
+        "file": "f16-r10-drink-kitchen-tutorial-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands pour plain oat milk into iced coffee in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-drink-asmr-can-r1": {
+        "file": "f16-r10-drink-asmr-can-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a plain cream-colored sparkling drink can beside a clear glass.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-home-room-reveal-r1": {
+        "file": "f16-r10-home-room-reveal-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Entryway shelf shown cluttered on one side and organized with a plain woven basket on the other.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-home-office-daily-r1": {
+        "file": "f16-r10-home-office-daily-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Older creator guides a charging cable into a plain gray desk organizer in a home office.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-bf-card-07-beanie-tryon-r1": {
+        "file": "f16-r10-bf-card-07-beanie-tryon-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Mature creator adjusts a plain rust knit beanie in an entryway mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-beauty-street-review-alt-r1": {
+        "file": "f16-r10-beauty-street-review-alt-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Older creator holds a plain sunscreen tube during a sidewalk interview.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-beauty-problem-solution-alt-r1": {
+        "file": "f16-r10-beauty-problem-solution-alt-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark-skinned hands spread plain moisturizer over dry knuckles beside a cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-bf-serum-review-r1": {
+        "file": "f16-r10-bf-serum-review-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a plain pale frosted serum bottle toward the camera in a warm vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-bf-after-offer-r1": {
+        "file": "f16-r10-bf-after-offer-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands set a plain pale frosted serum bottle on a vanity with open space for offer text.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10-bf-example-headphones-r1": {
+        "file": "f16-r10-bf-example-headphones-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands fold plain over-ear headphones on a warm wood desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10b-bf-card-07-desk-lamp-demo-r1": {
+        "file": "f16-r10b-bf-card-07-desk-lamp-demo-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands reveal a plain cordless desk lamp from a gift box and press its switch.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10b-bf-output-01-review-older-man-r1": {
+        "file": "f16-r10b-bf-output-01-review-older-man-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Older Black creator holds the same pale frosted serum dropper bottle toward the camera in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10b-bf-output-03-hands-bottle-r1": {
+        "file": "f16-r10b-bf-output-03-hands-bottle-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands set the same pale frosted serum dropper bottle on a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "f16-r10b-drink-picker-iced-tea-pour-r1": {
+        "file": "f16-r10b-drink-picker-iced-tea-pour-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands pour plain peach iced tea from a clear bottle into an ice-filled glass at a picnic table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
       }
     }
   }
