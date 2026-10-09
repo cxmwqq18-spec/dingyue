@@ -15,7 +15,7 @@
     "A feature callout works when shoppers can see one thing happen. The sample presses a white cleanser pump, spreads the foam, and keeps the action close enough to understand without a presenter.",
     "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action; use the product listing to add ingredients, measurements, and small package details in your editor.",
     "Choose one feature a shopper can see happen: a cleanser pump dispenses once, a cable seats in an organizer, a stain lifts from a cuff, or a clasp closes. Keep the product and the hand in the same close frame so the action explains itself without a presenter. One clear movement makes the resulting clip useful beside a listing and easy to compare with your own product footage.",
-    "Describe the action in the order it happens, including where the hand starts and where the product ends. Mention the surface, light, and final held position so the generator has a stable ending. Add measurements, ingredient names, and performance language later as editable copy from your product information; the image should demonstrate the mechanism without making an unsupported claim.",
+    "Describe the action in the order it happens, including where the hand starts and where the product ends. Mention the surface, light, and final held position so the generator has a stable ending. Add measurements, ingredient names, and performance language later in the product details; the image should demonstrate the mechanism without making an unsupported claim.",
     "Before publishing, verify the feature against a real sample and inspect the close-up for shape, color, and edge detail. Keep one feature per clip when a product has several mechanisms, then link each clip to the relevant section of the product page. A clear before state, one action, and a settled after state give shoppers enough evidence to decide what to inspect next."
   ],
   "tip": "Describe one visible feature and one action, then leave any ingredient, size, or performance statement for text you add yourself.",
@@ -92,6 +92,10 @@
     {
       "q": "How is a callout clip credited?",
       "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits."
+    },
+    {
+      "q": "Can I create another feature-callout video from the same source photo?",
+      "a": "Yes. Keep the cleanser pump as the reference, then change one action or camera angle at a time. Check that the pump, foam, and final held position match the physical sample. Add the feature name, measurement, and current offer after download so product facts remain easy to update."
     }
   ],
   "overview": [
@@ -223,7 +227,7 @@
     ]
   },
   "visual": {
-    "overview": "A product-feature callout video puts one visible function in focus. Describe a single movement, then add the feature name and any exact measurements in your editor.",
+    "overview": "A product-feature callout video puts one visible function in focus. Describe a single movement, then add the feature name and any exact measurements in your editor. Use this format when shoppers need to see a cleanser pump dispense, a cable seat, or a clasp close. Keep one mechanism visible from the first frame, then leave room for the feature label and measurement you add after download. Review the product edge, finish, and action against your source before publishing.",
     "strip": [
       "n:guide:q13-feature-strip-0",
       "n:guide:q13-feature-strip-1-r2",
@@ -258,7 +262,7 @@
     },
     "picker": {
       "title": "Pick one feature for your product video",
-      "lead": "Choose a part shoppers can see move, open, or catch the light.",
+      "lead": "Choose a part shoppers can see move, open, or catch the light. Start with one mechanism, then choose the scene that shows the start, action, and finished position clearly.",
       "chips": [
         {
           "id": "problem",
@@ -359,13 +363,13 @@
       {
         "frame": "browser",
         "h": "Show one feature on a product page",
-        "d": "Place the clip beside the feature description so shoppers can connect the action with its label.",
+        "d": "Place the clip beside the feature description so shoppers can connect the action with its label. Keep the close frame tight enough to show the cleanser pump and the result of one press.",
         "ref": "n:guide:q13-feature-uses-0"
       },
       {
         "frame": "phone",
         "h": "Share the cleanser feature demo in a Reel",
-        "d": "Show the pump action close up, then add the feature name and dimensions as text.",
+        "d": "Show the pump action close up, then add the feature name and dimensions as text. Leave the white bottle and hand unobstructed so the movement is easy to follow.",
         "ref": "n:guide:c1-tpl-product-feature-callout-video-m4-cleanser-video-916"
       }
     ],
@@ -411,8 +415,8 @@
         "Link"
       ],
       "items": [
-        "Add the feature callouts and exact measurement as editable text.",
-        "Keep the product link and ingredient details in your editor."
+        "Add the feature callouts and exact measurement as editable text. Check the cleanser pump, foam, and one-press action against the physical sample before publishing.",
+        "Keep the product link and ingredient details in your editor. Read the finished frame at mobile size and move added text away from the pump and the hand."
       ]
     },
     "titles": {
