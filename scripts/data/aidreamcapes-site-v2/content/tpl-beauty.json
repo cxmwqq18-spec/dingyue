@@ -70,6 +70,18 @@
     {
       "q": "Can I add a shade or ingredient name?",
       "a": "Add your own product claims as editable text in your video editor after download."
+    },
+    {
+      "q": "How long is a skincare routine clip?",
+      "a": "Choose 6 seconds for one application beat or 10 to 15 seconds for a short routine. These cost 24, 40, or 60 credits, shown before you create the clip."
+    },
+    {
+      "q": "Can the video show the texture without a face?",
+      "a": "Yes. Ask for a close shot of a hand, cotton pad, or the product itself when you do not want a face in frame."
+    },
+    {
+      "q": "Do I need a professional filming setup?",
+      "a": "No. A clear product photo and a written scene are enough; the clip is generated from your photo and description."
     }
   ],
   "overview": [
