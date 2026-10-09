@@ -365,5 +365,57 @@
         "h2": "Social ad photo FAQs"
       }
     }
-  }
+  },
+  "benefits": [
+    {
+      "t": "Leave space for the offer",
+      "d": "Keep the product clear on one side and add the approved headline or price later in Facebook ads or Instagram ads."
+    },
+    {
+      "t": "Build a square feed concept",
+      "d": "Start with one product photo, then compare this format with a lifestyle scene when context matters."
+    },
+    {
+      "t": "Test one change at a time",
+      "d": "Keep the product and offer fixed while testing the setting or crop; Testing Ad Versions gives a practical order."
+    },
+    {
+      "t": "Create campaign variants",
+      "d": "Use Sale Banner, Carousel Video Ad, or Spark Ads Style Video for a different format."
+    },
+    {
+      "t": "Keep product details honest",
+      "d": "Use White Background Photos for a clear catalog view and the [AI content checklist](page:blog-ai-video-review-checklist) before publishing."
+    },
+    {
+      "t": "Match the product category",
+      "d": "Pick a real use scene for beauty and skincare, food and drinks, fashion and clothing, or shoes."
+    }
+  ],
+  "uses": [
+    {
+      "t": "Paid social feed tests",
+      "d": "Make two square scenes for Instagram and Facebook, keeping audience and offer constant."
+    },
+    {
+      "t": "Short-form campaign handoff",
+      "d": "Pair the still with TikTok ads, Carousel Video Ad, or Spark Ads Style Video when motion is part of the plan."
+    },
+    {
+      "t": "Launch and promotion assets",
+      "d": "Use a clean scene for a new product launch, a sale campaign, or a Black Friday video."
+    },
+    {
+      "t": "Beauty demonstration stills",
+      "d": "Leave room beside a serum or brush for a claim added later, and browse Beauty Routine for a matching motion idea."
+    },
+    {
+      "t": "Food and drink ads",
+      "d": "Show the serving moment for food and drinks, then use [Drink Pour](page:tpl-drink) when a moving pour explains the product."
+    },
+    {
+      "t": "Catalog and retargeting",
+      "d": "Lead shoppers to the Shopify product photo page, then follow up with Retargeting Video Ad. For the next campaign, compare [Packaging Preview](page:tpl-pack), [Studio Lighting](page:tpl-light), [Story Ad](page:tpl-story), [How-To Video](page:tpl-howto), [Brand Film](page:tpl-film), [Home Organizing](page:tpl-home), [Outfit Reel](page:tpl-outfit), [Launch Promo](page:tpl-launch), [Side-by-Side Video](page:tpl-compare), [How to Take a Product Photo That Works](page:guide-product-photo-tips), White Background Photos for Amazon, AI Product Photography: A Practical Guide."
+    }
+  ]
 }
