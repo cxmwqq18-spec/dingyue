@@ -206,12 +206,12 @@
   "visual": {
     "overview": "A limited-drop alert video gives a new or restocked item a quick reveal. Keep the product prominent, then add release timing and availability as editable text.",
     "strip": [
-      "n:guide:q13-limited-strip-0",
-      "n:guide:q13-limited-strip-1",
-      "n:guide:q13-limited-strip-2",
+      "n:guide:g1-limited-skincare-restock",
+      "n:guide:g1-limited-jewelry-reveal",
+      "n:guide:g1-limited-apparel-fit-check",
       "n:guide:q13-limited-strip-3",
-      "n:guide:q13-limited-strip-4",
-      "n:guide:q13-limited-strip-5"
+      "n:guide:g1-limited-phone-case-reveal",
+      "n:guide:g1-limited-citrus-first-sip"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-limited-drop-alert-video-m2-source",
