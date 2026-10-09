@@ -7217,6 +7217,14 @@
       "variants": [
         1200
       ]
+    },
+    "t33-video-ads-og-r2": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand lifts a green glass bottle at a bright kitchen counter.",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {
