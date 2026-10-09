@@ -190,7 +190,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q6-cbg-pair-yogamat-after",
+          "ref": "n:guide:k7-ind-health-wellness-strip-1-n-yogamat-room",
           "label": "Yoga mat: rolled to ready",
           "chips": [
             "refresh"
@@ -199,7 +199,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q6-cbg-pair-boots-after",
+          "ref": "n:guide:k5-background-gallery-pair-boots",
           "label": "Plain boots: creator review",
           "chips": [
             "creator"
@@ -208,7 +208,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q6-cbg-pair-protein-after",
+          "ref": "n:guide:k5-background-gallery-pair-protein",
           "label": "Protein powder: mixed drink",
           "chips": [
             "quickfix"
@@ -217,7 +217,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q6-cbg-pair-phonecase-after",
+          "ref": "n:guide:k5-background-phonecase-result",
           "label": "Phone case: case seated",
           "chips": [
             "split"

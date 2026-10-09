@@ -53,19 +53,19 @@
       "pairs": [
         {
           "before": "n:guide:k5-background-phonecase-source",
-          "after": "n:guide:k5-background-phonecase-result"
+          "after": "n:guide:q6-cbg-pair-phonecase-after"
         },
         {
           "before": "n:yogamat-pack",
-          "after": "n:guide:k5-background-gallery-pair-yogamat"
+          "after": "n:guide:q6-cbg-pair-yogamat-after"
         },
         {
           "before": "n:boots-pack",
-          "after": "n:guide:k5-background-gallery-pair-boots"
+          "after": "n:guide:q6-cbg-pair-boots-after"
         },
         {
           "before": "n:protein-pack",
-          "after": "n:guide:k5-background-gallery-pair-protein"
+          "after": "n:guide:q6-cbg-pair-protein-after"
         }
       ]
     },
