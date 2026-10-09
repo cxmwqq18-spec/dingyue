@@ -47,6 +47,18 @@
     {
       "q": "Should I spray water on my can for a cold, fresh look?",
       "a": "No need. Ask for condensation in your description instead, then wipe off fingerprints and photograph the dry can near a window with the light coming from the side."
+    },
+    {
+      "q": "Can a can or bottle photo become a pour video?",
+      "a": "Yes. Upload a clear product shot and choose a pour or first-sip format; the video can show a hand pouring from that same package into a glass or cup. The label shape, color and proportions stay matched to your photo."
+    },
+    {
+      "q": "How do I make food or drinks look fresh?",
+      "a": "Use real condensation, ice or garnish at the shoot when possible, and describe the moment plainly, such as poured over ice. Do not rely on generated text for ingredients or nutrition panels."
+    },
+    {
+      "q": "What length and format fit food ads?",
+      "a": "Use a 6 to 15 second vertical video for in-feed placements, where one pour, bite or unwrap is enough. Square photos or 1:1 videos work on listings and product carousels where the package itself must stay centered."
     }
   ],
   "overview": {
