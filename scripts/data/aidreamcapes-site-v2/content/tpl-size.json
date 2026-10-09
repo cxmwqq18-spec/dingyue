@@ -258,11 +258,11 @@
       "chips": [
         {
           "id": "hand",
-          "label": "In a Person’s Hand"
+          "label": "In a Person's Hand"
         },
         {
           "id": "wear",
-          "label": "Worn for Fit"
+          "label": "Fit Cues"
         },
         {
           "id": "carry",
@@ -278,7 +278,8 @@
           "ref": "n:guide:q7-size-picker-cards-0",
           "label": "Vitamin C Serum in Hand",
           "chips": [
-            "hand"
+            "hand",
+            "daily"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain vitamin C serum bottle, shape, cap, and color. A hand holds the full bottle beside an open palm so its scale is clear. Bright bathroom daylight, close chest-level composition, natural product-ad look. No text, logos, or watermark.",
           "kind": "photo"
@@ -287,7 +288,8 @@
           "ref": "n:guide:q7-size-picker-cards-1",
           "label": "Protein Sachet in Hand",
           "chips": [
-            "hand"
+            "hand",
+            "carry"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact single-serve protein sachet, shape, seal, and color. A hand holds the full packet beside an open palm, with every edge visible. Soft gym daylight, chest-level close composition, natural product-ad look. No text, logos, or watermark.",
           "kind": "photo"
@@ -296,7 +298,9 @@
           "ref": "n:guide:q7-size-picker-cards-2",
           "label": "Backpack Fit Check",
           "chips": [
-            "wear"
+            "wear",
+            "carry",
+            "daily"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal backpack, panel layout, straps, zippers, and color. An adult commuter wears it with both shoulder straps visible and adjusts one strap. Open-shade daylight, three-quarter medium framing. No text, logos, or watermark.",
           "kind": "photo"
@@ -305,7 +309,8 @@
           "ref": "n:guide:q7-size-picker-cards-3",
           "label": "Knit Shoe Fit Check",
           "chips": [
-            "wear"
+            "wear",
+            "daily"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit running shoe, sole, and color. An adult runner wears the shoe with the full side profile and ankle fit visible on a shaded path. Natural morning light, low three-quarter composition. No text, logos, or watermark.",
           "kind": "photo"
@@ -314,6 +319,7 @@
           "ref": "n:guide:q7-size-picker-cards-4",
           "label": "Earbuds Case for Scale",
           "chips": [
+            "hand",
             "carry"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact compact dark earbuds case and its shape and color. A hand holds the closed case beside an open palm, with two small stemless earbuds visible nearby. Soft desk light, tight overhead composition. No text, logos, or watermark.",
@@ -323,7 +329,9 @@
           "ref": "n:guide:q7-size-picker-cards-5",
           "label": "Canvas Tote on Carry-On",
           "chips": [
-            "carry"
+            "wear",
+            "carry",
+            "daily"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact natural canvas tote, handle width, seams, and color. An adult traveler slides the tote over a carry-on handle, with both bags fully visible. Bright terminal daylight, medium travel-ad composition. No text, logos, or watermark.",
           "kind": "photo"
@@ -341,6 +349,7 @@
           "ref": "n:guide:q7-size-picker-cards-7",
           "label": "Protein Shaker in Hand",
           "chips": [
+            "carry",
             "daily"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain protein shaker, lid, cup shape, and color. An adult creator holds it upright beside their face with the lid clearly visible. Bright gym window light, chest-up composition, natural review style. No text, logos, or watermark.",
