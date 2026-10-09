@@ -78,6 +78,18 @@
     {
       "q": "What video size suits a cinematic product video?",
       "a": "Use 16:9 for a wide site hero or YouTube placement, 9:16 for mobile feeds, and 1:1 for square feeds."
+    },
+    {
+      "q": "Which ratio should a cinematic product clip use?",
+      "a": "16:9 suits a website hero or YouTube; choose 9:16 for TikTok and Reels. Both can be made from the same source photo."
+    },
+    {
+      "q": "How much does a cinematic clip cost?",
+      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits, displayed before you run it."
+    },
+    {
+      "q": "Can the video add moody lighting to a plain photo?",
+      "a": "Yes. Describe the light direction and mood; the product keeps its original shape and color."
     }
   ],
   "overview": [
