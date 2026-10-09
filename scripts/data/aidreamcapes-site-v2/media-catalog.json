@@ -38906,6 +38906,106 @@
           640,
           1280
         ]
+      },
+      "f11-r10-product-videos-water-bottle-review": {
+        "file": "f11-r10-product-videos-water-bottle-review",
+        "w": 941,
+        "h": 1672,
+        "alt": "Middle-aged Black man twists open a plain sage reusable water bottle in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-product-videos-sparkling-water-taste": {
+        "file": "f11-r10-product-videos-sparkling-water-taste",
+        "w": 941,
+        "h": 1672,
+        "alt": "Older East Asian woman tastes sparkling citrus water beside a plain glass bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-product-videos-mango-yogurt-taste": {
+        "file": "f11-r10-product-videos-mango-yogurt-taste",
+        "w": 941,
+        "h": 1672,
+        "alt": "Middle-aged South Asian man tastes plain mango yogurt from a ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-product-videos-fabric-shaver-demo": {
+        "file": "f11-r10-product-videos-fabric-shaver-demo",
+        "w": 941,
+        "h": 1672,
+        "alt": "Hands run a plain teal fabric shaver over a cream wool sweater.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-unboxing-videos-coffee-set-contents": {
+        "file": "f11-r10-unboxing-videos-coffee-set-contents",
+        "w": 941,
+        "h": 1672,
+        "alt": "Hands lay out a plain pour-over kettle set beside its open kraft box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-unboxing-videos-desk-organizer-asmr": {
+        "file": "f11-r10-unboxing-videos-desk-organizer-asmr",
+        "w": 941,
+        "h": 1672,
+        "alt": "Hands lift a plain metal desk organizer and wooden dividers from an open box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-before-after-cable-organizer-triptych": {
+        "file": "f11-r10-before-after-cable-organizer-triptych",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Three-panel sequence shows the same cable organizer before, during cord routing, and after.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-unboxing-videos-package-contents": {
+        "file": "f11-r10-unboxing-videos-package-contents",
+        "w": 941,
+        "h": 1672,
+        "alt": "Hands lay out plain headphones, a charging cable, and a storage pouch beside an open box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10-unboxing-videos-asmr-tea-canister": {
+        "file": "f11-r10-unboxing-videos-asmr-tea-canister",
+        "w": 941,
+        "h": 1672,
+        "alt": "Hands lift a plain ceramic tea canister lid beside an infuser and linen pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f11-r10b-before-after-videos-canvas-stain-cleanup": {
+        "file": "f11-r10b-before-after-videos-canvas-stain-cleanup",
+        "w": 941,
+        "h": 1672,
+        "alt": "Adult hands wipe a coffee stain from a plain canvas tote with a soap bar and cloth.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
