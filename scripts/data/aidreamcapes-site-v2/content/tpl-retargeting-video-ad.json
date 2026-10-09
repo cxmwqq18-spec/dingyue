@@ -206,12 +206,12 @@
   "visual": {
     "overview": "A useful retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see.",
     "strip": [
-      "n:guide:q14-retarget-strip-unbox",
-      "n:guide:q14-retarget-strip-commute",
-      "n:guide:q14-retarget-strip-talk",
+      "n:guide:g1-retarget-serum-application",
+      "n:guide:g1-retarget-shoe-tread-detail",
+      "n:guide:g1-retarget-snack-first-bite",
       "n:guide:q14-retarget-strip-duffel",
       "n:guide:q14-retarget-strip-fit",
-      "n:guide:q14-retarget-strip-board"
+      "n:guide:g1-retarget-pet-grooming-glove"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-retargeting-video-ad-m2-source",
