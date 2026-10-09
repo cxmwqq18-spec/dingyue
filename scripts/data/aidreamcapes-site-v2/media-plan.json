@@ -807,24 +807,24 @@
     },
     "tpl-limited-drop-alert-video": {
       "hero": {
-        "kind": "video",
-        "clip": "limited-drop-alert"
+        "kind": "image",
+        "image": "n:guide:q13-limited-hero"
       },
-      "og": "f:limited-drop-alert"
+      "og": "n:guide:q13-limited-og-r1"
     },
     "tpl-product-feature-callout-video": {
       "hero": {
-        "kind": "video",
-        "clip": "feature-callout"
+        "kind": "image",
+        "image": "n:guide:q13-feature-hero-r3"
       },
-      "og": "f:feature-callout"
+      "og": "n:guide:q13-feature-og-r1"
     },
     "tpl-carousel-video-ad": {
       "hero": {
-        "kind": "video",
-        "clip": "carousel-storytelling"
+        "kind": "image",
+        "image": "n:guide:q13-carousel-hero"
       },
-      "og": "f:carousel-storytelling"
+      "og": "n:guide:q13-carousel-og-r1"
     },
     "tpl-spark-ads-style-video": {
       "hero": {

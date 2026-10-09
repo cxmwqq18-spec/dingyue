@@ -32,23 +32,23 @@
   ],
   "visual": {
     "strip": [
-      "n:gen2:tpl-angle-c3",
-      "n:gen2:tpl-angle-c4",
-      "n:guide:k6-templates-strip-planter",
-      "n:guide:k6-templates-strip-beanies",
-      "n:guide:k6-templates-strip-deskset",
-      "n:gen2:tpl-detail-c1"
+      "n:guide:q13-templates-strip-0",
+      "n:guide:q13-templates-strip-1-r2",
+      "n:guide:q13-templates-strip-2",
+      "n:guide:q13-templates-strip-3",
+      "n:guide:q13-templates-strip-4",
+      "n:guide:q13-templates-strip-5-r1"
     ],
     "steps": {
       "source": "n:guide:k6-templates-step-source",
       "sourceAlt": "Brown leather duffel bag on a dark studio background.",
-      "result": "n:guide:k6-templates-step-result",
+      "result": "n:guide:q13-templates-steps-result-r2",
       "mode": "photo",
-      "prompt": "A brown leather duffel rests on a pale wood bench beside a bright window.",
+      "prompt": "A traveler lifts a plain dark brown leather duffel by its handles and settles it on a pale wood bench beside a bright station window. Keep the full bag visible in a square lifestyle product photo.",
       "options": [
         [
           "Template",
-          "Studio Lighting"
+          "Lifestyle Scene"
         ],
         [
           "Size",

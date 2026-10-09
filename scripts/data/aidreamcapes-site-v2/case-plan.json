@@ -723,68 +723,68 @@
     ],
     "tpl-limited-drop-alert-video": [
       {
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-strip-shoes-square",
-        "product": "sneaker",
-        "title": "Sneaker turned to show its sole before a limited drop"
+        "ref": "n:guide:q13-limited-more-3",
+        "product": "coral trail shoes",
+        "title": "Coral trail shoes tied before a hike"
       },
       {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-c2",
+        "ref": "n:guide:q13-limited-more-4",
         "product": "small-batch hot sauce",
-        "title": "Small-batch hot sauce lined up on a counter"
+        "title": "Hot sauce poured over noodles"
       },
       {
-        "ref": "n:guide:b1-spokesperson-videos-source",
-        "product": "forest-green bottle",
-        "title": "Matte forest-green bottle standing alone on a light surface"
+        "ref": "n:guide:q13-limited-more-5",
+        "product": "reusable bottle",
+        "title": "Reusable bottle beside a work laptop"
       },
       {
-        "ref": "g:background-remove-replace/example-04",
-        "product": "ceramic vase",
-        "title": "Ceramic vase shown against a dark editorial background"
+        "ref": "n:guide:q13-limited-more-6",
+        "product": "coral trail shoe tread",
+        "title": "Coral tread shown after a rocky hike"
       }
     ],
     "tpl-product-feature-callout-video": [
       {
-        "ref": "n:guide:white-background-soap-dispenser",
-        "product": "soap dispenser",
-        "title": "Soap dispenser pump shown in close detail"
+        "ref": "n:guide:q13-feature-more-3",
+        "product": "hand soap pump",
+        "title": "Hand soap foam beside the sink"
       },
       {
-        "ref": "g:on-model-generation/example-04",
-        "product": "backpack pocket",
-        "title": "Backpack pocket shown in a close-up"
+        "ref": "n:guide:q13-feature-more-4",
+        "product": "commuter backpack",
+        "title": "Backpack carried through a commute"
       },
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-c3",
-        "product": "electric kettle",
-        "title": "Kettle lid popping open at the press of a button"
+        "ref": "n:guide:q13-feature-more-5",
+        "product": "tea",
+        "title": "Tea served beside a morning window"
       },
       {
-        "ref": "n:guide:c1-tpl-feature-gold-band-square",
-        "product": "plain gold band ring",
-        "title": "Plain polished gold band beside a small scale coin"
+        "ref": "n:guide:q13-feature-more-6",
+        "product": "gold ring",
+        "title": "Gold ring catches natural daylight"
       }
     ],
     "tpl-carousel-video-ad": [
       {
-        "ref": "g:bundle-sets/example-02",
-        "product": "skincare set",
-        "title": "Skincare bottle and cream arranged side by side"
+        "ref": "n:guide:q13-carousel-more-3",
+        "product": "face cream",
+        "title": "Face cream applied before sunscreen"
       },
       {
-        "ref": "n:gen2:plat-youtube-shorts-c3",
-        "product": "camping stove",
-        "title": "Portable camp stove heating a pot beside a tent"
+        "ref": "n:guide:q13-carousel-more-4-r2",
+        "product": "commuter backpack",
+        "title": "Backpack arrives at a trailhead"
       },
       {
-        "ref": "n:guide:c1-tpl-carousel-video-ad-skillet-square",
+        "ref": "n:guide:q13-carousel-more-5",
         "product": "cast-iron skillet",
-        "title": "Unbranded cast-iron skillet with two eggs on a cooktop"
+        "title": "Eggs cook on a cast-iron skillet"
       },
       {
-        "ref": "n:gen2:tpl-carousel-video-ad-c4",
-        "product": "tote bag",
-        "title": "Tote bag with its contents spread out beside it"
+        "ref": "n:guide:q13-carousel-more-6",
+        "product": "canvas tote",
+        "title": "Canvas tote packed for a market"
       }
     ],
     "tpl-spark-ads-style-video": [

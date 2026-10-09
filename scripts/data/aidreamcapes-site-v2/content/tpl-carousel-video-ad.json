@@ -188,14 +188,14 @@
             "product": "wristwatch"
           },
           {
-            "ref": "f:carousel-storytelling",
+            "ref": "n:guide:q13-carousel-examples-1-r1",
             "title": "Commuter backpack packed beside a coat",
             "kind": "scene",
             "product": "commuter backpack"
           },
           {
-            "ref": "n:gen2:tpl-carousel-video-ad-g3",
-            "title": "Picnic basket set laid out on a blanket",
+            "ref": "n:guide:q13-carousel-examples-2",
+            "title": "Picnic basket serves lunch outdoors",
             "kind": "scene",
             "product": "picnic basket set"
           }
@@ -206,20 +206,20 @@
   "visual": {
     "overview": "A carousel video ad uses a short sequence to answer one shopper question at a time. Keep the product in view from the opening reveal through the final scene.",
     "strip": [
-      "n:guide:c1-tpl-carousel-video-ad-m2-source",
-      "n:guide:c1-tpl-carousel-video-ad-m2-result-square",
-      "n:gen2:tpl-compare-g2",
-      "n:guide:c1-tpl-product-feature-callout-video-reuse-strip4-wide",
-      "n:gen2:white-background-c3",
-      "n:gen2:url-to-video-c3"
+      "n:guide:q13-carousel-strip-0",
+      "n:guide:q13-carousel-strip-1-r2",
+      "n:guide:q13-carousel-strip-2-r2",
+      "n:guide:q13-carousel-strip-3",
+      "n:guide:q13-carousel-strip-4",
+      "n:guide:q13-carousel-strip-5-r2"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-carousel-video-ad-m2-source",
       "sourceTitle": "Product photo",
       "sourceHint": "Show the whole backpack and its main compartments.",
-      "result": "n:guide:c1-tpl-carousel-video-ad-m2-result-square",
+      "result": "n:guide:q13-carousel-steps-result-r2",
       "mode": "video",
-      "prompt": "Open this black commuter backpack on a clean cafe table and angle the laptop sleeve toward the camera.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black commuter backpack and places a notebook into its front organizer pocket. End with the pocket open and the full bag visible. Eye-level close framing with a gentle push-in; sound: zipper and quiet cafe room tone, no music.",
       "options": [
         [
           "Size",
@@ -241,11 +241,11 @@
       "chips": [
         {
           "id": "unbox",
-          "label": "Open the package"
+          "label": "Open a package or compartment"
         },
         {
           "id": "detail",
-          "label": "Show a detail"
+          "label": "Show a product detail"
         },
         {
           "id": "use",
@@ -253,81 +253,83 @@
         },
         {
           "id": "finish",
-          "label": "End the story"
+          "label": "End on a clear product moment"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:unboxing-videos-c2",
-          "label": "Candle inside an open mailer",
+          "ref": "n:guide:q13-carousel-picker-0",
+          "label": "Gold hoops unboxing",
           "chips": [
             "unbox"
           ],
-          "prompt": "Open a kraft mailer to reveal one candle wrapped in tissue.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands open a plain jewelry box, lift both gold hoops and hold them above the lining. End with the pair centered. Overhead close-up; sound: soft box hinge and room tone, no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c1-tpl-carousel-video-ad-picker-unbox-square",
-          "label": "Black backpack in an open box",
-          "chips": [
-            "unbox"
-          ],
-          "prompt": "Open a plain shipping box to reveal a black commuter backpack with its organizer compartment.",
-          "kind": "photo"
-        },
-        {
-          "ref": "g:virtual-try-on/example-07",
-          "label": "Blue jacket fabric close-up",
+          "ref": "n:guide:q13-carousel-picker-1",
+          "label": "Cable organizer in use",
           "chips": [
             "detail"
           ],
-          "prompt": "Move close to the blue jacket weave and keep the fabric texture in focus.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. Top-down close-up with a gentle push; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:white-background-g1",
-          "label": "Leather wallet on a white surface",
+          "ref": "n:guide:q13-carousel-picker-2",
+          "label": "Jacket fit check",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a fitting room, an adult turns once toward the mirror, then faces the camera and says, “The cuffs and hem are easy to see.” Keep the jacket front visible. Mirror-height medium framing; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-carousel-picker-3",
+          "label": "Serum morning routine",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult uses the dropper to place one small drop of serum on her cheek, then lowers the bottle beside her face. Close mirror framing; sound: soft cap click, no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-carousel-picker-4",
+          "label": "Backpack commute story",
+          "chips": [
+            "use",
+            "unbox",
+            "finish"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black backpack organizer, places a notebook inside and closes the flap. End with the full backpack visible. Eye-level medium close-up; sound: zipper and room tone, no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-carousel-picker-5",
+          "label": "Headphone feature review",
           "chips": [
             "detail"
           ],
-          "prompt": "Show the wallet exterior and edge stitching clearly against the white background.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator turns the headphones toward the lens, points to the visible ear cushions and says, “The padding and folding hinges are right here.” Front-facing chest-up framing; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c1-tpl-carousel-backpack-pair-square",
-          "label": "Two commuter backpack sizes",
+          "ref": "n:guide:q13-carousel-picker-6",
+          "label": "Dog leash reaction",
           "chips": [
             "use"
           ],
-          "prompt": "Compare the compact daypack and larger travel backpack with their matching charcoal fabric and front pockets visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a garden path, an adult offers the leash handle to a dog, then walks forward as the dog follows. Keep the clip and handle visible. Eye-level tracking shot; sound: footsteps and light outdoor ambience, no music.",
+          "kind": "video"
         },
         {
-          "ref": "g:lifestyle-scene/example-08",
-          "label": "Linen tote in soft daylight",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Set the linen tote beside a bench and show it ready for daily use.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:model-photos-c2",
-          "label": "Messenger bag carried in a lobby",
+          "ref": "n:guide:q13-carousel-picker-7",
+          "label": "Protein bar first bite",
           "chips": [
             "finish"
           ],
-          "prompt": "Carry the leather messenger bag across a bright office lobby.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:examples-g3",
-          "label": "Green glass bottle on a desk",
-          "chips": [
-            "finish"
-          ],
-          "prompt": "Set the green bottle on the desk to finish the sequence.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the crisp pieces inside.” Chest-up close framing; no music.",
+          "kind": "video"
         }
       ],
       "button": "Make a carousel video ad"
@@ -335,45 +337,45 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "n:guide:c1-tpl-carousel-video-ad-m4-backpack-video-916",
+        "ref": "n:guide:q13-carousel-uses-0",
         "h": "Post a 9:16 commuter-backpack video in a Reel",
         "d": "Show the backpack compartments and how it fits a daily commute."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:c1-tpl-carousel-video-ad-product-page-backpack-square",
+        "ref": "n:guide:q13-carousel-uses-1",
         "h": "Add the backpack video to a product page",
         "d": "Pair the clip with listing photos so shoppers can see the backpack compartments before choosing a size or color."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c1-tpl-carousel-video-ad-use-backpack-square",
-        "bad": "n:guide:c1-reuse-carousel-m5-1-blur",
+        "good": "n:guide:q13-carousel-input-0-good-r1",
+        "bad": "n:guide:q13-carousel-input-0-bad-r1",
         "good_label": "Product shape and details stay sharp",
         "bad_label": "Soft focus hides small product details"
       },
       {
-        "good": "n:guide:plat-facebook-size-portrait-backpack",
-        "bad": "n:guide:c1-reuse-carousel-m5-2-crop",
+        "good": "n:guide:q13-carousel-input-1-good-r1",
+        "bad": "n:guide:q13-carousel-input-1-bad-r1",
         "good_label": "Whole product fits inside the frame",
         "bad_label": "Tight framing cuts off a product edge"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:c1-tpl-carousel-video-ad-output-1-square",
+        "ref": "n:guide:q13-carousel-outputs-0-r2",
         "frame": "1:1",
-        "label": "1:1 commuter backpack sequence"
+        "label": "1:1 backpack organizer opened"
       },
       {
-        "ref": "n:guide:c1-tpl-carousel-video-ad-output-2-square",
+        "ref": "n:guide:q13-carousel-outputs-1-r2",
         "frame": "1:1",
-        "label": "1:1 open backpack reveal"
+        "label": "1:1 backpack carried to work"
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-compare-g3",
+      "ref": "n:guide:q13-carousel-after-r2",
       "zones": [
         "Headline",
         "Price",

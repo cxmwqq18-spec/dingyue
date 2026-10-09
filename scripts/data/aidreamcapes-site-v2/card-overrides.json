@@ -84,8 +84,8 @@
   "templates": {
     "images": {
       "creator": {
-        "ref": "n:guide:k6-templates-card-creator",
-        "alt": "Adult presenter holding plain charcoal over-ear headphones in a bright living room, mouth closed and not facing the camera."
+        "ref": "n:guide:q13-templates-creator",
+        "alt": "Adult presenter holding charcoal over-ear headphones and speaking toward the camera."
       }
     }
   },
@@ -366,8 +366,8 @@
     },
     "images": {
       "outfit": {
-        "ref": "g:fashion-editorial/example-06",
-        "alt": "Model wearing a plain sand-colored suit beside a stone terrace in natural light."
+        "ref": "n:guide:q13-carousel-card-outfit-r1",
+        "alt": "Adult wearing a bright blue zip-front jacket and jeans in a home entryway."
       }
     }
   },
@@ -775,6 +775,24 @@
   "tpl-product-feature-callout-video": {
     "swap": {
       "howto": "film"
+    },
+    "images": {
+      "creator": {
+        "ref": "n:guide:q13-feature-card-creator-r1",
+        "alt": "Adult presenter holds a plain white cleanser pump bottle beside their face."
+      }
+    }
+  },
+  "tpl-limited-drop-alert-video": {
+    "images": {
+      "spark-ads-style-video": {
+        "ref": "n:guide:q13-limited-card-spark-r1",
+        "alt": "Adult creator holds a coral trail shoe and points to its tread outdoors."
+      },
+      "retargeting-video-ad": {
+        "ref": "n:guide:q13-limited-card-retarget-r1",
+        "alt": "Adult wearing coral trail shoes while stepping onto a rocky path."
+      }
     }
   }
 }

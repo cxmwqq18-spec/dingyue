@@ -182,22 +182,22 @@
         "label": "Drop moments",
         "items": [
           {
-            "ref": "n:gen2:tpl-limited-drop-alert-video-g1",
-            "title": "Watch on a pedestal turned to its caseback",
+            "ref": "n:guide:q13-limited-examples-0",
+            "title": "Watch caseback catches the light",
             "kind": "scene",
             "product": "wristwatch"
           },
           {
-            "ref": "n:gen2:tpl-limited-drop-alert-video-g2",
-            "title": "Capsule jacket folded into a shipping box",
+            "ref": "n:guide:q13-limited-examples-1",
+            "title": "Jacket lifted from a plain box",
             "kind": "scene",
             "product": "jacket"
           },
           {
-            "ref": "n:gen2:tpl-limited-drop-alert-video-g3",
-            "title": "Handmade mugs lined up on a drying rack",
+            "ref": "n:guide:q13-limited-examples-2",
+            "title": "Trail shoe grip on a rocky hike",
             "kind": "scene",
-            "product": "handmade mugs"
+            "product": "trail shoe"
           }
         ]
       }
@@ -206,20 +206,20 @@
   "visual": {
     "overview": "A limited-drop alert video gives a new or restocked item a quick reveal. Keep the product prominent, then add release timing and availability as editable text.",
     "strip": [
-      "n:guide:c1-tpl-limited-drop-alert-video-m2-source",
-      "n:guide:c1-tpl-limited-drop-alert-video-m2-result",
-      "n:guide:white-background-shoe-blurred",
-      "n:guide:c1-tpl-product-feature-callout-video-reuse-strip3-wide",
-      "n:candle-pack",
-      "n:gen2:occ-holidays-c4"
+      "n:guide:q13-limited-strip-0",
+      "n:guide:q13-limited-strip-1",
+      "n:guide:q13-limited-strip-2",
+      "n:guide:q13-limited-strip-3",
+      "n:guide:q13-limited-strip-4",
+      "n:guide:q13-limited-strip-5"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-limited-drop-alert-video-m2-source",
       "sourceTitle": "Product photo",
       "sourceHint": "Show the full shoe shape and color in a clear view.",
-      "result": "n:guide:c1-tpl-limited-drop-alert-video-m2-result-video-916",
+      "result": "n:guide:q13-limited-steps-result-r3",
       "mode": "video",
-      "prompt": "Place this pair of coral trail shoes on a rocky mountain path and slowly turn them so the laces and tread face the camera.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a rocky trail at dawn, an adult crouches and ties one coral shoe, then turns the toe slightly to show its tread. End on one clear side view. Natural handheld close-up with a gentle push-in; sound: lace pull, gravel and light wind; no music or written text.",
       "options": [
         [
           "Size",
@@ -253,80 +253,88 @@
         },
         {
           "id": "ready",
-          "label": "Set up the release"
+          "label": "Unbox the release"
         }
       ],
       "cards": [
         {
-          "ref": "n:protein-pack",
-          "label": "Protein tub on a studio counter",
+          "ref": "n:guide:q13-limited-picker-0",
+          "label": "New tea tin first look",
           "chips": [
+            "ready",
             "first"
           ],
-          "prompt": "Reveal the unbranded tub with its lid and front surface fully visible.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-limited-drop-alert-video-c3",
-          "label": "Canvas tote first look",
-          "chips": [
-            "first"
-          ],
-          "prompt": "Reveal the plain canvas tote with its full shape and handles visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, hands lift the tea tin from a tissue-lined mailer and set it beside the open box. End with the tin centered. Top-down close-up with a gentle push-in; sound: paper rustle and quiet room tone, no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:c1-tpl-limited-drop-alert-video-shoe-square",
-          "label": "Coral trail shoe profile",
+          "ref": "n:guide:q13-limited-picker-1",
+          "label": "Pendant gift reveal for launch",
           "chips": [
-            "detail"
+            "ready",
+            "first"
           ],
-          "prompt": "Show the complete unbranded coral trail shoe from the side, including its lugged sole.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:ind-shoes-m2-result",
-          "label": "Brown Chelsea boot side view",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Show the elastic side panel and stitching on the brown leather boot.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:video-hub-g3",
-          "label": "Sneakers revealed inside a shoebox",
-          "chips": [
-            "ready"
-          ],
-          "prompt": "Lift the lid to reveal the unbranded sneakers in their box.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands open a plain jewelry box, lift the pendant by its chain and hold it above the lining. End with the pendant steady in frame. Warm bedside light, overhead close-up; sound: box hinge and soft room tone, no music.",
           "kind": "video"
         },
         {
-          "ref": "g:feed-ad-still/example-07",
-          "label": "Light trail shoe on rocky path",
+          "ref": "n:guide:q13-limited-picker-2-single-square-r2",
+          "label": "Coral trail shoe colorway",
           "chips": [
-            "use"
+            "use",
+            "detail"
           ],
-          "prompt": "Show the light trail shoe on a rocky path, keeping its tread and upper visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a gravel trail, an adult runner finishes tying the coral shoes and stands, ending with both shoes in a clear side view. Knee-level handheld framing with one short tilt; sound: lace pull and gravel, no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:white-background-leather-sandals",
-          "label": "Cognac leather sandals on stone",
+          "ref": "n:guide:q13-limited-picker-3",
+          "label": "New jacket release fit check",
           "chips": [
-            "use"
+            "use",
+            "first"
           ],
-          "prompt": "Show both plain leather sandals with their straps and soles visible on a rocky path.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a fitting room, an adult turns once toward the mirror, then faces the camera and says, “The cuffs and hem are easy to see.” Keep the jacket front in view. Soft window light, mirror-height medium framing; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
-          "label": "Small-run ceramic vases on a shelf",
+          "ref": "n:guide:q13-limited-picker-4",
+          "label": "Headphones release unboxing",
           "chips": [
-            "ready"
+            "ready",
+            "detail"
           ],
-          "prompt": "Arrange the plain ceramic vases on a gallery shelf before the limited release.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy desk, hands lift the over-ear headphones from a plain tissue-lined box and hold them above the open packaging. Top-down close-up with a slow push-in; sound: tissue rustle, no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-limited-picker-5",
+          "label": "Citrus drink launch taste test",
+          "chips": [
+            "first",
+            "use"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe counter, an adult creator holds the citrus drink beside her face, turns the glass toward the lens and says, “Look at the fine bubbles along the glass.” Chest-up handheld framing; sound: glass set down and room tone, no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-limited-picker-6",
+          "label": "Serum restock dropper detail",
+          "chips": [
+            "detail",
+            "use"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds the serum bottle near the lens, turns it so the dropper is visible and says, “Here is the glass dropper.” Front-facing chest-up framing with slight handheld sway; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-limited-picker-7-r2",
+          "label": "New dog leash launch walk",
+          "chips": [
+            "use",
+            "detail"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a neighborhood path, an adult walks a calm dog and briefly turns the leash clip toward the camera. Keep the dog and leash visible. Natural morning light, eye-level tracking shot; sound: footsteps and light outdoor ambience, no music.",
           "kind": "video"
         }
       ],
@@ -335,45 +343,45 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-m4-shoe-video-916",
+        "ref": "n:guide:q13-limited-uses-0",
         "h": "Announce the coral trail-shoe drop in a Reel",
         "d": "Use the 9:16 clip for the reveal, then add the release time and link in your post editor."
       },
       {
         "frame": "listing",
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-listing-shoe-video-square",
+        "ref": "n:guide:q13-limited-uses-1",
         "h": "Add the shoe release video to the product listing",
         "d": "Place the clip near the item details so shoppers can see the coral trail shoes before the drop opens."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c1-tpl-limited-drop-alert-video-picker-outsole-square",
-        "bad": "n:guide:tpl-limited-drop-alert-video-input-1-blur",
+        "good": "n:guide:q13-limited-input-0-good-r1",
+        "bad": "n:guide:q13-limited-input-0-bad-r1",
         "good_label": "Product shape and details stay sharp",
         "bad_label": "Soft focus hides small product details"
       },
       {
-        "good": "n:guide:plat-youtube-shorts-example-trail-square",
-        "bad": "n:guide:c1-reuse-limited-m5-2-crop",
+        "good": "n:guide:q13-limited-input-1-good",
+        "bad": "n:guide:q13-limited-input-1-bad-r1",
         "good_label": "Whole product fits inside the frame",
         "bad_label": "Tight framing cuts off a product edge"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-1",
-        "frame": "9:16",
-        "label": "9:16 limited-drop reveal"
+        "ref": "n:guide:q13-limited-outputs-0-r3",
+        "frame": "1:1",
+        "label": "1:1 coral trail shoes on a rocky trail"
       },
       {
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-2",
-        "frame": "9:16",
-        "label": "9:16 product-release video"
+        "ref": "n:guide:q13-limited-outputs-1-r1",
+        "frame": "1:1",
+        "label": "1:1 coral trail shoes on a rocky trail"
       }
     ],
     "after": {
-      "ref": "g:on-model-generation/example-06",
+      "ref": "n:guide:q13-limited-after-r3",
       "zones": [
         "Release time",
         "Quantity",

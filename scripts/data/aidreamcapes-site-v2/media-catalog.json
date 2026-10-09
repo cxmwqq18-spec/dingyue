@@ -36037,6 +36037,980 @@
           640,
           1280
         ]
+      },
+      "q13-limited-hero": {
+        "file": "gen2guide-q13-limited-hero",
+        "w": 864,
+        "h": 1536,
+        "alt": "Get-ready-with-me try-on: hiker ties trail shoes",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-strip-0": {
+        "file": "gen2guide-q13-limited-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Get-ready-with-me try-on: trail shoes on foot",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-strip-1": {
+        "file": "gen2guide-q13-limited-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Day-in-the-life integration: trail shoes on rocky path",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-strip-2": {
+        "file": "gen2guide-q13-limited-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up detail: trail shoe lugged sole",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-strip-3": {
+        "file": "gen2guide-q13-limited-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unboxing and first impression: new shoe colorway",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-strip-4": {
+        "file": "gen2guide-q13-limited-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple routine demo: sunscreen before a drop",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-strip-5": {
+        "file": "gen2guide-q13-limited-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three features in 20 seconds: trail shoe details on camera",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-0": {
+        "file": "gen2guide-q13-limited-picker-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Unboxing and first impression: tea tin reveal",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-1": {
+        "file": "gen2guide-q13-limited-picker-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Gift angle: pendant box reveal",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-3": {
+        "file": "gen2guide-q13-limited-picker-3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Fit-check honesty: jacket fit in mirror",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-4": {
+        "file": "gen2guide-q13-limited-picker-4",
+        "w": 864,
+        "h": 1536,
+        "alt": "Unboxing and first impression: headphones from box",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-5": {
+        "file": "gen2guide-q13-limited-picker-5",
+        "w": 864,
+        "h": 1536,
+        "alt": "Taste-test reaction: citrus drink first sip",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-6": {
+        "file": "gen2guide-q13-limited-picker-6",
+        "w": 864,
+        "h": 1536,
+        "alt": "Three features in 20 seconds: serum dropper details",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-7-r2": {
+        "file": "gen2guide-q13-limited-picker-7-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Problem-solving for owners: calm dog walk on leash",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-uses-0": {
+        "file": "gen2guide-q13-limited-uses-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Get-ready-with-me try-on: hiker steps into frame",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-uses-1": {
+        "file": "gen2guide-q13-limited-uses-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Problem it solves: trail shoe grip on rocky ground",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-input-1-good": {
+        "file": "gen2guide-q13-limited-input-1-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Source photo: complete trail shoe",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-examples-0": {
+        "file": "gen2guide-q13-limited-examples-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up detail: watch caseback catches light",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-examples-1": {
+        "file": "gen2guide-q13-limited-examples-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unboxing and first impression: jacket lifted from box",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-examples-2": {
+        "file": "gen2guide-q13-limited-examples-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three reasons: trail shoe grip for a hike",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-more-3": {
+        "file": "gen2guide-q13-limited-more-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Get-ready-with-me try-on: trail shoes on rocky path",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-more-4": {
+        "file": "gen2guide-q13-limited-more-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: small-batch sauce over noodles",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-more-5": {
+        "file": "gen2guide-q13-limited-more-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Day-in-the-life integration: bottle at desk",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-more-6": {
+        "file": "gen2guide-q13-limited-more-6",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three features in 20 seconds: trail shoe tread",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-after-r2": {
+        "file": "gen2guide-q13-limited-after-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of coral trail shoes on volcanic rocks at dawn.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-steps-result-r3": {
+        "file": "gen2guide-q13-limited-steps-result-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult ties coral trail shoes on a rocky mountain trail.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-outputs-0-r2": {
+        "file": "gen2guide-q13-limited-outputs-0-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Coral trail shoes worn on a rocky mountain path.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-picker-2-single-square-r2": {
+        "file": "gen2guide-q13-limited-picker-2-single-square-r2",
+        "w": 768,
+        "h": 768,
+        "alt": "Adult runner ties coral trail shoes on a rocky path.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-og-r1": {
+        "file": "gen2guide-q13-limited-og-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of coral trail shoes on a rocky mountain ledge at dawn.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-card-spark-r1": {
+        "file": "gen2guide-q13-limited-card-spark-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a coral trail shoe and points to its tread outdoors.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-card-retarget-r1": {
+        "file": "gen2guide-q13-limited-card-retarget-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing the same coral trail shoes while stepping onto a rocky path.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-input-1-bad-r1": {
+        "file": "gen2guide-q13-limited-input-1-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tightly cropped coral trail shoe photo with the heel and toe edges cut off.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-input-0-good-r1": {
+        "file": "gen2guide-q13-limited-input-0-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full side view of the coral trail shoe with its all-coral outsole visible.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-input-0-bad-r1": {
+        "file": "gen2guide-q13-limited-input-0-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Out-of-focus side view of the same coral trail shoe on a plain background.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-outputs-1-r1": {
+        "file": "gen2guide-q13-limited-outputs-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult tying the same coral trail shoes on a rocky trail.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-outputs-0-r3": {
+        "file": "gen2guide-q13-limited-outputs-0-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Runner wearing the same coral trail shoes on a rocky path.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-strip-0": {
+        "file": "gen2guide-q13-feature-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple routine demo: cleanser in a morning routine",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-strip-1-r2": {
+        "file": "gen2guide-q13-feature-strip-1-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple routine demo: moisturizer texture on skin",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-strip-2": {
+        "file": "gen2guide-q13-feature-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: coffee before work",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-strip-3-r2": {
+        "file": "gen2guide-q13-feature-strip-3-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three features in 20 seconds: glasses fit and frame",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-strip-4-r2": {
+        "file": "gen2guide-q13-feature-strip-4-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up detail: gold hoop earrings in daylight",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-strip-5-r2": {
+        "file": "gen2guide-q13-feature-strip-5-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three features in 20 seconds: adjustable laptop stand",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-0": {
+        "file": "gen2guide-q13-feature-picker-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Problem it solves: cable mess to clear desk",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-1": {
+        "file": "gen2guide-q13-feature-picker-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Three features in 20 seconds: over-ear headphones",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-2": {
+        "file": "gen2guide-q13-feature-picker-2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Simple routine demo: sunscreen stick before work",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-3": {
+        "file": "gen2guide-q13-feature-picker-3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Problem then solution: stain lifts from shirt",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-4": {
+        "file": "gen2guide-q13-feature-picker-4",
+        "w": 864,
+        "h": 1536,
+        "alt": "Gift angle: gold hoop earrings revealed",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-5": {
+        "file": "gen2guide-q13-feature-picker-5",
+        "w": 864,
+        "h": 1536,
+        "alt": "Fit-check honesty: jacket fit on camera",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-6": {
+        "file": "gen2guide-q13-feature-picker-6",
+        "w": 864,
+        "h": 1536,
+        "alt": "Problem-solving for owners: pet hair off sofa",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-picker-7": {
+        "file": "gen2guide-q13-feature-picker-7",
+        "w": 864,
+        "h": 1536,
+        "alt": "Taste-test reaction: protein bar first bite",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-uses-0": {
+        "file": "gen2guide-q13-feature-uses-0",
+        "w": 1536,
+        "h": 864,
+        "alt": "Simple routine demo: cleanser texture on fingertips",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q13-feature-examples-0-r2": {
+        "file": "gen2guide-q13-feature-examples-0-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three features in 20 seconds: wallet compartments",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-examples-1-r2": {
+        "file": "gen2guide-q13-feature-examples-1-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Taste-test reaction: smoothie from a portable blender",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-examples-2-r2": {
+        "file": "gen2guide-q13-feature-examples-2-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three reasons: adjustable laptop stand",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-more-3": {
+        "file": "gen2guide-q13-feature-more-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple routine demo: hand wash at the sink",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-more-4": {
+        "file": "gen2guide-q13-feature-more-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Day-in-the-life integration: backpack for the commute",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-more-5": {
+        "file": "gen2guide-q13-feature-more-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: tea before work",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-more-6": {
+        "file": "gen2guide-q13-feature-more-6",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up detail: gold ring catches daylight",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-hero-r3": {
+        "file": "gen2guide-q13-feature-hero-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult applies cleanser foam beside a plain white pump bottle.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-steps-result-r2": {
+        "file": "gen2guide-q13-feature-steps-result-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult spreads cleanser foam on her cheek beside a white pump bottle.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-outputs-0-r3": {
+        "file": "gen2guide-q13-feature-outputs-0-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult massages cleanser into her cheek beside a white pump bottle.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-after-r4": {
+        "file": "gen2guide-q13-feature-after-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white cleanser pump bottle beside a small amount of foam.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-input-1-good-r2": {
+        "file": "gen2guide-q13-feature-input-1-good-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white cleanser pump bottle shown fully in frame.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-input-1-bad-r2": {
+        "file": "gen2guide-q13-feature-input-1-bad-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White cleanser pump bottle cropped off the left edge.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-card-creator-r1": {
+        "file": "gen2guide-q13-feature-card-creator-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult presenter holds a plain white foaming cleanser pump bottle beside their face.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-feature-og-r1": {
+        "file": "gen2guide-q13-feature-og-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white foaming cleanser pump bottle beside a small amount of foam on a bathroom counter.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-hero": {
+        "file": "gen2guide-q13-carousel-hero",
+        "w": 864,
+        "h": 1536,
+        "alt": "Day-in-the-life integration: backpack for the commute",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-strip-0": {
+        "file": "gen2guide-q13-carousel-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unboxing and first impression: backpack packed for commute",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-strip-1-r2": {
+        "file": "gen2guide-q13-carousel-strip-1-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Problem it solves: backpack keeps the commute organized",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-strip-2-r2": {
+        "file": "gen2guide-q13-carousel-strip-2-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three features in 20 seconds: commuter backpack compartments",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-strip-3": {
+        "file": "gen2guide-q13-carousel-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up detail: jacket weave and seams",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-strip-4": {
+        "file": "gen2guide-q13-carousel-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: snack pack to lunch",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-strip-5-r2": {
+        "file": "gen2guide-q13-carousel-strip-5-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: sparkling drink over ice",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-0": {
+        "file": "gen2guide-q13-carousel-picker-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Unboxing and first impression: gold hoops",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-1": {
+        "file": "gen2guide-q13-carousel-picker-1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Problem it solves: charging cable stays untangled",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-2": {
+        "file": "gen2guide-q13-carousel-picker-2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Fit-check honesty: jacket fit in mirror",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-3": {
+        "file": "gen2guide-q13-carousel-picker-3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Simple routine demo: serum before work",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-4": {
+        "file": "gen2guide-q13-carousel-picker-4",
+        "w": 864,
+        "h": 1536,
+        "alt": "Day-in-the-life integration: backpack on commute",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-5": {
+        "file": "gen2guide-q13-carousel-picker-5",
+        "w": 864,
+        "h": 1536,
+        "alt": "Three features in 20 seconds: headphones",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-6": {
+        "file": "gen2guide-q13-carousel-picker-6",
+        "w": 864,
+        "h": 1536,
+        "alt": "Pet reaction: dog follows a new leash",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-picker-7": {
+        "file": "gen2guide-q13-carousel-picker-7",
+        "w": 864,
+        "h": 1536,
+        "alt": "Taste-test reaction: protein bar first bite",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-uses-0": {
+        "file": "gen2guide-q13-carousel-uses-0",
+        "w": 864,
+        "h": 1536,
+        "alt": "Day-in-the-life integration: backpack packed for commute",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-uses-1": {
+        "file": "gen2guide-q13-carousel-uses-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Day-in-the-life integration: backpack carried to work",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-examples-2": {
+        "file": "gen2guide-q13-carousel-examples-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: picnic basket serves lunch",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-more-3": {
+        "file": "gen2guide-q13-carousel-more-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple routine demo: face cream before sunscreen",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-more-4-r2": {
+        "file": "gen2guide-q13-carousel-more-4-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Day-in-the-life integration: backpack at the trailhead",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-more-5": {
+        "file": "gen2guide-q13-carousel-more-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: breakfast egg on a skillet",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-more-6": {
+        "file": "gen2guide-q13-carousel-more-6",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Day-in-the-life integration: tote packed for market",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-outputs-1-r2": {
+        "file": "gen2guide-q13-carousel-outputs-1-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult opens a black commuter backpack to reveal its organizer pocket.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-steps-result-r2": {
+        "file": "gen2guide-q13-carousel-steps-result-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Black commuter backpack opened on a cafe table.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-outputs-0-r2": {
+        "file": "gen2guide-q13-carousel-outputs-0-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult places a notebook in a black backpack organizer pocket.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-after-r2": {
+        "file": "gen2guide-q13-carousel-after-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult carries a black commuter backpack beside a station window.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-card-outfit-r1": {
+        "file": "gen2guide-q13-carousel-card-outfit-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a bright blue zip-front jacket and jeans in a home entryway.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-examples-1-r1": {
+        "file": "gen2guide-q13-carousel-examples-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open black commuter backpack with organizer pockets packed beside a neutral coat.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-og-r1": {
+        "file": "gen2guide-q13-carousel-og-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open black commuter backpack with the same organizer pockets on a station bench.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-input-1-good-r1": {
+        "file": "gen2guide-q13-carousel-input-1-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full open-front black commuter backpack with its organizer pockets visible.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-input-1-bad-r1": {
+        "file": "gen2guide-q13-carousel-input-1-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tightly cropped view of the same black commuter backpack, cutting off its right edge and base.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-input-0-good-r1": {
+        "file": "gen2guide-q13-carousel-input-0-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open-front black commuter backpack with the same pockets and accessories on a cafe chair.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-carousel-input-0-bad-r1": {
+        "file": "gen2guide-q13-carousel-input-0-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Out-of-focus view of the same open-front black commuter backpack on a cafe chair.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-strip-0": {
+        "file": "gen2guide-q13-templates-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Recipe or ritual: morning coffee before the commute",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-strip-1-r2": {
+        "file": "gen2guide-q13-templates-strip-1-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Before and after: office chair fit at a desk",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-strip-2": {
+        "file": "gen2guide-q13-templates-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Problem-solving for owners: pet hair off the sofa",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-strip-3": {
+        "file": "gen2guide-q13-templates-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Get-ready-with-me try-on: knit beanie for a cold morning",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-strip-4": {
+        "file": "gen2guide-q13-templates-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Day-in-the-life integration: desk kit at work",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-creator": {
+        "file": "gen2guide-q13-templates-creator",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Creator review: headphones to camera",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-steps-result-r2": {
+        "file": "gen2guide-q13-templates-steps-result-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult sets a dark brown leather duffel on a station bench.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-templates-strip-5-r1": {
+        "file": "gen2guide-q13-templates-strip-5-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up of the dark brown leather duffel zipper, brass pulls, grain, and stitching.",
+        "variants": [
+          640
+        ]
+      },
+      "q13-limited-after-r3": {
+        "file": "gen2guide-q13-limited-after-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral trail shoe with a matching mesh upper, sculpted midsole and lugged outsole resting on volcanic rock at sunrise.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
