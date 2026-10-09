@@ -74,6 +74,18 @@
     {
       "q": "What size works for a UGC style product photo?",
       "a": "Use a square image for feed listings or place it on a tall Story canvas in your editor. For full-screen motion, use a 9:16 video. Add exact claims and pricing yourself after download."
+    },
+    {
+      "q": "What makes a photo look like real customer content?",
+      "a": "Use a real use setting, natural light, and the product in an everyday moment, without staged text or logos."
+    },
+    {
+      "q": "Can I get a photo without a person's face?",
+      "a": "Yes. Ask for hands or a still-life shot when you prefer not to show a face."
+    },
+    {
+      "q": "What does a creator-style photo cost?",
+      "a": "Each photo costs 24 credits, shown before the job starts."
     }
   ],
   "overview": [
@@ -223,7 +235,7 @@
       "source": "n:guide:tpl-ugc-m2-source",
       "result": "n:guide:k6-tpl-ugc-step-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult runner holds the bottle beside their face after a short run, with the product clearly visible. Chest-up outdoor creator-ad still, late-afternoon light, natural skin texture, no text or logos.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Show the bottle with a light curl of condensation in a calm after-workout home setting, the full product clearly in view. Square still-life creator photo, soft late-afternoon light, no text or logos.",
       "options": [
         [
           "Template",
