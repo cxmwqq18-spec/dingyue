@@ -39006,6 +39006,126 @@
           640,
           1280
         ]
+      },
+      "f8-food-output-snack-pouch-r1": {
+        "file": "f8-food-output-snack-pouch-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a plain snack pouch beside a lunch container on an office desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-food-output-snack-box-r1": {
+        "file": "f8-food-output-snack-box-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open plain snack box on a cafe table beside a latte and an adult hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-electronics-phone-case-r1": {
+        "file": "f8-electronics-phone-case-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage-green phone case with one oval camera opening on a cafe table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-electronics-input-speaker-ports-r1": {
+        "file": "f8-electronics-input-speaker-ports-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact round black portable speaker with a woven grille, loop and rear ports facing the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-electronics-picker-headphones-r1": {
+        "file": "f8-electronics-picker-headphones-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark over-ear headphones lifted from a plain kraft box during an unboxing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-wellness-tea-hands-r1": {
+        "file": "f8-wellness-tea-hands-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands warm around a plain ceramic mug beside a tea tin on a bedside table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-wellness-example-yoga-mat-roller-r1": {
+        "file": "f8-wellness-example-yoga-mat-roller-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Teal yoga mat and dark foam roller arranged before a class on a wood floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-wellness-picker-quiet-man-r1": {
+        "file": "f8-wellness-picker-quiet-man-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Middle-aged Black man warms his hands around a plain mug beside a tea tin at a bedside table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-wellness-picker-quiet-hands-r1": {
+        "file": "f8-wellness-picker-quiet-hands-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands lower a plain charcoal sleep mask onto folded linen beside a warm bedside lamp.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-electronics-after-round-speaker-r1": {
+        "file": "f8-electronics-after-round-speaker-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Round black portable speaker with woven grille and top controls on a dark wood table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-food-output-snack-pouch-matched-r1": {
+        "file": "f8-food-output-snack-pouch-matched-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Sage-green snack pouch beside a transparent glass dual-compartment lunch container on an office desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f8-wellness-after-cork-block-r1": {
+        "file": "f8-wellness-after-cork-block-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Natural cork yoga block with visible grain on a teal yoga mat in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
