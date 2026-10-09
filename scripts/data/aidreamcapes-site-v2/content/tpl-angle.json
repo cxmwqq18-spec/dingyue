@@ -295,7 +295,9 @@
           "ref": "n:guide:q7-angle-picker-cards-1",
           "label": "Crossbody Bag Review",
           "chips": [
-            "worn"
+            "hands",
+            "worn",
+            "texture"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact canvas crossbody bag, clasp, seams, and color. An adult creator holds the bag beside their face with the clasp turned toward the lens. Soft window light, chest-up framing, natural skin texture. No text, logos, or watermark.",
           "kind": "photo"
@@ -304,6 +306,7 @@
           "ref": "n:guide:q7-angle-picker-cards-4-r2",
           "label": "Necklace Clasp Review",
           "chips": [
+            "hands",
             "worn",
             "feature"
           ],
@@ -314,7 +317,9 @@
           "ref": "n:guide:q7-angle-picker-cards-4-r3",
           "label": "Knit Sneaker Cleaning",
           "chips": [
-            "texture"
+            "worn",
+            "texture",
+            "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit sneaker, sole, and color. Freeze the moment a hand wipes one scuffed area, with the cleaned knit beside the untouched section and the whole shoe visible. Bright outdoor shade, low close composition. No text, logos, or watermark.",
           "kind": "photo"
@@ -323,6 +328,7 @@
           "ref": "n:guide:q7-angle-picker-cards-5-r4",
           "label": "Earbud Cable Organizer",
           "chips": [
+            "texture",
             "feature"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact wired earbuds and plain dark cable organizer. Freeze the moment the organizer closes around the coiled cable, with the loose and secured sections visible together. Soft desk light, overhead close composition, natural product-demo style. No text, logos, or watermark.",
@@ -332,6 +338,7 @@
           "ref": "n:guide:q7-angle-picker-cards-6-r2",
           "label": "Knit Sneaker Seam",
           "chips": [
+            "worn",
             "texture",
             "feature"
           ],
@@ -342,7 +349,8 @@
           "ref": "n:guide:q7-angle-picker-cards-7-r2",
           "label": "Protein Bar Broken Open",
           "chips": [
-            "hands"
+            "hands",
+            "texture"
           ],
           "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain protein bar and unprinted wrapper. Freeze the moment two hands hold the broken halves close to the lens, with the crisp center visible. Warm natural light, appetizing close tabletop composition. No text, logos, or watermark.",
           "kind": "photo"
