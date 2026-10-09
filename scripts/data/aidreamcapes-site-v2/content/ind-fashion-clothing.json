@@ -393,9 +393,11 @@
         "label": "Mid-blue denim jacket try-on"
       },
       {
-        "ref": "n:guide:q15-fashion-output-denim-jacket-r2",
+        "ref": "n:guide:f4-fashion-output-puffer-jacket-r1",
         "frame": "1:1",
-        "label": "Mid-blue denim jacket back view"
+        "label": "Light gray puffer jacket fit check",
+        "length": 15,
+        "spec": "1:1 video · 15 s · 60 credits"
       }
     ],
     "after": {
