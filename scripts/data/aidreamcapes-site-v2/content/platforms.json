@@ -15,20 +15,44 @@
   "intro": "Each platform uses product photos and short videos in different places. Browse the full list for channel-specific sizes, examples, and tips, then download the file and upload it where you sell.",
   "faq": [
     {
+      "q": "Which platform format should I make first?",
+      "a": "Start with the placement where you already buy traffic: 9:16 for TikTok, Reels, and Shorts; 4:5 for Meta Feed images and video; square images for Amazon and Shopify product galleries."
+    },
+    {
       "q": "Can one vertical video work on TikTok, Reels and Shorts?",
-      "a": "Yes, a 9:16 file fits all three. Each app places its buttons and captions a little differently, so look at the clip in each one before you spend money behind it."
+      "a": "Yes, a 9:16 file can fit all three. Each app places buttons and captions differently, so preview the clip in each placement before spending money behind it."
+    },
+    {
+      "q": "What size should I use for a Facebook or Instagram Feed image?",
+      "a": "Use a 4:5 image at 1440×1800 for Meta Feed. AIVideosUGC makes square stills, so crop the downloaded image to 4:5 and check the Feed preview."
+    },
+    {
+      "q": "What size should I use for a TikTok In-Feed ad?",
+      "a": "Use 9:16 vertical; TikTok lists 540×960 as the minimum for the recommended shape. Leave room around the product for the app controls and add final text in your editor."
+    },
+    {
+      "q": "What size should I use for a YouTube Short?",
+      "a": "Use a 9:16 vertical file; 1080×1920 is the recommended size for a Shorts ad. Use 16:9 separately for a regular YouTube video or in-stream placement."
+    },
+    {
+      "q": "What should I make for an Amazon listing?",
+      "a": "Start with a square plain-white main image, then add lifestyle and detail views that answer the next shopper question. Sponsored Brands video uses a separate 16:9 placement."
+    },
+    {
+      "q": "What size should Shopify product images be?",
+      "a": "Shopify says square 2048×2048 images usually display best. Keep a consistent crop for the product gallery and make a separate 9:16 asset for social placements."
     },
     {
       "q": "Do you post the finished ads to my accounts?",
-      "a": "No. You download the video or photo and upload it yourself, whether that's in an ad account, your Shopify admin or your Amazon listing."
-    },
-    {
-      "q": "Which ad format should I make first for my store?",
-      "a": "Start with the placement where you already buy traffic: 9:16 for TikTok, Reels, and Shorts; 1:1 for feeds; 16:9 for wide placements."
+      "a": "No. You download the video or photo and upload it yourself in Ads Manager, TikTok, YouTube, Shopify, or Amazon."
     },
     {
       "q": "Can I reuse one product creative on every platform?",
-      "a": "Choose a ratio for each separate generation; one run makes one video. Add captions, sound, and on-screen text in the platform editor."
+      "a": "Reuse the product photo as a starting point, then choose the ratio for each placement. One generation uses one selected format; add captions, sound, prices, and offers after download."
+    },
+    {
+      "q": "How do I keep important details out of platform controls?",
+      "a": "Keep the product and any later text inside the placement safe area, then preview the downloaded file in the exact Feed, Reel, Short, listing, or store slot before publishing."
     }
   ],
   "visual": {
@@ -45,7 +69,7 @@
       "sourceAlt": "Sage-green lunch container with a smooth lid on a pale kitchen counter.",
       "result": "n:guide:b1-url-to-video-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the skincare tube upright on a pale studio surface, front facing and fully visible, with a soft natural shadow. Clean commercial product-photo styling, diffuse window light. Three-quarter close-up, fixed camera.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the sage-green lunch container open on a pale kitchen counter with its smooth lid beside it, the full container visible and front facing. Clean commercial product-photo styling, diffuse window light. Three-quarter close-up, fixed camera.",
       "options": [
         [
           "Platform",
@@ -120,6 +144,86 @@
     {
       "t": "Prepare a product image",
       "d": "Open a related tool and add a clear source photo before downloading your creative."
+    }
+  ],
+  "directory_specs": {
+    "title": "Platform formats at a glance",
+    "lead": "Match the placement first, then choose the shape and length that the platform accepts.",
+    "columns": [
+      "Platform",
+      "Placement",
+      "Shape and size",
+      "AIVideosUGC options"
+    ],
+    "rows": [
+      [
+        "TikTok",
+        "In-Feed",
+        "9:16 · minimum 540×960",
+        "6, 10 or 15-second clips"
+      ],
+      [
+        "Instagram",
+        "Feed image / Reels video",
+        "4:5 · 1440×1800 / 9:16 · 1080×1920",
+        "Square stills; 6, 10 or 15-second clips"
+      ],
+      [
+        "Facebook",
+        "Feed image / Reels video",
+        "4:5 · 1440×1800 / 9:16",
+        "Square stills; 6, 10 or 15-second clips"
+      ],
+      [
+        "YouTube Shorts",
+        "Shorts ad",
+        "9:16 · 1080×1920 recommended",
+        "6, 10 or 15-second clips"
+      ],
+      [
+        "Amazon",
+        "Main image / Sponsored Brands video",
+        "Square white-background image / 16:9 video · 6–45 seconds",
+        "Square stills; 6, 10 or 15-second clips"
+      ],
+      [
+        "Shopify",
+        "Product gallery / product video",
+        "Square · 2048×2048 usually displays best / video up to 10 minutes",
+        "Square stills; 6, 10 or 15-second clips"
+      ]
+    ]
+  },
+  "directory_scenes": [
+    {
+      "t": "TikTok in-feed hook",
+      "d": "Open with the product entering frame, then finish one clear use moment in a vertical clip.",
+      "href": "/platforms/tiktok-ads"
+    },
+    {
+      "t": "Instagram Reels demo",
+      "d": "Show one tactile action close to the camera so the product reads before the viewer scrolls.",
+      "href": "/platforms/instagram-ads"
+    },
+    {
+      "t": "Facebook Feed detail",
+      "d": "Use a 4:5 product view that leaves room for the offer you add in Ads Manager.",
+      "href": "/platforms/facebook-ads"
+    },
+    {
+      "t": "Shorts first-second reveal",
+      "d": "Put the product and the start of its main action in the opening beat of a 9:16 Short.",
+      "href": "/platforms/youtube-shorts-ads"
+    },
+    {
+      "t": "Amazon listing gallery",
+      "d": "Lead with a plain-white main image, then answer a shopper question with a lifestyle or detail view.",
+      "href": "/platforms/amazon-product-photos"
+    },
+    {
+      "t": "Shopify product gallery",
+      "d": "Keep square collection images consistent, then add a separate short product video when motion explains the item.",
+      "href": "/platforms/shopify-product-photos"
     }
   ]
 }
