@@ -66,6 +66,10 @@
     {
       "q": "How do I make sure the result looks like my actual product?",
       "a": "Upload one photo with the product's shape, color and label area fully visible, and keep the scene description focused on that item. The generation keeps the product unchanged while placing it in the scene you choose."
+    },
+    {
+      "q": "Which ad moment should I make first for a new product?",
+      "a": "Start with the moment that answers the buyer's first question: texture for beauty, fit for clothing and shoes, scale for jewelry and home goods, setup for electronics, routine for wellness, or taste and serving for food."
     }
   ],
   "visual": {
@@ -182,6 +186,108 @@
     {
       "t": "Open a matching example",
       "d": "Follow a link to a photo or video tool for your next asset."
+    }
+  ],
+  "directory_specs": {
+    "title": "The first buyer question by category",
+    "lead": "Choose a scene that makes the product detail a shopper needs to judge visible in one glance.",
+    "columns": [
+      "Industry",
+      "Show first",
+      "Ad moment",
+      "Category page"
+    ],
+    "rows": [
+      [
+        "Beauty & Skincare",
+        "Texture and application",
+        "GRWM routine or review close-up",
+        "Beauty & Skincare"
+      ],
+      [
+        "Fashion & Clothing",
+        "Fit, fabric and movement",
+        "Outfit check or try-on",
+        "Fashion & Clothing"
+      ],
+      [
+        "Shoes",
+        "Tread, profile and fit",
+        "On-foot step test",
+        "Shoes"
+      ],
+      [
+        "Jewelry & Accessories",
+        "Scale, clasp and finish",
+        "Gift unboxing or worn detail",
+        "Jewelry & Accessories"
+      ],
+      [
+        "Electronics",
+        "Setup and controls",
+        "Desk demo or everyday use",
+        "Electronics"
+      ],
+      [
+        "Health & Wellness",
+        "When and how it is used",
+        "Routine or gym-bag use",
+        "Health & Wellness"
+      ],
+      [
+        "Food & Drinks",
+        "Serving, texture and portion",
+        "First-sip or first-bite reaction",
+        "Food & Drinks"
+      ],
+      [
+        "Home & Living",
+        "The problem it helps organize",
+        "Before-and-after or how-to",
+        "Home & Living"
+      ]
+    ]
+  },
+  "directory_scenes": [
+    {
+      "t": "Beauty: GRWM texture check",
+      "d": "Show an adult applying a small amount and holding the package beside the finished texture for a clear routine moment.",
+      "href": "/industries/beauty-skincare"
+    },
+    {
+      "t": "Fashion: outfit check",
+      "d": "Show the garment on a person in motion so shoppers can judge fit, fabric and the finished look.",
+      "href": "/industries/fashion-clothing"
+    },
+    {
+      "t": "Shoes: on-foot step test",
+      "d": "Frame the shoe on foot as the wearer takes a few steps, keeping the profile and sole visible.",
+      "href": "/industries/shoes"
+    },
+    {
+      "t": "Jewelry: gift unboxing",
+      "d": "Use hands to open the package, lift one piece and hold it close enough to show scale and finish.",
+      "href": "/industries/jewelry-accessories"
+    },
+    {
+      "t": "Electronics: desk demo",
+      "d": "Show the gadget being set up and used for one task, with the controls visible in the same frame.",
+      "href": "/industries/electronics"
+    },
+    {
+      "t": "Wellness: routine moment",
+      "d": "Place the product in a real morning or gym-bag routine without implying a health outcome you cannot support.",
+      "href": "/industries/health-wellness"
+    },
+    {
+      "t": "Food: first-sip reaction",
+      "d": "Show an adult serving the drink or snack, then taking the first sip or bite so the serving context is clear.",
+      "href": "/industries/food-drinks"
+    },
+    {
+      "t": "Home: problem to fix",
+      "d": "Show the starting clutter or mess, then the product in use during one simple organizing or cleaning step.",
+      "href": "/industries/home-living"
     }
   ]
 }
