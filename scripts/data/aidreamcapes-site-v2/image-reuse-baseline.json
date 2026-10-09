@@ -2,59 +2,11 @@
   "version": 1,
   "entries": [
     {
-      "image": "/assets/sites/site_aidreamcapes/lifestyle-scene-v1/lifestyle-scene/example-08",
-      "rule": "one-page",
-      "pages": [
-        "photo-hub",
-        "tpl-carousel-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/carousel-storytelling",
-      "rule": "one-page",
-      "pages": [
-        "plat-facebook",
-        "tpl-carousel-video-ad"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/clips/fashion-try-on-reel",
       "rule": "one-page",
       "pages": [
         "ind-fashion-clothing",
         "tpl-outfit"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/limited-drop-alert",
-      "rule": "one-page",
-      "pages": [
-        "ind-shoes",
-        "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/trending-audio-sync",
-      "rule": "one-page",
-      "pages": [
-        "ind-electronics",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/cinematic-video-t06",
-      "rule": "one-page",
-      "pages": [
-        "image-to-video",
-        "plat-facebook"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/frames/product-video",
-      "rule": "one-page",
-      "pages": [
-        "tpl-drink",
-        "tpl-product-feature-callout-video"
       ]
     },
     {
@@ -74,59 +26,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/hotsauce-tacos",
-      "rule": "one-page",
-      "pages": [
-        "examples",
-        "plat-facebook"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/protein-pack",
-      "rule": "one-page",
-      "pages": [
-        "change-background",
-        "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2product-videos-g5",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-angle-c3",
-      "rule": "one-page",
-      "pages": [
-        "templates",
-        "tpl-light"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-beauty-g3",
       "rule": "one-page",
       "pages": [
         "ind-beauty-skincare",
         "tpl-beauty"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-limited-drop-alert-video-g1",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
-        "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-product-feature-callout-video-c3",
-      "rule": "one-page",
-      "pages": [
-        "plat-tiktok",
-        "tpl-product-feature-callout-video"
       ]
     },
     {
@@ -146,30 +50,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2white-background-c3",
-      "rule": "one-page",
-      "pages": [
-        "plat-amazon",
-        "tpl-carousel-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-before-after-videos-source",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-videos-source",
-      "rule": "one-page",
-      "pages": [
-        "tpl-limited-drop-alert-video",
-        "tpl-pack"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-unboxing-card",
       "rule": "one-page",
       "pages": [
@@ -183,46 +63,6 @@
       "pages": [
         "plat-shopify",
         "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-fashion-clothing-m2-result",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-jewelry-accessories-m3-gem-prongs",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-jewelry-accessories-m3-necklace-clasp",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
-        "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-shoes-m2-result",
-      "rule": "one-page",
-      "pages": [
-        "tpl-limited-drop-alert-video",
-        "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-plat-youtube-shorts-example-trail-square",
-      "rule": "one-page",
-      "pages": [
-        "plat-youtube-shorts",
-        "tpl-limited-drop-alert-video"
       ]
     },
     {
@@ -242,27 +82,10 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-leather-sandals",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/v_compare",
-      "rule": "one-page",
-      "pages": [
-        "plat-instagram",
-        "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/v_creator_ad",
       "rule": "one-page",
       "pages": [
         "home",
-        "tpl-limited-drop-alert-video",
         "tpl-retargeting-video-ad"
       ]
     },
@@ -272,14 +95,6 @@
       "pages": [
         "home",
         "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on/example-07",
-      "rule": "one-page",
-      "pages": [
-        "examples",
-        "tpl-carousel-video-ad"
       ]
     }
   ]
