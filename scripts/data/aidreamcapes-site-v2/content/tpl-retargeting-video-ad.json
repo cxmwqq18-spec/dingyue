@@ -16,7 +16,7 @@
     "Pair a product reminder with an audience, offer, and frequency you configure in your ad platform. The scene itself does not identify visitors or cart activity.",
     "A second-look ad should answer the detail a returning shopper may still be weighing. Show the headphones on a commute, the ear cushion in a creator review, or the shoe tread on the path where it is used. The scene works because the product returns to view with a reason, not because it claims to know who visited your store.",
     "Keep the audience, offer, price, and frequency in the ad platform. In the creative, use one close action such as turning an ear cup, opening a pocket, tightening a lace, or checking a seam. End with the product held still so an editable reminder and a destination link can be added without covering the feature.",
-    "Check the reminder against the live product page before you launch. The color, version, and feature shown in the clip must match the item a shopper will receive, and any current offer must be added outside the generated frame. Test a routine scene against a detail scene while holding the audience and landing page constant so the result tells you which proof earns the second look."
+    "Check the reminder against the live product page before you launch. The color, version, and feature shown in the clip must match the item a shopper will receive, and any current offer must be added outside the generated frame. Test a routine scene against a detail scene while holding the audience and product page constant so the result tells you which proof earns the second look."
   ],
   "tip": "Describe a quiet second-look action and leave the audience, price, and reminder wording to the ad platform and your editor.",
   "steps": [
@@ -88,6 +88,10 @@
     {
       "q": "What length and cost work for retargeting?",
       "a": "A 6- or 10-second reminder is usually enough and costs 24 or 40 credits."
+    },
+    {
+      "q": "Can I create another retargeting video from the same source photo?",
+      "a": "Yes. Keep the dark navy headphones as the reference, then change one routine or camera move at a time. Check that the ear cups, controls, and fit match the physical item. Add the current offer, reminder, and product link after download so the second-look ad stays easy to update."
     }
   ],
   "overview": [
@@ -219,7 +223,7 @@
     ]
   },
   "visual": {
-    "overview": "A retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see.",
+    "overview": "A retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see. Use this format when shoppers need to bring dark navy headphones back with a specific reminder about fit, controls, or comfort. Keep one second-look detail visible from the first frame, then leave room for the offer and product link you add after download. Review the ear cups, controls, and color against your source before publishing.",
     "strip": [
       "n:guide:g1-retarget-serum-application",
       "n:guide:g1-retarget-shoe-tread-detail",
@@ -253,7 +257,7 @@
     },
     "picker": {
       "title": "Choose a second-look ad format",
-      "lead": "Give a product another close moment in a social feed or product page.",
+      "lead": "Give a product another close moment in a social feed or product page. Start with one remaining question about the headphones, then choose a routine or detail scene that answers it clearly.",
       "chips": [
         {
           "id": "demo",
@@ -355,13 +359,13 @@
         "frame": "phone",
         "ref": "n:guide:q14-retarget-use-phone",
         "h": "Bring a headphone routine into a social feed",
-        "d": "Show dark navy over-ear headphones worn during a city commute."
+        "d": "Show dark navy over-ear headphones worn during a city commute. Keep the ear cups and fit visible while the reminder stays easy to read on a phone."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q14-retarget-use-browser",
         "h": "Pair a headphone detail with its product page",
-        "d": "Keep the product details and current offer consistent on the linked page."
+        "d": "Keep the product details and current offer consistent on the linked page. Use a close view of the controls or ear cushion so the second-look proof stays clear."
       }
     ],
     "input": [
@@ -398,8 +402,8 @@
         "Product link"
       ],
       "items": [
-        "Add the current price and offer as editable text after download.",
-        "Link the video to the relevant product page."
+        "Add the current price and offer as editable text after download. Check the dark navy headphones, ear cups, and one remaining shopper question against the product page before publishing.",
+        "Link the video to the relevant product page. Read the finished frame at mobile size and move any added text away from the ear cups and controls."
       ]
     },
     "titles": {
