@@ -73,6 +73,18 @@
     {
       "q": "Do I need a studio setup?",
       "a": "No. Start with a clear phone photo and describe the lighting look you want to try."
+    },
+    {
+      "q": "Can I fix glare on glass or metal?",
+      "a": "Describe softer or warmer light and the generated photo keeps the same product with controlled highlights."
+    },
+    {
+      "q": "Do I need real studio lights?",
+      "a": "No. The lighting is generated; a clear product photo and a written direction are enough."
+    },
+    {
+      "q": "What does a relit photo cost?",
+      "a": "Each photo costs 24 credits, shown before you run the job."
     }
   ],
   "overview": [
@@ -379,12 +391,19 @@
     ],
     "after": {
       "ref": "n:gen2:tpl-angle-c3",
+      "mock": {
+        "type": "callout",
+        "tag1": "Soft window light",
+        "tag2": "No glare",
+        "tag3": "True color"
+      },
       "zones": [
+        "Lighting tag",
         "Product name",
         "Material"
       ],
       "items": [
-        "Download two lighting versions and choose the one that shows the material clearly.",
+        "The frame shows the lighting tags you add to mark which setup was used.",
         "Type any product label or finish name as editable text in your editor."
       ]
     },
