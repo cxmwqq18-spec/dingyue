@@ -7297,6 +7297,14 @@
       "variants": [
         1200
       ]
+    },
+    "t33-tpl-drink-og-r2": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Hand pours clear citrus soda from a silver can into an ice-filled glass.",
+      "variants": [
+        1200
+      ]
     }
   },
   "clips": {
