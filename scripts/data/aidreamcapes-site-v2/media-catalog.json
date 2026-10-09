@@ -38318,6 +38318,116 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "g1-launch-berry-sparkling-sip-r2": {
+        "file": "g1-launch-berry-sparkling-sip-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man takes a first sip of a sparkling berry drink beside a blank bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-face-mist-spray-r2": {
+        "file": "g1-launch-face-mist-spray-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman sprays a blank-label face mist beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-graphite-keyboard-demo-r2": {
+        "file": "g1-launch-graphite-keyboard-demo-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man points to a compact graphite keyboard in a home office.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-olive-sandal-first-look-r2": {
+        "file": "g1-launch-olive-sandal-first-look-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man presents an olive sandal in a sunlit entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-silver-bracelet-reveal-r2": {
+        "file": "g1-launch-silver-bracelet-reveal-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman holds an open jewelry box while wearing a silver bracelet.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-ugc-hair-clip-review-r2": {
+        "file": "g1-ugc-hair-clip-review-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Older adult woman reviews a hair clip beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-brown-boot-tread-r2": {
+        "file": "g1-retarget-brown-boot-tread-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man points to the tread of a brown hiking boot outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-coral-lip-balm-use-r2": {
+        "file": "g1-retarget-coral-lip-balm-use-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies a coral lip balm while looking into a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-retarget-electrolyte-gummy-r2": {
+        "file": "g1-retarget-electrolyte-gummy-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman eats an electrolyte gummy after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-box-burgundy-sandal-unboxing-r2": {
+        "file": "g1-box-burgundy-sandal-unboxing-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift burgundy sandals from a tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "g1-launch-dog-harness-fit-r2": {
+        "file": "g1-launch-dog-harness-fit-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Older East Asian man adjusts a plain teal dog harness on a black-and-white border collie at a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
