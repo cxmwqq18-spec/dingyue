@@ -202,10 +202,10 @@
     "overview": "A launch ad should show the product in a moment a buyer can understand. Choose a creator review, demo, unboxing, try-on, or first-bite reaction, then add dates and pricing after download.",
     "strip": [
       "n:guide:q12-tpl-launch-use-social-r1",
-      "n:guide:q12-tpl-launch-strip-result-r2",
-      "n:guide:q12-tpl-launch-strip-pet-clean-r2",
+      "n:guide:g1-launch-shoe-fit-check",
+      "n:guide:g1-launch-jewelry-reveal",
       "n:guide:q12-tpl-launch-strip-extra-01-r1",
-      "n:guide:q12-tpl-launch-strip-extra-02-r1",
+      "n:guide:g1-launch-citrus-first-sip",
       "n:guide:q12-tpl-launch-strip-extra-03-r1"
     ],
     "steps": {
