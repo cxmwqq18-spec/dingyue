@@ -1,11 +1,11 @@
 {
   "id": "plat-facebook",
   "title": "AI Facebook Ad Generator for Online Stores | AIVideosUGC",
-  "description": "Try an AI Facebook ad generator made for sellers: turn a product photo into square feed videos and ad images, then add your offer in Ads Manager. Get started.",
+  "description": "Try an AI Facebook ad generator made for sellers: turn one product photo into a short clip or square product visual, then add your offer in Ads Manager.",
   "h1": "AI Facebook Ad Generator for Square and Vertical Ads",
   "eyebrow": "Facebook ads",
-  "lead": "Use this AI Facebook ad generator to make square image or vertical video ads from one product photo, then write the headline and offer in Ads Manager, where you can change them anytime.",
-  "card": "Square and vertical ads for the feed, Stories and Reels.",
+  "lead": "Use this AI Facebook ad generator to make a square product image or a 9:16 Reels clip from one photo, then write the headline and offer in Ads Manager.",
+  "card": "Square product images and 9:16 Reels clips.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
     "Facebook feed ad images",
@@ -13,31 +13,39 @@
     "Facebook ads for small business"
   ],
   "intro": [
-    "Facebook ads reach people in the feed, in Stories and in Reels, often while they're scrolling quickly past posts from friends and groups. A clear look at the product matters more there than anything clever. AIVideosUGC creates square 1:1 videos for the feed and 9:16 videos for Stories and Reels, in 6, 10 or 15 seconds, plus square ad images from the same product photo.",
-    "It fits store owners who run their own campaigns and need something new to try without a photoshoot. Describe the scene you want, such as a lunch box packed on a kitchen counter or a dog harness on a morning walk, and check the credit cost before you start. Your headline, price and button text belong in Ads Manager, where they stay easy to edit."
+    "Facebook campaigns can reach people in Feed, Stories and Reels as they browse posts from friends and groups. A clear look at the product helps the creative read quickly. Meta recommends 4:5 (1440×1800) images and video for Feed; AIVideosUGC makes 6, 10 or 15-second clips and square product images from one photo, which you crop to 4:5 for Feed, and 9:16 clips for Reels, keeping key details inside the safe area.",
+    "It fits store owners who run their own campaigns and need something new to try without a photoshoot. Describe the scene you want, such as a lunch box packed on a kitchen counter or a dog harness on a morning walk, and check the credit cost before you start. Your headline, price and button text belong in Ads Manager, where they stay easy to edit. Plan one scene for each placement: a 4:5 Feed product ad, a tall Stories frame with breathing room, a 9:16 Reels explanation, or a catalog retargeting view that puts the same product in a new setting."
   ],
   "specs": [
     [
-      "Feed",
-      "1:1 square video"
+      "Feed image",
+      "4:5 · 1440×1800"
     ],
     [
-      "Stories & Reels",
+      "Feed video",
+      "4:5 · 1440×1800"
+    ],
+    [
+      "Reels video",
       "9:16 vertical"
     ],
     [
-      "Duration",
-      "Choose 6, 10 or 15 seconds"
+      "AIVideosUGC clips",
+      "6, 10 or 15 seconds per job"
     ],
     [
-      "Ad images",
-      "Square by default"
+      "AIVideosUGC still images",
+      "Square output; crop to 4:5 before you upload"
+    ],
+    [
+      "Facebook Feed video duration",
+      "4:5 · 1440×1800 · 1 second–241 minutes · up to 4 GB"
     ]
   ],
   "tips": [
     "Check that the product and any key wording still make sense with the sound off.",
     "Keep any words on the visual short, and put the details in the primary text and headline fields in Ads Manager.",
-    "Upload both a square and a vertical version so each placement gets a shape that fits it."
+    "Crop square images to 4:5 for Feed and prepare 9:16 clips for Reels as separate jobs, then check the placement preview in Ads Manager."
   ],
   "ideas": [
     {
@@ -69,6 +77,14 @@
     {
       "q": "Will Facebook reject an ad because it was made with AI?",
       "a": "Meta reviews each ad under its current Advertising Standards. Review claims, rights, and any AI-label requirement in Ads Manager before launch."
+    },
+    {
+      "q": "Which format should I use for Feed or Reels?",
+      "a": "Meta recommends 4:5 (1440×1800) for Feed images and video and 9:16 for Reels. AIVideosUGC outputs square stills you can crop to 4:5 before upload; make a separate 9:16 clip for Reels, then check each placement preview."
+    },
+    {
+      "q": "Where do I add the headline and offer?",
+      "a": "Add the primary text, headline, price, code and call to action in Ads Manager after download so you can edit them for each campaign."
     }
   ],
   "overview": [
@@ -78,7 +94,27 @@
     },
     {
       "h2": "Choose a shape for each Meta placement",
-      "d": "Meta's Reels guidance recommends 9:16 and keeping important content inside its safe area. AIVideosUGC offers 6, 10, and 15 second jobs; make each shape as its own job when the crop changes the composition."
+      "d": "Meta recommends 4:5 (1440×1800) creative for Feed and 9:16 video for Reels, with key messages inside the Reels safe area. AIVideosUGC outputs square stills to crop to 4:5 and 6, 10 or 15-second clips; run the 9:16 shape for Reels as a separate job and check each placement preview."
+    },
+    {
+      "h2": "Build one version for Feed and one for Reels",
+      "d": "Feed and Reels place controls in different parts of the screen. Keep the product and the first action clear in the 4:5 Feed crop, then run a separate 9:16 version for Reels when the tall framing changes the composition. Use the placement preview in Ads Manager to check the image crop, headline truncation, button area, and any safe-zone overlap before you publish."
+    },
+    {
+      "h2": "Use the visual to support the offer",
+      "d": "A useful Facebook creative answers one question quickly: what is it, how is it used, or what changes after use? Show a lunch box being packed, a pet brush touching a coat, or a bottle pouring into a glass. Keep claims modest and verifiable. Put the price, discount code, primary text, headline, and call to action in Ads Manager so each audience can receive the right version."
+    },
+    {
+      "h2": "Test the same message across placements",
+      "d": "Keep the product, offer, and audience constant when comparing a Feed image with a Reels clip. Change the crop or opening action only when the placement requires it. Name files with the placement and date, preview them with sound off, and confirm the product remains complete after Meta applies its automatic placement crop."
+    },
+    {
+      "h2": "Leave room for the Feed crop",
+      "d": "A square still can be cropped before it becomes a 4:5 Feed asset, so keep the bottle, label area, and hand action away from the outer edge. Check the 1440×1800 preview after cropping and move any final price or code into Ads Manager. Reels gets its own 9:16 file when the taller framing would cut the product."
+    },
+    {
+      "h2": "Map one product scene to each Meta placement",
+      "d": "Use the Feed product-ad frame for a 4:5 proof shot, Stories for a tall single action, Reels for a face-to-camera explanation, and catalog retargeting for the same product in a new setting. Keep the product and offer consistent, then add headline, price and button text in Ads Manager."
     }
   ],
   "input_guide": {
@@ -241,8 +277,8 @@
     "strip": [
       "f:q18-facebook-strip-serum-review",
       "f:q18-facebook-strip-pet-hair-roller",
-      "f:q18-facebook-strip-headphone-unbox",
-      "f:q18-facebook-strip-headphone-review",
+      "f:k8-facebook-guide-plat-facebook-size-portrait-backpack",
+      "n:guide:k8-facebook-gen2-plat-facebook-c2",
       "f:q18-facebook-strip-baby-bath-unbox",
       "n:gen2:tpl-ugc-g1"
     ],
@@ -281,17 +317,30 @@
         {
           "id": "feed",
           "label": "Product Proof"
+        },
+        {
+          "id": "stories",
+          "label": "Stories Vertical"
+        },
+        {
+          "id": "reels",
+          "label": "Reels Placement"
+        },
+        {
+          "id": "retarget",
+          "label": "Catalog Retargeting"
         }
       ],
       "cards": [
         {
-          "ref": "f:q18-facebook-picker-backpack-fit-check",
-          "label": "Fit Check — Sage Mini Backpack",
-          "prompt": "Square still photo using the pale sage-green mini backpack shown in the uploaded image as the exact product reference. Preserve its rounded shape, front pocket, straps, zippers, and color. An adult wears it over one shoulder at a bright entryway and turns so the whole bag is visible.",
+          "ref": "n:guide:f1-r10-facebook-feed-lunchbox",
+          "label": "Feed Ad — Lunch Box",
           "chips": [
-            "feed"
+            "feed",
+            "hands"
           ],
-          "kind": "photo"
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. Adult hands open the plain sage lunch box on a kitchen table with packed compartments visible and the lid beside it. Square source for a 4:5 Feed crop, bright daylight, no text or logos."
         },
         {
           "ref": "f:q18-facebook-picker-lunchbox-pack",
@@ -299,25 +348,28 @@
           "prompt": "Square still photo: adult hands place fruit and a sandwich into the compartments of an open reusable lunch box on a sunny kitchen counter. Show the lunch box and dividers clearly in bright morning light.",
           "chips": [
             "feed",
-            "hands"
+            "hands",
+            "stories"
           ],
           "kind": "photo"
         },
         {
-          "ref": "f:q18-facebook-picker-baby-bath-set",
-          "label": "Unbox — Baby Bath Set",
-          "prompt": "Square still photo: adult hands open a plain kraft carton and lift a folded hooded baby towel, with a washcloth and unbranded baby-wash bottle arranged beside it. Soft daylight on a changing table; no baby in frame.",
+          "ref": "n:guide:f1-r10-facebook-stories-travel-pouch",
+          "label": "Stories Vertical — Travel Pouch",
           "chips": [
+            "stories",
             "hands"
           ],
-          "kind": "photo"
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. An adult hand pulls the plain travel pouch from a tote beside a train seat, leaving breathing room above and below for a vertical Stories crop. No text or logos."
         },
         {
-          "ref": "f:q18-facebook-picker-headphone-review",
-          "label": "Review — Black Headphones at Desk",
-          "prompt": "Square still photo using the matte black over-ear headphones shown in the uploaded image as the exact product reference. Preserve their rounded earcups, headband, proportions, and finish. An adult man faces camera mid-sentence in a tidy home office while holding them fully visible at chest height.",
+          "ref": "n:guide:k8-facebook-gen2-tpl-ugc-case-81",
+          "label": "Creator — Bottle Desk Demo",
+          "prompt": "Square still photo: an adult creator holds a plain reusable water bottle beside a tidy home-office desk, with the bottle fully visible and a notebook nearby. Natural window light, casual creator framing, no text or logo.",
           "chips": [
-            "creator"
+            "creator",
+            "reels"
           ],
           "kind": "photo"
         },
@@ -340,11 +392,12 @@
           "kind": "photo"
         },
         {
-          "ref": "f:q18-facebook-picker-dog-brush",
-          "label": "Pet Demo — Golden Retriever Brush",
-          "prompt": "Square still photo: an adult kneels beside a calm golden retriever on a living-room rug and brushes its coat with a plain black grooming brush. Show the brush head touching the dog’s coat and the dog relaxed in warm window light.",
+          "ref": "n:guide:k8-facebook-gen2-tpl-spark-ads-style-video-c4",
+          "label": "Pet Brush — Hands-On Demo",
+          "prompt": "Still square product photograph using the uploaded photo as the exact product reference: an adult hand uses a plain pet brush once on a relaxed dog resting on a couch. Show the brush touching the coat, soft window light, no text or logos.",
           "chips": [
-            "hands"
+            "hands",
+            "creator"
           ],
           "kind": "photo"
         },
@@ -356,6 +409,87 @@
             "problem"
           ],
           "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k6-tpl-ugc-picker-organizer",
+          "label": "Desk Organizer — Problem Fix",
+          "chips": [
+            "problem",
+            "feed"
+          ],
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the wooden desk organizer and tray. Adult hands move loose pens into the compartments beside a blank notebook, ending with the tidy desk centered. Soft window light, practical creator look, square overhead framing. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k6-tpl-ugc-picker-lunchbag",
+          "label": "Lunch Bag — Hands-On Demo",
+          "chips": [
+            "hands",
+            "problem"
+          ],
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain insulated lunch bag. Adult hands place a wrapped sandwich and fruit inside on a kitchen island, ending with the open bag and contents fully visible. Bright daylight, natural square product scene, close three-quarter framing. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k6-tpl-ugc-picker-weekender",
+          "label": "Weekender Bag — Creator Reaction",
+          "chips": [
+            "creator",
+            "feed",
+            "retarget"
+          ],
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain canvas weekender bag. An adult creator lifts it from a parked car seat and looks toward camera with a pleased reaction, ending with the full bag visible. Warm afternoon daylight, candid square phone-video look. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:occ-product-launch-c3-m2-result",
+          "label": "Blue Bottle — Product Proof",
+          "chips": [
+            "feed",
+            "hands"
+          ],
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the matte blue water bottle. An adult hand lifts it from a pale stone ledge beside a folded towel, ending with the bottle upright and fully visible. Clean daylight, square lifestyle product framing, soft grounded shadow. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-speaker",
+          "label": "Table Speaker — Unbox Demo",
+          "chips": [
+            "creator",
+            "hands"
+          ],
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain rectangular tabletop speaker. Adult hands lift it from an open box beside the coiled cable, ending with the speaker centered for a clear product view. Soft window light, square unboxing framing, natural phone-photo look. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-soap-dispenser",
+          "label": "Soap Dispenser — Problem Fix",
+          "chips": [
+            "problem",
+            "feed"
+          ],
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the pale sage ceramic soap dispenser and brushed metal pump. An adult hand presses the pump over a sink, ending with one measured drop visible on the palm. Bright bathroom daylight, square close composition, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f1-r10-facebook-reels-screwdriver",
+          "label": "Reels Talk — Cordless Screwdriver",
+          "chips": [
+            "reels",
+            "creator"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. An adult creator faces camera and holds the plain cordless screwdriver at chest height while explaining one feature. Bright workshop, natural expression, 9:16 Reels framing, no text or logos."
+        },
+        {
+          "ref": "n:guide:f1-r10-facebook-catalog-mug",
+          "label": "Catalog Retarget — Travel Mug",
+          "chips": [
+            "retarget",
+            "feed"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. Put one plain ceramic travel mug beside a laptop and notebook on a calm home-office desk as a catalog retargeting scene. Natural daylight, clean product focus, no text or logos."
         }
       ],
       "button": "Make a product photo"
@@ -392,16 +526,18 @@
       {
         "ref": "f:q18-facebook-output-headphones",
         "frame": "1:1",
-        "label": "Matched Matte Black Over-Ear Headphones"
+        "label": "Matched Matte Black Over-Ear Headphones",
+        "presentation": "facebook"
       },
       {
         "ref": "f:q18-facebook-output-backpack-matched",
         "frame": "1:1",
-        "label": "Matched Pale Sage-Green Mini Backpack"
+        "label": "Matched Pale Sage-Green Mini Backpack",
+        "presentation": "facebook"
       }
     ],
     "after": {
-      "ref": "f:q18-facebook-after-bottle-offer",
+      "ref": "f:q18-facebook-strip-headphone-review",
       "zones": [
         "Price",
         "Call to action"
@@ -413,19 +549,19 @@
     },
     "sizes": [
       {
-        "frame": "16:9",
-        "ref": "f:q18-facebook-size-landscape-backpack",
-        "label": "16:9 · Facebook video placements"
+        "frame": "9:16",
+        "ref": "f:k4-plat-instagram-22-visual-sizes-1-image",
+        "label": "9:16 · Reels; keep key details in the safe area"
       },
       {
         "frame": "1:1",
-        "ref": "n:guide:k8-facebook-guide-plat-facebook-size-square-backpack",
-        "label": "1:1 · Square Feed placements"
+        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c4",
+        "label": "1:1 · Square product-photo output"
       },
       {
-        "frame": "9:16",
-        "ref": "f:k8-facebook-guide-plat-facebook-size-portrait-backpack",
-        "label": "9:16 video · Stories and Reels"
+        "frame": "1:1",
+        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c3",
+        "label": "1:1 · Another square product-photo output"
       }
     ],
     "titles": {
@@ -445,7 +581,7 @@
       "m7": {
         "h2": "Add the offer after download in Ads Manager"
       },
-      "m8": "One backpack, three Facebook ad sizes",
+      "m8": "Facebook Reels video and product-image examples",
       "examples": {
         "h2": "More Facebook ad examples",
         "lead": "Product moments for busy feeds, from a lunchbox to a pet bed."

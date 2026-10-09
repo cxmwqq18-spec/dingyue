@@ -20,15 +20,19 @@
   "ideas": [
     {
       "t": "Everyday use scenes",
-      "d": "Put a mechanical keyboard on a tidy desk, a fitness tracker on a wrist mid-workout, or a mini projector lighting up a bedroom wall. Context tells a shopper who the product is for faster than a spec sheet does."
+      "d": "Put a mechanical keyboard on a tidy desk, a fitness tracker on a wrist mid-workout, or a mini projector lighting up a bedroom wall. Context tells a shopper who the product is for faster than a spec sheet does. [Product Videos](/ai-video-generation/product-video) can hold a single setup or button press in view."
     },
     {
       "t": "Dark-background hero shots",
-      "d": "A slow turn on a dark surface with a single edge light suits headphones, speakers, and chargers. Use it for launch posts and at the top of a product page."
+      "d": "A slow turn on a dark surface with a single edge light suits headphones, speakers, and chargers. Use it for launch posts and at the top of a product page. [Image to Video](/ai-video-generation/image-to-video) works when a still product shot needs one controlled movement. [Studio Lighting](/ai-image-generation/commercial-lighting) gives a dark hero shot a readable edge light."
     },
     {
       "t": "Sale-season promos",
-      "d": "For Black Friday or back-to-school, generate a clean clip of the device first, then add the price and the deal's end date in Ads Manager or CapCut, where you control every digit."
+      "d": "For Black Friday or back-to-school, generate a clean clip of the device first, then add the price and the deal's end date in Ads Manager or CapCut, where you control every digit. [Every Angle](/ai-image-generation/packshot-multi-angle) and [Close-Up Details](/ai-image-generation/macro-details) help a listing show ports and controls. [Spark Ads Style Video](/ai-video-generation/spark-ads-style-video) fits a native-feeling launch post, while [Launch Promo](/ai-video-generation/promo-video) gives a new device a short reveal."
+    },
+    {
+      "t": "Electronics destinations",
+      "d": "Use the [TikTok ads](/platforms/tiktok-ads), [Amazon product photos](/platforms/amazon-product-photos), [Shopify product photos](/platforms/shopify-product-photos), or [YouTube Shorts ads](/platforms/youtube-shorts-ads) page to match the crop to where the device will appear."
     }
   ],
   "faq": [
@@ -118,6 +122,10 @@
       {
         "t": "Use in context",
         "d": "A desk, travel, fitness, or bedside scene answers who might reach for the product and where it fits."
+      },
+      {
+        "t": "Feature callout",
+        "d": "Show a hand pressing one button or connecting one cable so shoppers can see what the device does."
       },
       {
         "t": "Short product action",
@@ -251,7 +259,7 @@
       "chips": [
         {
           "id": "unbox",
-          "label": "Unbox & React"
+          "label": "Reveal & Review"
         },
         {
           "id": "desk",
@@ -268,9 +276,9 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:unboxing-videos-g5",
-          "label": "ASMR unboxing: Headphones leave foam",
-          "prompt": "Use the uploaded photo as the headphones and keep their shape, color, earcups and headband exactly. Hands lift the over-ear headphones from a fitted foam insert on a clean table, ending with both earcups facing the camera. Soft studio light, natural unboxing look. Top-down close-up with one gentle push-in. Sound: foam release and light cardboard rustle; no music.",
+          "ref": "n:guide:f8-electronics-picker-headphones-r1",
+          "label": "Lift headphones → fit → unboxing",
+          "prompt": "Use the uploaded photo as the dark over-ear headphones and keep the rounded earcups and padded headband exactly. Hands lift them from a plain kraft box with tissue on a tidy desk, ending with both earcups and the simple headband visible. Natural daylight, straightforward unboxing look. No logos or readable text.",
           "chips": [
             "unbox"
           ],
@@ -278,8 +286,8 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-headphones-talk",
-          "label": "Talking-head review: Over-ear headphones",
-          "prompt": "Use the uploaded photo as the headphones and keep their shape, color and earcups exactly. An adult woman holds them beside her face in a bright home office and says, \"Here is a closer look at the ear cushions and folding band.\" She tilts them once toward the lens, ending with the earcups centered. Natural window light, candid creator style. Chest-up front camera with slight handheld sway. Sound: her voice and quiet room tone; no music.",
+          "label": "Tilt headphones → band → review",
+          "prompt": "Use the uploaded photo as the dark over-ear headphones and keep their rounded earcups and padded headband exactly. An adult woman holds them beside her face in a bright home office, tilts them once toward the lens, and ends with the earcups centered. Natural window light, quiet creator-style product demo. Chest-up front camera with slight handheld movement. Sound: light handling and room tone; no music.",
           "chips": [
             "unbox"
           ],
@@ -287,8 +295,8 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-stand-talk",
-          "label": "Talking-head demo: Foldable stand",
-          "prompt": "Use the uploaded photo as the foldable stand and keep its shape, color and hinge exactly. An adult man holds it at chest height in a bright workspace and says, \"Here is how the hinge folds flat for a travel bag.\" He turns the stand slightly toward the lens, ending with the hinge visible. Natural daylight, relaxed creator style. Chest-up front camera with slight handheld sway. Sound: his voice and quiet room tone; no music.",
+          "label": "Turn stand → hinge → product-page",
+          "prompt": "Use the uploaded photo as the foldable stand and keep its shape, color and hinge exactly. An adult man holds it at chest height in a bright workspace, turns it once toward the lens, and ends with the hinge visible. Natural daylight, quiet hands-on product demo. Chest-up front camera with slight handheld movement. Sound: light hinge movement and room tone; no music.",
           "chips": [
             "desk"
           ],
@@ -296,7 +304,7 @@
         },
         {
           "ref": "n:guide:k9-ind-electronics-commuter-stand",
-          "label": "Pack-and-go: Stand in a commuter bag",
+          "label": "Fold stand → travel → carry-ad",
           "prompt": "Use the uploaded photo as the stand and keep its shape, color and hinge exactly. A hand folds the stand and slides it into an open commuter bag, ending with the bag and folded stand in view. Bright natural light, practical travel-ad style. Overhead close-up with a short follow move. Sound: fabric rustle and a soft hinge click; no music.",
           "chips": [
             "desk"
@@ -305,7 +313,7 @@
         },
         {
           "ref": "n:gen2:tpl-angle-g1",
-          "label": "Cinematic hero: Speaker grille",
+          "label": "Rotate speaker → grille → listing",
           "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and woven grille exactly. Turn the compact speaker slightly on a dark surface so a narrow light catches the grille, ending with its front centered. Low-key studio lighting, premium product-ad look. Slow close-up slider move. Sound: quiet room tone; no music.",
           "chips": [
             "detail"
@@ -314,7 +322,7 @@
         },
         {
           "ref": "n:gen2:tpl-angle-g3",
-          "label": "Macro detail: Speaker controls",
+          "label": "Focus controls → buttons → detail",
           "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and top controls exactly. Hold a tight view of the buttons and woven grille with one control centered in focus. Soft edge light, precise product-detail look. Table-height macro with a short push-in. End with the top controls centered above the speaker’s woven grille. Sound: one soft button click and quiet room tone; no music.",
           "chips": [
             "detail"
@@ -323,7 +331,7 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-cases-fan",
-          "label": "Lineup reveal: Plain phone cases",
+          "label": "Fan cases → openings → accessory-listing",
           "prompt": "Use the uploaded photo as the cases and keep each shape, color and single round camera opening exactly. A hand fans three plain cases across a clean tabletop, ending with all three backs visible. Bright window light, casual product-demo look. Overhead close-up with one small tilt. Sound: soft case taps on the table; no music.",
           "chips": [
             "travel"
@@ -332,10 +340,48 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-case-fit",
-          "label": "Hand demo: Case fit",
+          "label": "Fit case → edge → social-demo",
           "prompt": "Use the uploaded photo as the blue case and keep its color, slim shape and single round opening exactly. Hands fit the plain case onto a simple device, ending with the full back and one opening visible. Soft daylight, clear hands-on demo style. Close three-quarter angle with one short push-in. Sound: light case clicks; no music.",
           "chips": [
             "travel"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q16-electronics-picker-stand-demo",
+          "label": "Open stand → support → product-page",
+          "prompt": "Use the uploaded photo as the folding tablet stand and keep its shape, color and hinge exactly. Two adult hands open the hinge beside a bright window, place a plain tablet on it, and end with the hinge and screen support visible. Natural daylight, practical desk-demo look. Three-quarter close-up with one short push-in. Sound: hinge click and light desk movement; no music.",
+          "chips": [
+            "unbox",
+            "desk",
+            "detail"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "f:k2-url-picker-charging-pad",
+          "label": "Place phone → contact → travel-ad",
+          "prompt": "Use the uploaded photo as the wireless charging pad and keep its round shape, dark color and cable exactly. A hand places a plain phone onto the pad on a hotel desk, ending with the cable and contact point visible. Soft practical light, clear travel-ad look. Overhead close-up with one gentle tilt. Sound: cable movement and a soft placement tap; no music.",
+          "chips": [
+            "travel"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f8-electronics-phone-case-r1",
+          "label": "Fit case → opening → social-demo",
+          "prompt": "Use the uploaded photo as the plain phone case and keep its color, slim shape and single opening exactly. Hands turn the case once, fit it onto a simple device, and end with the back and opening clear on a clean desk. Soft daylight, casual creator-demo look. Three-quarter close-up with a short push-in. Sound: light case click; no music.",
+          "chips": [
+            "travel"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-picker-laptop-sleeve",
+          "label": "Slide laptop → padding → desk-ad",
+          "prompt": "Use the uploaded photo as the padded laptop sleeve and keep its shape, color and plain interior exactly. Adult hands open the sleeve on a tidy desk and slide in a slim laptop, ending with the closure visible. Bright window light, straightforward product-demo look. Overhead close-up with one slow follow move. Sound: fabric rustle and a light zip; no music.",
+          "chips": [
+            "desk"
           ],
           "kind": "video"
         }
@@ -358,7 +404,7 @@
     ],
     "input": [
       {
-        "good": "n:guide:k7-ind-electronics-input-0-good-speaker-ports",
+        "good": "n:guide:f8-electronics-input-speaker-ports-r1",
         "bad": "n:guide:ind-electronics-m5-soft-focus",
         "good_label": "Back ports remain sharp and visible",
         "bad_label": "Ports and grille blur into the background"
@@ -385,14 +431,14 @@
       }
     ],
     "after": {
-      "ref": "f:k7-ind-electronics-after-ref-f-cinematic-video-t06",
+      "ref": "n:guide:f8-electronics-after-round-speaker-r1",
       "zones": [
-        "Feature name",
+        "Feature detail",
         "Price"
       ],
       "items": [
-        "Type exact specs in your editor so every model number stays readable.",
-        "Place the price and product link in open space beside the device."
+        "Check the round grille, controls, color, and finish against the real speaker.",
+        "Place the feature name, price, and product link in open space beside the speaker."
       ]
     },
     "titles": {

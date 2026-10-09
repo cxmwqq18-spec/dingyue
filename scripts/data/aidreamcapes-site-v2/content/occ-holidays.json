@@ -218,10 +218,10 @@
       "n:guide:q20-occ-holiday-strip-06"
     ],
     "steps": {
-      "source": "n:guide:q20-occ-holiday-steps-source",
-      "result": "n:guide:q20-occ-holiday-steps-result-r2",
+      "source": "n:guide:f13-r10-occ-holidays-headphones-source",
+      "result": "n:guide:f13-r10-occ-holidays-headphones-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the only product reference. Preserve its matte graphite over-ear headphones, wide padded headband and oval fabric ear cushions. In a warm winter gift setting, an adult lifts this exact pair from cream tissue in a plain kraft box and holds it at chest height. Keep the full headphones visible. Medium close framing with one gentle push-in; end on the headset beside the open box. Warm, soft indoor light. Sound: tissue rustle and soft room tone; no music or added text.",
+      "prompt": "Use the uploaded photo as the only product reference. Preserve its matte graphite over-ear headphones, round leather ear pads, fabric-covered headband and visible metal telescoping sliders. In a warm winter gift setting, an adult lifts this exact pair from cream tissue in a plain kraft box and holds it at chest height. Keep the full headphones visible. Medium close framing with one gentle push-in; end on the headset beside the open box. Warm, soft indoor light. Sound: tissue rustle and soft room tone; no music or added text.",
       "options": [
         [
           "Template",
@@ -238,97 +238,169 @@
       ]
     },
     "picker": {
-      "title": "Choose a holiday product scene",
-      "lead": "Pick a setting that helps shoppers picture the item as a seasonal gift.",
+      "title": "Choose a holiday campaign moment",
+      "lead": "Pick gift unboxing, order-by-date, or winter gifting scenes and add the confirmed cutoff after download.",
       "chips": [
         {
-          "id": "review",
-          "label": "Creator Review"
+          "id": "gift-unboxing",
+          "label": "Gift Unboxing"
         },
         {
-          "id": "gift",
-          "label": "Gift Reveal"
+          "id": "order-by-date",
+          "label": "Order-by-Date"
         },
         {
-          "id": "routine",
-          "label": "GRWM Routine"
+          "id": "winter-gifting",
+          "label": "Winter Gifting"
         },
         {
-          "id": "taste",
-          "label": "Taste Test"
+          "id": "gift-bundle",
+          "label": "Gift Bundle"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:q20-occ-holidays-card-01",
-          "label": "Creator Review: Gold hoops gift reveal",
+          "ref": "n:guide:f13-occ-holidays-rework-card-14",
+          "label": "Gift Unboxing: Gold hoops gift reveal",
           "chips": [
-            "review"
+            "gift-unboxing"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a softly lit bedroom, an adult creator holds an open jewelry box beside her face and speaks to camera. An adult creator looks into the camera and says, “The size is easy to see when I hold them here.”. Natural creator-shot UGC with realistic skin under warm bedside-lamp light. Close framing with one gentle push-in. End with both hoops lifted beside the open jewelry box. Sound: clear speech and a small box click; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a warm holiday table, adult hands lift simple gold hoop earrings from a small gift box and turn them once toward camera. Natural creator-shot UGC with soft amber light. Close framing with one gentle push-in. End with both hoops above the open box; no face. Sound: tissue rustle and a small box click; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q20-occ-holidays-card-02",
-          "label": "Creator Review: Skincare gift set opened",
+          "ref": "n:guide:f13-occ-holidays-rework-card-15",
+          "label": "Gift Unboxing: Skincare gift set opened",
           "chips": [
-            "review"
+            "gift-unboxing"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bedroom, an adult creator holds a plain gift set toward camera and opens the lid once. An adult creator looks into the camera and says, “Here are the three pieces included in the set.”. Natural creator-shot UGC with realistic skin under soft bedroom window light. Close framing with one gentle push-in. End with the lid open and all three skincare pieces visible. Sound: clear speech and a soft lid hinge; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a warm holiday table, adult hands lift a plain cream jar from a three-piece skincare gift box and hold it beside the open set. Natural creator-shot UGC with soft seasonal window light. Close framing with one gentle push-in. End with the jar and all three pieces visible; no face. Sound: tissue rustle and a soft lid tap; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-holidays-card-03",
-          "label": "Gift Reveal: Baby blanket from box",
+          "label": "Order-by-Date: Baby blanket from box",
           "chips": [
-            "gift"
+            "order-by-date"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright nursery, no infant present, adult hands unfold a soft blanket once beside an open gift box. Natural creator-shot UGC with realistic skin under soft nursery window light. Close framing with one gentle push-in. End with the blanket unfolded beside the open gift box. Sound: paper rustle and fabric movement; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-holidays-card-04",
-          "label": "Gift Reveal: Gold bracelet in tissue",
+          "label": "Order-by-Date: Gold bracelet in tissue",
           "chips": [
-            "gift"
+            "order-by-date"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit dressing table, adult hands lift a simple bracelet and lay it across an open palm. Natural creator-shot UGC with realistic skin under warm dressing-table lamplight. Close framing with one gentle push-in. End with the bracelet resting across the open palm. Sound: tissue rustle and a light box click; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q20-occ-holidays-card-05",
-          "label": "GRWM: Winter jacket for city walk",
+          "ref": "n:guide:f13-occ-holidays-rework-card-16-r2",
+          "label": "Winter Gift: Jacket for city walk",
           "chips": [
-            "routine"
+            "winter-gifting"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult puts on the jacket and adjusts the collar once toward a mirror. An adult creator looks into the camera and says, “Ready for a cold city walk.”. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the adjusted collar and jacket front visible by the doorway. Sound: fabric movement and clear speech; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an older Asian man wears the plain charcoal winter jacket and adjusts its collar once beside an open gift box. Natural creator-shot UGC with cool daylight. Close framing with one gentle push-in. End with the jacket front and collar clear. Sound: fabric movement and room tone; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q20-occ-holidays-card-06",
-          "label": "GRWM: Lip tint for holiday look",
+          "ref": "n:guide:f13-occ-holidays-card-13",
+          "label": "Winter Gift: Lip tint holiday look",
           "chips": [
-            "routine"
+            "winter-gifting"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit vanity, an adult applies the tint once and holds it beside her face. An adult creator looks into the camera and says, “This is the last color step before dinner.”. Natural creator-shot UGC with realistic skin under soft vanity lighting. Close framing with one gentle push-in. End with the tint tube beside the finished color before dinner. Sound: cap click and clear speech; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a warm holiday vanity, an adult Black creator applies the plain berry lip tint once and holds the tube beside her face before dinner. Soft seasonal window light and realistic skin. Close framing with one gentle push-in; end with tint and finished color visible. Sound: cap click and room tone; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q20-occ-holidays-card-07",
-          "label": "First Bite: Holiday protein cookie",
+          "ref": "n:guide:f13-occ-holidays-rework-card-17-r2",
+          "label": "Gift Bundle: Holiday protein cookie",
           "chips": [
-            "taste"
+            "gift-bundle"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen table, an adult takes one bite, reacts naturally and holds the cookie cross-section to camera. Natural creator-shot UGC with realistic skin under soft kitchen window light. Close framing with one gentle push-in. End with the bitten cookie cross-section facing the camera. Sound: crisp bite and room tone; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Above a warm holiday kitchen table, adult hands break a plain protein cookie in two and show the crumb. Natural creator-shot UGC with soft amber light. Close framing with one gentle push-in. End with both halves and crumbs clearly visible; no face, text or logos. Sound: cookie snap and room tone; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-holidays-card-08-r2",
-          "label": "First Bite: Cranberry snack mix",
+          "label": "Gift Bundle: Cranberry snack mix",
           "chips": [
-            "taste"
+            "gift-bundle"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen table, an adult takes one bite of the cranberry snack mix bar, reacts naturally and holds the cross-section to camera. Natural creator-shot UGC with soft daylight and realistic skin. Chest-up close framing with one gentle push-in; end with the cross-section centered. Sound: crisp bite and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q20-occ-holiday-gallery-01",
+          "label": "Gift Unboxing: Hand cream applied",
+          "chips": [
+            "gift-unboxing"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a warm winter vanity, an adult creator opens a plain hand-cream tube and smooths a small amount across the back of one hand. Natural creator-shot UGC with soft window light. Close framing with one gentle push-in; end with the tube beside the moisturized hand. Sound: cap click and fingertip glide; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q20-occ-holiday-gallery-02",
+          "label": "Order-by-Date: Skincare jar from gift set",
+          "chips": [
+            "order-by-date"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift one plain cream jar from a three-piece skincare gift set and hold it above the open tissue box, leaving space above for an order-by-date layer. Warm window light, realistic hands. Close framing with one gentle push-in; end with the jar fully visible. Sound: tissue rustle and box click; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q20-occ-holiday-media-hero",
+          "label": "Winter Gift: Coat adjusted by box",
+          "chips": [
+            "winter-gifting"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside an open gift box in a winter entryway, an adult creator wears the plain coat and adjusts its collar once toward the camera. Natural creator-shot UGC with soft daylight. Medium framing with one gentle push-in; end with the coat front and box both visible. Sound: fabric movement and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q20-occ-holiday-gallery-03",
+          "label": "Gift Bundle: Cocoa pouch beside mug",
+          "chips": [
+            "gift-bundle"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a warm holiday kitchen table, an adult pours cocoa into a plain ceramic mug beside the pouch, then holds the pouch upright for a gift-bundle view. Natural creator-shot UGC with soft window light. Close framing with one gentle push-in; end with pouch and mug together. Sound: pour and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-holidays-gift-list",
+          "label": "Gift Unboxing: Gift List Flat Lay",
+          "chips": [
+            "gift-unboxing"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. On a warm cream table, arrange the candle, wool scarf, matte travel mug and skincare jar as separate gift-guide ideas with evergreen and ribbon. Natural creator-shot UGC with soft winter light. Overhead square framing keeps each product clear and leaves space for later HTML labels; no burned-in text. Sound: paper rustle and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-holidays-unboxing-candle",
+          "label": "Gift Unboxing: Ceramic candle opened",
+          "chips": [
+            "gift-unboxing"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a warm holiday table, adult hands lift the plain ceramic candle from cream tissue in a kraft gift box. Natural creator-shot UGC with soft amber light. Close framing with the candle and open box fully visible and clear space above for a later seasonal detail. Sound: tissue rustle and box click; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-holidays-order-reminder",
+          "label": "Order-by-Date: Wrapped gift beside blank calendar",
+          "chips": [
+            "order-by-date"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. On a bright winter desk, adult hands hold the wrapped gift beside a blank calendar page to leave room for a final order-by date added later in HTML. Natural creator-shot UGC with soft daylight. Overhead close framing; the calendar must remain blank with no writing. Sound: paper movement and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-holidays-packaging",
+          "label": "Gift Bundle: Ribbon-Wrapped Scarf Box",
+          "chips": [
+            "gift-bundle"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a warm holiday wrapping table, adult hands tie a deep green ribbon around a kraft box containing the cream wool scarf. Natural creator-shot UGC with soft daylight. Close framing with the box, ribbon and scarf clear and side space for a later bundle offer layer. Sound: ribbon pull and paper rustle; no music or added text.",
           "kind": "photo"
         }
       ],
@@ -375,7 +447,7 @@
       }
     ],
     "after": {
-      "ref": "n:guide:q20-occ-holiday-after",
+      "ref": "n:guide:f13-r10b-occ-holidays-after-pillar-candle",
       "zones": [
         "Offer",
         "Shipping date"

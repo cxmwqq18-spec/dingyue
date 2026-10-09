@@ -46,25 +46,33 @@
   "faq": [
     {
       "q": "Can the AI put my headline and price on the image?",
-      "a": "No. It creates the product scene with open space but does not render readable campaign text."
+      "a": "No. It creates the product scene with open space but does not render readable campaign text. Compare [macro detail photos](/ai-image-generation/macro-details) when a small product feature must stay visible."
     },
     {
       "q": "What size are the ad images?",
-      "a": "The examples on this page use square feed images. Other placements may use different dimensions or crops."
+      "a": "The examples on this page use square feed images. Other placements may use different dimensions or crops. For placement planning, use [TikTok ads](/platforms/tiktok-ads) and [product video demos](/ai-video-generation/product-video) alongside this square frame."
     },
     {
       "q": "Can I test two scene options?",
-      "a": "Yes. Keep the audience and offer consistent so the scene is the main change between versions."
+      "a": "Yes. Keep the audience and offer consistent so the scene is the main change between versions. For a fair test, pair this tool with [UGC ad videos](/ai-video-generation/ugc-ad-video) and [the AI UGC video ads guide](/blog/ai-ugc-video-ads-guide)."
     },
     {
       "q": "Do I have to say my ad image was made with AI?",
-      "a": "Disclosure rules vary by platform, location and use. Follow the guidance shown in the ad tool for your campaign."
+      "a": "Disclosure rules vary by platform, location and use. Follow the guidance shown in the ad tool for your campaign. For product detail coverage, see [story ad images](/ai-image-generation/story-ad-vertical) and [size reference images](/ai-image-generation/size-reference)."
+    },
+    {
+      "q": "What makes a social product photo clear?",
+      "a": "Keep the product recognizable, in focus and engaged in one believable everyday action. For apparel campaigns, compare [fashion and clothing ideas](/industries/fashion-clothing) and [fashion editorial photos](/ai-image-generation/fashion-editorial). Check the crop at phone width, keep the main object separated from nearby props, and compare the final thumbnail with the product page before you publish."
+    },
+    {
+      "q": "Can I use an outdoor scene?",
+      "a": "Yes. Describe a simple outdoor use moment while keeping the product shape and color consistent. For seasonal campaigns, review [Black Friday campaigns](/occasions/black-friday) and [product launch campaigns](/occasions/product-launch)."
     }
   ],
   "overview": [
     {
       "h2": "",
-      "d": "Square product visuals give a feed concept a clear focal point while people scroll. Start with one product photo, choose one scene and leave part of the frame open. Product claims and offers come from your approved campaign details."
+      "d": "Square product visuals give a feed concept a clear focal point while people scroll. Start with one product photo, choose one scene and leave part of the frame open. Product claims and offers come from your approved campaign details. Plan the rest of the campaign with [white background photos](/ai-image-generation/ecommerce-main-image), [lifestyle photos](/ai-image-generation/lifestyle-scene), [model photos](/ai-image-generation/on-model-generation), [sale campaign visuals](/ai-image-generation/sale-campaign-key-visual), [UGC still ads](/ai-image-generation/ugc-still-ad), [packshot angles](/ai-image-generation/packshot-multi-angle), [color variation photos](/ai-image-generation/colorway-variations), [Instagram ads](/platforms/instagram-ads), [Facebook ads](/platforms/facebook-ads), [the ad sizes guide](/guides/ad-sizes-by-platform), [the testing ad versions guide](/guides/testing-ad-versions), and [the inspiration gallery](/inspiration)."
     }
   ],
   "examples": {
@@ -105,7 +113,7 @@
           },
           {
             "ref": "n:guide:q6-social-example-5",
-          "title": "Brown trainer sole flex in motion",
+            "title": "Brown trainer sole flex in motion",
             "kind": "photo",
             "product": "brown leather trainers"
           }
@@ -114,21 +122,31 @@
     ]
   },
   "limitations": {
-    "h2": "What a square ad photo can provide",
+    "h2": "Features for a square ad photo",
     "items": [
       {
-        "t": "A clear product scene",
-        "d": "Choose a simple backdrop and reserve part of the frame for your headline or offer.",
+        "t": "Lead with one product",
+        "d": "Keep one item recognizable at thumbnail size so the feed concept has a clear focal point.",
         "supported": true
       },
       {
-        "t": "No verified offer terms",
-        "d": "Price, promotion dates and discount terms come from your approved campaign.",
+        "t": "Reserve an open area",
+        "d": "Describe an open side or upper area where your approved headline can be added later.",
+        "supported": true
+      },
+      {
+        "t": "Show one useful action",
+        "d": "Use a hand, try-on or first-bite moment to make the product benefit visible.",
+        "supported": true
+      },
+      {
+        "t": "Offer terms stay editable",
+        "d": "Price, promotion dates and discount terms come from your approved campaign; add them after download.",
         "supported": false
       },
       {
         "t": "Placement controls the crop",
-        "d": "Your ad tool determines the dimensions and crop used for each placement.",
+        "d": "Preview each placement because your ad tool determines the final dimensions and crop.",
         "supported": false
       }
     ]
@@ -143,10 +161,10 @@
       "n:guide:q6-social-strip-6"
     ],
     "steps": {
-      "source": "n:guide:k3-social-step-lipstick-source",
-      "result": "n:guide:q6-social-steps-result",
+      "source": "n:guide:k3-social-gallery-city-curb",
+      "result": "n:guide:f2-social-steps-result-r1",
       "mode": "photo",
-      "prompt": "Show a clean coral lipstick swatch on natural skin beside the tube, with open space on the left for a headline.",
+      "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Preserve its color, tread, laces and shape while placing it on a warm wood entryway floor; change the setting only.",
       "options": [
         [
           "Photo",
@@ -164,7 +182,7 @@
     },
     "picker": {
       "title": "Choose a format for a square social ad",
-    "lead": "Browse product scenes for social ads, from creator reviews and try-ons to unboxing and recipe formats.",
+      "lead": "Browse product scenes for social ads, from creator reviews and try-ons to unboxing and recipe formats.",
       "chips": [
         {
           "id": "routine",
@@ -230,6 +248,7 @@
           "label": "Try-On: Floral dress mirror check",
           "chips": [
             "tryon",
+            "routine",
             "creator"
           ],
           "prompt": "Use the uploaded dress as the exact product. An adult tries it on in a mirror and turns once to show its drape.",
@@ -237,7 +256,7 @@
         },
         {
           "ref": "n:guide:q6-social-picker-6",
-        "label": "Pet Brush Demo: Clear Sofa",
+          "label": "Pet Brush Demo: Clear Sofa",
           "chips": [
             "demo",
             "creator"

@@ -29,11 +29,11 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Shorts"
+        "9:16 vertical or 1:1 square"
       ],
       [
         "Length",
-        "10 seconds"
+        "6, 10 or 15 seconds"
       ]
     ],
     "cta": "Make my unboxing video"
@@ -49,11 +49,27 @@
     },
     {
       "q": "What length works for an unboxing video?",
-      "a": "Choose 6 seconds for a quick reveal, 10 to open the box and lift the item, or 15 to show several pieces."
+      "a": "Choose 6 seconds for a quick reveal, 10 to open the box and lift the item, or 15 to show several pieces. Use 9:16 for TikTok or Shorts and 1:1 for a product page."
     },
     {
       "q": "Can I make an unboxing video for a gift set or bundle?",
       "a": "Yes. Upload a photo of the set and list what's inside, such as “three candles and a matchbox in a ribbon-tied box.” A few items usually come out cleaner than a crowded box."
+    },
+    {
+      "q": "What should be visible in an unboxing shot?",
+      "a": "Keep the hands, package opening and the product reveal fully inside the frame."
+    },
+    {
+      "q": "Can I use a plain package?",
+      "a": "Yes. Unbranded packaging keeps attention on the product and the reveal sequence."
+    },
+    {
+      "q": "Can I keep accessories in the box?",
+      "a": "Yes. Name the lead item first, then list the accessories and reveal them one at a time. This keeps the final arrangement readable instead of hiding the product in a crowded box."
+    },
+    {
+      "q": "What should the final unboxing frame show?",
+      "a": "Hold the complete product, box opening, and included pieces inside the frame. Add a gift note, price, or campaign headline later in your editor so the package stays clear."
     }
   ],
   "overview": [
@@ -81,7 +97,7 @@
     },
     "picker": {
       "title": "Browse unboxing formats",
-      "lead": "See creator first looks, ASMR reveals and package openings across beauty, accessories and tech.",
+      "lead": "Pick the reveal format that matches the parcel you actually ship. Creator first looks keep the item near the lens while the presenter names what arrived; ASMR unboxings make paper, hinges, trays, and fabric audible; gentle reveals slow down the lift of a gift or baby item; package reveals show the box, insert, and hero product in one readable arrangement. Keep hands, package edges, and the full product inside the frame. Plain packaging is safer when printed words are not available, and campaign text belongs in your editor after download.",
       "chips": [
         {
           "id": "creator",
@@ -120,12 +136,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q3-unboxing-videos-board-03-pet-brush-review",
-          "label": "Creator Review: Pet Brush Unboxed",
+          "ref": "n:guide:f11-r10-unboxing-videos-coffee-set-contents",
+          "label": "Package contents → pieces → listing",
           "chips": [
-            "creator"
+            "package"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult lifts the pet brush from an open box, looks to camera and says, \"Here is the brush head and handle shape.\" End with the brush held upright beside the box. Soft daylight, friendly UGC style. Chest-up framing with one gentle pan. Sound: spoken line, paper rustle and a dog collar jingle; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain kraft box and lift the gooseneck kettle, ceramic dripper, glass carafe, and wooden scoop one by one onto the tissue. End with every included piece in a neat row beside the box. Soft kitchen daylight, practical package-content style. Overhead vertical framing with one slow pull-back. Sound: paper crinkle, ceramic tap and room tone; no music.",
           "kind": "video"
         },
         {
@@ -147,12 +163,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q3-unboxing-videos-board-06-protein-box-reveal",
-          "label": "Snack Box Reveal: Protein Bars Lifted",
+          "ref": "n:guide:f11-r10-unboxing-videos-desk-organizer-asmr",
+          "label": "ASMR tray → lift → sound",
           "chips": [
-            "soft"
+            "asmr"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a home kitchen, an adult creator lifts one plain protein bar from the open box and says, \"Here is the bar texture, with more inside the box.\" End with the bar beside the open set. Warm window light, casual UGC style. Chest-up framing with one gentle push-in. Sound: spoken line, wrapper rustle and kitchen ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain metal desk organizer from its kraft box, then place the wooden dividers beside it on the tissue. End with the tray and each divider visible. Soft office daylight, tactile ASMR style. Overhead vertical close framing with one slow tilt. Sound: tissue rustle, metal tap and wood set-down; no music.",
           "kind": "video"
         },
         {
@@ -172,6 +188,78 @@
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the power bank from its insert and place the cable beside it. End with both items centered in the open box. Soft desk daylight, clean tech-demo style. Close overhead framing with one slow push-in. Sound: tray lift, cable tap and quiet desk ambience; no music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:k5-home-picker-cards-1-image",
+          "label": "Ceramic mug set: creator first look",
+          "chips": [
+            "creator"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the ceramic mug set from a kraft gift box with paper filling, turning the lead mug toward the camera. End with the set held above the open box. Soft window light, natural first-look style. Overhead close framing with one gentle push-in. Sound: paper rustle, ceramic tap and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-mugs",
+          "label": "Handmade mugs: ASMR arrange",
+          "chips": [
+            "asmr"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift one handmade mug from a simple rack and place it beside the matching pair. End with the three mugs aligned. Bright kitchen daylight, quiet tactile style. Top-down medium framing with one slow slide. Sound: ceramic set-down and rack creak; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-tea-set",
+          "label": "Tea set: tin reveal",
+          "chips": [
+            "soft"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain gift box and lift the tea tin and infuser onto the tissue, keeping both pieces visible. End with the set arranged beside the open box. Soft morning light, gentle reveal style. Overhead framing with one slow pull-back. Sound: lid lift, paper rustle and a light metal tap; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-pet-kit",
+          "label": "Pet care set: brush reveal",
+          "chips": [
+            "soft"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain pet brush from an open kraft box, then place the folded towel and bottle beside it. End with the complete care set in view. Soft daylight, calm home style. Overhead medium framing with one gentle tilt. Sound: tissue rustle, brush tap and quiet room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-scarf",
+          "label": "Wool scarf: unbox and unfold",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the wool scarf from a plain mailer and unfold one corner over the tissue. End with the full texture and edge visible beside the open package. Soft bedroom daylight, tactile package style. Top-down framing with one slow pull-back. Sound: paper crinkle, fabric movement and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-unboxing-picker-speaker",
+          "label": "Portable speaker: package reveal",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain rectangular speaker from its open box and set the cable beside it. End with the speaker and cable centered on the table. Soft window light, clean tech reveal style. Close overhead framing with one small push-in. Sound: tray lift, cable tap and room ambience; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f11-r10-unboxing-videos-package-contents",
+          "label": "Contents laid → count → listing",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain gray headphones, charging cable, and storage pouch one by one from the open kraft box and lay them in a row. End with every included piece visible beside the box. Soft desk daylight, clear package-content style. Overhead vertical framing with one gentle push-in. Sound: tissue rustle, cable tap and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f11-r10-unboxing-videos-asmr-tea-canister",
+          "label": "ASMR canister → pieces → sound",
+          "chips": [
+            "asmr"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the ceramic tea canister lid, set it beside the canister, and place the metal infuser and linen pouch on the tissue. End with all pieces visible in the open box. Warm wood light, tactile ASMR style. Overhead vertical macro framing with one slow tilt. Sound: lid lift, ceramic tap, metal chime and paper rustle; no music.",
+          "kind": "video"
         }
       ],
       "button": "Try this video idea"
@@ -181,40 +269,40 @@
         "frame": "post",
         "ref": "n:guide:k1-unboxing-use-launch-mug",
         "h": "Show what arrives in the box",
-        "d": "Pair the product with its packaging so shoppers can picture the delivery."
+        "d": "An unboxing clip can answer a delivery question before checkout: what will arrive, and how is it protected? Start with the outer package, open one layer at a time, and hold the hero item still at the end. Use a vertical frame for a creator first look or a square frame for a product page. Keep tissue, inserts, and accessories in a tidy order so the viewer can count the pieces. If the set is large, reveal one item first and place the rest in a row rather than hiding the lead product."
       },
       {
         "frame": "browser",
         "ref": "n:guide:k1-unboxing-use-product-page-boxes",
         "h": "Add a reveal to a product page",
-        "d": "Show the packaging and item together during the reveal."
+        "d": "A reveal becomes more trustworthy when it matches the package you use. Describe kraft board, a mailer, a tray, or fabric wrap by its real finish, and avoid invented logos or claims. A soft sound cue can make the opening feel tactile, but the product must remain the visual focus. Review color, size, and included pieces against your fulfillment box before posting. If the box or insert changes for a seasonal run, make a new version instead of reusing a clip that shows a different delivery."
       }
     ],
     "input": [
       {
         "good": "n:guide:k1-unboxing-input-candle-shelf",
         "bad": "n:guide:k1-unboxing-input-candle-bad-crop",
-        "good_label": "Your candle, fully in frame",
-        "bad_label": "Your candle, cropped at the top"
+        "good_label": "Your product, fully visible with room for the box and tissue",
+        "bad_label": "A crop hides the opening or clips the product at the edge"
       },
       {
         "good": "n:guide:q3-unboxing-videos-input-candle-good-alt",
         "bad": "n:guide:q3-unboxing-videos-input-candle-bad-dark",
-        "good_label": "Your candle, fully in frame",
-        "bad_label": "Your candle, obscured by low light"
+        "good_label": "Your product, bright enough to read its shape and material",
+        "bad_label": "A dark upload where the item blends into the packaging"
       }
     ],
     "outputs": [
       {
         "ref": "n:guide:q3-unboxing-videos-output-candle-reveal",
         "frame": "1:1",
-        "label": "ASMR Unbox: Candle Revealed",
+        "label": "ASMR Unbox: candle revealed, 1:1 frame for a quiet package close-up",
         "length": 10
       },
       {
         "ref": "n:guide:q3-unboxing-videos-output-candle-lift",
         "frame": "1:1",
-        "label": "Gift Reveal: Candle Lifted",
+        "label": "Gift Reveal: candle lifted, 1:1 frame for the final hold above the box",
         "length": 10
       }
     ],
@@ -233,7 +321,7 @@
         "h2": "What to prepare for an unboxing scene"
       },
       "m6": {
-        "h2": "Unboxing video length, size and credits"
+        "h2": "Unboxing length and frame: 6, 10 or 15 seconds; 9:16 or 1:1"
       },
       "m7": {
         "h2": "Add your logo after download"
@@ -244,6 +332,20 @@
       "examples": {
         "h2": "More ways to show a reveal"
       }
+    },
+    "overview": "An unboxing video makes the delivery moment easy to follow: package opens, tissue moves, and the product rises into view. Upload a clear product photo, describe the box material and insert, and name the lead item before optional accessories. Use a [product launch video](/occasions/product-launch) for a reveal, a [holiday campaign](/occasions/holidays) for a gift set, and [cinematic product videos](/ai-video-generation/cinematic-video) when the final hold needs extra atmosphere. Choose 6, 10, or 15 seconds. Use a 9:16 vertical frame for [TikTok](/platforms/tiktok-ads) and Shorts, or a 1:1 square frame beside a store description.",
+    "after": {
+      "ref": "n:guide:occ-holidays-c3-m3-fireplace",
+      "zones": [
+        "Gift note",
+        "Price",
+        "CTA"
+      ],
+      "items": [
+        "Add the gift message or campaign headline after download.",
+        "Type a price or delivery date in your editor.",
+        "Keep the package and product names outside the generated scene."
+      ]
     }
   }
 }

@@ -20,15 +20,19 @@
   "ideas": [
     {
       "t": "Plated and served",
-      "d": "Show your pasta sauce on a bowl of rigatoni or your spice blend on roasted vegetables, so shoppers see the finished dish and not just the jar."
+      "d": "Show your pasta sauce on a bowl of rigatoni or your spice blend on roasted vegetables, so shoppers see the finished dish and not just the jar. [Carousel Video Ad](/ai-video-generation/carousel-video-ad) can separate the pack, serving moment, and final bite into clear beats."
     },
     {
       "t": "Packaging in a real setting",
-      "d": "Place a bag of coffee beans on a kitchen shelf, a snack box in a lunch bag, or a bottle of olive oil beside a cutting board. Upload a photo with the label sharp and facing forward."
+      "d": "Place a bag of coffee beans on a kitchen shelf, a snack box in a lunch bag, or a bottle of olive oil beside a cutting board. Upload a photo with the label sharp and facing forward. [How-To Video](/ai-video-generation/how-to-video) suits a recipe or preparation step with one visible action. [Launch Promo](/ai-video-generation/promo-video) gives a new flavor a short reveal, while [Black Friday Video](/ai-video-generation/black-friday-countdown) supports a timed offer."
     },
     {
       "t": "New flavor announcements",
-      "d": "A limited flavor or a holiday tin gets a short clip and a square still for your announcement post. Add the release date and price yourself so they appear exactly as intended."
+      "d": "A limited flavor or a holiday tin gets a short clip and a square still for your announcement post. Add the release date and price yourself so they appear exactly as intended. [White Background Photos](/ai-image-generation/ecommerce-main-image) keep the package readable in a listing gallery."
+    },
+    {
+      "t": "Choose the placement",
+      "d": "Use [TikTok ads](/platforms/tiktok-ads) and [Instagram ads](/platforms/instagram-ads) for a pour or first bite, then prepare the package crop for [Amazon product photos](/platforms/amazon-product-photos) or [Shopify product photos](/platforms/shopify-product-photos)."
     }
   ],
   "faq": [
@@ -118,6 +122,10 @@
       {
         "t": "Package recognition",
         "d": "Use square product stills and a clean shelf scene to keep the actual pack central in a gallery."
+      },
+      {
+        "t": "Serving action",
+        "d": "Show one pour, scoop, crack, or first bite while keeping the package in frame."
       },
       {
         "t": "Flexible framing",
@@ -279,7 +287,7 @@
       "cards": [
         {
           "ref": "n:gen2:tpl-drink-c4",
-          "label": "Recipe Demo: granola over yogurt",
+          "label": "Tip pouch → topping → recipe",
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright breakfast kitchen, a hand tips the granola pouch and lets a small stream fall into yogurt, ending with the clusters resting on top. Soft window light, natural creator-video look. Overhead close-up with a gentle push-in. Sound: dry crunch and pouch rustle; no music.",
           "chips": [
             "recipe"
@@ -288,8 +296,8 @@
         },
         {
           "ref": "f:q17-ind-food-drinks-picker-2",
-          "label": "Taste Test: protein bar first bite",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult woman breaks a protein bar and takes one bite, then holds the bitten bar beside its plain wrapper and says to camera: “The crisp outside and chewy center make this easy to pack.” Candid UGC style, natural skin texture. Chest-up eye-level handheld shot with slight sway. Warm cafe-window light. End with the cafe-table bar beside its wrapper, bite edge facing lens. Sound: wrapper crinkle, one crisp bite, her voice; no music.",
+          "label": "Bite bar → texture → taste",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult breaks a protein bar and takes one bite, then holds the bitten bar beside its plain wrapper, ending with the bite edge facing the lens. Candid hands-on taste-test style, natural skin texture. Chest-up eye-level handheld shot with slight sway. Warm cafe-window light. Sound: wrapper crinkle, one crisp bite and room tone; no music.",
           "chips": [
             "taste"
           ],
@@ -297,7 +305,7 @@
         },
         {
           "ref": "f:q17-ind-food-drinks-picker-3",
-          "label": "POV Hook: iced tea can opens",
+          "label": "Snap tab → cold → discovery",
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand lifts a chilled tea can from an open cooler and snaps its tab, ending with condensation and the open can centered in frame. Bright daylight, energetic phone-video look. Tight handheld close-up with one quick tilt to the can. Sound: tab snap and ice shift; no music.",
           "chips": [
             "hook"
@@ -306,7 +314,7 @@
         },
         {
           "ref": "f:q17-ind-food-drinks-picker-4",
-          "label": "ASMR Unboxing: snack sampler reveal",
+          "label": "Lift pouch → assortment → unboxing",
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a clean table, adult hands peel tissue from a snack sampler box and lift one pouch toward the lens, ending with the assortment visible below it. Soft morning window light, natural creator-video style. Top-down close-up with one slow push-in. Sound: tissue rustle and cardboard creak; no music.",
           "chips": [
             "hook"
@@ -315,7 +323,7 @@
         },
         {
           "ref": "f:q17-ind-food-drinks-picker-5",
-          "label": "ASMR Crunch: oat cracker snap",
+          "label": "Snap cracker → crumb → taste",
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright dining nook, an adult hand snaps an oat cracker over a bowl and lets the pieces fall, ending on the crisp crumb texture. Soft side light, clean food-macro look. Extreme close-up at table height with one short rack focus. Sound: one sharp crunch and light crumbs; no music.",
           "chips": [
             "taste"
@@ -324,8 +332,8 @@
         },
         {
           "ref": "f:q17-ind-food-drinks-picker-6",
-          "label": "GRWM: hydration mix before workout",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in workout clothes holds a hydration mix sachet beside her face and says to camera: “I mix one sachet into my bottle before I head out.” She pours it into a clear bottle and ends holding both products still. Soft morning daylight, natural GRWM creator style. Chest-up front-facing handheld framing with slight sway. Sound: her voice, powder pour, bottle cap click; no music.",
+          "label": "Pour mix → preparation → workout",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult in workout clothes holds a hydration mix sachet, pours it into a clear bottle, and ends with both products still in frame. Soft morning daylight, quiet hands-on routine style. Chest-up front-facing handheld framing with slight sway. Sound: powder pour and bottle cap click; no music.",
           "chips": [
             "routine"
           ],
@@ -333,8 +341,8 @@
         },
         {
           "ref": "f:q17-ind-food-drinks-picker-7",
-          "label": "Creator Review: protein shake to camera",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult presenter stands at a home counter holding a plain protein tub beside a glass and says to camera: “I add a scoop to cold water, then shake until smooth.” She pours once and ends with the glass beside the tub. Soft daylight, straightforward creator-demo look. Chest-up handheld framing with a gentle push-in. Sound: her voice, powder tap, shaker rattle; no music.",
+          "label": "Pour powder → mixing → product-page",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home counter, an adult presenter holds a plain protein tub beside a glass, pours one scoop, and ends with the glass beside the tub. Soft daylight, quiet product-demo style. Chest-up handheld framing with a gentle push-in. Sound: powder tap and shaker rattle; no music.",
           "chips": [
             "routine"
           ],
@@ -342,10 +350,46 @@
         },
         {
           "ref": "f:q17-ind-food-drinks-picker-8",
-          "label": "Meal Prep: pack work snacks",
+          "label": "Pack pouch → portability → meal-prep",
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright office break room, two hands slide a snack pouch into an open lunch tote beside fruit, ending with the package front visible above the zipper. Natural daylight, relaxed day-in-the-life phone-video look. Waist-level close-up with a gentle push-in. Sound: pouch crinkle and zipper; no music.",
           "chips": [
             "recipe"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q17-ind-food-drinks-example-pasta",
+          "label": "Drizzle sauce → serving → recipe",
+          "prompt": "Use the uploaded photo as the sauce bottle and keep its shape, color and label area exactly. An adult hand drizzles the sauce over a plate of rigatoni, ending with the bottle beside the finished serving. Warm kitchen light, clean recipe-demo look. Three-quarter close-up with one slow push-in. Sound: sauce pour and plate movement; no music.",
+          "chips": [
+            "recipe"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k5-lifestyle-photos-strip-3",
+          "label": "Sip tea → usage → taste",
+          "prompt": "Use the uploaded photo as the iced tea can and keep its shape, color and label area exactly. An adult takes one sip at a cafe table, looks toward the camera, and ends with the can beside the glass. Warm window light, candid taste-test look. Chest-up handheld framing with slight sway. Sound: sip, can set-down and room tone; no music.",
+          "chips": [
+            "taste"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k3-video-case-citrus-photo",
+          "label": "Pour drink → fizz → discovery",
+          "prompt": "Use the uploaded photo as the sparkling drink can and keep its shape, color and label area exactly. A hand opens the can and pours once over ice, ending with the fizz and can centered. Bright daylight, energetic phone-video look. Tight tabletop close-up with one quick tilt. Sound: tab snap, pour and ice clink; no music.",
+          "chips": [
+            "hook"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q17-ind-food-drinks-example-lunch",
+          "label": "Pack pouch → lunch-fit → routine",
+          "prompt": "Use the uploaded photo as the snack pouch and keep its shape, color and label area exactly. Adult hands slide it into an open lunch tote beside fruit, ending with the package front visible above the zipper. Natural office daylight, relaxed day-in-the-life look. Waist-level close-up with a gentle push-in. Sound: pouch crinkle and zipper; no music.",
+          "chips": [
+            "routine"
           ],
           "kind": "video"
         }
@@ -382,15 +426,15 @@
     ],
     "outputs": [
       {
-        "ref": "f:q17-ind-food-drinks-output-0",
-        "frame": "16:9",
-        "label": "Protein drink mixed beside the tub",
+        "ref": "n:guide:f8-food-output-snack-pouch-matched-r1",
+        "frame": "1:1",
+        "label": "Green snack pouch beside a glass lunch container",
         "length": 6
       },
       {
-        "ref": "f:k7-ind-food-drinks-outputs-1-ref-f-food-video-t13",
-        "frame": "16:9",
-        "label": "Citrus drink bottle beside a glass",
+        "ref": "n:guide:f8-food-output-snack-box-r1",
+        "frame": "1:1",
+        "label": "Snack box beside a latte",
         "length": 10
       }
     ],

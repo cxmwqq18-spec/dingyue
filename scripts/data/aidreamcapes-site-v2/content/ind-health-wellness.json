@@ -20,15 +20,19 @@
   "ideas": [
     {
       "t": "Creator-style photos",
-      "d": "Handheld-looking images of someone holding a protein powder pouch or a tin of loose-leaf tea feel at home in Instagram and TikTok feeds."
+      "d": "Handheld-looking images of someone holding a protein powder pouch or a tin of loose-leaf tea feel at home in Instagram and TikTok feeds. [Creator-Style Photo](/ai-image-generation/ugc-still-ad) keeps a supplement, bottle, or tool in a casual hand-held frame."
     },
     {
       "t": "Active scenes",
-      "d": "Show a yoga mat unrolled in a sunlit studio, a water bottle on a hiking trail, or a massage gun on a gym bench. Choose settings that look like your real customer's life."
+      "d": "Show a yoga mat unrolled in a sunlit studio, a water bottle on a hiking trail, or a massage gun on a gym bench. Choose settings that look like your real customer's life. [Lifestyle Photos](/ai-image-generation/lifestyle-scene) place the product in the routine without claiming a result. [Product Videos](/ai-video-generation/product-video) can show one pour, stretch, or pack-away action, while [How-To Video](/ai-video-generation/how-to-video) is useful when the routine needs a visible sequence."
     },
     {
       "t": "Wind-down moments",
-      "d": "Lavender pillow spray on a nightstand, a weighted eye mask on a duvet, or a bath soak beside the tub give you calm evening visuals for posts and your product gallery."
+      "d": "Lavender pillow spray on a nightstand, a weighted eye mask on a duvet, or a bath soak beside the tub give you calm evening visuals for posts and your product gallery. [Product Videos](/ai-video-generation/product-video) can show one pour, stretch, or pack-away action. [Close-Up Details](/ai-image-generation/macro-details) keeps powder, fabric, and tool texture easy to inspect."
+    },
+    {
+      "t": "Choose the placement",
+      "d": "For distribution, compare [Instagram ads](/platforms/instagram-ads), [TikTok ads](/platforms/tiktok-ads), [Amazon product photos](/platforms/amazon-product-photos), and [Shopify product photos](/platforms/shopify-product-photos) before you prepare a final crop."
     }
   ],
   "faq": [
@@ -120,6 +124,10 @@
         "d": "A casual hand, kitchen counter, gym bench, or bedside crop can fit a social feed without presenting a result claim."
       },
       {
+        "t": "Routine context",
+        "d": "Place the bottle, mat, or mask in one repeatable routine frame that a shopper can recognize."
+      },
+      {
         "t": "Short product moments",
         "d": "Use 9:16, 1:1, or 16:9, with 4:3 and 3:4 available for other crops, for a 6-, 10-, or 15-second clip built around one placement or movement."
       },
@@ -181,7 +189,7 @@
         "label": "Daily routines",
         "items": [
           {
-            "ref": "n:gen2:ind-health-wellness-g1",
+            "ref": "n:guide:f8-wellness-example-yoga-mat-roller-r1",
             "title": "Active setup: Yoga mat and roller before class",
             "kind": "photo",
             "product": "yoga mat and foam roller"
@@ -262,7 +270,7 @@
       "cards": [
         {
           "ref": "n:guide:k7-ind-health-wellness-picker-cards-0-cork-block",
-          "label": "Macro detail: Cork grain in focus",
+          "label": "Show grain → texture → listing",
           "prompt": "Show the natural cork grain and full square edge of the yoga block against a clean neutral surface.",
           "chips": [
             "movement"
@@ -271,7 +279,7 @@
         },
         {
           "ref": "n:guide:q16-wellness-face-mist",
-          "label": "First-use reaction: Face mist after class",
+          "label": "Mist face → scale → social-post",
           "prompt": "Show an adult holding a plain face mist beside her face after a workout, with a fine spray visible in soft gym light.",
           "chips": [
             "movement"
@@ -280,7 +288,7 @@
         },
         {
           "ref": "n:guide:k7-ind-health-wellness-picker-cards-2-ref-n-gen2-ind-beauty-skincare-c2",
-          "label": "Texture macro: Clay mask and towels",
+          "label": "Open mask → texture → routine-listing",
           "prompt": "Show the open clay mask jar and its creamy texture beside folded towels in soft bathroom light.",
           "chips": [
             "routine"
@@ -289,7 +297,7 @@
         },
         {
           "ref": "n:guide:q16-wellness-tea-pour-closeup",
-          "label": "Morning ritual: Tea before work",
+          "label": "Pour tea → serving → morning-post",
           "prompt": "Hands pour hot water into a ceramic mug beside a tea tin on a bright kitchen counter.",
           "chips": [
             "routine"
@@ -298,7 +306,7 @@
         },
         {
           "ref": "n:guide:q16-wellness-tea-unbox",
-          "label": "ASMR unboxing: Tea kit reveal",
+          "label": "Lift tin → contents → unboxing",
           "prompt": "Show hands lifting a plain tea tin from tissue in a simple gift box on a kitchen table.",
           "chips": [
             "selfcare"
@@ -307,7 +315,7 @@
         },
         {
           "ref": "n:guide:q16-wellness-lip-balm",
-          "label": "GRWM: Lip balm before heading out",
+          "label": "Apply balm → tube → get-ready",
           "prompt": "Show an adult applying a plain lip balm before leaving home; keep the tube clear beside a bright mirror in soft morning light.",
           "chips": [
             "selfcare"
@@ -315,18 +323,54 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q16-wellness-tea-sip-evening",
-          "label": "Wind-down: Herbal tea at dusk",
-          "prompt": "Show an adult holding a warm mug of herbal tea beside a softly lit evening window.",
+          "ref": "n:guide:f8-wellness-picker-quiet-man-r1",
+          "label": "Warm mug → ritual → bedtime",
+          "prompt": "Show a middle-aged Black man warming both hands around a plain ceramic mug beside a small unbranded tea tin at a bedside table. Keep the mug and tin visible in a calm evening routine, with no health claims. Warm lamp light, quiet lifestyle photo.",
           "chips": [
             "quiet"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q16-wellness-sleep-mask",
-          "label": "Night routine: Sleep mask at bedtime",
-          "prompt": "Show an adult lowering a soft sleep mask over her eyes in a calm bedroom with warm bedside light.",
+          "ref": "n:guide:f8-wellness-picker-quiet-hands-r1",
+          "label": "Lower mask → fabric → night-routine",
+          "prompt": "Show only adult hands lowering a plain charcoal sleep mask onto folded linen on a bedside table. Keep the mask fabric and elastic strap fully visible; no face or body in frame and no health claims. Warm bedside light, quiet night-routine photo.",
+          "chips": [
+            "quiet"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q5-life-fitness-supplement",
+          "label": "Sip shaker → package → workout",
+          "prompt": "Show an adult taking one sip from a plain shaker bottle after a workout, with the supplement pouch resting beside the gym bag. Keep the package shape clear and avoid health-result claims. Natural gym daylight, candid creator-style photo, hands and product in focus.",
+          "chips": [
+            "movement"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q9-head-supplement-spokesperson",
+          "label": "Hold bottle → label → product-page",
+          "prompt": "Show an adult presenter holding a plain supplement bottle beside their face in a bright home gym. Keep the cap, bottle shape and blank label area visible; show a routine moment without medical claims. Natural window light, straightforward creator-style photo.",
+          "chips": [
+            "routine"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k5-home-picker-cards-4-image",
+          "label": "Roll face → handle → self-care",
+          "prompt": "Show an adult using a plain jade face roller along one cheek beside a bright bathroom mirror. Keep the roller texture and handle visible, with natural skin texture and no transformation claim. Soft morning light, close creator-style photo.",
+          "chips": [
+            "selfcare"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f8-wellness-tea-hands-r1",
+          "label": "Warm mug → tea-tin → quiet-routine",
+          "prompt": "Show adult hands warming around a plain ceramic mug beside a small unbranded tea tin on a bedside table. Keep the cup and tin visible; no face or body in frame and no health claims. Warm lamp light, quiet evening lifestyle photo.",
           "chips": [
             "quiet"
           ],
@@ -376,14 +420,14 @@
       }
     ],
     "after": {
-      "ref": "n:gen2:ind-health-wellness-g3",
+      "ref": "n:guide:f8-wellness-after-cork-block-r1",
       "zones": [
-        "Fabric",
-        "Fit"
+        "Cork grain",
+        "Edge profile"
       ],
       "items": [
-        "Check the mask fabric, color, strap and stitching against the real product.",
-        "Add care instructions in text so customers can read them without zooming in."
+        "Check the cork grain, color, edges, and corners against the real block.",
+        "Add care instructions and product dimensions in text so customers can read them clearly."
       ]
     },
     "titles": {

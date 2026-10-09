@@ -14,7 +14,13 @@
   ],
   "intro": [
     "Think of this as a short brand film with your product as the star. Our sample puts a matte black speaker on a stone block while pale light falls through tall windows and a mountain view fades into dusk, all with a slow camera move.",
-    "The look suits products where design matters as much as specs: speakers, headphones, watches, perfume bottles, lamps. Use the clip to open a launch, run it as a YouTube Shorts ad, or set it as the video banner at the top of your store. AIVideosUGC doesn't add a soundtrack, so pair the clip with a music track before it goes out."
+    "The look suits products where design matters as much as specs: speakers, headphones, watches, perfume bottles, lamps. Use the clip to open a launch, run it as a YouTube Shorts ad, or set it as the video banner at the top of your store. AIVideosUGC doesn't add a soundtrack, so pair the clip with a music track before it goes out.",
+    "A cinematic product clip is still a product demonstration: the viewer should see the same compact speaker, its grille, and the control detail that makes the shot useful. Start from a clean source photo, choose one cool or warm light direction, and make one slow push or side reveal. End with the speaker held in a composed frame that leaves room for an editable headline.",
+    "Use the format when a store hero, YouTube placement, or wide product page needs atmosphere without losing physical accuracy. Describe the surface, the visible feature, and the final camera position rather than asking for several unrelated moves. The generated frame should contain no title, logo, or baked-in claim; add the product name and headline in the editor where they can be revised.",
+    "Check the result at its final 16:9 crop and compare the speaker silhouette with the uploaded photo. Look for preserved controls, edges, and material detail before you publish the clip. If you also need a vertical version, make a separate crop or run with a 9:16 composition so the product remains complete instead of being cut by a wide frame.",
+    "Keep the cinematic idea narrow enough to protect the product. One surface, one light direction, and one controlled camera path can reveal a grille, crown, edge, or finish. If the scene asks for several moves, the product may lose its outline before the final frame.",
+    "Match the ratio to the placement. A [product video](/ai-video-generation/product-video) can carry a wide listing demonstration, [YouTube Shorts ads](/platforms/youtube-shorts-ads) need a vertical version, and [TikTok ads](/platforms/tiktok-ads) or [Instagram ads](/platforms/instagram-ads) benefit from a mobile-first crop. Keep the same source photo when the product stays unchanged.",
+    "Use [commercial lighting](/ai-image-generation/commercial-lighting) when the main need is a controlled still, and try a [promo video](/ai-video-generation/promo-video) or [retargeting video ad](/ai-video-generation/retargeting-video-ad) when the scene needs a clearer sales moment. The [ad sizes guide](/guides/ad-sizes-by-platform) gives the frame context before you prepare the final export."
   ],
   "tip": "Name one light source and one surface, such as \"cool light from a tall window, dark stone plinth,\" so the scene stays simple and the product stays in focus.",
   "steps": [
@@ -78,6 +84,30 @@
     {
       "q": "What video size suits a cinematic product video?",
       "a": "Use 16:9 for a wide site hero or YouTube placement, 9:16 for mobile feeds, and 1:1 for square feeds."
+    },
+    {
+      "q": "Which ratio should a cinematic product clip use?",
+      "a": "16:9 suits a website hero or YouTube; choose 9:16 for TikTok and Reels. Both can be made from the same source photo."
+    },
+    {
+      "q": "How much does a cinematic clip cost?",
+      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits, displayed before you run it."
+    },
+    {
+      "q": "Can the video add moody lighting to a plain photo?",
+      "a": "Yes. Describe the light direction and mood; after generation, check the product outline and color frame by frame, and rerun if either is wrong."
+    },
+    {
+      "q": "Can I show a 360-degree product reveal?",
+      "a": "Yes. Ask for front, side, and rear angles on a slow turntable, then check that each angle still matches your product photo."
+    },
+    {
+      "q": "What should I do if a frame changes the product outline?",
+      "a": "Pause the preview, compare the frame with your source photo, and rerun with clearer shape and proportion details before publishing."
+    },
+    {
+      "q": "Can viewers understand a cinematic clip with sound off?",
+      "a": "Yes. Keep the action visually clear and add the product name or short cue as editable text after download."
     }
   ],
   "overview": [
@@ -223,7 +253,7 @@
       "sourceAlt": "Compact black speaker photographed alone on a dark display plinth.",
       "sourceTitle": "Product photo",
       "sourceHint": "Keep the product silhouette crisp against its background.",
-      "result": "n:q10-film-steps-result",
+      "result": "n:guide:f14-film-steps-result-r2",
       "options": [
         [
           "Size",
@@ -239,8 +269,9 @@
         ]
       ],
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Light this compact black speaker with cool window light and make one slow camera move toward its grille. End with the top controls centered above the speaker’s woven grille. Sound: quiet room tone; no music.",
-      "mode": "video"
+      "prompt": "Use the uploaded photo as the product and keep its rounded pebble shape, black matte body, angled woven grille, and proportions exactly. In a dark modern room, cool window light makes one slow highlight move across this same speaker on a stone sideboard. High-end cinematic product-film frame, 16:9 landscape, no text or logos.",
+      "mode": "video",
+      "resultAlt": "The same rounded pebble speaker catches a cool cinematic highlight."
     },
     "picker": {
       "title": "Choose a cinematic product-video treatment",
@@ -265,21 +296,22 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:c1-tpl-film-picker-perfume-metal-round-square",
-          "label": "Cinematic Reveal: Perfume on dark water",
+          "ref": "n:guide:k1-product-videos-picker-laptop-sleeve",
+          "label": "Texture Macro: Laptop Sleeve",
           "chips": [
-            "cinematic"
+            "cinematic",
+            "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On dark rippling water, the rounded metal fragrance bottle turns slowly as a narrow highlight crosses its cap, ending with the bottle centered and still. Cinematic product-ad look, deep bronze reflections. Low close-up with one slow orbit. Low-key warm side light. Sound: quiet water ripple, soft cap touch; no music.",
+          "prompt": "Use the uploaded photo as a plain charcoal laptop sleeve and keep its fabric, zipper and stitched edge visible. Adult hands open the sleeve and slide a laptop halfway inside as a narrow side light reveals the texture. Cinematic detail-ad look, macro side angle with one slow slide, no text or logos. Sound: zipper glide and fabric movement; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:q10-film-picker-2",
-          "label": "Car Selfie Review: Vitamin C serum",
+          "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g4",
+          "label": "Creator Review: Canvas Crossbody Bag",
           "chips": [
             "talking"
           ],
-          "prompt": "Use the uploaded photo as the vitamin C serum and preserve its shape, color, and label area. In a parked car in soft daylight, an adult creator holds the bottle beside their face, looks directly into camera and says, “I keep this step simple before work.” Keep the face, moving mouth, and product visible in a front-facing chest-up selfie frame. End with the serum held steady beside the creator’s face, pump visible. Sound: spoken line and quiet car ambience; no music.",
+          "prompt": "Use the uploaded photo as a plain tan canvas crossbody bag and keep its strap, body and seams visible. An adult presenter holds it at chest height in a softly lit room and explains the fit to camera. Talking-head product review, square framing, no text or logos. Sound: spoken review and room tone; no music.",
           "kind": "video"
         },
         {
@@ -292,48 +324,50 @@
           "kind": "video"
         },
         {
-          "ref": "n:q10-film-picker-4",
-          "label": "Taste Test: Protein shake after training",
+          "ref": "f:k7-ind-home-living-step-result-lamp-glow",
+          "label": "In-Use Demo: Lamp Switch-On",
           "chips": [
             "inuse"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright gym lounge, an adult finishes mixing a plain protein shake, takes one sip and nods, ending with the shaker and unbranded powder tub in frame. Natural cinematic fitness-ad look, soft overhead light. Chest-up handheld shot with a gentle push-in. Sound: shaker rattle, sip, gym room tone; no music.",
+          "prompt": "Use the uploaded photo as a plain white table lamp and keep its shade, stem and base visible. An adult hand switches it on beside an open book, ending with the warm pool of light and lamp fully in frame. Cinematic home-product demo, square framing, no text or logos. Sound: switch click and room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:q10-film-picker-5",
           "label": "Texture Macro: Wallet stitching",
           "chips": [
-            "texture"
+            "texture",
+            "cinematic"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and stitching exactly. In soft side light, adult hands open the leather wallet and draw one plain card halfway out, ending on the stitched slots in crisp focus. Cinematic detail-ad look, warm neutral tones. Macro side angle with one slow slide. Sound: leather flex, card glide; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:q10-film-picker-6",
-          "label": "Texture Macro: Gold earring clasp",
+          "ref": "n:guide:f14-r10-film-360-multi-angle",
+          "label": "360 Reveal: Black Speaker Angles",
           "chips": [
+            "cinematic",
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and metal finish exactly. At a softly lit vanity, an adult hand fastens a plain gold hoop earring and turns slightly so the clasp catches the light, ending in sharp focus. Cinematic jewelry-ad look, warm side light. Macro close-up with one slow slide. Sound: clasp click, quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as a plain rounded black portable speaker and keep its woven grille, side curve and rear controls visible. Show a 360-degree multi-angle reveal on a low turntable, presenting front, side and rear views with one controlled highlight. Cinematic product-film look, square framing, no text or logos. Sound: quiet turntable hum and room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-limited-drop-alert-video-c1",
-          "label": "Cinematic Reveal: Neutral sneaker spotlight",
+          "ref": "f:k3-video-picker-coffee-grinder",
+          "label": "In-Use Demo: Coffee Grinder Turn",
           "chips": [
-            "cinematic"
+            "inuse"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and panels exactly. On a dark concrete plinth, the neutral sneaker rotates a quarter turn as a narrow spotlight sweeps from heel to toe, ending in a clean side profile. Cinematic footwear-ad look, crisp shadow. Low close-up with one slow orbit. Narrow spotlight with a crisp edge. Sound: soft platform scrape, studio room tone; no music.",
+          "prompt": "Use the uploaded photo as a compact plain metal coffee grinder and keep its handle and body visible. An adult hand turns the handle beside a ceramic cup on a bright counter, ending with the grinder and cup in clear focus. Cinematic hands-on demo, square framing, no text or logos. Sound: handle clicks and room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:q10-film-picker-8",
-          "label": "GRWM: Tinted lip balm before work",
+          "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g3",
+          "label": "Creator Review: Snack Pouch",
           "chips": [
             "talking"
           ],
-          "prompt": "Use the uploaded photo as the tinted lip balm and preserve its shape and color. In a bright bathroom, an adult creator applies the balm, holds it beside their face, looks directly into camera and says, “This is the last step before I head out.” One adult face only, visible moving mouth, chest-up framing. Diffused bathroom window light. End with the lip tint beside the finished shade in the bathroom mirror. Sound: cap click and room tone; no music.",
+          "prompt": "Use the uploaded photo as a plain snack pouch and keep its shape and blank front panel visible. An adult presenter holds it at chest height in a bright kitchen while describing the first impression to camera. Talking product review, square framing, no text or logos. Sound: spoken review and room tone; no music.",
           "kind": "video"
         }
       ],
@@ -382,7 +416,7 @@
       }
     ],
     "after": {
-      "ref": "n:q10-film-after",
+      "ref": "n:guide:c1-tpl-film-reuse-strip5-wide",
       "zones": [
         "Headline",
         "Product name"

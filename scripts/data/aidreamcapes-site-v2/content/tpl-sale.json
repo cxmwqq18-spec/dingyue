@@ -12,8 +12,14 @@
     "winter clearance banner"
   ],
   "intro": [
-    "The example shows a sage green puffer jacket worn in a snowy mountain valley, with a wooden fence and a chalet nearby. The upper left is open sky, the natural place for a sale headline.",
-    "A sale image has two jobs: show the product and give the offer a clean place to sit. This handles the first and leaves room for the second, because you'll add the percentage, dates, and code yourself in Canva, where every number stays exact. Use it for Black Friday, end-of-season clearance, and holiday promotions on Facebook and Instagram."
+    "The example shows a blue hard-shell suitcase beside a pale wall and a small leafy plant, with all wheels visible. The open wall space is the natural place for a sale headline and dates.",
+    "A sale image has two jobs: show the product and give the offer a clean place to sit. This handles the first and leaves room for the second, because you'll add the percentage, dates, and code yourself in Canva, where every number stays exact. Use it for Black Friday, end-of-season clearance, and holiday promotions on Facebook and Instagram.",
+    "A sale image needs a clean product view and a deliberate place for the offer. A suitcase beside an open wall, a cutting board on a pale counter, or a complete skincare item on a quiet vanity gives the editor space for a discount without hiding the product. Keep the whole silhouette, handles, wheels, and important edges inside the frame before you add campaign text.",
+    "Use the template for a feed tile, a product-page promotion, or a seasonal clearance message. Describe the product, the light, and the empty area where the offer will sit; then add the percentage, dates, code, and legal wording in your editor. Separating the offer from the generated scene lets you update the price when stock changes and keeps numbers accurate.",
+    "Before the ad goes live, compare the color and model in the image with the product page and inventory. Check that the square crop still shows the full item and that any 9:16 adaptation leaves room for the platform interface. Remove the discount layer when the sale ends, and keep the product image only when the same product and destination remain available.",
+    "Plan the offer around the product evidence a shopper needs. For a suitcase, show the wheels and handle; for a cutting board, show the usable surface; for a skincare item, keep the cap and applicator visible. This gives the sale image a clear job before the seasonal props enter the frame.",
+    "Use the finished tile only when the destination matches the item shown. For channel guidance, compare [Facebook ad formats](/platforms/facebook-ads), [Instagram ad formats](/platforms/instagram-ads), and the [ad size guide](/guides/ad-sizes-by-platform) before adapting the crop.",
+    "For a larger campaign, pair this still with a [feed ad photo](/ai-image-generation/feed-ad-still), a [lifestyle scene](/ai-image-generation/lifestyle-scene), or a [white background photo](/ai-image-generation/ecommerce-main-image). Use the [sale discount occasion](/occasions/sale-discount), [Black Friday occasion](/occasions/black-friday), and [testing ad versions guide](/guides/testing-ad-versions) to keep the offer and destination consistent."
   ],
   "tip": "Say where you want the empty space, for example \"open sky across the left third,\" so your offer text has a calm area to sit on.",
   "steps": [
@@ -77,6 +83,30 @@
     {
       "q": "Can I make a sale banner in a vertical format?",
       "a": "The sale template produces a square image by default. Add a 9:16 canvas in your design tool after download if you need a Story or Reel placement."
+    },
+    {
+      "q": "Which placements fit the square sale image?",
+      "a": "The 1:1 image fits Facebook and Instagram feeds; place it on a 9:16 canvas for Stories and Reels."
+    },
+    {
+      "q": "Can I update the discount without a new photo?",
+      "a": "Yes. Since the offer is a separate text layer, change the percentage or dates on the same background image."
+    },
+    {
+      "q": "How many credits does a sale photo use?",
+      "a": "Each photo costs 24 credits and the charge is shown before you run it."
+    },
+    {
+      "q": "Where should I place a discount code?",
+      "a": "Put the code in the open area as an editable text layer, then check the full offer on a phone-sized preview."
+    },
+    {
+      "q": "How do I remove an expired promotion?",
+      "a": "Delete or replace the offer layer before reusing the image so an old date or code is never shown."
+    },
+    {
+      "q": "Can I use the sale image without an offer?",
+      "a": "Yes. Keep the clean product scene for a product-page image or add a different approved message later."
     }
   ],
   "overview": [
@@ -209,7 +239,7 @@
     ]
   },
   "visual": {
-    "overview": "Create sale product photos with room for the current offer, using a clear source and a scene that fits the item.",
+    "overview": "Create a sale product scene that keeps the full item visible while leaving a calm area for the offer added after download.",
     "strip": [
       "n:q10-sale-strip-1",
       "n:q10-sale-strip-2",
@@ -220,9 +250,9 @@
     ],
     "steps": {
       "source": "n:guide:tpl-sale-c3-m2-source",
-      "result": "n:q10-sale-steps-result",
+      "result": "n:guide:f14-sale-steps-result-r2",
       "mode": "photo",
-      "prompt": "Place this blue hard-shell suitcase beside a pale wall and a small leafy plant, with all wheels visible.",
+      "prompt": "Use the uploaded photo as the product and keep its blue color, horizontal ridges, handles, telescoping handle, and four wheels exactly. In a bright airport terminal, an adult pulls this same blue hard-shell suitcase past large windows, ending with the full suitcase visible in a clean frame. Natural travel-ad phone-video look, square 1:1, no text or logos.",
       "options": [
         [
           "Template",
@@ -236,7 +266,8 @@
           "Use",
           "Feed or product page"
         ]
-      ]
+      ],
+      "resultAlt": "Adult pulls the same blue hard-shell suitcase through a bright airport terminal."
     },
     "picker": {
       "title": "Choose the product for your sale photo",
@@ -261,39 +292,39 @@
       ],
       "cards": [
         {
-          "ref": "n:q10-sale-picker-1",
-          "label": "Sales Promo: Daypack on the go",
+          "ref": "n:guide:k6-tpl-ugc-picker-phone-case",
+          "label": "Offer Demo: Sage Phone Case",
           "chips": [
             "offer"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At an apartment doorway, an adult lifts the daypack from a hook, swings it onto one shoulder and turns toward the door, ending with the bag centered. Natural phone-video ad look, bright morning light. Chest-level handheld shot with a short follow move. Sound: strap rustle, door latch; no music.",
+          "prompt": "Use the uploaded photo as a plain sage phone case with one oval camera opening and no recognizable model. On a bright cafe table, an adult hand adjusts the case beside a coffee cup, leaving calm space for a sale offer added later. Natural product demo ad photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:q10-sale-picker-2",
-          "label": "Pack With Me: Backpack set",
+          "ref": "n:guide:k5-home-picker-cards-1-image",
+          "label": "Unboxing Offer: Mug Set",
           "chips": [
             "offer"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On an open suitcase at a bright hotel room, adult hands pack the backpack and a plain packing cube together, ending with both items visible beside the closed case. Natural travel-ad phone-video look. Overhead handheld shot with a slow push-in. Diffused hotel-room daylight. Sound: zipper, fabric movement; no music.",
+          "prompt": "Use the uploaded photo as a plain ceramic mug set and keep each handle visible. Adult hands lift the mugs from a kraft gift box with paper filling, leaving clear space for a seasonal offer. Natural unboxing ad photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:q10-sale-picker-3",
-          "label": "Try-On Deal: Canvas tote market run",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-5-image",
+          "label": "Try-On Deal: Silk Scarf",
           "chips": [
             "style"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Outside a neighborhood market, an adult slips the linen tote over one shoulder, places a paper-wrapped loaf inside and walks toward the entrance, ending with the tote in view. Natural lifestyle-ad phone-video look, soft midday light. Waist-up handheld follow shot with a gentle pan. Sound: footsteps, paper rustle, street ambience; no music.",
+          "prompt": "Use the uploaded photo as a plain silk scarf and keep its fabric and muted pattern visible. The scarf is knotted on a handbag handle during a bright outdoor walk, with clean space for a seasonal offer. Natural style ad photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:q10-sale-picker-4",
-          "label": "Pet Grooming: Brush a dog",
+          "ref": "n:guide:k5-lifestyle-photos-strip-1",
+          "label": "Hands-On Demo: Coffee Grinder",
           "chips": [
             "hands"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny home, an adult gently brushes a calm dog with an unbranded grooming kit and sets the brush beside the dog, ending with the tool and coat in view. Natural pet-product phone-video look. Floor-level handheld medium close-up with a slow push-in. Soft window light. Sound: brush through fur, collar jingle, room ambience; no music.",
+          "prompt": "Use the uploaded photo as a plain hand coffee grinder and keep its handle and body visible. Adult hands set the grinder on a bright morning counter beside a mug, leaving clean space for an offer. Natural hands-on product ad photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
@@ -310,18 +341,20 @@
           "ref": "n:q10-sale-picker-6",
           "label": "Taste Test: Protein shake after training",
           "chips": [
-            "creator"
+            "creator",
+            "hands"
           ],
           "prompt": "Use the uploaded photo as the protein drink and preserve its container and color. After a workout, an adult takes one sip, reacts naturally to the taste, and holds the drink toward camera. Creator-style taste-test ad, medium close-up, natural gym light; no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:q10-sale-picker-7",
-          "label": "Outfit Transition: Jacket snap-change",
+          "ref": "n:guide:k5-model-photos-strip-0",
+          "label": "Outfit Offer: Gray Hoodie Walk",
           "chips": [
-            "style"
+            "style",
+            "offer"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult steps into the jacket and turns once to show its fit, ending facing the lens with open space beside them for an offer added later. Natural fashion-ad phone-video look, soft daylight. Full-body tripod framing with one quick snap pan. End front-facing with the jacket fastened and its full fit visible. Sound: jacket rustle, footsteps; no music.",
+          "prompt": "Use the uploaded photo as a plain gray hoodie and keep its hood, fabric, and relaxed fit visible. An adult man walks away along a tree-lined city street so the outfit reads clearly from the back, leaving open space for an offer added later. Natural fashion-ad photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
@@ -367,18 +400,25 @@
     ],
     "outputs": [
       {
-        "ref": "n:q10-sale-outputs-1",
+        "ref": "n:guide:tpl-beauty-round4-sunscreen-tube",
         "frame": "1:1",
-        "label": "White-background sunscreen bottle with full silhouette"
+        "label": "White-background sunscreen tube with full silhouette"
       },
       {
-        "ref": "n:q10-sale-outputs-2-r2",
+        "ref": "n:guide:q14-retarget-strip-board",
         "frame": "1:1",
-        "label": "White sunscreen tube in a poolside scene"
+        "label": "Oiled cutting board in a sale-ready kitchen scene"
       }
     ],
     "after": {
-      "ref": "n:q10-sale-after",
+      "ref": "n:guide:tpl-sale-c3-m2-result",
+      "mock": {
+        "type": "limited",
+        "badge": "SALE",
+        "countdown": "40% OFF",
+        "caption": "3 days only",
+        "cta": "Shop now"
+      },
       "zones": [
         "Offer",
         "End date"

@@ -248,97 +248,160 @@
       ]
     },
     "picker": {
-      "title": "Choose a product for the sale creative",
-      "lead": "Pick a category and leave space for the offer details you will add later.",
+      "title": "Choose a sale ad moment",
+      "lead": "Use limited-time discount scenes for the offer launch and offer-reminder scenes when the end date is approaching.",
       "chips": [
         {
-          "id": "review",
-          "label": "Creator Review"
+          "id": "limited-time-discount",
+          "label": "Limited-Time Discount"
         },
         {
-          "id": "unbox",
-          "label": "ASMR Unboxing"
+          "id": "offer-reminder",
+          "label": "Offer Reminder"
         },
         {
-          "id": "routine",
-          "label": "GRWM Routine"
+          "id": "final-hours",
+          "label": "Final Hours"
         },
         {
-          "id": "demo",
-          "label": "Product Demo"
+          "id": "bundle-offer",
+          "label": "Bundle Offer"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:q20-occ-sale-discount-card-01-r2",
-          "label": "Creator Review: Running tights fit check",
+          "label": "Discount: Running tights fit check",
           "chips": [
-            "review"
+            "limited-time-discount"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitting area, an adult creator shows the waistband and turns a quarter turn toward camera. An adult creator looks into the camera and says, “Here is the waistband and full length in daylight.”. Natural creator-shot UGC with realistic skin under even fitting-room light. Close framing with one gentle push-in. End front-facing with the waistband centered and fabric smooth at the hip. Sound: clear speech and fabric movement; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-sale-discount-card-02",
-          "label": "Creator Review: Dog treat seal check",
+          "label": "Discount: Dog treat seal check",
           "chips": [
-            "review"
+            "limited-time-discount"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At home beside a calm dog, an adult owner holds a plain pouch and presses its seal once. An adult creator looks into the camera and says, “The pouch closes with one quick press.”. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with the pressed-closed pouch beside the calm dog, seal edge facing camera. Sound: clear speech and one pouch click; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-sale-discount-card-03",
-          "label": "ASMR Unboxing: Gold necklace from box",
+          "label": "Reminder: Gold necklace from box",
           "chips": [
-            "unbox"
+            "offer-reminder"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright dressing table, adult hands lift a simple necklace from a small gift box into window light. Natural creator-shot UGC with realistic skin under soft dressing-table window light. Close framing with one gentle push-in. End with the necklace laid clearly across the open tissue. Sound: lid click and tissue rustle; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-sale-discount-card-04",
-          "label": "ASMR Unboxing: Wireless charger revealed",
+          "label": "Reminder: Wireless charger revealed",
           "chips": [
-            "unbox"
+            "offer-reminder"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean desk, adult hands lift a compact matte charger from a plain box and place it by a generic phone. Natural creator-shot UGC with realistic skin under broad desk-side window light. Close framing with one gentle push-in. End with the charger beside the phone, both resting flat on the desk. Sound: cardboard rustle and a placement tap; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-sale-discount-card-05-r2",
-          "label": "GRWM: Eyeliner before an evening out",
+          "label": "Final Hours: Eyeliner evening look",
           "chips": [
-            "routine"
+            "final-hours"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult creator applies one eyeliner stroke, then holds the pencil by her cheek. An adult creator looks into the camera and says, “This is the last detail before I head out.”. Natural creator-shot UGC with realistic skin under balanced vanity-bulb light. Close framing with one gentle push-in. End with the pencil beside the finished eyeliner line. Sound: cap click and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-sale-discount-card-06-r2",
-          "label": "GRWM: Trail shoes for a walk",
+          "label": "Final Hours: Trail shoes on walk",
           "chips": [
-            "routine"
+            "final-hours"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright entry bench, an adult runner ties the shoes and stands to show the full pair. An adult creator looks into the camera and says, “Ready for the walk.”. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the tied trail shoes planted in a clear side view. Sound: lace pull, footsteps and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q20-occ-sale-discount-card-07",
-          "label": "Product Demo: Pet roller clears hair",
+          "ref": "n:guide:f13-r10-occ-sale-discount-bowl",
+          "label": "Discount: Serving bowl on dinner table",
           "chips": [
-            "demo"
+            "limited-time-discount"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a dark coat, an adult rolls the reusable tool once over pet hair to leave a clean strip. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with the roller at the clean fabric stripe, loose hair visible nearby. Sound: roller pass and fabric rustle; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a bright dining table, adult hands slide the plain cream serving bowl into place for a limited-time sale scene. Natural creator-shot UGC with soft daylight. Close framing with the bowl fully visible and clear space above for a later price and end-date layer. Sound: ceramic placement and room tone; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-sale-discount-card-08",
-          "label": "Product Demo: Balm smooths onto hand",
+          "label": "Bundle Offer: Balm smooths onto hand",
           "chips": [
-            "demo"
+            "bundle-offer"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean vanity, an adult dispenses a small amount of balm and smooths it across the back of a hand. Natural creator-shot UGC with realistic skin under soft vanity lighting. Close framing with one gentle push-in. End with the balm container beside the smoothed hand. Sound: cap click and fingertip glide; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q20-occ-sale-gallery-01",
+          "label": "Discount: Quilted jacket from box",
+          "chips": [
+            "limited-time-discount"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a plain quilted jacket from a simple gift box and hold it open against a bright wall, leaving clean space above for the offer. Natural creator-shot UGC with soft daylight. Medium framing with one gentle push-in; end with the full jacket visible. Sound: tissue rustle and fabric movement; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q20-occ-sale-gallery-02",
+          "label": "Reminder: Black sunglasses at a cafe",
+          "chips": [
+            "offer-reminder"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult creator puts on the plain sunglasses and turns toward the camera, leaving open space beside the face for an offer reminder. Natural creator-shot UGC with warm daylight. Close framing with one gentle push-in; end with the glasses facing camera. Sound: light cafe ambience; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q20-occ-sale-gallery-03",
+          "label": "Final Hours: Candle lit at dinner",
+          "chips": [
+            "final-hours"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a dinner table, an adult hand lights the plain candle once and withdraws, leaving the jar and flame clear with quiet space above for a final-hours message. Warm natural light, realistic hand. Close framing with one gentle push-in; end on the lit candle. Sound: match strike and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-occ-sale-discount-card-09-r2",
+          "label": "Bundle Offer: Travel organizers opened",
+          "chips": [
+            "bundle-offer"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a neatly made bed, an adult creator opens a plain packing cube and toiletry pouch bundle, points to the zippers and holds both pieces side by side. Natural creator-shot UGC with soft daylight. Medium framing with one gentle push-in; end with both organizers visible and clear space above. Sound: zipper pulls and fabric rustle; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-sale-discount-picnic-blanket",
+          "label": "Reminder: Picnic blanket folded",
+          "chips": [
+            "offer-reminder"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a sunny park table, adult hands fold the plain checked picnic blanket into its carry strap for an offer reminder. Natural creator-shot UGC with soft daylight. Close framing with the blanket clear and quiet space at left for a later end-date layer. Sound: fabric movement and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-sale-discount-desk-lamp",
+          "label": "Final Hours: Desk lamp switched on",
+          "chips": [
+            "final-hours"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a tidy home office near dusk, an adult hand taps the plain brass desk lamp switch and lets the warm pool of light settle. Natural creator-shot UGC with realistic indoor light. Close framing with dark blank space above for a later final-hours layer. Sound: switch click and room tone; no music or added text.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-sale-discount-tea-bundle",
+          "label": "Bundle Offer: Travel Tea Set",
+          "chips": [
+            "bundle-offer"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. On a bright kitchen counter, adult hands arrange the plain ceramic travel mug and kraft tea pouch together as a bundle. Natural creator-shot UGC with soft window light. Close framing with both products fully visible and clear top space for a later bundle price layer. Sound: ceramic tap and paper rustle; no music or added text.",
           "kind": "photo"
         }
       ],
@@ -385,7 +448,7 @@
       }
     ],
     "after": {
-      "ref": "n:guide:q20-occ-sale-after",
+      "ref": "n:guide:occ-sale-discount-c3-m2-result",
       "zones": [
         "Offer",
         "End date"

@@ -582,7 +582,7 @@
     "plat-amazon": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q19-amz-hero-vitamin"
+        "image": "n:guide:c4-amazon-mug-main-white"
       },
       "gallery": [
         "n:guide:q19-amz-gallery-protein",
@@ -594,7 +594,7 @@
     "plat-shopify": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q19-shop-hero-serum"
+        "image": "n:guide:plat-shopify-c3-m2-source-angle"
       },
       "gallery": [
         "n:guide:q19-shop-gallery-planter-hand",

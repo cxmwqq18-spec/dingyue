@@ -1,7 +1,7 @@
 {
   "id": "plat-tiktok",
   "title": "AI TikTok Ads Generator for Product Videos | AIVideosUGC",
-  "description": "Use our AI TikTok ad generator to turn one product photo into a 9:16 ad of 6, 10, 15 or 30 seconds. See the credit cost up front and make your first ad today.",
+  "description": "Use our AI TikTok ad generator to turn one product photo into a 9:16 clip of 6, 10 or 15 seconds. See the credit cost up front and make your first ad today.",
   "h1": "AI TikTok Ads Generator for Small Online Shops",
   "eyebrow": "TikTok ads",
   "lead": "Use this AI TikTok ads generator to make a product clip for TikTok In-Feed ads. Describe the action, download the file, then add the caption and sound in TikTok or CapCut.",
@@ -13,25 +13,29 @@
     "9:16 product video ad"
   ],
   "intro": [
-    "On TikTok, people decide in a moment whether to watch or swipe, so your product needs to show up right away and look like it belongs in the feed. AIVideosUGC turns one product photo and a short description into a vertical video ad of 6, 10, 15 or 30 seconds. You might describe a hand lifting the product off a desk, a bottle on a gym bench, or a phone case catching the light, and the clip is built around that moment.",
+    "On TikTok, people decide in a moment whether to watch or swipe, so your product needs to show up right away and look like it belongs in the feed. AIVideosUGC turns one product photo and a short description into a vertical video ad of 6, 10 or 15 seconds. You might describe a hand lifting the product off a desk, a bottle on a gym bench, or a phone case catching the light, and the clip is built around that moment. For a trend or challenge, show one repeatable move; for spoken audio, keep the frame hands-only and add your narration after download; a creator version can use a face-to-camera explanation.",
     "It suits sellers trying their first TikTok ad and marketers who need a new angle every week without booking a shoot. Each video is made one at a time, with the credit cost shown before you start. Want a different opening? Run another version. Once you download the file, add captions, a sound and your offer in TikTok or CapCut, then upload it to TikTok Ads Manager."
   ],
   "specs": [
     [
-      "Shape",
-      "9:16 vertical, full screen"
+      "Recommended In-Feed shape",
+      "9:16 vertical · minimum 540×960"
     ],
     [
-      "Length",
-      "6, 10, 15 or 30 seconds"
+      "Other accepted In-Feed shapes",
+      "1:1 · minimum 640×640; 16:9 · minimum 960×540"
     ],
     [
-      "Other shapes",
-      "1:1 and 16:9 when you need them"
+      "Non-Spark upload limit",
+      "Up to 10 minutes · 500 MB"
     ],
     [
-      "Still images",
-      "Square by default"
+      "AIVideosUGC clip options",
+      "6, 10 or 15 seconds"
+    ],
+    [
+      "TikTok safe zone",
+      "Varies by shape, caption and add-ons; use the matching safe-zone file"
     ]
   ],
   "tips": [
@@ -58,8 +62,8 @@
       "a": "No. Download the file, then upload it in TikTok Ads Manager or the TikTok app. That's also where you can add captions and pick a sound."
     },
     {
-      "q": "How long should my TikTok ad be?",
-      "a": "There's no single right length. Six seconds suits one striking shot, while 15 seconds leaves room to show the product being used. Try more than one and compare."
+      "q": "How long can a TikTok In-Feed ad run?",
+      "a": "Non-Spark In-Feed ads can run up to 10 minutes. AIVideosUGC makes 6, 10 or 15-second clips, so check the format requirements and preview your creative before publishing."
     },
     {
       "q": "Does the video come with music?",
@@ -68,6 +72,14 @@
     {
       "q": "Do I need to label an AI-generated ad on TikTok?",
       "a": "TikTok’s AI-content labeling control can vary by creative and market. Apply the in-app label when Ads Manager marks it as required."
+    },
+    {
+      "q": "What product photo works best for a TikTok ad?",
+      "a": "Use a clear photo that shows the whole item and the part that will move, then describe one action and leave room around the edges for TikTok controls."
+    },
+    {
+      "q": "Where do I add captions, prices and offers?",
+      "a": "Add exact wording, prices and offers in TikTok, CapCut or another editor after download; the generated clip does not contain your final text or sound."
     }
   ],
   "overview": [
@@ -77,7 +89,23 @@
     },
     {
       "h2": "Match the file to the placement",
-      "d": "TikTok's In-Feed guide recommends 9:16 at 540×960 or larger for a vertical file; it also lists 1:1 at 640×640 and 16:9 at 960×540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB, while TikTok's ad format guide lists 5–60 seconds. AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15, and 30 second jobs, with the cost shown before you run each one. Treat those product choices as the source for the file you export, review [TikTok's In-Feed ad specs](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads) before launch."
+      "d": "TikTok's official In-Feed guide lists a 9:16 vertical file at a minimum 540×960, plus 1:1 at 640×640 and 16:9 at 960×540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB. AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, or 15 second jobs; those are our generator options, not TikTok upload limits. Keep key details clear of the interface and use the preview before publishing. The safe zone changes with the video shape, caption length and add-ons; choose the matching file in [TikTok's In-Feed ad specs](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads) and preview before publishing."
+    },
+    {
+      "h2": "Write a hook that earns the first swipe",
+      "d": "Put the product and the start of its action in the opening beat. A creator can lift a bottle beside their face, a hand can open a cable organizer, or a shoe can turn to reveal its tread. Describe one change only, keep the item fully inside the vertical crop, and finish with a still frame that lets the viewer recognize it before the interface overlays cover the bottom."
+    },
+    {
+      "h2": "Separate In-Feed creative from Spark post",
+      "d": "Use a non-Spark In-Feed upload when you are supplying the asset directly to an ad. Spark Ads use an existing TikTok post and account permissions, so prepare the post and authorization in TikTok rather than assuming a downloaded file becomes a Spark ad. In either case, check current upload requirements, safe zone, captions, and sound in Ads Manager before launch."
+    },
+    {
+      "h2": "Make the product readable with audio off",
+      "d": "A viewer may see the first seconds with audio muted. Show the hand, product, and outcome clearly enough that the action makes sense with the audio off, then add a concise caption in TikTok or CapCut. Avoid baking prices or claims into the generated frame; put exact offers in editable caption and headline fields where you can correct them."
+    },
+    {
+      "h2": "Choose a TikTok scene by job",
+      "d": "Use a trend-challenge frame when you want a repeatable move, a hands-only setup when you will record spoken audio later, or a creator frame when the seller should explain one feature to camera. These are visual starting points; add spoken audio, captions and sound in TikTok or CapCut after download."
     }
   ],
   "input_guide": {
@@ -198,10 +226,10 @@
         "label": "Product Details",
         "items": [
           {
-            "ref": "n:guide:k4-plat-tiktok-25-example-shoe",
-            "title": "Product Detail — Gray Running Shoe Tread",
+            "ref": "n:guide:k4-plat-tiktok-26-case-hair-claws",
+            "title": "Product Detail — Matte Hair Claw Clips",
             "kind": "photo",
-            "product": "gray running shoe"
+            "product": "matte hair claw clips"
           }
         ]
       }
@@ -224,11 +252,11 @@
     }
   ],
   "visual": {
-    "overview": "For TikTok In-Feed video ads, 9:16 vertical is the recommended shape; square 1:1 and horizontal 16:9 are also listed. Keep the product visible early and leave room for the app interface. [TikTok's current In-Feed ad specifications](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads?lang=en-GB) describe the placements and file requirements.",
+    "overview": "For TikTok In-Feed video ads, 9:16 vertical is recommended; 1:1 square and 16:9 horizontal files are also accepted at the listed minimum resolutions. Keep the product visible early and leave room around the interface. [TikTok's current In-Feed ad specifications](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads) describe the placements and file requirements.",
     "strip": [
       "f:k4-plat-tiktok-13-visual-strip-0",
       "f:how-to-tutorial-v",
-      "f:k4-plat-tiktok-14-visual-strip-2",
+      "n:guide:k4-plat-tiktok-24-example-bottle",
       "f:k4-plat-tiktok-15-visual-strip-3",
       "f:k4-plat-tiktok-16-visual-strip-4",
       "f:q18-tiktok-strip-protein-powder"
@@ -242,7 +270,7 @@
       "options": [
         [
           "Size",
-          "9:16 · TikTok & Reels"
+          "9:16 · TikTok In-Feed"
         ],
         [
           "Length",
@@ -269,18 +297,27 @@
         {
           "id": "proof",
           "label": "Product Demos"
+        },
+        {
+          "id": "trend",
+          "label": "Trend Challenges"
+        },
+        {
+          "id": "spoken",
+          "label": "Hands-Only Talk"
         }
       ],
       "cards": [
         {
-          "ref": "f:q18-tiktok-picker-speaker-review",
-          "label": "Review — Parked-Car Speaker",
+          "ref": "n:guide:f1-r10-tiktok-phone-case",
+          "label": "Phone Case — Creator Hook",
           "chips": [
             "creator",
-            "hook"
+            "hook",
+            "trend"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the rounded black woven speaker’s shape, finish, and proportions. In a parked car, an adult creator faces camera holding the speaker and says, “I bring this one on weekend walks.” End with the speaker beside the face. Soft daylight, candid phone-video look, chest-up front-facing framing with a gentle push-in. Sound: spoken line and quiet car ambience; no music.",
-          "kind": "video"
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain sage-green silicone phone case with one small circular camera opening. Show only the case in an adult hand over a bright desk; no bare phone back appears. Square creator hook, soft daylight, no text or logos."
         },
         {
           "ref": "f:q18-tiktok-picker-cable-organizer",
@@ -301,13 +338,14 @@
           "kind": "video"
         },
         {
-          "ref": "f:q18-tiktok-picker-protein-bar-review",
-          "label": "Taste Test — Protein Bar Review",
+          "ref": "n:guide:f1-r10-tiktok-creator-coffee-filter",
+          "label": "Creator Talk — Coffee Filter",
           "chips": [
-            "creator"
+            "creator",
+            "spoken"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the oat protein bar’s wrapper color, shape, and label area. At a sunny kitchen counter, an adult creator faces camera holding it and says, “That crunch is louder than I expected.” End with the bar in frame. Natural phone-video look, soft window light, front-facing chest-up shot with a small push-in. Sound: wrapper rustle, spoken line and kitchen room tone; no music.",
-          "kind": "video"
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. An adult creator with short curly hair faces camera while holding a plain reusable coffee filter at chest height and explaining one feature. Bright kitchen, natural expression, square creator frame, no text or logos."
         },
         {
           "ref": "f:q18-tiktok-picker-sneaker-detail",
@@ -337,13 +375,86 @@
           "kind": "video"
         },
         {
-          "ref": "f:q18-tiktok-picker-dog-brush",
-          "label": "Pet Demo — Golden Retriever Brush",
+          "ref": "n:guide:k1-product-videos-example-cutlery",
+          "label": "Drawer Organizer — Hands-On Proof",
           "chips": [
             "proof"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the black grooming brush’s shape and finish. On a living-room rug, an adult gently brushes a calm golden retriever’s coat in one smooth pass, ending with the brush and dog visible together. Soft afternoon window light, warm candid phone-video look, floor-level close-up with a small handheld drift. Sound: brush through fur and quiet home ambience; no music.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the divided drawer organizer shape and finish. Top-down adult hands place utensils into each compartment, ending with the tidy result easy to inspect. Bright kitchen light, square framing, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:c1-tpl-launch-picker-phonecase-oval-cutout-square",
+          "label": "Sage Phone Case — Snap-On Hook",
+          "chips": [
+            "hook",
+            "transition"
+          ],
+          "prompt": "Still square product photograph using the uploaded photo as the exact reference: adult hands turn a plain sage phone case over a clean desk and snap it onto a generic phone. Keep the single oval camera opening visible, with bright window light and no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:k8-spokesperson-gen2-tpl-ugc-g1",
+          "label": "Travel Cup — Creator Demo",
+          "chips": [
+            "creator"
+          ],
+          "prompt": "Still square creator photograph using the uploaded photo as the exact reference: an adult woman gently rotates a plain ceramic travel cup beside a train window, showing the lid and handle clearly. Soft morning light, natural handheld framing, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:k6-video-hub-frame-headphone-unbox",
+          "label": "Over-Ear Headphones — Unbox Hook",
+          "chips": [
+            "transition"
+          ],
+          "prompt": "Use the uploaded photo as the exact product reference. Adult hands lift the plain dark over-ear headphones from an open gray box and turn the ear cups toward camera, ending centered. Warm window light, natural phone-video look, top-down close framing with one steady push-in. Sound: box flap and tissue rustle; no music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:c1-tpl-howto-picker-steamer-detail-square",
+          "label": "Garment Steamer — Hands-On Demo",
+          "chips": [
+            "proof"
+          ],
+          "prompt": "Still square product photograph using the uploaded photo as the exact reference: adult hands hold a plain white garment steamer beside a blue shirt, showing its controls and water reservoir in bright laundry daylight. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:k2-url-picker-charging-pad",
+          "label": "Charging Pad — Control Detail",
+          "chips": [
+            "proof"
+          ],
+          "prompt": "Still square product photograph using the uploaded photo as the exact reference: an adult hand places a plain round charging pad on dark fabric with its cable visible. Soft side light, tight overhead framing, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:k2-url-use-open-bento",
+          "label": "Lunch Container — Demo Detail",
+          "chips": [
+            "hook"
+          ],
+          "prompt": "Still square product photograph using the uploaded photo as the exact reference: an adult hand opens a sage lunch container on a desk, showing its divided compartments and lid beside it. Soft daylight, clear overhead framing, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:f1-r10-tiktok-trend-tumbler",
+          "label": "Trend Challenge — Travel Tumbler",
+          "chips": [
+            "trend"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. Two adult hands rotate a plain insulated travel tumbler once on a colorful kitchen counter for a repeatable trend challenge. Bright daylight, square creator framing, no text or logos."
+        },
+        {
+          "ref": "n:guide:f1-r10-tiktok-spoken-desk-fan",
+          "label": "Spoken Audio Explain — Desk Fan",
+          "chips": [
+            "spoken"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the exact product reference. Hands point to the front grille and control dial of a plain compact desk fan on a tidy desk for a hands-only spoken audio explanation. Square product framing, soft daylight, no text or logos."
         }
       ],
       "button": "Make a TikTok-style video"
@@ -358,8 +469,8 @@
       {
         "frame": "post",
         "ref": "f:k4-plat-tiktok-18-visual-uses-1-image",
-        "h": "Use 1:1 for square feed placements",
-        "d": "Re-frame the product for a square layout instead of cropping the 9:16 video."
+        "h": "Use 1:1 for square In-Feed creative",
+        "d": "Use a square file when the TikTok placement accepts 1:1, and check the current preview instead of assuming a separate square feed placement."
       }
     ],
     "input": [
@@ -381,13 +492,15 @@
         "ref": "f:q18-tiktok-output-shoe-tread",
         "frame": "9:16",
         "length": 6,
-        "label": "Matched Gray-and-White Running Shoe"
+        "label": "Matched Gray-and-White Running Shoe",
+        "presentation": "tiktok"
       },
       {
         "ref": "f:q18-tiktok-output-speaker-demo",
         "frame": "9:16",
         "length": 10,
-        "label": "Matched Rounded Black Woven Speaker"
+        "label": "Matched Rounded Black Woven Speaker",
+        "presentation": "tiktok"
       }
     ],
     "after": {
@@ -416,7 +529,7 @@
         "h2": "Keep the product clear in a vertical crop"
       },
       "m6": {
-        "h2": "Pick a 6, 10, or 15-second TikTok video"
+        "h2": "Pick a clip length for each TikTok job"
       },
       "m7": {
         "h2": "Add the caption and sound after download"
@@ -431,18 +544,18 @@
     "sizes": [
       {
         "frame": "9:16",
-        "ref": "f:unboxing-experience-v-m8",
+        "ref": "f:k8-spokesperson-tiktok-hand-vertical",
         "label": "9:16 · In-Feed, full screen"
       },
       {
         "frame": "1:1",
-        "ref": "n:guide:k4-plat-tiktok-11-visual-sizes-1-image",
-        "label": "1:1 · square feed placements"
+        "ref": "n:guide:k4-plat-tiktok-04-cards-5-image",
+        "label": "1:1 · square In-Feed creative"
       },
       {
         "frame": "16:9",
         "ref": "f:k4-plat-tiktok-28-visual-sizes-2",
-        "label": "16:9 · horizontal placements"
+        "label": "16:9 · horizontal In-Feed creative"
       }
     ]
   }

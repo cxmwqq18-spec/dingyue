@@ -14,7 +14,13 @@
   ],
   "intro": [
     "Here, your product gets used the way a customer would use it at home. The sample clip shows a woman running a handheld steamer down a creased blue shirt that hangs on a wooden clothes rack.",
-    "A quick how-to answers the question most shoppers have before they buy: how does this actually work? It suits tools and gadgets with one clear job, like garment steamers, milk frothers, lint shavers, or cleaning brushes. Put a 16:9 version on your product page and a 9:16 one on YouTube Shorts, then let the clip do the explaining."
+    "A quick how-to answers the question most shoppers have before they buy: how does this actually work? It suits tools and gadgets with one clear job, like garment steamers, milk frothers, lint shavers, or cleaning brushes. Put a 16:9 version on your product page and a 9:16 one on YouTube Shorts, then let the clip do the explaining.",
+    "A how-to product clip should teach one repeatable movement from a clear starting state to a visible result. A hand can switch on a steamer, press one pass across a shirt, and finish beside the smooth fabric. Keep the tool, the working surface, and the part being changed in frame so a shopper can understand what to do without guessing.",
+    "Write the steps in the order a customer would perform them: prepare the surface, use the tool once, and show the finished area. Mention the hand position, the pace, and the final hold. Add Step 1, Step 2, and Step 3 labels after download as editable layers, along with the product name and any safety instructions that come from your own documentation.",
+    "Review the tutorial at full-screen mobile size before publishing. Make sure the product is the same as the uploaded photo, the action is physically plausible, and the final result does not promise a measurement or performance you cannot support. Use the clip beside a listing or in a short feed ad where the first frame makes the problem and tool immediately clear.",
+    "A strong tutorial has one visible problem and one visible change. Begin with the wrinkled shirt, dry bristles, empty mug, or closed latch; show one deliberate movement; and hold on the finished state long enough for a shopper to compare it. Avoid a montage of unrelated features in a short clip.",
+    "Choose the destination before describing the frame. A [product video](/ai-video-generation/product-video) can sit beside a listing, a [YouTube Shorts ad](/platforms/youtube-shorts-ads) needs a vertical crop, and a [before-and-after video](/ai-video-generation/before-after-showcases) works when the changed surface is easy to see. The [Shopify product photo page](/platforms/shopify-product-photos) is useful when the lesson sits near a store listing.",
+    "For a sequence of product lessons, start with an [image-to-video clip](/ai-video-generation/image-to-video), then test a [UGC ad video](/ai-video-generation/ugc-ad-video) when a creator reaction adds context. The [first TikTok video ad guide](/guides/first-tiktok-video-ad), [product photo tips guide](/guides/product-photo-tips), and this how-to template help keep the source photo and final action aligned."
   ],
   "tip": "Describe one task from start to finish, like \"steams a wrinkled cotton shirt on a hanger, collar to hem,\" instead of listing every feature.",
   "steps": [
@@ -74,6 +80,34 @@
     {
       "q": "Does the video have to match how my product really works?",
       "a": "Yes. Describe the real way your product is used and watch the clip before you post it. If it shows something your product can't do, generate it again with a clearer description."
+    },
+    {
+      "q": "How many steps fit in one tutorial?",
+      "a": "Keep it to one clear task with a starting state, the product action, and the finished state. Extra steps are easier to follow in a second clip."
+    },
+    {
+      "q": "What length should a tutorial be?",
+      "a": "Ten seconds covers most single tasks; use 15 seconds for a slower demonstration, for 40 or 60 credits."
+    },
+    {
+      "q": "Can viewers follow the steps when audio is unavailable?",
+      "a": "Add short step tags as a text layer after download, so the tutorial remains clear when the soundtrack is muted."
+    },
+    {
+      "q": "Can I crop the tutorial to 1:1?",
+      "a": "Yes. Make a square version after download and check that the tool, hand, and finished result remain in frame."
+    },
+    {
+      "q": "What product photo works best for a how-to video?",
+      "a": "Use a sharp photo that shows the entire tool and the part it touches, with no edge cropped out."
+    },
+    {
+      "q": "How should I show a safety warning?",
+      "a": "Add the approved warning as editable step text after download and keep it beside the action it describes."
+    },
+    {
+      "q": "Can I watch the tutorial with the sound off?",
+      "a": "Yes. Add short step labels after download so the sequence stays understandable when the soundtrack is muted."
     }
   ],
   "overview": [
@@ -259,30 +293,32 @@
       ],
       "cards": [
         {
-          "ref": "n:q10-howto-picker-1",
-          "label": "Home Workout Demo: Resistance band row",
+          "ref": "n:guide:k6-industries-card-yoga",
+          "label": "Mobility Demo: Yoga Block",
           "chips": [
             "howto"
           ],
-          "prompt": "Use the uploaded photo as the resistance bands and keep their shape and color. In a bright home workout corner, an adult anchors the band to a closed door, steps back, and completes one controlled row, ending with the band taut. Product-in-use fitness ad, side medium framing. Even overhead gym light. Sound: shoe shift and band tension; no music.",
+          "prompt": "Use the uploaded photo as a plain cork yoga block and keep its edges visible. An adult demonstrates a gentle seated stretch on a teal mat in a bright room, showing the movement clearly. How-to creator photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:q10-howto-picker-2",
-          "label": "Product Demo: Electric toothbrush routine",
+          "label": "Creator Demo: Electric toothbrush routine",
           "chips": [
-            "howto"
+            "howto",
+            "creator",
+            "use"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a clean bathroom, an adult lifts the electric toothbrush and brushes one front tooth section, ending with the brush lowered beside the sink. Natural morning-routine phone-video look, soft daylight. Mirror-level close framing with a slow push-in. Sound: toothbrush hum, faucet drip; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:q10-howto-picker-3",
-          "label": "Creator Review: Cleanser pump dose",
+          "ref": "n:guide:k6-templates-card-creator",
+          "label": "Creator Review: Headphones",
           "chips": [
             "creator"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the cleanser beside their face, presses the pump once and says to camera, “Watch one pump dispense a dose.” They end with the bottle label area facing the lens. Casual creator-video look, natural skin texture. Chest-up front-facing handheld frame with slight sway. Diffused bathroom window light. Sound: voice, pump click, room tone; no music.",
+          "prompt": "Use the uploaded photo as plain charcoal over-ear headphones and keep both ear cups visible. An adult presenter holds them at chest height in a bright living room while explaining the fit. Creator how-to product photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
@@ -298,7 +334,8 @@
           "ref": "n:q10-howto-picker-5",
           "label": "Before/After: Steamer smooths a shirt",
           "chips": [
-            "beforeafter"
+            "beforeafter",
+            "howto"
           ],
           "prompt": "Use the uploaded photo as the garment steamer and preserve its shape and controls. An adult steams one wrinkled panel of a blue shirt in a smooth pass; end with the treated half visibly smooth beside the untouched wrinkles. Clear before-and-after product demo, close vertical framing. Soft window light. Sound: steam hiss and fabric rustle; no music.",
           "kind": "photo"
@@ -328,6 +365,15 @@
             "use"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult places a peeled garlic clove in the press and squeezes once, ending with minced garlic on a board and the tool open. Natural food-prep phone-video look. Overhead handheld close-up with a short push-in. Soft kitchen window light. Sound: hinge squeeze, garlic on board; no music.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k7-ind-shoes-picker-cards-7-ref-n-gen2-before-after-videos-c2",
+          "label": "Before/After: Boot brush clears scuff",
+          "chips": [
+            "beforeafter"
+          ],
+          "prompt": "Use the uploaded photo as the plain shoe brush and keep its bristles and handle visible. An adult brushes one scuffed leather boot, ending with the boot showing a cleaner toe beside the untreated scuff. Product how-to before-and-after ad still, close entryway framing, soft daylight, no text or logos.",
           "kind": "photo"
         }
       ],
@@ -375,13 +421,16 @@
     ],
     "after": {
       "ref": "n:q10-howto-after",
+      "mock": {
+        "type": "steps"
+      },
       "zones": [
-        "Step label",
+        "Step tags",
         "Product name"
       ],
       "items": [
-        "Add short step labels such as Fill, Press, or Rinse in your editor.",
-        "Place the product name beside the final result after download."
+        "The frame shows the Step 1-2-3 tags you add so viewers can follow each move.",
+        "Add short step labels such as Fill, Press, or Rinse, and the product name, in your editor."
       ]
     },
     "titles": {

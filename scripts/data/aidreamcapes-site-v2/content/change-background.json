@@ -64,25 +64,33 @@
   "faq": [
     {
       "q": "Do I get a cut-out with a transparent background?",
-      "a": "Not from this tool. It gives you a finished photo with the new background already in place, ready to upload. For a plain white version, use the white background photo tool."
+      "a": "Not from this tool. It gives you a finished photo with the new background already in place, ready to upload. For a plain white version, use the white background photo tool. Use [packshot angles](/ai-image-generation/packshot-multi-angle) when a consistent product view matters."
     },
     {
       "q": "Will my product change when the background changes?",
-      "a": "The tool aims to keep your product as it is, but fine details like printed text or small patterns can shift. Look over each result next to the real item before you add it to a listing."
+      "a": "The tool aims to keep your product as it is, but fine details like printed text or small patterns can shift. Look over each result next to the real item before you add it to a listing. See [product video demos](/ai-video-generation/product-video) if the product also needs motion."
     },
     {
       "q": "What backgrounds work well for home decor?",
-      "a": "Warm neutral walls, light wood, stone or linen surfaces and soft window light suit vases, candles, planters and tableware. Busy patterns can compete with the product, so save them for simple, solid-colored items."
+      "a": "Warm neutral walls, light wood, stone or linen surfaces and soft window light suit vases, candles, planters and tableware. Busy patterns can compete with the product, so save them for simple, solid-colored items. For matching category scenes, browse [beauty and skincare ideas](/industries/beauty-skincare)."
     },
     {
       "q": "Can I add my logo or a sale message to the background?",
-      "a": "Add logos and words afterward in a design tool such as Canva, where they'll look exactly as you set them. Lettering made by AI can come out misspelled or blurry."
+      "a": "Add logos and words afterward in a design tool such as Canva, where they'll look exactly as you set them. Lettering made by AI can come out misspelled or blurry. For paid social, follow [the TikTok ad guide](/guides/first-tiktok-video-ad)."
+    },
+    {
+      "q": "What stays the same in a background change?",
+      "a": "The product, subject, framing and scale should stay consistent while the setting changes. For seasonal planning, review [sale campaign visuals](/ai-image-generation/sale-campaign-key-visual)."
+    },
+    {
+      "q": "Can I request a new room or outdoor setting?",
+      "a": "Yes. Describe the new environment and keep the uploaded product reference clear. For broader placements, read [the ad sizes guide](/guides/ad-sizes-by-platform)."
     }
   ],
   "overview": [
     {
       "h2": "Use the photo as a reference for a new setting",
-      "d": "Keep the angle you already like and change only what's behind it. Ask for one thing at a time, like \"white marble counter\" or \"pale sage wall\", and compare each result with your original."
+      "d": "Keep the angle you already like and change only what's behind it. Ask for one thing at a time, like \"white marble counter\" or \"pale sage wall\", and compare each result with your original. For a consistent catalog, compare [white background photos](/ai-image-generation/ecommerce-main-image), [lifestyle photos](/ai-image-generation/lifestyle-scene), [model photos](/ai-image-generation/on-model-generation), [social ad photos](/ai-image-generation/feed-ad-still), [commercial lighting](/ai-image-generation/commercial-lighting), [color variation photos](/ai-image-generation/colorway-variations), [macro detail photos](/ai-image-generation/macro-details), [home and living ideas](/industries/home-living), [product photo tips](/guides/product-photo-tips), [the Amazon white background guide](/guides/white-background-amazon), [the inspiration gallery](/inspiration), and [pricing](/pricing)."
     }
   ],
   "fit": {
@@ -162,22 +170,22 @@
       "n:guide:q6-cbg-strip-3-r2"
     ],
     "steps": {
-      "source": "n:gen2:plat-instagram-g4",
-      "result": "n:guide:q6-cbg-steps-result-r2",
+      "source": "n:guide:q19-shop-hero-serum",
+      "result": "n:guide:f18-change-bg-steps-result-r2",
       "mode": "photo",
-      "prompt": "Show cream smoothed onto the back of a hand beside a bathroom sink, with the tube visible in soft morning light."
+      "prompt": "Use the uploaded amber serum dropper as the exact product reference. Keep the adult woman shown in the source, her white textured bathrobe, cheek application pose, hands, bottle, dropper, camera angle and framing. Change only the background to a soft muted sage-green bathroom with gentle tile detail and natural light."
     },
     "picker": {
       "title": "Choose a product ad format",
-    "lead": "Choose a product scene to see formats such as skincare routines, try-ons and hands-on demos.",
+      "lead": "Choose a product scene to see formats such as skincare routines, try-ons and hands-on demos.",
       "chips": [
         {
           "id": "routine",
           "label": "GRWM & Routine"
         },
         {
-          "id": "tryon",
-          "label": "Try-On"
+          "id": "product-use",
+          "label": "Product Use"
         },
         {
           "id": "problem-fix",
@@ -213,14 +221,16 @@
           "ref": "n:guide:q6-cbg-picker-3",
           "label": "Try-On: Suede loafers on foot",
           "chips": [
-            "tryon"
+            "product-use",
+            "problem-fix",
+            "demo"
           ],
           "prompt": "Use the uploaded loafers as the exact product. An adult slips them on and takes a confident step, with the fit, stitching and sole visible.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q6-cbg-picker-4",
-        "label": "Pet Brush Demo: Clear Sofa",
+          "label": "Pet Brush Demo: Clear Sofa",
           "chips": [
             "problem-fix",
             "demo"
@@ -242,7 +252,8 @@
           "ref": "n:guide:q6-cbg-picker-6",
           "label": "Try-On: Gold hoops before work",
           "chips": [
-            "tryon",
+            "routine",
+            "product-use",
             "demo"
           ],
           "prompt": "Use the uploaded earrings as the exact product. An adult fastens one hoop and turns to a mirror to show the scale and finish.",
@@ -261,6 +272,7 @@
           "ref": "n:guide:q6-cbg-picker-8",
           "label": "Workout Routine: Resistance band shoulder exercise",
           "chips": [
+            "product-use",
             "demo"
           ],
           "prompt": "Use the uploaded resistance band as the exact product. An adult shows a simple shoulder exercise with the band clearly visible and controlled form.",
@@ -353,8 +365,38 @@
         "h2": "Background changer FAQ"
       },
       "gallery": {
-        "h2": "AI background changer examples: one vase, five backgrounds"
+        "h2": "Background replacement examples with the product kept in view"
       }
     }
+  },
+  "limitations": {
+    "h2": "Features for a controlled background change",
+    "items": [
+      {
+        "t": "Keep product geometry",
+        "d": "Preserve the uploaded item’s angle, scale and visible edges while the setting changes.",
+        "supported": true
+      },
+      {
+        "t": "Describe one new setting",
+        "d": "Name a surface, color or room so the background has one clear visual direction.",
+        "supported": true
+      },
+      {
+        "t": "Match a collection palette",
+        "d": "Use a consistent color family across listings, feed ads and seasonal variants.",
+        "supported": true
+      },
+      {
+        "t": "Create seasonal variants",
+        "d": "Refresh an existing listing with a new setting without unpacking the product again.",
+        "supported": true
+      },
+      {
+        "t": "Review fine details",
+        "d": "Check labels, patterns and edges against the real item before publishing.",
+        "supported": true
+      }
+    ]
   }
 }

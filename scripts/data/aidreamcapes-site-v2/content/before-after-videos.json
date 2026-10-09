@@ -29,11 +29,11 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 vertical or 1:1 square"
       ],
       [
         "Length",
-        "15 seconds"
+        "6, 10 or 15 seconds"
       ]
     ],
     "cta": "Make my before & after video"
@@ -41,24 +41,40 @@
   "faq": [
     {
       "q": "How can I make the two scenes easy to compare?",
-      "a": "Keep the camera position fixed and describe one visible change, such as loose cords moving into an organizer. This makes both states easy to follow."
+      "a": "Keep the camera position fixed and show the same product in three frames: before, the action, and after. Use a 15-second clip when the action needs room, or 6 or 10 seconds for a quicker fix; choose 9:16 for TikTok or Reels and 1:1 for a product page."
     },
     {
       "q": "How do I describe the before and the after?",
-      "a": "Use one sentence with two parts joined by \u201cthen.\u201d For example: \u201ccluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.\u201d"
+      "a": "Use one sentence with two parts joined by “then.” For example: “cluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.”"
     },
     {
       "q": "Can I show skincare or health results?",
       "a": "Show a change to the product or the space around it, such as lint lifted from a cushion. Do not imply a health, skin or body result."
     },
     {
-      "q": "Can I add \u201cBefore\u201d and \u201cAfter\u201d labels?",
+      "q": "Can I add “Before” and “After” labels?",
       "a": "Yes, add them after you download, in CapCut or TikTok. Typed labels stay crisp and correctly spelled, which AI-generated lettering can't always manage."
+    },
+    {
+      "q": "What makes a before and after useful?",
+      "a": "Use the same product or space in both frames and show a clear, understandable change."
+    },
+    {
+      "q": "Can I show a small improvement?",
+      "a": "Yes. A focused change such as routed cables, a cleaned surface or a sorted drawer can be easy to compare."
+    },
+    {
+      "q": "Should the camera move during a comparison?",
+      "a": "Lock the camera, background, and lighting when the two states need a direct comparison. If a slow move helps show detail, keep both states visible and easy to match."
+    },
+    {
+      "q": "Can I compare two product versions?",
+      "a": "Yes. Use the same framing and describe the one difference shoppers need to judge, such as a size or fit change. Avoid a performance claim unless the frame proves it."
     }
   ],
   "overview": [
     {
-      "h2": "Make the product\u2019s role in the change easy to see",
+      "h2": "Make the product’s role in the change easy to see",
       "p": "Keep one space or object in view across both scenes so the difference reads quickly. Show the starting condition first, then the product in use and the finished state without adding a claim the product cannot support."
     }
   ],
@@ -69,7 +85,7 @@
       "n:guide:k4-before-after-videos-strip-drawer",
       "n:guide:k4-before-after-videos-strip-linen",
       "n:guide:k4-before-after-videos-strip-fridge",
-      "n:guide:k4-before-after-videos-m5-round-watch-bad"
+      "n:guide:k7-ind-shoes-picker-cards-7-ref-n-gen2-before-after-videos-c2"
     ],
     "steps": {
       "source": "n:guide:b1-before-after-videos-source",
@@ -81,7 +97,7 @@
     },
     "picker": {
       "title": "Browse before-and-after formats",
-      "lead": "Show a visible product-led change through creator demos, cleaning routines and practical fixes.",
+      "lead": "Choose a card by the change the viewer can verify without guessing. Creator reviews point to the untouched and improved sides; product refreshes show a brighter, cleaner, or better-arranged surface; quick fixes focus on one fit or connection; before-and-after cards keep both states in a comparable frame. Describe the surface, the misplaced object, the action that fixes it, and the final arrangement. Keep health or performance claims out unless the evidence is safe to show. Add Before and After labels later in your editor so they stay crisp.",
       "chips": [
         {
           "id": "creator",
@@ -102,12 +118,12 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:q3-before-after-videos-board-01-pet-hair-review",
-          "label": "Creator Review: Pet Roller Clears Fur",
+          "ref": "n:guide:f11-r10b-before-after-videos-canvas-stain-cleanup",
+          "label": "Canvas Tote: Coffee Stain Lifted",
           "chips": [
-            "creator"
+            "quickfix"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult rolls once across the sofa and says, \"The clean path is easy to see beside the fur.\" End with the cleared strip and remaining fur together in frame. Soft daylight, natural UGC style. Chest-up and sofa framing with one slow pan. Sound: spoken line, roller pass and dog ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright laundry room, adult hands press a plain white laundry soap bar into a damp cloth and wipe one coffee-stained section of a natural canvas tote. Keep the camera fixed so the stained fabric and the clean section remain visible together; end with the tote's clear before-to-after boundary in frame. Soft daylight, practical cleaning-demo style. Overhead medium framing with one slow push-in. Sound: cloth rub, light soap lather and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -172,6 +188,42 @@
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright hotel room, an adult draws the suitcase zipper along the track until the lid closes. End with the closed case and zipper pull in view. Soft window light, practical travel style. Medium close angle with one gentle tracking move. Sound: zipper glide, fabric settle and quiet room ambience; no music.",
           "kind": "video"
+        },
+        {
+          "ref": "n:guide:q6-cbg-pair-yogamat-after",
+          "label": "Yoga mat: rolled to ready",
+          "chips": [
+            "refresh"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright studio, an adult unrolls the yoga mat from a tight roll and steps onto the clear surface. End with the mat flat and ready for a stretch. Soft daylight, practical fitness style. Wide low framing with one slow pull-back. Sound: mat roll, footstep and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q6-cbg-pair-boots-after",
+          "label": "Plain boots: creator review",
+          "chips": [
+            "creator"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a quiet sidewalk, an adult creator steps into the plain boots, walks three short steps and says, \"The fit stays clear as I move.\" End with the boots planted side by side. Natural daylight, practical creator style. Low shoe-level tracking with one gentle move. Sound: spoken line, leather flex and street ambience; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q6-cbg-pair-protein-after",
+          "label": "Protein powder: mixed drink",
+          "chips": [
+            "quickfix"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. After a workout, an adult scoops the powder into water and shakes the bottle once. End with the mixed drink beside the open tub. Bright gym daylight, straightforward demonstration style. Waist-up framing with one small push-in. Sound: scoop tap, shaker rattle and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q6-cbg-pair-phonecase-after",
+          "label": "Phone case: case seated",
+          "chips": [
+            "split"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean desk, adult hands fit the plain case onto the generic phone and press the corners into place. End with the case seated and its single camera opening clear. Soft daylight, practical fit-check style. Overhead close framing with one gentle push-in. Sound: case snap, fingertip tap and quiet desk ambience; no music.",
+          "kind": "video"
         }
       ],
       "button": "Try this video idea"
@@ -181,40 +233,46 @@
         "frame": "phone",
         "ref": "n:guide:q3-before-after-videos-case-04-phone-case-single-camera",
         "h": "Show a practical product change",
-        "d": "Place a before-and-after clip beside the item that creates the visible change."
+        "d": "A comparison belongs on a product page when the feature changes the buyer's decision. Lock the camera, show the starting state, perform one action, and hold the final state long enough to read it. A case should fit its generic phone, a shoe should keep its color, and an organizer should keep its shape. Leave the boundary between states visible so the result cannot be mistaken for a new product. Make a separate clip when another feature needs a different angle."
       },
       {
         "frame": "post",
         "ref": "n:guide:k4-before-after-videos-m5-round-watch-good",
         "h": "Explain a result on a product page",
-        "d": "Show the product clearly before its result appears."
+        "d": "A short ad needs a clear problem before the fix. Keep the background and light stable, use one practical sound such as a brush pass or zipper glide, and avoid a dramatic transformation that the product cannot support. The product should cause the visible change; a tidy desk, clean path, fitted case, or closed zipper gives shoppers a concrete checkpoint. Check the final frame against the upload before publishing and type any claim or offer after download."
+      },
+      {
+        "frame": "post",
+        "ref": "n:guide:f11-r10-before-after-cable-organizer-triptych",
+        "h": "Lock one product through three frames",
+        "d": "Before → action → after: keep one cable organizer, camera, light, and desk while cords move from tangled to routed. Use 9:16 for TikTok or Reels, or 1:1 beside a product description."
       }
     ],
     "input": [
       {
         "good": "n:guide:q3-before-after-videos-input-watch-good-alt",
         "bad": "n:guide:q3-before-after-videos-input-watch-bad-crop",
-        "good_label": "Your watch, fully in frame",
-        "bad_label": "Your watch, cropped at the edge"
+        "good_label": "Your product, complete and sharp before the change",
+        "bad_label": "A crop that hides the product edge or starting problem"
       },
       {
         "good": "n:guide:q3-before-after-videos-input-watch-good-alt-2",
         "bad": "n:guide:q3-before-after-videos-input-watch-bad-blur-2",
-        "good_label": "Your watch, fully in frame",
-        "bad_label": "Your watch, softened by blur"
+        "good_label": "Your product with one visible state ready to compare",
+        "bad_label": "A blurred upload where the before state cannot be checked"
       }
     ],
     "outputs": [
       {
         "ref": "n:guide:q3-before-after-videos-output-watch-compare",
         "frame": "1:1",
-        "label": "Before and After: Watch Dial",
+        "label": "Before and After: watch dial compare, 1:1 frame with both states readable",
         "length": 10
       },
       {
         "ref": "n:guide:q3-before-after-videos-output-watch-wipe",
         "frame": "1:1",
-        "label": "Watch Demo: Dial Wipe",
+        "label": "Watch Demo: dial wipe, 1:1 frame holding the cleaned section",
         "length": 10
       }
     ],
@@ -233,7 +291,7 @@
         "h2": "What to prepare for a before-and-after scene"
       },
       "m6": {
-        "h2": "Before and after video length, size and credits"
+        "h2": "Before-and-after length and frame: 6, 10 or 15 seconds; 9:16 or 1:1"
       },
       "m7": {
         "h2": "Before you post the comparison"
@@ -244,6 +302,20 @@
       "examples": {
         "h2": "More ways to show a change"
       }
+    },
+    "overview": "A before-and-after video names one starting problem and shows one visible change. Keep the camera and product steady while a roller clears fur, a brush lifts a scuff, or an organizer turns tangled cables into a readable desk. Use [product comparison video](/ai-video-generation/product-comparison-video) for two versions, [home organization video](/ai-video-generation/home-organization) for a space reset, and [testing ad versions](/guides/testing-ad-versions) when you want to compare hooks. Choose 6, 10, or 15 seconds. Use a 9:16 vertical frame for [TikTok](/platforms/tiktok-ads) or [Instagram](/platforms/instagram-ads), or a 1:1 square frame beside a product description.",
+    "after": {
+      "ref": "n:guide:k7-ind-electronics-strip-5-n-gen2-before-after-videos-c4",
+      "zones": [
+        "Before",
+        "After",
+        "CTA"
+      ],
+      "items": [
+        "Add Before and After labels in your editor.",
+        "Type a concise claim only when the frame proves it.",
+        "Keep the offer or price outside the generated scene."
+      ]
     }
   }
 }
