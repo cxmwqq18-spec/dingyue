@@ -310,7 +310,7 @@
           "chips": [
             "creator-review"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult woman holds the serum bottle beside her face and says, \"Here is a closer look at the bottle.\" She points toward the dropper and keeps the package in view. Casual creator-review style, soft window light. Chest-up eye-level handheld framing with a gentle push-in. Sound: her voice and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult woman holds the serum bottle beside her face and says, \"Here is a closer look at the bottle.\" She points toward the dropper and keeps the package in view. Casual creator-review style, soft window light. Chest-up eye-level handheld framing with a gentle push-in. End chest-up with the serum label and dropper clear beside her face. Sound: her voice and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -319,7 +319,7 @@
           "chips": [
             "creator-review"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman faces the camera, holds the lipstick beside her face and says, \"This is how the shade looks in daylight.\" She pauses with the tube and color visible. Relaxed makeup-creator look, soft natural light. Chest-up eye-level handheld shot with a gentle push-in. Sound: her voice and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman faces the camera, holds the lipstick beside her face and says, \"This is how the shade looks in daylight.\" She pauses with the tube and color visible. Relaxed makeup-creator look, soft natural light. Chest-up eye-level handheld shot with a gentle push-in. End with the lipstick tube beside the finished shade, label facing camera. Sound: her voice and quiet room tone; no music.",
           "kind": "video"
         },
         {

@@ -221,7 +221,7 @@
       "source": "n:guide:q20-occ-holiday-steps-source",
       "result": "n:guide:q20-occ-holiday-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the only product reference. Preserve its matte graphite over-ear headphones, wide padded headband and oval fabric ear cushions. In a warm winter gift setting, an adult lifts this exact pair from cream tissue in a plain kraft box and holds it at chest height. Keep the full headphones visible. Medium close framing with one gentle push-in; end on the headset beside the open box. Sound: tissue rustle and soft room tone; no music or added text.",
+      "prompt": "Use the uploaded photo as the only product reference. Preserve its matte graphite over-ear headphones, wide padded headband and oval fabric ear cushions. In a warm winter gift setting, an adult lifts this exact pair from cream tissue in a plain kraft box and holds it at chest height. Keep the full headphones visible. Medium close framing with one gentle push-in; end on the headset beside the open box. Warm, soft indoor light. Sound: tissue rustle and soft room tone; no music or added text.",
       "options": [
         [
           "Template",
@@ -265,7 +265,7 @@
           "chips": [
             "review"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a softly lit bedroom, an adult creator holds an open jewelry box beside her face and speaks to camera. An adult creator looks into the camera and says, “The size is easy to see when I hold them here.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: clear speech and a small box click; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a softly lit bedroom, an adult creator holds an open jewelry box beside her face and speaks to camera. An adult creator looks into the camera and says, “The size is easy to see when I hold them here.”. Natural creator-shot UGC with realistic skin under warm bedside-lamp light. Close framing with one gentle push-in. End with both hoops lifted beside the open jewelry box. Sound: clear speech and a small box click; no music or added text.",
           "kind": "photo"
         },
         {
@@ -274,7 +274,7 @@
           "chips": [
             "review"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bedroom, an adult creator holds a plain gift set toward camera and opens the lid once. An adult creator looks into the camera and says, “Here are the three pieces included in the set.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: clear speech and a soft lid hinge; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bedroom, an adult creator holds a plain gift set toward camera and opens the lid once. An adult creator looks into the camera and says, “Here are the three pieces included in the set.”. Natural creator-shot UGC with realistic skin under soft bedroom window light. Close framing with one gentle push-in. End with the lid open and all three skincare pieces visible. Sound: clear speech and a soft lid hinge; no music or added text.",
           "kind": "photo"
         },
         {
@@ -283,7 +283,7 @@
           "chips": [
             "gift"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright nursery, no infant present, adult hands unfold a soft blanket once beside an open gift box. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: paper rustle and fabric movement; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright nursery, no infant present, adult hands unfold a soft blanket once beside an open gift box. Natural creator-shot UGC with realistic skin under soft nursery window light. Close framing with one gentle push-in. End with the blanket unfolded beside the open gift box. Sound: paper rustle and fabric movement; no music or added text.",
           "kind": "photo"
         },
         {
@@ -292,7 +292,7 @@
           "chips": [
             "gift"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit dressing table, adult hands lift a simple bracelet and lay it across an open palm. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: tissue rustle and a light box click; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit dressing table, adult hands lift a simple bracelet and lay it across an open palm. Natural creator-shot UGC with realistic skin under warm dressing-table lamplight. Close framing with one gentle push-in. End with the bracelet resting across the open palm. Sound: tissue rustle and a light box click; no music or added text.",
           "kind": "photo"
         },
         {
@@ -301,7 +301,7 @@
           "chips": [
             "routine"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult puts on the jacket and adjusts the collar once toward a mirror. An adult creator looks into the camera and says, “Ready for a cold city walk.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: fabric movement and clear speech; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult puts on the jacket and adjusts the collar once toward a mirror. An adult creator looks into the camera and says, “Ready for a cold city walk.”. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the adjusted collar and jacket front visible by the doorway. Sound: fabric movement and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
@@ -310,7 +310,7 @@
           "chips": [
             "routine"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit vanity, an adult applies the tint once and holds it beside her face. An adult creator looks into the camera and says, “This is the last color step before dinner.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: cap click and clear speech; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit vanity, an adult applies the tint once and holds it beside her face. An adult creator looks into the camera and says, “This is the last color step before dinner.”. Natural creator-shot UGC with realistic skin under soft vanity lighting. Close framing with one gentle push-in. End with the tint tube beside the finished color before dinner. Sound: cap click and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
@@ -319,7 +319,7 @@
           "chips": [
             "taste"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen table, an adult takes one bite, reacts naturally and holds the cookie cross-section to camera. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: crisp bite and room tone; no music or added text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen table, an adult takes one bite, reacts naturally and holds the cookie cross-section to camera. Natural creator-shot UGC with realistic skin under soft kitchen window light. Close framing with one gentle push-in. End with the bitten cookie cross-section facing the camera. Sound: crisp bite and room tone; no music or added text.",
           "kind": "photo"
         },
         {

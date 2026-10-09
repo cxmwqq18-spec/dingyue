@@ -128,7 +128,7 @@
       "result": "n:guide:q2-url-to-video-steps-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand opens a divided lunch container on a bright counter and stops with the compartments visible. Soft morning daylight, practical food-ad look. Overhead close-up with one slow push-in. Sound: lid click and soft room tone; no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand opens a divided lunch container on a bright counter and stops with the compartments visible. Soft morning daylight, practical food-ad look. Overhead close-up with one slow push-in. End with the open compartments facing camera beside the lid. Sound: lid click and soft room tone; no music.",
       "sourceTitle": "Paste your product page link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
@@ -160,7 +160,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in daylight, holds the sunscreen beside her face and says: “Watch how this spreads in one pass.” She smooths one dab over her cheek and ends facing camera with the tube visible. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. Sound: her voice, cap click and soft street ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in daylight, holds the sunscreen beside her face and says: “Watch how this spreads in one pass.” She smooths one dab over her cheek and ends facing camera with the tube visible. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. End with the sunscreen beside the cheek after the single smooth pass. Sound: her voice, cap click and soft street ambience; no music.",
           "kind": "video"
         },
         {
@@ -169,7 +169,7 @@
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one smooth pass of tinted lip balm and says to camera: “A quick tint before I head out.” She lowers the balm and holds still. Soft morning window light, natural skin, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. Sound: her voice and a small cap click; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one smooth pass of tinted lip balm and says to camera: “A quick tint before I head out.” She lowers the balm and holds still. Soft morning window light, natural skin, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. End facing the mirror with the lip balm tube beside her lips. Sound: her voice and a small cap click; no music.",
           "kind": "video"
         },
         {
@@ -187,7 +187,7 @@
           "chips": [
             "unboxing"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sofa cushion in a bright living room, an adult hand draws the pet-hair remover once across loose fur, leaving a clear clean stripe and stopping with the tool visible. Soft daylight, realistic home-ad look. Tight side close-up with a steady lateral slide. Sound: brush over fabric and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sofa cushion in a bright living room, an adult hand draws the pet-hair remover once across loose fur, leaving a clear clean stripe and stopping with the tool visible. Soft daylight, realistic home-ad look. Tight side close-up with a steady lateral slide. End on the cleared sofa stripe with the remover just beyond its edge. Sound: brush over fabric and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -196,7 +196,7 @@
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunlit apartment mirror, an adult woman puts on the crossbody bag, adjusts its strap once and turns to a relaxed side profile, ending still with the bag centered. Natural daylight, casual fashion try-on look. Waist-up mirror framing with one slow tilt from shoulder to bag. Sound: strap slide and room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunlit apartment mirror, an adult woman puts on the crossbody bag, adjusts its strap once and turns to a relaxed side profile, ending still with the bag centered. Natural daylight, casual fashion try-on look. Waist-up mirror framing with one slow tilt from shoulder to bag. End in a waist-up side pose with the strap and front pocket visible. Sound: strap slide and room tone; no music.",
           "kind": "video"
         },
         {
@@ -205,7 +205,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult fitness creator stands at a bright kitchen counter, holds the protein pouch beside their face and says: “Here’s how I mix one scoop with water.” They stir the drink once and end holding the glass and pouch toward camera. Natural daylight, straightforward creator-review look. Chest-up eye-level handheld shot with a gentle push-in. Sound: spoken line, spoon swirl and glass tap; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult fitness creator stands at a bright kitchen counter, holds the protein pouch beside their face and says: “Here’s how I mix one scoop with water.” They stir the drink once and end holding the glass and pouch toward camera. Natural daylight, straightforward creator-review look. Chest-up eye-level handheld shot with a gentle push-in. End with the finished drink glass beside the protein pouch, pouch label facing camera. Sound: spoken line, spoon swirl and glass tap; no music.",
           "kind": "video"
         },
         {

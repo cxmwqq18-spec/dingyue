@@ -296,7 +296,7 @@
           "chips": [
             "creator"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator sits beside a bright bathroom window, holds the serum bottle beside their face and says to camera, “I use two drops before moisturizer.” They show one drop on the back of a hand and end with the bottle beside their face. Casual selfie-video look, natural skin texture. Chest-up eye-level framing with slight handheld sway. Sound: voice, cap click, room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator sits beside a bright bathroom window, holds the serum bottle beside their face and says to camera, “I use two drops before moisturizer.” They show one drop on the back of a hand and end with the bottle beside their face. Casual selfie-video look, natural skin texture. Chest-up eye-level framing with slight handheld sway. Diffused bathroom window light. Sound: voice, cap click, room tone; no music.",
           "kind": "photo"
         },
         {
@@ -323,7 +323,7 @@
           "chips": [
             "response"
           ],
-          "prompt": "Use the uploaded photo as the lint roller and preserve its shape and color. On a light sofa, an adult rolls once across a pet-hair-covered cushion, ending with a clean strip beside the remaining fur. Clear before-and-after cleaning ad, close square framing, natural daylight; no music.",
+          "prompt": "Use the uploaded photo as the lint roller and preserve its shape and color. On a light sofa, an adult rolls once across a pet-hair-covered cushion, ending with a clean strip beside the remaining fur. Clear before-and-after cleaning ad, close square framing, natural daylight. Sound: roller pass and fabric movement; no music.",
           "kind": "photo"
         }
       ],

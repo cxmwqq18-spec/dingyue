@@ -297,7 +297,7 @@
           "chips": [
             "transition"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a bright bathroom mirror, an adult woman applies one smooth swipe of lip tint while holding its tube beside her face, ending still. Soft daylight, natural skin texture, casual get-ready look, chest-up mirror framing with slight handheld sway. Sound: cap click and quiet bathroom ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a bright bathroom mirror, an adult woman applies one smooth swipe of lip tint while holding its tube beside her face, ending still. Soft daylight, natural skin texture, casual get-ready look, chest-up mirror framing with slight handheld sway. End on her mirror reflection with the tint tube beside her finished lips. Sound: cap click and quiet bathroom ambience; no music.",
           "kind": "video"
         },
         {
@@ -324,7 +324,7 @@
           "chips": [
             "transition"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the tan canvas crossbody bag’s shape, front pocket, and color. In a bright apartment doorway, an adult wearing it makes one quick turn so the front pocket faces camera, ending centered and still. Clean daylight, casual fashion-creator look, full-length framing with a single snap pan. Sound: fabric movement and quiet room ambience; no music.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the tan canvas crossbody bag’s shape, front pocket, and color. In a bright apartment doorway, an adult wearing it makes one quick turn so the front pocket faces camera, ending centered and still. Clean daylight, casual fashion-creator look, full-length framing with a single snap pan. End centered with the bag’s front pocket square to camera. Sound: fabric movement and quiet room ambience; no music.",
           "kind": "video"
         },
         {
@@ -333,7 +333,7 @@
           "chips": [
             "proof"
           ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the compact white fabric shaver’s shape and finish. Adult hands move it once across a navy sweater sleeve, revealing a visibly smoother strip beside the pilled area, then hold. Bright soft window light, realistic creator phone-video framing, tight close-up with one gentle push-in. Sound: shaver hum and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the exact product reference. Preserve the compact white fabric shaver’s shape and finish. Adult hands move it once across a navy sweater sleeve, revealing a visibly smoother strip beside the pilled area, then hold. Bright soft window light, realistic creator phone-video framing, tight close-up with one gentle push-in. End with the shaver beside the smooth strip on the navy sleeve. Sound: shaver hum and quiet room tone; no music.",
           "kind": "video"
         },
         {

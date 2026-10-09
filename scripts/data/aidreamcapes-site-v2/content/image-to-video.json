@@ -116,7 +116,7 @@
       "result": "n:guide:q2-image-to-video-steps-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand applies one drop of the serum to the back of a hand at a bright vanity, then stops with the bottle in frame. Soft window light, natural skincare-ad look. Tight overhead close-up with one gentle push-in. Sound: dropper click and soft room tone; no music."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand applies one drop of the serum to the back of a hand at a bright vanity, then stops with the bottle in frame. Soft window light, natural skincare-ad look. Tight overhead close-up with one gentle push-in. End with the serum bottle beside the hand showing the single fresh drop. Sound: dropper click and soft room tone; no music."
     },
     "picker": {
       "title": "Choose a product ad format",
@@ -155,7 +155,7 @@
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one pass of tinted lip balm and says to camera: “Tinted balm, then I’m ready to go.” She lowers the balm and holds still facing the lens. Soft morning window light, natural skin texture, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. Sound: her voice, cap click and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one pass of tinted lip balm and says to camera: “Tinted balm, then I’m ready to go.” She lowers the balm and holds still facing the lens. Soft morning window light, natural skin texture, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. End in the mirror with the balm beside her cheek and finished tint visible. Sound: her voice, cap click and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -173,7 +173,7 @@
           "chips": [
             "before-after"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult hand draws the pet-hair remover once across a sofa cushion, revealing a clean stripe, then stops with the tool in frame. Soft side daylight, candid home-ad look. Tight three-quarter close-up with one steady lateral slide. Sound: fabric brush and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult hand draws the pet-hair remover once across a sofa cushion, revealing a clean stripe, then stops with the tool in frame. Soft side daylight, candid home-ad look. Tight three-quarter close-up with one steady lateral slide. End with the remover resting at the stripe’s edge on the cleared cushion. Sound: fabric brush and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -182,7 +182,7 @@
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At an apartment doorway, an adult runner laces the trail sneaker and turns one foot to show its side profile, ending planted and still. Clear morning window light, natural try-on ad look. Low ankle-height close-up with one short tilt from laces to sole. Sound: lace pull and one footstep; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At an apartment doorway, an adult runner laces the trail sneaker and turns one foot to show its side profile, ending planted and still. Clear morning window light, natural try-on ad look. Low ankle-height close-up with one short tilt from laces to sole. End with the sole angled toward camera and the tread in focus. Sound: lace pull and one footstep; no music.",
           "kind": "video"
         },
         {
@@ -200,7 +200,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a public park, an adult interviewer holds a plain microphone while an adult participant tastes one protein bar bite and says to the camera: “Let’s see how this tastes.” The participant lowers the bar and pauses with it visible. Natural afternoon light, clearly staged AI-actor street-interview ad. Waist-up eye-level handheld two-shot with a slight push-in. Sound: her voice, wrapper crinkle and park ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a public park, an adult interviewer holds a plain microphone while an adult participant tastes one protein bar bite and says to the camera: “Let’s see how this tastes.” The participant lowers the bar and pauses with it visible. Natural afternoon light, clearly staged AI-actor street-interview ad. Waist-up eye-level handheld two-shot with a slight push-in. End with the bitten bar lowered beside the participant’s face in the park. Sound: her voice, wrapper crinkle and park ambience; no music.",
           "kind": "video"
         },
         {

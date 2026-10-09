@@ -220,7 +220,7 @@
       "sourceHint": "Show the full tool and the surface it works on.",
       "result": "n:guide:c1-tpl-howto-m2-result-video-916",
       "mode": "video",
-      "prompt": "Switch on this white handheld steamer beside a blue shirt, then press the fabric in one steady pass.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Switch on this white handheld steamer beside a blue shirt, then press the fabric in one steady pass. Close side framing with one short push-in. Soft window light. End with the steamer beside the smooth panel of blue fabric. Sound: soft steam hiss and fabric movement; no music.",
       "options": [
         [
           "Size",
@@ -264,7 +264,7 @@
           "chips": [
             "howto"
           ],
-          "prompt": "Use the uploaded photo as the resistance bands and keep their shape and color. In a bright home workout corner, an adult anchors the band to a closed door, steps back, and completes one controlled row, ending with the band taut. Product-in-use fitness ad, side medium framing; shoe shift and band tension, no music.",
+          "prompt": "Use the uploaded photo as the resistance bands and keep their shape and color. In a bright home workout corner, an adult anchors the band to a closed door, steps back, and completes one controlled row, ending with the band taut. Product-in-use fitness ad, side medium framing. Even overhead gym light. Sound: shoe shift and band tension; no music.",
           "kind": "photo"
         },
         {
@@ -282,7 +282,7 @@
           "chips": [
             "creator"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the cleanser beside their face, presses the pump once and says to camera, “Watch one pump dispense a dose.” They end with the bottle label area facing the lens. Casual creator-video look, natural skin texture. Chest-up front-facing handheld frame with slight sway. Sound: voice, pump click, room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the cleanser beside their face, presses the pump once and says to camera, “Watch one pump dispense a dose.” They end with the bottle label area facing the lens. Casual creator-video look, natural skin texture. Chest-up front-facing handheld frame with slight sway. Diffused bathroom window light. Sound: voice, pump click, room tone; no music.",
           "kind": "photo"
         },
         {
@@ -291,7 +291,7 @@
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the gooseneck kettle and keep its shape, finish, and control details. In a bright kitchen, an adult pours hot water over a tea bag in a clear mug, lets the tea steep, then lifts the mug to serve, showing the finished drink. Recipe-demo pacing, overhead-to-side close framing; water pour and cup tap, no music.",
+          "prompt": "Use the uploaded photo as the gooseneck kettle and keep its shape, finish, and control details. In a bright kitchen, an adult pours hot water over a tea bag in a clear mug, lets the tea steep, then lifts the mug to serve, showing the finished drink. Recipe-demo pacing, overhead-to-side close framing. Soft kitchen window light. End with the filled mug and kettle together, tea color clear. Sound: water pour and cup tap; no music.",
           "kind": "photo"
         },
         {
@@ -300,7 +300,7 @@
           "chips": [
             "beforeafter"
           ],
-          "prompt": "Use the uploaded photo as the garment steamer and preserve its shape and controls. An adult steams one wrinkled panel of a blue shirt in a smooth pass; end with the treated half visibly smooth beside the untouched wrinkles. Clear before-and-after product demo, close vertical framing; steam hiss and fabric rustle, no music.",
+          "prompt": "Use the uploaded photo as the garment steamer and preserve its shape and controls. An adult steams one wrinkled panel of a blue shirt in a smooth pass; end with the treated half visibly smooth beside the untouched wrinkles. Clear before-and-after product demo, close vertical framing. Soft window light. Sound: steam hiss and fabric rustle; no music.",
           "kind": "photo"
         },
         {
@@ -309,7 +309,7 @@
           "chips": [
             "creator"
           ],
-          "prompt": "Use the uploaded photo as the field jacket and preserve its fabric and fit. An adult creator wears it, holds the cuff beside their face, looks directly into camera and says, “Watch how this cuff sits over my wrist.” Keep the face, moving mouth, and jacket visible in a chest-up handheld frame; natural room tone, no music.",
+          "prompt": "Use the uploaded photo as the field jacket and preserve its fabric and fit. An adult creator wears it, holds the cuff beside their face, looks directly into camera and says, “Watch how this cuff sits over my wrist.” Keep the face, moving mouth, and jacket visible in a chest-up handheld frame. Soft window light. End chest-up with the cuff near the lens and the field jacket collar clear. Sound: natural room tone; no music.",
           "kind": "photo"
         },
         {
@@ -327,7 +327,7 @@
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult places a peeled garlic clove in the press and squeezes once, ending with minced garlic on a board and the tool open. Natural food-prep phone-video look. Overhead handheld close-up with a short push-in. Sound: hinge squeeze, garlic on board; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult places a peeled garlic clove in the press and squeezes once, ending with minced garlic on a board and the tool open. Natural food-prep phone-video look. Overhead handheld close-up with a short push-in. Soft kitchen window light. Sound: hinge squeeze, garlic on board; no music.",
           "kind": "photo"
         }
       ],

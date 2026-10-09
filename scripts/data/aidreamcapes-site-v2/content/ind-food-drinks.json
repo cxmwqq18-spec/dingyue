@@ -243,7 +243,7 @@
       "result": "f:k7-ind-food-drinks-steps-result-f-food-video-t06",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand tilts the citrus bottle and pours once into an ice-filled glass, ending when the stream stops and the full bottle remains beside the glass. Bright morning window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. Sound: clear pour and ice clink; no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand tilts the citrus bottle and pours once into an ice-filled glass, ending when the stream stops and the full bottle remains beside the glass. Bright morning window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. End with the full citrus bottle beside the ice-filled glass. Sound: clear pour and ice clink; no music.",
       "options": [
         [
           "Size",
@@ -289,7 +289,7 @@
         {
           "ref": "f:q17-ind-food-drinks-picker-2",
           "label": "Taste Test: protein bar first bite",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult woman breaks a protein bar and takes one bite, then holds the bitten bar beside its plain wrapper and says to camera: “The crisp outside and chewy center make this easy to pack.” Candid UGC style, natural skin texture. Chest-up eye-level handheld shot with slight sway. Sound: wrapper crinkle, one crisp bite, her voice; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult woman breaks a protein bar and takes one bite, then holds the bitten bar beside its plain wrapper and says to camera: “The crisp outside and chewy center make this easy to pack.” Candid UGC style, natural skin texture. Chest-up eye-level handheld shot with slight sway. Warm cafe-window light. End with the cafe-table bar beside its wrapper, bite edge facing lens. Sound: wrapper crinkle, one crisp bite, her voice; no music.",
           "chips": [
             "taste"
           ],
@@ -325,7 +325,7 @@
         {
           "ref": "f:q17-ind-food-drinks-picker-6",
           "label": "GRWM: hydration mix before workout",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in workout clothes holds a hydration mix sachet beside her face and says to camera: “I mix one sachet into my bottle before I head out.” She pours it into a clear bottle and ends holding both products still. Soft morning daylight, natural GRWM creator style. Chest-up front-facing handheld framing with slight sway. Sound: her voice, powder pour, bottle cap click; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in workout clothes holds a hydration mix sachet beside her face and says to camera: “I mix one sachet into my bottle before I head out.” She pours it into a clear bottle and ends holding both products still. Soft morning daylight, natural GRWM creator style. Chest-up front-facing handheld framing with slight sway. End with the filled bottle beside the emptied sachet, pouch label facing camera. Sound: her voice, powder pour, bottle cap click; no music.",
           "chips": [
             "routine"
           ],

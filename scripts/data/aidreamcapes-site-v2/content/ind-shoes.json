@@ -316,7 +316,7 @@
           "chips": [
             "unbox-review"
           ],
-          "prompt": "Use the uploaded photo as the shoe and keep its shape, color and stitching exactly. An adult creator faces the camera and holds the leather loafer beside their face, saying, \"Let us look at the stitching and shape.\" They turn the shoe once and hold its profile still. Casual first-impression review, soft daylight. Chest-up eye-level handheld shot with a gentle push-in. Sound: their voice and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the shoe and keep its shape, color and stitching exactly. An adult creator faces the camera and holds the leather loafer beside their face, saying, \"Let us look at the stitching and shape.\" They turn the shoe once and hold its profile still. Casual first-impression review, soft daylight. Chest-up eye-level handheld shot with a gentle push-in. End with the loafer profile beside the creator’s face, stitching visible. Sound: their voice and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -343,7 +343,7 @@
           "chips": [
             "creator-review"
           ],
-          "prompt": "Use the uploaded photo as the boot and keep its shape, color and stitching exactly. On a quiet porch, an adult creator holds the rain boot beside their face, looks directly at the camera and says, \"Take a closer look at the stitching.\" They turn it once and hold it steady. Honest product-review style, soft daylight. Chest-up eye-level handheld shot with a gentle push-in. Sound: their voice and outdoor ambience; no music.",
+          "prompt": "Use the uploaded photo as the boot and keep its shape, color and stitching exactly. On a quiet porch, an adult creator holds the rain boot beside their face, looks directly at the camera and says, \"Take a closer look at the stitching.\" They turn it once and hold it steady. Honest product-review style, soft daylight. Chest-up eye-level handheld shot with a gentle push-in. End with the rain boot profile beside the creator’s face, stitching clear. Sound: their voice and outdoor ambience; no music.",
           "kind": "video"
         },
         {
@@ -352,7 +352,7 @@
           "chips": [
             "creator-review"
           ],
-          "prompt": "Use the uploaded photo as the trail shoe and keep its shape, color and tread exactly. An adult creator faces the camera and holds the shoe beside their face, saying, \"Here is a closer look at the tread.\" They angle the sole toward the lens and hold it steady. Casual footwear-review look, natural daylight. Chest-up eye-level handheld shot with a gentle push-in. Sound: their voice and light outdoor ambience; no music.",
+          "prompt": "Use the uploaded photo as the trail shoe and keep its shape, color and tread exactly. An adult creator faces the camera and holds the shoe beside their face, saying, \"Here is a closer look at the tread.\" They angle the sole toward the lens and hold it steady. Casual footwear-review look, natural daylight. Chest-up eye-level handheld shot with a gentle push-in. End with the sole angled toward camera and the tread in focus. Sound: their voice and light outdoor ambience; no music.",
           "kind": "video"
         }
       ],

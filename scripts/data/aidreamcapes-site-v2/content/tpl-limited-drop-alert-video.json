@@ -219,7 +219,7 @@
       "sourceHint": "Show the full shoe shape and color in a clear view.",
       "result": "n:guide:q13-limited-steps-result-r3",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a rocky trail at dawn, an adult crouches and ties one coral shoe, then turns the toe slightly to show its tread. End on one clear side view. Natural handheld close-up with a gentle push-in; sound: lace pull, gravel and light wind; no music or written text.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a rocky trail at dawn, an adult crouches and ties one coral shoe, then turns the toe slightly to show its tread. End on one clear side view. Natural handheld close-up with a gentle push-in. Sound: lace pull, gravel and light wind; no music or written text.",
       "options": [
         [
           "Size",
@@ -264,7 +264,7 @@
             "ready",
             "first"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, hands lift the tea tin from a tissue-lined mailer and set it beside the open box. End with the tin centered. Top-down close-up with a gentle push-in; sound: paper rustle and quiet room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, hands lift the tea tin from a tissue-lined mailer and set it beside the open box. End with the tin centered. Top-down close-up with a gentle push-in. Soft kitchen window light. Sound: paper rustle and quiet room tone, no music.",
           "kind": "video"
         },
         {
@@ -274,7 +274,7 @@
             "ready",
             "first"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands open a plain jewelry box, lift the pendant by its chain and hold it above the lining. End with the pendant steady in frame. Warm bedside light, overhead close-up; sound: box hinge and soft room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands open a plain jewelry box, lift the pendant by its chain and hold it above the lining. End with the pendant steady in frame. Warm bedside light, overhead close-up. Sound: box hinge and soft room tone, no music.",
           "kind": "video"
         },
         {
@@ -284,7 +284,7 @@
             "use",
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a gravel trail, an adult runner finishes tying the coral shoes and stands, ending with both shoes in a clear side view. Knee-level handheld framing with one short tilt; sound: lace pull and gravel, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a gravel trail, an adult runner finishes tying the coral shoes and stands, ending with both shoes in a clear side view. Knee-level handheld framing with one short tilt. Cool open-sky trail light. Sound: lace pull and gravel, no music.",
           "kind": "video"
         },
         {
@@ -294,7 +294,7 @@
             "use",
             "first"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a fitting room, an adult turns once toward the mirror, then faces the camera and says, “The cuffs and hem are easy to see.” Keep the jacket front in view. Soft window light, mirror-height medium framing; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a fitting room, an adult turns once toward the mirror, then faces the camera and says, “The cuffs and hem are easy to see.” Keep the jacket front in view. Soft window light, mirror-height medium framing. End in the fitting-room mirror with the jacket front and cuffs visible. Sound: spoken line and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -304,7 +304,7 @@
             "ready",
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy desk, hands lift the over-ear headphones from a plain tissue-lined box and hold them above the open packaging. Top-down close-up with a slow push-in; sound: tissue rustle, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy desk, hands lift the over-ear headphones from a plain tissue-lined box and hold them above the open packaging. Top-down close-up with a slow push-in. Broad desk-side window light. End with both ear cups above the open tissue-lined box. Sound: tissue rustle, no music.",
           "kind": "video"
         },
         {
@@ -314,7 +314,7 @@
             "first",
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe counter, an adult creator holds the citrus drink beside her face, turns the glass toward the lens and says, “Look at the fine bubbles along the glass.” Chest-up handheld framing; sound: glass set down and room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe counter, an adult creator holds the citrus drink beside her face, turns the glass toward the lens and says, “Look at the fine bubbles along the glass.” Chest-up handheld framing. Warm cafe-window light. End with fine bubbles visible in the glass beside the citrus drink. Sound: glass set down and room tone, no music.",
           "kind": "video"
         },
         {
@@ -324,7 +324,7 @@
             "detail",
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds the serum bottle near the lens, turns it so the dropper is visible and says, “Here is the glass dropper.” Front-facing chest-up framing with slight handheld sway; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds the serum bottle near the lens, turns it so the dropper is visible and says, “Here is the glass dropper.” Front-facing chest-up framing with slight handheld sway. Soft window light. End with the glass dropper close to lens and the bottle behind it. Sound: spoken line and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -334,7 +334,7 @@
             "use",
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a neighborhood path, an adult walks a calm dog and briefly turns the leash clip toward the camera. Keep the dog and leash visible. Natural morning light, eye-level tracking shot; sound: footsteps and light outdoor ambience, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a neighborhood path, an adult walks a calm dog and briefly turns the leash clip toward the camera. Keep the dog and leash visible. Natural morning light, eye-level tracking shot. End with the dog and leash clip both visible in a steady walking pose. Sound: footsteps and light outdoor ambience, no music.",
           "kind": "video"
         }
       ],

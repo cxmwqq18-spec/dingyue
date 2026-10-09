@@ -230,7 +230,7 @@
       "result": "f:k4-plat-youtube-shorts-17-visual-steps-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded steamer photo as the product reference and preserve its shape and color. In a bright laundry room, adult hands press the white garment steamer once across a wrinkled blue shirt sleeve; the cloth smooths as steam passes. Vertical 9:16, close side view, one continuous 3-second push-in with the steamer centered and safe margins for Shorts controls. Natural window light and realistic fabric texture. Sound: soft steam hiss and room tone, no music, captions or on-screen text.",
+      "prompt": "Use the uploaded steamer photo as the product reference and preserve its shape and color. In a bright laundry room, adult hands press the white garment steamer once across a wrinkled blue shirt sleeve; the cloth smooths as steam passes. Close side view with one continuous slow push-in and the steamer centered. Natural window light and realistic fabric texture. End with the steamer clear and still in frame. Sound: soft steam hiss and room tone; no music, captions or on-screen text.",
       "options": [
         [
           "Size",
@@ -267,7 +267,7 @@
         {
           "ref": "n:guide:q19-yt-picker-01-serum-review",
           "label": "Creator intro: serum texture close-up",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the plain serum bottle beside her cheek and says to camera: \"Here is the dropper and the texture up close.\" She turns the bottle once, ending with its dropper beside her face. Natural phone-video look and skin texture. Front-facing chest-up close-up with a slight handheld push-in. Sound: her voice and a soft cap click; no music or on-screen text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the plain serum bottle beside her cheek and says to camera: \"Here is the dropper and the texture up close.\" She turns the bottle once, ending with its dropper beside her face. Natural phone-video look and skin texture. Front-facing chest-up close-up with a slight handheld push-in. Diffused bathroom window light. Sound: her voice and a soft cap click; no music or on-screen text.",
           "chips": [
             "creator"
           ],
@@ -276,7 +276,7 @@
         {
           "ref": "n:guide:q19-yt-picker-02-protein-street-interview",
           "label": "Street taste test: first-bite reaction",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny gym lobby, an adult man holds the plain protein bar, takes one bite and says to camera: \"Listen to that first crunch.\" He pauses with a natural reaction, ending with the bar beside his face. Casual creator-video look. Front-facing medium close-up with a small handheld move closer. Sound: his voice, wrapper crinkle and one crisp bite; no music or on-screen text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny gym lobby, an adult man holds the plain protein bar, takes one bite and says to camera: \"Listen to that first crunch.\" He pauses with a natural reaction, ending with the bar beside his face. Casual creator-video look. Front-facing medium close-up with a small handheld move closer. Even overhead gym light. Sound: his voice, wrapper crinkle and one crisp bite; no music or on-screen text.",
           "chips": [
             "hook"
           ],
@@ -285,7 +285,7 @@
         {
           "ref": "n:guide:q19-yt-picker-03-grwm-lip-balm",
           "label": "GRWM: lip balm before work",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult woman looks into the mirror and camera, applies tinted lip balm once and says: \"This is the shade I am wearing today.\" She holds the tube beside her cheek, ending with her reflection and the balm in focus. Natural morning phone-video look. Over-shoulder close-up with a gentle pan. Sound: her voice and a cap click; no music or on-screen text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult woman looks into the mirror and camera, applies tinted lip balm once and says: \"This is the shade I am wearing today.\" She holds the tube beside her cheek, ending with her reflection and the balm in focus. Natural morning phone-video look. Over-shoulder close-up with a gentle pan. Diffused bathroom window light. Sound: her voice and a cap click; no music or on-screen text.",
           "chips": [
             "routine"
           ],
@@ -303,7 +303,7 @@
         {
           "ref": "n:guide:q19-yt-picker-05-phone-case-demo",
           "label": "Phone-case demo: one clean snap-on",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, adult hands align a plain sage case with one small circular camera opening and snap it onto a generic phone, ending with the phone held upright. Natural phone-video look. Overhead close-up with a short tilt toward the case edge. Sound: one soft case snap and room tone; no music or on-screen text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, adult hands align a plain sage case with one small circular camera opening and snap it onto a generic phone, ending with the phone held upright. Natural phone-video look. Overhead close-up with a short tilt toward the case edge. Broad desk-side window light. Sound: one soft case snap and room tone; no music or on-screen text.",
           "chips": [
             "demo"
           ],
@@ -312,7 +312,7 @@
         {
           "ref": "n:guide:q19-yt-picker-06-pet-hair-fix",
           "label": "Pet-hair fix: lint brush clears sofa",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny living room, an adult hand rolls the reusable lint brush once across pet hair on a sofa, leaving a clean fabric stripe, ending with the brush paused beside the cleared area. Realistic home-video texture. Low close-up with a slow side slide. Sound: brush pass and a dog shifting nearby; no music or on-screen text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny living room, an adult hand rolls the reusable lint brush once across pet hair on a sofa, leaving a clean fabric stripe, ending with the brush paused beside the cleared area. Realistic home-video texture. Low close-up with a slow side slide. Soft side light from the living-room window. Sound: brush pass and a dog shifting nearby; no music or on-screen text.",
           "chips": [
             "hook"
           ],
@@ -330,7 +330,7 @@
         {
           "ref": "n:guide:q19-yt-picker-08-fitness-demo",
           "label": "Creator demo: resistance band stretch",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright gym, an adult woman faces the camera, stretches the plain fabric resistance band once at chest height and says: \"Three simple moves start with one band.\" She relaxes the band, ending with it held level across the frame. Natural creator-video look. Front-facing chest-up shot with slight handheld sway. Sound: her voice and soft fabric tension; no music or on-screen text.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright gym, an adult woman faces the camera, stretches the plain fabric resistance band once at chest height and says: \"Three simple moves start with one band.\" She relaxes the band, ending with it held level across the frame. Natural creator-video look. Front-facing chest-up shot with slight handheld sway. Even overhead gym light. Sound: her voice and soft fabric tension; no music or on-screen text.",
           "chips": [
             "creator"
           ],

@@ -238,7 +238,7 @@
         ]
       ],
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a clean sink, a hand presses the white cleanser pump once and catches a small amount of foam on fingertips. Keep the bottle upright and fully visible. Close three-quarter framing with a gentle push-in; sound: single pump and quiet room tone, no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a clean sink, a hand presses the white cleanser pump once and catches a small amount of foam on fingertips. Keep the bottle upright and fully visible. Close three-quarter framing with a gentle push-in. Even task light over the counter. End with the cleanser upright and foam visible on the fingertips. Sound: single pump and quiet room tone, no music.",
       "mode": "video"
     },
     "picker": {
@@ -270,7 +270,7 @@
           "problem",
           "reaction"
         ],
-        "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. The adult looks at the tidier desk and gives a small, natural smile. Top-down close-up, slow push-in; sound: cable slide and desk ambience, no music.",
+        "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. The adult looks at the tidier desk and gives a small, natural smile. Top-down close-up, slow push-in. Broad desk-side window light. End with one cable seated and the remaining cables loose at the desk edge. Sound: cable slide and desk ambience, no music.",
           "kind": "video"
         },
         {
@@ -279,7 +279,7 @@
           "chips": [
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds the headphones toward the lens, turns them to show the padded ear cups and says, “The ear cups and headband are visible here.” Front-facing chest-up framing; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds the headphones toward the lens, turns them to show the padded ear cups and says, “The ear cups and headband are visible here.” Front-facing chest-up framing. Soft window light. End with the padded cups and folding hinge angled toward the lens. Sound: spoken line and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -288,7 +288,7 @@
           "chips": [
             "routine"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult glides the sunscreen stick once across her cheek and lowers it beside her face. Close mirror framing with a gentle push-in; sound: quiet room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult glides the sunscreen stick once across her cheek and lowers it beside her face. Close mirror framing with a gentle push-in. Diffused bathroom window light. End with the sunscreen beside the cheek after the single smooth pass. Sound: quiet room tone, no music.",
           "kind": "video"
         },
         {
@@ -297,7 +297,7 @@
         "chips": [
           "problem"
         ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a laundry sink, an adult sprays the stain remover once onto a marked shirt cuff and presses it with a plain cloth. Keep the bottle and cuff in view. Close handheld framing; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a laundry sink, an adult sprays the stain remover once onto a marked shirt cuff and presses it with a plain cloth. Keep the bottle and cuff in view. Close handheld framing. Even task light over the counter. End with the bottle beside the treated cuff, both in clear view. Sound: one spray and cloth movement; no music.",
           "kind": "video"
         },
         {
@@ -306,7 +306,7 @@
           "chips": [
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands lift the gold hoop earrings from a plain gift box and hold them briefly toward the window light. End with both hoops visible above the open box. Overhead close-up; sound: soft box movement, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands lift the gold hoop earrings from a plain gift box and hold them briefly toward the window light. End with both hoops visible above the open box. Overhead close-up. Sound: soft box movement, no music.",
           "kind": "video"
         },
         {
@@ -315,7 +315,7 @@
           "chips": [
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wearing the jacket turns toward the camera and says, “The sleeve length and front hem are visible.” Keep the full jacket front in frame. Natural fitting-room light, mirror-height medium shot; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wearing the jacket turns toward the camera and says, “The sleeve length and front hem are visible.” Keep the full jacket front in frame. Natural fitting-room light, mirror-height medium shot. End facing camera with the jacket front centered from hem to collar. Sound: spoken line and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -325,7 +325,7 @@
           "problem",
           "routine"
         ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a sofa, an adult rolls the lint remover across one cushion while a dog rests nearby. Show the tool and fabric clearly. Low close framing with a slow push; sound: soft roller movement, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a sofa, an adult rolls the lint remover across one cushion while a dog rests nearby. Show the tool and fabric clearly. Low close framing with a slow push. Soft side light from the living-room window. End with the roller at the cushion edge beside the resting dog. Sound: soft roller movement, no music.",
           "kind": "video"
         },
         {
@@ -334,7 +334,7 @@
         "chips": [
           "reaction"
         ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the oat and seed pieces.” Chest-up framing; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the oat and seed pieces.” Chest-up framing. Soft kitchen window light. End with the bar cut-side forward and its plain wrapper beside it. Sound: spoken line and one crisp bite; no music.",
           "kind": "video"
         }
       ],

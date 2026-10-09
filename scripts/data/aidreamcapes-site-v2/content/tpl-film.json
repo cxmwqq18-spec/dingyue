@@ -239,7 +239,7 @@
         ]
       ],
       "length": 15,
-      "prompt": "Light this compact black speaker with cool window light and make one slow camera move toward its grille.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Light this compact black speaker with cool window light and make one slow camera move toward its grille. End with the top controls centered above the speaker’s woven grille. Sound: quiet room tone; no music.",
       "mode": "video"
     },
     "picker": {
@@ -270,7 +270,7 @@
           "chips": [
             "cinematic"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On dark rippling water, the rounded metal fragrance bottle turns slowly as a narrow highlight crosses its cap, ending with the bottle centered and still. Cinematic product-ad look, deep bronze reflections. Low close-up with one slow orbit. Sound: quiet water ripple, soft cap touch; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On dark rippling water, the rounded metal fragrance bottle turns slowly as a narrow highlight crosses its cap, ending with the bottle centered and still. Cinematic product-ad look, deep bronze reflections. Low close-up with one slow orbit. Low-key warm side light. Sound: quiet water ripple, soft cap touch; no music.",
           "kind": "video"
         },
         {
@@ -279,7 +279,7 @@
           "chips": [
             "talking"
           ],
-          "prompt": "Use the uploaded photo as the vitamin C serum and preserve its shape, color, and label area. In a parked car in soft daylight, an adult creator holds the bottle beside their face, looks directly into camera and says, “I keep this step simple before work.” Keep the face, moving mouth, and product visible in a front-facing chest-up selfie frame; no music.",
+          "prompt": "Use the uploaded photo as the vitamin C serum and preserve its shape, color, and label area. In a parked car in soft daylight, an adult creator holds the bottle beside their face, looks directly into camera and says, “I keep this step simple before work.” Keep the face, moving mouth, and product visible in a front-facing chest-up selfie frame. End with the serum held steady beside the creator’s face, pump visible. Sound: spoken line and quiet car ambience; no music.",
           "kind": "video"
         },
         {
@@ -315,7 +315,7 @@
           "chips": [
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and metal finish exactly. At a softly lit vanity, an adult hand fastens a plain gold hoop earring and turns slightly so the clasp catches the light, ending in sharp focus. Cinematic jewelry-ad look, warm side light. Macro close-up with one slow slide. Sound: clasp click, quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and metal finish exactly. At a softly lit vanity, an adult hand fastens a plain gold hoop earring and turns slightly so the clasp catches the light, ending in sharp focus. Cinematic jewelry-ad look, warm side light. Macro close-up with one slow slide. End with the gold clasp in sharp focus against the earring curve. Sound: clasp click, quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -324,7 +324,7 @@
           "chips": [
             "cinematic"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and panels exactly. On a dark concrete plinth, the neutral sneaker rotates a quarter turn as a narrow spotlight sweeps from heel to toe, ending in a clean side profile. Cinematic footwear-ad look, crisp shadow. Low close-up with one slow orbit. Sound: soft platform scrape, studio room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and panels exactly. On a dark concrete plinth, the neutral sneaker rotates a quarter turn as a narrow spotlight sweeps from heel to toe, ending in a clean side profile. Cinematic footwear-ad look, crisp shadow. Low close-up with one slow orbit. Narrow spotlight with a crisp edge. End in a clean sneaker side profile as the spotlight reaches the toe. Sound: soft platform scrape, studio room tone; no music.",
           "kind": "video"
         },
         {
@@ -333,7 +333,7 @@
           "chips": [
             "talking"
           ],
-          "prompt": "Use the uploaded photo as the tinted lip balm and preserve its shape and color. In a bright bathroom, an adult creator applies the balm, holds it beside their face, looks directly into camera and says, “This is the last step before I head out.” One adult face only, visible moving mouth, chest-up framing; cap click and room tone, no music.",
+          "prompt": "Use the uploaded photo as the tinted lip balm and preserve its shape and color. In a bright bathroom, an adult creator applies the balm, holds it beside their face, looks directly into camera and says, “This is the last step before I head out.” One adult face only, visible moving mouth, chest-up framing. Diffused bathroom window light. End with the lip tint beside the finished shade in the bathroom mirror. Sound: cap click and room tone; no music.",
           "kind": "video"
         }
       ],

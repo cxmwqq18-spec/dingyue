@@ -243,7 +243,7 @@
       "source": "n:guide:q15-fashion-steps-source-blue-set-r2",
       "result": "n:guide:q15-fashion-steps-result-blue-set-r2",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep the pale blue hoodie and matching sweatpants exactly. In a bright fitting room, an adult model turns once and smooths the front pocket, ending front-facing with the full matching set visible. Natural try-on creator look, soft window light. Full-length eye-level handheld shot with a gentle push-in. Sound: fabric rustle and quiet room tone; no music.",
+      "prompt": "Use the uploaded photo as the product and keep the pale blue hoodie and matching sweatpants exactly. In a bright fitting room, an adult model turns once and smooths the front pocket, ending front-facing with the full matching set visible. Natural try-on creator look, soft window light. Full-length eye-level handheld shot with a gentle push-in. End facing camera with the full hoodie-and-sweatpants set in frame. Sound: fabric rustle and quiet room tone; no music.",
       "options": [
         [
           "Format",
@@ -288,7 +288,7 @@
             "try-on",
             "lookbook-pose"
           ],
-          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. On a quiet city sidewalk, an adult woman walks two steps toward camera in the coat and turns once to show its shape, ending in a relaxed front pose. Street-style lookbook, soft overcast daylight. Full-length eye-level handheld shot with a slow backward track. Sound: footsteps and light city ambience; no music.",
+          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. On a quiet city sidewalk, an adult woman walks two steps toward camera in the coat and turns once to show its shape, ending in a relaxed front pose. Street-style lookbook, soft overcast daylight. Full-length eye-level handheld shot with a slow backward track. End in a relaxed front pose with the coat silhouette clear. Sound: footsteps and light city ambience; no music.",
           "kind": "video"
         },
         {
@@ -325,7 +325,7 @@
           "chips": [
             "creator-review"
           ],
-          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. An adult man wearing the jacket faces the camera, holds its lapel at chest level and says, \"Here is how this jacket sits at the shoulder.\" He pauses with the garment visible. Relaxed creator-review look, soft daylight. Chest-up eye-level handheld framing with a gentle push-in. Sound: his voice and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. An adult man wearing the jacket faces the camera, holds its lapel at chest level and says, \"Here is how this jacket sits at the shoulder.\" He pauses with the garment visible. Relaxed creator-review look, soft daylight. Chest-up eye-level handheld framing with a gentle push-in. End with the lapel and shoulder seam centered in the chest-up frame. Sound: his voice and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -334,7 +334,7 @@
           "chips": [
             "creator-review"
           ],
-          "prompt": "Use the uploaded photo as the garment and keep its green color, shape and details exactly. An adult woman wearing the dress faces the camera, lightly lifts one side of the skirt and says, \"The drape is easy to see in daylight.\" She settles the fabric and holds still. Natural fashion-creator look, warm window light. Waist-up eye-level handheld shot with a gentle push-in. Sound: her voice and soft fabric movement; no music.",
+          "prompt": "Use the uploaded photo as the garment and keep its green color, shape and details exactly. An adult woman wearing the dress faces the camera, lightly lifts one side of the skirt and says, \"The drape is easy to see in daylight.\" She settles the fabric and holds still. Natural fashion-creator look, warm window light. Waist-up eye-level handheld shot with a gentle push-in. End with the green skirt edge settled and bodice centered in the waist-up frame. Sound: her voice and soft fabric movement; no music.",
           "kind": "video"
         },
         {
@@ -352,7 +352,7 @@
           "chips": [
             "lookbook-pose"
           ],
-          "prompt": "Use the uploaded photo as the garment and keep its print, color and shape exactly. An adult model wearing the floral dress turns once beside a bright window, then settles into a relaxed lookbook pose with the full outfit visible. Soft daylight and natural fabric movement. Full-length eye-level shot with a gentle side track. Sound: light fabric rustle and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the garment and keep its print, color and shape exactly. An adult model wearing the floral dress turns once beside a bright window, then settles into a relaxed lookbook pose with the full outfit visible. Soft daylight and natural fabric movement. Full-length eye-level shot with a gentle side track. End in the lookbook pose with the floral print and full hem in view. Sound: light fabric rustle and quiet room tone; no music.",
           "kind": "video"
         }
       ],

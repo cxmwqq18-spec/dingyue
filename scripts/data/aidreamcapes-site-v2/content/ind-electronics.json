@@ -315,7 +315,7 @@
         {
           "ref": "n:gen2:tpl-angle-g3",
           "label": "Macro detail: Speaker controls",
-          "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and top controls exactly. Hold a tight view of the buttons and woven grille with one control centered in focus. Soft edge light, precise product-detail look. Table-height macro with a short push-in. Sound: one soft button click and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and top controls exactly. Hold a tight view of the buttons and woven grille with one control centered in focus. Soft edge light, precise product-detail look. Table-height macro with a short push-in. End with the top controls centered above the speaker’s woven grille. Sound: one soft button click and quiet room tone; no music.",
           "chips": [
             "detail"
           ],

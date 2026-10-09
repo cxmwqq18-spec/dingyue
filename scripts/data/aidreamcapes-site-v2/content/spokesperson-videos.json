@@ -83,7 +83,7 @@
       "result": "n:guide:q4-spokesperson-strip-01",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded product image and preserve its shape, colors and label. In a parked car, an adult Latina woman holds a plain serum bottle beside her face and says: “Here is the pump detail I wanted to show.” She turns the bottle once so the pump faces the lens. Handheld front-camera chest-up framing, natural light and skin texture, slight natural sway. Sound: her voice and soft parked-car room tone; no music."
+      "prompt": "Use the uploaded product image and preserve its shape, colors and label. In a parked car, an adult Latina woman holds a plain serum bottle beside her face and says: “Here is the pump detail I wanted to show.” She turns the bottle once so the pump faces the lens. Handheld front-camera chest-up framing, natural light and skin texture, slight natural sway. End with the pump turned toward the lens beside her cheek. Sound: her voice and soft parked-car room tone; no music."
     },
     "picker": {
       "title": "Choose a format and setting",
@@ -113,7 +113,7 @@
           "chips": [
             "creator-reviews"
           ],
-          "prompt": "In a parked car, an adult creator holds the serum beside their face and says: “Here is the pump detail I wanted to show.” They turn it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin, slight handheld sway. Sound: clear speech and soft car ambience; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum beside their face and says: “Here is the pump detail I wanted to show.” They turn it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin, slight handheld sway. End with the serum held steady beside the creator’s face, pump visible. Sound: clear speech and soft car ambience; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -122,7 +122,7 @@
           "chips": [
             "routine-tryon"
           ],
-          "prompt": "At a bright bathroom sink, an adult creator holds the moisturizer beside their cheek and says: “This is the step I do before makeup.” They pat a small amount onto one cheek. Direct-to-camera selfie, natural light, realistic skin. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright bathroom sink, an adult creator holds the moisturizer beside their cheek and says: “This is the step I do before makeup.” They pat a small amount onto one cheek. Direct-to-camera selfie, natural light, realistic skin. End with the moisturizer beside the cheek and the applied layer visible. Sound: clear speech and quiet room tone; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -131,7 +131,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "At a home kitchen counter, an adult creator holds a silicone spatula and says: “This edge reaches along the curve of the pan.” They guide it once around a plain skillet, then face the lens. Casual phone selfie, natural window light. Sound: speech and a light pan scrape; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home kitchen counter, an adult creator holds a silicone spatula and says: “This edge reaches along the curve of the pan.” They guide it once around a plain skillet, then face the lens. Casual phone selfie, natural window light. End with the spatula resting in the skillet, curved edge visible. Sound: speech and a light pan scrape; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -140,7 +140,7 @@
           "chips": [
             "unboxing-reactions"
           ],
-          "prompt": "In a lived-in living room, an adult creator opens a small plain box, lifts a round wireless-earbud case and says: “Let’s open the case and see what comes in the box.” Eye-level handheld chest-up shot, natural skin texture. Sound: speech and soft packaging rustle; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lived-in living room, an adult creator opens a small plain box, lifts a round wireless-earbud case and says: “Let’s open the case and see what comes in the box.” Eye-level handheld chest-up shot, natural skin texture. Soft side light from the living-room window. End with the open earbud case above the box and both earbuds visible. Sound: speech and soft packaging rustle; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -149,7 +149,7 @@
           "chips": [
             "creator-reviews"
           ],
-          "prompt": "At a small podcast table, an adult creator holds plain over-ear headphones and says: “Here are three details I can show: the ear cups, hinge and button placement.” They turn the headphones once. Front-camera medium close-up, soft room light. Sound: speech and quiet room tone; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a small podcast table, an adult creator holds plain over-ear headphones and says: “Here are three details I can show: the ear cups, hinge and button placement.” They turn the headphones once. Front-camera medium close-up, soft room light. End with both ear cups forward beside the podcast table. Sound: speech and quiet room tone; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -158,7 +158,7 @@
           "chips": [
             "routine-tryon"
           ],
-          "prompt": "At a cafe window seat, an adult creator wears a plain cardigan and says: “Same cardigan, three layers: tee, button-down and tank.” They gesture to the neckline and sleeve. Casual front-camera selfie, natural window light. Sound: speech and low cafe ambience; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe window seat, an adult creator wears a plain cardigan and says: “Same cardigan, three layers: tee, button-down and tank.” They gesture to the neckline and sleeve. Casual front-camera selfie, natural window light. End facing camera with the cardigan neckline and sleeve in view. Sound: speech and low cafe ambience; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -167,7 +167,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "In a practical gym, an adult creator holds a plain shaker and says: “One squeeze shows how the cap opens with one hand.” They press the lid once and hold the bottle still. Chest-up front-camera view, natural skin, soft daylight. Sound: speech and a light shaker rattle; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator holds a plain shaker and says: “One squeeze shows how the cap opens with one hand.” They press the lid once and hold the bottle still. Chest-up front-camera view, natural skin, soft daylight. End with the shaker upright and its opened cap facing camera. Sound: speech and a light shaker rattle; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -176,7 +176,7 @@
           "chips": [
             "unboxing-reactions"
           ],
-          "prompt": "At a home-office desk, an adult creator opens a folding phone stand and says: “If your phone keeps sliding on calls, this stand holds the angle in place.” They set a phone into the cradle. Handheld eye-level selfie, window light. Sound: speech and a light hinge click; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, an adult creator opens a folding phone stand and says: “If your phone keeps sliding on calls, this stand holds the angle in place.” They set a phone into the cradle. Handheld eye-level selfie, window light. End with the phone seated upright in the open stand cradle. Sound: speech and a light hinge click; no music, text or logos.",
           "kind": "video"
         }
       ],

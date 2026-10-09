@@ -220,7 +220,7 @@
       "sourceHint": "Keep the complete headband and both ear cups in clear focus.",
       "result": "n:guide:q14-retarget-step",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter wearing the over-ear headphones walks along a bright station platform and turns toward an arriving train, both ear cups visible. Soft daylight, candid phone-video look. Medium side-follow framing with one smooth handheld move. Sound: footsteps and low station ambience; no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter wearing the over-ear headphones walks along a bright station platform and turns toward an arriving train, both ear cups visible. Soft daylight, candid phone-video look. Medium side-follow framing with one smooth handheld move. End side-on at the station with both ear cups visible. Sound: footsteps and low station ambience; no music.",
       "options": [
         [
           "Size",
@@ -274,7 +274,7 @@
             "hooks",
             "routines"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a rocky trail, an adult hiker takes two steady uphill steps in the plain brown boots, with the tread visibly touching gravel. Cool morning light, candid outdoor phone-video look. Low tracking angle that settles on the boot. Sound: gravel crunch and quiet birds; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a rocky trail, an adult hiker takes two steady uphill steps in the plain brown boots, with the tread visibly touching gravel. Cool morning light, candid outdoor phone-video look. Low tracking angle that settles on the boot. End with the sole angled toward the lens and the tread in focus. Sound: gravel crunch and quiet birds; no music.",
           "kind": "video"
         },
         {
@@ -283,7 +283,7 @@
           "chips": [
             "hooks"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a pale dressing table, adult hands open a small unbranded jewelry box to reveal a plain gold ring and hold it still in the center. Soft window light, tactile phone-video look. Top-down close framing with a slow push-in. Sound: box hinge and tissue rustle; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a pale dressing table, adult hands open a small unbranded jewelry box to reveal a plain gold ring and hold it still in the center. Soft window light, tactile phone-video look. Top-down close framing with a slow push-in. End with the ring centered in the open box lining. Sound: box hinge and tissue rustle; no music.",
           "kind": "video"
         },
         {
@@ -292,7 +292,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright market walkway, an adult interviewer holds a plain microphone toward an adult woman holding the protein bar. She takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up two-person framing with a gentle handheld drift. Sound: her voice, a crisp bite and outdoor ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright market walkway, an adult interviewer holds a plain microphone toward an adult woman holding the protein bar. She takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up two-person framing with a gentle handheld drift. End with the market-side bitten bar at chest height, cut edge facing camera. Sound: her voice, a crisp bite and outdoor ambience; no music.",
           "kind": "video"
         },
         {
@@ -301,7 +301,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator at a bright vanity holds the serum bottle beside her face and says, “Here is a closer look at the dropper.” She turns it once and holds it toward the lens. Natural skin texture, calm phone-video look. Chest-up eye-level framing with a gentle push-in. Sound: her voice and room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator at a bright vanity holds the serum bottle beside her face and says, “Here is a closer look at the dropper.” She turns it once and holds it toward the lens. Natural skin texture, calm phone-video look. Chest-up eye-level framing with a gentle push-in. Soft vanity lighting. End with the dropper upright beside the bottle, both in focus. Sound: her voice and room tone; no music.",
           "kind": "video"
         },
         {
@@ -310,7 +310,7 @@
           "chips": [
             "demo"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult applies one drop of clear serum to the back of her hand beside the untreated other hand, showing a same-light texture comparison without a result claim. Natural skin texture, no retouching. Overhead close framing with a slow push-in. Sound: dropper tap and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult applies one drop of clear serum to the back of her hand beside the untreated other hand, showing a same-light texture comparison without a result claim. Natural skin texture, no retouching. Overhead close framing with a slow push-in. End on both hands side by side, with the fresh drop centered between them. Sound: dropper tap and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -319,7 +319,7 @@
           "chips": [
             "demo"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. At a clean desk, an adult hand fits the plain case with one small circular camera opening onto a generic phone and holds the seated case edge-on. Soft daylight, natural product-demo look. Top-down close framing with a short tilt. Sound: one quiet snap and room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. At a clean desk, an adult hand fits the plain case with one small circular camera opening onto a generic phone and holds the seated case edge-on. Soft daylight, natural product-demo look. Top-down close framing with a short tilt. End on the fitted phone case edge-on, camera opening visible. Sound: one quiet snap and room tone; no music.",
           "kind": "video"
         },
         {
@@ -329,7 +329,7 @@
             "demo",
             "routines"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny neighborhood path, an adult owner walks a dog, pauses for a sit cue and offers one plain treat from a pouch. Natural afternoon light, candid lifestyle phone-video look. Medium follow framing with one smooth handheld move. Sound: footsteps, collar jingle and park ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny neighborhood path, an adult owner walks a dog, pauses for a sit cue and offers one plain treat from a pouch. Natural afternoon light, candid lifestyle phone-video look. Medium follow framing with one smooth handheld move. End with the dog beside the pouch after taking the treat. Sound: footsteps, collar jingle and park ambience; no music.",
           "kind": "video"
         }
       ],

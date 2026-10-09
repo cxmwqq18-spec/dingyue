@@ -219,7 +219,7 @@
       "sourceHint": "Show the whole backpack and its main compartments.",
       "result": "n:guide:q13-carousel-steps-result-r2",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black commuter backpack and places a notebook into its front organizer pocket. End with the pocket open and the full bag visible. Eye-level close framing with a gentle push-in; sound: zipper and quiet cafe room tone, no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black commuter backpack and places a notebook into its front organizer pocket. End with the pocket open and the full bag visible. Eye-level close framing with a gentle push-in. Warm cafe-window light. Sound: zipper and quiet cafe room tone, no music.",
       "options": [
         [
           "Size",
@@ -263,7 +263,7 @@
           "chips": [
             "unbox"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands open a plain jewelry box, lift both gold hoops and hold them above the lining. End with the pair centered. Overhead close-up; sound: soft box hinge and room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Hands open a plain jewelry box, lift both gold hoops and hold them above the lining. End with the pair centered. Overhead close-up. Soft window light. Sound: soft box hinge and room tone, no music.",
           "kind": "video"
         },
         {
@@ -272,7 +272,7 @@
           "chips": [
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. Top-down close-up with a gentle push; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. Top-down close-up with a gentle push. Broad desk-side window light. End on the organizer holding the charging cable, other cables beside it. Sound: cable taps and room tone; no music.",
           "kind": "video"
         },
         {
@@ -281,7 +281,7 @@
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a fitting room, an adult turns once toward the mirror, then faces the camera and says, “The cuffs and hem are easy to see.” Keep the jacket front visible. Mirror-height medium framing; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a fitting room, an adult turns once toward the mirror, then faces the camera and says, “The cuffs and hem are easy to see.” Keep the jacket front visible. Mirror-height medium framing. Even fitting-room light. End in the fitting-room mirror with the jacket front and cuffs visible. Sound: spoken line and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -290,7 +290,7 @@
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult uses the dropper to place one small drop of serum on her cheek, then lowers the bottle beside her face. Close mirror framing; sound: soft cap click, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult uses the dropper to place one small drop of serum on her cheek, then lowers the bottle beside her face. Close mirror framing. Diffused bathroom window light. End with the bottle beside her cheek after the drop, label facing camera. Sound: soft cap click, no music.",
           "kind": "video"
         },
         {
@@ -301,7 +301,7 @@
             "unbox",
             "finish"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black backpack organizer, places a notebook inside and closes the flap. End with the full backpack visible. Eye-level medium close-up; sound: zipper and room tone, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black backpack organizer, places a notebook inside and closes the flap. End with the full backpack visible. Eye-level medium close-up. Warm cafe-window light. Sound: zipper and room tone, no music.",
           "kind": "video"
         },
         {
@@ -310,7 +310,7 @@
           "chips": [
             "detail"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator turns the headphones toward the lens, points to the visible ear cushions and says, “The padding and folding hinges are right here.” Front-facing chest-up framing; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator turns the headphones toward the lens, points to the visible ear cushions and says, “The padding and folding hinges are right here.” Front-facing chest-up framing. Soft window light. End with both ear cups facing camera and the hinge visible. Sound: spoken line and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -319,7 +319,7 @@
           "chips": [
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a garden path, an adult offers the leash handle to a dog, then walks forward as the dog follows. Keep the clip and handle visible. Eye-level tracking shot; sound: footsteps and light outdoor ambience, no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a garden path, an adult offers the leash handle to a dog, then walks forward as the dog follows. Keep the clip and handle visible. Eye-level tracking shot. End with the dog and leash clip both visible in a steady walking pose. Sound: footsteps and light outdoor ambience, no music.",
           "kind": "video"
         },
         {
@@ -328,7 +328,7 @@
           "chips": [
             "finish"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the crisp pieces inside.” Chest-up close framing; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the crisp pieces inside.” Chest-up close framing. Soft kitchen window light. End with the bar cut-side forward and its plain wrapper beside it. Sound: spoken line, one crisp bite and room tone; no music.",
           "kind": "video"
         }
       ],

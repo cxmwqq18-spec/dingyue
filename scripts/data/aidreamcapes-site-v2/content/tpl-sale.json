@@ -275,7 +275,7 @@
           "chips": [
             "offer"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On an open suitcase at a bright hotel room, adult hands pack the backpack and a plain packing cube together, ending with both items visible beside the closed case. Natural travel-ad phone-video look. Overhead handheld shot with a slow push-in. Sound: zipper, fabric movement; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On an open suitcase at a bright hotel room, adult hands pack the backpack and a plain packing cube together, ending with both items visible beside the closed case. Natural travel-ad phone-video look. Overhead handheld shot with a slow push-in. Diffused hotel-room daylight. Sound: zipper, fabric movement; no music.",
           "kind": "photo"
         },
         {
@@ -293,7 +293,7 @@
           "chips": [
             "hands"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny home, an adult gently brushes a calm dog with an unbranded grooming kit and sets the brush beside the dog, ending with the tool and coat in view. Natural pet-product phone-video look. Floor-level handheld medium close-up with a slow push-in. Sound: brush through fur, collar jingle, room ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny home, an adult gently brushes a calm dog with an unbranded grooming kit and sets the brush beside the dog, ending with the tool and coat in view. Natural pet-product phone-video look. Floor-level handheld medium close-up with a slow push-in. Soft window light. Sound: brush through fur, collar jingle, room ambience; no music.",
           "kind": "photo"
         },
         {
@@ -321,7 +321,7 @@
           "chips": [
             "style"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult steps into the jacket and turns once to show its fit, ending facing the lens with open space beside them for an offer added later. Natural fashion-ad phone-video look, soft daylight. Full-body tripod framing with one quick snap pan. Sound: jacket rustle, footsteps; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult steps into the jacket and turns once to show its fit, ending facing the lens with open space beside them for an offer added later. Natural fashion-ad phone-video look, soft daylight. Full-body tripod framing with one quick snap pan. End front-facing with the jacket fastened and its full fit visible. Sound: jacket rustle, footsteps; no music.",
           "kind": "photo"
         },
         {
@@ -331,7 +331,7 @@
             "style",
             "creator"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a simple sunlit hallway, an adult wears the canvas crossbody bag, adjusts the strap and turns to show front and side fit, ending with the bag centered. Natural creator-video look. Waist-up handheld mirror framing with a small side step. Sound: strap slide, room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a simple sunlit hallway, an adult wears the canvas crossbody bag, adjusts the strap and turns to show front and side fit, ending with the bag centered. Natural creator-video look. Waist-up handheld mirror framing with a small side step. Soft window light. Sound: strap slide, room tone; no music.",
           "kind": "photo"
         }
       ],

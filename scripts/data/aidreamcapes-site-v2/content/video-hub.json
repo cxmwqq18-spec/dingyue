@@ -447,7 +447,7 @@
           "chips": [
             "product-moment"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape and label area exactly. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. End with the result and product centered and still in frame. Natural phone-video realism, one slow handheld push-in. Sound: soft fabric or product handling and room ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape and label area exactly. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. End with the result and product centered and still in frame. Natural phone-video realism, one slow handheld push-in. Soft window light. Sound: soft fabric or product handling and room ambience; no music.",
           "kind": "video",
           "tool": "before-after-videos"
         },

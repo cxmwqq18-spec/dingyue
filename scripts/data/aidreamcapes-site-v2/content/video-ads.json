@@ -119,7 +119,7 @@
       "result": "f:k3-video-step-green-bottle-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds an unbranded serum beside her face and speaks to camera, then applies one drop and stops with the bottle visible. Natural skin texture, bright window light, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. Sound: spoken line, dropper click and quiet room tone; no music."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds an unbranded serum beside her face and speaks to camera, then applies one drop and stops with the bottle visible. Natural skin texture, bright window light, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. End with the bottle beside the creator’s cheek after the drop application. Sound: spoken line, dropper click and quiet room tone; no music."
     },
     "picker": {
       "title": "Choose a product ad format",
@@ -149,7 +149,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in daylight, holds the serum beside her face and says: “One pump, then a light pass over the cheek.” She applies one pump and ends looking into the lens with the bottle visible. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld framing with slight sway. Sound: her voice, one pump click and light street ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in daylight, holds the serum beside her face and says: “One pump, then a light pass over the cheek.” She applies one pump and ends looking into the lens with the bottle visible. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld framing with slight sway. End with the bottle front beside her cheek after the single pump. Sound: her voice, one pump click and light street ambience; no music.",
           "kind": "video"
         },
         {
@@ -158,7 +158,7 @@
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one pass of tinted lip balm and says: “A quick tint before I head out.” She lowers the balm and pauses facing the lens. Soft morning window light, natural skin texture, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. Sound: her voice and cap click; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one pass of tinted lip balm and says: “A quick tint before I head out.” She lowers the balm and pauses facing the lens. Soft morning window light, natural skin texture, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. End facing the mirror with the lip balm tube beside her lips. Sound: her voice and cap click; no music.",
           "kind": "video"
         },
         {
@@ -167,7 +167,7 @@
           "chips": [
             "grwm"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny public park, an adult interviewer holds a plain microphone as an adult participant takes one protein-bar bite and says: “Let’s see how this tastes.” The participant lowers the bar and pauses toward camera. Clearly staged AI-actor interview, candid natural light. Waist-up handheld two-shot with a slight push-in. Sound: spoken line, wrapper crinkle and park ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny public park, an adult interviewer holds a plain microphone as an adult participant takes one protein-bar bite and says: “Let’s see how this tastes.” The participant lowers the bar and pauses toward camera. Clearly staged AI-actor interview, candid natural light. Waist-up handheld two-shot with a slight push-in. End with the bitten bar lowered beside the participant’s face in the park. Sound: spoken line, wrapper crinkle and park ambience; no music.",
           "kind": "video"
         },
         {
@@ -185,7 +185,7 @@
           "chips": [
             "try-on"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a full-length apartment mirror, an adult woman puts on the crossbody bag, adjusts the strap once and turns to show its fit, ending in a relaxed side profile. Natural daylight, casual fashion-ad look. Full-body mirror framing with one smooth pan from shoulder to hip. Sound: strap slide and footsteps; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a full-length apartment mirror, an adult woman puts on the crossbody bag, adjusts the strap once and turns to show its fit, ending in a relaxed side profile. Natural daylight, casual fashion-ad look. Full-body mirror framing with one smooth pan from shoulder to hip. End full-length in the mirror with the bag’s front pocket facing camera. Sound: strap slide and footsteps; no music.",
           "kind": "video"
         },
         {
@@ -194,7 +194,7 @@
           "chips": [
             "try-on"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a sofa with a calm adult dog nearby, an adult hand pulls the pet-hair remover across one cushion patch, revealing a clean stripe and stopping with the tool in view. Soft window light, relatable home-ad look. Tight three-quarter close-up with one lateral slide. Sound: brush over fabric and soft dog pant; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a sofa with a calm adult dog nearby, an adult hand pulls the pet-hair remover across one cushion patch, revealing a clean stripe and stopping with the tool in view. Soft window light, relatable home-ad look. Tight three-quarter close-up with one lateral slide. End with the remover beside the clean sofa stripe, brush paused at its edge. Sound: brush over fabric and soft dog pant; no music.",
           "kind": "video"
         },
         {

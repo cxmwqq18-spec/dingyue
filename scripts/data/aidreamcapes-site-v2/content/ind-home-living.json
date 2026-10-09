@@ -360,7 +360,7 @@
         {
           "ref": "f:q17-ind-home-living-r2-picker-6",
           "label": "Creator Review: washable pet sofa cover",
-          "prompt": "Use the uploaded photo as the exact product reference. In a calm living room, an adult creator presents a plain washable sofa cover, spreads it flat across the sofa cushion, and shows its quilted surface while a relaxed dog settles beside them. Keep the household pet cover and its texture clearly visible. Natural window light, straightforward creator review framing. No car, phone, wearable, text, logo, or unrelated product.",
+          "prompt": "Use the uploaded photo as the exact product reference. In a calm living room, an adult creator presents a plain washable sofa cover, spreads it flat across the sofa cushion, and shows its quilted surface while a relaxed dog settles beside them. Keep the household pet cover and its texture clearly visible. Natural window light, straightforward creator review framing. No car, phone, wearable, text, logo, or unrelated product. End with the quilted cover spread flat and the dog settled beside it. Sound: fabric movement and quiet room tone; no music.",
           "chips": [
             "creator"
           ],

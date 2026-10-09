@@ -138,7 +138,7 @@
           "chips": [
             "creator"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum beside her face and says, \"Here is the dropper and bottle finish up close.\" She turns the front toward the lens and holds it steady. Soft window light, natural UGC feel. Chest-up selfie framing with one gentle handheld drift. Sound: spoken line, seatbelt rustle and quiet street ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum beside her face and says, \"Here is the dropper and bottle finish up close.\" She turns the front toward the lens and holds it steady. Soft window light, natural UGC feel. Chest-up selfie framing with one gentle handheld drift. End with the bottle front held beside her face after the turn. Sound: spoken line, seatbelt rustle and quiet street ambience; no music.",
           "kind": "video"
         },
         {
@@ -147,7 +147,7 @@
           "chips": [
             "taste"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a home kitchen, an adult creator shows the bitten bar to camera and says, \"You can see the oat texture in this bite.\" He turns the cut edge toward the lens and holds it still. Warm window light, casual UGC look. Chest-up framing with one slow push-in. Sound: spoken line, a crisp bite and quiet kitchen ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a home kitchen, an adult creator shows the bitten bar to camera and says, \"You can see the oat texture in this bite.\" He turns the cut edge toward the lens and holds it still. Warm window light, casual UGC look. Chest-up framing with one slow push-in. End with the bitten bar and its crisp cross-section in view. Sound: spoken line, a crisp bite and quiet kitchen ambience; no music.",
           "kind": "video"
         },
         {
@@ -201,7 +201,7 @@
           "chips": [
             "taste"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult takes one sip of the citrus drink and says, \"It tastes bright with a little fizz.\" He sets the glass beside the plain bottle. Clear daylight, candid UGC style. Chest-up framing with one gentle handheld sway. Sound: spoken line, sip and faint glass bubbles; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult takes one sip of the citrus drink and says, \"It tastes bright with a little fizz.\" He sets the glass beside the plain bottle. Clear daylight, candid UGC style. Chest-up framing with one gentle handheld sway. End with the bottle next to the half-full glass after the sip. Sound: spoken line, sip and faint glass bubbles; no music.",
           "kind": "video"
         }
       ],

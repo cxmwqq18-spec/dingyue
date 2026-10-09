@@ -232,7 +232,7 @@
       "source": "n:guide:tpl-tryon-c3-m2-source",
       "result": "n:guide:tpl-tryon-c3-m2-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult model wears the garment and turns once in soft daylight to show its full silhouette. Natural fashion UGC look. Full-body eye-level handheld shot with one gentle push-in. Sound: fabric movement, no music. End facing camera.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult model wears the garment and turns once in soft daylight to show its full silhouette. Natural fashion UGC look. Full-body eye-level handheld shot with one gentle push-in. Sound: fabric movement, no music. End facing camera with the full garment silhouette visible.",
       "options": [
         [
           "Template",
@@ -295,7 +295,7 @@
           "chips": [
             "fit"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator wears a plain blazer, holds its lapel, looks into camera and says, “Here’s how the shoulder and sleeve sit when I move.” Bright office window light, natural UGC look. Chest-up handheld shot with slight sway. Sound: voice and fabric brush, no music. End facing camera with the blazer in view.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator wears a plain blazer, holds its lapel, looks into camera and says, “Here’s how the shoulder and sleeve sit when I move.” Bright office window light, natural UGC look. Chest-up handheld shot with slight sway. Sound: voice and fabric brush, no music. End facing camera with the blazer shoulder and sleeve in view.",
           "kind": "video"
         },
         {
@@ -314,7 +314,7 @@
           "chips": [
             "walk"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks three measured steps in a plain evening dress through a bright stone corridor and turns once to show the hem. Soft daylight, polished lookbook UGC style. Full-body tracking shot with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a still three-quarter pose.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks three measured steps in a plain evening dress through a bright stone corridor and turns once to show the hem. Soft daylight, polished lookbook UGC style. Full-body tracking shot with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a still three-quarter pose with the evening-dress hem visible.",
           "kind": "video"
         },
         {
@@ -341,7 +341,7 @@
           "chips": [
             "walk"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks toward camera in a plain wide-leg suit, pauses and turns slightly to show the drape. Soft courtyard daylight, clean fashion UGC look. Full-body handheld tracking with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a full-length front view.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks toward camera in a plain wide-leg suit, pauses and turns slightly to show the drape. Soft courtyard daylight, clean fashion UGC look. Full-body handheld tracking with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a full-length front pose showing the wide-leg suit drape.",
           "kind": "video"
         }
       ],

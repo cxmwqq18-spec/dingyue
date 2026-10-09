@@ -234,7 +234,7 @@
         ]
       ],
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a shaded trail overlook, an adult hiker pauses, drinks from the bottle and lowers it while looking along the path. Natural late-morning light, candid outdoor creator-video look. Chest-up eye-level framing with a gentle handheld settle. Sound: a quiet sip, birds and light breeze; no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a shaded trail overlook, an adult hiker pauses, drinks from the bottle and lowers it while looking along the path. Natural late-morning light, candid outdoor creator-video look. Chest-up eye-level framing with a gentle handheld settle. End with the bottle lowered at chest height, its label facing camera. Sound: a quiet sip, birds and light breeze; no music.",
       "mode": "video"
     },
     "picker": {
@@ -265,7 +265,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult creator holds the snack pouch beside her face and says, “The pouch opens wide; here is the snack size.” She turns it once to show the opening and holds it still. Soft window light, natural phone-video look. Chest-up eye-level framing with a gentle push-in. Sound: her voice and light kitchen ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult creator holds the snack pouch beside her face and says, “The pouch opens wide; here is the snack size.” She turns it once to show the opening and holds it still. Soft window light, natural phone-video look. Chest-up eye-level framing with a gentle push-in. End with the pouch opening held toward the camera. Sound: her voice and light kitchen ambience; no music.",
           "kind": "video"
         },
         {
@@ -274,7 +274,7 @@
           "chips": [
             "routines"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bathroom mirror, an adult woman holds the plain hair claw beside her face and says, “Here is how the clip closes around this section.” She clips it into place and looks toward the lens. Soft morning vanity light, casual GRWM phone-video look. Chest-up mirror framing with gentle handheld sway. Sound: her voice and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bathroom mirror, an adult woman holds the plain hair claw beside her face and says, “Here is how the clip closes around this section.” She clips it into place and looks toward the lens. Soft morning vanity light, casual GRWM phone-video look. Chest-up mirror framing with gentle handheld sway. End with the clip closed in her hair, teeth visible in the mirror. Sound: her voice and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -283,7 +283,7 @@
           "chips": [
             "hands"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunlit commuter desk, an adult hand lifts the dark navy over-ear headphones from an open canvas tote, turns the padded ear cups toward the lens and holds them still. Natural lifestyle phone-video look. Close over-shoulder framing with one slow push-in. Sound: fabric rustle and a soft hinge click; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunlit commuter desk, an adult hand lifts the dark navy over-ear headphones from an open canvas tote, turns the padded ear cups toward the lens and holds them still. Natural lifestyle phone-video look. Close over-shoulder framing with one slow push-in. Broad desk-side window light. End with the headphones above the open tote, ear cups facing lens. Sound: fabric rustle and a soft hinge click; no music.",
           "kind": "video"
         },
         {
@@ -301,7 +301,7 @@
           "chips": [
             "reviews"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a lively city sidewalk, an adult creator holds a plain protein bar, takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up eye-level framing with a slight handheld drift. Sound: her voice, a crisp bite and soft street ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a lively city sidewalk, an adult creator holds a plain protein bar, takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up eye-level framing with a slight handheld drift. End with the creator holding the bitten bar beside its open wrapper. Sound: her voice, a crisp bite and soft street ambience; no music.",
           "kind": "video"
         },
         {
@@ -319,7 +319,7 @@
           "chips": [
             "problem"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. In a bright living room, an adult uses the reusable lint roller across a pet-hair-covered sofa cushion, revealing a clean strip beside the remaining fur. Natural window light, honest home-demo look. Medium close framing with a slow sideward track. Sound: roller movement and soft room ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. In a bright living room, an adult uses the reusable lint roller across a pet-hair-covered sofa cushion, revealing a clean strip beside the remaining fur. Natural window light, honest home-demo look. Medium close framing with a slow sideward track. End with the roller at the clean fabric stripe, loose hair visible nearby. Sound: roller movement and soft room ambience; no music.",
           "kind": "video"
         },
         {
@@ -328,7 +328,7 @@
           "chips": [
             "routines"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter walks through a bright station wearing the backpack, pauses at a bench and takes a notebook from its front pocket. Natural daylight, candid phone-video look. Medium follow shot with one smooth handheld move. Sound: footsteps, fabric rustle and low station ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter walks through a bright station wearing the backpack, pauses at a bench and takes a notebook from its front pocket. Natural daylight, candid phone-video look. Medium follow shot with one smooth handheld move. End with the backpack worn and its front pocket facing camera. Sound: footsteps, fabric rustle and low station ambience; no music.",
           "kind": "video"
         }
       ],
