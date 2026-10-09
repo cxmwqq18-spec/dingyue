@@ -1488,7 +1488,7 @@ function payloadFor(model, page) {
         : t === "occasion" ? [...OCCASION_IDS.filter((id) => id !== page.id), ...Object.keys(PLAT_TOOLS).map((id) => `plat-${id}`)]
           : Object.keys(PLAT_TOOLS).filter((id) => id !== slug).map((id) => `plat-${id}`))
     ];
-    const relatedLinks = relatedLinksFor(model, page, relatedSuggestions);
+    const relatedLinks = t === "platform" ? undefined : relatedLinksFor(model, page, relatedSuggestions);
     let visual;
     let visualMaker;
     if (c.visual) {
