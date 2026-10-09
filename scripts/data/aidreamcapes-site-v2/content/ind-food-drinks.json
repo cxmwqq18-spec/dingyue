@@ -325,7 +325,7 @@
         {
           "ref": "f:q17-ind-food-drinks-picker-6",
           "label": "GRWM: hydration mix before workout",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in workout clothes holds a hydration mix sachet beside her face and says to camera: “I mix one sachet into my bottle before I head out.” She pours it into a clear bottle and ends holding both products still. Soft morning daylight, natural GRWM creator style. Chest-up front-facing handheld framing with slight sway. End with the filled bottle beside the emptied sachet, pouch label facing camera. Sound: her voice, powder pour, bottle cap click; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in workout clothes holds a hydration mix sachet beside her face and says to camera: “I mix one sachet into my bottle before I head out.” She pours it into a clear bottle and ends holding both products still. Soft morning daylight, natural GRWM creator style. Chest-up front-facing handheld framing with slight sway. Sound: her voice, powder pour, bottle cap click; no music.",
           "chips": [
             "routine"
           ],

@@ -185,7 +185,7 @@
           "chips": [
             "try-on"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a full-length apartment mirror, an adult woman puts on the crossbody bag, adjusts the strap once and turns to show its fit, ending in a relaxed side profile. Natural daylight, casual fashion-ad look. Full-body mirror framing with one smooth pan from shoulder to hip. End full-length in the mirror with the bag’s front pocket facing camera. Sound: strap slide and footsteps; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a full-length apartment mirror, an adult woman puts on the crossbody bag, adjusts the strap once and turns to show its fit, ending in a relaxed side profile. Natural daylight, casual fashion-ad look. Full-body mirror framing with one smooth pan from shoulder to hip. Sound: strap slide and footsteps; no music.",
           "kind": "video"
         },
         {

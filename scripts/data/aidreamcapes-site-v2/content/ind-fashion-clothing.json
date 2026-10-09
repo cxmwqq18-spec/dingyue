@@ -288,7 +288,7 @@
             "try-on",
             "lookbook-pose"
           ],
-          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. On a quiet city sidewalk, an adult woman walks two steps toward camera in the coat and turns once to show its shape, ending in a relaxed front pose. Street-style lookbook, soft overcast daylight. Full-length eye-level handheld shot with a slow backward track. End in a relaxed front pose with the coat silhouette clear. Sound: footsteps and light city ambience; no music.",
+          "prompt": "Use the uploaded photo as the garment and keep its color, cut and details exactly. On a quiet city sidewalk, an adult woman walks two steps toward camera in the coat and turns once to show its shape, ending in a relaxed front pose. Street-style lookbook, soft overcast daylight. Full-length eye-level handheld shot with a slow backward track. Sound: footsteps and light city ambience; no music.",
           "kind": "video"
         },
         {

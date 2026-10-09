@@ -315,7 +315,7 @@
           "chips": [
             "texture"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and metal finish exactly. At a softly lit vanity, an adult hand fastens a plain gold hoop earring and turns slightly so the clasp catches the light, ending in sharp focus. Cinematic jewelry-ad look, warm side light. Macro close-up with one slow slide. End with the gold clasp in sharp focus against the earring curve. Sound: clasp click, quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and metal finish exactly. At a softly lit vanity, an adult hand fastens a plain gold hoop earring and turns slightly so the clasp catches the light, ending in sharp focus. Cinematic jewelry-ad look, warm side light. Macro close-up with one slow slide. Sound: clasp click, quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -324,7 +324,7 @@
           "chips": [
             "cinematic"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and panels exactly. On a dark concrete plinth, the neutral sneaker rotates a quarter turn as a narrow spotlight sweeps from heel to toe, ending in a clean side profile. Cinematic footwear-ad look, crisp shadow. Low close-up with one slow orbit. Narrow spotlight with a crisp edge. End in a clean sneaker side profile as the spotlight reaches the toe. Sound: soft platform scrape, studio room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and panels exactly. On a dark concrete plinth, the neutral sneaker rotates a quarter turn as a narrow spotlight sweeps from heel to toe, ending in a clean side profile. Cinematic footwear-ad look, crisp shadow. Low close-up with one slow orbit. Narrow spotlight with a crisp edge. Sound: soft platform scrape, studio room tone; no music.",
           "kind": "video"
         },
         {
