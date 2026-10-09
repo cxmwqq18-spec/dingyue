@@ -1,10 +1,10 @@
 {
   "id": "tpl-retargeting-video-ad",
   "title": "Retargeting Video Ad Template | AIVideosUGC",
-  "description": "Make a retargeting video ad from one product photo. Show a useful return-to-product moment, then set your audience, offer, and frequency in your ad platform.",
+  "description": "Make a retargeting video ad from one product photo. Show a clear return-to-product moment, then set your audience, offer, and frequency in your ad platform.",
   "h1": "Retargeting Video Ads for a Second Look",
   "eyebrow": "Retargeting video template",
-  "lead": "Retargeting video ad creatives give a shopper a useful second look at a product. Upload a photo, describe a short return-to-product moment, and get a clip; the ad platform still controls who sees it.",
+  "lead": "Retargeting video ad creatives give a shopper a second look at a product they already viewed. Upload a photo, describe a short return-to-product moment, and get a clip; the ad platform still controls who sees it.",
   "secondary_keywords": [
     "remarketing video ad",
     "cart reminder video",
@@ -13,13 +13,13 @@
   ],
   "intro": [
     "The sample shows an adult commuter using dark navy over-ear headphones during a train-station routine. It is an AI-generated scene, not a claim about an individual shopper or their past activity.",
-    "Pair a useful product reminder with an audience, offer, and frequency you configure in your ad platform. The scene itself does not identify visitors or cart activity."
+    "Pair a product reminder with an audience, offer, and frequency you configure in your ad platform. The scene itself does not identify visitors or cart activity."
   ],
   "tip": "Describe a quiet second-look action and leave the audience, price, and reminder wording to the ad platform and your editor.",
   "steps": [
     {
       "t": "Choose the product",
-      "d": "Upload a clear product image that gives the clip a recognizable shape and useful detail."
+      "d": "Upload a clear product image that gives the clip a recognizable shape and a detail worth a second look."
     },
     {
       "t": "Describe the second look",
@@ -33,7 +33,7 @@
   "ideas": [
     {
       "t": "Feature reminder",
-      "d": "Use one close action to bring a useful product detail back into view."
+      "d": "Use one close action to bring a specific product detail back into view."
     },
     {
       "t": "Pack for later",
@@ -41,7 +41,7 @@
     },
     {
       "t": "New angle",
-      "d": "Make another run that shows the same product from a different useful angle."
+      "d": "Make another run that shows the same product from an angle the first clip did not cover."
     }
   ],
   "maker": {
@@ -73,11 +73,23 @@
     {
       "q": "Will it add the offer or price?",
       "a": "No. Add the current offer, price, dates, and disclosure in your editor or ad platform."
+    },
+    {
+      "q": "Who actually sees the retargeting ad?",
+      "a": "You configure the audience, offer, and frequency in your ad platform. The video only supplies the return-to-product creative."
+    },
+    {
+      "q": "Can the video identify returning shoppers?",
+      "a": "No. It cannot show real visitor or cart data; your ad platform matches the audience to the impression."
+    },
+    {
+      "q": "What length and cost work for retargeting?",
+      "a": "A 6- or 10-second reminder is usually enough and costs 24 or 40 credits."
     }
   ],
   "overview": [
     {
-      "h2": "Show a useful second look",
+      "h2": "Bring the product back into view",
       "d": "A short product reminder can show how an item fits a routine, explain one detail, or make a practical comparison easy to see."
     },
     {
@@ -97,7 +109,7 @@
         "d": "A turn, close, lace, click, or pack-away motion gives the reminder a concrete reason to exist."
       },
       {
-        "t": "Include the useful angle",
+        "t": "Include the missed angle",
         "d": "Show the sole, ear cup, wheel, clasp, or pocket that a shopper may want to inspect again."
       },
       {
@@ -164,9 +176,9 @@
   "fit": {
     "h2": "A good fit for a reminder ad",
     "good": [
-      "Products with one useful detail to revisit",
+      "Products with one detail worth revisiting",
       "Headphones, shoes, accessories, and desk goods",
-      "Feed and Reels return-to-product campaigns",
+      "Products with one detail worth revisiting",
       "Offers that the seller controls outside the asset"
     ],
     "not_ideal": [
@@ -176,7 +188,7 @@
   },
   "examples": {
     "h2": "More product reminder scenes",
-    "lead": "Show a useful product detail or everyday use moment.",
+    "lead": "Show a product detail or everyday use moment a returning shopper recognizes.",
     "groups": [
       {
         "label": "Second-Look Formats",
@@ -204,7 +216,7 @@
     ]
   },
   "visual": {
-    "overview": "A useful retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see.",
+    "overview": "A retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see.",
     "strip": [
       "n:guide:g1-retarget-serum-application",
       "n:guide:g1-retarget-shoe-tread-detail",
@@ -238,7 +250,7 @@
     },
     "picker": {
       "title": "Choose a second-look ad format",
-      "lead": "Give a product another useful moment in a social feed or product page.",
+      "lead": "Give a product another close moment in a social feed or product page.",
       "chips": [
         {
           "id": "demo",
@@ -392,7 +404,7 @@
         "h2": "Make a retargeting video ad from one product photo"
       },
       "m3": {
-        "h2": "Choose a useful scene for a retargeting video ad"
+        "h2": "Choose a scene that brings the product back into view"
       },
       "m4": {
         "h2": "Place a retargeting video in social ads and product pages"
