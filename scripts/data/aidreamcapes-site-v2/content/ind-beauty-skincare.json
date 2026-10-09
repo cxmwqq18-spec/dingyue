@@ -117,7 +117,7 @@
       },
       {
         "t": "Product and texture views",
-        "d": "Square product images can support a listing alongside close details of the finish or applicator."
+        "d": "Square 1:1 videos can support a listing alongside close details of the finish or applicator."
       },
       {
         "t": "Credit visibility",
@@ -242,7 +242,7 @@
         ],
         [
           "Aspect ratio",
-          "9:16"
+          "1:1"
         ]
       ]
     },
@@ -408,7 +408,7 @@
         "h2": "Start with a clear product photo"
       },
       "m6": {
-        "h2": "Square product photos for a listing"
+        "h2": "Square 1:1 beauty videos for a listing"
       },
       "m7": {
         "h2": "Add shade and ingredient details after download"

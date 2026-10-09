@@ -117,7 +117,7 @@
       },
       {
         "t": "Fabric and construction details",
-        "d": "Square stills can show a seam, cuff, closure, or surface texture beside the full garment view."
+        "d": "Square 1:1 videos can show a seam, cuff, closure, or surface texture beside the full garment view."
       },
       {
         "t": "Short movement",
@@ -251,7 +251,7 @@
         ],
         [
           "Aspect ratio",
-          "9:16"
+          "1:1"
         ]
       ]
     },
@@ -423,7 +423,7 @@
         "h2": "Start with a clear garment photo"
       },
       "m6": {
-        "h2": "Square clothing photos for product pages"
+        "h2": "Square 1:1 clothing videos for product pages"
       },
       "m7": {
         "h2": "Add size and fit details after download"

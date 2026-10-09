@@ -117,7 +117,7 @@
       },
       {
         "t": "Construction close-ups",
-        "d": "A square still can show the toe, heel, sole, stitching, or material beside the full product view."
+        "d": "A square 1:1 video can show the toe, heel, sole, stitching, or material beside the full product view."
       },
       {
         "t": "Motion for feeds",
@@ -257,7 +257,7 @@
         ],
         [
           "Aspect ratio",
-          "9:16"
+          "1:1"
         ]
       ]
     },
@@ -423,7 +423,7 @@
         "h2": "Start with a clear shoe photo"
       },
       "m6": {
-        "h2": "Square shoe photos for product pages"
+        "h2": "Square 1:1 shoe videos for product pages"
       },
       "m7": {
         "h2": "Add size and material details after download"
