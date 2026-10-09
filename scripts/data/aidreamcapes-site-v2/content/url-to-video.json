@@ -59,6 +59,14 @@
     {
       "q": "Can I change the photo you picked?",
       "a": "Yes. If the photo isn't the best one, replace it with your own upload before you generate."
+    },
+    {
+      "q": "What does a product URL provide?",
+      "a": "It reads public page metadata and available product imagery from the URL, then uses that reference for the clip."
+    },
+    {
+      "q": "What if the page cannot be read?",
+      "a": "Use a direct product photo in the upload flow when the page blocks access or exposes no usable image."
     }
   ],
   "overview": [
@@ -88,9 +96,9 @@
           },
           {
             "ref": "n:guide:q2-url-to-video-example-03",
-            "title": "Creator wears a crossbody bag",
+            "title": "Commuter Backpack Try-On",
             "kind": "scene",
-            "product": "crossbody bag"
+            "product": "commuter backpack"
           }
         ]
       },
@@ -234,13 +242,19 @@
         "frame": "browser",
         "ref": "n:guide:q2-url-to-video-uses-00",
         "h": "Product page",
-        "d": "A product page video can show how a useful item opens, fits or works in a daily routine."
+        "d": "Start with a public product page that includes a clear product image and name."
       },
       {
-        "frame": "listing",
+        "frame": "browser",
+        "ref": "n:guide:k2-url-strip-lunchbox-open",
+        "h": "Reference captured",
+        "d": "The product image and name become the starting reference for the video request."
+      },
+      {
+        "frame": "post",
         "ref": "n:guide:q2-url-to-video-uses-01",
-        "h": "Ads for your best sellers",
-        "d": "Turn a product link into a short creator-led ad for a best seller."
+        "h": "Generated clip",
+        "d": "Turn that product reference into an action scene for a listing or social post."
       }
     ],
     "input": [
