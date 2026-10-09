@@ -73,6 +73,18 @@
     {
       "q": "Can the photo show results like glowing skin?",
       "a": "Keep the photo about the products themselves. Showing the set is fine, but results such as clearer or younger-looking skin shouldn't be promised in the image or the listing text."
+    },
+    {
+      "q": "How should I photograph a multi-piece set?",
+      "a": "Lay every piece together in one clear photo with even light, so the generated image keeps the correct items and count."
+    },
+    {
+      "q": "Can I show the bundle on a white background?",
+      "a": "Yes. Ask for a plain background when the photo is for a listing, or a bright table for a lifestyle shot."
+    },
+    {
+      "q": "How many credits does a bundle photo cost?",
+      "a": "Each bundle photo costs 24 credits. You see the charge before running it, and failed jobs are refunded."
     }
   ],
   "overview": [
@@ -224,7 +236,7 @@
       "sourceHint": "Include every item and package that ships with the bundle.",
       "result": "n:guide:c1-tpl-box-m2-result-square",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the full set from a plain box on a bright table, ending with every item visible. Natural window light, candid UGC look. Top-down handheld close-up with one slow push-in. Sound: tissue rustle, no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the full set from a plain box on a bright table, with every item visible. Natural window light, candid UGC photo, top-down framing, no text or logos.",
       "options": [
         [
           "Template",
@@ -380,13 +392,19 @@
     ],
     "after": {
       "ref": "n:guide:c1-tpl-box-card-gift-set",
+      "mock": {
+        "type": "callout",
+        "tag1": "3-piece set",
+        "tag2": "Full size",
+        "tag3": "Gift boxed"
+      },
       "zones": [
         "Item count",
         "Contents",
         "Sizes"
       ],
       "items": [
-        "For a candle and linen set, list each included item and size after download.",
+        "The frame shows the callout tags you add so each included item and size is labeled.",
         "Name every piece so shoppers can compare the set with the package."
       ]
     },
