@@ -77,6 +77,14 @@
     {
       "q": "Can I add my logo or a sale message to the background?",
       "a": "Add logos and words afterward in a design tool such as Canva, where they'll look exactly as you set them. Lettering made by AI can come out misspelled or blurry."
+    },
+    {
+      "q": "What stays the same in a background change?",
+      "a": "The product, subject, framing and scale should stay consistent while the setting changes."
+    },
+    {
+      "q": "Can I request a new room or outdoor setting?",
+      "a": "Yes. Describe the new environment and keep the uploaded product reference clear."
     }
   ],
   "overview": [
@@ -162,14 +170,14 @@
       "n:guide:q6-cbg-strip-3-r2"
     ],
     "steps": {
-      "source": "n:gen2:plat-instagram-g4",
-      "result": "n:guide:q6-cbg-steps-result-r2",
+      "source": "n:guide:q19-shop-hero-serum",
+      "result": "n:guide:f2-change-background-steps-result-r1",
       "mode": "photo",
-      "prompt": "Show cream smoothed onto the back of a hand beside a bathroom sink, with the tube visible in soft morning light."
+      "prompt": "Use the uploaded amber serum dropper as the exact product reference. Change only the background while preserving the bottle, dropper, hand position, subject framing and product scale."
     },
     "picker": {
       "title": "Choose a product ad format",
-    "lead": "Choose a product scene to see formats such as skincare routines, try-ons and hands-on demos.",
+      "lead": "Choose a product scene to see formats such as skincare routines, try-ons and hands-on demos.",
       "chips": [
         {
           "id": "routine",
@@ -220,7 +228,7 @@
         },
         {
           "ref": "n:guide:q6-cbg-picker-4",
-        "label": "Pet Brush Demo: Clear Sofa",
+          "label": "Pet Brush Demo: Clear Sofa",
           "chips": [
             "problem-fix",
             "demo"
@@ -353,7 +361,7 @@
         "h2": "Background changer FAQ"
       },
       "gallery": {
-        "h2": "AI background changer examples: one vase, five backgrounds"
+        "h2": "Background replacement examples with the product kept in view"
       }
     }
   }
