@@ -47,6 +47,18 @@
     {
       "q": "Can I start from a photo on a white background?",
       "a": "Yes, a white background or cutout photo is a good starting point. Keep the whole product in frame, including legs, handles, and cords, since the AI won't add parts it can't see."
+    },
+    {
+      "q": "Can a white background product photo be placed inside a room?",
+      "a": "Yes. The lifestyle format keeps the item's shape and finish while placing it in a fitting room, shelf or table scene. Upload the full item with clear dimensions cues; the scene cannot change proportions or construction."
+    },
+    {
+      "q": "How do I show organizers or storage products in use?",
+      "a": "Show an adult hand or person placing items into the organizer, opening a drawer, or arranging the space once. A single before-and-after works when the room and product stay the same, with only the arrangement changed."
+    },
+    {
+      "q": "What if my product is large or sold as a set?",
+      "a": "Photograph every piece together and name the set in the description, such as two pillows or three baskets. Keep all pieces in the upload so the result does not add, remove or resize any part."
     }
   ],
   "overview": {
