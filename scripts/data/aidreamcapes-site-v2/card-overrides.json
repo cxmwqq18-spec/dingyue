@@ -304,7 +304,7 @@
   "tpl-color": {
     "images": {
       "box": {
-        "ref": "n:guide:b1-unboxing-card",
+        "ref": "n:guide:k9-tpl-color-box-headphones",
         "alt": "Matte-black headphones lifted from an open kraft box."
       }
     }
@@ -812,6 +812,46 @@
       "launch": {
         "ref": "f:q18-facebook-card-launch-lamp-before-after",
         "alt": "An adult writes in a planner under a compact black table lamp in the bright half of a split before-and-after desk scene."
+      }
+    }
+  },
+  "tpl-pack": {
+    "images": {
+      "look": {
+        "ref": "n:guide:k9-tpl-pack-lookbook-bag",
+        "alt": "Person in a cream coat carrying a tan leather handbag on a sunny street."
+      }
+    }
+  },
+  "tpl-angle": {
+    "images": {
+      "detail": {
+        "ref": "n:guide:k9-tpl-angle-hoodie-details",
+        "alt": "Close-up detail shots of a gray hoodie: the hood, the fabric, the drawstring ends, the front pocket and the ribbed cuff."
+      }
+    }
+  },
+  "tpl-retargeting-video-ad": {
+    "images": {
+      "spark-ads-style-video": {
+        "ref": "n:guide:k9-retargeting-creator-smartwatch",
+        "alt": "Adult creator holds a round-faced smartwatch toward the camera during a casual review."
+      },
+      "product-feature-callout-video": {
+        "ref": "n:guide:k9-retargeting-demo-espresso",
+        "alt": "Adult hand presses the button on a compact espresso maker as espresso pours into a glass cup."
+      }
+    }
+  },
+  "tpl-launch": {
+    "images": {
+      "howto": {
+        "ref": "f:how-to-video",
+        "alt": "Portable garment steamer next to a folded blue shirt on a wooden table"
+      },
+      "outfit": {
+        "ref": "n:guide:k9-tpl-outfit-hero",
+        "alt": "Adult model adjusts the cuff of a beige overshirt while checking the fit in a mirror."
       }
     }
   }

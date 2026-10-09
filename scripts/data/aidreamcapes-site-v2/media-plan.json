@@ -379,9 +379,9 @@
     "tpl-outfit": {
       "hero": {
         "kind": "image",
-        "image": "f:fashion-try-on-reel"
+        "image": "n:guide:k9-tpl-outfit-hero"
       },
-      "og": "f:fashion-try-on-reel",
+      "og": "n:guide:k9-tpl-outfit-hero",
       "gallery": [
         "f:fashion-try-on-reel-t01",
         "f:fashion-try-on-reel-t08",

@@ -37686,6 +37686,166 @@
           640,
           1280
         ]
+      },
+      "k9-tpl-outfit-hero": {
+        "file": "k9-tpl-outfit-hero",
+        "w": 1672,
+        "h": 941,
+        "alt": "Adult model adjusts the cuff of a beige overshirt while checking the fit in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-tpl-pack-lookbook-bag": {
+        "file": "k9-tpl-pack-lookbook-bag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Person in a cream coat carrying a tan leather handbag on a sunny street.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-tpl-pack-after-coffee-pouch": {
+        "file": "k9-tpl-pack-after-coffee-pouch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft coffee pouch centered on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-tpl-angle-hoodie-details": {
+        "file": "k9-tpl-angle-hoodie-details",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up detail shots of a gray hoodie: the hood, the fabric, the drawstring ends, the front pocket and the ribbed cuff.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-ind-beauty-input-hair-oil": {
+        "file": "k9-ind-beauty-input-hair-oil",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult works amber hair oil through the ends of long dark hair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-ind-beauty-input-hair-oil-bad": {
+        "file": "k9-ind-beauty-input-hair-oil-bad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber hair oil bottle with black pump partially cut off at the right edge of a pale vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-ind-beauty-input-hair-oil-good-r2": {
+        "file": "k9-ind-beauty-input-hair-oil-good-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear cylindrical bottle of golden hair oil with a black pump, fully visible on a bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-ind-beauty-input-hair-oil-bad-r2": {
+        "file": "k9-ind-beauty-input-hair-oil-bad-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear cylindrical bottle of golden hair oil with a black pump, partly cropped at the right edge of a bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-ind-beauty-after-hair-oil": {
+        "file": "k9-ind-beauty-after-hair-oil",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber hair oil bottle with a black pump beside a lock of dark hair on a pale vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-ind-electronics-commuter-stand": {
+        "file": "k9-ind-electronics-commuter-stand",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult places a folded phone stand into an open commuter backpack on a train.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-tpl-light-white-bottle": {
+        "file": "k9-tpl-light-white-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brushed steel water bottle on a pure white background with a soft contact shadow.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-tpl-light-white-desk-lamp": {
+        "file": "k9-tpl-light-white-desk-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain curved brass desk lamp shown alone on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-tpl-color-box-headphones": {
+        "file": "k9-tpl-color-box-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte-black headphones lifted from an open kraft box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-occ-product-launch-unboxing-pouch": {
+        "file": "k9-occ-product-launch-unboxing-pouch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift a plain kraft coffee pouch from an open carton lined with tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-retargeting-creator-smartwatch": {
+        "file": "k9-retargeting-creator-smartwatch",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds a round-faced smartwatch toward the camera during a casual review.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k9-retargeting-demo-espresso": {
+        "file": "k9-retargeting-demo-espresso",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand presses the button on a compact espresso maker as espresso pours into a glass cup.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

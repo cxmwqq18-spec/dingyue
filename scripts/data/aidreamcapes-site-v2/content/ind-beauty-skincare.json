@@ -365,8 +365,8 @@
         "bad_label": "Package details blur together"
       },
       {
-        "good": "n:gen2:tpl-beauty-g3",
-        "bad": "n:guide:beauty-sunscreen-crop",
+        "good": "n:guide:k9-ind-beauty-input-hair-oil-good-r2",
+        "bad": "n:guide:k9-ind-beauty-input-hair-oil-bad-r2",
         "good_label": "Hair oil bottle stays fully in frame",
         "bad_label": "Bottle is cut off at the frame edge"
       }
@@ -384,14 +384,14 @@
       }
     ],
     "after": {
-      "ref": "n:guide:k7-ind-beauty-skincare-after-ref-n-lipstick-swatch",
+      "ref": "n:guide:k9-ind-beauty-after-hair-oil",
       "zones": [
-        "Shade",
+        "Product name",
         "Ingredients"
       ],
       "items": [
-        "Small label text can come out soft, so add the shade name as text instead of relying on the photo.",
-        "Copy key ingredients from your listing word for word, so the ad and the product page match."
+        "Add the product name and directions for use in your editor after download.",
+        "Copy the ingredients from your listing exactly so the product details stay consistent."
       ]
     },
     "titles": {
