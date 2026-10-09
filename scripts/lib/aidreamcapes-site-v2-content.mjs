@@ -939,20 +939,150 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
   return visual;
 }
 
-// Footer "Related links" block: 8-12 hand-picked internal links that match the
-// page task. Ids are content ids; the first pass takes what the page asks for,
-// then suggested tool/template/collection ids fill up to the target without dupes.
+// Footer "Related links" block: 8-12 canonical public pages that match the
+// page task. Suggestions are derived from the page type and its industry,
+// platform, tool and template fields; content may provide an explicit list.
+const RELATED_PAGE_TYPES = new Set(["tool", "hub-tool", "hub", "template", "industry", "platform", "occasion"]);
+const RELATED_INDEX_IDS = new Set(["templates", "industries", "platforms"]);
+
+function isRelatedPage(model, page, id) {
+  if (typeof id !== "string" || id === page.id) return false;
+  const target = model.byId[id];
+  if (!target || (!RELATED_PAGE_TYPES.has(target.type) && !RELATED_INDEX_IDS.has(id))) return false;
+  return typeof target.url === "string" && target.url.startsWith("/") && !target.url.includes("#") && !target.url.includes("?");
+}
+
 function relatedLinkItem(model, id) {
   const page = model.byId[id];
   assert.ok(page, `related link target missing: ${id}`);
   return { label: page.label, href: page.url };
 }
 
-function relatedLinksFor(model, page, suggested = [], target = 10) {
-  const asked = model.content[page.id]?.related_links || [];
+function relatedManualId(model, value) {
+  if (typeof value === "string") return value;
+  if (!value || typeof value !== "object") return undefined;
+  if (typeof value.id === "string") return value.id;
+  if (typeof value.pageId === "string") return value.pageId;
+  if (typeof value.href === "string") return model.pages.find((page) => page.url === value.href)?.id;
+  return undefined;
+}
+
+function relatedManualItem(model, value) {
+  const id = relatedManualId(model, value);
+  if (!id) return undefined;
+  const page = model.byId[id];
+  return page ? { label: typeof value === "object" && typeof value.label === "string" ? value.label : page.label, href: page.url } : undefined;
+}
+
+function relatedPageIds(model, predicate) {
+  return model.cards
+    .filter((card) => model.byId[card.pageId]?.type === "template" && predicate(card, model.byId[card.pageId]))
+    .map((card) => card.pageId);
+}
+
+function relatedSuggestionsFor(model, page) {
+  const templateIds = (predicate) => relatedPageIds(model, predicate);
+  const templateIdsForGroup = (group) => templateIds((_card, target) => target.group === group);
+  const industryIdsForTool = (toolId) => Object.entries(IND_TOOLS)
+    .filter(([, tools]) => tools.includes(toolId)).map(([slug]) => `ind-${slug}`);
+  const platformIdsForTool = (toolId) => Object.entries(PLAT_TOOLS)
+    .filter(([, tools]) => tools.includes(toolId)).map(([slug]) => `plat-${slug}`);
+  const siblingTools = (group, id) => (group === "video" ? VIDEO_TOOLS : PHOTO_TOOLS).filter((toolId) => toolId !== id);
+  const templatesForTool = (toolId) => (TOOL_REL[toolId] || [])
+    .map((key) => model.cardByKey[key]?.pageId)
+    .filter((id) => model.byId[id]?.type === "template");
+
+  if (page.type === "home") {
+    return [
+      ...VIDEO_TOOLS.slice(0, 4), ...PHOTO_TOOLS.slice(1, 4),
+      ...HOME_FEATURED.map((key) => model.cardByKey[key]?.pageId),
+      ...VIDEO_TOOLS.slice(4), ...PHOTO_TOOLS.slice(4)
+    ];
+  }
+  if (page.type === "hub" || page.type === "hub-tool") {
+    const group = page.group === "video" ? "video" : "photo";
+    const tools = (group === "video" ? VIDEO_TOOLS : PHOTO_TOOLS).filter((id) => id !== page.id);
+    const templates = templateIdsForGroup(group);
+    const platforms = group === "video" ? ["plat-tiktok", "plat-instagram", "plat-youtube-shorts"] : ["plat-amazon", "plat-shopify", "plat-instagram"];
+    return [...tools, ...templates, ...platforms, ...Object.keys(IND_TOOLS).map((slug) => `ind-${slug}`)];
+  }
+  if (page.type === "tool") {
+    return [
+      ...siblingTools(page.group, page.id),
+      ...templatesForTool(page.id),
+      ...industryIdsForTool(page.id), ...platformIdsForTool(page.id),
+      page.group === "video" ? "video-hub" : "photo-hub"
+    ];
+  }
+  if (page.type === "template") {
+    const sameKind = model.cards.filter((card) => card.pageId !== page.id && card.kind === page.group);
+    const matching = sameKind
+      .filter((card) => card.ind.some((id) => page.industries.includes(id)) || card.plat.some((id) => page.platforms.includes(id)) || card.occ.some((id) => (page.occasions ?? []).includes(id)))
+      .map((card) => card.pageId);
+    const fallback = sameKind.map((card) => card.pageId);
+    return [
+      page.made_with,
+      ...matching, ...page.industries.map((slug) => `ind-${slug}`), ...page.platforms.map((slug) => `plat-${slug}`),
+      ...(page.occasions ?? []).map((slug) => `occ-${slug}`),
+      ...fallback,
+      page.group === "video" ? "video-hub" : "photo-hub"
+    ];
+  }
+  if (page.type === "industry" || page.type === "platform" || page.type === "occasion") {
+    const slug = page.id.split("-").slice(1).join("-");
+    const field = { industry: "ind", platform: "plat", occasion: "occ" }[page.type];
+    const tools = (page.type === "industry" ? IND_TOOLS[slug] : page.type === "platform" ? PLAT_TOOLS[slug] : OCCASION_TOOLS) || [];
+    const matchingTemplates = templateIds((card) => card[field]?.includes(slug));
+    const relatedCollections = page.type === "industry"
+      ? ["industries", ...Object.keys(IND_TOOLS).filter((id) => id !== slug).map((id) => `ind-${id}`)]
+      : page.type === "platform"
+        ? ["platforms", ...Object.keys(PLAT_TOOLS).filter((id) => id !== slug).map((id) => `plat-${id}`)]
+        : ["templates", "photo-hub", "video-hub", ...OCCASION_IDS.filter((id) => id !== page.id)];
+    return [...tools, ...matchingTemplates, ...relatedCollections,
+      ...(page.type === "platform" ? Object.keys(IND_TOOLS).filter((id) => model.cards.some((card) => card.plat.includes(slug) && card.ind.includes(id))).map((id) => `ind-${id}`) : [])];
+  }
+  if (page.type === "index" && page.id === "industries") {
+    return [
+      ...model.pages.filter((item) => item.type === "tool" && ["photo", "video"].includes(item.group)).map((item) => item.id),
+      "templates", "photo-hub", "video-hub"
+    ];
+  }
+  if (page.type === "index" && page.id === "templates") {
+    return [
+      ...VIDEO_TOOLS.slice(0, 4), ...PHOTO_TOOLS.slice(1, 4),
+      ...model.pages.filter((item) => item.type === "template").slice(0, 4).map((item) => item.id),
+      "platforms", "industries"
+    ];
+  }
+  if (page.type === "index" && page.id === "platforms") {
+    return [
+      ...Object.keys(PLAT_TOOLS).map((slug) => `plat-${slug}`),
+      ...VIDEO_TOOLS.slice(0, 2), ...PHOTO_TOOLS.slice(1, 3), "templates", "industries"
+    ];
+  }
+  return [];
+}
+
+function relatedLinksFor(model, page, suggested = relatedSuggestionsFor(model, page), target = 10) {
+  const content = model.content[page.id] ?? {};
+  const asked = Array.isArray(content.relatedLinks) ? content.relatedLinks : Array.isArray(content.related_links) ? content.related_links : null;
+  // An explicit list is authoritative. It may contain ids or canonical link objects;
+  // never append generated links to it.
+  if (asked?.length) {
+    const links = [];
+    const seen = new Set();
+    for (const value of asked) {
+      const id = relatedManualId(model, value);
+      if (id && isRelatedPage(model, page, id) && !seen.has(id)) {
+        links.push(relatedManualItem(model, value));
+        seen.add(id);
+      }
+    }
+    return links.length ? links : undefined;
+  }
   const ids = [];
-  for (const id of [...asked, ...suggested]) {
-    if (id !== page.id && model.byId[id] && !ids.includes(id)) ids.push(id);
+  for (const id of suggested) {
+    if (isRelatedPage(model, page, id) && !ids.includes(id)) ids.push(id);
     if (ids.length >= target) break;
   }
   if (ids.length < 8) return undefined;
@@ -1363,6 +1493,7 @@ function payloadFor(model, page) {
       photoOptions: HOME_PHOTO_OPTIONS
     };
     const visual = visualFor(model, page, c.visual, homeMaker, "video", videoHref, c);
+    const relatedLinks = relatedLinksFor(model, page);
     return { ...base,
       maker: homeMaker,
       ...(visual ? { visual } : {}),
@@ -1377,7 +1508,8 @@ function payloadFor(model, page) {
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
       ...(c.audience ? { audience: { ...c.audience, items: (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) })) } } : {}),
       exampleGallery: examples,
-      examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
+      examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) },
+      ...(relatedLinks ? { relatedLinks } : {})
     };
   }
   if (t === "hub") {
@@ -1393,12 +1525,14 @@ function payloadFor(model, page) {
       cta: c.maker?.cta ?? "Make my video",
       href: hubAppHref
     };
+    const relatedLinks = relatedLinksFor(model, page);
     return { ...base, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, maker,
       tools: VIDEO_TOOLS.map((id) => toolRef(model, id, true, model.cardOverrides?.[page.id]?.tools?.[id])),
       heroCards: applyCardOverrides(model, page, ["creator", "unbox", "beauty"].map((key) => cardRef(model, key, "primary")).filter(Boolean)),
       cards: applyCardOverrides(model, page, CARD_ORDER.filter((key) => model.cardByKey[key].kind === "video" && !["creator", "unbox", "beauty"].includes(key)).map((key) => cardRef(model, key, "primary")).filter(Boolean)),
       appHref: hubAppHref,
       relatedGroups,
+      ...(relatedLinks ? { relatedLinks } : {}),
       ...(visual ? { visual } : {}),
       reading: readingFor(model, page, readingLimitFor(page)) };
   }
@@ -1422,6 +1556,7 @@ function payloadFor(model, page) {
       { title: "Browse industries", links: pageLinksFor(model, ["ind-beauty-skincare", "ind-shoes", "ind-food-drinks", "ind-home-living"]) },
       { title: "Browse platforms", links: pageLinksFor(model, ["plat-amazon", "plat-shopify"]) }
     ] : [];
+    const relatedLinks = relatedLinksFor(model, page);
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
@@ -1437,6 +1572,7 @@ function payloadFor(model, page) {
         : page.id === "spokesperson-videos" ? { single: imageRef(model, "presenter", "AI-generated presenter holding a skincare bottle") }
         : hasHero ? {} : { cards: hub ? applyCardOverrides(model, page, rel.slice(0, 3)) : rel.slice(0, 3) },
       templates: [...templateCards, ...caseCards], siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [],
+      ...(relatedLinks ? { relatedLinks } : {}),
       reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "template") {
@@ -1454,6 +1590,7 @@ function payloadFor(model, page) {
     const caseCards = caseCardsFor(model, page, moreCards);
     const maker = { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c);
+    const relatedLinks = relatedLinksFor(model, page);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
       maker,
@@ -1465,7 +1602,9 @@ function payloadFor(model, page) {
         ["Made with", tool.label, specLinks(model, [tool.id])],
         ...(occasionIds.length ? [["Good for", names(occasionIds), specLinks(model, occasionIds)]] : [])
       ],
-      madeWith: { label: tool.label, href: tool.url }, more: [...moreCards, ...caseCards], reading: readingFor(model, page, readingLimitFor(page)) };
+      madeWith: { label: tool.label, href: tool.url }, more: [...moreCards, ...caseCards],
+      ...(relatedLinks ? { relatedLinks } : {}),
+      reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "industry" || t === "platform" || t === "occasion") {
     const slug = page.id.split("-").slice(1).join("-");
@@ -1482,14 +1621,7 @@ function payloadFor(model, page) {
     const collectionHref = appHref({ [paramKey]: slug, ...(t === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(slug) ? { size: "9:16", length: "15" } : {}) }, t === "platform" && ["tiktok", "youtube-shorts"].includes(slug));
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
     const caseCards = caseCardsFor(model, page, listed);
-    const relatedSuggestions = [
-      ...tools,
-      ...(t === "industry" ? ["industries"] : t === "occasion" ? ["templates", "photo-hub", "video-hub"] : ["platforms"]),
-      ...(t === "industry" ? Object.keys(IND_TOOLS).filter((id) => id !== slug).map((id) => `ind-${id}`)
-        : t === "occasion" ? [...OCCASION_IDS.filter((id) => id !== page.id), ...Object.keys(PLAT_TOOLS).map((id) => `plat-${id}`)]
-          : Object.keys(PLAT_TOOLS).filter((id) => id !== slug).map((id) => `plat-${id}`))
-    ];
-    const relatedLinks = t === "platform" ? undefined : relatedLinksFor(model, page, relatedSuggestions);
+    const relatedLinks = relatedLinksFor(model, page);
     let visual;
     let visualMaker;
     if (c.visual) {
@@ -1512,8 +1644,10 @@ function payloadFor(model, page) {
       reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "index") {
+    const relatedLinks = relatedLinksFor(model, page);
     const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro,
-      ...(INDEX_CTA[page.id] ? { cta: { ...INDEX_CTA[page.id], href: "/app/create" } } : {}) };
+      ...(INDEX_CTA[page.id] ? { cta: { ...INDEX_CTA[page.id], href: "/app/create" } } : {}),
+      ...(relatedLinks ? { relatedLinks } : {}) };
     const visual = visualFor(model, page, c.visual, { photoOptions: HOME_PHOTO_OPTIONS }, "photo", "/app/create", c);
     if (visual) out.visual = visual;
     if (page.id === "ai-actors") {
@@ -1549,11 +1683,6 @@ function payloadFor(model, page) {
       out.items = model.pages.filter((p) => p.id.startsWith(prefix)).map((p) => ({ label: p.label, href: p.url, text: model.content[p.id].card || snippet(model.content[p.id].lead, 140), image: imageOverrides[p.url] ? mediaImage(model, imageOverrides[p.url], "card") : pageCardImage(model, p.id), filterTags: filterMap[p.url] ?? [] }));
       if (page.id === "industries") {
         out.features = (c.features || []).map((entry) => ({ t: entry.t, d: inlineLinks(model, entry.d, page.id) }));
-        const industryIndexLinks = relatedLinksFor(model, page, [
-          ...model.pages.filter((p) => p.type === "tool" && ["photo", "video"].includes(p.group)).map((p) => p.id),
-          "templates", "photo-hub", "video-hub"
-        ]);
-        if (industryIndexLinks) out.relatedLinks = industryIndexLinks;
       }
     } else {
       out.articles = model.pages.filter((p) => p.section === page.id).map((p) => ({ title: model.content[p.id].h1, summary: model.content[p.id].summary || "", minutes: model.content[p.id].read_minutes || 5, href: p.url, image: pageCardImage(model, p.id) }));
