@@ -252,42 +252,50 @@
     {
       "t": "Beauty: GRWM texture check",
       "d": "Show an adult applying a small amount and holding the package beside the finished texture for a clear routine moment.",
-      "href": "/industries/beauty-skincare"
+      "href": "/industries/beauty-skincare",
+      "image": "n:guide:g1-retarget-coral-lip-balm-use-r2"
     },
     {
       "t": "Fashion: outfit check",
       "d": "Show the garment on a person in motion so shoppers can judge fit, fabric and the finished look.",
-      "href": "/industries/fashion-clothing"
+      "href": "/industries/fashion-clothing",
+      "image": "n:guide:c3-r3-tpl-outfit-walk"
     },
     {
       "t": "Shoes: on-foot step test",
       "d": "Frame the shoe on foot as the wearer takes a few steps, keeping the profile and sole visible.",
-      "href": "/industries/shoes"
+      "href": "/industries/shoes",
+      "image": "n:guide:q13-limited-card-spark-r1"
     },
     {
       "t": "Jewelry: gift unboxing",
       "d": "Use hands to open the package, lift one piece and hold it close enough to show scale and finish.",
-      "href": "/industries/jewelry-accessories"
+      "href": "/industries/jewelry-accessories",
+      "image": "n:guide:g1-launch-silver-bracelet-reveal-r2"
     },
     {
       "t": "Electronics: desk demo",
       "d": "Show the gadget being set up and used for one task, with the controls visible in the same frame.",
-      "href": "/industries/electronics"
+      "href": "/industries/electronics",
+      "image": "n:guide:q14-industries-strip-speaker"
     },
     {
       "t": "Wellness: routine moment",
       "d": "Place the product in a real morning or gym-bag routine without implying a health outcome you cannot support.",
-      "href": "/industries/health-wellness"
+      "href": "/industries/health-wellness",
+      "image": "n:guide:g1-retarget-electrolyte-gummy-r2"
     },
     {
       "t": "Food: first-sip reaction",
       "d": "Show an adult serving the drink or snack, then taking the first sip or bite so the serving context is clear.",
-      "href": "/industries/food-drinks"
+      "href": "/industries/food-drinks",
+      "image": "n:guide:q1-photo-example-tumbler"
     },
     {
       "t": "Home: problem to fix",
       "d": "Show the starting clutter or mess, then the product in use during one simple organizing or cleaning step.",
-      "href": "/industries/home-living"
+      "href": "/industries/home-living",
+      "image": "n:q10-sale-picker-2"
     }
   ]
 }
