@@ -13,7 +13,10 @@
   ],
   "intro": [
     "A feature callout works when shoppers can see one thing happen. The sample presses a white cleanser pump, spreads the foam, and keeps the action close enough to understand without a presenter.",
-    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action; use the product listing to add ingredients, measurements, and small package details in your editor."
+    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action; use the product listing to add ingredients, measurements, and small package details in your editor.",
+    "Choose one feature a shopper can see happen: a cleanser pump dispenses once, a cable seats in an organizer, a stain lifts from a cuff, or a clasp closes. Keep the product and the hand in the same close frame so the action explains itself without a presenter. One clear movement makes the resulting clip useful beside a listing and easy to compare with your own product footage.",
+    "Describe the action in the order it happens, including where the hand starts and where the product ends. Mention the surface, light, and final held position so the generator has a stable ending. Add measurements, ingredient names, and performance language later as editable copy from your product information; the image should demonstrate the mechanism without making an unsupported claim.",
+    "Before publishing, verify the feature against a real sample and inspect the close-up for shape, color, and edge detail. Keep one feature per clip when a product has several mechanisms, then link each clip to the relevant section of the product page. A clear before state, one action, and a settled after state give shoppers enough evidence to decide what to inspect next."
   ],
   "tip": "Describe one visible feature and one action, then leave any ingredient, size, or performance statement for text you add yourself.",
   "steps": [
