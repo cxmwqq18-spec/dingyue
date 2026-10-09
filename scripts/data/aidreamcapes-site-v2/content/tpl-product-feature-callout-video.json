@@ -95,7 +95,7 @@
     },
     {
       "q": "Can I create another feature-callout video from the same source photo?",
-      "a": "Yes. Keep the cleanser pump as the reference, then change one action or camera angle at a time. Check that the pump, foam, and final held position match the physical sample. Add the feature name, measurement, and current offer after download so product facts remain easy to update."
+      "a": "Yes. Keep the cleanser pump as the reference, then change one action or camera angle at a time. Check that the pump, foam, and final held position match the physical sample. Add the feature name, measurement, and current offer after download so product facts remain easy to update. Keep the action repeatable: one press, one visible result, and a still final frame make the clip easy to compare with a real sample. If the package changes, update the callout text and the reference frame together before publishing."
     }
   ],
   "overview": [
@@ -227,7 +227,7 @@
     ]
   },
   "visual": {
-    "overview": "A product-feature callout video puts one visible function in focus. Describe a single movement, then add the feature name and any exact measurements in your editor. Use this format when shoppers need to see a cleanser pump dispense, a cable seat, or a clasp close. Keep one mechanism visible from the first frame, then leave room for the feature label and measurement you add after download. Review the product edge, finish, and action against your source before publishing.",
+    "overview": "A product-feature callout video puts one visible function in focus. Describe a single movement, then add the feature name and any exact measurements in your editor. Use this format when shoppers need to see a cleanser pump dispense, a cable seat, or a clasp close. Keep one mechanism visible from the first frame, then leave room for the feature label and measurement you add after download. Review the product edge, finish, and action against your source before publishing. The close framing should show the hand, the moving part, and the finished state without relying on a caption to explain the mechanism.",
     "strip": [
       "n:guide:q13-feature-strip-0",
       "n:guide:q13-feature-strip-1-r2",
@@ -363,13 +363,13 @@
       {
         "frame": "browser",
         "h": "Show one feature on a product page",
-        "d": "Place the clip beside the feature description so shoppers can connect the action with its label. Keep the close frame tight enough to show the cleanser pump and the result of one press.",
+        "d": "Place the clip beside the feature description so shoppers can connect the action with its label. Keep the close frame tight enough to show the cleanser pump and the result of one press. Show the bottle shoulder and pump head together so the press has a clear starting point.",
         "ref": "n:guide:q13-feature-uses-0"
       },
       {
         "frame": "phone",
         "h": "Share the cleanser feature demo in a Reel",
-        "d": "Show the pump action close up, then add the feature name and dimensions as text. Leave the white bottle and hand unobstructed so the movement is easy to follow.",
+        "d": "Show the pump action close up, then add the feature name and dimensions as text. Leave the white bottle and hand unobstructed so the movement is easy to follow. If the feature has a limit, add that measurement beside the frame rather than claiming performance in the image.",
         "ref": "n:guide:c1-tpl-product-feature-callout-video-m4-cleanser-video-916"
       }
     ],
@@ -415,8 +415,8 @@
         "Link"
       ],
       "items": [
-        "Add the feature callouts and exact measurement as editable text. Check the cleanser pump, foam, and one-press action against the physical sample before publishing.",
-        "Keep the product link and ingredient details in your editor. Read the finished frame at mobile size and move added text away from the pump and the hand."
+        "Add the feature callouts and exact measurement as editable text. Check the cleanser pump, foam, and one-press action against the physical sample before publishing. Keep the callout line outside the hand path so the movement stays visible. Show the pump head and the foam result at the same scale in the close frame.",
+        "Keep the product link and ingredient details in your editor. Read the finished frame at mobile size and move added text away from the pump and the hand. Check the ingredient and measurement text against the package before the clip goes live. Keep the feature name beside the bottle rather than over the hand path so the action remains readable."
       ]
     },
     "titles": {
