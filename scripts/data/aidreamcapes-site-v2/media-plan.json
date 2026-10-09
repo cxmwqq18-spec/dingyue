@@ -31,14 +31,7 @@
         "before": "n:guide:k5-model-gallery-source",
         "after": "n:guide:k5-model-gallery-hero"
       },
-      "gallery": [
-        "n:guide:k5-model-gallery-01",
-        "n:guide:k5-model-gallery-02",
-        "n:guide:q5-model-backpack-back-r2",
-        "n:guide:q5-model-backpack-pocket-r2",
-        "n:guide:k5-model-gallery-05",
-        "n:guide:k5-model-gallery-06"
-      ],
+      "gallery": [],
       "og": "n:guide:k5-model-photos-after-image",
       "pairs": []
     },
@@ -57,24 +50,7 @@
         "n:guide:q6-cbg-gallery-06"
       ],
       "og": "g:background-remove-replace/og",
-      "pairs": [
-        {
-          "before": "n:guide:k5-background-phonecase-source",
-          "after": "n:guide:q6-cbg-pair-phonecase-after"
-        },
-        {
-          "before": "n:yogamat-pack",
-          "after": "n:guide:q6-cbg-pair-yogamat-after"
-        },
-        {
-          "before": "n:boots-pack",
-          "after": "n:guide:q6-cbg-pair-boots-after"
-        },
-        {
-          "before": "n:protein-pack",
-          "after": "n:guide:q6-cbg-pair-protein-after"
-        }
-      ]
+      "pairs": []
     },
     "social-ad-photos": {
       "hero": {
@@ -84,11 +60,7 @@
       },
       "gallery": [
         "n:guide:q6-social-gallery-01",
-        "n:guide:q6-social-gallery-02",
-        "n:guide:q6-social-gallery-03",
-        "n:guide:q6-social-gallery-04",
-        "n:guide:q6-social-gallery-05",
-        "n:guide:q6-social-gallery-06"
+        "n:guide:q6-social-gallery-02"
       ],
       "og": "n:guide:k3-social-og",
       "pairs": []
@@ -292,11 +264,11 @@
     "product-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q3-product-videos-hero-serum"
+        "image": "n:guide:f2-product-videos-hero-open-jar"
       },
-      "og": "n:guide:q3-product-videos-hero-serum",
+      "og": "n:guide:f2-product-videos-hero-open-jar",
       "gallery": [
-        "n:guide:k1-product-videos-gallery-espresso-shot"
+        "n:guide:k1-product-videos-gallery-feature-action-t06"
       ]
     },
     "before-after-videos": {

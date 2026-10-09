@@ -59,6 +59,14 @@
     {
       "q": "Can I ask for a celebrity or a well-known model?",
       "a": "Describe a general look, pose and setting instead of requesting a real person or suggesting a public figure endorses your product."
+    },
+    {
+      "q": "What should I provide for a try-on?",
+      "a": "Provide a flat garment photo or a clear accessory photo with the whole item visible."
+    },
+    {
+      "q": "Will the output replace measurements?",
+      "a": "No. Keep verified measurements and size information in the product listing."
     }
   ],
   "overview": [
@@ -333,5 +341,57 @@
         "h2": "AI model photo FAQs"
       }
     }
-  }
+  },
+  "benefits": [
+    {
+      "t": "See the item worn",
+      "d": "Turn a flat garment or accessory photo into a styled view while keeping measurements in the listing; compare with Clothing Try-On."
+    },
+    {
+      "t": "Show a complete look",
+      "d": "Describe the pairing and setting, then build a set with Lookbook, [Outfit Reel](page:tpl-outfit), and a clean white background photo."
+    },
+    {
+      "t": "Accessory detail support",
+      "d": "Use a worn frame for context and Jewelry On Model or Close-Up Details for clasp, texture, or finish."
+    },
+    {
+      "t": "Consistent store catalog",
+      "d": "Keep the same item and color across Shopify product photos, a model image, and a plain catalog view."
+    },
+    {
+      "t": "Social-ready styling",
+      "d": "Create a square look for Instagram fashion posts or Facebook ads, then add verified size and care copy."
+    },
+    {
+      "t": "Safer product claims",
+      "d": "Show styling without promising fit; use the fashion and clothing page and the AI content checklist before posting."
+    }
+  ],
+  "uses": [
+    {
+      "t": "New-arrival outfit posts",
+      "d": "Show one new piece for fashion and clothing, then keep the flat source for fabric and measurements."
+    },
+    {
+      "t": "Shoe try-on context",
+      "d": "Put the footwear in a walking pose for shoe listings, and use Size Comparison for scale."
+    },
+    {
+      "t": "Jewelry close views",
+      "d": "Show earrings or a ring for jewelry and accessories; use Jewelry On Model for a focused frame."
+    },
+    {
+      "t": "Bag and accessory pages",
+      "d": "Show how a bag hangs or opens, then pair it with a lifestyle scene and [Packaging Preview](page:tpl-pack)."
+    },
+    {
+      "t": "Beauty and wearable styling",
+      "d": "Model photos can show a tool or wearable for beauty and skincare, while the product view carries exact details."
+    },
+    {
+      "t": "Ad and catalog handoff",
+      "d": "Export a clean square view for Amazon product photos, social ad photos, or an Instagram campaign. For the next campaign, compare [Studio Lighting](page:tpl-light), [Team Headshots](page:tpl-head), [Creator-Style Photo](page:tpl-ugc), [Story Ad](page:tpl-story), [Sale Banner](page:tpl-sale), [Brand Film](page:tpl-film), [Home Organizing](page:tpl-home), [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad), [Ad Sizes for Every Platform](page:guide-ad-sizes-by-platform), [Testing Ad Versions](page:guide-testing-ad-versions)."
+    }
+  ]
 }

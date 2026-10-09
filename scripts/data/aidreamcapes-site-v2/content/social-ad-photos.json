@@ -59,6 +59,14 @@
     {
       "q": "Do I have to say my ad image was made with AI?",
       "a": "Disclosure rules vary by platform, location and use. Follow the guidance shown in the ad tool for your campaign."
+    },
+    {
+      "q": "What makes a social product photo clear?",
+      "a": "Keep the product recognizable, in focus and engaged in one believable everyday action."
+    },
+    {
+      "q": "Can I use an outdoor scene?",
+      "a": "Yes. Describe a simple outdoor use moment while keeping the product shape and color consistent."
     }
   ],
   "overview": [
@@ -105,7 +113,7 @@
           },
           {
             "ref": "n:guide:q6-social-example-5",
-          "title": "Brown trainer sole flex in motion",
+            "title": "Brown trainer sole flex in motion",
             "kind": "photo",
             "product": "brown leather trainers"
           }
@@ -143,10 +151,10 @@
       "n:guide:q6-social-strip-6"
     ],
     "steps": {
-      "source": "n:guide:k3-social-step-lipstick-source",
-      "result": "n:guide:q6-social-steps-result",
+      "source": "n:guide:k3-social-gallery-city-curb",
+      "result": "n:guide:f2-social-steps-result-r1",
       "mode": "photo",
-      "prompt": "Show a clean coral lipstick swatch on natural skin beside the tube, with open space on the left for a headline.",
+      "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Preserve its color, tread, laces and shape while placing it on a warm wood entryway floor; change the setting only.",
       "options": [
         [
           "Photo",
@@ -164,7 +172,7 @@
     },
     "picker": {
       "title": "Choose a format for a square social ad",
-    "lead": "Browse product scenes for social ads, from creator reviews and try-ons to unboxing and recipe formats.",
+      "lead": "Browse product scenes for social ads, from creator reviews and try-ons to unboxing and recipe formats.",
       "chips": [
         {
           "id": "routine",
@@ -237,7 +245,7 @@
         },
         {
           "ref": "n:guide:q6-social-picker-6",
-        "label": "Pet Brush Demo: Clear Sofa",
+          "label": "Pet Brush Demo: Clear Sofa",
           "chips": [
             "demo",
             "creator"
