@@ -37846,6 +37846,26 @@
           640,
           1280
         ]
+      },
+      "f4-beauty-output-sheet-mask-r1": {
+        "file": "f4-beauty-output-sheet-mask-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a plain coral sheet mask pouch with the white mask visible in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "f4-fashion-output-puffer-jacket-r1": {
+        "file": "f4-fashion-output-puffer-jacket-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model adjusts a light gray puffer jacket on a snowy city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

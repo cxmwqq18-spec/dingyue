@@ -373,9 +373,11 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:q15-beauty-output-hair-oil-r2",
+        "ref": "n:guide:f4-beauty-output-sheet-mask-r1",
         "frame": "1:1",
-        "label": "Amber hair oil bottle in hand"
+        "label": "Coral sheet mask pouch held in a bathroom",
+        "length": 15,
+        "spec": "1:1 video · 15 s · 60 credits"
       },
       {
         "ref": "n:guide:q15-beauty-output-hair-oil-r1",
