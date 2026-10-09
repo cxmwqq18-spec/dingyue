@@ -70,6 +70,18 @@
     {
       "q": "Where can I add flavor names?",
       "a": "Type flavor names, prices, and serving notes in your editor after download."
+    },
+    {
+      "q": "Can the clip show ice and condensation?",
+      "a": "Yes. Describe the glass, ice, and pour in the scene and the generated clip keeps your can as the product."
+    },
+    {
+      "q": "What length fits a pour clip?",
+      "a": "Six seconds covers one pour; use 10 to 15 seconds for a pour plus a tasting beat, for 24 to 60 credits."
+    },
+    {
+      "q": "Should the can label be blank?",
+      "a": "Use a clean product photo without a date sticker; add brand or flavor text as a separate layer when needed."
     }
   ],
   "overview": [
