@@ -13,7 +13,10 @@
   ],
   "intro": [
     "This template gives a new release a moving product moment before you add the details that can change. The sample shows coral trail shoes being tied, turned to reveal the sole, and taken onto a mountain path.",
-    "Use it for a small footwear drop, a colorway returning to stock, or a launch with a short buying window. The clip does not know your inventory or schedule, so put the accurate date, quantity, and call to action on top in your editor."
+    "Use it for a small footwear drop, a colorway returning to stock, or a launch with a short buying window. The clip does not know your inventory or schedule, so put the accurate date, quantity, and call to action on top in your editor.",
+    "Build the first frame around the moment that makes a limited release feel timely: an adult steps into the trail shoe, a hand opens the jewelry box, or a creator takes the first sip. Keep the product large enough to recognize before the countdown or quantity is added. This gives the viewer a reason to stop before the offer details appear.",
+    "For a drop alert, make the change in the scene easy to follow. A shoe can move from box to foot, a pendant can move from tissue to neckline, and a drink can move from can to first sip. Keep one action per short clip so the product stays the hero and the final frame leaves clear room for the current date, stock count, or notify link.",
+    "Before publishing, compare the generated product with the item in stock and check the release details in your editor. Add the live countdown, quantity, and call to action as editable layers rather than baking them into the image. Recheck the finished frame on the destination feed so the badge and timing remain readable inside its safe area."
   ],
   "tip": "Use a clear photo of the full product and describe where the scene should leave room for your drop date or restock message.",
   "steps": [
@@ -73,6 +76,22 @@
     {
       "q": "What video length fits a limited drop alert?",
       "a": "Use 6 seconds for one product-and-date beat or 10–15 seconds for a reveal plus call to action. Add the exact stock count and drop date after download."
+    },
+    {
+      "q": "Can I show a live countdown?",
+      "a": "Add the countdown as an editable text layer or platform element after download, so the time is always current."
+    },
+    {
+      "q": "What ratio works for a drop alert?",
+      "a": "9:16 fits TikTok and Reels; make a 1:1 version for feeds. A 15-second clip costs 60 credits."
+    },
+    {
+      "q": "Can the video include the stock quantity?",
+      "a": "Keep the quantity as a text layer you add yourself, so it can be updated as stock changes."
+    },
+    {
+      "q": "Can I create a second limited-drop video from the same source photo?",
+      "a": "Yes. Keep the coral trail shoe as the reference, then change one setting or camera move at a time. Check the shown color, size note, release time, and available quantity against the live offer. Add the current date, price, and notify link after download so those details stay easy to update. Keep one release date and one quantity source for every version so the alert cannot drift from the live offer. Recheck the live quantity before each scheduled placement; a limited message is only useful while that number is current."
     }
   ],
   "overview": [
@@ -204,7 +223,7 @@
     ]
   },
   "visual": {
-    "overview": "A limited-drop alert video gives a new or restocked item a quick reveal. Keep the product prominent, then add release timing and availability as editable text.",
+    "overview": "A limited-drop alert video gives a new or restocked item a quick reveal. Keep the product prominent, then add release timing and availability as editable text. Use this format when a restock or first release needs a clear trail-shoe reveal and a precise release moment. Keep the shoe, release time, and availability note visible from the first frame, then leave room for the date, price, and notify link you add after download. Review the sole, panels, and color against your source before publishing. Keep the first frame simple enough for a shopper to notice the shoe, the drop moment, and the one action that makes the release feel timely.",
     "strip": [
       "n:guide:g1-limited-skincare-restock",
       "n:guide:g1-limited-jewelry-reveal",
@@ -237,7 +256,7 @@
     },
     "picker": {
       "title": "Choose a scene for a limited-drop alert video",
-      "lead": "Show the new item clearly before adding its release details.",
+      "lead": "Show the new item clearly before adding its release details. Start with a clean product view, then choose the scene that makes the drop date and available quantity easy to notice.",
       "chips": [
         {
           "id": "first",
@@ -318,13 +337,13 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q13-limited-picker-6",
-          "label": "Serum restock dropper detail",
+          "ref": "n:guide:f5-r10-limited-card-6-beanie-unbox",
+          "label": "Forest-green beanie release unboxing",
           "chips": [
             "detail",
             "use"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds the serum bottle near the lens, turns it so the dropper is visible and says, “Here is the glass dropper.” Front-facing chest-up framing with slight handheld sway. Soft window light. End with the glass dropper close to lens and the bottle behind it. Sound: spoken line and quiet room tone; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy entryway bench, hands lift the forest-green knit beanie from a tissue-lined shipping box and hold it above the open box so its shape and texture are clear. Top-down close-up with a gentle push-in. Soft morning window light. Leave open wall space for the release date and stock note. End with the beanie centered above the box. Sound: tissue rustle and quiet room tone; no music.",
           "kind": "video"
         },
         {
@@ -345,13 +364,13 @@
         "frame": "phone",
         "ref": "n:guide:q13-limited-uses-0",
         "h": "Announce the coral trail-shoe drop in a Reel",
-        "d": "Use the 9:16 clip for the reveal, then add the release time and link in your post editor."
+        "d": "Use the 9:16 clip for the reveal, then add the release time and link in your post editor. Keep the coral trail shoe large enough to inspect while the drop date stays easy to read. Use the shoe angle that shows the tread and side panels without hiding the colorway."
       },
       {
         "frame": "listing",
         "ref": "n:guide:q13-limited-uses-1",
         "h": "Add the shoe release video to the product listing",
-        "d": "Place the clip near the item details so shoppers can see the coral trail shoes before the drop opens."
+        "d": "Place the clip near the item details so shoppers can see the coral trail shoes before the drop opens. Keep the product photo, release time, and available quantity together so the offer is easy to verify. If stock changes, update the quantity and notify destination together so the message stays current."
       }
     ],
     "input": [
@@ -372,24 +391,31 @@
       {
         "ref": "n:guide:q13-limited-outputs-0-r3",
         "frame": "1:1",
-        "label": "1:1 coral trail shoes on a rocky trail"
+        "label": "1:1 coral trail shoes on a rocky path"
       },
       {
-        "ref": "n:guide:q13-limited-outputs-1-r1",
-        "frame": "1:1",
-        "label": "1:1 coral trail shoes on a rocky trail"
+        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-2",
+        "frame": "9:16",
+        "label": "9:16 coral trail shoes stepping onto a rocky path"
       }
     ],
     "after": {
       "ref": "n:guide:q13-limited-after-r3",
+      "mock": {
+        "type": "limited",
+        "badge": "LIMITED DROP",
+        "countdown": "23:59:16",
+        "caption": "Only 48 pairs",
+        "cta": "Get notified"
+      },
       "zones": [
-        "Release time",
-        "Quantity",
-        "Product link"
+        "Limited badge",
+        "Countdown timer",
+        "Quantity & notify link"
       ],
       "items": [
-        "Add the release time and available quantity after download.",
-        "Place the product link and any offer in your ad editor."
+        "Add the limited badge, countdown, and available quantity after download. Check the coral trail shoe, release date, and stock line against the live offer before you publish. Keep countdown digits away from the outsole so the product remains recognizable. Make sure the coral colorway, release time, and stock line remain legible in the smallest feed preview.",
+        "Place the notify link and any offer in your ad editor. Read the finished frame at mobile size and keep the badge clear of the shoe and its sole. Test the link on the phone size where the announcement will appear. Keep the product silhouette and the countdown in separate visual areas so neither loses its job."
       ]
     },
     "titles": {
