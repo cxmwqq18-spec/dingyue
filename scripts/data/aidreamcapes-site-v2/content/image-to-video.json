@@ -58,14 +58,6 @@
     {
       "q": "Can I make several clips from the same photo?",
       "a": "Yes. Change the movement or clip length for each run. The editor shows the credit cost before generation."
-    },
-    {
-      "q": "What input should I start with?",
-      "a": "Use a clear photo where the product shape and key details are easy to see."
-    },
-    {
-      "q": "Can the motion stay subtle?",
-      "a": "Yes. Describe a small action such as a turn, lift, pour or steam moment."
     }
   ],
   "overview": [
@@ -83,25 +75,25 @@
         "items": [
           {
             "ref": "n:gen2:image-to-video-g1",
-            "title": "Watch Detail: dial light sweep",
+            "title": "Watch detail with a light sweep",
             "kind": "scene",
-            "product": "hydration mix"
+            "product": "wristwatch"
           },
           {
             "ref": "n:guide:q2-image-to-video-example-01",
-            "title": "Hydration Mix Demo: powder into water",
+            "title": "Hand applies peptide balm to skin",
             "kind": "scene",
-            "product": "linen shirt"
+            "product": "peptide balm"
           },
           {
             "ref": "n:guide:q2-image-to-video-example-02",
-            "title": "Fabric Detail: linen shirt drape",
+            "title": "Runner tries on a trail sneaker",
             "kind": "scene",
-            "product": "facial cleanser"
+            "product": "trail sneaker"
           },
           {
             "ref": "n:guide:q2-image-to-video-example-03",
-            "title": "Cleanser Pump Demo: one dose",
+            "title": "Pet hair remover clears a sofa",
             "kind": "scene",
             "product": "pet hair remover"
           }
@@ -121,10 +113,10 @@
     "steps": {
       "source": "n:guide:b1-image-to-video-source",
       "sourceAlt": "Your product: cream ceramic mug with blue flecks on a wooden counter.",
-      "result": "n:guide:b1-image-to-video-result",
+      "result": "n:guide:q2-image-to-video-steps-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Use the uploaded speckled ceramic mug as the exact product reference. Preserve its cream glaze, blue flecks, handle and shape while adding a subtle curl of steam in the uploaded kitchen setting."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand applies one drop of the serum to the back of a hand at a bright vanity, then stops with the bottle in frame. Soft window light, natural skincare-ad look. Tight overhead close-up with one gentle push-in. End with the serum bottle beside the hand showing the single fresh drop. Sound: dropper click and soft room tone; no music."
     },
     "picker": {
       "title": "Choose a product ad format",
@@ -279,7 +271,7 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to turn a product into a video in 3 steps"
+        "h2": "How to turn a product product into a video in 3 steps"
       },
       "m3": {
         "h2": "Product ad formats to animate",

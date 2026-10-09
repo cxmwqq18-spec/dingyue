@@ -4,7 +4,7 @@
   "description": "Create a carousel video ad as one downloadable product-story video. Plan short scenes, then add on-screen text and product details in your editor.",
   "h1": "Carousel Video Ads That Tell One Product Story",
   "eyebrow": "Carousel video ad template",
-  "lead": "This template turns one product photo into a short 1-2-3-4 sequence video, with the same beat order as a carousel ad. Upload a product photo, describe the panels, then review the clip before adding prices and product details in your editor.",
+  "lead": "This template creates one product-story video from a few short scenes, not a published carousel post. Upload one product photo, describe the sequence, then review the video before adding prices and product details.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -13,10 +13,7 @@
   ],
   "intro": [
     "This format is built around a sequence rather than a talking presenter. The sample opens a black commuter backpack in a cafe, shows its compartments, and ends with the bag on a person.",
-    "A short sequence can show what is inside, how a product fits a routine, or why a visible detail matters. Product position, size, and small lettering can vary between scenes, so review the video and add on-screen text in your editor.",
-    "Treat the sequence as four short beats with one product story: open on the backpack, reveal the organizer, show the hand placing an item, then finish with the bag ready to carry. A seller can download the clip for a feed placement and add panel numbers, a price, or a product link in the editor. The product should remain the same from the first frame through the close.",
-    "Write each panel before you generate so the order answers a shopper question. Panel one earns attention, panel two shows the feature, panel three proves the feature in use, and panel four gives the next step. Keep the camera movement simple and hold the final state long enough for an editable caption or call to action to be read.",
-    "Review a carousel video at the size where it will run. Confirm that the backpack, compartments, and packed items are visible in every beat, then place the finished sequence beside the matching listing. If the platform needs separate swipe cards, export still panels from your editor; this template supplies a single ordered video file."
+    "A short sequence can show what is inside, how a product fits a routine, or why a visible detail matters. Product position, size, and small lettering can vary between scenes, so review the video and add on-screen text in your editor."
   ],
   "tip": "Write three or four short beats in order and describe the product in each one so the transitions have a clear job.",
   "steps": [
@@ -76,18 +73,6 @@
     {
       "q": "Is the carousel output one file or a platform post?",
       "a": "This template exports one downloadable video file; it does not create or publish a platform post. For a swipe-through carousel, create separate cards in your editor or ad platform."
-    },
-    {
-      "q": "How many panels should I write?",
-      "a": "Three or four beats are enough for a 15-second sequence. Give each beat one job, such as open, reveal, use, or finish."
-    },
-    {
-      "q": "Can I make a real swipe-through carousel with this?",
-      "a": "This template outputs one sequence video. For a swipe-through post, assemble separate panels in your editor or ad platform."
-    },
-    {
-      "q": "What does a 15-second sequence cost?",
-      "a": "A 15-second clip costs 60 credits; 6- and 10-second versions cost 24 and 40 credits, shown before you run it."
     }
   ],
   "overview": [
@@ -391,19 +376,14 @@
     ],
     "after": {
       "ref": "n:guide:q13-carousel-after-r2",
-      "mock": {
-        "type": "carousel",
-        "title": "Panel 1 · Open",
-        "panel": "1/4"
-      },
       "zones": [
-        "Panel number",
         "Headline",
-        "Swipe dots & CTA"
+        "Price",
+        "CTA"
       ],
       "items": [
-        "The frame shows the 1-2-3-4 panel treatment you assemble after download.",
-        "Add one headline, the price, and the product link per panel in your ad editor."
+        "Add the headline, price, and product link as editable text in your ad editor.",
+        "Choose a licensed audio track before publishing the finished video."
       ]
     },
     "titles": {

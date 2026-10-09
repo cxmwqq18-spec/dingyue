@@ -12,11 +12,8 @@
     "winter clearance banner"
   ],
   "intro": [
-    "The example shows a blue hard-shell suitcase beside a pale wall and a small leafy plant, with all wheels visible. The open wall space is the natural place for a sale headline and dates.",
-    "A sale image has two jobs: show the product and give the offer a clean place to sit. This handles the first and leaves room for the second, because you'll add the percentage, dates, and code yourself in Canva, where every number stays exact. Use it for Black Friday, end-of-season clearance, and holiday promotions on Facebook and Instagram.",
-    "A sale image needs a clean product view and a deliberate place for the offer. A suitcase beside an open wall, a cutting board on a pale counter, or a complete skincare item on a quiet vanity gives the editor space for a discount without hiding the product. Keep the whole silhouette, handles, wheels, and important edges inside the frame before you add campaign text.",
-    "Use the template for a feed tile, a product-page promotion, or a seasonal clearance message. Describe the product, the light, and the empty area where the offer will sit; then add the percentage, dates, code, and legal wording in your editor. Separating the offer from the generated scene lets you update the price when stock changes and keeps numbers accurate.",
-    "Before the ad goes live, compare the color and model in the image with the landing page and inventory. Check that the square crop still shows the full item and that any 9:16 adaptation leaves room for the platform interface. Remove the discount layer when the sale ends, and keep the product image only when the same product and destination remain available."
+    "The example shows a sage green puffer jacket worn in a snowy mountain valley, with a wooden fence and a chalet nearby. The upper left is open sky, the natural place for a sale headline.",
+    "A sale image has two jobs: show the product and give the offer a clean place to sit. This handles the first and leaves room for the second, because you'll add the percentage, dates, and code yourself in Canva, where every number stays exact. Use it for Black Friday, end-of-season clearance, and holiday promotions on Facebook and Instagram."
   ],
   "tip": "Say where you want the empty space, for example \"open sky across the left third,\" so your offer text has a calm area to sit on.",
   "steps": [
@@ -80,18 +77,6 @@
     {
       "q": "Can I make a sale banner in a vertical format?",
       "a": "The sale template produces a square image by default. Add a 9:16 canvas in your design tool after download if you need a Story or Reel placement."
-    },
-    {
-      "q": "Which placements fit the square sale image?",
-      "a": "The 1:1 image fits Facebook and Instagram feeds; place it on a 9:16 canvas for Stories and Reels."
-    },
-    {
-      "q": "Can I update the discount without a new photo?",
-      "a": "Yes. Since the offer is a separate text layer, change the percentage or dates on the same background image."
-    },
-    {
-      "q": "How many credits does a sale photo use?",
-      "a": "Each photo costs 24 credits and the charge is shown before you run it."
     }
   ],
   "overview": [
@@ -394,13 +379,6 @@
     ],
     "after": {
       "ref": "n:q10-sale-after",
-      "mock": {
-        "type": "limited",
-        "badge": "SALE",
-        "countdown": "40% OFF",
-        "caption": "3 days only",
-        "cta": "Shop now"
-      },
       "zones": [
         "Offer",
         "End date"

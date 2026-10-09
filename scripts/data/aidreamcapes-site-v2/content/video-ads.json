@@ -50,18 +50,6 @@
     {
       "q": "Can I add captions, a price, or music?",
       "a": "Yes, once the clip is downloaded. Captions and music go on in TikTok or CapCut, and prices or discount codes can be added in CapCut or Ads Manager. Typing text yourself avoids the spelling slips that AI-made lettering can have."
-    },
-    {
-      "q": "Can I make a product demonstration ad?",
-      "a": "Yes. Start with a clear product reference and describe one believable action a customer can understand."
-    },
-    {
-      "q": "Can I choose a square or vertical output?",
-      "a": "Yes. The available video size choices include 9:16, 1:1, 16:9 and other configured ratios."
-    },
-    {
-      "q": "How many credits does a video ad cost?",
-      "a": "A 6-second clip costs 24 credits, a 10-second clip 40 credits and a 15-second clip 60 credits. The editor shows the cost before you generate."
     }
   ],
   "overview": [
@@ -79,21 +67,21 @@
         "items": [
           {
             "ref": "n:guide:k3-video-example-speaker",
-            "title": "Desk Setup: compact speaker beside laptop",
+            "title": "Creator holds a compact speaker at a desk",
             "kind": "scene",
-            "product": "protein bar"
+            "product": "compact speaker"
           },
           {
             "ref": "n:guide:q2-video-ads-example-02",
-            "title": "Mirror Try-On: crossbody bag strap",
+            "title": "Adult tries on a crossbody bag",
             "kind": "scene",
-            "product": "amber serum"
+            "product": "crossbody bag"
           },
           {
             "ref": "n:guide:q2-video-ads-example-03",
-            "title": "Park Interview: protein bar first bite",
+            "title": "Runner wears wireless earbuds",
             "kind": "scene",
-            "product": "protein bar"
+            "product": "wireless earbuds"
           }
         ]
       },
@@ -131,7 +119,7 @@
       "result": "f:k3-video-step-green-bottle-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult hand lifts the green glass bottle once and holds it still toward the camera. Clean daylight, natural kitchen-ad look. Close side angle with one slow push-in as the bottle rises. End with the bottle held steady above the counter. Sound: a soft bottle-set-down tone and quiet kitchen ambience; no music."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds an unbranded serum beside her face and speaks to camera, then applies one drop and stops with the bottle visible. Natural skin texture, bright window light, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. End with the bottle beside the creator’s cheek after the drop application. Sound: spoken line, dropper click and quiet room tone; no music."
     },
     "picker": {
       "title": "Choose a product ad format",

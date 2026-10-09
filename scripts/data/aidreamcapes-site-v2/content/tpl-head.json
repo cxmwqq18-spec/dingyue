@@ -74,18 +74,6 @@
     {
       "q": "Can I add names in the headshot?",
       "a": "Add names and job titles as editable text beside each image on your page."
-    },
-    {
-      "q": "Can each person upload a different style of photo?",
-      "a": "They can, but give the team one brief: plain background, similar framing, and even light, so the finished portraits match."
-    },
-    {
-      "q": "What if I need a headshot of a specific person exactly?",
-      "a": "The output keeps the uploaded person's features. Upload the clearest front-facing photo of that person for the closest result."
-    },
-    {
-      "q": "How much do team headshots cost?",
-      "a": "Each portrait costs 24 credits, so the cost scales with the number of teammates."
     }
   ],
   "overview": [
@@ -370,19 +358,13 @@
     ],
     "after": {
       "ref": "g:professional-headshot/example-06",
-      "mock": {
-        "type": "callout",
-        "tag1": "Same light",
-        "tag2": "Same crop",
-        "tag3": "Name & role"
-      },
       "zones": [
         "Name",
         "Role"
       ],
       "items": [
-        "The frame shows the standard tags you add so every portrait matches.",
-        "Add each teammate’s name and role as text beside the downloaded portrait."
+        "Add each teammate’s name and role as text beside the downloaded portrait.",
+        "Use consistent framing and light across the team page."
       ]
     },
     "titles": {

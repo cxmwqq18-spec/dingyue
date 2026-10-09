@@ -77,18 +77,6 @@
     {
       "q": "What garment photo gives the cleanest virtual try-on?",
       "a": "Lay the garment flat or hang it straight, show the full outline, and use even light. A clear front view gives the model photo more reliable shape and color."
-    },
-    {
-      "q": "Will the model wear my exact garment?",
-      "a": "The output keeps the uploaded garment's shape, color, and details on the model. Use a clear flat photo for the closest fit."
-    },
-    {
-      "q": "Can I see both front and back fit?",
-      "a": "Yes. Run a front and a back version so shoppers can judge the full fit."
-    },
-    {
-      "q": "What does a virtual try-on photo cost?",
-      "a": "Each photo costs 24 credits; a front-and-back pair uses 48 credits."
     }
   ],
   "overview": [
@@ -401,20 +389,13 @@
     ],
     "after": {
       "ref": "n:guide:tpl-tryon-c3-m7-back-detail",
-      "mock": {
-        "type": "steps",
-        "tag1": "1 Lay flat",
-        "tag2": "2 On model",
-        "tag3": "3 Check fit"
-      },
       "zones": [
-        "Try-on tags",
         "Garment name",
         "Size details"
       ],
       "items": [
-        "The frame shows the 1-2-3 tags you add to walk buyers through the try-on.",
-        "Add the garment name and real size details to the listing."
+        "Add the garment name and real size details to the listing.",
+        "Choose a crop that keeps the collar, sleeves, and hem in view."
       ]
     },
     "titles": {

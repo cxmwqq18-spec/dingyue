@@ -13,10 +13,7 @@
   ],
   "intro": [
     "A feature callout works when shoppers can see one thing happen. The sample presses a white cleanser pump, spreads the foam, and keeps the action close enough to understand without a presenter.",
-    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action; use the product listing to add ingredients, measurements, and small package details in your editor.",
-    "Choose one feature a shopper can see happen: a cleanser pump dispenses once, a cable seats in an organizer, a stain lifts from a cuff, or a clasp closes. Keep the product and the hand in the same close frame so the action explains itself without a presenter. One clear movement makes the resulting clip useful beside a listing and easy to compare with your own product footage.",
-    "Describe the action in the order it happens, including where the hand starts and where the product ends. Mention the surface, light, and final held position so the generator has a stable ending. Add measurements, ingredient names, and performance language later as editable copy from your product information; the image should demonstrate the mechanism without making an unsupported claim.",
-    "Before publishing, verify the feature against a real sample and inspect the close-up for shape, color, and edge detail. Keep one feature per clip when a product has several mechanisms, then link each clip to the relevant section of the product page. A clear before state, one action, and a settled after state give shoppers enough evidence to decide what to inspect next."
+    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action; use the product listing to add ingredients, measurements, and small package details in your editor."
   ],
   "tip": "Describe one visible feature and one action, then leave any ingredient, size, or performance statement for text you add yourself.",
   "steps": [
@@ -80,18 +77,6 @@
     {
       "q": "How should I describe a product feature?",
       "a": "Name one visible feature and one action, such as “presses the locking tab.”"
-    },
-    {
-      "q": "Can one clip cover several features?",
-      "a": "Keep one feature per clip so the detail is unmistakable; make a second clip for another feature."
-    },
-    {
-      "q": "What ratio fits a feature callout?",
-      "a": "9:16 works for TikTok and Reels and keeps the detail large; a 1:1 version fits feeds and listings."
-    },
-    {
-      "q": "How is a callout clip credited?",
-      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits."
     }
   ],
   "overview": [
@@ -281,11 +266,11 @@
         {
           "ref": "n:guide:q13-feature-picker-0",
           "label": "Cable organizer demo",
-          "chips": [
-            "problem",
-            "reaction"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. The adult looks at the tidier desk and gives a small, natural smile. Top-down close-up, slow push-in. Broad desk-side window light. End with one cable seated and the remaining cables loose at the desk edge. Sound: cable slide and desk ambience, no music.",
+        "chips": [
+          "problem",
+          "reaction"
+        ],
+        "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. The adult looks at the tidier desk and gives a small, natural smile. Top-down close-up, slow push-in. Broad desk-side window light. End with one cable seated and the remaining cables loose at the desk edge. Sound: cable slide and desk ambience, no music.",
           "kind": "video"
         },
         {
@@ -309,9 +294,9 @@
         {
           "ref": "n:guide:q13-feature-picker-3",
           "label": "Stain remover test",
-          "chips": [
-            "problem"
-          ],
+        "chips": [
+          "problem"
+        ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a laundry sink, an adult sprays the stain remover once onto a marked shirt cuff and presses it with a plain cloth. Keep the bottle and cuff in view. Close handheld framing. Even task light over the counter. End with the bottle beside the treated cuff, both in clear view. Sound: one spray and cloth movement; no music.",
           "kind": "video"
         },
@@ -336,19 +321,19 @@
         {
           "ref": "n:guide:q13-feature-picker-6",
           "label": "Pet hair cleanup",
-          "chips": [
-            "problem",
-            "routine"
-          ],
+        "chips": [
+          "problem",
+          "routine"
+        ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a sofa, an adult rolls the lint remover across one cushion while a dog rests nearby. Show the tool and fabric clearly. Low close framing with a slow push. Soft side light from the living-room window. End with the roller at the cushion edge beside the resting dog. Sound: soft roller movement, no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q13-feature-picker-7",
           "label": "Protein bar first bite",
-          "chips": [
-            "reaction"
-          ],
+        "chips": [
+          "reaction"
+        ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the oat and seed pieces.” Chest-up framing. Soft kitchen window light. End with the bar cut-side forward and its plain wrapper beside it. Sound: spoken line and one crisp bite; no music.",
           "kind": "video"
         }
@@ -385,13 +370,13 @@
     ],
     "outputs": [
       {
-        "label": "9:16 cleanser massaged into cheek",
+        "label": "9:16 cleanser pump pressed once",
         "frame": "9:16",
         "length": 15,
         "ref": "n:guide:q13-feature-outputs-0-r3"
       },
       {
-        "label": "9:16 cleanser pump pressed once",
+        "label": "9:16 cleanser foam on fingertips",
         "frame": "9:16",
         "length": 15,
         "ref": "n:guide:c1-tpl-product-feature-callout-video-m6-cleanser-output-2-916"
@@ -399,19 +384,13 @@
     ],
     "after": {
       "ref": "n:guide:q13-feature-after-r4",
-      "mock": {
-        "type": "callout",
-        "tag1": "One-press foam",
-        "tag2": "Gentle formula",
-        "tag3": "Rinses clean"
-      },
       "zones": [
-        "Feature callouts",
+        "Feature name",
         "Measurement",
         "Link"
       ],
       "items": [
-        "Add the feature callouts and exact measurement as editable text.",
+        "Add the feature name and exact measurement as editable text.",
         "Keep the product link and ingredient details in your editor."
       ]
     },

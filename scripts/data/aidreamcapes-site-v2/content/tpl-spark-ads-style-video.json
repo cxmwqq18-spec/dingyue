@@ -13,10 +13,7 @@
   ],
   "intro": [
     "The sample follows an adult creator showing the hinged lid on a sage-green insulated bottle. The scene is AI-generated and is not customer footage or an endorsement.",
-    "Use one clear product action in a creator-style post. Add captions, sound, authorization, audience, and campaign settings in TikTok Ads Manager.",
-    "A Spark Ads style creative should look like a real post that a seller can authorize and promote. Start with an everyday use moment: a creator explains why a bottle lid matters, a runner takes a drink after a hike, or a customer shows one feature beside a desk. Keep the camera close and the product in hand so the organic post feeling comes from the action, not from a decorative background.",
-    "Use one spoken idea and one visible product action in each version. The creator can turn the bottle, demonstrate the hinge, or take one sip while the line names the detail a shopper should notice. Leave captions, sound selection, handle, and offer wording for TikTok or your editor after download so the post can be updated without regenerating the product scene.",
-    "Check the final post before authorization: the product must match the uploaded item, the claim must be supported by your listing, and the frame must fit the selected TikTok placement. Run a small set of hooks with the same product shot, then compare watch time and clicks in Ads Manager rather than changing several variables at once."
+    "Use one clear product action in a creator-style post. Add captions, sound, authorization, audience, and campaign settings in TikTok Ads Manager."
   ],
   "tip": "Describe one everyday action in a familiar setting, then complete TikTok authorization and campaign setup before publishing.",
   "steps": [
@@ -80,18 +77,6 @@
     {
       "q": "What size should a Spark Ads style video use?",
       "a": "Use 9:16 for a full-screen TikTok placement. TikTok lists 9:16, 1:1, and 16:9 as standard sizes."
-    },
-    {
-      "q": "Does this authorize my TikTok account?",
-      "a": "No. The template creates a style-matched video; authorization and boosting are done in TikTok Ads Manager."
-    },
-    {
-      "q": "What makes a post ready for Spark Ads?",
-      "a": "Use an existing organic-style post, add captions and sound, then boost it following TikTok's authorization steps."
-    },
-    {
-      "q": "What does the style clip cost?",
-      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits."
     }
   ],
   "overview": [
@@ -393,18 +378,14 @@
     ],
     "after": {
       "ref": "n:guide:q14-spark-after-r2",
-      "mock": {
-        "type": "tiktok",
-        "caption": "How I keep water cold all hike"
-      },
       "zones": [
-        "Post frame",
         "Caption",
-        "Sound & offer"
+        "Sound",
+        "Offer"
       ],
       "items": [
-        "The frame shows the TikTok post chrome you add when promoting an existing post.",
-        "Add the caption, sound, and offer in TikTok Ads Manager after download."
+        "Add the caption and offer in TikTok or CapCut after download.",
+        "Choose a sound in TikTok before promoting the post."
       ]
     },
     "titles": {

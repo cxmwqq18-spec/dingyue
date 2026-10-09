@@ -29,7 +29,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -45,28 +45,20 @@
     },
     {
       "q": "How do I describe the before and the after?",
-      "a": "Use one sentence with two parts joined by “then.” For example: “cluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.”"
+      "a": "Use one sentence with two parts joined by \u201cthen.\u201d For example: \u201ccluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.\u201d"
     },
     {
       "q": "Can I show skincare or health results?",
       "a": "Show a change to the product or the space around it, such as lint lifted from a cushion. Do not imply a health, skin or body result."
     },
     {
-      "q": "Can I add “Before” and “After” labels?",
+      "q": "Can I add \u201cBefore\u201d and \u201cAfter\u201d labels?",
       "a": "Yes, add them after you download, in CapCut or TikTok. Typed labels stay crisp and correctly spelled, which AI-generated lettering can't always manage."
-    },
-    {
-      "q": "What makes a before and after useful?",
-      "a": "Use the same product or space in both frames and show a clear, understandable change."
-    },
-    {
-      "q": "Can I show a small improvement?",
-      "a": "Yes. A focused change such as routed cables, a cleaned surface or a sorted drawer can be easy to compare."
     }
   ],
   "overview": [
     {
-      "h2": "Make the product’s role in the change easy to see",
+      "h2": "Make the product\u2019s role in the change easy to see",
       "p": "Keep one space or object in view across both scenes so the difference reads quickly. Show the starting condition first, then the product in use and the finished state without adding a claim the product cannot support."
     }
   ],
@@ -77,7 +69,7 @@
       "n:guide:k4-before-after-videos-strip-drawer",
       "n:guide:k4-before-after-videos-strip-linen",
       "n:guide:k4-before-after-videos-strip-fridge",
-      "n:guide:k7-ind-shoes-picker-cards-7-ref-n-gen2-before-after-videos-c2"
+      "n:guide:k4-before-after-videos-m5-round-watch-bad"
     ],
     "steps": {
       "source": "n:guide:b1-before-after-videos-source",

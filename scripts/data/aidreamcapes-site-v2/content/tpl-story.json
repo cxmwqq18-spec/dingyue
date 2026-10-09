@@ -77,18 +77,6 @@
     {
       "q": "What dimensions should an Instagram Story image use?",
       "a": "This template outputs a square still, not a finished Story-size file. Place it on a 9:16 canvas in your design tool."
-    },
-    {
-      "q": "How much room should I leave for Story text?",
-      "a": "Ask for open space across the top or bottom third so your headline fits without covering the product."
-    },
-    {
-      "q": "Can a Story photo be reused for other offers?",
-      "a": "Yes. Keep the text separate and update the headline or date for different campaigns."
-    },
-    {
-      "q": "What does a Story-ready photo cost?",
-      "a": "Each photo costs 24 credits."
     }
   ],
   "overview": [

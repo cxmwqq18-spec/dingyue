@@ -233,95 +233,95 @@
       ]
     },
     "picker": {
-      "title": "Choose a Black Friday ad moment",
-      "lead": "Group your products by price drop, countdown, or last-day creative before adding the exact offer in your editor.",
+      "title": "Choose a Black Friday creative",
+      "lead": "Pick the product or bundle you plan to discount; each scene leaves room for the price.",
       "chips": [
         {
-          "id": "price-drop",
-          "label": "Price Drop"
+          "id": "review",
+          "label": "Creator Review"
         },
         {
-          "id": "countdown",
-          "label": "Countdown"
+          "id": "unbox",
+          "label": "ASMR Unboxing"
         },
         {
-          "id": "last-day",
-          "label": "Last Day"
+          "id": "routine",
+          "label": "GRWM Routine"
         },
         {
-          "id": "doorbuster",
-          "label": "Doorbuster"
+          "id": "demo",
+          "label": "Product Demo"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:q20-occ-black-friday-card-01",
-          "label": "Price Drop: Vitamin gummies held",
+          "label": "Creator Review: Vitamin gummies held",
           "chips": [
-            "price-drop"
+            "review"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult creator holds a plain supplement bottle, turns it once, and speaks to camera. An adult creator looks into the camera and says, “Here is the serving size on the front.”. Natural creator-shot UGC with realistic skin under soft kitchen window light. Close framing with one gentle push-in. End with the supplement front label facing camera beside her face. Sound: clear speech and room tone; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-02",
-          "label": "Price Drop: Phone tripod hinge demo",
+          "label": "Creator Review: Phone tripod hinge demo",
           "chips": [
-            "price-drop"
+            "review"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean desk, an adult creator holds a compact tripod to camera and extends one leg. An adult creator looks into the camera and says, “Here is how the hinge opens.”. Natural creator-shot UGC with realistic skin under broad desk-side window light. Close framing with one gentle push-in. End with one tripod leg extended and its hinge facing the lens. Sound: clear speech and one hinge click; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-03",
-          "label": "Countdown: Headphones from box",
+          "label": "ASMR Unboxing: Headphones from box",
           "chips": [
-            "countdown"
+            "unbox"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift graphite headphones from a plain box and turn the ear cushions toward the lens. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with the graphite ear cups above the open box. Sound: box rustle and hinge movement; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-04",
-          "label": "Countdown: Running shoes from tissue",
+          "label": "ASMR Unboxing: Running shoes from tissue",
           "chips": [
-            "countdown"
+            "unbox"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift neutral running shoes from plain tissue and bring both side by side. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with both running shoes held side by side above the tissue. Sound: tissue rustle and box creak; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-05-r2",
-          "label": "Last Day: Party dress fit check",
+          "label": "GRWM: Party dress fit check",
           "chips": [
-            "last-day"
+            "routine"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitting room, an adult wears the dress and makes one smooth half-turn in a mirror. An adult creator looks into the camera and says, “Here is the fit from the front and side.”. Natural creator-shot UGC with realistic skin under even fitting-room light. Close framing with one gentle push-in. End in the mirror with the dress showing its front and side fit. Sound: fabric movement and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-06",
-          "label": "Last Day: Setting powder in daylight",
+          "label": "GRWM: Setting powder in daylight",
           "chips": [
-            "last-day"
+            "routine"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunlit vanity, an adult creator makes one light brush pass and holds the compact beside her face. An adult creator looks into the camera and says, “This is the finish in natural light.”. Natural creator-shot UGC with realistic skin under sunlight through the vanity window. Close framing with one gentle push-in. End with the compact beside her cheek and the brushed finish visible. Sound: brush sweep and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-07",
-          "label": "Doorbuster: Serum texture on skin",
+          "label": "Product Demo: Serum texture on skin",
           "chips": [
-            "doorbuster"
+            "demo"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In soft daylight, an adult hand places one serum drop on the other hand and smooths it once. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End on both hands side by side, with the fresh drop centered between them. Sound: pump click and fingertip glide; no music or added text.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q20-occ-black-friday-card-08",
-          "label": "Doorbuster: Paw cleaner in use",
+          "label": "Problem-Solving: Paw cleaner in use",
           "chips": [
-            "doorbuster"
+            "demo"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright entry, an adult gently places a calm dog’s paw into a silicone cup and rotates it once. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the silicone cup beside the clean paw. Sound: soft silicone movement and room tone; no music or added text.",
           "kind": "photo"
