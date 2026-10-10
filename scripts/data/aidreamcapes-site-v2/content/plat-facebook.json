@@ -1,10 +1,10 @@
 {
   "id": "plat-facebook",
   "title": "AI Facebook Ad Generator for Online Stores | AIVideosUGC",
-  "description": "Try an AI Facebook ad generator made for sellers: turn one product photo into a short clip or square product visual, then add your offer in Ads Manager.",
+  "description": "Use an AI Facebook ad generator that turns one product photo into a square feed image or 9:16 Reels clip, with no shoot and the credit cost shown first.",
   "h1": "AI Facebook Ad Generator for Square and Vertical Ads",
   "eyebrow": "Facebook ads",
-  "lead": "Use this AI Facebook ad generator to make a square product image or a 9:16 Reels clip from one photo, then write the headline and offer in Ads Manager.",
+  "lead": "Tired of reshooting every time a Facebook angle stops performing? One product photo gives you a square feed image and a 9:16 Reels clip from the AI Facebook ad generator.",
   "card": "Square product images and 9:16 Reels clips.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
@@ -13,7 +13,7 @@
     "Facebook ads for small business"
   ],
   "intro": [
-    "Facebook campaigns can reach people in Feed, Stories and Reels as they browse posts from friends and groups. A clear look at the product helps the creative read quickly. Meta recommends 4:5 (1440×1800) images and video for Feed; AIVideosUGC makes 6, 10 or 15-second clips and square product images from one photo, which you crop to 4:5 for Feed, and 9:16 clips for Reels, keeping key details inside the safe area.",
+    "Facebook campaigns can reach people in Feed, Stories and Reels as they browse posts from friends and groups. A clear look at the product helps the creative read quickly. Meta recommends 4:5 (1440×1800) images and video for Feed; AIVideosUGC makes 6, 10, 15 or 30-second clips and square product images from one photo, which you crop to 4:5 for Feed, and 9:16 clips for Reels, keeping key details inside the safe area.",
     "It fits store owners who run their own campaigns and need something new to try without a photoshoot. Describe the scene you want, such as a lunch box packed on a kitchen counter or a dog harness on a morning walk, and check the credit cost before you start. Your headline, price and button text belong in Ads Manager, where they stay easy to edit. Plan one scene for each placement: a 4:5 Feed product ad, a tall Stories frame with breathing room, a 9:16 Reels explanation, or a catalog retargeting view that puts the same product in a new setting."
   ],
   "specs": [
@@ -31,7 +31,7 @@
     ],
     [
       "AIVideosUGC clips",
-      "6, 10 or 15 seconds per job"
+      "6, 10, 15 or 30 seconds per job"
     ],
     [
       "AIVideosUGC still images",
@@ -85,6 +85,14 @@
     {
       "q": "Where do I add the headline and offer?",
       "a": "Add the primary text, headline, price, code and call to action in Ads Manager after download so you can edit them for each campaign."
+    },
+    {
+      "q": "Do I need a creator or actors?",
+      "a": "No. The square image and Reels clip are generated from your product photo and a short scene description, so no one has to be filmed. You add the headline and offer after download."
+    },
+    {
+      "q": "Is this different from hiring a UGC creator?",
+      "a": "Yes. A creator films and hands you footage you cannot easily change; here every version is built on demand from your own photo, so you can test a new angle without rebooking anyone."
     }
   ],
   "overview": [
@@ -94,7 +102,7 @@
     },
     {
       "h2": "Choose a shape for each Meta placement",
-      "d": "Meta recommends 4:5 (1440×1800) creative for Feed and 9:16 video for Reels, with key messages inside the Reels safe area. AIVideosUGC outputs square stills to crop to 4:5 and 6, 10 or 15-second clips; run the 9:16 shape for Reels as a separate job and check each placement preview."
+      "d": "Meta recommends 4:5 (1440×1800) creative for Feed and 9:16 video for Reels, with key messages inside the Reels safe area. AIVideosUGC outputs square stills to crop to 4:5 and 6, 10, 15 or 30-second clips; run the 9:16 shape for Reels as a separate job and check each placement preview."
     },
     {
       "h2": "Build one version for Feed and one for Reels",
@@ -260,16 +268,16 @@
   "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager.",
   "steps": [
     {
-      "t": "Choose a clear product photo",
-      "d": "Upload one insulated bottle with its cap, body, and base fully visible."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo showing the whole item. Every feed, Reels and test version starts from that one product shot."
     },
     {
-      "t": "Give the feed a simple setting",
-      "d": "Place this bottle on a bright desk with clear space around the product."
+      "t": "Share Your Video Idea",
+      "d": "Describe the setting and one action, like the bottle on a bright desk. A new job gives you another version for testing."
     },
     {
-      "t": "Add the campaign details",
-      "d": "After download, add the price, dates, or call to action in Ads Manager."
+      "t": "Download and Post",
+      "d": "Download the image or clip, then add your headline and offer in Ads Manager. The file is yours, with no watermark."
     }
   ],
   "visual": {
@@ -590,5 +598,26 @@
         "h2": "Questions about Facebook ad creative"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make Facebook ads with AI UGC video?",
+  "benefits": [
+    {
+      "t": "Versions without reshoots",
+      "d": "Run another job with a different setting or opening action to get a new test creative from the same photo. You keep product, offer and audience constant while the visual changes."
+    },
+    {
+      "t": "Feed and Reels covered",
+      "d": "Square stills crop to the 4:5 feed image Meta recommends, and a separate job produces the 9:16 clip for Reels. Both placements come from the same product photo."
+    },
+    {
+      "t": "No creator between you and a draft",
+      "d": "There is no booking, filming day or edit queue when you need a quick angle. You describe the scene in a sentence and the credit cost appears before the job starts."
+    },
+    {
+      "t": "Ready to run, no watermark",
+      "d": "The downloaded image or clip is yours to place through Ads Manager and carries no AIVideosUGC watermark. Headline and offer stay editable fields you control."
+    }
+  ],
+  "steps_h2": "How to make a Facebook ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-run Feed or Reels ad — no studio, no creator, no reshoot."
 }
