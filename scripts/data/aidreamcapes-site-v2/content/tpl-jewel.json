@@ -1,10 +1,10 @@
 {
   "id": "tpl-jewel",
   "title": "AI Jewelry Model Photos and Ad Scenes",
-  "description": "Create AI jewelry model photos showing fit and detail on adult models. Choose a creator review, try-on or hand demonstration for social ads and product pages.",
+  "description": "Turn one jewelry photo into an on-model shot. AI model photos for necklaces, earrings, rings and bracelets, for social ads and product pages.",
   "h1": "AI Jewelry Model Photos for On-Model Ad Scenes",
   "eyebrow": "Model photo template",
-  "lead": "Use try-on, close-detail and creator-review formats to help shoppers see how a jewelry piece sits, catches light and scales on a person. Start from one clean product photo and add exact material details after download.",
+  "lead": "Jewelry on a plain white surface tells shoppers nothing about how it sits, catches light or scales. Turn one product photo into an on-model jewelry photo - collarbone, earlobe, hand or wrist - that answers the fit question before they ask.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
@@ -15,16 +15,16 @@
   "tip": "Set the piece on a plain surface with the clasp and pendant visible, and add the chain length to your description so it sits at a believable height.",
   "steps": [
     {
-      "t": "Photograph the piece on its own",
-      "d": "Use a plain light surface and keep the full piece, clasp, chain, stones, and setting in focus."
+      "t": "Upload Your Jewelry Photo",
+      "d": "Photograph the full piece on a plain light surface with clasp and stones in focus. A sharp source matches your item."
     },
     {
-      "t": "Describe where it is worn",
-      "d": "Name placement, clothing, light, and crop; say collarbone, earlobe, hand, or wrist when that is the purchase question."
+      "t": "Pick a Wear Scene",
+      "d": "Choose a try-on, close-detail or review, then name placement, crop and light. You get a square worn-photo."
     },
     {
-      "t": "Add details beside the photo",
-      "d": "Download, compare visible details with the real item, then add approved name, material, measurements, care, and regulated claims as text."
+      "t": "Download and Post",
+      "d": "Download the image, compare details with the piece, then add material and care notes. You answer fit without a shoot."
     }
   ],
   "ideas": [
@@ -90,6 +90,14 @@
     {
       "q": "Can I use the image beside a product listing?",
       "a": "Yes. Place the styled view beside the standalone product photo, material, measurements, price and care information. The worn image supplies context while the listing text remains the source for exact item facts. Keep the metal color, stone count, clasp type and chain length in the written details, and use a close crop only when it clarifies a visible feature."
+    },
+    {
+      "q": "Do I need to hire a hand or jewelry model?",
+      "a": "No. The on-model photo is generated from your product shot, so necklaces, earrings, rings and bracelets can be shown worn without booking a model, a studio or a photographer."
+    },
+    {
+      "q": "Can these photos go in paid social ads?",
+      "a": "Yes. Images you make can be used in your own ads and product pages, with no AIVideosUGC watermark on the downloaded file. Keep any regulated claims, such as metal grade or stone type, for text you verify yourself."
     }
   ],
   "overview": [
@@ -415,5 +423,26 @@
         "h2": "Questions about jewelry model photos"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make AI jewelry model photos?",
+  "benefits": [
+    {
+      "t": "Fit shown without a model booking",
+      "d": "Shoppers see the piece on a collarbone, earlobe, hand or wrist from one product photo, so they can judge drop length, scale and movement without you hiring a jewelry model."
+    },
+    {
+      "t": "Detail that survives a zoom",
+      "d": "Close-detail frames keep the clasp, chain, stones and setting in focus, giving buyers the texture and craftsmanship checks that flat catalog shots skip."
+    },
+    {
+      "t": "Scenes for every sales channel",
+      "d": "Use a try-on for the product page, a creator review for social ads or a hand demonstration for a feed post, all generated from the same source image."
+    },
+    {
+      "t": "No watermark, ready to publish",
+      "d": "Downloaded photos include no AIVideosUGC watermark and can be used commercially in your listings and campaigns."
+    }
+  ],
+  "steps_h2": "How to make a jewelry model photo in 3 simple steps",
+  "steps_lead": "Three steps turn one jewelry photo into an on-model image - no model, no studio, no shoot."
 }
