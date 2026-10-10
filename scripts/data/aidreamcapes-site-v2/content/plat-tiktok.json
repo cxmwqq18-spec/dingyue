@@ -46,62 +46,23 @@
       "a": "TikTok's AI-content label can be required depending on the creative and market. Apply the label in Ads Manager when it asks for it."
     }
   ],
-  "examples": {
-    "h2": "More TikTok-style examples",
-    "groups": [
-      {
-        "label": "Product Review",
-        "items": [
-          {
-            "ref": "f:q18-tiktok-strip-serum-review",
-            "title": "Product Review — Amber Serum at Home",
-            "kind": "scene",
-            "product": "amber serum"
-          }
-        ]
-      },
-      {
-        "label": "Product Demo",
-        "items": [
-          {
-            "ref": "n:gen2:plat-tiktok-g2",
-            "title": "Product Demo — Desk Fan in Use",
-            "kind": "photo",
-            "product": "desk fan"
-          }
-        ]
-      },
-      {
-        "label": "Product Detail",
-        "items": [
-          {
-            "ref": "n:guide:k4-plat-tiktok-26-case-hair-claws",
-            "title": "Product Detail — Matte Hair Claw Clips",
-            "kind": "photo",
-            "product": "matte hair claw clips"
-          }
-        ]
-      }
-    ]
-  },
   "templates_lead": "Pick a look that puts one clear product action at the center of your TikTok opening.",
   "cta_lead": "Build your TikTok clip around a clear product action and a placement you plan to use.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the product. The first frame shows what you sell, so shoppers do not have to guess."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so viewers recognize it right away."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Say what happens in one sentence, then pick the length. The credit cost shows first, so you know the price before the clip is made."
+      "t": "Share your video idea",
+      "d": "Say what happens in one sentence and choose the clip length. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the vertical file with no watermark, add your sound and caption, then upload it to TikTok Ads Manager."
+      "t": "Download and post",
+      "d": "Download the 9:16 file with no watermark, add your sound and offer, then upload it to TikTok Ads Manager."
     }
   ],
   "visual": {
-    "overview": "A 9:16 vertical file fits the In-Feed placement; 1:1 and 16:9 are also accepted at the listed resolutions. See [TikTok's In-Feed ad specifications](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads) for the current file rules.",
     "strip": [
       "f:k4-plat-tiktok-13-visual-strip-0",
       "f:how-to-tutorial-v",
@@ -109,314 +70,63 @@
       "f:k4-plat-tiktok-15-visual-strip-3",
       "f:k4-plat-tiktok-16-visual-strip-4",
       "f:q18-tiktok-strip-protein-powder"
-    ],
-    "steps": {
-      "source": "n:guide:k4-plat-tiktok-12-visual-steps-source",
-      "result": "f:q18-tiktok-steps-black-headphones-unboxing",
-      "mode": "video",
-      "length": 15,
-      "prompt": "Use the uploaded photo as the exact reference for the black over-ear headphones. Preserve their black finish, padded earcup shape, and headband. Adult hands lift them from a plain box on a bright desk and turn them toward camera; end with the headphones centered. Soft window light, natural phone-video look, top-down close framing. Sound: box flap and tissue rustle; no music.",
-      "options": [
-        [
-          "Size",
-          "9:16 · TikTok In-Feed"
-        ],
-        [
-          "Length",
-          "15 seconds"
-        ]
-      ]
-    },
-    "picker": {
-      "title": "Pick a TikTok video idea",
-      "lead": "Start from a creator-style format sellers already use on the feed.",
-      "chips": [
-        {
-          "id": "review",
-          "label": "Product Review"
-        },
-        {
-          "id": "unboxing",
-          "label": "Unboxing"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        },
-        {
-          "id": "beforeafter",
-          "label": "Before & After"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f1-r10-tiktok-phone-case",
-          "label": "Product Review — Sage Phone Case",
-          "chips": [
-            "review",
-            "unboxing"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain sage-green silicone phone case with one small circular camera opening. Show only the case in an adult hand over a bright desk; no bare phone back appears. Square creator hook, soft daylight, no text or logos."
-        },
-        {
-          "ref": "f:q18-tiktok-picker-cable-organizer",
-          "label": "Product Demo — Cable Organizer",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a cluttered desk, adult hands guide loose charging cables into the compact organizer, ending with the tidy channels centered. Warm desk light and window fill, casual creator-video look, overhead close-up with one quick push-in. Sound: cable clicks and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q18-tiktok-picker-lip-tint-grwm-r2",
-          "label": "Before & After Lip Tint",
-          "chips": [
-            "beforeafter"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color, and label area exactly. At a bright bathroom mirror, an adult woman applies one smooth swipe of lip tint while holding its tube beside her face, ending still. Soft daylight, natural skin texture, casual get-ready look, chest-up mirror framing with slight handheld sway. End on her mirror reflection with the tint tube beside her finished lips. Sound: cap click and quiet bathroom ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f1-r10-tiktok-creator-coffee-filter",
-          "label": "Product Review — Reusable Coffee Filter",
-          "chips": [
-            "review"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult creator with short curly hair faces camera while holding a plain reusable coffee filter at chest height and explaining one feature. Bright kitchen, natural expression, square creator frame, no text or logos."
-        },
-        {
-          "ref": "f:q18-tiktok-picker-sneaker-detail",
-          "label": "Product Review — Running Shoe Tread",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the gray-and-white running shoe’s shape, sole pattern, and color. On a clean bench, an adult hand sweeps the shoe across frame and turns it to reveal the tread, ending with the sole held toward camera. Crisp side light, energetic phone-video look, low close-up with one quick whip-pan that settles. Sound: shoe contact and soft room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q18-tiktok-picker-crossbody-turn",
-          "label": "Before & After Crossbody Turn",
-          "chips": [
-            "beforeafter"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the tan canvas crossbody bag’s shape, front pocket, and color. In a bright apartment doorway, an adult wearing it makes one quick turn so the front pocket faces camera, ending centered and still. Clean daylight, casual fashion-creator look, full-length framing with a single snap pan. End centered with the bag’s front pocket square to camera. Sound: fabric movement and quiet room ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q18-tiktok-picker-sweater-shaver",
-          "label": "Product Demo — Fabric Shaver",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the compact white fabric shaver’s shape and finish. Adult hands move it once across a navy sweater sleeve, revealing a visibly smoother strip beside the pilled area, then hold. Bright soft window light, realistic creator phone-video framing, tight close-up with one gentle push-in. End with the shaver beside the smooth strip on the navy sleeve. Sound: shaver hum and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-example-cutlery",
-          "label": "Product Demo — Drawer Cutlery Organizer",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the divided drawer organizer shape and finish. Top-down adult hands place utensils into each compartment, ending with the tidy result easy to inspect. Bright kitchen light, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-launch-picker-phonecase-oval-cutout-square",
-          "label": "Before & After Phone Case",
-          "chips": [
-            "review",
-            "beforeafter"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: adult hands turn a plain sage phone case over a clean desk and snap it onto a generic phone. Keep the single oval camera opening visible, with bright window light and no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k8-spokesperson-gen2-tpl-ugc-g1",
-          "label": "Product Review — Travel Cup",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Still square creator photograph using the uploaded photo as the exact reference: an adult woman gently rotates a plain ceramic travel cup beside a train window, showing the lid and handle clearly. Soft morning light, natural handheld framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k6-video-hub-frame-headphone-unbox",
-          "label": "Before & After Headphones",
-          "chips": [
-            "beforeafter"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands lift the plain dark over-ear headphones from an open gray box and turn the ear cups toward camera, ending centered. Warm window light, natural phone-video look, top-down close framing with one steady push-in. Sound: box flap and tissue rustle; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:c1-tpl-howto-m2-result",
-          "label": "Product Demo — Garment Steamer",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: adult hands hold a plain white garment steamer beside a blue shirt, showing its controls and water reservoir in bright laundry daylight. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-reuse-strip-03",
-          "label": "Product Demo — Wireless Charging Pad",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: an adult hand places a plain round charging pad on dark fabric with its cable visible. Soft side light, tight overhead framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k2-url-use-open-bento",
-          "label": "Product Review — Lunch Container",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: an adult hand opens a sage lunch container on a desk, showing its divided compartments and lid beside it. Soft daylight, clear overhead framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-tiktok-trend-tumbler",
-          "label": "Unboxing — Travel Tumbler Trend",
-          "chips": [
-            "unboxing"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Two adult hands rotate a plain insulated travel tumbler once on a colorful kitchen counter for a repeatable trend challenge. Bright daylight, square creator framing, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-tiktok-spoken-desk-fan",
-          "label": "Product Review — Desk Fan Demo",
-          "chips": [
-            "review"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Hands point to the front grille and control dial of a plain compact desk fan on a tidy desk for a hands-only spoken audio explanation. Square product framing, soft daylight, no text or logos."
-        }
-      ],
-      "button": "Make a TikTok ad video"
-    },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "f:q18-tiktok-uses-serum-selfie",
-        "h": "Product Review — Amber Serum at Home",
-        "d": "Shoppers see a real-feeling review and hear one clear reason the serum is worth trying. That trust is what makes them tap the shop link."
-      },
-      {
-        "frame": "post",
-        "ref": "f:k4-plat-tiktok-18-visual-uses-1-image",
-        "h": "Square 1:1 version for In-Feed placements",
-        "d": "Some In-Feed placements accept a square file. One product photo gives you both shapes, so you run the one the placement asks for."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k4-plat-tiktok-06-visual-input-0-good",
-        "bad": "n:guide:tiktok-bottle-soft-focus",
-        "good_label": "Sneaker outsole tread stays sharp",
-        "bad_label": "Outsole details blur together"
-      },
-      {
-        "good": "n:guide:k4-plat-tiktok-07-visual-input-1-good",
-        "bad": "n:guide:tiktok-speaker-crop",
-        "good_label": "Portable speaker stays fully in frame",
-        "bad_label": "Portable speaker is cut off by a tight crop"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:q18-tiktok-output-shoe-tread",
-        "frame": "9:16",
-        "length": 6,
-        "label": "Matched Gray-and-White Running Shoe",
-        "presentation": "tiktok"
-      },
-      {
-        "ref": "f:q18-tiktok-output-speaker-demo",
-        "frame": "9:16",
-        "length": 10,
-        "label": "Matched Rounded Black Woven Speaker",
-        "presentation": "tiktok"
-      }
-    ],
-    "after": {
-      "ref": "f:q18-tiktok-after-speaker-offer",
-      "zones": [
-        "Caption",
-        "Sound",
-        "Offer"
-      ],
-      "items": [
-        "Type captions and the offer in TikTok or CapCut, away from the bottom edge where the app shows its own caption.",
-        "Choose a sound in TikTok or CapCut before publishing."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Turn a product photo into a vertical TikTok clip"
-      },
-      "m3": {
-        "h2": "Choose the action viewers see in the first seconds"
-      },
-      "m4": {
-        "h2": "Match the video to its TikTok placement"
-      },
-      "m5": {
-        "h2": "Keep the product clear in a vertical crop"
-      },
-      "m6": {
-        "h2": "Pick a clip length for each TikTok job"
-      },
-      "m7": {
-        "h2": "Add the caption and sound after download"
-      },
-      "m8": {
-        "h2": "One product, three frames: 9:16, 1:1, and 16:9"
-      },
-      "faq": {
-        "h2": "Questions about TikTok product ads"
-      }
-    },
-    "sizes": [
-      {
-        "frame": "9:16",
-        "ref": "f:k8-spokesperson-tiktok-hand-vertical",
-        "label": "9:16 · In-Feed, full screen"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:k4-plat-tiktok-04-cards-5-image",
-        "label": "1:1 · square In-Feed creative"
-      },
-      {
-        "frame": "16:9",
-        "ref": "f:k4-plat-tiktok-28-visual-sizes-2",
-        "label": "16:9 · horizontal In-Feed creative"
-      }
     ]
   },
-  "benefits_h2": "Why make TikTok ads with AI UGC video?",
+  "benefits_h2": "A fast way to get high-converting TikTok ads",
   "benefits": [
     {
-      "t": "No creator booking, no shoot day",
-      "d": "One product photo replaces the creator, studio and edit session. You get a UGC-style clip without waiting for anyone's availability, which matters when the feed expects a new angle every week."
+      "t": "Stay On-Trend",
+      "d": "Jump on a TikTok trend or challenge while it is still hot, and get a ready-to-post clip without waiting on a creator."
     },
     {
-      "t": "Fresh openings from the same photo",
-      "d": "Run another job from the same photo with a different action and get a new opening beat for testing in Ads Manager. You are not paying to reshoot the product."
+      "t": "Fresh Clips On Demand",
+      "d": "One product photo is all you need to build a new clip, so the feed always has a fresh angle to run."
     },
     {
-      "t": "Built for the For You feed",
-      "d": "Clips come out in the 9:16 vertical shape TikTok In-Feed ads use, so you download a file that already fits the placement instead of reframing footage."
-    },
-    {
-      "t": "Yours to run, no watermark",
-      "d": "The download carries no AIVideosUGC watermark and you can use it in your own ads and posts. The credit cost appears on screen before each job starts."
+      "t": "Ready-to-Post TikTok Ads",
+      "d": "Get fast, fresh clips built to scale. There is no waiting and no shoot day, just content made when you need it."
     }
   ],
   "steps_h2": "How to make a TikTok ad video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post TikTok ad — no studio, no creator, no reshoot."
+  "steps_lead": "Three steps turn one product photo into a ready-to-post TikTok ad — no studio, no creator, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Why sellers switch",
+      "h2": "Why performance marketers prefer AI TikTok ads",
+      "lead": "Results-first creative without the production overhead.",
+      "items": [
+        {
+          "t": "Cut Costs, Not Quality",
+          "d": "Skip pricey creators and production teams, and make clear UGC-style clips for far less than a booked shoot."
+        },
+        {
+          "t": "Make More, Faster",
+          "d": "Stop waiting on creators one at a time. Each clip is built on demand from your own product photo."
+        },
+        {
+          "t": "Test More, Improve More",
+          "d": "Make versions with different openings and find what works, without extra filming or setup costs."
+        }
+      ]
+    },
+    {
+      "eyebrow": "How it keeps work moving",
+      "h2": "How AI streamlines TikTok video creation",
+      "lead": "Fewer bottlenecks between an idea and a clip you can run.",
+      "items": [
+        {
+          "t": "Test More Openings",
+          "d": "Produce many TikTok-style clips for far less than one booked creator, and scale content without scaling the budget."
+        },
+        {
+          "t": "Speed to Market, Any Week",
+          "d": "Launch a fresh, native-style ad in minutes without arranging a shoot or waiting on footage."
+        },
+        {
+          "t": "Zero Production Bottlenecks",
+          "d": "There is no studio, crew or edit queue to schedule. The clip is built from your own product photo."
+        }
+      ]
+    }
+  ]
 }
