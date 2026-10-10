@@ -123,6 +123,23 @@
         ]
       },
       {
+        "label": "Desert",
+        "items": [
+          {
+            "ref": "n:guide:mx1w-photo-hub-desert-1-r1",
+            "title": "Desert: amber bottle on stone",
+            "kind": "photo",
+            "product": "amber skincare bottle"
+          },
+          {
+            "ref": "n:guide:mx1w-photo-hub-desert-2-r1",
+            "title": "Desert: sandals on warm sand",
+            "kind": "photo",
+            "product": "woven hat and leather sandals"
+          }
+        ]
+      },
+      {
         "label": "Minimalist",
         "items": [
           {
@@ -147,6 +164,12 @@
             "title": "Indoor: table lamp in living room",
             "kind": "photo",
             "product": "table lamp"
+          },
+          {
+            "ref": "n:guide:mx1w-photo-hub-indoor-1-r1",
+            "title": "Indoor: diffuser on side table",
+            "kind": "photo",
+            "product": "ceramic diffuser"
           }
         ]
       }
