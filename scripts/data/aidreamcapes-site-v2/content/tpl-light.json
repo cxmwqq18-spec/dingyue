@@ -1,10 +1,10 @@
 {
   "id": "tpl-light",
   "title": "Product Photo Lighting Without a Studio | AIVideosUGC",
-  "description": "Fix product photo lighting without a studio. Upload a phone snapshot and get soft light, gentle shadows, and clean highlights on glass and metal. Start now.",
+  "description": "Fix harsh snapshots with soft, directional light and clean highlights on glass, metal and gloss. AI product relighting from one uploaded photo.",
   "h1": "Product Photo Lighting for Glass, Metal, and Glossy Finishes",
   "eyebrow": "Product photo template",
-  "lead": "Product photo lighting usually takes a lighting kit. Upload a plain snapshot and get a square photo with soft, directional light, gentle shadows, and the glow on glass and gold.",
+  "lead": "Bad light ruins otherwise good products - harsh glare on glass, dull gold, plastic-looking colors - and a lighting kit is an expensive fix. Upload a plain snapshot and get the soft, directional studio light the shot needed.",
   "secondary_keywords": [
     "studio lighting for product photos",
     "perfume bottle photography",
@@ -18,16 +18,16 @@
   "tip": "Photograph your product against a plain wall with no direct sun on it, so harsh glare from the original doesn't carry into the new image.",
   "steps": [
     {
-      "t": "Upload a clear product photo",
-      "d": "Show the whole product in focus with its cap, base, and reflective edges inside the frame; a neutral wall helps shape a clean highlight."
+      "t": "Upload Your Photo",
+      "d": "Show the whole product in focus, with cap, base and reflective edges in frame. Even a plain snapshot works."
     },
     {
-      "t": "Describe the light direction",
-      "d": "Describe the light direction, shadow softness, and supporting surface, then say whether glass should glow, metal should edge, or a label should stay legible."
+      "t": "Describe the Light",
+      "d": "Name the light direction, shadow softness and surface, then say how glass or metal should read. You get a square relit photo."
     },
     {
-      "t": "Choose a version for your store",
-      "d": "Download the square version, compare its silhouette and color with the real item, then add the product name or finish note in your editor."
+      "t": "Download and Post",
+      "d": "Download the image, compare silhouette and color with the item, then add the finish note. You skip the lighting kit."
     }
   ],
   "ideas": [
@@ -105,6 +105,14 @@
     {
       "q": "Which lighting scene belongs in an Amazon listing?",
       "a": "Use even front fill and a readable product face for a listing image, then reserve macro or orbit highlights for ads and detail pages. Keep the approved source photo for any finish or color detail that must be exact."
+    },
+    {
+      "q": "Can relighting fix glare on glass or metal?",
+      "a": "Yes. You describe how the surface should read - a glow on glass, a clean edge on metal - and the square result reshapes the highlights while keeping the product itself unchanged."
+    },
+    {
+      "q": "Do I need to buy studio lights?",
+      "a": "No. The directional light and soft shadows are generated from your snapshot, so the job costs credits only and the download has no watermark."
     }
   ],
   "overview": [
@@ -475,5 +483,26 @@
         "h2": "Questions about product photo lighting"
       }
     }
-  }
+  },
+  "benefits_h2": "Why relight product photos with AI?",
+  "benefits": [
+    {
+      "t": "Salvage snapshots",
+      "d": "Harsh shadows, blown highlights and dull color in an existing phone photo are corrected in a square image, so a usable shot is not thrown away and reshot."
+    },
+    {
+      "t": "Control reflections on tricky surfaces",
+      "d": "Glass can glow, metal keeps a clean edge and labels stay legible, removing the glare that makes reflective products look cheap."
+    },
+    {
+      "t": "No lighting kit or studio",
+      "d": "Softboxes, reflectors and a studio space are not needed; the light is generated from one ordinary snapshot."
+    },
+    {
+      "t": "Publish with no watermark",
+      "d": "Downloaded photos are cleared for your own ads, listings and social posts and carry no AIVideosUGC watermark."
+    }
+  ],
+  "steps_h2": "How to relight a product photo in 3 simple steps",
+  "steps_lead": "Three steps turn a flat snapshot into a studio-lit photo - no kit, no reshoot."
 }
