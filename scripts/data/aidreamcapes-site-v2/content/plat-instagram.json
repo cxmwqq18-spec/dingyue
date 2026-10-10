@@ -121,7 +121,23 @@
       "n:guide:k4-plat-instagram-29-visual-strip-3",
       "f:q18-instagram-strip-sunscreen-routine",
       "n:guide:k4-plat-instagram-31-visual-strip-5"
-    ]
+    ],
+    "steps": {
+      "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
+      "result": "f:q18-instagram-steps-hand-cream",
+      "mode": "photo",
+      "prompt": "Create a square product photo of the plain white hand-cream tube shown in the uploaded image. An adult applies a small amount of cream to the back of one hand while keeping the tube fully visible. Soft natural window light, realistic skin, clean vanity composition.",
+      "options": [
+        [
+          "Template",
+          "Product photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    }
   },
   "benefits_h2": "Why this works for Instagram ads",
   "benefits": [
