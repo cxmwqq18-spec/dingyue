@@ -101,20 +101,19 @@
   "cta_lead": "Choose the Instagram placement first, then make an image or clip that fits it.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the product. The first frame shows what you sell, so shoppers recognize it at a glance."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Say what happens in one sentence and pick a clip or square still. The credit cost shows before anything is made."
+      "t": "Share your video idea",
+      "d": "Say what happens in one sentence and pick a clip or square still. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and Post",
+      "t": "Download and post",
       "d": "Download the file with no watermark, add your caption and offer, then post it through Instagram or Ads Manager."
     }
   ],
   "visual": {
-    "overview": "A 9:16 clip fits Reels and Stories, and a square still works for the feed and carousel. Start from one product photo and match each file to its placement.",
     "strip": [
       "n:guide:k4-plat-instagram-25-visual-strip-0",
       "f:q18-instagram-strip-hand-cream-grwm",
@@ -122,312 +121,63 @@
       "n:guide:k4-plat-instagram-29-visual-strip-3",
       "f:q18-instagram-strip-sunscreen-routine",
       "n:guide:k4-plat-instagram-31-visual-strip-5"
-    ],
-    "steps": {
-      "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
-      "result": "f:q18-instagram-steps-hand-cream",
-      "mode": "photo",
-      "prompt": "Create a square product photo of the plain white hand-cream tube shown in the uploaded image. An adult applies a small amount of cream to the back of one hand while keeping the tube fully visible. Soft natural window light, realistic skin, clean vanity composition.",
-      "options": [
-        [
-          "Template",
-          "Product photo"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ]
-    },
-    "picker": {
-      "title": "Pick an Instagram ad idea",
-      "lead": "Start from a creator-style format sellers already use.",
-      "chips": [
-        {
-          "id": "review",
-          "label": "Product Review"
-        },
-        {
-          "id": "unboxing",
-          "label": "Unboxing"
-        },
-        {
-          "id": "grwm",
-          "label": "Get Ready With Me"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f1-r10-instagram-reels-lotion-demo",
-          "label": "Product Review — Lotion Pump Reel",
-          "chips": [
-            "review",
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult creator demonstrates the plain amber hand-lotion pump at a bathroom sink, gesturing toward one feature for a Reels spoken explanation. Product fully visible, soft daylight, no text or logos."
-        },
-        {
-          "ref": "f:q18-instagram-picker-sunscreen-walk",
-          "label": "GRWM — Sunscreen Before Walk",
-          "prompt": "Square still photo: an adult woman at a sunlit doorway rubs sunscreen onto her forearm before going outside, with a simple white sunscreen tube clearly visible in her other hand. Natural morning light, candid routine, clean composition.",
-          "chips": [
-            "grwm"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-instagram-picker-mask-texture",
-          "label": "Product Demo — Green Clay Mask",
-          "prompt": "Square close-up still: an adult hand spreads a swipe of muted green clay mask cream across the back of another hand; an open plain green mask jar sits nearby. Show creamy texture sharply in soft bathroom daylight with realistic skin detail.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-instagram-picker-iced-pour",
-          "label": "Product Demo — Sparkling Water Pour",
-          "prompt": "Square still photo: an adult hand pours sparkling water from a plain silver can into a clear glass filled with ice. Freeze the bubbles and splash in bright cafe window light; keep the can and glass clear.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k8-spokesperson-gen2-tpl-jewel-70",
-          "label": "Product Review — Gold Ring Styling",
-          "prompt": "Square close-up still of an adult hand wearing a plain gold ring beside a ceramic coffee cup in soft window light. Keep the ring and finger detail sharp against the neutral tabletop, with no text or logos.",
-          "chips": [
-            "review"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k2-url-picker-tote-commute",
-          "label": "Product Demo — Canvas Tote Packing",
-          "prompt": "Square lifestyle still of a plain natural canvas tote with a notebook and water bottle arranged beside it on a station bench. Show the handles and packed shape clearly in soft daylight, with no text or logos.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-instagram-picker-skincare-unbox",
-          "label": "Unboxing — Travel Skincare Minis",
-          "prompt": "Square still photo: adult hands open a small kraft gift box and lift three coordinated travel-size skincare minis from cream tissue. Show the tubes and jars together on a clean tabletop in soft daylight.",
-          "chips": [
-            "unboxing"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k2-url-picker-vase",
-          "label": "Unboxing — Pale Ceramic Vase",
-          "prompt": "Square still photo of a hand gently lifting a plain pale ceramic vase from tissue paper in an open box. Keep the vase, box and protective packing sharp in soft window light, with no text or logos.",
-          "chips": [
-            "unboxing"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c3-r3-occ-sale-serum",
-          "label": "Product Demo — Serum Swatches",
-          "chips": [
-            "demo",
-            "review"
-          ],
-          "prompt": "Still square beauty photograph using the uploaded photo as the exact reference: amber serum and cream textures arranged as clean swatches on glass while an adult hand reaches toward the dropper. Soft bathroom daylight, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:tpl-beauty-reuse-texture",
-          "label": "Product Demo — Serum Cream Swatches",
-          "chips": [
-            "demo",
-            "review"
-          ],
-          "prompt": "Still square beauty photograph using the uploaded photo as the exact reference: an adult hand places one clear serum swatch beside an ivory cream swatch beside a plain dropper bottle on glass. Soft bathroom daylight, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-home-hoodie-flatlay",
-          "label": "Product Review — Gray Hoodie Flatlay",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the folded gray hoodie, knit beanie and scarf. An adult hand smooths the hoodie beside the beanie and scarf on a wooden bench, ending with the fabric centered. Soft daylight, square styling frame, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k9-retargeting-creator-smartwatch",
-          "label": "Product Review — Smartwatch Unboxing",
-          "chips": [
-            "review",
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain round-faced smartwatch and its screen. An adult creator holds it toward the camera during an unbox reaction, ending with the watch face centered. Soft daylight, square creator composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c5-tpl-outfit-m1-green-midi",
-          "label": "GRWM — Trying On Green Dress",
-          "chips": [
-            "grwm"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain muted green midi dress. An adult model adjusts one sleeve in a courtyard mirror, ending with the full outfit visible. Soft daylight, natural square fashion framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c4-occ-holidays-output-scarf-gift",
-          "label": "Unboxing — Gift Scarf Reveal",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the forest-green wool scarf and plain gift box. Adult hands lift the folded scarf from the box beside evergreen branches, ending with the scarf fully visible. Warm window light, square seasonal lifestyle framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-instagram-stories-vase-triptych",
-          "label": "Product Demo — Vase Three Frames",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Show three consecutive vertical moments with the plain ceramic vase: a hand places one stem, the vase rests on a side table, then a close detail. Leave margins for Instagram controls; no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-instagram-feed-tote-carousel",
-          "label": "Product Demo — Tote Carousel Frames",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Build a three-part Feed sequence: front product view, side view for scale, then close detail of the handle stitching on the plain canvas tote. No text or logos."
-        }
-      ],
-      "button": "Make an Instagram ad"
-    },
-    "uses": [
-      {
-        "frame": "reels",
-        "ref": "f:q18-instagram-uses-face-mist-scale",
-        "h": "Reels clip — face mist in hand",
-        "d": "Shoppers see the bottle's real size in someone's hand and picture using it. That is the moment they want to know more."
-      },
-      {
-        "frame": "post",
-        "ref": "f:q18-instagram-uses-lip-shade-compare",
-        "h": "Feed post — three lip shades compared",
-        "d": "One post shows the shade choices side by side, so shoppers pick the right one and feel ready to buy."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k4-plat-instagram-11-visual-input-0-good",
-        "bad": "n:guide:k4-plat-instagram-m5-soft-focus-bad",
-        "good_label": "Face mist bottle stays clear and sharp on a gym bench",
-        "bad_label": "Blur softens the bottle edges and details"
-      },
-      {
-        "good": "n:guide:k4-plat-instagram-12-visual-input-1-good",
-        "bad": "n:guide:plat-instagram-m5-cropped",
-        "good_label": "The full toner bottle stays inside the photo",
-        "bad_label": "The toner bottle is cut off at the frame edge"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:q18-instagram-output-face-mist",
-        "frame": "1:1",
-        "label": "Matched Clear Face-Mist Bottle with White Pump",
-        "presentation": "instagram"
-      },
-      {
-        "ref": "f:q18-instagram-output-toner",
-        "frame": "1:1",
-        "label": "Matched Tall Clear Toner Bottle with White Cap",
-        "presentation": "instagram"
-      }
-    ],
-    "after": {
-      "ref": "f:q18-instagram-after-face-mist-offer",
-      "zones": [
-        "Caption",
-        "Offer"
-      ],
-      "items": [
-        "Type the caption and discount in your editor so the wording stays exact.",
-        "Keep the offer clear of the product and the Instagram interface."
-      ]
-    },
-    "sizes": [
-      {
-        "frame": "1:1",
-        "ref": "f:q18-instagram-size-square-mascara",
-        "label": "1:1 · Square product-image output"
-      },
-      {
-        "frame": "9:16",
-        "ref": "f:q18-instagram-size-vertical-crossbody",
-        "label": "9:16 · Reels; keep key details inside the safe area"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:k4-plat-instagram-03-cards-5-image",
-        "label": "1:1 · Square product-photo output"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Make an Instagram ad from a clear product image"
-      },
-      "m3": {
-        "h2": "Choose a feed image or Reels clip"
-      },
-      "m4": {
-        "h2": "Use Instagram photos across product posts and listings"
-      },
-      "m5": {
-        "h2": "Keep the product clear in an Instagram image"
-      },
-      "m6": "Instagram posts made from product photos",
-      "m7": {
-        "h2": "Add the caption and offer after download"
-      },
-      "m8": "Instagram Ad Images by Placement",
-      "examples": {
-        "h2": "More Instagram examples",
-        "lead": "Creator routines, product texture, unboxing, and travel use."
-      },
-      "faq": {
-        "h2": "Questions about Instagram product ads"
-      }
-    }
+    ]
   },
-  "benefits_h2": "Why make Instagram ads with AI UGC video?",
+  "benefits_h2": "Why this works for Instagram ads",
   "benefits": [
     {
-      "t": "Reels and feed from one photo",
-      "d": "Each job returns either a 9:16 clip or a square still, so you can cover Reels, Stories and a 4:5 feed post without producing the product twice."
+      "t": "Shorter Production Time",
+      "d": "Instagram demands consistency, and ready-to-make clips let you post and advertise in minutes rather than booking a shoot."
     },
     {
-      "t": "No creator or studio on retainer",
-      "d": "You skip the booking, filming and editing that a campaign set normally needs. When Instagram needs a fresh angle, you start another job from the same photo."
+      "t": "Lower Production Cost",
+      "d": "Your Instagram ads get high-quality visuals at a far lower cost, so content production costs stay in check."
     },
     {
-      "t": "A carousel built from separate jobs",
-      "d": "Run square jobs for a front view, an in-hand moment and a close detail, then assemble them as one carousel in Instagram. No reshoot is needed to add a slide."
-    },
-    {
-      "t": "Commercial use, no watermark",
-      "d": "Downloaded clips and stills carry no AIVideosUGC watermark and are yours to use in ads and posts, with the credit cost shown before each job."
+      "t": "Variations to Test",
+      "d": "Try clips with a wide range of formats, find what drives the best response, and do more of what works."
     }
   ],
   "steps_h2": "How to make an Instagram ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post Reel or feed ad — no studio, no creator, no reshoot."
+  "steps_lead": "Three steps turn one product photo into a ready-to-post Reel or feed ad — no studio, no creator, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Why sellers choose it",
+      "h2": "Why AI UGC videos work for Instagram ads",
+      "lead": "Consistent, on-brand creative whenever you need it.",
+      "items": [
+        {
+          "t": "No Creator Wait",
+          "d": "Get fresh, high-quality content in minutes without the wait, so your next ad is ready when you are."
+        },
+        {
+          "t": "Ready Instagram Templates",
+          "d": "Build high-converting ads using ready, creator-style formats, and scale your clips without a shoot."
+        },
+        {
+          "t": "Sell In Every Market",
+          "d": "Make versions for different audiences without extra production cost, so every market feels local."
+        }
+      ]
+    },
+    {
+      "eyebrow": "What you can do",
+      "h2": "A practical AI video generator for Instagram",
+      "lead": "Everything in one place, from product photo to ready clip.",
+      "items": [
+        {
+          "t": "Turn Product Photos Into Ads",
+          "d": "Start from your own product image and end with a finished clip, without switching between tools."
+        },
+        {
+          "t": "Holding and Demo Formats",
+          "d": "Show the product in a hand or in use, the formats shoppers expect in the feed."
+        },
+        {
+          "t": "Full Creative Control",
+          "d": "Change the opening, scene or length and make another version whenever you need a fresh take."
+        }
+      ]
+    }
+  ]
 }
