@@ -197,6 +197,7 @@ function MockFrame({ item, r }: { item: V2VisualUse; r: V2Resolvers }) {
 }
 
 export function VisualUses({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
+  if (!visual.uses.length) return null;
   return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><div className="v-use-art-inner"><MockFrame item={item} r={r} /></div></div><div className="v-use-copy"><h3>{item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
 }
 
@@ -205,6 +206,7 @@ function InputPair({ item, r }: { item: V2VisualInput; r: V2Resolvers }) {
 }
 
 export function VisualInput({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
+  if (!visual.input.length) return null;
   const darkened = visual.input.some((item) => item.darkened);
   return <Section eyebrow="Start with a clear photo" title={visual.titles?.m5?.h2 ?? "Choose a photo that shows the product well"}>
     {darkened ? <style dangerouslySetInnerHTML={{ __html: ".adc2 img.v-input-darkened{filter:brightness(.28)}" }} /> : null}
@@ -217,6 +219,7 @@ function OutputCard({ item, r }: { item: V2VisualOutput; r: V2Resolvers }) {
 }
 
 export function VisualOutputs({ visual, r, includeLimitations = false }: { visual: V2Visual; r: V2Resolvers; includeLimitations?: boolean }) {
+  if (!visual.outputs.length) return null;
   return <Section eyebrow="Your result" title={visual.titles?.m6?.h2 ?? "See the format and cost"}><div className="v-output-grid">{visual.outputs.map((item, index) => <OutputCard item={item} key={`${item.image.src}-${index}`} r={r} />)}</div>{includeLimitations ? <VisualLimitations asSubsection visual={visual} /> : null}</Section>;
 }
 
