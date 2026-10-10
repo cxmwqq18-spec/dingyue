@@ -1,10 +1,29 @@
 {
   "id": "tpl-ugc",
   "title": "UGC Style Product Photos and Ad Scenes",
-  "description": "Create UGC style product photos for skincare, clothing, jewelry, pet care and tech. Choose reviews, unboxings or demos for social ads and product pages.",
+  "description": "Get creator-style UGC product photos without booking a shoot. One product photo becomes a review, unboxing or demo scene ready for social ads.",
   "h1": "Create UGC Style Product Photos for Social Ads",
   "eyebrow": "Ad photo template",
-  "lead": "Choose an ad format that shows a real person using, opening or reviewing the product. These scenes suit social posts, creator ads and product-page galleries.",
+  "lead": "Need UGC-style product shots but have no creator, studio or time to arrange a shoot? Upload one product photo and get a real-looking review, unboxing or demo scene you can add to your social ads and listing gallery.",
+  "benefits_h2": "Why make UGC style product photos with AI?",
+  "benefits": [
+    {
+      "t": "No creator or shoot to arrange",
+      "d": "Booking a creator, location and shoot for every product is slow and expensive. This template puts a believable person or pair of hands in the scene from a single product photo, so each listing can have fresh social content on its own schedule."
+    },
+    {
+      "t": "Several scenes from one photo",
+      "d": "Run the same product through a morning-routine shot, a just-delivered unboxing or a hands-on demo. You can test which everyday moment gets attention in the feed without reshooting the product."
+    },
+    {
+      "t": "Built for feed and listing placement",
+      "d": "The square image drops straight into an Instagram or TikTok photo post, carousel or product-page gallery. Add your caption, price and discount code afterwards as editable text so every offer stays accurate."
+    },
+    {
+      "t": "Yours to use commercially",
+      "d": "Downloaded photos carry no AIVideosUGC watermark and can be used in your own ads, product pages and social posts, so a scene that performs can keep running without extra licensing."
+    }
+  ],
   "secondary_keywords": [
     "creator style product photos",
     "user-generated content style images",
@@ -21,18 +40,20 @@
     "Use [Instagram ads](/platforms/instagram-ads) or [TikTok ads](/platforms/tiktok-ads) when the frame is made for a social feed, and use [UGC video ads](/ai-video-generation/ugc-ad-video) when motion explains the product better than a still. The [ad sizes guide](/guides/ad-sizes-by-platform) gives the crop context before you prepare a second placement."
   ],
   "tip": "Describe a specific moment, like \"sitting on the floor after a home workout, morning light,\" rather than a vague style word such as \"authentic.\"",
+  "steps_h2": "How to make a UGC style product photo in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a feed-ready creator-style shot — no creator, no studio, no reshoot.",
   "steps": [
     {
-      "t": "Upload a clear product photo",
-      "d": "Show the whole bottle, jar, or package in good light, with its front label facing the camera."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a shot of the whole product in good light, front label facing the camera. A clear source keeps the generated scene recognizable."
     },
     {
-      "t": "Describe an everyday moment",
-      "d": "Name the person, place, and one action, such as setting a bottle beside a gym bag after a workout."
+      "t": "Describe Your Scene",
+      "d": "Name the person, place and one action, like the bottle beside a gym bag. You get a believable moment without paying a creator."
     },
     {
-      "t": "Download and add your caption",
-      "d": "Download the photo, then add your caption and any offer in your editor."
+      "t": "Download and Post",
+      "d": "Download the photo and add your caption or offer in your own editor. It is ready for posts, carousels and galleries with no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -106,6 +127,14 @@
     {
       "q": "How do I check a generated person before posting?",
       "a": "Compare the face, age range, clothing, pose, and product interaction with your brief, then rerun if any detail is wrong."
+    },
+    {
+      "q": "Is this different from hiring a UGC creator?",
+      "a": "Yes. Instead of paying a creator to film and wait for their schedule, you upload one product photo and describe the moment yourself. The people shown are AI-generated, so present the shot as your own ad creative rather than as a customer review or testimonial."
+    },
+    {
+      "q": "Do I own the photo well enough to run it as a paid ad?",
+      "a": "Yes. Photos you make can be used in your own ads, product pages and social posts, and downloads have no AIVideosUGC watermark. You are still responsible for the ad text, claims and any disclosure the ad platform requires."
     }
   ],
   "overview": [
