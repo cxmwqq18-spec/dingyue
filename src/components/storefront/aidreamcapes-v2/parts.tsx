@@ -465,14 +465,14 @@ const UploadIcon = () => (
 export const BRAND_NAME = "AIVideosUGC";
 export const BRAND_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png";
 
-// Workspace links (/app/...) open the sign-up form first and continue to the workspace afterwards;
-// visitors who are already signed in are sent straight on.
+// The AIVideosUGC v2 shell is rendered only for site_aidreamcapes. Its
+// workspace links are intentionally direct so unsigned visitors can inspect
+// the guest create and inspiration routes before authentication is required.
 export function withStartLinks(r: V2Resolvers): V2Resolvers {
   if (r.direct) return r;
   return {
     ...r,
-    direct: r.href,
-    href: (value: string) => (value.startsWith("/app/") ? `${r.href("/login")}?mode=register&next=${encodeURIComponent(r.href(value))}` : r.href(value))
+    direct: r.href
   };
 }
 

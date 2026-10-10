@@ -35,6 +35,7 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { renderAidreamcapesGuestCreatePage, renderAidreamcapesInspirationsPage } from "@/lib/aidreamcapes-guest-workspace";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -688,7 +689,14 @@ export default async function HostStorefrontCatchAllPage({
   }
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
-  if (needsPrivateRuntime && !(await hasAnyCustomerSessionCookie())) {
+  // AIVideosUGC lets unsigned visitors open the create workspace and the
+  // in-site inspiration library; every other private route still requires a
+  // session. This allowance applies to aidreamcapes only.
+  const isGuestAllowedAppRoute =
+    firstSegment === "app" &&
+    hostSiteSlug === "aidreamcapes" &&
+    (slug === "/app/create" || slug === "/app/inspirations");
+  if (needsPrivateRuntime && !(await hasAnyCustomerSessionCookie()) && !isGuestAllowedAppRoute) {
     const query = searchParams ? await searchParams : {};
     redirect(`/login?next=${encodeURIComponent(`${slug}${searchParamsSuffix(query)}`)}`);
   }
@@ -700,6 +708,12 @@ export default async function HostStorefrontCatchAllPage({
     if (slug === "/app") redirect(`/app/create${searchParamsSuffix(query)}`);
     const siteSlug = await getHostSiteSlugShellWithFallback(hostCandidates);
     if (!siteSlug) notFound();
+    if (isGuestAllowedAppRoute && !(await hasAnyCustomerSessionCookie())) {
+      if (slug === "/app/inspirations") {
+        return renderAidreamcapesInspirationsPage({ query, siteSlug });
+      }
+      return renderAidreamcapesGuestCreatePage({ query, siteSlug });
+    }
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
   }
   const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, slug);
