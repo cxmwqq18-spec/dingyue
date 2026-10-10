@@ -1,10 +1,29 @@
 {
   "id": "tpl-sale",
   "title": "Sale Banner Maker for Square Offer Images | AIVideosUGC",
-  "description": "Use this sale banner maker to put your product in a seasonal scene with open space for the offer. Add your discount in Canva later. Make your sale image now.",
+  "description": "Move stock with a seasonal sale image that leaves clean space for your offer. One product photo becomes a square banner; add discount and dates in Canva.",
   "h1": "Sale Banner Maker with Open Space for Offer Text",
   "eyebrow": "Ad photo template",
-  "lead": "Use this sale banner maker to create a seasonal image of your product with a clear patch of sky, wall, or snow where your discount and dates can go once you add them.",
+  "lead": "A discount with no clear sale image gets lost in crowded feeds, and custom banner design for every event takes time you do not have. Upload one product photo and this sale banner maker places it in a seasonal scene with a calm open area ready for your discount, dates and code.",
+  "benefits_h2": "Why use an AI sale banner maker?",
+  "benefits": [
+    {
+      "t": "Offer space built into the scene",
+      "d": "The product sits to one side with open sky, wall or snow deliberately left clear. Your discount and dates have a clean place to land without covering the item."
+    },
+    {
+      "t": "One image, several promotions",
+      "d": "Because the offer is a separate text layer, the same photo can run a percent-off headline, a free-shipping message or a code in different ads. Update the deal without commissioning a new banner."
+    },
+    {
+      "t": "Ready for every sales event",
+      "d": "Describe a darker Black Friday scene, end-of-season clearance or a holiday fireplace setting. The square image fits Facebook and Instagram feeds, then adapts to a 9:16 canvas for Stories."
+    },
+    {
+      "t": "Numbers stay accurate and yours to use",
+      "d": "Type the discount, code and end date yourself so AI never garbles a price. Downloads have no AIVideosUGC watermark and can be used commercially in your own ads."
+    }
+  ],
   "secondary_keywords": [
     "Black Friday banner image",
     "seasonal sale ad image",
@@ -22,18 +41,20 @@
     "For a larger campaign, pair this still with a [feed ad photo](/ai-image-generation/feed-ad-still), a [lifestyle scene](/ai-image-generation/lifestyle-scene), or a [white background photo](/ai-image-generation/ecommerce-main-image). Use the [sale discount occasion](/occasions/sale-discount), [Black Friday occasion](/occasions/black-friday), and [testing ad versions guide](/guides/testing-ad-versions) to keep the offer and destination consistent."
   ],
   "tip": "Say where you want the empty space, for example \"open sky across the left third,\" so your offer text has a calm area to sit on.",
+  "steps_h2": "How to make a sale banner in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into an offer-ready sale banner — no designer, no shoot, no wrong prices burned in.",
   "steps": [
     {
-      "t": "Choose the item for the sale",
-      "d": "Use a clear product photo that shows the full shape, color, and main details."
+      "t": "Upload Your Product Photo",
+      "d": "Use a clear photo showing the full shape, color and main details. The banner keeps that exact product so shoppers recognize the sale item."
     },
     {
-      "t": "Set the scene and open area",
-      "d": "Place the product to one side if the offer needs a clear space beside it."
+      "t": "Describe the Scene and Space",
+      "d": "Name the seasonal setting and where the open area should sit. The product is placed clear of the offer zone without a custom design session."
     },
     {
-      "t": "Download and add the deal",
-      "d": "Enter the discount, code, and end date in your editor."
+      "t": "Download and Add the Deal",
+      "d": "Enter the discount, code and end date in your editor, then post the square banner or adapt it to 9:16. No AIVideosUGC watermark is added."
     }
   ],
   "ideas": [
@@ -107,6 +128,14 @@
     {
       "q": "Can I use the sale image without an offer?",
       "a": "Yes. Keep the clean product scene for a product-page image or add a different approved message later."
+    },
+    {
+      "q": "Can I run these banners as paid sale ads?",
+      "a": "Yes. Images you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You are responsible for the offer terms, claims and disclosures in the ad."
+    },
+    {
+      "q": "What happens to the banner when the sale ends?",
+      "a": "Delete, pause or replace the offer layer so an expired date or code is never shown. The underlying product scene can be reused for a new promotion or kept as a plain listing image."
     }
   ],
   "overview": [
