@@ -296,14 +296,13 @@ export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?:
 export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   if (card.cardType === "case") return <CaseCard card={card} r={r} filterIndexes={filterIndexes} />;
   return (
-    <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
+    <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.filterTags && card.filterTags.length ? card.filterTags.join(" ") : card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         <Img image={card.image} r={r} />
       </div>
       <div className="tb">
         <h3><a className="card-title" href={r.href(card.href)}>{card.name}</a></h3>
         {card.line ? <p>{card.line}</p> : null}
-        {card.tags.length ? <div className="tags">{card.tags.map((tag) => <span key={tag}>{tag}</span>)}</div> : null}
         <span className="use">Use this template →</span>
       </div>
     </article>

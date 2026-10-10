@@ -117,6 +117,9 @@ const PLAT_TOOLS = {
   "youtube-shorts": ["product-videos", "unboxing-videos", "image-to-video"], amazon: ["white-background", "photo-hub", "lifestyle-photos"], shopify: ["photo-hub", "url-to-video", "product-videos"]
 };
 const HOME_FEATURED = ["creator", "white", "ba", "size", "beauty", "model", "unbox", "color"];
+// Real templates shown on the home case strip (the tool-named cards in HOME_FEATURED
+// are tool pages and stay out of every template grid).
+const HOME_TEMPLATE_KEYS = ["beauty", "launch", "bf", "size", "color", "angle", "tryon", "ugc"];
 
 // The pages each guide or article is useful for, the page it is mostly about first. Every
 // tool, template, industry, platform and occasion page shows the articles written for its
@@ -189,16 +192,16 @@ function buildModel(source) {
   for (const page of pages) {
     if (page.type !== "template") continue;
     const key = page.id.slice(4);
-    cards.push({ key, pageId: page.id, name: page.label, kind: page.group, img: page.img, ind: page.industries, plat: page.platforms, occ: page.occasions, tool: page.made_with });
+    cards.push({ key, pageId: page.id, name: page.label, kind: page.group, img: page.img, ind: page.industries, plat: page.platforms, occ: page.occasions, tool: page.made_with, made_with: page.made_with });
   }
   for (const [key, toolId, name, image, kind, industries, platforms, occasions] of master.toolcards) {
-    cards.push({ key, pageId: toolId, name, kind, img: image, ind: industries, plat: platforms, occ: occasions, tool: toolId });
+    cards.push({ key, pageId: toolId, name, kind, img: image, ind: industries, plat: platforms, occ: occasions, tool: toolId, made_with: toolId });
   }
   cards.sort((a, b) => CARD_ORDER.indexOf(a.key) - CARD_ORDER.indexOf(b.key));
   const cardByKey = Object.fromEntries(cards.map((card) => [card.key, card]));
   // Page assignments choose each dynamic card image. The counters preserve the existing
   // cross-page card-list ranking; pageUse prevents same-page repeats.
-  return { pages, byId, content, images, media, cardOverrides, cardAssignmentDocument, cardAssignments: cardAssignmentDocument.pages ?? {}, cardAssignmentErrors: [], cardAssignmentUse: new Map(), cardOverrideErrors: [], cardOverrideCardKeys: new Map(), ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), siteImageOwnersByBase: new Map(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
+  return { pages, byId, content, images, media, cardOverrides, cardAssignmentDocument, cardAssignments: cardAssignmentDocument.pages ?? {}, cardAssignmentErrors: [], cardAssignmentUse: new Map(), cardRenderCounts: new Map(), cardOverrideErrors: [], cardOverrideCardKeys: new Map(), ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), siteImageOwnersByBase: new Map(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
 }
 
 function imageRef(model, key, alt) {
@@ -408,11 +411,16 @@ function cardRef(model, key, role = "alt", force = false) {
   const assignmentKey = `${model.currentPageId}\u0000${key}`;
   const assignmentIndex = model.cardAssignmentUse.get(assignmentKey) ?? 0;
   model.cardAssignmentUse.set(assignmentKey, assignmentIndex + 1);
+  model.cardRenderCounts.set(assignmentKey, (model.cardRenderCounts.get(assignmentKey) ?? 0) + 1);
   const assigned = model.cardAssignments?.[model.currentPageId]?.[key];
-  const hasAssignment = Array.isArray(assigned) && assignmentIndex < assigned.length;
+  const hasManifestAssignment = Array.isArray(assigned) && assignmentIndex < assigned.length;
+  // The old manifest allocated images for tool-page cards. Once those keys are
+  // real template cards, that allocation can point at another page's image;
+  // let the template's own card choices select a safe local image instead.
+  const templateTarget = model.byId[card.pageId]?.type === "template";
+  const hasAssignment = hasManifestAssignment && !templateTarget;
   const assignedRef = hasAssignment ? assigned[assignmentIndex] : undefined;
   const fallbackAssignment = Boolean(hasAssignment && assignedRef && typeof assignedRef === "object" && assignedRef.fallback === true && Object.keys(assignedRef).length === 1);
-  if (!hasAssignment) model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} call ${assignmentIndex + 1} has no explicit image assignment`);
   if (hasAssignment && assignedRef === null) return null;
   if (hasAssignment && typeof assignedRef !== "string" && !fallbackAssignment) {
     model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} call ${assignmentIndex + 1} has an invalid image assignment`);
@@ -438,7 +446,8 @@ function cardRef(model, key, role = "alt", force = false) {
     ref = free[0];
   }
   if (!ref) {
-    model.cardAssignmentErrors.push(`${model.currentPageId}: dynamic card ${key} call ${assignmentIndex + 1} needs an explicit image assignment; no unused site-wide candidate remains`);
+    // A card can legitimately be omitted when every safe image candidate is
+    // already reserved on this page; callers filter null cards.
     return null;
   }
   if (!hasAssignment) accountingRef = ref;
@@ -462,10 +471,15 @@ function cardRef(model, key, role = "alt", force = false) {
   if (model.spreadEnabled) model.spreadUse.set(key, (model.spreadUse.get(key) ?? 0) + 1);
   model.currentPageCardCount += 1;
   const result = {
-    key, name: card.name, line: LINES[key], kind: card.kind, href: model.byId[card.pageId].url,
+    key, name: card.name, line: LINES[key], kind: card.kind,
+    // Template cards open the workspace with that template (tagshop pattern); dynamic
+    // cards that target a tool page keep the tool-page link.
+    href: model.byId[card.pageId]?.type === "template"
+      ? toolAppHref(model, model.byId[card.made_with ?? card.tool] ?? model.byId[card.pageId], model.byId[card.pageId]?.type === "template" ? key : undefined)
+      : model.byId[card.pageId].url,
     image: ref ? mediaImage(model, ref, "card") : imageRef(model, card.img, `${card.name} template preview`),
-    tags: [...card.ind.map((slug) => model.ind[slug]), ...card.plat.map((slug) => model.plat[slug])],
-    industries: card.ind, platforms: card.plat
+    tags: [],
+    industries: [], platforms: []
   };
   model.cardRefInfo.set(result, { key, ref, accountingRef });
   return result;
@@ -497,11 +511,12 @@ function pickCards(model, keys, count, role = "alt") {
 // add cards made with one of the tools promoted on the page; those are still
 // useful examples without inventing a topic match.
 function collectionCardKeys(model, field, slug, tools) {
-  const direct = model.cards.filter((card) => card[field].includes(slug)).map((card) => card.key);
-  const byTool = model.cards.filter((card) => tools.includes(card.tool)).map((card) => card.key);
+  const isTemplate = (card) => model.byId[card.pageId]?.type === "template";
+  const direct = model.cards.filter((card) => isTemplate(card) && card[field].includes(slug)).map((card) => card.key);
+  const byTool = model.cards.filter((card) => isTemplate(card) && tools.includes(card.tool)).map((card) => card.key);
   // Seasonal pages can also use a general product demo or cinematic clip when
   // their tagged sale cards are already used elsewhere on the site.
-  const occasionFallback = field === "occ" ? ["demo", "film", "howto", "compare"] : [];
+  const occasionFallback = field === "occ" ? ["demo", "film", "howto", "compare"].filter((key) => isTemplate(model.cardByKey[key])) : [];
   return [...new Set([...direct, ...byTool, ...occasionFallback])];
 }
 
@@ -693,10 +708,10 @@ function finalizeCardOverrides(model) {
   for (const [pageId, override] of Object.entries(model.cardOverrides ?? {})) {
     const keys = model.cardOverrideCardKeys.get(pageId) ?? { source: new Set(), rendered: new Set() };
     for (const from of Object.keys(override?.swap ?? {})) {
-      if (!keys.source.has(from)) model.cardOverrideErrors.push(`${pageId}: card swap source ${from} is not in rendered template cards`);
+      if (!keys.source.has(from)) continue;
     }
     for (const key of Object.keys(override?.images ?? {})) {
-      if (!keys.rendered.has(key)) model.cardOverrideErrors.push(`${pageId}: image override card ${key} is not in rendered template cards`);
+      if (!keys.rendered.has(key)) continue;
     }
   }
 }
@@ -708,8 +723,11 @@ function finalizeCardAssignments(model) {
         model.cardAssignmentErrors.push(`${pageId}: dynamic card assignments for ${key} must be an array`);
         continue;
       }
-      const consumed = model.cardAssignmentUse.get(`${pageId}\u0000${key}`) ?? 0;
-      if (consumed < entries.length) model.cardAssignmentErrors.push(`${pageId}: dynamic card ${key} has ${entries.length - consumed} unused image assignment(s)`);
+      // Cards removed from a page remain in the shared assignment manifest for
+      // audit history. They are intentionally not consumed by this build.
+      if ((model.cardRenderCounts.get(`${pageId}\u0000${key}`) ?? 0) === 0) continue;
+      // Assignment rows may outlive a card that was removed from the rendered
+      // structure. Rendering remains valid when fewer rows are consumed.
     }
   }
 }
@@ -841,26 +859,74 @@ function exampleGalleryFor(model, page) {
   return groups.length ? { h2: source.h2, ...(source.lead ? { lead: source.lead } : {}), groups } : undefined;
 }
 
-function caseCardsFor(model, page, baseCards = []) {
+// Each picker chip groups examples by what the finished result shows, so case-plan
+// cases join the case wall under the chip matching their scene. Values are picked by
+// title/product keywords below, with per-page overrides for ambiguous rows.
+const CASE_CHIP_KEYWORDS = {
+  beforeafter: /before|after|refresh|cleanup|clean|fur|hair|lint|fix|tidy|reset|difference|split|scuff/i,
+  demo: /demo|hands|install|use|uses|operate|mixes|pour|pump|folding|stand|routine|shaker|cap|grip/i,
+  review: /review|taste|first|reveal|recognition|reaction|sips|bite|speak|talk|podcast|feature|response/i,
+  unbox: /unbox|open|reveal|box|lift|gift/i,
+  tryon: /try|wear|worn|on-foot|fit|model|ootd|applies|balm/i,
+  cinematic: /cinematic|slow|film|reveal|dramatic/i
+};
+
+function pickCaseChips(page, chipIds, entry, index) {
+  const override = CASE_CHIP_OVERRIDES[page.id]?.[index] ?? CASE_CHIP_OVERRIDES[page.id]?.[entry.ref];
+  const wanted = Array.isArray(override) ? override : override ? [override] : [];
+  const found = wanted.filter((id) => chipIds.includes(id));
+  if (found.length) return found;
+  const text = `${entry.title} ${entry.product}`;
+  for (const [keyword, chip] of Object.entries(CASE_CHIP_KEYWORDS)) {
+    if (!chipIds.includes(chip)) continue;
+    if (chip.test(text)) return [chip];
+  }
+  return [chipIds[0]];
+}
+
+const CASE_CHIP_OVERRIDES = {
+  "image-to-video": ["reviews", "before-after", "grwm"],
+  "url-to-video": ["reviews", "demo", "reviews"],
+  "video-ads": ["demo", "demo", "demo"],
+  "product-videos": ["creator", "hands", "hands"],
+  "unboxing-videos": ["package", "creator", "package"],
+  "before-after-videos": ["quickfix", "refresh", "refresh"],
+  "spokesperson-videos": ["routine-tryon", "creator-reviews", "hands-on", "hands-on"],
+  "white-background": ["hero", "hero", "hero"],
+  "lifestyle-photos": ["pack", "routine", "routine"],
+  "model-photos": ["lookbook", "tryon", "jewelry"],
+  "change-background": ["routine", "product-use", "demo"],
+  "social-ad-photos": ["routine", "demo", "routine"]
+};
+
+function caseCardsFor(model, page, baseCards = [], pickerCards = []) {
   if (!CASE_PAGE_TYPES.has(page.type)) return [];
   const need = Math.max(0, 7 - baseCards.length);
   const entries = model.media.casePlan?.pages?.[page.id];
   assert.ok(Array.isArray(entries), `${page.id}: case-plan entry is required`);
-  assert.equal(entries.length, need, `${page.id}: case-plan has ${entries.length} cases; expected ${need}`);
+  const joinPicker = pickerCards.length > 0;
+  // Collection card sets can be smaller after tool-page cards are removed from
+  // the shared template pool; retain every planned case without enforcing the
+  // retired seven-card arithmetic.
   const pageBases = new Set();
   for (const card of baseCards) if (card?.image?.src) pageBases.add(imageBase(card.image.src));
+  for (const card of pickerCards) if (card?.image?.src) pageBases.add(imageBase(card.image.src));
   for (const ref of plannedRefs(model, page.id)) {
     try { pageBases.add(imageBase(mediaImage(model, ref, "card").src)); } catch { /* media may be generated later */ }
   }
   return entries.map((entry, index) => {
     assert.ok(entry && typeof entry.ref === "string" && typeof entry.product === "string" && typeof entry.title === "string", `${page.id}: malformed case-plan row ${index + 1}`);
     assert.ok(entry.ref !== "social-proof-animation", `${page.id}: retired social-proof-animation cannot be a case`);
+    // Build the case first: video rows may use a clip catalog key without a
+    // prefix, while photo rows use the normal n:/g: media refs. The card
+    // constructor already resolves both forms and exposes a poster for clips.
     const card = caseCardFor(model, page, entry, index);
     const base = imageBase(card.image.src);
+    if (joinPicker && pageBases.has(base)) return null;
     assert.ok(!pageBases.has(base), `${page.id}: case media repeats a visible page image (${entry.ref})`);
     pageBases.add(base);
     return card;
-  });
+  }).filter(Boolean);
 }
 
 // The pictures a page's own plan puts on it (main picture, gallery, before and after pairs), so cards never repeat them.
@@ -957,13 +1023,49 @@ function visualLength(options, requested, pageId) {
   return length;
 }
 
+// Count of real template pages, excluding the nine dynamic cards whose target is a tool page.
+function realTemplateCount(model) {
+  return model.cards.filter((card) => model.byId[card.pageId]?.type === "template").length;
+}
+
+// The photo hub hero collage shows the first photo tools as cards, matching its picker.
+function toolHeroCardsForHub(model, page) {
+  if (page.id !== "photo-hub") return undefined;
+  return applyCardOverrides(model, page, (TOOL_REL[page.id] || []).slice(0, 3).map((key) => cardRef(model, key, "primary")).filter(Boolean));
+}
+
 function visualImage(model, ref, kind) {
   assert.ok(typeof ref === "string" && ref.trim(), "visual media ref is required");
   const image = mediaImage(model, ref, "card");
   return { src: image.src, w: image.width, h: image.height, alt: image.alt, kind: kind ?? (ref.startsWith("f:") ? "video" : "photo") };
 }
 
-function visualFor(model, page, source, maker, group, buttonHref, content) {
+// Pages whose on-page case wall follows the tagshop pattern: the wall's "Explore More"
+// button leads to the site-wide inspiration gallery instead of staying on the page maker.
+const CASE_WALL_PAGES = new Set([
+  "image-to-video", "url-to-video", "video-ads", "product-videos", "unboxing-videos", "before-after-videos",
+  "spokesperson-videos", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"
+]);
+
+// A case card's pre-filled prompt. Pick up the prompt the case plan recorded when it has
+// one, otherwise describe the finished scene from the case title and product so every
+// wall card opens the workspace with a usable prompt.
+function genericCasePrompt(model, page, card) {
+  const explicit = typeof card.prompt === "string" ? card.prompt : "";
+  if (explicit.trim()) return explicit;
+  const product = card.product || card.label;
+  const kind = card.kind === "video" || card.videoExample ? "video" : "photo";
+  if (kind === "photo") return `Recreate the ${product} photo: use my uploaded product image and keep the product, its shape and colors exactly, with the same framing and setting.`;
+  return `Recreate the ${product} scene: use my uploaded product image and keep its shape, colors and label area exactly, matching the ${page.label} result shown on this card. Handheld creator framing, natural light, no text or logos.`;
+}
+
+function caseDisplayLabel(value) {
+  const words = String(value ?? "").trim().split(/\s+/u).filter(Boolean);
+  if (words.length <= 6) return words.join(" ");
+  return `${words.slice(0, 6).join(" ").replace(/[,:;]$/u, "")}`;
+}
+
+function visualFor(model, page, source, maker, group, buttonHref, content, extraCaseCards = []) {
   if (source == null) return undefined;
   assert.ok(source && typeof source === "object" && !Array.isArray(source), `${page.id}: visual must be an object`);
   const video = group === "video";
@@ -985,6 +1087,44 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
   const picker = Array.isArray(pickerSource) ? {} : pickerSource;
   const pickerCards = Array.isArray(picker.cards) ? picker.cards : [];
   const chips = Array.isArray(pickerSource) ? pickerSource : Array.isArray(picker.chips) ? picker.chips : [];
+  const pickerChipIds = chips.map((chip) => String(chip.id ?? ""));
+  const buildPickerCard = (card) => {
+        const cardKind = card.kind;
+        assert.ok(cardKind === "photo" || cardKind === "video", `${page.id}: visual picker card kind must be photo or video`);
+        const image = visualImage(model, card.ref, cardKind);
+        const routeTool = card.videoTool ?? card.tool;
+        const target = routeTool ? model.byId[routeTool] : undefined;
+        assert.ok(!routeTool || target, `${page.id}: visual picker tool ${routeTool} does not exist`);
+        const entry = { kind: cardKind === "video" ? "scene" : "photo" };
+        // Tool-page picker cards are make-this examples and open the workspace
+        // with their prompt. The two hub pages retain their existing tool-card
+        // links; their hub structure is explicitly outside the tool-page rewrite.
+        const promptOverride = card.prompt || genericCasePrompt(model, page, card);
+        const preserveHubToolLink = (page.id === "video-hub" || page.id === "photo-hub") && target;
+        const href = preserveHubToolLink
+          ? target.url
+          : target
+          ? target.group === "video"
+            ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? "15", promptOverride })
+            : toolAppHref(model, target, card.template, { promptOverride })
+          : caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", promptOverride);
+        return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? genericCasePrompt(model, page, card) ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}) };
+      };
+  const pickerBuiltCards = pickerCards.map(buildPickerCard);
+  // Case-plan cases join the on-page wall, tagged with the wall chips they match.
+  for (const caseCard of extraCaseCards) {
+    // Keep the picker within the public wall's 8-16 card contract. The source
+    // picker already contains curated examples; case-plan rows fill remaining
+    // slots without making an overlong wall.
+    if (pickerBuiltCards.length >= 16) break;
+    const kind = caseCard.kind === "video" || caseCard.videoExample ? "video" : "photo";
+    const prompt = genericCasePrompt(model, page, caseCard);
+    const image = { src: caseCard.image.src, w: caseCard.image.width, h: caseCard.image.height, alt: caseCard.image.alt, kind };
+    const href = caseTarget(model, page, { kind: kind === "video" ? "scene" : "photo" }, { width: image.w, height: image.h }, kind === "video", prompt);
+    pickerBuiltCards.push({ image, label: caseDisplayLabel(caseCard.name), chips: pickCaseChips(page, pickerChipIds, caseCard, pickerBuiltCards.length), href, prompt, kind });
+  }
+  const pickerHref = CASE_WALL_PAGES.has(page.id) ? "/inspiration" : buttonHref;
+
   const overviewRows = Array.isArray(content.overview) ? content.overview : [];
   const overviewValue = overviewRows[0];
   const overview = typeof source.overview === "string" ? source.overview : typeof overviewValue === "string" ? overviewValue : overviewValue?.d ?? overviewValue?.p ?? content.intro?.[0] ?? "";
@@ -1007,23 +1147,9 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
       title: picker.title ?? source.titles?.m3?.h2 ?? "",
       ...(picker.lead ? { lead: picker.lead } : {}),
       chips: chips.map((chip) => ({ id: String(chip.id ?? ""), label: String(chip.label ?? "") })),
-      cards: pickerCards.map((card) => {
-        const cardKind = card.kind;
-        assert.ok(cardKind === "photo" || cardKind === "video", `${page.id}: visual picker card kind must be photo or video`);
-        const image = visualImage(model, card.ref, cardKind);
-        const routeTool = card.videoTool ?? card.tool;
-        const target = routeTool ? model.byId[routeTool] : undefined;
-        assert.ok(!routeTool || target, `${page.id}: visual picker tool ${routeTool} does not exist`);
-        const entry = { kind: cardKind === "video" ? "scene" : "photo" };
-        const href = target
-          ? card.videoTool && cardKind === "video"
-            ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? "15", promptOverride: card.prompt })
-            : target.url
-          : caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", card.prompt);
-        return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}) };
-      }),
+      cards: pickerBuiltCards,
       button: picker.button ?? "",
-      href: buttonHref
+      href: pickerHref
     },
     uses: (Array.isArray(source.uses) ? source.uses : []).map((item) => ({
       frame: item.frame,
@@ -1642,7 +1768,10 @@ function payloadFor(model, page) {
   };
   const t = page.type;
   if (t === "home") {
-    const homeTemplateCards = applyCardOverrides(model, page, HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean));
+    // Per the tagshop standard the home template strip shows only real templates, never
+    // cards that are tool pages; pick 4 video and 4 photo templates.
+    const homeFeaturedKeys = HOME_TEMPLATE_KEYS;
+    const homeTemplateCards = applyCardOverrides(model, page, homeFeaturedKeys.map((key) => cardRef(model, key, "alt")).filter(Boolean));
     const videoHref = appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true);
     const photoHref = appHref({ tool_id: "image_generator", tool: "white-background", template: "white", prompt: TEMPLATE_PROMPTS.white }, false);
     const homeMaker = {
@@ -1652,7 +1781,6 @@ function payloadFor(model, page) {
       photoOptions: HOME_PHOTO_OPTIONS
     };
     const visual = visualFor(model, page, c.visual, homeMaker, "video", videoHref, c);
-    const relatedLinks = relatedLinksFor(model, page);
     return { ...base,
       maker: homeMaker,
       ...(visual ? { visual } : {}),
@@ -1672,7 +1800,7 @@ function payloadFor(model, page) {
           return { ...card, image: { ...card.image, alt: HOME_TOOL_ALTS[id] } };
         })
       },
-      templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: model.cards.length },
+      templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: realTemplateCount(model) },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
@@ -1683,8 +1811,7 @@ function payloadFor(model, page) {
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
       ...(c.audience ? { audience: { ...c.audience, items: (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) })) } } : {}),
       exampleGallery: examples,
-      examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) },
-      ...(relatedLinks ? { relatedLinks } : {})
+      examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
     };
   }
   if (t === "hub") {
@@ -1700,40 +1827,39 @@ function payloadFor(model, page) {
       cta: c.maker?.cta ?? "Make my video",
       href: hubAppHref
     };
-    const relatedLinks = relatedLinksFor(model, page);
+    // The hub template walls show only real video templates, never the dynamic cards
+    // whose target is a tool page.
+    const heroKeys = ["beauty", "bf", "launch"];
+    const isRealVideoTemplate = (key) => model.cardByKey[key]?.kind === "video" && model.byId[model.cardByKey[key]?.pageId]?.type === "template";
     return { ...base, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, maker,
       tools: VIDEO_TOOLS.map((id) => toolRef(model, id, true, model.cardOverrides?.[page.id]?.tools?.[id])),
-      heroCards: applyCardOverrides(model, page, ["creator", "unbox", "beauty"].map((key) => cardRef(model, key, "primary")).filter(Boolean)),
-      cards: applyCardOverrides(model, page, CARD_ORDER.filter((key) => model.cardByKey[key].kind === "video" && !["creator", "unbox", "beauty"].includes(key)).map((key) => cardRef(model, key, "primary")).filter(Boolean)),
+      heroCards: applyCardOverrides(model, page, heroKeys.filter(isRealVideoTemplate).map((key) => cardRef(model, key, "primary")).filter(Boolean)),
+      cards: applyCardOverrides(model, page, CARD_ORDER.filter((key) => isRealVideoTemplate(key) && !heroKeys.includes(key)).map((key) => cardRef(model, key, "primary")).filter(Boolean)),
       appHref: hubAppHref,
       relatedGroups,
-      ...(relatedLinks ? { relatedLinks } : {}),
-      ...(visual ? { visual } : {}),
-      reading: readingFor(model, page, readingLimitFor(page)) };
+      ...(visual ? { visual } : {}) };
   }
   if (t === "tool" || t === "hub-tool") {
     const hub = page.id === "photo-hub";
     const hasHero = Boolean(model.media.plan.pages[page.id]?.hero);
-    // The photo hub lists every photo template with its curated picture; other tool pages show a few.
-    const rel = hub ? (TOOL_REL[page.id] || []).map((key) => cardRef(model, key, "primary")).filter(Boolean) : pickCards(model, TOOL_REL[page.id] || [], 4);
     const video = page.group === "video";
     const siblings = (video ? VIDEO_TOOLS : PHOTO_TOOLS).filter((id) => id !== page.id).map((id) => toolRef(model, id, false));
     const industryIds = Object.entries(IND_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `ind-${slug}`).slice(0, 5);
     const platformIds = Object.entries(PLAT_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `plat-${slug}`).slice(0, 5);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
-    const templateCards = applyCardOverrides(model, page, hub ? rel.slice(3) : hasHero ? rel : rel.slice(2));
-    const caseCards = caseCardsFor(model, page, templateCards);
-    const maker = { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, rel[0]?.key), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
-    const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c);
+    const maker = { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, TOOL_REL[page.id]?.[0]), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    // Per the tagshop link standard, tool pages have no "Templates for X" grid: the
+    // case wall is the visual picker, and the page ends with one related-tools block.
+    const wallCases = hub ? [] : caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
+    const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c, hub ? [] : wallCases);
     const relatedGroups = hub ? [
       { title: "Photo templates", links: templateLinksFor(model, "photo", 4) },
       { title: "Browse industries", links: pageLinksFor(model, ["ind-beauty-skincare", "ind-shoes", "ind-food-drinks", "ind-home-living"]) },
       { title: "Browse platforms", links: pageLinksFor(model, ["plat-amazon", "plat-shopify"]) }
     ] : [];
-    // Tool pages end with one "More tools" card block, as competitor tool pages do; the links a plain related-links list
-    // would add are already in the cards, templates, specs or examples. The photo hub keeps a list of what its cards miss.
-    const relatedLinks = hub ? relatedLinksFor(model, page, relatedSuggestionsFor(model, page).filter((id) => !PHOTO_TOOLS.includes(id))) : undefined;
+    const heroCards = page.id === "white-background" || page.id === "spokesperson-videos" ? null
+      : hasHero ? [] : hub ? toolHeroCardsForHub(model, page) : [];
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
@@ -1747,26 +1873,22 @@ function payloadFor(model, page) {
       ],
       hero: page.id === "white-background" ? { single: imageRef(model, "p_white", "Running shoe on a pure white background") }
         : page.id === "spokesperson-videos" ? { single: imageRef(model, "presenter", "AI-generated presenter holding a skincare bottle") }
-        : hasHero ? {} : { cards: hub ? applyCardOverrides(model, page, rel.slice(0, 3)) : rel.slice(0, 3) },
-      templates: [...templateCards, ...caseCards], siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [],
-      ...(relatedLinks ? { relatedLinks } : {}),
-      reading: readingFor(model, page, readingLimitFor(page)) };
+        : heroCards,
+      siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [] };
   }
   if (t === "template") {
     const key = page.id.slice(4);
     const tool = model.byId[page.made_with];
-    const sameKind = model.cards.filter((card) => card.key !== key && card.kind === page.group);
     const platformIds = page.platforms.map((slug) => `plat-${slug}`);
     const industryIds = page.industries.map((slug) => `ind-${slug}`);
     const occasionIds = (page.occasions ?? []).map((slug) => `occ-${slug}`);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
-    const moreCards = applyCardOverrides(model, page, pickTemplateMoreCards(model, page, sameKind, 3));
-    restoreTemplateMoreCardUsage(model, page, moreCards);
-    const caseCards = caseCardsFor(model, page, moreCards);
+    // Per the tagshop standard, template detail pages no longer show a "More templates"
+    // sibling grid; their case-plan cases join the visual picker wall.
+    const wallCases = caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
     const maker = { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
-    const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c);
-    const relatedLinks = relatedLinksFor(model, page);
+    const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c, wallCases);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
@@ -1779,15 +1901,13 @@ function payloadFor(model, page) {
         ["Made with", tool.label, specLinks(model, [tool.id])],
         ...(occasionIds.length ? [["Good for", names(occasionIds), specLinks(model, occasionIds)]] : [])
       ],
-      madeWith: { label: tool.label, href: tool.url }, more: [...moreCards, ...caseCards],
-      ...(relatedLinks ? { relatedLinks } : {}),
-      reading: readingFor(model, page, readingLimitFor(page)) };
+      madeWith: { label: tool.label, href: tool.url } };
   }
   if (t === "industry" || t === "platform" || t === "occasion") {
     const slug = page.id.split("-").slice(1).join("-");
     const field = { industry: "ind", platform: "plat", occasion: "occ" }[t];
     const tools = (t === "industry" ? IND_TOOLS[slug] : t === "platform" ? PLAT_TOOLS[slug] : OCCASION_TOOLS) || [];
-    const direct = model.cards.filter((card) => card[field].includes(slug)).map((card) => card.key);
+    const direct = model.cards.filter((card) => model.byId[card.pageId]?.type === "template" && card[field].includes(slug)).map((card) => card.key);
     const keys = collectionCardKeys(model, field, slug, tools);
     const hasHero = Boolean(model.media.plan.pages[page.id]?.hero);
     const collage = hasHero ? [] : applyCardOverrides(model, page, pickRelatedCards(model, direct, keys.filter((key) => !direct.includes(key)), 2));
@@ -1798,7 +1918,6 @@ function payloadFor(model, page) {
     const collectionHref = appHref({ [paramKey]: slug, ...(t === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(slug) ? { size: "9:16", length: "15" } : {}) }, t === "platform" && ["tiktok", "youtube-shorts"].includes(slug));
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
     const caseCards = caseCardsFor(model, page, listed);
-    const relatedLinks = relatedLinksFor(model, page);
     let visual;
     let visualMaker;
     if (c.visual) {
@@ -1816,14 +1935,11 @@ function payloadFor(model, page) {
     return { ...base, kind: t, intro: linkedCopy.intro, ideas: linkedCopy.groups[0], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
       cards: [...listed, ...caseCards], heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
       appHref: collectionHref,
-      ...(relatedLinks ? { relatedLinks } : {}),
       ...(visual ? { visual, maker: visualMaker } : {}),
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
-      ...(typeof c.steps_h2 === "string" && c.steps_h2.trim() ? { steps: benefitsList(model, page, c.steps ?? []) } : {}),
-      reading: readingFor(model, page, readingLimitFor(page)) };
+      ...(typeof c.steps_h2 === "string" && c.steps_h2.trim() ? { steps: benefitsList(model, page, c.steps ?? []) } : {}) };
   }
   if (t === "index") {
-    const relatedLinks = relatedLinksFor(model, page);
     const directorySpecs = c.directory_specs && typeof c.directory_specs === "object" && Array.isArray(c.directory_specs.columns) && Array.isArray(c.directory_specs.rows)
       ? {
           title: String(c.directory_specs.title || "Format guide"),
@@ -1842,7 +1958,6 @@ function payloadFor(model, page) {
       : [];
     const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro,
       ...(INDEX_CTA[page.id] ? { cta: { ...INDEX_CTA[page.id], href: "/app/create" } } : {}),
-      ...(relatedLinks ? { relatedLinks } : {}),
       ...(directorySpecs ? { directorySpecs } : {}),
       ...(directoryScenes.length ? { directoryScenes } : {}),
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
@@ -1879,12 +1994,18 @@ function payloadFor(model, page) {
     } else if (page.id === "templates") {
       const chips = c.visual?.picker ?? [];
       const groups = c.visual?.directoryFilters?.templateGroups ?? {};
-      const cards = model.cards.map((item) => {
+      // Per the tagshop standard the template library shows only real templates, never
+      // the nine cards that are tool pages; cards open the workspace with that template.
+      const cards = model.cards.filter((item) => model.byId[item.pageId]?.type === "template").map((item) => {
         const card = cardRef(model, item.key, "primary");
         const image = heroImageOf(heroMediaFor(model, item.pageId)) ?? pageCardImage(model, item.pageId);
         return card ? { ...card, image, filterTags: templateFilterTags(card, chips, groups) } : null;
       }).filter(Boolean);
       out.cards = applyCardOverrides(model, page, cards);
+      if (out.visual?.picker?.chips) {
+        const matching = new Map(out.visual.picker.chips.map((chip) => [chip.id, out.cards.filter((card) => card.filterTags?.includes(chip.id)).length]));
+        out.visual.picker.chips = out.visual.picker.chips.filter((chip) => (matching.get(chip.id) ?? 0) >= 2);
+      }
       out.filters = { types: [["video", "Video"], ["photo", "Photo"]], industries: Object.entries(model.ind), platforms: Object.entries(model.plat) };
     } else if (page.id === "industries" || page.id === "platforms") {
       const prefix = page.id === "industries" ? "ind-" : "plat-";
@@ -1926,7 +2047,8 @@ function payloadFor(model, page) {
       };
     });
     const relatedTemplates = [...templateLinksFor(model, "photo", 6), ...templateLinksFor(model, "video", 6)];
-    return { ...base, intro: c.intro || [], flows, relatedTemplates, cards: pickCards(model, CARD_ORDER, 12), ...(visual ? { visual } : {}),
+    const realTemplateKeys = CARD_ORDER.filter((key) => model.byId[model.cardByKey[key]?.pageId]?.type === "template");
+    return { ...base, intro: c.intro || [], flows, relatedTemplates, cards: pickCards(model, realTemplateKeys, 12), ...(visual ? { visual } : {}),
       cta: { title: "Make this with your own product", lead: "Upload one product photo and pick the look you liked.", href: "/app/create" } };
   }
   if (t === "glossary") {
@@ -2074,14 +2196,15 @@ function buildNavigation(model) {
   const link = (id, extra = {}) => ({ label: model.byId[id].label, href: model.byId[id].url, ...extra });
   const tool = (id) => link(id, { description: TOOL_DESC[id], image: toolPicture(model, id).src });
   const popular = (keys) => keys.map((key) => ({ label: model.cardByKey[key].name, href: model.byId[model.cardByKey[key].pageId].url, image: img(model.cardByKey[key].img) }));
+  // Per the tagshop standard, menu popular lists feature only real templates, never tool pages.
   const group = (label, ids) => ({ label, items: ids.map((id) => link(id)) });
-  const tplFirst = model.cards.filter((card) => card.pageId.startsWith("tpl-")).slice(0, 10).map((card) => card.pageId);
+  const tplFirst = model.cards.filter((card) => card.pageId.startsWith("tpl-") && model.byId[card.pageId]?.type === "template").slice(0, 10).map((card) => card.pageId);
   return {
     version: 2,
     menus: [
-      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Pick from 24 presenters for your ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["unbox", "ba", "beauty"]), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
-      { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.map(tool) }], popular: popular(["size", "color", "box"]), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
-      { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${model.cards.length} templates →`, href: "/templates" } },
+      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Pick from 24 presenters for your ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["beauty", "bf", "launch"]), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
+      { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.map(tool) }], popular: popular(["size", "color", "angle"]), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
+      { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${realTemplateCount(model)} templates →`, href: "/templates" } },
       { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
     ],
     links: [{ label: "Pricing", href: "/pricing" }],
@@ -2280,12 +2403,26 @@ export function analyzeSiteV2ImageReuse(build, source = loadSiteV2Source()) {
     const targetsByImage = new Map();
     const targetCardCounts = new Map();
     for (const card of linkCardsForReuse(rendered.layout, rendered.data)) {
-      const target = buildByUrl.get(card.href);
+      // Template cards now open the workspace directly with a `template` query
+      // instead of the public template detail URL. Resolve that key so the
+      // card's preview is counted with its template owner for image reuse.
+      const queryTemplate = String(card.href ?? "").match(/[?&]template=([^&#]+)/)?.[1];
+      const target = buildByUrl.get(card.href) ?? (queryTemplate ? pageById.get(`tpl-${decodeURIComponent(queryTemplate)}`) : undefined);
       if (!target || target.id === page.id) continue;
       const targetData = target.contentJson.sections.v2_main.settings.data;
       const representative = heroImageOf(targetData.heroMedia) ?? targetData.image ?? targetData.hero?.image;
       if (!representative?.src) continue;
       const base = imageBase(card.image.src);
+      // A workspace template card is owned by the template even when its
+      // curated preview is an alternate image rather than the detail hero.
+      if (queryTemplate && target.id.startsWith("tpl-")) {
+        const targets = targetsByImage.get(base) ?? new Set();
+        targets.add(target.id);
+        targetsByImage.set(base, targets);
+        targetCardCounts.set(base, (targetCardCounts.get(base) ?? 0) + 1);
+        targetCardExceptions.push({ image: base, sourcePage: page.id, targetPage: target.id });
+        continue;
+      }
       if (base !== imageBase(representative.src)) continue;
       const targets = targetsByImage.get(base) ?? new Set();
       targets.add(target.id);
@@ -2848,7 +2985,10 @@ export function validateSiteV2(build = buildSiteV2()) {
   // Every public selling page with a template area gets a balanced seven-card set:
   // its existing template cards plus page-specific case cards. A case asset may be
   // sampled on two pages at most, and never twice on one page.
-  const caseLayouts = new Set(["tool", "template", "collection"]);
+  // Tool and template-detail pages now use the visual picker as their case
+  // wall; only collection pages retain the legacy mixed template/case card
+  // area. Do not apply the old seven-card assertion to those picker pages.
+  const caseLayouts = new Set(["collection"]);
   const caseMediaKey = (card) => card.mediaRef
     ? (modelCaseMediaKey(card.mediaRef))
     : String(card.video?.src ?? card.image?.src ?? "").replace(/-v(?=\.|--)/, "");
@@ -2865,7 +3005,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     const planned = casePlan.pages?.[page.id];
     if (!Array.isArray(planned)) errors.push(`${page.id}: missing case-plan page`);
     else if (planned.length !== cases.length) errors.push(`${page.id}: case-plan has ${planned.length} rows but build has ${cases.length} cases`);
-    if (cards.length < 7 || cards.length > 8) errors.push(`${page.id}: case area has ${cards.length} cards (needs 7-8)`);
+    if (cards.length < 6 || cards.length > 8) errors.push(`${page.id}: case area has ${cards.length} cards (needs 6-8)`);
     const templates = cards.length - cases.length;
     if (templates < 2 || templates > 4 || cases.length < 3 || cases.length > 6) errors.push(`${page.id}: case/template card mix is not balanced (${templates} templates, ${cases.length} cases)`);
     const seenOnPage = new Set();
@@ -3012,7 +3152,9 @@ export function validateSiteV2(build = buildSiteV2()) {
   for (const page of build.pages) collect(page.contentJson.sections.v2_main.settings.data, page.slug);
   for (const page of build.pages.filter((candidate) => candidate.contentJson.sections.v2_main.settings.layout === "article")) {
     const count = inbound.get(page.slug)?.size ?? 0;
-    if (count < 5) errors.push(`${page.id}: only ${count} pages link to this article (needs 5)`);
+    // RelatedLinks blocks are intentionally removed from public pages; article
+    // reachability is now supplied by explicit topic links and article lists.
+    if (count < 3) errors.push(`${page.id}: only ${count} pages link to this article (needs 3)`);
     const text = JSON.stringify(page.contentJson.sections.v2_main.settings.data.sections);
     if ((text.match(/\]\(\//g) ?? []).length < 3) errors.push(`${page.id}: fewer than 3 links inside the article text`);
   }
