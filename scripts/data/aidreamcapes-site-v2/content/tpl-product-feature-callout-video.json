@@ -112,7 +112,7 @@
     },
     {
       "q": "How is a callout clip credited?",
-      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits."
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits."
     },
     {
       "q": "Can I create another feature-callout video from the same source photo?",
@@ -171,7 +171,7 @@
       },
       {
         "t": "A measured test cost",
-        "d": "Six, ten, and fifteen seconds use 24, 40, and 60 credits; the cost is visible before creation."
+        "d": "Six, ten, fifteen and thirty seconds use 24, 40, 60 and 120 credits; the cost is visible before creation."
       }
     ]
   },
