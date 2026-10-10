@@ -1,11 +1,11 @@
 {
   "id": "ind-food-drinks",
-  "title": "AI Food and Drink Product Videos | AIVideosUGC",
-  "description": "Turn one package photo into pour, bite, and plate food video ads with an AI creator, no kitchen shoot. Watermark-free clips for TikTok, Reels and listings.",
-  "h1": "AI Food and Drink Product Videos: Pours, Plates, and Packaging",
-  "eyebrow": "Food & drinks",
-  "lead": "A real food shoot means a kitchen, props, and a crew for a few seconds of footage. Turn one photo of your can, bag, bottle, or jar into an appetizing pour, first bite, or serving scene shoppers can almost taste.",
-  "card": "Pours, plates and packs on the shelf, in photos and short clips.",
+  "title": "AI Food & Drink Video Ads From One Photo | AIVideosUGC",
+  "description": "Turn one food or drink photo into appetizing ads for social feeds and listings. Minutes, not weeks, far less than a kitchen shoot, watermark-free clips.",
+  "h1": "AI Food and Drink Product Videos That Drive Cravings",
+  "eyebrow": "Food and beverage brands",
+  "lead": "Hungry shoppers decide fast. Turn one food or drink photo into a clear package, serving moment, or product video that makes the next bite easy to imagine.",
+  "card": "Serving scenes, package reveals and product videos from one food photo.",
   "secondary_keywords": [
     "drink pour video",
     "AI food product photos",
@@ -16,24 +16,6 @@
   "intro": [
     "Show the package clearly, then use a serving scene to show the product’s color, texture, or portion. A cold brew needs beads of condensation on the glass, a hot sauce needs a drizzle over tacos, and granola can be shown with a bowl of milk and berries. Packaging matters just as much, because that is what shoppers look for on a store shelf and in a delivery app.",
     "Send in a clean shot of the package and spell out the serving moment: a can cracking open over ice, a cookie snapping in half, honey dripping from a dipper onto toast. Six- or ten-second vertical clips suit TikTok and Reels, while square photos fit your store and marketplace listings. Prices and offers are easiest to get right when you type them in afterward with Canva or CapCut."
-  ],
-  "ideas": [
-    {
-      "t": "Plated and served",
-      "d": "Show your pasta sauce on a bowl of rigatoni or your spice blend on roasted vegetables, so shoppers see the finished dish and not just the jar. [Carousel Video Ad](/ai-video-generation/carousel-video-ad) can separate the pack, serving moment, and final bite into clear beats."
-    },
-    {
-      "t": "Packaging in a real setting",
-      "d": "Place a bag of coffee beans on a kitchen shelf, a snack box in a lunch bag, or a bottle of olive oil beside a cutting board. Upload a photo with the label sharp and facing forward. [How-To Video](/ai-video-generation/how-to-video) suits a recipe or preparation step with one visible action. [Launch Promo](/ai-video-generation/promo-video) gives a new flavor a short reveal, while [Black Friday Video](/ai-video-generation/black-friday-countdown) supports a timed offer."
-    },
-    {
-      "t": "New flavor announcements",
-      "d": "A limited flavor or a holiday tin gets a short clip and a square still for your announcement post. Add the release date and price yourself so they appear exactly as intended. [White Background Photos](/ai-image-generation/ecommerce-main-image) keep the package readable in a listing gallery."
-    },
-    {
-      "t": "Choose the placement",
-      "d": "Use [TikTok ads](/platforms/tiktok-ads) and [Instagram ads](/platforms/instagram-ads) for a pour or first bite, then prepare the package crop for [Amazon product photos](/platforms/amazon-product-photos) or [Shopify product photos](/platforms/shopify-product-photos)."
-    }
   ],
   "faq": [
     {
@@ -61,212 +43,41 @@
       "a": "No for these clips. The hands, adult creator, and setting are generated from your package photo at a per-clip credit cost. For a real customer tasting or an original concept, you can still film one separately."
     }
   ],
-  "overview": {
-    "h2": "Make the serving moment easy to picture",
-    "items": [
-      {
-        "t": "Start with the real package",
-        "d": "A clear front-facing can, bag, bottle, or jar anchors the scene. Add a separate source for the back or side when the package information matters, because small generated lettering is not a substitute for the real label."
-      },
-      {
-        "t": "Give one action the frame",
-        "d": "A pour, crack, drizzle, snap, scoop, or plated finish is enough for a useful short clip. Keep ingredients, allergens, nutrition, and price on the verified package photo or product listing."
-      }
-    ]
-  },
-  "input_guide": {
-    "h2": "Prepare a food or drink upload",
-    "items": [
-      {
-        "t": "Face the package",
-        "d": "Photograph the can, bottle, pouch, box, or jar upright with the front label visible. Include the cap, lid, and base if they define the product."
-      },
-      {
-        "t": "Capture the texture",
-        "d": "Add a separate reference for crumb, sauce thickness, coffee color, fizz, tea leaves, or a cut surface when that detail carries the appeal."
-      },
-      {
-        "t": "Keep packs dry and clean",
-        "d": "Remove fingerprints and use side light for glossy cans and bottles. Ask for condensation or steam in the description rather than spraying the source."
-      },
-      {
-        "t": "Show every bundle piece",
-        "d": "For a multipack, gift box, or variety set, arrange every flavor or item in one frame so shoppers can count what arrives."
-      },
-      {
-        "t": "Choose a serving cue",
-        "d": "Name the glass, plate, table, lunch bag, shelf, or cutting board and keep the action focused on the food rather than invented label text."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Food and drink scenes you can describe",
-    "items": [
-      {
-        "t": "Cold pour",
-        "d": "A chilled coffee bottle pouring over ice into a tall clear glass on a kitchen counter, condensation on the bottle, front label facing camera."
-      },
-      {
-        "t": "Sauce finish",
-        "d": "A hot-sauce bottle beside tacos while a glossy red drizzle crosses the top, close crop on the bottle cap and serving texture."
-      },
-      {
-        "t": "Crunch moment",
-        "d": "A granola cluster breaking over a bowl of yogurt and berries, the jar behind it on a linen breakfast table."
-      },
-      {
-        "t": "Shelf-ready pack",
-        "d": "A tea pouch standing on a pantry shelf beside a mug and a small scoop, with the pouch front fully readable from a distance."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the food set can deliver",
-    "items": [
-      {
-        "t": "Appetite and context",
-        "d": "A pour, plate, drizzle, or break shows how the product might appear in a meal or routine."
-      },
-      {
-        "t": "Package recognition",
-        "d": "Use square product stills and a clean shelf scene to keep the actual pack central in a gallery."
-      },
-      {
-        "t": "Serving action",
-        "d": "Show one pour, scoop, crack, or first bite while keeping the package in frame."
-      },
-      {
-        "t": "Flexible framing",
-        "d": "Use 9:16, 1:1, or 16:9 as the main choices, with 4:3 and 3:4 available for other crops; choose 6, 10, or 15 seconds for the action."
-      },
-      {
-        "t": "See the cost first",
-        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip that fits the product story."
-      },
-      {
-        "t": "A clean file to finish",
-        "d": "The [FAQ](/faq) covers commercial-use details and whether downloads include a watermark."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the food asset",
-    "items": [
-      {
-        "t": "Verify the package",
-        "d": "Compare flavor, size, ingredient panel, nutrition values, allergen callouts, and count with the real product."
-      },
-      {
-        "t": "Add the exact offer",
-        "d": "Place price, discount, launch date, stock note, and serving instructions in an approved layout where every character is controlled."
-      },
-      {
-        "t": "Add sound or captions",
-        "d": "AIVideosUGC does not add voiceover, music, or captions; add verified ingredients and nutrition details, then caption the serving action in your editor."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A good fit for food merchandising",
-    "good": [
-      {
-        "t": "Packaged foods",
-        "d": "Coffee, tea, snacks, sauces, condiments, jars, pouches, cans, and boxed sets with a visible package."
-      },
-      {
-        "t": "Simple serving actions",
-        "d": "Products that can be poured, drizzled, scooped, plated, opened, or broken in one clear moment."
-      },
-      {
-        "t": "Occasion-led launches",
-        "d": "New flavors, lunch moments, pantry shelves, gifting, and seasonal serving scenes."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "Tiny label evidence",
-        "d": "Use a real package photo for ingredients, allergens, nutrition, and required notices."
-      }
-    ]
-  },
-  "examples": {
-    "h2": "More food and drink examples",
-    "lead": "Packaged food and drinks shown with real food, ready for a listing or a feed.",
-    "groups": [
-      {
-        "label": "POV Hooks",
-        "items": [
-          {
-            "ref": "n:gen2:ind-food-drinks-g1",
-            "title": "Iced tea can opened on a sunny balcony",
-            "kind": "photo",
-            "product": "iced tea can"
-          }
-        ]
-      },
-      {
-        "label": "Lunchbox Hauls",
-        "items": [
-          {
-            "ref": "n:guide:k7-ind-food-drinks-examples-0-items-1-ref-n-gen2-ind-food-drinks-g2",
-            "title": "Snack pouch packed for work",
-            "kind": "photo",
-            "product": "snack pouch"
-          }
-        ]
-      },
-      {
-        "label": "Recipe Demos",
-        "items": [
-          {
-            "ref": "n:guide:k7-ind-food-drinks-examples-0-items-2-ref-n-gen2-ind-food-drinks-g3",
-            "title": "Hot sauce drizzled over rigatoni",
-            "kind": "photo",
-            "product": "pasta sauce"
-          }
-        ]
-      }
-    ]
-  },
-  "templates_lead": "Select a pour, serving, or package scene that fits the product you sell.",
-  "cta_lead": "Begin with your package photo and choose the serving moment to build around.",
-  "benefits_h2": "Why make food and drink videos from a package photo?",
+  "templates_lead": "Choose a food ad format that puts one product and one serving moment in focus.",
+  "cta_lead": "Upload one package photo and turn its serving moment into an ad.",
+  "benefits_h2": "The Secret Ingredient Your Food Ads Have Been Missing",
   "benefits": [
     {
-      "t": "No kitchen shoot or food stylist",
-      "d": "You upload one package photo and describe the moment. The crew, kitchen rental, prop shopping, and stylist of a real food shoot never enter the process."
+      "t": "Always On. Always Ready.",
+      "d": "A package photo can become a serving scene in minutes. Launch a new flavor or restock without booking a kitchen or crew."
     },
     {
-      "t": "One pack, many serving scenes",
-      "d": "Run the same package through a cold pour, first bite, plated serving, and shelf scene. Each clip shows the product differently without a reshoot."
+      "t": "Full Creative Control",
+      "d": "Choose the action, setting and frame. Keep the package at the center while you decide which details appear in the ad."
     },
     {
-      "t": "Appetite appeal on demand",
-      "d": "Ask for condensation, a drizzle, or a crunch moment instead of spraying water or restaging props. The real color of the drink or food carries from your wording."
-    },
-    {
-      "t": "Cleared for ads and listings",
-      "d": "Downloaded clips are watermark-free and licensed for commercial use on TikTok, Reels, delivery apps, and product pages."
+      "t": "More Variants, Better Testing",
+      "d": "One photo can feed a pour, bite, plate and shelf scene. Test several hooks without paying for a reshoot."
     }
   ],
-  "steps_h2": "How to make a food video ad in 3 simple steps",
-  "steps_lead": "Three steps turn one package photo into a ready-to-post food or drink clip — no crew, no kitchen, no reshoots.",
+  "steps_h2": "Turn One Food Photo Into a Ready-to-Post Ad in 3 Steps",
+  "steps_lead": "Three steps make the serving moment easy to picture in a food or drink ad.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one upright photo with the full package and label area visible. The clip keeps the product's shape, color, and branding."
+      "d": "Add one clear package photo. The clip keeps the product's shape, color and label area in view."
     },
     {
-      "t": "Describe Your Serving Scene",
-      "d": "Name one moment, such as a pour over ice or a first bite. Try several scenes from the same pack to build more ads."
+      "t": "Share Your Serving Idea",
+      "d": "Name one pour, bite or plated moment in a sentence. Try several ad moments from the same package."
     },
     {
-      "t": "Download and Post",
-      "d": "Review the clip and save it. Add ingredients and offer text in your editor, then publish it."
+      "t": "Generate and Launch",
+      "d": "Review the clip and download it without a watermark. Add exact offer details in your editor, then post."
     }
   ],
   "visual": {
-    "overview": "Food and drink imagery should show the package clearly before it shows the serving idea. A single pour, opening, or plating moment gives shoppers useful context without obscuring the product.",
+    "overview": "",
     "strip": [
       "n:guide:ind-food-drinks-m2-source",
       "f:k7-ind-food-drinks-strip-1-f-food-video-t06",
@@ -292,192 +103,10 @@
         ]
       ]
     },
-    "picker": {
-      "title": "Choose a food ad format around one product",
-      "lead": "Pick a recipe, first bite, unboxing, or creator routine that makes one product benefit clear.",
-      "chips": [
-        {
-          "id": "recipe",
-          "label": "Recipes & Meal Prep"
-        },
-        {
-          "id": "taste",
-          "label": "Taste Tests"
-        },
-        {
-          "id": "hook",
-          "label": "Discovery Hooks"
-        },
-        {
-          "id": "routine",
-          "label": "UGC Routines"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:gen2:tpl-drink-c4",
-          "label": "Tip pouch → topping → recipe",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright breakfast kitchen, a hand tips the granola pouch and lets a small stream fall into yogurt, ending with the clusters resting on top. Soft window light, natural creator-video look. Overhead close-up with a gentle push-in. Sound: dry crunch and pouch rustle; no music.",
-          "chips": [
-            "recipe"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-food-drinks-picker-2",
-          "label": "Bite bar → texture → taste",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult breaks a protein bar and takes one bite, then holds the bitten bar beside its plain wrapper, ending with the bite edge facing the lens. Candid hands-on taste-test style, natural skin texture. Chest-up eye-level handheld shot with slight sway. Warm cafe-window light. Sound: wrapper crinkle, one crisp bite and room tone; no music.",
-          "chips": [
-            "taste"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-food-drinks-picker-3",
-          "label": "Snap tab → cold → discovery",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand lifts a chilled tea can from an open cooler and snaps its tab, ending with condensation and the open can centered in frame. Bright daylight, energetic phone-video look. Tight handheld close-up with one quick tilt to the can. Sound: tab snap and ice shift; no music.",
-          "chips": [
-            "hook"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-food-drinks-picker-4",
-          "label": "Lift pouch → assortment → unboxing",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a clean table, adult hands peel tissue from a snack sampler box and lift one pouch toward the lens, ending with the assortment visible below it. Soft morning window light, natural creator-video style. Top-down close-up with one slow push-in. Sound: tissue rustle and cardboard creak; no music.",
-          "chips": [
-            "hook"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-food-drinks-picker-5",
-          "label": "Snap cracker → crumb → taste",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright dining nook, an adult hand snaps an oat cracker over a bowl and lets the pieces fall, ending on the crisp crumb texture. Soft side light, clean food-macro look. Extreme close-up at table height with one short rack focus. Sound: one sharp crunch and light crumbs; no music.",
-          "chips": [
-            "taste"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-food-drinks-picker-6",
-          "label": "Pour mix → preparation → workout",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult in workout clothes holds a hydration mix sachet, pours it into a clear bottle, and ends with both products still in frame. Soft morning daylight, quiet hands-on routine style. Chest-up front-facing handheld framing with slight sway. Sound: powder pour and bottle cap click; no music.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-food-drinks-picker-7",
-          "label": "Pour powder → mixing → product-page",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home counter, an adult presenter holds a plain protein tub beside a glass, pours one scoop, and ends with the glass beside the tub. Soft daylight, quiet product-demo style. Chest-up handheld framing with a gentle push-in. Sound: powder tap and shaker rattle; no music.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-food-drinks-picker-8",
-          "label": "Pack pouch → portability → meal-prep",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright office break room, two hands slide a snack pouch into an open lunch tote beside fruit, ending with the package front visible above the zipper. Natural daylight, relaxed day-in-the-life phone-video look. Waist-level close-up with a gentle push-in. Sound: pouch crinkle and zipper; no music.",
-          "chips": [
-            "recipe"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q17-ind-food-drinks-example-pasta",
-          "label": "Drizzle sauce → serving → recipe",
-          "prompt": "Use the uploaded photo as the sauce bottle and keep its shape, color and label area exactly. An adult hand drizzles the sauce over a plate of rigatoni, ending with the bottle beside the finished serving. Warm kitchen light, clean recipe-demo look. Three-quarter close-up with one slow push-in. Sound: sauce pour and plate movement; no music.",
-          "chips": [
-            "recipe"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k5-lifestyle-photos-strip-3",
-          "label": "Sip tea → usage → taste",
-          "prompt": "Use the uploaded photo as the iced tea can and keep its shape, color and label area exactly. An adult takes one sip at a cafe table, looks toward the camera, and ends with the can beside the glass. Warm window light, candid taste-test look. Chest-up handheld framing with slight sway. Sound: sip, can set-down and room tone; no music.",
-          "chips": [
-            "taste"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k3-video-case-citrus-photo",
-          "label": "Pour drink → fizz → discovery",
-          "prompt": "Use the uploaded photo as the sparkling drink can and keep its shape, color and label area exactly. A hand opens the can and pours once over ice, ending with the fizz and can centered. Bright daylight, energetic phone-video look. Tight tabletop close-up with one quick tilt. Sound: tab snap, pour and ice clink; no music.",
-          "chips": [
-            "hook"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q17-ind-food-drinks-example-lunch",
-          "label": "Pack pouch → lunch-fit → routine",
-          "prompt": "Use the uploaded photo as the snack pouch and keep its shape, color and label area exactly. Adult hands slide it into an open lunch tote beside fruit, ending with the package front visible above the zipper. Natural office daylight, relaxed day-in-the-life look. Waist-level close-up with a gentle push-in. Sound: pouch crinkle and zipper; no music.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "video"
-        }
-      ],
-      "button": "Make a product video"
-    },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:gen2:tpl-drink-g3",
-        "h": "Show a drink in its serving glass",
-        "d": "A berry smoothie poured into a glass shows its color and texture."
-      },
-      {
-        "frame": "post",
-        "ref": "f:q17-ind-food-drinks-uses-1",
-        "h": "Show the product in a serving scene",
-        "d": "A hand pours olive oil over salad so shoppers can see how the bottle is used."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:gen2:video-ads-g3",
-        "bad": "n:guide:ind-food-drinks-m5-soft-focus",
-        "good_label": "The snack pouch and full top seal stay clear",
-        "bad_label": "Small package details merge into the blur"
-      },
-      {
-        "good": "n:gen2:photo-hub-g3",
-        "bad": "n:guide:ind-food-drinks-m5-cropped",
-        "good_label": "The package stays inside the square frame",
-        "bad_label": "The package edge is clipped by a tight crop"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f8-food-output-snack-pouch-matched-r1",
-        "frame": "1:1",
-        "label": "Green snack pouch beside a glass lunch container",
-        "length": 6
-      },
-      {
-        "ref": "n:guide:f8-food-output-snack-box-r1",
-        "frame": "1:1",
-        "label": "Snack box beside a latte",
-        "length": 10
-      }
-    ],
-    "after": {
-      "ref": "f:q17-ind-food-drinks-after",
-      "zones": [
-        "Package",
-        "Ingredient details"
-      ],
-      "items": [
-        "Keep ingredient and allergen details true to the real package.",
-        "Add any serving guidance after download in your editor."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make a food and drink video in three steps"
