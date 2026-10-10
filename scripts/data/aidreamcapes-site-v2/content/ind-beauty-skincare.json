@@ -261,20 +261,6 @@
   },
   "templates_lead": "Choose a beauty ad format for a routine, texture demo, creator review, or unboxing.",
   "cta_lead": "Choose a beauty ad format and review the result before posting.",
-  "steps": [
-    {
-      "t": "Upload a clear product photo",
-      "d": "Show the complete bottle, jar, or tube in even light, with the package shape and label area visible."
-    },
-    {
-      "t": "Choose a short ad format",
-      "d": "Select a routine, swatch, creator review, or unboxing and describe one main action."
-    },
-    {
-      "t": "Review the result",
-      "d": "Check the package, shade, and visible details, then add approved product details in your editing app."
-    }
-  ],
   "visual": {
     "overview": "Show beauty products through routines, texture demos, shade checks, unboxings, and adult creator reviews. Keep packaging and claims easy to verify.",
     "strip": [
