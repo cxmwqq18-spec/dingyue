@@ -4,18 +4,13 @@
   "description": "Put your product next to a familiar object so shoppers can judge its size at a glance. AI scale photos for listings and ads, from one photo.",
   "h1": "Product Size Reference Photo Next to Objects Shoppers Know",
   "eyebrow": "Product photo template",
-  "lead": "Shoppers send the same message again and again - how big is it? - and dimensions alone rarely answer it. Put your product next to an object buyers know, so they can judge fit and scale in one look.",
+  "lead": "Shoppers need a quick sense of scale, not another dimension table. Put your product beside a familiar object in one clear square image.",
   "secondary_keywords": [
     "size comparison product photo",
     "scale photo for Amazon listing",
     "product next to everyday object",
     "bag size reference image"
   ],
-  "intro": [
-    "In the example, a black packable backpack and a matching zip pouch sit on an airport floor beside a silver carry-on, with a traveler reaching for the top handle. Without reading a single number, you can tell the backpack is smaller than the case and the pouch fits in one hand.",
-    "Size is one of the first things shoppers wonder about with bags, wallets, watches, jewelry, and fitness gear. A reference photo gives them a feel for scale, while the measurements in your listing give the exact numbers. If you want to show two of your own sizes together, a [Side-by-Side Video template](page:tpl-compare) can put them in one clip before this still photo. Use it as an extra gallery image on Amazon, right after the main photo."
-  ],
-  "tip": "Name the comparison object in your description, such as \"next to a carry-on suitcase\" or \"held in an adult hand,\" and choose one your buyers already own.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -28,20 +23,6 @@
     {
       "t": "Download and Add Dimensions",
       "d": "Download the image and check the comparison looks natural, then add written measurements beside it."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Small jewelry",
-      "d": "Show a pendant or a pair of studs next to a coin or on a fingertip so shoppers can judge how small they really are."
-    },
-    {
-      "t": "Bags beside luggage",
-      "d": "Set a tote, crossbody, or backpack next to a carry-on or a laptop to show how big it is compared with things people travel with."
-    },
-    {
-      "t": "Pocket-size gifts",
-      "d": "Place a keychain, card holder, or lip balm in an open palm for a gift shop listing."
     }
   ],
   "maker": {
@@ -64,174 +45,38 @@
   "faq": [
     {
       "q": "Is the size in the photo exact?",
-      "a": "No. The photo is a visual guide, and the scale between objects can be slightly off. Always write the real measurements in your product description so buyers have the exact numbers. A visual reference helps shoppers orient themselves, but exact length, width, height, and capacity still belong in editable listing text."
+      "a": "No. It is a visual guide, and generated scale can be slightly off. Put the real length, width, height or capacity in the listing text."
     },
     {
       "q": "Can I use this as an Amazon listing image?",
-      "a": "Yes, as one of the extra images in your gallery. A scale shot placed right after the main image helps buyers picture the size before they scroll to the details. Use an adult hand, carry-on, notebook, or ordinary doorway as the cue your audience already recognizes; avoid branded objects that add confusion."
+      "a": "Yes. A scale comparison can be one of the extra images in an Amazon gallery when it shows the real item."
     },
     {
-      "q": "What object should I use to show a product’s size?",
-      "a": "Choose a familiar object with a stable size, such as a standard card or common bottle. Generated scale may vary, so include exact measurements in your product description. Keep the complete product in frame and hold it at a natural distance so perspective does not exaggerate its size."
+      "q": "What object shows a product’s size well?",
+      "a": "A familiar, unbranded object such as a hand, notebook, carry-on or common bottle gives shoppers a quick reference."
     },
     {
-      "q": "How do shoppers see the real size?",
-      "a": "Place the product beside a common object or a model, and add any dimensions as text after download. A size image works well beside a main listing photo, in a product-page carousel, or in a feed post that answers one scale question."
-    },
-    {
-      "q": "Can I use these images for Amazon?",
-      "a": "Yes. Size-comparison photos belong in a product gallery as long as they show the real item.  State capacity or measurements in the listing even when the reference object looks familiar; shoppers still need numbers for a purchase decision."
+      "q": "Where can I use a size reference photo?",
+      "a": "Use the square image in a product page, Amazon or Shopify gallery, feed post or carousel beside exact dimensions."
     },
     {
       "q": "What does a size photo cost?",
-      "a": "Each photo costs 24 credits.  Use an ordinary, unbranded object that your audience recognizes and keep it fully visible so the scale cue stays credible."
+      "a": "Each product size reference photo costs 24 credits, shown before the job starts."
     },
     {
       "q": "Can the reference photo replace my dimension table?",
-      "a": "No. It gives shoppers a fast sense of scale, but you keep the exact measurements in text too; the two work together to cut size questions and returns."
+      "a": "No. It gives shoppers a fast sense of scale; exact measurements and capacity still belong in editable listing text."
     },
     {
-      "q": "Do I need to buy props or book a studio?",
-      "a": "No. The reference object and setting are generated from your product photo, so the scale image costs only the credits for the job and carries no watermark."
-    }
-  ],
-  "overview": [
-    {
-      "h2": "Give Shoppers a Familiar Sense of Scale",
-      "p": "Dimensions are precise, but shoppers still want to picture a bag in a hand, a pendant at the collarbone, or a case beside the phone it protects. A scale image adds that visual cue to the gallery while leaving the official numbers in your product description."
+      "q": "Do I need props or a studio?",
+      "a": "No. The reference object and setting are generated from your product photo, and downloads have no watermark."
     },
     {
-      "h2": "Choose Context That Matches the Purchase",
-      "p": "A carry-on helps with travel gear; a palm helps with a keychain. The comparison should be recognizable to the people buying the item and simple enough that the product remains the subject of the frame."
+      "q": "Can shoppers judge fit from the image?",
+      "a": "They can orient themselves faster, but the listing still needs exact measurements for a purchase decision."
     }
   ],
-  "input_guide": {
-    "h2": "Plan the Comparison Before Uploading",
-    "items": [
-      {
-        "t": "Start with the item alone",
-        "d": "Use a clean source photo so the chosen reference is added intentionally instead of being confused with your background."
-      },
-      {
-        "t": "Pick one stable reference",
-        "d": "A bank card, phone, coffee mug, adult hand, or carry-on gives more useful context than an object with many sizes."
-      },
-      {
-        "t": "Avoid dramatic perspective",
-        "d": "Ask for a level view and keep the product near the reference so distance does not make one appear artificially large."
-      },
-      {
-        "t": "Keep the product proportions visible",
-        "d": "Show the full outline, handles, straps, or clasp instead of using a crop that hides the very dimension shoppers need."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What a Scale Frame Can Tell",
-    "items": [
-      {
-        "t": "Overall footprint",
-        "d": "Show whether a pouch fits in one hand or a tote sits beside a laptop."
-      },
-      {
-        "t": "Wearable proportion",
-        "d": "Place jewelry or a watch where it is worn so buyers can judge visual presence."
-      },
-      {
-        "t": "Travel context",
-        "d": "Set a case, bottle, or backpack beside luggage or a seat-side object people already know."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Reference Scenes That Read Quickly",
-    "items": [
-      {
-        "t": "Small pendant",
-        "d": "A teardrop necklace resting on an open palm beside a simple coin for a quick size cue."
-      },
-      {
-        "t": "Crossbody bag",
-        "d": "The bag at a person's side with a paperback or phone visible inside the opening."
-      },
-      {
-        "t": "Desk accessory",
-        "d": "A compact charger or speaker next to a laptop corner and a coffee mug on this desk."
-      },
-      {
-        "t": "Travel pouch",
-        "d": "A toiletry pouch beside a carry-on handle with one folded shirt nearby to suggest packing scale."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Pair the Picture With the Numbers",
-    "items": [
-      {
-        "t": "Check the relationship",
-        "d": "Compare the visual scene with the real item; discard any frame that makes it look materially larger or smaller."
-      },
-      {
-        "t": "Add measurements in text",
-        "d": "Write width, height, depth, weight, or chain length in the product page yourself."
-      },
-      {
-        "t": "Place it after the hero",
-        "d": "Use the scale image as a supporting gallery frame after shoppers have seen the product alone."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Good Matches for a Size Reference",
-    "good": [
-      "Bags, wallets, jewelry, watches, and small accessories",
-      "Travel gear whose footprint matters",
-      "Desk or kitchen products with a familiar everyday comparison",
-      "Listings that already publish exact dimensions"
-    ],
-    "not_ideal": [
-      "Products whose size changes dramatically with perspective or pose",
-      "Items that must be measured to a regulated tolerance",
-      "A reference object with no stable, recognizable size"
-    ]
-  },
-  "examples": {
-    "h2": "More size reference examples",
-    "lead": "Hands and everyday objects make size easy to read. List exact measurements in your product text.",
-    "groups": [
-      {
-        "label": "Scale at a glance",
-        "items": [
-          {
-            "ref": "n:guide:q7-size-ex-0",
-            "title": "Backpack with Pouch on Commute",
-            "kind": "photo",
-            "product": "travel backpack"
-          },
-          {
-            "ref": "n:guide:q7-size-ex-1",
-            "title": "Laptop in Canvas Tote",
-            "kind": "photo",
-            "product": "canvas tote bag"
-          },
-          {
-            "ref": "n:guide:q7-size-ex-2",
-            "title": "Tote on Carry-On",
-            "kind": "photo",
-            "product": "canvas tote bag"
-          },
-          {
-            "ref": "n:guide:q7-size-ex-3",
-            "title": "Stemless Earbuds in Hand",
-            "kind": "photo",
-            "product": "earbuds case"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A size reference image turns measurements into a visual cue shoppers already understand. Show the complete product beside one familiar object, in an adult hand, worn on a body, or packed for its normal use. Keep the comparison object ordinary and fully visible, and keep the product at a believable distance instead of making it look larger for drama. A tote beside a carry-on answers a travel question; a serum bottle in a hand answers a shelf-size question. Add exact units in the listing after reviewing the image. Keep the camera at a natural distance and avoid unusual perspective that makes a small item appear oversized. This gives a useful cue while your listing carries the exact numbers.",
     "strip": [
       "n:guide:q7-size-strip-0",
       "n:guide:q7-size-strip-1",
@@ -244,7 +89,7 @@
       "source": "n:guide:tpl-size-c3-m2-source",
       "result": "n:guide:q7-size-steps-result",
       "mode": "photo",
-      "prompt": "Use the uploaded product photo as the identity reference; preserve the natural canvas tote, exact handle width, seams, and fabric color. Show the full tote beside a closed notebook on a light wooden bench, with its shape easy to judge. Soft window daylight, clean product-photo composition. No text, logos, or watermark.",
+      "prompt": "Show the uploaded tote beside a notebook on a bench so its scale is easy to judge.",
       "options": [
         [
           "Template",
@@ -261,210 +106,17 @@
       ]
     },
     "picker": {
-      "title": "Choose a product scale ad format",
-      "lead": "Choose a scale cue that matches the buying decision: a hand for a small accessory, a worn fit for clothing, a packed carry scene for bags, or daily use for a tool or bottle.",
-      "chips": [
-        {
-          "id": "hand",
-          "label": "In a Person's Hand"
-        },
-        {
-          "id": "wear",
-          "label": "Fit Cues"
-        },
-        {
-          "id": "carry",
-          "label": "Packed to Carry"
-        },
-        {
-          "id": "daily",
-          "label": "In Daily Use"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q7-size-picker-cards-0",
-          "label": "Vitamin C Serum in Hand",
-          "chips": [
-            "hand",
-            "daily"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain vitamin C serum bottle, shape, cap, and color. A hand holds the full bottle beside an open palm so its scale is clear. Bright bathroom daylight, close chest-level composition, natural product-ad look. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-size-picker-cards-1",
-          "label": "Protein Sachet in Hand",
-          "chips": [
-            "hand",
-            "carry"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact single-serve protein sachet, shape, seal, and color. A hand holds the full packet beside an open palm, with every edge visible. Soft gym daylight, chest-level close composition, natural product-ad look. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-size-picker-cards-2",
-          "label": "Backpack Fit Check",
-          "chips": [
-            "wear",
-            "carry",
-            "daily"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal backpack, panel layout, straps, zippers, and color. An adult commuter wears it with both shoulder straps visible and adjusts one strap. Open-shade daylight, three-quarter medium framing. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-size-picker-cards-3",
-          "label": "Knit Shoe Fit Check",
-          "chips": [
-            "wear",
-            "daily"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit running shoe, sole, and color. An adult runner wears the shoe with the full side profile and ankle fit visible on a shaded path. Natural morning light, low three-quarter composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-size-picker-cards-4",
-          "label": "Earbuds Case for Scale",
-          "chips": [
-            "hand",
-            "carry"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact compact dark earbuds case and its shape and color. A hand holds the closed case beside an open palm, with two small stemless earbuds visible nearby. Soft desk light, tight overhead composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-size-picker-cards-5",
-          "label": "Canvas Tote on Carry-On",
-          "chips": [
-            "wear",
-            "carry",
-            "daily"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact natural canvas tote, handle width, seams, and color. An adult traveler slides the tote over a carry-on handle, with both bags fully visible. Bright terminal daylight, medium travel-ad composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-size-picker-cards-6",
-          "label": "Pet Grooming Brush in Hand",
-          "chips": [
-            "daily"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact pet grooming brush, handle, bristle layout, and color. An adult creator holds the brush beside their face with the bristles turned toward camera. Soft home daylight, chest-up composition, natural review style. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-size-picker-cards-7",
-          "label": "Protein Shaker in Hand",
-          "chips": [
-            "carry",
-            "daily"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain protein shaker, lid, cup shape, and color. An adult creator holds it upright beside their face with the lid clearly visible. Bright gym window light, chest-up composition, natural review style. No text, logos, or watermark.",
-          "kind": "photo"
-        }
-      ],
-      "button": "Make a product size photo"
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": ""
     },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q7-size-uses-0",
-        "h": "Show the size of a compact earbuds case",
-        "d": "An adult creator holds the closed earbuds case beside a palm at a natural distance, giving shoppers a familiar cue without hiding the hinge or case shape. Place the case beside a relaxed palm rather than close to the lens; the familiar hand cue helps shoppers judge scale without hiding the hinge or case opening."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q7-size-uses-1",
-        "h": "Show necklace length at the neckline",
-        "d": "A wearer faces the camera with the necklace pendant resting at the neckline. The frame helps a shopper judge drop length while the listing supplies the exact measurement. Show the necklace at a natural neckline and pair the image with an exact drop measurement, because the scene helps orientation but cannot replace dimensions."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q7-size-input-0-good",
-        "bad": "n:guide:q7-size-input-0-bad-r2",
-        "good_label": "Tote handles and contents fit the frame",
-        "bad_label": "Tote lower edge is cropped off"
-      },
-      {
-        "good": "n:guide:q7-size-input-1-good",
-        "bad": "n:guide:q7-size-input-1-bad-r2",
-        "good_label": "Backpack body and straps stay in focus",
-        "bad_label": "Backpack is slightly out of focus"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q7-size-outputs-0",
-        "frame": "1:1",
-        "label": "Natural canvas tote worn over one shoulder"
-      },
-      {
-        "ref": "n:guide:q7-size-outputs-1",
-        "frame": "1:1",
-        "label": "Charcoal daypack worn with both straps visible"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q7-size-after",
-      "zones": [
-        "Product dimensions",
-        "Unit"
-      ],
-      "items": [
-        "Type real measurements and units in the product listing after download; the reference scene is a visual aid, not a ruler.",
-        "Use one unit system in every size note and keep one order for length, width, and height.",
-        "Check that the comparison object is familiar, unbranded, and fully visible; review perspective so a product held near the lens does not look oversized."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Make a product size guide in three steps"
-      },
-      "m3": {
-        "h2": "Choose a product size scene"
-      },
-      "m4": {
-        "h2": "Use size photos beside listing measurements"
-      },
-      "m5": {
-        "h2": "Start a size guide with the whole item in frame"
-      },
-      "m6": {
-        "h2": "Square product size photos for listings"
-      },
-      "m7": {
-        "h2": "Add real measurements after download"
-      },
-      "faq": {
-        "h2": "Questions about product size guide photos"
-      },
-      "templates": {
-        "h2": "More product size guide templates",
-        "lead": "Choose a familiar reference object for another product."
-      }
-    }
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
   },
-  "benefits_h2": "Why make product size reference photos?",
-  "benefits": [
-    {
-      "t": "Fewer will-it-fit questions",
-      "d": "Showing the item beside a palm, carry-on or notebook gives an instant sense of scale, so shoppers stop guessing and send fewer size messages."
-    },
-    {
-      "t": "Fewer size-related returns",
-      "d": "Buyers who can picture the real proportions order with accurate expectations instead of discovering on delivery that the item is bigger or smaller than imagined."
-    },
-    {
-      "t": "Works across channels",
-      "d": "Use the square image in an Amazon or Shopify gallery, a feed ad or a product page, right beside your written dimensions."
-    },
-    {
-      "t": "No studio or props to source",
-      "d": "The reference scene is generated from your product photo, and downloads carry no watermark for commercial use."
-    }
-  ],
   "steps_h2": "How to make a size reference photo in 3 simple steps",
   "steps_lead": "Three steps turn one product photo into a clear scale image - no measuring tape shoot, no studio."
 }

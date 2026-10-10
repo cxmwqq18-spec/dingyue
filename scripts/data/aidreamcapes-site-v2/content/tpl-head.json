@@ -4,18 +4,13 @@
   "description": "Make matching team headshots in one shared light, crop and backdrop, each from a teammate's own photo. AI portraits for About and team pages.",
   "h1": "AI Team Headshots That Match, from Founder to New Hire",
   "eyebrow": "Team photo template",
-  "lead": "A team page stitched together from selfies and cropped wedding shots makes a business look small, and getting everyone into one studio is a scheduling nightmare. Give each person a matching headshot made from their own approved photo.",
+  "lead": "Mismatched team photos make an About page feel unfinished. Create a shared headshot look from each teammate's own approved photo.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
     "About page team photos",
     "headshots from your own photo"
   ],
-  "intro": [
-    "The example shows a smiling team member in a black blazer, framed from the chest up in a bright office with a plant and soft daylight behind her.",
-    "Small shops often have a Team or About page with photos taken years apart in different rooms. Matching headshots make that page look tidy and help customers put a face to the people who pack their orders and answer their emails. The Team Headshots template works best when each person uploads a recent photo and you use one setting description for everyone."
-  ],
-  "tip": "Ask each person for a front-facing photo in daylight with nothing covering their face, and paste the same setting description for every headshot.",
   "steps": [
     {
       "t": "Collect Team Photos",
@@ -28,20 +23,6 @@
     {
       "t": "Download and Arrange",
       "d": "Download the portraits, arrange the grid, then add names, roles and contact details as text. No studio day."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Team grid",
-      "d": "A row of matching portraits on your About page, so the whole crew looks like part of one shop."
-    },
-    {
-      "t": "Customer support replies",
-      "d": "Add a friendly face beside help desk replies or in your email signature."
-    },
-    {
-      "t": "Seller profiles",
-      "d": "Use a founder headshot for your Etsy shop profile or the About section of your Shopify store."
     }
   ],
   "maker": {
@@ -65,152 +46,39 @@
   "faq": [
     {
       "q": "What should each teammate upload?",
-      "a": "Use a recent photo of that person’s face and shoulders with even light and no hat, sunglasses or hand covering the face. Ask for consent for the specific business pages where the portrait will appear."
+      "a": "Use a recent face-and-shoulders photo with even light and no hat, sunglasses or hand covering the face."
     },
     {
       "q": "How can a team page feel consistent?",
-      "a": "Reuse the same backdrop, crop, light direction and outfit description while letting each person keep their own portrait. A shared brief creates consistency without flattening different faces into one identity."
+      "a": "A shared backdrop, crop and light gives every portrait one visual system while each person keeps their own features."
     },
     {
       "q": "Can I add names in the headshot?",
-      "a": "Add names and job titles as editable text beside each image on your page. Keep the portrait free of baked-in labels so you can correct a role or update a team member later."
-    },
-    {
-      "q": "Can each person upload a different style of photo?",
-      "a": "They can, but give the team one brief: plain background, similar framing and even light. Review each image for consistent shoulders and headroom before placing the set on the public page."
+      "a": "Add names and job titles as editable text beside each image, so the portrait stays easy to update."
     },
     {
       "q": "What if I need a headshot of a specific person exactly?",
-      "a": "The output follows the uploaded person’s visible features, but it is not an official identity document. Upload the clearest front-facing photo, ask the person to review it, and publish only with their approval."
+      "a": "The output follows the uploaded person’s visible features, but it is not an official identity document. Let the person review it before publishing."
     },
     {
       "q": "How much do team headshots cost?",
-      "a": "Each portrait costs 24 credits, so the total scales with the number of teammates. The current cost is shown before creation; make one test portrait first if you need to confirm the shared brief. Keep the approval record with the final file and page copy."
+      "a": "Each portrait costs 24 credits, and the total scales with the number of teammates. The current cost appears before creation."
     },
     {
       "q": "How do I publish team portraits safely?",
-      "a": "Ask each person to approve the portrait and the page where it will appear. Keep the source and consent record with your team files, publish names and roles as editable text, and remove a portrait when its owner asks."
-    },
-    {
-      "q": "What details belong beside each portrait?",
-      "a": "Use the person’s approved name, role, pronouns and a useful contact or bio sentence beside the image. Keep claims current and avoid baking a title or label into the pixels so updates stay easy. Check spelling, pronouns, role and contact destination with the person before publishing, and keep the portrait paired with the text record that can be updated later."
+      "a": "Get each person’s approval for the portrait and the page where it will appear. Keep names and roles as editable text."
     },
     {
       "q": "Do I need permission from each teammate?",
-      "a": "Yes. Use a photo the person has approved for this business use, show them the finished portrait and publish only with their consent; remove a portrait if its owner asks."
+      "a": "Yes. Use a photo approved for this business use, show the finished portrait to its owner and remove it if they ask."
     },
     {
       "q": "Can I use the headshots beyond the About page?",
-      "a": "Yes. Downloaded portraits carry no watermark and can be used on LinkedIn, pitch decks, speaker bios and other business materials, with each person's approval kept on file."
+      "a": "Yes. With each person’s approval, downloads can be used on LinkedIn, pitch decks, speaker bios and other business materials."
     }
   ],
-  "overview": [
-    {
-      "h2": "Give a Small Team One Visual Home",
-      "p": "Customers often meet a shop through its About page, support email, or founder profile before they visit a product page. Matching portraits make those touchpoints feel connected, even when each person starts with a different phone photo."
-    },
-    {
-      "h2": "Consistency Comes From the Brief",
-      "p": "Use one backdrop, crop, light direction, and clothing level for the group. Keep each person's face supplied by that person and review every result privately before you publish it."
-    }
-  ],
-  "input_guide": {
-    "h2": "Collect Respectful, Usable Source Photos",
-    "items": [
-      {
-        "t": "Ask each person directly",
-        "d": "Use a recent photo shared by the person shown, with their agreement for the intended business use."
-      },
-      {
-        "t": "Face the camera",
-        "d": "Choose a front-facing head-and-shoulders frame in daylight, without sunglasses, hats, or a hand covering the face."
-      },
-      {
-        "t": "Set one visual standard",
-        "d": "Choose the backdrop, jacket level, crop, and light once, then reuse the same description for everyone."
-      },
-      {
-        "t": "Keep the background quiet",
-        "d": "A bright office wall, workshop corner, or plain warm surface keeps the portrait readable beside the next person."
-      }
-    ]
-  },
-  "results": {
-    "h2": "Places a Matching Portrait Can Help",
-    "items": [
-      {
-        "t": "Team page",
-        "d": "Arrange founders, makers, and support staff in a shared grid with the same visual treatment."
-      },
-      {
-        "t": "Founder profile",
-        "d": "Use one portrait on an Etsy shop, Shopify About section, or launch page."
-      },
-      {
-        "t": "Support touchpoint",
-        "d": "Add a friendly face beside a help reply or email signature when that suits your brand."
-      },
-      {
-        "t": "A commercial square file",
-        "d": "Download the image for business pages or social posts after the person approves the result."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Headshot Sets for Different Shops",
-    "items": [
-      {
-        "t": "Bright studio team",
-        "d": "Three people in neutral tops against a warm white wall, framed chest-up with soft window light."
-      },
-      {
-        "t": "Maker workshop",
-        "d": "Founder and craft team in a clean workshop corner, with tools blurred behind the same shoulder crop."
-      },
-      {
-        "t": "Food business",
-        "d": "Owner and kitchen lead in simple aprons near a quiet prep counter, without distracting product props."
-      },
-      {
-        "t": "Remote support crew",
-        "d": "A coordinated office-style background for team members photographed in different places."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Complete the Human Details Yourself",
-    "items": [
-      {
-        "t": "Get approval",
-        "d": "Let each person review their own image before it appears on a public page or profile."
-      },
-      {
-        "t": "Add names and roles",
-        "d": "Type the correct name, title, pronouns, and contact context in the page content around the image."
-      },
-      {
-        "t": "Write useful alt text",
-        "d": "Describe the person and role plainly for visitors who do not see the portrait."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When Matching Headshots Make Sense",
-    "good": [
-      "Small ecommerce teams and family-run shops",
-      "Founder, About, support, and maker profiles",
-      "Teams that can collect an approved photo from each person",
-      "Pages that can place the portrait beside names and roles"
-    ],
-    "not_ideal": [
-      "A public figure or celebrity likeness without permission",
-      "A page that needs an official employee ID photo standard",
-      "People who have not agreed to the intended publication"
-    ]
-  },
   "cta_lead": "Upload one clear photo of the person. See the cost before you start.",
   "visual": {
-    "overview": "A matching team set helps customers recognize the people behind a small shop across its About page, support replies and founder profiles. Ask each teammate for a recent, approved photo, then reuse one brief for the crop, light, backdrop and clothing level. Keep facial features, hair and skin tone faithful to the supplied person; the generated portrait is a presentation aid, not an employee record. Let every person review their own result before it goes public, and add names, roles, pronouns and contact context as editable page text. Keep a private approval trail with the source and final portrait so a role change or removal request can be handled quickly. Review the grid at the size visitors will actually see.",
     "strip": [
       "n:guide:tpl-head-round4-02",
       "n:guide:tpl-head-round4-03",
@@ -223,7 +91,7 @@
       "source": "g:professional-headshot/source-input",
       "result": "n:guide:q9-head-step-output",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as an identity reference. Retain the person’s facial features, hair, and skin tone while creating a square team headshot against a soft light-gray background, with head and shoulders in frame. Use a black blazer, white top, natural skin texture, and even daylight; no props, text, or logos. Keep the expression relaxed and the crop consistent with the rest of the team. End on a clean portrait that the person can approve before publication. Leave enough headroom for a profile card and avoid adding names or job titles inside the image. Keep the background quiet enough for readable surrounding text.",
+      "prompt": "Make a square portrait from the uploaded person with a soft gray backdrop and even light.",
       "options": [
         [
           "Template",
@@ -240,210 +108,17 @@
       ]
     },
     "picker": {
-      "title": "Choose a team portrait setting",
-      "lead": "Pick a studio or workplace setting that keeps every face clear. Reuse a consistent crop and light direction so different source photos read as one team while each person remains recognizable. Keep each person’s approved portrait paired with their current role and contact context. A calm background leaves space for a short bio beside the image.",
-      "chips": [
-        {
-          "id": "studio",
-          "label": "Studio Backdrops"
-        },
-        {
-          "id": "workplace",
-          "label": "Office & Workspaces"
-        },
-        {
-          "id": "warm",
-          "label": "Warm Neutrals"
-        },
-        {
-          "id": "cool",
-          "label": "Cool Neutrals"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q9-head-card-01-warm-studio",
-          "label": "Studio Headshot: Warm Taupe Backdrop",
-          "chips": [
-            "studio",
-            "warm"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a warm taupe studio backdrop, with natural skin texture and soft even light. No props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-card-02-blue-office",
-          "label": "Office Headshot: Blue-Gray Wall",
-          "chips": [
-            "workplace",
-            "cool"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a pale blue-gray office wall, with natural skin texture and soft window light. No props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-card-03-olive-studio",
-          "label": "Team Portrait: Olive Plaster Backdrop",
-          "chips": [
-            "studio",
-            "warm"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against an olive plaster studio backdrop, with natural skin texture and soft even light. No props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-card-04-charcoal-studio",
-          "label": "Studio Headshot: Charcoal Backdrop",
-          "chips": [
-            "studio",
-            "cool"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a charcoal studio background, with natural skin texture and soft even light. No props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-card-05-wood-workspace",
-          "label": "Creative Lead Portrait: Wood Workspace",
-          "chips": [
-            "workplace",
-            "warm"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait in a brick-and-wood creative workspace, with natural skin texture and soft window light. No props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-card-06-dusty-blue",
-          "label": "Team Headshot: Dusty Blue Wall",
-          "chips": [
-            "studio",
-            "cool"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a dusty blue studio wall, with natural skin texture and soft even light. No props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-card-07-pale-blush",
-          "label": "Studio Portrait: Pale Blush Backdrop",
-          "chips": [
-            "studio",
-            "warm"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a pale blush studio backdrop, with natural skin texture and soft even light. No props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-card-08-olive-office",
-          "label": "Office Headshot: Olive Wall",
-          "chips": [
-            "workplace",
-            "cool"
-          ],
-          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against an olive office wall, with natural skin texture and soft window light. No props, text, or logos.",
-          "kind": "photo"
-        }
-      ],
-      "button": "Make a team headshot"
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": ""
     },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:tpl-head-round4-10",
-        "h": "Build a consistent team page",
-        "d": "Use a shared head-and-shoulders crop and soft light so founders, makers and support staff sit together on an About page. Place each portrait beside the person’s real name and role. Keep the grid order easy to update as the team changes. Give each card enough text contrast and whitespace for a small screen. Leave a clear path to the team member’s approved contact details. Keep the portrait crop consistent when the page is viewed on a phone."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:tpl-head-m3-office",
-        "h": "Show a portrait on a professional profile",
-        "d": "Pair a square portrait with a professional profile, founder bio or support introduction. Keep the person’s approved role and contact details in surrounding text so visitors can understand who they are. Review the surrounding copy whenever a person changes teams or responsibilities. Keep the portrait file and the public wording easy to replace together when consent changes. Make the update in one content record rather than baking it into pixels. Keep a private note of the approval date for every public portrait."
-      }
-    ],
-    "input": [
-      {
-        "good": "g:professional-headshot/example-01",
-        "bad": "n:guide:tpl-head-m5-blur",
-        "good_label": "Head and shoulders stay sharp",
-        "bad_label": "Headshot loses focus around the face"
-      },
-      {
-        "good": "g:professional-headshot/example-03",
-        "bad": "n:guide:tpl-head-m5-crop",
-        "good_label": "Face and shoulders fit the frame",
-        "bad_label": "The crop cuts across the face"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q9-media-head-output",
-        "frame": "1:1",
-        "label": "Square headshot against a soft gray background"
-      },
-      {
-        "ref": "n:guide:f7-tpl-head-output-wood-window",
-        "frame": "1:1",
-        "label": "Square headshot by a wood-framed office window"
-      }
-    ],
-    "after": {
-      "ref": "g:professional-headshot/example-06",
-      "mock": {
-        "type": "callout",
-        "tag1": "Same light",
-        "tag2": "Same crop",
-        "tag3": "Name & role"
-      },
-      "zones": [
-        "Name",
-        "Role"
-      ],
-      "items": [
-        "The frame shows the standard tags you add so every portrait matches.",
-        "Add each teammate’s name and role as text beside the downloaded portrait."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Create square team headshots from each person’s photo"
-      },
-      "m3": {
-        "h2": "Choose a consistent team headshot setting"
-      },
-      "m4": {
-        "h2": "Use team headshots on an about page"
-      },
-      "m5": {
-        "h2": "Start with a clear face and shoulders photo"
-      },
-      "m6": {
-        "h2": "Square team headshot example"
-      },
-      "m7": {
-        "h2": "Add names and roles after download"
-      },
-      "faq": {
-        "h2": "Questions about team headshots"
-      }
-    }
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
   },
-  "benefits_h2": "Why make AI team headshots?",
-  "benefits": [
-    {
-      "t": "A consistent, professional team page",
-      "d": "Every portrait shares one backdrop, crop and light, so your About page reads as a polished company grid instead of mismatched selfies."
-    },
-    {
-      "t": "No studio day to coordinate",
-      "d": "There is no appointment for the whole team; each person sends a photo and their portrait is generated from it, remotely and on their own time."
-    },
-    {
-      "t": "Each person keeps their own face",
-      "d": "The output follows the features in that person's photo rather than replacing the team with stock models, and every portrait is reviewed and approved before publishing."
-    },
-    {
-      "t": "No watermark on downloads",
-      "d": "Approved portraits can be placed on your site, LinkedIn and pitch materials with no AIVideosUGC watermark."
-    }
-  ],
   "steps_h2": "How to make team headshots in 3 simple steps",
   "steps_lead": "Three steps turn each teammate's photo into a matching portrait - no studio, no scheduling."
 }

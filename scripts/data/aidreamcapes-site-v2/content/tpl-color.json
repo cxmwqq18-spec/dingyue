@@ -4,18 +4,13 @@
   "description": "Create one coordinated photo for every product color from your own shade photos, so shoppers can compare options in the same scene. Square AI images.",
   "h1": "Product Color Variations for a Coordinated Photo Set",
   "eyebrow": "Product photo template",
-  "lead": "Color swatch names mean nothing until shoppers see the shade in a real setting, and disjointed photos make options look like different products. Give every color the same coordinated scene so the choice is clear.",
+  "lead": "Swatch names hide how a finish looks in context. Show every product color in one coordinated square set so shoppers can compare options.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
     "Amazon color variation images",
     "sneaker color options photos"
   ],
-  "intro": [
-    "The example lines up ceramic soap dispensers in terracotta, sage, charcoal, and cream on a pale surface. The light, the camera angle, and the spacing stay consistent so shoppers can compare each glaze.",
-    "That consistency matters when a buyer taps between swatches on a Shopify product page or an Amazon variation. If each shade was shot on a different day in a different room, the colors are hard to compare. Make one photo per color with the same description, and the photos read as one set."
-  ],
-  "tip": "Upload a photo of the actual product in each color rather than one pair to be recolored, because real dyes and fabric textures differ more than you'd expect.",
   "steps": [
     {
       "t": "Upload Your Shade Photos",
@@ -28,20 +23,6 @@
     {
       "t": "Download and Link Options",
       "d": "Download each image, compare the hue with the real item, then link it to its option. Shoppers get a clean comparison."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "New seasonal shades",
-      "d": "When you add a color for spring or fall, make its photo in the same setting so it slots into the set you already have."
-    },
-    {
-      "t": "Tees, caps, and totes",
-      "d": "Any item sold in several colors, from T-shirts to canvas bags, can follow the same one-setting approach."
-    },
-    {
-      "t": "Instagram color carousel",
-      "d": "Post the shades as a swipeable carousel, one color per slide, to introduce a full range."
     }
   ],
   "maker": {
@@ -64,172 +45,38 @@
   "faq": [
     {
       "q": "How do I keep color options consistent?",
-      "a": "Use the same view, light, and background for each source photo so shoppers can compare the finish. Upload one clear source for each actual shade when the options differ in dye, glaze, fabric, or finish; recoloring one image can hide those differences."
+      "a": "The set uses a shared view, light and background so shoppers compare the finish instead of a changing setup."
     },
     {
       "q": "Can the tool create a different product color?",
-      "a": "Describe the color change while keeping the silhouette, hardware, and material visible. Keep the product silhouette, camera angle, and light consistent so shoppers compare color instead of a changing setup."
+      "a": "It can render a described color change, but a generated shade is not a substitute for a photo of the real option."
     },
     {
       "q": "Where should each variation image go?",
-      "a": "Attach the downloaded image to the matching product option so the chosen finish is shown. A color set works in a listing gallery, a feed post, or a carousel that helps a shopper choose one option."
+      "a": "Attach each downloaded image to its matching product option in a listing gallery, feed post or carousel."
     },
     {
       "q": "Do I need a photo for each color?",
-      "a": "A clear photo of one color plus the listed color names is enough; the tool keeps the same shape across variations. Always compare a generated variation with the physical item and connect the file to the right option before publishing."
+      "a": "For reliable shade matching, use a clear source photo of each actual color, especially when dye, glaze, fabric or finish changes."
     },
     {
       "q": "Will the generated colors match my real products?",
-      "a": "Keep each color name exact and review the image against your swatch before publishing; use the real product photos when exact shade matters most.  Attach each file to the correct option before publishing and check the swatch or thumbnail beside the generated image so a shopper sees the intended shade."
+      "a": "Review every result against the physical item or swatch. Use the real product photo when exact shade matters."
     },
     {
       "q": "How are variation photos credited?",
-      "a": "Each variation photo costs 24 credits and the total appears before you create the set.  If fabric or glaze changes how light reflects, provide a real source for each option and review the result against the physical samples."
+      "a": "Each variation photo costs 24 credits, and the total appears before you create the set."
     },
     {
       "q": "Can the tool invent a new color from one photo?",
-      "a": "It can render a described color change, but a generated shade is not a reliable substitute for the real product. For selling a color, upload a photo of that actual shade and compare the result before publishing."
+      "a": "It can show a color concept, but selling an option calls for a photo of that actual shade and a review against the sample."
     },
     {
       "q": "Do I need a reshoot for every color variation?",
-      "a": "No. You photograph the shades you sell once; the same styled scene is applied to each source photo, so the set is coordinated without booking repeat shoots."
+      "a": "No. Once the real shades are photographed, the same coordinated scene can be applied without repeat styled shoots."
     }
   ],
-  "overview": [
-    {
-      "h2": "Make Every Swatch Feel Like Part of One Product",
-      "p": "When a shopper taps from black to cream, the product should stay in the same place and the setting should stay quiet. A coordinated colorway set keeps the comparison on the shade instead of making the shopper compare different rooms, crops, or camera angles."
-    },
-    {
-      "h2": "Use the Real Item for Every Variant",
-      "p": "Different dyes, materials, and finishes react differently to light. Supply a source photo for each shade you sell, then reuse the scene description so the setting remains stable while the product color changes."
-    }
-  ],
-  "input_guide": {
-    "h2": "Line Up the Color Sources",
-    "items": [
-      {
-        "t": "Capture each physical variant",
-        "d": "Photograph the actual black, cream, olive, or seasonal item rather than asking one shade to stand in for the rest."
-      },
-      {
-        "t": "Fix the camera position",
-        "d": "Use the same distance, tilt, crop, and product orientation for every source image."
-      },
-      {
-        "t": "Control the light",
-        "d": "Choose neutral daylight and avoid a colored wall or strong reflection that shifts how the shade reads."
-      },
-      {
-        "t": "Name the shade plainly",
-        "d": "Use the catalog color name in your notes so a downloaded file cannot be attached to the wrong swatch."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A Variant Set Built for Comparison",
-    "items": [
-      {
-        "t": "One setting",
-        "d": "Keep the table, backdrop, and shadow language aligned across the collection."
-      },
-      {
-        "t": "One product view",
-        "d": "Let shoppers compare shape, stitching, and proportions without a new angle in every file."
-      },
-      {
-        "t": "One image per shade",
-        "d": "Give each Shopify or Amazon variant its own supporting image."
-      },
-      {
-        "t": "A visual color cue",
-        "d": "Use the result to support the swatch, then verify the physical color before treating it as a catalog reference."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Colorway Sets for More Than Sneakers",
-    "items": [
-      {
-        "t": "Canvas sneakers",
-        "d": "Cream, navy, black, and olive pairs on a linen runner with the same low side angle."
-      },
-      {
-        "t": "Reusable bottles",
-        "d": "Four matte bottles aligned on a pale kitchen counter with identical caps facing forward."
-      },
-      {
-        "t": "Tote collection",
-        "d": "Natural, rust, and charcoal totes hanging from the same wooden peg in soft window light."
-      },
-      {
-        "t": "Lip balm shades",
-        "d": "Small tubes standing upright on a stone tray, with each cap facing the same direction."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Audit the Set Before Linking Variants",
-    "items": [
-      {
-        "t": "Compare with the physical stock",
-        "d": "Check hue, finish, stitching, and hardware against each item in your inventory."
-      },
-      {
-        "t": "Match names to files",
-        "d": "Use a simple filename such as product-color so the correct image follows the correct swatch."
-      },
-      {
-        "t": "Add the exact shade language",
-        "d": "Type your approved color name, price, and availability in the store system rather than inside the generated image."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Where Color Variations Work Best",
-    "good": [
-      "Apparel, footwear, bags, bottles, and accessories sold in clear colorways",
-      "Products with similar shape across variants",
-      "Shopify or Amazon catalogs using swatches",
-      "Social carousels introducing a new seasonal shade"
-    ],
-    "not_ideal": [
-      "Products whose color depends on an exact calibrated print proof",
-      "Variants with different shapes or packaging in every color",
-      "Highly reflective finishes that change dramatically with the light"
-    ]
-  },
-  "examples": {
-    "h2": "More product color variation examples",
-    "lead": "Color groups help shoppers compare finish options across product types.",
-    "groups": [
-      {
-        "label": "Product photo examples",
-        "items": [
-          {
-            "ref": "n:guide:q7-color-ex-0",
-            "title": "Running Shoe Color Choices",
-            "kind": "photo",
-            "product": "knit running shoes"
-          },
-          {
-            "ref": "n:guide:q7-color-ex-1",
-            "title": "Skincare Shades in Hand",
-            "kind": "photo",
-            "product": "skincare bottles"
-          },
-          {
-            "ref": "n:guide:q7-color-ex-2",
-            "title": "Collar Shade Options",
-            "kind": "photo",
-            "product": "pet collars"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Color variation photos help shoppers compare options when the product shape, camera angle, backdrop, and light stay consistent. Start from a clear photo of each actual shade instead of recoloring one source, because fabric, glaze, and pigment can change how a surface catches light. Keep the product silhouette easy to recognize and show color choices in a useful setting, such as a skincare lineup or a garment try-on. Link every downloaded image to the matching option, then verify the result against the physical item before publishing. Leave a little room around each product for a consistent crop and check that the light does not shift the apparent hue. The goal is comparison, not a new claim.",
     "strip": [
       "n:guide:tpl-color-round4-01",
       "n:guide:tpl-color-round4-02",
@@ -242,7 +89,7 @@
       "source": "n:guide:q7-color-steps-source",
       "result": "n:guide:q7-color-steps-result",
       "mode": "photo",
-      "prompt": "Use the uploaded product photo as the identity reference; preserve the sage ceramic soap dispenser, pump, silhouette, glaze, and exact color. Show the full dispenser upright on a clean white surface with a soft natural shadow. Even studio daylight, centered product-photo composition. No text, logos, or watermark.",
+      "prompt": "Place the uploaded dispenser on a clean white surface with its shade unchanged.",
       "options": [
         [
           "Template",
@@ -259,205 +106,17 @@
       ]
     },
     "picker": {
-      "title": "Choose a product color ad format",
-      "lead": "Choose a color comparison format that serves a real shopping decision: line up warm shades, compare cool cases, show soft neutrals on a garment, or demonstrate bold accents in use.",
-      "chips": [
-        {
-          "id": "warm",
-          "label": "Warm Tones"
-        },
-        {
-          "id": "cool",
-          "label": "Cool Tones"
-        },
-        {
-          "id": "soft",
-          "label": "Soft Neutrals"
-        },
-        {
-          "id": "bold",
-          "label": "Bold Accents"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q7-color-picker-cards-0",
-          "label": "Skincare Shade Lineup",
-          "chips": [
-            "warm",
-            "soft"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain skincare bottles and their distinct muted colors. Adult hands hold three bottles side by side with every bottle fully visible. Bright bathroom daylight, close chest-level composition, clean comparison-ad style. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-color-picker-cards-1",
-          "label": "Phone Case Color Lineup",
-          "chips": [
-            "cool",
-            "bold"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain phone cases, single round camera openings, shapes, and colors. An adult creator holds a neat lineup of cases beside a phone, with each color and opening visible. Soft window light, chest-up close composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-color-picker-cards-2",
-          "label": "Knit Shoe Color Try-On",
-          "chips": [
-            "cool",
-            "soft"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit running shoe and color. An adult wears the shoe outdoors with its full side profile visible against a shaded path. Natural morning light, low three-quarter composition, clear color try-on. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-color-picker-cards-3-r2",
-          "label": "Cream Cardigan Try-On",
-          "chips": [
-            "soft",
-            "warm"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the cream cardigan, knit texture, buttons, and exact shade. An adult wears it and holds one sleeve toward a mirror so the knit color is easy to judge. Soft bedroom daylight, waist-up composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-color-picker-cards-4",
-          "label": "Face Mist Color Review",
-          "chips": [
-            "warm",
-            "soft"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain face-mist bottle, pump, silhouette, and color. An adult creator holds the full bottle beside their face with the pump visible. Bright vanity daylight, chest-up composition, natural skin texture. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-color-picker-cards-5",
-          "label": "Pet Collar Color Pair",
-          "chips": [
-            "cool",
-            "bold"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain pet collars, buckle shapes, widths, and colors. An adult pet owner holds two collars side by side beside a dog, with both buckles visible. Soft natural home light, chest-up close composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-color-picker-cards-6",
-          "label": "Muted Rose Lip Balm",
-          "chips": [
-            "warm",
-            "soft"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact muted rose lip balm, tube shape, cap, and color. A hand holds the full closed tube beside the lips, with the product centered and clearly visible. Warm window light, natural close beauty composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-color-picker-cards-7",
-          "label": "Resistance Band Colors",
-          "chips": [
-            "cool",
-            "bold"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the resistance bands and their distinct colors. Adult hands fan out three bands side by side on a gym mat, with each color easy to compare. Bright gym daylight, clean overhead composition. No text, logos, or watermark.",
-          "kind": "photo"
-        }
-      ],
-      "button": "Make a color variation"
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": ""
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:q7-color-uses-0",
-        "h": "Compare skincare shade options in a feed",
-        "d": "Three plain skincare bottles held together keep shade differences easy to judge at a glance. Use the frame in a feed post when a shopper is choosing between tones. Keep the three bottles close enough for a quick feed comparison but leave each silhouette clear; shoppers should be able to name the shade they want. Keep the bottle spacing and camera height fixed while you compare shades, and place the color name beside each option in editable text. This lets a shopper connect the visible hue with the correct variant without relying on words inside the image."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q7-color-uses-1",
-        "h": "Compare protein drink flavors by color",
-        "d": "An adult athlete holds two plain protein pouches side by side so flavor options can be distinguished by color while the product shape stays clear. Show two pouches at one distance and use editable flavor names in the listing, because color alone cannot prove ingredients or taste."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q7-color-input-0-good",
-        "bad": "n:guide:q7-color-input-0-bad-r2",
-        "good_label": "Muted teal serum bottle stays in focus",
-        "bad_label": "Muted teal serum bottle cap is cropped at the top"
-      },
-      {
-        "good": "n:guide:q7-color-input-1-good",
-        "bad": "n:guide:q7-color-input-1-bad-r2",
-        "good_label": "Plum knit color is easy to judge",
-        "bad_label": "Muted plum knit top is cropped at the lower edge"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q7-color-outputs-0",
-        "frame": "1:1",
-        "label": "Muted teal serum bottle on a clean surface"
-      },
-      {
-        "ref": "n:guide:q7-color-outputs-1",
-        "frame": "1:1",
-        "label": "Muted plum knit top worn by an adult model"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q7-color-after-r2",
-      "zones": [
-        "Color name",
-        "Material"
-      ],
-      "items": [
-        "Link each downloaded image to the matching color option in your listing and double-check the filename before publishing.",
-        "Type color and material names from your product information so shoppers can compare finishes without words burned into the image.",
-        "Keep camera angle, backdrop, and light consistent across shades, then review every variation beside the physical item because the tool cannot verify a finish."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Make coordinated product color variations"
-      },
-      "m3": {
-        "h2": "Choose a palette for product color variants"
-      },
-      "m4": {
-        "h2": "Use color variation photos on listings and feeds"
-      },
-      "m5": {
-        "h2": "Start with a clear product color photo"
-      },
-      "m6": {
-        "h2": "Square product color variant examples"
-      },
-      "m7": {
-        "h2": "Add color and material names after download"
-      },
-      "faq": {
-        "h2": "Questions about product color variations"
-      }
-    }
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
   },
-  "benefits_h2": "Why make coordinated color variation photos?",
-  "benefits": [
-    {
-      "t": "Shoppers compare colors, not setups",
-      "d": "Every variation shares the same view, light and scene, so differences come from the shade itself rather than changing backgrounds or crops."
-    },
-    {
-      "t": "Fewer wrong-color returns",
-      "d": "Buyers see the actual shade in context and choose with realistic expectations, instead of relying on a swatch dot that looks different at home."
-    },
-    {
-      "t": "A tidy option gallery",
-      "d": "Each square image attaches straight to its matching product option, giving your listing a coordinated set instead of mixed supplier photos."
-    },
-    {
-      "t": "No reshoot per color",
-      "d": "The scenes are generated from your photos of each real shade, with no watermark on downloads for commercial use."
-    }
-  ],
   "steps_h2": "How to make color variation photos in 3 simple steps",
   "steps_lead": "Three steps turn your shade photos into a coordinated option set - no repeat shoots, no mismatched supplier shots."
 }

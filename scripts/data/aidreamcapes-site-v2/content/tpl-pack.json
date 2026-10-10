@@ -1,48 +1,15 @@
 {
   "id": "tpl-pack",
-  "title": "Packaging Mockup Generator for Scene Previews | AIVideosUGC",
-  "description": "Preview your box, pouch or label design in a styled shelf, cafe or kitchen scene before ordering printed stock. Packaging mockups from one photo.",
-  "h1": "Packaging Mockup Generator for a Scene Preview",
+  "title": "Packaging Mockup Generator for Product Scenes | AIVideosUGC",
+  "description": "Place your pouch, box or bottle artwork on a shelf, counter or cafe table before you order printed stock. Square packaging mockups from one photo.",
+  "h1": "Packaging Mockup Generator for Shelf and Scene Previews",
   "eyebrow": "Product photo template",
-  "lead": "Ordering printed stock just to see how your packaging looks on a shelf is expensive and slow. Upload your box, pouch or label artwork and preview it in a styled scene before you approve a print run.",
+  "lead": "See your pouch, box or bottle artwork in a shelf or cafe scene before you pay for a print run. Upload one photo of the package and get a square preview.",
   "secondary_keywords": [
-    "box mockup from design file",
+    "box mockup from design photo",
     "pouch packaging mockup",
-    "label mockup for food products",
-    "tea packaging design preview"
-  ],
-  "intro": [
-    "The example places a kraft coffee pouch on a grocery shelf beside simple pantry staples, with its blank front panel facing forward.",
-    "It's handy in the gap between finished artwork and finished stock. Show the new packaging on your Shopify product page or in a coming-soon post while the boxes are still at the printer, or compare two label designs in one scene before you commit to one. For food and drink products, check that the printed pack still matches what you will ship."
-  ],
-  "tip": "Upload a flat, high-resolution image of your design or label, and keep tiny text like ingredient lists off the front, since fine print may not come out as designed.",
-  "steps": [
-    {
-      "t": "Upload Your Packaging Photo",
-      "d": "Show the whole pouch, box or sleeve, with sealed edge and front panel visible. The scene keeps that shape."
-    },
-    {
-      "t": "Pick a Scene",
-      "d": "Choose a shelf, cafe or gift setting and name the surface, props and light. You get a square preview."
-    },
-    {
-      "t": "Download and Review",
-      "d": "Download the mockup, compare silhouette and colors with your design, then add final wording. Your printer's proof signs off production."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Coming-soon posts",
-      "d": "Share the new pack on Instagram or in an email a few weeks before stock arrives."
-    },
-    {
-      "t": "Label refresh",
-      "d": "Preview a redesigned label for coffee, hot sauce, or tea on a kitchen counter before you reorder packaging."
-    },
-    {
-      "t": "Gift box options",
-      "d": "Place a holiday sleeve or gift box in a cozy table scene to help you decide which version to print."
-    }
+    "product label scene preview",
+    "coffee packaging mockup"
   ],
   "maker": {
     "options": [
@@ -56,200 +23,62 @@
       ],
       [
         "Upload",
-        "Your design or label"
+        "Your package photo"
       ]
     ],
     "cta": "Preview my packaging"
   },
+  "steps": [
+    {
+      "t": "Upload your package photo",
+      "d": "Add one clear photo of the pouch, box or bottle you will ship. The shape in your photo stays the shape in the preview."
+    },
+    {
+      "t": "Name the scene",
+      "d": "Pick a shelf, counter or cafe setting. The credit cost shows before the square preview is made."
+    },
+    {
+      "t": "Download and review",
+      "d": "Save the square file with no watermark, then compare it with your artwork and your printer proof."
+    }
+  ],
+  "steps_h2": "How to make a packaging mockup in 3 steps",
+  "steps_lead": "One package photo becomes a styled scene preview - no studio, no print order, no wait.",
   "faq": [
     {
-      "q": "Can a packaging mockup verify my printed colors?",
-      "a": "No. It previews composition and presentation, but a printer proof or press sample is the authority for color, ink, substrate, and small legal copy. Compare the approved proof with the generated scene before ordering."
+      "q": "Can I make a packaging mockup from one photo?",
+      "a": "Yes. A clear photo of the pouch, box or bottle can become a square scene preview. The credit cost appears before the job runs."
     },
     {
-      "q": "Will the small text on my label come out right?",
-      "a": "Dense text such as ingredient panels or nutrition facts can blur or change in the result. Keep the front of your artwork simple, and show fine print in a separate photo of the real pack."
+      "q": "Which package shapes work for a mockup?",
+      "a": "Pouches, cartons, bottles, tins, jars and bags work when the package shape is visible in the source photo."
     },
     {
-      "q": "What packaging shapes can I use?",
-      "a": "Boxes, pouches, tins, jars, bottles, and paper bags are all common choices. Name the shape when you describe the scene so your design is placed on the right form."
+      "q": "Can a mockup verify my printed colors?",
+      "a": "No. It shows presentation and composition. A printer proof or press sample remains the authority for color, ink and small legal text."
     },
     {
-      "q": "Can I use a packaging mockup as my product listing photo?",
-      "a": "Use the mockup to show a setting or concept. Use a clear photo of the real package for ingredients, measurements, or other details a buyer must verify."
+      "q": "Will small label text come out clearly?",
+      "a": "Dense ingredient panels and other fine print can blur or change. Use a photo of the real pack for exact wording."
     },
     {
-      "q": "Can I preview the design before printing?",
-      "a": "The mockup shows how the artwork sits on the package; confirm colors and layout against your print file before ordering."
+      "q": "Can I compare two packaging variants?",
+      "a": "Yes. Create both variants in the same scene and compare the front panel, outline and shelf setting side by side."
     },
     {
-      "q": "Which package types can be mocked up?",
-      "a": "Pouches, boxes, bottles, and bags with a clear reference photo work; upload the packaging shape you actually use."
+      "q": "Can I use the mockup as my listing photo?",
+      "a": "Use it for a setting or launch concept. Keep a clear photo of the real package for measurements and details buyers must verify."
     },
     {
-      "q": "What does a packaging mockup cost?",
-      "a": "Each generated mockup costs 24 credits."
+      "q": "What does a packaging preview cost?",
+      "a": "Each square packaging mockup costs 24 credits. The total appears before the job runs, and failed jobs return their credits."
     },
     {
-      "q": "Can I start from a flat dieline or label file?",
-      "a": "Use a flat dieline to plan artwork, but a clear photo of the real package shape gives the mockup a better reference for folds, seams, closures, and proportions. Keep the dieline and printer proof for measurements and legal copy; use the scene preview to judge presentation."
-    },
-    {
-      "q": "Can I compare two packaging variants in one scene?",
-      "a": "Yes. Generate each approved variant with the same camera height, surface, props, and light direction, then compare the front panel and silhouette side by side."
-    },
-    {
-      "q": "Should I use a mockup as a print proof?",
-      "a": "No. Keep the dieline, printer proof, barcode, ingredients, allergens, dates, and warnings as the production source; use the scene preview to judge shelf presence and launch presentation."
-    },
-    {
-      "q": "Can an unboxing scene replace my final listing photo?",
-      "a": "No. Use a real photo of the shipped package for listing details and compliance. Use the unboxing mockup for a launch post, retailer deck, or concept while stock is at the printer."
-    },
-    {
-      "q": "Can I use a mockup instead of a staged packaging shoot?",
-      "a": "Yes for presentation and marketing use: the styled scene is generated from your package photo, so you can show the design on a shelf without booking a studio or props. For exact printed color and small text, still rely on your printer's proof."
-    },
-    {
-      "q": "Can I share these previews with clients?",
-      "a": "Yes. Downloaded mockups have no watermark and can be sent to clients or used in pitch decks to agree a setting or variant before print production."
+      "q": "Can I share the preview with clients or retailers?",
+      "a": "Yes. Downloaded files have no watermark and can support a retailer deck or pitch before print production."
     }
   ],
-  "overview": [
-    {
-      "h2": "See the Package Before the Shipment Arrives",
-      "p": "A packaging mockup helps you judge shelf presence, camera angle, and surrounding mood while artwork is still being revised. It can support a launch post, a retailer conversation, or an internal design choice before cartons and pouches come off the press."
-    },
-    {
-      "h2": "Use the Preview to Choose a Direction",
-      "p": "Treat the result as a visual concept, not a print proof. Keep the approved flat artwork and your production file as the authority for ingredients, warnings, dates, barcodes, and every small character."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare Artwork for a Useful Mockup",
-    "items": [
-      {
-        "t": "Start from the front panel",
-        "d": "Upload a flat, high-resolution design or a clear printed sample with the brand mark facing the camera."
-      },
-      {
-        "t": "Name the package shape",
-        "d": "Say whether it is a carton, stand-up pouch, bottle, sleeve, tin, or gift box, and mention its closure."
-      },
-      {
-        "t": "Keep fine print out of the brief",
-        "d": "Describe the broad front design while leaving ingredient lists, dates, and tiny legal lines to the approved artwork."
-      },
-      {
-        "t": "Choose a credible surface",
-        "d": "Ask for a shelf, kitchen counter, cafe bar, or gift table that matches how the product will be presented."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What a Packaging Preview Helps You Decide",
-    "items": [
-      {
-        "t": "Shelf presence",
-        "d": "Check whether the color block and silhouette stand out against the intended retail background."
-      },
-      {
-        "t": "Scene direction",
-        "d": "Compare a morning kitchen, cafe counter, or gift table before planning launch photography."
-      },
-      {
-        "t": "Package hierarchy",
-        "d": "See how a carton, pouch, bottle, or sleeve sits beside other items in the line."
-      },
-      {
-        "t": "A shareable concept",
-        "d": "Use a downloaded square preview for a design discussion or coming-soon post after reviewing it."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Packaging Scenes to Explore",
-    "items": [
-      {
-        "t": "Tea carton and pouch",
-        "d": "A tall carton and matching pouch on a wooden shelf beside a cup and loose leaves in morning light."
-      },
-      {
-        "t": "Hot sauce label refresh",
-        "d": "A glass bottle on a kitchen counter with peppers nearby, leaving the front label as the hero."
-      },
-      {
-        "t": "Coffee launch",
-        "d": "A printed bag beside a grinder and ceramic cup on a cafe bar with warm side light."
-      },
-      {
-        "t": "Holiday gift sleeve",
-        "d": "A gift box with a paper sleeve on a table with ribbon and soft window light, with no made-up offer text."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Turn the Concept Into an Approved Asset",
-    "items": [
-      {
-        "t": "Compare against the artwork",
-        "d": "Check logo shape, panel order, colors, and package proportions against the source file."
-      },
-      {
-        "t": "Protect exact wording",
-        "d": "Use the approved production file for ingredients, allergens, dates, barcodes, and required marks."
-      },
-      {
-        "t": "Label it as a preview",
-        "d": "Keep mockup images separate from final pack photography until the printed item has been inspected."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When a Mockup Is the Right Tool",
-    "good": [
-      "New packaging still at the design or printer stage",
-      "Food, drink, beauty, and household packs with a clear front panel",
-      "Comparing two approved label directions",
-      "Launch, retailer, and coming-soon visual planning"
-    ],
-    "not_ideal": [
-      "A legal or ingredient proof that depends on tiny lettering",
-      "A package whose back panel must be verified in full",
-      "A final color calibration or package layout proof for the printer"
-    ]
-  },
-  "examples": {
-    "h2": "More packaging ad scenes",
-    "lead": "Explore different package types and settings before you prepare artwork for print.",
-    "groups": [
-      {
-        "label": "Unboxing and product use",
-        "items": [
-          {
-            "ref": "f:q8-tpl-pack-example-01",
-            "title": "Kitchen Review: Vitamin Gummies",
-            "kind": "photo",
-            "product": "vitamin gummies"
-          },
-          {
-            "ref": "f:q8-tpl-pack-example-02",
-            "title": "Unboxing: Skincare Travel Kit",
-            "kind": "photo",
-            "product": "skincare travel kit"
-          },
-          {
-            "ref": "f:q8-tpl-pack-example-03",
-            "title": "Protein Snack Reaction: Bar Pack",
-            "kind": "photo",
-            "product": "protein bar pack"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A packaging mockup gives a seller a believable scene while the carton or pouch is still at the printer. Upload the package you will actually ship, describe the shelf or unboxing moment, and use the square result to plan a [Shopify product photo](/platforms/shopify-product-photos), a [food and drink launch](/industries/food-drinks), or a [product launch campaign](/occasions/product-launch). Review the silhouette, front panel, camera angle, and neighboring props together; keep the approved artwork as the authority for every exact word, ingredient, warning, date, and barcode. If two package directions are under review, keep the camera height and prop count consistent so the decision is about the package, not a new backdrop.",
     "strip": [
       "n:gen2:tpl-pack-g1",
       "n:gen2:tpl-pack-g2",
@@ -258,233 +87,23 @@
       "n:guide:c4-occ-holidays-post-gift",
       "n:guide:tpl-pack-c3-m3-shelf-boxes"
     ],
+    "picker": {
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": ""
+    },
     "steps": {
       "source": "n:guide:tpl-pack-c3-m2-source",
       "result": "n:f15-r10-tpl-pack-steps-open-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as a plain kraft coffee pouch and preserve its pouch shape, kraft color, front panel and sealed edge. Adult hands open the resealable top and hold the pouch toward the camera on a cafe counter. Warm window light, realistic UGC look, medium close-up with one gentle push-in. Sound: zipper pull and paper rustle, no music. End with the opened coffee pouch held still.",
+      "prompt": "Open the uploaded package on a cafe counter with the front panel visible.",
       "sourceTitle": "Your product"
     },
-    "picker": {
-      "title": "Choose a packaging ad scene",
-      "lead": "Choose a packaging scene that answers a practical selling question: how the pack looks on a shelf, how it feels to open, or how it sits in a gift set. Pick one clear action and keep the package front readable so the result can guide a listing or launch post. Use the card prompts as starting points, then replace the example product with the package in your upload. Avoid invented logos, discount text, or claims inside the generated scene; add those exact details later in your design tool. A preview can support a retailer deck, a launch email, or a draft listing while the printer proof remains separate. Keep the approved artwork beside the preview when you brief a photographer or retailer, and treat the printer proof as the authority for every exact detail.",
-      "chips": [
-        {
-          "id": "unbox",
-          "label": "Unboxing"
-        },
-        {
-          "id": "review",
-          "label": "Review"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        },
-        {
-          "id": "reveal",
-          "label": "Product Reveal"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "f:q8-tpl-pack-pick-01",
-          "label": "ASMR Unboxing: Vitamin Gummies",
-          "chips": [
-            "unbox",
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain supplement pouch carton and lift the unbranded bottle into the light. Bright kitchen daylight, tactile UGC look. Top-down handheld close-up with one slow push-in. Sound: seal peel and carton fold, no music. End with pouch and bottle together in hand.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-pack-pick-02",
-          "label": "Unboxing: Skincare Travel Kit",
-          "chips": [
-            "unbox",
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a small skincare travel kit at a bathroom counter and lifts one tube from the tissue. Soft natural window light, casual UGC look. Overhead handheld shot with one gentle tilt toward the open kit. Sound: tissue rustle and cap tap, no music. End with all travel items visible.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:f15-r10-tpl-pack-hero-carton-r1",
-          "label": "Carton and Jar, Cinematic Packaging Hero",
-          "chips": [
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place a plain folding carton and an unbranded amber jar together on a dark slate plinth as a cinematic packaging hero. A hand adjusts the carton edge, then holds still. Controlled spotlight, low counter-height camera, realistic product-ad look, no text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:f15-r10-tpl-pack-candle-gift-r1",
-          "label": "Candle Box, Gift Reveal",
-          "chips": [
-            "unbox",
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands reveal a plain unbranded candle jar from a simple kraft gift box on a warm dining table. Keep the blank package front visible, with tissue and the open lid framing the product. Top-down handheld close-up with one gentle push-in. Sound: tissue rustle and box tap, no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-pack-pick-05",
-          "label": "Pet Parent Review: Treat Pouch",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult pet owner holds a plain treat pouch at chest height, looks into camera and says, “Here’s what I keep by the leash for our walk.” Soft daylight, natural UGC look. Eye-level chest-up handheld shot with slight sway. Sound: voice and a light leash jingle, no music. End with the pouch beside the owner’s face.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:f15-r10-tpl-pack-asmr-soap-r1",
-          "label": "Soap Box, ASMR Unboxing",
-          "chips": [
-            "unbox",
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain recycled box and lift a small unbranded soap box from tissue on a bathroom counter. Overhead handheld close-up with one slow push-in. Sound: tissue peel and box flap, no music. End with the blank package front facing camera.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-pack-pick-07",
-          "label": "Gym Bag Haul: Training Bands",
-          "chips": [
-            "demo",
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult pulls a set of plain resistance bands from a gym pouch and stretches one gently beside a packed gym bag. Bright locker-room daylight, energetic UGC look. Handheld medium close-up with one short push-in. Sound: fabric rustle and band tension, no music. End with the set arranged in the creator’s hand.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:q8-tpl-pack-pick-08",
-          "label": "GRWM: Baby Care Essentials",
-          "chips": [
-            "review",
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult parent holds a plain baby-care pouch toward camera beside a nursery bag and says, “I’m packing the small things we reach for on an outing.” Soft daylight, calm UGC look. Chest-up front-facing handheld shot with a slight sway. Sound: voice and zipper movement, no music. End with the pouch beside the open bag.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:f15-r10-tpl-pack-cinematic-hero-r1",
-          "label": "Coffee Pouch, Cinematic Cafe Hero",
-          "chips": [
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Set the plain coffee pouch upright on a dark cafe counter while an adult hand places it into a narrow warm beam of side light. Coffee grinder and ceramic cup stay soft in the background. Low counter-height cinematic hero, one slow reveal, no text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:f15-r10-tpl-pack-asmr-unbox-r1",
-          "label": "Coffee Pouch, ASMR Seal Opening",
-          "chips": [
-            "unbox",
-            "reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open the resealable top of a plain coffee pouch from a simple cardboard mailer on a cafe counter. Close handheld shot with one slow push-in. Sound: seal peel and paper rustle, no music. End with the pouch and open mailer together.",
-          "kind": "video"
-        }
-      ],
-      "button": "Start with your product"
-    },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:tpl-pack-c3-m4-retail-shelf",
-        "h": "Show the pouch in a retail shelf setting",
-        "d": "A shelf or product-page scene shows how the package color and silhouette sit beside similar goods. Use it to brief a photographer, plan a [listing photo](/ai-image-generation/ecommerce-main-image), or decide which front panel should lead a coming-soon post."
-      },
-      {
-        "frame": "listing",
-        "ref": "n:guide:tpl-pack-c3-m4-unboxing",
-        "h": "Show the package during unboxing",
-        "d": "An [unboxing video](/ai-video-generation/unboxing-experience) makes the opening order visible before stock arrives. Show the carton, tissue, seal, and pack in one frame, then use the result for a launch email or retailer conversation while the production file remains the source of exact details."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:c3-r3-tpl-pack-m5-0",
-        "bad": "n:guide:c3-tpl-pack-m5-crop",
-        "good_label": "Package front and sealed edge visible",
-        "bad_label": "Sealed edge cut by frame"
-      },
-      {
-        "good": "n:granola-m5-clean",
-        "bad": "n:f15-r2-tpl-pack-granola-bad-r1",
-        "good_label": "Granola jar and berries stay clear",
-        "bad_label": "Granola jar stays in frame but is out of focus"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:c3-r3-tpl-pack-lineup",
-        "frame": "1:1",
-        "label": "Pouch Package Lineup"
-      },
-      {
-        "ref": "n:f15-tpl-pack-granola-output-r1",
-        "frame": "1:1",
-        "label": "Granola Jar Breakfast Pour"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:k9-tpl-pack-after-coffee-pouch",
-      "zones": [
-        "Product name",
-        "Required label text"
-      ],
-      "items": [
-        "Add exact wording and product details in your design editor after download.",
-        "Place required ingredients and cautions outside the generated scene."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Preview packaging in three clear steps"
-      },
-      "m3": {
-        "h2": "Choose a setting for an AI packaging preview"
-      },
-      "m4": {
-        "h2": "Use packaging previews in a listing or product page"
-      },
-      "m5": {
-        "h2": "Start with a clear package photo"
-      },
-      "m6": {
-        "h2": "Square packaging preview images for product pages"
-      },
-      "m7": {
-        "h2": "Add final package text in your editor"
-      },
-      "faq": {
-        "h2": "Questions about AI packaging previews"
-      },
-      "templates": {
-        "h2": "More packaging preview templates",
-        "lead": "Choose another package scene for your product design."
-      }
-    }
-  },
-  "benefits_h2": "Why use an AI packaging mockup generator?",
-  "benefits": [
-    {
-      "t": "See it in context before printing",
-      "d": "Your artwork appears on a shelf, cafe counter or kitchen table, so you can judge how the package reads at the point of sale before paying for a print run."
-    },
-    {
-      "t": "No photo studio for product shots",
-      "d": "Styled mockups are generated from one photo of your pouch, box or sleeve, skipping the backdrops, props and photographer a packaged-scene shoot requires."
-    },
-    {
-      "t": "Compare settings or variants",
-      "d": "Run the same design in several scenes, or put two variants in one consistent setting, to pick a direction with your team or a client."
-    },
-    {
-      "t": "Square files ready to share",
-      "d": "Downloaded mockups have no AIVideosUGC watermark and can be used in presentations, listings and campaigns, subject to a final print proof."
-    }
-  ],
-  "steps_h2": "How to make a packaging mockup in 3 simple steps",
-  "steps_lead": "Three steps turn one package photo into a styled scene preview - no studio, no print order, no waiting."
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
+  }
 }
