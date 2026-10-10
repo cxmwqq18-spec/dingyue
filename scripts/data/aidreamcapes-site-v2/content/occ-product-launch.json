@@ -1,178 +1,42 @@
 {
   "id": "occ-product-launch",
-  "title": "Product Launch Video and Photos for New Drops | AIVideosUGC",
-  "description": "Make launch ads from a sample photo before production finishes: get teaser, reveal and product-page assets without booking a shoot, cost shown first.",
-  "h1": "Product Launch Video and Photos, Ready Before Launch Day",
+  "title": "New Product Launch Video and Photos | AIVideosUGC",
+  "description": "Build anticipation for a new product with launch teasers, reveal clips and listing photos made from one product photo. No studio booking, no reshoot.",
+  "h1": "Create Product Launch Content Before Launch Day",
   "eyebrow": "New product launch",
-  "lead": "Launch day is near but the product is still a sample and booking a shoot now is risky. Upload the sample photo and leave with teaser, reveal and product-page assets ready before the drop.",
-  "card": "Teasers, a reveal clip and product page photos from your first sample shot.",
+  "lead": "Build anticipation for your reveal from one product photo. Make a teaser, a reveal clip and listing images before the launch date, without booking a shoot.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
     "launch teaser video",
     "new product announcement photos"
   ],
-  "intro": [
-    "A launch can call for a teaser, a reveal, product-page photos, and a follow-up post. List the placements and visual stages before choosing which assets to prepare.",
-    "If you have a photo of a sample, use it to make launch clips and product photos. If you do not have a product photo yet, you can start a video with a written description; every product photo requires an uploaded photo. Add the launch date, price, and product name after download in Canva or CapCut."
-  ],
-  "ideas": [
-    {
-      "t": "A teaser that hides the full product",
-      "d": "A 6-second clip of a texture, a silhouette or a box lid lifting just enough to make people curious."
-    },
-    {
-      "t": "Reveal clip for launch day",
-      "d": "The product turns into view on a clean background, in 9:16 for Stories, Reels and TikTok."
-    },
-    {
-      "t": "Packaging preview",
-      "d": "A square photo showing the sample package in a room or delivery setting."
-    },
-    {
-      "t": "First lifestyle set",
-      "d": "Photos of the product where people will use it, for the product page, the launch email and your first feed posts."
-    }
-  ],
-  "plan": [
-    {
-      "t": "Four to six weeks before",
-      "d": "Pick the photo you'll work from, make the white-background and lifestyle images for the product page, and decide which channels need video or square stills."
-    },
-    {
-      "t": "Two to three weeks before",
-      "d": "Make the teaser and reveal clips, try a couple of different openings, and add the launch date in your editing app."
-    },
-    {
-      "t": "Launch week",
-      "d": "Do a last check of every file, load your ads and posts, and keep a spare version ready in case one isn't getting attention."
-    }
-  ],
   "faq": [
     {
-      "q": "Can I make launch content before my product is finished?",
-      "a": "Start with a clear photo of the product, sample, or prototype. Text alone cannot create a product photo here."
+      "q": "Can I make launch content before production is finished?",
+      "a": "Start from a clear photo of the current sample or prototype. The teaser, reveal and listing images all use that one photo, so assets exist while production finishes."
     },
     {
-      "q": "Can I change launch details after making a video?",
-      "a": "Yes. Add the date, price, or code as editable text after download so you can update confirmed details without regenerating the scene."
+      "q": "Can I change the launch date after making the video?",
+      "a": "Yes. Add the date, price and code as editable text after download, so confirmed details can change without regenerating the scene."
     },
     {
-      "q": "Will anyone see my unreleased product before I announce it?",
-      "a": "No. Your uploads and the results stay in your own account and are never made public, so the product stays under wraps until you share it."
+      "q": "Will anyone see my unreleased product?",
+      "a": "No. Your uploads and results stay private in your own account until you download and share them, so the product stays under wraps."
     },
     {
       "q": "What video size should a product launch use?",
-      "a": "Use 9:16 for Stories, Reels, and TikTok; 1:1 for feeds; and 16:9 for a wide product page or YouTube placement. Make each size as its own job."
+      "a": "Use 9:16 for Stories, Reels and TikTok, 1:1 for feeds, and 16:9 for a wide page or YouTube placement. Each size is its own generation."
     },
     {
-      "q": "Do I need a studio or a creator for launch content?",
-      "a": "No. The teaser, reveal and product-page assets are generated from the sample photo you upload, so nothing has to be filmed while the launch date moves."
+      "q": "How long can a launch video be?",
+      "a": "Clips run 6, 10, 15 or 30 seconds. A 6-second clip works for a quick reveal; use 15 or 30 seconds when the launch needs a fuller product story."
     },
     {
       "q": "Can I run the finished clips as launch ads?",
-      "a": "Yes. Downloaded clips and images are yours to use in paid launch posts and carry no AIVideosUGC watermark, subject to each platform's current ad review."
+      "a": "Yes. Downloads carry no AIVideosUGC watermark and are yours to use in paid launch posts, subject to each platform's ad review."
     }
   ],
-  "overview": [
-    {
-      "h2": "Give every launch asset one job",
-      "d": "A teaser creates curiosity by withholding part of the product. A reveal identifies the item and shows its shape. A product-page image answers a buying question. Plan those jobs separately so the launch set does not repeat one pretty scene six times. If your sample changes before release, regenerate the visual from the newest photo and compare every result with the item customers will actually receive."
-    },
-    {
-      "h2": "Prepare the visual before the wording is final",
-      "d": "AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15, and 30 second jobs; each credit cost appears before generation. Make the scene while the launch wording is still changing, then add the exact name, price, date, code, and availability in Canva, CapCut, or your publishing tool. Uploaded source photos and generated drafts remain inside your account until you choose to download and share them."
-    }
-  ],
-  "input_guide": {
-    "h2": "Start with the sample customers will recognize",
-    "items": [
-      {
-        "t": "Photograph the current version",
-        "d": "Use a clear view of the prototype or sample, including the parts that are likely to remain in the shipped product."
-      },
-      {
-        "t": "Choose what stays hidden",
-        "d": "For a teaser, name the material, edge, or silhouette you want to hint at; do not rely on generated text to hide the product cleanly."
-      },
-      {
-        "t": "Describe the reveal action",
-        "d": "Say whether the item turns, opens, slides from a box, or settles into its use setting. One reveal action is easier to review."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A launch set that moves from hint to proof",
-    "items": [
-      {
-        "t": "Teaser",
-        "d": "A partial view or material detail that earns a second look without making a claim about demand."
-      },
-      {
-        "t": "Reveal",
-        "d": "A complete product view in a video crop or square still chosen for the channel where you will announce it."
-      },
-      {
-        "t": "Store image",
-        "d": "A clean still or lifestyle frame that lets a shopper inspect the item after the announcement."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Launch scenes for one new product",
-    "items": [
-      {
-        "t": "Texture teaser",
-        "d": "A close view of a matte bottle shoulder catches a narrow beam of light while the full shape stays just outside the frame."
-      },
-      {
-        "t": "Box reveal",
-        "d": "A plain shipping box opens on a table and the new product is lifted into the center against a calm background."
-      },
-      {
-        "t": "First use",
-        "d": "A hand places the product in the room where it belongs, showing one real use without a testimonial or invented result."
-      },
-      {
-        "t": "Packaging preview",
-        "d": "The packed product rests beside tissue paper and an insert card, with the actual contents visible for review."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Lock the launch details in your editor",
-    "items": [
-      {
-        "t": "Add the announcement details",
-        "d": "Type the product name, date, price, and availability yourself, then check every character against the launch plan."
-      },
-      {
-        "t": "Review the physical match",
-        "d": "Compare color, parts, packaging, and proportions with the sample that will ship. Regenerate a scene that changes a meaningful detail."
-      },
-      {
-        "t": "Make the channel versions",
-        "d": "For video, use 9:16 for phone-first placements, 1:1 for square feeds, or 16:9 for a wide page when the composition benefits from it."
-      },
-      {
-        "t": "Keep the draft private",
-        "d": "Download only when the launch team is ready to share; the source and generated work stay in your account before that point."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A good fit for staged launches",
-    "good": [
-      "Products with a photographed prototype or sample",
-      "Launches that need distinct teaser, reveal, and listing scenes",
-      "Teams whose launch dates and offer details may change during preparation",
-      "Sellers willing to inspect every generated detail against the final item"
-    ],
-    "not_ideal": [
-      "Products whose final form is still unknown",
-      "Announcements that depend on AI-generated prices, dates, or technical labels"
-    ]
-  },
   "examples": {
     "h2": "More product launch examples",
     "lead": "Teasers, packaging previews and first-use shots for launch week.",
@@ -202,24 +66,23 @@
       }
     ]
   },
-  "templates_lead": "Choose a teaser, reveal, or product-page scene for the launch stage.",
-  "cta_lead": "Plan the teaser or reveal first, then add launch details after download.",
+  "cta_lead": "Create the teaser or reveal first, then add the launch date after download.",
   "steps": [
     {
-      "t": "Upload Your Product Sample Photo",
-      "d": "Upload a clear photo of the current sample. Customers recognize the same item at launch."
+      "t": "Upload Your Product Photo",
+      "d": "Use a clear photo of the final item or sample. Every launch asset starts from that one shot."
     },
     {
-      "t": "Pick Teaser, Reveal or Product Page",
-      "d": "Pick a teaser, reveal or product-page scene. Each new job builds the next launch asset."
+      "t": "Pick Teaser, Reveal or Listing",
+      "d": "Choose a first look, reveal or first-use scene. Each job makes the next launch asset."
     },
     {
       "t": "Download and Add Launch Details",
-      "d": "Download the file, add name, date and price in Canva. It is yours to run, no watermark."
+      "d": "Type the name, date and price in your editor. The file is yours to run, no watermark."
     }
   ],
   "visual": {
-    "overview": "Plan a product launch from a clear sample photo, with separate scenes for packaging, first use, and the store listing.",
+    "overview": "A teaser, a reveal and listing photos all come from one sample photo, so the launch set is ready while production finishes.",
     "strip": [
       "n:guide:q20-occ-launch-strip-01",
       "n:gen2:spokesperson-videos-g4",
@@ -232,7 +95,7 @@
       "source": "n:guide:occ-product-launch-c3-m2-source",
       "result": "n:guide:q20-occ-product-launch-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the only product reference. Preserve its matte turquoise bottle, cap, proportions and finish. In a bright launch-day kitchen, an adult lifts the bottle for one sip and holds it beside their face. Natural phone-shot UGC in soft window light. Chest-up framing with one gentle push-in; end with the bottle clear beside the face. Sound: a quiet sip and room tone; no music or added text.",
+      "prompt": "Share the launch moment in one sentence.",
       "options": [
         [
           "Template",
@@ -249,266 +112,46 @@
       ]
     },
     "picker": {
-      "title": "Choose a product launch moment",
-      "lead": "Use a first look for the reveal, or a hands-on first use to show how the new product enters a real routine.",
-      "chips": [
-        {
-          "id": "first-look",
-          "label": "First Look"
-        },
-        {
-          "id": "hands-on-first-use",
-          "label": "Hands-on First Use"
-        },
-        {
-          "id": "reveal-day",
-          "label": "Reveal Day"
-        },
-        {
-          "id": "launch-demo",
-          "label": "Launch Demo"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q20-occ-product-launch-card-01",
-          "label": "First Look: Serum dropper shown",
-          "chips": [
-            "first-look"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the serum beside her cheek and points once to its dropper. An adult creator looks into the camera and says, “Notice how the dropper gives a neat, controlled dose.”. Natural creator-shot UGC with realistic skin under diffused bathroom window light. Close framing with one gentle push-in. End with the dropper and bottle beside her face, label toward camera. Sound: clear speech and a soft dropper click; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-product-launch-teaser-lamp",
-          "label": "First Look: Desk lamp teaser silhouette",
-          "chips": [
-            "first-look"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. In a bright studio, an adult hand lifts a light fabric cover just enough to reveal the outline of the plain curved desk lamp for a launch teaser. Natural creator-shot UGC with soft window light. Close framing with calm space above for a later launch date layer. Sound: fabric movement and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-product-launch-rework-card-14",
-          "label": "First Use: Berry tint swatch",
-          "chips": [
-            "hands-on-first-use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, adult hands draw one neat berry tint swatch on the back of a hand, then hold the tube beside the swatch. Natural creator-shot UGC with realistic skin under diffused vanity window light. Close framing with one gentle push-in. End with the plain tint tube and finished swatch clearly visible; no face. Sound: cap click and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-product-launch-card-04",
-          "label": "First Use: Cable organizer demo",
-          "chips": [
-            "hands-on-first-use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright work desk, an adult hand pulls three loose charging cables into a silicone organizer in one motion. Natural creator-shot UGC with realistic skin under broad desk-side window light. Close framing with one gentle push-in. End with three cables seated in the organizer, work desk clear. Sound: cable taps and a silicone snap; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-product-launch-card-13",
-          "label": "Reveal Day: Protein bar opened",
-          "chips": [
-            "reveal-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult Black creator opens the plain protein bar wrapper and holds the bar cross-section toward the camera. Natural creator-shot UGC with soft window light and realistic skin. Close framing with one gentle push-in; end with the texture clearly visible. Sound: wrapper crinkle and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-product-launch-card-06",
-          "label": "Reveal Day: Running jacket pre-run fit",
-          "chips": [
-            "reveal-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult runner zips the jacket once and faces the phone camera. An adult creator looks into the camera and says, “Here is the fit before the morning run.”. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the zipped front facing camera before the run. Sound: zipper slide and clear speech; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-product-launch-card-07",
-          "label": "Launch Demo: Pet brush lifts hair",
-          "chips": [
-            "launch-demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a calm dog, an adult owner makes one slow brush stroke and lifts it to show loose fur. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with loose fur visible on the brush beside the calm dog. Sound: brush through fur and quiet room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-product-launch-card-08",
-          "label": "Launch Demo: Resistance bands revealed",
-          "chips": [
-            "launch-demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright workout corner, adult hands open a plain pouch and lay three bands in a fan on a yoga mat. Natural creator-shot UGC with realistic skin under even overhead gym light. Close framing with one gentle push-in. End with the three bands fanned across the yoga mat. Sound: pouch rustle and elastic movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-launch-media-hero",
-          "label": "First Look: Skincare set from box",
-          "chips": [
-            "first-look"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a plain three-piece skincare set from an open gift box on a bright table, then hold the set still for the first look. Natural creator-shot UGC with soft window light and realistic skin. Close framing with one gentle push-in; end with all three pieces visible. Sound: tissue rustle and box hinge; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10b-occ-product-launch-card-09-hands-v2",
-          "label": "First Use: Handheld blender smoothie",
-          "chips": [
-            "hands-on-first-use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, adult hands blend a berry smoothie with the compact handheld blender and hold the tool beside the finished glass; keep the scene hands-only with no face or identifiable person. Natural creator-shot UGC with soft morning window light. Medium close framing with one gentle push-in; end with the blender and glass side by side. Sound: blender hum and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-product-launch-rework-card-15",
-          "label": "Reveal Day: Sunglasses on sidewalk",
-          "chips": [
-            "reveal-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny city sidewalk, an adult Black man wears plain matte black sunglasses and turns once toward the phone camera. Natural creator-shot UGC with realistic skin under bright daylight. Close framing with one gentle push-in. End with the sunglasses facing camera and the street softly behind him. Sound: light city room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-product-launch-card-10-r2",
-          "label": "Launch Demo: Protein pouch on shelf",
-          "chips": [
-            "launch-demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright grocery shelf, an adult hand places the plain protein pouch upright, then pulls it forward so the full pack is easy to recognize. Natural creator-shot UGC with soft aisle light. Close framing with one gentle push-in; end with the pouch facing camera. Sound: shelf tap and paper rustle; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-product-launch-unboxing-lamp",
-          "label": "First Look: Desk lamp unboxed",
-          "chips": [
-            "first-look"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a bright work desk, adult hands open a plain kraft box and lift out the curved desk lamp for the launch unboxing. Natural creator-shot UGC with soft morning light. Close framing with the lamp and box fully visible and space above for a later launch detail. Sound: tissue rustle and box movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-product-launch-first-use-steamer",
-          "label": "First Use: Garment steamer on shirt",
-          "chips": [
-            "hands-on-first-use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. In a bright entry area, an adult hand glides the plain white garment steamer once over a blue shirt for a first-use demonstration. Natural creator-shot UGC with soft daylight. Close framing with the steamer and fabric clear and side space for a later launch layer. Sound: quiet steam and fabric movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-product-launch-arrival-tote",
-          "label": "Reveal Day: Canvas tote arrives",
-          "chips": [
-            "reveal-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a sunny apartment entryway, adult hands open a plain parcel and reveal the natural canvas tote on launch day. Natural creator-shot UGC with bright daylight. Medium close framing with the tote and parcel fully visible and a blank wall area for a later date layer. Sound: cardboard and paper rustle; no music or added text.",
-          "kind": "photo"
-        }
-      ],
+      "title": "Choose a product launch scene",
+      "lead": "Show the product clearly in a teaser or reveal scene, then add the launch date after download.",
+      "chips": [],
+      "cards": [],
       "button": "Make a product launch photo"
     },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q20-occ-launch-uses-01",
-        "h": "Show the snack pouch at the shelf",
-        "d": "An adult hand picks up a plain kraft snack pouch from a grocery shelf, keeping the package easy to recognize beside nearby goods."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:k9-occ-product-launch-unboxing-pouch",
-        "h": "Add a launch image to a store page",
-        "d": "Place a clear product view near the listing details shoppers will use to decide."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:c3-r3-occ-product-launch-m5-0",
-        "bad": "n:guide:occ-product-launch-c3-bad-crop",
-        "good_label": "Tote body and handles fit the frame",
-        "bad_label": "Tote handle and lower edge are clipped"
-      },
-      {
-        "good": "n:guide:c3-r3-occ-product-launch-m5-1",
-        "bad": "n:guide:occ-product-launch-c3-bad-blur",
-        "good_label": "Grinder handle and beans stay clear",
-        "bad_label": "Grinder details turn soft"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q20-occ-product-launch-output-01",
-        "frame": "1:1",
-        "label": "Canvas tote packed for a commute"
-      },
-      {
-        "ref": "n:guide:q20-occ-product-launch-output-02",
-        "frame": "1:1",
-        "label": "Compact coffee grinder in use"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:occ-product-launch-c3-m7-release",
-      "zones": [
-        "Product name",
-        "Launch date"
-      ],
-      "items": [
-        "Add the launch date and final price after download.",
-        "Keep the product name and availability in a separate editable text layer."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Prepare a product launch photo in three steps"
+        "h2": "Make launch photos from one product photo"
       },
       "m3": {
         "h2": "Choose a product launch scene"
       },
-      "m4": {
-        "h2": "Use launch photos in a listing or retail preview"
-      },
-      "m5": {
-        "h2": "Start a product launch with a clear sample photo"
-      },
-      "m6": {
-        "h2": "Square product launch photos for a store page"
-      },
-      "m7": {
-        "h2": "Add product launch details after download"
-      },
-      "plan": {
-        "h2": "When to prepare your product launch photos and clips"
-      },
       "faq": {
         "h2": "Questions about product launch photos"
-      },
-      "templates": {
-        "h2": "More product launch photo templates",
-        "lead": "Choose another scene for the product you are preparing to launch."
       }
     }
   },
-  "benefits_h2": "Why make product launch videos with AI?",
+  "benefits_h2": "Why sellers choose product launch creatives",
   "benefits": [
     {
-      "t": "Start from a sample, not finished stock",
-      "d": "The first assets come from a photo of the current sample, so teasers and a reveal exist before production finishes instead of after it is too late to book."
+      "t": "Launch assets from one photo",
+      "d": "Build a teaser, reveal and listing image from the same product shot while production finishes."
     },
     {
-      "t": "One sample photo, the full launch set",
-      "d": "Separate jobs build the teaser, the reveal and product-page images from the same item, covering each launch milestone without a different shoot."
+      "t": "A clear first look",
+      "d": "Show the new item in a scene buyers can understand before launch day."
     },
     {
-      "t": "Wording added once it is final",
-      "d": "You make the visual while name, price and date are still changing, then type the final details in Canva or CapCut after download."
+      "t": "Details stay editable",
+      "d": "Add the confirmed name, price and date after download as the launch plan changes."
     },
     {
-      "t": "Yours to run, no watermark",
-      "d": "Downloaded clips and images carry no AIVideosUGC watermark and are yours to use in launch ads, with the credit cost shown before each job."
+      "t": "Ready to run without a watermark",
+      "d": "Use downloaded launch images and clips in your own posts and paid campaigns."
     }
   ],
-  "steps_h2": "How to make a product launch video in 3 simple steps",
-  "steps_lead": "Three steps turn one sample photo into a ready-to-run launch set — no studio, no waiting for production."
+  "steps_h2": "Create product launch creatives in three steps",
+  "steps_lead": "Turn one product photo into a launch teaser, reveal or listing image before launch day."
 }

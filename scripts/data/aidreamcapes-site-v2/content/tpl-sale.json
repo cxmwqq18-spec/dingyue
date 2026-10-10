@@ -5,70 +5,26 @@
   "h1": "Sale Banner Maker with Open Space for Offer Text",
   "eyebrow": "Ad photo template",
   "lead": "A discount with no clear sale image gets lost in crowded feeds, and custom banner design for every event takes time you do not have. Upload one product photo and this sale banner maker places it in a seasonal scene with a calm open area ready for your discount, dates and code.",
-  "benefits_h2": "Why use an AI sale banner maker?",
-  "benefits": [
-    {
-      "t": "Offer space built into the scene",
-      "d": "The product sits to one side with open sky, wall or snow deliberately left clear. Your discount and dates have a clean place to land without covering the item."
-    },
-    {
-      "t": "One image, several promotions",
-      "d": "Because the offer is a separate text layer, the same photo can run a percent-off headline, a free-shipping message or a code in different ads. Update the deal without commissioning a new banner."
-    },
-    {
-      "t": "Ready for every sales event",
-      "d": "Describe a darker Black Friday scene, end-of-season clearance or a holiday fireplace setting. The square image fits Facebook and Instagram feeds, then adapts to a 9:16 canvas for Stories."
-    },
-    {
-      "t": "Numbers stay accurate and yours to use",
-      "d": "Type the discount, code and end date yourself so AI never garbles a price. Downloads have no AIVideosUGC watermark and can be used commercially in your own ads."
-    }
-  ],
   "secondary_keywords": [
     "Black Friday banner image",
     "seasonal sale ad image",
     "holiday sale photo for Facebook",
     "winter clearance banner"
   ],
-  "intro": [
-    "The example shows a blue hard-shell suitcase beside a pale wall and a small leafy plant, with all wheels visible. The open wall space is the natural place for a sale headline and dates.",
-    "A sale image has two jobs: show the product and give the offer a clean place to sit. This handles the first and leaves room for the second, because you'll add the percentage, dates, and code yourself in Canva, where every number stays exact. Use it for Black Friday, end-of-season clearance, and holiday promotions on Facebook and Instagram.",
-    "A sale image needs a clean product view and a deliberate place for the offer. A suitcase beside an open wall, a cutting board on a pale counter, or a complete skincare item on a quiet vanity gives the editor space for a discount without hiding the product. Keep the whole silhouette, handles, wheels, and important edges inside the frame before you add campaign text.",
-    "Use the template for a feed tile, a product-page promotion, or a seasonal clearance message. Describe the product, the light, and the empty area where the offer will sit; then add the percentage, dates, code, and legal wording in your editor. Separating the offer from the generated scene lets you update the price when stock changes and keeps numbers accurate.",
-    "Before the ad goes live, compare the color and model in the image with the product page and inventory. Check that the square crop still shows the full item and that any 9:16 adaptation leaves room for the platform interface. Remove the discount layer when the sale ends, and keep the product image only when the same product and destination remain available.",
-    "Plan the offer around the product evidence a shopper needs. For a suitcase, show the wheels and handle; for a cutting board, show the usable surface; for a skincare item, keep the cap and applicator visible. This gives the sale image a clear job before the seasonal props enter the frame.",
-    "Use the finished tile only when the destination matches the item shown. For channel guidance, compare [Facebook ad formats](/platforms/facebook-ads), [Instagram ad formats](/platforms/instagram-ads), and the [ad size guide](/guides/ad-sizes-by-platform) before adapting the crop.",
-    "For a larger campaign, pair this still with a [feed ad photo](/ai-image-generation/feed-ad-still), a [lifestyle scene](/ai-image-generation/lifestyle-scene), or a [white background photo](/ai-image-generation/ecommerce-main-image). Use the [sale discount occasion](/occasions/sale-discount), [Black Friday occasion](/occasions/black-friday), and [testing ad versions guide](/guides/testing-ad-versions) to keep the offer and destination consistent."
-  ],
-  "tip": "Say where you want the empty space, for example \"open sky across the left third,\" so your offer text has a calm area to sit on.",
-  "steps_h2": "How to make a sale banner in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into an offer-ready sale banner — no designer, no shoot, no wrong prices burned in.",
+  "steps_h2": "Create a sale banner in three steps",
+  "steps_lead": "Turn one product photo into a sale banner, then add the confirmed offer.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a clear photo showing the full shape, color and main details. The banner keeps that exact product so shoppers recognize the sale item."
+      "d": "Start with one clear photo of the product featured in the sale."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Name the seasonal setting and where the open area should sit. The product is placed clear of the offer zone without a custom design session."
+      "t": "Share Your Sale Scene",
+      "d": "Share the product scene and open offer area in one sentence."
     },
     {
-      "t": "Download and Add the Deal",
-      "d": "Enter the discount, code and end date in your editor, then post the square banner or adapt it to 9:16. No AIVideosUGC watermark is added."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Black Friday",
-      "d": "Darker, dramatic light with plenty of empty space for bold offer text."
-    },
-    {
-      "t": "End-of-season clearance",
-      "d": "Summer dresses on a late-season beach or coats in early spring snow to move last season's stock."
-    },
-    {
-      "t": "Holiday gift promotions",
-      "d": "A product by a decorated fireplace or a frosted window for gift ads during the holiday rush."
+      "t": "Download and Add the Offer",
+      "d": "Add the confirmed discount, code and end date in your editor."
     }
   ],
   "maker": {
@@ -138,106 +94,6 @@
       "a": "Delete, pause or replace the offer layer so an expired date or code is never shown. The underlying product scene can be reused for a new promotion or kept as a plain listing image."
     }
   ],
-  "overview": [
-    {
-      "h2": "Give the Offer a Place to Land",
-      "p": "A sale visual has to show the item and leave enough calm surface for the message. This template creates the scene first, with open sky, wall, snow, or another quiet area that you can use for a percentage, date, code, or shipping line later."
-    },
-    {
-      "h2": "Keep Promotion Facts in Your Hands",
-      "p": "The generated image supplies seasonal context; your store or design tool supplies the exact offer. Add only an approved discount, date, inventory note, and link after download so a customer never sees a guessed number."
-    }
-  ],
-  "input_guide": {
-    "h2": "Reserve Negative Space Before You Run",
-    "items": [
-      {
-        "t": "Choose the hero product",
-        "d": "Use a crisp source of the jacket, bag, shoe, or other item that is actually part of the sale."
-      },
-      {
-        "t": "Name the open area",
-        "d": "Say open sky on the left third, a clear wall above the product, or snow behind the subject."
-      },
-      {
-        "t": "Set the seasonal cues",
-        "d": "Mention winter, summer, holiday, or end-of-season details that support the campaign without adding a promotion claim."
-      },
-      {
-        "t": "Protect the product silhouette",
-        "d": "Keep the item away from the planned text zone so the offer and product can be read separately."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A Sale Key Visual Can Provide",
-    "items": [
-      {
-        "t": "A clear product hero",
-        "d": "Put the discounted item in a scene that matches the season or campaign mood."
-      },
-      {
-        "t": "A reusable background",
-        "d": "Carry this visual into a percent-off post, free-shipping message, or reminder by changing the overlay."
-      },
-      {
-        "t": "A square campaign asset",
-        "d": "Use the download in Facebook or Instagram feed creative after verifying the promotion details."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Seasonal Sale Scenes",
-    "items": [
-      {
-        "t": "Black Friday apparel",
-        "d": "A dark coat or bag on a dramatic charcoal set with open space on the upper right for bold offer text."
-      },
-      {
-        "t": "Summer clearance",
-        "d": "A dress or sandal on a late-season beach with bright sky left clear for the date and discount."
-      },
-      {
-        "t": "Holiday gifts",
-        "d": "A boxed product beside a decorated fireplace with a calm frosted window area for the offer."
-      },
-      {
-        "t": "Home refresh",
-        "d": "A lamp or cushion in a bright room with an uncluttered wall above the product for a short sale line."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Publish the Offer With Exact Information",
-    "items": [
-      {
-        "t": "Add the promotion in a design tool",
-        "d": "Type the approved percentage, price, dates, code, and link after the image is downloaded."
-      },
-      {
-        "t": "Check availability",
-        "d": "Confirm the featured color, size, and stock still match the products the campaign sends people to."
-      },
-      {
-        "t": "Preview every crop",
-        "d": "Review feed and mobile placements so the product and offer remain visible together."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Promotions That Suit This Template",
-    "good": [
-      "Black Friday and holiday campaigns",
-      "End-of-season apparel or accessory clearance",
-      "Short product launches with a clear offer zone",
-      "Social feed posts that need one product and one message"
-    ],
-    "not_ideal": [
-      "A promotion that depends on dense legal text in the image",
-      "A product whose silhouette must fill the entire canvas",
-      "Offers that change before the creative can be reviewed and updated"
-    ]
-  },
   "examples": {
     "h2": "More sale key visuals",
     "lead": "Each scene keeps a clear area for your offer, placed where it suits the product.",
@@ -268,7 +124,7 @@
     ]
   },
   "visual": {
-    "overview": "Create a sale product scene that keeps the full item visible while leaving a calm area for the offer added after download.",
+    "overview": "Show the full product in a sale scene with a calm area for the offer added after download.",
     "strip": [
       "n:q10-sale-strip-1",
       "n:q10-sale-strip-2",
@@ -281,7 +137,7 @@
       "source": "n:guide:tpl-sale-c3-m2-source",
       "result": "n:guide:f14-sale-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its blue color, horizontal ridges, handles, telescoping handle, and four wheels exactly. In a bright airport terminal, an adult pulls this same blue hard-shell suitcase past large windows, ending with the full suitcase visible in a clean frame. Natural travel-ad phone-video look, square 1:1, no text or logos.",
+      "prompt": "Share the sale scene in one sentence.",
       "options": [
         [
           "Template",
@@ -301,188 +157,22 @@
     "picker": {
       "title": "Choose the product for your sale photo",
       "lead": "Select a product category and set the mood for the offer image.",
-      "chips": [
-        {
-          "id": "offer",
-          "label": "Offers & Packing"
-        },
-        {
-          "id": "style",
-          "label": "Try-On & Style"
-        },
-        {
-          "id": "hands",
-          "label": "Hands-On Demos"
-        },
-        {
-          "id": "creator",
-          "label": "Creator Reactions"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:k6-tpl-ugc-picker-phone-case",
-          "label": "Offer Demo: Sage Phone Case",
-          "chips": [
-            "offer"
-          ],
-          "prompt": "Use the uploaded photo as a plain sage phone case with one oval camera opening and no recognizable model. On a bright cafe table, an adult hand adjusts the case beside a coffee cup, leaving calm space for a sale offer added later. Natural product demo ad photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c4-occ-holidays-output-mug",
-          "label": "Holiday Mug — Offer Scene",
-          "chips": [
-            "offer"
-          ],
-          "prompt": "Use the uploaded photo as a plain cream ceramic mug and keep its handle visible. Place it on a holiday brunch table with clear space for a seasonal offer. Natural sale ad photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-5-image",
-          "label": "Try-On Deal: Silk Scarf",
-          "chips": [
-            "style"
-          ],
-          "prompt": "Use the uploaded photo as a plain silk scarf and keep its fabric and muted pattern visible. The scarf is knotted on a handbag handle during a bright outdoor walk, with clean space for a seasonal offer. Natural style ad photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-lifestyle-photos-strip-1",
-          "label": "Hands-On Demo: Coffee Grinder",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded photo as a plain hand coffee grinder and keep its handle and body visible. Adult hands set the grinder on a bright morning counter beside a mug, leaving clean space for an offer. Natural hands-on product ad photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:q10-sale-picker-5",
-          "label": "Creator Review: Serum swatch",
-          "chips": [
-            "hands",
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean vanity, an adult dispenses one drop of serum onto the back of a hand and turns the hand toward the lens, ending with the bottle beside it. Natural skincare-ad phone-video look, soft window light. Tight handheld close-up with a slow push-in. Sound: cap twist, pump click; no music.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:q10-sale-picker-6",
-          "label": "Taste Test: Protein shake after training",
-          "chips": [
-            "creator",
-            "hands"
-          ],
-          "prompt": "Use the uploaded photo as the protein drink and preserve its container and color. After a workout, an adult takes one sip, reacts naturally to the taste, and holds the drink toward camera. Creator-style taste-test ad, medium close-up, natural gym light; no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-model-photos-strip-0",
-          "label": "Outfit Offer: Gray Hoodie Walk",
-          "chips": [
-            "style",
-            "offer"
-          ],
-          "prompt": "Use the uploaded photo as a plain gray hoodie and keep its hood, fabric, and relaxed fit visible. An adult man walks away along a tree-lined city street so the outfit reads clearly from the back, leaving open space for an offer added later. Natural fashion-ad photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:q10-sale-picker-8",
-          "label": "Try-On Deal: Crossbody bag fit check",
-          "chips": [
-            "style",
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a simple sunlit hallway, an adult wears the canvas crossbody bag, adjusts the strap and turns to show front and side fit, ending with the bag centered. Natural creator-video look. Waist-up handheld mirror framing with a small side step. Soft window light. Sound: strap slide, room tone; no music.",
-          "kind": "photo"
-        }
-      ],
+      "chips": [],
+      "cards": [],
       "button": "Make a sale product photo"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:q10-sale-uses-1",
-        "h": "Show a leather wallet in a sale post",
-        "d": "Keep the brown wallet and gift box visible, then add the current offer as editable text."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:q10-sale-uses-2",
-        "h": "Connect a skincare set to its product page",
-        "d": "Match the promotion image to the set shown in the product listing."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:q10-sale-input-1-good",
-        "bad": "n:q10-sale-input-1-bad",
-        "good_label": "Complete sunscreen tube stays in view",
-        "bad_label": "Sunscreen tube is cropped at the top edge"
-      },
-      {
-        "good": "n:guide:tpl-sale-c3-m5-board-clean",
-        "bad": "n:guide:c5-tpl-sale-m5-board-blur",
-        "good_label": "The whole board, handle, and grain stay clear",
-        "bad_label": "Board grain and edge soften into blur"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:tpl-beauty-round4-sunscreen-tube",
-        "frame": "1:1",
-        "label": "White-background sunscreen tube with full silhouette"
-      },
-      {
-        "ref": "n:guide:q14-retarget-strip-board",
-        "frame": "1:1",
-        "label": "Oiled cutting board in a sale-ready kitchen scene"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:tpl-sale-c3-m2-result",
-      "mock": {
-        "type": "limited",
-        "badge": "SALE",
-        "countdown": "40% OFF",
-        "caption": "3 days only",
-        "cta": "Shop now"
-      },
-      "zones": [
-        "Offer",
-        "End date"
-      ],
-      "items": [
-        "Add the discount, code, and end date as editable text.",
-        "Update or remove the offer when the sale ends."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make sale product photos in three steps"
       },
-      "m3": {
-        "h2": "Choose a product for your sale photo"
-      },
-      "m4": {
-        "h2": "Use sale photos in a feed or product page"
-      },
-      "m5": {
-        "h2": "Start a sale photo with the whole product in view"
-      },
-      "m6": {
-        "h2": "Square sale photos for social and listings"
-      },
-      "m7": {
-        "h2": "Add the sale offer after download"
-      },
       "faq": {
         "h2": "Questions about sale product photos"
-      },
-      "templates": {
-        "h2": "More sale product photo templates",
-        "lead": "Choose another product and keep the offer area clear."
       }
     }
-  }
+  },
+  "cta_lead": "Create the sale banner, then add the confirmed offer after download."
 }

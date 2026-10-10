@@ -1,49 +1,17 @@
 {
   "id": "occ-sale-discount",
-  "title": "Sale Ad Creatives for Discounts and Promos | AIVideosUGC",
-  "description": "Build one reusable sale visual from a product photo with space for the offer, then retype the price and code for every promo without reshooting.",
-  "h1": "Sale Ad Creatives With Room for Your Offer",
-  "eyebrow": "Sales and promos",
-  "lead": "Every discount forces you to rebuild the same creative and the product itself never changes. Make one product-first visual with open space, then type the new offer each sale and reuse it.",
-  "card": "Clean visuals with room for the percentage off, the code and the end date.",
+  "title": "Sale Ad Creatives for Discount Promotions | AIVideosUGC",
+  "description": "Create sale ad creatives from one product photo, then add the confirmed price, code and end date in your editor. Reuse the visual for each offer.",
+  "h1": "Create Sale Ad Creatives From One Product Photo",
+  "eyebrow": "Sale ad creatives",
+  "lead": "Make a clear sale ad creative for the promotion, then add the offer details when the price and dates are confirmed.",
   "secondary_keywords": [
     "discount ad images",
     "sale banner for online store",
     "promo video ads",
     "flash sale ad ideas"
   ],
-  "intro": [
-    "For a sale creative, keep the product easy to recognize and leave a clear area for the confirmed offer. Put the exact price, code, and end date in an editable text layer.",
-    "AIVideosUGC makes the visual part. Choose a square image with your product on one side and open space on the other, or a short promo clip in 9:16 or 1:1. The numbers, like the amount off, a code or \"ends Sunday,\" get added in Canva, CapCut or Ads Manager. That keeps AI typos off your ads, and this visual is ready to use again for the next sale."
-  ],
-  "ideas": [
-    {
-      "t": "Bundle deal shot",
-      "d": "Two or three products grouped together for a buy-more-save-more offer."
-    },
-    {
-      "t": "Six-second promo clip",
-      "d": "A quick vertical clip of the product turning in the light, with space at the top for the discount you add in CapCut."
-    },
-    {
-      "t": "Last-chance version",
-      "d": "A new scene for the final days of the sale, so people who saw your first ad notice something different."
-    }
-  ],
-  "plan": [
-    {
-      "t": "About three weeks ahead",
-      "d": "Choose the products going on sale, refresh their main photos, and decide which channels the sale will run on."
-    },
-    {
-      "t": "One to two weeks ahead",
-      "d": "Make the banners and clips in each size you need, add the offer text, and prepare a separate version for the final days."
-    },
-    {
-      "t": "During the sale",
-      "d": "Switch to the last-chance version near the end, and take down any visuals that show the discount once the sale is over."
-    }
-  ],
+  "plan": [],
   "faq": [
     {
       "q": "Can AIVideosUGC put the discount on the image for me?",
@@ -70,105 +38,6 @@
       "a": "Yes. Downloaded files are yours to use in paid promotions and carry no AIVideosUGC watermark, as long as the offer and price meet the platform's ad rules."
     }
   ],
-  "overview": [
-    {
-      "h2": "Build the scene first and the offer second",
-      "d": "A discount creative has two separate layers. The scene must identify the product and make the frame easy to scan; the offer layer must contain the exact percentage, code, date, and conditions. Leave a deliberate quiet area in the generated image or video, then type the deal yourself after download. When the offer changes, you can update the text without rebuilding the visual."
-    },
-    {
-      "h2": "Make each sale version answer a different question",
-      "d": "Use a clean square image when the feed needs a fast product read, a 9:16 clip when the sale is phone-first, and a 16:9 composition when this visual belongs on a wide page; 4:3 and 3:4 are also available. AIVideosUGC offers 6, 10, 15, and 30 second jobs and shows their credit cost before generation. A second version can change the product action or camera angle; it should not invent a new discount."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a sale source that leaves usable space",
-    "items": [
-      {
-        "t": "Choose the hero product",
-        "d": "Use a photo where the item is recognizable at a glance and its most important feature faces the camera."
-      },
-      {
-        "t": "Name the quiet side",
-        "d": "Describe the product on the left or right of a calm surface, wall, or color field so your editor has room for the offer."
-      },
-      {
-        "t": "Keep the code out of the scene",
-        "d": "Do not ask AI to render the discount code, price, or end date. Place those as editable text after download."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A sale asset ready for an accurate offer",
-    "items": [
-      {
-        "t": "Product-first frame",
-        "d": "The item remains visible even after you place the discount headline beside it."
-      },
-      {
-        "t": "Offer space",
-        "d": "A clean area gives your editor room to set hierarchy without covering the product."
-      },
-      {
-        "t": "Reusable base",
-        "d": "A scene without an embedded date can support another promotion after the text layer is replaced."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Sale scenes to hand to a designer",
-    "items": [
-      {
-        "t": "Single-item split",
-        "d": "A coffee grinder sits on the left side of a warm counter while the right side remains a clean, softly lit wall."
-      },
-      {
-        "t": "Bundle on a table",
-        "d": "A skincare set of three real bottles is grouped on a tray, with the labels facing forward and open space above."
-      },
-      {
-        "t": "Fast product turn",
-        "d": "A sneaker rotates once on a simple platform, leaving the upper part of the 9:16 frame clear for your offer."
-      },
-      {
-        "t": "Use before price",
-        "d": "A storage bin receives folded clothes in a tidy room, then the final frame holds on the product with no generated words."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Add the promotion with exact wording",
-    "items": [
-      {
-        "t": "Type the offer",
-        "d": "Add the percentage, code, original price, sale price, and end date in Canva, CapCut, or Ads Manager, then proofread each one."
-      },
-      {
-        "t": "Check comparison claims",
-        "d": "Only show an original price you actually charged and review the pricing rules that apply where you sell."
-      },
-      {
-        "t": "Preview the smallest placement",
-        "d": "Make sure the product and the offer remain readable in the feed, Story, or ad preview before spending budget."
-      },
-      {
-        "t": "Remove expired offer text",
-        "d": "Take down old dates and codes when the promotion ends, even if the underlying scene remains useful."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Works for editable promotions",
-    "good": [
-      "Single products with an obvious visual identity",
-      "Bundles whose contents can be checked against a real inventory",
-      "Sales where the price or end date may change",
-      "Teams that want a clean base visual and a separate text layer"
-    ],
-    "not_ideal": [
-      "Promotions that depend on AI spelling a code correctly",
-      "Comparison-price claims without a verified original price"
-    ]
-  },
   "examples": {
     "h2": "More sale examples",
     "lead": "Product scenes with open space for your discount, added after download.",
@@ -209,24 +78,23 @@
       }
     ]
   },
-  "templates_lead": "Choose a product scene with room for the offer details you will add later.",
-  "cta_lead": "Stage the product on one side and leave room to add confirmed offer details.",
+  "cta_lead": "Create the sale ad creative first, then add the confirmed offer details after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo of the item or bundle. The same product visual is reused for each sale."
+      "d": "Start with one clear photo of the item shoppers will buy."
     },
     {
-      "t": "Pick a Sale Scene",
-      "d": "Pick a sale scene with open space on one side. A new job gives another promo version."
+      "t": "Choose a Sale Scene",
+      "d": "Select a product view that leaves room for the promotion."
     },
     {
-      "t": "Download and Add Sale Details",
-      "d": "Download the file, type price, code and end date as text. Reuse it next sale, no watermark."
+      "t": "Download and Add the Offer",
+      "d": "Add the confirmed price, code and end date in your editor."
     }
   ],
   "visual": {
-    "overview": "Build sale ad creatives around a recognizable product, then add the current price, code, and end date in an editable layer.",
+    "overview": "Show the product clearly in a sale scene, then add the current offer in an editable layer.",
     "strip": [
       "n:guide:q20-occ-sale-reuse-strip-01-r2",
       "f:retargeting-urgency",
@@ -239,7 +107,7 @@
       "source": "n:guide:occ-sale-discount-c3-m2-source",
       "result": "n:guide:q20-occ-sale-discount-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product reference and preserve its three pastel containers: a blush bottle, a sage bottle and a cream jar with a pale pink lid. At a bright vanity, an adult opens the cream jar and applies a small amount to the back of one hand while the other two containers remain visible. Natural beauty UGC with soft side light. Close framing; end with the open jar and cream texture in focus. Sound: lid click and fingertip glide; no music or added text.",
+      "prompt": "Share the sale moment in one sentence.",
       "options": [
         [
           "Template",
@@ -256,266 +124,47 @@
       ]
     },
     "picker": {
-      "title": "Choose a sale ad moment",
-      "lead": "Use limited-time discount scenes for the offer launch and offer-reminder scenes when the end date is approaching.",
-      "chips": [
-        {
-          "id": "limited-time-discount",
-          "label": "Limited-Time Discount"
-        },
-        {
-          "id": "offer-reminder",
-          "label": "Offer Reminder"
-        },
-        {
-          "id": "final-hours",
-          "label": "Final Hours"
-        },
-        {
-          "id": "bundle-offer",
-          "label": "Bundle Offer"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q20-occ-sale-discount-card-01-r2",
-          "label": "Discount: Running tights fit check",
-          "chips": [
-            "limited-time-discount"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitting area, an adult creator shows the waistband and turns a quarter turn toward camera. An adult creator looks into the camera and says, “Here is the waistband and full length in daylight.”. Natural creator-shot UGC with realistic skin under even fitting-room light. Close framing with one gentle push-in. End front-facing with the waistband centered and fabric smooth at the hip. Sound: clear speech and fabric movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-discount-card-02",
-          "label": "Discount: Dog treat seal check",
-          "chips": [
-            "limited-time-discount"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At home beside a calm dog, an adult owner holds a plain pouch and presses its seal once. An adult creator looks into the camera and says, “The pouch closes with one quick press.”. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with the pressed-closed pouch beside the calm dog, seal edge facing camera. Sound: clear speech and one pouch click; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-discount-card-03",
-          "label": "Reminder: Gold necklace from box",
-          "chips": [
-            "offer-reminder"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright dressing table, adult hands lift a simple necklace from a small gift box into window light. Natural creator-shot UGC with realistic skin under soft dressing-table window light. Close framing with one gentle push-in. End with the necklace laid clearly across the open tissue. Sound: lid click and tissue rustle; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-discount-card-04",
-          "label": "Reminder: Wireless charger revealed",
-          "chips": [
-            "offer-reminder"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean desk, adult hands lift a compact matte charger from a plain box and place it by a generic phone. Natural creator-shot UGC with realistic skin under broad desk-side window light. Close framing with one gentle push-in. End with the charger beside the phone, both resting flat on the desk. Sound: cardboard rustle and a placement tap; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-discount-card-05-r2",
-          "label": "Final Hours: Eyeliner evening look",
-          "chips": [
-            "final-hours"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult creator applies one eyeliner stroke, then holds the pencil by her cheek. An adult creator looks into the camera and says, “This is the last detail before I head out.”. Natural creator-shot UGC with realistic skin under balanced vanity-bulb light. Close framing with one gentle push-in. End with the pencil beside the finished eyeliner line. Sound: cap click and clear speech; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-discount-card-06-r2",
-          "label": "Final Hours: Trail shoes on walk",
-          "chips": [
-            "final-hours"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright entry bench, an adult runner ties the shoes and stands to show the full pair. An adult creator looks into the camera and says, “Ready for the walk.”. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the tied trail shoes planted in a clear side view. Sound: lace pull, footsteps and clear speech; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-sale-discount-bowl",
-          "label": "Discount: Serving bowl on dinner table",
-          "chips": [
-            "limited-time-discount"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a bright dining table, adult hands slide the plain cream serving bowl into place for a limited-time sale scene. Natural creator-shot UGC with soft daylight. Close framing with the bowl fully visible and clear space above for a later price and end-date layer. Sound: ceramic placement and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-discount-card-08",
-          "label": "Bundle Offer: Balm smooths onto hand",
-          "chips": [
-            "bundle-offer"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean vanity, an adult dispenses a small amount of balm and smooths it across the back of a hand. Natural creator-shot UGC with realistic skin under soft vanity lighting. Close framing with one gentle push-in. End with the balm container beside the smoothed hand. Sound: cap click and fingertip glide; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-gallery-01",
-          "label": "Discount: Quilted jacket from box",
-          "chips": [
-            "limited-time-discount"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a plain quilted jacket from a simple gift box and hold it open against a bright wall, leaving clean space above for the offer. Natural creator-shot UGC with soft daylight. Medium framing with one gentle push-in; end with the full jacket visible. Sound: tissue rustle and fabric movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-gallery-02",
-          "label": "Reminder: Black sunglasses at a cafe",
-          "chips": [
-            "offer-reminder"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny cafe table, an adult creator puts on the plain sunglasses and turns toward the camera, leaving open space beside the face for an offer reminder. Natural creator-shot UGC with warm daylight. Close framing with one gentle push-in; end with the glasses facing camera. Sound: light cafe ambience; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-sale-gallery-03",
-          "label": "Final Hours: Candle lit at dinner",
-          "chips": [
-            "final-hours"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a dinner table, an adult hand lights the plain candle once and withdraws, leaving the jar and flame clear with quiet space above for a final-hours message. Warm natural light, realistic hand. Close framing with one gentle push-in; end on the lit candle. Sound: match strike and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-sale-discount-card-09-r2",
-          "label": "Bundle Offer: Travel organizers opened",
-          "chips": [
-            "bundle-offer"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a neatly made bed, an adult creator opens a plain packing cube and toiletry pouch bundle, points to the zippers and holds both pieces side by side. Natural creator-shot UGC with soft daylight. Medium framing with one gentle push-in; end with both organizers visible and clear space above. Sound: zipper pulls and fabric rustle; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-sale-discount-picnic-blanket",
-          "label": "Reminder: Picnic blanket folded",
-          "chips": [
-            "offer-reminder"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a sunny park table, adult hands fold the plain checked picnic blanket into its carry strap for an offer reminder. Natural creator-shot UGC with soft daylight. Close framing with the blanket clear and quiet space at left for a later end-date layer. Sound: fabric movement and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-sale-discount-desk-lamp",
-          "label": "Final Hours: Desk lamp switched on",
-          "chips": [
-            "final-hours"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a tidy home office near dusk, an adult hand taps the plain brass desk lamp switch and lets the warm pool of light settle. Natural creator-shot UGC with realistic indoor light. Close framing with dark blank space above for a later final-hours layer. Sound: switch click and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-sale-discount-tea-bundle",
-          "label": "Bundle Offer: Travel Tea Set",
-          "chips": [
-            "bundle-offer"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. On a bright kitchen counter, adult hands arrange the plain ceramic travel mug and kraft tea pouch together as a bundle. Natural creator-shot UGC with soft window light. Close framing with both products fully visible and clear top space for a later bundle price layer. Sound: ceramic tap and paper rustle; no music or added text.",
-          "kind": "photo"
-        }
-      ],
+      "title": "Choose a product for your sale ad creative",
+      "lead": "Show the product clearly, then add the current offer in an editable layer.",
+      "chips": [],
+      "cards": [],
       "button": "Make a sale ad photo"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:c3-r3-tpl-outfit-hoodie",
-        "h": "Feature a plain hoodie before the offer",
-        "d": "A clear full outfit view can introduce an apparel offer before its price and end date are added."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q20-occ-sale-uses-02",
-        "h": "Show herbal tea during a quiet break",
-        "d": "An adult creator presents a plain herbal tea pouch beside a warm mug at a sunlit desk."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:gen2:before-after-videos-c3",
-        "bad": "n:guide:occ-sale-discount-c3-bad-crop",
-        "good_label": "Cutting board and handle stay in frame",
-        "bad_label": "Board edge and handle are clipped"
-      },
-      {
-        "good": "n:guide:c3-r3-occ-sale-discount-m5-1",
-        "bad": "n:guide:occ-sale-discount-c3-bad-blur",
-        "good_label": "Knit rows and fibers remain sharp",
-        "bad_label": "Knit texture softens into a blur"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q20-occ-sale-output-01",
-        "frame": "1:1",
-        "label": "Hand-applied oil finish on a wood board"
-      },
-      {
-        "ref": "n:guide:q20-occ-sale-output-02-r2",
-        "frame": "1:1",
-        "label": "Gray merino sweater in natural daylight"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:occ-sale-discount-c3-m2-result",
-      "zones": [
-        "Offer",
-        "End date"
-      ],
-      "items": [
-        "Add the deal amount, code, and end date in a text layer after download.",
-        "Update or remove the image when the current offer ends."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
-        "h2": "Plan sale ad creatives in three steps"
+        "h2": "Create sale ad creatives in three steps"
       },
       "m3": {
-        "h2": "Choose a product for your sale ad"
-      },
-      "m4": {
-        "h2": "Use sale creatives in a feed or product page"
-      },
-      "m5": {
-        "h2": "Start sale ads with a clear product photo"
-      },
-      "m6": {
-        "h2": "Square sale ad photos for feeds and listings"
-      },
-      "m7": {
-        "h2": "Add sale details after download"
-      },
-      "plan": {
-        "h2": "When to prepare your sale ad creatives"
+        "h2": "Choose a product for your sale ad creative"
       },
       "faq": {
         "h2": "Questions about sale ad creatives"
-      },
-      "templates": {
-        "h2": "More sale ad photo templates",
-        "lead": "Choose another product and leave room for the offer."
       }
     }
   },
-  "benefits_h2": "Why make sale ad creatives with AI?",
+  "benefits_h2": "Why sellers choose sale ad creatives",
   "benefits": [
     {
-      "t": "One base visual for every sale",
-      "d": "The product scene is made once and reused for the next promotion, so you are not rebuilding the same creative whenever the percentage changes."
+      "t": "A product view that earns attention",
+      "d": "Put the item first so shoppers understand what the promotion is for."
     },
     {
-      "t": "Offer text stays correct",
-      "d": "Price, code and end date are typed by you in an editable layer after download, keeping AI typos and stale offers out of the ad."
+      "t": "One visual for each offer",
+      "d": "Reuse the same product scene when the price, code or end date changes."
     },
     {
-      "t": "Versions from one product photo",
-      "d": "Run separate jobs for a square feed image, a 9:16 phone-first clip or another angle without arranging a shoot for any of them."
+      "t": "Versions for every placement",
+      "d": "Create a square post or a short clip for the channel where the sale runs."
     },
     {
-      "t": "Yours to run, no watermark",
-      "d": "Downloaded images and clips carry no AIVideosUGC watermark and are yours to use in paid sale posts, with the credit cost shown first."
+      "t": "Details stay in your hands",
+      "d": "Add the final price, code and dates after download so every offer stays accurate."
     }
   ],
-  "steps_h2": "How to make a sale ad creative in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a reusable sale visual — no studio, and no rebuild for the next promo."
+  "steps_h2": "Create sale ad creatives in three steps",
+  "steps_lead": "Turn one product photo into a sale ad creative, then prepare it for the places shoppers see the offer."
 }
