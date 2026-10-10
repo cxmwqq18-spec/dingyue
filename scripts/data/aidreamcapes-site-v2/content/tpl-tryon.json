@@ -135,86 +135,8 @@
     "picker": {
       "title": "Choose a fashion template",
       "lead": "Browse fashion styles, then add your own garment photo.",
-      "chips": [
-        {
-          "id": "fashion",
-          "label": "Fashion"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f7-r10-tryon-mirror-selfie",
-          "label": "Fashion Clothing Mirror Selfie UGC",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult gets dressed and checks a navy overshirt in a full-length fitting-room mirror selfie, holding the phone low so the shirt stays visible. Bright retail daylight, honest GRWM fit-check photo, full-body square framing. End with the collar, cuffs and hem clear for comparison. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f7-r10-tryon-mirror-denim",
-          "label": "Fashion Try-On Cinematic Reel",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult South Asian man checks a plain denim jacket in a full-length bedroom mirror, turning once to show the shoulder seams, pockets and hem. Bright natural daylight, honest fit-check photo, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f7-r10-tryon-walk-blue-jacket",
-          "label": "Fashion Whip-Pan Multi-Angle Ad",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult Latina woman walks one step in a plain cobalt blue utility jacket, then turns slightly to show the collar, pockets and hem. Soft overcast daylight, full-body square fit-check photo, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f7-r10-tryon-whip-pan",
-          "label": "Fashion Lifestyle Reel",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. An adult model makes a quick whip-pan turn in a cream cardigan over a pale blue shirt; show front, side and back angles in one readable sequence. Soft studio daylight, full-body square fashion photo with the cuffs, buttons and hem visible. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f7-r10-tryon-walk-ivory-puffer",
-          "label": "Fashion Street UGC",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An older East Asian woman walks three measured steps in a plain ivory puffer coat and turns once to show the hem. Soft daylight, polished lookbook UGC style, full-body square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f7-r10-look-review-navy-suit",
-          "label": "Talking Head Product Recommendation",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as a plain navy suit and keep the lapel, shoulders and fit visible. An older adult man presents the suit in a bright studio and pinches the lapel for a creator fit review. Full-body square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f7-r10-tryon-grwm-field-jacket",
-          "label": "GRWM Fashion Get Ready Reel",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult Black woman layers a plain charcoal field jacket in a bright bedroom mirror, then turns through three quick angles to show the shoulder, pockets and hem before heading outside. Cool morning light, full-body square GRWM photo, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-look-pleated-skirt-walk",
-          "label": "Fashion Clothing TikTok UGC Hook",
-          "chips": [
-            "fashion"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks toward camera in a plain pleated skirt, pauses and turns slightly so the drape and hem stay visible. Soft courtyard daylight, full-body square lookbook frame, no text or logos.",
-          "kind": "photo"
-        }
-      ],
+      "chips": [],
+      "cards": [],
       "button": "Start with your product"
     },
     "uses": [],
