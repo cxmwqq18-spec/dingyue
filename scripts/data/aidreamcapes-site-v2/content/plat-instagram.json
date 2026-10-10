@@ -1,10 +1,10 @@
 {
   "id": "plat-instagram",
   "title": "AI Instagram Ads for Reels, Stories and Feed | AIVideosUGC",
-  "description": "Make Instagram campaign visuals from one photo: a 9:16 AIVideosUGC clip for Reels or a square product image. Check the cost before you create.",
+  "description": "Make Instagram Reels and feed ads from one product photo: get a 9:16 clip and a square still to crop 4:5, with no shoot and the cost shown first.",
   "h1": "AI Instagram Ads From the Product Photos You Already Have",
   "eyebrow": "Instagram ads",
-  "lead": "Turn one photo into a 9:16 Reels clip or square product image, then add your caption and offer in Instagram or Ads Manager.",
+  "lead": "Need Reels and feed ads without booking a shoot? One product photo gives you a 9:16 UGC-style clip and a square still ready for Instagram.",
   "card": "9:16 Reels clips and square product images.",
   "secondary_keywords": [
     "Instagram Reels ads",
@@ -13,7 +13,7 @@
     "product ads for Instagram"
   ],
   "intro": [
-    "Instagram campaigns use Feed posts, Stories and Reels. Meta recommends 4:5 (1440×1800) for feed images and 9:16 (1080×1920) for feed and Reels video. AIVideosUGC makes 6, 10 or 15-second 9:16 clips and one square product image per job; crop the square still to 4:5 for the feed, run separate jobs when you want several carousel slides, then assemble them in Instagram. Keep key details inside the Reels safe area before publishing.",
+    "Instagram campaigns use Feed posts, Stories and Reels. Meta recommends 4:5 (1440×1800) for feed images and 9:16 (1080×1920) for feed and Reels video. AIVideosUGC makes 6, 10, 15 or 30-second 9:16 clips and one square product image per job; crop the square still to 4:5 for the feed, run separate jobs when you want several carousel slides, then assemble them in Instagram. Keep key details inside the Reels safe area before publishing.",
     "Upload your product shot along with a line about the setting: a serum bottle on a marble sink, sunglasses on a beach towel, a candle beside an open book. The result comes back to your account, private to you. Download it, write your caption, and add any text or stickers in Instagram, Canva or Ads Manager. For placement planning, a Reels demo keeps the action centered in 9:16, Stories can use three consecutive frames, and a Feed carousel can lead with the product, follow with scale, then show a detail. Generate each still separately and assemble the sequence in Instagram."
   ],
   "specs": [
@@ -31,7 +31,7 @@
     ],
     [
       "AIVideosUGC clips",
-      "6, 10 or 15 seconds per job"
+      "6, 10, 15 or 30 seconds per job"
     ],
     [
       "AIVideosUGC still images",
@@ -89,6 +89,14 @@
     {
       "q": "Should I choose a Reel or a feed post?",
       "a": "Meta recommends 9:16 (1080×1920) video for Reels and the feed, and 4:5 (1440×1800) for a feed image. AIVideosUGC makes 9:16 clips and square stills to crop to 4:5; preview the crop and safe area in the intended placement."
+    },
+    {
+      "q": "Do I need a model or a creator?",
+      "a": "No. The Reels clip and square still are generated from your product photo and a short description, so nothing has to be filmed. Add captions and stickers after download."
+    },
+    {
+      "q": "Can I run these as paid ads?",
+      "a": "Yes. Downloaded clips and stills are yours to use in Instagram ads, and they carry no AIVideosUGC watermark. You still need to follow Meta's current ad review rules."
     }
   ],
   "overview": [
@@ -98,7 +106,7 @@
     },
     {
       "h2": "Design for Reels, Stories, and the feed separately",
-      "d": "Meta recommends 4:5 (1440×1800) feed images and 9:16 (1080×1920) video for the feed and Reels. AIVideosUGC makes 9:16 clips of 6, 10 or 15 seconds and square stills to crop to 4:5; use Meta's safe-zone checker for key messages before publishing."
+      "d": "Meta recommends 4:5 (1440×1800) feed images and 9:16 (1080×1920) video for the feed and Reels. AIVideosUGC makes 9:16 clips of 6, 10, 15 or 30 seconds and square stills to crop to 4:5; use Meta's safe-zone checker for key messages before publishing."
     },
     {
       "h2": "Turn separate jobs into a useful carousel",
@@ -265,16 +273,16 @@
   "cta_lead": "Choose the Instagram placement first, then make an image or clip that fits it.",
   "steps": [
     {
-      "t": "Photograph the full tube",
-      "d": "Upload one hand-cream tube with its cap and package visible."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo showing the whole item; each job returns one asset. You start every Reel, feed and carousel version from it."
     },
     {
-      "t": "Choose a calm routine",
-      "d": "Set this tube beside a bathroom sink in soft morning light."
+      "t": "Share Your Video Idea",
+      "d": "Describe the setting and one action, like a serum bottle on a marble sink. Separate jobs give you Reels, Stories and carousel slides."
     },
     {
-      "t": "Finish the post",
-      "d": "Add the price or offer in your editor after downloading the image."
+      "t": "Download and Post",
+      "d": "Download the clip or square still, then add your caption and offer in Instagram or Ads Manager. The file is yours, with no watermark."
     }
   ],
   "visual": {
@@ -591,5 +599,26 @@
         "h2": "Questions about Instagram product ads"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make Instagram ads with AI UGC video?",
+  "benefits": [
+    {
+      "t": "Reels and feed from one photo",
+      "d": "Each job returns either a 9:16 clip or a square still, so you can cover Reels, Stories and a 4:5 feed post without producing the product twice."
+    },
+    {
+      "t": "No creator or studio on retainer",
+      "d": "You skip the booking, filming and editing that a campaign set normally needs. When Instagram needs a fresh angle, you start another job from the same photo."
+    },
+    {
+      "t": "A carousel built from separate jobs",
+      "d": "Run square jobs for a front view, an in-hand moment and a close detail, then assemble them as one carousel in Instagram. No reshoot is needed to add a slide."
+    },
+    {
+      "t": "Commercial use, no watermark",
+      "d": "Downloaded clips and stills carry no AIVideosUGC watermark and are yours to use in ads and posts, with the credit cost shown before each job."
+    }
+  ],
+  "steps_h2": "How to make an Instagram ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-post Reel or feed ad — no studio, no creator, no reshoot."
 }
