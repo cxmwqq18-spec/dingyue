@@ -1,10 +1,29 @@
 {
   "id": "tpl-limited-drop-alert-video",
   "title": "Limited Drop Alert Video Template | AIVideosUGC",
-  "description": "Make a limited drop alert video from one product photo. Build a short scene, then add your restock date, offer, and stock details in your editor.",
+  "description": "Drive urgency for a small release or restock with a drop alert video from one product photo. Add your date, quantity and notify link after download.",
   "h1": "Limited Drop Alert Videos for Restocks and New Drops",
   "eyebrow": "Limited drop video template",
-  "lead": "Limited drop alert video ads give a new pair of shoes or a small release a clear moment. Upload a product photo, describe the scene, and get a short clip for your launch or restock; add exact dates and stock details yourself.",
+  "lead": "A small release sells out only when buyers know about it in the short window it is available, while arranging a shoot for every drop is too slow. Upload one product photo and get a limited drop alert video that makes the release feel timely, with room for the exact date, stock count and notify link you control.",
+  "benefits_h2": "Why make limited drop alert videos?",
+  "benefits": [
+    {
+      "t": "Create urgency without a shoot",
+      "d": "The clip shows one clear reveal, such as a shoe stepping on, a box opening or a first sip, that gives the release a timely feel. Every small drop gets a fresh moment for a fixed credit cost."
+    },
+    {
+      "t": "One asset across the release window",
+      "d": "Use the same visual for a coming-soon teaser, release day and a planned restock, changing only the text layers. You cover the full cycle without regenerating the scene."
+    },
+    {
+      "t": "Built for TikTok, Reels and feeds",
+      "d": "Use 9:16 for full-screen alerts and 1:1 for feeds, with clips at 6, 10, 15 or 30 seconds. A quick product-and-date beat or a fuller reveal with a call to action both fit."
+    },
+    {
+      "t": "Dates and quantities never baked in",
+      "d": "Add the drop date, stock count, countdown and notify link as editable layers so the information stays current. Downloads carry no AIVideosUGC watermark and can be used in your own paid ads."
+    }
+  ],
   "secondary_keywords": [
     "restock alert video",
     "limited release ad",
@@ -19,18 +38,20 @@
     "Before publishing, compare the generated product with the item in stock and check the release details in your editor. Add the live countdown, quantity, and call to action as editable layers rather than baking them into the image. Recheck the finished frame on the destination feed so the badge and timing remain readable inside its safe area."
   ],
   "tip": "Use a clear photo of the full product and describe where the scene should leave room for your drop date or restock message.",
+  "steps_h2": "How to make a limited drop alert video in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into an urgent drop alert — no shoot, no stale dates, no missed release window.",
   "steps": [
     {
-      "t": "Upload the product photo",
-      "d": "Choose a sharp image with the whole shoe, garment, or accessory visible so the scene keeps its shape."
+      "t": "Upload Your Product Photo",
+      "d": "Use a sharp image with the whole shoe, garment or accessory visible so the scene keeps its shape."
     },
     {
-      "t": "Describe the drop moment",
-      "d": "Name the setting, movement, and mood, such as a trail shoe on rock with a close look at the tread."
+      "t": "Describe the Drop Moment",
+      "d": "Name the setting, movement and mood, such as a trail shoe on rock with a close tread look. The reveal is generated without a shoot."
     },
     {
-      "t": "Add the release details",
-      "d": "Type the real date, stock note, link, and call to action in your editor after downloading."
+      "t": "Download and Add Details",
+      "d": "Type the real date, stock note, notify link and call to action in your editor, then post 9:16 or 1:1. No AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -91,7 +112,15 @@
     },
     {
       "q": "Can I create a second limited-drop video from the same source photo?",
-      "a": "Yes. Keep the coral trail shoe as the reference, then change one setting or camera move at a time. Check the shown color, size note, release time, and available quantity against the live offer. Add the current date, price, and notify link after download so those details stay easy to update. Keep one release date and one quantity source for every version so the alert cannot drift from the live offer. Recheck the live quantity before each scheduled placement; a limited message is only useful while that number is current."
+      "a": "Yes. Keep the coral trail shoe as the reference, then change one setting or camera move at a time. Check that the shown color, size note, release time, and available quantity against the live offer. Add the current date, price, and notify link after download so those details stay easy to update. Keep one release date and one quantity source for every version so the alert cannot drift from the live offer. Recheck the live quantity before each scheduled placement; a limited message is only useful while that number is current."
+    },
+    {
+      "q": "Can I run the alert as a paid ad during the drop window?",
+      "a": "Yes. Videos you make can run in your own paid ads, social posts and restock emails, with no AIVideosUGC watermark on the download. You remain responsible for availability, claims and the disclosures the platform requires."
+    },
+    {
+      "q": "How do I stop showing sold-out urgency?",
+      "a": "Pause or update the ad and replace the quantity layer when the drop sells out, switching to a restock notify message if another release is planned. A limited alert should not keep running after the live number changes."
     }
   ],
   "overview": [
