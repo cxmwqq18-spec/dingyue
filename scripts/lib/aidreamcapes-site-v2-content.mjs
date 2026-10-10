@@ -1111,8 +1111,10 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
         return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? genericCasePrompt(model, page, card) ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}) };
       };
   const pickerBuiltCards = pickerCards.map(buildPickerCard);
-  // Case-plan cases join the on-page wall, tagged with the wall chips they match.
-  for (const caseCard of extraCaseCards) {
+  // Case-plan cases join the on-page wall only when the source page defines a
+  // picker. An intentionally empty picker means the competitor has no scene
+  // gallery, so generated case cards must not silently repopulate it.
+  for (const caseCard of pickerChipIds.length ? extraCaseCards : []) {
     // Keep the picker within the public wall's 8-16 card contract. The source
     // picker already contains curated examples; case-plan rows fill remaining
     // slots without making an overlong wall.
