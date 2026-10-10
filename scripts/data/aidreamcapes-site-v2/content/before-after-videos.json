@@ -1,28 +1,49 @@
 {
   "id": "before-after-videos",
   "title": "Before and After Video Maker for Products | AIVideosUGC",
-  "description": "Use this before and after video maker to show a messy shelf turn tidy or a scuffed sneaker come clean in one short clip for TikTok or Reels. Upload a photo now.",
+  "description": "Show the visible change your product makes — a messy shelf tidied, a scuffed shoe cleaned — in one short clip for TikTok or Reels, from one product photo.",
   "h1": "Before and After Video Maker: Show the Change Your Product Makes",
   "eyebrow": "Before & after video",
-  "lead": "Show the before and the after in one short clip, like a tangled desk that ends tidy. Start from one product photo.",
+  "lead": "When your product only makes sense once shoppers see the change, telling them in words is weak and filming both states is a full shoot. Make a before-and-after video from one product photo that keeps the same space or item in view, so the result is easy to judge without an exaggerated claim.",
   "secondary_keywords": [
     "AI before and after video",
     "before and after product video",
     "transformation video for ads",
     "before and after TikTok video"
   ],
+  "benefits_h2": "Why make a before-and-after video?",
+  "benefits": [
+    {
+      "t": "Make the result visible fast",
+      "d": "Shoppers see the starting condition and the finished state in one clip, which is more convincing than describing the change."
+    },
+    {
+      "t": "One product photo, no second shoot",
+      "d": "Both states are generated around the same item or space, so you don't stage the before and film the after separately."
+    },
+    {
+      "t": "Keep claims on safe ground",
+      "d": "Show changes to a product or the space around it, rather than implying health, skin or body results the clip can't prove."
+    },
+    {
+      "t": "Time for the full sequence",
+      "d": "Use a 30-second clip for before, action and after, or a short 6-second version when the fix is one quick move."
+    }
+  ],
+  "steps_h2": "How to make a before-and-after video in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a clear comparison clip — before, action and after, without a second shoot.",
   "steps": [
     {
-      "t": "Upload your product",
-      "d": "Keep the item that causes the change clear and fully in frame."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo with the item that causes the change fully in frame. It anchors both states of the comparison."
     },
     {
-      "t": "Describe the before and after",
-      "d": "Write one short sentence for each visible state."
+      "t": "Describe Both States",
+      "d": "Write one short sentence for the starting condition and one for the result, keeping the camera and space the same."
     },
     {
-      "t": "Download and add labels",
-      "d": "Add Before and After labels in your editor if you want them on screen."
+      "t": "Download and Add Labels",
+      "d": "Review the change against what your product really does, then download. Add Before and After labels in your editor."
     }
   ],
   "maker": {
@@ -41,7 +62,7 @@
   "faq": [
     {
       "q": "How can I make the two scenes easy to compare?",
-      "a": "Keep the camera position fixed and show the same product in three frames: before, the action, and after. Use a 15-second clip when the action needs room, or 6 or 10 seconds for a quicker fix; choose 9:16 for TikTok or Reels and 1:1 for a product page."
+      "a": "Keep the camera position fixed and show the same product in three frames: before, the action, and after. Use a 30-second clip when the action needs room, or 6, 10 or 15 seconds for a quicker fix; choose 9:16 for TikTok or Reels and 1:1 for a product page."
     },
     {
       "q": "How do I describe the before and the after?",
@@ -70,6 +91,14 @@
     {
       "q": "Can I compare two product versions?",
       "a": "Yes. Use the same framing and describe the one difference shoppers need to judge, such as a size or fit change. Avoid a performance claim unless the frame proves it."
+    },
+    {
+      "q": "Can I run the comparison as a paid ad?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so the clip can run on TikTok, Reels and other paid channels. Keep the claim to what the frame actually proves, and add any offer or price in your ad tool."
+    },
+    {
+      "q": "Are the people or results in the clip real?",
+      "a": "No. The scene and any people are AI-generated from your product photo, so don't present it as a real customer's results. It works as a product demonstration ad, not as a review or evidence of a health or skin outcome."
     }
   ],
   "overview": [
@@ -291,7 +320,7 @@
         "h2": "What to prepare for a before-and-after scene"
       },
       "m6": {
-        "h2": "Before-and-after length and frame: 6, 10 or 15 seconds; 9:16 or 1:1"
+        "h2": "Before-and-after length and frame: 6, 10, 15 or 30 seconds; 9:16 or 1:1"
       },
       "m7": {
         "h2": "Before you post the comparison"
@@ -303,7 +332,7 @@
         "h2": "More ways to show a change"
       }
     },
-    "overview": "A before-and-after video names one starting problem and shows one visible change. Keep the camera and product steady while a roller clears fur, a brush lifts a scuff, or an organizer turns tangled cables into a readable desk. Use [product comparison video](/ai-video-generation/product-comparison-video) for two versions, [home organization video](/ai-video-generation/home-organization) for a space reset, and [testing ad versions](/guides/testing-ad-versions) when you want to compare hooks. Choose 6, 10, or 15 seconds. Use a 9:16 vertical frame for [TikTok](/platforms/tiktok-ads) or [Instagram](/platforms/instagram-ads), or a 1:1 square frame beside a product description.",
+    "overview": "A before-and-after video names one starting problem and shows one visible change. Keep the camera and product steady while a roller clears fur, a brush lifts a scuff, or an organizer turns tangled cables into a readable desk. Use [product comparison video](/ai-video-generation/product-comparison-video) for two versions, [home organization video](/ai-video-generation/home-organization) for a space reset, and [testing ad versions](/guides/testing-ad-versions) when you want to compare hooks. Choose 6, 10, 15 or 30 seconds. Use a 9:16 vertical frame for [TikTok](/platforms/tiktok-ads) or [Instagram](/platforms/instagram-ads), or a 1:1 square frame beside a product description.",
     "after": {
       "ref": "n:guide:k7-ind-electronics-strip-5-n-gen2-before-after-videos-c4",
       "zones": [
