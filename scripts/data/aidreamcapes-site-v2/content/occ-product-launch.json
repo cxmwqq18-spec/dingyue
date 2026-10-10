@@ -66,7 +66,7 @@
       }
     ]
   },
-  "cta_lead": "Make the teaser or reveal first, then add the launch date after download.",
+  "cta_lead": "Create the teaser or reveal first, then add the launch date after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -95,7 +95,7 @@
       "source": "n:guide:occ-product-launch-c3-m2-source",
       "result": "n:guide:q20-occ-product-launch-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the only product reference. Preserve its matte turquoise bottle, cap, proportions and finish. In a bright launch-day kitchen, an adult lifts the bottle for one sip and holds it beside their face. Natural phone-shot UGC in soft window light. Chest-up framing with one gentle push-in; end with the bottle clear beside the face. Sound: a quiet sip and room tone; no music or added text.",
+      "prompt": "Share the launch moment in one sentence.",
       "options": [
         [
           "Template",
@@ -113,117 +113,9 @@
     },
     "picker": {
       "title": "Choose a product launch scene",
-      "lead": "Show a first look, a reveal moment or the product in first use, then add the launch date after download.",
-      "chips": [
-        {
-          "id": "first-look",
-          "label": "First Look UGC"
-        },
-        {
-          "id": "product-reveal",
-          "label": "Product Reveal"
-        },
-        {
-          "id": "first-use",
-          "label": "First Use UGC"
-        },
-        {
-          "id": "unboxing",
-          "label": "Unboxing UGC"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q20-occ-product-launch-card-01",
-          "label": "Bathroom Skincare First Look",
-          "chips": [
-            "first-look"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the serum beside her cheek and points once to its dropper. An adult creator looks into the camera and says, “Notice how the dropper gives a neat, controlled dose.”. Natural creator-shot UGC with realistic skin under diffused bathroom window light. Close framing with one gentle push-in. End with the dropper and bottle beside her face, label toward camera. Sound: clear speech and a soft dropper click; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-launch-media-hero",
-          "label": "Beauty Accessories Unboxing",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a plain three-piece skincare set from an open gift box on a bright table, then hold the set still for the first look. Natural creator-shot UGC with soft window light and realistic skin. Close framing with one gentle push-in; end with all three pieces visible. Sound: tissue rustle and box hinge; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-product-launch-rework-card-15",
-          "label": "Accessories Street Reveal",
-          "chips": [
-            "product-reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny city sidewalk, an adult Black man wears plain matte black sunglasses and turns once toward the phone camera. Natural creator-shot UGC with realistic skin under bright daylight. Close framing with one gentle push-in. End with the sunglasses facing camera and the street softly behind him. Sound: light city room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-product-launch-card-06",
-          "label": "Fashion Try-On Reveal",
-          "chips": [
-            "product-reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult runner zips the jacket once and faces the phone camera. An adult creator looks into the camera and says, “Here is the fit before the morning run.”. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the zipped front facing camera before the run. Sound: zipper slide and clear speech; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-product-launch-rework-card-14",
-          "label": "Beauty Product First Look",
-          "chips": [
-            "first-look"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. In a bright studio, an adult hand lifts a light fabric cover just enough to reveal the outline of the plain curved desk lamp for a launch teaser. Natural creator-shot UGC with soft window light. Close framing with calm space above for a later launch date layer. Sound: fabric movement and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-product-launch-card-13",
-          "label": "Kitchen Food Reveal UGC",
-          "chips": [
-            "product-reveal"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult Black creator opens the plain protein bar wrapper and holds the bar cross-section toward the camera. Natural creator-shot UGC with soft window light and realistic skin. Close framing with one gentle push-in; end with the texture clearly visible. Sound: wrapper crinkle and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10b-occ-product-launch-card-09-hands-v2",
-          "label": "Kitchen Appliance First Use",
-          "chips": [
-            "first-use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, adult hands blend a berry smoothie with the compact handheld blender and hold the tool beside the finished glass; keep the scene hands-only with no face or identifiable person. Natural creator-shot UGC with soft morning window light. Medium close framing with one gentle push-in; end with the blender and glass side by side. Sound: blender hum and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-product-launch-first-use-steamer",
-          "label": "Fashion First Use UGC",
-          "chips": [
-            "first-use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. In a bright entry area, an adult hand glides the plain white garment steamer once over a blue shirt for a first-use demonstration. Natural creator-shot UGC with soft daylight. Close framing with the steamer and fabric clear and side space for a later launch layer. Sound: quiet steam and fabric movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-product-launch-unboxing-lamp",
-          "label": "Home Decor Room Reveal UGC",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a bright work desk, adult hands open a plain kraft box and lift out the curved desk lamp for the launch unboxing. Natural creator-shot UGC with soft morning light. Close framing with the lamp and box fully visible and space above for a later launch detail. Sound: tissue rustle and box movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-product-launch-arrival-tote",
-          "label": "Fashion Accessories Unboxing",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. At a sunny apartment entryway, adult hands open a plain parcel and reveal the natural canvas tote on launch day. Natural creator-shot UGC with bright daylight. Medium close framing with the tote and parcel fully visible and a blank wall area for a later date layer. Sound: cardboard and paper rustle; no music or added text.",
-          "kind": "photo"
-        }
-      ],
+      "lead": "Show the product clearly in a teaser or reveal scene, then add the launch date after download.",
+      "chips": [],
+      "cards": [],
       "button": "Make a product launch photo"
     },
     "uses": [],
@@ -241,25 +133,25 @@
       }
     }
   },
-  "benefits_h2": "Launch video assets to build anticipation for your reveal",
+  "benefits_h2": "Why sellers choose product launch creatives",
   "benefits": [
     {
-      "t": "A face for every launch asset",
-      "d": "Pick a creator for the teaser and reveal so your launch has one consistent voice, without casting or booking talent."
+      "t": "Launch assets from one photo",
+      "d": "Build a teaser, reveal and listing image from the same product shot while production finishes."
     },
     {
-      "t": "One photo, every launch stage",
-      "d": "Make the teaser, reveal and listing images from the same item, so each launch milestone is covered without a new shoot."
+      "t": "A clear first look",
+      "d": "Show the new item in a scene buyers can understand before launch day."
     },
     {
-      "t": "Versions before the date is set",
-      "d": "Test different openings and creators while launch wording changes, then add the final name, price and date after download."
+      "t": "Details stay editable",
+      "d": "Add the confirmed name, price and date after download as the launch plan changes."
     },
     {
-      "t": "Yours to run, no watermark",
-      "d": "Downloaded clips and images carry no AIVideosUGC watermark and are ready for paid launch posts, with the credit cost shown first."
+      "t": "Ready to run without a watermark",
+      "d": "Use downloaded launch images and clips in your own posts and paid campaigns."
     }
   ],
-  "steps_h2": "Create launch videos and photos in three steps",
-  "steps_lead": "From product photo to reveal in minutes, with every clip exported for TikTok, Instagram and YouTube."
+  "steps_h2": "Create product launch creatives in three steps",
+  "steps_lead": "Turn one product photo into a launch teaser, reveal or listing image before launch day."
 }
