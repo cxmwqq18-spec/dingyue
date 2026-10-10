@@ -103,7 +103,7 @@
     },
     "picker": {
       "title": "Browse social scenes",
-      "lead": "Each card turns the same product into a feed-ready moment. Pick a scene the item belongs in.",
+      "lead": "Each card turns one product into a feed-ready moment. Pick a scene the item belongs in.",
       "chips": [],
       "cards": [],
       "button": "Make a social ad photo"
