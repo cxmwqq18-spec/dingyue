@@ -156,5 +156,36 @@
         }
       ]
     }
-  ]
+  ],
+  "visual": {
+    "strip": [],
+    "steps": {
+      "source": "n:guide:k2-url-step-lunchbox-source",
+      "sourceAlt": "Your product: closed sage-green lunch container on a pale counter, viewed from the front.",
+      "result": "n:guide:q2-url-to-video-steps-result",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Show the product opening in a bright, practical scene.",
+      "sourceTitle": "Paste your product page link",
+      "sourceHint": "Like yourstore.com/products/lunch-container"
+    },
+    "picker": {
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": "",
+      "href": ""
+    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
+    "titles": {
+      "m2": {
+        "h2": "How to turn a product link into a video in 3 steps"
+      }
+    },
+    "overview": ""
+  }
 }
