@@ -1,11 +1,11 @@
 {
   "id": "tpl-beauty",
   "title": "Beauty Product Video Ads for Skincare | AIVideosUGC",
-  "description": "Show your serum, cream or oil in a calm daily routine with a beauty video ad. One product photo becomes a 9:16 clip for TikTok, Reels and listings.",
+  "description": "Place a serum, cream or oil inside a simple routine. One product photo becomes a beauty clip for TikTok, Reels, listings and paid ads.",
   "h1": "Beauty Product Video Ads Built Around a Daily Routine",
   "eyebrow": "Beauty video template",
-  "lead": "Skincare shoppers buy a product they can picture using, and a white-background bottle alone does not show that moment. Upload one product photo and get a beauty video ad that places your serum, cream or oil in a quiet daily routine ready for TikTok, Reels and your listing.",
-  "benefits_h2": "Why make beauty product video ads with AI?",
+  "lead": "Shoppers buy skincare they can picture using. Upload one product photo and get a routine-led beauty clip for TikTok, Reels and product pages.",
+  "benefits_h2": "Why sellers choose beauty video templates",
   "benefits": [
     {
       "t": "Show the routine, not just the bottle",
@@ -31,47 +31,20 @@
     "skincare routine video",
     "cosmetics product video"
   ],
-  "intro": [
-    "This one films a quiet self-care moment with your product at the center. In our sample, a woman in a white robe lifts a dropper from an amber serum bottle in a bright, sunlit bathroom.",
-    "Routine clips feel at home on TikTok and Instagram because they look like something a friend might post. They let shoppers see the packaging, the dropper or pump, and where the product sits in someone's morning or evening. Close shots of two drops on a fingertip, or a swatch on the back of a hand, show texture in a way still photos can't."
-  ],
-  "tip": "Use a photo where the bottle shape, cap, and color are easy to see, and describe the action, such as \"lifts the dropper and adds two drops to her fingertips.\"",
-  "steps_h2": "How to make a beauty product video ad in 3 simple steps",
-  "steps_lead": "Three steps turn one skincare photo into a routine-led ad clip — no studio, no model booking, no reshoot.",
+  "steps_h2": "How it works",
+  "steps_lead": "Choose a beauty style, add your product, generate. No studio, model booking or reshoot.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the full bottle or jar with cap, pump and color easy to see. A clear, low-glare source keeps the product accurate in the clip."
+      "d": "Add a clear photo of the full bottle, jar or tube with its main details visible."
     },
     {
-      "t": "Describe Your Routine",
-      "d": "Name the counter, light and one action, such as lifting a dropper or pressing a pump. The routine is generated without a shoot or model."
+      "t": "Pick a Beauty Style",
+      "d": "Choose a routine, review or texture scene, then generate the clip."
     },
     {
-      "t": "Download and Add Details",
-      "d": "Add the shade name or usage line as editable text, then post the 9:16 clip to TikTok and Reels. The download has no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Evening routine",
-      "d": "Swap the sunlight for a dim bedside lamp to show a night cream or an overnight mask."
-    },
-    {
-      "t": "Texture close-up",
-      "d": "Ask for a hand pressing a pump or dipping into a jar so buyers can see the cream or gel."
-    },
-    {
-      "t": "Body and hair care",
-      "d": "Use the same idea for a body oil after a shower or a hair serum worked through damp ends."
-    },
-    {
-      "t": "Dryness problem to solution",
-      "d": "Show the dry patch first and one cream-spread beat next; keep treatment wording and any result claim in your approved text."
-    },
-    {
-      "t": "Street interview review",
-      "d": "Use a sidewalk chest-up review when shoppers need a quick product reaction, with the tube or jar held beside the speaker."
+      "t": "Download and Use",
+      "d": "Download the video and add your shade, usage line or offer in your own editor."
     }
   ],
   "maker": {
@@ -89,190 +62,44 @@
   },
   "faq": [
     {
-      "q": "What makes a good skincare video source photo?",
-      "a": "Use a clear image with the full package visible and little glare on the bottle or cap."
+      "q": "What is a beauty product video template?",
+      "a": "It is a ready-made beauty scene. Add your own skincare photo and generate a routine, review or texture clip without filming a creator."
     },
     {
-      "q": "Can the clip show a routine without a person’s face?",
-      "a": "Yes. A hand can lift a dropper, press a pump, or place the product on a shelf."
+      "q": "Do I need to write prompts to use these templates?",
+      "a": "No. Pick a beauty style, upload your product photo and generate. Step two can include one short line about the scene if you want."
     },
     {
-      "q": "Can I add a shade or ingredient name?",
-      "a": "Add your own product claims as editable text in your video editor after download."
+      "q": "Who are these beauty templates built for?",
+      "a": "Skincare sellers, beauty teams and agencies that need fresh product clips for social feeds, listings and ads."
     },
     {
-      "q": "How long is a skincare routine clip?",
-      "a": "Choose 6 seconds for one application beat, 10 or 15 seconds for a short routine, or 30 for a full routine. These cost 24, 40, 60 or 120 credits."
+      "q": "Can the clip show a routine without a face?",
+      "a": "Yes. Choose hands, a close-up or a product-only routine when the product should stay the focus."
     },
     {
-      "q": "Can the video show the texture without a face?",
-      "a": "Yes. Ask for a close shot of a hand, cotton pad, or the product itself when you do not want a face in frame."
+      "q": "Can I make several skincare scenes from one photo?",
+      "a": "Yes. Reuse the same photo across a routine, review, unboxing or texture scene and generate another angle when needed."
     },
     {
-      "q": "Do I need a professional filming setup?",
-      "a": "No. A clear product photo and a written scene are enough; the clip is generated from your photo and description."
+      "q": "Which platforms are beauty clips made for?",
+      "a": "Use 9:16 clips for TikTok and Reels, or place a square version in a product gallery or feed post."
     },
     {
-      "q": "How do I show dry skin before and after?",
-      "a": "Use a close shot of a hand or cheek and describe one application beat; keep verified benefits and treatment wording in your own text."
+      "q": "How fast is a beauty video made?",
+      "a": "A clip is generated in minutes after you start the job, with no studio booking, creator schedule or reshoot."
     },
     {
-      "q": "Can a beauty ad use a street interview?",
-      "a": "Yes. Ask for a chest-up creator, the product beside the face, and one short question while the tube or jar stays fully visible."
+      "q": "What does a beauty video cost?",
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before you run it."
     },
     {
-      "q": "Should I show the full face or only hands?",
-      "a": "Choose a full face when the application or shade matters; choose hands for swatches, drops, and texture so details stay clear."
-    },
-    {
-      "q": "How do I describe texture without exaggerating?",
-      "a": "Name what the camera can show, such as a cream spread, clear drop, or matte finish, and avoid promises about results."
-    },
-    {
-      "q": "Can the scene show an ingredient or shade?",
-      "a": "Add the exact ingredient or shade text after download from approved product information; do not ask the generated scene to invent a claim."
-    },
-    {
-      "q": "Can I run the routine clip as a paid beauty ad?",
-      "a": "Yes. Clips you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark. You remain responsible for product claims and the disclosures each ad platform requires."
-    },
-    {
-      "q": "Is it safe to show skincare results in the video?",
-      "a": "Show the application moment and texture, not a promised before-and-after result. Keep any verified benefit to approved wording added as text so the ad does not claim an outcome you cannot support."
+      "q": "Can I use a beauty clip in paid ads?",
+      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for claims and disclosures."
     }
   ],
-  "overview": [
-    {
-      "h2": "Show the product inside a real routine",
-      "d": "A beauty routine clip should answer two visual questions quickly: what the package looks like and how a person handles it. Pick one gesture, such as lifting a dropper or pressing a pump, and give that gesture enough room to read."
-    },
-    {
-      "h2": "Let the scene show texture without making a claim",
-      "d": "A swatch, a small pour, or a fingertip application can show a cream, oil, or gel. Add verified benefits, ingredients, shade names, and usage directions after you approve the scene."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a beauty photo for a close routine",
-    "items": [
-      {
-        "t": "Keep the dispenser front-facing",
-        "d": "A dropper, pump, or cap should be visible enough for the requested hand movement to make sense."
-      },
-      {
-        "t": "Control bottle reflections",
-        "d": "Use a soft angle on glossy glass or foil so highlights do not erase the color and silhouette."
-      },
-      {
-        "t": "Show the product alone",
-        "d": "A clean bottle or jar gives the scene a stable reference before you add a hand, basin, mirror, or towel."
-      },
-      {
-        "t": "Name the texture action",
-        "d": "Say fingertip swatch, cream spread, mist, or oil drop instead of asking for every routine step at once."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What your routine clip can make visible",
-    "items": [
-      {
-        "t": "Packaging in context",
-        "d": "The bottle, jar, pump, or dropper appears in a bathroom, vanity, bedside, or travel setting you describe."
-      },
-      {
-        "t": "One tactile moment",
-        "d": "A hand can lift, press, dispense, spread, or hold the product so shoppers see how it is handled."
-      },
-      {
-        "t": "Simple cost choices",
-        "d": "A six-, ten-, fifteen-, or thirty-second video costs 24, 40, 60, or 120 credits; you see the charge before generation."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Beauty routine scenes to describe",
-    "items": [
-      {
-        "t": "Morning serum",
-        "d": "A dropper lifts above a white sink, releases two drops onto fingertips, and returns beside the amber bottle."
-      },
-      {
-        "t": "Night cream",
-        "d": "A hand opens a low jar beside a warm bedside lamp and smooths a small amount across the back of the hand."
-      },
-      {
-        "t": "Hair oil",
-        "d": "A pump dispenses oil onto a palm beside a mirror, then the hand gathers the ends of damp hair."
-      },
-      {
-        "t": "Body mist",
-        "d": "A fine spray catches window light above a folded towel while the bottle remains centered and upright."
-      },
-      {
-        "t": "Dry knuckles",
-        "d": "Frame a dry hand beside an open cream jar, then show one slow spread across the same patch without implying a medical result."
-      },
-      {
-        "t": "Sidewalk sunscreen",
-        "d": "A creator answers one short question on a quiet street while holding a plain sunscreen tube at chest height and facing the camera."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the beauty message after download",
-    "items": [
-      {
-        "t": "Add verified product words",
-        "d": "Type the shade, ingredient, volume, and usage line from your approved product information."
-      },
-      {
-        "t": "Choose the sound",
-        "d": "Place licensed music or a voice track under the visual once the pacing feels right."
-      },
-      {
-        "t": "Check hand and label details",
-        "d": "Review the package and action frame by frame before publishing the routine."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Good matches for this routine",
-    "good": [
-      "Serums, creams, oils, and mists",
-      "Products with a visible pump, dropper, or jar",
-      "TikTok and Reels routine posts",
-      "Quiet bathroom, vanity, or travel scenes"
-    ],
-    "not_ideal": [
-      "Products that need a medical result claim",
-      "Tiny ingredient panels that must be read inside the video"
-    ]
-  },
-  "examples": {
-    "h2": "Skincare Moments in Use",
-    "lead": "A creator presents a face serum while a single face cream jar is unboxed at a bright vanity.",
-    "groups": [
-      {
-        "label": "Beauty Routines",
-        "items": [
-          {
-            "ref": "n:guide:tpl-beauty-m6-opening",
-            "title": "Amber Serum Bottle at a Vanity",
-            "kind": "scene",
-            "product": "face serum"
-          },
-          {
-            "ref": "n:guide:q11-beauty-example-02-square-r2",
-            "title": "Face Cream Jar Unboxed at a Vanity",
-            "kind": "scene",
-            "product": "face cream jar"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Create a skincare ad around one clear routine or texture moment. Keep the bottle, jar, or tube easy to recognize while a single action gives the scene its focus.",
+    "overview": "A beauty template puts your serum, cream or oil inside a routine shoppers recognize, so the product is easier to picture using.",
     "strip": [
       "n:guide:q11-beauty-strip-square-01",
       "n:guide:tpl-beauty-round4-serum-pump",
@@ -299,120 +126,101 @@
       ]
     },
     "picker": {
-      "title": "Choose a beauty ad style",
-      "lead": "Pick a creator format that shows the skincare product clearly.",
+      "title": "Choose a beauty template",
+      "lead": "Browse beauty styles, then add your own skincare product photo.",
       "chips": [
         {
-          "id": "review",
-          "label": "Creator review"
-        },
-        {
-          "id": "application",
-          "label": "Routine demo"
-        },
-        {
-          "id": "texture",
-          "label": "Texture close-up"
-        },
-        {
-          "id": "unboxing",
-          "label": "Unbox and reveal"
+          "id": "beauty",
+          "label": "Beauty"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:f16-r10-beauty-street-review-r1",
-          "label": "Sunscreen street interview",
+          "label": "Beauty Street Interview UGC TikTok",
           "chips": [
-            "review"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. An adult creator answers a quick street interview while holding the plain sunscreen tube beside his face. Use a chest-up sidewalk frame with a small handheld drift. Daylight keeps the tube front-facing and easy to inspect. End with the tube and creator together in frame. Sound: quiet street room tone. Voice: \"I keep this sunscreen ready for a quick morning routine.\". No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:f16-tpl-beauty-picker-lip-tint-r1",
-          "label": "Lip Tint Try-On Review",
+          "label": "Concealer Beauty Review UGC",
           "chips": [
-            "review",
-            "application"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator swipes the lip tint once across her lower lip. Hold a close face framing with a small push-in. Soft vanity light shows the tint clearly. End on the finished lip tint and product in hand. Sound: quiet room tone. Voice: \"This shade is easy to wear.\". No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:f16-r10-beauty-problem-solution-r1",
-          "label": "Moisturizer dry-skin problem to solution",
+          "label": "Skincare Problem Solution UGC",
           "chips": [
-            "application",
-            "texture"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands show a dry knuckle close-up, then spread one small amount of plain moisturizer over the same area beside the cream jar. Use a macro vanity frame with a slow push-in. Soft window light keeps the skin texture and cream visible. End with the moisturized hand and jar together. Sound: quiet bathroom room tone. No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q11-beauty-picker-04",
-          "label": "Serum Dropper Swatch",
+          "label": "Skincare Product Close-Up UGC",
           "chips": [
-            "application",
-            "texture"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand places one serum drop onto the back of the other hand. Use a macro hand close-up and a slow lateral slide. A bright side light catches the clear serum drop. End with the amber bottle and single swatch together. Sound: one glass click and quiet room tone. No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q11-beauty-picker-05",
-          "label": "Cream Texture ASMR",
+          "label": "Beauty Accessories ASMR Unboxing",
           "chips": [
-            "texture",
-            "unboxing"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A spatula draws one smooth line through the cream in the open jar. Use a macro crop with a gentle push-in. Soft daylight reveals the cream texture. End on the clean groove beside the jar. Sound: soft spatula scrape and room tone. No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q11-beauty-picker-06",
-          "label": "Lip Tint Before and After",
+          "label": "Beauty Before After UGC Hook",
           "chips": [
-            "application",
-            "texture"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator turns once from a bare-lip starting look to the finished tint look. Keep a steady face close-up with a short smooth pan. Even vanity light keeps both sides of the face clear. End facing camera with the tint tube beside her chin. Sound: soft room tone. No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q11-beauty-picker-07",
-          "label": "Serum Bottle Unboxing",
+          "label": "GRWM Skincare Morning Routine",
           "chips": [
-            "unboxing"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands lift the amber serum bottle once from its open skincare box. Frame the box and bottle from a close overhead angle. Bright window light fills the clean counter scene. End with the full bottle upright beside the open box. Sound: paper tissue rustle and bottle tap. No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:f16-tpl-beauty-picker-gift-review-r1",
-          "label": "Skincare Gift Set Review",
+          "label": "Beauty Talking Head Product Review UGC",
           "chips": [
-            "review",
-            "unboxing"
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator presents the open skincare gift set to the camera. Use a chest-up medium frame with a gentle push-in. Soft daylight lights each item in the set. End with the open set centered at chest height. Sound: quiet room tone. Voice: \"This set covers my evening routine.\". No music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:f16-r10-beauty-problem-solution-alt-r1",
-          "label": "Moisturizer dry-hand application",
+          "label": "Skincare Routine TikTok UGC",
           "chips": [
-            "application",
-            "texture"
+            "beauty"
           ],
           "kind": "video",
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands apply one small amount of plain moisturizer to a dry patch on the back of the hand beside the open cream jar. Use a close bathroom counter frame with a gentle lateral slide. Bright daylight shows the change in surface sheen without promising a result. End with the jar and treated hand in frame. Sound: one soft jar tap and room tone. No music."
         },
         {
           "ref": "n:guide:f16-r10-beauty-street-review-alt-r1",
-          "label": "Sunscreen sidewalk interview",
+          "label": "Toner Skincare Bathroom UGC",
           "chips": [
-            "review"
+            "beauty"
           ],
           "kind": "video",
           "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. An older creator answers one short question on a quiet sidewalk while holding the plain sunscreen tube at chest height. Use a chest-up interview frame with a small handheld drift. Keep the tube and face fully visible. End with the tube front-facing beside the creator. Sound: light street ambience. Voice: \"The tube fits in my everyday bag.\". No music."
@@ -420,77 +228,16 @@
       ],
       "button": "Make a skincare video"
     },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:q11-beauty-uses-01-r2",
-        "h": "Show the serum on a product page",
-        "d": "Keep the amber dropper bottle and full package visible beside approved product details."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q11-beauty-uses-02-square-r2",
-        "h": "Feature cream texture in a feed post",
-        "d": "Show one scoop of cream beside its jar before adding ingredient and usage copy."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:tpl-beauty-m2-source",
-        "bad": "n:guide:q11-beauty-input-01-bad-r2",
-        "good_label": "Amber serum bottle stays sharply focused",
-        "bad_label": "Amber serum bottle falls out of focus"
-      },
-      {
-        "good": "n:guide:q11-beauty-input-02-good-r2",
-        "bad": "n:guide:q11-beauty-input-02-bad-r2",
-        "good_label": "Full amber serum bottle stays in frame",
-        "bad_label": "Amber serum bottle is clipped by frame"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:tpl-beauty-r4-opening",
-        "frame": "9:16",
-        "length": 10,
-        "label": "Amber serum bottle routine opening"
-      },
-      {
-        "ref": "f:tpl-beauty-r4-drop",
-        "frame": "9:16",
-        "length": 10,
-        "label": "Amber serum dropper close-up"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:tpl-beauty-m6-drop",
-      "zones": [
-        "Product name",
-        "Usage line"
-      ],
-      "items": [
-        "Add the product name and routine note as editable text in your video editor.",
-        "Choose licensed music or a voice track there before publishing."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make skincare video ads from one product photo"
       },
       "m3": {
         "h2": "Choose a beauty routine scene for skincare"
-      },
-      "m4": {
-        "h2": "Use beauty videos in feeds and product pages"
-      },
-      "m5": {
-        "h2": "Start with a clear skincare package photo"
-      },
-      "m6": {
-        "h2": "Vertical skincare video sample frames"
-      },
-      "m7": {
-        "h2": "Add product wording after download"
       },
       "faq": {
         "h2": "Questions about skincare video ads"
