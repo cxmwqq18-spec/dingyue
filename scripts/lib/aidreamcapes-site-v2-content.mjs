@@ -88,8 +88,8 @@ const HOME_TOOL_ALTS = {
   "social-ad-photos": "Gray trail shoe on a rock beside a blue lake."
 };
 const TOOL_DESC = {
-  "image-to-video": "Turn any product photo into a video", "url-to-video": "Paste a product link, get a video", "video-ads": "Short ads for TikTok, Reels and Shorts",
-  "product-videos": "Show how your product looks and works", "unboxing-videos": "The first-look moment, no filming", "before-after-videos": "Show the difference your product makes",
+  "image-to-video": "Animate one product photo into a short clip", "url-to-video": "Paste a product link, get a video", "video-ads": "Short ads for TikTok, Reels and Shorts",
+  "product-videos": "Demo how your product works, one action per clip", "unboxing-videos": "The first-look moment, no filming", "before-after-videos": "Show the difference your product makes",
   "spokesperson-videos": "A presenter shows your product on camera", "photo-hub": "Studio-quality shots from any photo", "white-background": "Ready for Amazon and Shopify",
   "lifestyle-photos": "Your product in a real-life scene", "model-photos": "Your clothes and accessories on a model", "change-background": "New background, same product",
   "social-ad-photos": "Images for Facebook and Instagram ads"
