@@ -89,6 +89,20 @@
           "Use",
           "Product page · home · social"
         ]
+      ],
+      "items": [
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo from your Shopify product page. There is no link to paste and no product data to sync."
+        },
+        {
+          "t": "Pick the scene",
+          "d": "Choose the format you want, from a clean product shot to a creator-style scene, and see the credit cost first."
+        },
+        {
+          "t": "Render, download and launch",
+          "d": "Preview the result, make another version if you need one, then download the file and add it to your store or ad."
+        }
       ]
     }
   },
