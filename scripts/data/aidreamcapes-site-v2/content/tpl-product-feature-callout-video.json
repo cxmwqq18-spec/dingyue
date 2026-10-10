@@ -1,27 +1,27 @@
 {
   "id": "tpl-product-feature-callout-video",
   "title": "Product Feature Callout Video Template | AIVideosUGC",
-  "description": "Make one product feature impossible to miss with a callout video from one photo. Show the detail in action, then add the exact feature name as text.",
+  "description": "Put one product feature in the spotlight with a callout video from a single photo. Show the detail in action, then add the exact label as text.",
   "h1": "Product Feature Callout Videos for One Clear Detail",
   "eyebrow": "Feature callout video template",
-  "lead": "Products lose sales when a key feature stays buried in a list of specs, and filming every detail separately is not practical. Upload one product photo and get a feature callout video that isolates the detail in action, so shoppers see exactly why it matters without a presenter explaining it.",
-  "benefits_h2": "Why make product feature callout videos?",
+  "lead": "A key feature buried in a spec list rarely helps shoppers decide. Upload one product photo and make a callout video that shows the detail in action, so buyers see why it matters.",
+  "benefits_h2": "Why make feature callout videos from one photo?",
   "benefits": [
     {
-      "t": "Move one feature from text to proof",
-      "d": "The clip shows a pump press, clasp close, hinge opening or texture spread in a close frame. Buyers see the feature working instead of reading its name in a spec list."
+      "t": "Turn a spec into proof",
+      "d": "Show a pump press, clasp close, hinge opening or texture spread in close frame, so buyers see the feature working."
     },
     {
-      "t": "One detail per clip, easy to place",
-      "d": "Keep each callout focused on a single mechanism and link it to the matching section of the product page. A product with several features gets a short clip for each one without new shoots."
+      "t": "One detail per clip",
+      "d": "Give each feature its own short video and link it to the matching part of your product page, with no new shoots."
     },
     {
-      "t": "Cut for pages, TikTok and Reels",
-      "d": "Use 9:16 to keep the detail large in vertical feeds, 1:1 in listings or 16:9 on a product page. Clips run 6, 10, 15 or 30 seconds, from one quick action to a fuller feature walkthrough."
+      "t": "Fit every selling channel",
+      "d": "Use 9:16 in TikTok and Reels, 1:1 in feeds, or 16:9 on a product page, with clips at 6, 10, 15 or 30 seconds."
     },
     {
-      "t": "Exact labels added by you",
-      "d": "Type feature names, measurements and ingredient lines in your editor after download so small words stay accurate. Downloads carry no AIVideosUGC watermark and can be used in your own ads."
+      "t": "Add exact labels yourself",
+      "d": "Type feature names, measurements and ingredients in your editor after download. The video carries no watermark."
     }
   ],
   "secondary_keywords": [
@@ -30,42 +30,20 @@
     "single benefit product video",
     "ecommerce feature video"
   ],
-  "intro": [
-    "A feature callout works when shoppers can see one thing happen. The sample presses a white cleanser pump, spreads the foam, and keeps the action close enough to understand without a presenter.",
-    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action; use the product listing to add ingredients, measurements, and small package details in your editor.",
-    "Choose one feature a shopper can see happen: a cleanser pump dispenses once, a cable seats in an organizer, a stain lifts from a cuff, or a clasp closes. Keep the product and the hand in the same close frame so the action explains itself without a presenter. One clear movement makes the resulting clip useful beside a listing and easy to compare with your own product footage.",
-    "Describe the action in the order it happens, including where the hand starts and where the product ends. Mention the surface, light, and final held position so the generator has a stable ending. Add measurements, ingredient names, and performance language later in the product details; the image should demonstrate the mechanism without making an unsupported claim.",
-    "Before publishing, verify the feature against a real sample and inspect the close-up for shape, color, and edge detail. Keep one feature per clip when a product has several mechanisms, then link each clip to the relevant section of the product page. A clear before state, one action, and a settled after state give shoppers enough evidence to decide what to inspect next."
-  ],
-  "tip": "Describe one visible feature and one action, then leave any ingredient, size, or performance statement for text you add yourself.",
-  "steps_h2": "How to make a feature callout video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a single-detail proof clip — no presenter, no close-up shoot, no unsupported claims.",
+  "steps_h2": "Make a feature callout video in 3 steps",
+  "steps_lead": "One product photo becomes a single-detail clip, with no presenter and no close-up shoot.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the whole item and the part shoppers need to see in use, with glare and blur kept out of the frame."
+      "d": "Show the whole item and the part shoppers need to see in use."
     },
     {
       "t": "Describe the Action",
-      "d": "Name what moves and where, such as pressing a pump beside a sink. One visible feature is generated in a close, steady scene."
+      "d": "Share one sentence about what moves, such as pressing a pump beside a sink."
     },
     {
-      "t": "Download and Label",
-      "d": "Add the exact feature name, dimensions and ingredients in your editor, then post 9:16, 1:1 or 16:9. The file has no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Texture moment",
-      "d": "Show a cream, gel, or drink pouring into a glass without making an unsupported claim."
-    },
-    {
-      "t": "Small mechanism",
-      "d": "Use a close movement for a zipper, lid, hinge, button, or charging port."
-    },
-    {
-      "t": "Pack and use",
-      "d": "Show the feature once in the package and once in a real setting."
+      "t": "Download and Add Label",
+      "d": "Add the exact feature name, measurements and ingredients in your editor, then post in any size."
     }
   ],
   "maker": {
@@ -87,176 +65,32 @@
   },
   "faq": [
     {
-      "q": "Will the video write my feature label correctly?",
-      "a": "No. The generated scene may not render small words accurately. Add the feature name, ingredients, measurements, and disclosures in your editor after downloading."
+      "q": "Will the video render my feature label?",
+      "a": "Small text in a generated scene may be inaccurate. Add the feature name, ingredients and measurements in your editor after download."
     },
     {
-      "q": "Can I show more than one feature?",
-      "a": "You can make separate runs for separate features. Keeping one detail per clip makes the action easier to understand."
+      "q": "Can one video show several features?",
+      "a": "Make a separate video for each feature. One detail per clip keeps the action easy to follow."
     },
     {
-      "q": "Does the clip include a spoken narration or music?",
-      "a": "AIVideosUGC does not add spoken narration, music, or captions. Add your spoken or written explanation in your editor after download."
+      "q": "Does the video include narration?",
+      "a": "No narration, music or captions are added. Add sound or written explanations in your editor."
     },
     {
-      "q": "How should I describe a product feature?",
-      "a": "Name one visible feature and one action, such as “presses the locking tab.”"
+      "q": "What photo should I upload?",
+      "a": "Use a sharp, well-lit photo that shows the whole product and the feature clearly, without glare or tight crops."
     },
     {
-      "q": "What input photo works best for a feature callout?",
-      "a": "Use a sharp, well-lit photo that shows the whole product and the feature in focus. Avoid glare, blur, tight crops, or printed text you need to preserve; a clean input makes a pump, hinge, clasp, or texture easier to review after rendering."
+      "q": "What size should I choose?",
+      "a": "Use 9:16 for TikTok and Reels, 1:1 for feeds and listings, or 16:9 for a product page."
     },
     {
-      "q": "What ratio fits a feature callout?",
-      "a": "9:16 works for TikTok and Reels and keeps the detail large; a 1:1 version fits feeds and listings."
-    },
-    {
-      "q": "How is a callout clip credited?",
-      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits."
-    },
-    {
-      "q": "Can I create another feature-callout video from the same source photo?",
-      "a": "Yes. Keep the cleanser pump as the reference, then change one action or camera angle at a time. Check that the pump, foam, and final held position match the physical sample. Add the feature name, measurement, and current offer after download so product facts remain easy to update. Keep the action repeatable: one press, one visible result, and a still final frame make the clip easy to compare with a real sample. If the package changes, update the callout text and the reference frame together before publishing."
-    },
-    {
-      "q": "Can the callout video be used as a paid ad?",
-      "a": "Yes. Videos you make can run in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You remain responsible for the feature claims and disclosures in the ad."
-    },
-    {
-      "q": "What is the difference between a feature callout and a how-to video?",
-      "a": "A callout isolates one detail and proves it in a single action, while a how-to walks through a complete task from setup to finished result. Use the callout when one feature is the reason to buy."
+      "q": "How much do the videos cost?",
+      "a": "Clips cost 24, 40, 60 or 120 credits at 6, 10, 15 or 30 seconds, and the charge is shown before you start."
     }
   ],
-  "overview": [
-    {
-      "h2": "Make one feature easy to notice",
-      "d": "A callout clip should have one subject and one visible action: a pump pressed, a clasp closed, a hinge opened, or a texture spread. Start with the detail a shopper needs to inspect, then keep the scene close enough to follow."
-    },
-    {
-      "h2": "Keep overlay wording accurate",
-      "d": "Use the product listing for ingredients, measurements, compatibility, and performance statements before adding them as text."
-    }
-  ],
-  "input_guide": {
-    "h2": "Photograph the feature before you describe it",
-    "items": [
-      {
-        "t": "Frame the moving part",
-        "d": "Keep the pump head, clasp, zipper, button, hinge, or port large enough to remain visible through the action."
-      },
-      {
-        "t": "Show the surrounding shape",
-        "d": "Include enough of the full product that the viewer can tell where the feature belongs."
-      },
-      {
-        "t": "Use a useful angle",
-        "d": "A side view suits a hinge or zipper; a top view can suit a pump or lid; choose the angle that shows movement."
-      },
-      {
-        "t": "Name one result",
-        "d": "Describe opens, closes, dispenses, pours, or connects rather than listing several benefits in one request."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the callout can show",
-    "items": [
-      {
-        "t": "A readable mechanism",
-        "d": "The short scene puts one physical detail at the center so shoppers can see how it moves."
-      },
-      {
-        "t": "A channel-ready frame",
-        "d": "Use 9:16 for social, 1:1 for a feed, 16:9 for a product page, or 4:3 and 3:4 for another crop."
-      },
-      {
-        "t": "A measured test cost",
-        "d": "Six, ten, fifteen and thirty seconds use 24, 40, 60 and 120 credits; the cost is visible before creation."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Feature callouts to describe",
-    "items": [
-      {
-        "t": "Pump and foam",
-        "d": "A hand presses a cleanser pump once, foam gathers on fingertips, and the bottle remains upright beside the sink."
-      },
-      {
-        "t": "Wallet clasp",
-        "d": "A leather wallet opens on a desk, the clasp closes with one motion, and the camera returns to the full shape."
-      },
-      {
-        "t": "Kettle lid",
-        "d": "A hand lifts the lid, steam leaves the spout, and the kettle settles back on its base."
-      },
-      {
-        "t": "Charging port",
-        "d": "A cable connects to a small device on a desk, with the port and plug visible in one close movement."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Add the feature details",
-    "items": [
-      {
-        "t": "Name the feature",
-        "d": "Add the exact feature title and model wording from your product information."
-      },
-      {
-        "t": "Add measurements or ingredients",
-        "d": "Use the product listing when adding capacity, dimensions, ingredients, or compatibility."
-      },
-      {
-        "t": "Choose sound",
-        "d": "Add music, a short sound effect, or spoken narration in the editor that will publish the clip."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When a feature callout fits",
-    "good": [
-      "Pumps, caps, hinges, clasps, and ports",
-      "Visible textures and simple pours",
-      "One product detail on a product page",
-      "Short social demonstrations without a presenter"
-    ],
-    "not_ideal": [
-      "Performance or medical claims that need testing",
-      "Features hidden inside software or unreadable small print"
-    ]
-  },
-  "examples": {
-    "h2": "More feature scenes",
-    "lead": "One feature at a time, shown in close-up, with the whole product before and after.",
-    "groups": [
-      {
-        "label": "One feature each",
-        "items": [
-          {
-            "ref": "n:guide:q13-feature-examples-0-r2",
-            "title": "Wallet opens to show its compartments",
-            "kind": "scene",
-            "product": "wallet"
-          },
-          {
-            "ref": "n:guide:q13-feature-examples-1-r2",
-            "title": "Smoothie pours from a portable blender",
-            "kind": "scene",
-            "product": "portable blender"
-          },
-          {
-            "ref": "n:guide:q13-feature-examples-2-r2",
-            "title": "Laptop stand raised beside a desk",
-            "kind": "scene",
-            "product": "laptop stand"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A product-feature callout video puts one visible function in focus. Describe a single movement, then add the feature name and any exact measurements in your editor. Use this format when shoppers need to see a cleanser pump dispense, a cable seat, or a clasp close. Keep one mechanism visible from the first frame, then leave room for the feature label and measurement you add after download. Review the product edge, finish, and action against your source before publishing. The close framing should show the hand, the moving part, and the finished state without relying on a caption to explain the mechanism.",
+    "overview": "A feature callout video puts one visible function at the center of the frame. Show the moving part in a single action, then add the exact feature name and measurements in your editor.",
     "strip": [
       "n:guide:q13-feature-strip-0",
       "n:guide:q13-feature-strip-1-r2",
@@ -290,163 +124,101 @@
       "mode": "video"
     },
     "picker": {
-      "title": "Pick one feature for your product video",
-      "lead": "Choose a part shoppers can see move, open, or catch the light. Start with one mechanism, then choose the scene that shows the start, action, and finished position clearly.",
+      "title": "Choose a feature callout format",
+      "lead": "Pick a format that shows the feature in one clear action.",
       "chips": [
         {
-          "id": "problem",
-          "label": "Solve a visible problem"
+          "id": "demos",
+          "label": "Demos"
         },
         {
-          "id": "detail",
-          "label": "Show a product detail"
+          "id": "details",
+          "label": "Details"
         },
         {
-          "id": "routine",
-          "label": "Demonstrate a routine"
+          "id": "routines",
+          "label": "Routines"
         },
         {
-          "id": "reaction",
-          "label": "Capture a reaction"
+          "id": "reactions",
+          "label": "Reactions"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:q13-feature-picker-0",
-          "label": "Cable organizer demo",
+          "label": "Cable Organizer Desk Demo",
           "chips": [
-            "problem",
-            "reaction"
+            "demos"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a desk, an adult guides one loose charging cable into the organizer slot and leaves the other cables visible beside it. The adult looks at the tidier desk and gives a small, natural smile. Top-down close-up, slow push-in. Broad desk-side window light. End with one cable seated and the remaining cables loose at the desk edge. Sound: cable slide and desk ambience, no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:f5-r10-feature-card-1-travel-mug-lock",
-          "label": "Stainless travel mug lid lock",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, one adult hand presses the locking tab on the stainless-steel travel mug lid once. Keep the hinge and latch in clear view and show no face. Tight overhead close-up with a gentle push-in. Soft window light. End with the tab closed and the full lid centered. Sound: one latch click and quiet kitchen room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f5-r10-feature-card-2-speaker-button",
-          "label": "Desktop speaker side-button detail",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, one adult hand presses the round side button on the small charcoal desktop speaker once. Keep the button and speaker grille visible and show no face. Close eye-level desk framing with a short push-in. Soft window light. End with the button centered and the speaker steady. Sound: one soft button click and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-feature-picker-3",
-          "label": "Stain remover test",
-          "chips": [
-            "problem"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a laundry sink, an adult sprays the stain remover once onto a marked shirt cuff and presses it with a plain cloth. Keep the bottle and cuff in view. Close handheld framing. Even task light over the counter. End with the bottle beside the treated cuff, both in clear view. Sound: one spray and cloth movement; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f5-r10-feature-card-4-container-seal",
-          "label": "Glass food container seal",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a kitchen counter, adult hands press the pale lid seal and close the visible latch on a clear glass food container. Keep the lid edge and latch in frame. Overhead close-up with a gentle push-in. Soft daylight. End with the sealed container centered. Sound: one latch click and quiet kitchen room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-feature-picker-5",
-          "label": "Jacket fit check",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wearing the jacket turns toward the camera and says, “The sleeve length and front hem are visible.” Keep the full jacket front in frame. Natural fitting-room light, mirror-height medium shot. End facing camera with the jacket front centered from hem to collar. Sound: spoken line and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
           "ref": "n:guide:f5-r10-feature-card-6-screen-cloth",
-          "label": "Microfiber cloth screen cleanup",
+          "label": "Microfiber Screen Cleanup Demo",
           "chips": [
-            "problem",
-            "routine"
+            "demos"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, an adult hand wipes dust from a blank dark tablet screen with a blue-gray microfiber cloth, leaving a clean strip beside the remaining dust. Keep the cloth and screen edge visible; show no face or readable screen text. Medium close framing with a slow sideward move. Soft window light. End on the clean strip and cloth together. Sound: soft cloth movement and quiet desk ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q13-feature-picker-7",
-          "label": "Protein bar first bite",
+          "ref": "n:guide:f5-r10-feature-card-1-travel-mug-lock",
+          "label": "Travel Mug Lid Detail",
           "chips": [
-            "reaction"
+            "details"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, one adult hand presses the locking tab on the stainless-steel travel mug lid once. Keep the hinge and latch in clear view and show no face. Tight overhead close-up with a gentle push-in. Soft window light. End with the tab closed and the full lid centered. Sound: one latch click and quiet kitchen room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f5-r10-feature-card-4-container-seal",
+          "label": "Food Container Seal Detail",
+          "chips": [
+            "details"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a kitchen counter, adult hands press the pale lid seal and close the visible latch on a clear glass food container. Keep the lid edge and latch in frame. Overhead close-up with a gentle push-in. Soft daylight. End with the sealed container centered. Sound: one latch click and quiet kitchen room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f5-r10-feature-card-2-speaker-button",
+          "label": "Speaker Button Routine",
+          "chips": [
+            "routines"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, one adult hand presses the round side button on the small charcoal desktop speaker once. Keep the button and speaker grille visible and show no face. Close eye-level desk framing with a short push-in. Soft window light. End with the button centered and the speaker steady. Sound: one soft button click and quiet room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-feature-picker-5",
+          "label": "Jacket Fit Routine",
+          "chips": [
+            "routines"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wearing the jacket turns toward the camera and says, “The sleeve length and front hem are visible.” Keep the full jacket front in frame. Natural fitting-room light, mirror-height medium shot. End facing camera with the jacket front centered from hem to collar. Sound: spoken line and quiet room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-feature-picker-3",
+          "label": "Stain Remover Reaction",
+          "chips": [
+            "reactions"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a laundry sink, an adult sprays the stain remover once onto a marked shirt cuff and presses it with a plain cloth. Keep the bottle and cuff in view. Close handheld framing. Even task light over the counter. End with the bottle beside the treated cuff, both in clear view. Sound: one spray and cloth movement; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q13-feature-picker-7",
+          "label": "Protein Bar Taste Reaction",
+          "chips": [
+            "reactions"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult takes one bite of the protein bar, turns the cut side toward the lens and says, “You can see the oat and seed pieces.” Chest-up framing. Soft kitchen window light. End with the bar cut-side forward and its plain wrapper beside it. Sound: spoken line and one crisp bite; no music.",
           "kind": "video"
         }
       ],
       "button": "Make a feature callout video"
-    },
-    "uses": [
-      {
-        "frame": "browser",
-        "h": "Show one feature on a product page",
-        "d": "Place the clip beside the feature description so shoppers can connect the action with its label. Keep the close frame tight enough to show the cleanser pump and the result of one press. Show the bottle shoulder and pump head together so the press has a clear starting point.",
-        "ref": "n:guide:q13-feature-uses-0"
-      },
-      {
-        "frame": "phone",
-        "h": "Share the cleanser feature demo in a Reel",
-        "d": "Show the pump action close up, then add the feature name and dimensions as text. Leave the white bottle and hand unobstructed so the movement is easy to follow. If the feature has a limit, add that measurement beside the frame rather than claiming performance in the image.",
-        "ref": "n:guide:c1-tpl-product-feature-callout-video-m4-cleanser-video-916"
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:c1-tpl-product-feature-callout-video-reuse-strip0-square",
-        "bad": "n:guide:tpl-product-feature-callout-video-input-1-blur",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
-      },
-      {
-        "good": "n:guide:q13-feature-input-1-good-r2",
-        "bad": "n:guide:q13-feature-input-1-bad-r2",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
-      }
-    ],
-    "outputs": [
-      {
-        "label": "9:16 cleanser massaged into cheek",
-        "frame": "9:16",
-        "length": 15,
-        "ref": "n:guide:q13-feature-outputs-0-r3"
-      },
-      {
-        "label": "9:16 cleanser pump pressed once",
-        "frame": "9:16",
-        "length": 15,
-        "ref": "n:guide:c1-tpl-product-feature-callout-video-m6-cleanser-output-2-916"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q13-feature-after-r4",
-      "mock": {
-        "type": "callout",
-        "tag1": "One-press foam",
-        "tag2": "Gentle formula",
-        "tag3": "Rinses clean"
-      },
-      "zones": [
-        "Feature callouts",
-        "Measurement",
-        "Link"
-      ],
-      "items": [
-        "Add the feature callouts and exact measurement as editable text. Check the cleanser pump, foam, and one-press action against the physical sample before publishing. Keep the callout line outside the hand path so the movement stays visible. Show the pump head and foam result at one scale in the close frame.",
-        "Keep the product link and ingredient details in your editor. Read the finished frame at mobile size and move added text away from the pump and the hand. Check the ingredient and measurement text against the package before the clip goes live. Keep the feature name beside the bottle rather than over the hand path so the action remains readable."
-      ]
     },
     "titles": {
       "m2": {
