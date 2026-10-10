@@ -1,49 +1,17 @@
 {
   "id": "occ-black-friday",
-  "title": "Black Friday Ad Creatives for Small Shops | AIVideosUGC",
-  "description": "Prepare Black Friday ads weeks early from one product photo: clips and banners in every size with space for the deal, no shoot, cost shown first.",
-  "h1": "Black Friday Ad Creatives You Can Prepare Weeks Ahead",
-  "eyebrow": "Black Friday",
-  "lead": "Black Friday deals wait for no one and booking a shoot weeks out is too slow. Upload a product photo now and have clips and banners in every size ready, then add the deal once it is set.",
-  "card": "Clips and banners made ahead, with every size ready for sale weekend.",
+  "title": "Black Friday Ad Creatives for Your Sale | AIVideosUGC",
+  "description": "Create Black Friday ad creatives from one product photo, then add the confirmed discount, code and end date after download. Prepare the sale scene early.",
+  "h1": "Create Black Friday Ad Creatives From One Product Photo",
+  "eyebrow": "Black Friday ad creatives",
+  "lead": "Make the Black Friday product scene early, then add the confirmed discount, code and end date when the offer is ready.",
   "secondary_keywords": [
     "Black Friday video ads",
     "Black Friday banner ideas",
     "Black Friday sale ads for ecommerce",
     "Cyber Monday ad creatives"
   ],
-  "intro": [
-    "Keep the featured product clear and leave a separate area for the offer. Add the confirmed discount, code, and end date in an editable text layer.",
-    "AIVideosUGC lets you make the visual side well ahead of time: vertical and square product clips (6, 10, 15 or 30 seconds long) and square banners with bold backgrounds and space for your deal. Prices, countdowns and \"doorbuster\" labels go on later in CapCut or Ads Manager, so you can lock in the visuals before your discounts are final."
-  ],
-  "ideas": [
-    {
-      "t": "Clip with room for a countdown",
-      "d": "A vertical clip that leaves the top of the frame clear, so you can add a timer in your editor."
-    },
-    {
-      "t": "Gift bundle",
-      "d": "Several of your products arranged as a set for a holiday bundle deal."
-    },
-    {
-      "t": "Cyber Monday follow-up",
-      "d": "A second visual in a different color and setting, so Monday's ads don't look like a rerun of Friday's."
-    }
-  ],
-  "plan": [
-    {
-      "t": "Six to eight weeks out",
-      "d": "Choose the products you'll feature, clean up their photos, and try early versions in your regular ads to see which visuals people stop for."
-    },
-    {
-      "t": "Three to four weeks out",
-      "d": "Make the final clips and banners in each size, then put them into your campaign calendar ahead of launch."
-    },
-    {
-      "t": "The week of",
-      "d": "Schedule everything, keep spare versions for Cyber Monday, and swap out anything that isn't getting clicks."
-    }
-  ],
+  "plan": [],
   "faq": [
     {
       "q": "How early should I make my Black Friday ads?",
@@ -70,105 +38,6 @@
       "a": "Yes. Downloaded files are yours to use across paid placements and carry no AIVideosUGC watermark, provided the deal text follows each platform's ad rules."
     }
   ],
-  "overview": [
-    {
-      "h2": "Make the product win the first glance",
-      "d": "Black Friday creative can be dramatic without hiding what is being sold. Use contrast, one hero product, and a single visible action—a lid opens, a bundle is arranged, or a lamp switches on. Keep the offer as a separate layer so the visual can be approved before the percentage, code, or final date is locked."
-    },
-    {
-      "h2": "Choose a video frame shape for each placement.",
-      "d": "AIVideosUGC offers 9:16, 1:1, 16:9, 4:3, and 3:4 video shapes, with 9:16, 1:1, and 16:9 covering the main phone, feed, and wide placements. Video choices are 6, 10, 15, and 30 seconds, and the cost is shown before each job. Make a new composition when the crop changes what the shopper can see; do not stretch one frame into every placement."
-    }
-  ],
-  "input_guide": {
-    "h2": "Start with a sale-ready product photo",
-    "items": [
-      {
-        "t": "Choose one hero item",
-        "d": "Use a photo where the product's silhouette and most important feature are obvious before the seasonal styling is added."
-      },
-      {
-        "t": "Name the seasonal surface",
-        "d": "Describe dark stone, deep fabric, metallic paper, or another real setting that supports the product without filling every corner."
-      },
-      {
-        "t": "Leave the offer editable",
-        "d": "Ask for open space at the top or side, but add the actual price, percentage, code, and deadline in your editor later."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A seasonal set with clear roles",
-    "items": [
-      {
-        "t": "Hero banner",
-        "d": "One product or bundle against a bold background, with a quiet area reserved for your exact offer."
-      },
-      {
-        "t": "Vertical sale moment",
-        "d": "A 9:16 clip that shows the product in use and keeps the top or center open for text you add later."
-      },
-      {
-        "t": "Feed version",
-        "d": "A 1:1 composition that remains recognizable when the viewer scrolls past quickly."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Black Friday prompts with room for the deal",
-    "items": [
-      {
-        "t": "Single-product spotlight",
-        "d": "A black coffee machine stands on a dark counter with a narrow highlight along its edges and clean space above."
-      },
-      {
-        "t": "Bundle table",
-        "d": "A real set of candles, matches, and a small tray is arranged on deep fabric, with each item visible from the front."
-      },
-      {
-        "t": "Gift reveal",
-        "d": "A ribbon-tied box opens on a dark table and reveals the product without any generated words on the lid."
-      },
-      {
-        "t": "Last-day close-up",
-        "d": "A watch or piece of jewelry turns slowly under a single light, with the top third left quiet for your final-day message."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Apply the Black Friday details yourself",
-    "items": [
-      {
-        "t": "Add verified numbers",
-        "d": "Type the discount, price, code, and end date in Canva, CapCut, or Ads Manager, then compare them with the live offer."
-      },
-      {
-        "t": "Preview every crop",
-        "d": "Inspect 9:16, 1:1, and any wide version in its actual placement so the product and message stay visible."
-      },
-      {
-        "t": "Keep urgency truthful",
-        "d": "Use a countdown or last-chance phrase only when the deadline and inventory support it."
-      },
-      {
-        "t": "Remove old versions",
-        "d": "Retire files that show an expired deal before reusing the underlying scene for another promotion."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Useful for a prepared seasonal sale",
-    "good": [
-      "Products with a strong silhouette that reads against a dark background",
-      "Gift sets whose actual contents are known",
-      "Teams that want the visual approved before final sale wording",
-      "Stores making separate square and vertical versions"
-    ],
-    "not_ideal": [
-      "Promotions that rely on a generated countdown or price",
-      "Promises of platform approval or sales performance"
-    ]
-  },
   "examples": {
     "h2": "More Black Friday examples",
     "lead": "Dark, dramatic product shots with space for a deal badge, plus a brighter take for Cyber Monday.",
@@ -198,24 +67,23 @@
       }
     ]
   },
-  "templates_lead": "Choose the product and placements for your Black Friday creative set.",
-  "cta_lead": "Plan each Black Friday scene, then add the confirmed price, code, and date.",
+  "cta_lead": "Create the Black Friday product scene first, then add the confirmed offer details after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo of the featured product or bundle. Every BF size starts from that one shot."
+      "d": "Start with one clear photo of the product or bundle featured in the sale."
     },
     {
-      "t": "Pick a Black Friday Scene",
-      "d": "Pick a spotlight, bundle or gift-reveal scene. A new job adds the next platform size."
+      "t": "Choose a Black Friday Scene",
+      "d": "Share the sale scene you want in one sentence, such as a gift reveal or product demo."
     },
     {
       "t": "Download and Add the Deal",
-      "d": "Download the file, type price, code and end date as text. Update for Cyber Monday, no watermark."
+      "d": "Add the confirmed price, code and end date in your editor."
     }
   ],
   "visual": {
-    "overview": "Make your Black Friday product photos and clips before prices are locked. Leave clear space beside the product, then drop in the discount, code, and end date once they are set.",
+    "overview": "Show the Black Friday product clearly, then add the confirmed offer in an editable layer after download.",
     "strip": [
       "n:guide:q20-occ-bf-strip-01",
       "n:guide:k8-blackfriday-gen2-plat-amazon-g1",
@@ -228,7 +96,7 @@
       "source": "n:guide:black-friday-m2-source",
       "result": "n:guide:q20-occ-bf-steps-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and preserve the charcoal duffel, its shape and details. In a bright hotel room, an adult places a folded shirt and toiletry pouch into the bag, then pulls the zipper closed. Natural travel-day UGC with soft window light. Overhead close framing with one slow tilt; end on the zipped bag. Sound: fabric movement and zipper; no music or added text.",
+      "prompt": "Share the Black Friday scene in one sentence.",
       "options": [
         [
           "Template",
@@ -241,225 +109,16 @@
       ]
     },
     "picker": {
-      "title": "Choose a Black Friday ad moment",
-      "lead": "Group your products by price drop, countdown, or last-day creative before adding the exact offer in your editor.",
-      "chips": [
-        {
-          "id": "price-drop",
-          "label": "Price Drop"
-        },
-        {
-          "id": "countdown",
-          "label": "Countdown"
-        },
-        {
-          "id": "last-day",
-          "label": "Last Day"
-        },
-        {
-          "id": "doorbuster",
-          "label": "Doorbuster"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f13-occ-black-friday-rework-card-14",
-          "label": "Price Drop: Vitamin gummies held",
-          "chips": [
-            "price-drop"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a dark kitchen counter, adult hands hold a plain supplement bottle beside a small bowl of unmarked vitamin gummies and turn the bottle once. Natural creator-shot UGC with soft directional light. Close framing with one gentle push-in. End with the bottle and gummies clearly visible; no face. Sound: bottle tap and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-black-friday-rework-card-15",
-          "label": "Price Drop: Phone tripod hinge demo",
-          "chips": [
-            "price-drop"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a dark desk, adult hands open one hinge on a compact plain phone tripod and hold the joint toward camera. Natural creator-shot UGC with soft desk light. Close framing with one gentle push-in. End with the hinge open and its movement easy to see; no face. Sound: one hinge click and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-black-friday-card-03",
-          "label": "Countdown: Headphones from box",
-          "chips": [
-            "countdown"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift graphite headphones from a plain box and turn the ear cushions toward the lens. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with the graphite ear cups above the open box. Sound: box rustle and hinge movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-black-friday-card-04",
-          "label": "Countdown: Running shoes from tissue",
-          "chips": [
-            "countdown"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift neutral running shoes from plain tissue and bring both side by side. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End with both running shoes held side by side above the tissue. Sound: tissue rustle and box creak; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-black-friday-rework-card-16-r2",
-          "label": "Last Day: Party dress fit check",
-          "chips": [
-            "last-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitting room, an adult Black woman with short natural curls wears the plain red midi dress and makes one smooth half-turn toward the phone camera. Natural creator-shot UGC with even fitting-room light. Close framing with one gentle push-in. End front-facing with the dress silhouette clear; no mirror reflection. Sound: fabric movement and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-black-friday-card-13-r2",
-          "label": "Last Day: Setting powder in daylight",
-          "chips": [
-            "last-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a dark wood vanity, an older Asian creator sweeps plain setting powder across one cheek and holds the matte compact beside her face, leaving quiet space above for a last-day layer. Warm directional light, realistic skin. Close framing with one gentle push-in; end with compact and cheek visible. Sound: brush sweep and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-black-friday-card-07",
-          "label": "Doorbuster: Serum texture on skin",
-          "chips": [
-            "doorbuster"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In soft daylight, an adult hand places one serum drop on the other hand and smooths it once. Natural creator-shot UGC with realistic skin under soft window light. Close framing with one gentle push-in. End on both hands side by side, with the fresh drop centered between them. Sound: pump click and fingertip glide; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q20-occ-black-friday-card-08",
-          "label": "Doorbuster: Paw cleaner in use",
-          "chips": [
-            "doorbuster"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright entry, an adult gently places a calm dog’s paw into a silicone cup and rotates it once. Natural creator-shot UGC with realistic skin under daylight through the entryway. Close framing with one gentle push-in. End with the silicone cup beside the clean paw. Sound: soft silicone movement and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-black-friday-card-09",
-          "label": "Price Drop: Coffee grinder from box",
-          "chips": [
-            "price-drop"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Against a dark stone counter, an adult creator lifts the compact matte grinder from a plain box and turns the dial once, leaving dark space above for a later price layer. High-contrast natural creator UGC with realistic hands. Close framing with one gentle push-in; end with the grinder fully visible. Sound: cardboard rustle and dial click; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-black-friday-card-10",
-          "label": "Countdown: Insulated lunch bag packed",
-          "chips": [
-            "countdown"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a dark kitchen, an adult creator slides a stainless food container into the plain insulated lunch bag and points to the open interior, leaving a quiet dark area for a later countdown layer. Natural creator-shot UGC with soft window light. Medium framing with one gentle push-in; end on the filled bag. Sound: zipper and container tap; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-black-friday-card-11-r2",
-          "label": "Last Day: Quilted vest fit check",
-          "chips": [
-            "last-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitting room, an adult creator wears the plain quilted vest and turns her shoulders once to show front and side fit, leaving a quiet strip above for a last-day message. Natural creator-shot UGC with soft daylight. Medium framing with one gentle push-in; end front-facing. Sound: fabric movement and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-occ-black-friday-card-12",
-          "label": "Doorbuster: Sweater shaver clean strip",
-          "chips": [
-            "doorbuster"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a dark seasonal setting, an adult hand runs the compact fabric shaver once across a gray sweater, leaving a clean strip and quiet space for a later doorbuster offer. Natural close creator-shot UGC with warm directional light. End with the tool beside the clean fabric. Sound: shaver hum and fabric movement; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-black-friday-store-rush",
-          "label": "Price Drop: Speaker on Shelf",
-          "chips": [
-            "price-drop"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. In a dark unbranded retail aisle, a shopper hand reaches for the plain matte portable speaker in a store-style limited-time rush. Natural product UGC with high-contrast shelf light. Close framing with clear space above for a later price layer. Sound: shelf tap and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-black-friday-bundle",
-          "label": "Countdown: Lunch bag set arranged",
-          "chips": [
-            "countdown"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. On a dark kitchen counter, adult hands arrange the plain insulated lunch bag, stainless container and reusable cutlery as a discounted set. Natural creator-shot UGC with warm directional light. Close framing with a quiet side area for a later countdown layer. Sound: zipper and metal tap; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-black-friday-cart-reminder",
-          "label": "Last Day: Organizer in Cart",
-          "chips": [
-            "last-day"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. In a dark unbranded store aisle, an adult hand places the plain black travel organizer into a wire shopping basket for an add-to-cart reminder. Natural creator-shot UGC with soft shelf light. Medium close framing with blank space above for a later last-day layer. Sound: basket tap and room tone; no music or added text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f13-r10-occ-black-friday-delivery-unbox",
-          "label": "Doorbuster: Wool scarf delivery unboxing",
-          "chips": [
-            "doorbuster"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and finish exactly. On a warm entry bench, adult hands open a plain kraft delivery box and reveal the cream wool scarf after the sale. Natural creator-shot UGC with soft lamp light. Close framing with box and scarf fully visible and space above for a later offer layer. Sound: cardboard and tissue rustle; no music or added text.",
-          "kind": "photo"
-        }
-      ],
+      "title": "Choose a Black Friday scene",
+      "lead": "Show the product in a sale moment, then add the confirmed offer after download.",
+      "chips": [],
+      "cards": [],
       "button": "Make a sale product photo"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:gen2:occ-product-launch-g1",
-        "h": "Tease the product before the sale starts",
-        "d": "Tease the product before the sale, then add confirmed offer details on launch day."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q20-occ-bf-uses-01",
-        "h": "Keep the ad and listing aligned",
-        "d": "Shoppers who click a Black Friday ad should land on the product they just saw."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:gen2:tpl-bf-g1",
-        "bad": "n:guide:black-friday-duffel-soft-focus",
-        "good_label": "Monitor shape and stand stay sharp",
-        "bad_label": "Screen and stand blur together"
-      },
-      {
-        "good": "n:gen2:tpl-bf-g3",
-        "bad": "n:guide:black-friday-giftbox-crop",
-        "good_label": "Whole coffee machine stays in frame",
-        "bad_label": "Machine edge is cropped from view"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q20-occ-bf-output-01-r2",
-        "frame": "1:1",
-        "label": "Gaming monitor at a home desk"
-      },
-      {
-        "ref": "n:guide:q20-occ-bf-output-02",
-        "frame": "1:1",
-        "label": "Espresso poured from a compact machine"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:black-friday-m2-result",
-      "zones": [
-        "Discount",
-        "End date"
-      ],
-      "items": [
-        "Keep the price, code, and end date as editable text layers instead of baking them into the photo.",
-        "Match the discount wording to your store banner so shoppers see one clear offer everywhere."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make your Black Friday product photo before prices are set"
@@ -467,45 +126,30 @@
       "m3": {
         "h2": "Choose a product or gift bundle to feature"
       },
-      "m4": {
-        "h2": "Use one Black Friday photo from teaser to sale day"
-      },
-      "m5": {
-        "h2": "Start with a clear product or bundle photo"
-      },
-      "m6": {
-        "h2": "Square Black Friday photos for feeds and listings"
-      },
-      "m7": {
-        "h2": "Add the discount and end date after download"
-      },
       "faq": {
         "h2": "Questions about Black Friday ad creatives"
-      },
-      "plan": {
-        "h2": "When to prepare your Black Friday ads"
       }
     }
   },
-  "benefits_h2": "Why make Black Friday creatives with AI?",
+  "benefits_h2": "Why sellers choose Black Friday ad creatives",
   "benefits": [
     {
-      "t": "Ready weeks before the weekend",
-      "d": "The visual set is built well ahead from a product photo, so Black Friday creative is approved and waiting instead of booked while deals are being negotiated."
+      "t": "Prepare the sale scene early",
+      "d": "Make the product visual before the Black Friday offer is final."
     },
     {
-      "t": "Every size from one photo",
-      "d": "Separate jobs produce the vertical phone clip, square feed and banner from the same item, covering each placement without a different shoot."
+      "t": "One product photo, many placements",
+      "d": "Create separate versions for phone-first feeds or square posts from the same item."
     },
     {
-      "t": "Deal details added once final",
-      "d": "Price, code and end date stay an editable text layer, so the same files carry into Cyber Monday with corrected wording."
+      "t": "Offer details stay editable",
+      "d": "Add the discount, code and end date after download when every detail is confirmed."
     },
     {
-      "t": "Yours to run, no watermark",
-      "d": "Downloaded clips and banners carry no AIVideosUGC watermark and are yours to use in paid posts, with the credit cost shown first."
+      "t": "Ready for your own campaigns",
+      "d": "Use downloaded Black Friday images and clips in your posts and paid ads."
     }
   ],
-  "steps_h2": "How to make a Black Friday ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-run Black Friday set — no studio, no last-minute booking."
+  "steps_h2": "Create Black Friday ad creatives in three steps",
+  "steps_lead": "Turn one product photo into a Black Friday sale scene, then add the confirmed offer after download."
 }
