@@ -121,7 +121,27 @@
       "n:guide:q19-amz-strip-white-bottle",
       "n:guide:q19-amz-strip-soap-use",
       "n:guide:q19-amz-strip-cable-demo"
-    ]
+    ],
+    "steps": {
+      "source": "n:guide:plat-amazon-c3-m2-source",
+      "result": "n:guide:q19-amz-step-mug-use",
+      "mode": "photo",
+      "prompt": "Still square product photograph of an adult hand lifting a plain ceramic mug at a bright breakfast table, the mug held at the frozen moment just above the table; soft morning window light, close composition with the mug and hand centered, crisp product detail, no text or logos.",
+      "options": [
+        [
+          "Template",
+          "Amazon listing photo"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Main · lifestyle · detail"
+        ]
+      ]
+    }
   },
   "benefits_h2": "Amazon-ready image formats that help search and sales",
   "benefits": [
