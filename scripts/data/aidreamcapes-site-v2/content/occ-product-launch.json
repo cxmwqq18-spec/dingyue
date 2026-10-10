@@ -1,10 +1,10 @@
 {
   "id": "occ-product-launch",
   "title": "Product Launch Video and Photos for New Drops | AIVideosUGC",
-  "description": "Plan product launch videos and photos: teaser clips before the drop, a reveal video on launch day, and product-page scenes for each milestone after it.",
+  "description": "Make launch ads from a sample photo before production finishes: get teaser, reveal and product-page assets without booking a shoot, cost shown first.",
   "h1": "Product Launch Video and Photos, Ready Before Launch Day",
   "eyebrow": "New product launch",
-  "lead": "Plan teaser clips, a reveal video, and product-page photos around each launch milestone, with final dates and prices added after download.",
+  "lead": "Launch day is near but the product is still a sample and booking a shoot now is risky. Upload the sample photo and leave with teaser, reveal and product-page assets ready before the drop.",
   "card": "Teasers, a reveal clip and product page photos from your first sample shot.",
   "secondary_keywords": [
     "new product launch video",
@@ -64,6 +64,14 @@
     {
       "q": "What video size should a product launch use?",
       "a": "Use 9:16 for Stories, Reels, and TikTok; 1:1 for feeds; and 16:9 for a wide product page or YouTube placement. Make each size as its own job."
+    },
+    {
+      "q": "Do I need a studio or a creator for launch content?",
+      "a": "No. The teaser, reveal and product-page assets are generated from the sample photo you upload, so nothing has to be filmed while the launch date moves."
+    },
+    {
+      "q": "Can I run the finished clips as launch ads?",
+      "a": "Yes. Downloaded clips and images are yours to use in paid launch posts and carry no AIVideosUGC watermark, subject to each platform's current ad review."
     }
   ],
   "overview": [
@@ -198,16 +206,16 @@
   "cta_lead": "Plan the teaser or reveal first, then add launch details after download.",
   "steps": [
     {
-      "t": "Choose the current product sample",
-      "d": "Use a clear photo of the sample customers will recognize when it launches."
+      "t": "Upload Your Product Sample Photo",
+      "d": "Upload a clear photo of the current sample. Customers recognize the same item at launch."
     },
     {
-      "t": "Pick a teaser or reveal scene",
-      "d": "Describe one action, surface, and light direction for each launch placement."
+      "t": "Pick Teaser, Reveal or Product Page",
+      "d": "Pick a teaser, reveal or product-page scene. Each new job builds the next launch asset."
     },
     {
-      "t": "Download and add launch details",
-      "d": "Add the product name, date, and final price in your editor."
+      "t": "Download and Add Launch Details",
+      "d": "Download the file, add name, date and price in Canva. It is yours to run, no watermark."
     }
   ],
   "visual": {
@@ -481,5 +489,26 @@
         "lead": "Choose another scene for the product you are preparing to launch."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make product launch videos with AI?",
+  "benefits": [
+    {
+      "t": "Start from a sample, not finished stock",
+      "d": "The first assets come from a photo of the current sample, so teasers and a reveal exist before production finishes instead of after it is too late to book."
+    },
+    {
+      "t": "One sample photo, the full launch set",
+      "d": "Separate jobs build the teaser, the reveal and product-page images from the same item, covering each launch milestone without a different shoot."
+    },
+    {
+      "t": "Wording added once it is final",
+      "d": "You make the visual while name, price and date are still changing, then type the final details in Canva or CapCut after download."
+    },
+    {
+      "t": "Yours to run, no watermark",
+      "d": "Downloaded clips and images carry no AIVideosUGC watermark and are yours to use in launch ads, with the credit cost shown before each job."
+    }
+  ],
+  "steps_h2": "How to make a product launch video in 3 simple steps",
+  "steps_lead": "Three steps turn one sample photo into a ready-to-run launch set — no studio, no waiting for production."
 }
