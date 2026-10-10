@@ -1,11 +1,11 @@
 {
   "id": "tpl-howto",
-  "title": "AI How-To Video Maker for Your Products | AIVideosUGC",
-  "description": "Show shoppers exactly how your product works with a how-to video from one photo. Pick 9:16 for YouTube Shorts or 16:9 for your product page.",
+  "title": "AI How-To Product Videos in Minutes | AIVideosUGC",
+  "description": "Show shoppers how your product works with a how-to video from one photo. Pick 9:16 for Shorts or 16:9 for a product page and ads.",
   "h1": "AI How-To Video Maker for Showing Products in Action",
   "eyebrow": "How-to video template",
-  "lead": "Products with a job to do get returned when buyers cannot see how they work, but filming a clear demo is hard without a studio. Upload one photo and this AI how-to video maker shows your product completing one real task, so shoppers understand it before they buy and support questions drop.",
-  "benefits_h2": "Why use an AI how-to video maker?",
+  "lead": "Products with a job to do sell better when buyers can see the task. Upload one photo and get a clear how-to clip for product pages, Shorts and ads.",
+  "benefits_h2": "Why sellers choose how-to templates",
   "benefits": [
     {
       "t": "Answer \"how does it work\" before checkout",
@@ -31,45 +31,20 @@
     "YouTube Shorts product tutorial",
     "instructional product video"
   ],
-  "intro": [
-    "Here, your product gets used the way a customer would use it at home. The sample clip shows a woman running a handheld steamer down a creased blue shirt that hangs on a wooden clothes rack.",
-    "A quick how-to answers the question most shoppers have before they buy: how does this actually work? It suits tools and gadgets with one clear job, like garment steamers, milk frothers, lint shavers, or cleaning brushes. Put a 16:9 version on your product page and a 9:16 one on YouTube Shorts, then let the clip do the explaining.",
-    "A how-to product clip should teach one repeatable movement from a clear starting state to a visible result. A hand can switch on a steamer, press one pass across a shirt, and finish beside the smooth fabric. Keep the tool, the working surface, and the part being changed in frame so a shopper can understand what to do without guessing.",
-    "Write the steps in the order a customer would perform them: prepare the surface, use the tool once, and show the finished area. Mention the hand position, the pace, and the final hold. Add Step 1, Step 2, and Step 3 labels after download as editable layers, along with the product name and any safety instructions that come from your own documentation.",
-    "Review the tutorial at full-screen mobile size before publishing. Make sure the product is the same as the uploaded photo, the action is physically plausible, and the final result does not promise a measurement or performance you cannot support. Use the clip beside a listing or in a short feed ad where the first frame makes the problem and tool immediately clear.",
-    "A strong tutorial has one visible problem and one visible change. Begin with the wrinkled shirt, dry bristles, empty mug, or closed latch; show one deliberate movement; and hold on the finished state long enough for a shopper to compare it. Avoid a montage of unrelated features in a short clip.",
-    "Choose the destination before describing the frame. A [product video](/ai-video-generation/product-video) can sit beside a listing, a [YouTube Shorts ad](/platforms/youtube-shorts-ads) needs a vertical crop, and a [before-and-after video](/ai-video-generation/before-after-showcases) works when the changed surface is easy to see. The [Shopify product photo page](/platforms/shopify-product-photos) is useful when the lesson sits near a store listing.",
-    "For a sequence of product lessons, start with an [image-to-video clip](/ai-video-generation/image-to-video), then test a [UGC ad video](/ai-video-generation/ugc-ad-video) when a creator reaction adds context. The [first TikTok video ad guide](/guides/first-tiktok-video-ad), [product photo tips guide](/guides/product-photo-tips), and this how-to template help keep the source photo and final action aligned."
-  ],
-  "tip": "Describe one task from start to finish, like \"steams a wrinkled cotton shirt on a hanger, collar to hem,\" instead of listing every feature.",
-  "steps_h2": "How to make a how-to product video in 3 simple steps",
-  "steps_lead": "Three steps turn one tool photo into a clear demonstration clip — no studio, no presenter, no reshoot.",
+  "steps_h2": "How it works",
+  "steps_lead": "Choose a task, add your product, generate. No studio, presenter or reshoot.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a sharp photo of the whole tool against a plain background, with no edge cropped. A clear source helps the video keep its shape."
+      "d": "Add a clear photo of the whole tool or product with its useful details visible."
     },
     {
-      "t": "Describe the Task",
-      "d": "Name one action from start to finish, such as the steamer passing down a shirt. The clip shows the real task the product performs."
+      "t": "Pick a How-To Style",
+      "d": "Choose a task scene, then generate a clip that shows the product in action."
     },
     {
       "t": "Download and Label",
-      "d": "Add short step labels and any approved safety warning in your editor, then post 16:9 or 9:16. The download has no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Kitchen gadgets",
-      "d": "Show a milk frother foaming a latte or a garlic press working through a clove, one job per clip."
-    },
-    {
-      "t": "Product page explainer",
-      "d": "Place a 16:9 version in your Shopify product description so buyers see the item in use before they add it to cart."
-    },
-    {
-      "t": "A Shorts series",
-      "d": "Make a few 10-second clips, each showing a different use, and post them on YouTube Shorts over a week."
+      "d": "Download the video and add short step labels or approved safety copy in your editor."
     }
   ],
   "maker": {
@@ -91,184 +66,48 @@
   },
   "faq": [
     {
+      "q": "What is an AI how-to video template?",
+      "a": "It is a ready-made demonstration scene. Add one product photo and generate a clip that shows one useful task from setup to result."
+    },
+    {
+      "q": "Do I need to write prompts to use these templates?",
+      "a": "No. Pick a task style, upload your product photo and generate. Step two can include one short line about the action if you want."
+    },
+    {
+      "q": "Who are how-to templates built for?",
+      "a": "Product sellers, support teams and agencies that need a clear demonstration for listings, Shorts, Reels or ads."
+    },
+    {
       "q": "Can one video show several steps in a row?",
-      "a": "Keep it to one clear task. At 10, 15 or 30 seconds, steaming a single shirt reads better than a full laundry routine. For a longer guide, make a few clips and join them in your editing app."
+      "a": "Yes. Keep the clip focused on one task and let the sequence show its main actions in order."
     },
     {
       "q": "Will the video include spoken instructions?",
-      "a": "AIVideosUGC does not add voiceover, music, or captions. Record your narration and add it with step text in your editor after download."
-    },
-    {
-      "q": "Does the video have to match how my product really works?",
-      "a": "Yes. Describe the real way your product is used and watch the clip before you post it. If it shows something your product can't do, generate it again with a clearer description."
-    },
-    {
-      "q": "How many steps fit in one tutorial?",
-      "a": "Keep it to one clear task with a starting state, the product action, and the finished state. Extra steps are easier to follow in a second clip."
-    },
-    {
-      "q": "What length should a tutorial be?",
-      "a": "Ten seconds covers most single tasks; use 15 seconds for a slower demonstration, for 40 or 60 credits."
-    },
-    {
-      "q": "Can viewers follow the steps when audio is unavailable?",
-      "a": "Add short step tags as a text layer after download, so the tutorial remains clear when the soundtrack is muted."
-    },
-    {
-      "q": "Can I crop the tutorial to 1:1?",
-      "a": "Yes. Make a square version after download and check that the tool, hand, and finished result remain in frame."
+      "a": "The template creates the visual clip. Add narration, captions or step labels in your editor after download."
     },
     {
       "q": "What product photo works best for a how-to video?",
-      "a": "Use a sharp photo that shows the entire tool and the part it touches, with no edge cropped out."
+      "a": "Use a clear photo of the whole product with its working part visible and no important edge cropped."
     },
     {
-      "q": "How should I show a safety warning?",
-      "a": "Add the approved warning as editable step text after download and keep it beside the action it describes."
+      "q": "How many steps fit in one tutorial?",
+      "a": "A short clip works best with one task and a few readable actions. Add longer written instructions outside the generated frame."
     },
     {
-      "q": "Can I watch the tutorial with the sound off?",
-      "a": "Yes. Add short step labels after download so the sequence stays understandable when the soundtrack is muted."
+      "q": "How fast is a how-to video made?",
+      "a": "A clip is generated in minutes after you start the job, with no presenter, studio day or reshoot."
     },
     {
-      "q": "Can I run the how-to clip as a paid ad?",
-      "a": "Yes. Videos you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You are responsible for the claims, safety wording and disclosures in the ad."
+      "q": "What does a how-to video cost?",
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before you run it."
     },
     {
-      "q": "What if my product needs several steps to explain?",
-      "a": "Keep each clip to one task with a start, action and finished state. Make separate clips for additional steps and join them in your editor, using a 30-second cut when one full lesson belongs in a single video."
+      "q": "Can I use a how-to video in paid ads?",
+      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for instructions and claims."
     }
   ],
-  "overview": [
-    {
-      "h2": "Show one job from setup to result",
-      "d": "A useful how-to clip has a visible starting state, one product action, and a finished state. Ask for the hand position, the working surface, and the moment the task is complete so the scene explains the product without a spoken presenter."
-    },
-    {
-      "h2": "Choose the frame for the place it will live",
-      "d": "Use 9:16 when the lesson will sit in a Shorts feed, 16:9 when it belongs beside a product description, 1:1 for a square feed, or 4:3 and 3:4 when another crop fits better. Make separate versions when the crop would hide the tool or the finished result."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a tool photo that can show the action",
-    "items": [
-      {
-        "t": "Keep the working end visible",
-        "d": "Photograph the nozzle, blade, whisk, brush, or handle in full so the requested movement has a clear reference."
-      },
-      {
-        "t": "Show the useful position",
-        "d": "For an item that opens, fills, clamps, or adjusts, include that part in its normal open position rather than hiding it in packaging."
-      },
-      {
-        "t": "Leave room around the object",
-        "d": "A little space around the product gives a hand, fabric, cup, or counter room to enter the scene without covering the tool."
-      },
-      {
-        "t": "Name one surface",
-        "d": "Say whether the action happens on a counter, hanger, sink, desk, or floor; one stable surface keeps the lesson readable."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the downloaded lesson contains",
-    "items": [
-      {
-        "t": "A single demonstrated task",
-        "d": "The generated scene is strongest when one action carries the whole clip, such as steaming one shirt panel or frothing one mug."
-      },
-      {
-        "t": "Four length choices",
-        "d": "Six, ten, fifteen, and thirty seconds use 24, 40, 60, and 120 credits; the exact cost is shown before you start."
-      },
-      {
-        "t": "A clean visual base",
-        "d": "The download gives you the moving product scene; add the step names, measurements, or instructions that must be exact."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "How-to scenes you can describe",
-    "items": [
-      {
-        "t": "Steam a sleeve",
-        "d": "A handheld steamer travels from cuff to shoulder on a hanging cotton shirt, ending on the smooth fabric."
-      },
-      {
-        "t": "Foam one cup",
-        "d": "A milk frother spins inside a clear mug on a breakfast counter, then lifts to reveal the foam."
-      },
-      {
-        "t": "Brush a keyboard",
-        "d": "A compact cleaning brush passes between keys on a desk beside the product box and a small pile of dust."
-      },
-      {
-        "t": "Seal a lunch container",
-        "d": "A hand closes the lid around prepared food on a kitchen table and presses the side latch once."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the lesson in your editor",
-    "items": [
-      {
-        "t": "Add numbered steps",
-        "d": "Place short labels such as Fill, Press, and Rinse beside the matching moment."
-      },
-      {
-        "t": "Add claims and measurements",
-        "d": "Type capacity, temperature, or cleaning directions from your product information rather than relying on generated lettering."
-      },
-      {
-        "t": "Add sound",
-        "d": "Choose music or a voice track that matches the pace when the clip is ready for its channel."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When this template fits",
-    "good": [
-      "Tools with one visible job",
-      "Small appliances with a clear setup",
-      "Cleaning and organization products",
-      "Accessories that open, close, or adjust"
-    ],
-    "not_ideal": [
-      "Products whose value depends on several hidden steps",
-      "Claims that require a precise demonstration or measurement"
-    ]
-  },
-  "examples": {
-    "h2": "More how-to scenes",
-    "lead": "Step-by-step ideas where each action is easy to follow on a small screen.",
-    "groups": [
-      {
-        "label": "Step by step",
-        "items": [
-          {
-            "ref": "n:q10-howto-example-01",
-            "title": "Recipe Demo: Kettle steeps herbal tea",
-            "kind": "scene",
-            "product": "electric kettle"
-          },
-          {
-            "ref": "n:q10-howto-example-02",
-            "title": "Before/After: Fabric shaver clears a sweater",
-            "kind": "scene",
-            "product": "fabric shaver"
-          },
-          {
-            "ref": "n:q10-howto-example-03",
-            "title": "Pitcher filter replaced step by step",
-            "kind": "scene",
-            "product": "water filter pitcher"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A how-to video is easiest to follow when it shows one task from setup to result. Keep the tool and the part being worked on visible throughout the clip.",
+    "overview": "A how-to template shows one product task from setup to result, helping shoppers understand how it works before checkout.",
     "strip": [
       "n:q10-howto-strip-1",
       "n:q10-howto-strip-2",
@@ -300,107 +139,104 @@
       ]
     },
     "picker": {
-      "title": "Choose one task for a how-to video",
-      "lead": "Pick a short action that viewers can follow from start to finish.",
+      "title": "Choose a how-to template",
+      "lead": "Browse task demos, then add your own product photo.",
       "chips": [
         {
-          "id": "howto",
-          "label": "How-To Demos"
+          "id": "fitness",
+          "label": "Fitness"
         },
         {
-          "id": "creator",
-          "label": "Creator Reviews"
+          "id": "fashion",
+          "label": "Fashion"
         },
         {
-          "id": "use",
-          "label": "Use and Prep"
+          "id": "home-decor",
+          "label": "Home Decor"
         },
         {
-          "id": "beforeafter",
-          "label": "Before & After"
+          "id": "food-drink",
+          "label": "Food & Drink"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:k6-industries-card-yoga",
-          "label": "Mobility Demo: Yoga Block",
+          "label": "Fitness Coach UGC Hook",
           "chips": [
-            "howto"
+            "fitness"
           ],
           "prompt": "Use the uploaded photo as a plain cork yoga block and keep its edges visible. An adult demonstrates a gentle seated stretch on a teal mat in a bright room, showing the movement clearly. How-to creator photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:q10-howto-picker-2",
-          "label": "Creator Demo: Electric toothbrush routine",
+          "label": "Beauty Education Talking Head UGC",
           "chips": [
-            "howto",
-            "creator",
-            "use"
+            "fitness"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a clean bathroom, an adult lifts the electric toothbrush and brushes one front tooth section, ending with the brush lowered beside the sink. Natural morning-routine phone-video look, soft daylight. Mirror-level close framing with a slow push-in. Sound: toothbrush hum, faucet drip; no music.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k6-templates-card-creator",
-          "label": "Creator Review: Headphones",
+          "label": "Electronics Desk Review UGC",
           "chips": [
-            "creator"
+            "home-decor"
           ],
           "prompt": "Use the uploaded photo as plain charcoal over-ear headphones and keep both ear cups visible. An adult presenter holds them at chest height in a bright living room while explaining the fit. Creator how-to product photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:q10-howto-picker-4",
-          "label": "Recipe Demo: Herbal tea steep",
+          "label": "Food Beverage ASMR Unboxing Ad",
           "chips": [
-            "use"
+            "food-drink"
           ],
           "prompt": "Use the uploaded photo as the gooseneck kettle and keep its shape, finish, and control details. In a bright kitchen, an adult pours hot water over a tea bag in a clear mug, lets the tea steep, then lifts the mug to serve, showing the finished drink. Recipe-demo pacing, overhead-to-side close framing. Soft kitchen window light. End with the filled mug and kettle together, tea color clear. Sound: water pour and cup tap; no music.",
           "kind": "photo"
         },
         {
           "ref": "n:q10-howto-picker-5",
-          "label": "Before/After: Steamer smooths a shirt",
+          "label": "Home Cleaning Product UGC",
           "chips": [
-            "beforeafter",
-            "howto"
+            "home-decor"
           ],
           "prompt": "Use the uploaded photo as the garment steamer and preserve its shape and controls. An adult steams one wrinkled panel of a blue shirt in a smooth pass; end with the treated half visibly smooth beside the untouched wrinkles. Clear before-and-after product demo, close vertical framing. Soft window light. Sound: steam hiss and fabric rustle; no music.",
           "kind": "photo"
         },
         {
           "ref": "n:q10-howto-picker-6",
-          "label": "Creator Review: Field jacket fit check",
+          "label": "Fashion Clothing TikTok UGC Hook",
           "chips": [
-            "creator"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the field jacket and preserve its fabric and fit. An adult creator wears it, holds the cuff beside their face, looks directly into camera and says, “Watch how this cuff sits over my wrist.” Keep the face, moving mouth, and jacket visible in a chest-up handheld frame. Soft window light. End chest-up with the cuff near the lens and the field jacket collar clear. Sound: natural room tone; no music.",
           "kind": "photo"
         },
         {
           "ref": "n:q10-howto-picker-7",
-          "label": "Before/After: Grout brush cleans seam",
+          "label": "Home Cleaning Product Demo UGC",
           "chips": [
-            "beforeafter"
+            "home-decor"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tiled bathroom, an adult moves the grout brush once across a dirty seam, ending with the cleaned strip beside the untouched grout. Natural home-cleaning ad look, clear side light. Low close-up tracking the brush in one smooth move. Sound: brush bristles on tile, water drip; no music.",
           "kind": "photo"
         },
         {
           "ref": "n:q10-howto-picker-8",
-          "label": "Cooking Demo: Press garlic",
+          "label": "Food Beverage Product Demo UGC",
           "chips": [
-            "use"
+            "food-drink"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult places a peeled garlic clove in the press and squeezes once, ending with minced garlic on a board and the tool open. Natural food-prep phone-video look. Overhead handheld close-up with a short push-in. Soft kitchen window light. Sound: hinge squeeze, garlic on board; no music.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k7-ind-shoes-strip-4-n-boots-doorway",
-          "label": "Boots — Doorway Use",
+          "label": "Fashion Footwear Lifestyle UGC",
           "chips": [
-            "use"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the plain brown leather boots and keep both boots fully visible. An adult steps into the boots beside a doorway, ending with the pair planted beside a folded coat. Practical try-on style, square framing, no text or logos.",
           "kind": "photo"
@@ -408,60 +244,10 @@
       ],
       "button": "Make a how-to video"
     },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:guide:c1-tpl-howto-use-social-video-916",
-        "h": "Post a how-to video as a Short",
-        "d": "Keep the tool and action in the vertical frame, then add a short label for each step."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:c1-tpl-howto-use-product-page-video-169",
-        "h": "Add the how-to clip to a product page",
-        "d": "Place the demonstration near the instructions so shoppers can see the tool in use."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:q10-howto-input-1-good-r2",
-        "bad": "n:guide:c1-reuse-howto-m5-1-blur",
-        "good_label": "Complete garment steamer shown clearly",
-        "bad_label": "Soft focus hides small product details"
-      },
-      {
-        "good": "n:q10-howto-input-2-good",
-        "bad": "n:q10-howto-input-2-bad",
-        "good_label": "Whole steamer and shirt fit in frame",
-        "bad_label": "The steamer edge is cut off"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:q10-howto-outputs-1",
-        "frame": "9:16",
-        "label": "Before/after: Steamer smooths a shirt wrinkle"
-      },
-      {
-        "ref": "n:guide:c1-tpl-howto-output-2",
-        "frame": "9:16",
-        "label": "9:16 vertical product tutorial"
-      }
-    ],
-    "after": {
-      "ref": "n:q10-howto-after",
-      "mock": {
-        "type": "steps"
-      },
-      "zones": [
-        "Step tags",
-        "Product name"
-      ],
-      "items": [
-        "The frame shows the Step 1-2-3 tags you add so viewers can follow each move.",
-        "Add short step labels such as Fill, Press, or Rinse, and the product name, in your editor."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make a vertical how-to video from one product photo"
@@ -469,26 +255,8 @@
       "m3": {
         "h2": "Choose a clear action for a how-to video"
       },
-      "m4": {
-        "h2": "Use a how-to video on product pages and Shorts"
-      },
-      "m5": {
-        "h2": "Start a how-to video with a clear tool photo"
-      },
-      "m6": {
-        "h2": "Choose a 9:16 how-to video format"
-      },
-      "m7": {
-        "h2": "Add step labels after download"
-      },
       "faq": {
         "h2": "Questions about product how-to videos"
-      },
-      "examples": {
-        "h2": "Product how-to video examples"
-      },
-      "templates": {
-        "h2": "More how-to video templates"
       }
     }
   }
