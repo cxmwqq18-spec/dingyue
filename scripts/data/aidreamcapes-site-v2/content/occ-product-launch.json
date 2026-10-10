@@ -82,7 +82,7 @@
     }
   ],
   "visual": {
-    "overview": "A teaser, a reveal and listing photos all come from the same sample photo, so the launch set is ready while production finishes.",
+    "overview": "A teaser, a reveal and listing photos all come from one sample photo, so the launch set is ready while production finishes.",
     "strip": [
       "n:guide:q20-occ-launch-strip-01",
       "n:gen2:spokesperson-videos-g4",
