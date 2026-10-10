@@ -57,7 +57,7 @@
     },
     {
       "t": "Choose a Tool, Frame and Length",
-      "d": "Pick an ad, demo or unboxing type, then set 9:16, 1:1 or 16:9 and 6, 10, 15 or 30 seconds."
+      "d": "Pick an ad, demo or unboxing type, then set the frame and length, up to half a minute."
     },
     {
       "t": "Get a Ready-to-Use Clip",
@@ -517,7 +517,7 @@
         "h2": "Start with a clear product photo"
       },
       "m6": {
-        "h2": "Choose 6, 10, 15, or 30 seconds"
+        "h2": "Pick the length, from a quick hook to a full story"
       },
       "m7": {
         "h2": "Finish the clip after download"
