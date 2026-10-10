@@ -359,7 +359,7 @@ export function ExampleGallery({ examples, r, asSubsection = false, title, lead 
   const gallery = <div className="example-gallery">
     {groups.map((group) => (
       <div className="example-group" key={group.label}>
-        <h3>{group.label}</h3>
+        {group.label ? <h3>{group.label}</h3> : null}
         <div className="tgrid">{group.items.map((item) => <ExampleCard item={item} key={item.key} r={r} />)}</div>
       </div>
     ))}

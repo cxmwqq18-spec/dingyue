@@ -176,14 +176,7 @@
     ]
   },
   "visual": {
-    "strip": [
-      "n:guide:q1-photo-strip-granola",
-      "n:guide:q1-photo-strip-tumbler",
-      "n:guide:q1-photo-strip-snackbox",
-      "n:gen2:tpl-detail-g2",
-      "n:guide:q1-photo-strip-knit",
-      "n:guide:q1-photo-strip-phonecase"
-    ],
+    "strip": [],
     "steps": {
       "source": "n:guide:q1-photo-steps-source",
       "sourceAlt": "Plain coral lip balm tube fully in frame on pure white, cap beside it, blank label area and soft even light.",

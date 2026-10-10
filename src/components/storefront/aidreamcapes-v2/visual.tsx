@@ -8,7 +8,8 @@ import type {
   V2VisualImage,
   V2VisualInput,
   V2VisualOutput,
-  V2VisualUse
+  V2VisualUse,
+  V2Image
 } from "./types";
 import { TemplateGrid } from "./parts";
 
@@ -84,6 +85,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
   ) : null;
   return (
     <Section eyebrow="How it works" lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
+      <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       {actorStepStyles}
       <div className="v-steps">
         <article className="v-step-card">
@@ -129,6 +131,38 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
         </article>
       </div>
     </Section>
+  );
+}
+
+type FreshLookItem = { label: string; image: V2Image };
+
+export function VisualFreshLook({ heading, lead, items, button, href, r }: {
+  heading?: string;
+  lead?: string;
+  items: FreshLookItem[];
+  button?: string;
+  href?: string;
+  r: V2Resolvers;
+}) {
+  if (!items.length) return null;
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}\n.adc2 .v-fresh-look{padding-block:72px;border-top:1px solid var(--line)}.adc2 .v-fresh-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}.adc2 .v-fresh-media{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px;border:1px solid var(--line-2);border-radius:20px;background:#08080a}.adc2 .v-fresh-media figure{position:relative;min-width:0;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#111}.adc2 .v-fresh-media img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}.adc2 .v-fresh-media figcaption{position:absolute;left:10px;bottom:10px;padding:4px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(5,5,5,.78);font-size:12px;font-weight:600}.adc2 .v-fresh-copy{max-width:540px}.adc2 .v-fresh-copy h2{max-width:520px}.adc2 .v-fresh-copy p{margin-top:16px;color:var(--ink-2);font-size:18px;line-height:1.65}.adc2 .v-fresh-copy .btn{margin-top:24px}@media(max-width:760px){.adc2 .v-fresh-look{padding-block:52px}.adc2 .v-fresh-grid{grid-template-columns:minmax(0,1fr);gap:28px}.adc2 .v-fresh-copy{max-width:none}}` }} />
+      <section aria-label={heading} className="sec v-fresh-look">
+        <div className="wrap">
+          <div className="v-fresh-grid">
+            <div className="v-fresh-media">
+              {items.map((item, index) => <figure key={`${item.image.src}-${index}`}><Img image={item.image} r={r} /><figcaption>{item.label}</figcaption></figure>)}
+            </div>
+            <div className="v-fresh-copy">
+              {heading ? <h2>{heading}</h2> : null}
+              {lead ? <p>{lead}</p> : null}
+              {button && href ? <a className="btn btn-grad" href={r.href(href)}>{button} →</a> : null}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 
