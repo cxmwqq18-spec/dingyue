@@ -12,6 +12,41 @@
     "The actor links start with a vertical 9:16 composition and a 10-second delivery so you can review a focused first draft. Keep the spoken line to one claim and one action. If you need a six-second hook, a square placement or a longer edit, make that choice in your editor after checking the first result.",
     "Before publishing, compare the generated hands, labels, color and moving parts with the real item. The actor can demonstrate what your source photo supports, but it cannot prove measurements, performance, safety or a result that the photo never showed."
   ],
+  "actor_visual": {
+    "titles": {
+      "m2": {
+        "h2": "How to make an AI actor video in 3 simple steps",
+        "lead": "Turn one clear product photo into a spoken vertical ad you can review before posting."
+      }
+    },
+    "steps": {
+      "mode": "video",
+      "source": "n:aa3-ai-actors-kavya-source",
+      "sourceTitle": "Upload your product photo",
+      "sourceHint": "One clear product photo is enough to start",
+      "result": "n:aa3-ai-actors-kavya-result",
+      "options": [
+        ["Frame", "9:16 vertical"],
+        ["Length", "10 seconds"],
+        ["Template", "Actor-led product ad"]
+      ],
+      "length": 10,
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, the selected actor holds the sky-blue moisturizer jar toward the camera, then touches one cheek. Natural creator delivery says: \"This is the moisturizer step I keep beside the sink.\" Sound: her voice and quiet bathroom room tone.",
+      "items": [
+        {"t": "Upload your product photo", "d": "Use one clear product photo with the shape, color and label area visible. A bright, sharp source makes it easier to check the generated hands and product details."},
+        {"t": "Pick your AI actor", "d": "Choose a presenter whose setting fits the product and customer moment. The directory starts a 9:16, 10-second delivery for a focused first draft."},
+        {"t": "Download and post", "d": "Check the hands, product color and spoken line, then download the vertical draft. Add approved captions, prices or offer dates in your editor before posting."}
+      ],
+      "actor_cards": [
+        {"ref": "n:guide:q4-actor-maya", "label": "Maya"},
+        {"ref": "n:guide:q4-actor-kavya", "label": "Kavya", "selected": true},
+        {"ref": "n:guide:q4-actor-nico", "label": "Nico"},
+        {"ref": "n:guide:q4-actor-hailey", "label": "Hailey"},
+        {"ref": "n:guide:q4-actor-vikram", "label": "Vikram"},
+        {"ref": "n:guide:q4-actor-aruna", "label": "Aruna"}
+      ]
+    }
+  },
   "actor_scenes": [
     "Car",
     "Bathroom",

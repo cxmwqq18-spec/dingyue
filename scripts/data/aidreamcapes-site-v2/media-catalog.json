@@ -8570,6 +8570,26 @@
     }
   },
   "gen2": {
+    "aa3-ai-actors-kavya-source": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "A plain sky-blue moisturizer jar with a white lid on a clean bathroom counter.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "aa3 image generation"
+    },
+    "aa3-ai-actors-kavya-result": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult South Asian woman in a bright bathroom holds a plain sky-blue moisturizer jar toward the camera.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "aa3 image generation"
+    },
     "gen2:photo-hub-c1": {
       "w": 1280,
       "h": 1280,

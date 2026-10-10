@@ -974,6 +974,13 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
   const options = Array.isArray(steps.options) ? steps.options : (stepMode === "video" ? maker?.videoOptions : maker?.photoOptions) ?? configuredOptions;
   const stepLength = stepMode === "video" ? visualLength(options, steps.length, page.id) : undefined;
   const stepCredits = stepMode === "video" ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
+  const stepItems = Array.isArray(content.steps) ? content.steps : Array.isArray(steps.items) ? steps.items : [];
+  const actorCards = Array.isArray(steps.actor_cards) ? steps.actor_cards.map((item, index) => {
+    const ref = typeof item === "string" ? item : item?.ref;
+    assert.ok(typeof ref === "string" && ref.trim(), `${page.id}: actor step card ${index + 1} needs a media ref`);
+    const label = typeof item === "string" ? `Actor ${index + 1}` : String(item.label ?? `Actor ${index + 1}`);
+    return { image: visualImage(model, ref, "video"), label, ...(item && typeof item === "object" && item.selected ? { selected: true } : {}) };
+  }) : [];
   const pickerSource = source.picker && typeof source.picker === "object" ? source.picker : {};
   const picker = Array.isArray(pickerSource) ? {} : pickerSource;
   const pickerCards = Array.isArray(picker.cards) ? picker.cards : [];
@@ -993,7 +1000,8 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
       credits: `${stepCredits} credits`,
       ...(steps.prompt ? { prompt: String(steps.prompt) } : {}),
       mode: stepMode,
-      items: Array.isArray(content.steps) ? content.steps.map((item) => ({ t: normalizeStepLabel(item.t ?? ""), d: item.d ?? "" })) : []
+      items: stepItems.map((item) => ({ t: normalizeStepLabel(item.t ?? ""), d: item.d ?? "" })),
+      ...(actorCards.length ? { actorCards } : {})
     } } : {}),
     picker: {
       title: picker.title ?? source.titles?.m3?.h2 ?? "",
@@ -1841,6 +1849,8 @@ function payloadFor(model, page) {
     if (visual) out.visual = visual;
     if (page.id === "ai-actors") {
       const spokespersonTool = model.byId["spokesperson-videos"];
+      const actorVisual = visualFor(model, page, c.actor_visual, { videoOptions: [["Frame", "9:16 vertical"], ["Length", "10 seconds"], ["Template", "Actor-led product ad"]] }, "video", toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10" }), c);
+      if (actorVisual) out.visual = actorVisual;
       out.actorScenes = c.actor_scenes;
       out.howTo = c.how_to;
       out.honesty = c.honesty;
@@ -2123,6 +2133,7 @@ const PUBLIC_ENRICHMENT_BANNED = [
 function visualPayloadImages(visual) {
   if (!visual) return [];
   const images = [...(visual.strip ?? []), visual.steps?.source, visual.steps?.result];
+  for (const card of visual.steps?.actorCards ?? []) images.push(card.image);
   for (const card of visual.picker?.cards ?? []) images.push(card.image);
   for (const item of visual.uses ?? []) images.push(item.image, item.imageB);
   for (const item of visual.input ?? []) images.push(item.good, item.bad);
