@@ -56,9 +56,8 @@ export function cleanProductUrl(value: string | null | undefined): string | unde
 export function aidreamcapesCreateIntentFromSearchParams(params: SearchParamsLike): AidreamcapesCreateIntent | undefined {
   const prompt = cleanPrompt(params.get("prompt"));
   if (params.get("tool_id") === "image_generator") {
-    if (!prompt) return undefined;
     const tool = cleanTool(params.get("tool"));
-    return { kind: "photo", key: `photo:${tool ?? ""}:${prompt}`, ...(tool ? { tool } : {}), prompt };
+    return { kind: "photo", key: `photo:${tool ?? ""}:${prompt ?? ""}`, ...(tool ? { tool } : {}), ...(prompt ? { prompt } : {}) };
   }
   const tool = cleanTool(params.get("tool"));
   if (!tool) return undefined;
