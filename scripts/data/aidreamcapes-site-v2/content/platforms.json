@@ -1,10 +1,10 @@
 {
   "id": "platforms",
   "title": "AI Ads and Product Photos by Platform | AIVideosUGC",
-  "description": "Browse AI ads and product photos by platform, from TikTok and Instagram to Amazon and Shopify. See the sizes and ideas that fit, then make your first one.",
+  "description": "Turn one product photo into correctly sized ads and photos for TikTok, Instagram, Facebook, Shorts, Amazon, and Shopify. Watermark-free files, ready to post.",
   "h1": "AI Ads and Product Photos by Platform, Sized for Where You Sell",
   "eyebrow": "Choose your channel",
-  "lead": "Choose a selling platform to find product photo guidance, video formats, and practical ideas for where you publish.",
+  "lead": "Every channel wants its own size, and resizing one clip for each one wastes hours. Pick your platform to see the exact photo and video specs, then generate a correctly sized asset from one product photo.",
   "card": "Sizes and ideas for TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify.",
   "secondary_keywords": [
     "social media ad sizes for products",
@@ -53,6 +53,14 @@
     {
       "q": "How do I keep important details out of platform controls?",
       "a": "Keep the product and any later text inside the placement safe area, then preview the downloaded file in the exact Feed, Reel, Short, listing, or store slot before publishing."
+    },
+    {
+      "q": "Do I have to make a separate video for each platform?",
+      "a": "For the best fit, yes for shape: vertical for TikTok, Reels, and Shorts, square for feeds and listings. You generate each size from the same product photo and scene, so you don't reshoot or re-edit from scratch."
+    },
+    {
+      "q": "Can the downloaded files be used in paid ads commercially?",
+      "a": "Yes. They are watermark-free and licensed for commercial use across social, marketplace, and store placements. Each platform still reviews your ad, and any claims or offer text you add must be accurate."
     }
   ],
   "visual": {
@@ -132,18 +140,39 @@
       }
     }
   },
+  "benefits_h2": "Why size your ads with this platform directory?",
+  "benefits": [
+    {
+      "t": "One photo, every channel size",
+      "d": "Generate vertical, square, and wide assets from the same product photo. Each file matches the channel's specs, so you stop cropping and re-exporting one clip by hand."
+    },
+    {
+      "t": "No per-platform reshoots",
+      "d": "You don't film the product again for TikTok, Reels, Shorts, or your store. One upload carries the item into every format the directory covers."
+    },
+    {
+      "t": "Specs checked against official rules",
+      "d": "The size table lists ratios and pixels such as 1080x1920 and 1440x1800 as platform requirements, so your creative fits the placement instead of getting cropped by the app."
+    },
+    {
+      "t": "Files you can post and run as ads",
+      "d": "Downloaded photos and videos are watermark-free and licensed for commercial use on social feeds, marketplaces, and paid campaigns."
+    }
+  ],
+  "steps_h2": "How to make a platform-ready asset in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a correctly sized, ready-to-post file for the channel you choose.",
   "steps": [
     {
-      "t": "Select where you will publish",
-      "d": "Choose the sales channel or social feed where shoppers will see the product."
+      "t": "Upload Your Product Photo",
+      "d": "Add one photo that shows the whole item. The generated asset keeps the product's shape, color, and details."
     },
     {
-      "t": "Select a format for that channel",
-      "d": "Match the image or video shape to the placement where shoppers will see your product."
+      "t": "Pick the Platform and Format",
+      "d": "Choose where you will publish and select the matching size. Run the same photo through more channels to build a full set at once."
     },
     {
-      "t": "Prepare a product image",
-      "d": "Open a related tool and add a clear source photo before downloading your creative."
+      "t": "Download and Post",
+      "d": "Review the file and save it. Add headlines or captions in your editor, then upload it to the channel."
     }
   ],
   "directory_specs": {

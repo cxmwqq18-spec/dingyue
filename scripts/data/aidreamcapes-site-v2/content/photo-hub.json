@@ -1,10 +1,10 @@
 {
   "id": "photo-hub",
   "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
-  "description": "Make square listing, lifestyle, on-model, and detail images with an AI product photo generator. Start from a product photo; review results before publishing.",
+  "description": "Turn one product photo into square listing, lifestyle, on-model, and detail shots with our AI product photo generator. Watermark-free images, ready to publish.",
   "h1": "AI Product Photo Generator for Listing, Lifestyle, and Detail Photos",
   "eyebrow": "AI photo tools",
-  "lead": "Use an AI product photo generator to make listing, lifestyle, on-model, or detail photos from one product image. Choose the photo tool that fits where you need to show the item, then build a small set that answers the questions shoppers ask before they buy. Build the set around a listing question such as scale, texture, fit or daily use, so every frame earns its place.",
+  "lead": "Filling a listing with real photos can mean a shoot for every item and angle. This AI product photo generator turns one product image into listing, lifestyle, on-model, and detail shots that answer shoppers' questions before they buy.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -15,32 +15,39 @@
     "Start with one clear product photo and choose the kind of image you need: a white-background listing photo, a lifestyle scene, an on-model view, a new background, or a social ad still. Each tool opens its own templates and options.",
     "Photos are square by default. Download each result and add exact prices, captions, or offers in your editor."
   ],
+  "benefits_h2": "Why use an AI product photo generator?",
   "benefits": [
     {
-      "t": "Many shots, one upload",
-      "d": "Use the same product photo again with different templates or descriptions. There's no reshoot each time you want a new setting."
+      "t": "No photoshoot or photographer",
+      "d": "Upload one existing product image and generate the shot. You skip studio rental, lighting gear, and a shoot date for each new listing."
     },
     {
-      "t": "Templates or your own words",
-      "d": "Pick a ready-made look when you want a quick start. Write your own description when you have a specific scene in mind."
+      "t": "One photo, a whole gallery",
+      "d": "Use the same image for a white-background main shot, a lifestyle scene, a close-up detail, and an on-model view. Each extra image answers a different shopper question without a reshoot."
     },
     {
-      "t": "Private to your account",
-      "d": "Uploads and finished images are visible only to you. Nothing goes into a public gallery."
+      "t": "Models and settings without casting",
+      "d": "On-model photos and room scenes are generated around your item, so you don't hire a model or build a set to show the product worn or in use."
+    },
+    {
+      "t": "Yours to publish and sell with",
+      "d": "Downloaded images are square, watermark-free, and licensed for commercial use on Amazon, Shopify, social feeds, and ads."
     }
   ],
+  "steps_h2": "How to make product photos in 3 simple steps",
+  "steps_lead": "Three steps turn one product image into a ready-to-publish square photo — no studio, no photographer, no reshoots.",
   "steps": [
     {
-      "t": "Your product",
-      "d": "Upload a clear item image with the whole product in frame, including its surface, hardware and important opening."
+      "t": "Upload Your Product Photo",
+      "d": "Add one image with the whole item in frame. The generated photo keeps the product's shape, color, and key details."
     },
     {
-      "t": "Choose a visual direction",
-      "d": "Choose a clean hero, everyday-use scene or model try-on based on whether shoppers need shape, scale, context or fit."
+      "t": "Pick a Photo Type and Scene",
+      "d": "Choose a listing, lifestyle, on-model, or detail shot. Run the same upload through several scenes to build a full gallery."
     },
     {
-      "t": "Download your result",
-      "d": "Save the square image, check it against stock, then add exact wording in your editor before placing it in your gallery."
+      "t": "Download and Publish",
+      "d": "Review the square image and save it. Add exact wording in your editor, then place it in your listing, feed, or ad."
     }
   ],
   "uses": [
@@ -106,6 +113,14 @@
     {
       "q": "What size and crop should a product photo use?",
       "a": "The photo hub makes square images by default. Keep the full product inside the source frame, then check the square crop on mobile so handles, straps, lids, and small details do not disappear at feed width."
+    },
+    {
+      "q": "Can I use the downloaded photos in ads and my store?",
+      "a": "Yes. Downloaded images are watermark-free and licensed for commercial use, including product listings, social posts, and paid ads. Any price, claim, or logo you add is your responsibility and must match the item you sell."
+    },
+    {
+      "q": "Is this cheaper than hiring a product photographer?",
+      "a": "It avoids the per-shoot costs of a photographer, studio, and model: you pay credits per generated image and can rerun a scene. You keep final review yourself, and complex custom setups may still be worth a real photoshoot."
     }
   ],
   "overview": [
