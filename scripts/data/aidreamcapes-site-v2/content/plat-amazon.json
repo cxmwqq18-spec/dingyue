@@ -1,10 +1,10 @@
 {
   "id": "plat-amazon",
   "title": "Amazon Product Photos on White and in Use | AIVideosUGC",
-  "description": "Create square Amazon product photos from one upload, including a white-background main image, a lifestyle view, and detail shots.",
+  "description": "Meet Amazon main-image rules with one product photo: get a white-background main, lifestyle and detail shots without a reshoot, with the cost shown first.",
   "h1": "Amazon Product Photos for Your Main Image and Listing Gallery",
   "eyebrow": "Amazon listings",
-  "lead": "Plan an Amazon gallery around a square white-background main image, a square lifestyle secondary, and a square detail or size image.",
+  "lead": "Need an Amazon-compliant gallery without a product reshoot? One photo gives you a plain white main image plus lifestyle and detail shots that follow Amazon's rules.",
   "card": "A clean white main image, then photos for size, detail and use.",
   "secondary_keywords": [
     "Amazon main image white background",
@@ -31,7 +31,7 @@
     ],
     [
       "AIVideosUGC clip options",
-      "6, 10 or 15 seconds"
+      "6, 10, 15 or 30 seconds"
     ],
     [
       "Sponsored Brands safe area",
@@ -68,7 +68,7 @@
     },
     {
       "q": "Can I make a video for my Amazon listing?",
-      "a": "Sponsored Brands video ads require 16:9 and 6–45 seconds, with text and key details kept out of the lower-right corner. Product-detail page videos have separate rules: 16:9 or 9:16, 1–12 minutes, MOV or MP4, up to 1080p and 5 GB. AIVideosUGC makes 6, 10 or 15-second clips, which fit the Sponsored Brands duration but are shorter than the product-detail minimum. See Amazon Ads' Sponsored Brands video specs and Seller Central's product video guidance."
+      "a": "Sponsored Brands video ads require 16:9 and 6–45 seconds, with text and key details kept out of the lower-right corner. Product-detail page videos have separate rules: 16:9 or 9:16, 1–12 minutes, MOV or MP4, up to 1080p and 5 GB. AIVideosUGC makes 6, 10, 15 or 30-second clips, which fit the Sponsored Brands duration but are shorter than the product-detail minimum. See Amazon Ads' Sponsored Brands video specs and Seller Central's product video guidance."
     },
     {
       "q": "What are Amazon main-image requirements?",
@@ -81,6 +81,14 @@
     {
       "q": "Can the main Amazon image contain props or badges?",
       "a": "Keep the main slot plain when the current category rules require it; put callouts, props and extra context on the secondary gallery images after checking Seller Central."
+    },
+    {
+      "q": "Do I need a photographer or a studio?",
+      "a": "No. The main image and gallery shots are built from the product photo you upload, so the item does not have to be photographed in a studio. Any text callouts are added afterward."
+    },
+    {
+      "q": "Can I use these images in my Amazon listing?",
+      "a": "Yes. Downloaded images are yours to use and carry no AIVideosUGC watermark, but you are still responsible for matching Amazon's current main-image and category rules."
     }
   ],
   "overview": [
@@ -248,16 +256,16 @@
   "cta_lead": "Build a listing photo set around the main view, useful details, and product use.",
   "steps": [
     {
-      "t": "Choose the product for the gallery",
-      "d": "Start with a clear photo that shows the full item and its important parts."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo of the full item. The main image and every gallery shot start from it."
     },
     {
-      "t": "Pick the placement and frame",
-      "d": "Choose a square main, lifestyle, or close-detail image for the product listing."
+      "t": "Pick Main, Lifestyle or Detail",
+      "d": "Pick a white main, a lifestyle scene or a detail crop. A new job adds the next gallery image."
     },
     {
-      "t": "Download and add listing details",
-      "d": "Enter current product details in your seller tools or image editor."
+      "t": "Download and Add Listing Details",
+      "d": "Download the square file and add callouts in Canva. It is yours to list, with no watermark."
     }
   ],
   "visual": {
@@ -559,5 +567,26 @@
         "lead": "Choose a clean listing view or a lifestyle scene for your product."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make Amazon product photos with AI?",
+  "benefits": [
+    {
+      "t": "A white main without a reshoot",
+      "d": "Your product photo is rebuilt on the plain white background Amazon expects for the main image, so a new SKU does not mean another studio session."
+    },
+    {
+      "t": "A full gallery from one item",
+      "d": "Separate jobs produce the lifestyle, detail and package-content shots that answer a shopper's later questions, all with the same product."
+    },
+    {
+      "t": "Rules handled as requirements",
+      "d": "The square main is framed around Amazon's main-image rules and current category guidance, which is the difference between a listing image and a rejected upload."
+    },
+    {
+      "t": "Yours to sell with, no watermark",
+      "d": "Downloaded images carry no AIVideosUGC watermark and are yours to use in your listing, with the credit cost shown before each job starts."
+    }
+  ],
+  "steps_h2": "How to make Amazon product photos in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into listing-ready main and gallery images — no studio, no reshoot."
 }

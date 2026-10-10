@@ -1,10 +1,10 @@
 {
   "id": "plat-tiktok",
   "title": "AI TikTok Ads Generator for Product Videos | AIVideosUGC",
-  "description": "Use our AI TikTok ad generator to turn one product photo into a 9:16 clip of 6, 10 or 15 seconds. See the credit cost up front and make your first ad today.",
+  "description": "Skip the creator shoot and turn one product photo into a 9:16 TikTok ad clip of 6, 10, 15 or 30 seconds, with the credit cost shown before you start.",
   "h1": "AI TikTok Ads Generator for Small Online Shops",
   "eyebrow": "TikTok ads",
-  "lead": "Use this AI TikTok ads generator to make a product clip for TikTok In-Feed ads. Describe the action, download the file, then add the caption and sound in TikTok or CapCut.",
+  "lead": "Can't book a creator every time TikTok needs fresh creative? Upload one product photo and get a 9:16 UGC-style clip ready to post as an In-Feed ad.",
   "card": "Vertical 9:16 clips for the For You feed, from one product photo.",
   "secondary_keywords": [
     "TikTok video ads for products",
@@ -13,7 +13,7 @@
     "9:16 product video ad"
   ],
   "intro": [
-    "On TikTok, people decide in a moment whether to watch or swipe, so your product needs to show up right away and look like it belongs in the feed. AIVideosUGC turns one product photo and a short description into a vertical video ad of 6, 10 or 15 seconds. You might describe a hand lifting the product off a desk, a bottle on a gym bench, or a phone case catching the light, and the clip is built around that moment. For a trend or challenge, show one repeatable move; for spoken audio, keep the frame hands-only and add your narration after download; a creator version can use a face-to-camera explanation.",
+    "On TikTok, people decide in a moment whether to watch or swipe, so your product needs to show up right away and look like it belongs in the feed. AIVideosUGC turns one product photo and a short description into a vertical video ad of 6, 10, 15 or 30 seconds. You might describe a hand lifting the product off a desk, a bottle on a gym bench, or a phone case catching the light, and the clip is built around that moment. For a trend or challenge, show one repeatable move; for spoken audio, keep the frame hands-only and add your narration after download; a creator version can use a face-to-camera explanation.",
     "It suits sellers trying their first TikTok ad and marketers who need a new angle every week without booking a shoot. Each video is made one at a time, with the credit cost shown before you start. Want a different opening? Run another version. Once you download the file, add captions, a sound and your offer in TikTok or CapCut, then upload it to TikTok Ads Manager."
   ],
   "specs": [
@@ -31,7 +31,7 @@
     ],
     [
       "AIVideosUGC clip options",
-      "6, 10 or 15 seconds"
+      "6, 10, 15 or 30 seconds"
     ],
     [
       "TikTok safe zone",
@@ -63,7 +63,7 @@
     },
     {
       "q": "How long can a TikTok In-Feed ad run?",
-      "a": "Non-Spark In-Feed ads can run up to 10 minutes. AIVideosUGC makes 6, 10 or 15-second clips, so check the format requirements and preview your creative before publishing."
+      "a": "Non-Spark In-Feed ads can run up to 10 minutes. AIVideosUGC makes 6, 10, 15 or 30-second clips, so check the format requirements and preview your creative before publishing."
     },
     {
       "q": "Does the video come with music?",
@@ -80,6 +80,14 @@
     {
       "q": "Where do I add captions, prices and offers?",
       "a": "Add exact wording, prices and offers in TikTok, CapCut or another editor after download; the generated clip does not contain your final text or sound."
+    },
+    {
+      "q": "Do I need a model or a creator to make these?",
+      "a": "No. The clip is generated from your product photo and a one-sentence description, so there is no creator to book or film. Add your own caption and sound after download."
+    },
+    {
+      "q": "Is this different from hiring a UGC creator?",
+      "a": "Yes. A hired creator films their own footage and sends it to you days later; AIVideosUGC builds the clip from your own product photo on demand, and you can run a second version whenever the angle stops working."
     }
   ],
   "overview": [
@@ -89,7 +97,7 @@
     },
     {
       "h2": "Match the file to the placement",
-      "d": "TikTok's official In-Feed guide lists a 9:16 vertical file at a minimum 540×960, plus 1:1 at 640×640 and 16:9 at 960×540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB. AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, or 15 second jobs; those are our generator options, not TikTok upload limits. Keep key details clear of the interface and use the preview before publishing. The safe zone changes with the video shape, caption length and add-ons; choose the matching file in [TikTok's In-Feed ad specs](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads) and preview before publishing."
+      "d": "TikTok's official In-Feed guide lists a 9:16 vertical file at a minimum 540×960, plus 1:1 at 640×640 and 16:9 at 960×540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB. AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15 or 30 second jobs; those are our generator options, not TikTok upload limits. Keep key details clear of the interface and use the preview before publishing. The safe zone changes with the video shape, caption length and add-ons; choose the matching file in [TikTok's In-Feed ad specs](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads) and preview before publishing."
     },
     {
       "h2": "Write a hook that earns the first swipe",
@@ -239,16 +247,16 @@
   "cta_lead": "Build your TikTok clip around a clear product action and a placement you plan to use.",
   "steps": [
     {
-      "t": "Upload a clear product photo",
-      "d": "Keep the product centered and fully in frame so it remains visible in a vertical crop."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo of the whole item, leaving room for TikTok controls. It reads in the first frame, so viewers know what you sell."
     },
     {
-      "t": "Choose a 9:16 action",
-      "d": "Describe one movement viewers can follow, such as opening a box or turning the product toward camera."
+      "t": "Share Your Video Idea",
+      "d": "Describe one action, like a hand lifting the product off a desk. The cost shows first, and another idea gives a new opening without reshooting."
     },
     {
-      "t": "Download and add sound in TikTok",
-      "d": "Add a caption, a sound, and any offer in TikTok or CapCut before you post."
+      "t": "Download and Post",
+      "d": "Download the 9:16 file, add your caption and offer in TikTok or CapCut, then post through Ads Manager. The clip is yours, with no watermark."
     }
   ],
   "visual": {
@@ -558,5 +566,26 @@
         "label": "16:9 · horizontal In-Feed creative"
       }
     ]
-  }
+  },
+  "benefits_h2": "Why make TikTok ads with AI UGC video?",
+  "benefits": [
+    {
+      "t": "No creator booking, no shoot day",
+      "d": "One product photo replaces the creator, studio and edit session. You get a UGC-style clip without waiting for anyone's availability, which matters when the feed expects a new angle every week."
+    },
+    {
+      "t": "Fresh openings from the same photo",
+      "d": "Run another job from the same photo with a different action and get a new opening beat for testing in Ads Manager. You are not paying to reshoot the product."
+    },
+    {
+      "t": "Built for the For You feed",
+      "d": "Clips come out in the 9:16 vertical shape TikTok In-Feed ads use, so you download a file that already fits the placement instead of reframing footage."
+    },
+    {
+      "t": "Yours to run, no watermark",
+      "d": "The download carries no AIVideosUGC watermark and you can use it in your own ads and posts. The credit cost appears on screen before each job starts."
+    }
+  ],
+  "steps_h2": "How to make a TikTok ad video in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-post TikTok ad — no studio, no creator, no reshoot."
 }

@@ -1,10 +1,10 @@
 {
   "id": "plat-youtube-shorts",
   "title": "YouTube Shorts Ads From Product Photos | AIVideosUGC",
-  "description": "Create YouTube Shorts ads from one product photo: a full-screen vertical clip in 6, 10 or 15 seconds. See the cost first and start yours now.",
+  "description": "Turn one product photo into a full-screen YouTube Shorts ad clip of 6, 10, 15 or 30 seconds, with no shoot, no creator and the credit cost shown first.",
   "h1": "YouTube Shorts Ads Made From a Single Product Photo",
   "eyebrow": "YouTube Shorts",
-  "lead": "YouTube Shorts ads play full screen on a phone. Turn a product photo into a vertical clip that shows what the product does before the viewer moves on.",
+  "lead": "Want a Shorts ad without filming it yourself? One product photo becomes a full-screen vertical clip that shows the product doing something real, ready for YouTube.",
   "card": "Full-screen vertical clips that show what your product does.",
   "secondary_keywords": [
     "YouTube Shorts video ads",
@@ -13,8 +13,8 @@
     "short product videos for YouTube"
   ],
   "intro": [
-    "YouTube Shorts sit between quick videos people chose to watch, so an ad there works when it feels like one more useful clip: a product shown clearly, doing something real. Upload a product photo, add a sentence about what should happen, and AIVideosUGC returns a 9:16 clip that fills the screen, in your choice of 6, 10 or 15 seconds. Need a wider cut for a regular YouTube video or in-stream ad? Choose 16:9 instead.",
-    "Demo-style clips suit Shorts well. Try a hand blender whirring in a glass, a backpack being packed for a trip, or a desk lamp clicking on at dusk. Each clip is made separately and shows its cost first. Add any music and on-screen text in CapCut or another editor, then upload the finished file to your YouTube channel or ad account. Use a short product demo for the 6, 10 or 15-second file, a creator face-to-camera explanation when the product needs context, and a centered frame with open space when you will add captions later. The generated image or clip has no baked-in words."
+    "YouTube Shorts sit between quick videos people chose to watch, so an ad there works when it feels like one more useful clip: a product shown clearly, doing something real. Upload a product photo, add a sentence about what should happen, and AIVideosUGC returns a 9:16 clip that fills the screen, in your choice of 6, 10, 15 or 30 seconds. Need a wider cut for a regular YouTube video or in-stream ad? Choose 16:9 instead.",
+    "Demo-style clips suit Shorts well. Try a hand blender whirring in a glass, a backpack being packed for a trip, or a desk lamp clicking on at dusk. Each clip is made separately and shows its cost first. Add any music and on-screen text in CapCut or another editor, then upload the finished file to your YouTube channel or ad account. Use a short product demo for the 6, 10, 15 or 30-second file, a creator face-to-camera explanation when the product needs context, and a centered frame with open space when you will add captions later. The generated image or clip has no baked-in words."
   ],
   "specs": [
     [
@@ -31,7 +31,7 @@
     ],
     [
       "AIVideosUGC clip options",
-      "6, 10 or 15 seconds"
+      "6, 10, 15 or 30 seconds"
     ]
   ],
   "tips": [
@@ -68,7 +68,7 @@
     },
     {
       "q": "What are YouTube Shorts ad limits?",
-      "a": "Square or vertical uploads up to 3 minutes can qualify as Shorts. Google Ads Shorts video ads can also run up to 3 minutes; AIVideosUGC offers 6, 10 or 15-second jobs. See [YouTube upload guidance](https://support.google.com/youtube/answer/15424877) and [Google Ads Shorts specs](https://support.google.com/google-ads/answer/16041697?hl=en)."
+      "a": "Square or vertical uploads up to 3 minutes can qualify as Shorts. Google Ads Shorts video ads can also run up to 3 minutes; AIVideosUGC offers 6, 10, 15 or 30-second jobs. See [YouTube upload guidance](https://support.google.com/youtube/answer/15424877) and [Google Ads Shorts specs](https://support.google.com/google-ads/answer/16041697?hl=en)."
     },
     {
       "q": "What should appear in the first second of a Short?",
@@ -77,6 +77,14 @@
     {
       "q": "When should I use 16:9 instead of Shorts?",
       "a": "Use 16:9 for a regular YouTube video or in-stream placement. It is a separate wide output and should not be labeled as a Shorts format."
+    },
+    {
+      "q": "Do I need to film a creator?",
+      "a": "No. The Short is generated from your product photo and a one-sentence action, so nobody needs to be filmed. Add music, captions and links in your editor after download."
+    },
+    {
+      "q": "Can I use the Short as a paid ad?",
+      "a": "Yes. The downloaded clip is yours to run through your Google Ads account and has no AIVideosUGC watermark, but it still has to meet Google's current ad review rules."
     }
   ],
   "overview": [
@@ -86,7 +94,7 @@
     },
     {
       "h2": "Use Google's guidance as the publishing check",
-      "d": "YouTube Help says square or vertical uploads can qualify as Shorts up to 3 minutes. Google Ads recommends 9:16 creative at 1080×1920 for Shorts ads. AIVideosUGC offers 6, 10, and 15 second jobs; its five generator shapes are 9:16, 1:1, 16:9, 4:3, and 3:4. Choose 16:9 for a standard YouTube video or in-stream ad, not for a Shorts card. Read [YouTube's Shorts upload guidance](https://support.google.com/youtube/answer/15424877) and [Google Ads Demand Gen video specs](https://support.google.com/google-ads/answer/17140777?hl=en) before publishing."
+      "d": "YouTube Help says square or vertical uploads can qualify as Shorts up to 3 minutes. Google Ads recommends 9:16 creative at 1080×1920 for Shorts ads. AIVideosUGC offers 6, 10, 15 and 30 second jobs; its five generator shapes are 9:16, 1:1, 16:9, 4:3, and 3:4. Choose 16:9 for a standard YouTube video or in-stream ad, not for a Shorts card. Read [YouTube's Shorts upload guidance](https://support.google.com/youtube/answer/15424877) and [Google Ads Demand Gen video specs](https://support.google.com/google-ads/answer/17140777?hl=en) before publishing."
     },
     {
       "h2": "Start with the action viewers came to see",
@@ -102,7 +110,7 @@
     },
     {
       "h2": "Plan the Shorts frame before the edit",
-      "d": "Choose one hands-on demo for a 15-second-ready Shorts cut, a creator face-to-camera review, or a centered product frame with open subtitle space. AIVideosUGC supplies the visual starting point in 6, 10 or 15 seconds; add narration, captions and music in your editor, then check the vertical preview."
+      "d": "Choose one hands-on demo for a 15-second-ready Shorts cut, a creator face-to-camera review, or a centered product frame with open subtitle space. AIVideosUGC supplies the visual starting point in 6, 10, 15 or 30 seconds; add narration, captions and music in your editor, then check the vertical preview."
     }
   ],
   "input_guide": {
@@ -227,16 +235,16 @@
   "cta_lead": "Start with one product action, then shape a clip for your YouTube Shorts placement.",
   "steps": [
     {
-      "t": "Upload one clean product photo",
-      "d": "Show the white steamer, water reservoir, and cord against a plain background."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo showing the working parts. Every Short starts from that one product shot."
     },
     {
-      "t": "Describe one quick action",
-      "d": "Press this steamer across a blue shirt in a bright, uncluttered room."
+      "t": "Share Your Video Idea",
+      "d": "Describe one action, like a steamer smoothing a shirt. The cost shows first, and another idea needs no reshoot."
     },
     {
-      "t": "Finish the vertical clip",
-      "d": "After download, add music, captions, or the product link in your editor."
+      "t": "Download and Post",
+      "d": "Download the 9:16 clip, add music and captions in CapCut, then post from YouTube Studio. The file is yours, no watermark."
     }
   ],
   "maker": {
@@ -557,5 +565,26 @@
         "h2": "Questions about YouTube Shorts ads"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make YouTube Shorts ads with AI UGC video?",
+  "benefits": [
+    {
+      "t": "Fits between the clips people chose",
+      "d": "The result is one clear product beat in the same full-screen vertical format as the Shorts around it, so your ad reads as one more useful clip instead of a break in the feed."
+    },
+    {
+      "t": "No filming, no creator",
+      "d": "A product photo and one sentence replace the camera, the person and the edit session. A second take is just another job, not a reshoot."
+    },
+    {
+      "t": "Room for a full product story",
+      "d": "Choose a 6, 10, 15 or 30-second clip, so a short demo or a longer start-to-finish demonstration can both come from the same uploaded photo."
+    },
+    {
+      "t": "Yours on the channel, no watermark",
+      "d": "Downloaded clips carry no AIVideosUGC watermark and are yours to post from YouTube Studio or your ad account, with the credit cost shown first."
+    }
+  ],
+  "steps_h2": "How to make a YouTube Shorts ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-post Short — no studio, no creator, no reshoot."
 }

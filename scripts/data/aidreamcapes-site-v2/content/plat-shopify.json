@@ -1,10 +1,10 @@
 {
   "id": "plat-shopify",
   "title": "Shopify Product Photos That Match Your Store | AIVideosUGC",
-  "description": "Create Shopify product photos with AI: matching square images for collection pages, lifestyle shots for product pages and short videos. Start with one photo.",
+  "description": "Get matching Shopify product photos without reshooting your catalog: one photo gives you square page shots, collection tiles, social crops and a clip.",
   "h1": "Shopify Product Photos and Videos From One Upload",
   "eyebrow": "Shopify stores",
-  "lead": "Plan Shopify product photos as square images for product pages, collection or home cards, and social feed posts.",
+  "lead": "Your Shopify catalog looks mismatched and reshooting it all is too expensive. Upload one photo per product and get matching square photos and clips that make the whole store look like one shoot.",
   "card": "Matching square photos, lifestyle shots and a short clip for each product page.",
   "secondary_keywords": [
     "Shopify product images",
@@ -68,7 +68,7 @@
     },
     {
       "q": "What are Shopify product video limits?",
-      "a": "Shopify allows product videos up to 10 minutes, 1 GB and 4K (4096×2160) in MP4, MOV or WebM. Our generator offers 6, 10 or 15-second clips in five shapes; preview how the file appears in your storefront."
+      "a": "Shopify allows product videos up to 10 minutes, 1 GB and 4K (4096×2160) in MP4, MOV or WebM. Our generator offers 6, 10, 15 or 30-second clips in five shapes; preview how the file appears in your storefront."
     },
     {
       "q": "How do I keep collection images consistent?",
@@ -77,6 +77,14 @@
     {
       "q": "Should social crops go in the product gallery?",
       "a": "Keep square product-page images together in the gallery and make a separate 9:16 asset for Stories or Reels so a tall crop does not force the product grid out of shape."
+    },
+    {
+      "q": "Do I need to reshoot older products to match?",
+      "a": "No. Upload the photo you already have for each item and the same background treatment is applied, so older products can match new arrivals without another shoot."
+    },
+    {
+      "q": "Can I use the photos and clips on my store?",
+      "a": "Yes. Downloaded files are yours to publish in Shopify and carry no AIVideosUGC watermark, so they fit straight into your product and collection pages."
     }
   ],
   "overview": [
@@ -86,7 +94,7 @@
     },
     {
       "h2": "Choose media for the page job",
-      "d": "Shopify says square 2048×2048 product images usually display best; its image limit is 5000×5000 pixels or 25 MP and under 20 MB. Product videos can be up to 10 minutes and 1 GB, up to 4K (4096×2160), in MP4, MOV or WebM. AIVideosUGC offers 6, 10 or 15-second clips in five shapes—9:16, 1:1, 16:9, 4:3 and 3:4—with the cost shown before the job starts. Your storefront controls how media appears. Check [Shopify's product media types](https://help.shopify.com/en/manual/products/product-media/product-media-types) for current upload details."
+      "d": "Shopify says square 2048×2048 product images usually display best; its image limit is 5000×5000 pixels or 25 MP and under 20 MB. Product videos can be up to 10 minutes and 1 GB, up to 4K (4096×2160), in MP4, MOV or WebM. AIVideosUGC offers 6, 10, 15 or 30-second clips in five shapes—9:16, 1:1, 16:9, 4:3 and 3:4—with the cost shown before the job starts. Your storefront controls how media appears. Check [Shopify's product media types](https://help.shopify.com/en/manual/products/product-media/product-media-types) for current upload details."
     },
     {
       "h2": "Build a collection that scans cleanly",
@@ -227,16 +235,16 @@
   "cta_lead": "Start with one product and plan matching images for its collection and detail pages.",
   "steps": [
     {
-      "t": "Choose the product for the store",
-      "d": "Start with a clear photo of the item you want to feature across the store."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo of the item. Page shots, collection tiles, social crops and clips all start from it."
     },
     {
-      "t": "Choose the placement and frame",
-      "d": "Choose square product, collection, or social images for the storefront."
+      "t": "Pick Page, Collection or Social",
+      "d": "Pick the store placement and frame. A new job with a new setting adds the next matching image."
     },
     {
-      "t": "Download and add store details",
-      "d": "Add the product name, price, and collection details in Shopify admin."
+      "t": "Download and Add Store Details",
+      "d": "Download the square file, add details in Shopify admin. It is yours to publish, with no watermark."
     }
   ],
   "visual": {
@@ -547,5 +555,26 @@
         "lead": "Choose a product-page, homepage, or social scene for your store."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make Shopify product photos with AI?",
+  "benefits": [
+    {
+      "t": "One coordinated look, no catalog reshoot",
+      "d": "Every image is rebuilt with the same background treatment, so products sit neatly side by side on collection pages without a second shoot for older items."
+    },
+    {
+      "t": "One photo covers store and social",
+      "d": "The same uploaded item yields product-page shots, collection tiles, social crops and a short clip instead of commissioning each format separately."
+    },
+    {
+      "t": "A page set that keeps shoppers scrolling",
+      "d": "Build a main view, a detail and an in-scene image as separate jobs from one photo, giving each product page the set Shopify themes expect."
+    },
+    {
+      "t": "Yours to publish, no watermark",
+      "d": "Downloaded photos and clips carry no AIVideosUGC watermark and are yours to add in Shopify admin, with the credit cost shown before each job."
+    }
+  ],
+  "steps_h2": "How to make Shopify product photos in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into matching storefront images — no studio, no catalog reshoot."
 }

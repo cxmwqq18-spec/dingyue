@@ -1,10 +1,10 @@
 {
   "id": "occ-black-friday",
   "title": "Black Friday Ad Creatives for Small Shops | AIVideosUGC",
-  "description": "Make Black Friday ad creatives weeks ahead: product scenes and clips with clear space for the deal. Add the price, code, and end date once they are set.",
+  "description": "Prepare Black Friday ads weeks early from one product photo: clips and banners in every size with space for the deal, no shoot, cost shown first.",
   "h1": "Black Friday Ad Creatives You Can Prepare Weeks Ahead",
   "eyebrow": "Black Friday",
-  "lead": "Plan a Black Friday creative set around featured products and placements, then add the price, code, and end date after download.",
+  "lead": "Black Friday deals wait for no one and booking a shoot weeks out is too slow. Upload a product photo now and have clips and banners in every size ready, then add the deal once it is set.",
   "card": "Clips and banners made ahead, with every size ready for sale weekend.",
   "secondary_keywords": [
     "Black Friday video ads",
@@ -60,6 +60,14 @@
     {
       "q": "Which Black Friday details should stay editable until the offer is final?",
       "a": "Keep the price, discount, code, and end date editable so you can update the wording after download without rebuilding the product scene."
+    },
+    {
+      "q": "Do I need a creator or a shoot?",
+      "a": "No. The clips and banners are generated from the product photo you upload and a chosen scene, so the sale set does not depend on filming anyone."
+    },
+    {
+      "q": "Can I run these creatives as paid Black Friday ads?",
+      "a": "Yes. Downloaded files are yours to use across paid placements and carry no AIVideosUGC watermark, provided the deal text follows each platform's ad rules."
     }
   ],
   "overview": [
@@ -194,16 +202,16 @@
   "cta_lead": "Plan each Black Friday scene, then add the confirmed price, code, and date.",
   "steps": [
     {
-      "t": "Choose the featured product",
-      "d": "Upload a clear photo of the item or bundle you plan to promote, with its shape and details visible."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo of the featured product or bundle. Every BF size starts from that one shot."
     },
     {
-      "t": "Describe the campaign scene",
-      "d": "Choose a surface, the light, and which side of the frame stays empty for the sale price."
+      "t": "Pick a Black Friday Scene",
+      "d": "Pick a spotlight, bundle or gift-reveal scene. A new job adds the next platform size."
     },
     {
-      "t": "Download and add the deal",
-      "d": "Type the price, code, and end date as text, so you can update them for Cyber Monday."
+      "t": "Download and Add the Deal",
+      "d": "Download the file, type price, code and end date as text. Update for Cyber Monday, no watermark."
     }
   ],
   "visual": {
@@ -478,5 +486,26 @@
         "h2": "When to prepare your Black Friday ads"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make Black Friday creatives with AI?",
+  "benefits": [
+    {
+      "t": "Ready weeks before the weekend",
+      "d": "The visual set is built well ahead from a product photo, so Black Friday creative is approved and waiting instead of booked while deals are being negotiated."
+    },
+    {
+      "t": "Every size from one photo",
+      "d": "Separate jobs produce the vertical phone clip, square feed and banner from the same item, covering each placement without a different shoot."
+    },
+    {
+      "t": "Deal details added once final",
+      "d": "Price, code and end date stay an editable text layer, so the same files carry into Cyber Monday with corrected wording."
+    },
+    {
+      "t": "Yours to run, no watermark",
+      "d": "Downloaded clips and banners carry no AIVideosUGC watermark and are yours to use in paid posts, with the credit cost shown first."
+    }
+  ],
+  "steps_h2": "How to make a Black Friday ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-run Black Friday set — no studio, no last-minute booking."
 }

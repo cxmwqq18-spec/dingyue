@@ -1,10 +1,10 @@
 {
   "id": "occ-holidays",
   "title": "Holiday Ad Photos and Videos for Gift Season | AIVideosUGC",
-  "description": "Create holiday ad photos and videos from one product shot: cozy gift scenes, festive Story clips and square images. Add shipping dates later. Get started now.",
+  "description": "Cover the whole gift season from one product photo: holiday scenes and clips for winter, Valentine's, Mother's and Father's Day without a reshoot.",
   "h1": "Holiday Ad Photos and Videos for Every Gift-Giving Season",
   "eyebrow": "Holiday season",
-  "lead": "Holiday ad photos and videos put your product in a gift-ready scene, from a winter table to a spring brunch, and you add your shipping cutoff or offer yourself before it goes live.",
+  "lead": "Each holiday means another decorated set and another shoot you don't have time for. Upload one product photo and get gift-ready scenes for every season, then add the shipping date yourself.",
   "card": "Gift-ready scenes for every season, with space for your shipping cutoff or offer.",
   "secondary_keywords": [
     "Christmas product photos",
@@ -61,6 +61,14 @@
     {
       "q": "How should I prepare holiday product photos?",
       "a": "Start with a clear product photo, name the holiday setting, and keep the product identity unchanged. Add dates and shipping cutoffs after download."
+    },
+    {
+      "q": "Do I need to decorate a set or book a creator?",
+      "a": "No. The seasonal scene is generated around the product photo you upload, so no room has to be decorated and no one has to be filmed. Cutoffs and offers are added after download."
+    },
+    {
+      "q": "Can I use the holiday clips and images as paid ads?",
+      "a": "Yes. Downloaded files are yours to use in seasonal ads and carry no AIVideosUGC watermark, as long as they meet the platform's current review rules."
     }
   ],
   "overview": [
@@ -195,16 +203,16 @@
   "cta_lead": "Choose the seasonal moment, then add shipping dates and offers after download.",
   "steps": [
     {
-      "t": "Choose the gift-ready product",
-      "d": "Start with a clear photo of the candle, set, or item you plan to feature."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo of the gift-ready product. Every seasonal version starts from that one shot."
     },
     {
-      "t": "Describe the seasonal setting",
-      "d": "Name a table, mantel, or wrapped-gift scene and keep the product easy to see."
+      "t": "Pick a Holiday Scene",
+      "d": "Pick a winter, Valentine's, Mother's or Father's Day scene. A new job adds the next holiday."
     },
     {
-      "t": "Download and add current details",
-      "d": "Add the delivery cutoff, offer, and seasonal message in your editor."
+      "t": "Download and Add Current Details",
+      "d": "Download the file, add shipping cutoff and offer as text. Reuse it next season, no watermark."
     }
   ],
   "visual": {
@@ -487,5 +495,26 @@
         "lead": "Choose another seasonal scene for the product you plan to feature."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make holiday ad videos with AI?",
+  "benefits": [
+    {
+      "t": "Year-round holidays from one photo",
+      "d": "The same starting photo goes into winter, Valentine's Day, Mother's Day and Father's Day scenes, so each season does not start with a new shoot."
+    },
+    {
+      "t": "No seasonal set to build",
+      "d": "Decorated rooms, warm light and gift moments are generated around your product instead of arranged in a studio or your living room."
+    },
+    {
+      "t": "Dates fixed when they change",
+      "d": "Shipping cutoffs, prices and codes are typed after download, so one visual stays usable when the carrier or offer moves."
+    },
+    {
+      "t": "Yours to run, no watermark",
+      "d": "Downloaded images and clips carry no AIVideosUGC watermark and are yours to use in holiday posts, with the credit cost shown first."
+    }
+  ],
+  "steps_h2": "How to make a holiday ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a gift-ready seasonal ad — no decorated set, no reshoot."
 }
