@@ -4,7 +4,7 @@
   "description": "Find product photos and videos matched to your industry, from skincare to sneakers and snacks. Make them from one photo, ready to download and post.",
   "h1": "AI Product Content by Industry, Matched to What You Sell",
   "eyebrow": "Browse by industry",
-  "lead": "Not sure what to shoot for the product you sell? Pick your industry page to see the photos and short videos shoppers in that category look for, then make them from one product photo.",
+  "lead": "Pick the page for what you sell. It shows the photos and short clips shoppers in that category look for, all made from one product photo.",
   "card": "Photo and video ideas matched to what you sell.",
   "secondary_keywords": [
     "AI product photos by category",
@@ -96,7 +96,7 @@
       "sourceHint": "Keep the full bag, handle, and zipper visible.",
       "result": "n:guide:q14-industries-step-lunchbag",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen an adult places a packed lunch container inside the insulated bag, closes the zipper and lifts it by the handle to leave. Preserve the soft sage bag shape and color. Morning window light, candid lifestyle phone-video look. Medium follow framing with one smooth handheld move. End with the zipped lunch bag lifted by its handle. Sound: fabric rustle, zipper and quiet home ambience; no music.",
+      "prompt": "Pack a lunch container into the insulated bag and lift it by the handle.",
       "options": [
         [
           "Category",
@@ -180,7 +180,7 @@
         "/industries/home-living": "n:guide:q14-industry-home-clean"
       }
     },
-    "overview": "Filter the category directory by product group, then open a category for examples matched to the products you sell."
+    "overview": "Group the directory by product type, then open your category for examples matched to what you actually sell."
   },
   "benefits_h2": "Why start content from your industry page?",
   "benefits": [
