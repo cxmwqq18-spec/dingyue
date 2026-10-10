@@ -1,11 +1,11 @@
 {
   "id": "tpl-tryon",
-  "title": "AI Virtual Try-On for Clothing Photos | AIVideosUGC",
-  "description": "Show your clothing on a model without booking one. AI virtual try-on turns a flat lay or hanger photo into an on-model shot for your listing.",
+  "title": "AI Try-On Clothing Photos in Minutes | AIVideosUGC",
+  "description": "Show clothing on a model without a booking. AI virtual try-on turns a flat-lay or hanger photo into a realistic on-model view for your listing and social ads.",
   "h1": "AI Virtual Try-On for Clothing: Your Garment on a Model",
   "eyebrow": "Model photo template",
-  "lead": "Online shoppers skip garments they can only see flat on a table, but booking a model for every new arrival is hard to afford. Upload one flat lay or hanger photo and AI virtual try-on puts your clothing on a realistic model so shoppers can picture wearing it.",
-  "benefits_h2": "Why use AI virtual try-on for clothing photos?",
+  "lead": "Shoppers skip clothing they can only see flat, while booking a model for every arrival is expensive. Upload one garment photo and get an on-model view for listings and social ads.",
+  "benefits_h2": "Why sellers choose virtual try-on",
   "benefits": [
     {
       "t": "Show the garment on a body",
@@ -30,39 +30,20 @@
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "intro": [
-    "The example shows a lightweight blue zip jacket over a white tee and stone-colored chinos, with the model standing by a mirror that catches the back of the collar and shoulders. It answers what a flat lay can't: where the hem falls, how the sleeves sit, and how the jacket looks zipped on a body.",
-    "For a small clothing shop, it's a way to show a new piece on a person the week it arrives, without booking a model or a studio. These model photos work well on Shopify product pages beside your flat lays."
-  ],
-  "tip": "Hang the garment on a plain wall or spread it out flat, zipped and smoothed, then describe the model and room, such as \"man in his twenties, light fitting room.\"",
-  "steps_h2": "How to put clothing on a model in 3 simple steps",
-  "steps_lead": "Three steps turn one garment photo into an on-model view — no casting, no studio, no shoot day.",
+  "steps_h2": "How it works",
+  "steps_lead": "Choose a fashion style, add your garment, generate. No casting call and no studio booking.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "Show collar, closures, pockets, sleeves and hem in one clear view, with stray folds smoothed. A full, even source keeps shape and color reliable."
+      "d": "Add a clear photo of the whole garment with its shape and key details visible."
     },
     {
-      "t": "Pick a Model and Setting",
-      "d": "Describe the model, base layer, pose, light and room, leaving the garment unobstructed. You get a styled view without booking anyone."
+      "t": "Pick a Fashion Style",
+      "d": "Choose an on-model scene, then generate the garment in that setting."
     },
     {
-      "t": "Download and Add Size Facts",
-      "d": "Compare the download with the real piece, then add your approved size chart to the listing. The photo is ready for pages and launch posts."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Outerwear and layers",
-      "d": "Jackets, overshirts, and cardigans look natural worn open or zipped over a simple base layer."
-    },
-    {
-      "t": "Front and back pairs",
-      "d": "Pair a front view with a mirror or back view so buyers can judge the cut from more than one side."
-    },
-    {
-      "t": "New arrivals",
-      "d": "Put each new piece on a model the day it lands, so your new-in collection shows clothes on people, not just on hangers."
+      "t": "Download and Use",
+      "d": "Download the try-on photo and add your size chart or offer in your own editor."
     }
   ],
   "maker": {
@@ -84,191 +65,44 @@
   },
   "faq": [
     {
-      "q": "Can my shoppers try clothes on themselves with this?",
-      "a": "No. This tool is for you as the seller: it turns your garment photo into a model view that you can review and place on your store, launch email or social feed. Shoppers still use your size chart for fit decisions."
+      "q": "What is an AI virtual try-on template?",
+      "a": "It is a ready-made fashion scene. Add a garment photo and generate an on-model view for a listing, campaign or social post."
     },
     {
-      "q": "Can one model appear in every photo?",
-      "a": "There is no saved model to reuse. The person can look different from one image to the next, so describe age range, hair, build, pose and light consistently when you want a related collection."
+      "q": "Do I need to write prompts to use these templates?",
+      "a": "No. Pick a style, upload your garment photo and generate. Step two can include one short line about the scene if you want."
     },
     {
-      "q": "Does the photo show the true fit?",
-      "a": "It shows the style and how the fabric drapes, not an exact fit for every body. Publish real garment measurements and a size chart beside the image, and avoid wording that promises a measured result."
+      "q": "Who are these clothing templates built for?",
+      "a": "Clothing sellers, ecommerce teams and agencies that need on-model product photos without arranging a model shoot."
     },
     {
-      "q": "What garment photo gives the cleanest virtual try-on?",
-      "a": "Lay the garment flat or hang it straight, show the full outline, smooth non-design folds, and use even light. A clear front view gives the model frame more reliable shape, color, closures and pocket placement."
+      "q": "Can I use a flat-lay or hanger photo?",
+      "a": "Yes. Use a clear flat-lay or hanger photo that shows the full garment and its main details."
     },
     {
       "q": "Will the model wear my exact garment?",
-      "a": "The output is guided by the uploaded garment and keeps its visible shape, color and details on the model. Review buttons, seams, prints and hem against the real item before publishing the photo."
+      "a": "The result uses your uploaded garment as the reference. Check the shape, color, seams and closures against the physical piece before publishing."
     },
     {
-      "q": "Can I see both front and back fit?",
-      "a": "Yes. Run a front and a back version when construction matters. Use a separate rear source or a clear back description rather than asking a front photo to invent hidden seams or closures."
+      "q": "Can I make several views from one garment photo?",
+      "a": "Yes. Reuse the source across mirror, walk and lookbook scenes to create another view without a second shoot."
+    },
+    {
+      "q": "How fast is a try-on photo made?",
+      "a": "A photo is generated in minutes after you start the job, with no casting, studio day or reshoot in between."
     },
     {
       "q": "What does a virtual try-on photo cost?",
-      "a": "Each photo costs 24 credits; a front-and-back pair uses 48 credits. The current total is shown before creation, so you can decide how many views the listing needs. Plan the pair when a collar, back seam or closure matters to the product story."
+      "a": "Each photo costs 24 credits, and the charge is shown before the job starts."
     },
     {
-      "q": "How should I compare the generated view with stock?",
-      "a": "Keep the approved flat or hanger photo open beside the result. Check the collar, closures, pocket placement, sleeve length, hem and visible color, then publish the model view only when those details still describe the item in stock. Compare the shoulder line and garment length at the same zoom, and retain the source photo beside the model view so a shopper can check both references."
-    },
-    {
-      "q": "Do I still need to hire a fashion model?",
-      "a": "Not for standard listing and social shots. One uploaded garment becomes an on-model view for a fixed credit cost, so you can cover a full new-in collection without a casting or studio day."
-    },
-    {
-      "q": "Can shoppers mistake the photo for a guaranteed fit?",
-      "a": "Avoid wording that promises an exact fit. Present the image as a style view, publish real measurements and a size chart beside it, and let shoppers choose their size from those facts."
+      "q": "Can I use a try-on image in paid ads?",
+      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for product claims and disclosures."
     }
   ],
-  "overview": [
-    {
-      "h2": "Show the Garment in a Wearable Context",
-      "p": "A flat lay tells shoppers what the garment looks like on a table. A model view adds the hem, sleeve, neckline, and overall silhouette in a room that helps them picture the piece in use. Use it as a supporting image beside your clean product shot."
-    },
-    {
-      "h2": "Style the Scene Without Promising a Fit",
-      "p": "Choose a model, pose, base layer, and setting that fit your collection."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare the Garment for a Reliable Try-On",
-    "items": [
-      {
-        "t": "Show one item clearly",
-        "d": "Photograph the front with collar, pockets, closures, and full hem visible; smooth folds that are not part of the design."
-      },
-      {
-        "t": "Keep the silhouette honest",
-        "d": "Use a straight or gently angled source rather than a bundle of garments that hides the cut."
-      },
-      {
-        "t": "Describe the styling",
-        "d": "Name model age range, pose, base layer, footwear, room, and light without adding a body measurement claim."
-      },
-      {
-        "t": "Plan the second view",
-        "d": "If the back matters, supply a rear source or run a separate rear composition rather than asking the front to reveal hidden construction."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What a Try-On Image Adds",
-    "items": [
-      {
-        "t": "Hem and sleeve context",
-        "d": "Show where a jacket, cardigan, shirt, or dress visually falls on the body."
-      },
-      {
-        "t": "Layering idea",
-        "d": "Place the piece over a simple tee, shirt, or tank so customers can see a complete outfit direction."
-      },
-      {
-        "t": "Collection consistency",
-        "d": "Use one room and lighting language for several new arrivals."
-      },
-      {
-        "t": "A commercial listing asset",
-        "d": "Use the downloaded photo on a product page, launch email, or social post after checking the garment."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Try-On Directions for a Small Collection",
-    "items": [
-      {
-        "t": "Lightweight jacket",
-        "d": "Blue zip jacket over a white tee with hands in pockets, standing beside a fitting-room mirror in soft daylight."
-      },
-      {
-        "t": "Slip dress",
-        "d": "A neutral slip dress on a model near a pale window, with relaxed stance and the full hem visible."
-      },
-      {
-        "t": "Wide-leg trousers",
-        "d": "Trousers styled with a tucked knit top and simple shoes on a clean city sidewalk, cropped from head to toe."
-      },
-      {
-        "t": "Knit cardigan",
-        "d": "Cardigan worn open over a tank in a warm living room, with the sleeve cuff and button placket clear."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Review the Garment Before It Goes Live",
-    "items": [
-      {
-        "t": "Compare construction",
-        "d": "Check pockets, buttons, zipper direction, collar shape, seams, and hem against the real piece."
-      },
-      {
-        "t": "Keep size facts in text",
-        "d": "Add the approved measurements, model notes, and size chart in your store editor."
-      },
-      {
-        "t": "Choose a useful crop",
-        "d": "Use a full-body frame when hem and proportion matter; use a closer crop when fabric or neckline is the point."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Good Garments for Try-On",
-    "good": [
-      "Jackets, overshirts, cardigans, dresses, and tops",
-      "New arrivals that need a styled scene quickly",
-      "Collections that can share one model direction and room",
-      "Listings that also provide real size and measurement information"
-    ],
-    "not_ideal": [
-      "Garments whose construction is hidden in the source",
-      "Products where fit or drape needs to be measured or confirmed",
-      "Very complex prints where every small motif must align perfectly"
-    ]
-  },
-  "examples": {
-    "h2": "More try-on ad scenes",
-    "lead": "Front, back and seated views help shoppers judge drape and fit. Put sizing details in your listing text.",
-    "groups": [
-      {
-        "label": "Model fit and movement",
-        "items": [
-          {
-            "ref": "f:q8-tpl-tryon-example-01",
-            "title": "Fit Check: Bomber Front",
-            "kind": "photo",
-            "product": "bomber jacket",
-            "prompt": "Front view: adult model wears the plain bomber jacket square to camera with collar, zipper and hem visible for a fit check."
-          },
-          {
-            "ref": "f:q8-tpl-tryon-example-02",
-            "title": "Lookbook Walk: Bomber Back",
-            "kind": "photo",
-            "product": "bomber jacket",
-            "prompt": "Back view: adult model walks away in the same bomber jacket and pauses to show the shoulder seams and back hem."
-          },
-          {
-            "ref": "f:q8-tpl-tryon-example-03",
-            "title": "Knit top try-on review",
-            "kind": "photo",
-            "product": "knit top",
-            "prompt": "Creator review: adult model wears the knit top and turns one shoulder toward camera to show sleeve length and fabric drape."
-          },
-          {
-            "ref": "f:q8-tpl-tryon-example-04",
-            "title": "Lookbook Walk: Satin Skirt",
-            "kind": "photo",
-            "product": "satin skirt",
-            "prompt": "Lookbook walk: adult model takes three steps in the satin skirt and turns once so the hem and movement are visible."
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Treat a try-on image as a merchandising aid, not a measurement. A clear model frame lets shoppers judge the collar, sleeve length, hem, layering and overall silhouette before they open the size chart. Keep one garment as the subject, describe a pose that leaves its construction visible, and use consistent light and crop across a new-arrivals set. Review the generated frame against the real item, then place the approved image beside measurements, fabric information and care notes on your product page. Record which angle passed review, keep the source and result together, and use the image only where a shopper can still reach the size chart.",
+    "overview": "A virtual try-on scene puts your garment on a model so shoppers can see the silhouette before opening the size chart.",
     "strip": [
       "n:guide:tpl-tryon-c3-strip-bomber-front",
       "n:guide:tpl-tryon-c3-strip-cardigan-side",
@@ -299,111 +133,83 @@
       "sourceTitle": "Your product"
     },
     "picker": {
-      "title": "Choose a try-on ad scene",
-      "lead": "Choose the ad moment that answers one clothing question: how the garment fits, moves, layers or looks in a real shopping scene. Keep the item and its key seams visible. For a collection, keep the camera height and background steady while changing only the approved garment.",
+      "title": "Choose a fashion template",
+      "lead": "Browse fashion styles, then add your own garment photo.",
       "chips": [
         {
-          "id": "tryon",
-          "label": "Try-On Transition"
-        },
-        {
-          "id": "fit",
-          "label": "Fit Check"
-        },
-        {
-          "id": "grwm",
-          "label": "GRWM"
-        },
-        {
-          "id": "walk",
-          "label": "Lookbook Walk"
-        },
-        {
-          "id": "mirror",
-          "label": "Mirror Selfies"
-        },
-        {
-          "id": "multiangle",
-          "label": "Multi-Angle Whip-Pan"
+          "id": "fashion",
+          "label": "Fashion"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:f7-r10-tryon-mirror-selfie",
-          "label": "Mirror Selfie: Navy Overshirt Fit",
+          "label": "Fashion Clothing Mirror Selfie UGC",
           "chips": [
-            "fit",
-            "grwm",
-            "mirror"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult gets dressed and checks a navy overshirt in a full-length fitting-room mirror selfie, holding the phone low so the shirt stays visible. Bright retail daylight, honest GRWM fit-check photo, full-body square framing. End with the collar, cuffs and hem clear for comparison. No text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:f7-r10-tryon-mirror-denim",
-          "label": "Mirror Fit Check: Denim Jacket",
+          "label": "Fashion Try-On Cinematic Reel",
           "chips": [
-            "fit"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult South Asian man checks a plain denim jacket in a full-length bedroom mirror, turning once to show the shoulder seams, pockets and hem. Bright natural daylight, honest fit-check photo, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:f7-r10-tryon-walk-blue-jacket",
-          "label": "Walk Fit Check: Blue Jacket",
+          "label": "Fashion Whip-Pan Multi-Angle Ad",
           "chips": [
-            "fit",
-            "multiangle"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult Latina woman walks one step in a plain cobalt blue utility jacket, then turns slightly to show the collar, pockets and hem. Soft overcast daylight, full-body square fit-check photo, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:f7-r10-tryon-whip-pan",
-          "label": "Multi-Angle Whip-Pan: Cream Cardigan",
+          "label": "Fashion Lifestyle Reel",
           "chips": [
-            "multiangle",
-            "tryon"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. An adult model makes a quick whip-pan turn in a cream cardigan over a pale blue shirt; show front, side and back angles in one readable sequence. Soft studio daylight, full-body square fashion photo with the cuffs, buttons and hem visible. No text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:f7-r10-tryon-walk-ivory-puffer",
-          "label": "Lookbook Walk: Ivory Puffer",
+          "label": "Fashion Street UGC",
           "chips": [
-            "walk"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An older East Asian woman walks three measured steps in a plain ivory puffer coat and turns once to show the hem. Soft daylight, polished lookbook UGC style, full-body square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:f7-r10-look-review-navy-suit",
-          "label": "Suit Fit Review: Navy Lapel",
+          "label": "Talking Head Product Recommendation",
           "chips": [
-            "fit",
-            "mirror",
-            "tryon"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as a plain navy suit and keep the lapel, shoulders and fit visible. An older adult man presents the suit in a bright studio and pinches the lapel for a creator fit review. Full-body square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:f7-r10-tryon-grwm-field-jacket",
-          "label": "GRWM: Field Jacket Layering",
+          "label": "GRWM Fashion Get Ready Reel",
           "chips": [
-            "grwm",
-            "multiangle"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the garment and keep its shape, color and seam details exactly. An adult Black woman layers a plain charcoal field jacket in a bright bedroom mirror, then turns through three quick angles to show the shoulder, pockets and hem before heading outside. Cool morning light, full-body square GRWM photo, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:q9-look-pleated-skirt-walk",
-          "label": "Lookbook Walk: Pleated Skirt",
+          "label": "Fashion Clothing TikTok UGC Hook",
           "chips": [
-            "walk",
-            "multiangle"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks toward camera in a plain pleated skirt, pauses and turns slightly so the drape and hem stay visible. Soft courtyard daylight, full-body square lookbook frame, no text or logos.",
           "kind": "photo"
@@ -411,64 +217,10 @@
       ],
       "button": "Start with your product"
     },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:tpl-tryon-c3-m4-product-page",
-        "h": "Show an olive bomber on a product page",
-        "d": "Place a square front or three-quarter view beside the garment name, verified measurements, and stock details. Keep the collar, zipper, pockets and hem visible so shoppers can connect the styled image to the item they can buy. Add a back view only when construction or closure details are important. Keep the size chart one click away from the image on mobile."
-      },
-      {
-        "frame": "listing",
-        "ref": "n:guide:tpl-tryon-c3-m4-seasonal-listing",
-        "h": "Feature outerwear in seasonal browsing",
-        "d": "Use a consistent crop and light across a seasonal collection. A city walk or fitting-room frame adds context while the listing text carries the real size, fabric and availability information. Keep the approved source beside each result during your stock review. Name each view by angle so a merchandiser can update the collection without confusing front and back files. Add the garment color to filenames so the right approved view is easy to find."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:c3-r3-tpl-tryon-m5-0",
-        "bad": "n:guide:tpl-tryon-c3-bad-crop",
-        "good_label": "Hoodie sleeves and hem are visible",
-        "bad_label": "Sleeves and hem extend past the frame"
-      },
-      {
-        "good": "n:guide:c3-r3-tpl-tryon-m5-1",
-        "bad": "n:guide:tpl-tryon-c3-bad-blur",
-        "good_label": "Jacket zipper and denim seams stay sharp",
-        "bad_label": "Zipper teeth and seams soften out of focus"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f7-r10-tryon-output-gray-hoodie",
-        "frame": "1:1",
-        "label": "Gray Hoodie Front Fit"
-      },
-      {
-        "ref": "n:guide:f7-r10-tryon-output-denim-jacket",
-        "frame": "1:1",
-        "label": "Denim Jacket Back Fit"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:tpl-tryon-c3-m7-back-detail",
-      "mock": {
-        "type": "steps",
-        "tag1": "1 Lay flat",
-        "tag2": "2 On model",
-        "tag3": "3 Check fit"
-      },
-      "zones": [
-        "Try-on tags",
-        "Garment name",
-        "Size details"
-      ],
-      "items": [
-        "The frame shows the 1-2-3 tags you add to walk buyers through the try-on.",
-        "Add the garment name and real size details to the listing."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Create an on-model try-on in three steps"
@@ -476,24 +228,8 @@
       "m3": {
         "h2": "Choose a virtual try-on scene for your garment"
       },
-      "m4": {
-        "h2": "Use try-on photos on a listing or product page"
-      },
-      "m5": {
-        "h2": "Start try-on photos with a clear garment image"
-      },
-      "m6": {
-        "h2": "Square on-model clothing photos for listings"
-      },
-      "m7": {
-        "h2": "Add garment details after download"
-      },
       "faq": {
         "h2": "Questions about on-model try-on photos"
-      },
-      "templates": {
-        "h2": "More on-model try-on templates",
-        "lead": "Choose another garment type and styling direction."
       }
     }
   }
