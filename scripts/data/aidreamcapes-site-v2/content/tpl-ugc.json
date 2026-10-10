@@ -1,27 +1,27 @@
 {
   "id": "tpl-ugc",
-  "title": "UGC Style Product Photos and Ad Scenes",
-  "description": "Get creator-style UGC product photos without booking a shoot. One product photo becomes a review, unboxing or demo scene ready for social ads.",
+  "title": "UGC Style Product Photos, Recreated in Minutes | AIVideosUGC",
+  "description": "See a creator-style photo, recreate it with your own product. One product photo becomes a review, unboxing or demo scene for social ads.",
   "h1": "Create UGC Style Product Photos for Social Ads",
   "eyebrow": "Ad photo template",
-  "lead": "Need UGC-style product shots but have no creator, studio or time to arrange a shoot? Upload one product photo and get a real-looking review, unboxing or demo scene you can add to your social ads and listing gallery.",
-  "benefits_h2": "Why make UGC style product photos with AI?",
+  "lead": "See a creator-style shot you like, recreate it with your own product. One photo becomes a review, unboxing or demo scene, ready in minutes.",
+  "benefits_h2": "Why sellers recreate UGC photos here",
   "benefits": [
     {
-      "t": "No creator or shoot to arrange",
-      "d": "Booking a creator, location and shoot for every product is slow and expensive. This template puts a believable person or pair of hands in the scene from a single product photo, so each listing can have fresh social content on its own schedule."
+      "t": "No creator or shoot to book",
+      "d": "A believable person or pair of hands appears with your product from one photo, so every listing gets social content on its own schedule."
     },
     {
       "t": "Several scenes from one photo",
-      "d": "Run the same product through a morning-routine shot, a just-delivered unboxing or a hands-on demo. You can test which everyday moment gets attention in the feed without reshooting the product."
+      "d": "Run the product through a routine shot, a delivery unboxing or a demo, and test which moment holds attention without reshooting."
     },
     {
-      "t": "Built for feed and listing placement",
-      "d": "The square image drops straight into an Instagram or TikTok photo post, carousel or product-page gallery. Add your caption, price and discount code afterwards as editable text so every offer stays accurate."
+      "t": "Made for feed and listing spots",
+      "d": "The square image drops into a feed post, carousel or product gallery. Add your caption and price afterwards as editable text."
     },
     {
-      "t": "Yours to use commercially",
-      "d": "Downloaded photos carry no AIVideosUGC watermark and can be used in your own ads, product pages and social posts, so a scene that performs can keep running without extra licensing."
+      "t": "Yours for commercial use",
+      "d": "Downloads carry no AIVideosUGC watermark and can run in your own ads, pages and posts with no extra licensing."
     }
   ],
   "secondary_keywords": [
@@ -30,44 +30,20 @@
     "lifestyle photos for Instagram ads",
     "fitness product lifestyle photos"
   ],
-  "intro": [
-    "A useful UGC ad makes the product easy to recognize while showing the moment a shopper wants to see. Pick a format such as a review, unboxing, try-on or hands-on demonstration.",
-    "Creator-style product content works when the item appears in an ordinary moment that a customer can recognize. A runner can hold a sage-lid bottle after exercise, a hand can pack it into a gym bag, or a creator can turn it toward the camera at home. Keep the package, lid, and main feature clear while the setting supplies the relaxed context.",
-    "Choose whether the frame should show a person, hands, or a quiet still life, then describe one action and one reason to care. Natural light and an unforced crop help the result feel like a usable post, but the product still needs the same shape and color as the upload. Add prices, claims, captions, and disclosures in your editor after you inspect the generated image.",
-    "Use the finished asset where a seller would place creator content: a product page gallery, a feed test, or a short vertical adaptation. Compare the scene with your listing, remove any unsupported implication, and keep the call to action outside the image. If a face is not needed for the message, hands or a product-only frame can keep attention on the item.",
-    "The best creator-style stills have a simple reason for the viewer to look: a hand opens the package, a person takes the first sip, or a product is placed where it will be used. Keep the action small enough to read in a square feed tile, and let the product remain the sharpest subject.",
-    "Pair the scene with the channel and category where it will run. A [lifestyle photo](/ai-image-generation/lifestyle-scene) gives a quiet setting, an [on-model photo](/ai-image-generation/on-model-generation) shows fit, and a [feed ad still](/ai-image-generation/feed-ad-still) leaves room for a tested headline. For product categories, see [beauty skincare](/industries/beauty-skincare), [food and drinks](/industries/food-drinks), and [fashion clothing](/industries/fashion-clothing).",
-    "Use [Instagram ads](/platforms/instagram-ads) or [TikTok ads](/platforms/tiktok-ads) when the frame is made for a social feed, and use [UGC video ads](/ai-video-generation/ugc-ad-video) when motion explains the product better than a still. The [ad sizes guide](/guides/ad-sizes-by-platform) gives the crop context before you prepare a second placement."
-  ],
-  "tip": "Describe a specific moment, like \"sitting on the floor after a home workout, morning light,\" rather than a vague style word such as \"authentic.\"",
-  "steps_h2": "How to make a UGC style product photo in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a feed-ready creator-style shot — no creator, no studio, no reshoot.",
+  "steps_h2": "How it works",
+  "steps_lead": "Pick a style, add your product, generate. No studio booking and no rescheduling.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a shot of the whole product in good light, front label facing the camera. A clear source keeps the generated scene recognizable."
+      "d": "Add a clear photo of the whole product with the front label facing the camera."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Name the person, place and one action, like the bottle beside a gym bag. You get a believable moment without paying a creator."
+      "t": "Pick a Style and Generate",
+      "d": "Choose a creator-style scene, then generate it with your product in the frame."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the photo and add your caption or offer in your own editor. It is ready for posts, carousels and galleries with no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Morning routine",
-      "d": "A tea tin or supplement jar on a kitchen counter next to breakfast."
-    },
-    {
-      "t": "On the go",
-      "d": "A bottle tucked into a gym tote, a pair of sneakers, or other fitness gear on a city sidewalk."
-    },
-    {
-      "t": "Just delivered",
-      "d": "A package opened on the hallway floor with the product held up toward the camera."
+      "t": "Download and Use",
+      "d": "Download the photo and add your caption or offer in your own editor."
     }
   ],
   "maker": {
@@ -82,196 +58,51 @@
       ],
       [
         "Scene",
-        "An everyday moment you describe"
+        "An everyday moment you pick"
       ]
     ],
     "cta": "Make my UGC photo"
   },
   "faq": [
     {
-      "q": "Can the photo show health benefits of my product?",
-      "a": "Show the product being used, not what it does for the body. Leave out before-and-after looks and claims like more energy or weight loss, in the image and in your ad text."
+      "q": "What is a UGC style product photo template?",
+      "a": "It is a ready-made creator-style scene. You add your own product photo and generate a believable review, unboxing or demo shot without filming a creator."
     },
     {
-      "q": "Can I choose who appears in the photo?",
-      "a": "Describe the person's age range, clothing, setting, and action; after generation, inspect the face, outfit, and pose and rerun if they do not fit your brief."
+      "q": "Do I need to write prompts to use these templates?",
+      "a": "No. Pick a style, upload your product photo and generate. Step two lets you add one line about the scene if you want."
     },
     {
-      "q": "Does this work for TikTok?",
-      "a": "Yes, as a photo post or carousel that matches the casual tone of the feed. If you want moving footage, use one of the video tools instead."
+      "q": "Who are these photo templates built for?",
+      "a": "Ecommerce sellers, marketers and agencies that need fresh social photos for ads, carousels and product pages without booking shoots."
     },
     {
-      "q": "What size works for a UGC style product photo?",
-      "a": "Use a square image for feed listings or place it on a tall Story canvas in your editor. For full-screen motion, use a 9:16 video. Add exact claims and pricing yourself after download."
+      "q": "Which platforms are these photos made for?",
+      "a": "Square photos fit Instagram and TikTok posts, carousels and product galleries. Place them on a tall canvas in your editor for Stories."
     },
     {
-      "q": "What makes a photo look like real customer content?",
-      "a": "Use a real use setting, natural light, and the product in an everyday moment, without staged text or logos."
+      "q": "Can beginners use these templates?",
+      "a": "Yes. Upload one product photo, choose a style and download the result. No editing or production experience is needed."
     },
     {
-      "q": "Can I get a photo without a person's face?",
-      "a": "Yes. Ask for hands or a still-life shot when you prefer not to show a face."
+      "q": "Can I make several scenes from one product photo?",
+      "a": "Yes. Reuse the same photo across a routine, unboxing or demo scene, and generate a new version whenever you need another angle to test."
+    },
+    {
+      "q": "How fast is a UGC style photo made?",
+      "a": "A photo is generated in minutes after you start the job, with no studio booking, creator schedule or reshoot in between."
     },
     {
       "q": "What does a creator-style photo cost?",
-      "a": "Each photo costs 24 credits, shown before the job starts."
+      "a": "Each photo costs 24 credits, and the cost is shown before the job starts."
     },
     {
-      "q": "Where should I put a discount code on a UGC photo?",
-      "a": "Add the code as an editable text layer in a clear corner after download, leaving the product and hands unobstructed."
-    },
-    {
-      "q": "Can I prepare both square and 9:16 crops?",
-      "a": "Yes. Keep the square image for feed posts and place the scene on a 9:16 canvas for a Story, checking the crop before publishing."
-    },
-    {
-      "q": "How do I check a generated person before posting?",
-      "a": "Compare the face, age range, clothing, pose, and product interaction with your brief, then rerun if any detail is wrong."
-    },
-    {
-      "q": "Is this different from hiring a UGC creator?",
-      "a": "Yes. Instead of paying a creator to film and wait for their schedule, you upload one product photo and describe the moment yourself. The people shown are AI-generated, so present the shot as your own ad creative rather than as a customer review or testimonial."
-    },
-    {
-      "q": "Do I own the photo well enough to run it as a paid ad?",
-      "a": "Yes. Photos you make can be used in your own ads, product pages and social posts, and downloads have no AIVideosUGC watermark. You are still responsible for the ad text, claims and any disclosure the ad platform requires."
+      "q": "Can I use these photos in paid ads?",
+      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for ad claims and disclosures."
     }
   ],
-  "overview": [
-    {
-      "h2": "Start With a Moment Someone Recognizes",
-      "p": "A creator-style still works when the product has a place in a believable routine: a bottle after a workout, a tea tin beside breakfast, or a package opened in a hallway. Describe that moment rather than asking for a vague feeling such as authentic."
-    },
-    {
-      "h2": "Keep the Product More Specific Than the Mood",
-      "p": "The scene can feel relaxed, but the source must still show the package, label, cap, or main feature clearly. Use the image to show use and context; add a precise offer or product claim outside the generated frame."
-    }
-  ],
-  "input_guide": {
-    "h2": "Write the Moment in Four Parts",
-    "items": [
-      {
-        "t": "Name the person",
-        "d": "Give an age range, clothing direction, or body position without implying a real customer testimonial."
-      },
-      {
-        "t": "Name the place",
-        "d": "Choose a kitchen, gym corner, hallway, sidewalk, desk, or bedroom that fits the product routine."
-      },
-      {
-        "t": "Name the action",
-        "d": "Say holding, opening, packing, pouring, reaching, or setting down instead of only saying lifestyle."
-      },
-      {
-        "t": "Keep the product readable",
-        "d": "Upload a source with the label facing forward and the whole bottle, jar, pack, or tool visible."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A Creator-Style Still Can Show",
-    "items": [
-      {
-        "t": "Daily use",
-        "d": "Put an ordinary product into a recognizable routine without needing a polished studio backdrop."
-      },
-      {
-        "t": "A sense of scale",
-        "d": "Use a hand, bag, desk, or room to help the viewer understand how the item fits into life."
-      },
-      {
-        "t": "A feed-ready square",
-        "d": "Use the output in an Instagram or TikTok photo post after adding your own ad text."
-      },
-      {
-        "t": "A product-first moment",
-        "d": "Keep packaging and main features clear enough for a shopper to identify the item."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Everyday Moments to Describe",
-    "items": [
-      {
-        "t": "Breakfast prep",
-        "d": "Tea tin or supplement jar on a kitchen counter beside toast and a mug in quiet morning light."
-      },
-      {
-        "t": "After the workout",
-        "d": "Water bottle held by a person on a living-room floor with a yoga mat and towel nearby."
-      },
-      {
-        "t": "Desk reset",
-        "d": "Notebook, pen set, or small desk lamp being used beside a laptop during an afternoon work break."
-      },
-      {
-        "t": "Just delivered",
-        "d": "A parcel opened on a hallway floor with the product lifted toward the camera and the label visible."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Make the Still Ready for a Real Ad",
-    "items": [
-      {
-        "t": "Inspect the label",
-        "d": "Check logos, caps, countable pieces, and packaging shape against the product you sell."
-      },
-      {
-        "t": "Add the offer yourself",
-        "d": "Place price, discount, date, URL, and required disclaimer in your design or ad editor."
-      },
-      {
-        "t": "Remove unsupported claims",
-        "d": "Keep the message about the scene and product use unless an approved product claim supports stronger wording."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Products That Read Well in a Casual Scene",
-    "good": [
-      "Bottles, snacks, tea, stationery, and small household goods",
-      "Fitness accessories shown during ordinary use",
-      "Products with a clear package or recognizable silhouette",
-      "Square social posts that need a relaxed visual entry point"
-    ],
-    "not_ideal": [
-      "A regulated product that needs a clinical demonstration",
-      "Claims that depend on a before-and-after body result",
-      "A package whose tiny label text must be exact inside the image"
-    ]
-  },
-  "examples": {
-    "h2": "More creator-style stills",
-    "lead": "Casual everyday scenes show a different kind of product in use.",
-    "groups": [
-      {
-        "label": "Everyday scenes",
-        "items": [
-          {
-            "ref": "n:guide:k6-tpl-ugc-example-coffee-cup",
-            "title": "Travel coffee cup held on a morning train",
-            "kind": "photo",
-            "product": "travel coffee cup"
-          },
-          {
-            "ref": "n:gen2:tpl-ugc-g2",
-            "title": "Scarf pulled from a mailer box on a bed",
-            "kind": "photo",
-            "product": "wool scarf"
-          },
-          {
-            "ref": "n:gen2:tpl-ugc-g3",
-            "title": "Small desk plant next to an open laptop",
-            "kind": "photo",
-            "product": "desk plant"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Show a creator using the product in a clear, believable ad moment. Start with a clean product image, then choose a format that fits its strongest selling point.",
+    "overview": "A creator-style photo shows your product in an everyday moment, ready for social ads and listing galleries.",
     "strip": [
       "n:guide:g1-ugc-running-shoe-review",
       "n:guide:g1-ugc-hoop-earring-review",
@@ -297,195 +128,111 @@
       ]
     },
     "picker": {
-      "title": "Choose a UGC ad format",
-      "lead": "Pick a review, demonstration, unboxing or reaction that makes the product easy to understand.",
+      "title": "Pick a creator style",
+      "lead": "Choose a category, then open a scene and add your own product.",
       "chips": [
         {
-          "id": "review",
-          "label": "Creator Reviews"
+          "id": "technology",
+          "label": "Technology"
         },
         {
-          "id": "demo",
-          "label": "Hands-On Demos"
+          "id": "home-decor",
+          "label": "Home Decor"
         },
         {
-          "id": "unbox",
-          "label": "ASMR Unboxing"
+          "id": "fashion",
+          "label": "Fashion"
         },
         {
-          "id": "tryon",
-          "label": "Try-On Styling"
+          "id": "fitness",
+          "label": "Fitness"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:q9-ugc-phone-grip",
-          "label": "Creator Review + Demo: Phone Grip",
+          "label": "Tech Product Demo UGC",
           "chips": [
-            "demo",
-            "review"
+            "technology"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult attaches the simple phone grip to a plain phone with one small camera opening and holds the phone ready for a steady shot. Over-shoulder close framing, bright cafe window light, natural tech-creator still, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-facebook-discount-free-shipping",
-          "label": "Kraft Box Unboxing: Mug",
+          "ref": "n:guide:b1-spokesperson-output-bag",
+          "label": "Tech Bag Review Demo Photo",
           "chips": [
-            "unbox"
+            "technology"
+          ],
+          "prompt": "Use the uploaded photo as a plain everyday commuter bag and keep its strap and body visible. An adult presenter holds the bag at chest height while showing the fit in a creator review. UGC review and demo photo, square framing, no text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k8-facebook-discount-free-shipping",
+          "label": "Home Unboxing ASMR Photo",
+          "chips": [
+            "home-decor"
           ],
           "prompt": "Use the uploaded photo as a plain coffee starter kit and keep the blank bag, hand grinder, and mug visible. Adult hands pack the kit beside a blank kraft box on a bright counter, showing an unboxing reveal. ASMR creator photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k1-unboxing-case-mug-set",
-          "label": "Mug Set Unboxing",
+          "label": "Home Gift Unboxing Photo",
           "chips": [
-            "unbox"
+            "home-decor"
           ],
           "prompt": "Use the uploaded photo as a coordinated plain ceramic mug set and keep both mugs visible. Adult hands lift the set from a gift box with paper filling, showing a clear unboxing moment. ASMR creator photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k6-industries-card-fashion",
-          "label": "Try-On: Olive Field Jacket",
+          "label": "Fashion Try-On Field Jacket",
           "chips": [
-            "tryon"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as a plain olive field jacket and keep its pockets, seams, and fit visible. An adult man tries on the jacket on a city sidewalk, with his face outside the crop and one hand in a pocket. Fashion creator try-on photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:f14-r10-ugc-pov-discovery",
-          "label": "POV Discovery: Blue Bottle from Tote",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as a plain matte blue reusable bottle and keep its shape, lid and color visible. From a first-person smartphone viewpoint, an adult hand lifts the bottle from a canvas tote beside a cafe table, with a coffee cup and phone edge in view. Casual UGC product-discovery still, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:g1-ugc-hair-clip-review-r2",
-          "label": "Hair Clip: Creator Review",
-          "chips": [
-            "demo",
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as a plain matte hair clip and keep its shape, hinge and finish visible. An adult creator demonstrates the clip in their hair, then turns slightly to show how it holds without pulling. Hands-on UGC product review, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
           "ref": "n:guide:q20-occ-black-friday-card-05-r2",
-          "label": "Try-On: Party Dress",
+          "label": "Fashion Try-On Party Dress",
           "chips": [
-            "tryon"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as a plain red party dress and keep its silhouette visible. An adult model checks the fit in a bright courtyard, turning slightly to show the launch outfit naturally. UGC try-on photo, square framing, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:b1-spokesperson-output-bag",
-          "label": "Bag Review: Strap Demo",
+          "ref": "n:guide:f14-r10-ugc-pov-discovery",
+          "label": "Fitness Bottle Discovery UGC",
           "chips": [
-            "review",
-            "demo"
+            "fitness"
           ],
-          "prompt": "Use the uploaded photo as a tan canvas crossbody bag and keep its strap and body visible. An adult presenter holds the bag at chest height while explaining the fit in a creator review. UGC review and demo photo, square framing, no text or logos.",
+          "prompt": "Use the uploaded photo as a plain matte blue reusable bottle and keep its shape, lid and color visible. From a first-person smartphone viewpoint, an adult hand lifts the bottle from a canvas tote beside a cafe table, with a coffee cup and phone edge in view. Casual UGC product-discovery still, square framing, no text or logos.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:c1-tpl-carousel-video-ad-picker-unbox-square",
-          "label": "Backpack Unboxing: Pocket Reveal",
+          "label": "Fitness Backpack Unboxing Photo",
           "chips": [
-            "unbox"
+            "fitness"
           ],
           "prompt": "Use the uploaded photo as a plain black commuter backpack and keep its organizer pocket visible. Adult hands open the packaging and lift the backpack during an unboxing, showing the pocket clearly. ASMR creator photo, square framing, no text or logos.",
           "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-ugc-gallery-jacket-tryon",
-          "label": "Try-On Transition: Jacket mirror fit check",
-          "chips": [
-            "tryon"
-          ],
-          "prompt": "Use the uploaded photo as the lightweight jacket and keep its color, seams, and fit. An adult tries it on in a bedroom mirror, adjusts one cuff, and turns slightly so the full jacket remains visible. Fashion creator still, soft daylight, no text or logos.",
-          "kind": "photo"
         }
       ],
-      "button": "Create a UGC ad scene"
-    },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:k6-tpl-ugc-use-trail-shoe",
-        "h": "Add context to a feed post",
-        "d": "A kitchen counter or a gym bag shows followers when they would reach for the product."
-      },
-      {
-        "frame": "listing",
-        "ref": "n:guide:k6-tpl-ugc-use-smoothie",
-        "h": "Give a product page another view",
-        "d": "Place it after your white-background photo so shoppers can judge the size next to everyday things."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k6-tpl-ugc-input-bottle",
-        "bad": "n:guide:q9-ugc-input-bottle-soft-focus",
-        "good_label": "Full bottle and cap stay clear",
-        "bad_label": "Bottle details blur into the backdrop"
-      },
-      {
-        "good": "g:ugc-still-ad/example-07",
-        "bad": "n:guide:tpl-ugc-breakfast-crop",
-        "good_label": "Full bottle fits inside the frame",
-        "bad_label": "Bottle is cropped at the frame edge"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f14-ugc-output-0-r2-alt",
-        "frame": "1:1",
-        "label": "Pale blue bottle on gym bench"
-      },
-      {
-        "ref": "n:guide:q9-ugc-output-bottle-gym-bag",
-        "frame": "1:1",
-        "label": "Clear sage-lid bottle packed for the gym"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:k6-tpl-ugc-after-hoodie",
-      "zones": [
-        "Caption",
-        "Offer"
-      ],
-      "items": [
-        "Write a short caption in your editor, such as where the bottle goes with you each day.",
-        "Put the offer or code in an empty corner of the scene so it never covers the product."
-      ]
+      "button": "Recreate with my product"
     },
     "titles": {
       "m2": {
-        "h2": "Turn one product photo into a UGC-style scene"
+        "h2": "Pick a style, add your product"
       },
       "m3": {
-        "h2": "Pick an everyday moment for your UGC photo"
-      },
-      "m4": {
-        "h2": "Where creator-style photos work: feed posts and listings"
-      },
-      "m5": {
-        "h2": "Start with a clear, complete product photo"
-      },
-      "m6": {
-        "h2": "Square UGC photos for Instagram and product pages"
-      },
-      "m7": {
-        "h2": "Add your caption and offer after download"
+        "h2": "Pick a creator style"
       },
       "faq": {
-        "h2": "Questions about creator-style product photos"
+        "h2": "UGC photo template questions"
       }
     }
   }
