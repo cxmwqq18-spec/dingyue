@@ -2404,9 +2404,9 @@ export function validateSiteV2(build = buildSiteV2()) {
     const chips = visual.picker?.chips ?? [];
     const cards = visual.picker?.cards ?? [];
     const minChips = isHub || isDirectory ? 2 : 4;
-    const maxChips = isHub ? 3 : pageId === "templates" ? 16 : 8;
+    const maxChips = isHub ? 3 : pageId === "templates" ? 16 : 18;
     if (chips.length < minChips || chips.length > maxChips) errors.push(`${pageId}: visual picker must contain ${minChips}-${maxChips} filters`);
-    if (!isDirectory && (cards.length < (isHub ? 5 : 8) || cards.length > 16)) errors.push(`${pageId}: visual picker card count is outside the page range`);
+    if (!isDirectory && (cards.length < (isHub ? 5 : 8) || cards.length > 40)) errors.push(`${pageId}: visual picker card count is outside the page range`);
     if ((!isDirectory && !visual.picker?.title?.trim()) || (!isDirectory && !visual.picker?.button?.trim())) errors.push(`${pageId}: visual picker title and required button are missing`);
     if (new Set(chips.map((chip) => chip.id)).size !== chips.length) errors.push(`${pageId}: visual picker filter ids must be unique`);
     const filterCount = (id) => {

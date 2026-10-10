@@ -105,6 +105,10 @@
       "lead": "Pick a scene, then add your product and your line.",
       "chips": [
         {
+          "id": "indoor",
+          "label": "Indoor"
+        },
+        {
           "id": "home",
           "label": "Home"
         },
@@ -117,12 +121,24 @@
           "label": "Living Room"
         },
         {
+          "id": "studio",
+          "label": "Studio"
+        },
+        {
           "id": "office",
           "label": "Office"
         },
         {
+          "id": "garden",
+          "label": "Garden"
+        },
+        {
           "id": "gym",
           "label": "Gym"
+        },
+        {
+          "id": "cafe",
+          "label": "Cafe"
         },
         {
           "id": "kitchen",
@@ -133,11 +149,53 @@
           "label": "Podcast"
         },
         {
+          "id": "fitness",
+          "label": "Fitness"
+        },
+        {
+          "id": "beach",
+          "label": "Beach"
+        },
+        {
           "id": "car",
           "label": "Car"
+        },
+        {
+          "id": "hospital",
+          "label": "Hospital"
+        },
+        {
+          "id": "balcony",
+          "label": "Balcony"
+        },
+        {
+          "id": "pet",
+          "label": "Pet"
+        },
+        {
+          "id": "shop",
+          "label": "Shop"
         }
       ],
       "cards": [
+        {
+          "ref": "n:guide:sc1-spk-indoor-1",
+          "label": "Indoor: hand cream",
+          "chips": [
+            "indoor"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright apartment entryway, an adult creator holds the hand cream tube beside her cheek and says: “I keep this by the door for dry hands.” She turns the tube once. Direct-to-camera chest-up selfie, soft window light, natural skin. End with the tube steady beside her face. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-indoor-2",
+          "label": "Indoor: candle",
+          "chips": [
+            "indoor"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a warm living room, an adult creator holds the amber candle jar beside his chest and says: “This small candle is my five-minute evening reset.” He lifts the lid once. Handheld chest-up selfie, warm window light, natural skin. End with the lid beside the open jar. Sound: clear speech and soft room tone; no music, text or logos.",
+          "kind": "video"
+        },
         {
           "ref": "n:guide:q4-spokesperson-picker-02",
           "label": "Home: moisturizer",
@@ -194,6 +252,24 @@
           "kind": "video"
         },
         {
+          "ref": "n:guide:sc1-spk-studio-1",
+          "label": "Studio: lipstick",
+          "chips": [
+            "studio"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a pale studio, an adult creator holds the open coral lipstick beside her face and says: “I keep this shade in my everyday bag.” She turns the tube once. Chest-up front-camera framing, soft daylight, natural skin. End with the lipstick bullet facing camera. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-studio-2",
+          "label": "Studio: supplement bottle",
+          "chips": [
+            "studio"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a clean studio, an adult creator holds the plain blue supplement bottle at chest height and says: “I check the serving details before I add this to my routine.” He turns the blank bottle once. Eye-level handheld chest-up, soft daylight, natural skin. End with the bottle held still. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
           "ref": "n:guide:q4-spokesperson-picker-08",
           "label": "Office: phone stand",
           "chips": [
@@ -213,6 +289,24 @@
           "kind": "video"
         },
         {
+          "ref": "n:guide:sc1-spk-garden-1",
+          "label": "Garden: gloves",
+          "chips": [
+            "garden"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a backyard garden, an adult creator holds the pair of garden gloves palms-forward and says: “These are the gloves I reach for before planting.” She flips them once. Front-camera chest-up, bright natural light, realistic skin. End with both gloves centered. Sound: clear speech and soft birds; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-garden-2",
+          "label": "Garden: plant sprayer",
+          "chips": [
+            "garden"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a leafy backyard garden, an adult creator holds the blue plant sprayer and says: “I mist the seedlings without soaking the soil.” They press the trigger once toward a nearby herb. Handheld chest-up selfie, bright daylight. End with the sprayer held still beside the herbs. Sound: speech, a light spray and garden ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
           "ref": "n:guide:q4-spokesperson-picker-07",
           "label": "Gym: shaker",
           "chips": [
@@ -229,6 +323,24 @@
           ],
           "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
           "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-06",
+          "label": "Cafe: cardigan",
+          "chips": [
+            "cafe"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe window seat, an adult creator wears a plain cardigan and says: “Same cardigan, three layers: tee, button-down and tank.” They gesture to the neckline and sleeve. Casual front-camera selfie, natural window light. End facing camera with the cardigan neckline and sleeve in view. Sound: speech and low cafe ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-strip-05",
+          "label": "Cafe: cardigan review",
+          "chips": [
+            "cafe"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe window seat, an adult creator wears a plain cardigan and says: “I can style this cardigan for a coffee run or a late meeting.” They adjust one sleeve. Casual front-camera selfie, natural window light. End facing camera with the cardigan neckline and sleeve in view. Sound: speech and low cafe ambience; no music, text or logos.",
           "kind": "video"
         },
         {
@@ -269,6 +381,42 @@
           "kind": "video"
         },
         {
+          "ref": "n:guide:sc1-spk-fitness-1",
+          "label": "Fitness: yoga mat",
+          "chips": [
+            "fitness"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitness studio, an adult creator holds the rolled slate-blue yoga mat and says: “This roll fits beside my desk for a quick stretch.” They loosen one edge. Chest-up front-camera view, soft daylight, natural skin. End with the rolled mat upright and its edge visible. Sound: clear speech and light room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-fitness-2",
+          "label": "Fitness: resistance band",
+          "chips": [
+            "fitness"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator stretches the coral resistance band once between both hands and says: “I can change the tension without changing my setup.” Chest-up handheld selfie, daylight, natural skin. End with the band held in a relaxed loop. Sound: speech and a soft band stretch; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-beach-1",
+          "label": "Beach: sun hat",
+          "chips": [
+            "beach"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny beach, an adult creator holds the woven sun hat beside her face and says: “The wide brim is what I pack for long afternoons outside.” She tilts the brim once. Chest-up front-camera selfie, bright natural light. End with the brim facing the lens. Sound: clear speech and gentle surf; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-beach-2",
+          "label": "Beach: towel",
+          "chips": [
+            "beach"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a bright beach boardwalk, an adult creator holds the folded turquoise beach towel and says: “This towel folds small enough for my day bag.” They open one corner to show the terry texture. Chest-up handheld selfie, natural daylight. End with the towel corner held still. Sound: speech and soft beach ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
           "ref": "n:guide:q4-spokesperson-picker-01",
           "label": "Car: serum",
           "chips": [
@@ -284,6 +432,78 @@
             "car"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum bottle beside their cheek and says: “This is the bottle I keep in my bag.” They tilt it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin. End with the bottle held steady beside the creator’s face. Sound: clear speech and soft car ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-hospital-1",
+          "label": "Hospital: travel tumbler",
+          "chips": [
+            "hospital"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a hospital staff break room, an adult creator in solid teal scrubs holds the insulated tumbler and says: “I keep this close during a long shift.” They lift the lid once. Chest-up front-camera framing, bright soft light. End with the lid and rim visible. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-hospital-2",
+          "label": "Hospital: power bank",
+          "chips": [
+            "hospital"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet hospital visitor corridor, an adult creator holds the slim power bank and says: “I bring a backup charge when the waiting room runs long.” They plug the short cable into its round port. Handheld chest-up selfie, soft corridor light. End with the cable seated and the power bank facing camera. Sound: speech and a light connector click; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-balcony-1",
+          "label": "Balcony: herb pot",
+          "chips": [
+            "balcony"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny apartment balcony, an adult creator holds the small basil herb pot and says: “Fresh leaves are right outside my kitchen door.” They turn the pot once. Chest-up front-camera selfie, natural morning light. End with the plant centered and leaves visible. Sound: clear speech and light city ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-balcony-2",
+          "label": "Balcony: plant mister",
+          "chips": [
+            "balcony"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a small balcony filled with greenery, an adult creator holds the translucent plant mister and says: “A few fine sprays keep these leaves looking fresh.” They press the pump once. Handheld chest-up view, warm daylight. End with the mister held still beside the plants. Sound: speech, a soft mist and city ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-pet-1",
+          "label": "Pet: dog treats",
+          "chips": [
+            "pet"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a cozy living room, an adult creator holds the kraft dog treat pouch and says: “This is the pouch I grab before our walk.” A friendly dog enters on a simple leash. Chest-up handheld selfie, natural window light. End with the pouch and dog both visible. Sound: clear speech, a soft leash jingle and room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-pet-2",
+          "label": "Pet: cat teaser",
+          "chips": [
+            "pet"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult creator holds the feather cat teaser and says: “One quick play session gets my cat moving.” They move the feather once while a gray cat watches. Chest-up front-camera selfie, natural light. End with the feather held beside the creator. Sound: speech and a light toy swish; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-shop-1",
+          "label": "Shop: canvas tote",
+          "chips": [
+            "shop"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Inside a small clothing shop, an adult creator holds the plain canvas tote and says: “This is the bag I use for every market run.” They open the handles once. Chest-up handheld selfie, warm shop light. End with the tote held open toward the lens. Sound: clear speech and quiet shop ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc1-spk-shop-2",
+          "label": "Shop: ceramic cup",
+          "chips": [
+            "shop"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Behind a small cafe counter, an adult creator holds the matte ceramic cup and says: “The rounded handle is what makes this cup easy to carry.” They turn the handle once. Chest-up front-camera selfie, warm window light. End with the handle facing camera. Sound: speech and soft cafe ambience; no music, text or logos.",
           "kind": "video"
         }
       ],
@@ -305,7 +525,7 @@
         "frame": "post",
         "ref": "n:guide:q4-spokesperson-strip-04",
         "h": "Paid Ads.",
-        "d": "Spend less on creators, sets and crews. Pick an AI actor and a scene that fit the people you sell to. Make a new version of the same ad in minutes and test which one gets the click."
+        "d": "Spend less on creators, sets and crews. Pick an AI actor and a scene that fit the people you sell to. Make a new version of one ad in minutes and test which one gets the click."
       },
       {
         "frame": "browser",
@@ -317,7 +537,7 @@
         "frame": "tiktok",
         "ref": "n:gen2:spokesperson-videos-c1",
         "h": "Social Media Channels",
-        "d": "Keep your feeds full without booking a new shoot each week. Use the same actor across posts for a steady look, or switch actors and scenes for each audience on TikTok, Reels and Shorts."
+        "d": "Keep your feeds full without booking a new shoot each week. Use one presenter across posts for a steady look, or switch actors and scenes for each audience on TikTok, Reels and Shorts."
       },
       {
         "frame": "1:1",
