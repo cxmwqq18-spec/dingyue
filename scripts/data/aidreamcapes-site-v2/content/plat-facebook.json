@@ -120,7 +120,23 @@
       "n:guide:k8-facebook-gen2-plat-facebook-c2",
       "f:q18-facebook-strip-baby-bath-unbox",
       "n:gen2:tpl-ugc-g1"
-    ]
+    ],
+    "steps": {
+      "source": "n:guide:k8-facebook-gen2-plat-facebook-g3",
+      "result": "f:q18-facebook-steps-bottle-pour",
+      "mode": "photo",
+      "prompt": "Create a square still photo using the pale-blue insulated bottle shown in the uploaded image as the exact product reference. Preserve its body shape, blue color, loop cap, and metal collar. An adult hand pours water from it into a clear glass on a sunny breakfast desk; keep bottle and glass fully visible in soft morning light.",
+      "options": [
+        [
+          "Template",
+          "Product photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    }
   },
   "benefits_h2": "Reasons to switch to AI UGC for Facebook ads",
   "benefits": [
