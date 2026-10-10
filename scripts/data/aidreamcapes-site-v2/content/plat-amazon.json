@@ -140,6 +140,20 @@
           "Use",
           "Main · lifestyle · detail"
         ]
+      ],
+      "items": [
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo of the whole item. Every gallery shot starts from that single product photo."
+        },
+        {
+          "t": "Pick main, lifestyle or detail",
+          "d": "Choose a white main, a lifestyle scene or a close detail. The credit cost shows first, before the file is made."
+        },
+        {
+          "t": "Download and list",
+          "d": "Download the square file with no watermark, add any callouts yourself, then use it in your Amazon listing."
+        }
       ]
     }
   },
