@@ -1,7 +1,7 @@
 {
   "id": "image-to-video",
   "title": "Image to Video AI for Product Ads | AIVideosUGC",
-  "description": "Animate a product photo into a short video ad for TikTok, Reels, or product pages. Add one clear movement without filming a new shoot.",
+  "description": "Animate one product photo into a short video ad for TikTok, Reels, or product pages. Add clear movement without booking a new shoot or camera crew.",
   "h1": "Turn Product Images into Video Ads with AI",
   "eyebrow": "Image to video",
   "lead": "Turn one product image into a short moving ad. Show a detail shoppers need to see without booking a new shoot.",
@@ -107,5 +107,34 @@
       "t": "Educational Videos",
       "d": "Explain one product feature with a visual demonstration."
     }
-  ]
+  ],
+  "visual": {
+    "strip": [],
+    "steps": {
+      "source": "n:guide:b1-image-to-video-source",
+      "sourceAlt": "Your product: cream ceramic mug with blue flecks on a wooden counter.",
+      "result": "n:guide:b1-image-to-video-result",
+      "mode": "video",
+      "length": 6,
+      "prompt": "Show the product with one clear movement."
+    },
+    "picker": {
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": "",
+      "href": ""
+    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
+    "titles": {
+      "m2": {
+        "h2": "How to turn a product into a video in 3 steps"
+      }
+    },
+    "overview": ""
+  }
 }
