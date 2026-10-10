@@ -486,7 +486,7 @@ function IndexPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
       {visual ? <>
         {data.id === "templates" ? <>
-          {cards.length ? <VisualDirectoryFilter eyebrow="Template gallery" title="See it. Recreate it. Launch it." pageId={data.id} visual={visual}>
+          {cards.length ? <VisualDirectoryFilter eyebrow="Template gallery" pageId={data.id} visual={visual}>
             <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
           </VisualDirectoryFilter> : null}
           <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
