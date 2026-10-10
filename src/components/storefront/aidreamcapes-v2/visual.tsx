@@ -39,13 +39,14 @@ function visualRatio(image: V2VisualImage): string {
   return image.w < image.h ? "9:16" : "16:9";
 }
 
-export function VisualStrip({ visual, r, includeOverview = false }: { visual: V2Visual; r: V2Resolvers; includeOverview?: boolean }) {
+export function VisualStrip({ visual, r, includeOverview = false, heading, lead }: { visual: V2Visual; r: V2Resolvers; includeOverview?: boolean; heading?: string; lead?: string }) {
   if (!visual.strip.length && !(includeOverview && visual.overview)) return <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />;
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       <section aria-label="Product examples" className="sec v-strip-section">
         <div className="wrap">
+          {heading ? <div className="v-strip-heading"><h2>{heading}</h2>{lead ? <p>{lead}</p> : null}</div> : null}
           <div className="v-strip" data-count={visual.strip.length}>
             {visual.strip.map((item, index) => (
               <figure className="v-strip-card" data-kind={item.kind} data-ratio={visualRatio(item)} key={`${item.src}-${index}`}>

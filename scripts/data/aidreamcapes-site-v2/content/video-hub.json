@@ -29,7 +29,7 @@
     "This AI video generator turns a photo, a product page link or a short description into a clip, without filming, actors on set or a production crew. Every clip is centered on your product.",
     "Choose a creator-style ad, a demo, an unboxing or a visible change, then set a 9:16, 1:1 or 16:9 frame and a length of 6, 10, 15 or 30 seconds. Each run makes one clip, and the credit cost appears before you start."
   ],
-  "benefits_h2": "Reasons to use our AI video generator",
+  "benefits_h2": "Reasons to use an AI video generator",
   "benefits": [
     {
       "t": "Simple and fast",
@@ -155,31 +155,7 @@
       }
     ]
   },
-  "more_sections": [
-    {
-      "eyebrow": "Reasons to use our AI video generator",
-      "h2": "Every ad format you need in one place",
-      "lead": "Make a creator-style ad, demo or unboxing from the same product photo.",
-      "items": [
-        {
-          "t": "Test hooks without reshooting",
-          "d": "Try different openings and actors from one upload, then split-test them in your ad platform."
-        },
-        {
-          "t": "Keep creative fresh",
-          "d": "Add a new scene whenever ad fatigue slows a running campaign."
-        },
-        {
-          "t": "Scale a growing catalog",
-          "d": "Build clips for many products while keeping the same recognizable look."
-        },
-        {
-          "t": "Simple monthly credits",
-          "d": "Each job shows its price before it starts, with planned monthly plans listed on the pricing page."
-        }
-      ]
-    }
-  ],
+  "more_sections": null,
   "visual": {
     "strip": [
       "f:q1-video-strip-protein",
@@ -679,24 +655,8 @@
       "m3": {
         "h2": "Recreate what you love",
         "lead": "Recreate the style with your own product and launch a campaign in minutes."
-      },
-      "m4": {
-        "h2": "Different use-cases"
       }
     },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:guide:q1-video-use-selfie",
-        "h": "Paid ads",
-        "d": "A personal review to camera works well as a vertical in-feed ad."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q1-video-use-necklace",
-        "h": "Official websites",
-        "d": "A close product moment on a wide frame fits a brand or product page."
-      }
-    ]
+    "uses": []
   }
 }

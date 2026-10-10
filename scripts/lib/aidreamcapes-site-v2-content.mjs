@@ -2293,10 +2293,14 @@ export function renderedImages(layout, data) {
     addTools(data.make.video); addTools(data.make.photo); addCards(data.templates.cards); addFlows(data.examples.flows); addExamples(data.exampleGallery);
   } else if (layout === "video-hub") {
     if (!data.visual) { addCards(data.heroCards); addTools(data.tools); addCards(data.cards); addExamples(); }
-    else addCards((data.heroCards ?? []).filter((card) => !(data.visual.picker?.cards ?? []).some((pick) => pick.image.src === card.image?.src)));
+    else {
+      addCards((data.heroCards ?? []).filter((card) => !(data.visual.picker?.cards ?? []).some((pick) => pick.image.src === card.image?.src)));
+      const pickerImages = new Set((data.visual.picker?.cards ?? []).map((card) => card.image?.src).filter(Boolean));
+      addExamples({ groups: (data.examples?.groups ?? []).map((group) => ({ ...group, items: (group.items ?? []).filter((item) => !pickerImages.has(item.image?.src)) })) });
+    }
   }
   else if (layout === "tool") {
-    if (data.id === "photo-hub" && data.visual) addCards(data.hero?.cards);
+    if (data.id === "photo-hub" && data.visual) { addCards(data.hero?.cards); addExamples(data.examples); }
     else {
       if (!addMedia(data.heroMedia)) { if (data.hero?.single) add(data.hero.single); else addCards(data.hero?.cards); }
       addGallery(); addPairs(); addTools(data.photoTools); addCards(data.templates); addTools(data.siblings); addExamples();

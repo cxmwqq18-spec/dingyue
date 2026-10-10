@@ -12,12 +12,12 @@
     "white background product photos",
     "AI ads for ecommerce"
   ],
-  "make_title": "Pick the video or photo you need",
-  "make_lead": "Every tool starts from the same product photo. Choose a creator-style ad, a demo or unboxing clip, or a listing and social photo.",
-  "templates_title": "Pick an idea. Add your product.",
-  "templates_lead": "Choose a product demo, unboxing, before-and-after or lifestyle template, upload your product photo and review the result before you publish.",
-  "platforms_title": "The right size for every platform",
-  "benefits_h2": "Benefits of AI product videos and photos",
+  "make_title": "One AI video generator for every campaign",
+  "make_lead": "Use one place for creator-style ads, product demos, unboxing clips and product photos across social campaigns.",
+  "templates_title": null,
+  "templates_lead": null,
+  "platforms_title": null,
+  "benefits_h2": "Everything you need to scale your brand",
   "benefits": [
     {
       "t": "Cost-effective",
@@ -44,8 +44,8 @@
       "d": "Generate several openings and scenes, then split-test them in your ad platform without reshooting."
     }
   ],
-  "steps_h2": "How to make AI videos and photos",
-  "steps_lead": "Three steps take one product photo to a ready-to-post result. No studio, no models, no reshoots.",
+  "steps_h2": "How to create AI UGC ads in 3 steps",
+  "steps_lead": "Turn one product photo into a ready-to-post result in three clear steps.",
   "steps": [
     {
       "t": "Share Your Video Idea",
@@ -58,53 +58,6 @@
     {
       "t": "Get a Ready-to-Use Result",
       "d": "Check the product shape, color and label, then download a watermark-free file for ads and listings."
-    }
-  ],
-  "example_flows": [
-    {
-      "id": "lipstick",
-      "t": "GRWM: Coral Lipstick Before Work",
-      "d": "Start with the lipstick, show it being applied, and finish with a clear swatch on skin.",
-      "imageRefs": [
-        "n:guide:k5-home-lipstick-pack",
-        "n:guide:q1-home-flow-lipstick-grwm",
-        "n:guide:q1-home-flow-lipstick-swatch"
-      ],
-      "imageLabels": [
-        "Your product",
-        "GRWM application",
-        "Coral swatch on skin"
-      ]
-    },
-    {
-      "id": "hoodie",
-      "t": "Outfit Transition: Hoodie Styled for a City Walk",
-      "d": "Show the hoodie worn as part of a complete city outfit.",
-      "imageRefs": [
-        "n:guide:k5-home-hoodie-pack",
-        "n:guide:k5-home-flow-hoodie-result",
-        "n:guide:q1-home-flow-hoodie-style"
-      ],
-      "imageLabels": [
-        "Your product",
-        "Street try-on",
-        "Three-way styling"
-      ]
-    },
-    {
-      "id": "coffee",
-      "t": "Protein Bar Ad: Gym Prep to First Bite",
-      "d": "Pack a protein snack before training, then show a candid first-bite reaction outdoors.",
-      "imageRefs": [
-        "n:guide:q1-home-flow-proteinbar-source",
-        "n:guide:q1-home-flow-proteinbar-gym-bag",
-        "n:guide:q1-home-flow-proteinbar-street-taste"
-      ],
-      "imageLabels": [
-        "Your product",
-        "Gym bag snack prep",
-        "Street interview first bite"
-      ]
     }
   ],
   "ugc": {
@@ -225,87 +178,6 @@
       "a": "No. The results are generated from one product photo, so there is no casting, sample shipping or filming date. Present the people in clips as part of your ad, not as customer reviews."
     }
   ],
-  "examples": {
-    "h2": "Ad scenes across product categories",
-    "lead": "See a product hero, a try-on, a creator-style review and a cinematic scene, each matched to a real ad job.",
-    "groups": [
-      {
-        "label": "Product Hero",
-        "items": [
-          {
-            "ref": "n:guide:q1-home-example-lipstick",
-            "title": "Lipstick Hero: Coral Tube on White",
-            "kind": "photo",
-            "product": "coral lipstick"
-          }
-        ]
-      },
-      {
-        "label": "Lifestyle Use",
-        "items": [
-          {
-            "ref": "n:guide:q1-home-example-tote",
-            "title": "Bag Routine: Crossbody Worn at Cafe",
-            "kind": "scene",
-            "product": "leather crossbody bag"
-          }
-        ]
-      },
-      {
-        "label": "On-Model Try-On",
-        "items": [
-          {
-            "ref": "n:guide:q1-home-example-scarf",
-            "title": "Street Try-On: Silk Scarf in Motion",
-            "kind": "scene",
-            "product": "silk scarf"
-          }
-        ]
-      },
-      {
-        "label": "Cinematic Hero",
-        "items": [
-          {
-            "ref": "n:guide:q1-home-example-serum",
-            "title": "Cinematic Hero: Serum Bottle on Wet Stone",
-            "kind": "photo",
-            "product": "face serum",
-            "tool": "lifestyle-photos",
-            "template": "life",
-            "prompt": "Keep the uploaded serum bottle shape, color and label area exactly. Place the plain amber serum bottle on wet black stone with one amber droplet beside it, soft warm side light and a cinematic close-up, no text."
-          }
-        ]
-      },
-      {
-        "label": "Fitness & wellness",
-        "items": [
-          {
-            "ref": "n:guide:q1-home-example-watch",
-            "title": "Run Prep: Watch Fastened Before Workout",
-            "kind": "scene",
-            "product": "smartwatch"
-          }
-        ]
-      },
-      {
-        "label": "Creator and review ads",
-        "items": [
-          {
-            "ref": "n:guide:q1-home-example-harness",
-            "title": "Dog harness review from a pet parent",
-            "kind": "scene",
-            "product": "dog walking harness"
-          },
-          {
-            "ref": "n:guide:f3-home-earbuds",
-            "title": "Tech Review: Stemless Earbuds in Use",
-            "kind": "scene",
-            "product": "wireless earbuds"
-          }
-        ]
-      }
-    ]
-  },
   "limitations": {
     "h2": "What AI can't check for you",
     "items": [
@@ -338,13 +210,13 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Built for teams that move fast",
-      "h2": "One platform for every result",
-      "lead": "Whatever you sell, every result starts from one product photo and is priced per job.",
+      "eyebrow": "One platform",
+      "h2": "One platform. Unlimited possibilities.",
+      "lead": "Keep product ads and store images together, so every new campaign starts from one product photo.",
       "items": [
         {
           "t": "Ads and listings in one place",
-          "d": "A creator-style clip, a clean main image and a lifestyle scene can all come from the same upload."
+          "d": "A creator-style clip, a clean main image and a lifestyle scene can all come from the same upload, alongside product photos for the same catalog."
         },
         {
           "t": "Scale without more shoots",
@@ -353,10 +225,6 @@
         {
           "t": "Keep creative fresh",
           "d": "Test new openings and scenes so ad fatigue does not stall a running campaign."
-        },
-        {
-          "t": "Simple monthly credits",
-          "d": "Each job shows its price before it starts, with planned monthly plans listed on the pricing page."
         }
       ]
     }
@@ -896,24 +764,6 @@
       "m3": {
         "h2": "Recreate what you love",
         "lead": "Recreate the style with your own product and launch a campaign in minutes."
-      },
-      "m4": {
-        "h2": "Where to use your AI product photos and videos"
-      },
-      "m5": {
-        "h2": "What makes a good product photo for AI"
-      },
-      "m6": {
-        "h2": "What you get and what each one costs"
-      },
-      "m8": {
-        "h2": "Sizes for TikTok, Reels, Instagram and Shopify"
-      },
-      "examples": {
-        "h2": "AI product photo and video examples"
-      },
-      "templates": {
-        "h2": "AI product photo and video templates"
       },
       "faq": {
         "h2": "Questions about AI product photos and videos"

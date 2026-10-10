@@ -29,6 +29,25 @@ export function stepsTitle(data: V2Data, visual: V2Visual | undefined): string {
   return text(data.stepsH2) || visual?.titles?.m2?.h2 || "Three steps";
 }
 
+function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: { title: string; links: { label: string; href: string }[] }[]; r: V2Resolvers; title?: string }) {
+  const visible = groups.filter((group) => group.links?.length);
+  if (!visible.length) return null;
+  return <Section eyebrow="Related tools" title={title}>
+    <div className="related-groups">
+      {visible.map((group) => <div key={group.title}>
+        <h3>{group.title}</h3>
+        <ul>{group.links.map((link) => <li key={link.href}><a href={r.href(link.href)}>{link.label}</a></li>)}</ul>
+      </div>)}
+    </div>
+  </Section>;
+}
+
+function examplesWithoutPickerImages(examples: V2Examples | undefined, visual: V2Visual): V2Examples | undefined {
+  if (!examples) return undefined;
+  const pickerImages = new Set(visual.picker.cards.map((card) => card.image.src));
+  return { ...examples, groups: examples.groups.map((group) => ({ ...group, items: group.items.filter((item) => !pickerImages.has(item.image.src)) })).filter((group) => group.items.length) };
+}
+
 // The home examples are a list of flows. Until a page's data has been refreshed it can still hold the
 // older layout (one smartwatch flow and one water bottle flow); show that the same way meanwhile.
 function homeExampleFlows(examples: unknown): V2Flow[] {
@@ -51,11 +70,6 @@ function HomePage({ data, r }: Props) {
   const maker = data.maker as (V2Maker & { videoOptions?: [string, string][]; photoOptions?: [string, string][] }) | undefined;
   const visual = data.visual as V2Visual | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
-  const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
-  const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
-  const exampleFlows = homeExampleFlows(data.examples);
-  const exampleGallery = data.exampleGallery as V2Examples | undefined;
-  const hasExampleGallery = Boolean(exampleGallery?.groups?.some((group) => group.items?.length));
   const ugc = data.ugc as { eyebrow?: string; title?: string; paras?: string[]; formats?: V2Item[] } | undefined;
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
@@ -124,90 +138,34 @@ function HomePage({ data, r }: Props) {
         </div>
       </section>
       {visual ? <VisualStrip includeOverview visual={visual} r={r} /> : null}
-      <section className="sec">
-        <div className="wrap">
-          <SecHead eyebrow="What do you want to make?" lead={make.lead} title={make.title} />
-          <div className="make">
-            <MakeToolGroup
-              allHref="/ai-video-generation"
-              allLabel="All video tools"
-              guide={{
-                description: "Ready-made ideas for unboxing, before-and-after, beauty and more.",
-                href: "/templates",
-                label: "Browse video templates",
-                secondaryHref: "/ai-video-generation",
-                secondaryLabel: "All video tools",
-                title: "Start from a template"
-              }}
-              r={r}
-              subtitle="For TikTok, Reels, Shorts and your product page"
-              title="Video"
-              tools={make.video}
-            />
-            <MakeToolGroup
-              allHref="/ai-image-generation"
-              allLabel="All photo tools"
-              r={r}
-              subtitle="For Amazon, Shopify and social ads"
-              title="Photo"
-              tools={make.photo}
-            />
-          </div>
-        </div>
-      </section>
-      {!visual && ugc?.title ? (
+      {visual && ugc?.title ? (
         <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
           <Intro paras={list<string>(ugc.paras)} r={r} />
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} /></div> : null}
         </Section>
       ) : null}
-      {!visual ? <EnrichmentOverview r={r} sections={data.overview as never} /> : null}
-      {!visual ? <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
-        <TemplateGrid cards={templates.cards} r={r} />
-        <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
-      </Section> : null}
-      {!visual ? <Section eyebrow="Made for where you sell" title={platforms.title}>
-        <div className="plats">
-          {platforms.items.map((item) => (
-            <a className="plat" href={r.href(item.href)} key={item.href}>
-              <b>{item.label}</b><span>{item.spec}</span><i>See {item.label} page →</i>
-            </a>
-          ))}
-        </div>
-      </Section> : null}
-      <BenefitsSection data={data} fallbackTitle="Skip the photoshoot, get ads that sell" r={r} />
-      {visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : <Section eyebrow="How it works" lead={text(data.stepsLead)} title={text(data.stepsH2) || "Three steps. No studio, no filming."}><Steps items={list<V2Item>(data.steps)} /></Section>}
+      {visual ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null}
+      {visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null}
+      <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />
       <MoreSections r={r} sections={data.more_sections as never} />
-      {visual ? <VisualPicker pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />}
-      {visual ? <VisualSizes visual={visual} r={r} /> : <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />}
-      {visual ? <VisualInput visual={visual} r={r} /> : <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />}
-      {visual ? <VisualOutputs includeLimitations={data.id === "home" && Boolean(visual.limitations.items.length)} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />}
-      {!visual ? <EnrichmentBlockSection block={data.limitations as never} eyebrow="Before you publish" r={r} /> : null}
-      {exampleFlows.length > 0 || hasExampleGallery ? (
-        <Section eyebrow="Examples" title={visual?.titles?.examples?.h2 ?? "One product photo, many results"}>
-          {exampleFlows.length ? <Flows flows={exampleFlows} r={r} /> : null}
-          <ExampleGallery asSubsection examples={exampleGallery} r={r} />
-          {exampleFlows.length ? <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div> : null}
-        </Section>
-      ) : null}
-      {visual ? <VisualUses visual={visual} r={r} /> : null}
-      {visual && data.id !== "home" ? <VisualLimitations visual={visual} /> : null}
-      {visual ? <Section eyebrow="Templates" lead={visual.titles?.templates?.lead ?? templates.lead} title={visual.titles?.templates?.h2 ?? templates.title}>
-        <TemplateGrid cards={templates.cards} r={r} />
-        <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
-      </Section> : null}
-      {!visual && audience?.title ? <Section eyebrow="Who it's for" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null}
-      <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
+      {audience?.title ? <Section eyebrow="For growing teams" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null}
+      <section className="sec">
+        <div className="wrap">
+          <SecHead eyebrow="One workflow" lead={make.lead} title={make.title} />
+          <div className="make">
+            <MakeToolGroup allHref="/ai-video-generation" allLabel="All video tools" guide={{ description: "Ready-made ideas for unboxing, before-and-after, beauty and more.", href: "/templates", label: "Browse video templates", secondaryHref: "/ai-video-generation", secondaryLabel: "All video tools", title: "Start from a template" }} r={r} subtitle="For TikTok, Reels, Shorts and your product page" title="Video" tools={make.video} />
+            <MakeToolGroup allHref="/ai-image-generation" allLabel="All photo tools" r={r} subtitle="For Amazon, Shopify and social ads" title="Photo" tools={make.photo} />
+          </div>
+        </div>
+      </section>
+      <RelatedGroupsSection groups={relatedGroups} r={r} />
+      <Section eyebrow="Why stores switch" title="A faster way to keep testing new ads">
         <div className="cmp-wrap">
           <table className="cmp">
             <thead><tr><th scope="col"><span className="sr-only">Topic</span></th><th scope="col">Photoshoot or creator</th><th scope="col">{BRAND_NAME}</th></tr></thead>
             <tbody>{list<string[]>(data.compare).map((row) => <tr key={row[0]}><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td></tr>)}</tbody>
           </table>
         </div>
-      </Section>
-      <Section eyebrow="Pricing" lead="Every plan comes with monthly credits. You always see the cost before you make anything." title="Simple monthly plans">
-        <Plans plans={list<V2Plan>(data.plans)} r={r} />
-        <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/pricing")}>See full pricing →</a></div>
       </Section>
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />
       <CtaBand href="/app/create" lead={text(data.ctaLead) || "Upload a photo, pick a template and get a video ad or store-ready photos."} r={r} title="Your next ad starts with one product photo" />
@@ -252,20 +210,18 @@ function VideoHubPage({ data, r }: Props) {
   const visual = data.visual as V2Visual | undefined;
   const maker = data.maker as V2Maker | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  const uniqueExamples = visual ? examplesWithoutPickerImages(data.examples as V2Examples | undefined, visual) : data.examples as V2Examples | undefined;
   if (visual) return <>
     <Crumbs items={data.breadcrumbs} r={r} />
     <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
       <Maker note={text(data.startNote)} maker={maker ?? { options: [], cta: "Make my video", href: text(data.appHref) }} r={r} />
     </PageHero>
     <VisualStrip includeOverview visual={visual} r={r} />
-    <BenefitsSection data={data} fallbackTitle={`Why stores make videos with ${BRAND_NAME}`} r={r} />
-    <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-    <MoreSections r={r} sections={data.more_sections as never} />
+    <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>
     <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
-    <VisualUses visual={visual} r={r} />
-    <VisualInput visual={visual} r={r} />
-    <VisualOutputs visual={visual} r={r} />
-    <VisualAfter visual={visual} r={r} />
+    <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />
+    <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
+    <ExampleGallery examples={uniqueExamples} title="Types of videos you can generate" r={r} />
     <Faq items={data.faq} title="Questions about AI video" r={r} />
     <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
   </>;
@@ -316,15 +272,11 @@ function ToolPage({ data, r }: Props) {
       </PageHero>
       {visual && !photoHub ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null}
       {visual && photoHub ? <>
-        <VisualStrip includeOverview visual={visual} r={r} />
+        <VisualStrip heading={visual.titles?.m3?.h2 ?? "Give your product a fresh look"} lead={visual.titles?.m3?.lead} visual={visual} r={r} />
         <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
         <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-        <MoreSections r={r} sections={data.more_sections as never} />
-        <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
-        <VisualUses visual={visual} r={r} />
-        <VisualInput visual={visual} r={r} />
-        <VisualOutputs visual={visual} r={r} />
-        <VisualAfter visual={visual} r={r} />
+        <ExampleGallery examples={data.examples as V2Examples | undefined} title="Examples of AI generated product photos" r={r} />
+        <RelatedGroupsSection groups={relatedGroups} r={r} />
       </> : visual ? <>
         <VisualStrip visual={visual} r={r} />
         {gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
@@ -533,31 +485,40 @@ function IndexPage({ data, r }: Props) {
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
       {visual ? <>
-        <VisualStrip includeOverview visual={visual} r={r} />
-        <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
-        <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-        <MoreSections r={r} sections={data.more_sections as never} />
-        {cards.length ? <VisualDirectoryFilter eyebrow="Browse templates" pageId={data.id} visual={visual}>
-          <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
-        </VisualDirectoryFilter> : null}
-        {items.length ? <VisualDirectoryFilter eyebrow={data.id === "platforms" ? "Browse platforms" : "Browse industries"} pageId={data.id} visual={visual}>
-          <div className="cardlist v-filter-grid">
-            {items.map((item) => {
-              const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);
-              return <article className="cardlist-card v-filter-card" data-filter-indexes={indexes.join(" ")} key={item.href}>
-                <Img image={item.image} r={r} />
-                <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
-              </article>;
-            })}
-          </div>
-        </VisualDirectoryFilter> : null}
-        {list<V2Item>(data.features).length ? <Section eyebrow="What you can do" title="What the industry pages help you make">
-          <Boxes items={list<V2Item>(data.features)} r={r} />
-        </Section> : null}
-        {data.directorySpecs ? <DirectorySpecs specs={data.directorySpecs as never} /> : null}
-        {list<V2DirectoryScene>(data.directoryScenes).length ? <DirectoryScenes items={list<V2DirectoryScene>(data.directoryScenes)} r={r} /> : null}
-        <Faq items={data.faq} title="Questions" r={r} />
-        {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
+        {data.id === "templates" ? <>
+          {cards.length ? <VisualDirectoryFilter eyebrow="Template gallery" title="See it. Recreate it. Launch it." pageId={data.id} visual={visual}>
+            <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
+          </VisualDirectoryFilter> : null}
+          <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
+          <Faq items={data.faq} title="Questions" r={r} />
+          {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
+        </> : <>
+          <VisualStrip includeOverview visual={visual} r={r} />
+          <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
+          <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
+          <MoreSections r={r} sections={data.more_sections as never} />
+          {cards.length ? <VisualDirectoryFilter eyebrow="Browse templates" pageId={data.id} visual={visual}>
+            <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
+          </VisualDirectoryFilter> : null}
+          {items.length ? <VisualDirectoryFilter eyebrow={data.id === "platforms" ? "Browse platforms" : "Browse industries"} pageId={data.id} visual={visual}>
+            <div className="cardlist v-filter-grid">
+              {items.map((item) => {
+                const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);
+                return <article className="cardlist-card v-filter-card" data-filter-indexes={indexes.join(" ")} key={item.href}>
+                  <Img image={item.image} r={r} />
+                  <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+                </article>;
+              })}
+            </div>
+          </VisualDirectoryFilter> : null}
+          {list<V2Item>(data.features).length ? <Section eyebrow="What you can do" title="What the industry pages help you make">
+            <Boxes items={list<V2Item>(data.features)} r={r} />
+          </Section> : null}
+          {data.directorySpecs ? <DirectorySpecs specs={data.directorySpecs as never} /> : null}
+          {list<V2DirectoryScene>(data.directoryScenes).length ? <DirectoryScenes items={list<V2DirectoryScene>(data.directoryScenes)} r={r} /> : null}
+          <Faq items={data.faq} title="Questions" r={r} />
+          {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
+        </>}
       </> : <>
       <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
       <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
