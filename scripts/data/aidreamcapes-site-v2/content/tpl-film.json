@@ -1,10 +1,10 @@
 {
   "id": "tpl-film",
   "title": "Cinematic Product Video With Moody Lighting | AIVideosUGC",
-  "description": "Make a cinematic product video from a single photo, with soft light, deep shadows, and a slow camera move. Choose 16:9 or 9:16 and create your first clip.",
+  "description": "Turn one product photo into a cinematic video with moody light and a slow camera move. 9:16 or 16:9 clips from 6 to 30 seconds, ready to post.",
   "h1": "Create a Cinematic Product Video From One Photo",
   "eyebrow": "Cinematic video template",
-  "lead": "A cinematic product video gives your product the dark, slow, big-screen look of a brand film. Upload one photo, describe the light and the setting, and get a clip that runs 6, 10, or 15 seconds.",
+  "lead": "Flat studio shots make a product feel ordinary, and a real brand film means a crew, a set and a budget most sellers don't have. Turn one photo into a cinematic video with moody light and a slow camera move.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -25,16 +25,16 @@
   "tip": "Name one light source and one surface, such as \"cool light from a tall window, dark stone plinth,\" so the scene stays simple and the product stays in focus.",
   "steps": [
     {
-      "t": "Upload a clear product photo",
-      "d": "A sharp outline gives the light and camera move a clear subject."
+      "t": "Upload Your Product Photo",
+      "d": "Use a sharp photo with a clear outline so the camera move has a definite subject. Your product stays the same item."
     },
     {
-      "t": "Describe the light and movement",
-      "d": "Name a surface, light source, and one camera move."
+      "t": "Share Your Video Idea",
+      "d": "Name the surface, one light source, a camera move and frame, then choose 6 to 30 seconds. Cost shows first."
     },
     {
-      "t": "Download and add licensed sound",
-      "d": "Add a licensed track and product name in your editor."
+      "t": "Download and Post",
+      "d": "Download the clip, then add a licensed track and product name in your editor. No production budget needed."
     }
   ],
   "ideas": [
@@ -91,7 +91,7 @@
     },
     {
       "q": "How much does a cinematic clip cost?",
-      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits, displayed before you run it."
+      "a": "A 6-, 10- or 15-second clip costs 24, 40 or 60 credits, displayed before you run it; each job shows its exact cost before you start."
     },
     {
       "q": "Can the video add moody lighting to a plain photo?",
@@ -108,6 +108,14 @@
     {
       "q": "Can viewers understand a cinematic clip with sound off?",
       "a": "Yes. Keep the action visually clear and add the product name or short cue as editable text after download."
+    },
+    {
+      "q": "Can I use a cinematic clip in paid ads?",
+      "a": "Yes. Clips you make can run in your own paid campaigns as well as website heroes and social posts, and downloads carry no watermark. Add licensed music yourself, since the clip itself ships without a track."
+    },
+    {
+      "q": "Do I need a film crew or studio for this look?",
+      "a": "No. The moody lighting, set and slow camera move are generated from one photo, so the brand-film result costs only the credits per job instead of a production budget."
     }
   ],
   "overview": [
@@ -457,5 +465,26 @@
         "lead": "Try another product video style to control the light, pace, and reveal."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make a cinematic product video?",
+  "benefits": [
+    {
+      "t": "A premium look without a film crew",
+      "d": "Deep shadows, soft directional light and a slow camera move give one ordinary product photo the feel of a brand film, with no set, crew or rental day."
+    },
+    {
+      "t": "Story room when the product needs it",
+      "d": "Choose 6, 10 or 15 seconds for a moody reveal, or 30 seconds for a fuller brand-style sequence built around the same product."
+    },
+    {
+      "t": "Framed for widescreen or feeds",
+      "d": "Pick 16:9 for a website hero or YouTube, or 9:16 for TikTok and Reels, instead of stretching one shape across every placement."
+    },
+    {
+      "t": "No watermark, yours to publish",
+      "d": "Downloaded clips can be used in ads, pages and social posts and carry no AIVideosUGC watermark."
+    }
+  ],
+  "steps_h2": "How to make a cinematic video in 3 simple steps",
+  "steps_lead": "Three steps turn one photo into a brand-film clip - no crew, no set, no rental."
 }

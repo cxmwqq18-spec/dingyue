@@ -1,10 +1,10 @@
 {
   "id": "tpl-head",
   "title": "AI Team Headshots for Your About Page | AIVideosUGC",
-  "description": "Make AI team headshots with the same light and backdrop for everyone. Each person uploads their own photo, so your About page looks tidy. Start with yours.",
+  "description": "Make matching team headshots in one shared light, crop and backdrop, each from a teammate's own photo. AI portraits for About and team pages.",
   "h1": "AI Team Headshots That Match, from Founder to New Hire",
   "eyebrow": "Team photo template",
-  "lead": "Give everyone on your team a polished headshot in the same light, crop and backdrop, each one made from that person’s own approved photo. Review identity and consent before publishing names or roles.",
+  "lead": "A team page stitched together from selfies and cropped wedding shots makes a business look small, and getting everyone into one studio is a scheduling nightmare. Give each person a matching headshot made from their own approved photo.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -18,16 +18,16 @@
   "tip": "Ask each person for a front-facing photo in daylight with nothing covering their face, and paste the same setting description for every headshot.",
   "steps": [
     {
-      "t": "Collect a clear photo from each person",
-      "d": "Ask each teammate for a recent, approved portrait with face and shoulders visible; confirm the intended business use before upload."
+      "t": "Collect Team Photos",
+      "d": "Ask each teammate for an approved face-and-shoulders photo with even light. Confirm the business use before upload."
     },
     {
-      "t": "Choose one backdrop style",
-      "d": "Describe the backdrop, crop, light direction, and clothing level once; reuse the brief while keeping each face reference personal."
+      "t": "Pick One Backdrop",
+      "d": "Describe the backdrop, crop, light and clothing once and reuse the brief. Each portrait keeps a personal face."
     },
     {
-      "t": "Arrange the portraits on your page",
-      "d": "Download approved portraits, arrange the grid, then add correct names, roles, pronouns, and contact context as page text."
+      "t": "Download and Arrange",
+      "d": "Download the portraits, arrange the grid, then add names, roles and contact details as text. No studio day."
     }
   ],
   "ideas": [
@@ -94,6 +94,14 @@
     {
       "q": "What details belong beside each portrait?",
       "a": "Use the person’s approved name, role, pronouns and a useful contact or bio sentence beside the image. Keep claims current and avoid baking a title or label into the pixels so updates stay easy. Check spelling, pronouns, role and contact destination with the person before publishing, and keep the portrait paired with the text record that can be updated later."
+    },
+    {
+      "q": "Do I need permission from each teammate?",
+      "a": "Yes. Use a photo the person has approved for this business use, show them the finished portrait and publish only with their consent; remove a portrait if its owner asks."
+    },
+    {
+      "q": "Can I use the headshots beyond the About page?",
+      "a": "Yes. Downloaded portraits carry no watermark and can be used on LinkedIn, pitch decks, speaker bios and other business materials, with each person's approval kept on file."
     }
   ],
   "overview": [
@@ -416,5 +424,26 @@
         "h2": "Questions about team headshots"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make AI team headshots?",
+  "benefits": [
+    {
+      "t": "A consistent, professional team page",
+      "d": "Every portrait shares one backdrop, crop and light, so your About page reads as a polished company grid instead of mismatched selfies."
+    },
+    {
+      "t": "No studio day to coordinate",
+      "d": "There is no appointment for the whole team; each person sends a photo and their portrait is generated from it, remotely and on their own time."
+    },
+    {
+      "t": "Each person keeps their own face",
+      "d": "The output follows the features in that person's photo rather than replacing the team with stock models, and every portrait is reviewed and approved before publishing."
+    },
+    {
+      "t": "No watermark on downloads",
+      "d": "Approved portraits can be placed on your site, LinkedIn and pitch materials with no AIVideosUGC watermark."
+    }
+  ],
+  "steps_h2": "How to make team headshots in 3 simple steps",
+  "steps_lead": "Three steps turn each teammate's photo into a matching portrait - no studio, no scheduling."
 }

@@ -1,10 +1,10 @@
 {
   "id": "tpl-outfit",
   "title": "AI Fashion Reels: Show the Full Outfit | AIVideosUGC",
-  "description": "Create AI fashion reels from a photo of your jacket, jeans, or full outfit. Get a head-to-toe 9:16 video in 6, 10, or 15 seconds for TikTok and Instagram.",
+  "description": "Turn one clothing photo into a 9:16 fashion reel on a model. Head-to-toe try-on videos in 6, 10, 15 or 30 seconds for TikTok and Instagram ads.",
   "h1": "AI Fashion Reels That Show the Whole Look, Head to Toe",
   "eyebrow": "Fashion video template",
-  "lead": "AI fashion reels put your jacket, jeans or full outfit on a model from one clothing photo. Describe the look and one readable action, choose a 9:16 duration, then add verified size and offer details after review.",
+  "lead": "Posting jacket shots on a white background doesn't show shoppers how the whole outfit moves. Turn one clothing photo into a 9:16 fashion reel that puts the full head-to-toe look on a model for TikTok and Instagram.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -19,16 +19,16 @@
   "tip": "Photograph the outfit laid flat or on a mannequin in one well-lit shot, then describe the model and pose, like \"man in his 20s, hands in pockets, light gray studio.\"",
   "steps": [
     {
-      "t": "Upload the clothing photo",
-      "d": "Keep the hem, collar, closures, and seams inside one well-lit source frame so the model can show the garment clearly."
+      "t": "Upload Your Clothing Photo",
+      "d": "Use a well-lit photo that keeps hem, collar, closures and seams in frame. Clear details make the model version match your clothes."
     },
     {
-      "t": "Describe the model and backdrop",
-      "d": "Describe wearer, backdrop, and one pose; pick 6 seconds for a reveal, 10 for detail, or 15 for a full sequence."
+      "t": "Share Your Video Idea",
+      "d": "Describe the model, backdrop and one action, then pick a 6 to 30-second 9:16 length. The credit cost shows first."
     },
     {
-      "t": "Add captions and sizing notes",
-      "d": "After download, compare with the real item, then add verified sizes, price, product link, licensed audio, and disclosure in your editor."
+      "t": "Download and Post",
+      "d": "Download the clip, compare it with the real item, then add sizes, price and link. You skip the shoot day."
     }
   ],
   "ideas": [
@@ -73,7 +73,7 @@
     },
     {
       "q": "What length works for an AI fashion reel?",
-      "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and choose 9:16 for Instagram or TikTok."
+      "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and 30 seconds when you want several styled moments. Pick 9:16 for TikTok or Instagram."
     },
     {
       "q": "Can the clothes be shown head to toe?",
@@ -90,6 +90,14 @@
     {
       "q": "How do I check a reel before posting?",
       "a": "Watch the full export with the source photo beside it. Check collar, closures, prints, seams, hem, face, hands and footwear, then add the verified size, material, price and disclosure in the platform editor. Check the opening and closing frames at phone size, confirm the garment remains visible during motion, and trim any pause that hides the fit or the product details."
+    },
+    {
+      "q": "Can I run these reels as paid ads?",
+      "a": "Yes. Videos you make can be used in your own ads, including paid TikTok, Instagram and Facebook campaigns. Add any required disclosure or label yourself before the campaign goes live."
+    },
+    {
+      "q": "Do I need a UGC creator for outfit videos?",
+      "a": "No. The reel is generated from your clothing photo with an AI model, so you do not book a creator, ship samples or wait on a filming schedule; each job costs a fixed number of credits shown up front."
     }
   ],
   "overview": [
@@ -431,5 +439,26 @@
         "lead": "Pick another clothing scene, then add your garment photo."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make AI fashion reels?",
+  "benefits": [
+    {
+      "t": "One photo, full head-to-toe look",
+      "d": "The reel puts your jacket, jeans or complete outfit on a model from a single clothing photo, so shoppers see fit, length and movement without you filming anyone."
+    },
+    {
+      "t": "Built for TikTok and Reels",
+      "d": "Every clip is vertical 9:16 with the whole body in frame, ready to post straight to the phone-first feeds where outfit content performs."
+    },
+    {
+      "t": "Lengths for any outfit beat",
+      "d": "Choose 6 seconds for a reveal, 10 or 15 seconds for a turn or walk, or 30 seconds when a look needs several styled moments."
+    },
+    {
+      "t": "Commercial use, no watermark",
+      "d": "Downloaded reels carry no AIVideosUGC watermark and can be used in your ads, product pages and social posts."
+    }
+  ],
+  "steps_h2": "How to make a fashion reel in 3 simple steps",
+  "steps_lead": "Three steps turn one clothing photo into a ready-to-post 9:16 reel - no casting, no shoot, no editing suite."
 }

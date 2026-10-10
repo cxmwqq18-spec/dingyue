@@ -1,10 +1,10 @@
 {
   "id": "tpl-color",
   "title": "Product Color Variations in a Coordinated Set | AIVideosUGC",
-  "description": "Create a coordinated square photo for each product color. Upload each actual shade and compare the result with the item before adding it to a swatch.",
+  "description": "Create one coordinated photo for every product color from your own shade photos, so shoppers can compare options in the same scene. Square AI images.",
   "h1": "Product Color Variations for a Coordinated Photo Set",
   "eyebrow": "Product photo template",
-  "lead": "Product color variations start with a photo of each actual shade and the same scene description to aim for a coordinated set. Separate results can still vary, so compare each image with the item you sell. Name the decision your set supports, such as choosing a warm shade or matching a fabric option, before you attach the source photos.",
+  "lead": "Color swatch names mean nothing until shoppers see the shade in a real setting, and disjointed photos make options look like different products. Give every color the same coordinated scene so the choice is clear.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -18,16 +18,16 @@
   "tip": "Upload a photo of the actual product in each color rather than one pair to be recolored, because real dyes and fabric textures differ more than you'd expect.",
   "steps": [
     {
-      "t": "Photograph one color clearly",
-      "d": "Keep the whole product and its surface texture in frame. Consistent distance and light make the color differences easier to compare."
+      "t": "Upload Your Shade Photos",
+      "d": "Attach one clear photo of the actual shade, with the whole item and texture in frame. Real sources keep finishes honest."
     },
     {
-      "t": "Choose the finish and setting",
-      "d": "Describe the palette and setting once, then attach a source photo of each actual shade so the option names do not drift between results."
+      "t": "Pick One Scene",
+      "d": "Describe the setting and camera once and apply it to every source. Each square image keeps its true shade."
     },
     {
-      "t": "Link each image to its option",
-      "d": "Download each variation, compare hue and shape with the real item, and attach the correct file to the matching color option in your store."
+      "t": "Download and Link Options",
+      "d": "Download each image, compare the hue with the real item, then link it to its option. Shoppers get a clean comparison."
     }
   ],
   "ideas": [
@@ -85,6 +85,14 @@
     {
       "q": "How are variation photos credited?",
       "a": "Each variation photo costs 24 credits and the total appears before you create the set.  If fabric or glaze changes how light reflects, provide a real source for each option and review the result against the physical samples."
+    },
+    {
+      "q": "Can the tool invent a new color from one photo?",
+      "a": "It can render a described color change, but a generated shade is not a reliable substitute for the real product. For selling a color, upload a photo of that actual shade and compare the result before publishing."
+    },
+    {
+      "q": "Do I need a reshoot for every color variation?",
+      "a": "No. You photograph the shades you sell once; the same styled scene is applied to each source photo, so the set is coordinated without booking repeat shoots."
     }
   ],
   "overview": [
@@ -430,5 +438,26 @@
         "h2": "Questions about product color variations"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make coordinated color variation photos?",
+  "benefits": [
+    {
+      "t": "Shoppers compare colors, not setups",
+      "d": "Every variation shares the same view, light and scene, so differences come from the shade itself rather than changing backgrounds or crops."
+    },
+    {
+      "t": "Fewer wrong-color returns",
+      "d": "Buyers see the actual shade in context and choose with realistic expectations, instead of relying on a swatch dot that looks different at home."
+    },
+    {
+      "t": "A tidy option gallery",
+      "d": "Each square image attaches straight to its matching product option, giving your listing a coordinated set instead of mixed supplier photos."
+    },
+    {
+      "t": "No reshoot per color",
+      "d": "The scenes are generated from your photos of each real shade, with no watermark on downloads for commercial use."
+    }
+  ],
+  "steps_h2": "How to make color variation photos in 3 simple steps",
+  "steps_lead": "Three steps turn your shade photos into a coordinated option set - no repeat shoots, no mismatched supplier shots."
 }

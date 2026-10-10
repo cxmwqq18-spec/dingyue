@@ -1,10 +1,10 @@
 {
   "id": "tpl-bf",
   "title": "Black Friday Video Ads From One Photo | AIVideosUGC",
-  "description": "Create Black Friday video ads from a single product photo and add your discount in your editor. Get a 9:16 or 1:1 clip for Facebook and Instagram today.",
+  "description": "Make a Black Friday video ad from one product photo and add your discount as an editable overlay. 9:16 or 1:1 clips for Facebook and Instagram.",
   "h1": "Black Friday Video Ads Ready for Your Deal",
   "eyebrow": "Black Friday template",
-  "lead": "Create a Black Friday ad from a clear product photo. Choose a creator review, try-on, unboxing or hands-on demo, then add the confirmed offer and end date after download.",
+  "lead": "Black Friday rewards sellers who show up with ads early, but filming a fresh deal clip at the last minute is impossible when offers are still changing. Lock the video now from one product photo, then type the confirmed discount on top later.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -19,16 +19,16 @@
   "tip": "Leave open space beside the product when you plan to add an offer. Keep the final price, code and end date as editable text.",
   "steps": [
     {
-      "t": "Upload the featured sale item",
-      "d": "Show the full product clearly so its shape and main details carry into the clip."
+      "t": "Upload Your Product Photo",
+      "d": "Show the full sale item clearly so its shape and details carry into the clip. That product anchors the scene."
     },
     {
-      "t": "Describe a simple sale scene",
-      "d": "Choose the setting, light, and where you want open space for the offer."
+      "t": "Share Your Video Idea",
+      "d": "Pick a review, try-on, unboxing or demo, choose 9:16 or 1:1, and leave open space for the offer. Cost shows first."
     },
     {
-      "t": "Add the deal after download",
-      "d": "Download the video, then type the discount, code, and end date in your editor."
+      "t": "Download and Add the Deal",
+      "d": "Download the clip, then add discount, code and end date as an editable overlay. No last-minute reshoot needed."
     }
   ],
   "ideas": [
@@ -118,6 +118,14 @@
     {
       "q": "What should I remove after the event?",
       "a": "Remove or update the discount, code, countdown, and end date after the event; the reusable product action can stay if its wording remains accurate."
+    },
+    {
+      "q": "Can I make the video before I know my discount?",
+      "a": "Yes. Generate the clip with empty space for the offer, then add the confirmed discount, code and end date as editable text, so creative is finished early without a reshoot."
+    },
+    {
+      "q": "Can these clips run as paid Black Friday ads?",
+      "a": "Yes. Videos you make can be used in your own paid campaigns on Facebook, Instagram and other channels, and downloads have no watermark. Remove or pause the ads when the event ends."
     }
   ],
   "overview": [
@@ -467,5 +475,26 @@
         "h2": "Questions about Black Friday video ads"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make AI Black Friday video ads?",
+  "benefits": [
+    {
+      "t": "Ready before the offer is final",
+      "d": "The video is shot from a product photo with clean space left for the deal, so you make the creative early and add the confirmed discount, code and end date later."
+    },
+    {
+      "t": "No shoot in your busiest week",
+      "d": "Creator reviews, try-ons, unboxings and hands-on demos are generated from one photo, so no filming, models or studio compete with your sale-week workload."
+    },
+    {
+      "t": "Sized for every deal placement",
+      "d": "Choose vertical 9:16 for phone-first feeds or square 1:1 for in-feed ads and store pages, instead of forcing one shape across Facebook and Instagram."
+    },
+    {
+      "t": "Commercial use, no watermark",
+      "d": "Downloaded clips carry no AIVideosUGC watermark and can be run as paid ads while the event is live."
+    }
+  ],
+  "steps_h2": "How to make a Black Friday video ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a deal-ready clip - film it now, add the offer later."
 }

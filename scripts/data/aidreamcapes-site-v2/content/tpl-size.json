@@ -1,10 +1,10 @@
 {
   "id": "tpl-size",
   "title": "Product Size Reference Photo to Show Scale | AIVideosUGC",
-  "description": "Make a product size reference photo that sets your item beside a suitcase, phone, or hand. Upload your product photo and show its scale at a glance. Start now.",
+  "description": "Put your product next to a familiar object so shoppers can judge its size at a glance. AI scale photos for listings and ads, from one photo.",
   "h1": "Product Size Reference Photo Next to Objects Shoppers Know",
   "eyebrow": "Product photo template",
-  "lead": "A product size reference photo starts with a clear picture of your item and pairs it with a familiar object, giving shoppers a visual sense of scale before they read exact measurements. Describe the reference object and the decision it supports, such as fitting a carry-on or judging a handheld accessory, before you generate.",
+  "lead": "Shoppers send the same message again and again - how big is it? - and dimensions alone rarely answer it. Put your product next to an object buyers know, so they can judge fit and scale in one look.",
   "secondary_keywords": [
     "size comparison product photo",
     "scale photo for Amazon listing",
@@ -18,16 +18,16 @@
   "tip": "Name the comparison object in your description, such as \"next to a carry-on suitcase\" or \"held in an adult hand,\" and choose one your buyers already own.",
   "steps": [
     {
-      "t": "Upload the item you will measure",
-      "d": "Keep the whole item and the comparison object inside the frame. A clipped handle, sole, or corner removes the very cue shoppers need."
+      "t": "Upload Your Product Photo",
+      "d": "Keep the whole item in frame, with no clipped handle, sole or corner. The full outline is the size cue."
     },
     {
-      "t": "Add a familiar size reference",
-      "d": "Name one reference object your buyers know, such as an adult palm, carry-on suitcase, or desk notebook, and describe the everyday setting around it."
+      "t": "Pick a Reference Object",
+      "d": "Name one familiar object - a palm, carry-on or notebook - plus the setting. The square image uses natural proportion."
     },
     {
-      "t": "Download and add real dimensions",
-      "d": "Download the image, confirm the comparison feels natural, and place it next to the written dimensions rather than using it as a substitute for measurements."
+      "t": "Download and Add Dimensions",
+      "d": "Download the image and check the comparison looks natural, then add written measurements beside it."
     }
   ],
   "ideas": [
@@ -85,6 +85,14 @@
     {
       "q": "What does a size photo cost?",
       "a": "Each photo costs 24 credits.  Use an ordinary, unbranded object that your audience recognizes and keep it fully visible so the scale cue stays credible."
+    },
+    {
+      "q": "Can the reference photo replace my dimension table?",
+      "a": "No. It gives shoppers a fast sense of scale, but you keep the exact measurements in text too; the two work together to cut size questions and returns."
+    },
+    {
+      "q": "Do I need to buy props or book a studio?",
+      "a": "No. The reference object and setting are generated from your product photo, so the scale image costs only the credits for the job and carries no watermark."
     }
   ],
   "overview": [
@@ -437,5 +445,26 @@
         "lead": "Choose a familiar reference object for another product."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make product size reference photos?",
+  "benefits": [
+    {
+      "t": "Fewer will-it-fit questions",
+      "d": "Showing the item beside a palm, carry-on or notebook gives an instant sense of scale, so shoppers stop guessing and send fewer size messages."
+    },
+    {
+      "t": "Fewer size-related returns",
+      "d": "Buyers who can picture the real proportions order with accurate expectations instead of discovering on delivery that the item is bigger or smaller than imagined."
+    },
+    {
+      "t": "Works across channels",
+      "d": "Use the square image in an Amazon or Shopify gallery, a feed ad or a product page, right beside your written dimensions."
+    },
+    {
+      "t": "No studio or props to source",
+      "d": "The reference scene is generated from your product photo, and downloads carry no watermark for commercial use."
+    }
+  ],
+  "steps_h2": "How to make a size reference photo in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a clear scale image - no measuring tape shoot, no studio."
 }
