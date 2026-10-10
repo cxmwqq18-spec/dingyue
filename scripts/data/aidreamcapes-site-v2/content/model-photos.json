@@ -1,10 +1,10 @@
 {
   "id": "model-photos",
-  "title": "AI Model Photos for Clothes and Jewelry | AIVideosUGC",
-  "description": "Show clothing, bags or jewelry worn on an AI model from one flat product photo, so shoppers see the look without booking a model or a studio.",
-  "h1": "Show Clothes and Accessories on AI Models",
-  "eyebrow": "On-model photo maker",
-  "lead": "Apparel sells once shoppers see it worn. Put a flat product photo onto an AI model in a styled scene. No casting, no studio day, no long wait.",
+  "title": "AI Virtual Model Photos for Fashion | AIVideosUGC",
+  "description": "Show clothing and accessories on AI-generated fashion models from one flat product photo, so shoppers see the look without booking a model or a studio.",
+  "h1": "Show Your Products on AI-Generated Fashion Models",
+  "eyebrow": "Virtual model photo maker",
+  "lead": "See your products worn by AI fashion models. One flat product photo becomes a styled look that helps shoppers picture the item on.",
   "secondary_keywords": [
     "on-model photos for clothing",
     "AI fashion model images",
@@ -12,21 +12,56 @@
     "AI photos of bags being worn",
     "jewelry on model photos"
   ],
-  "benefits_h2": "Why sellers show products on AI models with AIVideosUGC",
-  "steps_h2": "How to make an on-model photo with AI",
+  "benefits_h2": "See your products worn by AI models",
+  "benefits": [
+    {
+      "t": "See it worn, not laid flat",
+      "d": "A top, dress or accessory appears on a model in a styled scene, so shoppers picture how it looks on."
+    },
+    {
+      "t": "Launch collections faster",
+      "d": "Move every item from a flat photo to a worn look in minutes, without booking model days."
+    },
+    {
+      "t": "Consistent on every channel",
+      "d": "Use one style across product pages, feeds and ads, then scale fashion photography without a studio."
+    }
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Why virtual models",
+      "h2": "Produce a whole catalog without repeated shoots",
+      "lead": "Realistic worn looks for a whole catalog, produced from the photos you already have.",
+      "items": [
+        {
+          "t": "Skip casting and the studio",
+          "d": "No model booking, photographer or lighting setup for every new item."
+        },
+        {
+          "t": "Keep the garment the same",
+          "d": "Color, cut and details follow the flat product photo you upload."
+        },
+        {
+          "t": "Refresh looks any time",
+          "d": "Change the model or scene and generate a new worn view for a season or a campaign."
+        }
+      ]
+    }
+  ],
+  "steps_h2": "Make an AI fashion model photo in three steps",
   "steps_lead": "Three steps. One flat photo in, one worn look out.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
+      "t": "Upload your clothing photo",
       "d": "Add a flat or hanging photo with the whole garment, strap or clasp in frame."
     },
     {
-      "t": "Pick a Model and Share Your Idea",
-      "d": "Choose a model and a scene that fit your audience. Share your idea in one sentence."
+      "t": "Select your virtual model",
+      "d": "Pick an adult model and a scene that fit your audience and the item."
     },
     {
-      "t": "Generate and Download",
-      "d": "Review the worn look and download it. Add measurements and the size chart in your listing."
+      "t": "Download the fashion image",
+      "d": "Review the worn look and download it. Add measurements and a size chart in your listing."
     }
   ],
   "maker": {
@@ -48,31 +83,31 @@
   },
   "faq": [
     {
-      "q": "What is an AI model photo?",
-      "a": "It is a photo that shows your clothing or accessory worn by an AI-generated model. You start from one flat product photo and get a styled, on-body image."
+      "q": "What is an AI fashion model generator?",
+      "a": "It shows your clothing or accessory worn by an AI-generated model. You start from one flat product photo and get a styled, on-body image for your store."
     },
     {
-      "q": "Which products work on an AI model?",
+      "q": "How does virtual model photography work?",
+      "a": "Upload a flat garment photo, choose a model and a scene, and generate. The item is placed on the model while its color and cut follow your photo."
+    },
+    {
+      "q": "Which products work on a virtual model?",
       "a": "Tops, dresses, outerwear, bags and jewelry work well. A clear flat garment or accessory photo gives the best reference."
     },
     {
-      "q": "Does the photo prove how clothing fits?",
+      "q": "Is it suitable for ecommerce stores?",
+      "a": "Yes. Use the worn view on product pages and social posts, and keep a separate plain product photo for details and measurements."
+    },
+    {
+      "q": "Can I choose the model and background?",
+      "a": "Yes. Pick a general adult look and a styled scene. Do not request a real celebrity, and small differences between results are normal."
+    },
+    {
+      "q": "Does the image prove how clothing fits?",
       "a": "No. It shows a styled look, not a measured fitting. Keep verified measurements and a size chart in the listing."
     },
     {
-      "q": "Can I choose the model's age or look?",
-      "a": "Yes. Pick a general adult look that fits your audience. Do not request a real celebrity, and small differences between results are normal."
-    },
-    {
-      "q": "Can I use these photos on my store and social channels?",
-      "a": "Yes. Use the worn view on a product page or social post, and keep a separate plain product photo for details."
-    },
-    {
-      "q": "How fast can I launch a new collection?",
-      "a": "Each item moves from a flat photo to a worn look in minutes. You can prepare a whole collection without booking model days."
-    },
-    {
-      "q": "Can the image run in paid ads?",
+      "q": "Can I run the photo in paid ads?",
       "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor, not on the image."
     },
     {
@@ -80,295 +115,118 @@
       "a": "Color and cut are kept from the flat photo, but small print or closure details can shift. Compare each result with the real item."
     }
   ],
-  "overview": [
-    {
-      "h2": "Visualize your products on fashion models",
-      "d": "A flat garment or accessory photo becomes a worn, styled look. Shoppers see how the item might appear as part of an outfit."
-    }
-  ],
-  "examples": {
-    "h2": "More model photos for clothes, bags and jewelry",
-    "lead": "Browse OOTD, fit checks and worn accessory details in real settings.",
-    "groups": [
-      {
-        "label": "Worn and in context",
-        "items": [
-          {
-            "ref": "n:guide:k5-model-example-g1",
-            "title": "Hoodie OOTD: oversized fit in studio",
-            "kind": "photo",
-            "product": "oversized hoodie"
-          },
-          {
-            "ref": "n:guide:k5-model-example-g2",
-            "title": "Sunglasses Try-On: tortoiseshell frames outdoors",
-            "kind": "photo",
-            "product": "tortoiseshell sunglasses"
-          },
-          {
-            "ref": "n:guide:k5-model-example-g3",
-            "title": "Boot Try-On: ankle boots mid-stride",
-            "kind": "photo",
-            "product": "leather ankle boots"
-          },
-          {
-            "ref": "n:guide:k5-model-example-g4",
-            "title": "Stud Earrings Display: close-up on ear",
-            "kind": "photo",
-            "product": "stud earrings"
-          }
-        ]
-      }
-    ]
-  },
-  "limitations": {
-    "h2": "What an on-model product photo shows",
-    "items": [
-      {
-        "t": "A styled worn view",
-        "d": "Show the item on a person beside the flat product photo to illustrate a look.",
-        "supported": true
-      },
-      {
-        "t": "Not a fitting or size record",
-        "d": "Pose, drape and proportions in a generated scene are not measured fit.",
-        "supported": false
-      },
-      {
-        "t": "Fine details can shift",
-        "d": "Print, closures and finish may look different from the manufactured item.",
-        "supported": false
-      }
-    ]
-  },
   "visual": {
-    "strip": [
-      "n:guide:q5-model-mirror-fitcheck",
-      "n:guide:k5-model-photos-strip-1",
-      "n:guide:k5-model-photos-strip-2",
-      "n:guide:k5-model-photos-strip-3",
-      "n:guide:k5-model-photos-strip-4",
-      "n:guide:k5-model-photos-strip-5"
-    ],
     "steps": {
       "source": "n:guide:k5-model-photos-steps-source",
       "result": "n:guide:k5-model-photos-steps-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the garment and preserve its color, cut, seams and blank label area. Show an adult wearing it for a full-length outfit check, ending with the garment and silhouette easy to see. Natural fitting-room light, mirror-view framing.",
-      "options": [
-        [
-          "Photo",
-          "Your clothing item"
-        ],
-        [
-          "Look",
-          "Casual streetwear"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ]
+      "prompt": "Use the uploaded photo as the garment and preserve its color, cut, seams and blank label area. Show an adult wearing it for a full-length outfit check, ending with the garment and silhouette easy to see. Natural fitting-room light, mirror-view framing."
     },
     "picker": {
       "title": "Browse worn looks",
-      "lead": "Each card places the same product on a model in a styled scene. Pick a look the item belongs in.",
+      "lead": "Each card places the same product on a model in a styled fashion scene.",
       "chips": [
         {
-          "id": "lookbook",
-          "label": "Get Ready With Me"
+          "id": "dresses",
+          "label": "Dresses"
         },
         {
-          "id": "fit",
-          "label": "Product Review"
+          "id": "outerwear",
+          "label": "Outerwear"
         },
         {
-          "id": "tryon",
-          "label": "Try-On"
+          "id": "activewear",
+          "label": "Activewear"
         },
         {
-          "id": "jewelry",
-          "label": "Product Demo"
+          "id": "accessories",
+          "label": "Accessories"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:k5-model-photos-picker-cards-0-image",
-          "label": "Floral Dress OOTD",
+          "label": "Floral dress by a window",
           "chips": [
-            "lookbook"
+            "dresses"
           ],
           "prompt": "Use the uploaded photo as the dress and preserve its print, neckline and hem. An adult wears it beside a bright window, ending with the full silhouette visible. Soft daylight, natural OOTD framing.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-model-photos-picker-cards-1-image",
-          "label": "Weekend Fit Check: matching athletic set",
+          "ref": "n:guide:k5-model-photos-picker-cards-7-image",
+          "label": "Evening dress on stone steps",
           "chips": [
-            "fit"
+            "dresses"
           ],
-          "prompt": "Use the uploaded photo as the athletic set and preserve its color, seams and shape. An adult wears it in a bright studio for a full outfit check, ending with the set fully visible. Clean studio daylight, full-length fit-check framing.",
+          "prompt": "Use the uploaded photo as the dress and preserve its color, fabric and hem. An adult wears it on stone steps for a full outfit check, ending with the complete silhouette visible. Warm late-afternoon light, full-length fashion framing.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-2-image",
-          "label": "Puffer Jacket OOTD",
+          "label": "Puffer jacket on a snowy street",
           "chips": [
-            "tryon"
+            "outerwear"
           ],
           "prompt": "Use the uploaded photo as the puffer jacket and preserve its quilting, closure and hood. An adult wears it on a snowy sidewalk, ending with the jacket front clear. Cool winter daylight, full-length OOTD framing.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-3-image",
-          "label": "Fit Check: long coat in motion",
+          "label": "Long coat walking past a wall",
           "chips": [
-            "tryon",
-            "fit"
+            "outerwear"
           ],
           "prompt": "Use the uploaded photo as the coat and preserve its color, cut and hem. An adult wears it while walking past a neutral wall, ending with the full coat visible. Soft overcast light, full-length try-on framing.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:q5-model-brooch-r2",
-          "label": "Brooch Lapel Try-On",
+          "ref": "n:guide:k5-model-photos-picker-cards-6-image",
+          "label": "Streetwear against concrete",
           "chips": [
-            "jewelry"
+            "outerwear"
+          ],
+          "prompt": "Use the uploaded photo as the outfit and preserve its color, construction and details. An adult wears it against a concrete wall for an OOTD, ending with the full silhouette visible. Open-shade light, full-length lookbook framing.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k5-model-photos-picker-cards-1-image",
+          "label": "Athletic set in a studio",
+          "chips": [
+            "activewear"
+          ],
+          "prompt": "Use the uploaded photo as the athletic set and preserve its color, seams and shape. An adult wears it in a bright studio for a full outfit check, ending with the set fully visible. Clean studio daylight, full-length fit-check framing.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q5-model-mirror-fitcheck",
+          "label": "Active set in a mirror check",
+          "chips": [
+            "activewear"
+          ],
+          "prompt": "Use the uploaded photo as the activewear set and preserve its color and shape. An adult checks the fit in a full-length mirror in a bright room, ending with the full outfit visible. Soft daylight, mirror-view framing.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q5-model-brooch-r2",
+          "label": "Flower brooch on a coat lapel",
+          "chips": [
+            "accessories"
           ],
           "prompt": "Use the uploaded photo as the brooch and preserve its cream enamel petals, gold-tone outline, thin stem and muted green leaves. An adult wears it on a charcoal coat lapel, ending with the flower centered and sharp. Soft window light, close accessory styling, no text or logo.",
           "kind": "photo"
         },
         {
           "ref": "n:guide:k5-model-photos-picker-cards-5-image",
-          "label": "Gold Anklet Try-On",
+          "label": "Gold anklet on sand",
           "chips": [
-            "jewelry"
+            "accessories"
           ],
           "prompt": "Use the uploaded photo as the anklet and preserve its chain and clasp. An adult wears it above the ankle on a sandy path, ending with the jewelry clear. Warm daylight, close accessory try-on framing.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-model-photos-picker-cards-6-image",
-          "label": "Streetwear OOTD: concrete backdrop",
-          "chips": [
-            "lookbook"
-          ],
-          "prompt": "Use the uploaded photo as the outfit and preserve its color, construction and details. An adult wears it against a concrete wall for an OOTD, ending with the full silhouette visible. Open-shade light, full-length lookbook framing.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-model-photos-picker-cards-7-image",
-          "label": "Evening Dress Fit Check",
-          "chips": [
-            "lookbook"
-          ],
-          "prompt": "Use the uploaded photo as the dress and preserve its color, fabric and hem. An adult wears it on stone steps for a full outfit check, ending with the complete silhouette visible. Warm late-afternoon light, full-length fashion framing.",
           "kind": "photo"
         }
       ],
       "button": "Make an on-model photo"
-    },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:k5-model-photos-uses-0-image",
-        "h": "Show length and drape",
-        "d": "Place a worn view next to the flat photo. Shoppers see how the garment hangs without guessing."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:k5-model-photos-uses-1-image",
-        "h": "Worn accessories in a feed",
-        "d": "Jewelry, bags or watches are easier to picture when seen on a person in a styled scene."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k5-model-photos-input-0-good",
-        "bad": "n:guide:q5-model-jeans-cropped-r2",
-        "good_label": "Mid-blue jeans waistband and cuffs in view",
-        "bad_label": "Mid-blue jeans waistband cropped at the top edge"
-      },
-      {
-        "good": "n:guide:k5-model-photos-input-1-good",
-        "bad": "n:guide:q5-model-hoops-blur-r2",
-        "good_label": "Thick gold hoop pair sharp and complete",
-        "bad_label": "Thick gold hoops softened by blur"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q5-model-jeans-output-r2",
-        "frame": "1:1",
-        "label": "Same cuffed jeans on a model"
-      },
-      {
-        "ref": "n:guide:q5-model-hoops-output-r2",
-        "frame": "1:1",
-        "label": "Same gold hoops worn on a model"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:k5-model-photos-after-image",
-      "zones": [],
-      "items": [
-        "Put the size chart and measurements in the listing.",
-        "Check color, print, buttons and zippers against the real item.",
-        "Call it a styled look, not a fit photo, if shoppers could read it that way."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "How to make an on-model photo in three steps"
-      },
-      "m3": {
-        "h2": "On-model photo ideas",
-        "lead": "Try-ons, worn looks and styled accessories."
-      },
-      "m4": {
-        "h2": "Where AI model photos help you sell"
-      },
-      "m5": {
-        "h2": "How to photograph clothes for AI model photos"
-      },
-      "m6": {
-        "h2": "Model photo size and credits"
-      },
-      "m7": {
-        "h2": "Add sizes and fit notes after download"
-      },
-      "gallery": {
-        "h2": "AI model photos for clothing and accessories"
-      },
-      "examples": {
-        "h2": "More model photos for clothes, bags and jewelry"
-      },
-      "examplesLead": "Browse styled views of clothing and accessories on a model.",
-      "templates": {
-        "h2": "Model photo templates",
-        "lead": "Choose a worn look that keeps the garment or accessory easy to see."
-      },
-      "faq": {
-        "h2": "AI model photo FAQs"
-      }
     }
-  },
-  "benefits": [
-    {
-      "t": "Launch collections faster",
-      "d": "Move every item from a flat photo to a worn look in minutes, without booking model days."
-    },
-    {
-      "t": "Consistent visuals on every channel",
-      "d": "Use one style across product pages, feeds and ads, so the catalog stays consistent."
-    },
-    {
-      "t": "Scale fashion photography",
-      "d": "Create worn looks for many items without a studio, a crew or repeated setups."
-    },
-    {
-      "t": "Test looks with the same product",
-      "d": "Try different models and scenes, then pick the worn view that fits the item best."
-    }
-  ]
+  }
 }
