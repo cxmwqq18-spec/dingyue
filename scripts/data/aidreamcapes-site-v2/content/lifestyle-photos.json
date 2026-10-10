@@ -1,10 +1,10 @@
 {
   "id": "lifestyle-photos",
-  "title": "Lifestyle Product Photos for Ecommerce | AIVideosUGC",
-  "description": "Place your product in a breakfast-table, reading-corner or café setting from one plain product photo, so shoppers picture using it without a photoshoot.",
-  "h1": "Lifestyle Product Photos for Product Pages and Social Posts",
-  "eyebrow": "For product ads",
-  "lead": "Shoppers buy when they can picture where an item fits into their day, but staging a kitchen, café or living-room scene for each product means props, a space and a shoot. Put your product into a believable setting from one plain photo, so the listing or post shows the item in real use without that setup.",
+  "title": "Lifestyle Product Photo Maker for Shops | AIVideosUGC",
+  "description": "Place a product in a believable room, table or cafe scene from one plain photo, so shoppers picture using it without booking a shoot.",
+  "h1": "Create Lifestyle Product Photos from One Plain Photo",
+  "eyebrow": "Lifestyle photo maker",
+  "lead": "Shoppers picture an item in their day before they buy. Place the product in a room, a table or a cafe scene. No props, no space, no photoshoot.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,21 +12,21 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Why make lifestyle photos with AI?",
-  "steps_h2": "How to make a lifestyle product photo in 3 simple steps",
-  "steps_lead": "Three steps place your product into a believable setting and return a finished square photo ready to post.",
+  "benefits_h2": "Why sellers create lifestyle photos with AIVideosUGC",
+  "steps_h2": "How to make a lifestyle product photo with AI",
+  "steps_lead": "Three steps. One plain photo in, one styled scene out.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo with the whole product in frame and in focus; a plain background works best. It anchors the new scene."
+      "d": "Add one clear photo with the whole product in frame. A plain background works best."
     },
     {
-      "t": "Name the Setting",
-      "d": "Describe one place, surface, light and a prop or two, such as a marble café table in morning sun with a coffee."
+      "t": "Pick a Scene and Share Your Idea",
+      "d": "Choose a room, a surface or a cafe scene. Share your idea in one sentence."
     },
     {
-      "t": "Review and Download",
-      "d": "Ask for fewer props if the scene feels busy, then download. Add your caption, link and price outside the image."
+      "t": "Generate and Download",
+      "d": "Review the styled photo and download it. Add caption, link and price in your own editor."
     }
   ],
   "maker": {
@@ -48,42 +48,42 @@
   },
   "faq": [
     {
-      "q": "Can I choose where the product sits in the scene?",
-      "a": "Name the surface, the product’s position and one or two props; for example, a handbag on a marble café table beside a cappuccino."
+      "q": "What is a lifestyle product photo?",
+      "a": "It is a photo that shows your product inside a believable room or scene, such as a kitchen counter or a cafe table. It helps shoppers picture using the item."
     },
     {
-      "q": "Can a lifestyle image replace a product listing photo?",
-      "a": "Keep a plain product view available for shoppers who need to see the item, its closures and dimensions without a styled setting."
+      "q": "How do I make one from a plain product photo?",
+      "a": "Upload one clear product photo, choose a scene and describe the setting in one sentence. The generated photo places the item in that scene."
     },
     {
-      "q": "What lifestyle scenes work for home goods?",
-      "a": "A bedside table, calm shelf or kitchen counter gives a lamp, pillow or serving dish a recognizable place in the home."
+      "q": "Does it replace my plain product image?",
+      "a": "No. Keep a plain view so shoppers can inspect the item and its size. The lifestyle scene shows where it fits into daily life, and the two work together."
     },
     {
-      "q": "Can I use lifestyle photos in Facebook or Instagram posts?",
-      "a": "Yes. Add your caption and link in the post, and put any price or offer in your ad editor."
+      "q": "Which scenes work for home goods?",
+      "a": "A bedside table, a calm shelf or a kitchen counter gives a lamp, pillow or dish a clear place in the home."
     },
     {
-      "q": "What should a lifestyle scene show?",
-      "a": "Show the product in a natural setting where its use is easy to understand."
+      "q": "Can I show how the product is used?",
+      "a": "Yes. Pick a scene where the use is easy to follow, with a person or hands interacting with the item."
     },
     {
-      "q": "Can I request a close detail?",
-      "a": "Yes. Ask for a close view of a texture, clasp, seam or other product feature."
+      "q": "Can the photo run in social ads?",
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor, not on the image."
     },
     {
-      "q": "Can lifestyle photos run as ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so a scene can be used in Facebook, Instagram or other paid campaigns. Keep the product identical to what you sell, and put any offer or price in your ad tool rather than on the image."
+      "q": "Can I ask for a close-up detail?",
+      "a": "Yes. Request a close view of a texture, clasp, seam or other feature, and compare it with the real product."
     },
     {
-      "q": "Do lifestyle photos replace my plain product image?",
-      "a": "No. Keep a clear plain-background view so shoppers can inspect the item, its closures and its dimensions, and use the lifestyle scene to show where it fits into daily life. The two work together in a listing, not as substitutes."
+      "q": "How is this different from a real photoshoot?",
+      "a": "A shoot needs props, a space and often a crew. Here the scene is generated from one existing photo in minutes, at far less cost."
     }
   ],
   "overview": [
     {
-      "h2": "",
-      "d": "Create a lifestyle product photo from a plain image by naming one setting. A breakfast table, reading corner or café counter gives the item a place in a buyer’s routine. Name one surface, the light and a prop or two so the scene stays focused on the product."
+      "h2": "Give your product a place in the buyer's day",
+      "d": "One plain photo moves into a breakfast table, a reading corner or a cafe counter. The scene stays focused on the product, so the use is easy to picture."
     }
   ],
   "examples": {
@@ -190,16 +190,16 @@
       "sourceHint": "Keep the complete bag and handles visible."
     },
     "picker": {
-      "title": "Lifestyle Ad Formats in Use",
-      "lead": "Choose a hands-on demo, routine, review, try-on or unboxing scene for your product.",
+      "title": "Browse lifestyle scenes",
+      "lead": "Each card places the same product in a believable moment. Pick a scene the item belongs in.",
       "chips": [
         {
           "id": "routine",
-          "label": "Skincare Routine"
+          "label": "Get Ready With Me"
         },
         {
           "id": "pack",
-          "label": "Pack With Me"
+          "label": "Unboxing"
         },
         {
           "id": "demo",
@@ -207,7 +207,7 @@
         },
         {
           "id": "tryon",
-          "label": "Try-On Walk"
+          "label": "Try-On"
         }
       ],
       "cards": [
@@ -291,14 +291,13 @@
       {
         "frame": "browser",
         "ref": "n:guide:q5-life-pet-use-r2",
-        "h": "Pet Grooming Demo",
-        "d": "Show the wooden brush in use so shoppers can see how it reaches the coat."
+        "h": "Show the product in use",
+        "d": "A grooming brush, kitchen tool or gadget is easier to understand when hands use it in a real room."
       },
       {
         "frame": "post",
         "ref": "n:guide:q5-life-earbuds-review",
-        "h": "Wireless Earbud Review",
-        "d": "A creator can show the earbuds in use with the charging case beside them, so shoppers see both parts together."
+        "d": "A styled scene in a feed shows the item as part of a normal day. One clear setting keeps attention on the product."
       }
     ],
     "input": [
@@ -341,11 +340,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to make lifestyle product photos in 3 steps"
+        "h2": "How to make lifestyle product photos in three steps"
       },
       "m3": {
-        "h2": "Lifestyle product photo formats in use",
-        "lead": "Choose a routine, review, food demo, unboxing or try-on for the product."
+        "h2": "Lifestyle photo formats in use",
+        "lead": "Choose a routine, demo, unboxing or try-on scene for the product."
       },
       "m4": {
         "h2": "Where lifestyle product photos help you sell"
@@ -377,46 +376,20 @@
   },
   "benefits": [
     {
-      "t": "Product in a believable moment",
-      "d": "Place the same item in a breakfast, desk or café moment so buyers picture using it, and keep a plain product view for details."
+      "t": "Cost-effective scenes",
+      "d": "Get a styled product photo for far less than booking a space, props and a crew."
     },
     {
-      "t": "One surface, one light, one prop",
-      "d": "Name a single setting to keep the hero item clear. Use the background changer instead when the product already looks right."
+      "t": "Time-saving",
+      "d": "A scene that would take a shoot to prepare is ready in minutes from one plain photo."
     },
     {
-      "t": "Ready for page and social",
-      "d": "The square scene fits a product listing or an Instagram post, and a second setting gives you another audience or season."
+      "t": "No models or props to source",
+      "d": "The setting is generated, so you do not rent a room, gather props or hire a model."
     },
     {
-      "t": "Scenes for wearable products",
-      "d": "Show a bag, scarf or garment in context, then use model photos or a try-on view when it needs to be worn."
-    }
-  ],
-  "uses": [
-    {
-      "t": "Home and desk routines",
-      "d": "Use a counter or shelf for home and living products, while the lead image stays plain."
-    },
-    {
-      "t": "Beauty application moments",
-      "d": "Show a serum, balm, or brush beside a sink for beauty and skincare; use Beauty Routine for motion."
-    },
-    {
-      "t": "Food and drink serving",
-      "d": "Place a bottle or package at the table for food and drinks, and use [Drink Pour](page:tpl-drink) when motion helps."
-    },
-    {
-      "t": "Fashion day-in-the-life",
-      "d": "Put a scarf, tote, or shoes into an outing for fashion and clothing or shoes, then show the fit with [Outfit Reel](page:tpl-outfit)."
-    },
-    {
-      "t": "Pet and wellness use",
-      "d": "Show a grooming tool or shaker in use for health and wellness, keeping the action and product clear."
-    },
-    {
-      "t": "Launch and sale context",
-      "d": "Refresh a collection backdrop before a new product launch or sale campaign, then add the approved offer outside the image. For the next campaign, compare [Home Organizing](page:tpl-home), [Launch Promo](page:tpl-launch), [Sale Banner](page:tpl-sale), [Story Ad](page:tpl-story), [Side-by-Side Video](page:tpl-compare), [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad), [Ad Sizes for Every Platform](page:guide-ad-sizes-by-platform), Before You Publish: A Checklist for AI Content."
+      "t": "Fast testing support",
+      "d": "Make a few different scenes with the same product and see which one fits the listing or ad best."
     }
   ]
 }
