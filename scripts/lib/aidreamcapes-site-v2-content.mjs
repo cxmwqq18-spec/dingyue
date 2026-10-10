@@ -2542,6 +2542,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     const outputs = Array.isArray(visual.outputs) ? visual.outputs : [];
     const sizes = Array.isArray(visual.sizes) ? visual.sizes : [];
     const after = visual.after && typeof visual.after === "object" ? visual.after : null;
+    const afterHasContent = Boolean(after && !Array.isArray(after) && Object.keys(after).length);
     const limitations = visual.limitations && typeof visual.limitations === "object" ? visual.limitations : null;
     const limitationItems = limitations && Array.isArray(limitations.items) ? limitations.items : [];
     if (!( ["home", "tool", "template", "collection", "video-hub", "index", "examples"].includes(layout))) errors.push(`${pageId}: visual is not supported on this layout`);
@@ -2596,6 +2597,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (visual.steps?.sourceHint != null && (typeof visual.steps.sourceHint !== "string" || !visual.steps.sourceHint.trim() || visual.steps.sourceHint.length > 100)) errors.push(`${pageId}: visual source hint must be a non-empty string of at most 100 characters`);
     if (visual.steps && (typeof visual.steps.prompt !== "string" || !visual.steps.prompt.trim())) errors.push(`${pageId}: visual steps need an example prompt`);
     if (!isDirectory && outputs.length && (outputs.length < 2 || outputs.length > 4)) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
+    if (isHub && afterHasContent && !after.image) errors.push(`${pageId}: visual hub must show the after-download module`);
     if (pageId === "video-hub" && strip.some((item) => item.kind !== "video" || Math.abs(item.w / item.h - 9 / 16) > 0.04)) errors.push(`${pageId}: overview strip must use actual 9:16 video frames`);
     if (pageId === "home" && sizes.length && (sizes.length < 3 || sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
     if (layout === "collection" && data.kind === "platform" && sizes.length && (sizes.length < 3 || sizes.length > 4)) errors.push(`${pageId}: platform visual sizes must contain 3-4 frames`);
