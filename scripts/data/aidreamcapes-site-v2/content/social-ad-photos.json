@@ -1,10 +1,10 @@
 {
   "id": "social-ad-photos",
   "title": "AI Ad Image Generator | AIVideosUGC",
-  "description": "Create square Facebook and Instagram ad photos from one product shot, with clear space to add your headline or offer later in Ads Manager or Canva.",
+  "description": "Make a square Facebook or Instagram ad photo from one product shot with clear space left for your headline or offer, added in Ads Manager or Canva.",
   "h1": "AI Ad Image Generator for Facebook and Instagram",
   "eyebrow": "Photo tool",
-  "lead": "Make square ad images for Facebook and Instagram from one product photo, with room left for your headline. Type the offer in Ads Manager or Canva.",
+  "lead": "A feed ad has to make the product clear at thumbnail size and still leave room for your headline, but paying a designer for each new version adds up fast. Make the square ad photo from one product shot with the open space built in, then type and test every word in your ad tool.",
   "secondary_keywords": [
     "Facebook ad image maker",
     "Instagram feed ad photos",
@@ -12,18 +12,39 @@
     "square ad images for social media",
     "AI images for paid social ads"
   ],
+  "benefits_h2": "Why make social ad photos with AI?",
+  "benefits": [
+    {
+      "t": "The product reads at thumbnail size",
+      "d": "One clear item in a simple scene stays recognizable while people scroll, which busy designs lose in a feed."
+    },
+    {
+      "t": "Headline space built in",
+      "d": "Ask for an open side or upper area, so your offer fits without covering the product or crowding the frame."
+    },
+    {
+      "t": "Words stay editable and correct",
+      "d": "The photo ships without baked-in text; you type the headline and price in Ads Manager or Canva, where spelling is exact."
+    },
+    {
+      "t": "Test several scenes from one photo",
+      "d": "Generate alternative backdrops or one-use moments with the same audience and offer, each with its credit cost shown first."
+    }
+  ],
+  "steps_h2": "How to make a square social ad photo in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a square ad image with headline space, ready for Ads Manager.",
   "steps": [
     {
-      "t": "Upload one product photo",
-      "d": "Clear and in focus. The product has to read at thumbnail size."
+      "t": "Upload Your Product Photo",
+      "d": "Upload one clear, in-focus product photo. The item has to read instantly when the ad appears at thumbnail size."
     },
     {
-      "t": "Describe the scene and leave room for text",
-      "d": "One backdrop or setting, and where the headline goes, like \"open space on the left\"."
+      "t": "Describe Your Scene",
+      "d": "Choose one backdrop or setting and say where the headline goes, such as open space on the left. Simple scenes scroll better."
     },
     {
-      "t": "Add your headline in your ad tool",
-      "d": "Type the price and offer in Ads Manager or Canva so every word is spelled right."
+      "t": "Add Your Headline and Post",
+      "d": "Download the photo, then type your offer and price in Ads Manager or Canva. Preview it on a phone before launch."
     }
   ],
   "maker": {
@@ -67,6 +88,14 @@
     {
       "q": "Can I use an outdoor scene?",
       "a": "Yes. Describe a simple outdoor use moment while keeping the product shape and color consistent. For seasonal campaigns, review [Black Friday campaigns](/occasions/black-friday) and [product launch campaigns](/occasions/product-launch)."
+    },
+    {
+      "q": "Can I upload the photo straight into a live ad?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so after you add approved text you can place the image directly into a Facebook or Instagram ad. Check the placement crop and safe areas in Ads Manager before the campaign goes live."
+    },
+    {
+      "q": "How do I add a price badge without making the ad look fake?",
+      "a": "Add it in your ad tool or Canva after download rather than asking the image to render it. AI lettering can misspell numbers, while an overlay stays sharp, matches your real offer and is easy to change between tests."
     }
   ],
   "overview": [

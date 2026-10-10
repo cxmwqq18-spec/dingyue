@@ -1,10 +1,10 @@
 {
   "id": "home",
   "title": "AI Product Videos & Photos for Online Stores | AIVideosUGC",
-  "description": "Turn one product photo into short video ads, white-background photos and lifestyle shots for TikTok, Instagram, Amazon and Shopify. See the cost first.",
+  "description": "Turn one product photo into ready-to-post video ads, white-background photos and lifestyle shots for TikTok, Amazon and Shopify; see the cost first.",
   "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "AI video ads & product photos for online stores",
-  "lead": "Upload one photo of your product and get a short video ad, a clean white-background photo or a lifestyle scene for your online store. You see the cost before anything is made.",
+  "lead": "Running an online store means you need fresh ads and listing photos every week without booking a shoot for each one. Upload one product photo and get a short video ad, a white-background image or a lifestyle shot, with the cost shown before anything is made.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -17,18 +17,39 @@
   "templates_title": "Pick an idea. Add your product.",
   "templates_lead": "Choose a product demo, unboxing, before-and-after or lifestyle template, upload your product photo and review the result before you publish.",
   "platforms_title": "The right size for every platform",
+  "benefits_h2": "Why sellers make product videos and photos with AI?",
+  "benefits": [
+    {
+      "t": "No shoot to book",
+      "d": "Skip the models, studio and product shipments: every result is built around a photo of the product you already sell."
+    },
+    {
+      "t": "Ads and listing photos in one place",
+      "d": "Make a creator-style clip for TikTok or Reels, a white-background main image for Amazon, or a lifestyle shot for Shopify from the same product photo."
+    },
+    {
+      "t": "Sizes that fit the placement",
+      "d": "Choose 9:16, 1:1 or 16:9 before you start, so the file fits the feed, gallery or product page without a re-edit."
+    },
+    {
+      "t": "Know the cost first",
+      "d": "Each video or photo shows its credit price before you run it, so a small store can plan a campaign without quotes or invoices."
+    }
+  ],
+  "steps_h2": "How to make a product video or photo in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-post video or listing image — no studio, no models, no reshoots.",
   "steps": [
     {
-      "t": "Your product",
-      "d": "Start with a clear item image where the whole product stays in frame."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo with the whole product in frame. That one image becomes the reference for every version you make."
     },
     {
-      "t": "Choose a scene and size",
-      "d": "Pick an ad format and the placement that fits your next campaign."
+      "t": "Pick the Result and Size",
+      "d": "Choose a video ad, white-background photo or lifestyle scene, then pick the size for where you'll post it. No second shoot needed."
     },
     {
-      "t": "Download your result",
-      "d": "Check the product shape, color, label area and chosen aspect ratio before you download or make another variation."
+      "t": "Download and Post",
+      "d": "Check the product shape, color and label area, then download. The file has no watermark and is yours to use in ads."
     }
   ],
   "example_flows": [
@@ -197,6 +218,14 @@
     {
       "q": "Which video type should I make first?",
       "a": "An ad if you're launching it, a demo if one feature sells it (a lid, a zipper, a switch), an unboxing if the packaging is part of the gift."
+    },
+    {
+      "q": "Do I need to hire a model or a creator?",
+      "a": "No. The videos and photos are generated from one product photo, so no one has to appear on a set and you don't ship samples to anyone. The people in the clips are AI-generated, so present them as part of your ad, not as customer reviews."
+    },
+    {
+      "q": "Can I run these videos as paid ads?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so you can use them in TikTok, Instagram, Facebook, YouTube or marketplace campaigns. Add captions, prices and offers in your ad tool, and follow the platform's rules for labeling AI-generated content."
     }
   ],
   "examples": {
