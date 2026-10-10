@@ -330,42 +330,42 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:mx1w-video-hub-apps-1-r1",
-          "label": "Smartphone App Demo UGC",
+          "ref": "n:guide:k7-ind-electronics-strip-4-n-gen2-tpl-spark-ads-style-video-c1",
+          "label": "Phone Tripod App Setup",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a generic smartphone with a softly blurred abstract app interface and no text. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Phone tripod set up on a bedroom desk, natural light. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:mx1w-video-hub-apps-2-r1",
-          "label": "Tablet App Tutorial UGC",
+          "ref": "n:guide:k1-unboxing-output-tablet-stand",
+          "label": "Tablet Stand App Demo",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman swipes a generic tablet showing only abstract blurred interface shapes, no text. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain adjustable tablet stand holding a dark-screen tablet on a desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-hero-grwm",
-          "label": "Tinted Balm GRWM Reel",
+          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-0-ref-n-gen2-image-to-video-c3",
+          "label": "Tinted Balm Vanity Reel",
           "chips": [
             "beauty-personal-care"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman at a bathroom vanity holds a plain tinted lip balm near her face. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Red lipstick standing uncapped on a white marble vanity. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-ex-serum",
-          "label": "Serum Car Review UGC",
+          "ref": "n:guide:k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4",
+          "label": "Sheet Mask Routine UGC",
           "chips": [
             "beauty-personal-care"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman in a parked car holds a plain amber serum bottle beside her face. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Sheet mask pouch with opened on a bathroom counter. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -390,12 +390,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-picker-serum",
-          "label": "Product Page Shopping Demo",
+          "ref": "n:guide:k2-url-hero-link-to-video",
+          "label": "Product Listing Screen Demo",
           "chips": [
             "e-commerce"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a serum bottle beside a simple product page on a tablet. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Open laptop beside a plain ceramic mug on a bright desk, with an abstract product listing on screen. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -430,12 +430,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-card-ba",
-          "label": "Pet Hair Problem Explainer",
+          "ref": "n:guide:q14-industries-strip-drawer",
+          "label": "Drawer Organizer Explainer",
           "chips": [
             "explainer"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A dark sofa split into a visibly fuzzy side and a clean side as an adult hand pulls a reusable lint remover across the fabric. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Hands fitting a bamboo cutlery organizer into a kitchen drawer. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -450,12 +450,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:mx1w-video-hub-financial-services-1-r1",
-          "label": "Finance Dashboard UGC",
+          "ref": "n:guide:k3-video-strip-desk-plant",
+          "label": "Finance Desk Dashboard UGC",
           "chips": [
             "financial-services"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a generic phone with a softly blurred abstract finance dashboard and no numbers. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Small desk plant beside an open laptop. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -470,22 +470,22 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-hero-creator-v2",
-          "label": "Electrolyte Sachet UGC",
+          "ref": "n:guide:k3-social-example-hot-sauce",
+          "label": "Hot Sauce Pour UGC",
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult male creator in a bright kitchen looks straight into the lens mid-sentence and holds a flat single-serve electrolyte powder sachet beside his face. The sachet is rectangular and soft, not a tube or bottle. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Hot sauce bottle with a blank cream label, red chilies and a small sauce bowl. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-card-proteinbar",
-          "label": "Protein Bar First Bite",
+          "ref": "n:guide:k1-product-videos-template-citrus-drink",
+          "label": "Citrus Drink First Sip",
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult interviewer asks an adult commuter for a first-bite reaction while the commuter holds a plain protein bar. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain glass bottle of golden citrus drink beside iced citrus water on a sunny counter. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -520,32 +520,32 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-output-selfie",
-          "label": "Athlete Bottle Selfie",
+          "ref": "n:guide:k2-url-strip-water-bottle",
+          "label": "Trail Bottle Feature",
           "chips": [
             "health-fitness"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult male athlete sits in a parked car, holding a clear bottle and speaking directly to camera. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain brushed steel water bottle on a park bench beside a folded running jacket. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-ex-protein-bar",
-          "label": "Protein Bar Gym Finish",
+          "ref": "n:guide:q2-video-ads-after",
+          "label": "Trail Belt Finish Reel",
           "chips": [
             "sports-gym"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult interviewer holds a small microphone toward an adult runner who holds a plain protein bar and reacts after a first bite. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult runner holds a plain waist belt and explains the zip pocket at a trailhead. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-picker-jewel",
-          "label": "Hoop Earring Unboxing ASMR",
+          "ref": "n:guide:k1-unboxing-picker-scarf",
+          "label": "Silk Scarf Unboxing ASMR",
           "chips": [
             "jewelry-accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Soft wool scarf lifted from a plain mailer onto a bed. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -610,12 +610,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-picker-headphones",
-          "label": "Over-Ear Headphone Review",
+          "ref": "n:guide:k1-unboxing-picker-headphones",
+          "label": "Over-Ear Headphone Unboxing",
           "chips": [
             "tech-electronics"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman wearing a plain sweater holds over-ear headphones and speaks directly to lens. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Matte-black over-ear headphones lifted from an open kraft box with pale tissue. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -630,22 +630,22 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-output-serum",
-          "label": "Serum Car Selfie UGC",
+          "ref": "n:guide:q3-product-videos-board-05-collagen-review",
+          "label": "Supplement Creator Demo UGC",
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman with natural skin holds a plain face serum bottle beside her cheek and speaks to camera. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a plain supplement tub and a mixed drink. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-card-demo",
-          "label": "Serum Car Creator UGC",
+          "ref": "n:guide:k1-unboxing-gallery-headphones-box",
+          "label": "Headphone Product Demo UGC",
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult man in his thirties sits in a parked car and holds a plain serum bottle near his cheek. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain over-ear headphones arranged inside an open gray box. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
