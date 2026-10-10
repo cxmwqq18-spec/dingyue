@@ -5,25 +5,6 @@
   "h1": "AI Promo Video Maker for Your Next Product Launch",
   "eyebrow": "Launch video template",
   "lead": "A new product with no announcement gets ignored, but most small shops cannot book a shoot before launch day. Upload one photo of the final item and this AI promo video maker builds a creator-led launch clip that makes the release feel ready for its first customers.",
-  "benefits_h2": "Why use an AI promo video maker for launches?",
-  "benefits": [
-    {
-      "t": "A full launch sequence from one photo",
-      "d": "The same source image supports a coming-soon teaser, a launch-day post and a product-page clip. You cover every stage of the release without arranging separate shoots."
-    },
-    {
-      "t": "Introduce the product before the pitch",
-      "d": "The opening frame shows the new item, then a creator review, unboxing, try-on or hands-on demo explains what is new. Viewers understand the product before the date and offer appear."
-    },
-    {
-      "t": "Cut for every launch channel",
-      "d": "Use 9:16 for Stories, Reels and TikTok, 1:1 for feeds and listings, or 16:9 for a wide embed. Clips run 6, 10, 15 or 30 seconds, from a quick reveal to a full product story."
-    },
-    {
-      "t": "Release details stay editable",
-      "d": "Add the confirmed date, price, offer and product link after download so nothing is burned into the clip. Downloads carry no AIVideosUGC watermark and are cleared for your own commercial use."
-    }
-  ],
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -31,45 +12,20 @@
     "Instagram launch ad",
     "home decor promo video"
   ],
-  "intro": [
-    "A launch video can introduce an item with a creator review, product demo, unboxing, try-on or first-bite reaction. Keep the featured product visible from the opening frame.",
-    "Use 9:16 for Stories and Reels, 1:1 for feeds and listings, or 16:9 for a wide placement. Add the confirmed date, price and product link as editable text after generation.",
-    "Launch content should make a new product feel ready to meet its first customer. Open with a creator holding the amber bottle, then show one drop or one clear product action in bright bathroom light. Keep the item visible from the first frame so a viewer understands what is being introduced before the launch date or message is added in the editor.",
-    "Plan the launch story around one proof point: the package silhouette, the way the dropper works, the first use, or a concise creator explanation. Use a single movement and a settled ending so the same source photo can support a teaser, a launch-day post, and a product-page image. Dates, availability, price, and claims should remain editable and tied to the information you can verify.",
-    "Before publishing, check that the image, product page, and stock record refer to the same item and variant. Adapt the composition for the chosen feed while protecting the face and bottle from interface overlays. A small set of launch hooks is easier to review when the scene, product, and destination stay fixed and only the opening line changes.",
-    "Treat the opening frame as the introduction. Show the new package, garment, or device before the creator begins the review, then use one reveal or one hand movement to establish what is new. A stable final frame gives the editor a place for the release date and product link.",
-    "Choose the channel before writing the scene. A [product launch occasion](/occasions/product-launch) keeps the release plan together, while [Instagram ads](/platforms/instagram-ads) and [YouTube Shorts ads](/platforms/youtube-shorts-ads) call for different crops. Use an [unboxing video](/ai-video-generation/unboxing-experience) when the package is part of the announcement and a [product video](/ai-video-generation/product-video) when the item itself needs a closer demonstration.",
-    "For a launch sequence, test a [UGC ad video](/ai-video-generation/ugc-ad-video) for a creator introduction, a [lifestyle scene](/ai-image-generation/lifestyle-scene) for the product page, and the [holiday occasion](/occasions/holidays) when gift timing is part of the plan. The [testing ad versions guide](/guides/testing-ad-versions) helps compare openings while the date, offer, and URL stay accurate."
-  ],
-  "tip": "Choose one clear product moment, such as holding a bottle toward the camera, opening a gift box or showing a new item in use. Keep final launch facts editable.",
-  "steps_h2": "How to make a product launch video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a launch-ready clip — no shoot, no studio, no missed release date.",
+  "steps_h2": "Create a product launch video in three steps",
+  "steps_lead": "Turn one product photo into a launch video, then add the confirmed release details.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a clean shot of the final item so shoppers see the real product. The video builds the room around that one image."
+      "d": "Start with one clear photo of the product you are about to launch."
     },
     {
-      "t": "Pick a Format and Size",
-      "d": "Choose a review, unboxing, try-on or demo, then pick 9:16, 1:1 or 16:9 and a 6, 10, 15 or 30-second length for each channel."
+      "t": "Share Your Launch Moment",
+      "d": "Share the review, reveal, try-on or demo moment in one sentence."
     },
     {
       "t": "Download and Add Details",
-      "d": "Add the release date, offer and product link in your editor after download. Publish the teaser and launch clip with no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Creator first look",
-      "d": "Show the new item to camera and introduce the release in a short review."
-    },
-    {
-      "t": "Launch-week offer",
-      "d": "Add the confirmed price and introductory offer in your editor after generation."
-    },
-    {
-      "t": "Try-on release",
-      "d": "Show the fit and details of a new jacket or shoe before linking to its product page."
+      "d": "Add the confirmed release date, price and offer in your editor."
     }
   ],
   "maker": {
@@ -139,105 +95,6 @@
       "a": "No. One photo of the final product becomes a creator-led review, unboxing or demo clip for a fixed credit cost shown up front. The people on screen are AI-generated, so present the clip as your own ad, not as a customer review."
     }
   ],
-  "overview": [
-    {
-      "h2": "Build anticipation with a place for the product",
-      "d": "A launch promo should establish what is new, where it belongs, and which visual detail deserves the first look. Describe the room, the light, and a small reveal or glow so the product feels introduced rather than merely displayed."
-    },
-    {
-      "h2": "Keep changing launch details editable",
-      "d": "Use the generated scene for the visual announcement, then add the exact date, offer, URL, and availability yourself. This lets you reuse the same scene when a release detail changes."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a new product for its first scene",
-    "items": [
-      {
-        "t": "Show the launch hero angle",
-        "d": "Choose the view that makes the product recognizable before the room and props are added."
-      },
-      {
-        "t": "Include controls or light points",
-        "d": "For a lamp, speaker, or appliance, keep the button, shade, grille, or other launch-worthy detail visible."
-      },
-      {
-        "t": "Name the room role",
-        "d": "Say bedside table, kitchen counter, desk, entryway, or gift table so the scene explains where the item belongs."
-      },
-      {
-        "t": "Leave room for on-screen text",
-        "d": "Ask for open wall, tabletop, or sky beside the product so you can add a date or URL after download."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the launch asset gives you",
-    "items": [
-      {
-        "t": "A contextual first look",
-        "d": "The product appears in a room that matches its use, with a reveal, glow, or camera move to mark the introduction."
-      },
-      {
-        "t": "Five usable frames",
-        "d": "Choose 9:16 for Stories and Reels, 1:1 for a feed or listing, or 16:9 for a wide placement."
-      },
-      {
-        "t": "A visible spend before testing",
-        "d": "Add the release date, introductory offer and product link after generation so each detail stays easy to update."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Product-launch scenes to describe",
-    "items": [
-      {
-        "t": "Creator review",
-        "d": "An adult creator holds a skincare bottle at eye level and describes the first look."
-      },
-      {
-        "t": "First-bite reaction",
-        "d": "A creator takes one bite of a protein bar and shows the bitten bar to camera."
-      },
-      {
-        "t": "Hands-on demo",
-        "d": "A person shows a product detail clearly, then holds the full item in frame."
-      },
-      {
-        "t": "Gift unboxing",
-        "d": "Hands open a small gift box and reveal the new item against a clean background."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Put the launch facts on top",
-    "items": [
-      {
-        "t": "Add the release date",
-        "d": "Type the planned date, time, and timezone in a layer you can edit when plans change."
-      },
-      {
-        "t": "Place the offer and URL",
-        "d": "Use the current price, introductory offer, or product link from your launch plan."
-      },
-      {
-        "t": "Choose launch sound",
-        "d": "Add your licensed track or announcement voice once the reveal timing feels right."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A strong fit for launch promos",
-    "good": [
-      "Decor, appliances, gadgets, and gift items",
-      "Products with a clear room or use context",
-      "Coming-soon teasers and launch-week posts",
-      "Scenes with open space for on-screen text"
-    ],
-    "not_ideal": [
-      "Live inventory or countdown information that must update automatically",
-      "Products whose launch story needs several unrelated demonstrations"
-    ]
-  },
   "examples": {
     "h2": "More launch scene examples",
     "lead": "Creator reviews, product reveals, and hands-on moments for a launch post.",
@@ -262,7 +119,7 @@
     ]
   },
   "visual": {
-    "overview": "A launch ad should show the product in a moment a buyer can understand. Choose a creator review, demo, unboxing, try-on, or first-bite reaction, then add dates and pricing after download.",
+    "overview": "Show the new product in a launch moment buyers understand, then add the release details after download.",
     "strip": [
       "n:guide:q12-tpl-launch-use-social-r1",
       "n:guide:g1-launch-shoe-fit-check",
@@ -277,7 +134,7 @@
       "sourceHint": "Show the amber bottle and blank label clearly before adding the launch message.",
       "result": "n:guide:q12-tpl-launch-strip-result-r2",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the exact product: an amber glass dropper bottle with a black pipette and blank white label. Preserve its shape, glass color, cap and label area. In a bright bathroom, an adult creator holds the bottle beside her face and says, \"Here is the serum I am showing today.\" She tilts the bottle once and finishes with the full bottle beside her cheek. Soft morning window light, natural skin texture. Chest-up front-facing framing with slight handheld sway. Sound: her voice and a cap click; no music.",
+      "prompt": "Share the launch moment in one sentence.",
       "options": [
         [
           "Size",
@@ -296,183 +153,20 @@
     "picker": {
       "title": "Choose a product-launch ad format",
       "lead": "Pick a creator review, demo, unboxing, try-on or first-bite format that opens with the product.",
-      "chips": [
-        {
-          "id": "creator-review",
-          "label": "Creator Reviews"
-        },
-        {
-          "id": "first-impression",
-          "label": "First Impressions"
-        },
-        {
-          "id": "in-use-demo",
-          "label": "Hands-On Demos"
-        },
-        {
-          "id": "routine",
-          "label": "GRWM Routines"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:b1-spokesperson-strip",
-          "label": "Creator Review: Espresso Maker",
-          "chips": [
-            "creator-review",
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as a compact plain espresso maker and keep its controls and body visible. An adult presenter holds it at chest height while introducing the product in a bright kitchen. Creator launch review photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f14-r10-launch-kinetic-reveal",
-          "label": "Kinetic Reveal: Cobalt Mug",
-          "chips": [
-            "first-impression"
-          ],
-          "prompt": "Use the uploaded photo as a plain cobalt-blue ceramic travel mug with its fitted lid and handle visible. Two adult hands pull cream paper wrap open as the mug is revealed on a sunlit table, creating a small kinetic launch moment. Product-launch reveal still, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f14-r10-launch-multi-angle-hero",
-          "label": "Multi-Angle Hero: Olive Backpack",
-          "chips": [
-            "first-impression"
-          ],
-          "prompt": "Use the uploaded photo as a plain olive canvas backpack and preserve its flap, pockets, straps and buckles. Show a multi-angle launch hero with the front three-quarter view large and smaller side and back views arranged behind it on studio plinths. Clean product-launch still, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f14-r10b-launch-card3-mug",
-          "label": "First Sip Reaction: Speckled Mug",
-          "chips": [
-            "creator-review",
-            "first-impression"
-          ],
-          "prompt": "Use the uploaded photo as a plain speckled ceramic mug and keep its handle and flecked glaze visible. An older Black man holds the mug with both hands after a first sip in a bright kitchen, giving a clear launch reaction. UGC first-impression photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-launch-card-05-sneaker-try-on",
-          "label": "Try-On Transition: trail sneakers on walk",
-          "chips": [
-            "in-use-demo"
-          ],
-          "prompt": "Photorealistic square sportswear ad still: an adult runner wears charcoal trail sneakers with subtle orange trim on a city path, both shoes fully visible. Cool morning daylight, low close framing, natural pavement detail. Freeze a planted step. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-launch-card-06-pet-harness-demo",
-          "label": "Pet Demo: harness on dog",
-          "chips": [
-            "in-use-demo",
-            "routine"
-          ],
-          "prompt": "Photorealistic square pet-product ad still: an adult owner checks the fit of a simple harness on a calm dog in a bright living room. Show the buckle and the dog’s full upper body clearly. Natural window light, medium close framing. Freeze the fit-check moment. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k7-ind-health-wellness-uses-0-ref-n-gen2-image-to-video-g4",
-          "label": "Hand Wash Routine: Dispenser",
-          "chips": [
-            "routine",
-            "in-use-demo"
-          ],
-          "prompt": "Use the uploaded photo as a clear plain hand soap dispenser and keep its pump and bottle visible. A hand presses the dispenser over an open palm at a bathroom vanity, showing a simple daily routine. Routine launch photo, square framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f14-r10b-launch-card7-earbuds",
-          "label": "Phone Audio Review: Earbuds",
-          "chips": [
-            "creator-review"
-          ],
-          "prompt": "Use the uploaded photo as a plain open matte-black wireless-earbud case and keep both earbuds visible. An older South Asian woman holds the case toward camera while explaining her first impression in a tidy home office. Creator review photo, square framing, no text or logos.",
-          "kind": "photo"
-        }
-      ],
+      "chips": [],
+      "cards": [],
       "button": "Make a product-launch video"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:q12-tpl-launch-strip-sunscreen-r2",
-        "h": "Share a launch video in Stories and Reels",
-        "d": "Keep the sunscreen tube in view and add the release date in your post editor."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q12-tpl-launch-strip-supplement-demo-r2",
-        "h": "Add a launch video to a product page",
-        "d": "Place the supplement clip beside its final product details so shoppers can see the item before launch."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q12-tpl-launch-demo-source-r3",
-        "bad": "n:guide:q12-tpl-launch-demo-blur-r3",
-        "good_label": "The full amber bottle is sharp",
-        "bad_label": "Soft focus hides the bottle details"
-      },
-      {
-        "good": "n:guide:q12-tpl-launch-input-good-02-r1",
-        "bad": "n:guide:q12-tpl-launch-demo-crop-r3",
-        "good_label": "The complete bottle fits in frame",
-        "bad_label": "The crop cuts off the bottle ends"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f14-r10b-launch-hands-hold",
-        "frame": "9:16",
-        "label": "9:16 serum bottle held by hands"
-      },
-      {
-        "ref": "n:guide:f14-r10b-launch-hands-drop",
-        "frame": "9:16",
-        "label": "9:16 dropper application by hands"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q12-tpl-launch-after-offer-r1",
-      "zones": [
-        "Launch date",
-        "Price",
-        "Product link"
-      ],
-      "items": [
-        "Add the launch date and price as editable text after download.",
-        "Link the video to the product page where the item will be available."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Create a vertical product-launch video from one photo"
       },
-      "m3": {
-        "h2": "Choose a scene for a product-launch video"
-      },
-      "m4": {
-        "h2": "Use a product-launch video in Stories and on listings"
-      },
-      "m5": {
-        "h2": "Start a product-launch video with a clear photo"
-      },
-      "m6": {
-        "h2": "Choose a 9:16 product-launch video format"
-      },
-      "m7": {
-        "h2": "Add the launch date and price after download"
-      },
       "faq": {
         "h2": "Questions about product-launch videos"
-      },
-      "examples": {
-        "h2": "Product launch video examples"
-      },
-      "templates": {
-        "h2": "More product-launch video templates"
       }
     }
   }
