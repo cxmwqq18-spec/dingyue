@@ -1,10 +1,29 @@
 {
   "id": "tpl-retargeting-video-ad",
   "title": "Retargeting Video Ad Template | AIVideosUGC",
-  "description": "Make a retargeting video ad from one product photo. Show a clear return-to-product moment, then set your audience, offer, and frequency in your ad platform.",
+  "description": "Win back shoppers who viewed a product or left a cart with a retargeting video from one photo. Set audience, offer and frequency in your ad platform.",
   "h1": "Retargeting Video Ads for a Second Look",
   "eyebrow": "Retargeting video template",
-  "lead": "Retargeting video ad creatives give a shopper a second look at a product they already viewed. Upload a photo, describe a short return-to-product moment, and get a clip; the ad platform still controls who sees it.",
+  "lead": "Most shoppers leave after viewing a product and never return, yet reusing the same ad creative does not win them back. Upload one product photo and get a retargeting video that brings the item back with the specific detail a returning buyer is still weighing, so your remarketing audience gets a reason to finish the order.",
+  "benefits_h2": "Why make retargeting video ads with AI?",
+  "benefits": [
+    {
+      "t": "Give viewed products a second reason to buy",
+      "d": "The clip revisits one detail, such as an ear cushion, a pocket or a seam, that a returning shopper may still be weighing. It turns a reminder into an answer instead of repeating the same product shot."
+    },
+    {
+      "t": "Fresh creative without a second shoot",
+      "d": "Run a routine version and a close-detail version from the same source photo, then test which proof earns the second look. New remarketing creative costs only credits, not another filming day."
+    },
+    {
+      "t": "Cut for every remarketing placement",
+      "d": "Use 1:1 in feed placements and 9:16 in Reels, with clips at 6, 10, 15 or 30 seconds. A short reminder works for cart audiences, while a longer clip can answer a hesitancy in full."
+    },
+    {
+      "t": "Audience facts stay in your platform",
+      "d": "Add the offer, price, audience and frequency in your ad platform and keep claims about browsing history out of the scene. Downloads carry no AIVideosUGC watermark and can be used in your own paid ads."
+    }
+  ],
   "secondary_keywords": [
     "remarketing video ad",
     "cart reminder video",
@@ -19,18 +38,20 @@
     "Check the reminder against the live product page before you launch. The color, version, and feature shown in the clip must match the item a shopper will receive, and any current offer must be added outside the generated frame. Test a routine scene against a detail scene while holding the audience and product page constant so the result tells you which proof earns the second look."
   ],
   "tip": "Describe a quiet second-look action and leave the audience, price, and reminder wording to the ad platform and your editor.",
+  "steps_h2": "How to make a retargeting video ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a second-look clip — no shoot, no new audience data, no repeated creative.",
   "steps": [
     {
-      "t": "Choose the product",
-      "d": "Upload a clear product image that gives the clip a recognizable shape and a detail worth a second look."
+      "t": "Upload Your Product Photo",
+      "d": "Use a clear product image that gives the clip a recognizable shape and a detail worth revisiting."
     },
     {
-      "t": "Describe the second look",
-      "d": "Write a moment such as inspecting the ear cups and placing the headphones into a commuter bag."
+      "t": "Describe the Second Look",
+      "d": "Write a short moment, such as inspecting the ear cups before packing the headphones away. The return-to-product scene is generated without a shoot."
     },
     {
-      "t": "Set the audience yourself",
-      "d": "Add your offer and product page, then choose visitors, cart users, exclusions, and frequency in your ad platform."
+      "t": "Download and Set Audience",
+      "d": "Add your offer and product page, then choose visitors, cart users and frequency in your ad platform. The file has no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -87,11 +108,19 @@
     },
     {
       "q": "What length and cost work for retargeting?",
-      "a": "A 6- or 10-second reminder is usually enough and costs 24 or 40 credits."
+      "a": "A 6- or 10-second reminder is usually enough and costs 24 or 40 credits; 15 and 30-second clips cost 60 or 120."
     },
     {
       "q": "Can I create another retargeting video from the same source photo?",
       "a": "Yes. Keep the dark navy headphones as the reference, then change one routine or camera move at a time. Check that the ear cups, controls, and fit match the physical item. Add the current offer, reminder, and product link after download so the second-look ad stays easy to update. Keep routine and detail versions tied to the same product variant so a returning shopper does not see a different color or control layout. If the offer or destination changes, recheck every exported variant against the same product page and color."
+    },
+    {
+      "q": "Can I show the video only to people who left a cart?",
+      "a": "Yes, using your ad platform. Upload the finished clip to a cart or website-visitor audience, set exclusions and frequency there, and keep any reminder wording tied to what your campaign actually offers."
+    },
+    {
+      "q": "Should the retargeting clip say \"you forgot this\"?",
+      "a": "Only if your campaign supports that message, and add it as text outside the generated scene. The clip itself cannot know a viewer's history, so avoid personal claims and focus on bringing the product detail back into view."
     }
   ],
   "overview": [

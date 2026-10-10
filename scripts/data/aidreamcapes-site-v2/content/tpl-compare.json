@@ -1,10 +1,29 @@
 {
   "id": "tpl-compare",
   "title": "Product Comparison Video: Side by Side | AIVideosUGC",
-  "description": "Make a product comparison video that puts two of your own colors, sizes, or models side by side. Get a 1:1 or 16:9 clip for your listing or Shorts. Try it.",
+  "description": "Help shoppers choose between your colors, sizes or sets with a side-by-side comparison video. One photo of both becomes a clip for listings or Shorts.",
   "h1": "Make a Product Comparison Video of Your Own Options",
   "eyebrow": "Comparison video template",
-  "lead": "A product comparison video helps shoppers choose between your own colors, sizes, or models. Upload a photo of both, say what sets them apart, and get a short side-by-side clip.",
+  "lead": "Shoppers who cannot tell your colors, sizes or sets apart leave without buying, and text specs rarely settle it. Upload one photo showing both options and get a product comparison video that demonstrates the real difference so customers can choose with confidence.",
+  "benefits_h2": "Why make a product comparison video?",
+  "benefits": [
+    {
+      "t": "Fewer undecided shoppers",
+      "d": "A moving side-by-side view shows size, finish or included pieces more clearly than a spec line. Buyers can see which option fits their need instead of opening a support chat or leaving."
+    },
+    {
+      "t": "No second shoot for variants",
+      "d": "One source photo with both options supplies a shared scale and light. You demonstrate a full range without staging each color or size in front of a camera."
+    },
+    {
+      "t": "Cut to fit every placement",
+      "d": "Choose 1:1 for a product gallery, 16:9 for a description embed or 9:16 for Shorts. Lengths run 6, 10, 15 or 30 seconds, so a simple pair and a detailed feature walkthrough both fit."
+    },
+    {
+      "t": "Exact labels stay under your control",
+      "d": "Add variant names, measurements and prices as editable text after download. Your numbers stay accurate, and the finished clip carries no AIVideosUGC watermark."
+    }
+  ],
   "secondary_keywords": [
     "side by side product video",
     "product variant comparison video",
@@ -16,18 +35,20 @@
     "Comparison clips answer practical questions about color, size, fit and packaging. Show your own options together, then add variant names and current prices in an editable layer. Use 1:1, 16:9 or 9:16 for the placement you need."
   ],
   "tip": "Photograph both options together and describe one visible difference, such as color, size, finish or included pieces.",
+  "steps_h2": "How to make a product comparison video in 3 simple steps",
+  "steps_lead": "Three steps turn one photo of both options into a clear side-by-side clip — no studio, no models, no reshoot.",
   "steps": [
     {
-      "t": "Upload both options in one photo",
-      "d": "Photograph both options together with full silhouettes visible, using one camera angle and even light so the difference is not caused by distance."
+      "t": "Upload Both Options",
+      "d": "Photograph both options with full silhouettes, one angle and even light. A shared surface gives the clip an honest scale instead of a faked difference."
     },
     {
-      "t": "Name the difference",
-      "d": "Name one difference to show, such as capacity, color, finish, included pieces, or package size, and describe the action that proves it."
+      "t": "Describe the Difference",
+      "d": "Name one difference, such as capacity, color, finish or included pieces, and the action that shows it. The clip proves it without a second shoot."
     },
     {
-      "t": "Label each side",
-      "d": "Add variant names, measurements, prices, or links after download; choose 1:1 for a product page, 16:9 for wide placement, or 15 seconds for detail."
+      "t": "Download and Label",
+      "d": "Add variant names, measurements and prices after download, then pick 1:1, 16:9 or 9:16 for the placement. The clip is ready with no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -80,7 +101,7 @@
     },
     {
       "q": "What length fits a comparison?",
-      "a": "A 10-second clip usually covers both options; choose 15 seconds when each one needs a demonstration. They cost 40 or 60 credits."
+      "a": "A 10-second clip usually covers both options; choose 15 seconds when each one needs a demonstration and 30 for both demos in full. Clips cost 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds."
     },
     {
       "q": "Can I compare two of my own products?",
@@ -105,6 +126,14 @@
     {
       "q": "Which variant should the comparison link to?",
       "a": "Link to the product page that lists both options, then use the final text layer or CTA to name the tested size, finish, or color. Do not imply that one option is available if it is out of stock."
+    },
+    {
+      "q": "Can I run this video as a paid ad?",
+      "a": "Yes. Videos you make can be used in your own ads, listings and social posts, with no AIVideosUGC watermark on the download. You remain responsible for your ad text, claims and platform disclosures."
+    },
+    {
+      "q": "Is a 30-second clip worth it for two products?",
+      "a": "Use 30 seconds when each option needs its own demonstration, such as showing capacity on one side and included pieces on the other. For a single visible difference, 6 or 10 seconds is usually enough."
     }
   ],
   "overview": [

@@ -1,10 +1,29 @@
 {
   "id": "tpl-howto",
   "title": "AI How-To Video Maker for Your Products | AIVideosUGC",
-  "description": "Use this AI how-to video maker to show your product in use, made from a single photo. Pick 9:16 for YouTube Shorts or 16:9 for your store page. Try it now.",
+  "description": "Show shoppers exactly how your product works with a how-to video from one photo. Pick 9:16 for YouTube Shorts or 16:9 for your product page.",
   "h1": "AI How-To Video Maker for Showing Products in Action",
   "eyebrow": "How-to video template",
-  "lead": "Use this AI how-to video maker to show shoppers how your product works in 10, 15 or 30 seconds. Upload a photo, describe the task, and get a vertical or widescreen video for your store and YouTube Shorts.",
+  "lead": "Products with a job to do get returned when buyers cannot see how they work, but filming a clear demo is hard without a studio. Upload one photo and this AI how-to video maker shows your product completing one real task, so shoppers understand it before they buy and support questions drop.",
+  "benefits_h2": "Why use an AI how-to video maker?",
+  "benefits": [
+    {
+      "t": "Answer \"how does it work\" before checkout",
+      "d": "The clip takes one product from a clear starting state to a visible result, showing the repeatable movement a customer needs. Buyers stop guessing and make the purchase with fewer support questions."
+    },
+    {
+      "t": "One visible problem, one visible change",
+      "d": "Open on the wrinkled shirt, dry brush or empty mug, show one deliberate action, and hold on the finished state. The product proves its job without a long feature montage."
+    },
+    {
+      "t": "Cuts for the page and the feed",
+      "d": "Embed 16:9 in a product description and post 9:16 on YouTube Shorts and TikTok. Lengths run 6, 10, 15 or 30 seconds, so a quick task and a full step-by-step lesson both fit."
+    },
+    {
+      "t": "Instructions stay accurate after download",
+      "d": "Add step labels and approved safety warnings as editable text in your editor, and use your real product documentation as the source. Downloads have no AIVideosUGC watermark and are cleared for commercial use."
+    }
+  ],
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -23,18 +42,20 @@
     "For a sequence of product lessons, start with an [image-to-video clip](/ai-video-generation/image-to-video), then test a [UGC ad video](/ai-video-generation/ugc-ad-video) when a creator reaction adds context. The [first TikTok video ad guide](/guides/first-tiktok-video-ad), [product photo tips guide](/guides/product-photo-tips), and this how-to template help keep the source photo and final action aligned."
   ],
   "tip": "Describe one task from start to finish, like \"steams a wrinkled cotton shirt on a hanger, collar to hem,\" instead of listing every feature.",
+  "steps_h2": "How to make a how-to product video in 3 simple steps",
+  "steps_lead": "Three steps turn one tool photo into a clear demonstration clip — no studio, no presenter, no reshoot.",
   "steps": [
     {
-      "t": "Upload the product on its own",
-      "d": "A clear photo of the steamer, frother, or tool against a plain background helps it keep its shape in the video."
+      "t": "Upload Your Product Photo",
+      "d": "Use a sharp photo of the whole tool against a plain background, with no edge cropped. A clear source helps the video keep its shape."
     },
     {
-      "t": "Describe a single task",
-      "d": "Name one action, then show the steamer passing over a blue shirt."
+      "t": "Describe the Task",
+      "d": "Name one action from start to finish, such as the steamer passing down a shirt. The clip shows the real task the product performs."
     },
     {
-      "t": "Add step labels after download",
-      "d": "Type short labels like \"Fill,\" \"Heat,\" and \"Steam\" in CapCut or Canva so the order is easy to follow."
+      "t": "Download and Label",
+      "d": "Add short step labels and any approved safety warning in your editor, then post 16:9 or 9:16. The download has no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -108,6 +129,14 @@
     {
       "q": "Can I watch the tutorial with the sound off?",
       "a": "Yes. Add short step labels after download so the sequence stays understandable when the soundtrack is muted."
+    },
+    {
+      "q": "Can I run the how-to clip as a paid ad?",
+      "a": "Yes. Videos you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You are responsible for the claims, safety wording and disclosures in the ad."
+    },
+    {
+      "q": "What if my product needs several steps to explain?",
+      "a": "Keep each clip to one task with a start, action and finished state. Make separate clips for additional steps and join them in your editor, using a 30-second cut when one full lesson belongs in a single video."
     }
   ],
   "overview": [

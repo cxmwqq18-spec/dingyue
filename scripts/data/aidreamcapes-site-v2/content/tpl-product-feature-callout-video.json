@@ -1,10 +1,29 @@
 {
   "id": "tpl-product-feature-callout-video",
   "title": "Product Feature Callout Video Template | AIVideosUGC",
-  "description": "Create a product feature callout video from one photo. Show one useful detail in a short scene, then add the feature name or label in your editor.",
+  "description": "Make one product feature impossible to miss with a callout video from one photo. Show the detail in action, then add the exact feature name as text.",
   "h1": "Product Feature Callout Videos for One Clear Detail",
   "eyebrow": "Feature callout video template",
-  "lead": "Product feature callout video ads keep one useful detail in view. Upload a product photo, describe the action, and get a focused clip for a product page, TikTok, or Reels; add the feature name yourself.",
+  "lead": "Products lose sales when a key feature stays buried in a list of specs, and filming every detail separately is not practical. Upload one product photo and get a feature callout video that isolates the detail in action, so shoppers see exactly why it matters without a presenter explaining it.",
+  "benefits_h2": "Why make product feature callout videos?",
+  "benefits": [
+    {
+      "t": "Move one feature from text to proof",
+      "d": "The clip shows a pump press, clasp close, hinge opening or texture spread in a close frame. Buyers see the feature working instead of reading its name in a spec list."
+    },
+    {
+      "t": "One detail per clip, easy to place",
+      "d": "Keep each callout focused on a single mechanism and link it to the matching section of the product page. A product with several features gets a short clip for each one without new shoots."
+    },
+    {
+      "t": "Cut for pages, TikTok and Reels",
+      "d": "Use 9:16 to keep the detail large in vertical feeds, 1:1 in listings or 16:9 on a product page. Clips run 6, 10, 15 or 30 seconds, from one quick action to a fuller feature walkthrough."
+    },
+    {
+      "t": "Exact labels added by you",
+      "d": "Type feature names, measurements and ingredient lines in your editor after download so small words stay accurate. Downloads carry no AIVideosUGC watermark and can be used in your own ads."
+    }
+  ],
   "secondary_keywords": [
     "feature callout ad",
     "product feature video",
@@ -19,18 +38,20 @@
     "Before publishing, verify the feature against a real sample and inspect the close-up for shape, color, and edge detail. Keep one feature per clip when a product has several mechanisms, then link each clip to the relevant section of the product page. A clear before state, one action, and a settled after state give shoppers enough evidence to decide what to inspect next."
   ],
   "tip": "Describe one visible feature and one action, then leave any ingredient, size, or performance statement for text you add yourself.",
+  "steps_h2": "How to make a feature callout video in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a single-detail proof clip — no presenter, no close-up shoot, no unsupported claims.",
   "steps": [
     {
-      "t": "Upload a clear product photo",
-      "d": "Show the whole item and the part shoppers need to see in use."
+      "t": "Upload Your Product Photo",
+      "d": "Show the whole item and the part shoppers need to see in use, with glare and blur kept out of the frame."
     },
     {
-      "t": "Describe one visible action",
-      "d": "Name what moves and where, such as pressing a pump beside a sink."
+      "t": "Describe the Action",
+      "d": "Name what moves and where, such as pressing a pump beside a sink. One visible feature is generated in a close, steady scene."
     },
     {
-      "t": "Download and add the feature name",
-      "d": "Type exact dimensions, ingredients, and feature wording in your editor."
+      "t": "Download and Label",
+      "d": "Add the exact feature name, dimensions and ingredients in your editor, then post 9:16, 1:1 or 16:9. The file has no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -91,11 +112,19 @@
     },
     {
       "q": "How is a callout clip credited?",
-      "a": "A 6-, 10-, or 15-second clip costs 24, 40, or 60 credits."
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits."
     },
     {
       "q": "Can I create another feature-callout video from the same source photo?",
       "a": "Yes. Keep the cleanser pump as the reference, then change one action or camera angle at a time. Check that the pump, foam, and final held position match the physical sample. Add the feature name, measurement, and current offer after download so product facts remain easy to update. Keep the action repeatable: one press, one visible result, and a still final frame make the clip easy to compare with a real sample. If the package changes, update the callout text and the reference frame together before publishing."
+    },
+    {
+      "q": "Can the callout video be used as a paid ad?",
+      "a": "Yes. Videos you make can run in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You remain responsible for the feature claims and disclosures in the ad."
+    },
+    {
+      "q": "What is the difference between a feature callout and a how-to video?",
+      "a": "A callout isolates one detail and proves it in a single action, while a how-to walks through a complete task from setup to finished result. Use the callout when one feature is the reason to buy."
     }
   ],
   "overview": [
@@ -142,7 +171,7 @@
       },
       {
         "t": "A measured test cost",
-        "d": "Six, ten, and fifteen seconds use 24, 40, and 60 credits; the cost is visible before creation."
+        "d": "Six, ten, fifteen and thirty seconds use 24, 40, 60 and 120 credits; the cost is visible before creation."
       }
     ]
   },

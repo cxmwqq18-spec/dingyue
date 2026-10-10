@@ -1,10 +1,29 @@
 {
   "id": "tpl-carousel-video-ad",
   "title": "Carousel Video Ad Template for Product Stories | AIVideosUGC",
-  "description": "Create a carousel video ad as one downloadable product-story video. Plan short scenes, then add on-screen text and product details in your editor.",
+  "description": "Turn one product photo into a sequenced video ad with the beat order of a carousel: open, reveal, use, finish. Add text and price after download.",
   "h1": "Carousel Video Ads That Tell One Product Story",
   "eyebrow": "Carousel video ad template",
-  "lead": "This template turns one product photo into a short 1-2-3-4 sequence video, with the same beat order as a carousel ad. Upload a product photo, describe the panels, then review the clip before adding prices and product details in your editor.",
+  "lead": "A single product shot rarely answers every shopper question, while a full carousel means designing and uploading several cards. Upload one product photo and get a single carousel-style video ad that walks buyers through the product in ordered beats, from first look to the reason to buy.",
+  "benefits_h2": "Why use a carousel video ad template?",
+  "benefits": [
+    {
+      "t": "One file instead of several cards",
+      "d": "The ordered clip plays open, reveal, use and finish in one video, so you get the persuasive flow of a carousel without designing and uploading separate panels."
+    },
+    {
+      "t": "Every beat answers a shopper question",
+      "d": "The first beat earns attention, the next shows the feature, another proves it in use and the last gives the next step. Buyers move through the story instead of scrolling past."
+    },
+    {
+      "t": "Cut for feed placements",
+      "d": "Use 1:1 in feed placements and 9:16 in Reels and Stories, with clips at 6, 10, 15 or 30 seconds. A longer cut lets each beat breathe when the product needs explanation."
+    },
+    {
+      "t": "Facts added after download",
+      "d": "Place headlines, prices, dimensions and calls to action in your editor so every number stays exact. The download carries no AIVideosUGC watermark and can run in your own ads."
+    }
+  ],
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -19,18 +38,20 @@
     "Review a carousel video at the size where it will run. Confirm that the backpack, compartments, and packed items are visible in every beat, then place the finished sequence beside the matching listing. If the platform needs separate swipe cards, export still panels from your editor; this template supplies a single ordered video file."
   ],
   "tip": "Write three or four short beats in order and describe the product in each one so the transitions have a clear job.",
+  "steps_h2": "How to make a carousel video ad in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into an ordered story clip — no card design, no shoot, no multi-file upload.",
   "steps": [
     {
-      "t": "Pick the story beats",
-      "d": "Choose the product photo and outline three or four moments, such as open, reveal, use, and finish."
+      "t": "Upload Your Product Photo",
+      "d": "Start with one clear product photo and outline three or four beats, such as open, reveal, use and finish. The same product anchors every scene."
     },
     {
-      "t": "Describe each scene",
-      "d": "Say where each beat happens and how the camera moves, keeping the product and action simple."
+      "t": "Describe Each Beat",
+      "d": "Say where each moment happens and how the camera moves, keeping the action simple. The ordered sequence is generated without filming each panel."
     },
     {
-      "t": "Add on-screen text",
-      "d": "Place your headline, price, dimensions, and call to action in your editor after reviewing the rendered clip."
+      "t": "Download and Add Text",
+      "d": "Review the clip, then add your headline, price and call to action in your editor. Post 1:1 or 9:16 with no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -87,11 +108,19 @@
     },
     {
       "q": "What does a 15-second sequence cost?",
-      "a": "A 15-second clip costs 60 credits; 6- and 10-second versions cost 24 and 40 credits, shown before you run it."
+      "a": "A 15-second clip costs 60 credits; 6- and 10-second versions cost 24 and 40, and a 30-second version costs 120, shown before you run it."
     },
     {
       "q": "Can I create another carousel video from the same source photo?",
       "a": "Yes. Keep the commuter backpack as the reference, then change one panel, crop, or camera move at a time. Check that the pockets, straps, and carry position match the physical item. Add the current price, size, and product link after download so each panel stays easy to update. Keep panel order stable when you make a second version so shoppers can compare storage, access, and carry comfort without relearning the sequence. A second version should answer a different backpack question, not repeat the same pocket view with new wording."
+    },
+    {
+      "q": "Can I run this sequence video as a paid ad?",
+      "a": "Yes. Videos you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You remain responsible for the ad text, claims and platform disclosures."
+    },
+    {
+      "q": "When should I use this instead of a real swipe carousel?",
+      "a": "Use the sequence video when you want one file that plays the full story in a feed or Reels placement. Choose separate swipe cards when your goal is letting buyers browse panels at their own pace."
     }
   ],
   "overview": [

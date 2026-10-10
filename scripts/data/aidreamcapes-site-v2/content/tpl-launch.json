@@ -1,10 +1,29 @@
 {
   "id": "tpl-launch",
   "title": "AI Promo Video Maker for New Products | AIVideosUGC",
-  "description": "Use this AI promo video maker to announce a new product with a warm, polished clip. Upload one photo, choose 9:16 or 1:1, and make your launch video today.",
+  "description": "Announce a new product with a polished launch video made from one photo. Pick 9:16 or 1:1 and add your release date and offer as editable text.",
   "h1": "AI Promo Video Maker for Your Next Product Launch",
   "eyebrow": "Launch video template",
-  "lead": "Create a short product-launch video from a clear photo. Choose a creator review, unboxing, try-on or hands-on demo, then add the verified release date and offer after download.",
+  "lead": "A new product with no announcement gets ignored, but most small shops cannot book a shoot before launch day. Upload one photo of the final item and this AI promo video maker builds a creator-led launch clip that makes the release feel ready for its first customers.",
+  "benefits_h2": "Why use an AI promo video maker for launches?",
+  "benefits": [
+    {
+      "t": "A full launch sequence from one photo",
+      "d": "The same source image supports a coming-soon teaser, a launch-day post and a product-page clip. You cover every stage of the release without arranging separate shoots."
+    },
+    {
+      "t": "Introduce the product before the pitch",
+      "d": "The opening frame shows the new item, then a creator review, unboxing, try-on or hands-on demo explains what is new. Viewers understand the product before the date and offer appear."
+    },
+    {
+      "t": "Cut for every launch channel",
+      "d": "Use 9:16 for Stories, Reels and TikTok, 1:1 for feeds and listings, or 16:9 for a wide embed. Clips run 6, 10, 15 or 30 seconds, from a quick reveal to a full product story."
+    },
+    {
+      "t": "Release details stay editable",
+      "d": "Add the confirmed date, price, offer and product link after download so nothing is burned into the clip. Downloads carry no AIVideosUGC watermark and are cleared for your own commercial use."
+    }
+  ],
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -23,18 +42,20 @@
     "For a launch sequence, test a [UGC ad video](/ai-video-generation/ugc-ad-video) for a creator introduction, a [lifestyle scene](/ai-image-generation/lifestyle-scene) for the product page, and the [holiday occasion](/occasions/holidays) when gift timing is part of the plan. The [testing ad versions guide](/guides/testing-ad-versions) helps compare openings while the date, offer, and URL stay accurate."
   ],
   "tip": "Choose one clear product moment, such as holding a bottle toward the camera, opening a gift box or showing a new item in use. Keep final launch facts editable.",
+  "steps_h2": "How to make a product launch video in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a launch-ready clip — no shoot, no studio, no missed release date.",
   "steps": [
     {
-      "t": "Upload the new product",
-      "d": "A clean shot from your launch photos is enough, and the video builds the room around it."
+      "t": "Upload Your Product Photo",
+      "d": "Use a clean shot of the final item so shoppers see the real product. The video builds the room around that one image."
     },
     {
-      "t": "Choose the room and size",
-      "d": "Describe the space and mood, then choose 9:16 or 1:1 and a 6-, 10-, or 15-second clip."
+      "t": "Pick a Format and Size",
+      "d": "Choose a review, unboxing, try-on or demo, then pick 9:16, 1:1 or 16:9 and a 6, 10, 15 or 30-second length for each channel."
     },
     {
-      "t": "Add the launch details",
-      "d": "Type “New,” the release date, and any offer in Canva or Ads Manager, where you can review each detail before publishing."
+      "t": "Download and Add Details",
+      "d": "Add the release date, offer and product link in your editor after download. Publish the teaser and launch clip with no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -79,7 +100,7 @@
     },
     {
       "q": "What length should a launch promo use?",
-      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds only where the public option is available. Choose 9:16 for vertical placements."
+      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds when the launch needs a full product story. Choose 9:16 for vertical placements."
     },
     {
       "q": "Which ratio is best for launch day?",
@@ -91,7 +112,7 @@
     },
     {
       "q": "What does a launch clip cost?",
-      "a": "A 6-, 10-, or 15-second clip is 24, 40, or 60 credits."
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before the job starts."
     },
     {
       "q": "What belongs in a launch teaser?",
@@ -108,6 +129,14 @@
     {
       "q": "What should I check before publishing?",
       "a": "Confirm the product shape, launch date, price, stock status, link, and crop in the final placement."
+    },
+    {
+      "q": "Can I have launch ads ready before the product is in stock?",
+      "a": "Yes. Use a clear photo of the final item to make a coming-soon teaser and add the date as editable text. Wait for a confirmed release date before advertising an exact delivery promise."
+    },
+    {
+      "q": "Do I need a creator or a studio to film the launch?",
+      "a": "No. One photo of the final product becomes a creator-led review, unboxing or demo clip for a fixed credit cost shown up front. The people on screen are AI-generated, so present the clip as your own ad, not as a customer review."
     }
   ],
   "overview": [
