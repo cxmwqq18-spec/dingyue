@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a full-screen YouTube Shorts ad clip of 6, 10, 15 or 30 seconds, with no shoot, no creator and the credit cost shown first.",
   "h1": "YouTube Shorts Ads Made From a Single Product Photo",
   "eyebrow": "YouTube Shorts",
-  "lead": "Want a Shorts ad without filming it yourself? One product photo becomes a full-screen vertical clip that shows the product doing something real, ready for YouTube.",
+  "lead": "Turn one product photo into a YouTube Shorts ad. Make a full-screen vertical clip of 6, 10, 15 or 30 seconds in minutes, with the credit cost shown first.",
   "card": "Full-screen vertical clips that show what your product does.",
   "secondary_keywords": [
     "YouTube Shorts video ads",
@@ -12,218 +12,62 @@
     "product demo Shorts",
     "short product videos for YouTube"
   ],
-  "intro": [
-    "YouTube Shorts sit between quick videos people chose to watch, so an ad there works when it feels like one more useful clip: a product shown clearly, doing something real. Upload a product photo, add a sentence about what should happen, and AIVideosUGC returns a 9:16 clip that fills the screen, in your choice of 6, 10, 15 or 30 seconds. Need a wider cut for a regular YouTube video or in-stream ad? Choose 16:9 instead.",
-    "Demo-style clips suit Shorts well. Try a hand blender whirring in a glass, a backpack being packed for a trip, or a desk lamp clicking on at dusk. Each clip is made separately and shows its cost first. Add any music and on-screen text in CapCut or another editor, then upload the finished file to your YouTube channel or ad account. Use a short product demo for the 6, 10, 15 or 30-second file, a creator face-to-camera explanation when the product needs context, and a centered frame with open space when you will add captions later. The generated image or clip has no baked-in words."
-  ],
-  "specs": [
-    [
-      "Shorts ad creative",
-      "9:16 vertical · 1080×1920 recommended"
-    ],
-    [
-      "Eligible Shorts uploads",
-      "Square or vertical · up to 3 minutes"
-    ],
-    [
-      "Regular YouTube video or in-stream ad",
-      "Use 16:9; this is not a Shorts format"
-    ],
-    [
-      "AIVideosUGC clip options",
-      "6, 10, 15 or 30 seconds"
-    ]
-  ],
-  "tips": [
-    "Keep the product and any text you add near the center, since the title, channel name and buttons run along the bottom and right side.",
-    "Shorts replay on their own, so an ending that flows back into the opening makes the loop feel smooth.",
-    "Let the first frames show the product mid-action, such as a zipper closing or a lid popping open, so viewers can recognize the product and action from the opening."
-  ],
-  "ideas": [
-    {
-      "t": "Ten-second demo",
-      "d": "Show one clear use from start to finish, like a garlic press crushing a clove or a pet bowl being filled."
-    },
-    {
-      "t": "Unboxing short",
-      "d": "A vertical clip of the lid lifting and the product coming into view, made for launch weeks."
-    },
-    {
-      "t": "Wide cut for longer placements",
-      "d": "A 16:9 version of the same idea for a standard YouTube video or in-stream ad."
-    }
-  ],
   "faq": [
     {
-      "q": "Can I use my TikTok video as a YouTube Short?",
-      "a": "Yes, the same 9:16 file works on both. Watch it in the Shorts player before you run it, to make sure nothing important hides under the buttons."
+      "q": "Can I make a YouTube Shorts ad from one product photo?",
+      "a": "Yes. Upload one clear photo, share your idea in one sentence and pick 6, 10, 15 or 30 seconds. The credit cost shows before you start."
     },
     {
-      "q": "Can I add sound to my Shorts ad?",
-      "a": "Yes, after download. Add music in CapCut or another editor, or pick audio inside YouTube, before the clip goes live. We don't add sound ourselves."
+      "q": "How long should a Shorts ad be?",
+      "a": "Choose 6, 10, 15 or 30 seconds. Six seconds suits one product moment, while a longer clip gives a demo room to finish."
     },
     {
-      "q": "Is a 6-second clip long enough for a Shorts ad?",
-      "a": "For one clear product moment, six seconds can work. Ten or fifteen seconds leaves more room for a demonstration from start to finish."
+      "q": "Do I need to book a creator or film anything?",
+      "a": "No. The Short is built from your own product photo, so there is no shoot day and no wait for footage. Run another job when you need a new angle."
     },
     {
-      "q": "What are YouTube Shorts ad limits?",
-      "a": "Square or vertical uploads up to 3 minutes can qualify as Shorts. Google Ads Shorts video ads can also run up to 3 minutes; AIVideosUGC offers 6, 10, 15 or 30-second jobs. See [YouTube upload guidance](https://support.google.com/youtube/answer/15424877) and [Google Ads Shorts specs](https://support.google.com/google-ads/answer/16041697?hl=en)."
+      "q": "Does the Short include music and captions?",
+      "a": "No. Add a soundtrack and caption text in YouTube or an editor after download. The file itself has no soundtrack or words."
     },
     {
-      "q": "What should appear in the first second of a Short?",
-      "a": "Show the product and the start of one action immediately, then let the clip finish that action without relying on a title card or spoken explanation."
+      "q": "Can I run the same file as a TikTok ad?",
+      "a": "Yes. A 9:16 file fits both feeds, but preview it in each player so the buttons do not cover the product."
     },
     {
-      "q": "When should I use 16:9 instead of Shorts?",
-      "a": "Use 16:9 for a regular YouTube video or in-stream placement. It is a separate wide output and should not be labeled as a Shorts format."
+      "q": "What photo should I upload?",
+      "a": "Use a sharp photo that shows the whole product and the part that moves, with a little space around it for the player controls."
     },
     {
-      "q": "Do I need to film a creator?",
-      "a": "No. The Short is generated from your product photo and a one-sentence action, so nobody needs to be filmed. Add music, captions and links in your editor after download."
+      "q": "When do I need a 16:9 video?",
+      "a": "Use 16:9 for a regular YouTube video or in-stream ad. That is a separate wide job and is not a Shorts format."
     },
     {
-      "q": "Can I use the Short as a paid ad?",
-      "a": "Yes. The downloaded clip is yours to run through your Google Ads account and has no AIVideosUGC watermark, but it still has to meet Google's current ad review rules."
+      "q": "Can I use the Short in a paid campaign?",
+      "a": "Yes. The download has no AIVideosUGC watermark and is yours to run through Google Ads, subject to Google's current ad review rules."
     }
   ],
-  "overview": [
-    {
-      "h2": "Give a Short one clear product beat",
-      "d": "A Short works best when the viewer can understand the object and the action without waiting for a spoken narration. Start from a photo that shows the working parts, then describe a beginning, one movement, and a finish: the lid opens, the contents appear, and the product settles into use. That sequence also gives the clip a natural point to loop."
-    },
-    {
-      "h2": "Use Google's guidance as the publishing check",
-      "d": "YouTube Help says square or vertical uploads can qualify as Shorts up to 3 minutes. Google Ads recommends 9:16 creative at 1080×1920 for Shorts ads. AIVideosUGC offers 6, 10, 15 and 30 second jobs; its five generator shapes are 9:16, 1:1, 16:9, 4:3, and 3:4. Choose 16:9 for a standard YouTube video or in-stream ad, not for a Shorts card. Read [YouTube's Shorts upload guidance](https://support.google.com/youtube/answer/15424877) and [Google Ads Demand Gen video specs](https://support.google.com/google-ads/answer/17140777?hl=en) before publishing."
-    },
-    {
-      "h2": "Start with the action viewers came to see",
-      "d": "A Short should make the object and its change clear immediately. Describe the starting position, one movement, and the final hold: a steamer smooths one shirt panel, a speaker button is pressed, or a snack pouch opens before the first bite. Keep the subject centered enough for the Shorts feed while leaving edge room for controls and captions."
-    },
-    {
-      "h2": "Know when the wide cut belongs elsewhere",
-      "d": "Use the 9:16 output for the Shorts feed and make a separate 16:9 job for a standard YouTube video or in-stream placement. Do not stretch a vertical frame into a wide player. The same product story can carry across both files, but rewrite the camera direction so the product remains large and complete in each crop."
-    },
-    {
-      "h2": "Add the publish details after export",
-      "d": "Download the clip, review the opening and final frame, then add music, captions, product links, and the description in YouTube Studio or your ad account. Check current upload duration and orientation guidance at publishing time. Keep health, performance, or comparison claims supported by your own product information before the file goes live."
-    },
-    {
-      "h2": "Plan the Shorts frame before the edit",
-      "d": "Choose one hands-on demo for a 15-second-ready Shorts cut, a creator face-to-camera review, or a centered product frame with open subtitle space. AIVideosUGC supplies the visual starting point in 6, 10, 15 or 30 seconds; add narration, captions and music in your editor, then check the vertical preview."
-    }
-  ],
-  "input_guide": {
-    "h2": "Photograph the parts that need to move",
-    "items": [
-      {
-        "t": "Include the working end",
-        "d": "Show the lid, hinge, nozzle, zipper, switch, or handle that the scene will use. The source image should give that part enough room to move."
-      },
-      {
-        "t": "Describe a three-part beat",
-        "d": "Write what is visible first, what happens next, and where the action ends. This keeps a short clip from trying to tell three stories."
-      },
-      {
-        "t": "Keep the vertical center open",
-        "d": "Place the product where the title, channel controls, and buttons are less likely to cover it; add any exact text after download."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A Short that can stand on its own",
-    "items": [
-      {
-        "t": "Instant recognition",
-        "d": "The product should be visible before the movement begins, so the viewer knows what the clip is showing."
-      },
-      {
-        "t": "One complete action",
-        "d": "Show a single use or reveal from start to finish instead of relying on a title card."
-      },
-      {
-        "t": "A clean loop point",
-        "d": "End close to the opening position when the action naturally repeats, or use a decisive final frame so the product stays easy to recognize."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Shorts prompts for product demonstrations",
-    "items": [
-      {
-        "t": "Pack and go",
-        "d": "A travel backpack receives one folded shirt, the zipper closes, and a hand lifts it from a bench."
-      },
-      {
-        "t": "Pour once",
-        "d": "A blender cup receives frozen fruit, the blade turns briefly, and the finished drink appears in a clear glass."
-      },
-      {
-        "t": "Light at dusk",
-        "d": "A desk lamp clicks on beside a notebook as the room changes from evening shade to a warm pool of light."
-      },
-      {
-        "t": "Unbox the useful part",
-        "d": "A plain box opens, the product is lifted into the center, and one key component is shown close to the camera."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the Short in your publishing tools",
-    "items": [
-      {
-        "t": "Add a readable caption",
-        "d": "Type the product name, price, offer, and any required disclosure yourself so the words are accurate."
-      },
-      {
-        "t": "Choose the soundtrack",
-        "d": "Select audio in YouTube, CapCut, or another editor; the generated clip does not include music or speech."
-      },
-      {
-        "t": "Watch the first and last seconds",
-        "d": "Confirm that the opening identifies the product and that the ending does not cut off the action or any added text."
-      },
-      {
-        "t": "Preview the final placement",
-        "d": "Open the asset in the Shorts player and inspect the center, bottom, and right edge before you promote it."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Best for compact, visible demonstrations",
-    "good": [
-      "Products with a simple opening, use, or reveal",
-      "Small items that remain clear in a vertical crop",
-      "Launch content that needs a quick unboxing or first look",
-      "Sellers who want a separate wide cut for standard YouTube video"
-    ],
-    "not_ideal": [
-      "Scenes that need several paragraphs of explanation",
-      "Tiny labels or interface screens that must be read inside the generated image"
-    ]
-  },
   "examples": {
     "h2": "More YouTube Shorts examples",
     "lead": "Vertical moments with a clear start and finish, plus a wide frame for regular YouTube.",
     "groups": [
       {
-        "label": "Short and clear",
+        "label": "Product Demo",
         "items": [
           {
             "ref": "n:guide:k4-plat-youtube-shorts-29-example-daypack",
-            "title": "Daypack lifted by its top handle",
+            "title": "Daypack Lifted Up by Its Top Handle",
             "kind": "photo",
             "product": "daypack"
           },
           {
             "ref": "n:guide:k4-plat-youtube-shorts-06-examples-groups-0-items-1-image",
-            "title": "Garlic press crushing a clove, close up",
+            "title": "Garlic Press Crushing a Clove Close Up",
             "kind": "photo",
             "product": "garlic press"
           },
           {
             "ref": "n:guide:q19-yt-example-pet-clean",
-            "title": "Lint brush lifts dog hair off a sofa",
+            "title": "Lint Brush Sweeping Dog Hair Off a Sofa",
             "kind": "photo",
             "product": "lint brush"
           }
@@ -235,16 +79,16 @@
   "cta_lead": "Start with one product action, then shape a clip for your YouTube Shorts placement.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo showing the working parts. Every Short starts from that one product shot."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so viewers recognize it right away."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Describe one action, like a steamer smoothing a shirt. The cost shows first, and another idea needs no reshoot."
+      "t": "Share your video idea",
+      "d": "Say what happens in one sentence and choose the clip length. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the 9:16 clip, add music and captions in CapCut, then post from YouTube Studio. The file is yours, no watermark."
+      "t": "Download and post",
+      "d": "Download the full-screen file with no watermark, add your sound and details, then upload it to YouTube or Google Ads."
     }
   ],
   "maker": {
@@ -260,7 +104,6 @@
     ]
   },
   "visual": {
-    "overview": "YouTube Shorts ads work best when one product action reads quickly on a phone. Keep the object near the center and leave room around the frame edges for app controls. The 16:9 example is for regular YouTube video or in-stream use, not a Short.",
     "strip": [
       "n:guide:q19-yt-strip-skincare-use",
       "n:guide:k4-plat-youtube-shorts-19-visual-strip-1",
@@ -284,307 +127,78 @@
           "Length",
           "15 seconds"
         ]
-      ]
-    },
-    "picker": {
-      "title": "Choose a Shorts ad format",
-      "lead": "Browse creator-led hooks, unboxings and quick product demos for vertical placements.",
-      "chips": [
-        {
-          "id": "creator",
-          "label": "Creator review"
-        },
-        {
-          "id": "hook",
-          "label": "Hook & fix"
-        },
-        {
-          "id": "routine",
-          "label": "Daily routine"
-        },
-        {
-          "id": "demo",
-          "label": "Hands-on demo"
-        },
-        {
-          "id": "safe-zone",
-          "label": "Subtitle Safe Area"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q19-yt-picker-01-serum-review",
-          "label": "Creator intro: serum texture close-up",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the plain serum bottle beside her cheek and says to camera: \"Here is the dropper and the texture up close.\" She turns the bottle once, ending with its dropper beside her face. Natural phone-video look and skin texture. Front-facing chest-up close-up with a slight handheld push-in. Diffused bathroom window light. Sound: her voice and a soft cap click; no music or on-screen text.",
-          "chips": [
-            "creator",
-            "safe-zone"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q19-yt-picker-02-protein-street-interview",
-          "label": "Street taste test: first-bite reaction",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny gym lobby, an adult man holds the plain protein bar, takes one bite and says to camera: \"Listen to that first crunch.\" He pauses with a natural reaction, ending with the bar beside his face. Casual creator-video look. Front-facing medium close-up with a small handheld move closer. Even overhead gym light. Sound: his voice, wrapper crinkle and one crisp bite; no music or on-screen text.",
-          "chips": [
-            "hook",
-            "safe-zone"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:k3-video-picker-cleanser",
-          "label": "Cleanser routine: bottle lineup",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A clean bathroom counter holds plain cleanser and cream bottles arranged left to right as a quick morning routine, with one hand entering to pick the cleanser. Vertical creator framing, no music or on-screen text.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:k3-video-picker-coffee-grinder",
-          "label": "Coffee routine: grind before work",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and controls exactly. An adult hand turns a compact plain coffee grinder beside a cup before work, ending with the grinder and grounds centered. Vertical routine-video framing, no music or on-screen text.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-demo-first-aid",
-          "label": "Shorts Demo — First-Aid Kit",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands open a plain compact first-aid kit and lay out its contents in a clear sequence on a clean table. 15-second-ready Shorts demo framing, bright daylight, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-demo-garlic-press",
-          "label": "Shorts Demo — Garlic Press",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands squeeze a plain stainless garlic press over a cutting board so the crushed clove is visible. Vertical Shorts demo framing, bright kitchen light, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-unbox-snack-pouch",
-          "label": "Unbox Hook — Snack Pouch",
-          "chips": [
-            "hook"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands lift a plain olive snack pouch from a kraft mailer on a kitchen counter, showing its zipper clearly for an unboxing hook. Warm daylight, no text or logos."
-        },
-        {
-          "ref": "n:guide:q19-yt-picker-08-fitness-demo",
-          "label": "Creator demo: resistance band stretch",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright gym, an adult woman faces the camera, stretches the plain fabric resistance band once at chest height and says: \"Three simple moves start with one band.\" She relaxes the band, ending with it held level across the frame. Natural creator-video look. Front-facing chest-up shot with slight handheld sway. Even overhead gym light. Sound: her voice and soft fabric tension; no music or on-screen text.",
-          "chips": [
-            "creator"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:plat-youtube-shorts-m2-source",
-          "label": "Garment Steamer — Hands-On Demo",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: adult hands hold a plain white garment steamer beside a blue shirt, showing its controls and water reservoir in bright laundry daylight. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-product-feature-callout-video-m6-output-2-vertical",
-          "label": "Loop Speaker — Control Demo",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the black woven loop speaker. An adult hand presses one control and turns the speaker toward camera, ending with its grille and button visible. Soft side light, realistic vertical phone-video look, close framing with one gentle push-in. Sound: click and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:c1-tpl-spark-ads-style-video-reuse-strip4-square",
-          "label": "Insulated Bottle — Daily Routine",
-          "chips": [
-            "routine",
-            "demo"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: an adult hand lifts a sage-green insulated bottle by its loop handle from a softly lit desk. Keep the full bottle centered, with no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-spark-ads-style-video-use-post-video-square",
-          "label": "Insulated Bottle — Desk Lift",
-          "chips": [
-            "hook",
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the sage-green insulated bottle. An adult hand lifts it from a desk before leaving, ending with the loop handle and full bottle centered. Soft morning light, square creator framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-launch-m2-result-video-916",
-          "label": "Desk Lamp — Creator Review",
-          "chips": [
-            "creator",
-            "hook"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the white saucer-shade desk lamp. An adult creator switches it on beside a book and looks toward camera, ending with the warm glow centered. Evening room light, candid vertical phone-video look, slow push-in. Sound: switch click and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:c1-tpl-compare-m4-tumbler-pair-square",
-          "label": "Tumbler Pair — Creator Review",
-          "chips": [
-            "creator",
-            "hook"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the matte black and warm cream tumblers. An adult hand places them side by side and points to the lids, ending with both fully visible. Soft kitchen daylight, square creator framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-creator-bottle",
-          "label": "Creator Talk — Water Bottle",
-          "chips": [
-            "creator"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An older creator with short gray curls holds a plain insulated water bottle and speaks naturally to camera in a bright kitchen. Product fully visible, vertical Shorts framing, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-safe-lamp",
-          "label": "Subtitle Safe Area — Desk Lamp",
-          "chips": [
-            "safe-zone"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Center the plain desk lamp in the middle third of a vertical phone frame and leave uncluttered space above and below for subtitles, without writing any words. Bright daylight, no text or logos."
-        }
-      ],
-      "button": "Make a product video"
-    },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:gen2:video-hub-g1",
-        "h": "Use a vertical product reveal",
-        "d": "A water bottle lifted from a gym bag makes a quick opening moment."
-      },
-      {
-        "frame": "post",
-        "ref": "f:k4-plat-youtube-shorts-32-visual-uses-1",
-        "h": "Keep a product demo on screen",
-        "d": "A protein shaker in a gym gives a short use scene without a long explanation."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:plat-youtube-shorts-example-trail-square",
-        "bad": "n:guide:plat-youtube-shorts-m5-soft-focus",
-        "good_label": "The trail shoe has room around its toe and heel",
-        "bad_label": "The shoe mesh blurs together at this size"
-      },
-      {
-        "good": "n:guide:k4-plat-youtube-shorts-09-visual-input-1-good",
-        "bad": "n:guide:k4-plat-youtube-shorts-m5-cropped-bad",
-        "good_label": "Trail shoes stay centered in the square frame",
-        "bad_label": "A tight crop cuts off parts of the shoes"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-1",
-        "frame": "9:16",
-        "label": "Portrait coral trail shoes shown in full on a rocky trail",
-        "length": 6,
-        "presentation": "youtube-shorts"
-      },
-      {
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-2",
-        "frame": "9:16",
-        "label": "Portrait coral trail shoes stepping onto a rocky path",
-        "length": 10,
-        "presentation": "youtube-shorts"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:c1-tpl-limited-drop-alert-video-m2-result-video-916",
-      "zones": [
-        "Music",
-        "Product link"
       ],
       "items": [
-        "Choose music in your editor or YouTube after downloading the clip.",
-        "Add the product link in the placement where viewers can open it."
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo of the whole product. The first frame shows what you sell, so viewers recognize it right away."
+        },
+        {
+          "t": "Share your video idea",
+          "d": "Say what happens in one sentence and choose the clip length. The credit cost shows first, before the file is made."
+        },
+        {
+          "t": "Download and post",
+          "d": "Download the full-screen file with no watermark, add your sound and details, then upload it to YouTube or Google Ads."
+        }
       ]
-    },
-    "sizes": [
-      {
-        "frame": "9:16",
-        "ref": "f:k4-plat-youtube-shorts-16-visual-sizes-0-image",
-        "label": "9:16 · YouTube Shorts"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:q19-yt-size-square-example",
-        "label": "1:1 · square uploads can qualify as Shorts"
-      },
-      {
-        "frame": "16:9",
-        "ref": "f:q19-yt-wide-demo",
-        "label": "16:9 · standard YouTube video or in-stream ad"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Create a YouTube Shorts ad from one product photo"
-      },
-      "m3": {
-        "h2": "Choose a YouTube Shorts scene with one action"
-      },
-      "m4": {
-        "h2": "Use YouTube Shorts for a quick product demonstration"
-      },
-      "m5": {
-        "h2": "Keep the product centered in a YouTube Shorts frame"
-      },
-      "m6": "YouTube Shorts made from product photos",
-      "m7": {
-        "h2": "Add music and details after download"
-      },
-      "m8": {
-        "h2": "Shorts uploads and regular YouTube video formats"
-      },
-      "examples": {
-        "h2": "More YouTube Shorts examples",
-        "lead": "Vertical product moments with one clear start and finish."
-      },
-      "faq": {
-        "h2": "Questions about YouTube Shorts ads"
-      }
     }
   },
-  "benefits_h2": "Why make YouTube Shorts ads with AI UGC video?",
+  "benefits_h2": "Why advertisers move to AI video for YouTube",
   "benefits": [
     {
-      "t": "Fits between the clips people chose",
-      "d": "The result is one clear product beat in the same full-screen vertical format as the Shorts around it, so your ad reads as one more useful clip instead of a break in the feed."
+      "t": "Faster Turnaround",
+      "d": "Make multiple ad variations for testing and scaling, so more time goes into growing the campaign instead of managing shoots."
     },
     {
-      "t": "No filming, no creator",
-      "d": "A product photo and one sentence replace the camera, the person and the edit session. A second take is just another job, not a reshoot."
+      "t": "More Conversions",
+      "d": "Keep a steady flow of platform-style clips, so ads stay fresh and viewers keep responding."
     },
     {
-      "t": "Room for a full product story",
-      "d": "Choose a 6, 10, 15 or 30-second clip, so a short demo or a longer start-to-finish demonstration can both come from the same uploaded photo."
-    },
-    {
-      "t": "Yours on the channel, no watermark",
-      "d": "Downloaded clips carry no AIVideosUGC watermark and are yours to post from YouTube Studio or your ad account, with the credit cost shown first."
+      "t": "No Production Delays",
+      "d": "Skip long production timelines and get a new video ad on demand, built from your own product photo."
     }
   ],
   "steps_h2": "How to make a YouTube Shorts ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post Short — no studio, no creator, no reshoot."
+  "steps_lead": "Three steps turn one product photo into a ready-to-post Short — no studio, no creator, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Why choose it",
+      "h2": "Why teams choose AI for YouTube ads",
+      "lead": "More creative, without the usual production chain.",
+      "items": [
+        {
+          "t": "Ready Avatars for Your Brand",
+          "d": "Feature different presenters without finding and booking creators, and keep content fresh."
+        },
+        {
+          "t": "Keep Viewers Watching",
+          "d": "Open with a clear, local-feeling moment and hold attention long enough to make the offer."
+        },
+        {
+          "t": "Test Your Ads",
+          "d": "Make multiple creator-style clips and test openings and scenes to see what actually performs."
+        }
+      ]
+    },
+    {
+      "eyebrow": "What makes it useful",
+      "h2": "What makes this AI video tool stand out",
+      "lead": "Features built for marketers who need results.",
+      "items": [
+        {
+          "t": "Built for Marketers Who Need Results",
+          "d": "Go from product photo to ready clip with a setup made for fast testing."
+        },
+        {
+          "t": "Product Holding Formats",
+          "d": "Show the product in hand or in use, the formats shoppers recognize and trust."
+        },
+        {
+          "t": "A Studio with Full Creative Control",
+          "d": "Change the opening, length or scene and make another version on your own schedule."
+        }
+      ]
+    }
+  ]
 }

@@ -4,7 +4,7 @@
   "description": "Meet Amazon main-image rules with one product photo: get a white-background main, lifestyle and detail shots without a reshoot, with the cost shown first.",
   "h1": "Amazon Product Photos for Your Main Image and Listing Gallery",
   "eyebrow": "Amazon listings",
-  "lead": "Need an Amazon-compliant gallery without a product reshoot? One photo gives you a plain white main image plus lifestyle and detail shots that follow Amazon's rules.",
+  "lead": "Turn one product photo into an Amazon-ready image set. Get a white-background main, plus lifestyle and detail shots that follow Amazon's rules, with the credit cost shown first.",
   "card": "A clean white main image, then photos for size, detail and use.",
   "secondary_keywords": [
     "Amazon main image white background",
@@ -12,241 +12,86 @@
     "Amazon secondary images",
     "Amazon lifestyle product photos"
   ],
-  "intro": [
-    "Amazon listings start with a square white-background image, followed by square lifestyle, detail, or size photos of this item. Keep the product recognizable from one view to the next, and use each image to answer a shopper’s next question. Build the set in order: choose the front-facing white main image, compare the same item in different colors when variants need clarity, then lay out the package contents or add a lifestyle and detail view.",
-    "It's made for sellers who need a fuller gallery without reshooting every item. Upload a phone photo of your product, pick a white background or describe a setting, and download the result. For front, side and back views, photograph each side and use the Every Angle template to keep the gallery consistent. Amazon's Sponsored Brands video and product-detail video have different upload requirements, so check the placement before adding a clip. Callouts and text labels go on afterward in Canva or another design tool."
-  ],
-  "specs": [
-    [
-      "Main image",
-      "Square · plain white background · see category rules"
-    ],
-    [
-      "Sponsored Brands video",
-      "16:9 · 6–45 seconds"
-    ],
-    [
-      "Product-detail video",
-      "16:9 or 9:16 · 1–12 minutes · up to 1080p"
-    ],
-    [
-      "AIVideosUGC clip options",
-      "6, 10, 15 or 30 seconds"
-    ],
-    [
-      "Sponsored Brands safe area",
-      "Keep text and important details out of the lower-right corner"
-    ]
-  ],
-  "tips": [
-    "Use a pure white background for the main image, and check Amazon's current rules for your category before uploading, since requirements vary by category.",
-    "Keep the main image free of added text, badges and props; save those for the other gallery slots.",
-    "Fill the rest of the gallery with a scale shot, a close-up of the materials and a photo of the item in use."
-  ],
-  "ideas": [
-    {
-      "t": "White main image",
-      "d": "Turn a photo taken on your kitchen table into a square shot on plain white for the first image slot."
-    },
-    {
-      "t": "Size next to something familiar",
-      "d": "Place a wallet beside a phone or a planter beside a coffee mug so shoppers can judge the size at a glance."
-    },
-    {
-      "t": "Lifestyle shot in the right room",
-      "d": "Show a cutting board on a counter with chopped vegetables, or a bath mat in a bright bathroom."
-    }
-  ],
   "faq": [
     {
-      "q": "Does this work for Amazon main images?",
-      "a": "Use square images by default: a white-background main image, a lifestyle secondary, and a detail or size view. Keep the product recognizable across the gallery and check the current category requirements before uploading."
+      "q": "What are Amazon's main image requirements?",
+      "a": "The main image needs a pure white background and a product that fills about 85% of the square frame, with no text, badges or props. Check Seller Central for the current rules."
     },
     {
-      "q": "Can I add text callouts to my gallery images?",
-      "a": "Add them yourself in Canva or a similar design app. Letters drawn by AI can come out wrong, and a separate text layer is easier to correct later."
+      "q": "Can I make a white-background main from a regular photo?",
+      "a": "Yes. Upload a clear product photo and pick the white main. The product is rebuilt on a plain white background, so you do not book a studio."
+    },
+    {
+      "q": "What happens if an image does not meet Amazon's rules?",
+      "a": "Amazon may suppress a non-compliant image, and the listing can stop showing in search. Use a correct white main and keep extra callouts on the other gallery images."
+    },
+    {
+      "q": "Which images should follow the main image?",
+      "a": "Add a lifestyle shot, a close detail and a size cue, in that order. Each image should answer the shopper's next question about the product."
+    },
+    {
+      "q": "Can I add text callouts to my images?",
+      "a": "Add them yourself in Canva or a similar tool after download. Keep the main image plain, and put callouts only on secondary images."
+    },
+    {
+      "q": "What photo should I upload?",
+      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front view works best for a main image rebuild."
     },
     {
       "q": "Can I make a video for my Amazon listing?",
-      "a": "Sponsored Brands video ads require 16:9 and 6–45 seconds, with text and key details kept out of the lower-right corner. Product-detail page videos have separate rules: 16:9 or 9:16, 1–12 minutes, MOV or MP4, up to 1080p and 5 GB. AIVideosUGC makes 6, 10, 15 or 30-second clips, which fit the Sponsored Brands duration but are shorter than the product-detail minimum. See Amazon Ads' Sponsored Brands video specs and Seller Central's product video guidance."
+      "a": "AIVideosUGC makes short clips of 6, 10, 15 or 30 seconds. Check Amazon's current Sponsored Brands and product video rules before you use one."
     },
     {
-      "q": "What are Amazon main-image requirements?",
-      "a": "Amazon's main-image rules include a pure-white background and a product that fills at least 85% of the image. Check Seller Central's current main-image requirements, including pixel and zoom guidance."
-    },
-    {
-      "q": "How should I order the images in an Amazon gallery?",
-      "a": "Start with the plain white-background main image, then add lifestyle, detail, scale or in-use views that answer the shopper's next question."
-    },
-    {
-      "q": "Can the main Amazon image contain props or badges?",
-      "a": "Keep the main slot plain when the current category rules require it; put callouts, props and extra context on the secondary gallery images after checking Seller Central."
-    },
-    {
-      "q": "Do I need a photographer or a studio?",
-      "a": "No. The main image and gallery shots are built from the product photo you upload, so the item does not have to be photographed in a studio. Any text callouts are added afterward."
-    },
-    {
-      "q": "Can I use these images in my Amazon listing?",
-      "a": "Yes. Downloaded images are yours to use and carry no AIVideosUGC watermark, but you are still responsible for matching Amazon's current main-image and category rules."
+      "q": "Are the images mine to use in my listing?",
+      "a": "Yes. Downloads carry no AIVideosUGC watermark and are yours to use, but you are responsible for matching Amazon's current rules."
     }
   ],
-  "overview": [
-    {
-      "h2": "Treat the main image as a proof of the item",
-      "d": "A listing gallery works best when its square images answer different questions about this item. Lead with a clean white-background main image, then show a lifestyle view and a useful detail or size cue."
-    },
-    {
-      "h2": "Use the gallery to answer the next questions",
-      "d": "Secondary images can show a close-up, a scale comparison, the parts in the box, and the product in a room. Sponsored Brands video specs call for 16:9 and 6–45 seconds. Product-detail videos are a separate placement and support 16:9 or 9:16, 1–12 minutes, and up to 1080p. AIVideosUGC's own clip options are 6, 10, or 15 seconds in five shapes. Check Amazon Ads' Sponsored Brands video specs and Seller Central's product-detail video guidance before uploading."
-    },
-    {
-      "h2": "Give every gallery image a job",
-      "d": "A useful Amazon gallery moves from identification to proof. Use the white-background main image to show the complete item, a lifestyle view to show scale or setting, and detail or bundle views to answer a specific shopper question. Photograph or generate the same item from the same source reference so its proportions, color, and parts stay recognizable from slide to slide."
-    },
-    {
-      "h2": "Separate Sponsored Brands from product-detail video",
-      "d": "Sponsored Brands video is an ad placement with its own 16:9 and duration rules. Product-detail video is uploaded to a product page and follows different duration, file, and resolution guidance. Choose the destination first, then make a file that fits that placement. A six, ten, or fifteen-second AIVideosUGC clip may fit an ad duration but does not satisfy a product-detail minimum that requires a longer video."
-    },
-    {
-      "h2": "Keep the main slot simple",
-      "d": "Put props, comparison views, callouts, and badges in secondary gallery slots when current category rules require a plain main image. Review the complete silhouette at seller preview size, confirm the product fills the frame without clipping, and add exact dimensions or claims in seller listing fields or a design editor after download."
-    },
-    {
-      "h2": "Finish the listing set with variants and contents",
-      "d": "Use the front-facing white main image first, then add a same-item color comparison or a packaging-contents flatlay as secondary images. Keep props and callouts out of the main slot when the category requires a clean background, and verify each piece against the physical listing before upload."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a source for a trustworthy listing",
-    "items": [
-      {
-        "t": "Photograph the whole item",
-        "d": "Keep every part that ships with the product inside the frame. Do not expect a hidden side, cable, or accessory to appear accurately later."
-      },
-      {
-        "t": "Use a straight product view",
-        "d": "For the main-image starting point, face the product toward the camera and keep the lens level so its proportions are easier to compare."
-      },
-      {
-        "t": "Capture separate details",
-        "d": "Take additional photos of the sole, clasp, ports, texture, or inside compartment when a shopper needs that information."
-      }
-    ]
-  },
-  "results": {
-    "h2": "One product, three square uses",
-    "items": [
-      {
-        "t": "White-background main image",
-        "d": "A square product view on clean white, with no extra words, badges, or props."
-      },
-      {
-        "t": "Lifestyle secondary image",
-        "d": "A square scene that shows this product in a familiar setting."
-      },
-      {
-        "t": "Detail or size image",
-        "d": "A square close view that shows a useful feature or size reference for this product."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Gallery scenes that answer shopper questions",
-    "items": [
-      {
-        "t": "Kitchen scale",
-        "d": "Place a cutting board beside a mixing bowl on a kitchen counter, with a familiar mug nearby for context and no invented measurements."
-      },
-      {
-        "t": "Open the storage",
-        "d": "Show a backpack standing upright with its main compartment open and the zipper, lining, and pockets visible."
-      },
-      {
-        "t": "Show the hardware",
-        "d": "Lay a watch or bag on a plain surface with the clasp, buckle, or stitching close enough to inspect."
-      },
-      {
-        "t": "Room placement",
-        "d": "Put a bath mat in front of a real-looking tub or a lamp on a side table, keeping the product's edges clear."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Review every file before Seller Central",
-    "items": [
-      {
-        "t": "Compare the real item",
-        "d": "Check shape, color, parts, finish, and label against the physical product before you upload the asset."
-      },
-      {
-        "t": "Measure the frame",
-        "d": "Verify the pure-white background, product coverage, and pixel dimensions against Amazon's current category guidance."
-      },
-      {
-        "t": "Add accurate callouts",
-        "d": "Type dimensions, material names, prices, and feature labels yourself on secondary images, where the wording can be checked."
-      },
-      {
-        "t": "Keep the main slot plain",
-        "d": "Remove props, added text, badges, and watermarks from the main image when the current rules require a clean product view."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Useful for an Amazon image set",
-    "good": [
-      "Physical products with a clear, complete source photo",
-      "Listings that need a white main image plus detail and lifestyle frames",
-      "Sellers willing to verify the current category rules before upload",
-      "Products whose dimensions and claims can be added accurately after download"
-    ],
-    "not_ideal": [
-      "Items whose critical features are absent from every source photo",
-      "Claims that depend on an AI-generated label or measurement being exact"
-    ]
-  },
   "examples": {
     "h2": "More Amazon listing examples",
     "lead": "A white main image, then the size and use shots that answer shoppers' questions.",
     "groups": [
       {
-        "label": "A varied listing gallery",
+        "label": "White main images",
         "items": [
           {
             "ref": "n:guide:q19-amz-example-vitamin-main",
-            "title": "Vitamin bottle centered on pure white",
+            "title": "White Main — Vitamin Bottle Centered",
             "kind": "photo",
             "product": "vitamin bottle"
           },
           {
-            "ref": "n:guide:q19-amz-example-trail-sole",
-            "title": "Trail shoe tread and mesh in detail",
+            "ref": "n:guide:q19-amz-example-daypack-main",
+            "title": "White Main — Canvas Daypack Upright",
             "kind": "photo",
-            "product": "trail shoe"
-          },
-          {
-            "ref": "n:guide:q19-amz-example-pet-water",
-            "title": "Pet water bottle held beside a dog",
-            "kind": "photo",
-            "product": "pet water bottle"
+            "product": "daypack"
           }
         ]
       },
       {
-        "label": "Inside view",
+        "label": "Detail shots",
         "items": [
           {
-            "ref": "n:guide:q19-amz-example-daypack-main",
-            "title": "Daypack on pure white",
+            "ref": "n:guide:q19-amz-example-trail-sole",
+            "title": "Detail Shot — Trail Shoe Tread and Mesh",
             "kind": "photo",
-            "product": "daypack"
+            "product": "trail shoe"
           },
           {
             "ref": "n:guide:q19-amz-example-daypack-pocket",
-            "title": "Daypack pocket opened by hand",
+            "title": "Detail Shot — Daypack Pocket Opened",
             "kind": "photo",
             "product": "daypack"
+          }
+        ]
+      },
+      {
+        "label": "Lifestyle shots",
+        "items": [
+          {
+            "ref": "n:guide:q19-amz-example-pet-water",
+            "title": "Lifestyle Shot — Pet Water Bottle at Trail Stop",
+            "kind": "photo",
+            "product": "pet water bottle"
           }
         ]
       }
@@ -256,20 +101,19 @@
   "cta_lead": "Build a listing photo set around the main view, useful details, and product use.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo of the full item. The main image and every gallery shot start from it."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo of the whole item. Every gallery shot starts from that single product photo."
     },
     {
-      "t": "Pick Main, Lifestyle or Detail",
-      "d": "Pick a white main, a lifestyle scene or a detail crop. A new job adds the next gallery image."
+      "t": "Pick main, lifestyle or detail",
+      "d": "Choose a white main, a lifestyle scene or a close detail. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and Add Listing Details",
-      "d": "Download the square file and add callouts in Canva. It is yours to list, with no watermark."
+      "t": "Download and list",
+      "d": "Download the square file with no watermark, add any callouts yourself, then use it in your Amazon listing."
     }
   ],
   "visual": {
-    "overview": "The walkthrough and gallery keep one plain ceramic mug consistent: a white-background main view, an in-use breakfast view, and close detail. Other listing examples below are separate products.",
     "strip": [
       "n:guide:q19-amz-strip-first-sip",
       "n:guide:q19-amz-strip-coffee-pouch",
@@ -296,297 +140,101 @@
           "Use",
           "Main · lifestyle · detail"
         ]
-      ]
-    },
-    "picker": {
-      "title": "Choose an Amazon listing image",
-      "lead": "Build a square gallery with a main image, useful detail and product-in-use views.",
-      "chips": [
-        {
-          "id": "main",
-          "label": "White-background main"
-        },
-        {
-          "id": "detail",
-          "label": "Product detail"
-        },
-        {
-          "id": "use",
-          "label": "In use"
-        },
-        {
-          "id": "bundle",
-          "label": "Bundle and packaging"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q19-amz-picker-01-white-sunscreen",
-          "label": "Main image: sunscreen tube on white",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Still square listing photograph of the complete pale-green sunscreen tube standing upright on a seamless pure-white studio surface, its blank label area facing forward; frozen clean product pose, bright diffused studio light with a soft grounded shadow, centered full silhouette with generous margins, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-02-white-protein",
-          "label": "Main image: protein pouch on white",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Still square listing photograph of the complete plain protein pouch standing upright on seamless pure white, blank front label facing camera; crisp studio packshot under bright even softbox light, centered full package with a faint grounded shadow and open margins, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-03-gold-hoop-detail",
-          "label": "Detail macro: gold hoop earrings",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Still square macro product photograph of a pair of simple gold hoop earrings with one hinge visible, resting on a warm ivory surface; polished metal caught in a frozen glint under soft directional window light, tight balanced composition with both hoops in focus, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-04-trail-shoe-detail",
-          "label": "Detail view: trail shoe sole",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Still square secondary product photograph of an unbranded charcoal trail shoe angled to show the full side profile and textured sole; clean neutral studio floor, soft directional light revealing mesh and tread, shoe centered and fully inside the frame, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-05-size-bottle-hand",
-          "label": "Size in hand: pet water bottle",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Still square lifestyle photograph of an adult hand holding a compact plain pet water bottle beside a calm dog at a trail stop; frozen moment with bottle at the dog’s shoulder height, open-shade daylight, close balanced composition that makes the bottle scale clear, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-06-cleanser-use",
-          "label": "Pump demo: cleanser in palm",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Still square use photograph of adult hands pressing a plain cleanser pump and catching one small dose in an open palm beside a bright sink; freeze the drop just above the palm, soft bathroom daylight, close composition focused on pump and hand, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-07-headphone-unbox",
-          "label": "ASMR unboxing: over-ear headphones",
-          "chips": [
-            "bundle"
-          ],
-          "prompt": "Still square unboxing photograph of adult hands lifting plain charcoal over-ear headphones from an open gray box on a clean table; freeze the headphones halfway above the tissue, gentle warm window light, centered close composition with the full headphones visible, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-08-pet-bundle",
-          "label": "Bundle view: dog grooming kit",
-          "chips": [
-            "bundle"
-          ],
-          "prompt": "Still square bundle photograph of a plain pet grooming brush, comb and glove arranged together beside a calm dog; all pieces held in a neat frozen display on a light floor, soft natural daylight, balanced composition with each item fully visible, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:white-background-kettle",
-          "label": "Green Kettle — Main Image",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the sea-glass green kettle and its handle. Place the complete kettle upright on seamless pure white with a faint grounded shadow, centered and fully in frame. Clean listing photography, even studio light, no props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:ind-jewelry-accessories-m2-source",
-          "label": "Gold Band Ring — Detail View",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain polished gold band. Place it centered on a neutral display card beside a small coin for scale, with the full ring and edge visible. Soft studio light, square listing detail, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-2-image",
-          "label": "Snack Bag — In-Use View",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain snack bag. An adult hand places it in an open lunch bag beside fruit, showing the pouch height and seal. Bright daylight, square Amazon lifestyle composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c4-amazon-notebook-square",
-          "label": "Leather Notebook — Detail View",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain brown leather notebook and pen. An adult hand opens the notebook on a bright desk, showing the cover edge and paper scale. Soft window light, square listing detail, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-feature-gold-band-square",
-          "label": "Gold Band Ring — Bundle View",
-          "chips": [
-            "bundle"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain polished gold band. An adult hand lifts it beside the neutral coin and display card, ending with all pieces complete and easy to inspect. Soft studio light, square bundle composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:white-background-serving-bowl",
-          "label": "Stoneware Bowl — Main Image",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the cream stoneware serving bowl. Place the complete bowl upright on seamless pure white with a soft grounded shadow, centered and fully visible. Clean listing photography, even studio light, no props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-amazon-variant-backpacks",
-          "label": "Variant Main — Two Backpacks",
-          "chips": [
-            "main"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Show two identical plain canvas backpacks, olive and charcoal, front-facing side by side on seamless pure white with equal scale. Secondary comparison view, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-amazon-packaging-brewer",
-          "label": "Packaging Contents — Coffee Brewer Kit",
-          "chips": [
-            "bundle"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Lay out the plain reusable coffee brewer kit, lid, filter, scoop and blank accessory card separately on a white surface so every included piece is visible. No text or logos."
-        }
-      ],
-      "button": "Make an Amazon product photo"
-    },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q19-amz-use-phonefolio",
-        "h": "Show a leather phone folio holding a card",
-        "d": "Hands slide a card into the tan folio beside a generic phone so shoppers can see its pockets and stitching."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q19-amz-use-notebook-write",
-        "h": "Show the notebook being used",
-        "d": "An adult hand writes in the plain leather notebook at a bright desk, making its cover and scale easy to see."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:f1-r10-amazon-backpack-snapshot",
-        "bad": "n:guide:f1-r10-amazon-backpack-snapshot-bad",
-        "good_label": "Seller snapshot — backpack front on bench",
-        "bad_label": "Bad crop — soft backpack snapshot"
-      },
-      {
-        "good": "n:gen2:white-background-c3",
-        "bad": "n:guide:plat-amazon-c3-bad-blur",
-        "good_label": "All train cars stay easy to see",
-        "bad_label": "Train details blur on white"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f1-r10-amazon-backpack-main",
-        "frame": "1:1",
-        "label": "Matched front-facing backpack on white",
-        "presentation": "amazon-gallery"
-      },
-      {
-        "ref": "n:guide:f1-amazon-toy-train-output",
-        "frame": "1:1",
-        "label": "Square white-background wooden toy train",
-        "presentation": "amazon-gallery"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q19-amz-output-backpack-walk",
-      "zones": [
-        "Product details",
-        "Callout"
       ],
       "items": [
-        "Add real dimensions and feature labels in your seller tools or design editor.",
-        "Keep the price and current availability in the product listing."
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo of the whole item. Every gallery shot starts from that single product photo."
+        },
+        {
+          "t": "Pick main, lifestyle or detail",
+          "d": "Choose a white main, a lifestyle scene or a close detail. The credit cost shows first, before the file is made."
+        },
+        {
+          "t": "Download and list",
+          "d": "Download the square file with no watermark, add any callouts yourself, then use it in your Amazon listing."
+        }
       ]
-    },
-    "sizes": [
-      {
-        "frame": "1:1",
-        "ref": "n:guide:plat-amazon-c3-size-square-main",
-        "label": "White-background mug main image"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:plat-amazon-c3-size-square-lifestyle",
-        "label": "Mug in a bright kitchen lifestyle view"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:plat-amazon-c3-size-square-detail",
-        "label": "Close mug rim and handle detail"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Plan Amazon product photos in three steps"
-      },
-      "m3": {
-        "h2": "Choose an Amazon product image role"
-      },
-      "m4": {
-        "h2": "Use Amazon photos in a listing or storefront"
-      },
-      "m5": {
-        "h2": "Start Amazon images with a clear product photo"
-      },
-      "m6": {
-        "h2": "Square product photos for Amazon listings"
-      },
-      "m7": {
-        "h2": "Add Amazon listing details after download"
-      },
-      "m8": {
-        "h2": "Square Amazon examples matched to each upload"
-      },
-      "faq": {
-        "h2": "Questions about Amazon product photos"
-      },
-      "templates": {
-        "h2": "More Amazon product photo templates",
-        "lead": "Choose a clean listing view or a lifestyle scene for your product."
-      }
     }
   },
-  "benefits_h2": "Why make Amazon product photos with AI?",
+  "benefits_h2": "Amazon-ready image formats that help search and sales",
   "benefits": [
     {
-      "t": "A white main without a reshoot",
-      "d": "Your product photo is rebuilt on the plain white background Amazon expects for the main image, so a new SKU does not mean another studio session."
+      "t": "Main Listing Image",
+      "d": "A clean square shot on plain white, the first image shoppers see when they open the listing."
     },
     {
-      "t": "A full gallery from one item",
-      "d": "Separate jobs produce the lifestyle, detail and package-content shots that answer a shopper's later questions, all with the same product."
+      "t": "Detail and How-To Shots",
+      "d": "Show a useful feature or use step, the images that cut questions and returns."
     },
     {
-      "t": "Rules handled as requirements",
-      "d": "The square main is framed around Amazon's main-image rules and current category guidance, which is the difference between a listing image and a rejected upload."
-    },
-    {
-      "t": "Yours to sell with, no watermark",
-      "d": "Downloaded images carry no AIVideosUGC watermark and are yours to use in your listing, with the credit cost shown before each job starts."
+      "t": "Lifestyle and Unboxing",
+      "d": "Place the product in a real scene or show what is in the box, so shoppers know what to expect."
     }
   ],
   "steps_h2": "How to make Amazon product photos in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into listing-ready main and gallery images — no studio, no reshoot."
+  "steps_lead": "Three steps turn one product photo into listing-ready main and gallery images — no studio, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Made for each placement",
+      "h2": "Optimized for Amazon image placements",
+      "lead": "A square set for the listing, brand store and sponsored ads.",
+      "items": [
+        {
+          "t": "Listing and Brand Store",
+          "d": "Square main and gallery images that keep shoppers on the product page longer."
+        },
+        {
+          "t": "Sponsored Ad Creative",
+          "d": "Clear product shots made for search and ad placements, with a fresh look ready to test."
+        },
+        {
+          "t": "Off-Amazon Traffic",
+          "d": "Use the same square assets in social ads that send traffic back to the listing."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Why sellers scale with it",
+      "h2": "Why growing sellers scale Amazon images here",
+      "lead": "No more weeks of production cycles for each new SKU.",
+      "items": [
+        {
+          "t": "Study Best-Selling Listings",
+          "d": "See what works in your category and apply the same visual ideas to your own products."
+        },
+        {
+          "t": "Photo Ready In Minutes",
+          "d": "Start from one product photo and get a listing image without a studio booking."
+        },
+        {
+          "t": "White Background to Lifestyle",
+          "d": "Turn one plain product photo into a white main and a real lifestyle scene."
+        }
+      ]
+    },
+    {
+      "eyebrow": "By top categories",
+      "h2": "AI image solutions for top Amazon categories",
+      "lead": "The visual language that drives clicks in each niche.",
+      "items": [
+        {
+          "t": "Home and Kitchen Gadgets",
+          "d": "Clear problem-and-use shots that show the benefit fast."
+        },
+        {
+          "t": "Electronics and Accessories",
+          "d": "Clean feature and detail shots that make technical points easy to see."
+        },
+        {
+          "t": "Beauty and Personal Care",
+          "d": "Routine-style shots and close details that build trust."
+        },
+        {
+          "t": "Pet Supplies and Toys",
+          "d": "Warm, real-life scenes that show the product with a pet."
+        }
+      ]
+    }
+  ]
 }

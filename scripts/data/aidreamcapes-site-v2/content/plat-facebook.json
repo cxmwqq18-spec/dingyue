@@ -4,7 +4,7 @@
   "description": "Use an AI Facebook ad generator that turns one product photo into a square feed image or 9:16 Reels clip, with no shoot and the credit cost shown first.",
   "h1": "AI Facebook Ad Generator for Square and Vertical Ads",
   "eyebrow": "Facebook ads",
-  "lead": "Tired of reshooting every time a Facebook angle stops performing? One product photo gives you a square feed image and a 9:16 Reels clip from the AI Facebook ad generator.",
+  "lead": "Turn one product photo into a Facebook ad. Get a square feed image or a Reels-style clip in minutes, with the credit cost shown first.",
   "card": "Square product images and 9:16 Reels clips.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
@@ -12,251 +12,83 @@
     "square video ads for Facebook",
     "Facebook ads for small business"
   ],
-  "intro": [
-    "Facebook campaigns can reach people in Feed, Stories and Reels as they browse posts from friends and groups. A clear look at the product helps the creative read quickly. Meta recommends 4:5 (1440×1800) images and video for Feed; AIVideosUGC makes 6, 10, 15 or 30-second clips and square product images from one photo, which you crop to 4:5 for Feed, and 9:16 clips for Reels, keeping key details inside the safe area.",
-    "It fits store owners who run their own campaigns and need something new to try without a photoshoot. Describe the scene you want, such as a lunch box packed on a kitchen counter or a dog harness on a morning walk, and check the credit cost before you start. Your headline, price and button text belong in Ads Manager, where they stay easy to edit. Plan one scene for each placement: a 4:5 Feed product ad, a tall Stories frame with breathing room, a 9:16 Reels explanation, or a catalog retargeting view that puts the same product in a new setting."
-  ],
-  "specs": [
-    [
-      "Feed image",
-      "4:5 · 1440×1800"
-    ],
-    [
-      "Feed video",
-      "4:5 · 1440×1800"
-    ],
-    [
-      "Reels video",
-      "9:16 vertical"
-    ],
-    [
-      "AIVideosUGC clips",
-      "6, 10, 15 or 30 seconds per job"
-    ],
-    [
-      "AIVideosUGC still images",
-      "Square output; crop to 4:5 before you upload"
-    ],
-    [
-      "Facebook Feed video duration",
-      "4:5 · 1440×1800 · 1 second–241 minutes · up to 4 GB"
-    ]
-  ],
-  "tips": [
-    "Check that the product and any key wording still make sense with the sound off.",
-    "Keep any words on the visual short, and put the details in the primary text and headline fields in Ads Manager.",
-    "Crop square images to 4:5 for Feed and prepare 9:16 clips for Reels as separate jobs, then check the placement preview in Ads Manager."
-  ],
-  "ideas": [
-    {
-      "t": "Messy to tidy",
-      "d": "For an organizer or storage bin, describe the cluttered space first and the neat result after, in one 10- or 15-second clip."
-    },
-    {
-      "t": "Gift-ready still",
-      "d": "A square image of the product beside wrapping paper and a ribbon, ready for gift-season ads."
-    },
-    {
-      "t": "Reminder for store visitors",
-      "d": "A clean lifestyle shot of a product people already looked at on your site, for ads aimed at past visitors."
-    }
-  ],
   "faq": [
     {
-      "q": "How can I check a Facebook ad before it runs?",
-      "a": "Open the Feed, Stories, and Reels previews separately and check that product details stay clear of buttons, captions, and profile controls."
+      "q": "Can I make a Facebook ad from one product photo?",
+      "a": "Yes. Upload one clear photo, share your idea in one sentence and choose a square image or a Reels-style clip. The credit cost shows before you start."
     },
     {
-      "q": "Can AIVideosUGC run my Facebook campaign?",
-      "a": "No. We make the video or image; you download it and set up the budget, audience and schedule in Ads Manager."
+      "q": "Which Facebook placements can I make ads for?",
+      "a": "Make a square still to crop for the Feed, or a 9:16 clip for Reels and Stories. Pick the file the placement asks for."
     },
     {
-      "q": "Can I make several versions to test against each other?",
-      "a": "Yes, one at a time. Each version shows its own credit cost before you start, and you can compare how they perform in Ads Manager."
+      "q": "Do I need to book a creator or a studio?",
+      "a": "No. The image or clip is built from your own product photo, so there is no shoot day and no wait for footage. Start another job when you need a new angle."
     },
     {
-      "q": "Will Facebook reject an ad because it was made with AI?",
-      "a": "Meta reviews each ad under its current Advertising Standards. Review claims, rights, and any AI-label requirement in Ads Manager before launch."
+      "q": "Can I test several versions?",
+      "a": "Yes. Run another job from the same photo with a different idea and compare the results in Ads Manager. You do not reshoot or pay a second creator."
     },
     {
-      "q": "Which format should I use for Feed or Reels?",
-      "a": "Meta recommends 4:5 (1440×1800) for Feed images and video and 9:16 for Reels. AIVideosUGC outputs square stills you can crop to 4:5 before upload; make a separate 9:16 clip for Reels, then check each placement preview."
+      "q": "Where do I add the headline and price?",
+      "a": "Add the primary text, headline, price and call to action in Ads Manager after download, so they stay easy to change for each audience."
     },
     {
-      "q": "Where do I add the headline and offer?",
-      "a": "Add the primary text, headline, price, code and call to action in Ads Manager after download so you can edit them for each campaign."
+      "q": "Does the file include sound and captions?",
+      "a": "No. Add any sound and caption text in Ads Manager or an editor after you download the file."
     },
     {
-      "q": "Do I need a creator or actors?",
-      "a": "No. The square image and Reels clip are generated from your product photo and a short scene description, so no one has to be filmed. You add the headline and offer after download."
+      "q": "What photo should I upload?",
+      "a": "Use a sharp photo that shows the whole product, with a little space around it. This keeps the item clear when Meta crops or adds controls."
     },
     {
-      "q": "Is this different from hiring a UGC creator?",
-      "a": "Yes. A creator films and hands you footage you cannot easily change; here every version is built on demand from your own photo, so you can test a new angle without rebooking anyone."
+      "q": "Do I need to label the ad as AI-made?",
+      "a": "Meta's rules can change by market and creative. Check the current AI-label and ad review requirements in Ads Manager before launch."
     }
   ],
-  "overview": [
-    {
-      "h2": "Show one clear product action",
-      "d": "A Facebook feed ad may be encountered while the viewer's sound is off. Build the visual around one unmistakable action: open the container, attach the clip, turn the dial, or place the item where it is used. Use the source photo to keep the product's shape and color anchored, then write the headline and offer in Ads Manager where you can revise them."
-    },
-    {
-      "h2": "Choose a shape for each Meta placement",
-      "d": "Meta recommends 4:5 (1440×1800) creative for Feed and 9:16 video for Reels, with key messages inside the Reels safe area. AIVideosUGC outputs square stills to crop to 4:5 and 6, 10, 15 or 30-second clips; run the 9:16 shape for Reels as a separate job and check each placement preview."
-    },
-    {
-      "h2": "Build one version for Feed and one for Reels",
-      "d": "Feed and Reels place controls in different parts of the screen. Keep the product and the first action clear in the 4:5 Feed crop, then run a separate 9:16 version for Reels when the tall framing changes the composition. Use the placement preview in Ads Manager to check the image crop, headline truncation, button area, and any safe-zone overlap before you publish."
-    },
-    {
-      "h2": "Use the visual to support the offer",
-      "d": "A useful Facebook creative answers one question quickly: what is it, how is it used, or what changes after use? Show a lunch box being packed, a pet brush touching a coat, or a bottle pouring into a glass. Keep claims modest and verifiable. Put the price, discount code, primary text, headline, and call to action in Ads Manager so each audience can receive the right version."
-    },
-    {
-      "h2": "Test the same message across placements",
-      "d": "Keep the product, offer, and audience constant when comparing a Feed image with a Reels clip. Change the crop or opening action only when the placement requires it. Name files with the placement and date, preview them with sound off, and confirm the product remains complete after Meta applies its automatic placement crop."
-    },
-    {
-      "h2": "Leave room for the Feed crop",
-      "d": "A square still can be cropped before it becomes a 4:5 Feed asset, so keep the bottle, label area, and hand action away from the outer edge. Check the 1440×1800 preview after cropping and move any final price or code into Ads Manager. Reels gets its own 9:16 file when the taller framing would cut the product."
-    },
-    {
-      "h2": "Map one product scene to each Meta placement",
-      "d": "Use the Feed product-ad frame for a 4:5 proof shot, Stories for a tall single action, Reels for a face-to-camera explanation, and catalog retargeting for the same product in a new setting. Keep the product and offer consistent, then add headline, price and button text in Ads Manager."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a feed-friendly source photo",
-    "items": [
-      {
-        "t": "Keep the product identifiable",
-        "d": "Use a front or three-quarter photo where the useful parts are visible, such as a latch, handle, control, or opening."
-      },
-      {
-        "t": "Describe one clear action",
-        "d": "Choose a movement that communicates through the picture alone. A hand placing or using the product works better than an explanation that would need narration."
-      },
-      {
-        "t": "Leave the edges calm",
-        "d": "Keep the important object away from corners and lower controls so you can add a headline without hiding the product."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What a useful Facebook asset contains",
-    "items": [
-      {
-        "t": "A fast visual read",
-        "d": "The item and its use should be apparent before the viewer reaches the end of a short clip."
-      },
-      {
-        "t": "A placement-ready crop",
-        "d": "Keep one square feed image and make a vertical video when Stories or Reels need a taller composition."
-      },
-      {
-        "t": "A flexible text layer",
-        "d": "Leave the generated scene free of the exact price and code; place those in Ads Manager or an editor."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Facebook Still-Photo Prompts",
-    "items": [
-      {
-        "t": "Hands-On Demo — Lunch Box Packed",
-        "d": "Square still photo of adult hands placing cut fruit into a reusable lunch box with visible compartments on a bright kitchen counter. Keep the lid open and the food neatly arranged in clean morning light."
-      },
-      {
-        "t": "Pet Demo — Harness Clipped On",
-        "d": "Square still photo of an adult clipping a plain harness onto a calm dog beside a bright front doorway. Show the buckle and harness fit clearly in natural morning light; keep the dog relaxed."
-      },
-      {
-        "t": "Problem-Solution — Desk Cable Tray",
-        "d": "Square still photo under a home-office desk: adult hands guide two loose cords into a compact cable tray fixed beneath the tabletop. Show the tidy channel and tray in soft window light."
-      },
-      {
-        "t": "Gift Reveal — Matching Set Unboxed",
-        "d": "Square still photo of adult hands lifting a plain gift-box lid to reveal a matching product set nestled in cream tissue on a bright dining table. Keep the full set centered in warm window light."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Set up the ad in Ads Manager",
-    "items": [
-      {
-        "t": "Add the campaign text",
-        "d": "Write the primary text, headline, price, code, and call to action in Ads Manager so each version stays easy to edit."
-      },
-      {
-        "t": "Add sound only when useful",
-        "d": "Add a licensed track in Ads Manager or an editor after download; AIVideosUGC does not add voiceover, music, or captions."
-      },
-      {
-        "t": "Inspect the placement preview",
-        "d": "Check feed, Stories, and Reels previews separately. Move added text if a profile control, button, or caption covers it."
-      },
-      {
-        "t": "Compare one change",
-        "d": "If you make several creatives, alter one opening or scene at a time and keep the audience and offer consistent for a readable comparison."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Good candidates for Facebook creative",
-    "good": [
-      "Products whose use can be understood visually",
-      "Stores that manage their own campaigns in Ads Manager",
-      "Catalogs needing both square feed and vertical placement assets",
-      "Promotions where the offer changes after the scene is made"
-    ],
-    "not_ideal": [
-      "Ads that require a spoken explanation to make sense",
-      "Claims or fine print that must be rendered inside the generated frame"
-    ]
-  },
   "examples": {
     "h2": "More Facebook Ad Examples",
     "lead": "Clear product use, pet life, gifts, and color choices for busy feeds.",
     "groups": [
       {
-        "label": "Hands-On Demo",
+        "label": "Product Demo",
         "items": [
           {
             "ref": "f:q18-facebook-example-lunchbox-pack",
-            "title": "Lunch Prep — Reusable Lunch Box Packed",
+            "title": "Reusable Lunch Box Packed for Outings",
             "kind": "photo",
             "product": "reusable lunch box"
           }
         ]
       },
       {
-        "label": "Pet Product Lifestyle",
+        "label": "Product Review",
         "items": [
           {
             "ref": "n:guide:k8-facebook-gen2-plat-facebook-g2",
-            "title": "Pet Lifestyle — Cat in Pet Bed",
+            "title": "Product Review — Cat Resting in Pet Bed",
             "kind": "photo",
             "product": "round pet bed"
           }
         ]
       },
       {
-        "label": "Gift Scenario",
+        "label": "Unboxing",
         "items": [
           {
             "ref": "f:q18-facebook-example-earring-gift",
-            "title": "Gift Reveal — Gold Hoop Earrings",
+            "title": "Unboxing — Gold Hoop Earrings Gift",
             "kind": "photo",
             "product": "gold hoop earrings"
           }
         ]
       },
       {
-        "label": "Color Comparison",
+        "label": "Before & After",
         "items": [
           {
             "ref": "f:q18-facebook-example-lip-shades",
-            "title": "Shade Comparison — Three Lip Balms",
+            "title": "Before & After — Three Lip Balm Shades",
             "kind": "photo",
             "product": "lip balms"
           }
@@ -268,20 +100,19 @@
   "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo showing the whole item. Every feed, Reels and test version starts from that one product shot."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Describe the setting and one action, like the bottle on a bright desk. A new job gives you another version for testing."
+      "t": "Share your video idea",
+      "d": "Say what happens in one sentence and pick an image or Reels clip. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the image or clip, then add your headline and offer in Ads Manager. The file is yours, with no watermark."
+      "t": "Download and post",
+      "d": "Download the file with no watermark, add your headline and offer in Ads Manager, then run your campaign."
     }
   ],
   "visual": {
-    "overview": "Facebook ads can appear in Feed, Stories, and Reels. Start with a clear product image, then choose a crop and setting that leave room around the item.",
     "strip": [
       "f:q18-facebook-strip-serum-review",
       "f:q18-facebook-strip-pet-hair-roller",
@@ -304,320 +135,78 @@
           "Size",
           "Square"
         ]
-      ]
-    },
-    "picker": {
-      "title": "Choose a Facebook ad scene that fits the feed",
-      "lead": "Pick a product moment that suits the space in a Facebook placement.",
-      "chips": [
-        {
-          "id": "problem",
-          "label": "Problem-Solution"
-        },
-        {
-          "id": "hands",
-          "label": "Hands-On Demos"
-        },
-        {
-          "id": "creator",
-          "label": "Creator Reactions"
-        },
-        {
-          "id": "feed",
-          "label": "Product Proof"
-        },
-        {
-          "id": "stories",
-          "label": "Stories Vertical"
-        },
-        {
-          "id": "reels",
-          "label": "Reels Placement"
-        },
-        {
-          "id": "retarget",
-          "label": "Catalog Retargeting"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f1-r10-facebook-feed-lunchbox",
-          "label": "Feed Ad — Lunch Box",
-          "chips": [
-            "feed",
-            "hands"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands open the plain sage lunch box on a kitchen table with packed compartments visible and the lid beside it. Square source for a 4:5 Feed crop, bright daylight, no text or logos."
-        },
-        {
-          "ref": "f:q18-facebook-picker-lunchbox-pack",
-          "label": "Lunch Demo — Box Packed",
-          "prompt": "Square still photo: adult hands place fruit and a sandwich into the compartments of an open reusable lunch box on a sunny kitchen counter. Show the lunch box and dividers clearly in bright morning light.",
-          "chips": [
-            "feed",
-            "hands",
-            "stories"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-facebook-stories-travel-pouch",
-          "label": "Stories Vertical — Travel Pouch",
-          "chips": [
-            "stories",
-            "hands"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult hand pulls the plain travel pouch from a tote beside a train seat, leaving breathing room above and below for a vertical Stories crop. No text or logos."
-        },
-        {
-          "ref": "n:guide:k8-facebook-gen2-tpl-ugc-case-81",
-          "label": "Creator — Bottle Desk Demo",
-          "prompt": "Square still photo: an adult creator holds a plain reusable water bottle beside a tidy home-office desk, with the bottle fully visible and a notebook nearby. Natural window light, casual creator framing, no text or logo.",
-          "chips": [
-            "creator",
-            "reels"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-facebook-picker-cable-tray",
-          "label": "Desk Fix — Cable Tray",
-          "prompt": "Square still photo: adult hands guide loose charging cords into a compact black cable tray clipped beneath a home-office desk. Show a tidy channel and the product clearly in natural window light.",
-          "chips": [
-            "problem"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-facebook-picker-protein-bar",
-          "label": "First Bite — Oat Protein Bar",
-          "prompt": "Square still photo: an adult woman at a sunny kitchen table takes a first bite of an unbranded oat protein bar and smiles naturally toward camera. Keep the bar visible with soft window light and a casual breakfast setting.",
-          "chips": [
-            "creator"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k8-facebook-gen2-tpl-spark-ads-style-video-c4",
-          "label": "Pet Brush — Hands-On Demo",
-          "prompt": "Still square product photograph using the uploaded photo as the exact product reference: an adult hand uses a plain pet brush once on a relaxed dog resting on a couch. Show the brush touching the coat, soft window light, no text or logos.",
-          "chips": [
-            "hands",
-            "creator"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-facebook-picker-travel-pouch",
-          "label": "Pouch Test — Water Wiped Away",
-          "prompt": "Square still photo: an adult hand wipes a small stream of water from a compact gray travel pouch on an outdoor picnic table, with the damp and wiped areas visible. Overcast daylight, practical product close-up.",
-          "chips": [
-            "problem"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k6-tpl-ugc-picker-organizer",
-          "label": "Desk Organizer — Problem Fix",
-          "chips": [
-            "problem",
-            "feed"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the wooden desk organizer and tray. Adult hands move loose pens into the compartments beside a blank notebook, ending with the tidy desk centered. Soft window light, practical creator look, square overhead framing. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k6-tpl-ugc-picker-lunchbag",
-          "label": "Lunch Bag — Hands-On Demo",
-          "chips": [
-            "hands",
-            "problem"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain insulated lunch bag. Adult hands place a wrapped sandwich and fruit inside on a kitchen island, ending with the open bag and contents fully visible. Bright daylight, natural square product scene, close three-quarter framing. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k6-tpl-ugc-picker-weekender",
-          "label": "Weekender Bag — Creator Reaction",
-          "chips": [
-            "creator",
-            "feed",
-            "retarget"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain canvas weekender bag. An adult creator lifts it from a parked car seat and looks toward camera with a pleased reaction, ending with the full bag visible. Warm afternoon daylight, candid square phone-video look. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:occ-product-launch-c3-m2-result",
-          "label": "Blue Bottle — Product Proof",
-          "chips": [
-            "feed",
-            "hands"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the matte blue water bottle. An adult hand lifts it from a pale stone ledge beside a folded towel, ending with the bottle upright and fully visible. Clean daylight, square lifestyle product framing, soft grounded shadow. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-film-strip-speaker-vertical",
-          "label": "Table Speaker — Shelf Film",
-          "chips": [
-            "creator",
-            "hands"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the compact black speaker and woven loop. On a dark shelf, a slow camera move reveals the speaker in low light, ending with the front grille centered. Cinematic low-light framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:white-background-soap-dispenser",
-          "label": "Soap Dispenser — Problem Fix",
-          "chips": [
-            "problem",
-            "feed"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the pale sage ceramic soap dispenser and brushed metal pump. An adult hand presses the pump over a sink, ending with one measured drop visible on the palm. Bright bathroom daylight, square close composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-facebook-reels-screwdriver",
-          "label": "Reels Talk — Cordless Screwdriver",
-          "chips": [
-            "reels",
-            "creator"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult creator faces camera and holds the plain cordless screwdriver at chest height while explaining one feature. Bright workshop, natural expression, 9:16 Reels framing, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-facebook-catalog-mug",
-          "label": "Catalog Retarget — Travel Mug",
-          "chips": [
-            "retarget",
-            "feed"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Put one plain ceramic travel mug beside a laptop and notebook on a calm home-office desk as a catalog retargeting scene. Natural daylight, clean product focus, no text or logos."
-        }
-      ],
-      "button": "Make a product photo"
-    },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "f:q18-facebook-uses-backpack-scale",
-        "h": "Product Scale — Pale Sage Mini Backpack",
-        "d": "A pale sage-green mini backpack beside an adult torso gives shoppers a useful size reference."
-      },
-      {
-        "frame": "post",
-        "ref": "f:q18-facebook-uses-protein-bar",
-        "h": "Gym-Bag Moment — Oat Protein Bar",
-        "d": "A bar held beside an open gym bag connects the snack to a post-workout routine."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k8-facebook-gen2-tpl-angle-c1",
-        "bad": "n:guide:plat-facebook-m5-soft-focus",
-        "good_label": "The headphone shape stays sharp and complete",
-        "bad_label": "The headphone edges fade into soft focus"
-      },
-      {
-        "good": "n:gen2:tpl-size-c1",
-        "bad": "n:guide:plat-facebook-m5-cropped",
-        "good_label": "The backpack remains fully inside the frame",
-        "bad_label": "The backpack is cut off at the side of the frame"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:q18-facebook-output-headphones",
-        "frame": "1:1",
-        "label": "Matched Matte Black Over-Ear Headphones",
-        "presentation": "facebook"
-      },
-      {
-        "ref": "f:q18-facebook-output-backpack-matched",
-        "frame": "1:1",
-        "label": "Matched Pale Sage-Green Mini Backpack",
-        "presentation": "facebook"
-      }
-    ],
-    "after": {
-      "ref": "f:q18-facebook-strip-headphone-review",
-      "zones": [
-        "Price",
-        "Call to action"
       ],
       "items": [
-        "Add the exact price and campaign dates after download.",
-        "Place a short call to action where it does not cover the product."
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
+        },
+        {
+          "t": "Share your video idea",
+          "d": "Say what happens in one sentence and pick an image or Reels clip. The credit cost shows first, before the file is made."
+        },
+        {
+          "t": "Download and post",
+          "d": "Download the file with no watermark, add your headline and offer in Ads Manager, then run your campaign."
+        }
       ]
-    },
-    "sizes": [
-      {
-        "frame": "9:16",
-        "ref": "f:k4-plat-instagram-22-visual-sizes-1-image",
-        "label": "9:16 · Reels; keep key details in the safe area"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c4",
-        "label": "1:1 · Square product-photo output"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c3",
-        "label": "1:1 · Another square product-photo output"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Create a Facebook ad from one product photo"
-      },
-      "m3": {
-        "h2": "Choose a Facebook ad scene that fits the feed"
-      },
-      "m4": {
-        "h2": "Use Facebook ads in Feed, Stories, and Reels"
-      },
-      "m5": {
-        "h2": "Keep the product readable in a Facebook ad"
-      },
-      "m6": "Facebook ad examples made from product photos",
-      "m7": {
-        "h2": "Add the offer after download in Ads Manager"
-      },
-      "m8": "Facebook Reels video and product-image examples",
-      "examples": {
-        "h2": "More Facebook ad examples",
-        "lead": "Product moments for busy feeds, from a lunchbox to a pet bed."
-      },
-      "faq": {
-        "h2": "Questions about Facebook ad creative"
-      }
     }
   },
-  "benefits_h2": "Why make Facebook ads with AI UGC video?",
+  "benefits_h2": "Reasons to switch to AI UGC for Facebook ads",
   "benefits": [
     {
-      "t": "Versions without reshoots",
-      "d": "Run another job with a different setting or opening action to get a new test creative from the same photo. You keep product, offer and audience constant while the visual changes."
+      "t": "Better Returns",
+      "d": "Make clear Facebook ads with UGC-style clips that help your budget work harder, without booking creators."
     },
     {
-      "t": "Feed and Reels covered",
-      "d": "Square stills crop to the 4:5 feed image Meta recommends, and a separate job produces the 9:16 clip for Reels. Both placements come from the same product photo."
+      "t": "Always-On Content",
+      "d": "Clips are ready when you are, so you stay consistent and scale fast without waiting on shoots."
     },
     {
-      "t": "No creator between you and a draft",
-      "d": "There is no booking, filming day or edit queue when you need a quick angle. You describe the scene in a sentence and the credit cost appears before the job starts."
-    },
-    {
-      "t": "Ready to run, no watermark",
-      "d": "The downloaded image or clip is yours to place through Ads Manager and carries no AIVideosUGC watermark. Headline and offer stay editable fields you control."
+      "t": "No Creative Fatigue",
+      "d": "Fresh, scroll-ready content on demand keeps your ads from feeling repetitive and your audience engaged."
     }
   ],
   "steps_h2": "How to make a Facebook ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-run Feed or Reels ad — no studio, no creator, no reshoot."
+  "steps_lead": "Three steps turn one product photo into a ready-to-run Feed or Reels ad — no studio, no creator, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Why sellers use it",
+      "h2": "Why teams use AI for Facebook UGC ads",
+      "lead": "Creator-style clips without the creator delays.",
+      "items": [
+        {
+          "t": "No Creator Hold-Ups",
+          "d": "Skip the wait and get fresh, high-quality content in minutes, ready to go for Facebook."
+        },
+        {
+          "t": "Ready Facebook Templates",
+          "d": "Build high-converting ads with ready creator-style formats, and scale clips without a shoot."
+        },
+        {
+          "t": "Localize For Every Audience",
+          "d": "Make versions for different audiences without extra production cost, so every market feels familiar."
+        }
+      ]
+    },
+    {
+      "eyebrow": "The business case",
+      "h2": "The business case for Facebook ads made with AI",
+      "lead": "A faster path from product photo to a clip that converts.",
+      "items": [
+        {
+          "t": "Ads That Actually Convert",
+          "d": "Show the product in real, familiar moments so shoppers understand it and want to buy."
+        },
+        {
+          "t": "Scale Video Ads Easily",
+          "d": "Make more clips without adding people or production days, even during busy campaign weeks."
+        },
+        {
+          "t": "Made for Personalization",
+          "d": "Change the scene or opening for each audience and keep the message relevant."
+        }
+      ]
+    }
+  ]
 }

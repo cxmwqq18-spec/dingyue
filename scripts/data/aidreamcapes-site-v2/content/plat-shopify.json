@@ -4,7 +4,7 @@
   "description": "Get matching Shopify product photos without reshooting your catalog: one photo gives you square page shots, collection tiles, social crops and a clip.",
   "h1": "Shopify Product Photos and Videos From One Upload",
   "eyebrow": "Shopify stores",
-  "lead": "Your Shopify catalog looks mismatched and reshooting it all is too expensive. Upload one photo per product and get matching square photos and clips that make the whole store look like one shoot.",
+  "lead": "Turn one product photo into matching Shopify media. Get square page and collection images, plus a short clip, with the credit cost shown first.",
   "card": "Matching square photos, lifestyle shots and a short clip for each product page.",
   "secondary_keywords": [
     "Shopify product images",
@@ -12,243 +12,57 @@
     "product photos for a Shopify store",
     "Shopify product page video"
   ],
-  "intro": [
-    "A Shopify store looks more polished when every product photo feels like part of one coordinated shoot. Mixed backgrounds and odd crops make a collection page look unfinished, even when the products themselves are great. AIVideosUGC helps you even things out: upload the photos you have, choose a clean background or describe a setting, and get square images that sit neatly side by side.",
-    "Product pages also need something that keeps shoppers scrolling. Build a three-image product-page set with a main view, one detail and one scene, reuse the square treatment for collection tiles, and make a separate seasonal set when a launch changes the background or color. Everything stays private in your account until you download it and add it in your Shopify admin."
-  ],
-  "specs": [
-    [
-      "Square product images",
-      "2048×2048 usually displays best"
-    ],
-    [
-      "Uploaded product video",
-      "Up to 10 minutes · 1 GB"
-    ],
-    [
-      "Maximum video resolution",
-      "4K · 4096×2160"
-    ],
-    [
-      "Accepted video files",
-      "MP4, MOV or WebM"
-    ]
-  ],
-  "tips": [
-    "Use a consistent shape for every product photo in a collection so the grid lines up neatly.",
-    "Put your clearest, simplest photo first, because it's usually the one shown on collection pages.",
-    "Write short alt text for each image so shoppers using screen readers know what's pictured."
-  ],
-  "ideas": [
-    {
-      "t": "Matching collection grid",
-      "d": "Give every candle, mug or tee in a collection a consistent plain background so the page reads as one set."
-    },
-    {
-      "t": "Lifestyle shot for the product page",
-      "d": "Add a photo of the item where it's used, like a planter on a sunny windowsill, right after the main image."
-    },
-    {
-      "t": "Short clip in the media gallery",
-      "d": "A 10-second video of the product being handled gives shoppers a closer look than a still can."
-    }
-  ],
   "faq": [
     {
-      "q": "What size should Shopify product photos be?",
-      "a": "Shopify says square 2048×2048 images usually display best. Pair product photos with a consistent background and camera height, then check how your storefront displays the image. See [Shopify's product media guidance](https://help.shopify.com/en/manual/products/product-media/product-media-types)."
+      "q": "Can I make Shopify product photos from one photo each?",
+      "a": "Yes. Upload one clear photo per product and pick a square page or collection image. The credit cost shows before each file is made."
     },
     {
-      "q": "Can I add a video to my Shopify product page?",
-      "a": "Yes. Shopify product media supports video; check the file duration, size, resolution and format against Shopify's current product-media guidance, then upload it in the product's media section."
+      "q": "What image size works for Shopify product pages?",
+      "a": "A square file around 2048 by 2048 pixels usually displays well, and it also works on a collection card. Check how your storefront shows it."
     },
     {
-      "q": "Will all my product photos look consistent?",
-      "a": "Describing a consistent background each time helps a lot. Results can still vary slightly, so review each image before it goes on your store."
+      "q": "How do I make a whole collection look consistent?",
+      "a": "Use the same square shape and a related background treatment for every product, then compare each new image beside the others in the collection."
     },
     {
-      "q": "What are Shopify product video limits?",
-      "a": "Shopify allows product videos up to 10 minutes, 1 GB and 4K (4096×2160) in MP4, MOV or WebM. Our generator offers 6, 10, 15 or 30-second clips in five shapes; preview how the file appears in your storefront."
+      "q": "Do I need to reshoot older products?",
+      "a": "No. Start from the photo you already have for each item, so older products can match new arrivals without another shoot."
     },
     {
-      "q": "How do I keep collection images consistent?",
-      "a": "Use a repeatable camera height, square framing and a related background treatment, then compare every new image beside the existing collection before publishing."
+      "q": "Can I add a short clip to a product page?",
+      "a": "Yes. Make a clip of 6, 10, 15 or 30 seconds and add it in Shopify product media. Check your store's current file rules first."
     },
     {
-      "q": "Should social crops go in the product gallery?",
-      "a": "Keep square product-page images together in the gallery and make a separate 9:16 asset for Stories or Reels so a tall crop does not force the product grid out of shape."
+      "q": "Should social clips go in the same product gallery?",
+      "a": "Keep the square images in the product gallery and make a separate vertical file for Stories or Reels, so the grid stays even."
     },
     {
-      "q": "Do I need to reshoot older products to match?",
-      "a": "No. Upload the photo you already have for each item and the same background treatment is applied, so older products can match new arrivals without another shoot."
+      "q": "What photo should I upload?",
+      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front or three-quarter view works best."
     },
     {
-      "q": "Can I use the photos and clips on my store?",
-      "a": "Yes. Downloaded files are yours to publish in Shopify and carry no AIVideosUGC watermark, so they fit straight into your product and collection pages."
+      "q": "Are the files mine to use on my store?",
+      "a": "Yes. Downloads carry no AIVideosUGC watermark and are yours to add in Shopify admin, with product name and price set by you."
     }
   ],
-  "overview": [
-    {
-      "h2": "Make a catalog feel like one store",
-      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Use square images for the product page, collection or home card, and social feed post around this product."
-    },
-    {
-      "h2": "Choose media for the page job",
-      "d": "Shopify says square 2048×2048 product images usually display best; its image limit is 5000×5000 pixels or 25 MP and under 20 MB. Product videos can be up to 10 minutes and 1 GB, up to 4K (4096×2160), in MP4, MOV or WebM. AIVideosUGC offers 6, 10, 15 or 30-second clips in five shapes—9:16, 1:1, 16:9, 4:3 and 3:4—with the cost shown before the job starts. Your storefront controls how media appears. Check [Shopify's product media types](https://help.shopify.com/en/manual/products/product-media/product-media-types) for current upload details."
-    },
-    {
-      "h2": "Build a collection that scans cleanly",
-      "d": "Use one repeatable square treatment across collection cards: a similar camera height, background family, and margin around the product. A bowl set can show the same glaze colors from a low angle, a lunch container can show its open compartments, and a skincare tube can show a clean routine. Keep the product name and price in Shopify admin rather than burning them into the image."
-    },
-    {
-      "h2": "Use media by page role",
-      "d": "A product-page gallery answers detail questions, a collection card needs a quick silhouette, and a social post can show use in context. Start separate jobs when the crop or action changes. Shopify supports product media video under its own duration, size, resolution, and file rules; AIVideosUGC clip length is a separate generator choice, so preview the downloaded file against the destination before uploading."
-    },
-    {
-      "h2": "Keep the catalog consistent as it grows",
-      "d": "Review a new square image beside the existing collection before publishing. Check the item is the same color and variant, the background does not compete with the product, and the crop leaves room for the Shopify card layout. Make a distinct lifestyle or social asset when a tall crop would make the collection grid uneven, then keep the square gallery intact."
-    },
-    {
-      "h2": "Assign a set to each Shopify surface",
-      "d": "Use the product-page set for a main view, a detail and a scene; use a single square collection tile for quick grid scanning; and make a seasonal set when several products need the same launch treatment. Keep social crops as separate assets and review each file in the intended Shopify surface before publishing."
-    }
-  ],
-  "input_guide": {
-    "h2": "Set a repeatable source-photo rule",
-    "items": [
-      {
-        "t": "Keep the camera height similar",
-        "d": "Photograph each item from a comparable front or three-quarter angle so the collection grid does not jump from product to product."
-      },
-      {
-        "t": "Use consistent background wording",
-        "d": "Reuse a short description such as matte stone, warm daylight, and soft shadow, then change only the product and action."
-      },
-      {
-        "t": "Show the whole product",
-        "d": "Include handles, cords, lids, and the base in the source. A consistent crop cannot repair a missing component."
-      }
-    ]
-  },
-  "results": {
-    "h2": "One product, three square uses",
-    "items": [
-      {
-        "t": "Product-page image",
-        "d": "A square product view that sits clearly beside its collection neighbors."
-      },
-      {
-        "t": "Collection or home card",
-        "d": "A square image that makes this product easy to scan in a grid."
-      },
-      {
-        "t": "Social feed post",
-        "d": "A square scene that gives this product a clear social post without changing its shape."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Scenes for collection and product pages",
-    "items": [
-      {
-        "t": "Coordinated candle row",
-        "d": "Place three candle vessels on one pale wood surface with matching daylight and enough space for each label to be reviewed later."
-      },
-      {
-        "t": "Blanket in use",
-        "d": "Drape a throw blanket over a reading chair with the full weave visible and one corner falling naturally toward the floor."
-      },
-      {
-        "t": "Bottle in a gym bag",
-        "d": "A water bottle slides into an open gym bag beside a towel, then reappears on a bench for a close look."
-      },
-      {
-        "t": "Planter by the window",
-        "d": "Show a planter on a sunny sill with the pot and leaves fully in frame, leaving room for a real size note later."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Load the files into Shopify with a final check",
-    "items": [
-      {
-        "t": "Check the media limits",
-        "d": "Confirm the image dimensions and file size, or the video duration, container, size, and resolution, against Shopify's current product-media guidance."
-      },
-      {
-        "t": "Write the metadata",
-        "d": "Add product names, descriptions, and alt text yourself; AI-generated lettering is not a reliable source for product descriptions or labels."
-      },
-      {
-        "t": "Compare neighboring items",
-        "d": "View the new image beside the rest of the collection and adjust the crop or background when one item looks out of place."
-      },
-      {
-        "t": "Add social variants separately",
-        "d": "Keep a 9:16 clip for Stories or Reels as a separate asset instead of forcing a tall crop into the product gallery."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A practical fit for Shopify merchants",
-    "good": [
-      "Catalogs that need a consistent square collection grid",
-      "Products with a visible use or opening for a short gallery clip",
-      "Merchants who can supply repeatable source-photo angles",
-      "Stores that want one product-page set plus separate social crops"
-    ],
-    "not_ideal": [
-      "Listings that rely on exact generated text inside the image",
-      "A catalog with no source photos for the products or their key components"
-    ]
-  },
-  "examples": {
-    "h2": "More Shopify store examples",
-    "lead": "Matching shots for collection grids, headers and product pages.",
-    "groups": [
-      {
-        "label": "Store-ready sets",
-        "items": [
-          {
-            "ref": "n:guide:q19-shop-example-bowls-serve",
-            "title": "Berries served in a coordinated bowl set",
-            "kind": "photo",
-            "product": "ceramic bowls"
-          },
-          {
-            "ref": "n:guide:q19-shop-example-tote-market",
-            "title": "Produce packed into a canvas tote",
-            "kind": "photo",
-            "product": "canvas tote"
-          },
-          {
-            "ref": "n:guide:q19-shop-example-pet-sofa",
-            "title": "Sofa cushion cleared of pet hair",
-            "kind": "photo",
-            "product": "lint brush"
-          }
-        ]
-      }
-    ]
-  },
   "templates_lead": "Pick matching looks for your product grid, detail page, and short product video.",
   "cta_lead": "Start with one product and plan matching images for its collection and detail pages.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo of the item. Page shots, collection tiles, social crops and clips all start from it."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo from your Shopify product page. There is no link to paste and no product data to sync."
     },
     {
-      "t": "Pick Page, Collection or Social",
-      "d": "Pick the store placement and frame. A new job with a new setting adds the next matching image."
+      "t": "Pick the scene",
+      "d": "Choose the format you want, from a clean product shot to a creator-style scene, and see the credit cost first."
     },
     {
-      "t": "Download and Add Store Details",
-      "d": "Download the square file, add details in Shopify admin. It is yours to publish, with no watermark."
+      "t": "Render, download and launch",
+      "d": "Preview the result, make another version if you need one, then download the file and add it to your store or ad."
     }
   ],
   "visual": {
-    "overview": "The hero and walkthrough show one four-bowl set from a clear source photo to a serving scene. The square examples below use separate products so you can see how this Shopify layout handles a catalog.",
     "strip": [
       "n:guide:q19-shop-strip-glasses-tryon",
       "n:guide:q19-shop-strip-serum-apply",
@@ -275,306 +89,63 @@
           "Use",
           "Product page · home · social"
         ]
-      ]
-    },
-    "picker": {
-      "title": "Choose a Shopify campaign image",
-      "lead": "Create a consistent square gallery with creator routines, try-ons and clear product demos.",
-      "chips": [
-        {
-          "id": "hook",
-          "label": "Hook & reveal"
-        },
-        {
-          "id": "demo",
-          "label": "Hands-on demo"
-        },
-        {
-          "id": "before",
-          "label": "Before & after"
-        },
-        {
-          "id": "lifestyle",
-          "label": "Lifestyle & try-on"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f1-r10-shopify-product-set-bowl",
-          "label": "Product Page Set — Bowl Views",
-          "chips": [
-            "hook",
-            "demo",
-            "lifestyle"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Show a coordinated three-panel square set for one plain ceramic bowl: front hero, rim detail and fruit-use scene. Keep light and color consistent, no text or logos."
-        },
-        {
-          "ref": "n:guide:q19-shop-picker-02-shoe-tryon",
-          "label": "Try-on: trail shoes by the door",
-          "chips": [
-            "lifestyle"
-          ],
-          "prompt": "Still square try-on photograph of an adult woman tying generic charcoal trail shoes with muted coral laces beside a bright doorway; freeze the knot being pulled snug, soft daylight from the open door, low three-quarter composition with both shoes visible, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-shop-picker-03-pet-hair-before-after",
-          "label": "Before-after: pet hair off the sofa",
-          "chips": [
-            "before",
-            "demo"
-          ],
-          "prompt": "Still square before-and-after-style photograph of an adult hand drawing a plain reusable lint brush across pet hair on a sofa, leaving one clean strip beside the brushed area; calm living room in soft window light, close diagonal composition, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-shop-picker-04-lamp-product-hero",
-          "label": "Product hero: ivory lamp on white",
-          "chips": [
-            "hook"
-          ],
-          "prompt": "Still square product hero photograph of a complete matte ivory table lamp with a simple linen shade on seamless pure white; lamp upright in a calm still pose, bright diffused studio light and a faint grounded shadow, centered full silhouette with generous margins, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-shop-picker-05-protein-shaker",
-          "label": "Post-workout: protein shaker in hand",
-          "chips": [
-            "lifestyle"
-          ],
-          "prompt": "Still square lifestyle photograph of an adult athlete holding a plain protein shaker after a workout in a bright gym; freeze the shaker at chest height with condensation visible, soft side daylight, centered medium close composition, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-shop-picker-06-cable-fix",
-          "label": "Problem-to-fix: charging cables secured",
-          "chips": [
-            "before",
-            "demo"
-          ],
-          "prompt": "Still square desk photograph of adult hands pressing two charging cables into small plain silicone clips on a tidy wooden work surface; freeze the second cable being secured, soft directional daylight, close overhead composition with cables and clips clear, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k2-url-picker-sneaker-doorstep",
-          "label": "Running Shoe — Doorstep Hook",
-          "chips": [
-            "hook"
-          ],
-          "prompt": "Still square lifestyle photograph of a plain dark gray technical running shoe resting by a front door on a small mat. Keep the tread and laces visible in crisp morning light, with no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-shop-picker-08-glasses-tryon",
-          "label": "Mirror try-on: round acetate glasses",
-          "chips": [
-            "lifestyle"
-          ],
-          "prompt": "Still square mirror try-on photograph of an adult man checking simple round dark acetate glasses in a bright bedroom mirror; freeze his hand adjusting the temple, soft natural daylight, chest-up composition with the reflection and frames sharp, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-lifestyle-gallery-01",
-          "label": "Linen Tote — Cafe Lifestyle",
-          "chips": [
-            "lifestyle",
-            "hook"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain linen tote. An adult places a water bottle and notebook inside it at a sunny cafe table, ending with the tote fully visible. Soft daylight, square Shopify lifestyle framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:tpl-home-round4-case-desk-organizer",
-          "label": "Desk Organizer — Hands-On Demo",
-          "chips": [
-            "demo",
-            "before"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the walnut desk organizer and compartments. Adult hands place pens and a notepad into the tray, ending with the tidy desk centered. Soft window light, square product-page framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-retargeting-video-ad-blanket-action",
-          "label": "Wool Throw — Before-After",
-          "chips": [
-            "before",
-            "lifestyle"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the sage-green wool throw. Adult hands smooth it across a cream armchair, leaving one rumpled section beside the neat section, ending with both areas visible. Bright living-room daylight, square Shopify lifestyle framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c5-tpl-outfit-m1-cream-blouse",
-          "label": "Cream Blouse — Try-On Lifestyle",
-          "chips": [
-            "lifestyle"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain cream blouse and charcoal trousers. An adult model adjusts one cuff in a neutral studio, ending with the full outfit visible. Soft daylight, square Shopify collection framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "f:k2-url-case-desk-organizer",
-          "label": "Desk Organizer — Tidy Desk Hook",
-          "chips": [
-            "hook",
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain walnut desk organizer and its compartments. A tidy workspace shows pencils and a blank notebook beside it, ending with the organizer centered and easy to inspect. Soft desk daylight, square Shopify comparison framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:tpl-beauty-round4-texture-swatch",
-          "label": "Serum and Cream — Texture Demo",
-          "chips": [
-            "demo",
-            "before"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the amber dropper and cream jar. An adult hand places one clear serum swatch beside an ivory cream swatch on glass, ending with both textures visible. Soft bathroom daylight, square Shopify detail framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-shopify-collection-planter",
-          "label": "Collection Tile — Terracotta Planter",
-          "chips": [
-            "hook"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Center the plain terracotta planter as a clean square collection tile with the full silhouette and leaves visible. Warm neutral background, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-shopify-seasonal-napkins",
-          "label": "Seasonal Set — Linen Napkins",
-          "chips": [
-            "lifestyle"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Arrange three plain linen napkins in muted autumn colors on one coordinated warm tabletop for a seasonal set update. No text or logos."
-        }
-      ],
-      "button": "Make a Shopify product photo"
-    },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:q19-shop-use-protein-pour",
-        "h": "Show a protein drink being prepared",
-        "d": "An adult pours plain powder into a clear shaker at a gym, showing how the product is used before a workout."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q19-shop-use-ring-tryon",
-        "h": "Show a ring during a try-on",
-        "d": "An adult slides a simple gold ring onto one finger beside a mirror, with the hand and ring clearly framed."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:c3-r3-plat-shopify-m5-0",
-        "bad": "n:guide:plat-shopify-c3-bad-crop",
-        "good_label": "Coffee pouch and seal stay in the frame",
-        "bad_label": "Pouch edge is clipped by the frame"
-      },
-      {
-        "good": "n:guide:c3-r3-plat-shopify-m5-1",
-        "bad": "n:guide:plat-shopify-c3-bad-blur",
-        "good_label": "Lunchbox shape and handle stay clear",
-        "bad_label": "Lunchbox details blur into the counter"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:k7-ind-food-drinks-picker-2-coffee-pouch",
-        "frame": "1:1",
-        "label": "Square coffee-pouch product image",
-        "presentation": "shopify-product"
-      },
-      {
-        "ref": "n:guide:k2-url-strip-lunchbox-open",
-        "frame": "1:1",
-        "label": "Square sage lunch-container product image",
-        "presentation": "shopify-product"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:k2-url-step-lunchbox-result",
-      "zones": [
-        "Product name",
-        "Price"
       ],
       "items": [
-        "Add the product name and price in Shopify admin after download.",
-        "Use the square image for a product page, collection card, or social post."
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo from your Shopify product page. There is no link to paste and no product data to sync."
+        },
+        {
+          "t": "Pick the scene",
+          "d": "Choose the format you want, from a clean product shot to a creator-style scene, and see the credit cost first."
+        },
+        {
+          "t": "Render, download and launch",
+          "d": "Preview the result, make another version if you need one, then download the file and add it to your store or ad."
+        }
       ]
-    },
-    "sizes": [
-      {
-        "frame": "1:1",
-        "ref": "n:guide:c4-shopify-m3-planter-square",
-        "label": "Square planter product image"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:c4-shopify-m3-shelf-square",
-        "label": "Square shelf-display product image"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:c4-shopify-m4-reusable-bottle",
-        "label": "Square reusable-bottle product image"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Plan Shopify product photos in three steps"
-      },
-      "m3": {
-        "h2": "Choose a square Shopify image placement"
-      },
-      "m4": {
-        "h2": "Use Shopify photos on product and social pages"
-      },
-      "m5": {
-        "h2": "Start Shopify images with a clear product photo"
-      },
-      "m6": {
-        "h2": "Square product images for Shopify pages"
-      },
-      "m7": {
-        "h2": "Add Shopify details after download"
-      },
-      "m8": {
-        "h2": "Square product photos from three different products"
-      },
-      "faq": {
-        "h2": "Questions about Shopify product photos"
-      },
-      "templates": {
-        "h2": "More Shopify product photo templates",
-        "lead": "Choose a product-page, homepage, or social scene for your store."
-      }
     }
   },
-  "benefits_h2": "Why make Shopify product photos with AI?",
+  "benefits_h2": "3 ways AI helps you scale your Shopify marketing",
   "benefits": [
     {
-      "t": "One coordinated look, no catalog reshoot",
-      "d": "Every image is rebuilt with the same background treatment, so products sit neatly side by side on collection pages without a second shoot for older items."
+      "t": "Clear video ads on a small budget",
+      "d": "Turn one product photo into clear video ads without the cost and wait of booked UGC creators and designers."
     },
     {
-      "t": "One photo covers store and social",
-      "d": "The same uploaded item yields product-page shots, collection tiles, social crops and a short clip instead of commissioning each format separately."
+      "t": "Unmatched creative freedom",
+      "d": "Make several ad versions in minutes, not weeks, with full control over the scene and the message."
     },
     {
-      "t": "A page set that keeps shoppers scrolling",
-      "d": "Build a main view, a detail and an in-scene image as separate jobs from one photo, giving each product page the set Shopify themes expect."
-    },
-    {
-      "t": "Yours to publish, no watermark",
-      "d": "Downloaded photos and clips carry no AIVideosUGC watermark and are yours to add in Shopify admin, with the credit cost shown before each job."
+      "t": "AI creators for every audience",
+      "d": "Use creator-style scenes for different markets, so each audience sees an ad that feels made for them."
     }
   ],
-  "steps_h2": "How to make Shopify product photos in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into matching storefront images — no studio, no catalog reshoot."
+  "steps_h2": "How to get started",
+  "steps_lead": "Turn a Shopify product photo into an ad-ready clip or image in a few steps.",
+  "more_sections": [
+    {
+      "eyebrow": "From photo to winning ad",
+      "h2": "From one product photo to a winning ad in minutes",
+      "lead": "No manual editing. The product photo becomes the clip or store image in one flow.",
+      "items": [
+        {
+          "t": "Add Your Product Photo",
+          "d": "Start from the photo you already have on Shopify instead of filming anything new."
+        },
+        {
+          "t": "Pick a Winning Reference",
+          "d": "Choose a proven ad style and let your own product fill the scene, instead of guessing what works."
+        },
+        {
+          "t": "Generate Fresh Hooks",
+          "d": "Try several openings and keep the version that holds attention, with no extra shoot."
+        },
+        {
+          "t": "Customize for Conversion",
+          "d": "Change the scene, length or format and keep the file ready for store pages or ads."
+        }
+      ]
+    }
+  ]
 }
