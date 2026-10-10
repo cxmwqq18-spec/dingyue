@@ -136,6 +136,20 @@
           "Size",
           "Square"
         ]
+      ],
+      "items": [
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
+        },
+        {
+          "t": "Share your video idea",
+          "d": "Say what happens in one sentence and pick a clip or square still. The credit cost shows first, before the file is made."
+        },
+        {
+          "t": "Download and post",
+          "d": "Download the file with no watermark, add your caption and offer, then post it through Instagram or Ads Manager."
+        }
       ]
     }
   },
