@@ -4,76 +4,54 @@
   "description": "Turn one product photo into listing, lifestyle, on-model and social shots with our AI product photo generator. Watermark-free images, ready to publish.",
   "h1": "AI Product Photo Generator for Listing, Lifestyle, and Detail Photos",
   "eyebrow": "AI photo tools",
-  "lead": "Have an item that needs new photos but a shoot for every angle feels out of reach? This AI product photo generator places your product in new backgrounds, rooms and scenes in minutes, starting from one image.",
+  "lead": "Have a product idea that never made it to a shoot because it felt too complicated? This AI photo generator places your item into new backdrops, looks and scenes instantly from one image.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
     "ecommerce product photo AI",
     "AI product photo templates"
   ],
-  "intro": [
-    "Start with one clear product photo and choose the kind of image you need: a white-background listing photo, a lifestyle scene, an on-model view, a new background, or a social ad still. Each tool opens its own templates and options.",
-    "Photos are square by default. Download each result and add exact prices, captions, or offers in your editor."
-  ],
-  "benefits_h2": "Benefits of an AI product photo generator",
+  "benefits_h2": "Benefits of AI Product Shots Generator",
   "benefits": [
     {
       "t": "Cost-effective",
-      "d": "Skip the photographer, studio and gear fees. You pay a small credit price per image instead of booking a shoot."
+      "d": "Cut the shoot budget: skip the photographer, studio and gear fees, and pay a small credit price per image."
     },
     {
       "t": "Time-saving",
-      "d": "No shoot dates or days of waiting. A clean, usable photo is ready in minutes from your existing image."
+      "d": "No more waiting days for shoots. Get clean, usable product photos in minutes, fast and fuss-free."
     },
     {
-      "t": "One photo, many scenes",
-      "d": "Run the same upload through different rooms, backgrounds and camera angles to build a full gallery."
+      "t": "Scalability",
+      "d": "Need several shots? Generate multiple product images at once for a growing catalog."
     },
     {
-      "t": "No models or props needed",
-      "d": "People and settings are generated around your item, so no casting, set building or sample shipping."
+      "t": "No models or props",
+      "d": "Ditch the models and props. Instantly create polished product scenes from one upload."
     },
     {
-      "t": "Ready whenever you are",
-      "d": "Make a new photo on a launch day, a holiday or late at night, with the price shown before each job."
+      "t": "Ready day or night",
+      "d": "Your photo tool is ready whenever you are, on a launch day, a holiday or late at night."
     },
     {
       "t": "Fast A/B testing",
-      "d": "Generate several scenes and compositions, then see which image performs best in your listing or ad."
+      "d": "Try different backgrounds, styles and compositions, generate variations and see which one works."
     }
   ],
   "steps_h2": "Steps to generate an AI product photo",
-  "steps_lead": "One image becomes a ready-to-publish photo. No studio, photographer or reshoots.",
+  "steps_lead": "Three steps take one image to a ready-to-publish square photo.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Start with one clear image of the item you sell, or describe the photo you want to make."
+      "t": "Describe or Upload Your Input",
+      "d": "Type the image you want, or upload one clear product photo for image-to-image generation."
     },
     {
       "t": "Choose a Photo Type and Scene",
-      "d": "Pick a listing, lifestyle, on-model or social result, then choose the scene and square size."
+      "d": "Pick a white-background, lifestyle, on-model or social result and the square size."
     },
     {
-      "t": "Generate, Review and Use",
-      "d": "Run the job, check the product shape and color, then download a watermark-free image for your store or ad."
-    }
-  ],
-  "uses": [
-    {
-      "t": "Shopify product pages",
-      "d": "Add lifestyle and detail shots under your main image so shoppers can see the product in use."
-    },
-    {
-      "t": "Amazon and Etsy listings",
-      "d": "Fill the extra image slots after your main photo with scenes, close-ups, and size references."
-    },
-    {
-      "t": "Instagram and Facebook posts",
-      "d": "Square images fit the feed without cropping, for regular posts and feed ads alike."
-    },
-    {
-      "t": "Email newsletters",
-      "d": "Drop a fresh product scene into your next launch or restock email instead of reusing the same old photo."
+      "t": "Generate, Refine and Use",
+      "d": "Review the result, refine it with another run, then download and use it in your store or ad."
     }
   ],
   "maker": {
@@ -92,23 +70,27 @@
   "faq": [
     {
       "q": "What is AI product photo generation?",
-      "a": "It is a tool that makes new photos of your product with AI. You provide one image of the item and choose a background, scene or model view, and it generates a new square photo without a real shoot."
+      "a": "It is an AI tool that builds realistic product images automatically, so an online store gets professional-looking photos without a traditional photoshoot."
     },
     {
       "q": "How does AI product photo generation work?",
-      "a": "You upload a clear photo of your product and pick a photo type and scene. The tool builds the new image around your item, and you review the shape and color before you download it."
-    },
-    {
-      "q": "What kinds of product photos can I make?",
-      "a": "White-background main shots, lifestyle scenes, on-model views, new backgrounds, social ad stills and close-up details. Every image starts from a photo of your product."
+      "a": "You give the tool a product photo and a short description. It builds new product photos around your item, and you can change the backdrop, light and look."
     },
     {
       "q": "Is there a free way to make AI product photos?",
-      "a": "There is no free plan right now. Each image uses 24 credits and the price shows before the job starts; the pricing page lists the planned monthly plans."
+      "a": "There is no free plan right now. Each image uses 24 credits, and the price shows before the job starts; the pricing page lists the planned monthly plans."
     },
     {
       "q": "Are AI product photos good for ecommerce?",
-      "a": "Yes, for filling listings, product pages and social ads with extra views. Compare each result with the item you ship, and keep your main image simple so shoppers can judge the product at a glance."
+      "a": "Yes. They are professional, consistent and affordable for storefronts, catalogs and ad campaigns, as long as you compare each result with the item you ship."
+    },
+    {
+      "q": "What kinds of product photos can I make?",
+      "a": "White-background main shots, coastal and indoor lifestyle scenes, on-model views, close details and social ad stills. Every image starts from a photo of your product."
+    },
+    {
+      "q": "What are the benefits of using AI product photos?",
+      "a": "Fast image creation, a consistent look, easy background changes and multiple product variations in minutes instead of days."
     },
     {
       "q": "Are AI product photos copyright-free?",
@@ -119,206 +101,57 @@
       "a": "Type prices, offers and logos in your editor after you download, since generated lettering can come out wrong. That keeps every word and brand mark accurate."
     }
   ],
-  "overview": [
-    {
-      "h2": "Give your product a fresh look",
-      "d": "Place that item in coastal, minimalist, indoor or seasonal settings generated in seconds, without moving a single prop."
-    },
-    {
-      "h2": "Pick the photo by the question it answers",
-      "d": "Use a white-background image when the item must read first, a lifestyle scene for context, an on-model view for wear and size, and a social still with room for a headline."
-    }
-  ],
-  "input_guide": {
-    "h2": "Match the source photo to the output",
-    "items": [
-      {
-        "t": "For a clean catalog view",
-        "d": "Show the full product straight on with its important face visible; this gives a white-background result a clear shape to preserve."
-      },
-      {
-        "t": "For a room or table scene",
-        "d": "Leave the whole item in frame and avoid props touching its edges, especially for mugs, candles, and small home goods."
-      },
-      {
-        "t": "For a worn view",
-        "d": "Photograph clothing or accessories flat, on a hanger, or on a mannequin with straps, openings, and hardware visible."
-      },
-      {
-        "t": "For a close detail",
-        "d": "Use a near view when the selling point is stitching, finish, a bottle cap, or a printed surface; do not ask a distant image to invent that detail."
-      },
-      {
-        "t": "For a feed still",
-        "d": "Keep packaging and neighboring products out of the source frame so the resulting composition has one obvious subject."
-      }
-    ]
-  },
-  "results": {
-    "h2": "The output is simple to budget",
-    "items": [
-      {
-        "t": "One square image",
-        "d": "Each image generation uses 24 credits. You see that cost before confirming the job."
-      },
-      {
-        "t": "Six useful directions",
-        "d": "The photo hub links to white background, lifestyle, model, background replacement, detail and social ad still processes."
-      },
-      {
-        "t": "A private file",
-        "d": "The uploaded source and generated image stay in your account rather than being shown in a public gallery."
-      },
-      {
-        "t": "A file you can finish",
-        "d": "Download the image, then add exact prices, dates, offers, or other text in the editor where you can check every character."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Five ways to turn one item into a set",
-    "items": [
-      {
-        "t": "Ceramic mug",
-        "d": "Make a plain first view, a breakfast table with an open book, and a close crop that keeps the handle and glaze visible."
-      },
-      {
-        "t": "Crossbody bag",
-        "d": "Start with the bag laid flat, then request a shoulder-worn street scene and a quiet entryway hook shot showing the strap length."
-      },
-      {
-        "t": "Glass perfume bottle",
-        "d": "Use a clean front view for the catalog, a marble vanity for context, and a soft-color backdrop that keeps the bottle silhouette readable."
-      },
-      {
-        "t": "Reusable bottle",
-        "d": "Show the bottle upright on a white field, on a desk beside a notebook, and outdoors beside a trail, keeping the lid closed in each view."
-      },
-      {
-        "t": "Knit throw",
-        "d": "Use a folded product shot for the listing, a sofa scene for scale, and a close-up that shows the weave without covering the edge."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When the photo tools fit",
-    "good": [
-      {
-        "t": "Small catalogs",
-        "d": "Stores adding several views for the same item without arranging a new location each time."
-      },
-      {
-        "t": "Seasonal refreshes",
-        "d": "Teams that need a new room, color, or social setting while keeping the product source unchanged."
-      },
-      {
-        "t": "Products with a clear outline",
-        "d": "Mugs, bottles, bags, boxes, shoes, and other items that are fully visible in the starting shot."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "Hidden or tiny details",
-        "d": "A source image cannot reliably supply a logo, measurement, ingredient, or texture that it never shows."
-      },
-      {
-        "t": "Exact fit decisions",
-        "d": "Generated scenes add context; use real measurements and product information for sizing or technical claims."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Make the downloaded photo publication-ready",
-    "items": [
-      {
-        "t": "Type the message",
-        "d": "Add sale language, prices, dates, and codes yourself so the published text is exact."
-      },
-      {
-        "t": "Compare against stock",
-        "d": "Check color, count, shape, and printed details against the item you actually ship."
-      },
-      {
-        "t": "Place it in sequence",
-        "d": "Use the cleanest view first, then follow with the scene or detail that answers the next shopper question."
-      }
-    ]
-  },
   "examples": {
     "h2": "Examples of AI generated product photos",
-    "lead": "See clean hero shots, lifestyle scenes and on-model views generated from real product photos.",
+    "lead": "Real products placed in coastal, minimalist and indoor scenes from one starting photo.",
     "groups": [
       {
-        "label": "Product Hero",
+        "label": "Coastal",
         "items": [
           {
-            "ref": "n:guide:q1-photo-example-lipbalm",
-            "title": "Lip Balm Hero: Coral Tube on White",
+            "ref": "n:guide:k5-lifestyle-gallery-04",
+            "title": "Coastal: linen tote on a beach blanket",
             "kind": "photo",
-            "product": "tinted lip balm"
+            "product": "linen tote bag"
+          },
+          {
+            "ref": "n:guide:k3-social-picker-sandals",
+            "title": "Coastal: summer sandals on sand",
+            "kind": "photo",
+            "product": "summer sandals"
           }
         ]
       },
       {
-        "label": "Trail Sip",
+        "label": "Minimalist",
         "items": [
           {
-            "ref": "n:guide:q1-photo-example-tumbler",
-            "title": "Trail Test: Runner Drinks From Tumbler",
+            "ref": "n:guide:k2-white-picker-tea-kettle",
+            "title": "Minimalist: stovetop kettle on white",
             "kind": "photo",
-            "product": "steel travel tumbler"
+            "product": "stovetop kettle"
+          },
+          {
+            "ref": "n:guide:plat-facebook-size-square-backpack",
+            "title": "Minimalist: commuter backpack in studio",
+            "kind": "photo",
+            "product": "commuter backpack"
           }
         ]
       },
       {
-        "label": "Street Interview",
+        "label": "Indoor",
         "items": [
           {
-            "ref": "n:guide:q1-photo-example-snack",
-            "title": "Taste Test: Protein Bar First Bite",
+            "ref": "n:guide:ind-home-living-m3-lit-lamp",
+            "title": "Indoor: table lamp in living room",
             "kind": "photo",
-            "product": "protein bar"
-          }
-        ]
-      },
-      {
-        "label": "On-Model Try-On",
-        "items": [
-          {
-            "ref": "n:guide:q1-photo-example-sunglasses",
-            "title": "On-Model Try-On: Sunglasses Outdoors",
-            "kind": "photo",
-            "product": "sunglasses"
+            "product": "table lamp"
           }
         ]
       }
     ]
   },
-  "more_sections": [
-    {
-      "eyebrow": "Who it's for",
-      "h2": "Built for businesses that sell",
-      "lead": "Whichever stage your store is at, every photo starts from one image and is priced per job.",
-      "items": [
-        {
-          "t": "Growing brands",
-          "d": "Add new listing and social views as products launch, without booking a shoot for each one."
-        },
-        {
-          "t": "Performance marketers",
-          "d": "Generate several scenes to test images in ads and refresh creative when results slow down."
-        },
-        {
-          "t": "Scaling businesses",
-          "d": "Build out galleries for a growing catalog while keeping the same look across images."
-        },
-        {
-          "t": "Growth teams and agencies",
-          "d": "Turn around photo sets for several clients or campaigns with costs shown up front."
-        }
-      ]
-    }
-  ],
   "visual": {
     "strip": [
       "n:guide:q1-photo-strip-granola",
@@ -346,157 +179,20 @@
       ]
     },
     "picker": {
-      "title": "Choose a photo tool",
-      "lead": "Open the process that matches the image you need, starting from the placement and shopper question.",
-      "chips": [
-        {
-          "id": "listing",
-          "label": "Listing and background"
-        },
-        {
-          "id": "styled",
-          "label": "Lifestyle and campaigns"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q1-photo-picker-white-lipbalm",
-          "label": "White Background: Lip Balm on White",
-          "chips": [
-            "listing"
-          ],
-          "prompt": "",
-          "kind": "photo",
-          "tool": "white-background"
-        },
-        {
-          "ref": "g:lifestyle-scene/example-08",
-          "label": "Lifestyle Use: Canvas Tote at Market",
-          "chips": [
-            "styled"
-          ],
-          "prompt": "",
-          "kind": "photo",
-          "tool": "lifestyle-photos"
-        },
-        {
-          "ref": "g:fashion-editorial/example-08",
-          "label": "On-Model Try-On: Linen Outfit",
-          "chips": [
-            "styled"
-          ],
-          "prompt": "",
-          "kind": "photo",
-          "tool": "model-photos"
-        },
-        {
-          "ref": "n:guide:q1-photo-picker-earbuds-v2",
-          "label": "Earbud Hero: Pair on White",
-          "chips": [
-            "listing"
-          ],
-          "prompt": "",
-          "kind": "photo",
-          "tool": "change-background"
-        },
-        {
-          "ref": "n:guide:q1-photo-picker-coat",
-          "label": "Winter Try-On: Coat in Motion",
-          "chips": [
-            "styled"
-          ],
-          "prompt": "Use the uploaded product image and preserve its shape, color and label area. An adult wears a plain warm coat on a city walk and turns slightly to show the fit and front fastening. Soft winter daylight, clean seasonal retail campaign, full coat visible in a natural street setting, no text.",
-          "kind": "photo",
-          "tool": "social-ad-photos"
-        },
-        {
-          "ref": "g:ecommerce-main-image/example-04",
-          "label": "Listing Detail: Travel Mug Rim",
-          "chips": [
-            "listing"
-          ],
-          "href": "/ai-image-generation/ecommerce-main-image",
-          "prompt": "",
-          "kind": "photo",
-          "tool": "white-background"
-        }
-      ],
+      "title": "Give your product a fresh look",
+      "lead": "Drop your product into a coastal, simple or indoor look in seconds.",
+      "chips": [],
+      "cards": [],
       "button": "Open the photo creator"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:q1-photo-use-review",
-        "h": "Creator Review: Face Serum Held to Camera",
-        "d": "A large, clear view of the product lets shoppers judge the bottle before they read the rest of the page."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q1-photo-use-recipe",
-        "d": "A hand or cooking moment shows the ingredient in a real kitchen, with open space for a short headline."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:plat-facebook-size-square-backpack",
-        "bad": "n:guide:k6-photo-hub-input-daypack-blur",
-        "good_label": "Sharp, complete backpack on light background",
-        "bad_label": "Backpack blurred and hard to inspect"
-      },
-      {
-        "good": "n:guide:k6-photo-hub-input-shoe-good",
-        "bad": "n:guide:k6-photo-hub-input-shoe-blur",
-        "good_label": "Clear running shoe, full shape visible",
-        "bad_label": "Running shoe details lost in blur"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f2-photo-hub-output-backpack",
-        "frame": "1:1",
-        "label": "Backpack Carry: Handle Lift by the Window"
-      },
-      {
-        "ref": "n:guide:f2-photo-hub-output-shoe",
-        "frame": "1:1",
-        "label": "Trail Fit: Charcoal Running Shoe in Use"
-      }
-    ],
     "titles": {
       "m2": {
-        "h2": "How to make a product photo in 3 steps"
+        "h2": "Steps to generate an AI product photo"
       },
       "m3": {
-        "h2": "Choose a product photo tool",
-        "lead": "Select the type of photo you need for your listing or campaign, from a clean main view to an on-model or social image."
-      },
-      "m4": {
-        "h2": "Where to use product photos"
-      },
-      "m5": {
-        "h2": "Start with a clear product photo"
-      },
-      "m6": {
-        "h2": "Square photos with the cost shown"
-      },
-      "m7": {
-        "h2": "Add your final details after download"
-      },
-      "examples": {
-        "h2": "Product photo examples"
+        "h2": "Give your product a fresh look",
+        "lead": "Drop your product into a coastal, simple or indoor look in seconds."
       }
-    },
-    "after": {
-      "ref": "n:guide:q1-photo-after-lip",
-      "zones": [
-        "Your price",
-        "Your headline"
-      ],
-      "items": [
-        "Add exact prices and offers in your editor, where you can check the date, currency and wording before publishing.",
-        "Compare labels, color, and small details with the source photo, then confirm the image shows the product you actually ship.",
-        "Choose the clearest view for the first slot and use the scene or detail image to answer the next shopper question."
-      ]
     }
   }
 }
