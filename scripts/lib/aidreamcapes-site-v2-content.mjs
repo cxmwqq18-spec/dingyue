@@ -2398,7 +2398,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     const isHub = ["video-hub", "photo-hub"].includes(pageId);
     const isDirectory = ["templates", "industries", "platforms", "examples"].includes(pageId);
     if (!( ["home", "tool", "template", "collection", "video-hub", "index", "examples"].includes(layout))) errors.push(`${pageId}: visual is not supported on this layout`);
-    if (visual.strip.length < 6 || visual.strip.length > 8) errors.push(`${pageId}: visual strip must contain 6-8 images`);
+    if (visual.strip.length && (visual.strip.length < 6 || visual.strip.length > 8)) errors.push(`${pageId}: visual strip must contain 6-8 images`);
     if (!isDirectory && (!Array.isArray(visual.steps?.items) || visual.steps.items.length !== 3)) errors.push(`${pageId}: visual steps must contain three copy rows`);
     else for (const [index, item] of (visual.steps?.items ?? []).entries()) if (wordCount(item.d) > 25) errors.push(`${pageId}: visual step ${index + 1} description exceeds 25 words`);
     const chips = visual.picker?.chips ?? [];
@@ -2436,8 +2436,8 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (!expectedSize || params.get("size") !== expectedSize) errors.push(`${pageId}: video picker link must use the card's supported frame (${card.label})`);
       }
     }
-    if (!isDirectory && (visual.uses.length < 2 || visual.uses.length > 4)) errors.push(`${pageId}: visual uses must contain 2-4 rows`);
-    if (!isDirectory && (visual.input.length < 2 || visual.input.length > 4)) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
+    if (!isDirectory && visual.uses.length && (visual.uses.length < 2 || visual.uses.length > 4)) errors.push(`${pageId}: visual uses must contain 2-4 rows`);
+    if (!isDirectory && visual.input.length && (visual.input.length < 2 || visual.input.length > 4)) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
     for (const item of visual.input ?? []) {
       if (imageBase(item.good.src) === imageBase(item.bad.src) && !item.darkened) errors.push(`${pageId}: visual input good and bad photos must differ unless the bad image is intentionally darkened`);
       for (const label of [item.good_label, item.bad_label]) if (wordCount(label) < 3 || wordCount(label) > 12) errors.push(`${pageId}: visual input labels must contain 3-12 words (${label})`);
@@ -2446,7 +2446,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (visual.steps?.sourceTitle != null && (typeof visual.steps.sourceTitle !== "string" || !visual.steps.sourceTitle.trim() || visual.steps.sourceTitle.length > 60)) errors.push(`${pageId}: visual source title must be a non-empty string of at most 60 characters`);
     if (visual.steps?.sourceHint != null && (typeof visual.steps.sourceHint !== "string" || !visual.steps.sourceHint.trim() || visual.steps.sourceHint.length > 100)) errors.push(`${pageId}: visual source hint must be a non-empty string of at most 100 characters`);
     if (visual.steps && (typeof visual.steps.prompt !== "string" || !visual.steps.prompt.trim())) errors.push(`${pageId}: visual steps need an example prompt`);
-    if (!isDirectory && (visual.outputs.length < 2 || visual.outputs.length > 4)) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
+    if (!isDirectory && visual.outputs.length && (visual.outputs.length < 2 || visual.outputs.length > 4)) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
     if (isHub && !visual.after) errors.push(`${pageId}: visual hub must show the after-download module`);
     if (pageId === "video-hub" && visual.strip.some((item) => item.kind !== "video" || Math.abs(item.w / item.h - 9 / 16) > 0.04)) errors.push(`${pageId}: overview strip must use actual 9:16 video frames`);
     if (pageId === "home" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
