@@ -66,8 +66,21 @@ export function VisualOverview({ visual, r }: { visual: V2Visual; r: V2Resolvers
 export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visual: V2Visual; r: V2Resolvers; buttonLabel?: string }) {
   const step = visual.steps;
   if (!step) return null;
+  const actorCards = step.actorCards ?? [];
+  const actorStepStyles = actorCards.length ? (
+    <style dangerouslySetInnerHTML={{ __html: `
+      .adc2 .v-step-actor-maker{gap:8px}
+      .adc2 .v-step-actor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+      .adc2 .v-step-actor-card{position:relative;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#0c0c0f;color:var(--ink-2);font-size:10px;line-height:1.2;text-align:left}
+      .adc2 .v-step-actor-card.is-selected{border-color:#c4b5fd;box-shadow:0 0 0 2px rgba(196,181,253,.5)}
+      .adc2 .v-step-actor-card.is-selected::after{content:"✓";position:absolute;right:4px;top:4px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:#c4b5fd;color:#17131f;font-size:11px;font-weight:700}
+      .adc2 .v-step-actor-card img.v-step-actor-image{width:100%;aspect-ratio:1;object-fit:cover;object-position:center top}
+      .adc2 .v-step-actor-card span{display:block;padding:4px 5px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    ` }} />
+  ) : null;
   return (
-    <Section eyebrow="How it works" title={visual.titles?.m2?.h2 ?? "Three steps"}>
+    <Section eyebrow="How it works" lead={visual.titles?.m2?.lead} title={visual.titles?.m2?.h2 ?? "Three steps"}>
+      {actorStepStyles}
       <div className="v-steps">
         <article className="v-step-card">
           <div className="v-step-art v-step-source">
@@ -80,12 +93,26 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visu
         </article>
         <article className="v-step-card">
           <div className="v-step-art v-step-options">
-            <div className="maker v-step-maker">
-              {step.prompt ? <div aria-label="Example description" className="v-step-prompt"><span className="v-step-prompt-text">{step.prompt}</span></div> : null}
-              <div className="opts">{step.options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
-              <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>
-              <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
-            </div>
+            {actorCards.length ? (
+              <div aria-label="Choose an actor" className="maker v-step-maker v-step-actor-maker">
+                <div className="v-step-actor-grid" role="list">
+                  {actorCards.map((card, index) => <div aria-label={`${card.label}${card.selected ? ", selected" : ""}`} className={`v-step-actor-card${card.selected ? " is-selected" : ""}`} key={`${card.image.src}-${index}`} role="listitem">
+                    <VisualImage image={card.image} r={r} className="v-step-actor-image" />
+                    <span>{card.label}</span>
+                  </div>)}
+                </div>
+                <div className="opts">{step.options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
+                <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>
+                <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
+              </div>
+            ) : (
+              <div className="maker v-step-maker">
+                {step.prompt ? <div aria-label="Example description" className="v-step-prompt"><span className="v-step-prompt-text">{step.prompt}</span></div> : null}
+                <div className="opts">{step.options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
+                <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>
+                <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
+              </div>
+            )}
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 02</span><h3>{normalizeStepLabel(step.items[1]?.t ?? "")}</h3><p>{step.items[1]?.d}</p></div>
         </article>

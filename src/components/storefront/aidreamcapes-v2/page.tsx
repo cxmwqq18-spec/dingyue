@@ -650,6 +650,7 @@ function ActorDirectoryPage({ data, r }: Props) {
   const honesty = data.honesty as { h2: string; items: V2Item[] } | undefined;
   const cta = data.cta as { title: string; lead: string; href: string } | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  const actorVisual = data.visual as V2Visual | undefined;
   const filterOptions = [
     { key: "scene", label: "Scene", values: scenes },
     { key: "gender", label: "Gender", values: genders },
@@ -659,6 +660,7 @@ function ActorDirectoryPage({ data, r }: Props) {
   return <>
     <Crumbs items={data.breadcrumbs} r={r} />
     <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+    {actorVisual ? <VisualSteps buttonLabel="Make my video" visual={actorVisual} r={r} /> : null}
     <section className="actor-directory-section" aria-label="AI actor directory">
       <div className="wrap">
         <style>{actorDirectoryCss}</style>
