@@ -1,10 +1,10 @@
 {
   "id": "url-to-video",
-  "title": "URL to Video: Product Link to Video Ad | AIVideosUGC",
-  "description": "Paste your product page link to start a video from the photo and name on that page, write one action, then download. Blocked page? Upload a photo instead.",
-  "h1": "URL to Video: Turn a Product Link into a Video Ad",
-  "eyebrow": "Video tool",
-  "lead": "Your product page already has a good photo and a name, but turning that listing into an ad clip usually means starting a shoot from scratch. Paste the link into URL to Video and build the clip from the exact variant you sell, without uploading files or shipping samples.",
+  "title": "URL to Video AI Generator for Product Ads | AIVideosUGC",
+  "description": "Turn a public product URL into a short video ad using its product image and name. Create product demos, ecommerce videos, and social ads without a studio shoot.",
+  "h1": "Turn a Product URL into a Video Ad",
+  "eyebrow": "URL to video",
+  "lead": "Turn a product page into a short video ad for social posts, demos, or ecommerce listings. Start with the image and name already on your page.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -12,39 +12,39 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Why start a video ad from a product link?",
+  "benefits_h2": "Key advantages of starting with a product URL",
   "benefits": [
     {
-      "t": "No files to gather",
-      "d": "The link supplies the product photo and name, so you don't have to export and re-upload assets before making the ad."
+      "t": "Save setup time",
+      "d": "Start with the image and name already on your page."
     },
     {
-      "t": "Starts from the variant you sell",
-      "d": "Review the captured image and name first, so the clip shows the same color and version listed on the page."
+      "t": "Skip manual uploads",
+      "d": "A public URL can supply the first product reference."
     },
     {
-      "t": "Describe one scene yourself",
-      "d": "Write the action or spoken line and choose the final pose, keeping every claim tied to facts you control."
+      "t": "Create more versions",
+      "d": "Use one listing to test different scenes and lengths."
     },
     {
-      "t": "Photo upload as a fallback",
-      "d": "If the page blocks access or picks the wrong image, replace it with your own upload without leaving the flow."
+      "t": "Build buyer confidence",
+      "d": "A clear product scene helps shoppers understand the item before they buy."
     }
   ],
-  "steps_h2": "How to make a video ad from a product link in 3 simple steps",
-  "steps_lead": "Three steps turn a public product page link into a ready-to-post clip — no shoot, no sample shipment.",
+  "steps_h2": "How to turn a product URL into a video",
+  "steps_lead": "Three steps move from a public product page to a short clip for ads and social posts.",
   "steps": [
     {
-      "t": "Paste Your Product Link",
-      "d": "Paste a public product page that loads without sign-in. The tool reads its main image and name when the page allows access."
+      "t": "Paste Your Product URL",
+      "d": "Paste a public product page that loads without sign-in."
     },
     {
-      "t": "Review the Captured Reference",
-      "d": "Check the image, name, color and variant, and replace the photo if needed. Then choose the one selling point to show."
+      "t": "Review the Product Reference",
+      "d": "Check the captured image and name before generation."
     },
     {
-      "t": "Write the Scene and Download",
-      "d": "Describe one action or spoken line, choose the length and final pose, then download. Add your offer and price in your editor."
+      "t": "Generate Your Video",
+      "d": "Download the clip and place your current offer in your ad editor."
     }
   ],
   "maker": {
@@ -66,347 +66,126 @@
   },
   "faq": [
     {
-      "q": "Which product links work?",
-      "a": "A public product page can still block access or require a login. If it does, upload the product photo instead. Use a page that loads without a sign-in and shows the variant you want."
+      "q": "What does the product URL provide?",
+      "a": "A readable public page supplies its main product image and name as the starting reference."
     },
     {
-      "q": "What do you take from the page?",
-      "a": "Only the main product photo and the product name. Prices, reviews and other text on the page are not used. The captured image may differ from the gallery image, so compare it manually."
-    },
-    {
-      "q": "Can I use a link to someone else's product?",
-      "a": "Only use links to products you own or are allowed to advertise, and only photos you have the rights to use. Confirm that your rights cover the product image, name and advertising use."
-    },
-    {
-      "q": "Can I change the photo you picked?",
-      "a": "Yes. If the photo isn't the best one, replace it with your own upload before you generate. Check the replacement photo before writing the action prompt."
-    },
-    {
-      "q": "What does a product URL provide?",
-      "a": "It reads public page metadata and available product imagery from the URL, then uses that reference for the clip. Use a stable product photo when the page offers several gallery variants."
+      "q": "Which product pages work?",
+      "a": "Use a public page that loads without sign-in and shows the variant you sell."
     },
     {
       "q": "What if the page cannot be read?",
-      "a": "Use a direct product photo in the upload flow when the page blocks access or exposes no usable image. A direct upload avoids a blocked page and gives you more control over the starting frame."
+      "a": "Upload the product photo directly when the page blocks access or has no usable image."
     },
     {
-      "q": "Does the link include prices or reviews?",
-      "a": "No. The tool uses the available product image and product name as the visual reference. Add your own price, review wording and offer in the editor after generation so every public claim is current. Recheck wording after generation because product facts can change."
+      "q": "Can I change the captured image?",
+      "a": "Yes. Replace it with your own upload before generation."
     },
     {
-      "q": "Can I choose a different variant after capture?",
-      "a": "Yes. Replace the captured image with a clear upload when the page selected the wrong color, size or angle. Check the replacement against the item you ship before you describe the motion. Save the chosen variant before you describe motion so color and scale stay consistent."
+      "q": "Does the URL include prices or reviews?",
+      "a": "No. The tool uses the product image and name; add current prices or reviews in your editor."
     },
     {
-      "q": "Do I need a product page to make the video?",
-      "a": "No. A public link is the fastest starting point, but if the page blocks access or has no usable image, upload a product photo and describe the scene the same way. Both routes end with the same kind of clip built around your product."
+      "q": "How long can the video be?",
+      "a": "Choose 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "Can I use the video as a paid ad?",
-      "a": "Yes. The download is watermark-free and licensed for commercial use, so you can run it on TikTok, Instagram, Facebook or another ad channel. Put prices and offers in your ad tool, since the page text and reviews are not copied into the clip."
+      "q": "Can I use the clip in paid ads?",
+      "a": "Yes. Use the download in TikTok, Instagram, Facebook, or other ad placements."
     }
   ],
-  "overview": [
+  "cta_lead": "Start with one product URL and see the credit cost before generation.",
+  "uses": [
     {
-      "h2": "Start with the product page you already have",
-      "p": "A public product page provides the starting photo and name. Share your video idea in one sentence, such as opening a lid or lifting a bag, to turn the listing into a short scene."
+      "t": "E-commerce Videos",
+      "d": "Show product features and benefits in a short ad."
+    },
+    {
+      "t": "Product Demos",
+      "d": "Explain how the product works in a clear scene."
+    },
+    {
+      "t": "Advertising Videos",
+      "d": "Build an ad around one selling point."
+    },
+    {
+      "t": "Social Media Videos",
+      "d": "Create a clip for Instagram, YouTube, or TikTok."
     }
   ],
-  "examples": {
-    "h2": "Product ad formats",
-    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after. Each format turns the page reference into one visible action that can carry a specific hook in a paid placement.",
-    "groups": [
-      {
-        "label": "Creator-led product scenes",
-        "items": [
-          {
-            "ref": "n:guide:q2-url-to-video-example-01",
-            "title": "Runner mixes a hydration drink",
-            "kind": "scene",
-            "product": "electrolyte drink mix"
-          }
-        ]
-      },
-      {
-        "label": "More creator-led scenes",
-        "items": [
-          {
-            "ref": "n:guide:q2-url-to-video-example-04",
-            "title": "Fitness creator mixes a protein drink",
-            "kind": "scene",
-            "product": "protein powder"
-          },
-          {
-            "ref": "n:guide:q2-url-to-video-example-05",
-            "title": "Runner adjusts a running belt at a trailhead",
-            "kind": "scene",
-            "product": "running belt"
-          }
-        ]
-      }
-    ]
-  },
+  "more_sections": [
+    {
+      "eyebrow": "Why brands choose URL to video",
+      "h2": "Why brands choose AIVideosUGC for URL to video",
+      "lead": "A product URL gives your ad a clear starting reference.",
+      "items": [
+        {
+          "t": "Create from the Product Page",
+          "d": "Turn a listed product into an ad concept without starting a new shoot."
+        },
+        {
+          "t": "Keep Creative Control",
+          "d": "Choose the scene and the final length for each ad."
+        },
+        {
+          "t": "Test Campaign Angles",
+          "d": "Compare different product moments before a campaign goes live."
+        },
+        {
+          "t": "Use the Product Image You Sell",
+          "d": "Start from the image and name customers already see."
+        }
+      ]
+    },
+    {
+      "eyebrow": "More content, less hassle",
+      "h2": "More Product Content With Less Hassle",
+      "lead": "Build more ad versions with the same product reference.",
+      "items": [
+        {
+          "t": "Test More Ad Angles",
+          "d": "Compare hooks before a campaign goes live."
+        },
+        {
+          "t": "Scale Product Clips",
+          "d": "Reuse one listing to make several short ads."
+        },
+        {
+          "t": "Keep Review Time Short",
+          "d": "Move from product page to draft without a studio shoot."
+        }
+      ]
+    }
+  ],
   "visual": {
-    "strip": [
-      "n:guide:k2-url-strip-lunchbox-closed",
-      "n:guide:q2-url-to-video-strip-01",
-      "n:guide:q2-url-to-video-strip-02",
-      "n:guide:q2-url-to-video-strip-03",
-      "n:guide:q2-url-to-video-strip-04",
-      "n:guide:q2-url-to-video-strip-05"
-    ],
+    "strip": [],
     "steps": {
       "source": "n:guide:k2-url-step-lunchbox-source",
       "sourceAlt": "Your product: closed sage-green lunch container on a pale counter, viewed from the front.",
       "result": "n:guide:q2-url-to-video-steps-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand opens a divided lunch container on a bright counter and stops with the compartments visible. Soft morning daylight, practical food-ad look. Overhead close-up with one slow push-in. End with the open compartments facing camera beside the lid. Sound: lid click and soft room tone; no music.",
+      "prompt": "Show the product opening in a bright, practical scene.",
       "sourceTitle": "Paste your product page link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
     "picker": {
-      "title": "Choose a product ad format",
-      "lead": "Choose a scene that shows a product in use, on camera or in a creator-led ad. Match the action to the shopper question, then keep one product, one setting and one final pose in the prompt.",
-      "chips": [
-        {
-          "id": "reviews",
-          "label": "Creator Reviews"
-        },
-        {
-          "id": "grwm",
-          "label": "GRWM & Try-On"
-        },
-        {
-          "id": "unboxing",
-          "label": "Unboxing & Before/After"
-        },
-        {
-          "id": "demo",
-          "label": "Hand Demo & Daily Routine"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f2-r10-url-card-00",
-          "label": "Living Room Review: Air Purifier",
-          "chips": [
-            "reviews"
-          ],
-          "prompt": "Use the uploaded plain white air purifier as the exact product reference. A middle-aged man stands in a bright living room, holds it beside his chest and says: “Here is the filter size I check first.” He points to the vents and ends with the purifier centered. Natural creator-review framing, chest-up vertical shot. Sound: spoken line and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f2-r10-url-card-01",
-          "label": "Kitchen Routine: Linen Apron",
-          "chips": [
-            "grwm"
-          ],
-          "prompt": "Use the uploaded plain linen apron as the exact product reference. An older woman puts it on in a sunny kitchen, adjusts one shoulder strap and says: “The cross-back tie keeps the front clear.” She turns once and ends facing the counter. Waist-up routine framing, natural daylight. Sound: spoken line and fabric movement; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f2-r10-url-card-02",
-          "label": "Unboxing: Ceramic Spice Jars",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded plain ceramic spice jars as the exact product reference. Adult hands open a kraft box, lift the three jars and place them in a row on the kitchen counter. Top-down vertical unboxing shot with one gentle push-in. Sound: box hinge, paper rustle and ceramic taps; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:gen2:unboxing-videos-c1",
-          "label": "Unboxing: Ceramic Mug Set",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the captured product image and name as the reference. Adult hands lift the ceramic mug set from a gift box, remove the paper filling and place the pieces on a table. Keep the product centered in a top-down tabletop shot, then hold on the full set. Sound: paper rustle and ceramic taps; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:gen2:unboxing-videos-c2",
-          "label": "Unboxing: Wrapped Candle",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the captured product image and name as the reference. Adult hands open a kraft mailer, fold back the tissue and lift the candle onto the table. Keep the package and product fully visible in a top-down tabletop shot, ending with the candle centered. Sound: mailer fold and tissue rustle; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f2-r10-url-card-03",
-          "label": "Demo: Fabric Shaver Clean Stripe",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded plain fabric shaver as the exact product reference. Adult hands pull it once across a navy wool sweater, leaving a visibly smoother stripe beside the untouched fabric. Tight side close-up, one steady lateral move, clear final pose. Sound: fabric brush and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f2-r10-url-card-04",
-          "label": "Try-On: Woven Sun Hat",
-          "chips": [
-            "grwm"
-          ],
-          "prompt": "Use the uploaded plain woven sun hat as the exact product reference. An older woman with short silver hair tries it on in an entryway mirror, adjusts the brim once and turns to a relaxed side angle. Waist-up mirror framing, natural daylight, final pose with the hat centered. Sound: room tone and light fabric movement; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q2-url-to-video-card-06",
-          "label": "Creator Review: Protein Powder Mix",
-          "chips": [
-            "reviews"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult fitness creator stands at a bright kitchen counter, holds the protein pouch beside their face and says: “Here’s how I mix one scoop with water.” They stir the drink once and end holding the glass and pouch toward camera. Natural daylight, straightforward creator-review look. Chest-up eye-level handheld shot with a gentle push-in. Sound: spoken line, spoon swirl and glass tap; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q2-url-to-video-card-07",
-          "label": "Product Demo: Foldable Phone Stand",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy work desk, an adult hand unfolds the phone stand and sets a generic phone with one small camera opening onto it, ending with the screen facing away and the stand stable. Soft window light, practical product-demo look. Three-quarter close-up with one short push-in. Sound: hinge click and desk tap; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q2-url-to-video-card-08",
-          "label": "Day in Life: Packs Hydration Chews",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a park trailhead, an adult runner places the hydration-chew pouch into a running belt and closes the pocket, ending with the belt held at waist height. Natural morning light, candid fitness-routine ad look. Waist-level close-up with one gentle tilt from pouch to belt. Sound: fabric zip and birds; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q2-url-to-video-output-01",
-          "label": "Phone Stand: Desk Review",
-          "chips": [
-            "reviews"
-          ],
-          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f2-r10-url-card-09",
-          "label": "Demo: Compost Caddy Lid",
-          "chips": [
-            "demo"
-          ],
-          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
-          "prompt": "Use the uploaded plain stainless-steel compost caddy as the exact product reference. Adult hands open the lid, place a few vegetable scraps inside and hold the charcoal filter toward the camera. Three-quarter kitchen close-up, one clear action and stable ending. Sound: lid click and quiet kitchen tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:k2-url-picker-hot-sauce",
-          "label": "Hot Sauce: Daily Demo",
-          "chips": [
-            "demo"
-          ],
-          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q2-url-to-video-example-03",
-          "label": "Commuter Backpack Try-On",
-          "chips": [
-            "grwm"
-          ],
-          "href": "/app/create?tool=url-to-video&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        }
-      ],
-      "button": "Try this video idea"
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": "",
+      "href": ""
     },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:q2-url-to-video-uses-00",
-        "h": "Product page",
-        "d": "Start with a public product page that includes a clear product image and name. Confirm the URL is public and points to the exact item or variant you want to advertise. Record the captured page state before you request another variant."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:k2-url-example-teapot",
-        "h": "Reference captured",
-        "d": "The product image and name become the starting reference for the video request. Review both before generation so the action does not begin with a mismatched color, size or product family. Keep one final pose so the product remains easy to compare with the source."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q2-url-to-video-uses-01",
-        "h": "Generated clip",
-        "d": "Turn that product reference into an action scene for a listing or social post. Keep the product visible, compare the result with the captured reference, and add your exact offer in the editor. A clear final pose also gives the editor a useful thumbnail."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k2-url-input-headphones",
-        "bad": "n:guide:b1-url-to-video-bad-crop",
-        "good_label": "Your product, fully in frame with soft highlights",
-        "bad_label": "Your product is cropped at the left edge"
-      },
-      {
-        "good": "n:guide:k2-url-input-backpack",
-        "bad": "n:guide:b1-url-to-video-bad-blur",
-        "good_label": "Your product details are sharp in a square frame",
-        "bad_label": "Your product details are out of focus"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:f2-url-to-video-output-headphones-r4",
-        "frame": "9:16",
-        "label": "Unboxing: Headphones Lifted From Box",
-        "length": 15
-      },
-      {
-        "ref": "f:f2-url-to-video-output-backpack",
-        "frame": "16:9",
-        "label": "Trail Pack: Backpack Adjusted at Overlook",
-        "length": 15
-      }
-    ],
-    "after": {
-      "ref": "n:guide:f2-r10b-url-to-video-after-headphones",
-      "zones": [
-        "Product name",
-        "Caption"
-      ],
-      "items": [
-        "Make sure the video shows the color and size you sell, then compare its first frame with the captured product reference.",
-        "Add prices and offers in your editor. AI-made letters can come out wrong, so type the final wording yourself.",
-        "Check the action and final pose on mute before you post to a listing, feed or story placement."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "How to turn a product link into a video in 3 steps"
-      },
-      "m3": {
-        "h2": "Product link ideas for creator-led ads",
-        "lead": "Choose a creator review, try-on, unboxing or product demonstration for your next ad."
-      },
-      "m4": {
-        "h2": "Where creator-style product videos support your ads"
-      },
-      "m5": {
-        "h2": "What product image works best"
-      },
-      "m6": {
-        "h2": "URL to video length, size and credits"
-      },
-      "m7": {
-        "h2": "Before you post: check the color and size"
-      },
-      "gallery": {
-        "h2": "Product ad formats in motion"
-      },
-      "examples": {
-        "h2": "Product scenes from your catalog"
       }
     },
-    "overview": "A public product URL supplies a starting image and name when the page can be read. Review that captured reference, add the selling point and scene script yourself, then generate a short clip with one action and a stable final pose."
+    "overview": ""
   }
 }
