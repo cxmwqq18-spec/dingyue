@@ -159,7 +159,7 @@
           "chips": [
             "beauty"
           ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands show a dry knuckle close-up, then spread one small amount of plain moisturizer over the same area beside the cream jar. Use a macro vanity frame with a slow push-in. Soft window light keeps the skin texture and cream visible. End with the moisturized hand and jar together. Sound: quiet bathroom room tone. No music.",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands show a dry knuckle close-up, then spread one small amount of plain moisturizer over the target area beside the cream jar. Use a macro vanity frame with a slow push-in. Soft window light keeps the skin texture and cream visible. End with the moisturized hand and jar together. Sound: quiet bathroom room tone. No music.",
           "kind": "video"
         },
         {
