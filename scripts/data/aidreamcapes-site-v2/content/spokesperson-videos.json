@@ -1,28 +1,49 @@
 {
   "id": "spokesperson-videos",
   "title": "AI Spokesperson Videos for UGC Ads | AIVideosUGC",
-  "description": "Create AI spokesperson videos for UGC ads. Choose a speaking actor, add your product and write a clear line for a selfie-style product ad.",
+  "description": "Get an AI actor who holds your product and speaks one clear line to camera, so a feature is explained in a selfie-style ad without hiring a presenter.",
   "h1": "AI Spokesperson Videos With a Speaking Actor",
   "eyebrow": "On-camera product video",
-  "lead": "Choose an adult AI actor who holds your product and speaks to camera in a familiar setting. Add one useful line, then review the voice, visuals and claims. Use the presenter to explain a feature clearly, not to invent a customer story. A short line works best when the actor can hold the item steady, show one detail and finish on a clear pose.",
+  "lead": "Some products sell once a feature is explained out loud, but booking a presenter and a set for one line is expensive and slow. Choose an adult AI actor who holds your product and speaks your line to camera, then use the clip as a brand-led ad instead of an invented review.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
     "AI actor product ads",
     "on-camera product showcase"
   ],
+  "benefits_h2": "Why use an AI spokesperson video?",
+  "benefits": [
+    {
+      "t": "Explain one feature out loud",
+      "d": "A face-to-camera line tells shoppers what the part does and why it matters, which is harder to show in a photo alone."
+    },
+    {
+      "t": "No presenter or set to book",
+      "d": "Pick an AI actor and setting, then generate the clip from a product photo without a casting, studio or sample shipment."
+    },
+    {
+      "t": "You control every word",
+      "d": "Write one supportable line yourself, so the ad stays factual and never invents a customer testimonial."
+    },
+    {
+      "t": "Time for a fuller product story",
+      "d": "Choose up to 30 seconds when the feature needs an action and a clear final hold, not just a quick product flash."
+    }
+  ],
+  "steps_h2": "How to make a spokesperson video in 3 simple steps",
+  "steps_lead": "Three steps give you a speaking presenter who holds your product — no casting, no studio day.",
   "steps": [
     {
-      "t": "Upload your product",
-      "d": "Upload a clear full view with shape, color and label area visible so the presenter can hold the item at a believable scale."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear full view with the shape, color and label area visible. It lets the presenter hold the item at a believable scale."
     },
     {
-      "t": "Choose an actor and format",
-      "d": "Pick a scene and delivery style that fit your audience; give the presenter one simple action shoppers can follow."
+      "t": "Choose an Actor and Scene",
+      "d": "Pick an adult AI actor, a familiar setting and a delivery style that fit your audience, with one simple on-screen action."
     },
     {
-      "t": "Write your spoken line",
-      "d": "Write a supportable line, then review the voice and visuals before adding captions in your editor."
+      "t": "Write Your Line and Download",
+      "d": "Write one short, factual line, review the voice and visuals, then download. Add captions and offers in your editor."
     }
   ],
   "maker": {
@@ -70,6 +91,14 @@
     {
       "q": "How long should the spoken line be?",
       "a": "Use one short sentence that names the product and one useful feature. A focused line leaves time for the presenter to hold the item steady, show its action and finish without rushing the viewer. Read the line aloud before generation and check the final audio against the written copy."
+    },
+    {
+      "q": "Can this video run as a paid ad?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so the clip can run on TikTok, Reels and other paid channels. Identify the presenter as AI-generated where the platform requires it, and put prices or offers in your ad tool."
+    },
+    {
+      "q": "Is an AI spokesperson the same as hiring a UGC creator?",
+      "a": "No. A UGC creator films themselves with the real product and can improvise; an AI spokesperson speaks the line you write and is generated from your product photo. Use the presenter for a brand explanation, not as a personal customer story."
     }
   ],
   "overview": [
