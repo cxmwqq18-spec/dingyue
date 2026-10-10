@@ -1,10 +1,10 @@
 {
   "id": "tpl-detail",
   "title": "Product Detail Photos: Close-Ups of Texture | AIVideosUGC",
-  "description": "Create product detail photos that bring stitching, leather grain, and hardware up close. Upload a sharp shot of your item and make your first close-up now.",
+  "description": "Turn one sharp photo into a close-up of stitching, grain, hardware or finish. AI product detail photos for listing galleries and paid social ads.",
   "h1": "Close-Up Product Detail Photos of Stitching, Grain, and Finish",
   "eyebrow": "Product photo template",
-  "lead": "Product detail photos start with a sharp source photo where the stitching, texture, clasp, or finish is clearly visible. The square close-up can frame that detail; compare the result with the real item before publishing. Call out the one material or mechanism the image should prove, so a shopper can connect the close-up with a specific quality question.",
+  "lead": "Shoppers can't judge stitching, grain or hardware from a wide catalog shot, and unanswered quality questions become lost sales. Turn one sharp photo into a close-up that proves the detail buyers zoom in for.",
   "secondary_keywords": [
     "close-up product photos",
     "macro product photography",
@@ -18,16 +18,16 @@
   "tip": "Upload a photo taken in soft daylight with the detail in sharp focus, because the close-up can only be as crisp as the texture in your original shot.",
   "steps": [
     {
-      "t": "Choose one detail to show",
-      "d": "Keep the item steady and make the named seam, texture, or hardware fill the frame without losing edges that show its position."
+      "t": "Upload Your Product Photo",
+      "d": "Use a steady, well-lit photo in which the stitching, texture or clasp is visible. That feature becomes the close-up subject."
     },
     {
-      "t": "Frame that feature clearly",
-      "d": "Describe one feature and one setting, such as vegetable-tanned grain beside a window, and avoid mixing a second material into the request."
+      "t": "Pick the Detail",
+      "d": "Name one feature to enlarge and one simple setting. You get a square image where the detail fills the frame."
     },
     {
-      "t": "Place the photo in your gallery",
-      "d": "Download the close-up, check color and construction against the source, and place it after the full product image for shoppers to zoom."
+      "t": "Download and Place",
+      "d": "Download the close-up, check color and construction against the source, then place it after the hero shot."
     }
   ],
   "ideas": [
@@ -85,6 +85,14 @@
     {
       "q": "What does a detail photo cost?",
       "a": "Each detail photo costs 24 credits, shown before the job starts.  Use the full item first and the detail second in a listing so shoppers know which product the texture or hardware belongs to."
+    },
+    {
+      "q": "Can the close-up replace the main product photo?",
+      "a": "No. It supports the main image by proving one detail, so keep the full-product hero shot first and use the close-up where shoppers zoom to inspect quality."
+    },
+    {
+      "q": "Do I need a macro lens or professional camera?",
+      "a": "No. A sharp, steady photo from a phone is enough as the source; the close-up is generated from it, so the job costs only credits and the download has no watermark."
     }
   ],
   "overview": [
@@ -427,5 +435,26 @@
         "h2": "Questions about close-up product photos"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make AI product detail photos?",
+  "benefits": [
+    {
+      "t": "Prove quality before the question",
+      "d": "A tight, readable frame of the seam, leather grain, clasp or coating shows craftsmanship directly, so shoppers stop relying on guesswork about what they are buying."
+    },
+    {
+      "t": "Fewer quality-based returns",
+      "d": "Buyers who have seen the real texture and finish up close receive what they expected, cutting disappointments that come from distant main images."
+    },
+    {
+      "t": "Fill the gallery customers zoom on",
+      "d": "Place square close-ups after the hero shot in your listing, giving the detail images shoppers open before adding to cart."
+    },
+    {
+      "t": "No macro lens or studio",
+      "d": "The close-up is generated from a photo you already have; downloads carry no watermark and can be used commercially."
+    }
+  ],
+  "steps_h2": "How to make a product detail photo in 3 simple steps",
+  "steps_lead": "Three steps turn one sharp photo into a gallery-ready close-up - no macro gear, no studio."
 }
