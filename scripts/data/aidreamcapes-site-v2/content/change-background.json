@@ -1,10 +1,10 @@
 {
   "id": "change-background",
   "title": "AI Product Background Changer for Shop Photos | AIVideosUGC",
-  "description": "Keep a product photo you like and swap a cluttered background for a marble counter, sunny shelf or plain color, so listings and ads look like one set.",
-  "h1": "AI Product Background Changer for a New Setting",
+  "description": "Keep the product and swap the background behind it. A clean color, counter or seasonal setting in one square photo, ready for listings or ads.",
+  "h1": "AI Product Background Changer",
   "eyebrow": "Photo tool",
-  "lead": "Many product photos show the item well but fail against a messy counter or a backdrop that clashes with the rest of your store, and reshooting every listing is rarely worth it. Keep the product exactly as it is and replace the setting behind it, so your catalog, seasonal shots and ads look like they came from one shoot.",
+  "lead": "Keep the product shot you like. Replace only the setting behind it with a clean color, a counter or a seasonal scene. No reshoot, no studio day.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -12,43 +12,35 @@
     "new background for Etsy photos",
     "AI backdrop for product shots"
   ],
-  "intro": [
-    "Sometimes a product photo is usable but the background does not fit: a cluttered counter, a wrinkled sheet, or a wall that clashes with your brand colors. Use the photo as a reference for a new setting, then compare the product and edges with the original before publishing.",
-    "Use it to match a new collection to your store's colors, give old listings a seasonal backdrop, or line up products shot in different places so they look like one set. Describe the background in a few words, like \"sage green wall, light wood shelf,\" or pick a ready-made option. Each result is a complete square photo with the new background already in place."
-  ],
   "benefits_h2": "Why change a product photo background with AI?",
   "benefits": [
     {
-      "t": "Save the shot you already like",
-      "d": "Keep the angle, lighting and product that work, and replace only what sits behind it instead of losing the whole photo."
+      "t": "Keep it professional",
+      "d": "Move a product off a messy counter and onto a clean surface. Listings and ads look shot in one place."
     },
     {
-      "t": "A catalog that looks like one set",
-      "d": "Move items shot in different rooms onto matching surfaces or colors, so listings and ads feel consistent across your store."
+      "t": "Save hours and money",
+      "d": "Skip the reshoot, the crew and the studio day. One existing photo is all you need."
     },
     {
-      "t": "Seasonal updates without a reshoot",
-      "d": "Give existing products a holiday or launch backdrop without unpacking stock, booking space or setting up lights again."
-    },
-    {
-      "t": "Match your brand palette",
-      "d": "Ask for backgrounds in your store's colors, so product pages, feed posts and campaigns stay on brand."
+      "t": "Seasonal settings on demand",
+      "d": "Give an existing listing a holiday or launch backdrop without unpacking stock or setting up lights."
     }
   ],
-  "steps_h2": "How to change a product photo background in 3 simple steps",
-  "steps_lead": "Three steps keep your product and move it into a new setting, returning a finished square photo ready to post.",
+  "steps_h2": "How to change a product photo background with AI",
+  "steps_lead": "Three steps. The product stays, the setting changes.",
   "steps": [
     {
-      "t": "Upload the Original Photo",
-      "d": "Upload a sharp photo with the whole product in frame; a messy room behind it is fine. The item stays the reference throughout."
+      "t": "Upload Your Image",
+      "d": "Add one sharp photo with the whole product in frame. A messy room behind it is fine."
     },
     {
-      "t": "Name the New Background",
-      "d": "Describe one surface, color or room, such as white marble or pale sage, or pick a ready-made option. One setting works best."
+      "t": "Describe the New Background",
+      "d": "Name one surface, color or room, such as white marble or pale sage. You can also pick a ready-made option."
     },
     {
-      "t": "Review and Download",
-      "d": "Compare the edges and label with your original, then keep the result or try another backdrop. Add logos and text in your editor."
+      "t": "Download Your New Photo",
+      "d": "Review the edges against the original and download the finished square photo. Add logos and text in your own editor."
     }
   ],
   "maker": {
@@ -70,71 +62,44 @@
   },
   "faq": [
     {
-      "q": "Do I get a cut-out with a transparent background?",
-      "a": "Not from this tool. It gives you a finished photo with the new background already in place, ready to upload. For a plain white version, use the white background photo tool. Use [packshot angles](/ai-image-generation/packshot-multi-angle) when a consistent product view matters."
+      "q": "What is an AI product background changer?",
+      "a": "It is a tool that keeps your product and replaces the setting behind it. You start from one existing photo and get a finished square photo with the new background in place."
     },
     {
       "q": "Will my product change when the background changes?",
-      "a": "The tool aims to keep your product as it is, but fine details like printed text or small patterns can shift. Look over each result next to the real item before you add it to a listing. See [product video demos](/ai-video-generation/product-video) if the product also needs motion."
+      "a": "The item should stay the same: same angle, same scale, same edges. Small printed details can shift, so compare each result with the real product before you publish."
     },
     {
-      "q": "What backgrounds work well for home decor?",
-      "a": "Warm neutral walls, light wood, stone or linen surfaces and soft window light suit vases, candles, planters and tableware. Busy patterns can compete with the product, so save them for simple, solid-colored items. For matching category scenes, browse [beauty and skincare ideas](/industries/beauty-skincare)."
+      "q": "Do I get a transparent cut-out?",
+      "a": "No. You get a complete photo with the new setting already in place, ready to upload. For a plain white version, use the white background photo tool."
     },
     {
-      "q": "Can I add my logo or a sale message to the background?",
-      "a": "Add logos and words afterward in a design tool such as Canva, where they'll look exactly as you set them. Lettering made by AI can come out misspelled or blurry. For paid social, follow [the TikTok ad guide](/guides/first-tiktok-video-ad)."
+      "q": "Which backgrounds work best?",
+      "a": "Simple surfaces and colors keep attention on the item: marble, light wood, stone, linen or a solid brand color. Busy patterns can compete with the product."
     },
     {
-      "q": "What stays the same in a background change?",
-      "a": "The product, subject, framing and scale should stay consistent while the setting changes. For seasonal planning, review [sale campaign visuals](/ai-image-generation/sale-campaign-key-visual)."
+      "q": "Can I add my logo or a sale message?",
+      "a": "Add logos and words afterward in your own editor. AI-made lettering can come out misspelled or blurry."
     },
     {
-      "q": "Can I request a new room or outdoor setting?",
-      "a": "Yes. Describe the new environment and keep the uploaded product reference clear. For broader placements, read [the ad sizes guide](/guides/ad-sizes-by-platform)."
+      "q": "Can the new photo run in paid ads?",
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Keep the product identical to what you sell, and add any price or offer in your ad tool."
     },
     {
-      "q": "Is this the same as taking my own cut-out photo?",
-      "a": "No. A cut-out gives you the product on a transparent background to place anywhere yourself, while this tool returns a finished photo with the new setting already in place. Use it when you want a complete image, not a transparent asset."
+      "q": "Can I pick a seasonal or outdoor setting?",
+      "a": "Yes. Name one room, surface or outdoor scene, such as a holiday shelf or a garden table. One clear setting works best."
     },
     {
-      "q": "Can the new photo be used in paid ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so the image can run in paid social or marketplace campaigns. Keep the product identical to what you sell, and add any offer or logo in your ad tool."
+      "q": "How is this different from a reshoot?",
+      "a": "A reshoot means booking space and setting up lights again. Here the new setting is generated from your existing photo in minutes, at far less cost."
     }
   ],
   "overview": [
     {
-      "h2": "Use the photo as a reference for a new setting",
-      "d": "Keep the angle you already like and change only what's behind it. Ask for one thing at a time, like \"white marble counter\" or \"pale sage wall\", and compare each result with your original. For a consistent catalog, compare [white background photos](/ai-image-generation/ecommerce-main-image), [lifestyle photos](/ai-image-generation/lifestyle-scene), [model photos](/ai-image-generation/on-model-generation), [social ad photos](/ai-image-generation/feed-ad-still), [commercial lighting](/ai-image-generation/commercial-lighting), [color variation photos](/ai-image-generation/colorway-variations), [macro detail photos](/ai-image-generation/macro-details), [home and living ideas](/industries/home-living), [product photo tips](/guides/product-photo-tips), [the Amazon white background guide](/guides/white-background-amazon), [the inspiration gallery](/inspiration), and [pricing](/pricing)."
+      "h2": "Keep the product, change the setting",
+      "d": "The item and its angle stay exactly as they are. Only the surface and scene behind it change, so one photo can fit a whole catalog."
     }
   ],
-  "fit": {
-    "h2": "A good fix for setting problems",
-    "good": [
-      {
-        "t": "Mismatched product shoots",
-        "d": "Collections assembled from phone photos taken in different rooms or on different surfaces."
-      },
-      {
-        "t": "Seasonal refreshes",
-        "d": "Existing items that need an autumn, winter, or launch backdrop without opening the stock again."
-      },
-      {
-        "t": "Quiet product emphasis",
-        "d": "Objects whose shape reads better against a solid color or restrained material."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "A transparent asset request",
-        "d": "The output includes its new background and does not provide a transparent cutout."
-      },
-      {
-        "t": "Unreadable originals",
-        "d": "A tiny label or obscured pattern may not remain exact after the setting changes."
-      }
-    ]
-  },
   "examples": {
     "h2": "More background swaps",
     "lead": "One product shown on different backdrops, from a plain color block to a seasonal scene.",
@@ -191,20 +156,20 @@
       "prompt": "Use the uploaded amber serum dropper as the exact product reference. Keep the adult woman shown in the source, her white textured bathrobe, cheek application pose, hands, bottle, dropper, camera angle and framing. Change only the background to a soft muted sage-green bathroom with gentle tile detail and natural light."
     },
     "picker": {
-      "title": "Choose a product ad format",
-      "lead": "Choose a product scene to see formats such as skincare routines, try-ons and hands-on demos.",
+      "title": "Browse product settings",
+      "lead": "Each card moves the same product into a new scene. Pick a setting that fits the item and your brand.",
       "chips": [
         {
           "id": "routine",
-          "label": "GRWM & Routine"
+          "label": "Get Ready With Me"
         },
         {
           "id": "product-use",
-          "label": "Product Use"
+          "label": "Product Demo"
         },
         {
           "id": "problem-fix",
-          "label": "Problem to Fix"
+          "label": "Before & After"
         },
         {
           "id": "demo",
@@ -300,14 +265,14 @@
       {
         "frame": "browser",
         "ref": "n:guide:q6-cbg-uses-1",
-        "h": "GRWM: Gold earrings before work",
-        "d": "Show the scale and finish while an adult fastens a pair of hoops in a mirror."
+        "h": "Show scale and finish",
+        "d": "Place jewelry or small items on a clean surface. Shoppers judge size and material without distraction."
       },
       {
         "frame": "post",
         "ref": "n:guide:q6-cbg-uses-2",
-        "h": "Day in the Life: Dog harness fit",
-        "d": "An adult checks the fit on a calm dog before heading to the park."
+        "h": "A catalog that looks like one shoot",
+        "d": "Move products shot in different rooms onto matching surfaces. The whole store feels consistent."
       }
     ],
     "input": [
@@ -321,7 +286,7 @@
         "good": "n:gen2:plat-instagram-g1",
         "bad": "n:guide:q6-cbg-bad-mug-r2",
         "good_label": "Whole speckled mug, handle in frame",
-        "bad_label": "Too close: only the rim, nothing to set on a new background"
+        "bad_label": "Too close: only the rim in view"
       }
     ],
     "outputs": [
@@ -343,8 +308,8 @@
         "Your headline"
       ],
       "items": [
-        "Type prices, logos and sale dates in Canva or your editor. AI lettering can come out misspelled.",
-        "Zoom in on labels, patterns and small buttons and compare them with the real product."
+        "Type prices, logos and sale dates in your own editor. AI lettering can come out misspelled.",
+        "Zoom in on labels, patterns and edges and compare them with the real product."
       ]
     },
     "titles": {
@@ -352,8 +317,8 @@
         "h2": "How to change a product photo background in 3 steps"
       },
       "m3": {
-        "h2": "Product ad scenes by format",
-        "lead": "Pick an ad format that shows how shoppers can use your product."
+        "h2": "Product scenes by format",
+        "lead": "Pick a setting that shows the product at its best."
       },
       "m4": {
         "h2": "Where new-background photos help"
@@ -385,32 +350,32 @@
     }
   },
   "limitations": {
-    "h2": "Features for a controlled background change",
+    "h2": "What the background change includes",
     "items": [
       {
-        "t": "Keep product geometry",
-        "d": "Preserve the uploaded item’s angle, scale and visible edges while the setting changes.",
+        "t": "Product stays the same",
+        "d": "The item's angle, scale and visible edges stay in place while the setting changes.",
         "supported": true
       },
       {
-        "t": "Describe one new setting",
-        "d": "Name a surface, color or room so the background has one clear visual direction.",
+        "t": "One new setting",
+        "d": "Name a surface, color or room so the background has one clear direction.",
         "supported": true
       },
       {
-        "t": "Match a collection palette",
-        "d": "Use a consistent color family across listings, feed ads and seasonal variants.",
+        "t": "Seasonal settings",
+        "d": "Refresh an existing listing with a holiday or launch backdrop.",
         "supported": true
       },
       {
-        "t": "Create seasonal variants",
-        "d": "Refresh an existing listing with a new setting without unpacking the product again.",
-        "supported": true
+        "t": "Transparent cut-out",
+        "d": "The output keeps a finished background. It is not a transparent asset.",
+        "supported": false
       },
       {
-        "t": "Review fine details",
-        "d": "Check labels, patterns and edges against the real item before publishing.",
-        "supported": true
+        "t": "Logos or text",
+        "d": "Add logos, prices and words yourself after download.",
+        "supported": false
       }
     ]
   }
