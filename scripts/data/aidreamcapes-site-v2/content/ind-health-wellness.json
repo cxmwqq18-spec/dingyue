@@ -1,10 +1,10 @@
 {
   "id": "ind-health-wellness",
-  "title": "AI Lifestyle Photos for Wellness Brands | AIVideosUGC",
-  "description": "Turn one product photo into wellness lifestyle shots: supplements by the coffee, yoga gear in a studio, creator-style clips, no shoot. Watermark-free images.",
-  "h1": "AI Lifestyle Photos for Wellness Brands That Fit Real Routines",
+  "title": "AI UGC Ads and Lifestyle Photos for Wellness | AIVideosUGC",
+  "description": "Turn one product photo into wellness lifestyle photos and creator-style ads in gym, kitchen and routine scenes. Watermark-free, ready to post.",
+  "h1": "Wellness Product Ads and Photos Without a Shoot",
   "eyebrow": "Health & wellness",
-  "lead": "A plain packshot doesn't show how a supplement, tea, or gear fits into someone's day, and staging real routines is a shoot for each scene. Turn one product photo into a lifestyle image of your item in a real morning, workout, or evening routine.",
+  "lead": "Wellness sales run on trust, and a plain packshot does not build it. Turn one product photo into lifestyle images and creator-style clips set in real routines.",
   "card": "Supplements, tea and gear shown in the routines where people use them.",
   "secondary_keywords": [
     "supplement lifestyle photos",
@@ -13,244 +13,65 @@
     "fitness product lifestyle images",
     "yoga product photos"
   ],
-  "intro": [
-    "Wellness products get bought as part of a routine. People want to see the vitamin bottle next to the morning coffee, the foam roller on a living room rug, the herbal tea on a nightstand. Scenes like these help a shopper picture your product in their own day, which a plain packshot can't do on its own.",
-    "Upload a photo of the bottle, pouch, or tool and describe a real moment: a shaker bottle on a locker room bench, a silk sleep mask on a linen pillow, a resistance band looped around a doorframe. Creator-style images, with the casual shot-on-a-phone look common in social feeds, suit Instagram and TikTok posts. One clear product shot can be restaged in as many of these settings as you like."
-  ],
-  "ideas": [
-    {
-      "t": "Creator-style photos",
-      "d": "Handheld-looking images of someone holding a protein powder pouch or a tin of loose-leaf tea feel at home in Instagram and TikTok feeds. [Creator-Style Photo](/ai-image-generation/ugc-still-ad) keeps a supplement, bottle, or tool in a casual hand-held frame."
-    },
-    {
-      "t": "Active scenes",
-      "d": "Show a yoga mat unrolled in a sunlit studio, a water bottle on a hiking trail, or a massage gun on a gym bench. Choose settings that look like your real customer's life. [Lifestyle Photos](/ai-image-generation/lifestyle-scene) place the product in the routine without claiming a result. [Product Videos](/ai-video-generation/product-video) can show one pour, stretch, or pack-away action, while [How-To Video](/ai-video-generation/how-to-video) is useful when the routine needs a visible sequence."
-    },
-    {
-      "t": "Wind-down moments",
-      "d": "Lavender pillow spray on a nightstand, a weighted eye mask on a duvet, or a bath soak beside the tub give you calm evening visuals for posts and your product gallery. [Product Videos](/ai-video-generation/product-video) can show one pour, stretch, or pack-away action. [Close-Up Details](/ai-image-generation/macro-details) keeps powder, fabric, and tool texture easy to inspect."
-    },
-    {
-      "t": "Choose the placement",
-      "d": "For distribution, compare [Instagram ads](/platforms/instagram-ads), [TikTok ads](/platforms/tiktok-ads), [Amazon product photos](/platforms/amazon-product-photos), and [Shopify product photos](/platforms/shopify-product-photos) before you prepare a final crop."
-    }
-  ],
   "faq": [
     {
-      "q": "Can my photos or videos show what my supplement does?",
-      "a": "Keep them to how and when the product is used. Don't describe health benefits or results in your request or in any text you add later, and skip scenes that imply a physical change, such as before-and-after bodies."
+      "q": "Can the photos or videos show what my supplement does?",
+      "a": "Show how and when the product is used, not a health result. Keep claims and dosage wording in text your team approves, and skip scenes that imply a body change."
     },
     {
-      "q": "Why is my supplement label washed out in the result?",
-      "a": "Glare on a glossy label usually starts in the upload. Stand the bottle upright with the front label centered against a plain wall or board, and turn it slightly so daylight from the window doesn't hit the label head-on."
+      "q": "Why does the label look washed out in my result?",
+      "a": "Glare on a glossy label usually starts in the source photo. Shoot the bottle upright with the front label centered and use soft side light instead of direct light."
     },
     {
-      "q": "How do I make UGC-style product photos without hiring a creator?",
-      "a": "Describe a casual framing and setting, like \"phone photo, hand holding the jar over a kitchen counter, natural window light.\" Words such as \"phone photo\" and \"natural light\" help keep the look relaxed rather than polished."
+      "q": "Can I use these photos in paid wellness ads?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads and product pages. Any health claim or offer text you add must be accurate."
     },
     {
-      "q": "Can I use an image for Instagram Stories?",
-      "a": "Images come out square by default. For a vertical piece, make a short 9:16 video and post that as your Story instead."
+      "q": "Do I need to hire a model or a creator?",
+      "a": "No. Generated people and hands are placed around your product for a per-image credit cost. Arrange a real creator separately if you want a true customer story."
     },
     {
-      "q": "Can I use the lifestyle photos in paid wellness ads?",
-      "a": "Yes. Downloaded images are watermark-free and licensed for commercial use, including paid ads and product pages. Don't state health results or benefits you can't prove, and let the platform complete its ad review."
+      "q": "Can I use an image as an Instagram Story?",
+      "a": "Photos come out square. For a vertical Story, make a 9:16 clip and post that instead."
     },
     {
-      "q": "Do I need to hire a model or a UGC creator?",
-      "a": "No for these photos. Generated adult people and hands are placed around your product at a per-image credit cost instead of a model or creator fee. For a real customer story, you can still arrange an actual testimonial."
+      "q": "What format are the photos and clips delivered in?",
+      "a": "Photos are square JPGs. Clips are vertical 9:16 at 6, 10 or 15 seconds, so one product works across feeds and listings."
     }
   ],
-  "overview": {
-    "h2": "Put wellness products into a real routine",
-    "items": [
-      {
-        "t": "Show the moment, not a medical promise",
-        "d": "A jar beside breakfast, a mat in a studio, or a sleep mask on a nightstand helps someone picture when the product appears in a day. Keep health outcomes, testimonials, and before-and-after bodies out of the generated scene."
-      },
-      {
-        "t": "Keep the package dependable",
-        "d": "Use a clear source that shows the bottle, pouch, tin, tool, or fabric item from a useful angle. Context can feel relaxed and handheld, while the ingredient panel and approved claims stay under your team’s control."
-      }
-    ]
-  },
-  "input_guide": {
-    "h2": "Prepare a wellness product photo",
-    "items": [
-      {
-        "t": "Face the pack",
-        "d": "Center the front label, cap, lid, and base in the frame. Photograph a pouch or sachet flat enough that its shape is not folded away."
-      },
-      {
-        "t": "Reduce label glare",
-        "d": "Use side window light and turn glossy packaging slightly. Avoid a bright reflection across the product name or dosage panel."
-      },
-      {
-        "t": "Show the tool whole",
-        "d": "For a mat, roller, band, bottle, mask, or massage tool, include every edge, strap, handle, and attachment that a scene might expose."
-      },
-      {
-        "t": "Describe a routine",
-        "d": "Choose one time and place such as morning kitchen, gym bench, travel bag, or bedtime table. A focused moment reads more clearly than a list of benefits."
-      },
-      {
-        "t": "Keep claims approved",
-        "d": "Do not ask the image to show weight loss, pain relief, treatment, or a body change. Use the product photo for context, then add only health claims your team has approved."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Wellness photo ideas for daily routines",
-    "items": [
-      {
-        "t": "Morning shake",
-        "d": "In a bright kitchen, hands pour one scoop from a plain protein pouch into a shaker beside a glass of water; keep the package shape clear, use natural morning light, and leave out any health-result claims."
-      },
-      {
-        "t": "Stretch with a cork block",
-        "d": "An adult uses one natural cork yoga block under a hand during a seated stretch on a teal mat; keep the square edges and grain visible in soft studio daylight, with no body-transformation or medical cues."
-      },
-      {
-        "t": "Foam roller after a run",
-        "d": "An adult sits on a mat after a run and uses a plain foam roller beneath one calf; show the roller shape and texture clearly in calm gym light, without suggesting treatment or pain relief."
-      },
-      {
-        "t": "Tea at bedtime",
-        "d": "Hands pour herbal tea from a plain tin into a ceramic mug beside an open book on a bedside table; use warm evening light and keep the tin front visible without adding text or benefit claims."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the wellness set can show",
-    "items": [
-      {
-        "t": "Routine stills",
-        "d": "Square photos put a product beside objects that explain when it is used."
-      },
-      {
-        "t": "Creator-style context",
-        "d": "A casual hand, kitchen counter, gym bench, or bedside crop can fit a social feed without presenting a result claim."
-      },
-      {
-        "t": "Routine context",
-        "d": "Place the bottle, mat, or mask in one repeatable routine frame that a shopper can recognize."
-      },
-      {
-        "t": "Short product moments",
-        "d": "Use 9:16, 1:1, or 16:9, with 4:3 and 3:4 available for other crops, for a 6-, 10-, or 15-second clip built around one placement or movement."
-      },
-      {
-        "t": "See the cost first",
-        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip with the scope that suits the routine."
-      },
-      {
-        "t": "Download details",
-        "d": "Read the [FAQ](/faq) for commercial-use terms and watermark information before sharing."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the wellness asset",
-    "items": [
-      {
-        "t": "Check the label",
-        "d": "Compare product name, flavor, quantity, dosage wording, and package color with the real item."
-      },
-      {
-        "t": "Add approved product details",
-        "d": "Place ingredient facts, directions, required notices, price, and promotion dates in your approved design or store editor."
-      },
-      {
-        "t": "Add the social layer",
-        "d": "AIVideosUGC does not add voiceover, music, or captions; add ingredient facts and required notices after your claims review."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A good fit for routine-led wellness",
-    "good": [
-      {
-        "t": "Packaged consumables",
-        "d": "Supplements, tea, powders, pouches, tins, and bottles with a clear physical form."
-      },
-      {
-        "t": "Movement accessories",
-        "d": "Mats, blocks, bands, rollers, masks, and tools that make sense in a room or bag."
-      },
-      {
-        "t": "Calm daily moments",
-        "d": "Products whose use can be shown through a counter, studio, gym, travel, or wind-down scene."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "Clinical evidence",
-        "d": "Generated imagery cannot prove a treatment, dosage outcome, or health result."
-      }
-    ]
-  },
-  "examples": {
-    "h2": "More health and wellness examples",
-    "lead": "Products shown after a workout and in a simple skin-care routine.",
-    "groups": [
-      {
-        "label": "Daily routines",
-        "items": [
-          {
-            "ref": "n:guide:f8-wellness-example-yoga-mat-roller-r1",
-            "title": "Active setup: Yoga mat and roller before class",
-            "kind": "photo",
-            "product": "yoga mat and foam roller"
-          },
-          {
-            "ref": "n:guide:k7-ind-health-wellness-examples-0-items-1-ref-n-gen2-social-ad-photos-c3",
-            "title": "Product detail: Hand cream among lavender",
-            "kind": "photo",
-            "product": "hand cream"
-          }
-        ]
-      }
-    ]
-  },
-  "templates_lead": "Choose a routine, workout, or wind-down scene for your wellness product.",
-  "cta_lead": "Choose an everyday setting for your wellness product, such as a counter or gym bag.",
-  "benefits_h2": "Why make wellness lifestyle photos from a product shot?",
+  "benefits_h2": "Why Wellness Brands Are Done Waiting on Creators",
   "benefits": [
     {
-      "t": "No creator, studio, or location",
-      "d": "Upload one product photo and generate the scene. You don't hire a creator, rent a studio, or set up a shoot for each routine."
+      "t": "Faster, lower-cost production",
+      "d": "Upload one product photo and get the scene back in minutes. No creator fees, studio rental, or waiting on a shoot date."
     },
     {
-      "t": "One product, every routine",
-      "d": "Restage the same bottle, pouch, or tool in a morning kitchen, locker room, studio, and nightstand. Each shot helps shoppers picture it in a different part of the day."
+      "t": "Content that scales across channels",
+      "d": "Restage one bottle, tin, or gear in multiple routine scenes. One source photo feeds social posts, ads, and product pages."
     },
     {
-      "t": "Stay on the right side of ad rules",
-      "d": "Show the moment of use without describing results or before-and-after bodies, so your ad focuses on the product instead of an unsupported health claim."
-    },
-    {
-      "t": "Ready for feeds and listings",
-      "d": "Downloaded images are watermark-free and licensed for commercial use on social posts, Stories, and product pages."
+      "t": "Trust without the hard sell",
+      "d": "Shoppers see your product in a routine they recognize. The scene answers how it fits the day, without unsupported health claims."
     }
   ],
-  "steps_h2": "How to make a wellness lifestyle photo in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-publish lifestyle shot — no studio, no creator, no reshoots.",
+  "steps_h2": "Your Next Wellness Ad Is a Swipe Away",
+  "steps_lead": "3 Steps to make creator-style videos for wellness products with AIVideosUGC",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one upright, glare-free photo with the label area visible. The result keeps the product's shape and details."
+      "t": "Upload Your Product",
+      "d": "Add one clear photo of the bottle, pouch, tin, or gear. The result keeps its shape, color, and label area."
     },
     {
-      "t": "Describe Your Routine Scene",
-      "d": "Pick a morning, workout, or evening setting and describe the moment of use. Run the same photo through more scenes to build a set."
+      "t": "Pick a Scene and Format",
+      "d": "Choose a routine setting and a square photo or vertical clip. Run one product through more scenes to build a set."
     },
     {
       "t": "Download and Post",
-      "d": "Review the image and save it. Add material, care, or offer text in your editor, then publish it."
+      "d": "Review the file, save it, and add approved text in your editor. Then upload it to your store or ad account."
     }
   ],
   "visual": {
-    "overview": "Wellness shoppers often want to see the product, its texture, and the routine around it. Keep product images grounded in use, and leave health outcomes out of the scene.",
+    "overview": "Wellness shoppers want to see the product and the routine around it. Every scene stays grounded in use, with no health results on screen.",
     "strip": [
       "n:guide:q16-wellness-mat-unroll",
       "n:guide:q16-wellness-first-stretch",
@@ -261,9 +82,10 @@
     ],
     "steps": {
       "source": "n:guide:q16-wellness-mat-source",
+      "sourceAlt": "Teal yoga mat partly unrolled on a clean studio floor.",
       "result": "n:guide:q16-wellness-mat-stretch",
       "mode": "photo",
-      "prompt": "An adult sits on this teal yoga mat beside a bright window, preparing for a gentle stretch. Show the full mat, strap and surface texture on a clean wooden floor in soft daylight, with a calm home-workout feel and no text or health claims.",
+      "prompt": "A teal yoga mat beside a bright window, ready for a gentle stretch without a health claim.",
       "options": [
         [
           "Template",
@@ -276,215 +98,28 @@
       ]
     },
     "picker": {
-      "title": "Choose a wellness ad scene",
-      "lead": "Pick a routine and product moment for a product page or social post.",
-      "chips": [
-        {
-          "id": "movement",
-          "label": "Hands-on Demo"
-        },
-        {
-          "id": "routine",
-          "label": "Daily Routine"
-        },
-        {
-          "id": "selfcare",
-          "label": "Texture & Reveal"
-        },
-        {
-          "id": "quiet",
-          "label": "Night Routine"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:k7-ind-health-wellness-picker-cards-0-cork-block",
-          "label": "Show grain → texture → listing",
-          "prompt": "Show the natural cork grain and full square edge of the yoga block against a clean neutral surface.",
-          "chips": [
-            "movement"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q16-wellness-face-mist",
-          "label": "Mist face → scale → social-post",
-          "prompt": "Show an adult holding a plain face mist beside her face after a workout, with a fine spray visible in soft gym light.",
-          "chips": [
-            "movement"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k7-ind-health-wellness-picker-cards-2-ref-n-gen2-ind-beauty-skincare-c2",
-          "label": "Open mask → texture → routine-listing",
-          "prompt": "Show the open clay mask jar and its creamy texture beside folded towels in soft bathroom light.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q16-wellness-tea-pour-closeup",
-          "label": "Pour tea → serving → morning-post",
-          "prompt": "Hands pour hot water into a ceramic mug beside a tea tin on a bright kitchen counter.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q16-wellness-tea-unbox",
-          "label": "Lift tin → contents → unboxing",
-          "prompt": "Show hands lifting a plain tea tin from tissue in a simple gift box on a kitchen table.",
-          "chips": [
-            "selfcare"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q16-wellness-lip-balm",
-          "label": "Apply balm → tube → get-ready",
-          "prompt": "Show an adult applying a plain lip balm before leaving home; keep the tube clear beside a bright mirror in soft morning light.",
-          "chips": [
-            "selfcare"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f8-wellness-picker-quiet-man-r1",
-          "label": "Warm mug → ritual → bedtime",
-          "prompt": "Show a middle-aged Black man warming both hands around a plain ceramic mug beside a small unbranded tea tin at a bedside table. Keep the mug and tin visible in a calm evening routine, with no health claims. Warm lamp light, quiet lifestyle photo.",
-          "chips": [
-            "quiet"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f8-wellness-picker-quiet-hands-r1",
-          "label": "Lower mask → fabric → night-routine",
-          "prompt": "Show only adult hands lowering a plain charcoal sleep mask onto folded linen on a bedside table. Keep the mask fabric and elastic strap fully visible; no face or body in frame and no health claims. Warm bedside light, quiet night-routine photo.",
-          "chips": [
-            "quiet"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-fitness-supplement",
-          "label": "Sip shaker → package → workout",
-          "prompt": "Show an adult taking one sip from a plain shaker bottle after a workout, with the supplement pouch resting beside the gym bag. Keep the package shape clear and avoid health-result claims. Natural gym daylight, candid creator-style photo, hands and product in focus.",
-          "chips": [
-            "movement"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q9-head-supplement-spokesperson",
-          "label": "Hold bottle → label → product-page",
-          "prompt": "Show an adult presenter holding a plain supplement bottle beside their face in a bright home gym. Keep the cap, bottle shape and blank label area visible; show a routine moment without medical claims. Natural window light, straightforward creator-style photo.",
-          "chips": [
-            "routine"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-home-picker-cards-4-image",
-          "label": "Roll face → handle → self-care",
-          "prompt": "Show an adult using a plain jade face roller along one cheek beside a bright bathroom mirror. Keep the roller texture and handle visible, with natural skin texture and no transformation claim. Soft morning light, close creator-style photo.",
-          "chips": [
-            "selfcare"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f8-wellness-tea-hands-r1",
-          "label": "Warm mug → tea-tin → quiet-routine",
-          "prompt": "Show adult hands warming around a plain ceramic mug beside a small unbranded tea tin on a bedside table. Keep the cup and tin visible; no face or body in frame and no health claims. Warm lamp light, quiet evening lifestyle photo.",
-          "chips": [
-            "quiet"
-          ],
-          "kind": "photo"
-        }
-      ],
+      "title": "Choose a wellness scene",
+      "lead": "Pick a routine moment for a product page or social post.",
+      "chips": [],
+      "cards": [],
       "button": "Make a product photo"
     },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q16-wellness-hand-soap",
-        "h": "Hand demo: Soap pressed into a palm",
-        "d": "A clear pump and fresh lather show the product in a familiar hand-washing routine."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:k7-ind-health-wellness-uses-1-ref-n-gen2-tpl-ugc-case-81",
-        "h": "Product setup: Bottle beside a work desk",
-        "d": "A plain reusable bottle beside a laptop shows where it fits into a daily work routine."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:gen2:examples-g4",
-        "bad": "n:guide:ind-health-wellness-m5-soft-focus",
-        "good_label": "The cork block edges stay sharp",
-        "bad_label": "The cork grain disappears in soft focus"
-      },
-      {
-        "good": "n:guide:k7-ind-health-wellness-input-1-good-block",
-        "bad": "n:guide:ind-health-wellness-m5-cropped",
-        "good_label": "The block and mat fit inside the image",
-        "bad_label": "One end of the yoga block is cut off by the frame"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q16-wellness-cork-block-output1",
-        "frame": "1:1",
-        "label": "Cork block supports a seated stretch"
-      },
-      {
-        "ref": "n:guide:q16-wellness-cork-block-output2",
-        "frame": "1:1",
-        "label": "Cork block under a side stretch"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:f8-wellness-after-cork-block-r1",
-      "zones": [
-        "Cork grain",
-        "Edge profile"
-      ],
-      "items": [
-        "Check the cork grain, color, edges, and corners against the real block.",
-        "Add care instructions and product dimensions in text so customers can read them clearly."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Create a wellness product photo in three steps"
+        "h2": "Your Next Wellness Ad Is a Few Clicks Away"
       },
       "m3": {
-        "h2": "Choose a wellness scene for daily use"
-      },
-      "m4": {
-        "h2": "Use wellness photos in listings and social posts"
-      },
-      "m5": {
-        "h2": "Start with a clear wellness product photo"
-      },
-      "m6": {
-        "h2": "Square health and wellness photos for listings"
-      },
-      "m7": {
-        "h2": "Add usage details after download"
-      },
-      "examples": {
-        "h2": "More health and wellness examples",
-        "lead": "Wellness gear, daily hydration, and simple self-care routines for product listings and social posts."
+        "h2": "Choose a Wellness Scene",
+        "lead": "Open a routine scene and place your product in it."
       },
       "faq": {
-        "h2": "Questions about wellness product photos"
+        "h2": "Questions About Wellness Product Photos"
       }
     }
-  }
+  },
+  "templates_lead": "Pick a routine scene for your wellness product.",
+  "cta_lead": "Place your wellness product in a real routine, starting from one photo."
 }

@@ -1,10 +1,10 @@
 {
   "id": "ind-home-living",
-  "title": "AI Product Videos for Home Brands | AIVideosUGC",
-  "description": "Turn one product photo into room scenes, organizing before-and-after clips, and cleaning demos for home brands, no set building. Watermark-free videos.",
-  "h1": "AI Product Videos for Home Brands, Shown in Real Rooms",
+  "title": "AI Home Product Videos Without a Set | AIVideosUGC",
+  "description": "Turn one product photo into home product videos for room styling, cleaning demos, and organizing moments. Watermark-free files, ready for listings and ads.",
+  "h1": "Home Product Videos That Show the Product in Use",
   "eyebrow": "Home & living",
-  "lead": "Shoppers can't judge a pillow, organizer, or gadget from a white-background shot, and building real room sets for each product is slow. Turn one product photo into an in-room scene or demo that shows the item working and its true scale.",
+  "lead": "Home shoppers need to see where a product fits and what it does. Turn one product photo into a room scene, cleaning demo, or organizing moment without building a set.",
   "card": "Products in lived-in rooms, plus before-and-after clips for organizers.",
   "secondary_keywords": [
     "home decor product videos",
@@ -13,40 +13,10 @@
     "furniture product video",
     "storage product video ads"
   ],
-  "intro": [
-    "A visible in-room result helps shoppers understand a product quickly. Show a cordless vacuum lifting crumbs, a grooming glove collecting loose fur, or a throw pillow set styled on a reading chair. Link the finished still to [room-styled product photos](page:lifestyle-photos) when the listing needs a calm context shot.",
-    "For textiles, lighting, kitchen organization, and pet-home products, keep the material, scale, and useful action in clear view. Use [background replacement](page:change-background) for a setting change and [white-background product photos](page:white-background) when the listing needs an uncluttered main image."
-  ],
-  "ideas": [
-    {
-      "t": "Before and after cleaning",
-      "d": "Keep the camera angle steady and show one realistic cleaning result."
-    },
-    {
-      "t": "Pet product demos",
-      "d": "Show the product in use with a calm animal and a clear view of the tool."
-    },
-    {
-      "t": "Room styling for textiles and lighting",
-      "d": "Place a throw pillow set, fold a blanket, or switch on a lamp so shoppers can judge scale and texture."
-    },
-    {
-      "t": "Storage capacity check",
-      "d": "Show one drawer, shelf, or bin opening before and after the product is placed, then keep the final view within its stated capacity."
-    },
-    {
-      "t": "Pet-hair problem to fix",
-      "d": "Start with visible fur on one sofa section, make a single cleaning pass, and leave both surfaces in frame so the result is easy to judge."
-    },
-    {
-      "t": "Small-room product review",
-      "d": "Have an adult hold the home tool beside the problem area and explain one useful detail before showing the result in the same room."
-    }
-  ],
   "faq": [
     {
       "q": "Can I show a before-and-after of a closet using my organizer?",
-      "a": "Yes. Describe both states, such as \"cluttered closet floor with shoes piled up, then the same closet with shoes on a three-tier rack.\" Keep the after true to what your product really holds, so buyers aren't surprised when it arrives."
+      "a": "Yes. Describe both states, such as \"cluttered closet floor with shoes piled up, then that closet with shoes on a three-tier rack.\" Keep the after true to what your product really holds, so buyers aren't surprised when it arrives."
     },
     {
       "q": "Will furniture look the right size in the room?",
@@ -77,203 +47,25 @@
       "a": "No for these clips. Rooms, props, and adult hands are generated around your product photo at a per-clip credit cost. A large custom set or an original filmed concept can still be produced separately."
     }
   ],
-  "overview": {
-    "h2": "Show where the product belongs",
-    "items": [
-      {
-        "t": "Let the room answer scale",
-        "d": "A planter beside a windowsill, a side table beside a chair, or a rack in a hallway gives shoppers a reference they already understand. Keep the real dimensions visible in your listing as the authoritative source."
-      },
-      {
-        "t": "Make one setup step clear",
-        "d": "Open the cabinet, attach the bracket, place the bin, or pull the shade. A focused action can explain use while staying honest about what the product actually does and holds."
-      }
-    ]
-  },
-  "input_guide": {
-    "h2": "Prepare a home product photo",
-    "items": [
-      {
-        "t": "Keep the whole item in frame",
-        "d": "Include legs, handles, cords, lids, brackets, and edges. A cut-off product gives the scene too much room to guess."
-      },
-      {
-        "t": "Photograph working parts",
-        "d": "Add separate views of a drawer, hinge, fold, plug, mounting hole, or closure when a setup scene needs to reveal it."
-      },
-      {
-        "t": "State the dimensions",
-        "d": "Write the width, height, depth, and capacity in your product information. Use nearby furniture or a doorway as a visual cue, not as a measurement."
-      },
-      {
-        "t": "Choose one room",
-        "d": "Name a narrow entryway, rental kitchen, nursery, dorm, patio, or living room and describe where the item sits. One clear space keeps the composition believable."
-      },
-      {
-        "t": "Plan the before state",
-        "d": "For an organizer or storage item, describe clutter that your actual product can handle and keep the after state within its real capacity."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Home scenes you can describe",
-    "items": [
-      {
-        "t": "Entryway scale",
-        "d": "A narrow console table beside a front door with a small planter and bowl on top, camera wide enough to show the walkway around it."
-      },
-      {
-        "t": "Pantry reset",
-        "d": "An overfilled pantry shelf opening on clutter, then matching clear bins lined up with labels added later in the editor."
-      },
-      {
-        "t": "Reading corner",
-        "d": "A round side table beside a reading chair and floor lamp, a book and mug giving the table a familiar scale."
-      },
-      {
-        "t": "One installation step",
-        "d": "A shelf bracket aligned against a wall with a drill and level nearby, close crop on the bracket while leaving exact instructions for the caption."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What a home set can deliver",
-    "items": [
-      {
-        "t": "Room context",
-        "d": "Square or landscape stills let a shopper see the product beside furniture, shelves, walls, and everyday objects."
-      },
-      {
-        "t": "Before-and-after structure",
-        "d": "A clear opening state and a believable finished state can explain organizers without promising more capacity than the product has."
-      },
-      {
-        "t": "Flexible crops",
-        "d": "Choose 9:16, 1:1, or 16:9 for primary placements, with 4:3 and 3:4 available when a room needs a different frame; clips run 6, 10, or 15 seconds."
-      },
-      {
-        "t": "See the cost first",
-        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip that fits the room and product story."
-      },
-      {
-        "t": "A file ready to finish",
-        "d": "Visit the [FAQ](/faq) for commercial-use and watermark information for downloaded files."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the home asset",
-    "items": [
-      {
-        "t": "Check the room",
-        "d": "Compare product color, hardware, cord routing, legs, handles, and the number of included pieces with the real item."
-      },
-      {
-        "t": "Add exact specifications",
-        "d": "Overlay dimensions, weight limit, capacity, material, price, delivery date, and installation steps in your approved layout."
-      },
-      {
-        "t": "Add the instructional layer",
-        "d": "AIVideosUGC does not add voiceover, music, or captions; add dimensions and installation steps after checking each scene."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A good fit for home and living products",
-    "good": [
-      {
-        "t": "Room-scale goods",
-        "d": "Planters, lamps, tables, rugs, baskets, organizers, textiles, and decor with visible form."
-      },
-      {
-        "t": "Placement-led selling",
-        "d": "Products that become easier to judge beside a chair, shelf, countertop, doorway, or bed."
-      },
-      {
-        "t": "Simple setup stories",
-        "d": "Items whose use can be shown in one placement, opening, fitting, or organizing step."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "Exact installation proof",
-        "d": "Keep real manuals, hole spacing, and safety details for products where a mistake matters."
-      }
-    ]
-  },
-  "examples": {
-    "h2": "More home and living examples",
-    "lead": "Room styling, cleaning demos, pet-care scenes, and useful home-product details.",
-    "groups": [
-      {
-        "label": "Pet Demos",
-        "items": [
-          {
-            "ref": "n:guide:q17-ind-home-living-example-1",
-            "title": "Pet grooming glove in use",
-            "kind": "photo",
-            "product": "pet grooming glove"
-          }
-        ]
-      },
-      {
-        "label": "Room Styling",
-        "items": [
-          {
-            "ref": "n:guide:q17-ind-home-living-r2-example-2",
-            "title": "Woven throw blanket styled over an armchair",
-            "kind": "photo",
-            "product": "throw blanket"
-          }
-        ]
-      },
-      {
-        "label": "Cleaning Demos",
-        "items": [
-          {
-            "ref": "n:guide:q17-ind-home-living-example-3",
-            "title": "Stain remover pen on a shirt cuff",
-            "kind": "photo",
-            "product": "stain remover pen"
-          }
-        ]
-      },
-      {
-        "label": "Before & After",
-        "items": [
-          {
-            "ref": "n:guide:q17-ind-home-living-example-4",
-            "title": "Cordless vacuum lifting sofa crumbs",
-            "kind": "photo",
-            "product": "cordless vacuum"
-          }
-        ]
-      }
-    ]
-  },
   "templates_lead": "Choose a room, organizing step, or placement that fits the home product.",
   "cta_lead": "Select the room or use scene where your home product belongs.",
-  "benefits_h2": "Why make home product videos from one photo?",
+  "benefits_h2": "Why Home Brands Are Done Waiting on Shoots",
   "benefits": [
     {
-      "t": "No room sets or location shoots",
-      "d": "Generate the room around your product photo instead of building or renting a set. You skip the crew, props, and shoot date for each home product."
+      "t": "Faster, lower-cost production",
+      "d": "Create a room scene or product demo from one photo. Skip a location, crew, props, and another shoot for every new item."
     },
     {
-      "t": "One photo, many rooms",
-      "d": "Place the same item in an entryway, pantry, reading corner, and kitchen. Each scene answers a different question about scale, storage, or use without a reshoot."
+      "t": "Content that scales across channels",
+      "d": "Place one item in room styling, cleaning, and organizing scenes. One source photo feeds product pages, social posts, and ads."
     },
     {
-      "t": "Prove the result honestly",
-      "d": "A before-and-after can show an organizer at work when the after matches its real capacity, so shoppers trust what arrives instead of seeing an exaggerated claim."
-    },
-    {
-      "t": "Cleared for ads and listings",
-      "d": "Downloaded clips are watermark-free and licensed for commercial use on product pages, social feeds, and paid campaigns."
+      "t": "Clearer decisions for shoppers",
+      "d": "A useful room or action shows where the product belongs. Buyers can judge scale and use before they add it to the cart."
     }
   ],
-  "steps_h2": "How to make a home product video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post in-room clip — no set, no crew, no reshoots.",
+  "steps_h2": "Your Next Home Ad Is a Swipe Away",
+  "steps_lead": "3 Steps to make creator-style videos for home products with AIVideosUGC",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -281,7 +73,7 @@
     },
     {
       "t": "Pick a Room Scene",
-      "d": "Choose a room and one action, such as organizing, cleaning, or styling. Run the same photo through more rooms to show scale and use."
+      "d": "Choose a room and one action, such as organizing, cleaning, or styling. Run one photo through more rooms to show scale and use."
     },
     {
       "t": "Download and Post",
@@ -303,7 +95,7 @@
       "result": "f:q17-ind-home-living-r2-steps-pillow",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the exact product reference. Keep this two-piece set of solid linen throw pillows unchanged: one warm ivory-beige square pillow and one muted sage-green square pillow, preserving their woven texture, seams, proportions, and colors. In a calm living room, hands place this pair on a reading chair and make one gentle adjustment, ending with both pillows fully visible. Soft window light, natural home product-video style. Medium close framing with one slow push-in. Sound: fabric rustle and quiet room tone; no music.",
+      "prompt": "Two linen pillows arranged on a reading chair in soft window light.",
       "options": [
         [
           "Size",
@@ -332,221 +124,19 @@
     "picker": {
       "title": "Choose a home-product ad format",
       "lead": "Show a clear result, a hands-on demo, or a creator explaining the product.",
-      "chips": [
-        {
-          "id": "before-after",
-          "label": "Before & After"
-        },
-        {
-          "id": "creator",
-          "label": "Creator Reviews"
-        },
-        {
-          "id": "demo",
-          "label": "Unboxing & Product Demos"
-        },
-        {
-          "id": "fit-setup",
-          "label": "Room Setup / Styling"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "f:q17-ind-home-living-picker-0",
-          "label": "Before & After: vacuum clears crumbs",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A compact cordless vacuum crosses a sofa cushion with scattered crumbs in one pass, ending on the cleaned strip beside the untouched area. Soft daylight, satisfying home-demo style. Low close-up at cushion height with one slow lateral move. Sound: vacuum motor and fabric brush; no music.",
-          "chips": [
-            "before-after"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-home-living-picker-1",
-          "label": "Creator Review: pet roller demo",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds a pet-hair roller beside their face and says to camera: “This lifts loose fur from the sofa in a single pass.” They roll once across a dark cushion and end with the clean strip visible. Soft natural room light, straightforward UGC demo, natural skin texture. Chest-up handheld framing with a slight push-in. Sound: voice, roller peel, fabric brush; no music.",
-          "chips": [
-            "creator"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-home-living-picker-2",
-          "label": "ASMR Unboxing: paw-cleaning glove",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain pet-care mailer, lift a soft paw-cleaning glove from the tissue and hold it beside the open package, ending with its texture visible. Bright window light, natural creator-video style. Top-down close-up with a slow push-in. Sound: tissue rustle and carton creak; no music.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-home-living-picker-3",
-          "label": "Cleaning Demo: stain spray",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand sprays a plain stain remover onto a small mark on a shirt cuff and blots once with a white cloth, ending with the treated patch beside the untreated edge. Clean daylight, natural product-demo look. Close side view with a gentle push-in. Sound: spray and cloth dab; no music.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-home-living-r2-picker-4",
-          "label": "Style the throw pillow set",
-          "prompt": "Use the uploaded photo as the exact product reference. Keep this pair of two solid linen throw pillows unchanged: one warm ivory-beige and one muted sage-green, with identical woven texture, seams, proportions, and colors. In a bright reading corner, a hand arranges the matching pair on a chair, ending with both pillows fully visible beside the floor lamp. Natural window light, realistic home styling video. Medium shot with a gentle lateral move. Sound: fabric rustle; no music.",
-          "chips": [
-            "fit-setup"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-home-living-r2-picker-5",
-          "label": "Switch on a table lamp",
-          "prompt": "Use the uploaded photo as the exact product reference. In a calm reading corner, a hand switches on a plain ceramic table lamp beside a chair with a folded neutral throw. Keep the lamp shape and shade clear, end on its warm pool of light across the room. No people, text, logo, or unrelated products. Soft evening ambience with realistic home-product video framing, one slow push-in. Sound: switch click and quiet room tone; no music.",
-          "chips": [
-            "demo",
-            "fit-setup"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:q17-ind-home-living-r2-picker-6",
-          "label": "Creator Review: washable pet sofa cover",
-          "prompt": "Use the uploaded photo as the exact product reference. In a calm living room, an adult creator presents a plain washable sofa cover, spreads it flat across the sofa cushion, and shows its quilted surface while a relaxed dog settles beside them. Keep the household pet cover and its texture clearly visible. Natural window light, straightforward creator review framing. No car, phone, wearable, text, logo, or unrelated product. End with the quilted cover spread flat and the dog settled beside it. Sound: fabric movement and quiet room tone; no music.",
-          "chips": [
-            "creator"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:k7-ind-home-living-picker-07-cushion-clean",
-          "label": "Pet Hair Demo: clean sofa",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a charcoal sofa, a hand rolls a lint roller across pet hair in one straight pass, ending with a clean strip beside the untouched area. Soft natural room light, satisfying short-form video look. Low close-up with one lateral move. Sound: roller peel and fabric brush; no music.",
-          "chips": [
-            "before-after"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f17-home-vacuum-demo",
-          "label": "Before & After: vacuum crumbs",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult hand guides a compact cordless vacuum across crumbs on a charcoal sofa cushion in one straight pass, ending with a clean strip beside the untouched area. Keep the tool shape and neutral color clear. Soft window light, realistic home product photo, square crop, no text or logo.",
-          "chips": [
-            "before-after"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f17-home-pet-roller-review",
-          "label": "Creator Review: pet roller",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult Black man with short natural hair holds a plain pet-hair roller beside a charcoal sofa, then rolls once across a visible patch of fur so the clean strip remains in frame. Keep the roller shape and sofa texture clear. Soft natural room light, square creator-review photo, no text or logo.",
-          "chips": [
-            "creator"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k7-ind-home-living-case-desk-lamp",
-          "label": "Room Demo: table lamp",
-          "prompt": "Use the uploaded photo as the exact product reference. Show the oak table lamp glowing beside a reading chair and open book in a calm nook. Keep the lamp shade, base, and warm pool of light clear at a natural room scale. Square home styling photo, soft daylight, no text or logo.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k7-ind-home-living-case-wall-shelf",
-          "label": "Room Setup: floating shelf with plants",
-          "prompt": "Use the uploaded photo as the exact product reference. Show a floating oak shelf with books and a small plant on a pale wall above a simple console. Keep the shelf shape, plant leaves, and wall spacing clear. Square room setup photo in bright window light, no text or logo.",
-          "chips": [
-            "fit-setup"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k7-ind-home-living-case-linen-bed",
-          "label": "Room Styling: linen bedding in daylight",
-          "prompt": "Use the uploaded photo as the exact product reference. Show a neatly made bed with soft linen bedding and a folded oatmeal throw in daylight. Keep the fabric texture, folds, and full bed scale visible. Square room styling photo, calm neutral palette, no text or logo.",
-          "chips": [
-            "fit-setup"
-          ],
-          "kind": "photo"
-        }
-      ],
+      "chips": [],
+      "cards": [],
       "button": "Make a product video"
     },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "f:q17-ind-home-living-uses-0",
-        "h": "Show a pet product in use",
-        "d": "A grooming glove lifts loose fur while the dog stays calm."
-      },
-      {
-        "frame": "post",
-        "ref": "f:q17-ind-home-living-uses-1",
-        "h": "Show a cleaning tool solving a problem",
-        "d": "A compact vacuum picks crumbs from a sofa seam."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:gen2:url-to-video-g2",
-        "bad": "n:guide:ind-home-living-m5-soft-focus",
-        "good_label": "The throw pillow and reading chair stay in view",
-        "bad_label": "The pillow and chair soften into blur"
-      },
-      {
-        "good": "n:guide:k7-ind-home-living-input-01-good-planter",
-        "bad": "n:guide:k7-ind-home-living-input-01-bad-planter-v2",
-        "good_label": "The planter shape and leaves stay crisp",
-        "bad_label": "The planter is cut off at the frame edge"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:q17-ind-home-living-r2-output-pillow-0",
-        "frame": "16:9",
-        "label": "Ivory and sage throw pillows on a reading chair",
-        "length": 6
-      },
-      {
-        "ref": "n:guide:f17-home-output-fern-planter",
-        "frame": "16:9",
-        "label": "Hand touches fern in a sage planter",
-        "length": 10
-      }
-    ],
-    "after": {
-      "ref": "f:q17-ind-home-living-after",
-      "zones": [
-        "Before",
-        "After"
-      ],
-      "items": [
-        "Use a clear, consistent view of the fabric mark.",
-        "Keep the result realistic for the cleaning product shown."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
     "titles": {
       "m2": {
         "h2": "Make a home product video in three steps"
       },
       "m3": {
         "h2": "Choose a home-product ad format"
-      },
-      "m4": {
-        "h2": "Use home videos on product pages and social feeds"
-      },
-      "m5": {
-        "h2": "Start with a clear home product photo"
-      },
-      "m6": {
-        "h2": "Choose a home video shape and length"
-      },
-      "m7": {
-        "h2": "Add dimensions after downloading your home video"
-      },
-      "examples": {
-        "h2": "More home and living examples",
-        "lead": "Room styling, cleaning demos, pet-care scenes, and useful home-product details."
       },
       "faq": {
         "h2": "Questions about home product videos"

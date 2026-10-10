@@ -1,10 +1,10 @@
 {
   "id": "ind-shoes",
-  "title": "Footwear UGC Video Ads for Shoes and Sneakers | AIVideosUGC",
-  "description": "Turn one shoe photo into on-foot demos, unboxings, fit checks and creator reviews for footwear ads, no video shoot. Watermark-free clips for social ads.",
-  "h1": "Shoe UGC Ads for On-Foot Demos and Wear Tests",
+  "title": "AI Footwear Video Ads for Shoe Brands | AIVideosUGC",
+  "description": "Turn one shoe photo into on-foot demos, unboxings, fit checks, and creator reviews for footwear ads. Watermark-free clips, ready for social and listings.",
+  "h1": "Shoe UGC Ads That Show the Pair in Motion",
   "eyebrow": "Shoe UGC ads",
-  "lead": "Shoppers buy footwear when they can picture it on their feet, and shoe brands that film real on-foot clips for every pair pay for a shoot each time. Turn one shoe photo into an on-foot demo, unboxing, or review that shows the shape, tread, and fit.",
+  "lead": "Shoppers buy when they can picture the pair on their feet. Turn one shoe photo into an on-foot demo, unboxing, or review that shows shape and visible details.",
   "card": "On-foot demos, shoe unboxings, creator reviews, and wear-test scenes for footwear ads.",
   "secondary_keywords": [
     "sneaker product photos",
@@ -13,44 +13,22 @@
     "AI shoe photography",
     "shoe photos for Amazon listings"
   ],
-  "intro": [
-    "A clear profile helps shoppers identify shape, while a close-up can show construction details. Use an ordinary try-on or wear action without implying performance that has not been verified.",
-    "Choose an on-foot demo, unboxing, fit check, wear-test, or creator-review format for a short social ad. Start from a clear product photo and review shoe shape, color, and visible details before publishing."
-  ],
-  "ideas": [
-    {
-      "t": "On-foot demos",
-      "d": "Show an adult taking a step in a technical shoe or fastening a sandal strap, with the footwear in clear view."
-    },
-    {
-      "t": "Creator reviews and unboxings",
-      "d": "An adult creator can hold a pair and discuss visible details; an unboxing can reveal one shoe from tissue."
-    },
-    {
-      "t": "Wear-test and care scenes",
-      "d": "Show a trail shoe on a path or a brush removing surface dirt, without implying unverified durability or water resistance."
-    }
-  ],
   "faq": [
     {
       "q": "Can I get sole and heel photos from a single side shot?",
-      "a": "Not reliably. The AI can only show details it can see in your upload, so photograph the outsole, heel, and toe separately and use each one as the starting point for that view."
+      "a": "Not reliably. The result can only show details visible in your upload. For a tread or heel view, start from a separate photo of the outsole or heel instead of a side shot."
     },
     {
       "q": "Does this work for Amazon main images for shoes?",
-      "a": "For a main image, ask for the shoe alone on a pure white background, filling most of the frame, with no props or text. Size charts and width notes belong on extra gallery images you build in Canva."
+      "a": "For a main image, use the shoe alone on a pure white background, filling most of the frame, with no props or text. Add size charts and width notes to gallery images instead."
     },
     {
       "q": "Can I show the logo of a sneaker brand I resell?",
       "a": "Requests built around a logo or trademark you don't own may be declined. If you resell branded pairs, your own straight product photos are the safer choice for those listings."
     },
     {
-      "q": "My sneakers look flat or creased in the results. What should I change?",
-      "a": "Photograph the laces arranged the way you want them shown, then review the result for loose or uneven laces."
-    },
-    {
       "q": "What angles should I shoot for shoe ads?",
-      "a": "Start with one full side profile, then add a top view and a sole or heel shot. Those three uploads answer fit, shape and tread questions without asking the generated image to invent details it cannot see."
+      "a": "Start with one full side profile, then add a top view and a sole or heel shot. Those three views answer fit, shape and tread questions without asking the generated image to invent details it cannot see."
     },
     {
       "q": "Can one shoe photo produce both a listing image and a walking video?",
@@ -58,7 +36,7 @@
     },
     {
       "q": "How do I avoid a branded look when selling unbranded shoes?",
-      "a": "Describe the shoe by its materials and colors, such as gray knit or tan suede, and avoid stripes, sole shapes and stitching that match a known brand. Keep logos and text off both the upload and the scene."
+      "a": "Start from a photo of a plain, unbranded pair and check the result for stripes, sole shapes, or stitching that echoes a known logo. Keep logos and text out of both the source photo and the finished scene."
     },
     {
       "q": "Can I run the clips as paid footwear ads?",
@@ -69,199 +47,25 @@
       "a": "Yes. You upload one photo and pay credits per clip instead of a creator fee, sample shipping, and usage terms. The person is generated and not a real reviewer, so present the video as an ad."
     }
   ],
-  "overview": {
-    "h2": "Show footwear from the angles shoppers notice",
-    "items": [
-      {
-        "t": "Make the product easy to recognize",
-        "d": "Keep the shoe profile, toe, heel, laces, and visible construction clear. Avoid relying on details that do not appear in the source photo."
-      },
-      {
-        "t": "Use movement to add context",
-        "d": "An on-foot step, lace-up close-up, or creator review can show how a pair appears in use. Keep fit and performance information grounded in verified product details."
-      }
-    ]
-  },
-  "input_guide": {
-    "h2": "Prepare a shoe upload",
-    "items": [
-      {
-        "t": "Photograph every planned view",
-        "d": "Take separate straight-on photos of the outer side, inner side, toe, heel, and outsole. Do not expect a side photo to reveal tread that was never visible."
-      },
-      {
-        "t": "Hold the form",
-        "d": "Stuff boots or sneakers lightly so the toe box and collar keep their shape. Lace the pair exactly as you want it shown before taking the source image."
-      },
-      {
-        "t": "Preserve the material",
-        "d": "Use soft side light for suede nap, mesh, leather grain, stitching, and reflective panels. Wipe fingerprints from smooth finishes before shooting."
-      },
-      {
-        "t": "Separate color options",
-        "d": "Use one clean input per color option and reuse a scene description only after checking that the colors stay distinct. Keep the pair centered and fully in frame."
-      },
-      {
-        "t": "Include a scale cue",
-        "d": "For on-foot or floor scenes, state the surface and surrounding object, then keep actual size, width, and fit information in the listing."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Footwear ad formats shoppers recognize",
-    "items": [
-      {
-        "t": "On-foot demo",
-        "d": "An adult takes one measured step in a technical shoe, ending with the outer profile visible."
-      },
-      {
-        "t": "Shoe unboxing",
-        "d": "Hands open a shoebox, peel back tissue, and lift one shoe toward the camera."
-      },
-      {
-        "t": "Creator review",
-        "d": "An adult creator holds a shoe beside their face and points out a visible detail."
-      },
-      {
-        "t": "Care demo",
-        "d": "An adult brushes a small patch of dirt from a hiking boot, then shows the cleaned panel."
-      }
-    ]
-  },
-  "results": {
-    "h2": "Create footwear ads and product views",
-    "items": [
-      {
-        "t": "On-foot ad scenes",
-        "d": "Use a vertical or square frame to show an ordinary step, a strap adjustment, or a lace-up detail."
-      },
-      {
-        "t": "Construction close-ups",
-        "d": "A square 1:1 video can show the toe, heel, sole, stitching, or material beside the full product view."
-      },
-      {
-        "t": "Motion for feeds",
-        "d": "Choose 9:16 for a vertical step, 1:1 for a square feed, or 16:9, 4:3, or 3:4 for another placement; clips can be 6, 10, or 15 seconds."
-      },
-      {
-        "t": "A visible budget",
-        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip that suits the shoe and planned action."
-      },
-      {
-        "t": "A clean download",
-        "d": "Our FAQ explains commercial use and the watermark-free download."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the footwear asset",
-    "items": [
-      {
-        "t": "Inspect the shape",
-        "d": "Compare toe width, sole pattern, heel height, logo placement, laces, and color with the real pair."
-      },
-      {
-        "t": "Add exact details",
-        "d": "Overlay size range, width, material, price, delivery date, or promotion in your own editor so every number stays accurate."
-      },
-      {
-        "t": "Add the channel layer",
-        "d": "AIVideosUGC does not add voiceover, music, or captions; add size notes, required disclosures, and channel text in your publishing tool after download."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A strong fit for footwear merchandising",
-    "good": [
-      {
-        "t": "Shape-led products",
-        "d": "Sneakers, boots, sandals, loafers, and slippers with a clear, photographable silhouette."
-      },
-      {
-        "t": "Several color options",
-        "d": "Collections that need a consistent composition while keeping each pair visibly different."
-      },
-      {
-        "t": "Lifestyle and motion",
-        "d": "Products that benefit from a trail, sidewalk, gym, poolside, or everyday styling cue."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "Unseen construction",
-        "d": "Do not use a generated angle as proof of a sole or interior feature absent from the input."
-      }
-    ]
-  },
-  "examples": {
-    "h2": "More shoe examples",
-    "lead": "Toe, heel and sole views, plus on-foot shots that show how a pair looks when worn.",
-    "groups": [
-      {
-        "label": "Every angle",
-        "items": [
-          {
-            "ref": "n:gen2:ind-shoes-g1",
-            "title": "Running sneaker from the toe",
-            "kind": "photo",
-            "product": "running sneaker"
-          },
-          {
-            "ref": "n:gen2:ind-shoes-g2",
-            "title": "Same sneaker from the heel",
-            "kind": "photo",
-            "product": "running sneaker"
-          },
-          {
-            "ref": "n:gen2:ind-shoes-g3",
-            "title": "Sneaker outsole tread on a clean counter",
-            "kind": "photo",
-            "product": "running sneaker"
-          }
-        ]
-      },
-      {
-        "label": "On foot",
-        "items": [
-          {
-            "ref": "n:gen2:ind-shoes-g4",
-            "title": "White casual shoes worn with cropped trousers",
-            "kind": "photo",
-            "product": "white casual shoes"
-          },
-          {
-            "ref": "n:guide:k7-ind-shoes-examples-1-items-1-ref-n-gen2-ind-shoes-g5",
-            "title": "A street step that highlights the shoe profile",
-            "kind": "photo",
-            "product": "sneakers"
-          }
-        ]
-      }
-    ]
-  },
   "templates_lead": "Choose a shoe ad format for an on-foot demo, unboxing, wear test, or creator review.",
   "cta_lead": "Choose a footwear ad format and review the pair before posting.",
-  "benefits_h2": "Why make shoe video ads from one product photo?",
+  "benefits_h2": "Why Footwear Brands Are Done Waiting on Shoots",
   "benefits": [
     {
-      "t": "No video shoot or on-camera talent",
-      "d": "Generate on-foot clips from one shoe photo, so you don't hire a videographer, book a model, or schedule a shoot for each pair."
+      "t": "Faster, lower-cost production",
+      "d": "Create an on-foot demo or creator review from one shoe photo. Skip talent booking, studio rental, and a new shoot for every pair."
     },
     {
-      "t": "One photo, every footwear moment",
-      "d": "Run the same shoe through a stride demo, unboxing, lace-up detail, and review. Each clip covers a different buyer question without a reshoot."
+      "t": "Content that scales across channels",
+      "d": "Run one pair through a step, unboxing, care, and review scene. One source photo feeds product pages, social posts, and ads."
     },
     {
-      "t": "Show fit without overclaiming",
-      "d": "An on-foot moment shows profile, collar, and tread while you keep comfort and performance statements to what you can verify, so the ad stays honest."
-    },
-    {
-      "t": "Cleared for paid social ads",
-      "d": "Downloaded clips are watermark-free and licensed for commercial use on TikTok, Instagram, listings, and paid campaigns."
+      "t": "A clearer fit decision",
+      "d": "An on-foot moment shows profile, collar, and visible construction. Keep comfort and performance claims tied to verified product facts."
     }
   ],
-  "steps_h2": "How to make a shoe UGC ad in 3 simple steps",
-  "steps_lead": "Three steps turn one shoe photo into a ready-to-post on-foot clip — no shoot, no talent, no reshoots.",
+  "steps_h2": "Your Next Shoe Ad Is a Swipe Away",
+  "steps_lead": "3 Steps to make creator-style videos for footwear products with AIVideosUGC",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -269,7 +73,7 @@
     },
     {
       "t": "Pick an Ad Format",
-      "d": "Choose an on-foot demo, unboxing, fit check, or review and describe one action. Try more formats from the same photo to build a set."
+      "d": "Choose an on-foot demo, unboxing, fit check, or review for the pair. More formats from one photo build a full ad set."
     },
     {
       "t": "Download and Post",
@@ -290,7 +94,7 @@
       "source": "n:guide:q15-shoes-steps-source",
       "result": "n:guide:q15-shoes-steps-result-laceup-r2",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep the brown lace-up boots shape, color and panel details exactly. On a quiet trail, an adult model takes one measured step in the brown lace-up boots and settles with the outer profile visible, ending with both boots in frame. Natural footwear-ad look, soft overcast daylight. Low ankle-height handheld shot with a gentle side track. Sound: one clear footstep and light outdoor ambience; no music.",
+      "prompt": "Brown lace-up boots taking one measured step on a quiet trail in soft overcast light.",
       "options": [
         [
           "Format",
@@ -305,173 +109,19 @@
     "picker": {
       "title": "Choose a footwear ad format",
       "lead": "Pick an on-foot demo, unboxing, wear test, or creator review for your next shoe ad.",
-      "chips": [
-        {
-          "id": "on-foot",
-          "label": "On-Foot Demo"
-        },
-        {
-          "id": "unbox-review",
-          "label": "Unbox & Review"
-        },
-        {
-          "id": "wear-test-care",
-          "label": "Wear-Test & Care"
-        },
-        {
-          "id": "creator-review",
-          "label": "Creator Review"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q15-shoes-picker-0",
-          "label": "Runner curb step",
-          "chips": [
-            "on-foot"
-          ],
-          "prompt": "Use the uploaded photo as the shoe and keep its shape, color and sole exactly. At a city curb, an adult runner takes one step forward in the running shoe and plants the sole, ending with the shoe in a clear side view. Everyday movement ad, natural morning light. Low ankle-height handheld shot with one smooth track. Sound: rubber sole on pavement and faint traffic; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q15-shoes-picker-1",
-          "label": "Sandal strap demo",
-          "chips": [
-            "on-foot"
-          ],
-          "prompt": "Use the uploaded photo as the shoe and keep its shape, color and strap exactly. Beside a bright window, an adult sits and fastens the sandal strap once, ending with the buckle closed and foot planted. Clean comfort-fit demo, soft daylight. Tight side close-up with a slow tilt toward the buckle. Sound: strap snap and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q15-shoes-picker-2-unboxing-r1",
-          "label": "Trail sneaker unboxing",
-          "chips": [
-            "unbox-review"
-          ],
-          "prompt": "Use the uploaded photo as the shoe and keep its shape, color and sole exactly. On a desk, adult hands open the shoe box, peel back tissue and lift one trail sneaker toward camera, ending with its side profile centered. First-person unboxing style, warm daylight. Top-down close-up with a slow push-in as the shoe rises. Sound: box lid and tissue rustle; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q15-shoes-picker-3",
-          "label": "Loafer creator review",
-          "chips": [
-            "unbox-review"
-          ],
-          "prompt": "Use the uploaded photo as the shoe and keep its shape, color and stitching exactly. An adult creator faces the camera and holds the leather loafer beside their face, saying, \"Let us look at the stitching and shape.\" They turn the shoe once and hold its profile still. Casual first-impression review, soft daylight. Chest-up eye-level handheld shot with a gentle push-in. End with the loafer profile beside the creator’s face, stitching visible. Sound: their voice and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q15-shoes-picker-4",
-          "label": "Trail shoe puddle test",
-          "chips": [
-            "wear-test-care"
-          ],
-          "prompt": "Use the uploaded photo as the shoe and keep its shape, color and sole exactly. On a damp park path, an adult steps once through a shallow puddle in the trail shoe and plants the foot, ending with the shoe and sole edge visible. Natural outdoor ad, overcast daylight. Low side-angle close-up with a short tracking move. Sound: one light splash and wet gravel; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q15-shoes-picker-5",
-          "label": "Hiking boot care demo",
-          "chips": [
-            "wear-test-care"
-          ],
-          "prompt": "Use the uploaded photo as the boot and keep its shape, color and panels exactly. At an outdoor bench, an adult brushes one muddy patch from the hiking boot, ending with the cleaned panel held still beside the brush. Practical footwear-demo look, soft overcast daylight. Tight low-angle close-up with a slow push-in. Sound: bristles on leather and light outdoor ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q15-shoes-picker-6",
-          "label": "Rain boot creator review",
-          "chips": [
-            "creator-review"
-          ],
-          "prompt": "Use the uploaded photo as the boot and keep its shape, color and stitching exactly. On a quiet porch, an adult creator holds the rain boot beside their face, looks directly at the camera and says, \"Take a closer look at the stitching.\" They turn it once and hold it steady. Honest product-review style, soft daylight. Chest-up eye-level handheld shot with a gentle push-in. End with the rain boot profile beside the creator’s face, stitching clear. Sound: their voice and outdoor ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q15-shoes-picker-7-review-r2",
-          "label": "Trail shoe tread review",
-          "chips": [
-            "creator-review"
-          ],
-          "prompt": "Use the uploaded photo as the trail shoe and keep its shape, color and tread exactly. An adult creator faces the camera and holds the shoe beside their face, saying, \"Here is a closer look at the tread.\" They angle the sole toward the lens and hold it steady. Casual footwear-review look, natural daylight. Chest-up eye-level handheld shot with a gentle push-in. End with the sole angled toward camera and the tread in focus. Sound: their voice and light outdoor ambience; no music.",
-          "kind": "video"
-        }
-      ],
+      "chips": [],
+      "cards": [],
       "button": "Make a footwear ad video"
     },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q15-shoes-uses-0",
-        "h": "Show an on-foot step in a social ad",
-        "d": "A short walking scene shows how the pair appears with an everyday outfit."
-      },
-      {
-        "frame": "post",
-        "ref": "n:gen2:tpl-sale-g2",
-        "h": "Style sandals for a summer post",
-        "d": "Keep the straps and footbed visible so shoppers can see the pair clearly."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:gen2:white-background-g3",
-        "bad": "n:guide:ind-shoes-m5-soft-focus",
-        "good_label": "The full running shoe fits on white",
-        "bad_label": "The shoe profile loses detail in blur"
-      },
-      {
-        "good": "n:gen2:tpl-sale-c2",
-        "bad": "n:guide:ind-shoes-m5-cropped",
-        "good_label": "Both running shoes stay fully inside the frame",
-        "bad_label": "The running shoes are cut off by a tight crop"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q15-shoes-output-gray-running-shoe-r1",
-        "frame": "1:1",
-        "label": "Gray running shoe on foot"
-      },
-      {
-        "ref": "n:guide:q15-shoes-output-gray-pair-r1",
-        "frame": "1:1",
-        "label": "Gray running shoe pair on path"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:k7-ind-shoes-after-ref-n-gen2-tpl-limited-drop-alert-video-c1",
-      "zones": [
-        "Size",
-        "Material"
-      ],
-      "items": [
-        "Add the size range and material beside the photo in your listing.",
-        "Put return or care details in text rather than on the shoe image."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
     "titles": {
       "m2": {
         "h2": "Create a footwear ad from a product photo"
       },
       "m3": {
         "h2": "Choose a footwear ad format"
-      },
-      "m4": {
-        "h2": "Use footwear ads across product and social channels"
-      },
-      "m5": {
-        "h2": "Start with a clear shoe photo"
-      },
-      "m6": {
-        "h2": "Square 1:1 shoe videos for product pages"
-      },
-      "m7": {
-        "h2": "Add size and material details after download"
-      },
-      "examples": {
-        "h2": "More footwear ad scenes",
-        "lead": "On-foot demos, product details, unboxings, and creator reviews for footwear campaigns."
       },
       "faq": {
         "h2": "Questions about shoe UGC ads"

@@ -1,0 +1,8 @@
+ind-shoes
+  S: Lace-up boot source.
+  R: Brown lace-up hiking boots shown in a walking stride.
+  P: Brown lace-up boots taking one measured step on a quiet trail in soft overcast light.
+ind-jewelry-accessories
+  S: Silver solitaire ring rests in an ivory velvet dish.
+  R: Silver solitaire ring worn beside a ceramic cup.
+  P: A silver solitaire ring worn beside a ceramic cup on a pale cafe table.
