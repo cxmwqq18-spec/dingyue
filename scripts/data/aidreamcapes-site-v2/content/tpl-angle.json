@@ -12,11 +12,6 @@
     "Amazon gallery images",
     "Shopify product image set"
   ],
-  "intro": [
-    "A packshot is a clean photo of the product alone, with nothing to pull the eye away from it. In the example, a light gray fabric-covered wireless speaker with a woven wrist strap sits on a soft gray backdrop, its control buttons facing the camera.",
-    "Online shoppers can't turn a product over in their hands, so they look for the back, the base, and the buttons in your gallery. Run this once for each side you photograph and keep the same backdrop words, and the views line up as a set on your Amazon or Shopify listing."
-  ],
-  "tip": "Shoot each side straight on in daylight, and upload the back and base as separate photos so ports and labels come from your real product instead of a guess.",
   "steps": [
     {
       "t": "Upload Your Side Photos",
@@ -29,20 +24,6 @@
     {
       "t": "Download and Build the Gallery",
       "d": "Download each view, compare controls with your source photos, then place them after the hero image. No studio needed."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Buttons and ports",
-      "d": "Give the control strip or charging port a view of its own so buyers can see how the device works before they order."
-    },
-    {
-      "t": "Amazon gallery slots",
-      "d": "Fill the extra image slots on your listing with matching side, back, and base views that follow the main photo."
-    },
-    {
-      "t": "Other small electronics",
-      "d": "Earbud cases, chargers, smart plugs, and desk lamps all read more clearly with a top view beside the front view."
     }
   ],
   "maker": {
@@ -65,172 +46,38 @@
   "faq": [
     {
       "q": "Should I photograph each side separately?",
-      "a": "Yes. Give the back, base, and close details their own sharp source photos when shoppers need to see them. A separate source for each side keeps ports, controls, and labels tied to the real surface instead of asking the tool to invent a hidden view."
+      "a": "Yes. Separate front, back, base and detail photos keep ports, controls, labels and closures tied to the real surface."
     },
     {
       "q": "Can one photo reveal a hidden port?",
-      "a": "Use a real photo of that side so the port and its placement come from your item. Keep the front hero first, then put the view that answers the most frequent question, such as connector type or closure, before less important angles."
+      "a": "Not reliably. A real photo of that side is the source for an accurate packshot."
     },
     {
       "q": "Where do multi-angle photos belong?",
-      "a": "Add the front first, then use side views to show controls, connectors, closures, or other product details. A clear JPG, PNG, or WebP is sufficient; use matching light and a stable camera distance so the set looks consistent."
+      "a": "Put the front first, then add side views that answer questions about controls, connectors, closures or other details."
     },
     {
-      "q": "What file format and size should the source photos be?",
-      "a": "JPG, PNG, or Web Photos that clearly show the whole product work best. Shoot the front, back, and any port or button in similar light so the gallery reads as one set. Three or four views cover many small listings, but add a base or control view when it resolves a question buyers regularly ask."
+      "q": "What file formats work for source photos?",
+      "a": "JPG, PNG or WebP files that show the whole product clearly work for the source set."
     },
     {
       "q": "How many angle photos do I need?",
-      "a": "Three to four cover most listings: a front hero, a back view, and one or two detail angles. Start with the views shoppers ask about most.  Check the full item and its controls in the source before generating; hidden ports should come from a real view, not an invented angle."
+      "a": "Three or four views cover many listings: a front, back and one or two detail angles. Add a base or control view when it answers a common question."
     },
     {
       "q": "How many credits does each angle photo cost?",
-      "a": "Each generated angle photo costs 24 credits, and the cost appears before you run it. A failed job returns its credits to your balance.  Use one front hero, one rear or side view, and one detail view when the product has controls or connectors buyers need to inspect."
+      "a": "Each generated angle photo costs 24 credits, and the cost appears before you run it."
     },
     {
-      "q": "Can one front photo generate the sides I didn't photograph?",
-      "a": "Not reliably. A real photo of each side is the source for its packshot, so the output shows actual ports and details rather than a guessed view that could mislead buyers."
+      "q": "Can one front photo generate sides I did not photograph?",
+      "a": "Not reliably. A real photo of each side keeps hidden ports and details from becoming guessed views."
     },
     {
       "q": "Can I run multi-angle images as paid ads?",
-      "a": "Yes. Photos you make can be used in your own ad campaigns as well as listings, and the downloaded files carry no watermark. For Amazon, keep its image rules, such as no extra props, in mind."
+      "a": "Yes. Downloaded photos can be used in listings and your own paid campaigns with no watermark."
     }
   ],
-  "overview": [
-    {
-      "h2": "Build a Gallery That Lets Shoppers Turn the Product Over",
-      "p": "A single hero image cannot answer every question about a device. A matching set can show the charging port, control surface, hinge, back panel, and base in the order a shopper naturally inspects them. Start from real photos of the sides you want to publish, then use one visual description so the set feels like one shoot."
-    },
-    {
-      "h2": "Use Each View for a Specific Decision",
-      "p": "Put the clearest front view first, then use the remaining frames for fit, connection, and construction details. This suits a speaker, lamp, charger, case, or boxed accessory when the product has distinct surfaces that can be photographed directly."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare Each View Before You Start",
-    "items": [
-      {
-        "t": "Photograph one side at a time",
-        "d": "Keep the whole item inside the frame and make the camera face the surface you want to preserve."
-      },
-      {
-        "t": "Mark the orientation",
-        "d": "Use a small note outside the crop to identify front, rear, top, or base, so you do not attach a view to the wrong gallery slot."
-      },
-      {
-        "t": "Keep the setup steady",
-        "d": "Use the same table, distance, and light for every source shot before reusing the backdrop description."
-      },
-      {
-        "t": "Show fine hardware",
-        "d": "Move close enough for ports, buttons, screw heads, and printed labels to be visible in the source image."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the Set Can Cover",
-    "items": [
-      {
-        "t": "Front and rear",
-        "d": "Give the listing a clear primary view plus the back panel shoppers cannot see in person."
-      },
-      {
-        "t": "Top and base",
-        "d": "Use separate frames for controls, feet, vents, connectors, or a serial label."
-      },
-      {
-        "t": "A consistent square set",
-        "d": "The template keeps the presentation shape aligned while each run focuses on one supplied side."
-      },
-      {
-        "t": "A commercial download",
-        "d": "Use the downloaded files in product pages, ads, or social posts after reviewing the physical details."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Four Multi-Angle Sets to Try",
-    "items": [
-      {
-        "t": "Portable speaker",
-        "d": "Front grille on soft gray, rear charging ports beside the same shadow, then top buttons and underside feet."
-      },
-      {
-        "t": "Desk lamp",
-        "d": "Shade and stem from the front, rear cable exit, base switch, and a close view of the hinge."
-      },
-      {
-        "t": "Phone case",
-        "d": "Camera cutout, button edge, interior lining, and the case standing beside the matching phone."
-      },
-      {
-        "t": "Smart plug",
-        "d": "Socket face, side profile, back label, and the folded prongs on one quiet neutral surface."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the Gallery Before Publishing",
-    "items": [
-      {
-        "t": "Check every physical feature",
-        "d": "Compare ports, labels, openings, and button counts with the real item before uploading."
-      },
-      {
-        "t": "Order views for scanning",
-        "d": "Lead with the front, follow with the side shoppers ask about, and place the base near the end."
-      },
-      {
-        "t": "Add exact selling details",
-        "d": "Type measurements, compatibility notes, price, and dates yourself in your listing or design tool."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When This Template Fits",
-    "good": [
-      "Electronics with identifiable ports or controls",
-      "Cases, lamps, chargers, and accessories with several useful surfaces",
-      "Listings that need a coordinated square image set",
-      "Sellers who can photograph every side they want shown"
-    ],
-    "not_ideal": [
-      "A product whose rear or base cannot be photographed",
-      "Highly transparent or mirror-like objects where surface details are hard to inspect",
-      "Items with moving mechanisms that need a demonstration rather than still views"
-    ]
-  },
-  "examples": {
-    "h2": "More multi-angle product photos",
-    "lead": "Separate views make small product features easier to see.",
-    "groups": [
-      {
-        "label": "Product angle examples",
-        "items": [
-          {
-            "ref": "n:guide:q7-angle-ex-0",
-            "title": "Sage Case in Creator’s Hand",
-            "kind": "photo",
-            "product": "sage phone case"
-          },
-          {
-            "ref": "n:guide:q7-angle-ex-1",
-            "title": "Muted Teal Serum Demo",
-            "kind": "photo",
-            "product": "serum bottle"
-          },
-          {
-            "ref": "n:guide:q7-angle-ex-2-r2",
-            "title": "Headphones Out of Box",
-            "kind": "photo",
-            "product": "over-ear headphones"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Show the front, rear, top, and base from separate photos of the real item so shoppers can inspect the parts they cannot turn over online. Keep the camera height, distance, backdrop, and shadow direction consistent across the set. A speaker can show its grille, controls, strap, ports, and feet; a charger can show its connector and rating panel. Use the front as the gallery lead, then put the view that answers the most common question next. Every generated angle still needs a check against the supplied product before it goes live. Keep reflections controlled on glossy electronics and leave enough margin around corners for a consistent crop. This approach helps sellers answer fit, connection, and construction questions with real views.",
     "strip": [
       "n:guide:tpl-angle-round4-speaker-controls",
       "n:guide:q7-angle-strip-1",
@@ -243,7 +90,7 @@
       "source": "n:guide:tpl-angle-round4-speaker-controls",
       "result": "n:guide:tpl-angle-m2-back",
       "mode": "photo",
-      "prompt": "Use the uploaded product photo as the identity reference; preserve the compact black woven speaker, its strap, rear ports, shape, and color. Show the full speaker from a rear three-quarter angle on a pale seamless surface, with the ports sharp and centered. Soft studio daylight, clean product-photo composition. No text, logos, or watermark.",
+      "prompt": "Show the uploaded speaker from the rear with its ports sharp and centered.",
       "options": [
         [
           "Template",
@@ -260,207 +107,17 @@
       ]
     },
     "picker": {
-      "title": "Choose a multi-angle ad format",
-      "lead": "Choose an advertising moment that makes one side worth inspecting. Use a hands-on reveal for ports, a creator review for a clasp, or a texture close-up when the surface itself sells the item.",
-      "chips": [
-        {
-          "id": "hands",
-          "label": "Hands-On Views"
-        },
-        {
-          "id": "worn",
-          "label": "Worn by a Creator"
-        },
-        {
-          "id": "texture",
-          "label": "Texture Details"
-        },
-        {
-          "id": "feature",
-          "label": "Product Features"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q7-angle-picker-cards-0-r4",
-          "label": "Headphones Box Reveal",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain over-ear headphones, shape, and color. Freeze the moment two hands lift both ear cups above an open kraft box on a clean desk. Soft window light, close overhead composition, natural product-ad realism. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-angle-picker-cards-2",
-          "label": "Daypack Pocket Opening",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal daypack, pocket layout, straps, and color. Freeze the moment an adult hand opens the main pocket to reveal its padded tablet sleeve. Bright entryway daylight, close rear three-quarter composition, natural product-ad realism. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-angle-picker-cards-1",
-          "label": "Crossbody Bag Review",
-          "chips": [
-            "hands",
-            "worn",
-            "texture"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact canvas crossbody bag, clasp, seams, and color. An adult creator holds the bag beside their face with the clasp turned toward the lens. Soft window light, chest-up framing, natural skin texture. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-angle-picker-cards-4-r2",
-          "label": "Necklace Clasp Review",
-          "chips": [
-            "hands",
-            "worn",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact silver necklace, links, clasp, and finish. An adult creator holds the chain beside their face with the clasp clearly visible near the lens. Soft vanity daylight, chest-up close framing, natural creator-review style. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-angle-picker-cards-4-r3",
-          "label": "Knit Sneaker Cleaning",
-          "chips": [
-            "worn",
-            "texture",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit sneaker, sole, and color. Freeze the moment a hand wipes one scuffed area, with the cleaned knit beside the untouched section and the whole shoe visible. Bright outdoor shade, low close composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-angle-picker-cards-5-r4",
-          "label": "Earbud Cable Organizer",
-          "chips": [
-            "texture",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact wired earbuds and plain dark cable organizer. Freeze the moment the organizer closes around the coiled cable, with the loose and secured sections visible together. Soft desk light, overhead close composition, natural product-demo style. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-angle-picker-cards-6-r2",
-          "label": "Knit Sneaker Seam",
-          "chips": [
-            "worn",
-            "texture",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit sneaker and stitching. A hand gently stretches the seam so the knit weave and stitching fill a crisp macro frame. Soft side daylight, tactile close composition, shallow depth of field. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-angle-picker-cards-7-r2",
-          "label": "Protein Bar Broken Open",
-          "chips": [
-            "hands",
-            "texture"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain protein bar and unprinted wrapper. Freeze the moment two hands hold the broken halves close to the lens, with the crisp center visible. Warm natural light, appetizing close tabletop composition. No text, logos, or watermark.",
-          "kind": "photo"
-        }
-      ],
-      "button": "Make a product angle photo"
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": ""
     },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q7-angle-picker-cards-3",
-        "h": "Show a daypack back panel in a listing",
-        "d": "A hand lifts the daypack by its top handle and turns the back toward a listing camera, keeping the straps, padding, seams, and pocket openings visible so a buyer can judge construction before ordering. For a listing, follow the hero with the rear or base view that confirms compatibility, then keep a detail angle for shoppers who zoom on mobile."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q7-angle-uses-1-r3",
-        "h": "Review a compact USB-C charger",
-        "d": "An adult creator holds a compact USB-C charger near their face and turns its port toward the camera. This works for a product-page detail or a feed post that answers a compatibility question. For a product-page or feed post, turn the charger slowly enough for the port to remain legible and use editable text for compatibility details."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q7-angle-input-0-good",
-        "bad": "n:guide:q7-angle-input-0-bad-r5",
-        "good_label": "Speaker rear ports stay crisp in hand",
-        "bad_label": "Speaker rear port panel is cropped at the edge"
-      },
-      {
-        "good": "n:guide:q7-angle-input-1-good-r2",
-        "bad": "n:guide:q7-angle-input-1-bad-r3",
-        "good_label": "Lip balm cap and color stay in frame",
-        "bad_label": "Muted rose lip balm cap is cropped at the top"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q7-angle-outputs-0-r3",
-        "frame": "1:1",
-        "label": "Light-gray woven speaker rear ports on a pale surface"
-      },
-      {
-        "ref": "n:guide:q7-angle-outputs-1",
-        "frame": "1:1",
-        "label": "Muted rose lip balm held beside a creator"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:tpl-angle-reuse-speaker-reveal",
-      "zones": [
-        "Gallery order",
-        "Product details"
-      ],
-      "items": [
-        "Place the clearest front image first, then add the side that answers the main buying question before rear and base views.",
-        "Compare ports, labels, openings, and button counts with the real item before publishing; an angle image cannot verify a hidden feature.",
-        "Type dimensions and compatibility notes in your listing, and keep one crop and background treatment across the set so it reads as one shoot."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Make multi-angle product photos from real views"
-      },
-      "m3": {
-        "h2": "Choose the product angle shoppers need"
-      },
-      "m4": {
-        "h2": "Use product angles on listings and stores"
-      },
-      "m5": {
-        "h2": "Start with a sharp product angle photo"
-      },
-      "m6": {
-        "h2": "Square product angle photo examples"
-      },
-      "m7": {
-        "h2": "Add measurements and labels after download"
-      },
-      "faq": {
-        "h2": "Questions about multi-angle product photos"
-      }
-    }
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
   },
-  "benefits_h2": "Why make multi-angle packshot photos?",
-  "benefits": [
-    {
-      "t": "Answer the back-and-side questions",
-      "d": "Rear ports, buttons, base labels and top views sit in your gallery, so buyers find the details instead of messaging you or abandoning the purchase."
-    },
-    {
-      "t": "Fewer not-as-expected returns",
-      "d": "Shoppers who have inspected every side receive the item they pictured, instead of discovering a port, clasp or finish they did not know about."
-    },
-    {
-      "t": "One consistent studio look",
-      "d": "Every view shares the same backdrop, light and framing, giving your listing a coordinated packshot set without a studio day."
-    },
-    {
-      "t": "No watermark, usable in ads",
-      "d": "Downloaded square photos can be used in your listings and paid campaigns, with no AIVideosUGC watermark."
-    }
-  ],
   "steps_h2": "How to make multi-angle packshots in 3 simple steps",
   "steps_lead": "Three steps turn your side photos into a coordinated gallery set - no turntable, no studio reshoot."
 }
