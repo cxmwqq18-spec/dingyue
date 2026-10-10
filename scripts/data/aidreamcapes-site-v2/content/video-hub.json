@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a short, watermark-free ad clip with our AI video generator. Pick 6, 10, 15, or 30 seconds for TikTok, Reels, or your store.",
   "h1": "AI Video Generator for Ecommerce: Choose a Video Type",
   "eyebrow": "AI video tools",
-  "lead": "Booking a shoot for every product takes time and money you may not have. This AI video generator turns one product photo into a ready-to-use clip for TikTok, Reels, YouTube Shorts, or your store.",
+  "lead": "Launch videos faster, spend far less than a real shoot, and test more creative from one product photo with this AI video generator.",
   "maker": {
     "options": [
       [
@@ -29,83 +29,83 @@
     "Choose a video direction for the product moment you want to show: a creator-style ad, a product demonstration, an unboxing, a visible change, or motion added to a still photo. Start from a product photo or a product page link, then describe one clear action.",
     "Choose a 9:16, 1:1, or 16:9 frame and a length of 6, 10, 15, or 30 seconds. Each run makes one clip, and the credit cost appears before you start."
   ],
-  "benefits_h2": "Why make product videos with an AI video generator?",
+  "benefits_h2": "Reasons to use our AI video generator",
   "benefits": [
     {
-      "t": "No shoot, no models, no studio",
-      "d": "One product photo is all you upload. The clip is generated around your item, so you skip the camera setup, location, and cast booking of a real shoot."
+      "t": "Simple and fast",
+      "d": "Start from one photo or a product page link and get a finished clip to choose from in minutes, not weeks of planning."
     },
     {
-      "t": "One photo, many scenes",
-      "d": "Run the same product photo through a creator ad, demo, unboxing, or before-and-after scene. Each run gives your product a different angle without reshooting it."
+      "t": "Many scenes from one photo",
+      "d": "Run the same upload through ads, demos, unboxings and comparisons to give your product new angles."
     },
     {
-      "t": "A length for the full story",
-      "d": "Pick 6, 10, or 15 seconds for a quick hook, or 30 seconds for a complete product story. Vertical, square, and wide frames are built in, so the clip fits TikTok, Reels, Shorts, and your store."
+      "t": "Actors that fit your audience",
+      "d": "Pick an AI actor who resembles your target buyer and have them deliver your script in a casual, phone-video style."
     },
     {
-      "t": "Yours to use commercially",
-      "d": "Downloaded videos are watermark-free and licensed for commercial use, so you can run them as paid ads, post them on social feeds, and place them on product pages."
+      "t": "Ready to run as an ad",
+      "d": "Download a watermark-free clip licensed for commercial use, sized for TikTok, Reels, Shorts or your product page."
     }
   ],
-  "steps_h2": "How to make a product video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post clip — no studio, no models, no reshoots.",
+  "steps_h2": "How to create AI videos",
+  "steps_lead": "One photo becomes a ready-to-post clip. No studio, cast or reshoots.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one photo of the whole item, or paste a public product page link. The clip keeps the product's shape and details."
+      "t": "Share Your Video Idea",
+      "d": "Upload a clear product photo or paste a product page link, then say what you want in one sentence."
     },
     {
-      "t": "Pick a Video Type and Format",
-      "d": "Choose an ad, demo, or unboxing scene, then set the frame and length. Test many scenes from one photo without reshoots."
+      "t": "Choose a Tool, Frame and Length",
+      "d": "Pick an ad, demo or unboxing type, then set 9:16, 1:1 or 16:9 and 6, 10, 15 or 30 seconds."
     },
     {
-      "t": "Download and Post",
-      "d": "Review the clip, save it, and add price or captions in your editor. The watermark-free file is ready for ads and feeds."
+      "t": "Get a Ready-to-Use Clip",
+      "d": "Review the product shape and label, then download a watermark-free file for your ad, feed or store."
     }
   ],
   "faq": [
     {
-      "q": "Do I need a product photo to make a video?",
-      "a": "No, but it helps. With a photo, the video is built around your actual product. Without one, the result comes from your description alone, so it may not match your item exactly."
+      "q": "How do I make an AI video from a product photo?",
+      "a": "Upload one clear photo of your item or paste a product page link, choose a video type, frame and length, and run the job. The tool builds the clip around your product and shows the credit cost before you start."
     },
     {
-      "q": "How long are the videos, and what sizes can I choose?",
-      "a": "You can pick 6, 10, 15, or 30 seconds. Formats include 9:16 vertical, 1:1 square, and 16:9 wide, plus 3:4 and 4:3."
+      "q": "How long and wide can an AI video be?",
+      "a": "You can choose 6, 10, 15 or 30 seconds, with 9:16 vertical, 1:1 square and 16:9 wide frames. There are also 3:4 and 4:3 options for listings and pages."
     },
     {
-      "q": "Can I add my price, captions, or music?",
-      "a": "Add those after you download. Put prices, dates, and discount codes on in Canva, CapCut, or Ads Manager, and add captions and music in TikTok or CapCut. AI-generated text can come out misspelled, so it's safer to type it yourself."
+      "q": "What does one video cost?",
+      "a": "The price shows before each run. A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60 and 30 seconds uses 120. If a job fails, the credits return to your balance automatically."
     },
     {
-      "q": "What does one video job cost?",
-      "a": "The displayed cost depends on length: a 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. The exact cost appears on screen before each run, and credits for a failed job are returned automatically."
+      "q": "Can I make several versions for A/B testing?",
+      "a": "Yes. Run the same photo with different actors, openings or scenes, then download each version and split-test them in your ad platform. You do not need another shoot."
     },
     {
-      "q": "What should the first shot of a product video show?",
-      "a": "Show the item clearly before it moves. Use one action that explains its purpose, and keep the label and important parts in view as the scene develops."
+      "q": "Can I enter a product page URL instead of a photo?",
+      "a": "Yes. Paste the link into URL to Video and the tool brings the product image and name into the editor for you to check before making the clip."
     },
     {
-      "q": "Do I need a model or a creator to make the video?",
-      "a": "No. People and hands that appear in the clip are generated around your product photo, so you don't book a model, ship samples to a creator, or wait on a filming date. You can still have a real creator review the product later if you want one."
+      "q": "Do I need to hire a model or creator?",
+      "a": "No. The people in the clips are generated around your product photo, so there is no casting, sample shipping or filming date. You can still work with a real creator later if you want one."
     },
     {
-      "q": "Is this different from hiring a UGC creator?",
-      "a": "Yes. A UGC creator films your product and charges for their time, usage rights, and often revisions; here you upload one photo, pick a scene, and pay credits per clip. The people shown are AI-generated actors, not customers or independent reviewers, so describe the video honestly when you post it."
+      "q": "Are these clips suitable for paid social ads?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use on TikTok, Instagram, Facebook and YouTube. Add your own captions, prices and offers, and follow each platform's rules for labeling AI content."
     },
     {
-      "q": "Can I run the downloaded videos as paid ads?",
-      "a": "Yes. Downloaded videos are watermark-free and licensed for commercial use, including paid ads on TikTok, Instagram, Facebook, and YouTube. You are responsible for the claims and text you add, and each platform still reviews the ad against its own policies."
+      "q": "How long does a video take to make?",
+      "a": "A finished clip is ready in minutes, and the exact time varies a little with the length and server load. You can start another job while you wait."
     }
   ],
   "overview": [
     {
-      "h2": "Choose the video type for your product",
-      "p": "A demonstration can show one useful action. An unboxing can reveal what comes in the package. A creator-style ad can frame a quick product moment, while image-to-video adds movement to a still photo."
+      "h2": "What is an AI video generator?",
+      "p": "An AI video generator makes a clip from a photo, a product link or a short description, without filming, actors on set or a production crew. This one is built for online stores, so every clip is centered on your product."
     },
     {
-      "h2": "Set the format before you start",
-      "p": "Use 9:16 for a vertical feed, 1:1 for a square placement, or 16:9 for a wide video area. Pick 6, 10, 15, or 30 seconds to match the space where you plan to use the clip."
+      "h2": "Types of videos you can generate",
+      "p": "Creator-style ads explain the product to camera, demos show one feature in use, unboxings reveal the package, and before-and-after clips show a change. You can also add motion to a still photo."
     }
   ],
   "input_guide": {
@@ -184,41 +184,37 @@
     ]
   },
   "after_download": {
-    "h2": "Finish the message after download",
+    "h2": "Finish the clip after download",
     "items": [
       {
         "t": "Type exact offer details",
-        "d": "Add the price, date, discount code, or product name yourself so every small character matches the approved source."
+        "d": "Add the price, date, discount code, or product name yourself so every character matches the approved source."
       },
       {
         "t": "Layer captions and sound",
-        "d": "Add captions, music, or a voiceover in TikTok, CapCut, Ads Manager, or your usual editor after download, since the generated clip doesn't include them."
+        "d": "Add captions, music, or a spoken track in TikTok, CapCut, Ads Manager, or your usual editor, since the clip does not include them."
       },
       {
-        "t": "Review the clip from first to last frame",
-        "d": "Look for changes to labels, colors, edges, or small parts before publishing and keep the version that represents the item honestly."
+        "t": "Review from first to last frame",
+        "d": "Look for changes to labels, colors, edges, or small parts before publishing and keep the version that shows the item honestly."
       },
       {
         "t": "Save versions with useful names",
         "d": "Name files by product, scene, shape, and date so a later test does not overwrite the opening you want to reuse."
-      },
-      {
-        "t": "Refresh current availability",
-        "d": "Add the live stock status and offer conditions from your seller record, then verify them again before scheduling; inventory or deadlines may change after a scene is prepared."
       }
     ]
   },
   "fit": {
     "h2": "Where this hub helps most",
     "good": [
-      "Small stores testing several product angles from an approved photo",
-      "Catalog teams that need short visual demos for different placements",
+      "Small stores testing several product angles from one approved photo",
+      "Catalog teams that need short demos for different placements",
       "Launch teams preparing a reveal before a full shoot is scheduled",
-      "Sellers who want product-specific scenes instead of a generic text overlay"
+      "Sellers who want product-specific scenes instead of a generic overlay"
     ],
     "not_ideal": [
-      "Claims that depend on an exact medical, body, or performance transformation",
-      "Scenes where tiny printed text must remain perfectly accurate throughout"
+      "Claims that depend on an exact medical, body, or performance change",
+      "Scenes where tiny printed text must stay perfectly accurate throughout"
     ]
   },
   "compare": {
@@ -226,7 +222,7 @@
     "items": [
       {
         "t": "Versus filming in-house",
-        "d": "You begin with one product photo and a written scene, so there is no camera setup or location schedule inside the process."
+        "d": "You begin with one product photo and a short idea, so there is no camera setup or location schedule in the process."
       },
       {
         "t": "Versus hiring a creator",
@@ -243,8 +239,8 @@
     ]
   },
   "examples": {
-    "h2": "Product ad formats from common categories",
-    "lead": "Choose a proven product-video format, then shape it around the item you sell.",
+    "h2": "Product video examples from common categories",
+    "lead": "See proven formats, from demos and reviews to reveals, each made around a real product photo.",
     "groups": [
       {
         "label": "Product Demo",
@@ -321,65 +317,19 @@
     "items": [
       {
         "t": "Skin care jar",
-        "d": "Broad: “Show this jar.” More specific: “A hand turns the glass moisturizer jar on a pale vanity; tight product framing, soft morning light from the right.” This names one movement, one place, the distance of the shot, and the light source, so the jar stays in focus."
+        "d": "Broad: “Show this jar.” More specific: “A hand turns the glass moisturizer jar on a pale vanity; tight framing, soft morning light from the right.” It names one movement, one place, the shot distance and the light, so the jar stays in focus."
       },
       {
         "t": "Daypack",
-        "d": "Broad: “Show my backpack.” More specific: “A hand pulls the zipper on a navy daypack beside an open train seat; medium close-up, window light across the fabric.” The action and setting tell viewers what to look at, while the framing gives the bag more attention than the passing background."
+        "d": "Broad: “Show my backpack.” More specific: “A hand pulls the zipper on a navy daypack beside an open train seat; medium close-up, window light across the fabric.” The action and setting tell viewers what to look at."
       },
       {
         "t": "Tea tin",
-        "d": "Broad: “Make a video of my tea.” More specific: “A round tea tin turns on a wooden breakfast table beside a cup; close framing, side light through a kitchen window.” The concrete direction sets the location, the change in the scene, and which product details should stay in view."
+        "d": "Broad: “Make a video of my tea.” More specific: “A round tea tin turns on a wooden breakfast table beside a cup; close framing, side light through a kitchen window.” This sets the place and the product details in view."
       },
       {
         "t": "Wireless speaker",
-        "d": "Broad: “Show how this speaker works.” More specific: “A finger presses the top dial on the speaker at a desk; tight shot, cool daylight from a side window.” One visible gesture gives the scene a clear subject and beat instead of leaving a long sequence open to interpretation."
-      }
-    ]
-  },
-  "troubleshooting": {
-    "h2": "Make one focused change when a result misses",
-    "items": [
-      {
-        "t": "The product shape drifts",
-        "d": "Switch to a straight-on photo that shows the whole item, then simplify the scene to one small movement. Compare the result with the actual product before using it."
-      },
-      {
-        "t": "Label lettering looks wrong",
-        "d": "Keep exact words out of the visual direction. Use a clean product view, then add verified brand, ingredient, or offer wording in your editor after download."
-      },
-      {
-        "t": "The action changes",
-        "d": "Describe one starting position and one visible action, such as a lid closing. If two movements compete, split them into separate clips or try the Product Videos tool for a single feature."
-      },
-      {
-        "t": "The product looks too small",
-        "d": "Ask for a close shot with the item in the foreground and drop extra props from the description. Fewer objects leave more of the frame for the product."
-      }
-    ]
-  },
-  "tool_chooser": {
-    "h2": "Choose the video tool by your starting point",
-    "items": [
-      {
-        "t": "I have a product page link",
-        "d": "Start with [URL to Video](page:url-to-video) to bring a product image and name into the AIVideosUGC editor for review."
-      },
-      {
-        "t": "I want one feature in motion",
-        "d": "Try [Product Videos](page:product-videos) when a single action, such as opening or switching, explains the item."
-      },
-      {
-        "t": "I like my still photo",
-        "d": "Use [Image to Video](page:image-to-video) to add a camera move or a small change in light around the frame."
-      },
-      {
-        "t": "I want a casual product moment",
-        "d": "Choose [Video Ads](page:video-ads) for a creator-style scene centered on the product."
-      },
-      {
-        "t": "I need a package reveal",
-        "d": "Choose [Unboxing Videos](page:unboxing-videos) when the first look inside the package is the main event."
+        "d": "Broad: “Show how this speaker works.” More specific: “A finger presses the top dial on the speaker at a desk; tight shot, cool daylight from a side window.” One visible gesture gives the scene a clear subject."
       }
     ]
   },
@@ -398,7 +348,7 @@
       "result": "n:guide:q1-video-steps-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in a bright bathroom holds a plain serum bottle and speaks to the lens. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
+      "prompt": "I wanted to show you this serum before I head out.",
       "options": [
         [
           "Frame",
@@ -415,12 +365,16 @@
       "lead": "Open the tool that matches the product moment you want to show.",
       "chips": [
         {
-          "id": "product-moment",
-          "label": "Show product moments"
+          "id": "demo",
+          "label": "Product demos"
         },
         {
-          "id": "creator-ad",
-          "label": "Create an ad"
+          "id": "ad",
+          "label": "Creator ads"
+        },
+        {
+          "id": "unboxing",
+          "label": "Unboxing & comparisons"
         }
       ],
       "cards": [
@@ -428,7 +382,7 @@
           "ref": "n:guide:q1-video-picker-workout",
           "label": "Workout Demo: Protein Scooped Into Shaker",
           "chips": [
-            "product-moment"
+            "demo"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand scoops protein powder from a plain pouch into a clear shaker at a gym bench. The action ends with the product clearly visible and still in frame. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music.",
           "kind": "video",
@@ -438,7 +392,7 @@
           "ref": "n:guide:q1-video-picker-car",
           "label": "Car Review: Electrolyte Held to Lens",
           "chips": [
-            "creator-ad"
+            "ad"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult man in a parked car holds a clear bottle with a pale electrolyte drink and speaks to camera. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
           "kind": "video",
@@ -448,7 +402,7 @@
           "ref": "n:guide:q1-video-picker-phone-v2",
           "label": "Phone Case Demo: Two Cases Compared",
           "chips": [
-            "product-moment"
+            "demo"
           ],
           "prompt": "Use the uploaded photo as the product and preserve its shape, color, and label area. Adult hands fit a plain muted sage-green silicone case with exactly one small circular camera opening onto a generic smartphone with one camera. The action ends with the single camera opening aligned and the product clearly visible. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music. Avoid square camera islands and multi-lens clusters.",
           "kind": "video",
@@ -458,7 +412,7 @@
           "ref": "n:guide:q1-video-picker-jewel",
           "label": "ASMR Unboxing: Gold Hoop Earrings",
           "chips": [
-            "product-moment"
+            "unboxing"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue. The action ends with the product clearly visible and still in frame. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music.",
           "kind": "video",
@@ -468,7 +422,7 @@
           "ref": "n:guide:q1-video-picker-closet-v2",
           "label": "Before/After: Closet Organizer Clears Shelf",
           "chips": [
-            "product-moment"
+            "unboxing"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape and label area exactly. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. End with the result and product centered and still in frame. Natural phone-video realism, one slow handheld push-in. Soft window light. Sound: soft fabric or product handling and room ambience; no music.",
           "kind": "video",
@@ -478,9 +432,9 @@
           "ref": "n:guide:q1-video-picker-headphones",
           "label": "Tech Review: Headphones Held to Camera",
           "chips": [
-            "creator-ad"
+            "ad"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman wearing a plain sweater holds over-ear headphones and speaks directly to lens. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman wearing a plain sweater holds over-ear headphones and speaks directly to lens. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside her face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
           "kind": "video",
           "tool": "spokesperson-videos"
         },
@@ -488,7 +442,7 @@
           "ref": "n:guide:q1-video-picker-serum",
           "label": "Creator Review: Serum From Product Page",
           "chips": [
-            "creator-ad"
+            "ad"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds a plain serum bottle while showing a generic unbranded product page on a tablet beside them. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
           "kind": "video",
@@ -502,13 +456,13 @@
         "frame": "phone",
         "ref": "n:guide:q1-video-use-selfie",
         "h": "Car Selfie Review: Face Serum in Daylight",
-        "d": "Use this format when a personal product review fits the placement."
+        "d": "A personal review to camera works well as a vertical in-feed ad."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q1-video-use-necklace",
         "h": "Creator Review: Necklace Held to Camera",
-        "d": "Use this format when a personal product review fits the placement."
+        "d": "A close product moment on a wide frame fits a brand or product page."
       }
     ],
     "input": [
@@ -554,7 +508,7 @@
       },
       "m3": {
         "h2": "Choose an AI video tool",
-        "lead": "Select the kind of product clip you want to make."
+        "lead": "Select the type of product clip you want, from a creator ad to a demo, unboxing or comparison."
       },
       "m4": {
         "h2": "Where to use product videos"
