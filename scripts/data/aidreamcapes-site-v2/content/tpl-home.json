@@ -230,7 +230,7 @@
             "reveal"
           ],
           "kind": "video",
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Show the same entryway shelf before and after: loose mail, keys, and shoes on the first beat, then a plain woven basket and tray organizing the same shelf. Keep the camera angle fixed with a slow reveal. End on the organized shelf. Sound: soft room tone. No music."
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Show one entryway shelf before and after: loose mail, keys, and shoes on the first beat, then a plain woven basket and tray organizing the same shelf. Keep the camera angle fixed with a slow reveal. End on the organized shelf. Sound: soft room tone. No music."
         },
         {
           "ref": "n:guide:f16-r10-home-office-daily-r1",
