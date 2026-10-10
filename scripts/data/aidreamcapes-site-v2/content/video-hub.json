@@ -102,10 +102,10 @@
         "label": "UGC-Style Product Ads",
         "items": [
           {
-            "ref": "n:guide:q1-video-ex-gym-protein",
-            "title": "Gym Routine: Protein Shaker After Workout",
+            "ref": "n:gen2:video-hub-g1",
+            "title": "Gym Bag Bottle Creator Ad",
             "kind": "scene",
-            "product": "protein shaker"
+            "product": "insulated bottle"
           }
         ]
       },
@@ -113,10 +113,10 @@
         "label": "Product Explainer Videos",
         "items": [
           {
-            "ref": "n:guide:q1-video-ex-lunchbox",
-            "title": "Leakproof lunchbox in a commuter bag",
+            "ref": "n:gen2:video-hub-g2",
+            "title": "Bento Lunchbox Explainer",
             "kind": "scene",
-            "product": "insulated lunchbox"
+            "product": "bento lunchbox"
           }
         ]
       },
@@ -124,10 +124,10 @@
         "label": "Product Showcase Videos",
         "items": [
           {
-            "ref": "n:guide:q1-video-ex-trailshoe",
-            "title": "Run Test: Trail Shoe on Wet Path",
+            "ref": "n:gen2:video-hub-g7",
+            "title": "Perfume Bottle Product Showcase",
             "kind": "scene",
-            "product": "trail running shoe"
+            "product": "perfume bottle"
           }
         ]
       },
@@ -135,10 +135,10 @@
         "label": "Avatar-Based Brand Videos",
         "items": [
           {
-            "ref": "n:guide:q1-video-ex-serum",
-            "title": "Car Selfie Review: Vitamin C Serum",
+            "ref": "n:gen2:spokesperson-videos-c3",
+            "title": "Gym Shaker Avatar Demo",
             "kind": "scene",
-            "product": "vitamin C serum"
+            "product": "protein shaker"
           }
         ]
       },
@@ -146,10 +146,10 @@
         "label": "Social Media Content",
         "items": [
           {
-            "ref": "n:guide:q1-video-ex-earbuds",
-            "title": "Wireless earbuds unboxed up close",
+            "ref": "n:gen2:video-hub-g3",
+            "title": "Sneaker Social Product Demo",
             "kind": "scene",
-            "product": "wireless earbuds"
+            "product": "running sneaker"
           }
         ]
       }

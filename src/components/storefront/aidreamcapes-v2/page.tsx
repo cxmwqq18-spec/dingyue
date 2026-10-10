@@ -6,7 +6,7 @@ import {
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
 import { list, text, type V2Card, type V2Data, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
-import { VisualAfter, VisualDirectoryFilter, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
+import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual } from "./types";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
@@ -42,10 +42,19 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
   </Section>;
 }
 
-function examplesWithoutPickerImages(examples: V2Examples | undefined, visual: V2Visual): V2Examples | undefined {
-  if (!examples) return undefined;
-  const pickerImages = new Set(visual.picker.cards.map((card) => card.image.src));
-  return { ...examples, groups: examples.groups.map((group) => ({ ...group, items: group.items.filter((item) => !pickerImages.has(item.image.src)) })).filter((group) => group.items.length) };
+function splitPhotoHubExamples(examples: V2Examples | undefined) {
+  if (!examples) return { fresh: [], gallery: undefined as V2Examples | undefined };
+  const fresh: { label: string; image: V2Image }[] = [];
+  const galleryItems: V2Examples["groups"][number]["items"] = [];
+  for (const group of examples.groups) {
+    const [first, ...rest] = group.items;
+    if (first?.image) fresh.push({ label: group.label, image: first.image });
+    galleryItems.push(...rest);
+  }
+  return {
+    fresh,
+    gallery: galleryItems.length ? { ...examples, groups: [{ label: "", items: galleryItems }] } : undefined
+  };
 }
 
 // The home examples are a list of flows. Until a page's data has been refreshed it can still hold the
@@ -210,7 +219,6 @@ function VideoHubPage({ data, r }: Props) {
   const visual = data.visual as V2Visual | undefined;
   const maker = data.maker as V2Maker | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
-  const uniqueExamples = visual ? examplesWithoutPickerImages(data.examples as V2Examples | undefined, visual) : data.examples as V2Examples | undefined;
   if (visual) return <>
     <Crumbs items={data.breadcrumbs} r={r} />
     <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
@@ -221,7 +229,7 @@ function VideoHubPage({ data, r }: Props) {
     <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
     <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />
     <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-    <ExampleGallery examples={uniqueExamples} title="Types of videos you can generate" r={r} />
+    <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
     <Faq items={data.faq} title="Questions about AI video" r={r} />
     <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
   </>;
@@ -264,6 +272,7 @@ function ToolPage({ data, r }: Props) {
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const video = data.group === "video";
   const photoHub = data.id === "photo-hub";
+  const photoExamples = photoHub ? splitPhotoHubExamples(data.examples as V2Examples | undefined) : undefined;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -272,10 +281,10 @@ function ToolPage({ data, r }: Props) {
       </PageHero>
       {visual && !photoHub ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null}
       {visual && photoHub ? <>
-        <VisualStrip heading={visual.titles?.m3?.h2 ?? "Give your product a fresh look"} lead={visual.titles?.m3?.lead} visual={visual} r={r} />
+        <VisualFreshLook heading={visual.titles?.m3?.h2} lead={visual.titles?.m3?.lead} items={photoExamples?.fresh ?? []} button={visual.picker.button} href={maker.href} r={r} />
         <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
         <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-        <ExampleGallery examples={data.examples as V2Examples | undefined} title="Examples of AI generated product photos" r={r} />
+        <ExampleGallery examples={photoExamples?.gallery} r={r} />
         <RelatedGroupsSection groups={relatedGroups} r={r} />
       </> : visual ? <>
         <VisualStrip visual={visual} r={r} />
