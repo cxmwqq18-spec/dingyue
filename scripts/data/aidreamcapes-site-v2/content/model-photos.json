@@ -1,10 +1,10 @@
 {
   "id": "model-photos",
-  "title": "AI Model Photos for Clothes, Bags and Jewelry | AIVideosUGC",
-  "description": "Show your clothing, bags or jewelry worn in a styled, on-body look from one flat product photo, without booking a model, photographer or studio.",
-  "h1": "Show Clothes and Accessories on a Model",
-  "eyebrow": "Clothing and accessories",
-  "lead": "Apparel and accessories sell when shoppers see them worn, but hiring a model and a studio for every new item is expensive and takes weeks. Put your flat product photo onto a person in a styled scene, so buyers see the look while your listing keeps the real measurements.",
+  "title": "AI Model Photos for Clothes and Jewelry | AIVideosUGC",
+  "description": "Show clothing, bags or jewelry worn on an AI model from one flat product photo, so shoppers see the look without booking a model or a studio.",
+  "h1": "Show Clothes and Accessories on AI Models",
+  "eyebrow": "On-model photo maker",
+  "lead": "Apparel sells once shoppers see it worn. Put a flat product photo onto an AI model in a styled scene. No casting, no studio day, no long wait.",
   "secondary_keywords": [
     "on-model photos for clothing",
     "AI fashion model images",
@@ -12,21 +12,21 @@
     "AI photos of bags being worn",
     "jewelry on model photos"
   ],
-  "benefits_h2": "Why show products on an AI model?",
-  "steps_h2": "How to make an on-model photo in 3 simple steps",
-  "steps_lead": "Three steps put one flat product photo onto a styled person and return a square photo ready for the page or feed.",
+  "benefits_h2": "Why sellers show products on AI models with AIVideosUGC",
+  "steps_h2": "How to make an on-model photo with AI",
+  "steps_lead": "Three steps. One flat photo in, one worn look out.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a flat or hanging photo with the whole garment, strap or clasp in frame. It becomes the item being worn."
+      "d": "Add a flat or hanging photo with the whole garment, strap or clasp in frame."
     },
     {
-      "t": "Describe the Look",
-      "d": "Say who wears it, what it's paired with and where, such as an autumn street look with the face turned away."
+      "t": "Pick a Model and Share Your Idea",
+      "d": "Choose a model and a scene that fit your audience. Share your idea in one sentence."
     },
     {
-      "t": "Download and Add Fit Details",
-      "d": "Review the result against your real item, then download. Put measurements and the size chart in your listing."
+      "t": "Generate and Download",
+      "d": "Review the worn look and download it. Add measurements and the size chart in your listing."
     }
   ],
   "maker": {
@@ -48,46 +48,42 @@
   },
   "faq": [
     {
-      "q": "What products work with AI model photos?",
-      "a": "The tool suits clothing and accessories such as tops, dresses, outerwear, bags, watches and jewelry. A flat garment or clear accessory photo gives the preview a useful reference."
+      "q": "What is an AI model photo?",
+      "a": "It is a photo that shows your clothing or accessory worn by an AI-generated model. You start from one flat product photo and get a styled, on-body image."
     },
     {
-      "q": "Will the photo show how clothing actually fits?",
-      "a": "No. It presents a styled look, not a garment fitting or measurement session."
+      "q": "Which products work on an AI model?",
+      "a": "Tops, dresses, outerwear, bags and jewelry work well. A clear flat garment or accessory photo gives the best reference."
     },
     {
-      "q": "Can I use these photos on Shopify and Instagram?",
-      "a": "Yes. Use a worn view on a product page or social post, with a separate clear product photo available for close details."
-    },
-    {
-      "q": "Can I ask for a celebrity or a well-known model?",
-      "a": "Describe a general look, pose and setting instead of requesting a real person or suggesting a public figure endorses your product."
-    },
-    {
-      "q": "What should I provide for a try-on?",
-      "a": "Provide a flat garment photo or a clear accessory photo with the whole item visible."
-    },
-    {
-      "q": "Will the output replace measurements?",
-      "a": "No. Keep verified measurements and size information in the product listing."
-    },
-    {
-      "q": "Can I use on-model photos in paid ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so the worn view can run on Instagram, Facebook and other paid channels. Don't request a real celebrity or present the AI model as a customer, and add offers in your ad tool."
+      "q": "Does the photo prove how clothing fits?",
+      "a": "No. It shows a styled look, not a measured fitting. Keep verified measurements and a size chart in the listing."
     },
     {
       "q": "Can I choose the model's age or look?",
-      "a": "Yes. Describe a general type of adult person, styling and setting, rather than a specific real person or public figure. The result can vary slightly between runs, so keep the request about a general look that fits your audience."
+      "a": "Yes. Pick a general adult look that fits your audience. Do not request a real celebrity, and small differences between results are normal."
     },
     {
-      "q": "Does the generated photo prove the fit?",
-      "a": "No. The scene shows a styled outfit and how the item might drape, not a measured fitting. Keep accurate size, material and care information in the listing so shoppers don't read the image as a fit guarantee."
+      "q": "Can I use these photos on my store and social channels?",
+      "a": "Yes. Use the worn view on a product page or social post, and keep a separate plain product photo for details."
+    },
+    {
+      "q": "How fast can I launch a new collection?",
+      "a": "Each item moves from a flat photo to a worn look in minutes. You can prepare a whole collection without booking model days."
+    },
+    {
+      "q": "Can the image run in paid ads?",
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor, not on the image."
+    },
+    {
+      "q": "Do the garment details stay the same?",
+      "a": "Color and cut are kept from the flat photo, but small print or closure details can shift. Compare each result with the real item."
     }
   ],
   "overview": [
     {
-      "h2": "",
-      "d": "A model photo shows clothing or an accessory in a styled look. Upload a flat garment photo or a clear accessory shot, then describe who wears it, what it is paired with and where. Use the result to show a styling idea; put verified measurements and material details in the listing."
+      "h2": "Visualize your products on fashion models",
+      "d": "A flat garment or accessory photo becomes a worn, styled look. Shoppers see how the item might appear as part of an outfit."
     }
   ],
   "examples": {
@@ -175,16 +171,16 @@
       ]
     },
     "picker": {
-      "title": "On-model photo formats",
-      "lead": "Choose a try-on, outfit check, lookbook or jewelry display that keeps the item visible.",
+      "title": "Browse worn looks",
+      "lead": "Each card places the same product on a model in a styled scene. Pick a look the item belongs in.",
       "chips": [
         {
           "id": "lookbook",
-          "label": "OOTD and Lookbook"
+          "label": "Get Ready With Me"
         },
         {
           "id": "fit",
-          "label": "Fit Check"
+          "label": "Product Review"
         },
         {
           "id": "tryon",
@@ -192,7 +188,7 @@
         },
         {
           "id": "jewelry",
-          "label": "Jewelry Display"
+          "label": "Product Demo"
         }
       ],
       "cards": [
@@ -276,14 +272,14 @@
       {
         "frame": "browser",
         "ref": "n:guide:k5-model-photos-uses-0-image",
-        "h": "Product page",
-        "d": "Add a worn view next to the flat photo so shoppers see the length and how it hangs."
+        "h": "Show length and drape",
+        "d": "Place a worn view next to the flat photo. Shoppers see how the garment hangs without guessing."
       },
       {
         "frame": "post",
         "ref": "n:guide:k5-model-photos-uses-1-image",
-        "h": "Instagram post",
-        "d": "Show the watch on a wrist, then put the band size and material in the caption."
+        "h": "Worn accessories in a feed",
+        "d": "Jewelry, bags or watches are easier to picture when seen on a person in a styled scene."
       }
     ],
     "input": [
@@ -323,11 +319,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to make an on-model clothing photo in 3 steps"
+        "h2": "How to make an on-model photo in three steps"
       },
       "m3": {
-        "h2": "On-model photo ideas for try-ons and lookbooks",
-        "lead": "Choose a fit check, outfit lookbook or jewelry display that keeps details visible."
+        "h2": "On-model photo ideas",
+        "lead": "Try-ons, worn looks and styled accessories."
       },
       "m4": {
         "h2": "Where AI model photos help you sell"
@@ -359,46 +355,20 @@
   },
   "benefits": [
     {
-      "t": "A worn view from a flat photo",
-      "d": "Turn one garment or accessory image into a styled look while the listing keeps the real measurements and fit details."
+      "t": "Launch collections faster",
+      "d": "Move every item from a flat photo to a worn look in minutes, without booking model days."
     },
     {
-      "t": "A complete outfit, not an isolated item",
-      "d": "Describe the pairing and setting, then support the look with a white-background product photo and close details."
+      "t": "Consistent visuals on every channel",
+      "d": "Use one style across product pages, feeds and ads, so the catalog stays consistent."
     },
     {
-      "t": "One item kept identical",
-      "d": "The color and product stay the same between the flat photo, model view and catalog image, so nothing drifts."
+      "t": "Scale fashion photography",
+      "d": "Create worn looks for many items without a studio, a crew or repeated setups."
     },
     {
-      "t": "Ready for social without a model day",
-      "d": "Use the square worn view in Instagram or Facebook campaigns, then add verified size and care copy outside the image."
-    }
-  ],
-  "uses": [
-    {
-      "t": "New-arrival outfit posts",
-      "d": "Show one new piece for fashion and clothing, then keep the flat source for fabric and measurements."
-    },
-    {
-      "t": "Shoe try-on context",
-      "d": "Put the footwear in a walking pose for shoe listings, and use Size Comparison for scale."
-    },
-    {
-      "t": "Jewelry close views",
-      "d": "Show earrings or a ring for jewelry and accessories; use Jewelry On Model for a focused frame."
-    },
-    {
-      "t": "Bag and accessory pages",
-      "d": "Show how a bag hangs or opens, then pair it with a lifestyle scene and [Packaging Preview](page:tpl-pack)."
-    },
-    {
-      "t": "Beauty and wearable styling",
-      "d": "Model photos can show a tool or wearable for beauty and skincare, while the product view carries exact details."
-    },
-    {
-      "t": "Ad and catalog handoff",
-      "d": "Export a clean square view for Amazon product photos, social ad photos, or an Instagram campaign. For the next campaign, compare [Studio Lighting](page:tpl-light), [Team Headshots](page:tpl-head), [Creator-Style Photo](page:tpl-ugc), [Story Ad](page:tpl-story), [Sale Banner](page:tpl-sale), [Brand Film](page:tpl-film), [Home Organizing](page:tpl-home), [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad), [Ad Sizes for Every Platform](page:guide-ad-sizes-by-platform), [Testing Ad Versions](page:guide-testing-ad-versions)."
+      "t": "Test looks with the same product",
+      "d": "Try different models and scenes, then pick the worn view that fits the item best."
     }
   ]
 }

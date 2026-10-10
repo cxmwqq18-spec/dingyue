@@ -1,28 +1,28 @@
 {
   "id": "spokesperson-videos",
   "title": "AI Spokesperson Video Maker for Product Ads | AIVideosUGC",
-  "description": "Turn one product photo into an AI spokesperson ad. Pick a realistic actor, write one line about a feature, and get a talking selfie video in minutes.",
+  "description": "Turn one product photo into an AI spokesperson ad. Pick a realistic actor and scene, write one line, and get a talking video in minutes.",
   "h1": "Create Spokesperson Videos with Realistic AI Actors",
   "eyebrow": "AI spokesperson video",
-  "lead": "Some products sell once a feature is explained out loud. Pick a realistic AI actor, write one line, and get a talking ad in minutes. No casting, no studio day, no creator contract.",
+  "lead": "Some products sell once a feature is explained out loud. Pick a realistic AI actor and a scene, write one line, and get a talking ad in minutes. No casting, no studio day.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
     "AI actor product ads",
     "on-camera product showcase"
   ],
-  "benefits_h2": "Why sellers create spokesperson videos with AIVideosUGC",
+  "benefits_h2": "Why brands choose spokesperson videos with AIVideosUGC",
   "benefits": [
     {
-      "t": "Same-day speed",
+      "t": "Speed",
       "d": "Get a talking ad in minutes. Skip the casting, the booking and the weeks of prep before a shoot."
     },
     {
-      "t": "Test more, reshoot nothing",
+      "t": "Scale",
       "d": "Try different actors and hooks with the same product photo. Make fresh versions and split-test them in your ad account."
     },
     {
-      "t": "Every word is yours",
+      "t": "Straight",
       "d": "Write one factual line about a feature. The actor delivers it exactly, so no review is invented."
     }
   ],
@@ -35,7 +35,7 @@
     },
     {
       "t": "Pick an Actor and Share Your Idea",
-      "d": "Choose an actor and scene that fit your audience. Share your video idea in one sentence."
+      "d": "Choose an actor and a scene that fit your audience. Share your video idea in one sentence."
     },
     {
       "t": "Generate and Download",
@@ -81,10 +81,6 @@
       "a": "No. The presenter is AI-generated, so never present them as a real buyer. Use the clip as a brand explanation and add an AI disclosure where the platform asks."
     },
     {
-      "q": "Can I use the video as a customer testimonial?",
-      "a": "Not unless the words come from a real, authorized customer. Use the clip to explain a feature instead, and tie each claim to a fact you can support."
-    },
-    {
       "q": "How is this different from hiring a UGC creator?",
       "a": "A UGC creator films with your real product and can improvise. The AI actor speaks your exact line from a photo, so it is ready in minutes and costs far less."
     },
@@ -93,38 +89,7 @@
       "a": "Yes. Downloads are licensed for commercial use under our terms. Any captions, music or offers you add still need separate rights."
     }
   ],
-  "overview": [
-    {
-      "h2": "Explain the feature without inventing a review",
-      "p": "The presenter shows the product in a familiar setting and says the line you wrote. Buyers get real product facts from a face they can trust."
-    }
-  ],
-  "examples": {
-    "h2": "Presenter scenes for product ads",
-    "lead": "Each scene is a real ad moment. The presenter holds the product and explains one thing.",
-    "groups": [
-      {
-        "label": "Product demonstrations",
-        "items": [
-          {
-            "ref": "n:gen2:spokesperson-videos-c4",
-            "title": "Planner Hold: Product Detail",
-            "kind": "scene",
-            "product": "hardcover planner"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "strip": [
-      "n:guide:q4-spokesperson-strip-01",
-      "n:guide:q4-spokesperson-strip-02",
-      "n:guide:q4-spokesperson-strip-03",
-      "n:guide:q4-spokesperson-strip-04",
-      "n:guide:q4-spokesperson-strip-05",
-      "n:guide:q4-spokesperson-strip-06"
-    ],
     "steps": {
       "source": "n:guide:q4-spokesperson-source",
       "sourceAlt": "Plain forest-green bottle shown fully from cap to base on a light neutral background.",
@@ -140,130 +105,37 @@
       "lead": "See how each actor looks holding a real product. Pick a scene and make the line yours.",
       "chips": [
         {
-          "id": "creator-reviews",
-          "label": "Creator Reviews"
+          "id": "home",
+          "label": "Home"
         },
         {
-          "id": "routine-tryon",
-          "label": "Get Ready With Me"
+          "id": "kitchen",
+          "label": "Kitchen"
         },
         {
-          "id": "hands-on",
-          "label": "Product Demo"
+          "id": "gym",
+          "label": "Gym"
         },
         {
-          "id": "unboxing-reactions",
-          "label": "Unboxing"
+          "id": "office",
+          "label": "Office"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:q4-spokesperson-picker-01",
-          "label": "Car selfie review: serum pump",
-          "chips": [
-            "creator-reviews"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum beside their face and says: “Here is the pump detail I wanted to show.” They turn it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin, slight handheld sway. End with the serum held steady beside the creator’s face, pump visible. Sound: clear speech and soft car ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
           "ref": "n:guide:q4-spokesperson-picker-02",
-          "label": "Bathroom routine: moisturizer",
+          "label": "Home: moisturizer to camera",
           "chips": [
-            "routine-tryon"
+            "home"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright bathroom sink, an adult creator holds the moisturizer beside their cheek and says: “This is the step I do before makeup.” They pat a small amount onto one cheek. Direct-to-camera selfie, natural light, realistic skin. End with the moisturizer beside the cheek and the applied layer visible. Sound: clear speech and quiet room tone; no music, text or logos.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-03",
-          "label": "Kitchen solution: skillet spatula",
-          "chips": [
-            "hands-on"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home kitchen counter, an adult creator holds a silicone spatula and says: “This edge reaches along the curve of the pan.” They guide it once around a plain skillet, then face the lens. Casual phone selfie, natural window light. End with the spatula resting in the skillet, curved edge visible. Sound: speech and a light pan scrape; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q4-spokesperson-picker-04",
-          "label": "Living-room unboxing: earbuds",
-          "chips": [
-            "unboxing-reactions"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lived-in living room, an adult creator opens a small plain box, lifts a round wireless-earbud case and says: “Let’s open the case and see what comes in the box.” Eye-level handheld chest-up shot, natural skin texture. Soft side light from the living-room window. End with the open earbud case above the box and both earbuds visible. Sound: speech and soft packaging rustle; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q4-spokesperson-picker-05",
-          "label": "Podcast review: headphones",
-          "chips": [
-            "creator-reviews"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a small podcast table, an adult creator holds plain over-ear headphones and says: “Here are three details I can show: the ear cups, hinge and button placement.” They turn the headphones once. Front-camera medium close-up, soft room light. End with both ear cups forward beside the podcast table. Sound: speech and quiet room tone; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q4-spokesperson-picker-06",
-          "label": "Cafe try-on: everyday cardigan",
-          "chips": [
-            "routine-tryon"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe window seat, an adult creator wears a plain cardigan and says: “Same cardigan, three layers: tee, button-down and tank.” They gesture to the neckline and sleeve. Casual front-camera selfie, natural window light. End facing camera with the cardigan neckline and sleeve in view. Sound: speech and low cafe ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q4-spokesperson-picker-07",
-          "label": "Gym demo: shaker bottle",
-          "chips": [
-            "hands-on"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator holds a plain shaker and says: “One squeeze shows how the cap opens with one hand.” They press the lid once and hold the bottle still. Chest-up front-camera view, natural skin, soft daylight. End with the shaker upright and its opened cap facing camera. Sound: speech and a light shaker rattle; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q4-spokesperson-picker-08",
-          "label": "Office setup: phone stand",
-          "chips": [
-            "unboxing-reactions"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, an adult creator opens a folding phone stand and says: “If your phone keeps sliding on calls, this stand holds the angle in place.” They set a phone into the cradle. Handheld eye-level selfie, window light. End with the phone seated upright in the open stand cradle. Sound: speech and a light hinge click; no music, text or logos.",
-          "kind": "video"
-        },
-        {
           "ref": "n:guide:q4-spokesperson-output-01",
-          "label": "Moisturizer Review: Held to Camera",
+          "label": "Home: moisturizer close-up",
           "chips": [
-            "creator-reviews"
-          ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c3",
-          "label": "Gym Shaker: Product Hold",
-          "chips": [
-            "routine-tryon"
-          ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        },
-        {
-          "ref": "f:f2-r10b-spokesperson-card-10",
-          "label": "Snack Pouch: Presenter Review",
-          "chips": [
-            "creator-reviews"
-          ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        },
-        {
-          "ref": "f:f2-r10b-spokesperson-card-11",
-          "label": "Charger Detail: Held to Camera",
-          "chips": [
-            "hands-on"
+            "home"
           ],
           "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
           "prompt": "",
@@ -271,130 +143,84 @@
         },
         {
           "ref": "f:k8-spokesperson-output-audio-safe",
-          "label": "Skincare Bottle: Unboxing Reaction",
+          "label": "Home: skincare bottle hold",
           "chips": [
-            "unboxing-reactions"
+            "home"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-03",
+          "label": "Kitchen: spatula to camera",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home kitchen counter, an adult creator holds a silicone spatula and says: “This edge reaches along the curve of the pan.” They guide it once around a plain skillet, then face the lens. Casual phone selfie, natural window light. End with the spatula resting in the skillet, curved edge visible. Sound: speech and a light pan scrape; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f2-r10b-spokesperson-card-10",
+          "label": "Kitchen: snack pouch hold",
+          "chips": [
+            "kitchen"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-07",
+          "label": "Gym: shaker to camera",
+          "chips": [
+            "gym"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator holds a plain shaker and says: “One squeeze shows how the cap opens with one hand.” They press the lid once and hold the bottle still. Chest-up front-camera view, natural skin, soft daylight. End with the shaker upright and its opened cap facing camera. Sound: speech and a light shaker rattle; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c3",
+          "label": "Gym: protein shaker hold",
+          "chips": [
+            "gym"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-08",
+          "label": "Office: phone stand to camera",
+          "chips": [
+            "office"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, an adult creator opens a folding phone stand and says: “If your phone keeps sliding on calls, this stand holds the angle in place.” They set a phone into the cradle. Handheld eye-level selfie, window light. End with the phone seated upright in the open stand cradle. Sound: speech and a light hinge click; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f2-r10b-spokesperson-card-11",
+          "label": "Office: charger to camera",
+          "chips": [
+            "office"
           ],
           "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
           "prompt": "",
           "kind": "video"
         }
       ],
-      "button": "Use this idea"
-    },
-    "uses": [
-      {
-        "frame": "1:1",
-        "ref": "n:guide:q4-spokesperson-use-01",
-        "h": "Product page presenter video",
-        "d": "Shoppers hear the feature explained while they see its size and finish. Doubts get answered before they leave the page."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q4-spokesperson-use-02",
-        "h": "Paid social presenter ad",
-        "d": "A face talking to camera stops the scroll in a feed. One clear feature gives viewers a reason to click through."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q4-spokesperson-input-good-bottle",
-        "bad": "n:guide:q4-spokesperson-input-bad-blur",
-        "good_label": "Full forest-green bottle in clear light",
-        "bad_label": "Forest-green bottle details are blurred"
-      },
-      {
-        "good": "n:guide:k8-spokesperson-gen2-photo-hub-c1",
-        "bad": "n:guide:q4-spokesperson-input-bad-crop",
-        "good_label": "Brown leather bag and gold buckle fully visible",
-        "bad_label": "Bag edge is cut off in dim light"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:f2-spokesperson-output-bottle-r2",
-        "frame": "9:16",
-        "label": "Bottle Review: Presenter Holds Green Bottle",
-        "length": 10
-      },
-      {
-        "ref": "n:guide:q4-spokesperson-output-02",
-        "frame": "1:1",
-        "label": "Studio bag review",
-        "length": 10
-      }
-    ],
-    "after": {
-      "ref": "n:guide:f2-r10b-spokesperson-after-bottle",
-      "zones": [
-        "Caption",
-        "Price"
-      ],
-      "items": [
-        "Add the exact product name and offer after generation.",
-        "Label the presenter as AI where your ad platform requires it.",
-        "Check the spoken line and pronunciation before you publish."
-      ]
+      "button": "Use this scene"
     },
     "titles": {
-      "m2": {
-        "h2": "Create an AI spokesperson ad in three steps"
-      },
-      "m3": {
-        "h2": "Speaking actor formats for product ads",
-        "lead": "Choose an actor, a product and a short line."
-      },
       "m4": {
-        "h2": "Where spokesperson ads can help"
+        "h2": ""
       },
       "m5": {
-        "h2": "Start with a clear view of your product"
+        "h2": ""
       },
       "m6": {
-        "h2": "Spokesperson ad sizes, length and credits"
-      },
-      "m7": {
-        "h2": "Review the spoken line and sound"
-      },
-      "gallery": {
-        "h2": "Spoken AI actor ad styles"
-      },
-      "examples": {
-        "h2": "More on-camera product formats"
+        "h2": ""
       }
-    },
-    "overview": "An AI actor holds your product and speaks one line to camera. The clip works as a brand-led product ad on your page or in a paid campaign."
-  },
-  "limitations": {
-    "h2": "Before you publish: what is included",
-    "items": [
-      {
-        "t": "Actor look and setting",
-        "d": "Pick the actor look and setting in the create flow.",
-        "supported": true,
-        "status": "can"
-      },
-      {
-        "t": "Spoken product line",
-        "d": "The actor speaks one line you write.",
-        "supported": true,
-        "status": "can"
-      },
-      {
-        "t": "Language selector",
-        "d": "The create flow has no separate language selector.",
-        "supported": false
-      },
-      {
-        "t": "B-roll insertion",
-        "d": "The create flow has no separate B-roll insertion control.",
-        "supported": false
-      },
-      {
-        "t": "Captions or music",
-        "d": "Add captions and music yourself after download.",
-        "supported": false
-      }
-    ]
+    }
   }
 }
