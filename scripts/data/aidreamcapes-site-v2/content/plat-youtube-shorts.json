@@ -79,15 +79,15 @@
   "cta_lead": "Start with one product action, then shape a clip for your YouTube Shorts placement.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the product. The first frame shows what you sell, so viewers recognize it right away."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so viewers recognize it right away."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Say what happens in one sentence and pick the clip length. The credit cost shows before anything is made."
+      "t": "Share your video idea",
+      "d": "Say what happens in one sentence and choose the clip length. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and Post",
+      "t": "Download and post",
       "d": "Download the full-screen file with no watermark, add your sound and details, then upload it to YouTube or Google Ads."
     }
   ],
@@ -104,7 +104,6 @@
     ]
   },
   "visual": {
-    "overview": "A full-screen 9:16 clip fills the Shorts player, and square uploads can also qualify. Start from one product photo, then match the file to the placement.",
     "strip": [
       "n:guide:q19-yt-strip-skincare-use",
       "n:guide:k4-plat-youtube-shorts-19-visual-strip-1",
@@ -112,317 +111,63 @@
       "n:guide:q19-yt-strip-jewelry-unbox",
       "n:guide:q19-yt-strip-charger-demo",
       "n:guide:q19-yt-strip-phonecase-demo"
-    ],
-    "steps": {
-      "source": "n:guide:q19-yt-step-steamer-source",
-      "result": "f:k4-plat-youtube-shorts-17-visual-steps-result",
-      "mode": "video",
-      "length": 15,
-      "prompt": "Use the uploaded steamer photo as the product reference and preserve its shape and color. In a bright laundry room, adult hands press the white garment steamer once across a wrinkled blue shirt sleeve; the cloth smooths as steam passes. Close side view with one continuous slow push-in and the steamer centered. Natural window light and realistic fabric texture. End with the steamer clear and still in frame. Sound: soft steam hiss and room tone; no music, captions or on-screen text.",
-      "options": [
-        [
-          "Size",
-          "9:16"
-        ],
-        [
-          "Length",
-          "15 seconds"
-        ]
-      ]
-    },
-    "picker": {
-      "title": "Pick a Shorts ad idea",
-      "lead": "Start from a creator-style format sellers already run.",
-      "chips": [
-        {
-          "id": "review",
-          "label": "Product Review"
-        },
-        {
-          "id": "unboxing",
-          "label": "Unboxing"
-        },
-        {
-          "id": "grwm",
-          "label": "Get Ready With Me"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q19-yt-picker-01-serum-review",
-          "label": "Product Review — Amber Serum",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the plain serum bottle beside her cheek and says to camera: \"Here is the dropper and the texture up close.\" She turns the bottle once, ending with its dropper beside her face. Natural phone-video look and skin texture. Front-facing chest-up close-up with a slight handheld push-in. Diffused bathroom window light. Sound: her voice and a soft cap click; no music or on-screen text.",
-          "chips": [
-            "review"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q19-yt-picker-02-protein-street-interview",
-          "label": "Product Review — Protein Bar Taste",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny gym lobby, an adult man holds the plain protein bar, takes one bite and says to camera: \"Listen to that first crunch.\" He pauses with a natural reaction, ending with the bar beside his face. Casual creator-video look. Front-facing medium close-up with a small handheld move closer. Even overhead gym light. Sound: his voice, wrapper crinkle and one crisp bite; no music or on-screen text.",
-          "chips": [
-            "review"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:k3-video-picker-cleanser",
-          "label": "Product Demo — Cleanser Bottle Lineup",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A clean bathroom counter holds plain cleanser and cream bottles arranged left to right as a quick morning routine, with one hand entering to pick the cleanser. Vertical creator framing, no music or on-screen text.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "f:k3-video-picker-coffee-grinder",
-          "label": "Product Demo — Coffee Grinder",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and controls exactly. An adult hand turns a compact plain coffee grinder beside a cup before work, ending with the grinder and grounds centered. Vertical routine-video framing, no music or on-screen text.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-demo-first-aid",
-          "label": "Unboxing — First-Aid Kit Open",
-          "chips": [
-            "unboxing",
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands open a plain compact first-aid kit and lay out its contents in a clear sequence on a clean table. 15-second-ready Shorts demo framing, bright daylight, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-demo-garlic-press",
-          "label": "Product Demo — Garlic Press",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands squeeze a plain stainless garlic press over a cutting board so the crushed clove is visible. Vertical Shorts demo framing, bright kitchen light, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-unbox-snack-pouch",
-          "label": "Unboxing — Olive Snack Pouch",
-          "chips": [
-            "unboxing"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands lift a plain olive snack pouch from a kraft mailer on a kitchen counter, showing its zipper clearly for an unboxing hook. Warm daylight, no text or logos."
-        },
-        {
-          "ref": "n:guide:q19-yt-picker-08-fitness-demo",
-          "label": "GRWM — Stretching Resistance Band",
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright gym, an adult woman faces the camera, stretches the plain fabric resistance band once at chest height and says: \"Three simple moves start with one band.\" She relaxes the band, ending with it held level across the frame. Natural creator-video look. Front-facing chest-up shot with slight handheld sway. Even overhead gym light. Sound: her voice and soft fabric tension; no music or on-screen text.",
-          "chips": [
-            "grwm",
-            "review"
-          ],
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:plat-youtube-shorts-m2-source",
-          "label": "Product Demo — Garment Steamer",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: adult hands hold a plain white garment steamer beside a blue shirt, showing its controls and water reservoir in bright laundry daylight. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-product-feature-callout-video-m6-output-2-vertical",
-          "label": "Product Demo — Loop Speaker",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the black woven loop speaker. An adult hand presses one control and turns the speaker toward camera, ending with its grille and button visible. Soft side light, realistic vertical phone-video look, close framing with one gentle push-in. Sound: click and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:c1-tpl-spark-ads-style-video-reuse-strip4-square",
-          "label": "Product Demo — Insulated Bottle",
-          "chips": [
-            "demo",
-            "review"
-          ],
-          "prompt": "Still square product photograph using the uploaded photo as the exact reference: an adult hand lifts a sage-green insulated bottle by its loop handle from a softly lit desk. Keep the full bottle centered, with no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-spark-ads-style-video-use-post-video-square",
-          "label": "Product Review — Bottle Desk Lift",
-          "chips": [
-            "grwm",
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the sage-green insulated bottle. An adult hand lifts it from a desk before leaving, ending with the loop handle and full bottle centered. Soft morning light, square creator framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-launch-m2-result-video-916",
-          "label": "Product Review — Desk Lamp Glow",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the white saucer-shade desk lamp. An adult creator switches it on beside a book and looks toward camera, ending with the warm glow centered. Evening room light, candid vertical phone-video look, slow push-in. Sound: switch click and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:c1-tpl-compare-m4-tumbler-pair-square",
-          "label": "Product Review — Tumbler Pair",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the matte black and warm cream tumblers. An adult hand places them side by side and points to the lids, ending with both fully visible. Soft kitchen daylight, square creator framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-creator-bottle",
-          "label": "Product Review — Water Bottle Talk",
-          "chips": [
-            "review"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An older creator with short gray curls holds a plain insulated water bottle and speaks naturally to camera in a bright kitchen. Product fully visible, vertical Shorts framing, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-youtube-safe-lamp",
-          "label": "Product Demo — Desk Lamp Setup",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Center the plain desk lamp in the middle third of a vertical phone frame and leave uncluttered space above and below for subtitles, without writing any words. Bright daylight, no text or logos."
-        }
-      ],
-      "button": "Make a Shorts ad"
-    },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:gen2:video-hub-g1",
-        "h": "Shorts clip — bottle lifted from gym bag",
-        "d": "Shoppers picture the bottle in their own training routine and want a closer look. That familiar moment is what holds them."
-      },
-      {
-        "frame": "post",
-        "ref": "f:k4-plat-youtube-shorts-32-visual-uses-1",
-        "h": "Shorts clip — shaker in the gym",
-        "d": "One quick use scene shows what the product is for without a long talk. Viewers who train understand it immediately."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:plat-youtube-shorts-example-trail-square",
-        "bad": "n:guide:plat-youtube-shorts-m5-soft-focus",
-        "good_label": "The trail shoe has room around its toe and heel",
-        "bad_label": "The shoe mesh blurs together at this size"
-      },
-      {
-        "good": "n:guide:k4-plat-youtube-shorts-09-visual-input-1-good",
-        "bad": "n:guide:k4-plat-youtube-shorts-m5-cropped-bad",
-        "good_label": "Trail shoes stay centered in the square frame",
-        "bad_label": "A tight crop cuts off parts of the shoes"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-1",
-        "frame": "9:16",
-        "label": "Portrait coral trail shoes shown in full on a rocky trail",
-        "length": 6,
-        "presentation": "youtube-shorts"
-      },
-      {
-        "ref": "n:guide:c1-tpl-limited-drop-alert-video-output-2",
-        "frame": "9:16",
-        "label": "Portrait coral trail shoes stepping onto a rocky path",
-        "length": 10,
-        "presentation": "youtube-shorts"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:c1-tpl-limited-drop-alert-video-m2-result-video-916",
-      "zones": [
-        "Music",
-        "Product link"
-      ],
-      "items": [
-        "Choose music in your editor or YouTube after downloading the clip.",
-        "Add the product link in the placement where viewers can open it."
-      ]
-    },
-    "sizes": [
-      {
-        "frame": "9:16",
-        "ref": "f:k4-plat-youtube-shorts-16-visual-sizes-0-image",
-        "label": "9:16 · YouTube Shorts"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:q19-yt-size-square-example",
-        "label": "1:1 · square uploads can qualify as Shorts"
-      },
-      {
-        "frame": "16:9",
-        "ref": "f:q19-yt-wide-demo",
-        "label": "16:9 · standard YouTube video or in-stream ad"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Create a YouTube Shorts ad from one product photo"
-      },
-      "m3": {
-        "h2": "Choose a YouTube Shorts scene with one action"
-      },
-      "m4": {
-        "h2": "Use YouTube Shorts for a quick product demonstration"
-      },
-      "m5": {
-        "h2": "Keep the product centered in a YouTube Shorts frame"
-      },
-      "m6": "YouTube Shorts made from product photos",
-      "m7": {
-        "h2": "Add music and details after download"
-      },
-      "m8": {
-        "h2": "Shorts uploads and regular YouTube video formats"
-      },
-      "examples": {
-        "h2": "More YouTube Shorts examples",
-        "lead": "Vertical product moments with one clear start and finish."
-      },
-      "faq": {
-        "h2": "Questions about YouTube Shorts ads"
-      }
-    }
+    ]
   },
-  "benefits_h2": "Why make YouTube Shorts ads with AI UGC video?",
+  "benefits_h2": "Why advertisers move to AI video for YouTube",
   "benefits": [
     {
-      "t": "Fits between the clips people chose",
-      "d": "The result is one clear product beat in the same full-screen vertical format as the Shorts around it, so your ad reads as one more useful clip instead of a break in the feed."
+      "t": "Faster Turnaround",
+      "d": "Make multiple ad variations for testing and scaling, so more time goes into growing the campaign instead of managing shoots."
     },
     {
-      "t": "No filming, no creator",
-      "d": "A product photo and one sentence replace the camera, the person and the edit session. A second take is just another job, not a reshoot."
+      "t": "More Conversions",
+      "d": "Keep a steady flow of platform-style clips, so ads stay fresh and viewers keep responding."
     },
     {
-      "t": "Room for a full product story",
-      "d": "Choose a 6, 10, 15 or 30-second clip, so a short demo or a longer start-to-finish demonstration can both come from the same uploaded photo."
-    },
-    {
-      "t": "Yours on the channel, no watermark",
-      "d": "Downloaded clips carry no AIVideosUGC watermark and are yours to post from YouTube Studio or your ad account, with the credit cost shown first."
+      "t": "No Production Delays",
+      "d": "Skip long production timelines and get a new video ad on demand, built from your own product photo."
     }
   ],
   "steps_h2": "How to make a YouTube Shorts ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post Short — no studio, no creator, no reshoot."
+  "steps_lead": "Three steps turn one product photo into a ready-to-post Short — no studio, no creator, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Why choose it",
+      "h2": "Why teams choose AI for YouTube ads",
+      "lead": "More creative, without the usual production chain.",
+      "items": [
+        {
+          "t": "Ready Avatars for Your Brand",
+          "d": "Feature different presenters without finding and booking creators, and keep content fresh."
+        },
+        {
+          "t": "Keep Viewers Watching",
+          "d": "Open with a clear, local-feeling moment and hold attention long enough to make the offer."
+        },
+        {
+          "t": "Test Your Ads",
+          "d": "Make multiple creator-style clips and test openings and scenes to see what actually performs."
+        }
+      ]
+    },
+    {
+      "eyebrow": "What makes it useful",
+      "h2": "What makes this AI video tool stand out",
+      "lead": "Features built for marketers who need results.",
+      "items": [
+        {
+          "t": "Built for Marketers Who Need Results",
+          "d": "Go from product photo to ready clip with a setup made for fast testing."
+        },
+        {
+          "t": "Product Holding Formats",
+          "d": "Show the product in hand or in use, the formats shoppers recognize and trust."
+        },
+        {
+          "t": "A Studio with Full Creative Control",
+          "d": "Change the opening, length or scene and make another version on your own schedule."
+        }
+      ]
+    }
+  ]
 }
