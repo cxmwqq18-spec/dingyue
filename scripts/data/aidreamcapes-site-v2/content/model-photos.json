@@ -124,7 +124,7 @@
     },
     "picker": {
       "title": "Browse worn looks",
-      "lead": "Each card places the same product on a model in a styled fashion scene.",
+      "lead": "Each card places one product on a model in a styled fashion scene.",
       "chips": [],
       "cards": [],
       "button": "Make an on-model photo"
