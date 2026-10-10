@@ -101,20 +101,19 @@
   "cta_lead": "Build a listing photo set around the main view, useful details, and product use.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
+      "t": "Upload your product photo",
       "d": "Add one clear photo of the whole item. Every gallery shot starts from that single product photo."
     },
     {
-      "t": "Pick Main, Lifestyle or Detail",
-      "d": "Choose a white main, a lifestyle scene or a close detail. The credit cost shows before each image is made."
+      "t": "Pick main, lifestyle or detail",
+      "d": "Choose a white main, a lifestyle scene or a close detail. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and List",
+      "t": "Download and list",
       "d": "Download the square file with no watermark, add any callouts yourself, then use it in your Amazon listing."
     }
   ],
   "visual": {
-    "overview": "Square gallery shots cover the white main, a lifestyle view and a close detail, all built from one product photo. Match each file to the listing slot.",
     "strip": [
       "n:guide:q19-amz-strip-first-sip",
       "n:guide:q19-amz-strip-coffee-pouch",
@@ -122,316 +121,86 @@
       "n:guide:q19-amz-strip-white-bottle",
       "n:guide:q19-amz-strip-soap-use",
       "n:guide:q19-amz-strip-cable-demo"
-    ],
-    "steps": {
-      "source": "n:guide:plat-amazon-c3-m2-source",
-      "result": "n:guide:q19-amz-step-mug-use",
-      "mode": "photo",
-      "prompt": "Still square product photograph of an adult hand lifting a plain ceramic mug at a bright breakfast table, the mug held at the frozen moment just above the table; soft morning window light, close composition with the mug and hand centered, crisp product detail, no text or logos.",
-      "options": [
-        [
-          "Template",
-          "Amazon listing photo"
-        ],
-        [
-          "Size",
-          "Square 1:1"
-        ],
-        [
-          "Use",
-          "Main · lifestyle · detail"
-        ]
-      ]
-    },
-    "picker": {
-      "title": "Choose an Amazon image slot",
-      "lead": "Build a square gallery: white main, close detail and in-use views.",
-      "chips": [
-        {
-          "id": "main",
-          "label": "White-background main"
-        },
-        {
-          "id": "detail",
-          "label": "Product detail"
-        },
-        {
-          "id": "use",
-          "label": "In use"
-        },
-        {
-          "id": "bundle",
-          "label": "Bundle and packaging"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q19-amz-picker-01-white-sunscreen",
-          "label": "Pale Sunscreen Tube on White",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Still square listing photograph of the complete pale-green sunscreen tube standing upright on a seamless pure-white studio surface, its blank label area facing forward; frozen clean product pose, bright diffused studio light with a soft grounded shadow, centered full silhouette with generous margins, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-02-white-protein",
-          "label": "Plain Protein Pouch on White",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Still square listing photograph of the complete plain protein pouch standing upright on seamless pure white, blank front label facing camera; crisp studio packshot under bright even softbox light, centered full package with a faint grounded shadow and open margins, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-03-gold-hoop-detail",
-          "label": "Gold Hoop Earrings Macro Detail",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Still square macro product photograph of a pair of simple gold hoop earrings with one hinge visible, resting on a warm ivory surface; polished metal caught in a frozen glint under soft directional window light, tight balanced composition with both hoops in focus, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-04-trail-shoe-detail",
-          "label": "Charcoal Trail Shoe Sole Detail",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Still square secondary product photograph of an unbranded charcoal trail shoe angled to show the full side profile and textured sole; clean neutral studio floor, soft directional light revealing mesh and tread, shoe centered and fully inside the frame, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-05-size-bottle-hand",
-          "label": "Pet Water Bottle Held by Hand",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Still square lifestyle photograph of an adult hand holding a compact plain pet water bottle beside a calm dog at a trail stop; frozen moment with bottle at the dog’s shoulder height, open-shade daylight, close balanced composition that makes the bottle scale clear, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-06-cleanser-use",
-          "label": "Cleanser Pumped into Open Palm",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Still square use photograph of adult hands pressing a plain cleanser pump and catching one small dose in an open palm beside a bright sink; freeze the drop just above the palm, soft bathroom daylight, close composition focused on pump and hand, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-07-headphone-unbox",
-          "label": "Charcoal Headphones Lifted from Box",
-          "chips": [
-            "bundle"
-          ],
-          "prompt": "Still square unboxing photograph of adult hands lifting plain charcoal over-ear headphones from an open gray box on a clean table; freeze the headphones halfway above the tissue, gentle warm window light, centered close composition with the full headphones visible, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q19-amz-picker-08-pet-bundle",
-          "label": "Dog Grooming Kit Pieces with Dog",
-          "chips": [
-            "bundle"
-          ],
-          "prompt": "Still square bundle photograph of a plain pet grooming brush, comb and glove arranged together beside a calm dog; all pieces held in a neat frozen display on a light floor, soft natural daylight, balanced composition with each item fully visible, no text, logo or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:white-background-kettle",
-          "label": "Sea-Green Kettle on Seamless White",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the sea-glass green kettle and its handle. Place the complete kettle upright on seamless pure white with a faint grounded shadow, centered and fully in frame. Clean listing photography, even studio light, no props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:ind-jewelry-accessories-m2-source",
-          "label": "Polished Gold Band Ring on White",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain polished gold band. Place it centered on a neutral display card beside a small coin for scale, with the full ring and edge visible. Soft studio light, square listing detail, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k5-lifestyle-photos-picker-cards-2-image",
-          "label": "Snack Bag Packed with Fresh Fruit",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain snack bag. An adult hand places it in an open lunch bag beside fruit, showing the pouch height and seal. Bright daylight, square Amazon lifestyle composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c4-amazon-notebook-square",
-          "label": "Brown Leather Notebook and Pen Flatlay",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain brown leather notebook and pen. An adult hand opens the notebook on a bright desk, showing the cover edge and paper scale. Soft window light, square listing detail, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-feature-gold-band-square",
-          "label": "Gold Band Ring Beside Neutral Coin",
-          "chips": [
-            "bundle"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain polished gold band. An adult hand lifts it beside the neutral coin and display card, ending with all pieces complete and easy to inspect. Soft studio light, square bundle composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:white-background-serving-bowl",
-          "label": "Cream Stoneware Bowl on Seamless White",
-          "chips": [
-            "main"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the cream stoneware serving bowl. Place the complete bowl upright on seamless pure white with a soft grounded shadow, centered and fully visible. Clean listing photography, even studio light, no props, text, or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-amazon-variant-backpacks",
-          "label": "Two Canvas Backpacks Side by Side",
-          "chips": [
-            "main"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Show two identical plain canvas backpacks, olive and charcoal, front-facing side by side on seamless pure white with equal scale. Secondary comparison view, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-amazon-packaging-brewer",
-          "label": "Coffee Brewer Kit Contents Flatlay",
-          "chips": [
-            "bundle"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Lay out the plain reusable coffee brewer kit, lid, filter, scoop and blank accessory card separately on a white surface so every included piece is visible. No text or logos."
-        }
-      ],
-      "button": "Make an Amazon image"
-    },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q19-amz-use-phonefolio",
-        "h": "Listing image — leather folio with a card",
-        "d": "Shoppers see the pockets and stitching at work and picture keeping their own cards in it. That is the detail they need before buying."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q19-amz-use-notebook-write",
-        "h": "Listing image — notebook in use at a desk",
-        "d": "A writer's hand shows the notebook's real size and paper, so shoppers can judge it for their own daily notes."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:f1-r10-amazon-backpack-snapshot",
-        "bad": "n:guide:f1-r10-amazon-backpack-snapshot-bad",
-        "good_label": "Seller snapshot — backpack front on bench",
-        "bad_label": "Bad crop — soft backpack snapshot"
-      },
-      {
-        "good": "n:gen2:white-background-c3",
-        "bad": "n:guide:plat-amazon-c3-bad-blur",
-        "good_label": "All train cars stay easy to see",
-        "bad_label": "Train details blur on white"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f1-r10-amazon-backpack-main",
-        "frame": "1:1",
-        "label": "Matched front-facing backpack on white",
-        "presentation": "amazon-gallery"
-      },
-      {
-        "ref": "n:guide:f1-amazon-toy-train-output",
-        "frame": "1:1",
-        "label": "Square white-background wooden toy train",
-        "presentation": "amazon-gallery"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q19-amz-output-backpack-walk",
-      "zones": [
-        "Product details",
-        "Callout"
-      ],
-      "items": [
-        "Add real dimensions and feature labels in your seller tools or design editor.",
-        "Keep the price and current availability in the product listing."
-      ]
-    },
-    "sizes": [
-      {
-        "frame": "1:1",
-        "ref": "n:guide:plat-amazon-c3-size-square-main",
-        "label": "White-background mug main image"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:plat-amazon-c3-size-square-lifestyle",
-        "label": "Mug in a bright kitchen lifestyle view"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:plat-amazon-c3-size-square-detail",
-        "label": "Close mug rim and handle detail"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Plan Amazon product photos in three steps"
-      },
-      "m3": {
-        "h2": "Choose an Amazon product image role"
-      },
-      "m4": {
-        "h2": "Use Amazon photos in a listing or storefront"
-      },
-      "m5": {
-        "h2": "Start Amazon images with a clear product photo"
-      },
-      "m6": {
-        "h2": "Square product photos for Amazon listings"
-      },
-      "m7": {
-        "h2": "Add Amazon listing details after download"
-      },
-      "m8": {
-        "h2": "Square Amazon examples matched to each upload"
-      },
-      "faq": {
-        "h2": "Questions about Amazon product photos"
-      },
-      "templates": {
-        "h2": "More Amazon product photo templates",
-        "lead": "Choose a clean listing view or a lifestyle scene for your product."
-      }
-    }
+    ]
   },
-  "benefits_h2": "Why make Amazon product photos with AI?",
+  "benefits_h2": "Amazon-ready image formats that help search and sales",
   "benefits": [
     {
-      "t": "A white main without a reshoot",
-      "d": "Your product photo is rebuilt on the plain white background Amazon expects for the main image, so a new SKU does not mean another studio session."
+      "t": "Main Listing Image",
+      "d": "A clean square shot on plain white, the first image shoppers see when they open the listing."
     },
     {
-      "t": "A full gallery from one item",
-      "d": "Separate jobs produce the lifestyle, detail and package-content shots that answer a shopper's later questions, all with the same product."
+      "t": "Detail and How-To Shots",
+      "d": "Show a useful feature or use step, the images that cut questions and returns."
     },
     {
-      "t": "Rules handled as requirements",
-      "d": "The square main is framed around Amazon's main-image rules and current category guidance, which is the difference between a listing image and a rejected upload."
-    },
-    {
-      "t": "Yours to sell with, no watermark",
-      "d": "Downloaded images carry no AIVideosUGC watermark and are yours to use in your listing, with the credit cost shown before each job starts."
+      "t": "Lifestyle and Unboxing",
+      "d": "Place the product in a real scene or show what is in the box, so shoppers know what to expect."
     }
   ],
   "steps_h2": "How to make Amazon product photos in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into listing-ready main and gallery images — no studio, no reshoot."
+  "steps_lead": "Three steps turn one product photo into listing-ready main and gallery images — no studio, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Made for each placement",
+      "h2": "Optimized for Amazon image placements",
+      "lead": "A square set for the listing, brand store and sponsored ads.",
+      "items": [
+        {
+          "t": "Listing and Brand Store",
+          "d": "Square main and gallery images that keep shoppers on the product page longer."
+        },
+        {
+          "t": "Sponsored Ad Creative",
+          "d": "Clear product shots made for search and ad placements, with a fresh look ready to test."
+        },
+        {
+          "t": "Off-Amazon Traffic",
+          "d": "Use the same square assets in social ads that send traffic back to the listing."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Why sellers scale with it",
+      "h2": "Why growing sellers scale Amazon images here",
+      "lead": "No more weeks of production cycles for each new SKU.",
+      "items": [
+        {
+          "t": "Study Best-Selling Listings",
+          "d": "See what works in your category and apply the same visual ideas to your own products."
+        },
+        {
+          "t": "Photo Ready In Minutes",
+          "d": "Start from one product photo and get a listing image without a studio booking."
+        },
+        {
+          "t": "White Background to Lifestyle",
+          "d": "Turn one plain product photo into a white main and a real lifestyle scene."
+        }
+      ]
+    },
+    {
+      "eyebrow": "By top categories",
+      "h2": "AI image solutions for top Amazon categories",
+      "lead": "The visual language that drives clicks in each niche.",
+      "items": [
+        {
+          "t": "Home and Kitchen Gadgets",
+          "d": "Clear problem-and-use shots that show the benefit fast."
+        },
+        {
+          "t": "Electronics and Accessories",
+          "d": "Clean feature and detail shots that make technical points easy to see."
+        },
+        {
+          "t": "Beauty and Personal Care",
+          "d": "Routine-style shots and close details that build trust."
+        },
+        {
+          "t": "Pet Supplies and Toys",
+          "d": "Warm, real-life scenes that show the product with a pet."
+        }
+      ]
+    }
+  ]
 }
