@@ -41707,6 +41707,396 @@
           640,
           1280
         ]
+      },
+      "mx1w-home-apps-1-r1": {
+        "file": "mx1w-home-apps-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman holds a generic smartphone toward the camera with only a softly blurred abstract app interface, no readable text or logo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-apps-2-r1": {
+        "file": "mx1w-home-apps-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult man presents a generic smartphone and points to a softly blurred, text-free app interface, no logo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-e-commerce-1-r1": {
+        "file": "mx1w-home-e-commerce-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands open a plain shipping carton to reveal an unbranded product pouch, no readable marks.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-e-commerce-2-r1": {
+        "file": "mx1w-home-e-commerce-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult packs a plain unbranded skincare carton into a kraft mailer on a clean table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-education-1-r1": {
+        "file": "mx1w-home-education-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A calm adult instructor demonstrates a plain kitchen tool beside a blank board with abstract shapes only.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-education-2-r1": {
+        "file": "mx1w-home-education-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult teacher holds a generic tablet with a softly blurred text-free interface and explains a product feature.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-explainer-1-r1": {
+        "file": "mx1w-home-explainer-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands show a plain cable organizer changing a desk from tangled cords to a tidy route.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-explainer-2-r1": {
+        "file": "mx1w-home-explainer-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult presenter points to the plain features of a generic unbranded insulated bottle on a table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-financial-services-1-r1": {
+        "file": "mx1w-home-financial-services-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator checks a generic finance app on a phone with only blurred abstract bars and circles.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-financial-services-2-r1": {
+        "file": "mx1w-home-financial-services-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult advisor gestures beside a generic laptop with a softly blurred abstract chart and no numbers.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-kids-toy-1-r1": {
+        "file": "mx1w-home-kids-toy-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A child plays with a plain wooden stacking toy while an adult hand demonstrates one piece.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-kids-toy-2-r1": {
+        "file": "mx1w-home-kids-toy-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands open a plain box of colorful wooden building blocks with no letters or logos.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-apparel-1-r1": {
+        "file": "mx1w-video-hub-apparel-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult model presents a plain olive overshirt with the full front and sleeves visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-apparel-2-r1": {
+        "file": "mx1w-video-hub-apparel-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman adjusts a plain cream knit sweater in a mirror with the full garment visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-apps-1-r1": {
+        "file": "mx1w-video-hub-apps-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a generic smartphone with a softly blurred abstract app interface and no text.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-apps-2-r1": {
+        "file": "mx1w-video-hub-apps-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman swipes a generic tablet showing only abstract blurred interface shapes, no text.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-clothing-1-r1": {
+        "file": "mx1w-video-hub-clothing-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands hold a plain denim shirt toward the camera with collar and seams visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-clothing-2-r1": {
+        "file": "mx1w-video-hub-clothing-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult folds plain charcoal trousers on a clean bed with the full garment visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-financial-services-1-r1": {
+        "file": "mx1w-video-hub-financial-services-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a generic phone with a softly blurred abstract finance dashboard and no numbers.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-financial-services-2-r1": {
+        "file": "mx1w-video-hub-financial-services-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult advisor points beside a generic laptop with a softly blurred abstract chart and no text.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-kids-toy-1-r1": {
+        "file": "mx1w-video-hub-kids-toy-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A child plays with a plain wooden toy train while an adult hand demonstrates it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-kids-toy-2-r1": {
+        "file": "mx1w-video-hub-kids-toy-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands open a plain toy box with colorful wooden blocks and no letters or logos.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-pet-1-r1": {
+        "file": "mx1w-video-hub-pet-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult owner brushes a calm golden dog with a plain grooming brush in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-pet-2-r1": {
+        "file": "mx1w-video-hub-pet-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult owner fits a plain teal harness onto a calm dog at a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-apparel-3-r1": {
+        "file": "mx1w-home-apparel-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult model wears a plain navy cardigan and turns to show the full sleeves and hem.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-clothing-1-r1": {
+        "file": "mx1w-home-clothing-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands hold a plain cotton shirt toward the camera with collar and seams visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-clothing-2-r1": {
+        "file": "mx1w-home-clothing-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult folds plain charcoal trousers on a clean bed with the full garment visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-food-beverage-3-r1": {
+        "file": "mx1w-home-food-beverage-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult pours a plain citrus drink from an unbranded glass bottle into a clear glass with ice.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-footwear-3-r1": {
+        "file": "mx1w-home-footwear-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult ties an unbranded charcoal running shoe at a doorway, with the complete shoe and laces visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-health-fitness-3-r1": {
+        "file": "mx1w-home-health-fitness-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult stretches on a plain teal yoga mat beside a window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-sports-gym-3-r1": {
+        "file": "mx1w-home-sports-gym-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult athlete finishes a set and holds a plain shaker beside a gym bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-viral-2-r1": {
+        "file": "mx1w-home-viral-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds a compact plain charcoal speaker toward the camera with an excited reaction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-video-hub-jewelry-accessories-3-r1": {
+        "file": "mx1w-video-hub-jewelry-accessories-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands fasten a plain silver bracelet at a wrist beside a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-viral-3-r1": {
+        "file": "mx1w-home-viral-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator reacts with delight while revealing a plain coral lipstick tube in a close-up.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-viral-4-r1": {
+        "file": "mx1w-home-viral-4-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds a plain gold hoop earring close to the camera with a surprised reaction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-home-accessories-3-r1": {
+        "file": "mx1w-home-accessories-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult carries a plain canvas tote bag with a notebook and water bottle on a sunny city walk, full handles visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-photo-hub-desert-1-r1": {
+        "file": "mx1w-photo-hub-desert-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber skincare bottle standing on pale desert stone in warm sunset light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-photo-hub-desert-2-r1": {
+        "file": "mx1w-photo-hub-desert-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woven sun hat and plain leather sandals arranged on warm desert sand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx1w-photo-hub-indoor-1-r1": {
+        "file": "mx1w-photo-hub-indoor-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain ceramic diffuser on a walnut side table in a calm living room.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
