@@ -124,7 +124,7 @@
     },
     "picker": {
       "title": "Browse product settings",
-      "lead": "Each card moves the same product into a new scene. Pick a setting that fits the item and your brand.",
+      "lead": "Each card moves one product into a new scene. Pick a setting that fits the item and your brand.",
       "chips": [],
       "cards": [],
       "button": "Try this background"
