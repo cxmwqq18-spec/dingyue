@@ -17,39 +17,47 @@
   "templates_title": "Pick an idea. Add your product.",
   "templates_lead": "Choose a product demo, unboxing, before-and-after or lifestyle template, upload your product photo and review the result before you publish.",
   "platforms_title": "The right size for every platform",
-  "benefits_h2": "Why sellers make videos and photos with AI",
+  "benefits_h2": "Benefits of AI product videos and photos",
   "benefits": [
     {
-      "t": "Skip the shoot",
-      "d": "No studio, models or sample shipments. Every result is built around a photo of the product you already sell."
+      "t": "Cost-effective",
+      "d": "Skip the photographer, studio and gear fees. Each result is built around a photo of the product you already sell."
     },
     {
-      "t": "Ads and listings from one photo",
-      "d": "A creator-style clip for TikTok or Reels, a clean main image for Amazon, a lifestyle shot for Shopify, all from the same upload."
+      "t": "Time-saving",
+      "d": "No shoot dates or days of waiting. A clean clip or photo is ready in minutes from your existing image."
     },
     {
-      "t": "Test more, reshoot nothing",
-      "d": "Change the scene, actor or opening and run another version from the same photo, then split-test it in your ad platform."
+      "t": "One photo, many results",
+      "d": "Run the same upload through ads, demos, white-background and lifestyle scenes without another booking."
     },
     {
-      "t": "Know the cost before you start",
-      "d": "Each photo or video shows its credit price up front, so a small store can plan a campaign without quotes or invoices."
+      "t": "No models or props needed",
+      "d": "People and settings are generated around your item, so there is no casting or set building."
+    },
+    {
+      "t": "Ready whenever you are",
+      "d": "Make a new ad or listing on a launch day, a holiday or late at night, with the price shown first."
+    },
+    {
+      "t": "Fast A/B testing",
+      "d": "Generate several openings and scenes, then split-test them in your ad platform without reshooting."
     }
   ],
-  "steps_h2": "How to make product videos and photos with AI",
-  "steps_lead": "No filming, casting or reshoots. Start with one clear photo and get a ready-to-post result.",
+  "steps_h2": "How to make AI videos and photos",
+  "steps_lead": "Three steps take one product photo to a ready-to-post result. No studio, no models, no reshoots.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Use one clear photo of the item you sell. It becomes the reference for every version you make."
+      "t": "Share Your Video Idea",
+      "d": "Upload a clear product photo or paste a product page link, then say what you want in one sentence."
     },
     {
-      "t": "Pick a Tool, Size and Length",
-      "d": "Choose a video or photo result and where it will run. You can share your idea for the scene in one sentence."
+      "t": "Choose a Tool, Size and Length",
+      "d": "Pick an ad, demo or photo result, then set the frame and length for where it will run."
     },
     {
-      "t": "Download and Post",
-      "d": "Check the product shape, color and label, then download a watermark-free file you own for ads and listings."
+      "t": "Get a Ready-to-Use Result",
+      "d": "Check the product shape, color and label, then download a watermark-free file for ads and listings."
     }
   ],
   "example_flows": [
@@ -101,7 +109,7 @@
   ],
   "ugc": {
     "eyebrow": "AI-generated creator-style ads",
-    "title": "What is a creator-style AI video ad?",
+    "title": "What is AI UGC?",
     "paras": [
       "UGC means user-generated content. Here, a creator-style ad uses an AI-generated person and casual phone-video framing; it is not a real customer review or endorsement.",
       "An [AI UGC video ad](page:video-ads) gives you that look without hiring a creator or shipping your product to anyone. You upload a photo of your product, pick a style or describe the scene, and AIVideosUGC makes a 6, 10, 15 or 30 second clip built around your real product.",
@@ -109,77 +117,78 @@
     ],
     "formats": [
       {
-        "t": "Creator-style ad",
-        "d": "Someone holds your product up to the camera and shows it off, like a quick phone video."
+        "t": "Product review ads",
+        "d": "An AI person gives a first-person review of your product, straight to camera."
       },
       {
-        "t": "Unboxing",
-        "d": "The first-look moment: the box opens and your product comes out."
+        "t": "Testimonial-style ads",
+        "d": "A problem-to-solution story your shopper can recognize."
       },
       {
-        "t": "Product demo",
-        "d": "Your product being used, so shoppers see how it looks and works."
+        "t": "Tutorial and demo videos",
+        "d": "A short walkthrough of how your product looks and works."
       },
       {
-        "t": "Before and after",
-        "d": "The change your product makes, shown in one short clip."
+        "t": "Unboxing-style ads",
+        "d": "The first reveal as your product comes out of the box."
       }
     ]
   },
   "audience": {
-    "title": "Who AIVideosUGC is for",
-    "lead": "Shop owners and marketing teams use one product photo to make a listing image, a short ad or a product-use demo.",
+    "title": "Built for teams that move fast",
+    "lead": "Whatever you sell, every result starts from one product photo and is priced per job.",
     "items": [
       {
-        "t": "Shopify stores and brands selling through their own websites",
-        "d": "Make [video ads](page:video-ads) and [product photos](page:photo-hub) for a new campaign without booking a shoot."
-      },
-      {
-        "t": "Amazon and marketplace sellers",
-        "d": "Clean [white-background main images](page:white-background), [lifestyle shots](page:lifestyle-photos) and [short listing videos](page:product-videos) from photos you already have."
+        "t": "Ecommerce and D2C brands",
+        "d": "Launch fresh ads and refresh product pages without booking a shoot for each new campaign."
       },
       {
         "t": "Dropshippers",
-        "d": "Make [ad images](page:social-ad-photos) and clips for a new product listing, then review each result before you use it."
+        "d": "Test a new product with several scenes before spending heavily, paying per job rather than per shoot."
       },
       {
-        "t": "Agencies and freelancers",
-        "d": "Several versions for every client, with the cost of each job shown up front so you can price your work."
+        "t": "Small businesses",
+        "d": "Explain the product with an AI clip or photo, even on a small budget and timeline."
       },
       {
-        "t": "Small online stores",
-        "d": "Make a clean [product photo](page:photo-hub) for a new listing, then test a short [video ad](page:video-ads) without booking a shoot."
+        "t": "Marketers and agencies",
+        "d": "Turn around versions for several clients, with every job's cost shown before you price the work."
       },
       {
         "t": "Content creators",
-        "d": "Turn a product photo into a [creator-style ad](page:video-ads) or a product-use clip for a brief you can edit before posting."
+        "d": "Scale your own output with a generated on-camera look, without burning out on filming."
       },
       {
-        "t": "App and SaaS teams",
-        "d": "Use a presenter or product demo to explain one visible feature, then add approved captions and a call to action in your editor."
+        "t": "App and SaaS companies",
+        "d": "Explain one visible feature with a presenter or demo and drive signups without heavy production."
       }
     ]
   },
   "compare": [
     [
-      "What you need",
-      "Models or creators, a location, shipping the product",
-      "One clear product photo"
+      "Content creation speed",
+      "Days to weeks of shoot coordination",
+      "Minutes from one product photo"
     ],
     [
-      "Another version",
-      "Book another shoot and wait",
-      "Re-run the same photo in minutes"
+      "Cost",
+      "High creator, studio and gear fees",
+      "Low credit price shown up front"
     ],
     [
-      "Different platforms",
-      "Re-crop and re-edit for each one",
-      "Pick 9:16, 1:1 or 16:9 before you start"
+      "Scalability",
+      "Limited by people and locations",
+      "Many scenes from the same upload"
     ],
     [
-      "Knowing the cost",
-      "Quotes, fees and invoices",
-      "Cost shown before every job"
+      "A/B testing",
+      "Another booking and slower rounds",
+      "Instant variations to test"
+    ],
+    [
+      "Risk of off-brand content",
+      "Varies with each creator",
+      "You set the product and scene"
     ]
   ],
   "faq": [
@@ -197,23 +206,23 @@
     },
     {
       "q": "How much does a video or photo cost?",
-      "a": "Each job shows its credit price before you start. A photo or a 6-second clip is 24 credits, a 10-second clip is 40, 15 seconds is 60 and 30 seconds is 120. Credits for a failed job go back to your balance."
+      "a": "Each job shows its credit price before you start. A photo or a 6-second clip is 24 credits, a 10-second clip is 40, 15 seconds is 60 and half a minute is 120. Credits for a failed job go back to your balance."
     },
     {
       "q": "Is the person in the video a real creator?",
       "a": "No. The people in these clips are generated by AI, so show the product with them rather than presenting the clip as a customer review. Some platforms ask you to label AI-generated content."
     },
     {
-      "q": "Do I need to hire a model or a creator?",
-      "a": "No. The videos and photos are generated from one product photo, so no one has to appear on a set and you do not ship samples to anyone. Present the people in the clips as part of your ad, not as customer reviews."
+      "q": "Can I make multiple versions for A/B testing?",
+      "a": "Yes. Run the same photo with different scenes, actors or openings, then split-test the downloads in your ad platform. You do not need another shoot."
     },
     {
       "q": "Can I run these videos as paid ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so you can run them on TikTok, Instagram, Facebook, YouTube or marketplace campaigns. Add your captions, prices and offers in your ad tool and follow each platform's AI labeling rules."
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use on TikTok, Instagram, Facebook, YouTube and marketplaces. Add your own captions, prices and offers and follow each platform's AI labeling rules."
     },
     {
-      "q": "Can I try it before paying?",
-      "a": "There is no free plan right now, and checkout is not open yet. The pricing page lists the planned Starter, Pro and Premium offers, and every photo or video shows its credit cost before it is made."
+      "q": "Do I need to hire a model or creator?",
+      "a": "No. The results are generated from one product photo, so there is no casting, sample shipping or filming date. Present the people in clips as part of your ad, not as customer reviews."
     }
   ],
   "examples": {
@@ -329,25 +338,25 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Who it's for",
-      "h2": "Built for sellers who move fast",
-      "lead": "Whatever you sell, the steps stay the same: one photo, pick a result, download and run it.",
+      "eyebrow": "Built for teams that move fast",
+      "h2": "One platform for every result",
+      "lead": "Whatever you sell, every result starts from one product photo and is priced per job.",
       "items": [
         {
-          "t": "Shopify and D2C brands",
-          "d": "Launch a fresh ad or refresh a product page without booking a shoot for each new campaign."
+          "t": "Ads and listings in one place",
+          "d": "A creator-style clip, a clean main image and a lifestyle scene can all come from the same upload."
         },
         {
-          "t": "Amazon sellers",
-          "d": "Build a clean main image, extra gallery views and a short listing clip from photos you already have."
+          "t": "Scale without more shoots",
+          "d": "Build many scenes for a growing catalog while keeping the same product and recognizable look."
         },
         {
-          "t": "Dropshippers",
-          "d": "Test a new product with several scenes before you spend heavily, paying per job instead of per shoot."
+          "t": "Keep creative fresh",
+          "d": "Test new openings and scenes so ad fatigue does not stall a running campaign."
         },
         {
-          "t": "Agencies and freelancers",
-          "d": "Turn around versions for several clients at once, with each job's cost shown before you price the work."
+          "t": "Simple monthly credits",
+          "d": "Each job shows its price before it starts, with planned monthly plans listed on the pricing page."
         }
       ]
     }
@@ -365,7 +374,7 @@
       "source": "n:guide:q1-home-steps-source",
       "result": "n:guide:q1-home-steps-result",
       "mode": "photo",
-      "prompt": "A quick, natural review of this serum in my car before I head out.",
+      "prompt": "A quick, natural look at this serum in my car before I head out.",
       "options": [
         [
           "Template",
@@ -378,67 +387,28 @@
       ]
     },
     "picker": {
-      "title": "Choose an ad moment for your product",
-      "lead": "Start with the product moment that matches your next ad placement.",
+      "title": "Recreate what you love",
+      "lead": "Recreate the style with your own product and launch a campaign in minutes.",
       "chips": [
         {
-          "id": "hooks",
-          "label": "Opening hooks"
+          "id": "beauty",
+          "label": "Beauty"
         },
         {
-          "id": "unboxing",
-          "label": "Unboxing"
+          "id": "fashion",
+          "label": "Fashion"
         },
         {
-          "id": "demo",
-          "label": "Product demos"
-        },
-        {
-          "id": "problem",
-          "label": "Problem / solution"
+          "id": "home-decor",
+          "label": "Home Decor"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:q1-home-picker-runner",
-          "label": "POV Hook: Trail Shoe Hits Path",
-          "chips": [
-            "hooks"
-          ],
-          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile visible. Freeze the moment just before the next stride in late-afternoon light, candid sports-ad style, low close angle, full shoe in frame, no text.",
-          "kind": "video",
-          "template": "creator",
-          "videoTool": "video-ads"
-        },
-        {
-          "ref": "n:guide:q1-home-picker-earrings",
-          "label": "ASMR Unboxing: Gold Hoop Earrings",
-          "chips": [
-            "unboxing",
-            "demo"
-          ],
-          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands lift plain gold hoop earrings from a small jewelry box lined with cream tissue. Hold the reveal above the open box in soft window light, overhead close framing, realistic jewelry campaign, no text.",
-          "kind": "video",
-          "template": "unbox",
-          "videoTool": "unboxing-videos"
-        },
-        {
-          "ref": "n:guide:q1-home-picker-earbuds-v2",
-          "label": "Earbud Demo: Wireless Earbud Fit",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult fits a small matte sage-green, stemless bean-shaped wireless earbud into one ear while holding its matching low, flat pill-shaped case in the other hand. Keep the earbud and case clearly visible in a bright everyday setting, tight side view, natural tech-ad style, no text, no logos.",
-          "kind": "video",
-          "template": "demo",
-          "videoTool": "product-videos"
-        },
-        {
           "ref": "n:guide:q1-home-picker-mask",
-          "label": "Mask Macro: Clay Lifted by Spatula",
+          "label": "Beauty demo: clay mask lift",
           "chips": [
-            "hooks",
-            "demo"
+            "beauty"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. A clean spatula lifts a smooth ribbon of pale green clay mask from a plain open jar, with the texture suspended above the rim. Soft window light, realistic skincare macro, overhead close composition, no text.",
           "kind": "video",
@@ -447,9 +417,9 @@
         },
         {
           "ref": "n:guide:q1-home-picker-lipbalm",
-          "label": "GRWM: Tinted Lip Balm Before Work",
+          "label": "Beauty GRWM: tinted lip balm",
           "chips": [
-            "demo"
+            "beauty"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult applies tinted balm in a mirror before leaving home, with the balm held beside the face and the color visible on the lips. Natural morning light, close candid beauty-campaign framing, no text.",
           "kind": "video",
@@ -457,32 +427,32 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:gen2:tpl-size-g2",
-          "label": "Bag Demo: Laptop Into Canvas Tote",
+          "ref": "n:guide:q1-home-picker-runner",
+          "label": "Fashion POV: trail shoe on path",
           "chips": [
-            "demo"
+            "fashion"
           ],
-          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult slides a laptop into a plain canvas tote and lifts the bag by its handles, showing the full tote and open capacity. Bright natural light, practical lifestyle-ad composition at waist height, no text.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile visible. Freeze the moment just before the next stride in late-afternoon light, candid sports-ad style, low close angle, full shoe in frame, no text.",
           "kind": "video",
-          "template": "demo",
-          "videoTool": "product-videos"
+          "template": "creator",
+          "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-picker-hot-sauce",
-          "label": "Taco Recipe: Hot Sauce Drizzle",
+          "ref": "n:guide:q1-home-picker-earrings",
+          "label": "Fashion ASMR: gold hoop earrings",
           "chips": [
-            "demo"
+            "fashion"
           ],
-          "prompt": "Use the uploaded product image and keep its bottle shape, color, and label area exactly. An adult hand squeezes a thin ribbon of plain hot sauce from a blank-label bottle onto a fresh taco on a clean plate. Keep the taco and bottle clearly visible. Bright kitchen light, close food-ad composition, no text.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands lift plain gold hoop earrings from a small jewelry box lined with cream tissue. Hold the reveal above the open box in soft window light, overhead close framing, realistic jewelry campaign, no text.",
           "kind": "video",
-          "template": "drink",
-          "videoTool": "product-videos"
+          "template": "unbox",
+          "videoTool": "unboxing-videos"
         },
         {
           "ref": "n:guide:q1-home-picker-pet-hair",
-          "label": "Pet Problem: Brush Hair From Sofa",
+          "label": "Home demo: pet hair off sofa",
           "chips": [
-            "problem"
+            "home-decor"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult uses a plain pet-hair remover across a sofa cushion while a calm dog sits nearby. Show the cleaned path and collected fur clearly, bright home light, close practical-ad composition, no text.",
           "kind": "video",
@@ -490,33 +460,10 @@
           "videoTool": "before-after-videos"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-pet-kit",
-          "label": "Unboxing: Pet Grooming Kit Reveal",
-          "chips": [
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Reveal a plain pet grooming kit from an open kraft box: a wood-handle brush, folded towel and blank shampoo bottle sit clearly in the box. Bright soft window light, clean overhead product-ad framing, no text.",
-          "kind": "video",
-          "template": "unbox",
-          "videoTool": "unboxing-videos"
-        },
-        {
-          "ref": "n:guide:k1-unboxing-picker-scarf",
-          "label": "POV Hook: Scarf Pulled From Mailer",
-          "chips": [
-            "hooks",
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands pull a soft plain wool scarf from a white mailer onto a neatly made bed, revealing its texture and full length as the opening hook. Bright window light, overhead unboxing-ad composition, no text.",
-          "kind": "video",
-          "template": "unbox",
-          "videoTool": "unboxing-videos"
-        },
-        {
           "ref": "n:guide:k1-product-videos-case-vacuum",
-          "label": "Problem to Fix: Crumbs Off Sofa",
+          "label": "Home fix: vacuuming crumbs off sofa",
           "chips": [
-            "problem"
+            "home-decor"
           ],
           "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. A plain cordless handheld vacuum lifts visible crumbs from a dark fabric sofa, leaving a clean path beside the nozzle. Bright home light, close practical product-demo framing, show the tool and result clearly, no text.",
           "kind": "video",
@@ -526,96 +473,13 @@
       ],
       "button": "Start a video ad like this"
     },
-    "uses": [
-      {
-        "frame": "amazon",
-        "ref": "n:gen2:plat-amazon-c1",
-        "h": "Amazon product gallery",
-        "d": "A clean full-view image lets shoppers inspect the shape before they decide to buy."
-      },
-      {
-        "frame": "tiktok",
-        "ref": "n:guide:f3-home-speaker-review",
-        "h": "TikTok in-feed ad",
-        "d": "Run the creator review as a vertical ad with your own caption, price and button."
-      },
-      {
-        "frame": "reels",
-        "ref": "n:guide:f3-home-street-interview",
-        "h": "Instagram Reels placement",
-        "d": "Use the first-bite moment in Reels with your text inside the safe area."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:gen2:plat-facebook-g3",
-        "ref_b": "n:guide:f3-home-ab-bottle-review",
-        "h": "Shopify product page",
-        "d": "A clean bottle image on the page helps shoppers picture the item in their home."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:gen2:white-background-c1",
-        "bad": "n:guide:home-bottle-cropped",
-        "good_label": "Brushed steel bottle fully visible",
-        "bad_label": "Brushed steel bottle cap cropped"
-      },
-      {
-        "good": "n:guide:home-steamer-frame",
-        "bad": "n:guide:c1-tpl-howto-output-1",
-        "good_label": "Steamer control lit before the pass",
-        "bad_label": "Steamer beside shirt with no visible pass"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:k2-url-picker-water-bottle-desk",
-        "frame": "1:1",
-        "label": "Bottle Demo: Brushed Steel Bottle on Desk"
-      },
-      {
-        "ref": "n:guide:q1-home-output-steamer",
-        "frame": "9:16",
-        "label": "Problem to Fix: Creases Smoothed From Shirt",
-        "length": 10
-      }
-    ],
-    "after": {
-      "ref": "n:guide:c1-tpl-howto-picker-steamer-detail-square",
-      "zones": [
-        "Your price",
-        "Your headline"
-      ],
-      "items": [
-        "Add approved prices and offer dates in your editor after download.",
-        "Place captions and music yourself in an editor after download.",
-        "Compare steam head, water tank and garment result with the real item before posting."
-      ]
-    },
-    "sizes": [
-      {
-        "frame": "9:16",
-        "ref": "f:q1-home-size-electrolyte",
-        "label": "Car Selfie Review: Electrolyte Drink"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:q1-home-size-earrings",
-        "label": "Earrings Hero: Gold Hoops on White"
-      },
-      {
-        "frame": "16:9",
-        "ref": "f:f3-home-size-headphones-generic",
-        "label": "Tech Review: Headphones for the Commute"
-      }
-    ],
     "titles": {
       "m2": {
         "h2": "How to make AI product photos and videos in 3 steps"
       },
       "m3": {
-        "h2": "AI ad moments organized by what each one is built to do",
-        "lead": "Filter by ad purpose. Each card shows one product in one moment you can actually run."
+        "h2": "Recreate what you love",
+        "lead": "Recreate the style with your own product and launch a campaign in minutes."
       },
       "m4": {
         "h2": "Where to use your AI product photos and videos"
