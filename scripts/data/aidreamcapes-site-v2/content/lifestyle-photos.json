@@ -105,7 +105,7 @@
     },
     "picker": {
       "title": "Browse lifestyle scenes",
-      "lead": "Each card places the same product in a believable, real-life moment. Pick a scene the item belongs in.",
+      "lead": "Each card places one product in a believable, real-life moment. Pick a scene the item belongs in.",
       "chips": [],
       "cards": [],
       "button": "Make a lifestyle photo"
