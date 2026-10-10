@@ -72,36 +72,7 @@
         ]
       ]
     },
-    "picker": [
-      {
-        "id": "skincare",
-        "label": "Skincare"
-      },
-      {
-        "id": "beauty",
-        "label": "Beauty"
-      },
-      {
-        "id": "fashion",
-        "label": "Fashion"
-      },
-      {
-        "id": "food-drink",
-        "label": "Food & Drink"
-      },
-      {
-        "id": "technology",
-        "label": "Technology"
-      },
-      {
-        "id": "fitness",
-        "label": "Fitness"
-      },
-      {
-        "id": "home-decor",
-        "label": "Home Decor"
-      }
-    ],
+    "picker": [],
     "titles": {
       "m2": {
         "h2": "How to create product ad content in 3 simple steps"
