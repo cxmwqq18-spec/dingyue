@@ -212,124 +212,462 @@
       "lead": "Recreate the style with your own product and launch a campaign in minutes.",
       "chips": [
         {
-          "id": "skincare",
-          "label": "Skincare"
+          "id": "accessories",
+          "label": "Accessories"
         },
         {
-          "id": "beauty",
-          "label": "Beauty"
+          "id": "apparel",
+          "label": "Apparel"
         },
         {
-          "id": "fashion",
-          "label": "Fashion"
+          "id": "apps",
+          "label": "Apps"
         },
         {
-          "id": "food-drink",
-          "label": "Food & Drink"
+          "id": "beauty-personal-care",
+          "label": "Beauty & Personal Care"
         },
         {
-          "id": "technology",
-          "label": "Technology"
+          "id": "clothing",
+          "label": "Clothing"
         },
         {
-          "id": "fitness",
-          "label": "Fitness"
+          "id": "e-commerce",
+          "label": "E-Commerce"
         },
         {
-          "id": "home-decor",
-          "label": "Home Decor"
+          "id": "education",
+          "label": "Education"
+        },
+        {
+          "id": "explainer",
+          "label": "Explainer"
+        },
+        {
+          "id": "financial-services",
+          "label": "Financial Services"
+        },
+        {
+          "id": "food-beverage",
+          "label": "Food & Beverage"
+        },
+        {
+          "id": "footwear",
+          "label": "Footwear"
+        },
+        {
+          "id": "health-fitness",
+          "label": "Health & Fitness"
+        },
+        {
+          "id": "jewelry-accessories",
+          "label": "Jewelry & Accessories"
+        },
+        {
+          "id": "kids-toy",
+          "label": "Kids & Toy"
+        },
+        {
+          "id": "pet",
+          "label": "Pet"
+        },
+        {
+          "id": "sports-gym",
+          "label": "Sports & Gym"
+        },
+        {
+          "id": "tech-electronics",
+          "label": "Tech & Electronics"
+        },
+        {
+          "id": "ugc",
+          "label": "UGC"
+        },
+        {
+          "id": "viral",
+          "label": "Viral"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:q1-video-picker-workout",
-          "label": "Technology demo: protein shaker",
+          "ref": "n:guide:q1-video-ex-bike",
+          "label": "Folding Bike Commute UGC",
           "chips": [
-            "technology"
+            "accessories"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand scoops protein powder from a plain pouch into a clear shaker at a gym bench. The action ends with the product clearly visible and still in frame. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A commuter folds a compact bicycle beside a train platform and carries it through an open train doorway. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-picker-car",
-          "label": "Technology review: electrolyte bottle",
+          "ref": "n:guide:q1-video-ex-earbuds",
+          "label": "Earbud Box Reveal UGC",
           "chips": [
-            "technology"
+            "accessories"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult man in a parked car holds a clear bottle with a pale electrolyte drink and speaks to camera. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands peel back tissue and lift a plain wireless earbud case from a small kraft box, ending with the case centered. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "video-ads"
+          "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-picker-phone-v2",
-          "label": "Technology demo: phone case fit",
+          "ref": "n:guide:mx1w-video-hub-apparel-1-r1",
+          "label": "Olive Overshirt Fit Reel",
           "chips": [
-            "technology"
+            "apparel"
           ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color, and label area. Adult hands fit a plain muted sage-green silicone case with exactly one small circular camera opening onto a generic smartphone with one camera. The action ends with the single camera opening aligned and the product clearly visible. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music. Avoid square camera islands and multi-lens clusters.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult model presents a plain olive overshirt with the full front and sleeves visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "product-videos"
+          "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-picker-headphones",
-          "label": "Technology review: over-ear headphones",
+          "ref": "n:guide:mx1w-video-hub-apparel-2-r1",
+          "label": "Knit Sweater Mirror UGC",
           "chips": [
-            "technology"
+            "apparel"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman wearing a plain sweater holds over-ear headphones and speaks directly to lens. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside her face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman adjusts a plain cream knit sweater in a mirror with the full garment visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "spokesperson-videos"
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-apps-1-r1",
+          "label": "Smartphone App Demo UGC",
+          "chips": [
+            "apps"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a generic smartphone with a softly blurred abstract app interface and no text. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-apps-2-r1",
+          "label": "Tablet App Tutorial UGC",
+          "chips": [
+            "apps"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman swipes a generic tablet showing only abstract blurred interface shapes, no text. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-hero-grwm",
+          "label": "Tinted Balm GRWM Reel",
+          "chips": [
+            "beauty-personal-care"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman at a bathroom vanity holds a plain tinted lip balm near her face. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-ex-serum",
+          "label": "Serum Car Review UGC",
+          "chips": [
+            "beauty-personal-care"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman in a parked car holds a plain amber serum bottle beside her face. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-clothing-1-r1",
+          "label": "Denim Shirt Detail Reel",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands hold a plain denim shirt toward the camera with collar and seams visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-clothing-2-r1",
+          "label": "Trousers Fold Demo",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult folds plain charcoal trousers on a clean bed with the full garment visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
         },
         {
           "ref": "n:guide:q1-video-picker-serum",
-          "label": "Technology review: serum from page",
+          "label": "Product Page Shopping Demo",
           "chips": [
-            "technology"
+            "e-commerce"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds a plain serum bottle while showing a generic unbranded product page on a tablet beside them. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a serum bottle beside a simple product page on a tablet. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "url-to-video"
+          "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-picker-jewel",
-          "label": "Fashion ASMR: hoop earrings reveal",
+          "ref": "n:guide:q1-video-output-cases",
+          "label": "Silicone Case Compare Ad",
           "chips": [
-            "fashion"
+            "e-commerce"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue. The action ends with the product clearly visible and still in frame. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands compare plain silicone phone cases side by side on a clean desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "unboxing-videos"
+          "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:tpl-outfit-c3-m6-walk-reel",
-          "label": "Fashion walk: beige zip jacket",
+          "ref": "n:guide:q1-video-card-stain",
+          "label": "Fabric Cleaner Lesson Demo",
           "chips": [
-            "fashion"
+            "education"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. An adult wearing the plain beige zip jacket walks through a quiet stone courtyard, turns slightly, then faces the camera and says: \"I wanted to show you this before I head out.\" End with the jacket fully visible. Natural available light, realistic phone-video look, handheld framing with one slow push-in. Sound: soft footsteps and room ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand sprays a plain fabric-safe cleaner on a visible coffee stain on a white shirt and lifts the stain with one cloth pass. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "video-ads"
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-ex-lunchbox",
+          "label": "Lunchbox Leak Tutorial",
+          "chips": [
+            "education"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Close view of an adult opening a commuter backpack to reveal a lunchbox leak, then wiping the inner lining clean with a cloth; show the leak remover spray nearby. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-card-ba",
+          "label": "Pet Hair Problem Explainer",
+          "chips": [
+            "explainer"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A dark sofa split into a visibly fuzzy side and a clean side as an adult hand pulls a reusable lint remover across the fabric. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
         },
         {
           "ref": "n:guide:q1-video-picker-closet-v2",
-          "label": "Home Decor: closet organizer bins",
+          "label": "Closet Organizer Walkthrough",
           "chips": [
-            "home-decor"
+            "explainer"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape and label area exactly. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. End with the result and product centered and still in frame. Natural phone-video realism, one slow handheld push-in. Soft window light. Sound: soft fabric or product handling and room ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "before-after-videos"
+          "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q19-yt-picker-06-pet-hair-fix",
-          "label": "Home Decor: lint brush on sofa",
+          "ref": "n:guide:mx1w-video-hub-financial-services-1-r1",
+          "label": "Finance Dashboard UGC",
           "chips": [
-            "home-decor"
+            "financial-services"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape and label area exactly. An adult hand rolls a reusable lint brush over pet hair on a sofa. The action ends with the product still in frame and a clean path visible. Natural available light, realistic phone-video look, close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a generic phone with a softly blurred abstract finance dashboard and no numbers. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
-          "tool": "before-after-videos"
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-financial-services-2-r1",
+          "label": "Finance Chart Explainer",
+          "chips": [
+            "financial-services"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult advisor points beside a generic laptop with a softly blurred abstract chart and no text. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-hero-creator-v2",
+          "label": "Electrolyte Sachet UGC",
+          "chips": [
+            "food-beverage"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult male creator in a bright kitchen looks straight into the lens mid-sentence and holds a flat single-serve electrolyte powder sachet beside his face. The sachet is rectangular and soft, not a tube or bottle. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-card-proteinbar",
+          "label": "Protein Bar First Bite",
+          "chips": [
+            "food-beverage"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult interviewer asks an adult commuter for a first-bite reaction while the commuter holds a plain protein bar. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-card-flashshoe",
+          "label": "Performance Shoe Step Ad",
+          "chips": [
+            "footwear"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult runner steps into a plain performance shoe and turns one foot toward camera on a track, clear side profile and laces visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-ex-trailshoe",
+          "label": "Trail Shoe Wet Path Reel",
+          "chips": [
+            "footwear"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A runner in plain trail shoes steps through a shallow wet patch on a wooded path, with water droplets and the shoe tread visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-ex-gym-protein",
+          "label": "Post Workout Shaker UGC",
+          "chips": [
+            "health-fitness"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult athlete finishes a set in a bright gym and lifts a plain shaker filled with protein drink for a post-workout sip. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-output-selfie",
+          "label": "Athlete Bottle Selfie",
+          "chips": [
+            "health-fitness"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult male athlete sits in a parked car, holding a clear bottle and speaking directly to camera. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-ex-protein-bar",
+          "label": "Protein Bar Gym Finish",
+          "chips": [
+            "sports-gym"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult interviewer holds a small microphone toward an adult runner who holds a plain protein bar and reacts after a first bite. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-picker-jewel",
+          "label": "Hoop Earring Unboxing ASMR",
+          "chips": [
+            "jewelry-accessories"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-jewelry-accessories-3-r1",
+          "label": "Silver Bracelet Fasten UGC",
+          "chips": [
+            "jewelry-accessories"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands fasten a plain silver bracelet at a wrist beside a bright vanity. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-kids-toy-1-r1",
+          "label": "Wooden Train Play Demo",
+          "chips": [
+            "kids-toy"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A child plays with a plain wooden toy train while an adult hand demonstrates it. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-kids-toy-2-r1",
+          "label": "Color Blocks Unboxing UGC",
+          "chips": [
+            "kids-toy"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands open a plain toy box with colorful wooden blocks and no letters or logos. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-pet-1-r1",
+          "label": "Dog Brush Care UGC",
+          "chips": [
+            "pet"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult owner brushes a calm golden dog with a plain grooming brush in a bright room. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:mx1w-video-hub-pet-2-r1",
+          "label": "Dog Harness Fit Demo",
+          "chips": [
+            "pet"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult owner fits a plain teal harness onto a calm dog at a bright entryway. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-picker-workout",
+          "label": "Gym Protein Scoop Demo",
+          "chips": [
+            "sports-gym"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand scoops protein powder from a plain pouch into a clear shaker at a gym bench. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-picker-headphones",
+          "label": "Over-Ear Headphone Review",
+          "chips": [
+            "tech-electronics"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman wearing a plain sweater holds over-ear headphones and speaks directly to lens. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-picker-phone-v2",
+          "label": "Single Camera Case Fit",
+          "chips": [
+            "tech-electronics"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands fit a muted sage-green phone case with one circular camera opening onto a generic smartphone. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-output-serum",
+          "label": "Serum Car Selfie UGC",
+          "chips": [
+            "ugc"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman with natural skin holds a plain face serum bottle beside her cheek and speaks to camera. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-card-demo",
+          "label": "Serum Car Creator UGC",
+          "chips": [
+            "ugc"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult man in his thirties sits in a parked car and holds a plain serum bottle near his cheek. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-ex-fragrance",
+          "label": "Fragrance Reveal Reaction",
+          "chips": [
+            "viral"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A fragrance bottle catches warm reflected light on a dark stone surface. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:guide:q1-video-card-compare",
+          "label": "Phone Case Compare Hook",
+          "chips": [
+            "viral"
+          ],
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands hold plain silicone phone cases side by side at equal distance from the lens. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "kind": "video",
+          "tool": "image-to-video"
         }
       ],
       "button": "Open the video creator"
