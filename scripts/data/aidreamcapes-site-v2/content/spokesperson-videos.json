@@ -101,30 +101,46 @@
       "prompt": "Use the uploaded plain forest-green bottle as the exact product reference. Preserve its matte green body and black cap while a presenter holds it at chest height and explains its everyday use. No labels or logos."
     },
     "picker": {
-      "title": "Browse actors and scenes",
-      "lead": "See how each actor looks holding a real product. Pick a scene and make the line yours.",
+      "title": "Choose your actor",
+      "lead": "Pick a scene, then add your product and your line.",
       "chips": [
         {
           "id": "home",
           "label": "Home"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "outdoor",
+          "label": "Outdoor"
+        },
+        {
+          "id": "living-room",
+          "label": "Living Room"
+        },
+        {
+          "id": "office",
+          "label": "Office"
         },
         {
           "id": "gym",
           "label": "Gym"
         },
         {
-          "id": "office",
-          "label": "Office"
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "podcast",
+          "label": "Podcast"
+        },
+        {
+          "id": "car",
+          "label": "Car"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:q4-spokesperson-picker-02",
-          "label": "Home: moisturizer to camera",
+          "label": "Home: moisturizer",
           "chips": [
             "home"
           ],
@@ -132,18 +148,8 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-output-01",
-          "label": "Home: moisturizer close-up",
-          "chips": [
-            "home"
-          ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        },
-        {
           "ref": "f:k8-spokesperson-output-audio-safe",
-          "label": "Home: skincare bottle hold",
+          "label": "Home: skincare bottle",
           "chips": [
             "home"
           ],
@@ -152,46 +158,44 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-03",
-          "label": "Kitchen: spatula to camera",
+          "ref": "n:guide:q4-spokesperson-after",
+          "label": "Outdoor: sunscreen",
           "chips": [
-            "kitchen"
+            "outdoor"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home kitchen counter, an adult creator holds a silicone spatula and says: “This edge reaches along the curve of the pan.” They guide it once around a plain skillet, then face the lens. Casual phone selfie, natural window light. End with the spatula resting in the skillet, curved edge visible. Sound: speech and a light pan scrape; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny outdoor patio, an adult creator holds the sunscreen tube at chest height and says: “This is the one I keep in my bag for afternoons outside.” They tilt the tube once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin. End with the tube held steady beside the creator’s face. Sound: clear speech and light outdoor ambience; no music, text or logos.",
           "kind": "video"
         },
         {
-          "ref": "f:f2-r10b-spokesperson-card-10",
-          "label": "Kitchen: snack pouch hold",
+          "ref": "n:gen2:spokesperson-videos-g1",
+          "label": "Outdoor: water bottle",
           "chips": [
-            "kitchen"
+            "outdoor"
           ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a park bench on a bright day, an adult creator holds the steel water bottle toward the camera and says: “This is what I bring on every walk.” They turn the bottle once to show the lid. Handheld chest-up selfie, natural daylight, realistic skin. End with the bottle held steady near the creator’s face. Sound: clear speech and soft park ambience; no music, text or logos.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-07",
-          "label": "Gym: shaker to camera",
+          "ref": "n:guide:q4-spokesperson-picker-04",
+          "label": "Living Room: earbuds",
           "chips": [
-            "gym"
+            "living-room"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator holds a plain shaker and says: “One squeeze shows how the cap opens with one hand.” They press the lid once and hold the bottle still. Chest-up front-camera view, natural skin, soft daylight. End with the shaker upright and its opened cap facing camera. Sound: speech and a light shaker rattle; no music, text or logos.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lived-in living room, an adult creator opens a small plain box, lifts a round wireless-earbud case and says: “Let’s open the case and see what comes in the box.” Eye-level handheld chest-up shot, natural skin texture. Soft side light from the living-room window. End with the open earbud case above the box and both earbuds visible. Sound: speech and soft packaging rustle; no music, text or logos.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c3",
-          "label": "Gym: protein shaker hold",
+          "ref": "n:gen2:spokesperson-videos-1",
+          "label": "Living Room: smart speaker",
           "chips": [
-            "gym"
+            "living-room"
           ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult creator holds the smart speaker at chest height and says: “Here is the speaker I put on my shelf this week.” They turn it once to show the top buttons. Eye-level handheld chest-up shot, soft window light, realistic skin. End with the speaker held steady facing the camera. Sound: clear speech and quiet room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q4-spokesperson-picker-08",
-          "label": "Office: phone stand to camera",
+          "label": "Office: phone stand",
           "chips": [
             "office"
           ],
@@ -200,12 +204,86 @@
         },
         {
           "ref": "f:f2-r10b-spokesperson-card-11",
-          "label": "Office: charger to camera",
+          "label": "Office: charger",
           "chips": [
             "office"
           ],
           "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
           "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-07",
+          "label": "Gym: shaker",
+          "chips": [
+            "gym"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator holds a plain shaker and says: “One squeeze shows how the cap opens with one hand.” They press the lid once and hold the bottle still. Chest-up front-camera view, natural skin, soft daylight. End with the shaker upright and its opened cap facing camera. Sound: speech and a light shaker rattle; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c3",
+          "label": "Gym: protein shaker",
+          "chips": [
+            "gym"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-03",
+          "label": "Kitchen: spatula",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home kitchen counter, an adult creator holds a silicone spatula and says: “This edge reaches along the curve of the pan.” They guide it once around a plain skillet, then face the lens. Casual phone selfie, natural window light. End with the spatula resting in the skillet, curved edge visible. Sound: speech and a light pan scrape; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:f2-r10b-spokesperson-card-10",
+          "label": "Kitchen: snack pouch",
+          "chips": [
+            "kitchen"
+          ],
+          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
+          "prompt": "",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-05",
+          "label": "Podcast: headphones",
+          "chips": [
+            "podcast"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a small podcast table, an adult creator holds plain over-ear headphones and says: “Here are three details I can show: the ear cups, hinge and button placement.” They turn the headphones once. Front-camera medium close-up, soft room light. End with both ear cups forward beside the podcast table. Sound: speech and quiet room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-strip-06",
+          "label": "Podcast: over-ear headphones",
+          "chips": [
+            "podcast"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a podcast table, an adult creator holds the over-ear headphones at the podcast table and says: “These are the ones I wear for every recording.” They fold one ear cup once. Front-camera medium close-up, soft room light, realistic skin. End with the headphones held steady facing the camera. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-picker-01",
+          "label": "Car: serum",
+          "chips": [
+            "car"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum beside their face and says: “Here is the pump detail I wanted to show.” They turn it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin, slight handheld sway. End with the serum held steady beside the creator’s face, pump visible. Sound: clear speech and soft car ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q4-spokesperson-strip-01",
+          "label": "Car: serum bottle",
+          "chips": [
+            "car"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum bottle beside their cheek and says: “This is the bottle I keep in my bag.” They tilt it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin. End with the bottle held steady beside the creator’s face. Sound: clear speech and soft car ambience; no music, text or logos.",
           "kind": "video"
         }
       ],
@@ -213,7 +291,7 @@
     },
     "titles": {
       "m4": {
-        "h2": ""
+        "h2": "Different Ways to Use Videos Made with AI Actors"
       },
       "m5": {
         "h2": ""
@@ -221,6 +299,32 @@
       "m6": {
         "h2": ""
       }
-    }
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:q4-spokesperson-strip-04",
+        "h": "Paid Ads.",
+        "d": "Spend less on creators, sets and crews. Pick an AI actor and a scene that fit the people you sell to. Make a new version of the same ad in minutes and test which one gets the click."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:q4-spokesperson-use-01",
+        "h": "Official Websites",
+        "d": "Put an AI actor on your product page as the face of your brand. The actor holds the product and points out one key feature, so shoppers see it in use before they buy."
+      },
+      {
+        "frame": "tiktok",
+        "ref": "n:gen2:spokesperson-videos-c1",
+        "h": "Social Media Channels",
+        "d": "Keep your feeds full without booking a new shoot each week. Use the same actor across posts for a steady look, or switch actors and scenes for each audience on TikTok, Reels and Shorts."
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:q4-spokesperson-strip-02",
+        "h": "Product Guides",
+        "d": "Use an AI actor as a guide who shows your product one step at a time. Short clips can cover setup, sizing or daily use, so buyers have fewer questions after they order."
+      }
+    ]
   }
 }
