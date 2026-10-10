@@ -2596,7 +2596,6 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (visual.steps?.sourceHint != null && (typeof visual.steps.sourceHint !== "string" || !visual.steps.sourceHint.trim() || visual.steps.sourceHint.length > 100)) errors.push(`${pageId}: visual source hint must be a non-empty string of at most 100 characters`);
     if (visual.steps && (typeof visual.steps.prompt !== "string" || !visual.steps.prompt.trim())) errors.push(`${pageId}: visual steps need an example prompt`);
     if (!isDirectory && outputs.length && (outputs.length < 2 || outputs.length > 4)) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
-    if (isHub && after) { /* hubs may provide an after-download module; omit it when the field is empty */ }
     if (pageId === "video-hub" && strip.some((item) => item.kind !== "video" || Math.abs(item.w / item.h - 9 / 16) > 0.04)) errors.push(`${pageId}: overview strip must use actual 9:16 video frames`);
     if (pageId === "home" && sizes.length && (sizes.length < 3 || sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
     if (layout === "collection" && data.kind === "platform" && sizes.length && (sizes.length < 3 || sizes.length > 4)) errors.push(`${pageId}: platform visual sizes must contain 3-4 frames`);
