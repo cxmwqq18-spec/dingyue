@@ -53,6 +53,7 @@ export type V2FlowStep = { label: string; image: V2Image; tall?: boolean };
 export type V2Flow = { t: string; d: string; steps: V2FlowStep[]; id?: string; filterTags?: string[]; cta?: { label: string; href: string } };
 export type V2Maker = { options: [string, string][]; cta: string; href: string; urlInput?: boolean; uploadTitle?: string };
 export type V2Plan = { name: string; price: string; credits: string; who: string; features: string[]; popular: boolean };
+export type V2MoreSection = { eyebrow: string; h2: string; lead?: string; items: V2Item[] };
 export type V2Section = { h2: string; paras: string[] };
 export type V2EnrichmentSection = { h2: string; paras: string[]; items?: V2Item[] };
 export type V2EnrichmentBlock = { h2: string; items: V2Item[] };

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
+import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
 import type { V2Company } from "./company";
 
 export function normalizeStepLabel(label: string): string {
@@ -85,6 +85,18 @@ export function EnrichmentOverview({ sections, r }: { sections: V2EnrichmentSect
 export function EnrichmentBlockSection({ block, eyebrow, className = "ideas", r }: { block?: V2EnrichmentBlock; eyebrow: string; className?: string; r: V2Resolvers }) {
   if (!block?.items?.length) return null;
   return <Section eyebrow={eyebrow} title={block.h2}><Boxes className={className} items={block.items} r={r} /></Section>;
+}
+
+// Optional page-owned explanation blocks (per platform, per audience, vs traditional shoots).
+// They reuse the standard Section + Boxes markup so no new styles are introduced.
+export function MoreSections({ sections, r }: { sections?: V2MoreSection[]; r: V2Resolvers }) {
+  const list = (sections ?? []).filter((section) => section?.h2 && section.items?.length);
+  if (!list.length) return null;
+  return <>{list.map((section) => (
+    <Section eyebrow={section.eyebrow} key={`${section.h2}-${section.lead ?? ""}`} lead={section.lead} title={section.h2}>
+      <Boxes items={section.items} r={r} />
+    </Section>
+  ))}</>;
 }
 
 export function FitSection({ block, r }: { block?: V2FitBlock; r: V2Resolvers }) {

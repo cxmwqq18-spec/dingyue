@@ -1496,6 +1496,20 @@ function benefitsList(model, page, items) {
   return autoLinkPage(model, page, [], [items]).groups[0];
 }
 
+// Optional page-owned sections keep their stored shape; only the item descriptions run
+// through the same automatic internal linker as benefit cards.
+function moreSectionsFor(model, page, sections) {
+  if (!Array.isArray(sections)) return undefined;
+  const groups = sections.map((section) => Array.isArray(section?.items) ? section.items : []);
+  const linked = autoLinkPage(model, page, [], groups).groups;
+  return sections.map((section, index) => ({
+    eyebrow: section.eyebrow ?? "",
+    h2: section.h2,
+    ...(section.lead ? { lead: section.lead } : {}),
+    items: linked[index]
+  }));
+}
+
 function autoLinkPage(model, page, intro, groups) {
   const paras = Array.isArray(intro) ? intro : [];
   const lists = groups.map((items) => (Array.isArray(items) ? items : []));
@@ -1614,6 +1628,7 @@ function payloadFor(model, page) {
     ...(typeof c.steps_h2 === "string" && c.steps_h2.trim() ? { stepsH2: c.steps_h2 } : {}),
     ...(typeof c.steps_lead === "string" && c.steps_lead.trim() ? { stepsLead: c.steps_lead } : {}),
     ...(typeof c.maker?.upload_title === "string" ? { maker: { uploadTitle: c.maker.upload_title } } : {}),
+    ...(Array.isArray(c.more_sections) ? { more_sections: moreSectionsFor(model, page, c.more_sections) } : {}),
     ...(examples ? { examples } : {}),
     ...enrichmentFor(model, page, c)
   };
@@ -2608,6 +2623,16 @@ export function validateSiteV2(build = buildSiteV2()) {
       const fit = data.fit;
       if (!fit || typeof fit.h2 !== "string" || !Array.isArray(fit.good) || !Array.isArray(fit.not_ideal)) errors.push(`${page.id}: invalid fit block shape`);
       else for (const item of [...fit.good, ...fit.not_ideal]) if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid fit item shape`);
+    }
+    if (data.more_sections !== undefined) {
+      const sections = data.more_sections;
+      if (!Array.isArray(sections)) errors.push(`${page.id}: more_sections must be an array`);
+      else for (const section of sections) {
+        if (!section || typeof section.eyebrow !== "string" || typeof section.h2 !== "string" || !section.h2.trim()) errors.push(`${page.id}: invalid more_sections section shape`);
+        else if (section.lead !== undefined && typeof section.lead !== "string") errors.push(`${page.id}: more_sections lead must be a string`);
+        if (!Array.isArray(section?.items) || !section.items.length) errors.push(`${page.id}: more_sections section must list items`);
+        else for (const item of section.items) if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid more_sections item shape`);
+      }
     }
     if (page.id === "glossary") {
       const entries = Array.isArray(data.entries) ? data.entries : [];
