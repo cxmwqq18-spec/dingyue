@@ -1,27 +1,27 @@
 {
   "id": "tpl-retargeting-video-ad",
   "title": "Retargeting Video Ad Template | AIVideosUGC",
-  "description": "Win back shoppers who viewed a product or left a cart with a retargeting video from one photo. Set audience, offer and frequency in your ad platform.",
+  "description": "Bring viewed products back with a retargeting video from one photo. Add your offer, audience and frequency in your ad platform.",
   "h1": "Retargeting Video Ads for a Second Look",
   "eyebrow": "Retargeting video template",
-  "lead": "Most shoppers leave after viewing a product and never return, yet reusing the same ad creative does not win them back. Upload one product photo and get a retargeting video that brings the item back with the specific detail a returning buyer is still weighing, so your remarketing audience gets a reason to finish the order.",
-  "benefits_h2": "Why make retargeting video ads with AI?",
+  "lead": "Shoppers who only viewed a product usually need a reason to come back. Upload one product photo and make a retargeting video that shows the item again with the detail a returning buyer is still weighing.",
+  "benefits_h2": "Why make retargeting ads from one photo?",
   "benefits": [
     {
-      "t": "Give viewed products a second reason to buy",
-      "d": "The clip revisits one detail, such as an ear cushion, a pocket or a seam, that a returning shopper may still be weighing. It turns a reminder into an answer instead of repeating the same product shot."
+      "t": "Bring back the detail",
+      "d": "Show one detail a returning shopper is still weighing, such as a cushion, a pocket or a seam, instead of repeating the same product shot."
     },
     {
-      "t": "Fresh creative without a second shoot",
-      "d": "Run a routine version and a close-detail version from the same source photo, then test which proof earns the second look. New remarketing creative costs only credits, not another filming day."
+      "t": "Test new creative for credits",
+      "d": "Make a routine version and a close-detail version from the same photo, then see which one earns the second look."
     },
     {
-      "t": "Cut for every remarketing placement",
-      "d": "Use 1:1 in feed placements and 9:16 in Reels, with clips at 6, 10, 15 or 30 seconds. A short reminder works for cart audiences, while a longer clip can answer a hesitancy in full."
+      "t": "Fit every remarketing placement",
+      "d": "Use 1:1 in feed placements and 9:16 in Reels, with clips at 6, 10, 15 or 30 seconds."
     },
     {
-      "t": "Audience facts stay in your platform",
-      "d": "Add the offer, price, audience and frequency in your ad platform and keep claims about browsing history out of the scene. Downloads carry no AIVideosUGC watermark and can be used in your own paid ads."
+      "t": "Keep audience data in your platform",
+      "d": "Set the audience, offer and frequency in your ad platform. The clip carries no watermark and works in your own paid ads."
     }
   ],
   "secondary_keywords": [
@@ -30,42 +30,20 @@
     "returning shopper ad",
     "retargeting creative"
   ],
-  "intro": [
-    "The sample shows an adult commuter using dark navy over-ear headphones during a train-station routine. It is an AI-generated scene, not a claim about an individual shopper or their past activity.",
-    "Pair a product reminder with an audience, offer, and frequency you configure in your ad platform. The scene itself does not identify visitors or cart activity.",
-    "A second-look ad should answer the detail a returning shopper may still be weighing. Show the headphones on a commute, the ear cushion in a creator review, or the shoe tread on the path where it is used. The scene works because the product returns to view with a reason, not because it claims to know who visited your store.",
-    "Keep the audience, offer, price, and frequency in the ad platform. In the creative, use one close action such as turning an ear cup, opening a pocket, tightening a lace, or checking a seam. End with the product held still so an editable reminder and a destination link can be added without covering the feature.",
-    "Check the reminder against the live product page before you launch. The color, version, and feature shown in the clip must match the item a shopper will receive, and any current offer must be added outside the generated frame. Test a routine scene against a detail scene while holding the audience and product page constant so the result tells you which proof earns the second look."
-  ],
-  "tip": "Describe a quiet second-look action and leave the audience, price, and reminder wording to the ad platform and your editor.",
-  "steps_h2": "How to make a retargeting video ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a second-look clip — no shoot, no new audience data, no repeated creative.",
+  "steps_h2": "Make a retargeting video ad in 3 steps",
+  "steps_lead": "One product photo becomes a second-look clip, with no second shoot and no new audience data.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a clear product image that gives the clip a recognizable shape and a detail worth revisiting."
+      "d": "Use a clear image that shows the product shape and one detail worth revisiting."
     },
     {
       "t": "Describe the Second Look",
-      "d": "Write a short moment, such as inspecting the ear cups before packing the headphones away. The return-to-product scene is generated without a shoot."
+      "d": "Share one short moment, such as inspecting the ear cups before putting the headphones away."
     },
     {
       "t": "Download and Set Audience",
-      "d": "Add your offer and product page, then choose visitors, cart users and frequency in your ad platform. The file has no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Feature reminder",
-      "d": "Use one close action to bring a specific product detail back into view."
-    },
-    {
-      "t": "Pack for later",
-      "d": "Show a product going into a bag, case, or drawer to suggest a next step without a promise."
-    },
-    {
-      "t": "New angle",
-      "d": "Make another run that shows the same product from an angle the first clip did not cover."
+      "d": "Add your offer and product page, then choose visitors, cart users and frequency in your ad platform."
     }
   ],
   "maker": {
@@ -88,171 +66,31 @@
   "faq": [
     {
       "q": "Does AIVideosUGC choose my retargeting audience?",
-      "a": "No. Set visitors, cart users, exclusions, budget, frequency, and delivery in your ad platform."
+      "a": "No. Choose visitors, cart users, exclusions, budget and frequency in your ad platform."
     },
     {
-      "q": "Can the video claim that someone viewed or abandoned a cart?",
-      "a": "Do not make that claim in the generated scene. It does not know a viewer’s history. Add only text that matches your actual campaign and data."
+      "q": "Can the video say someone viewed a product or left a cart?",
+      "a": "No. The clip does not know a viewer's history. Keep claims about browsing or cart activity out of the scene."
     },
     {
-      "q": "Will it add the offer or price?",
-      "a": "No. Add the current offer, price, dates, and disclosure in your editor or ad platform."
+      "q": "Will the video add my offer or price?",
+      "a": "No. Add the current offer, price and dates in your editor or ad platform."
     },
     {
-      "q": "Who actually sees the retargeting ad?",
-      "a": "You configure the audience, offer, and frequency in your ad platform. The video only supplies the return-to-product creative."
+      "q": "Who sees the retargeting ad?",
+      "a": "Your ad platform matches the audience you configure to each impression. The video only supplies the creative."
     },
     {
-      "q": "Can the video identify returning shoppers?",
-      "a": "No. It cannot show real visitor or cart data; your ad platform matches the audience to the impression."
+      "q": "What length should I use?",
+      "a": "A 6- or 10-second reminder fits cart audiences, while a 15- or 30-second clip can answer a hesitancy in full."
     },
     {
-      "q": "What length and cost work for retargeting?",
-      "a": "A 6- or 10-second reminder is usually enough and costs 24 or 40 credits; 15 and 30-second clips cost 60 or 120."
-    },
-    {
-      "q": "Can I create another retargeting video from the same source photo?",
-      "a": "Yes. Keep the dark navy headphones as the reference, then change one routine or camera move at a time. Check that the ear cups, controls, and fit match the physical item. Add the current offer, reminder, and product link after download so the second-look ad stays easy to update. Keep routine and detail versions tied to the same product variant so a returning shopper does not see a different color or control layout. If the offer or destination changes, recheck every exported variant against the same product page and color."
-    },
-    {
-      "q": "Can I show the video only to people who left a cart?",
-      "a": "Yes, using your ad platform. Upload the finished clip to a cart or website-visitor audience, set exclusions and frequency there, and keep any reminder wording tied to what your campaign actually offers."
-    },
-    {
-      "q": "Should the retargeting clip say \"you forgot this\"?",
-      "a": "Only if your campaign supports that message, and add it as text outside the generated scene. The clip itself cannot know a viewer's history, so avoid personal claims and focus on bringing the product detail back into view."
+      "q": "How much do the videos cost?",
+      "a": "Clips cost 24, 40, 60 or 120 credits at 6, 10, 15 or 30 seconds, and you see the charge before you start."
     }
   ],
-  "overview": [
-    {
-      "h2": "Bring the product back into view",
-      "d": "A short product reminder can show how an item fits a routine, explain one detail, or make a practical comparison easy to see."
-    },
-    {
-      "h2": "Set the offer in your platform",
-      "d": "Add the current price, offer, audience, and frequency in your advertising platform before launch."
-    }
-  ],
-  "input_guide": {
-    "h2": "Choose a product detail worth revisiting",
-    "items": [
-      {
-        "t": "Show the recognizable silhouette",
-        "d": "Use a photo where the product shape is clear before the second-look action begins."
-      },
-      {
-        "t": "Pick one inspection move",
-        "d": "A turn, close, lace, click, or pack-away motion gives the reminder a concrete reason to exist."
-      },
-      {
-        "t": "Include the missed angle",
-        "d": "Show the sole, ear cup, wheel, clasp, or pocket that a shopper may want to inspect again."
-      },
-      {
-        "t": "Keep temporary offers out",
-        "d": "Use a clean source photo and add the current price or promotion only after the clip is reviewed."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the reminder asset can provide",
-    "items": [
-      {
-        "t": "A fresh product angle",
-        "d": "The clip returns to a practical detail or use moment without claiming anything about a particular shopper."
-      },
-      {
-        "t": "Flexible feed framing",
-        "d": "Choose 1:1 for a feed, 9:16 for Reels, or 16:9, 4:3, or 3:4 when another placement requires it."
-      },
-      {
-        "t": "Four visible price points",
-        "d": "Six seconds uses 24 credits, ten 40, fifteen 60, and thirty 120; the charge is shown before you make the asset."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Useful second-look ad formats",
-    "items": [
-      {
-        "t": "Problem-Solution: Desk Cable Organizer",
-        "d": "Keep the uploaded cable organizer’s silhouette, finish, and blank label area unchanged as the scene moves. At a shared desk, an adult hand routes a loose charging cable into the organizer, ending with the cable neatly beside a laptop. Soft daylight, realistic product-demo look. Overhead close framing with a short push-in. Sound: cable slide and a gentle desk tap; no music."
-      },
-      {
-        "t": "POV Discovery: Trail Boot Grip",
-        "d": "Anchor the shot to the uploaded boot photo, preserving its color, shape, and label area. On a rocky trail, an adult hiker takes two steady uphill steps in plain brown boots, with the tread visibly meeting the ground. Cool morning light, natural outdoor phone-video look. Low tracking framing that follows the feet and settles on the boot. Sound: gravel crunch and quiet birds; no music."
-      },
-      {
-        "t": "Talking-Head Review: Serum Dropper",
-        "d": "Use the serum in the upload as the product reference and preserve its dropper shape, color, and label space. An adult creator at a bright vanity holds the plain serum bottle beside her face and says, “Here is a closer look at the dropper.” She turns it once toward the lens and holds it steady. Natural skin texture, calm phone-video look. Chest-up three-quarter framing with a slow camera move toward the pipette. Sound: her voice and room tone; no music."
-      },
-      {
-        "t": "Day in Life: Pet Treat on a Walk",
-        "d": "Retain the uploaded treat pouch’s shape, color, and label area throughout the walk. On a sunny neighborhood path, an adult owner walks a dog, pauses for a simple sit cue, and offers one plain treat from a pouch. Natural afternoon light, candid lifestyle phone-video look. Medium follow framing with a gentle handheld settle. Sound: footsteps, collar jingle and quiet park ambience; no music."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Set the retargeting message in your ad platform",
-    "items": [
-      {
-        "t": "Add the current offer",
-        "d": "Place the current price, promotion, or product link in your editor."
-      },
-      {
-        "t": "Choose the audience",
-        "d": "Set visitors, cart users, exclusions, and frequency in the ad platform that owns those rules."
-      },
-      {
-        "t": "Add sound and disclosure",
-        "d": "Apply licensed music, caption text, and any required disclosure before publishing."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A good fit for a reminder ad",
-    "good": [
-      "Products with one detail worth revisiting",
-      "Headphones, shoes, accessories, and desk goods",
-      "Products with one detail worth revisiting",
-      "Offers that the seller controls outside the asset"
-    ],
-    "not_ideal": [
-      "Audience and policy limits",
-      "A campaign that needs automatic inventory or cart data inside the clip"
-    ]
-  },
-  "examples": {
-    "h2": "More product reminder scenes",
-    "lead": "Show a product detail or everyday use moment a returning shopper recognizes.",
-    "groups": [
-      {
-        "label": "Second-Look Formats",
-        "items": [
-          {
-            "ref": "n:guide:q14-retarget-example-boot",
-            "title": "Trail Boot on Uneven Ground: Fit Check",
-            "kind": "scene",
-            "product": "plain brown trail boot"
-          },
-          {
-            "ref": "n:guide:q14-retarget-example-mouse",
-            "title": "Hands-on Demo: Wireless Mouse Side Buttons",
-            "kind": "scene",
-            "product": "wireless mouse"
-          },
-          {
-            "ref": "n:guide:q14-retarget-example-serum",
-            "title": "Serum Dropper Details: Talking-Head Review",
-            "kind": "scene",
-            "product": "serum dropper bottle"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see. Use this format when shoppers need to bring dark navy headphones back with a specific reminder about fit, controls, or comfort. Keep one second-look detail visible from the first frame, then leave room for the offer and product link you add after download. Review the ear cups, controls, and color against your source before publishing. A returning shopper should see the product detail they may still be weighing before the reminder, offer, and destination compete for space.",
+    "overview": "A retargeting video puts the product back in a shopper's feed with one clear reason to return. Show it in a familiar routine or focus on a detail the buyer is still weighing, then add your offer and product link after download.",
     "strip": [
       "n:guide:g1-retarget-serum-application",
       "n:guide:g1-retarget-shoe-tread-detail",
@@ -285,58 +123,66 @@
       ]
     },
     "picker": {
-      "title": "Choose a second-look ad format",
-      "lead": "Give a product another close moment in a social feed or product page. Start with one remaining question about the headphones, then choose a routine or detail scene that answers it clearly.",
+      "title": "Choose a retargeting video format",
+      "lead": "Pick a format that brings the product back with one clear answer.",
       "chips": [
         {
-          "id": "demo",
-          "label": "Hands-on Demos"
+          "id": "demos",
+          "label": "Demos"
         },
         {
-          "id": "hooks",
-          "label": "Discovery Hooks"
+          "id": "discovery",
+          "label": "Discovery"
         },
         {
           "id": "reviews",
-          "label": "Creator Reviews"
+          "label": "Reviews"
         },
         {
           "id": "routines",
-          "label": "Routine Formats"
+          "label": "Routines"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:q14-retarget-picker-cable",
-          "label": "Problem-Solution: Cable Tangle Cleared",
+          "label": "Problem Solution Desk Demo",
           "chips": [
-            "demo"
+            "demos"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a shared work desk, an adult hand routes one loose charging cable into the small organizer, ending with the cable beside a laptop. Soft daylight, clean product-demo look. Overhead close framing with a short push-in. Sound: cable slide and a soft desk tap; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q14-retarget-picker-boot",
-          "label": "POV Discovery: Trail Boot Grip",
+          "ref": "n:guide:q14-retarget-picker-case",
+          "label": "Hands On Phone Case Demo",
           "chips": [
-            "hooks",
-            "routines"
+            "demos"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. At a clean desk, an adult hand fits the plain case with one small circular camera opening onto a generic phone and holds the seated case edge-on. Soft daylight, natural product-demo look. Top-down close framing with a short tilt. End on the fitted phone case edge-on, camera opening visible. Sound: one quiet snap and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q14-retarget-picker-boot",
+          "label": "POV Boot Discovery Hook",
+          "chips": [
+            "discovery"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a rocky trail, an adult hiker takes two steady uphill steps in the plain brown boots, with the tread visibly touching gravel. Cool morning light, candid outdoor phone-video look. Low tracking angle that settles on the boot. End with the sole angled toward the lens and the tread in focus. Sound: gravel crunch and quiet birds; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q14-retarget-picker-ring",
-          "label": "ASMR Unboxing: Gold Ring Reveal",
+          "label": "ASMR Ring Unboxing",
           "chips": [
-            "hooks"
+            "discovery"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a pale dressing table, adult hands open a small unbranded jewelry box to reveal a plain gold ring and hold it still in the center. Soft window light, tactile phone-video look. Top-down close framing with a slow push-in. End with the ring centered in the open box lining. Sound: box hinge and tissue rustle; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q14-retarget-picker-street",
-          "label": "Street Interview: Protein Bar First Bite",
+          "label": "Street Interview Protein Bar",
           "chips": [
             "reviews"
           ],
@@ -345,7 +191,7 @@
         },
         {
           "ref": "n:guide:q14-retarget-picker-serum-talk",
-          "label": "Talking-Head Review: Serum Dropper",
+          "label": "Talking Head Serum Review",
           "chips": [
             "reviews"
           ],
@@ -354,27 +200,17 @@
         },
         {
           "ref": "n:guide:q14-retarget-picker-serum-texture",
-          "label": "Before/After: Serum Texture on Skin",
+          "label": "Serum Texture Demo",
           "chips": [
-            "demo"
+            "routines"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult applies one drop of clear serum to the back of her hand beside the untreated other hand, showing a same-light texture comparison without a result claim. Natural skin texture, no retouching. Overhead close framing with a slow push-in. End on both hands side by side, with the fresh drop centered between them. Sound: dropper tap and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q14-retarget-picker-case",
-          "label": "Hands-on Demo: Single-Hole Phone Case",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. At a clean desk, an adult hand fits the plain case with one small circular camera opening onto a generic phone and holds the seated case edge-on. Soft daylight, natural product-demo look. Top-down close framing with a short tilt. End on the fitted phone case edge-on, camera opening visible. Sound: one quiet snap and room tone; no music.",
-          "kind": "video"
-        },
-        {
           "ref": "n:guide:q14-retarget-picker-pet",
-          "label": "Day-in-Life Routine: Pet Walk Treat",
+          "label": "Day In Life Pet Routine",
           "chips": [
-            "demo",
             "routines"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny neighborhood path, an adult owner walks a dog, pauses for a sit cue and offers one plain treat from a pouch. Natural afternoon light, candid lifestyle phone-video look. Medium follow framing with one smooth handheld move. End with the dog beside the pouch after taking the treat. Sound: footsteps, collar jingle and park ambience; no music.",
@@ -382,58 +218,6 @@
         }
       ],
       "button": "Make a retargeting video ad"
-    },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:guide:q14-retarget-use-phone",
-        "h": "Bring a headphone routine into a social feed",
-        "d": "Show dark navy over-ear headphones worn during a city commute. Keep the ear cups and fit visible while the reminder stays easy to read on a phone. Keep the ear cup profile and head fit visible so the commute scene answers a comfort question."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q14-retarget-use-browser",
-        "h": "Pair a headphone detail with its product page",
-        "d": "Keep the product details and current offer consistent on the linked page. Use a close view of the controls or ear cushion so the second-look proof stays clear. Match the close control view to the model and color shown on the linked product page."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q14-retarget-input-good-1",
-        "bad": "n:guide:q14-retarget-input-blur",
-        "good_label": "Headband and both ear cups stay sharp",
-        "bad_label": "Soft focus hides headphone details"
-      },
-      {
-        "good": "n:guide:q14-retarget-input-good-2",
-        "bad": "n:guide:q14-retarget-input-crop",
-        "good_label": "Full headphones fit inside the frame",
-        "bad_label": "Crop cuts off the headband and ear cup"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q14-retarget-output-commute",
-        "frame": "1:1",
-        "label": "Day-in-Life Routine: Headphones at the Station"
-      },
-      {
-        "ref": "n:guide:q14-retarget-output-features",
-        "frame": "1:1",
-        "label": "Creator Review: Headphone Ear Cushion"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q14-retarget-after-detail",
-      "zones": [
-        "Current price",
-        "Offer",
-        "Product link"
-      ],
-      "items": [
-        "Add the current price and offer as editable text after download. Check the dark navy headphones, ear cups, and one remaining shopper question against the product page before publishing. Use one reminder per frame so the ear cups and controls remain easy to inspect. Keep the headphones large enough to inspect while the reminder stays outside the ear cup outline. Confirm the ear cup controls and the destination before every scheduled run.",
-        "Link the video to the relevant product page. Read the finished frame at mobile size and move any added text away from the ear cups and controls. Check the destination and offer together before scheduling the second-look placement. Use a calm final hold for the offer so the product detail does not disappear at the end."
-      ]
     },
     "titles": {
       "m2": {
