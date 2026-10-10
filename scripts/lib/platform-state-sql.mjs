@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
  * platform shape. It reads PostgreSQL JSONB only; no filesystem fallback is
  * permitted here.
  */
-export async function readPlatformStateFromSql(existingPrisma) {
+export async function readPlatformStateFromSql(existingPrisma, { pageSource = "theme" } = {}) {
   const prisma = existingPrisma ?? new PrismaClient();
   const ownsClient = !existingPrisma;
   try {
@@ -18,7 +18,9 @@ export async function readPlatformStateFromSql(existingPrisma) {
     const [siteRows, domains, pages, settings, profiles, packs, packCategories, mediaAssets, products, siteThemes, toolCategories, toolMenuItems, videoCategories, videoThemes, siteAiApps] = await Promise.all([
       prisma.site.findMany({ orderBy: { createdAt: "asc" } }),
       prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
-      prisma.themePage.findMany({ orderBy: [{ siteId: "asc" }, { slug: "asc" }] }),
+      pageSource === "live"
+        ? prisma.livePage.findMany({ orderBy: [{ siteId: "asc" }, { slug: "asc" }] }).then((rows) => rows.map((row) => ({ ...row, draftJson: row.contentJson, publishedJson: row.contentJson })))
+        : prisma.themePage.findMany({ orderBy: [{ siteId: "asc" }, { slug: "asc" }] }),
       prisma.themeSettings.findMany(),
       prisma.storefrontProfile.findMany(),
       prisma.creativePack.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),

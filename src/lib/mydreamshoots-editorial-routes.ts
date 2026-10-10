@@ -1,3 +1,5 @@
+import { MYDREAMSHOOTS_TOPIC_GROUP_PATHS } from "@/lib/mydreamshoots-topic-groups";
+
 export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
   "/ai-save-the-date/valentines-day",
   "/ai-save-the-date/engagement",
@@ -33,6 +35,7 @@ export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [
   "/best-ai-image",
   "/best-ai-video",
   "/best-save-the-date",
+  ...MYDREAMSHOOTS_TOPIC_GROUP_PATHS,
   "/pricing",
   "/faq",
   "/workflow",

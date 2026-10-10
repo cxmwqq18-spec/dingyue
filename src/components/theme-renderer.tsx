@@ -57,6 +57,7 @@ import {
 } from "@/lib/photo-package-use-case-profiles";
 import { mydreamshootsLegacyPublicPathTarget, shortPolicyPath } from "@/lib/site-route-canonical";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
+import { isMydreamshootsTopicGroupPath } from "@/lib/mydreamshoots-topic-groups";
 import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentPath } from "@/lib/mydreamshoots-video-watch";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { canonicalSpanishXbyCollectionSlug, isAidreamshootsStorefrontSite, isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
@@ -5561,6 +5562,9 @@ function hrefFor(site: Site, href: string): string {
   const pairedStore = usesAiGenerationPublicRoutes(site);
   const primaryMyDreamShoots = isPrimaryMydreamshootsCapabilitySite(site);
   const legacyPrefix = `/site/${site.slug}`;
+  if (site.id === "site_dreamshoot" && isMydreamshootsTopicGroupPath(href.split(/[?#]/)[0] || "")) {
+    return routedSitePath(site, href);
+  }
   if (pairedStore && !isAidreamcapesSite(site)) {
     const pathOnly = href.split(/[?#]/)[0] || "/";
     const unscopedPath = pathOnly.startsWith(`${legacyPrefix}/`) ? pathOnly.slice(legacyPrefix.length) : pathOnly;
@@ -11205,6 +11209,67 @@ function SectionView({
   const usesNativeDreamShootRenderer = section.type.startsWith("dreamshoot_");
   const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, storefrontContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
+
+  if (section.type === "topic_group_breadcrumb") {
+    const items = Array.isArray(section.settings.breadcrumbs)
+      ? section.settings.breadcrumbs.flatMap((entry) => {
+          if (!entry || typeof entry !== "object" || Array.isArray(entry)) return [];
+          const item = entry as Record<string, ThemeSettingValue>;
+          const label = typeof item.label === "string" ? item.label.trim() : "";
+          const href = typeof item.href === "string" ? item.href.trim() : "";
+          return label ? [{ label, href }] : [];
+        })
+      : [];
+    if (!items.length) return null;
+    return (
+      <nav aria-label="Breadcrumb" className="border-b border-black/5 bg-white px-5 py-3 text-sm text-zinc-600" data-topic-group-breadcrumb="true" id={sectionAnchor(section, id)}>
+        <ol className="mx-auto flex max-w-[var(--site-content-width)] flex-wrap items-center gap-x-2 gap-y-1">
+          {items.map((item, index) => (
+            <li className="inline-flex items-center gap-2" key={`${item.href}-${item.label}`}>
+              {index ? <span aria-hidden="true" className="text-zinc-400">/</span> : null}
+              {item.href && index < items.length - 1
+                ? <Link className="underline-offset-4 hover:text-zinc-950 hover:underline" href={hrefFor(site, item.href)}>{item.label}</Link>
+                : <span aria-current={index === items.length - 1 ? "page" : undefined}>{item.label}</span>}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    );
+  }
+
+  if (section.type === "topic_group_links") {
+    const items = Array.isArray(section.settings.links)
+      ? section.settings.links.flatMap((entry) => {
+          if (!entry || typeof entry !== "object" || Array.isArray(entry)) return [];
+          const item = entry as Record<string, ThemeSettingValue>;
+          const label = typeof item.label === "string" ? item.label.trim() : "";
+          const href = typeof item.href === "string" ? item.href.trim() : "";
+          const description = typeof item.description === "string" ? item.description.trim() : "";
+          return label && href ? [{ label, href, description }] : [];
+        })
+      : [];
+    const title = setting(section, "title", "Explore related themes");
+    const intro = setting(section, "intro");
+    if (!items.length) return null;
+    return (
+      <section aria-labelledby={`${id}-title`} className="bg-[#f8f7f4] px-5 py-12 sm:px-8 lg:py-16" data-topic-group-links="true" id={sectionAnchor(section, id)}>
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <h2 className="text-balance text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl" id={`${id}-title`}>{title}</h2>
+          {intro ? <p className="mt-3 max-w-3xl text-base leading-7 text-zinc-600">{intro}</p> : null}
+          <ul className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((item) => (
+              <li key={item.href}>
+                <Link className="group flex h-full min-h-24 flex-col rounded-xl border border-black/10 bg-white p-5 transition hover:-translate-y-0.5 hover:border-black/25 hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900" href={hrefFor(site, item.href)}>
+                  <span className="font-semibold text-zinc-950 underline decoration-transparent underline-offset-4 group-hover:decoration-current">{item.label}</span>
+                  {item.description ? <span className="mt-2 text-sm leading-6 text-zinc-600">{item.description}</span> : null}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
+  }
 
   const editorialFaq = section.type === "faq" && setting(section, "layout", "default") !== "visual_faq" && sectionBlocks(section).length > 0 && sectionBlocks(section).every((block) => Boolean(blockValue(block, "question") && blockValue(block, "answer")));
   if (["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_scene_grid", "editorial_detail_list", "editorial_steps", "editorial_story_flow", "editorial_ideas", "editorial_formats", "editorial_quality", "editorial_boundaries", "editorial_evidence", "editorial_checklist", "editorial_cta"].includes(section.type) || editorialFaq) {

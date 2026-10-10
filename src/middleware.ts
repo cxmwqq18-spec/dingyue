@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsImageTopicGroupForSlug } from "@/lib/mydreamshoots-topic-groups";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesGonePublicPath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
@@ -407,7 +408,7 @@ function mydreamshootsUnknownImageThemeResponse(request: NextRequest): NextRespo
   const sitePathMatch = request.nextUrl.pathname.match(/^\/site\/mydreamshoots\/ai-image-generation\/([^/]+)\/?$/i);
   if (hostSlug !== "mydreamshoots" && !sitePathMatch) return undefined;
   const slug = sitePathMatch?.[1] ?? request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)\/?$/i)?.[1];
-  if (!slug || mydreamshootsPageCopyForSlug(slug)) return undefined;
+  if (!slug || mydreamshootsImageTopicGroupForSlug(slug) || mydreamshootsPageCopyForSlug(slug)) return undefined;
   return new NextResponse(request.method === "HEAD" ? null : "Page not found", {
     status: 404,
     headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex, follow" }
@@ -917,6 +918,11 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   // category query lets its metadata resolve the requested image theme.
   const imageThemeMatch = upstreamUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
   if (hostSlug === "mydreamshoots" && imageThemeMatch?.[1]) {
+    if (mydreamshootsImageTopicGroupForSlug(imageThemeMatch[1])) {
+      upstreamUrl.pathname = `/site/${hostSlug}/ai-image-generation/${imageThemeMatch[1]}`;
+      upstreamUrl.search = "";
+      return upstreamUrl;
+    }
     upstreamUrl.pathname = `/site/${hostSlug}/ai-image-generation`;
     upstreamUrl.searchParams.set("category", imageThemeMatch[1]);
     return upstreamUrl;
@@ -1030,7 +1036,7 @@ export async function middleware(request: NextRequest) {
     `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`
   );
   const imageThemeMatch = request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
-  if (imageThemeMatch?.[1] && storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "mydreamshoots") {
+  if (imageThemeMatch?.[1] && !mydreamshootsImageTopicGroupForSlug(imageThemeMatch[1]) && storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "mydreamshoots") {
     upstreamHeaders.set(IMAGE_THEME_CONTEXT_HEADER, imageThemeMatch[1]);
   }
   const upstreamUrl = sameServerStorefrontUrl(request);

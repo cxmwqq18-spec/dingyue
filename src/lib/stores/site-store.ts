@@ -1226,7 +1226,7 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string, indexing
   const isCollectionDetail = isCollections && Boolean(contextSlug);
   const isBestPackagePage = primary === "/best-packages";
   const isBestMediaPage = primary === "/best-ai-image" || primary === "/best-ai-video";
-  const isBestSaveTheDatePage = primary === "/best-save-the-date";
+  const isBestSaveTheDatePage = primary === "/best-save-the-date" || primary.startsWith("/best-save-the-date/group/");
   const isWorkspace = primary === "/app";
   const isEditorialThemeDetail = /^\/(?:ai-save-the-date|holidays-events)\//.test(primary);
   const needsVideoThemes =

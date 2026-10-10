@@ -7,17 +7,31 @@ import { parsePublicCollectionRouteForSite, publicCollectionRootPathForSite } fr
 import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { renderStorefrontPage } from "@/lib/storefront-render";
-import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
+import { createPublishedSiteSnapshot, resolveEffectiveIndexability, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { canResolveCollectionSlugForSite } from "@/lib/storefront-render";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 import { AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY, isAidreamshootsEngagementFrenchPage } from "@/lib/aidreamshoots-engagement-photo-french";
 import { AIDREAMCAPES_IMAGE_THEME_ROOT_PATH, isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
+import { isMydreamshootsTopicGroupActive, mydreamshootsImageTopicGroupForSlug } from "@/lib/mydreamshoots-topic-groups";
+import { isPrimaryMydreamshootsSlug } from "@/lib/storefront-context/capabilities";
 import type { PlatformState, Site } from "@/lib/types";
 
 type RouteParams = Promise<{ siteSlug: string; themeSlug: string }>;
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+async function loadMydreamshootsImageTopicGroup(siteSlug: string, group: NonNullable<ReturnType<typeof mydreamshootsImageTopicGroupForSlug>>) {
+  if (!isPrimaryMydreamshootsSlug(siteSlug)) return undefined;
+  const state = await readPathModePublicRuntimeState(siteSlug, group.path);
+  const site = state?.sites[0];
+  const page = site?.id === "site_dreamshoot" ? findPage(site, group.path) : undefined;
+  if (!state || !site || !page || page.publishedJson.seo?.canonicalPath !== group.path || !isMydreamshootsTopicGroupActive(state, site.id, group)) return undefined;
+  const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
+  if (resolvePublishedRouteDisposition(snapshot, group.path).kind !== "render") return undefined;
+  if (!resolveEffectiveIndexability(snapshot, page).index) return undefined;
+  return { state, site, page, snapshot };
+}
 
 async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise<{ state: PlatformState; site: Site } | undefined> {
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`;
@@ -37,9 +51,22 @@ async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise
 
 export async function generateMetadata({ params }: { params: RouteParams }): Promise<Metadata> {
   const { siteSlug, themeSlug } = await params;
+  const group = mydreamshootsImageTopicGroupForSlug(themeSlug);
+  if (group && isPrimaryMydreamshootsSlug(siteSlug)) {
+    const loadedGroup = await loadMydreamshootsImageTopicGroup(siteSlug, group);
+    if (!loadedGroup) return { robots: { index: false, follow: false } };
+    return metadataForPublishedStorefrontPage({
+      site: loadedGroup.site,
+      page: loadedGroup.page,
+      path: group.path,
+      products: loadedGroup.state.products,
+      creativePacks: loadedGroup.state.creativePacks,
+      snapshot: loadedGroup.snapshot
+    });
+  }
   if (siteSlug === "aidreamcapes-eu" && canonicalAidreamcapesEuPublicPath(`${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`) !== `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`) return {};
   const loaded = await loadImageThemeState(siteSlug, themeSlug);
-  if (!loaded) return {};
+  if (!loaded) return isPrimaryMydreamshootsSlug(siteSlug) ? { robots: { index: false, follow: false } } : {};
   const { state, site } = loaded;
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`;
   if (isAidreamcapesImageThemePath(siteSlug, requestedPath)) {
@@ -111,6 +138,22 @@ export default async function ImageThemePage({
 }) {
   const resolved = await params;
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${resolved.themeSlug}`;
+  const group = mydreamshootsImageTopicGroupForSlug(resolved.themeSlug);
+  if (group && isPrimaryMydreamshootsSlug(resolved.siteSlug)) {
+    const loadedGroup = await loadMydreamshootsImageTopicGroup(resolved.siteSlug, group);
+    if (!loadedGroup) notFound();
+    const routeMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
+    const query = searchParams ? await searchParams : {};
+    return renderStorefrontPage({
+      site: loadedGroup.site,
+      slug: group.path,
+      publicPath: group.path,
+      query,
+      routeMode,
+      state: loadedGroup.state,
+      deferCustomerRuntime: true
+    });
+  }
   if (resolved.siteSlug === "aidreamcapes-eu") {
     const canonicalEuPath = canonicalAidreamcapesEuPublicPath(requestedPath);
     if (canonicalEuPath !== requestedPath) {

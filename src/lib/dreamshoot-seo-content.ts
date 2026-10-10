@@ -3,6 +3,7 @@ import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-cont
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { mydreamshootsPageCopyForRoute, mydreamshootsPageCopyForSlug, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
+import { isMydreamshootsTopicGroupPath } from "@/lib/mydreamshoots-topic-groups";
 import {
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
@@ -2560,6 +2561,8 @@ function isDirectoryRootPath(kind: SeoDirectoryKind, rawSlug: string): boolean {
 }
 
 export function canonicalSeoDirectoryPathForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): string {
+  const normalizedPath = rawSlug.trim().split(/[?#]/)[0]?.replace(/\/+$/, "") || "/";
+  if (site?.id === "site_dreamshoot" && isMydreamshootsTopicGroupPath(normalizedPath)) return normalizedPath;
   if (isDirectoryRootPath(kind, rawSlug)) {
     if (kind === "collection") return publicCollectionPathForSite(site, "");
     return isPrimaryMydreamshootsSite(site) ? publicVideoGenerationPathForSite(site, "") : "/tools";

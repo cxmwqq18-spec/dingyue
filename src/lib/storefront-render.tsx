@@ -2445,11 +2445,15 @@ function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson, sit
   // publication snapshot while its topic pages are being updated.
   const spanishTarget = site ? isSpanishMydreamshootsStorefront(site) : false;
   const frenchTarget = site?.id === "site_aidreamcapes_xby";
+  const topicGroupSections = Object.fromEntries(pageJson.sectionsOrder
+    .filter((sectionId) => pageJson.sections[sectionId]?.type === "topic_group_links")
+    .map((sectionId) => [sectionId, pageJson.sections[sectionId]]));
+  const topicGroupSectionIds = Object.keys(topicGroupSections);
   const frenchIntro = "Aidreamcapes vous aide à transformer une idée, une photo autorisée ou une direction de marque en une courte vidéo à relire avant le partage. Parcourez les thèmes pour choisir une intention claire : produit, portrait animé, réseaux sociaux ou souvenir. Chaque page indique la source à préparer et les points essentiels à vérifier avant de publier.";
   const frenchFaq = "Questions fréquentes\n\nQuelle source faut-il préparer ? Utilisez une image nette ou un bref descriptif dont vous détenez les droits. Une lumière régulière, un visage visible et un sujet bien séparé de l’arrière-plan facilitent la génération.\n\nComment choisir un thème ? Commencez par le résultat attendu : présentation produit, portrait animé, vidéo sociale, annonce ou récit. Comparez ensuite les exemples, le cadrage et les éléments à vérifier.\n\nLe résultat est-il publié automatiquement ? Non. Relisez la vidéo dans votre espace privé, vérifiez les personnes, les objets, le texte et les droits, puis décidez vous-même où la partager.";
   return {
     ...pageJson,
-    sectionsOrder: frenchTarget ? ["video_intro_1", "video_theme_directory_1", "video_faq_1"] : ["video_theme_directory_1"],
+    sectionsOrder: [...(frenchTarget ? ["video_intro_1", "video_theme_directory_1", "video_faq_1"] : ["video_theme_directory_1"]), ...topicGroupSectionIds],
     sections: {
       ...(frenchTarget ? {
         video_intro_1: {
@@ -2499,7 +2503,8 @@ function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson, sit
           },
           blocks: []
         }
-      } : {})
+      } : {}),
+      ...topicGroupSections
     }
   };
 }

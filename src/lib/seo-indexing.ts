@@ -3,6 +3,7 @@ import fs from "node:fs";
 import nodePath from "node:path";
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
+import { isMydreamshootsTopicGroupPath } from "@/lib/mydreamshoots-topic-groups";
 import {
   MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS,
   creativePackCollectionHref,
@@ -769,7 +770,7 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   if (isRetiredAidreamcapesPublicPath(site.slug, normalizePath(page.slug)) || isRetiredAidreamcapesPublicPath(site.slug, canonicalPath)) return "";
   // Legacy video ThemePage rows can remain in relational data during a route
   // migration, but unsupported video slugs must not become sitemap URLs.
-  if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
+  if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isMydreamshootsTopicGroupPath(canonicalPath) && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
   const isLegacyDuplicate = (LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug)) && !(isAidreamshootsStorefrontSite(site) && normalizePath(page.slug) === "/ai-image-generation/motion-generator")) || (isDreamshootSite(site) && (MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(normalizePath(page.slug)) || MYDREAMSHOOTS_RETIRED_PUBLIC_PATH_SET.has(normalizePath(page.slug))));
   // SEO eligibility is resolved once below by resolveEffectivePublishedPage().
   // Reading raw page flags here creates a second owner that can disagree with
@@ -1255,6 +1256,7 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
+  if (site.id === "site_dreamshoot" && isMydreamshootsTopicGroupPath(normalized)) return normalized;
   if (site.id === "site_aidreamcapes_xby") {
     const euCanonicalPath = canonicalAidreamcapesEuPublicPath(normalized);
     if (euCanonicalPath !== normalized) return euCanonicalPath;
@@ -1309,6 +1311,7 @@ function isBlockedPublicPathForSite(site: Site, path: string): boolean {
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/ai-image-generation/collections-")) return true;
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/tools/")) return true;
   if (isDreamshootSite(site)) {
+    if (site.id === "site_dreamshoot" && isMydreamshootsTopicGroupPath(path)) return false;
     if (path === "/collections" || path.startsWith("/collections/") || path === "/tools" || path.startsWith("/tools/") || path === "/ai-photoshoot" || path.startsWith("/ai-photoshoot/")) return true;
     if (path.startsWith("/ai-image-generation/") && !parsePublicCollectionRouteForSite(site, path)) return true;
     if (path.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, path)) return true;
@@ -1322,6 +1325,7 @@ function isPublicVideoGenerationSitemapPath(site: Site, path: string): boolean {
 
 function isIndexableSeoDirectoryPath(site: Site, path: string): boolean {
   const normalized = canonicalDirectoryPathForSite(site, path);
+  if (site.id === "site_dreamshoot" && isMydreamshootsTopicGroupPath(normalized)) return true;
   if (isCollectionDirectoryPath(normalized)) {
     const route = parsePublicCollectionRouteForSite(site, normalized);
     if (route?.kind === "directory") return true;
