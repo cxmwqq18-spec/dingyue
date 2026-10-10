@@ -319,6 +319,7 @@ function ToolPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} label={maker.cta} r={r} />} right={photoHub && visual ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
       </PageHero>
+      {visual && !photoHub ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null}
       {visual && photoHub ? <>
         <VisualStrip includeOverview visual={visual} r={r} />
         <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
@@ -337,18 +338,12 @@ function ToolPage({ data, r }: Props) {
         <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
         <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
         <MoreSections r={r} sections={data.more_sections as never} />
-        <VisualPicker pageId={data.id} visual={visual} r={r} />
         <VisualSizes visual={visual} r={r} />
         <VisualInput visual={visual} r={r} />
         <VisualOutputs visual={visual} r={r} />
         <VisualUses visual={visual} r={r} />
         <VisualAfter visual={visual} r={r} />
         <VisualLimitations visual={visual} />
-        {list<V2Card>(data.templates).length ? (
-          <Section eyebrow="Templates" lead={visual.titles?.templates?.lead ?? "Pick one, add your product photo and get the same look."} title={visual.titles?.templates?.h2 ?? `Templates for ${data.label}`}>
-            <TemplateGrid cards={list<V2Card>(data.templates)} r={r} />
-          </Section>
-        ) : null}
         <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
       </> : <>
       {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
@@ -376,10 +371,15 @@ function ToolPage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       </>}
+      {visual && !photoHub ? <>
+        {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
+        <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
+      </> : <>
       <RelatedLinks links={data.relatedLinks as { label: string; href: string }[] | undefined} r={r} />
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
+      </>}
       <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title={`Make your first ${video ? "video" : "photo"} today`} />
     </>
   );

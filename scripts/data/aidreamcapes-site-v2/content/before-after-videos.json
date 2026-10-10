@@ -1,49 +1,45 @@
 {
   "id": "before-after-videos",
-  "title": "Before and After Video Maker for Products | AIVideosUGC",
-  "description": "Show the visible change your product makes — a messy shelf tidied, a scuffed shoe cleaned — in one short clip for TikTok or Reels, from one product photo.",
-  "h1": "Before and After Video Maker: Show the Change Your Product Makes",
+  "title": "Before and After Video Maker for Product Ads | AIVideosUGC",
+  "description": "Show the visible change your product makes in one short clip. Same item, same camera, then the fixed state, ready for TikTok or Reels.",
+  "h1": "Create Before and After Videos from One Product Photo",
   "eyebrow": "Before & after video",
-  "lead": "When your product only makes sense once shoppers see the change, telling them in words is weak and filming both states is a full shoot. Make a before-and-after video from one product photo that keeps the same space or item in view, so the result is easy to judge without an exaggerated claim.",
+  "lead": "Shoppers believe a change they can see. Keep one item and one camera, then show the fixed state in the same clip. No second shoot, no exaggerated claim.",
   "secondary_keywords": [
     "AI before and after video",
     "before and after product video",
     "transformation video for ads",
     "before and after TikTok video"
   ],
-  "benefits_h2": "Why make a before-and-after video?",
+  "benefits_h2": "Why sellers create before and after videos with AIVideosUGC",
   "benefits": [
     {
-      "t": "Make the result visible fast",
-      "d": "Shoppers see the starting condition and the finished state in one clip, which is more convincing than describing the change."
+      "t": "Minutes, not weeks of prep",
+      "d": "Get a finished comparison clip in minutes. Skip the studio day, the crew and the second setup for the fixed state."
     },
     {
-      "t": "One product photo, no second shoot",
-      "d": "Both states are generated around the same item or space, so you don't stage the before and film the after separately."
+      "t": "Test more, reshoot nothing",
+      "d": "Try different actions and hooks with the same product photo. Make fresh versions and split-test them in your ad account."
     },
     {
-      "t": "Keep claims on safe ground",
-      "d": "Show changes to a product or the space around it, rather than implying health, skin or body results the clip can't prove."
-    },
-    {
-      "t": "Time for the full sequence",
-      "d": "Use a 30-second clip for before, action and after, or a short 6-second version when the fix is one quick move."
+      "t": "Claims stay on safe ground",
+      "d": "Show a change to an item or the space around it. Nothing implies health, skin or body results the clip cannot prove."
     }
   ],
-  "steps_h2": "How to make a before-and-after video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a clear comparison clip — before, action and after, without a second shoot.",
+  "steps_h2": "How to make a before and after video with AI",
+  "steps_lead": "Three steps. Same item, same camera, one visible change.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo with the item that causes the change fully in frame. It anchors both states of the comparison."
+      "d": "Add one clear photo of the item that makes the change, fully in frame."
     },
     {
-      "t": "Describe the Before and After",
-      "d": "Write one short sentence for the starting condition and one for the result, keeping the camera and space the same."
+      "t": "Pick a Scene and Share Your Idea",
+      "d": "Choose a scene that fits the product. Share your video idea in one sentence, from the starting state to the fixed state."
     },
     {
-      "t": "Download and Add Labels",
-      "d": "Review the change against what your product really does, then download. Add Before and After labels in your editor."
+      "t": "Generate and Download",
+      "d": "Review the clip and download it. Add Before and After labels in your own editor."
     }
   ],
   "maker": {
@@ -61,50 +57,59 @@
   },
   "faq": [
     {
-      "q": "How can I make the two scenes easy to compare?",
-      "a": "Keep the camera position fixed and show the same product in three frames: before, the action, and after. Use a 30-second clip when the action needs room, or 6, 10 or 15 seconds for a quicker fix; choose 9:16 for TikTok or Reels and 1:1 for a product page."
+      "q": "What is a before and after video?",
+      "a": "It is a short clip that shows a starting state, one action, and the fixed state. You make it from one product photo and use it as a product demonstration ad."
     },
     {
-      "q": "How do I describe the before and the after?",
-      "a": "Use one sentence with two parts joined by “then.” For example: “cluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.”"
+      "q": "How do I make one from a product photo?",
+      "a": "Upload one clear product photo, choose a scene, and describe the starting state and the fixed state in one sentence. The generated clip keeps the same item and camera in view."
     },
     {
-      "q": "Can I show skincare or health results?",
-      "a": "Show a change to the product or the space around it, such as lint lifted from a cushion. Do not imply a health, skin or body result."
+      "q": "How is this different from a traditional video shoot?",
+      "a": "A shoot needs the item staged twice, a camera setup and often a crew. Here both states are generated from the same photo in minutes, at far less cost."
     },
     {
-      "q": "Can I add “Before” and “After” labels?",
-      "a": "Yes, add them after you download, in CapCut or TikTok. Typed labels stay crisp and correctly spelled, which AI-generated lettering can't always manage."
+      "q": "Who should use before and after videos?",
+      "a": "Sellers whose product fixes something visible: a stain, dust on a surface, tangled cords or a messy shelf. Ecommerce brands and ad teams use them on product pages and paid campaigns."
     },
     {
-      "q": "What makes a before and after useful?",
-      "a": "Use the same product or space in both frames and show a clear, understandable change."
+      "q": "What video styles work for a before and after?",
+      "a": "Keep it simple: a fixed camera, a practical action and both states easy to compare. A product review or product demo style reads naturally in a feed."
     },
     {
-      "q": "Can I show a small improvement?",
-      "a": "Yes. A focused change such as routed cables, a cleaned surface or a sorted drawer can be easy to compare."
+      "q": "What are the limitations?",
+      "a": "The clip shows a change to an item or the space around it, not a health, skin or body result. The fixed state should match what your product really does."
     },
     {
-      "q": "Should the camera move during a comparison?",
-      "a": "Lock the camera, background, and lighting when the two states need a direct comparison. If a slow move helps show detail, keep both states visible and easy to match."
+      "q": "Which formats and platforms are supported?",
+      "a": "Download a 9:16 vertical clip for TikTok Ads and Instagram Reels, or a 1:1 square for a product page. Lengths are 6, 10, 15 or 30 seconds, and downloads have no watermark."
     },
     {
-      "q": "Can I compare two product versions?",
-      "a": "Yes. Use the same framing and describe the one difference shoppers need to judge, such as a size or fit change. Avoid a performance claim unless the frame proves it."
-    },
-    {
-      "q": "Can I run the comparison as a paid ad?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so the clip can run on TikTok, Reels and other paid channels. Keep the claim to what the frame actually proves, and add any offer or price in your ad tool."
-    },
-    {
-      "q": "Are the people or results in the clip real?",
-      "a": "No. The scene and any people are AI-generated from your product photo, so don't present it as a real customer's results. It works as a product demonstration ad, not as a review or evidence of a health or skin outcome."
+      "q": "Can I add Before and After labels?",
+      "a": "Yes. Add them in your own editor after download, so they stay crisp and correctly spelled."
     }
   ],
   "overview": [
     {
-      "h2": "Make the product’s role in the change easy to see",
-      "p": "Keep one space or object in view across both scenes so the difference reads quickly. Show the starting condition first, then the product in use and the finished state without adding a claim the product cannot support."
+      "h2": "Show one change buyers can check",
+      "p": "One item stays in view from start to finish. Buyers see the problem, then the fixed state, and can judge the change for themselves."
+    }
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "The comparison",
+      "h2": "The Old Way vs. the AIVideosUGC Way",
+      "lead": "Showing a change used to mean two setups. Now it starts with one product photo.",
+      "items": [
+        {
+          "t": "Plan both states in advance",
+          "d": "Stage the starting scene, then reset for the fixed state, with the same lighting and camera."
+        },
+        {
+          "t": "Describe the change in one sentence",
+          "d": "Keep one photo and one camera. The starting state and the fixed state are generated for you."
+        }
+      ]
     }
   ],
   "visual": {
@@ -125,20 +130,20 @@
       "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, an adult hand feeds three loose cords through the organizer slots, leaving the tabletop clear. End with the cords arranged in place. Soft daylight, practical home-demo style. Overhead medium framing with one slow push-in. Sound: cord slide, organizer tap and quiet room tone; no music."
     },
     "picker": {
-      "title": "Browse before-and-after formats",
-      "lead": "Choose a card by the change the viewer can verify without guessing. Creator reviews point to the untouched and improved sides; product refreshes show a brighter, cleaner, or better-arranged surface; quick fixes focus on one fit or connection; before-and-after cards keep both states in a comparable frame. Describe the surface, the misplaced object, the action that fixes it, and the final arrangement. Keep health or performance claims out unless the evidence is safe to show. Add Before and After labels later in your editor so they stay crisp.",
+      "title": "Browse before and after scenes",
+      "lead": "Each card keeps one item and one camera, then shows the fixed state. Pick the change your product really makes.",
       "chips": [
         {
           "id": "creator",
-          "label": "Creator Reviews"
+          "label": "Product Review"
         },
         {
           "id": "refresh",
-          "label": "Product Refresh"
+          "label": "Product Demo"
         },
         {
           "id": "quickfix",
-          "label": "Quick Fixes"
+          "label": "Before & After"
         },
         {
           "id": "split",
@@ -261,34 +266,34 @@
       {
         "frame": "phone",
         "ref": "n:guide:q3-before-after-videos-case-04-phone-case-single-camera",
-        "h": "Show a practical product change",
-        "d": "A comparison belongs on a product page when the feature changes the buyer's decision. Lock the camera, show the starting state, perform one action, and hold the final state long enough to read it. A case should fit its generic phone, a shoe should keep its color, and an organizer should keep its shape. Leave the boundary between states visible so the result cannot be mistaken for a new product. Make a separate clip when another feature needs a different angle."
+        "h": "Answer a doubt on the product page",
+        "d": "Shoppers see the fix happen before they leave. A case that fits, a brush that lifts a mark, an organizer that clears a desk. One visible checkpoint can settle the decision."
       },
       {
         "frame": "post",
         "ref": "n:guide:k4-before-after-videos-m5-round-watch-good",
-        "h": "Explain a result on a product page",
-        "d": "A short ad needs a clear problem before the fix. Keep the background and light stable, use one practical sound such as a brush pass or zipper glide, and avoid a dramatic transformation that the product cannot support. The product should cause the visible change; a tidy desk, clean path, fitted case, or closed zipper gives shoppers a concrete checkpoint. Check the final frame against the upload before publishing and type any claim or offer after download."
+        "h": "Stop the scroll in a paid ad",
+        "d": "A problem and its fix are easy to follow in a feed. Keep the change honest and simple, and give viewers a reason to click through."
       },
       {
         "frame": "post",
         "ref": "n:guide:f11-r10-before-after-cable-organizer-triptych",
-        "h": "Lock one product through three frames",
-        "d": "Before → action → after: keep one cable organizer, camera, light, and desk while cords move from tangled to routed. Use 9:16 for TikTok or Reels, or 1:1 beside a product description."
+        "h": "Show the whole sequence",
+        "d": "Before, action, after, with one item in view the whole time. Buyers compare the two states without guessing what changed."
       }
     ],
     "input": [
       {
         "good": "n:guide:q3-before-after-videos-input-watch-good-alt",
         "bad": "n:guide:q3-before-after-videos-input-watch-bad-crop",
-        "good_label": "Your product, complete and sharp before the change",
-        "bad_label": "A crop that hides the product edge or starting problem"
+        "good_label": "Full product, sharp and in frame",
+        "bad_label": "Product edge is cut off"
       },
       {
         "good": "n:guide:q3-before-after-videos-input-watch-good-alt-2",
         "bad": "n:guide:q3-before-after-videos-input-watch-bad-blur-2",
-        "good_label": "Your product with one visible state ready to compare",
-        "bad_label": "A blurred upload where the before state cannot be checked"
+        "good_label": "Starting state clear and easy to check",
+        "bad_label": "Blurred photo hides the starting state"
       }
     ],
     "outputs": [
@@ -307,32 +312,32 @@
     ],
     "titles": {
       "m2": {
-        "h2": "How to make a before and after video in 3 steps"
+        "h2": "Create a before and after video in three steps"
       },
       "m3": {
         "h2": "Before and after video ideas",
-        "lead": "Try a lint roller on a cushion, a tidy cable desk or a cleaned sneaker."
+        "lead": "A stain lifted, a desk tidied, a scuff brushed out."
       },
       "m4": {
         "h2": "Where before and after videos help you sell"
       },
       "m5": {
-        "h2": "What to prepare for a before-and-after scene"
+        "h2": "What to prepare for a before and after scene"
       },
       "m6": {
-        "h2": "Before-and-after length and frame: 6, 10, 15 or 30 seconds; 9:16 or 1:1"
+        "h2": "Before and after sizes and length: 6, 10, 15 or 30 seconds; 9:16 or 1:1"
       },
       "m7": {
         "h2": "Before you post the comparison"
       },
       "gallery": {
-        "h2": "Before-and-after scenes"
+        "h2": "Before and after scenes"
       },
       "examples": {
         "h2": "More ways to show a change"
       }
     },
-    "overview": "A before-and-after video names one starting problem and shows one visible change. Keep the camera and product steady while a roller clears fur, a brush lifts a scuff, or an organizer turns tangled cables into a readable desk. Use [product comparison video](/ai-video-generation/product-comparison-video) for two versions, [home organization video](/ai-video-generation/home-organization) for a space reset, and [testing ad versions](/guides/testing-ad-versions) when you want to compare hooks. Choose 6, 10, 15 or 30 seconds. Use a 9:16 vertical frame for [TikTok](/platforms/tiktok-ads) or [Instagram](/platforms/instagram-ads), or a 1:1 square frame beside a product description.",
+    "overview": "A before and after video names one starting problem and shows one visible change, with the same item and camera in view. Keep the claim to what the frame proves. Choose 6, 10, 15 or 30 seconds. Use a 9:16 vertical frame for TikTok Ads or Instagram Ads, or a 1:1 square beside a product description.",
     "after": {
       "ref": "n:guide:k7-ind-electronics-strip-5-n-gen2-before-after-videos-c4",
       "zones": [
@@ -342,7 +347,7 @@
       ],
       "items": [
         "Add Before and After labels in your editor.",
-        "Type a concise claim only when the frame proves it.",
+        "Type a claim only when the frame proves it.",
         "Keep the offer or price outside the generated scene."
       ]
     }

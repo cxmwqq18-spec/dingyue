@@ -26340,6 +26340,186 @@
           640
         ]
       },
+      "sc1-spk-indoor-1": {
+        "file": "sc1-spk-indoor-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult woman with medium-brown skin in an indoor apartment entryway speaks to camera while holding a plain hand cream tube.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-indoor-2": {
+        "file": "sc1-spk-indoor-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian man in an indoor living room speaks to camera while holding a plain amber candle jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-studio-1": {
+        "file": "sc1-spk-studio-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black woman in a pale studio speaks to camera while holding a plain coral lipstick.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-studio-2": {
+        "file": "sc1-spk-studio-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white man in a clean studio speaks to camera while holding a plain blue supplement bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-garden-1": {
+        "file": "sc1-spk-garden-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Latina woman in a backyard garden speaks to camera while holding plain moss-green gardening gloves.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-garden-2": {
+        "file": "sc1-spk-garden-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult South Asian man in a backyard garden speaks to camera while holding a plain blue plant sprayer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-fitness-1": {
+        "file": "sc1-spk-fitness-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black man in a fitness studio speaks to camera while holding a plain rolled slate-blue yoga mat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-fitness-2": {
+        "file": "sc1-spk-fitness-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white woman in a gym speaks to camera while holding a plain coral resistance band.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-beach-1": {
+        "file": "sc1-spk-beach-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Middle Eastern woman on a sunny beach speaks to camera while holding a plain woven sun hat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-beach-2": {
+        "file": "sc1-spk-beach-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian man beside a beach boardwalk speaks to camera while holding a plain turquoise beach towel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-hospital-1": {
+        "file": "sc1-spk-hospital-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black woman in teal scrubs in a hospital break room speaks to camera while holding a plain insulated travel tumbler.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-hospital-2": {
+        "file": "sc1-spk-hospital-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white man in a hospital visitor corridor speaks to camera while holding a plain charcoal power bank.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-balcony-1": {
+        "file": "sc1-spk-balcony-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult South Asian woman on a sunny apartment balcony speaks to camera while holding a small plain basil herb pot.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-balcony-2": {
+        "file": "sc1-spk-balcony-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white woman on an apartment balcony speaks to camera while holding a plain translucent plant mister.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-pet-1": {
+        "file": "sc1-spk-pet-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black woman in a living room speaks to camera while holding a plain dog treat pouch beside a leashed dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-pet-2": {
+        "file": "sc1-spk-pet-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian woman in a living room speaks to camera while holding a plain feather cat teaser.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-shop-1": {
+        "file": "sc1-spk-shop-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult South Asian man in a small clothing shop speaks to camera while holding a plain canvas tote bag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc1-spk-shop-2": {
+        "file": "sc1-spk-shop-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Latina woman behind a cafe counter speaks to camera while holding a plain matte ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "q4-spokesperson-hero": {
         "file": "gen2guide-q4-spokesperson-hero-r1",
         "w": 1024,
