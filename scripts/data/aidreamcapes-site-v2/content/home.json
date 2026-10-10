@@ -855,11 +855,11 @@
         },
         {
           "ref": "n:guide:k1-product-videos-template-table-lamp",
-          "label": "Desk Lamp Creator Demo UGC",
+          "label": "Desk Lamp Product Demo UGC",
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain white portable table lamp glows on a desk beside a closed laptop. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain white portable desk lamp glows on a desk beside a closed laptop for a clean product demo. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
