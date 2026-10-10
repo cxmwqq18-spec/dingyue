@@ -11,11 +11,6 @@
     "leather goods product photos",
     "texture shots for product listings"
   ],
-  "intro": [
-    "The example frames a brown leather bifold wallet on a wooden desk, close enough to follow the edge stitching and the soft grain of the hide, with a pen, a plant, and a coffee cup around the edges.",
-    "Buyers judge quality from small things: how a seam is finished, whether a zipper pull is metal, how a surface takes the light. A close-up answers those questions without a long paragraph. It suits wallets, belts, bags, watches, jewelry, and fitness gear such as a massage gun, and it sits well as the second or third image after a full product view."
-  ],
-  "tip": "Upload a photo taken in soft daylight with the detail in sharp focus, because the close-up can only be as crisp as the texture in your original shot.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -28,20 +23,6 @@
     {
       "t": "Download and Place",
       "d": "Download the close-up, check color and construction against the source, then place it after the hero shot."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Clasps and closures",
-      "d": "Show how a bracelet clasp, magnetic snap, or zipper pull is made, since buyers often ask about these small parts."
-    },
-    {
-      "t": "Material up close",
-      "d": "Get near enough to a canvas tote, wool scarf, or leather belt that the weave or grain reads clearly on a phone screen."
-    },
-    {
-      "t": "Engraving and maker's marks",
-      "d": "Give initials, a maker's stamp, or a personalized message its own frame for handmade and custom pieces."
     }
   ],
   "maker": {
@@ -64,166 +45,38 @@
   "faq": [
     {
       "q": "Which product details work well in close-up?",
-      "a": "Show a material, stitch, clasp, zipper, rim, or finish that shoppers cannot see in the main product image. Start with a source that is sharp at the feature you want to show; a soft seam cannot become reliable evidence after enlargement."
+      "a": "Materials, stitching, clasps, zippers, rims and finishes answer quality questions that a wide product shot cannot."
     },
     {
       "q": "How close should the source photo be?",
-      "a": "Keep the named feature in focus and leave enough surrounding product to show where it sits. Name one material or fastening at a time and keep the surrounding context in frame so shoppers know where the detail sits."
+      "a": "Keep the feature sharp with enough surrounding product to show where it sits. One close-up should answer one detail question."
     },
     {
       "q": "Where should a detail photo go?",
-      "a": "Place it after a clear main image so shoppers can first understand the whole product. Close-ups are useful after the full product image in a listing gallery, in a carousel slide, or in a social post built around one quality claim."
+      "a": "Place it after the full product image in a listing gallery, carousel or social post built around one quality point."
     },
     {
       "q": "How do I get a sharp close-up?",
-      "a": "Start with a clear, well-lit product photo and name the detail, such as stitching, a port, or material texture. Compare the result with the physical product because color, stitch count, and hardware placement remain seller responsibilities."
+      "a": "A clear, steady, well-lit source gives the generated detail the best chance of staying readable."
     },
     {
       "q": "Can the macro shot be used on a listing?",
-      "a": "Yes. Close-up photos answer material and quality questions in a product gallery.  Do not ask one close-up to prove several unrelated features; create a separate frame for the material, fastener, or finish that matters most."
+      "a": "Yes. It supports the main image by showing material or construction details in a product gallery."
     },
     {
       "q": "What does a detail photo cost?",
-      "a": "Each detail photo costs 24 credits, shown before the job starts.  Use the full item first and the detail second in a listing so shoppers know which product the texture or hardware belongs to."
+      "a": "Each AI product detail photo costs 24 credits, shown before the job starts."
     },
     {
       "q": "Can the close-up replace the main product photo?",
-      "a": "No. It supports the main image by proving one detail, so keep the full-product hero shot first and use the close-up where shoppers zoom to inspect quality."
+      "a": "No. Keep the full-product hero first, then use the close-up where shoppers inspect quality."
     },
     {
       "q": "Do I need a macro lens or professional camera?",
-      "a": "No. A sharp, steady photo from a phone is enough as the source; the close-up is generated from it, so the job costs only credits and the download has no watermark."
+      "a": "No. A sharp phone photo can be the source; the close-up is generated from it and the download has no watermark."
     }
   ],
-  "overview": [
-    {
-      "h2": "Let the Material Make Its Case",
-      "p": "A detail frame earns its place when the buyer is deciding whether a seam is neat, a clasp is substantial, or a surface has the finish you describe. Use it after the full product view, where a close crop answers a question the hero image leaves open."
-    },
-    {
-      "h2": "Enlarge Evidence You Actually Supplied",
-      "p": "The process can frame a real texture from your source, but it should not replace a missing weave, engraving, or hardware part. Choose one visible detail per run and keep the crop close enough for a phone shopper to inspect without turning the image into an abstract texture."
-    }
-  ],
-  "input_guide": {
-    "h2": "Give the Detail Room to Stay Sharp",
-    "items": [
-      {
-        "t": "Fill the frame with the feature",
-        "d": "Place the seam, clasp, grain, or mark near the center and avoid a source crop that cuts it in half."
-      },
-      {
-        "t": "Use a steady soft light",
-        "d": "Diffuse daylight reveals texture while reducing a hard reflection across metal or varnish."
-      },
-      {
-        "t": "Keep the product surface clean",
-        "d": "Remove lint, fingerprints, and stray props that could be mistaken for part of the finish."
-      },
-      {
-        "t": "Name the exact subject",
-        "d": "Say whether you want the corner stitching, zipper pull, brushed steel, or maker stamp in focus."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A Useful Close-Up Has a Job",
-    "items": [
-      {
-        "t": "Show construction",
-        "d": "Make stitching, seams, joins, and edge finishing legible beside the main image."
-      },
-      {
-        "t": "Show surface",
-        "d": "Give leather grain, canvas weave, ceramic glaze, or wood texture a dedicated view."
-      },
-      {
-        "t": "Show hardware",
-        "d": "Frame a buckle, snap, clasp, zipper pull, or watch crown without burying it in the whole product."
-      },
-      {
-        "t": "Support an honest claim",
-        "d": "Use the image as visual evidence for details you can verify in the item and product description."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Close-Ups for Different Catalogs",
-    "items": [
-      {
-        "t": "Leather wallet",
-        "d": "Corner stitching and folded edge on a warm wood desk with the grain catching soft side light."
-      },
-      {
-        "t": "Canvas tote",
-        "d": "Handle seam and woven fabric beside a paper tag, cropped tightly enough to read the weave."
-      },
-      {
-        "t": "Watch",
-        "d": "Brushed metal case, crown, and strap connection on a dark stone surface with controlled highlights."
-      },
-      {
-        "t": "Handmade mug",
-        "d": "Glaze variation and maker mark near the base on a linen tabletop, with the rim still in context."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Place the Detail With the Right Context",
-    "items": [
-      {
-        "t": "Keep the whole item nearby",
-        "d": "Use the full product image first so the close crop has an obvious reference."
-      },
-      {
-        "t": "Verify the feature",
-        "d": "Compare grain direction, countable hardware, engraving, and color against the physical product."
-      },
-      {
-        "t": "Write exact specifications",
-        "d": "Add material, dimensions, care instructions, or personalization text yourself where the listing needs precision."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Best Uses and Boundaries",
-    "good": [
-      "Leather, canvas, knit, wood, ceramic, and other visibly textured products",
-      "Jewelry or watches with a meaningful clasp or finish",
-      "Handmade goods with a maker mark or construction detail",
-      "A listing that already has a clear full-product hero"
-    ],
-    "not_ideal": [
-      "A blurry source with no visible texture",
-      "Plain objects whose selling point is only a printed number",
-      "Reflective surfaces with uncontrolled glare across the feature"
-    ]
-  },
-  "examples": {
-    "h2": "More product detail photos",
-    "lead": "A close view can show a material edge, surface finish, or small piece of hardware.",
-    "groups": [
-      {
-        "label": "Product photo examples",
-        "items": [
-          {
-            "ref": "n:guide:q7-detail-ex-0",
-            "title": "Wallet Card Slots in Use",
-            "kind": "photo",
-            "product": "leather wallet"
-          },
-          {
-            "ref": "n:guide:q7-detail-ex-1",
-            "title": "Olive-Green Collar Buckle Close-Up",
-            "kind": "photo",
-            "product": "pet collar"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Close product photos let shoppers inspect the material, stitching, fasteners, grain, and finish that a full product view cannot show. Start with a sharp source frame and choose one detail at a time: the wallet edge, a collar buckle, a shoe seam, or a pump. Keep the camera close without clipping the feature, and use soft side light that reveals texture without hiding color. A detail image supports a listing gallery, a product-page carousel, or a social post that answers one concrete quality question. Compare every result with the physical item before publishing. Leave a small border around the feature so the result can sit beside a full product view. This keeps the detail readable.",
     "strip": [
       "n:guide:q7-detail-strip-0",
       "n:guide:q7-detail-strip-1",
@@ -236,7 +89,7 @@
       "source": "n:guide:tpl-detail-reuse-wallet",
       "result": "n:guide:tpl-detail-m2-result",
       "mode": "photo",
-      "prompt": "Use the uploaded product photo as the identity reference; preserve the exact brown leather bifold wallet, its leather shade, edge shape, and stitching. Show a crisp close-up of the stitched edge and natural grain against a pale neutral background. Warm side light, macro product-photo composition. No text, logos, or watermark.",
+      "prompt": "Show the uploaded wallet’s stitched edge and grain in a crisp square close-up.",
       "options": [
         [
           "Template",
@@ -253,208 +106,17 @@
       ]
     },
     "picker": {
-      "title": "Choose a product detail ad format",
-      "lead": "Pick a close-up format that answers a buyer’s quality question: show grain or weave, demonstrate a fastener, reveal a small accessory, or isolate a feature that changes how the product is used.",
-      "chips": [
-        {
-          "id": "material",
-          "label": "Materials and Texture"
-        },
-        {
-          "id": "hardware",
-          "label": "Fasteners and Hardware"
-        },
-        {
-          "id": "accessory",
-          "label": "Jewelry and Accessories"
-        },
-        {
-          "id": "feature",
-          "label": "Everyday Features"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q7-detail-picker-cards-0",
-          "label": "Wallet Grain Macro",
-          "chips": [
-            "material",
-            "accessory"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact brown leather wallet, grain, and stitching. A fingertip rests along the stitched edge while the leather grain fills a crisp macro frame. Warm side light, tactile close composition, shallow depth of field. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-detail-picker-cards-1",
-          "label": "Pet Collar Buckle Demo",
-          "chips": [
-            "hardware",
-            "accessory",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact olive-green pet collar, buckle, width, weave, and color. A hand holds the complete buckle close to the lens with the release clearly visible. Soft daylight, tight macro composition, clean product-demo style. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-detail-picker-cards-2",
-          "label": "Gold Hoop Unboxing",
-          "chips": [
-            "material",
-            "hardware",
-            "accessory"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain gold hoop earrings and their shape and finish. Hands lift both hoops above an open kraft jewelry case with the pair centered. Warm window light, close overhead composition, refined natural styling. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-detail-picker-cards-3",
-          "label": "Headphones Box Reveal",
-          "chips": [
-            "hardware",
-            "accessory",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal over-ear headphones, cushion shape, and color. Adult hands lift the headphones from an open padded box with both ear cups visible. Soft studio daylight, close overhead composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-detail-picker-cards-4",
-          "label": "Knit Sneaker Cleaning",
-          "chips": [
-            "material",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit sneaker, sole, and color. Freeze the moment a cloth wipes one scuffed side panel, showing the cleaned knit beside the untouched area with the full shoe in frame. Bright soft daylight, low close composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-detail-picker-cards-5",
-          "label": "Pet Hair Roller Demo",
-          "chips": [
-            "material",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain reusable pet-hair roller and handle. An adult hand presses the roller against a sofa cushion, with a clean strip beside loose fur. Soft living-room daylight, tight side composition, clear before-and-after detail. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-detail-picker-cards-6",
-          "label": "Denim Jacket Seam",
-          "chips": [
-            "material"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact blue denim jacket, seam, stitching, and color. An adult creator holds the jacket beside their face and points to its reinforced seam. Soft window light, chest-up framing, natural fabric texture. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q7-detail-picker-cards-7",
-          "label": "Serum Pump Review",
-          "chips": [
-            "hardware",
-            "accessory",
-            "feature"
-          ],
-          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain serum bottle, pump, silhouette, and color. An adult creator holds the full bottle beside their face with the pump turned toward the lens. Bright bathroom daylight, chest-up framing, natural skin texture. No text, logos, or watermark.",
-          "kind": "photo"
-        }
-      ],
-      "button": "Make a detail photo"
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": ""
     },
-    "uses": [
-      {
-        "frame": "listing",
-        "ref": "n:guide:q7-detail-uses-0",
-        "h": "Show a wallet in a crossbody bag",
-        "d": "A close carry view shows how the slim wallet fits inside a crossbody pocket, with the stitched edge and leather grain still clear enough for a shopper to judge thickness. Keep enough of the crossbody pocket around the wallet to show scale, then let the stitched edge carry the quality message for a mobile shopper who zooms in."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q7-detail-uses-1",
-        "h": "Review a pet grooming brush",
-        "d": "An adult pet owner turns the bristle side of a grooming brush toward the camera and keeps the grip visible. Use this frame on a product page when brush head shape matters. Turn the brush once to show bristles and grip together, and place the close-up after the full brush image so the feature has context."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q7-detail-input-0-good",
-        "bad": "n:guide:q7-detail-input-0-bad-r2",
-        "good_label": "Wallet seam stays sharp",
-        "bad_label": "Brown leather wallet edge is cropped at the right"
-      },
-      {
-        "good": "n:guide:q7-detail-input-1-good",
-        "bad": "n:guide:q7-detail-input-1-bad-r2",
-        "good_label": "Pet collar buckle stays fully visible",
-        "bad_label": "Pet collar buckle is slightly clipped"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q7-detail-outputs-0",
-        "frame": "1:1",
-        "label": "Brown leather wallet stitching close-up"
-      },
-      {
-        "ref": "n:guide:q7-detail-outputs-1-r2",
-        "frame": "1:1",
-        "label": "Olive-green pet collar buckle in focus"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:tpl-detail-after-square",
-      "zones": [
-        "Gallery order",
-        "Product details"
-      ],
-      "items": [
-        "Place the close-up after the full product photo so the detail has a clear reference.",
-        "Check grain, stitch spacing, hardware color, and edge shape against the item before uploading.",
-        "Type material names, dimensions, and care notes as editable text, and use one detail per frame so shoppers know what to inspect."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Make close-up product detail photos"
-      },
-      "m3": {
-        "h2": "Choose a texture or hardware detail"
-      },
-      "m4": {
-        "h2": "Use detail photos on listings and product pages"
-      },
-      "m5": {
-        "h2": "Start with a sharp close-up source photo"
-      },
-      "m6": {
-        "h2": "Square product detail photo examples"
-      },
-      "m7": {
-        "h2": "Add material notes after download"
-      },
-      "faq": {
-        "h2": "Questions about close-up product photos"
-      }
-    }
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
   },
-  "benefits_h2": "Why make AI product detail photos?",
-  "benefits": [
-    {
-      "t": "Prove quality before the question",
-      "d": "A tight, readable frame of the seam, leather grain, clasp or coating shows craftsmanship directly, so shoppers stop relying on guesswork about what they are buying."
-    },
-    {
-      "t": "Fewer quality-based returns",
-      "d": "Buyers who have seen the real texture and finish up close receive what they expected, cutting disappointments that come from distant main images."
-    },
-    {
-      "t": "Fill the gallery customers zoom on",
-      "d": "Place square close-ups after the hero shot in your listing, giving the detail images shoppers open before adding to cart."
-    },
-    {
-      "t": "No macro lens or studio",
-      "d": "The close-up is generated from a photo you already have; downloads carry no watermark and can be used commercially."
-    }
-  ],
   "steps_h2": "How to make a product detail photo in 3 simple steps",
   "steps_lead": "Three steps turn one sharp photo into a gallery-ready close-up - no macro gear, no studio."
 }
