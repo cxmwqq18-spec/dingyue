@@ -17,6 +17,18 @@ export function isAidreamcapesV2Section(section: SectionInstance | undefined): b
 
 type Props = { data: V2Data; r: V2Resolvers };
 
+// The "why use it" block shows on every layout once the page data lists benefits.
+export function BenefitsSection({ data, r, fallbackTitle, eyebrow }: { data: V2Data; r: V2Resolvers; fallbackTitle: string; eyebrow?: string }) {
+  const items = list<V2Item>(data.benefits);
+  if (!items.length) return null;
+  return <Section eyebrow={eyebrow ?? "Why use it"} title={text(data.benefitsH2) || fallbackTitle}><Boxes items={items} r={r} /></Section>;
+}
+
+// The three-step heading falls back through the visual title to the same default as before.
+export function stepsTitle(data: V2Data, visual: V2Visual | undefined): string {
+  return text(data.stepsH2) || visual?.titles?.m2?.h2 || "Three steps";
+}
+
 // The home examples are a list of flows. Until a page's data has been refreshed it can still hold the
 // older layout (one smartwatch flow and one water bottle flow); show that the same way meanwhile.
 function homeExampleFlows(examples: unknown): V2Flow[] {
@@ -163,7 +175,8 @@ function HomePage({ data, r }: Props) {
           ))}
         </div>
       </Section> : null}
-      {visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} visual={visual} r={r} /> : <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>}
+      <BenefitsSection data={data} fallbackTitle="Skip the photoshoot, get ads that sell" r={r} />
+      {visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : <Section eyebrow="How it works" lead={text(data.stepsLead)} title={text(data.stepsH2) || "Three steps. No studio, no filming."}><Steps items={list<V2Item>(data.steps)} /></Section>}
       {visual ? <VisualPicker pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />}
       {visual ? <VisualSizes visual={visual} r={r} /> : <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />}
       {visual ? <VisualInput visual={visual} r={r} /> : <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />}
@@ -245,7 +258,8 @@ function VideoHubPage({ data, r }: Props) {
       <Maker note={text(data.startNote)} maker={maker ?? { options: [], cta: "Make my video", href: text(data.appHref) }} r={r} />
     </PageHero>
     <VisualStrip includeOverview visual={visual} r={r} />
-    <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} visual={visual} r={r} />
+    <BenefitsSection data={data} fallbackTitle={`Why stores make videos with ${BRAND_NAME}`} r={r} />
+    <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
     <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
     <VisualUses visual={visual} r={r} />
     <VisualInput visual={visual} r={r} />
@@ -266,9 +280,9 @@ function VideoHubPage({ data, r }: Props) {
       <EnrichmentOverview r={r} sections={data.overview as never} />
       <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
       <EnrichmentBlockSection block={data.toolChooser as never} eyebrow="Choose a tool" r={r} />
-      <Section eyebrow="Why use it" title={`Why stores make videos with ${BRAND_NAME}`}><Boxes items={list<V2Item>(data.benefits)} r={r} /></Section>
+      <BenefitsSection data={data} fallbackTitle={`Why stores make videos with ${BRAND_NAME}`} r={r} />
       <EnrichmentBlockSection block={data.compare as never} eyebrow="Compare your options" r={r} />
-      <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
+      <Section eyebrow="How it works" lead={text(data.stepsLead)} title={stepsTitle(data, undefined)}><Steps items={list<V2Item>(data.steps)} /></Section>
       <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
       <EnrichmentBlockSection block={data.scenePromptExamples as never} eyebrow="Scene examples" r={r} />
       <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
@@ -304,7 +318,8 @@ function ToolPage({ data, r }: Props) {
       </PageHero>
       {visual && photoHub ? <>
         <VisualStrip includeOverview visual={visual} r={r} />
-        <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />
+        <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
+        <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
         <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
         <VisualUses visual={visual} r={r} />
         <VisualInput visual={visual} r={r} />
@@ -315,7 +330,8 @@ function ToolPage({ data, r }: Props) {
         {gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
         {pairs.length ? <Section eyebrow="Before and after" title={visual.titles?.beforeAfter?.h2 ?? "Your photo, then the result"}><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
         <VisualOverview visual={visual} r={r} />
-        <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />
+        <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
+        <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
         <VisualPicker pageId={data.id} visual={visual} r={r} />
         <VisualSizes visual={visual} r={r} />
         <VisualInput visual={visual} r={r} />
@@ -334,9 +350,9 @@ function ToolPage({ data, r }: Props) {
       {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
       <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} r={r} /></Section>
       <EnrichmentOverview r={r} sections={data.overview as never} />
-      <Section eyebrow="Why use it" title={`Why stores use ${data.label}`}><Boxes items={list<V2Item>(data.benefits)} r={r} /></Section>
+      <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
       <EnrichmentBlockSection block={data.compare as never} eyebrow="Compare your options" r={r} />
-      <Section eyebrow="How it works" title="Three steps">
+      <Section eyebrow="How it works" lead={text(data.stepsLead)} title={stepsTitle(data, undefined)}>
         <Steps items={list<V2Item>(data.steps)} />
         <div style={{ marginTop: 20 }}><Specs r={r} rows={list<V2SpecRow>(data.specs)} /></div>
       </Section>
@@ -376,7 +392,8 @@ function TemplatePage({ data, r }: Props) {
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
       <VisualStrip includeOverview visual={visual} r={r} />
-      <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />
+      <BenefitsSection data={data} fallbackTitle="Why sellers start from this template" r={r} />
+      <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
       <VisualPicker pageId={data.id} visual={visual} r={r} />
       <VisualUses visual={visual} r={r} />
       <VisualInput visual={visual} r={r} />
@@ -410,7 +427,8 @@ function TemplatePage({ data, r }: Props) {
       <FitSection block={data.fit as never} r={r} />
       <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
       <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
-      <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
+      <BenefitsSection data={data} fallbackTitle="Why sellers start from this template" r={r} />
+      <Section eyebrow="How it works" lead={text(data.stepsLead)} title={stepsTitle(data, undefined)}><Steps items={list<V2Item>(data.steps)} /></Section>
       {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="Ways to use it"><Boxes className="ideas" items={list<V2Item>(data.ideas)} r={r} /></Section> : null}
       <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
@@ -460,7 +478,8 @@ function CollectionPage({ data, r }: Props) {
       </PageHero>
       <VisualStrip includeOverview visual={visual} r={r} />
       {kind === "occasion" && list<V2Item>(data.plan).length && visual.titles?.plan?.h2 ? <Section eyebrow="Plan your campaign" title={visual.titles.plan.h2}><Steps items={list<V2Item>(data.plan)} /></Section> : null}
-      <VisualSteps buttonLabel={visualMaker?.cta ?? "Get started"} visual={visual} r={r} />
+      <BenefitsSection data={data} fallbackTitle={`Why ${data.label} sellers use ${BRAND_NAME}`} r={r} />
+      <VisualSteps buttonLabel={visualMaker?.cta ?? "Get started"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
       <VisualPicker pageId={data.id} visual={visual} r={r} />
       <VisualUses visual={visual} r={r} />
       <VisualSizes visual={visual} r={r} />
@@ -496,6 +515,8 @@ function CollectionPage({ data, r }: Props) {
           {list<string>(data.tips).length ? <ul className="prose check" style={{ marginTop: 18 }}>{list<string>(data.tips).map((tip) => <li key={tip}>{tip}</li>)}</ul> : null}
         </Section>
       ) : null}
+      <BenefitsSection data={data} fallbackTitle={`Why ${data.label} sellers use ${BRAND_NAME}`} r={r} />
+      {list<V2Item>(data.steps).length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={stepsTitle(data, undefined)}><Steps items={list<V2Item>(data.steps)} /></Section> : null}
       {list<V2Item>(data.plan).length ? <Section eyebrow="Plan ahead" title="How to prepare"><Steps items={list<V2Item>(data.plan)} /></Section> : null}
       <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
       <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
@@ -538,7 +559,8 @@ function IndexPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
       {visual ? <>
         <VisualStrip includeOverview visual={visual} r={r} />
-        <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} visual={visual} r={r} />
+        <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
+        <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
         {cards.length ? <VisualDirectoryFilter eyebrow="Browse templates" pageId={data.id} visual={visual}>
           <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
         </VisualDirectoryFilter> : null}
@@ -563,6 +585,8 @@ function IndexPage({ data, r }: Props) {
         {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
       </> : <>
       <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
+      <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
+      {list<V2Item>(data.steps).length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={stepsTitle(data, undefined)}><Steps items={list<V2Item>(data.steps)} /></Section> : null}
       {cards.length && filters ? (
         <section style={{ paddingBottom: 88 }}>
           <div className="wrap">
@@ -701,7 +725,8 @@ function ActorDirectoryPage({ data, r }: Props) {
     </section>
     <AidreamcapesV2ActorFilters />
     <section className="actor-support-copy"><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
-    {howTo.length ? <Section eyebrow="How it works" title="Make a spoken product ad"><Steps items={howTo} /></Section> : null}
+    <BenefitsSection data={data} fallbackTitle="Why sellers cast an AI actor" r={r} />
+    {howTo.length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={text(data.stepsH2) || "Make a spoken product ad"}><Steps items={howTo} /></Section> : null}
     {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
     {relatedGroups.length ? <Section eyebrow="Related tools and guides" title="Plan the placement for your actor ad">
       <div className="related">

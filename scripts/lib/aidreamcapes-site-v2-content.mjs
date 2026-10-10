@@ -1490,6 +1490,12 @@ function autoLinks(model, paras, page) {
 }
 
 // The same contextual links across a page's opening paragraphs and the descriptions in its idea or benefit cards.
+// Benefits lists share the same item shape as steps; pass their descriptions through
+// the same automatic linker so internal links resolve the same way on every layout.
+function benefitsList(model, page, items) {
+  return autoLinkPage(model, page, [], [items]).groups[0];
+}
+
 function autoLinkPage(model, page, intro, groups) {
   const paras = Array.isArray(intro) ? intro : [];
   const lists = groups.map((items) => (Array.isArray(items) ? items : []));
@@ -1604,6 +1610,9 @@ function payloadFor(model, page) {
     startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
     ...(typeof c.cta_lead === "string" ? { ctaLead: c.cta_lead } : {}),
     ...(typeof c.templates_lead === "string" ? { templatesLead: c.templates_lead } : {}),
+    ...(typeof c.benefits_h2 === "string" && c.benefits_h2.trim() ? { benefitsH2: c.benefits_h2 } : {}),
+    ...(typeof c.steps_h2 === "string" && c.steps_h2.trim() ? { stepsH2: c.steps_h2 } : {}),
+    ...(typeof c.steps_lead === "string" && c.steps_lead.trim() ? { stepsLead: c.steps_lead } : {}),
     ...(typeof c.maker?.upload_title === "string" ? { maker: { uploadTitle: c.maker.upload_title } } : {}),
     ...(examples ? { examples } : {}),
     ...enrichmentFor(model, page, c)
@@ -1643,6 +1652,7 @@ function payloadFor(model, page) {
       templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
+      ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
       relatedGroups: [
         { title: "Photo and listing prep", links: pageLinksFor(model, ["platforms", "guide-product-photo-tips", "guide-white-background-amazon", "blog-ai-product-photography-guide"]) },
         { title: "Ad sizes and testing", links: pageLinksFor(model, ["guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-ugc-video-ads-guide"]) }
@@ -1734,6 +1744,7 @@ function payloadFor(model, page) {
     const relatedLinks = relatedLinksFor(model, page);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
+      ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
       maker,
       ...(visual ? { visual } : {}),
       specs: [
@@ -1782,6 +1793,8 @@ function payloadFor(model, page) {
       appHref: collectionHref,
       ...(relatedLinks ? { relatedLinks } : {}),
       ...(visual ? { visual, maker: visualMaker } : {}),
+      ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
+      ...(typeof c.steps_h2 === "string" && c.steps_h2.trim() ? { steps: benefitsList(model, page, c.steps ?? []) } : {}),
       reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "index") {
@@ -1806,7 +1819,9 @@ function payloadFor(model, page) {
       ...(INDEX_CTA[page.id] ? { cta: { ...INDEX_CTA[page.id], href: "/app/create" } } : {}),
       ...(relatedLinks ? { relatedLinks } : {}),
       ...(directorySpecs ? { directorySpecs } : {}),
-      ...(directoryScenes.length ? { directoryScenes } : {}) };
+      ...(directoryScenes.length ? { directoryScenes } : {}),
+      ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
+      ...(typeof c.steps_h2 === "string" && c.steps_h2.trim() ? { steps: benefitsList(model, page, c.steps ?? []) } : {}) };
     const visual = visualFor(model, page, c.visual, { photoOptions: HOME_PHOTO_OPTIONS }, "photo", "/app/create", c);
     if (visual) out.visual = visual;
     if (page.id === "ai-actors") {
@@ -1931,7 +1946,7 @@ function jsonLdFor(model, page, c, payload, ogImage) {
       duration: `PT${videoNode.duration}S`, contentUrl: absolute(videoNode.src), width: videoNode.width, height: videoNode.height, inLanguage: "en" });
   }
   if (["tool", "hub-tool", "template", "hub"].includes(page.type) && payload.steps?.length >= 2) {
-    graph.push({ "@type": "HowTo", "@id": `${canonical(page)}#howto`, name: `How it works: ${page.label}`,
+    graph.push({ "@type": "HowTo", "@id": `${canonical(page)}#howto`, name: payload.stepsH2 || `How it works: ${page.label}`,
       step: payload.steps.map((step, index) => ({ "@type": "HowToStep", position: index + 1, name: step.t, text: step.d })) });
   }
   if (page.type === "tool" || page.type === "hub-tool") {

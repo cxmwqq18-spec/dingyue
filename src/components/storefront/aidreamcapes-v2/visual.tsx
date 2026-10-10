@@ -63,11 +63,13 @@ export function VisualOverview({ visual, r }: { visual: V2Visual; r: V2Resolvers
   return visual.overview ? <div className="v-overview"><p><RichText r={r} text={visual.overview} /></p></div> : null;
 }
 
-export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visual: V2Visual; r: V2Resolvers; buttonLabel?: string }) {
+export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 = "", stepsLead = "" }: {
+  visual: V2Visual; r: V2Resolvers; buttonLabel?: string; stepsH2?: string; stepsLead?: string
+}) {
   const step = visual.steps;
   if (!step) return null;
   return (
-    <Section eyebrow="How it works" title={visual.titles?.m2?.h2 ?? "Three steps"}>
+    <Section eyebrow="How it works" lead={stepsLead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
       <div className="v-steps">
         <article className="v-step-card">
           <div className="v-step-art v-step-source">
