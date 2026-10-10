@@ -1,10 +1,29 @@
 {
   "id": "tpl-story",
   "title": "Instagram Story Ad Images with Square Photos | AIVideosUGC",
-  "description": "Square product images for Instagram Story layouts, with room for your offer in Canva or Ads Manager. Use a 9:16 video for full-screen motion.",
+  "description": "Build Instagram and Facebook Story ads from a square product photo placed on a 9:16 canvas. Leave room for headline, price, stickers and the action button.",
   "h1": "Instagram Story Ad Images Built Around a Square Product Photo",
   "eyebrow": "Ad photo template",
-  "lead": "Instagram Story ad images from this template are square product photos for a 9:16 Story canvas. Add the image to the layout in your design tool, then place your headline, price, and offer around it.",
+  "lead": "Story ads disappear fast if they look like a cropped feed photo, and designing a fresh full-screen layout for each offer takes real time. Upload one product photo and get a square image built to sit inside a 9:16 Story canvas with clear room for your headline, price and action button.",
+  "benefits_h2": "Why make Story ad images with AI?",
+  "benefits": [
+    {
+      "t": "A layout that fits the full phone screen",
+      "d": "The square product sits centered on a 9:16 canvas with calm space kept above and below. Your headline and offer land in open zones instead of covering the item."
+    },
+    {
+      "t": "Designed around stickers and controls",
+      "d": "The product is kept away from the top header and lower action area, so stickers, dates and the call-to-action button remain visible without hiding what you sell."
+    },
+    {
+      "t": "One image for both Story platforms",
+      "d": "Place the same square download inside Instagram and Facebook Story layouts, then change the surrounding text per campaign. The image also works in feed posts, carousels and listing galleries."
+    },
+    {
+      "t": "Exact offers added after download",
+      "d": "Type prices, dates, codes and claims in Canva or Ads Manager so words stay accurate. Downloads have no AIVideosUGC watermark and can be used in your own ads."
+    }
+  ],
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
@@ -16,18 +35,20 @@
     "A square photo can also be used in feed posts, carousels, and listing galleries, or placed in a Story layout. For full-screen movement, use the [Video Ads tool](/ai-video-generation/ugc-ad-video) and choose a 9:16 video frame."
   ],
   "tip": "Keep the product clear in the square image, then reserve the top and bottom of the Story canvas for your account name, headline, price, and ad button.",
+  "steps_h2": "How to make a Story ad image in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a Story-ready layout — no designer, no shoot, no text baked into the image.",
   "steps": [
     {
-      "t": "Upload one square product photo",
-      "d": "Show one complete product with breathing room, keeping its cap, base, and important label area visible inside the square crop."
+      "t": "Upload Your Product Photo",
+      "d": "Show one complete product with breathing room, keeping its cap, base and label area visible inside the square crop."
     },
     {
-      "t": "Describe a simple setting",
-      "d": "Name a simple surface, light direction, and one prop while reserving calm space above or below for your headline and offer."
+      "t": "Describe the Setting",
+      "d": "Name a surface, light direction and one prop, with calm space kept above or below for your headline and offer."
     },
     {
-      "t": "Download and add Story text",
-      "d": "Place the square download on a 9:16 canvas, add exact headline, price, date, code, and button, then preview account controls before publishing."
+      "t": "Download and Build Layout",
+      "d": "Place the square download on a 9:16 canvas, add your exact price, date and button, then preview the controls. No AIVideosUGC watermark is added."
     }
   ],
   "ideas": [
@@ -105,6 +126,14 @@
     {
       "q": "Can I reuse the square image in a feed or carousel?",
       "a": "Yes. The same square download can run in a feed post, carousel, or listing gallery. Change the surrounding text in your editor while keeping the product and offer details accurate."
+    },
+    {
+      "q": "Can I run the finished layout as a paid Story ad?",
+      "a": "Yes. Images you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You remain responsible for the offer, claims and disclosures in the ad."
+    },
+    {
+      "q": "Should I use this instead of a 9:16 video?",
+      "a": "Use the square-in-Story image when a simple offer and product view are enough. Choose a full-screen 9:16 video when motion is needed to show the product in use."
     }
   ],
   "overview": [
