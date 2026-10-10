@@ -1,10 +1,29 @@
 {
   "id": "tpl-beauty",
   "title": "Beauty Product Video Ads for Skincare | AIVideosUGC",
-  "description": "Make beauty product video ads that show your serum, cream, or oil in a calm daily routine. Upload a photo and get a 9:16 clip for TikTok or Reels. Start now.",
+  "description": "Show your serum, cream or oil in a calm daily routine with a beauty video ad. One product photo becomes a 9:16 clip for TikTok, Reels and listings.",
   "h1": "Beauty Product Video Ads Built Around a Daily Routine",
   "eyebrow": "Beauty video template",
-  "lead": "Beauty product video ads work best when they show your serum, cream, or oil as part of a quiet self-care moment. Share a product shot, sketch the bathroom scene in a few words, and receive a 9:16 clip for TikTok and Reels.",
+  "lead": "Skincare shoppers buy a product they can picture using, and a white-background bottle alone does not show that moment. Upload one product photo and get a beauty video ad that places your serum, cream or oil in a quiet daily routine ready for TikTok, Reels and your listing.",
+  "benefits_h2": "Why make beauty product video ads with AI?",
+  "benefits": [
+    {
+      "t": "Show the routine, not just the bottle",
+      "d": "A 9:16 clip places the product in a believable morning or evening moment, so shoppers see when and how they would use it. The packaging stays the focus from the first frame."
+    },
+    {
+      "t": "Texture that still photos cannot show",
+      "d": "Show a dropper lift, two drops on a fingertip, a pump press or a swatch on the back of a hand. Buyers see cream, gel or oil consistency without booking a close-up shoot."
+    },
+    {
+      "t": "One product, several skincare angles",
+      "d": "Run an evening-routine version, a hands-only texture shot or a sidewalk creator review from the same source photo. Test which angle gets attention without reshooting."
+    },
+    {
+      "t": "Claims stay in your control",
+      "d": "Add shade names, ingredient lines and usage instructions as editable text after download, and keep any result claim to approved wording. Clips carry no AIVideosUGC watermark and are yours for commercial use."
+    }
+  ],
   "secondary_keywords": [
     "skincare video ads",
     "serum video ad",
@@ -17,18 +36,20 @@
     "Routine clips feel at home on TikTok and Instagram because they look like something a friend might post. They let shoppers see the packaging, the dropper or pump, and where the product sits in someone's morning or evening. Close shots of two drops on a fingertip, or a swatch on the back of a hand, show texture in a way still photos can't."
   ],
   "tip": "Use a photo where the bottle shape, cap, and color are easy to see, and describe the action, such as \"lifts the dropper and adds two drops to her fingertips.\"",
+  "steps_h2": "How to make a beauty product video ad in 3 simple steps",
+  "steps_lead": "Three steps turn one skincare photo into a routine-led ad clip — no studio, no model booking, no reshoot.",
   "steps": [
     {
-      "t": "Upload one product photo",
-      "d": "Show the full bottle or jar with its cap, pump, and package color easy to see."
+      "t": "Upload Your Product Photo",
+      "d": "Show the full bottle or jar with cap, pump and color easy to see. A clear, low-glare source keeps the product accurate in the clip."
     },
     {
-      "t": "Describe one routine moment",
-      "d": "Name the counter, light, and a single action such as lifting a dropper or pressing a pump."
+      "t": "Describe Your Routine",
+      "d": "Name the counter, light and one action, such as lifting a dropper or pressing a pump. The routine is generated without a shoot or model."
     },
     {
-      "t": "Add product wording after download",
-      "d": "Download the clip, then type the shade name or usage line as editable text."
+      "t": "Download and Add Details",
+      "d": "Add the shade name or usage line as editable text, then post the 9:16 clip to TikTok and Reels. The download has no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -110,6 +131,14 @@
     {
       "q": "Can the scene show an ingredient or shade?",
       "a": "Add the exact ingredient or shade text after download from approved product information; do not ask the generated scene to invent a claim."
+    },
+    {
+      "q": "Can I run the routine clip as a paid beauty ad?",
+      "a": "Yes. Clips you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark. You remain responsible for product claims and the disclosures each ad platform requires."
+    },
+    {
+      "q": "Is it safe to show skincare results in the video?",
+      "a": "Show the application moment and texture, not a promised before-and-after result. Keep any verified benefit to approved wording added as text so the ad does not claim an outcome you cannot support."
     }
   ],
   "overview": [
