@@ -12,49 +12,18 @@
     "holiday sale video ad",
     "Facebook Black Friday ads"
   ],
-  "intro": [
-    "A Black Friday ad can open with a creator showing the product, a try-on, a gift reveal or a clear product demo. Add the confirmed price and end date after download.",
-    "Prepare a short creator clip for a skincare set, jacket, fitness item or snack. Keep the product clear and leave prices, codes and dates editable so the offer can be checked before publishing."
-  ],
-  "tip": "Leave open space beside the product when you plan to add an offer. Keep the final price, code and end date as editable text.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the full sale item clearly so its shape and details carry into the clip. That product anchors the scene."
+      "d": "Start with one clear photo of the product featured in the Black Friday offer."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Pick a review, try-on, unboxing or demo, choose 9:16 or 1:1, and leave open space for the offer. Cost shows first."
+      "t": "Share Your Offer Scene",
+      "d": "Share the review, try-on, unboxing or demo moment in one sentence."
     },
     {
       "t": "Download and Add the Deal",
-      "d": "Download the clip, then add discount, code and end date as an editable overlay. No last-minute reshoot needed."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Cyber Monday follow-up",
-      "d": "Make a second product clip and update the offer after its terms are confirmed."
-    },
-    {
-      "t": "Early-access teaser",
-      "d": "Share a short creator review with your email list before the sale begins."
-    },
-    {
-      "t": "Gift picks",
-      "d": "Show a skincare gift set or jewelry reveal, then link to the current offer page."
-    },
-    {
-      "t": "Offer layer check",
-      "d": "Leave clean space beside the product, then add the confirmed discount, code, and end date only after the terms are approved."
-    },
-    {
-      "t": "Gift reveal",
-      "d": "Use hands lifting a generic gift item from a box when the sale hook is the unboxing beat rather than a spoken claim."
-    },
-    {
-      "t": "Try-on fit check",
-      "d": "Show the fit and texture of a wearable item first, then add the exact offer wording in the editor."
+      "d": "Add the confirmed discount, code and end date in your editor."
     }
   ],
   "maker": {
@@ -128,113 +97,6 @@
       "a": "Yes. Videos you make can be used in your own paid campaigns on Facebook, Instagram and other channels, and downloads have no watermark. Remove or pause the ads when the event ends."
     }
   ],
-  "overview": [
-    {
-      "h2": "Make the product the fixed point of the sale",
-      "d": "A Black Friday scene can be vivid without carrying every promotion detail. Choose one product, one visual hook, and one area for your offer; then reuse the visual while the confirmed price, date, or code is finalized."
-    },
-    {
-      "h2": "Separate urgency from unsupported promises",
-      "d": "Use your real stock note, end date, and offer language in the final edit. The generated clip supplies a moving backdrop for the sale rather than inventing inventory, countdowns, or savings."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a sale product with overlay room",
-    "items": [
-      {
-        "t": "Show the whole item",
-        "d": "A complete product silhouette gives the sale scene a reliable hero even when the background becomes dramatic."
-      },
-      {
-        "t": "Leave one side open",
-        "d": "Choose an angle with sky, wall, floor, or desk space where a discount badge will remain readable."
-      },
-      {
-        "t": "Keep the offer out of the photo",
-        "d": "Use a clean image without temporary price stickers so the final promotion can be changed safely."
-      },
-      {
-        "t": "Name the sale mood",
-        "d": "Say neon street, warm gift table, or focused studio light and keep the product action simple."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the sale clip can do",
-    "items": [
-      {
-        "t": "Create a visual hook",
-        "d": "A creator review, gift reveal, try-on or product demo gives the sale clip a clear opening hook."
-      },
-      {
-        "t": "Fit common placements",
-        "d": "Use 9:16 for Stories and Reels, 1:1 for a feed or listing, or 16:9 for a wide placement."
-      },
-      {
-        "t": "Show the spend upfront",
-        "d": "Add the confirmed price, code, end date and stock wording after generation so the terms stay editable."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Black Friday scenes to describe",
-    "items": [
-      {
-        "t": "Serum review",
-        "d": "An adult creator holds a skincare bottle toward the camera in a warm vanity scene."
-      },
-      {
-        "t": "Jacket try-on",
-        "d": "A creator shows the jacket cuff and fit in a mirror before the offer appears."
-      },
-      {
-        "t": "Protein bar reaction",
-        "d": "An athlete takes a bite and shows the bar and package to camera."
-      },
-      {
-        "t": "Pet-cleaning demo",
-        "d": "A reusable lint tool clears pet hair from one strip of a sofa cushion."
-      },
-      {
-        "t": "Beanie try-on",
-        "d": "A mature creator adjusts a plain rust knit beanie in a mirror, leaving one side of the frame open for the final offer."
-      },
-      {
-        "t": "Headphone hinge demo",
-        "d": "Hands fold a plain over-ear headphone hinge on a warm desk, with the offer layer added after the product action is approved."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Apply the promotion when it is final",
-    "items": [
-      {
-        "t": "Add the offer",
-        "d": "Type the confirmed percentage, price, code, or bundle terms in your editor."
-      },
-      {
-        "t": "Set the dates",
-        "d": "Place the real start and end dates, timezone, and stock wording on a layer you can update."
-      },
-      {
-        "t": "Choose sale sound",
-        "d": "Add licensed music or a countdown effect only after the visual timing is approved."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Best fits for a sale clip",
-    "good": [
-      "Electronics, bikes, appliances, and gift items",
-      "Black Friday and Cyber Monday feeds",
-      "Scenes with open space for offer text",
-      "Reusable teasers while offers change"
-    ],
-    "not_ideal": [
-      "A promotion whose terms are not yet confirmed",
-      "Claims of scarcity or savings the seller cannot substantiate"
-    ]
-  },
   "examples": {
     "h2": "More Black Friday ad examples",
     "lead": "Creator hooks and product demonstrations for seasonal offers.",
@@ -259,7 +121,7 @@
     ]
   },
   "visual": {
-    "overview": "A Black Friday ad opens with a product action or a creator showing the item. Add the confirmed offer, code, and end date after download so every detail stays accurate.",
+    "overview": "Show the Black Friday product clearly, then add the confirmed offer in an editable layer after download.",
     "strip": [
       "n:guide:q12-tpl-bf-demo-source-r3",
       "n:guide:q12-tpl-bf-after-offer-r1",
@@ -273,7 +135,7 @@
       "result": "n:guide:q12-tpl-bf-demo-output-02-r3",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the exact product: a pale frosted cylindrical serum dropper bottle with a white cap and blank label. Preserve its shape, pale color, cap and label area. An adult creator holds the bottle beside her face and says, \"This serum is featured in this week’s offer.\" She turns it once and finishes with the full bottle facing the lens. Warm vanity light, natural skin texture. Chest-up front-facing handheld framing. Sound: her voice and a cap click; no music.",
+      "prompt": "Share the Black Friday offer moment in one sentence.",
       "options": [
         [
           "Size",
@@ -292,209 +154,23 @@
     "picker": {
       "title": "Choose a Black Friday ad format",
       "lead": "Choose a creator hook, product demo, gift unboxing or try-on. Add the confirmed offer after download.",
-      "chips": [
-        {
-          "id": "creator-review",
-          "label": "Creator Reviews"
-        },
-        {
-          "id": "gift-reveal",
-          "label": "Gift Reveals"
-        },
-        {
-          "id": "product-demo",
-          "label": "Product Demos"
-        },
-        {
-          "id": "product-tryout",
-          "label": "Product Tryouts"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f16-r10-bf-serum-review-r1",
-          "label": "Serum Offer Creator Review",
-          "chips": [
-            "creator-review"
-          ],
-          "prompt": "Photorealistic square Black Friday UGC ad still: an adult creator with short dark hair holds a plain pale frosted serum bottle toward the camera in a warm bathroom vanity. Keep the full bottle and blank label sharp, chest-up framing, with open wall space for an offer overlay added later. No text, prices, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-bf-card-02-jacket-try-on-review",
-          "label": "Talking-Head Offer: creator shows jacket",
-          "chips": [
-            "creator-review",
-            "product-tryout"
-          ],
-          "prompt": "Photorealistic square fashion ad still: an adult creator wears a plain navy jacket and raises one cuff toward the camera, with the fit and fabric visible in a mirror. Warm indoor daylight, chest-up composition. Freeze a try-on review moment. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-bf-card-03-earring-gift-unboxing",
-          "label": "Jewelry Haul: earrings from gift box",
-          "chips": [
-            "gift-reveal"
-          ],
-          "prompt": "Photorealistic square gift ad still: hands lift plain gold hoop earrings from a small open gift box lined with tissue. Warm window light, close overhead composition with the pair centered. Freeze the reveal moment. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-bf-card-04-sneaker-try-on",
-          "label": "Try-On Offer: sneakers for weekend",
-          "chips": [
-            "product-tryout"
-          ],
-          "prompt": "Photorealistic square sportswear ad still: an adult runner wears plain charcoal running sneakers with muted orange trim on a city sidewalk, both shoes fully visible. Natural morning light, low close framing. Freeze a planted step. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-bf-card-05-headphone-demo",
-          "label": "Product Demo: over-ear headphones fold",
-          "chips": [
-            "product-demo",
-            "creator-review"
-          ],
-          "prompt": "Photorealistic square tech-demo ad still: an adult creator folds one ear cup of plain over-ear headphones inward, with the full headband and hinge visible. Soft desk light, close natural framing. Freeze the fold demonstration. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-bf-card-06-resistance-band-unboxing",
-          "label": "Gift Unboxing: resistance bands from box",
-          "chips": [
-            "gift-reveal"
-          ],
-          "prompt": "Photorealistic square fitness gift ad still: hands lift muted resistance bands from a plain open gift box, with the full set centered above tissue paper. Warm window light, close overhead composition. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f16-r10-bf-card-07-beanie-tryon-r1",
-          "label": "Knit beanie try-on fit check",
-          "chips": [
-            "product-tryout"
-          ],
-          "prompt": "Photorealistic square seasonal UGC ad still: a mature creator with short silver hair adjusts a plain rust knit beanie in an entryway mirror. Keep the knit texture and fit visible, with open wall space for an offer overlay added later. No text, prices, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f16-r10b-bf-card-07-desk-lamp-demo-r1",
-          "label": "Desk Lamp Gift Reveal",
-          "chips": [
-            "gift-reveal",
-            "product-demo"
-          ],
-          "prompt": "Photorealistic square Black Friday ad still: adult hands lift a plain cordless desk lamp from an open kraft gift box on a warm seasonal tabletop, then touch its single switch as the lamp glows. The matte cream cylindrical shade and wooden base stay fully visible, with space for an offer overlay added later. No text, prices, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f16-tpl-bf-picker-gift-demo-r1",
-          "label": "Gift Reveal: Coffee Grinder Demo",
-          "chips": [
-            "gift-reveal",
-            "product-demo"
-          ],
-          "kind": "photo",
-          "prompt": "Photorealistic square Black Friday gift ad still: hands lift a plain compact coffee grinder from an open kraft gift box, with the clear lid and single dial visible. Warm seasonal window light, dark tabletop, close three-quarter composition with space for an offer overlay added later. Freeze the reveal and first product demonstration moment. No text, prices, logos, or watermark."
-        }
-      ],
+      "chips": [],
+      "cards": [],
       "button": "Make a Black Friday video"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:q12-tpl-bf-strip-jacket-tryon-r2",
-        "h": "Preview a jacket offer before sale day",
-        "d": "Show the jacket fit clearly, then add the confirmed offer and dates in your editor."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q12-tpl-bf-use-social-r1",
-        "h": "Share a serum offer in a social video",
-        "d": "Keep the serum bottle in view and add the confirmed offer details before posting."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q12-tpl-bf-input-good-r1",
-        "bad": "n:guide:q12-tpl-bf-demo-blur-r3",
-        "good_label": "Bottle shape and cap stay clear",
-        "bad_label": "Soft focus hides the bottle details"
-      },
-      {
-        "good": "n:guide:q12-tpl-bf-input-good-02-r1",
-        "bad": "n:guide:q12-tpl-bf-demo-crop-r3",
-        "good_label": "The full bottle fits in frame",
-        "bad_label": "The crop cuts off the bottle ends"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:f16-r10b-bf-output-01-review-older-man-r1",
-        "frame": "9:16",
-        "length": 15,
-        "label": "15-second serum offer review with an older creator"
-      },
-      {
-        "ref": "n:guide:f16-r10b-bf-output-03-hands-bottle-r1",
-        "frame": "1:1",
-        "length": 15,
-        "label": "15-second serum offer hands-only close-up"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:f16-r10-bf-after-offer-r1",
-      "zones": [
-        "Discount",
-        "End date"
-      ],
-      "items": [
-        "Type the offer, code, and end date as editable text in your video editor.",
-        "Keep offer wording consistent across the clip and the store page."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make Black Friday video ads from one product photo"
-      },
-      "m3": {
-        "h2": "Choose a product for your Black Friday offer"
-      },
-      "m4": {
-        "h2": "Use one Black Friday video from teaser to sale"
-      },
-      "m5": {
-        "h2": "Start with a clear sale product photo"
-      },
-      "m6": {
-        "h2": "Black Friday sale video output examples"
-      },
-      "m7": {
-        "h2": "Add the discount and end date after download"
       },
       "faq": {
         "h2": "Questions about Black Friday video ads"
       }
     }
   },
-  "benefits_h2": "Why make AI Black Friday video ads?",
-  "benefits": [
-    {
-      "t": "Ready before the offer is final",
-      "d": "The video is shot from a product photo with clean space left for the deal, so you make the creative early and add the confirmed discount, code and end date later."
-    },
-    {
-      "t": "No shoot in your busiest week",
-      "d": "Creator reviews, try-ons, unboxings and hands-on demos are generated from one photo, so no filming, models or studio compete with your sale-week workload."
-    },
-    {
-      "t": "Sized for every deal placement",
-      "d": "Choose vertical 9:16 for phone-first feeds or square 1:1 for in-feed ads and store pages, instead of forcing one shape across Facebook and Instagram."
-    },
-    {
-      "t": "Commercial use, no watermark",
-      "d": "Downloaded clips carry no AIVideosUGC watermark and can be run as paid ads while the event is live."
-    }
-  ],
-  "steps_h2": "How to make a Black Friday video ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a deal-ready clip - film it now, add the offer later."
+  "steps_h2": "Create a Black Friday video ad in three steps",
+  "steps_lead": "Turn one product photo into a Black Friday video ad, then add the confirmed offer."
 }
