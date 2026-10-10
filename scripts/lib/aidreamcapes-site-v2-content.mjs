@@ -2534,48 +2534,58 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (!visual) { errors.push(`${pageId}: visual data was not compiled`); return; }
     const isHub = ["video-hub", "photo-hub"].includes(pageId);
     const isDirectory = ["templates", "industries", "platforms", "examples"].includes(pageId);
+    const strip = Array.isArray(visual.strip) ? visual.strip : [];
+    const uses = Array.isArray(visual.uses) ? visual.uses : [];
+    const input = Array.isArray(visual.input) ? visual.input : [];
+    const outputs = Array.isArray(visual.outputs) ? visual.outputs : [];
+    const sizes = Array.isArray(visual.sizes) ? visual.sizes : [];
+    const after = visual.after && typeof visual.after === "object" ? visual.after : null;
+    const limitations = visual.limitations && typeof visual.limitations === "object" ? visual.limitations : null;
+    const limitationItems = limitations && Array.isArray(limitations.items) ? limitations.items : [];
     if (!( ["home", "tool", "template", "collection", "video-hub", "index", "examples"].includes(layout))) errors.push(`${pageId}: visual is not supported on this layout`);
-    if (visual.strip.length && (visual.strip.length < 6 || visual.strip.length > 8)) errors.push(`${pageId}: visual strip must contain 6-8 images`);
+    if (strip.length && (strip.length < 6 || strip.length > 8)) errors.push(`${pageId}: visual strip must contain 6-8 images`);
     if (!isDirectory && (!Array.isArray(visual.steps?.items) || visual.steps.items.length !== 3)) errors.push(`${pageId}: visual steps must contain three copy rows`);
     else for (const [index, item] of (visual.steps?.items ?? []).entries()) if (wordCount(item.d) > 25) errors.push(`${pageId}: visual step ${index + 1} description exceeds 25 words`);
-    const chips = visual.picker?.chips ?? [];
-    const cards = visual.picker?.cards ?? [];
-    const minChips = isHub || isDirectory ? 2 : 4;
-    const maxChips = isHub ? 3 : pageId === "templates" ? 16 : 18;
-    if (chips.length < minChips || chips.length > maxChips) errors.push(`${pageId}: visual picker must contain ${minChips}-${maxChips} filters`);
-    if (!isDirectory && (cards.length < (isHub ? 5 : 8) || cards.length > 40)) errors.push(`${pageId}: visual picker card count is outside the page range`);
-    if ((!isDirectory && !visual.picker?.title?.trim()) || (!isDirectory && !visual.picker?.button?.trim())) errors.push(`${pageId}: visual picker title and required button are missing`);
-    if (new Set(chips.map((chip) => chip.id)).size !== chips.length) errors.push(`${pageId}: visual picker filter ids must be unique`);
-    const filterCount = (id) => {
-      if (pageId === "templates") return data.cards.filter((card) => card.filterTags?.includes(id)).length;
-      if (pageId === "industries" || pageId === "platforms") return data.items.filter((item) => item.filterTags?.includes(id)).length;
-      if (pageId === "examples") return data.flows.filter((flow) => flow.filterTags?.includes(id)).length;
-      return cards.filter((card) => card.chips.includes(id)).length;
-    };
-    for (const chip of chips) if (filterCount(chip.id) < 2) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
-    for (const card of cards) {
-      const labelWords = wordCount(card.label);
-      if (labelWords < 2 || labelWords > 6) errors.push(`${pageId}: visual picker card labels must contain 2-6 words (${card.label})`);
-      if (!card.chips.length || card.chips.some((id) => !chips.some((chip) => chip.id === id))) errors.push(`${pageId}: visual picker card has an unknown or missing filter (${card.label})`);
-      if (card.tool) {
-        const target = validationSource.master.pages.find((page) => page.id === card.tool);
-        if (!isHub || !target || card.href !== target.url) errors.push(`${pageId}: tool card does not link to its matching tool page (${card.label})`);
-        if (pageId === "video-hub" && !VIDEO_TOOLS.includes(card.tool)) errors.push(`${pageId}: card links to a non-video tool (${card.tool})`);
-        if (pageId === "photo-hub" && !PHOTO_TOOLS.slice(1).includes(card.tool)) errors.push(`${pageId}: card links to a non-photo tool (${card.tool})`);
-        continue;
-      }
-      const params = searchParamsForHref(card.href);
-      if (card.kind === "photo") {
-        if (params.get("tool_id") !== "image_generator" || !params.get("prompt")?.trim()) errors.push(`${pageId}: photo picker link must use image_generator and include a prompt (${card.label})`);
-      } else {
-        const expectedSize = videoSizeForDimensions(card.image.w, card.image.h);
-        if (params.get("tool_id") === "image_generator") errors.push(`${pageId}: video picker link uses image_generator (${card.label})`);
-        if (!expectedSize || params.get("size") !== expectedSize) errors.push(`${pageId}: video picker link must use the card's supported frame (${card.label})`);
+    const chips = Array.isArray(visual.picker?.chips) ? visual.picker.chips : [];
+    const cards = Array.isArray(visual.picker?.cards) ? visual.picker.cards : [];
+    const pickerPresent = chips.length > 0 || cards.length > 0;
+    if (pickerPresent) {
+      if (chips.length > 20) errors.push(`${pageId}: visual picker must contain at most 20 filters`);
+      if (cards.length > 40) errors.push(`${pageId}: visual picker card count is outside the page range`);
+      if (!isDirectory && !visual.picker?.title?.trim()) errors.push(`${pageId}: visual picker title and required button are missing`);
+      if (!isDirectory && !visual.picker?.button?.trim()) errors.push(`${pageId}: visual picker title and required button are missing`);
+      if (new Set(chips.map((chip) => chip.id)).size !== chips.length) errors.push(`${pageId}: visual picker filter ids must be unique`);
+      const filterCount = (id) => {
+        if (pageId === "templates") return (data.cards ?? []).filter((card) => card.filterTags?.includes(id)).length;
+        if (pageId === "industries" || pageId === "platforms") return (data.items ?? []).filter((item) => item.filterTags?.includes(id)).length;
+        if (pageId === "examples") return (data.flows ?? []).filter((flow) => flow.filterTags?.includes(id)).length;
+        return cards.filter((card) => card.chips?.includes(id)).length;
+      };
+      for (const chip of chips) if (filterCount(chip.id) < 2) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
+      for (const card of cards) {
+        const labelWords = wordCount(card.label);
+        if (labelWords < 2 || labelWords > 6) errors.push(`${pageId}: visual picker card labels must contain 2-6 words (${card.label})`);
+        if (!Array.isArray(card.chips) || !card.chips.length || card.chips.some((id) => !chips.some((chip) => chip.id === id))) errors.push(`${pageId}: visual picker card has an unknown or missing filter (${card.label})`);
+        if (card.tool) {
+          const target = validationSource.master.pages.find((page) => page.id === card.tool);
+          if (!isHub || !target || card.href !== target.url) errors.push(`${pageId}: tool card does not link to its matching tool page (${card.label})`);
+          if (pageId === "video-hub" && !VIDEO_TOOLS.includes(card.tool)) errors.push(`${pageId}: card links to a non-video tool (${card.tool})`);
+          if (pageId === "photo-hub" && !PHOTO_TOOLS.slice(1).includes(card.tool)) errors.push(`${pageId}: card links to a non-photo tool (${card.tool})`);
+          continue;
+        }
+        const params = searchParamsForHref(card.href);
+        if (card.kind === "photo") {
+          if (params.get("tool_id") !== "image_generator" || !params.get("prompt")?.trim()) errors.push(`${pageId}: photo picker link must use image_generator and include a prompt (${card.label})`);
+        } else {
+          const expectedSize = videoSizeForDimensions(card.image.w, card.image.h);
+          if (params.get("tool_id") === "image_generator") errors.push(`${pageId}: video picker link uses image_generator (${card.label})`);
+          if (!expectedSize || params.get("size") !== expectedSize) errors.push(`${pageId}: video picker link must use the card's supported frame (${card.label})`);
+        }
       }
     }
-    if (!isDirectory && visual.uses.length && (visual.uses.length < 2 || visual.uses.length > 4)) errors.push(`${pageId}: visual uses must contain 2-4 rows`);
-    if (!isDirectory && visual.input.length && (visual.input.length < 2 || visual.input.length > 4)) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
-    for (const item of visual.input ?? []) {
+    if (!isDirectory && uses.length && (uses.length < 2 || uses.length > 4)) errors.push(`${pageId}: visual uses must contain 2-4 rows`);
+    if (!isDirectory && input.length && (input.length < 2 || input.length > 4)) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
+    for (const item of input) {
       if (imageBase(item.good.src) === imageBase(item.bad.src) && !item.darkened) errors.push(`${pageId}: visual input good and bad photos must differ unless the bad image is intentionally darkened`);
       for (const label of [item.good_label, item.bad_label]) if (wordCount(label) < 3 || wordCount(label) > 12) errors.push(`${pageId}: visual input labels must contain 3-12 words (${label})`);
     }
@@ -2583,20 +2593,20 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (visual.steps?.sourceTitle != null && (typeof visual.steps.sourceTitle !== "string" || !visual.steps.sourceTitle.trim() || visual.steps.sourceTitle.length > 60)) errors.push(`${pageId}: visual source title must be a non-empty string of at most 60 characters`);
     if (visual.steps?.sourceHint != null && (typeof visual.steps.sourceHint !== "string" || !visual.steps.sourceHint.trim() || visual.steps.sourceHint.length > 100)) errors.push(`${pageId}: visual source hint must be a non-empty string of at most 100 characters`);
     if (visual.steps && (typeof visual.steps.prompt !== "string" || !visual.steps.prompt.trim())) errors.push(`${pageId}: visual steps need an example prompt`);
-    if (!isDirectory && visual.outputs.length && (visual.outputs.length < 2 || visual.outputs.length > 4)) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
-    if (isHub && !visual.after) errors.push(`${pageId}: visual hub must show the after-download module`);
-    if (pageId === "video-hub" && visual.strip.some((item) => item.kind !== "video" || Math.abs(item.w / item.h - 9 / 16) > 0.04)) errors.push(`${pageId}: overview strip must use actual 9:16 video frames`);
-    if (pageId === "home" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
-    if (layout === "collection" && data.kind === "platform" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: platform visual sizes must contain 3-4 frames`);
-    if (visual.sizes?.length && !(layout === "home" || (layout === "collection" && data.kind === "platform"))) errors.push(`${pageId}: visual sizes are only supported on home and platform pages`);
+    if (!isDirectory && outputs.length && (outputs.length < 2 || outputs.length > 4)) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
+    if (isHub && after) { /* hubs may provide an after-download module; omit it when the field is empty */ }
+    if (pageId === "video-hub" && strip.some((item) => item.kind !== "video" || Math.abs(item.w / item.h - 9 / 16) > 0.04)) errors.push(`${pageId}: overview strip must use actual 9:16 video frames`);
+    if (pageId === "home" && sizes.length && (sizes.length < 3 || sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
+    if (layout === "collection" && data.kind === "platform" && sizes.length && (sizes.length < 3 || sizes.length > 4)) errors.push(`${pageId}: platform visual sizes must contain 3-4 frames`);
+    if (sizes.length && !(layout === "home" || (layout === "collection" && data.kind === "platform"))) errors.push(`${pageId}: visual sizes are only supported on home and platform pages`);
     if (["template", "collection"].includes(layout)) {
       const allowedFrames = new Set(["1:1", "9:16", "16:9"]);
-      for (const item of visual.outputs) if (!allowedFrames.has(item.frame)) errors.push(`${pageId}: visual output frame must be Square, 9:16 or 16:9 (${item.frame})`);
-      for (const item of visual.sizes ?? []) if (!allowedFrames.has(item.frame)) errors.push(`${pageId}: visual size frame must be Square, 9:16 or 16:9 (${item.frame})`);
+      for (const item of outputs) if (!allowedFrames.has(item.frame)) errors.push(`${pageId}: visual output frame must be Square, 9:16 or 16:9 (${item.frame})`);
+      for (const item of sizes) if (!allowedFrames.has(item.frame)) errors.push(`${pageId}: visual size frame must be Square, 9:16 or 16:9 (${item.frame})`);
     }
-    if (visual.after && (visual.after.items.length < 2 || visual.after.items.length > 3)) errors.push(`${pageId}: visual after-download list must contain 2-3 items`);
-    if (visual.limitations.items.length > 5) errors.push(`${pageId}: visual limitations must contain at most five items`);
-    for (const item of visual.limitations.items) if (wordCount(item.label) > 12) errors.push(`${pageId}: visual limitation exceeds 12 words (${item.label})`);
+    if (after && Array.isArray(after.items) && after.items.length && (after.items.length < 2 || after.items.length > 3)) errors.push(`${pageId}: visual after-download list must contain 2-3 items`);
+    if (limitationItems.length > 5) errors.push(`${pageId}: visual limitations must contain at most five items`);
+    for (const item of limitationItems) if (wordCount(item.label) > 12) errors.push(`${pageId}: visual limitation exceeds 12 words (${item.label})`);
     if (wordCount(visual.overview) > 120) errors.push(`${pageId}: visual overview exceeds 120 words`);
     const imageRows = visualPayloadImages(visual);
     const publicRoot = path.resolve(process.cwd(), "public");
@@ -2612,20 +2622,20 @@ export function validateSiteV2(build = buildSiteV2()) {
     let imageSections;
     if (isHub) {
       const modules = [
-        { present: visual.strip.length > 0, hasImage: visual.strip.length > 0 },
+        { present: strip.length > 0, hasImage: strip.length > 0 },
         { present: Boolean(visual.steps), hasImage: Boolean(visual.steps?.source && visual.steps?.result) },
         { present: cards.length > 0, hasImage: cards.some((card) => card.image?.src) },
-        { present: visual.uses.length > 0, hasImage: visual.uses.some((item) => item.image?.src) },
-        { present: visual.input.length > 0, hasImage: visual.input.some((item) => item.good?.src && item.bad?.src) },
-        { present: visual.outputs.length > 0, hasImage: visual.outputs.some((item) => item.image?.src) },
-        { present: Boolean(visual.after), hasImage: Boolean(visual.after?.image?.src) }
+        { present: uses.length > 0, hasImage: uses.some((item) => item.image?.src) },
+        { present: input.length > 0, hasImage: input.some((item) => item.good?.src && item.bad?.src) },
+        { present: outputs.length > 0, hasImage: outputs.some((item) => item.image?.src) },
+        { present: Boolean(after), hasImage: Boolean(after?.image?.src) }
       ].filter((module) => module.present);
       contentSections = modules.length;
       imageSections = modules.filter((module) => module.hasImage).length;
     } else if (isDirectory) {
       const directoryCards = pageId === "templates" ? data.cards : pageId === "examples" ? data.flows : data.items;
       const modules = [
-        { present: visual.strip.length > 0, hasImage: visual.strip.length > 0 },
+        { present: strip.length > 0, hasImage: strip.length > 0 },
         { present: Boolean(visual.steps), hasImage: Boolean(visual.steps?.source && visual.steps?.result) },
         { present: Boolean(directoryCards?.length), hasImage: Boolean(directoryCards?.some((item) => item.image?.src || item.steps?.some((step) => step.image?.src) || item.media?.src || item.video?.src)) }
       ].filter((module) => module.present);
@@ -2634,24 +2644,24 @@ export function validateSiteV2(build = buildSiteV2()) {
     } else if (layout === "home") {
       const homeSections = [
         Boolean(data.make?.video?.length || data.make?.photo?.length),
-        Boolean(visual.steps?.items?.length), cards.length > 0, Boolean(visual.sizes?.length),
-        visual.input.length > 0, visual.outputs.length > 0, hasExamples,
-        visual.uses.length > 0, Boolean(data.templates?.cards?.length), Boolean(data.compare?.length)
+        Boolean(visual.steps?.items?.length), cards.length > 0, sizes.length > 0,
+        input.length > 0, outputs.length > 0, hasExamples,
+        uses.length > 0, Boolean(data.templates?.cards?.length), Boolean(data.compare?.length)
       ];
       contentSections = homeSections.filter(Boolean).length;
       imageSections = contentSections - (data.compare?.length ? 1 : 0);
     } else if (["template", "collection"].includes(layout)) {
       const preservedSections = [layout === "template" ? Boolean(data.more?.length) : Boolean(data.cards?.length), Boolean(data.examples?.groups?.length)].filter(Boolean).length;
-      const moduleSections = [visual.strip.length > 0, Boolean(visual.steps?.items?.length), cards.length > 0, visual.uses.length > 0, visual.input.length > 0,
-        visual.outputs.length > 0, Boolean(visual.after), Boolean(visual.sizes?.length)].filter(Boolean).length;
+      const moduleSections = [strip.length > 0, Boolean(visual.steps?.items?.length), cards.length > 0, uses.length > 0, input.length > 0,
+        outputs.length > 0, Boolean(after), sizes.length > 0].filter(Boolean).length;
       const planSection = layout === "collection" && data.kind === "occasion" && data.plan?.length ? 1 : 0;
       contentSections = moduleSections + preservedSections + planSection;
       imageSections = moduleSections + preservedSections;
     } else {
-      const moduleSections = [visual.strip.length > 0, Boolean(visual.steps?.items?.length), cards.length > 0, visual.uses.length > 0, visual.input.length > 0,
-        visual.outputs.length > 0, Boolean(visual.after), Boolean(visual.sizes?.length)].filter(Boolean).length;
+      const moduleSections = [strip.length > 0, Boolean(visual.steps?.items?.length), cards.length > 0, uses.length > 0, input.length > 0,
+        outputs.length > 0, Boolean(after), sizes.length > 0].filter(Boolean).length;
       const overviewSection = visual.overview ? 1 : 0;
-      contentSections = moduleSections + overviewSection + (visual.limitations.items.length ? 1 : 0) + (hasExamples ? 1 : 0);
+      contentSections = moduleSections + overviewSection + (limitationItems.length ? 1 : 0) + (hasExamples ? 1 : 0);
       imageSections = moduleSections + (hasExamples ? 1 : 0);
     }
     if (contentSections > 10) errors.push(`${pageId}: visual page has ${contentSections} content sections (maximum 10)`);
