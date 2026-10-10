@@ -1,10 +1,29 @@
 {
   "id": "tpl-box",
   "title": "Product Bundle Photos for a Set of Items | AIVideosUGC",
-  "description": "Make a square bundle photo from clear images of items in your set. Compare each object with the kit, then list exact contents in your product description.",
+  "description": "Show exactly what comes in your kit with a square bundle photo. One photo of every item becomes a clean set image for Amazon, Shopify and gift listings.",
   "h1": "Product Bundle Photos for Items Sold Together",
   "eyebrow": "Product photo template",
-  "lead": "Lay out every item in your kit, take one clear photo, and turn it into a bundle photo in one square scene. Review each object against your actual kit and list the exact contents in your product description. List the included pieces before you start so the arrangement can keep every item visible and your final contents statement stays accurate.",
+  "lead": "Bundle shoppers hesitate because one question is never clearly answered: what exactly is in the box? Lay out every item, take one clear photo, and turn it into a bundle image that shows the complete kit so buyers can count the pieces before they order.",
+  "benefits_h2": "Why make bundle photos with AI?",
+  "benefits": [
+    {
+      "t": "Answer \"what do I get\" at a glance",
+      "d": "One square image shows every piece and nothing extra, so shoppers can count the kit without opening a dropdown. The contents question is settled before they read the description."
+    },
+    {
+      "t": "No styled shoot for each gift set",
+      "d": "Arrange a starter kit, refill pack or holiday gift set in a clean scene from one source photo. Seasonal styling is added without booking a product photographer."
+    },
+    {
+      "t": "Honest contents, controlled by you",
+      "d": "Upload every shipped piece, including the box and inserts, and state the exact count. The image supports your written contents list instead of inventing missing accessories."
+    },
+    {
+      "t": "Ready for listings and gift pages",
+      "d": "Place the square photo as image two on Amazon or Shopify and use it in seasonal gift posts. Downloads carry no AIVideosUGC watermark and can be used commercially."
+    }
+  ],
   "secondary_keywords": [
     "what's in the box photo",
     "skincare set product photo",
@@ -16,18 +35,20 @@
     "Bundle listings raise one question above all: what do I actually get? One photo with every item, and nothing extra, answers it at a glance. Add it right after your main image on Amazon or Shopify, and use it for gift sets, starter kits, and refill packs."
   ],
   "tip": "Upload every piece that comes in the set, box included, and list them in your description, so the photo shows your kit and no extra products.",
+  "steps_h2": "How to make a bundle photo in 3 simple steps",
+  "steps_lead": "Three steps turn one kit photo into a clear what's-in-the-box image — no shoot, no props to buy, no missing pieces.",
   "steps": [
     {
-      "t": "Gather the whole kit",
-      "d": "Photograph every item, the box, and any insert so the source represents the complete bundle rather than a hero item alone."
+      "t": "Gather the Full Kit",
+      "d": "Photograph every item, the box and any insert so the source shows the complete bundle, not a hero item alone."
     },
     {
-      "t": "List what's inside",
-      "d": "Describe an arrangement that keeps each piece visible, such as a top-down reveal on a bright table, and state which items belong to the set."
+      "t": "Describe the Arrangement",
+      "d": "Ask for a layout that keeps each piece visible, such as a top-down reveal on a bright table. State which items belong to the set."
     },
     {
-      "t": "Use it as image two",
-      "d": "Download the square result, compare every object with the packed kit, and place it beside the item count and contents list on your product page."
+      "t": "Download and Verify",
+      "d": "Compare every object with the packed kit, then place the square photo beside your contents list. The image has no AIVideosUGC watermark."
     }
   ],
   "ideas": [
@@ -85,6 +106,14 @@
     {
       "q": "How many credits does a bundle photo cost?",
       "a": "Each bundle photo costs 24 credits. You see the charge before running it, and failed jobs are refunded.  Check the source against the packed kit after generation; the photo can show arrangement, but the seller remains responsible for the exact contents statement."
+    },
+    {
+      "q": "Can I use the bundle image in gift ads?",
+      "a": "Yes. Images you make can run in your own paid ads, gift guides and product pages, with no AIVideosUGC watermark on the download. You remain responsible for the offer and contents statement in the ad."
+    },
+    {
+      "q": "What if a piece in my kit changes seasonally?",
+      "a": "Build the photo only from items currently shipped and update the written contents list when the kit changes. A bundle image that shows a piece no longer included should be replaced so the listing stays accurate."
     }
   ],
   "overview": [
