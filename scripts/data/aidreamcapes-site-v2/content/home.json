@@ -469,23 +469,23 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:mx1w-home-accessories-3-r1",
-          "label": "Canvas Tote Commute UGC",
+          "ref": "n:guide:white-background-canvas-tote",
+          "label": "Canvas Tote Product Detail",
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult carries a plain canvas tote bag with a notebook and water bottle on a sunny city walk, full handles visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Natural canvas tote bag shown upright on seamless white. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-example-earbuds",
-          "label": "Earbud Case Review UGC",
+          "ref": "n:guide:q1-photo-picker-earbuds-v2",
+          "label": "Wireless Earbud Case Product Detail",
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult commuter speaks directly to the camera while holding a plain earbud case beside their face. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Pair of matte sage-green stemless bean-shaped earbuds beside a low pill-shaped charging case on pure white. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -513,12 +513,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-apps-1-r1",
-          "label": "Lifestyle App Demo UGC",
+          "ref": "n:guide:q9-head-phone-grip-demo",
+          "label": "Phone Grip App Demo UGC",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman holds a generic smartphone toward the camera with only a softly blurred abstract app interface, no readable text or logo. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult creator presenting a generic phone grip beside a plain phone. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -546,12 +546,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-picker-lipbalm",
-          "label": "Tinted Balm GRWM UGC",
+          "ref": "n:guide:k5-home-lipstick-vanity",
+          "label": "Tinted Balm Vanity Reel",
           "chips": [
             "beauty-personal-care"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman applies a plain tinted balm at a bathroom mirror, then turns the tube toward the lens. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Coral lipstick on a softly lit vanity. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -612,12 +612,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-education-2-r1",
-          "label": "Tablet Tutorial UGC",
+          "ref": "n:guide:k1-product-videos-gallery-feature-action-t06",
+          "label": "Coffee Maker How-To Demo",
           "chips": [
             "education"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult teacher holds a generic tablet with a softly blurred text-free interface and explains a product feature. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Compact countertop coffee maker pouring coffee into a white ceramic cup. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -634,34 +634,34 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-explainer-2-r1",
-          "label": "Bottle Feature Walkthrough",
+          "ref": "n:guide:k5-change-background-uses-1-image",
+          "label": "Speaker Feature Walkthrough",
           "chips": [
             "explainer"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult presenter points to the plain features of a generic unbranded insulated bottle on a table. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Compact rectangular Bluetooth speaker on a desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-financial-services-1-r1",
-          "label": "Finance App Review UGC",
+          "ref": "n:guide:k6-templates-strip-deskset",
+          "label": "Budget Desk Overview",
           "chips": [
             "financial-services"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator checks a generic finance app on a phone with only blurred abstract bars and circles. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-financial-services-2-r1",
-          "label": "Budget Chart Explainer",
+          "ref": "n:guide:k5-change-background-picker-cards-1-image",
+          "label": "Budget Tool Desk Explainer",
           "chips": [
             "financial-services"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult advisor gestures beside a generic laptop with a softly blurred abstract chart and no numbers. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Mechanical keyboard with blank keycaps on a tidy desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -722,34 +722,34 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-use-electrolyte-review",
-          "label": "Electrolyte Trail Reaction",
+          "ref": "n:guide:k6-tpl-ugc-picker-water-bottle",
+          "label": "Trail Bottle Detail",
           "chips": [
             "health-fitness"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult runner looks directly into the camera, holds a plain electrolyte sachet and gives a brief first-sip reaction after drinking from a bottle. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Unbranded sage-green water bottle beside a runner’s hand and folded towel at a quiet trail rest stop, no face visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-picker-earrings",
-          "label": "Gold Hoop Unboxing ASMR",
+          "ref": "n:guide:q9-jewel-cufflinks-demo",
+          "label": "Cufflink Detail Demo",
           "chips": [
             "jewelry-accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult man fastens simple brushed silver cufflinks on a white shirt. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-size-earrings",
-          "label": "Hoop Earring Size Detail",
+          "ref": "n:guide:q16-jewelry-ring-macro",
+          "label": "Silver Ring Size Detail",
           "chips": [
             "jewelry-accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A pair of plain gold hoop earrings arranged on pure white with soft even light and every curve clearly visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Close view of a silver solitaire ring and its setting. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -777,111 +777,111 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-after-pet",
-          "label": "Pet Hair Sofa Fix",
+          "ref": "n:guide:k1-unboxing-picker-pet-kit",
+          "label": "Pet Grooming Kit Unboxing",
           "chips": [
             "pet"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A sofa cushion shows a clear half-and-half result as an adult hand removes pet hair with a reusable lint tool. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Pet grooming kit with brush, folded towel and plain shampoo bottle revealed. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-picker-pet-hair",
-          "label": "Pet Hair Roller Demo",
+          "ref": "n:guide:q3-product-videos-board-04-pet-brush-demo",
+          "label": "Dog Brush Care Demo",
           "chips": [
             "pet"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand pulls a reusable lint remover across a fuzzy sofa cushion, revealing a clean strip beside the remaining pet hair. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult brushes a golden retriever with a plain pet brush. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-sports-gym-3-r1",
-          "label": "Shaker Finish UGC",
+          "ref": "n:guide:k6-video-hub-picker-protein",
+          "label": "Protein Pouch Gym Detail",
           "chips": [
             "sports-gym"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult athlete finishes a set and holds a plain shaker beside a gym bench. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Unbranded protein powder pouch with a completely blank label on a gym bench after a workout. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-output-bite",
-          "label": "First Bite Reaction UGC",
+          "ref": "n:guide:q14-spark-og",
+          "label": "Sage Bottle Desk Detail",
           "chips": [
             "sports-gym"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult runner looks into the camera, holds a plain protein bar and gives a clear first-bite reaction with the wrapper visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Sage-green insulated bottle on a bright work desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-picker-earbuds-v2",
-          "label": "Stemless Earbud Fit Demo",
+          "ref": "n:guide:k5-home-picker-cards-2-image",
+          "label": "Stemless Earbud Desk Demo",
           "chips": [
             "tech-electronics"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman fits a matte sage-green, stemless bean-shaped earbud while holding its matching low pill-shaped case. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two rounded black stemless earbuds on a pale oak desk beside a laptop. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-use-speaker-review-v2",
-          "label": "Speaker Feature Review",
+          "ref": "n:guide:k1-unboxing-template-film-speaker",
+          "label": "Speaker Feature Detail",
           "chips": [
             "tech-electronics"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator speaks to camera while holding a compact charcoal fabric cylinder speaker with a sage wrist lanyard. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain rectangular black speaker on a console beside a large window. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-example-review",
-          "label": "Serum Creator Review",
+          "ref": "n:guide:q1-video-card-headphones",
+          "label": "Headphone Creator Review",
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman looks directly into the camera while speaking and holds a plain face serum bottle beside her cheek. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-use-ab-review",
-          "label": "Serum Creator Demo UGC",
+          "ref": "n:guide:k1-product-videos-template-table-lamp",
+          "label": "Desk Lamp Creator Demo UGC",
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator looks into the lens while holding a plain serum bottle beside their face in clean morning window light. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain white portable table lamp glows on a desk beside a closed laptop. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-viral-3-r1",
-          "label": "Lipstick Color Reveal",
+          "ref": "n:guide:k5-home-lipstick-swatch",
+          "label": "Coral Lipstick Swatch",
           "chips": [
             "viral"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult creator reacts with delight while revealing a plain coral lipstick tube in a close-up. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Coral lipstick beside a matching color swatch. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-viral-4-r1",
-          "label": "Speaker Reaction Hook",
+          "ref": "n:guide:k5-home-card-color",
+          "label": "Mug Color Reveal Hook",
           "chips": [
             "viral"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult creator holds a plain gold hoop earring close to the camera with a surprised reaction. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Three simple ceramic mugs in distinct glaze colors. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
