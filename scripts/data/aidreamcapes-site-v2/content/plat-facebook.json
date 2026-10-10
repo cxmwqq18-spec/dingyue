@@ -100,20 +100,19 @@
   "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the product. The first frame shows what you sell, so shoppers recognize it at a glance."
+      "t": "Upload your product photo",
+      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Say what happens in one sentence and pick a square image or a Reels clip. The credit cost shows before anything is made."
+      "t": "Share your video idea",
+      "d": "Say what happens in one sentence and pick an image or Reels clip. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and Post",
+      "t": "Download and post",
       "d": "Download the file with no watermark, add your headline and offer in Ads Manager, then run your campaign."
     }
   ],
   "visual": {
-    "overview": "A square still works for the Feed, and a 9:16 clip fits Reels and Stories. Start from one product photo and match each file to its placement.",
     "strip": [
       "f:q18-facebook-strip-serum-review",
       "f:q18-facebook-strip-pet-hair-roller",
@@ -121,316 +120,63 @@
       "n:guide:k8-facebook-gen2-plat-facebook-c2",
       "f:q18-facebook-strip-baby-bath-unbox",
       "n:gen2:tpl-ugc-g1"
-    ],
-    "steps": {
-      "source": "n:guide:k8-facebook-gen2-plat-facebook-g3",
-      "result": "f:q18-facebook-steps-bottle-pour",
-      "mode": "photo",
-      "prompt": "Create a square still photo using the pale-blue insulated bottle shown in the uploaded image as the exact product reference. Preserve its body shape, blue color, loop cap, and metal collar. An adult hand pours water from it into a clear glass on a sunny breakfast desk; keep bottle and glass fully visible in soft morning light.",
-      "options": [
-        [
-          "Template",
-          "Product photo"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ]
-    },
-    "picker": {
-      "title": "Pick a Facebook ad idea",
-      "lead": "Start from a creator-style format sellers already use.",
-      "chips": [
-        {
-          "id": "review",
-          "label": "Product Review"
-        },
-        {
-          "id": "unboxing",
-          "label": "Unboxing"
-        },
-        {
-          "id": "grwm",
-          "label": "Get Ready With Me"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f1-r10-facebook-feed-lunchbox",
-          "label": "Product Demo — Sage Lunch Box",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Adult hands open the plain sage lunch box on a kitchen table with packed compartments visible and the lid beside it. Square source for a 4:5 Feed crop, bright daylight, no text or logos."
-        },
-        {
-          "ref": "f:q18-facebook-picker-lunchbox-pack",
-          "label": "Product Demo — Packing Lunch Box",
-          "prompt": "Square still photo: adult hands place fruit and a sandwich into the compartments of an open reusable lunch box on a sunny kitchen counter. Show the lunch box and dividers clearly in bright morning light.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-facebook-stories-travel-pouch",
-          "label": "Unboxing — Travel Pouch in Tote",
-          "chips": [
-            "demo",
-            "review",
-            "unboxing"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult hand pulls the plain travel pouch from a tote beside a train seat, leaving breathing room above and below for a vertical Stories crop. No text or logos."
-        },
-        {
-          "ref": "n:guide:k8-facebook-gen2-tpl-ugc-case-81",
-          "label": "Product Review — Water Bottle Desk",
-          "prompt": "Square still photo: an adult creator holds a plain reusable water bottle beside a tidy home-office desk, with the bottle fully visible and a notebook nearby. Natural window light, casual creator framing, no text or logo.",
-          "chips": [
-            "review"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-facebook-picker-cable-tray",
-          "label": "Product Demo — Under-Desk Cable Tray",
-          "prompt": "Square still photo: adult hands guide loose charging cords into a compact black cable tray clipped beneath a home-office desk. Show a tidy channel and the product clearly in natural window light.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-facebook-picker-protein-bar",
-          "label": "Product Review — Oat Protein Bar",
-          "prompt": "Square still photo: an adult woman at a sunny kitchen table takes a first bite of an unbranded oat protein bar and smiles naturally toward camera. Keep the bar visible with soft window light and a casual breakfast setting.",
-          "chips": [
-            "review",
-            "grwm"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k8-facebook-gen2-tpl-spark-ads-style-video-c4",
-          "label": "Product Demo — Pet Brushing",
-          "prompt": "Still square product photograph using the uploaded photo as the exact product reference: an adult hand uses a plain pet brush once on a relaxed dog resting on a couch. Show the brush touching the coat, soft window light, no text or logos.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "f:q18-facebook-picker-travel-pouch",
-          "label": "Product Demo — Wiping Travel Pouch",
-          "prompt": "Square still photo: an adult hand wipes a small stream of water from a compact gray travel pouch on an outdoor picnic table, with the damp and wiped areas visible. Overcast daylight, practical product close-up.",
-          "chips": [
-            "demo"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k6-tpl-ugc-picker-organizer",
-          "label": "Product Demo — Wooden Desk Organizer",
-          "chips": [
-            "demo",
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the wooden desk organizer and tray. Adult hands move loose pens into the compartments beside a blank notebook, ending with the tidy desk centered. Soft window light, practical creator look, square overhead framing. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k6-tpl-ugc-picker-lunchbag",
-          "label": "Product Demo — Insulated Lunch Bag",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain insulated lunch bag. Adult hands place a wrapped sandwich and fruit inside on a kitchen island, ending with the open bag and contents fully visible. Bright daylight, natural square product scene, close three-quarter framing. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k6-tpl-ugc-picker-weekender",
-          "label": "Unboxing — Canvas Weekender Bag",
-          "chips": [
-            "review",
-            "unboxing"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the plain canvas weekender bag. An adult creator lifts it from a parked car seat and looks toward camera with a pleased reaction, ending with the full bag visible. Warm afternoon daylight, candid square phone-video look. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:occ-product-launch-c3-m2-result",
-          "label": "Product Demo — Matte Blue Bottle",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the matte blue water bottle. An adult hand lifts it from a pale stone ledge beside a folded towel, ending with the bottle upright and fully visible. Clean daylight, square lifestyle product framing, soft grounded shadow. No text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:c1-tpl-film-strip-speaker-vertical",
-          "label": "Product Review — Compact Shelf Speaker",
-          "chips": [
-            "review",
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the compact black speaker and woven loop. On a dark shelf, a slow camera move reveals the speaker in low light, ending with the front grille centered. Cinematic low-light framing, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:white-background-soap-dispenser",
-          "label": "Product Demo — Sage Soap Dispenser",
-          "chips": [
-            "demo",
-            "grwm"
-          ],
-          "prompt": "Use the uploaded photo as the exact product reference. Preserve the pale sage ceramic soap dispenser and brushed metal pump. An adult hand presses the pump over a sink, ending with one measured drop visible on the palm. Bright bathroom daylight, square close composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:f1-r10-facebook-reels-screwdriver",
-          "label": "Product Review — Cordless Screwdriver",
-          "chips": [
-            "review"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. An adult creator faces camera and holds the plain cordless screwdriver at chest height while explaining one feature. Bright workshop, natural expression, 9:16 Reels framing, no text or logos."
-        },
-        {
-          "ref": "n:guide:f1-r10-facebook-catalog-mug",
-          "label": "Product Review — Travel Mug Desk",
-          "chips": [
-            "review",
-            "demo"
-          ],
-          "kind": "photo",
-          "prompt": "Use the uploaded photo as the exact product reference. Put one plain ceramic travel mug beside a laptop and notebook on a calm home-office desk as a catalog retargeting scene. Natural daylight, clean product focus, no text or logos."
-        }
-      ],
-      "button": "Make a Facebook ad"
-    },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "f:q18-facebook-uses-backpack-scale",
-        "h": "Feed image — mini backpack in scale",
-        "d": "Shoppers see the real size on a person and picture wearing it. That is the detail that moves them from browsing to buying."
-      },
-      {
-        "frame": "post",
-        "ref": "f:q18-facebook-uses-protein-bar",
-        "h": "Feed image — protein bar after a workout",
-        "d": "The snack is shown in a familiar gym moment, so shoppers who train picture buying it for their own bag."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k8-facebook-gen2-tpl-angle-c1",
-        "bad": "n:guide:plat-facebook-m5-soft-focus",
-        "good_label": "The headphone shape stays sharp and complete",
-        "bad_label": "The headphone edges fade into soft focus"
-      },
-      {
-        "good": "n:gen2:tpl-size-c1",
-        "bad": "n:guide:plat-facebook-m5-cropped",
-        "good_label": "The backpack remains fully inside the frame",
-        "bad_label": "The backpack is cut off at the side of the frame"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:q18-facebook-output-headphones",
-        "frame": "1:1",
-        "label": "Matched Matte Black Over-Ear Headphones",
-        "presentation": "facebook"
-      },
-      {
-        "ref": "f:q18-facebook-output-backpack-matched",
-        "frame": "1:1",
-        "label": "Matched Pale Sage-Green Mini Backpack",
-        "presentation": "facebook"
-      }
-    ],
-    "after": {
-      "ref": "f:q18-facebook-strip-headphone-review",
-      "zones": [
-        "Price",
-        "Call to action"
-      ],
-      "items": [
-        "Add the exact price and campaign dates after download.",
-        "Place a short call to action where it does not cover the product."
-      ]
-    },
-    "sizes": [
-      {
-        "frame": "9:16",
-        "ref": "f:k4-plat-instagram-22-visual-sizes-1-image",
-        "label": "9:16 · Reels; keep key details in the safe area"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c4",
-        "label": "1:1 · Square product-photo output"
-      },
-      {
-        "frame": "1:1",
-        "ref": "n:guide:k8-facebook-gen2-plat-facebook-c3",
-        "label": "1:1 · Another square product-photo output"
-      }
-    ],
-    "titles": {
-      "m2": {
-        "h2": "Create a Facebook ad from one product photo"
-      },
-      "m3": {
-        "h2": "Choose a Facebook ad scene that fits the feed"
-      },
-      "m4": {
-        "h2": "Use Facebook ads in Feed, Stories, and Reels"
-      },
-      "m5": {
-        "h2": "Keep the product readable in a Facebook ad"
-      },
-      "m6": "Facebook ad examples made from product photos",
-      "m7": {
-        "h2": "Add the offer after download in Ads Manager"
-      },
-      "m8": "Facebook Reels video and product-image examples",
-      "examples": {
-        "h2": "More Facebook ad examples",
-        "lead": "Product moments for busy feeds, from a lunchbox to a pet bed."
-      },
-      "faq": {
-        "h2": "Questions about Facebook ad creative"
-      }
-    }
+    ]
   },
-  "benefits_h2": "Why make Facebook ads with AI UGC video?",
+  "benefits_h2": "Reasons to switch to AI UGC for Facebook ads",
   "benefits": [
     {
-      "t": "Versions without reshoots",
-      "d": "Run another job with a different setting or opening action to get a new test creative from the same photo. You keep product, offer and audience constant while the visual changes."
+      "t": "Better Returns",
+      "d": "Make clear Facebook ads with UGC-style clips that help your budget work harder, without booking creators."
     },
     {
-      "t": "Feed and Reels covered",
-      "d": "Square stills crop to the 4:5 feed image Meta recommends, and a separate job produces the 9:16 clip for Reels. Both placements come from the same product photo."
+      "t": "Always-On Content",
+      "d": "Clips are ready when you are, so you stay consistent and scale fast without waiting on shoots."
     },
     {
-      "t": "No creator between you and a draft",
-      "d": "There is no booking, filming day or edit queue when you need a quick angle. You describe the scene in a sentence and the credit cost appears before the job starts."
-    },
-    {
-      "t": "Ready to run, no watermark",
-      "d": "The downloaded image or clip is yours to place through Ads Manager and carries no AIVideosUGC watermark. Headline and offer stay editable fields you control."
+      "t": "No Creative Fatigue",
+      "d": "Fresh, scroll-ready content on demand keeps your ads from feeling repetitive and your audience engaged."
     }
   ],
   "steps_h2": "How to make a Facebook ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-run Feed or Reels ad — no studio, no creator, no reshoot."
+  "steps_lead": "Three steps turn one product photo into a ready-to-run Feed or Reels ad — no studio, no creator, no reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Why sellers use it",
+      "h2": "Why teams use AI for Facebook UGC ads",
+      "lead": "Creator-style clips without the creator delays.",
+      "items": [
+        {
+          "t": "No Creator Hold-Ups",
+          "d": "Skip the wait and get fresh, high-quality content in minutes, ready to go for Facebook."
+        },
+        {
+          "t": "Ready Facebook Templates",
+          "d": "Build high-converting ads with ready creator-style formats, and scale clips without a shoot."
+        },
+        {
+          "t": "Localize For Every Audience",
+          "d": "Make versions for different audiences without extra production cost, so every market feels familiar."
+        }
+      ]
+    },
+    {
+      "eyebrow": "The business case",
+      "h2": "The business case for Facebook ads made with AI",
+      "lead": "A faster path from product photo to a clip that converts.",
+      "items": [
+        {
+          "t": "Ads That Actually Convert",
+          "d": "Show the product in real, familiar moments so shoppers understand it and want to buy."
+        },
+        {
+          "t": "Scale Video Ads Easily",
+          "d": "Make more clips without adding people or production days, even during busy campaign weeks."
+        },
+        {
+          "t": "Made for Personalization",
+          "d": "Change the scene or opening for each audience and keep the message relevant."
+        }
+      ]
+    }
+  ]
 }
