@@ -86,6 +86,20 @@
           "Length",
           "15 seconds"
         ]
+      ],
+      "items": [
+        {
+          "t": "Upload your product photo",
+          "d": "Add one clear photo of the whole product. The first frame shows what you sell, so viewers recognize it right away."
+        },
+        {
+          "t": "Share your video idea",
+          "d": "Say what happens in one sentence and choose the clip length. The credit cost shows first, before the file is made."
+        },
+        {
+          "t": "Download and post",
+          "d": "Download the 9:16 file with no watermark, add your sound and offer, then upload it to TikTok Ads Manager."
+        }
       ]
     }
   },
