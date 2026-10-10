@@ -1,11 +1,11 @@
 {
   "id": "tpl-carousel-video-ad",
-  "title": "Carousel Video Ad Template for Product Stories | AIVideosUGC",
-  "description": "Turn one product photo into a sequenced video ad with the beat order of a carousel: open, reveal, use, finish. Add text and price after download.",
+  "title": "Carousel Video Ads for Product Stories | AIVideosUGC",
+  "description": "Turn one product photo into an ordered video story: open, reveal, use and finish. Add your headline, price and call to action after download.",
   "h1": "Carousel Video Ads That Tell One Product Story",
   "eyebrow": "Carousel video ad template",
-  "lead": "A single product shot rarely answers every shopper question, while a full carousel means designing and uploading several cards. Upload one product photo and get a single carousel-style video ad that walks buyers through the product in ordered beats, from first look to the reason to buy.",
-  "benefits_h2": "Why use a carousel video ad template?",
+  "lead": "One product shot rarely answers every shopping question, while a full carousel takes several cards to design. Upload one photo and get an ordered story clip for feeds and ads.",
+  "benefits_h2": "Why sellers choose carousel video templates",
   "benefits": [
     {
       "t": "One file instead of several cards",
@@ -30,42 +30,20 @@
     "Instagram carousel video",
     "sequenced product ad"
   ],
-  "intro": [
-    "This format is built around a sequence rather than a talking presenter. The sample opens a black commuter backpack in a cafe, shows its compartments, and ends with the bag on a person.",
-    "A short sequence can show what is inside, how a product fits a routine, or why a visible detail matters. Product position, size, and small lettering can vary between scenes, so review the video and add on-screen text in your editor.",
-    "Treat the sequence as four short beats with one product story: open on the backpack, reveal the organizer, show the hand placing an item, then finish with the bag ready to carry. A seller can download the clip for a feed placement and add panel numbers, a price, or a product link in the editor. The product should remain the same from the first frame through the close.",
-    "Write each panel before you generate so the order answers a shopper question. Panel one earns attention, panel two shows the feature, panel three proves the feature in use, and panel four gives the next step. Keep the camera movement simple and hold the final state long enough for an editable caption or call to action to be read.",
-    "Review a carousel video at the size where it will run. Confirm that the backpack, compartments, and packed items are visible in every beat, then place the finished sequence beside the matching listing. If the platform needs separate swipe cards, export still panels from your editor; this template supplies a single ordered video file."
-  ],
-  "tip": "Write three or four short beats in order and describe the product in each one so the transitions have a clear job.",
-  "steps_h2": "How to make a carousel video ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into an ordered story clip — no card design, no shoot, no multi-file upload.",
+  "steps_h2": "How it works",
+  "steps_lead": "Choose a story style, add your product, generate. No card design and no multi-file upload.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear product photo and outline three or four beats, such as open, reveal, use and finish. The same product anchors every scene."
+      "d": "Add one clear photo that gives the product a recognizable shape and useful detail."
     },
     {
-      "t": "Describe Each Beat",
-      "d": "Say where each moment happens and how the camera moves, keeping the action simple. The ordered sequence is generated without filming each panel."
+      "t": "Pick a Story Style",
+      "d": "Choose an open, reveal, use or finish scene, then generate the ordered clip."
     },
     {
       "t": "Download and Add Text",
-      "d": "Review the clip, then add your headline, price and call to action in your editor. Post 1:1 or 9:16 with no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "What is inside",
-      "d": "Open a bag, case, or bundle and move through the pieces one at a time."
-    },
-    {
-      "t": "From desk to door",
-      "d": "Show a product in its work setting, then in the moment it leaves with the customer."
-    },
-    {
-      "t": "Three reasons",
-      "d": "Give each scene one visual reason to keep watching, then add the wording yourself."
+      "d": "Download the video and add your headline, price or call to action in your editor."
     }
   ],
   "maker": {
@@ -87,172 +65,44 @@
   },
   "faq": [
     {
-      "q": "Is this a real platform carousel post?",
-      "a": "No. A swipe-through post needs separate cards assembled and uploaded through your ad platform."
+      "q": "What is a carousel video ad template?",
+      "a": "It is a ready-made product story. Add one photo and generate a single clip that moves through a few ordered beats."
     },
     {
-      "q": "Can the product move between scenes?",
-      "a": "Yes. AI-generated scenes can shift the product’s position, scale, or details. Review the video and simplify the sequence if a steadier composition matters."
+      "q": "Do I need to write prompts to use these templates?",
+      "a": "No. Pick a story style, upload your product photo and generate. Step two can include one short line about the beats if you want."
     },
     {
-      "q": "Is the carousel output one file or a platform post?",
-      "a": "This template exports one downloadable video file; it does not create or publish a platform post. For a swipe-through carousel, create separate cards in your editor or ad platform."
+      "q": "Who are carousel video templates built for?",
+      "a": "Ecommerce sellers and agencies that need a product story for feeds, listings or paid ads without designing several cards."
     },
     {
-      "q": "How many panels should I write?",
-      "a": "Three or four beats are enough for a 15-second sequence. Give each beat one job, such as open, reveal, use, or finish."
+      "q": "Is the output one file or a platform carousel post?",
+      "a": "The template creates one video file. Upload it wherever you publish, then add your text and link in that platform or editor."
     },
     {
-      "q": "Can I make a real swipe-through carousel with this?",
-      "a": "This template outputs one sequence video. For a swipe-through post, assemble separate panels in your editor or ad platform."
+      "q": "Can one sequence show several product beats?",
+      "a": "Yes. Use an opening, a reveal, one useful action and a clear finish so each beat answers one shopper question."
     },
     {
-      "q": "What does a 15-second sequence cost?",
-      "a": "A 15-second clip costs 60 credits; 6- and 10-second versions cost 24 and 40, and a 30-second version costs 120, shown before you run it."
+      "q": "Which sizes can I use?",
+      "a": "Use 1:1 for a square feed or 9:16 for a vertical placement. Choose the frame that fits where the clip will live."
     },
     {
-      "q": "Can I create another carousel video from the same source photo?",
-      "a": "Yes. Keep the commuter backpack as the reference, then change one panel, crop, or camera move at a time. Check that the pockets, straps, and carry position match the physical item. Add the current price, size, and product link after download so each panel stays easy to update. Keep panel order stable when you make a second version so shoppers can compare storage, access, and carry comfort without relearning the sequence. A second version should answer a different backpack question, not repeat the same pocket view with new wording."
+      "q": "How fast is a carousel video made?",
+      "a": "A clip is generated in minutes after you start the job, with no card design, shoot day or multi-file upload."
     },
     {
-      "q": "Can I run this sequence video as a paid ad?",
-      "a": "Yes. Videos you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You remain responsible for the ad text, claims and platform disclosures."
+      "q": "What does a carousel video cost?",
+      "a": "A 15-second sequence costs 60 credits, and the charge is shown before you run it."
     },
     {
-      "q": "When should I use this instead of a real swipe carousel?",
-      "a": "Use the sequence video when you want one file that plays the full story in a feed or Reels placement. Choose separate swipe cards when your goal is letting buyers browse panels at their own pace."
+      "q": "Can I use the sequence in paid ads?",
+      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for claims and offers."
     }
   ],
-  "overview": [
-    {
-      "h2": "Plan a sequence that earns each beat",
-      "d": "A carousel-style clip works when every moment answers the next shopper question: what is it, what is inside, how is it used, and what should I notice? Keep the same product description in each beat so the object does not change between scenes."
-    },
-    {
-      "h2": "Use the frame to separate the story from the facts",
-      "d": "Let the visual progression carry the narrative, then add price, dimensions, materials, and a call to action in your editor. The sequence can stay useful when those details change."
-    }
-  ],
-  "input_guide": {
-    "h2": "Give a multi-beat story one stable anchor",
-    "items": [
-      {
-        "t": "Choose one hero photo",
-        "d": "Use a product view that shows the main silhouette and the detail each later beat will revisit."
-      },
-      {
-        "t": "Write three or four beats",
-        "d": "Open, reveal, use, and finish is enough for a short sequence; extra beats can blur the story."
-      },
-      {
-        "t": "Repeat the product description",
-        "d": "Name the same color, material, and shape in every scene so transitions have a consistent reference."
-      },
-      {
-        "t": "Reserve panel space",
-        "d": "Describe a clear wall, tabletop, or background area for headline and price layers added later."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the sequence can deliver",
-    "items": [
-      {
-        "t": "A beginning, middle, and close",
-        "d": "The clip can move from product introduction through one useful detail to a finished use scene."
-      },
-      {
-        "t": "Two practical layouts",
-        "d": "Choose 1:1 for a square feed or 9:16 for a vertical placement; 16:9, 4:3, and 3:4 are also available when the destination calls for them."
-      },
-      {
-        "t": "Four transparent durations",
-        "d": "Six, ten, fifteen, and thirty seconds use 24, 40, 60, and 120 credits; you see the charge before you run a version."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Carousel stories to describe",
-    "items": [
-      {
-        "t": "Bag from open to commute",
-        "d": "A backpack opens on a cafe table, reveals a laptop sleeve, then appears on a shoulder beside a train platform."
-      },
-      {
-        "t": "Watch from box to wrist",
-        "d": "A watch box opens, the dial catches light, and the watch ends on a wrist near a window."
-      },
-      {
-        "t": "Diffuser in a room",
-        "d": "A glass diffuser starts on a shelf, receives reeds, and finishes beside a chair in soft evening light."
-      },
-      {
-        "t": "Bundle laid out",
-        "d": "A kit begins closed, opens to reveal the pieces, and ends arranged beside the product it supports."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Turn each beat into a shoppable panel",
-    "items": [
-      {
-        "t": "Add one headline per scene",
-        "d": "Use short wording that matches each scene rather than repeating a general benefit."
-      },
-      {
-        "t": "Place prices and dimensions",
-        "d": "Add the current figures and product URL after reviewing the rendered sequence."
-      },
-      {
-        "t": "Choose sound and final call",
-        "d": "Add licensed music, captions, and the action you want the viewer to take in the publishing editor."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A good fit for a carousel story",
-    "good": [
-      "Bags, kits, and products with several visible parts",
-      "A product that moves from package to use",
-      "Square feed and vertical story placements",
-      "Stories where each beat has a separate job"
-    ],
-    "not_ideal": [
-      "Many unrelated products in one sequence",
-      "Panels that depend on tiny generated lettering"
-    ]
-  },
-  "examples": {
-    "h2": "More carousel story scenes",
-    "lead": "Short product stories that move from box, to use, to the finished look.",
-    "groups": [
-      {
-        "label": "Story beats",
-        "items": [
-          {
-            "ref": "n:gen2:tpl-carousel-video-ad-g1",
-            "title": "Watch out of its box and on the wrist",
-            "kind": "scene",
-            "product": "wristwatch"
-          },
-          {
-            "ref": "n:guide:q13-carousel-examples-1-r1",
-            "title": "Commuter backpack packed beside a coat",
-            "kind": "scene",
-            "product": "commuter backpack"
-          },
-          {
-            "ref": "n:guide:q13-carousel-examples-2",
-            "title": "Picnic basket serves lunch outdoors",
-            "kind": "scene",
-            "product": "picnic basket set"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A carousel video ad uses a short sequence to answer one shopper question at a time. Keep the product in view from the opening reveal through the final scene. Use this format when a commuter backpack needs separate proof for storage, access, and carry comfort. Keep one shopper question across several beats, then leave room for the panel label, price, and product link you add after download. Review the pockets, straps, and scale against your source before publishing. The opening beat should name the question, while the middle beats show evidence and the final beat leaves a calm frame for the link or offer.",
+    "overview": "A carousel template turns one product photo into an ordered story so shoppers can follow the product from first look to use.",
     "strip": [
       "n:guide:q13-carousel-strip-0",
       "n:guide:q13-carousel-strip-1-r2",
@@ -284,161 +134,16 @@
       ]
     },
     "picker": {
-      "title": "Pick a beat for your carousel video ad",
-      "lead": "Use a four-beat sequence—open, reveal, use, finish—to answer one product question. Start with the item, then keep the final frame clear for the details you add after download.",
-      "chips": [
-        {
-          "id": "unbox",
-          "label": "Open a package or compartment"
-        },
-        {
-          "id": "detail",
-          "label": "Show a product detail"
-        },
-        {
-          "id": "use",
-          "label": "Put it to use"
-        },
-        {
-          "id": "finish",
-          "label": "End on a clear product moment"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:f5-r10-carousel-card-0-folding-umbrella",
-          "label": "Folding umbrella open→reveal→use→finish",
-          "chips": [
-            "unbox"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open a plain shipping box, reveal the folded charcoal umbrella, extend it slightly to show the ribs, then finish holding it centered beside the open box. Close vertical framing with a gentle push-in. Soft entryway daylight. Sound: box movement and one soft umbrella click; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-carousel-picker-1",
-          "label": "Cable organizer open→reveal→use→finish",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the organizer slot, reveal one loose charging cable, guide the cable into place, then finish with the organizer holding it while the other cables remain beside it. Top-down desk close-up with a gentle push. Broad window light. Sound: cable taps and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-carousel-picker-2",
-          "label": "Jacket fit check open→reveal→use→finish",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the fitting-room curtain, reveal the jacket front in the mirror, turn once to show the cuffs and hem, then finish facing the camera with the jacket centered. Mirror-height medium framing. Even fitting-room light. Sound: curtain movement and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-carousel-picker-3",
-          "label": "Serum morning routine open→reveal→use→finish",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the dropper cap, reveal the serum bottle and pipette, place one small drop on the cheek, then finish with the bottle beside the face and label facing camera. Close bathroom mirror framing. Diffused window light. Sound: cap click and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-carousel-picker-4",
-          "label": "Commuter backpack open→reveal→use→finish",
-          "chips": [
-            "use",
-            "unbox",
-            "finish"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the commuter backpack, reveal its organizer, place a notebook inside, then finish with the full backpack closed and ready to carry. Eye-level cafe close-up. Warm window light. Sound: zipper and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-carousel-picker-5",
-          "label": "Headphones feature review open→reveal→use→finish",
-          "chips": [
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the canvas tote, reveal the dark navy headphones, turn the ear cups toward the lens, then finish holding both cups and the folding hinge steady above the tote. Close over-shoulder framing with one slow push-in. Desk-side daylight. Sound: fabric rustle and a soft hinge click; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q13-carousel-picker-6",
-          "label": "Dog leash walk open→reveal→use→finish",
-          "chips": [
-            "use"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the leash clasp, reveal the clip and handle, walk forward with the calm dog, then finish with the dog and clip together in a clear walking pose. Eye-level tracking shot. Natural garden-path light. Sound: footsteps and light outdoor ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f5-r10-carousel-card-7-water-bottle",
-          "label": "Insulated water bottle open→reveal→use→finish",
-          "chips": [
-            "finish"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Open the cap, reveal the matte green insulated bottle mouth, pour into the clear glass, then finish with the bottle upright beside the filled glass on the trail table. Close outdoor framing. Natural morning light. Sound: cap click and a soft pour; no music.",
-          "kind": "video"
-        }
-      ],
+      "title": "Choose a carousel video template",
+      "lead": "Browse product story styles, then add one clear product photo.",
+      "chips": [],
+      "cards": [],
       "button": "Make a carousel video ad"
     },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:guide:q13-carousel-uses-0",
-        "h": "Post a 9:16 commuter-backpack video in a Reel",
-        "d": "Show the backpack compartments and how it fits a daily commute. Give each beat one proof point, such as the laptop sleeve, bottle pocket, or shoulder strap, so the sequence is easy to follow on a phone. Keep the laptop sleeve, bottle pocket, and shoulder strap in separate beats so none is hidden by the next crop."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q13-carousel-uses-1",
-        "h": "Add the backpack video to a product page",
-        "d": "Pair the clip with listing photos so shoppers can see the backpack compartments before choosing a size or color. Keep the panel order consistent with the product page and leave the price and link readable. If a color or size changes, update the panel labels and listing photos together."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q13-carousel-input-0-good-r1",
-        "bad": "n:guide:q13-carousel-input-0-bad-r1",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
-      },
-      {
-        "good": "n:guide:q13-carousel-input-1-good-r1",
-        "bad": "n:guide:q13-carousel-input-1-bad-r1",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q13-carousel-outputs-0-r2",
-        "frame": "1:1",
-        "label": "1:1 backpack organizer opened"
-      },
-      {
-        "ref": "n:guide:q13-carousel-outputs-1-r2",
-        "frame": "1:1",
-        "label": "1:1 backpack carried to work"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q13-carousel-after-r2",
-      "mock": {
-        "type": "carousel",
-        "title": "Panel 1 · Open",
-        "panel": "1/4"
-      },
-      "zones": [
-        "Panel number",
-        "Headline",
-        "Swipe dots & CTA"
-      ],
-      "items": [
-        "The frame shows the 1-2-3-4 panel treatment you assemble after download. Check that the commuter backpack, pocket order, and carry position stayed accurate before adding panel labels. Give every panel one readable job; a crowded frame makes the sequence harder to scan. Keep the panel crop consistent so the backpack does not jump in size between beats.",
-        "Add one headline, the price, and the product link per panel in your ad editor. Read the finished frame at mobile size and keep text away from the backpack pockets and straps. Check that the final card leaves the product silhouette clear beside the link. Use the final panel for the clear product silhouette, then place the destination link in the open area."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make a carousel video ad from one product photo"
@@ -446,26 +151,8 @@
       "m3": {
         "h2": "Plan each scene in a carousel video ad"
       },
-      "m4": {
-        "h2": "Use a carousel video ad on product pages and social"
-      },
-      "m5": {
-        "h2": "Keep carousel video ad scenes anchored to one product"
-      },
-      "m6": {
-        "h2": "Choose a carousel video ad format"
-      },
-      "m7": {
-        "h2": "Add captions and offer details after download"
-      },
       "faq": {
         "h2": "Questions about carousel video ads"
-      },
-      "examples": {
-        "h2": "Carousel video ad examples"
-      },
-      "templates": {
-        "h2": "More carousel video ad templates"
       }
     }
   }

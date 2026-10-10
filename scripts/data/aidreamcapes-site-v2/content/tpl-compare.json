@@ -1,11 +1,11 @@
 {
   "id": "tpl-compare",
-  "title": "Product Comparison Video: Side by Side | AIVideosUGC",
-  "description": "Help shoppers choose between your colors, sizes or sets with a side-by-side comparison video. One photo of both becomes a clip for listings or Shorts.",
+  "title": "Product Comparison Videos for Clearer Choices | AIVideosUGC",
+  "description": "Show shoppers the difference between your colors, sizes or sets. One photo of both options becomes a comparison clip for listings, Shorts and paid ads.",
   "h1": "Make a Product Comparison Video of Your Own Options",
   "eyebrow": "Comparison video template",
-  "lead": "Shoppers who cannot tell your colors, sizes or sets apart leave without buying, and text specs rarely settle it. Upload one photo showing both options and get a product comparison video that demonstrates the real difference so customers can choose with confidence.",
-  "benefits_h2": "Why make a product comparison video?",
+  "lead": "When shoppers cannot tell your colors, sizes or sets apart, they leave. Upload one photo of both options and get a comparison clip that makes the choice clear for listings and ads.",
+  "benefits_h2": "Why sellers use comparison videos",
   "benefits": [
     {
       "t": "Fewer undecided shoppers",
@@ -30,39 +30,20 @@
     "color options video",
     "product size comparison video"
   ],
-  "intro": [
-    "A comparison ad can help shoppers choose between two finishes, fits, or sizes. Show both options in one frame or have a creator explain the visible difference while holding them.",
-    "Comparison clips answer practical questions about color, size, fit and packaging. Show your own options together, then add variant names and current prices in an editable layer. Use 1:1, 16:9 or 9:16 for the placement you need."
-  ],
-  "tip": "Photograph both options together and describe one visible difference, such as color, size, finish or included pieces.",
-  "steps_h2": "How to make a product comparison video in 3 simple steps",
-  "steps_lead": "Three steps turn one photo of both options into a clear side-by-side clip — no studio, no models, no reshoot.",
+  "steps_h2": "How it works",
+  "steps_lead": "Choose a comparison style, add both options, generate. No second shoot and no studio setup.",
   "steps": [
     {
-      "t": "Upload Both Options",
-      "d": "Photograph both options with full silhouettes, one angle and even light. A shared surface gives the clip an honest scale instead of a faked difference."
+      "t": "Upload Both Product Options",
+      "d": "Add one clear photo that shows the two options at a similar scale."
     },
     {
-      "t": "Describe the Difference",
-      "d": "Name one difference, such as capacity, color, finish or included pieces, and the action that shows it. The clip proves it without a second shoot."
+      "t": "Pick a Comparison Style",
+      "d": "Choose a side-by-side, fit or feature scene, then generate the clip."
     },
     {
       "t": "Download and Label",
-      "d": "Add variant names, measurements and prices after download, then pick 1:1, 16:9 or 9:16 for the placement. The clip is ready with no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Size guide",
-      "d": "Stand your small and large bottles together so buyers see the real difference in height."
-    },
-    {
-      "t": "Old and new packaging",
-      "d": "Show your updated design next to the previous one so returning customers recognize it."
-    },
-    {
-      "t": "Single or set",
-      "d": "Compare one item with your gift set to show which pieces come in the bundle."
+      "d": "Download the video and add variant names, measurements or prices in your editor."
     }
   ],
   "maker": {
@@ -84,183 +65,44 @@
   },
   "faq": [
     {
-      "q": "Can I compare my product with another brand's?",
-      "a": "No. Use this template to compare options from your own range, like two colors or two sizes. Requests that include other companies' logos or trademarks may be refused."
+      "q": "What is a product comparison video template?",
+      "a": "It is a ready-made side-by-side scene. Add two of your own options and generate a clip that helps shoppers choose."
     },
     {
-      "q": "Can the video show capacity, weight, or price?",
-      "a": "Add specs like these as text in your editor after downloading. Generated numbers aren't always accurate, so it's safer to type them yourself."
+      "q": "Do I need to write prompts to use these templates?",
+      "a": "No. Choose a comparison style, upload both options and generate. Step two can include one short line about the difference if you want."
     },
     {
-      "q": "Which aspect ratio should I choose?",
-      "a": "Square 1:1 works well in product galleries and feeds. Widescreen 16:9 suits a video in your product description. Vertical 9:16 is for YouTube Shorts and other phone-first feeds."
-    },
-    {
-      "q": "Can the clip show measurements on screen?",
-      "a": "Numbers are added as a text layer after download so they stay exact. The clip can show both options side by side as you demonstrate them."
-    },
-    {
-      "q": "What length fits a comparison?",
-      "a": "A 10-second clip usually covers both options; choose 15 seconds when each one needs a demonstration and 30 for both demos in full. Clips cost 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds."
+      "q": "Who are comparison templates built for?",
+      "a": "Ecommerce sellers and agencies that show variants, sizes, finishes or sets on product pages and social ads."
     },
     {
       "q": "Can I compare two of my own products?",
-      "a": "Yes. Upload both options together and describe which feature each side should show."
+      "a": "Yes. Use the same source photo for two options in your range so the comparison stays clear and fair."
     },
     {
-      "q": "Should both products be in one source photo?",
-      "a": "Yes. A single photo with both options fully visible gives the comparison a shared scale and light reference. Leave space between them, keep caps and bases inside the frame, and avoid props that could make one option look larger or more important than the other."
+      "q": "Can one photo show both options?",
+      "a": "Yes. A clear frame with both products visible gives the scene one consistent reference."
     },
     {
-      "q": "Can I compare features instead of sizes?",
-      "a": "Yes. Compare a visible, supportable difference such as a finish, colorway, closure, included accessory, or capacity marking. Describe one action that reveals it, then add the exact feature name and any measurement as editable text after download."
+      "q": "Can I compare colors, sizes or sets?",
+      "a": "Yes. The clip can show visible differences in color, size, finish or included pieces. Add exact specifications after download."
     },
     {
-      "q": "Can I use one source photo for both variants?",
-      "a": "Yes. One frame with both options fully visible gives the generator a shared scale and light reference, as long as both caps, bases, and edges stay inside the frame."
+      "q": "How fast is a comparison video made?",
+      "a": "A clip is generated in minutes after you start the job, with no second shoot or studio booking."
     },
     {
-      "q": "How do I keep the two products at the same scale?",
-      "a": "Place both products on one level surface or hold them at equal height, leave space between them, and describe the shared camera distance. Add exact measurements later as editable text."
+      "q": "What does a comparison video cost?",
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before you run it."
     },
     {
-      "q": "Which variant should the comparison link to?",
-      "a": "Link to the product page that lists both options, then use the final text layer or CTA to name the tested size, finish, or color. Do not imply that one option is available if it is out of stock."
-    },
-    {
-      "q": "Can I run this video as a paid ad?",
-      "a": "Yes. Videos you make can be used in your own ads, listings and social posts, with no AIVideosUGC watermark on the download. You remain responsible for your ad text, claims and platform disclosures."
-    },
-    {
-      "q": "Is a 30-second clip worth it for two products?",
-      "a": "Use 30 seconds when each option needs its own demonstration, such as showing capacity on one side and included pieces on the other. For a single visible difference, 6 or 10 seconds is usually enough."
+      "q": "Can I use a comparison video in paid ads?",
+      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for product claims."
     }
   ],
-  "overview": [
-    {
-      "h2": "Compare what the camera can actually show",
-      "d": "A side-by-side clip is useful for color, size, finish, included pieces, or packaging. Keep the two items in one stable composition and let viewers inspect the difference; put performance claims and exact specifications in your product listing."
-    },
-    {
-      "h2": "Keep the comparison about your range",
-      "d": "Use this template for your own variants, sizes, or bundles. It can clarify a choice without naming or implying a competing brand, and it leaves the final decision with the shopper."
-    }
-  ],
-  "input_guide": {
-    "h2": "Photograph both options for fair scale",
-    "items": [
-      {
-        "t": "Use one shared surface",
-        "d": "Place both items on the same plain surface so the scene does not invent a scale difference."
-      },
-      {
-        "t": "Match the camera angle",
-        "d": "Front views work for color and packaging; a three-quarter view can reveal a lid, handle, or side port on both products."
-      },
-      {
-        "t": "Leave a clear center gap",
-        "d": "A small space between the options gives each label and silhouette room after the clip is downloaded."
-      },
-      {
-        "t": "Name the exact difference",
-        "d": "Say charcoal versus cream, 12-ounce versus 20-ounce, or single item versus set instead of asking for a general comparison."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the side-by-side can settle",
-    "items": [
-      {
-        "t": "A visual choice",
-        "d": "The clip can make color, form, packaging, or included pieces easy to inspect in one frame."
-      },
-      {
-        "t": "Flexible placements",
-        "d": "Use 1:1 for a listing or feed, 16:9 for a wide product section, or 9:16 for Stories and Reels."
-      },
-      {
-        "t": "A transparent test cost",
-        "d": "Use current listing data for prices, capacities, dimensions and included pieces."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Comparison scenes to describe",
-    "items": [
-      {
-        "t": "Two bottle sizes",
-        "d": "An adult creator holds a small and large bottle side by side, with both full silhouettes visible."
-      },
-      {
-        "t": "Two headphone finishes",
-        "d": "A creator holds matte black and brushed silver headphones at equal height."
-      },
-      {
-        "t": "Legging color test",
-        "d": "Two creators wear charcoal and navy versions of the same legging cut in matched poses."
-      },
-      {
-        "t": "Two phone-case colors",
-        "d": "Show sage and blush cases together, each with one circular camera opening."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Add facts the scene cannot show",
-    "items": [
-      {
-        "t": "Label each option",
-        "d": "Place the variant name, size, color, or model above the correct side."
-      },
-      {
-        "t": "Add prices and measurements",
-        "d": "Use current listing data for price, capacity, dimensions, and included pieces."
-      },
-      {
-        "t": "Keep claims neutral",
-        "d": "Describe the visible difference without adding a performance winner the clip cannot prove."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When a comparison is useful",
-    "good": [
-      "Your own colors, sizes, or finishes",
-      "Single product versus gift set",
-      "Old packaging beside a new design",
-      "Listings that need a quick visual choice"
-    ],
-    "not_ideal": [
-      "Unsupported claims about quality or performance",
-      "Two products that cannot share a truthful scale reference"
-    ]
-  },
-  "examples": {
-    "h2": "More side-by-side comparison examples",
-    "lead": "Show two versions together so shoppers can see the difference for themselves.",
-    "groups": [
-      {
-        "label": "Side by side",
-        "items": [
-          {
-            "ref": "n:guide:q12-tpl-compare-case-phone-colors-r2",
-            "title": "Sage and blush phone cases with one circular camera opening",
-            "kind": "scene",
-            "product": "phone cases"
-          },
-          {
-            "ref": "n:guide:q12-tpl-compare-strip-pet-fit-r2",
-            "title": "Two harness sizes compared beside a dog",
-            "kind": "scene",
-            "product": "dog harnesses"
-          }
-        ]
-      }
-    ]
-  },
-  "cta_lead": "Upload one photo that shows both options. See the cost before you start.",
   "visual": {
-    "overview": "A comparison video helps a seller answer one visible shopping question: which size, finish, color, or package option is right for this customer? Upload both of your own options, describe the difference, and use the result on a [product page](/ai-video-generation/product-video), in a [Shorts placement](/platforms/youtube-shorts-ads), or alongside [Amazon product photos](/platforms/amazon-product-photos). Keep both products at a comparable scale, name each side in your editor, and do not use a generated comparison to make an unverified performance claim. A clear comparison is about the choice the shopper must make, not a general review.",
+    "overview": "A comparison video puts two options side by side so shoppers can choose the size, finish or set that suits them.",
     "strip": [
       "n:guide:q12-tpl-compare-demo-size-source-r4",
       "n:guide:q12-tpl-compare-demo-size-output-02-r4",
@@ -292,155 +134,16 @@
       ]
     },
     "picker": {
-      "title": "Choose a product-comparison ad format",
-      "lead": "Choose a comparison scene that makes one buyer decision visible in the first seconds. Keep both options in one frame, match their scale, and use a side-by-side hold, fit check, or feature demonstration that your own product information can support. Use the prompt as a shot list: identify the two options, state the visible difference, then end with both products held still. Add a third option only in a separate version so the viewer does not lose track of the first two. Keep the pair in one visual system, use a matching camera distance, and let the product information you already publish decide which differences deserve a label. Use the product information you already publish to decide which differences deserve a label, and avoid unsupported performance claims in the comparison.",
-      "chips": [
-        {
-          "id": "talk-through",
-          "label": "Talk-Through Reviews"
-        },
-        {
-          "id": "side-by-side",
-          "label": "Side-by-Side"
-        },
-        {
-          "id": "fit-test",
-          "label": "Fit Tests"
-        },
-        {
-          "id": "wear-test",
-          "label": "Wear Tests"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q12-tpl-compare-card-01-serum-review",
-          "label": "Talking-Head Compare: serum finishes",
-          "chips": [
-            "talk-through"
-          ],
-          "prompt": "Photorealistic square comparison ad still: an adult creator holds two amber serum bottles with different finishes at equal height, fronts facing the camera. Bright vanity daylight, natural skin texture, chest-up composition. Freeze a clear side-by-side review moment. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-compare-card-02-headphone-review",
-          "label": "Talking-Head Compare: headphone fit",
-          "chips": [
-            "talk-through"
-          ],
-          "prompt": "Photorealistic square comparison ad still: an adult creator wears one plain over-ear headphone fit and holds a matching second pair beside his shoulder. Show both ear cups and headbands clearly. Soft desk daylight, chest-up tech-demo composition. No brand marks, text, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-compare-card-03-skincare-bottles",
-          "label": "Side-by-Side Demo: skincare bottles",
-          "chips": [
-            "side-by-side"
-          ],
-          "prompt": "Photorealistic square comparison ad still: two hands hold plain skincare bottles side by side, showing the visible packaging and finish difference. Bright bathroom vanity light, close composition, both full bottles in frame. Freeze the comparison moment. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-compare-card-04-athletic-fits",
-          "label": "Wear Test: two athletic fits",
-          "chips": [
-            "fit-test",
-            "wear-test"
-          ],
-          "prompt": "Photorealistic square split-screen fitness ad still: two adult creators wear a matching athletic legging cut in charcoal and navy, shown from waist to ankle in matched poses. Bright studio daylight, balanced side-by-side framing. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-compare-card-05-sneaker-colors",
-          "label": "Side-by-Side Demo: sneaker colorways",
-          "chips": [
-            "wear-test"
-          ],
-          "prompt": "Photorealistic square sports comparison ad still: two adult runners wear charcoal trail sneakers in two colorways on a city path, both pairs fully visible. Cool natural daylight, low close framing, matched planted steps. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-compare-card-06-pet-harness-sizes",
-          "label": "Fit Compare: pet harness sizes",
-          "chips": [
-            "fit-test"
-          ],
-          "prompt": "Photorealistic square pet comparison ad still: an adult owner holds two green harness sizes beside a calm dog wearing the smaller fit. Show the straps, buckles and dog clearly in a bright living room. Freeze the fit comparison. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-compare-card-07-supplement-flavors",
-          "label": "Mix Compare: two supplement flavors",
-          "chips": [
-            "side-by-side"
-          ],
-          "prompt": "Photorealistic square beverage comparison ad still: two hands hold vanilla and cocoa protein drinks in plain shaker cups side by side, with the color difference clear. Bright gym lounge daylight, close counter-height framing. No text, logos, or watermark.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q12-tpl-compare-card-08-package-refresh",
-          "label": "Package Compare: skincare refresh",
-          "chips": [
-            "side-by-side"
-          ],
-          "prompt": "Photorealistic square skincare comparison ad still: hands hold an earlier and refreshed skincare bottle design side by side, both front labels blank and fully visible. Bright vanity light, clean close composition. Freeze the packaging comparison. No text, logos, or watermark.",
-          "kind": "photo"
-        }
-      ],
+      "title": "Choose a comparison template",
+      "lead": "Browse comparison styles, then add two options from your own range.",
+      "chips": [],
+      "cards": [],
       "button": "Make a product-comparison video"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:q12-tpl-compare-strip-runner-r2",
-        "h": "Share two sneaker colorways in a social post",
-        "d": "A side-by-side social post can show two colors or finishes without forcing the shopper to open separate listings. Keep the pair at equal height, label each option after download, and link to the page where both variants are in stock."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q12-tpl-compare-strip-skincare-talk-r2",
-        "h": "Show two skincare finishes on a product page",
-        "d": "A product-page comparison works when the viewer can inspect one measurable difference, such as size or included pieces. Show both items in one steady action, add exact measurements yourself, and keep the clip focused on the choice rather than an unsupported result claim."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q12-tpl-compare-input-good-r1",
-        "bad": "n:guide:q12-tpl-compare-demo-size-blur-r4",
-        "good_label": "Both bottle sizes and caps stay sharp",
-        "bad_label": "Soft focus hides both bottle sizes"
-      },
-      {
-        "good": "n:guide:q12-tpl-compare-input-good-02-r1",
-        "bad": "n:guide:q12-tpl-compare-demo-size-crop-r4",
-        "good_label": "Both complete bottles fit in frame",
-        "bad_label": "The crop cuts off both bottle ends"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q12-tpl-compare-demo-size-output-01-r4",
-        "frame": "1:1",
-        "label": "Creator compares two amber bottle sizes"
-      },
-      {
-        "ref": "n:guide:q12-tpl-compare-demo-size-output-03-r1",
-        "frame": "1:1",
-        "label": "Both amber bottle sizes stay in view"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q12-tpl-compare-after-bottle-sizes-r1",
-      "zones": [
-        "Variant names",
-        "Price",
-        "Product link"
-      ],
-      "items": [
-        "Add each variant name and price as editable text after download.",
-        "Link the comparison to the product page with both options available."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make a product-comparison video from one photo"
@@ -448,26 +151,8 @@
       "m3": {
         "h2": "Choose a product-comparison video scene"
       },
-      "m4": {
-        "h2": "Use comparison videos on product pages and social"
-      },
-      "m5": {
-        "h2": "Start a product-comparison video with a clear image"
-      },
-      "m6": {
-        "h2": "Choose a square product-comparison video format"
-      },
-      "m7": {
-        "h2": "Add variant names and prices after download"
-      },
       "faq": {
         "h2": "Questions about product-comparison videos"
-      },
-      "examples": {
-        "h2": "Product comparison video examples"
-      },
-      "templates": {
-        "h2": "More comparison video templates"
       }
     }
   }
