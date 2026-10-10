@@ -4,7 +4,7 @@
   "description": "Keep the product and swap the background behind it. A clean color, counter or seasonal setting in one square photo, ready for listings or ads.",
   "h1": "AI Product Background Changer",
   "eyebrow": "Photo tool",
-  "lead": "Keep the product shot you like. Replace only the setting behind it with a clean color, a counter or a seasonal scene. No reshoot, no studio day.",
+  "lead": "Remove and replace the background behind your product in seconds. Keep the item exactly as it is and set it on a clean surface, a brand color or a seasonal scene.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -12,35 +12,56 @@
     "new background for Etsy photos",
     "AI backdrop for product shots"
   ],
-  "benefits_h2": "Why change a product photo background with AI?",
-  "benefits": [
-    {
-      "t": "Keep it professional",
-      "d": "Move a product off a messy counter and onto a clean surface. Listings and ads look shot in one place."
-    },
-    {
-      "t": "Save hours and money",
-      "d": "Skip the reshoot, the crew and the studio day. One existing photo is all you need."
-    },
-    {
-      "t": "Seasonal settings on demand",
-      "d": "Give an existing listing a holiday or launch backdrop without unpacking stock or setting up lights."
-    }
-  ],
-  "steps_h2": "How to change a product photo background with AI",
-  "steps_lead": "Three steps. The product stays, the setting changes.",
+  "steps_h2": "How to change a product background with AIVideosUGC",
+  "steps_lead": "Want a fresh look for your products? Change any product image in three simple steps.",
   "steps": [
     {
       "t": "Upload Your Image",
       "d": "Add one sharp photo with the whole product in frame. A messy room behind it is fine."
     },
     {
-      "t": "Describe the New Background",
+      "t": "Give Your Prompt",
       "d": "Name one surface, color or room, such as white marble or pale sage. You can also pick a ready-made option."
     },
     {
       "t": "Download Your New Photo",
       "d": "Review the edges against the original and download the finished square photo. Add logos and text in your own editor."
+    }
+  ],
+  "benefits_h2": "Why you need an AI product background changer",
+  "benefits": [
+    {
+      "t": "Keep it professional",
+      "d": "Move a product off a cluttered counter and onto a clean surface, so listings and ads look shot in one place."
+    },
+    {
+      "t": "Market those ads",
+      "d": "Give the same item a fresh backdrop for a new campaign or season without unpacking stock again."
+    },
+    {
+      "t": "Cost effective",
+      "d": "Skip the reshoot, the crew and the studio day. One existing photo is all you need."
+    }
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Why AIVideosUGC",
+      "h2": "A precise product background replacer",
+      "lead": "The item stays the same while only the setting changes.",
+      "items": [
+        {
+          "t": "Save hours and dollars",
+          "d": "A new background is ready in minutes, for far less than booking space and lights."
+        },
+        {
+          "t": "Precise product keeping",
+          "d": "The angle, scale and edges of your product are preserved while the backdrop changes."
+        },
+        {
+          "t": "Sharp square results",
+          "d": "Download a high-resolution square photo ready for your store and your feed."
+        }
+      ]
     }
   ],
   "maker": {
@@ -66,6 +87,10 @@
       "a": "It is a tool that keeps your product and replaces the setting behind it. You start from one existing photo and get a finished square photo with the new background in place."
     },
     {
+      "q": "How do I change a product background?",
+      "a": "Upload one product photo, name the surface, color or room you want, and generate. Then review the edges and download the new image."
+    },
+    {
       "q": "Will my product change when the background changes?",
       "a": "The item should stay the same: same angle, same scale, same edges. Small printed details can shift, so compare each result with the real product before you publish."
     },
@@ -76,10 +101,6 @@
     {
       "q": "Which backgrounds work best?",
       "a": "Simple surfaces and colors keep attention on the item: marble, light wood, stone, linen or a solid brand color. Busy patterns can compete with the product."
-    },
-    {
-      "q": "Can I add my logo or a sale message?",
-      "a": "Add logos and words afterward in your own editor. AI-made lettering can come out misspelled or blurry."
     },
     {
       "q": "Can the new photo run in paid ads?",
@@ -94,289 +115,19 @@
       "a": "A reshoot means booking space and setting up lights again. Here the new setting is generated from your existing photo in minutes, at far less cost."
     }
   ],
-  "overview": [
-    {
-      "h2": "Keep the product, change the setting",
-      "d": "The item and its angle stay exactly as they are. Only the surface and scene behind it change, so one photo can fit a whole catalog."
-    }
-  ],
-  "examples": {
-    "h2": "More background swaps",
-    "lead": "One product shown on different backdrops, from a plain color block to a seasonal scene.",
-    "groups": [
-      {
-        "label": "Creator-style ad scenes",
-        "items": [
-          {
-            "ref": "n:guide:q6-cbg-example-1",
-            "title": "Hand Demo: Fit a generic phone case",
-            "kind": "photo",
-            "product": "generic phone case"
-          },
-          {
-            "ref": "n:guide:q6-cbg-example-2",
-            "title": "Routine: Mix a post-workout protein drink",
-            "kind": "photo",
-            "product": "protein powder"
-          },
-          {
-            "ref": "n:guide:q6-cbg-example-3",
-            "title": "White leather shoes on a morning walk",
-            "kind": "photo",
-            "product": "walking shoes"
-          }
-        ]
-      },
-      {
-        "label": "Product-use formats",
-        "items": [
-          {
-            "ref": "n:guide:q6-cbg-example-4",
-            "title": "GRWM: Apply serum before work",
-            "kind": "photo",
-            "product": "facial serum"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "strip": [
-      "n:guide:q6-social-strip-skincare-routine",
-      "n:guide:q6-cbg-strip-2",
-      "n:guide:q6-cbg-strip-4",
-      "n:guide:q6-cbg-strip-5",
-      "n:guide:q6-cbg-strip-6",
-      "n:guide:q6-cbg-strip-3-r2"
-    ],
     "steps": {
       "source": "n:guide:q19-shop-hero-serum",
       "result": "n:guide:f18-change-bg-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded amber serum dropper as the exact product reference. Keep the adult woman shown in the source, her white textured bathrobe, cheek application pose, hands, bottle, dropper, camera angle and framing. Change only the background to a soft muted sage-green bathroom with gentle tile detail and natural light."
+      "prompt": "Use the uploaded amber serum dropper as the exact product reference. Keep the adult woman shown in the source, her white textured bathrobe, cheek application pose, hands, bottle, dropper, camera angle and framing. Change only the background to a soft muted sage-green bathroom with gentle tile detail and natural light"
     },
     "picker": {
       "title": "Browse product settings",
-      "lead": "Each card moves the same product into a new scene. Pick a setting that fits the item and your brand.",
-      "chips": [
-        {
-          "id": "routine",
-          "label": "Get Ready With Me"
-        },
-        {
-          "id": "product-use",
-          "label": "Product Demo"
-        },
-        {
-          "id": "problem-fix",
-          "label": "Before & After"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q6-cbg-picker-1",
-          "label": "GRWM: Serum before work",
-          "chips": [
-            "routine",
-            "demo"
-          ],
-          "prompt": "Use the uploaded serum as the exact product. An adult creator dispenses one drop into her palm and pats it onto her cheek in a natural morning routine. Keep the unbranded bottle visible and make no skin or medical claims.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-cbg-picker-2-r2",
-          "label": "Before & After: Phone case swap",
-          "chips": [
-            "problem-fix",
-            "demo"
-          ],
-          "prompt": "Use the uploaded case as the exact product. Show a clear before-and-after as an adult replaces a worn generic phone case with the new single-camera-opening case. No recognizable phone design or text.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-cbg-picker-3",
-          "label": "Try-On: Suede loafers on foot",
-          "chips": [
-            "product-use",
-            "problem-fix",
-            "demo"
-          ],
-          "prompt": "Use the uploaded loafers as the exact product. An adult slips them on and takes a confident step, with the fit, stitching and sole visible.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-cbg-picker-4",
-          "label": "Pet Brush Demo: Clear Sofa",
-          "chips": [
-            "problem-fix",
-            "demo"
-          ],
-          "prompt": "Use the uploaded pet brush as the exact product. An adult lifts fur from a sofa and reveals a clean strip beside it, with the tool visible in hand.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-cbg-picker-5",
-          "label": "Routine: Creatine shake at the gym",
-          "chips": [
-            "routine",
-            "demo"
-          ],
-          "prompt": "Use the uploaded supplement container as the exact product. An adult measures one scoop into a shaker before training; make no health claims and keep label lettering blank.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-cbg-picker-6",
-          "label": "Try-On: Gold hoops before work",
-          "chips": [
-            "routine",
-            "product-use",
-            "demo"
-          ],
-          "prompt": "Use the uploaded earrings as the exact product. An adult fastens one hoop and turns to a mirror to show the scale and finish.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-cbg-picker-7",
-          "label": "First-Bite Reaction: Protein snack",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded snack bar as the exact product. An adult takes a first bite outdoors and gives a natural, pleased reaction.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-cbg-picker-8",
-          "label": "Workout Routine: Resistance band shoulder exercise",
-          "chips": [
-            "product-use",
-            "demo"
-          ],
-          "prompt": "Use the uploaded resistance band as the exact product. An adult shows a simple shoulder exercise with the band clearly visible and controlled form.",
-          "kind": "photo"
-        }
-      ],
+      "lead": "Each card moves one product into a new scene. Pick a setting that fits the item and your brand.",
+      "chips": [],
+      "cards": [],
       "button": "Try this background"
-    },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:q6-cbg-uses-1",
-        "h": "Show scale and finish",
-        "d": "Place jewelry or small items on a clean surface. Shoppers judge size and material without distraction."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q6-cbg-uses-2",
-        "h": "A catalog that looks like one shoot",
-        "d": "Move products shot in different rooms onto matching surfaces. The whole store feels consistent."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k5-change-background-input-0-good",
-        "bad": "n:guide:q6-cbg-bad-daypack-r2",
-        "good_label": "Open bag, full handle visible",
-        "bad_label": "Top handle clipped by frame"
-      },
-      {
-        "good": "n:gen2:plat-instagram-g1",
-        "bad": "n:guide:q6-cbg-bad-mug-r2",
-        "good_label": "Whole speckled mug, handle in frame",
-        "bad_label": "Too close: only the rim in view"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q6-cbg-output-backpack-r1",
-        "frame": "1:1",
-        "label": "Day in the Life: Wear an olive daypack"
-      },
-      {
-        "ref": "n:guide:q6-cbg-output-mug-r1",
-        "frame": "1:1",
-        "label": "First Sip: Speckled ceramic mug"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q6-cbg-after",
-      "zones": [
-        "Your price",
-        "Your headline"
-      ],
-      "items": [
-        "Type prices, logos and sale dates in your own editor. AI lettering can come out misspelled.",
-        "Zoom in on labels, patterns and edges and compare them with the real product."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "How to change a product photo background in 3 steps"
-      },
-      "m3": {
-        "h2": "Product scenes by format",
-        "lead": "Pick a setting that shows the product at its best."
-      },
-      "m4": {
-        "h2": "Where new-background photos help"
-      },
-      "m5": {
-        "h2": "Which photos work best for background replacement"
-      },
-      "m6": {
-        "h2": "Output sizes and credits"
-      },
-      "m7": {
-        "h2": "Add price and logo in your editor"
-      },
-      "beforeAfter": {
-        "h2": "Product photo background, before and after"
-      },
-      "examples": {
-        "h2": "More background swaps"
-      },
-      "templates": {
-        "h2": "Background templates"
-      },
-      "faq": {
-        "h2": "Background changer FAQ"
-      },
-      "gallery": {
-        "h2": "Background replacement examples with the product kept in view"
-      }
     }
-  },
-  "limitations": {
-    "h2": "What the background change includes",
-    "items": [
-      {
-        "t": "Product stays the same",
-        "d": "The item's angle, scale and visible edges stay in place while the setting changes.",
-        "supported": true
-      },
-      {
-        "t": "One new setting",
-        "d": "Name a surface, color or room so the background has one clear direction.",
-        "supported": true
-      },
-      {
-        "t": "Seasonal settings",
-        "d": "Refresh an existing listing with a holiday or launch backdrop.",
-        "supported": true
-      },
-      {
-        "t": "Transparent cut-out",
-        "d": "The output keeps a finished background. It is not a transparent asset.",
-        "supported": false
-      },
-      {
-        "t": "Logos or text",
-        "d": "Add logos, prices and words yourself after download.",
-        "supported": false
-      }
-    ]
   }
 }

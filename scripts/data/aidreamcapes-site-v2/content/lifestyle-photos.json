@@ -1,10 +1,10 @@
 {
   "id": "lifestyle-photos",
-  "title": "Lifestyle Product Photo Maker for Shops | AIVideosUGC",
-  "description": "Place a product in a believable room, table or cafe scene from one plain photo, so shoppers picture using it without booking a shoot.",
-  "h1": "Create Lifestyle Product Photos from One Plain Photo",
+  "title": "AI Product Staging: Lifestyle Photo Maker | AIVideosUGC",
+  "description": "Put your product in a real-life room, table or cafe scene from one plain photo, so shoppers picture using it without booking a photoshoot.",
+  "h1": "Stage Your Products in Real-Life Scenes with AI",
   "eyebrow": "Lifestyle photo maker",
-  "lead": "Shoppers picture an item in their day before they buy. Place the product in a room, a table or a cafe scene. No props, no space, no photoshoot.",
+  "lead": "Set your product in the right surrounding. One plain photo becomes a styled, real-life scene that helps shoppers picture the item in their day.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,20 +12,34 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Why sellers create lifestyle photos with AIVideosUGC",
-  "steps_h2": "How to make a lifestyle product photo with AI",
+  "benefits_h2": "Set the scene that helps shoppers buy",
+  "benefits": [
+    {
+      "t": "See it in everyday use",
+      "d": "Place the item on a kitchen counter, a bedside table or a cafe table where its use is easy to picture."
+    },
+    {
+      "t": "Realistic scenes that sell",
+      "d": "Styled, natural-light photos help shoppers imagine owning the product and add it to the listing."
+    },
+    {
+      "t": "High-quality, made fast",
+      "d": "Generate a clean lifestyle image in minutes from one photo, without a studio, props or a crew."
+    }
+  ],
+  "steps_h2": "How to use product staging",
   "steps_lead": "Three steps. One plain photo in, one styled scene out.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo with the whole product in frame. A plain background works best."
+      "t": "Create an account",
+      "d": "Add one clear product photo with the whole item in frame. A plain background works best."
     },
     {
-      "t": "Pick a Scene and Share Your Idea",
-      "d": "Choose a room, a surface or a cafe scene. Share your idea in one sentence."
+      "t": "Test different ideas",
+      "d": "Choose a room, a surface or a cafe scene. Share your idea in one sentence and try a few settings."
     },
     {
-      "t": "Generate and Download",
+      "t": "Download your image",
       "d": "Review the styled photo and download it. Add caption, link and price in your own editor."
     }
   ],
@@ -37,7 +51,7 @@
       ],
       [
         "Scene",
-        "Café table"
+        "Cafe table"
       ],
       [
         "Size",
@@ -48,348 +62,53 @@
   },
   "faq": [
     {
-      "q": "What is a lifestyle product photo?",
-      "a": "It is a photo that shows your product inside a believable room or scene, such as a kitchen counter or a cafe table. It helps shoppers picture using the item."
+      "q": "What is AI product staging?",
+      "a": "It places your product inside a realistic real-life scene, such as a kitchen counter or a cafe table, starting from one plain product photo. It helps shoppers picture the item in use."
     },
     {
-      "q": "How do I make one from a plain product photo?",
-      "a": "Upload one clear product photo, choose a scene and describe the setting in one sentence. The generated photo places the item in that scene."
+      "q": "How does product staging work?",
+      "a": "Upload one clear product photo, choose a setting and describe the scene in one sentence. The generated photo keeps your item and places it in that context."
+    },
+    {
+      "q": "Is product staging suitable for ecommerce?",
+      "a": "Yes. The square image works on product pages, Shopify listings and social posts, alongside a plain product photo that shows the exact item."
+    },
+    {
+      "q": "Can I pick the setting for my product?",
+      "a": "Yes. Name a room, a surface, the light and a prop or two, or pick a ready-made scene. One clear setting works best."
+    },
+    {
+      "q": "Can I customize the generated background?",
+      "a": "Yes. Ask for fewer props, a different surface or another room, and generate a new version with the same product photo."
     },
     {
       "q": "Does it replace my plain product image?",
-      "a": "No. Keep a plain view so shoppers can inspect the item and its size. The lifestyle scene shows where it fits into daily life, and the two work together."
-    },
-    {
-      "q": "Which scenes work for home goods?",
-      "a": "A bedside table, a calm shelf or a kitchen counter gives a lamp, pillow or dish a clear place in the home."
-    },
-    {
-      "q": "Can I show how the product is used?",
-      "a": "Yes. Pick a scene where the use is easy to follow, with a person or hands interacting with the item."
+      "a": "No. Keep a plain view so shoppers can inspect the item and its size. The staged scene shows where it fits into daily life."
     },
     {
       "q": "Can the photo run in social ads?",
       "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor, not on the image."
     },
     {
-      "q": "Can I ask for a close-up detail?",
-      "a": "Yes. Request a close view of a texture, clasp, seam or other feature, and compare it with the real product."
-    },
-    {
-      "q": "How is this different from a real photoshoot?",
+      "q": "How is this different from a photoshoot?",
       "a": "A shoot needs props, a space and often a crew. Here the scene is generated from one existing photo in minutes, at far less cost."
     }
   ],
-  "overview": [
-    {
-      "h2": "Give your product a place in the buyer's day",
-      "d": "One plain photo moves into a breakfast table, a reading corner or a cafe counter. The scene stays focused on the product, so the use is easy to picture."
-    }
-  ],
-  "examples": {
-    "h2": "Lifestyle Ads in Use",
-    "lead": "Browse product-led routines, demonstrations, reviews, try-ons and unboxing scenes.",
-    "groups": [
-      {
-        "label": "In-Use Demos",
-        "items": [
-          {
-            "ref": "n:guide:q5-life-tote-example-r2",
-            "title": "Market Tote Demo: shopper packs fresh produce",
-            "kind": "photo",
-            "product": "canvas market tote"
-          },
-          {
-            "ref": "n:guide:q5-life-pet-gallery-r2",
-            "title": "Pet Tool Demo: brush a golden retriever",
-            "kind": "photo",
-            "product": "wooden grooming brush"
-          },
-          {
-            "ref": "n:guide:q5-life-scarf-example-r2",
-            "title": "Fashion Style OOTD: patterned scarf on a city walk",
-            "kind": "photo",
-            "product": "silk scarf"
-          }
-        ]
-      },
-      {
-        "label": "Reviews and Unboxing",
-        "items": [
-          {
-            "ref": "n:guide:q5-life-unbox-gallery-r2",
-            "title": "ASMR Unboxing: moisturizer jar reveal",
-            "kind": "photo",
-            "product": "moisturizer jar"
-          },
-          {
-            "ref": "n:guide:q5-life-fitness-example-r2",
-            "title": "Post-Workout Review: first sip from a shaker",
-            "kind": "photo",
-            "product": "supplement shaker"
-          },
-          {
-            "ref": "n:guide:q5-life-sauce-example-r2",
-            "title": "First-Bite Review: taco with red sauce",
-            "kind": "photo",
-            "product": "red sauce bottle"
-          }
-        ]
-      }
-    ]
-  },
-  "limitations": {
-    "h2": "What a lifestyle scene can show",
-    "items": [
-      {
-        "t": "A product in context",
-        "d": "Use a familiar surface or room to show where the item might sit or be used.",
-        "supported": true
-      },
-      {
-        "t": "It does not confirm dimensions",
-        "d": "Add verified size and measurements to your listing.",
-        "supported": false
-      },
-      {
-        "t": "Small details can look different",
-        "d": "Generated light and styling can change the appearance of hardware or color.",
-        "supported": false
-      }
-    ]
-  },
   "visual": {
-    "strip": [
-      "n:guide:q5-life-scarf-picker-r2",
-      "n:guide:q5-life-sauce-picker-r2",
-      "n:guide:q5-life-laundry-strip-r2",
-      "n:guide:q5-life-fitness-template-r2",
-      "n:guide:q5-life-sandal-tryon",
-      "n:guide:k5-lifestyle-gallery-06"
-    ],
     "steps": {
       "source": "n:guide:q5-life-tote-source-r2",
       "result": "n:guide:q5-life-tote-hero-r2",
       "mode": "photo",
       "prompt": "Use the uploaded photo as the cream canvas tote and preserve its exact color, rectangular shape, long handles and plain woven fabric. Show an adult carrying this tote through a farmers market with a few groceries visible inside. Soft daylight, authentic product-review framing, no text or logo.",
-      "options": [
-        [
-          "Photo",
-          "Your product shot"
-        ],
-        [
-          "Scene",
-          "Café table"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ],
       "sourceTitle": "Cream canvas tote photo",
       "sourceHint": "Keep the complete bag and handles visible."
     },
     "picker": {
       "title": "Browse lifestyle scenes",
-      "lead": "Each card places the same product in a believable moment. Pick a scene the item belongs in.",
-      "chips": [
-        {
-          "id": "routine",
-          "label": "Get Ready With Me"
-        },
-        {
-          "id": "pack",
-          "label": "Unboxing"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        },
-        {
-          "id": "tryon",
-          "label": "Try-On"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q5-life-pet-demo",
-          "label": "Pet Brush Demo",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the grooming brush and preserve its wood handle, oval head and bristles. An adult brushes a golden retriever on a living-room rug, ending with the brush against the coat and the relaxed dog in view. Soft window light, natural home-care campaign framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-serum-template-r2",
-          "label": "Skincare Routine",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the serum bottle and preserve its amber glass, narrow shape, black dropper cap and blank label. An adult applies one drop to her cheek beside a bathroom mirror, ending with the bottle visible near her face. Soft morning light, authentic skincare campaign framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-pack-example-r2",
-          "label": "Tea Pouch Demo",
-          "chips": [
-            "pack"
-          ],
-          "prompt": "Use the uploaded photo as the tea pouch and preserve its plain kraft front, stand-up shape and seams. Hands measure loose leaves into an infuser beside a ceramic cup, ending with the pouch fully visible. Warm kitchen daylight, natural product-demo framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-sauce-recipe",
-          "label": "Taco Sauce Demo",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the sauce bottle and preserve its clear glass, bottle shape and red sauce. A hand pours sauce over a freshly plated taco, ending with the bottle and meal together. Warm kitchen light, appetizing creator-style food framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-sandal-gallery-r2",
-          "label": "Sandals Try-On Walk",
-          "chips": [
-            "tryon"
-          ],
-          "prompt": "Use the uploaded photo as the sandals and preserve their cognac color, ankle straps and soles. An adult takes a sidewalk step wearing the uploaded pair, ending with both sandals visible. Natural daylight, close fashion try-on framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-scarf-ootd",
-          "label": "Scarf OOTD Look",
-          "chips": [
-            "tryon",
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the scarf and preserve its cream silk, muted botanical pattern and colors. An adult adjusts it over a neutral jacket on a city sidewalk, ending with the pattern centered in frame. Soft daylight, candid OOTD campaign style, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-hiking-tryon",
-          "label": "Hiking Boot Try-On",
-          "chips": [
-            "tryon"
-          ],
-          "prompt": "Use the uploaded photo as the hiking boots and preserve their brown leather, ankle height and dark laces. An adult walks along a forest trail wearing them, ending with both boots in view. Dappled daylight, close footwear try-on framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-life-picker-unboxing",
-          "label": "Moisturizer Unboxing",
-          "chips": [
-            "pack"
-          ],
-          "prompt": "Use the uploaded photo as the moisturizer jar and preserve its short round shape, clear lower glass and wide white lid. Hands lift it from white tissue in an open kraft skincare box, ending with the jar centered. Warm daylight, tactile ecommerce unboxing framing, no text or logo.",
-          "kind": "photo"
-        }
-      ],
+      "lead": "Each card places one product in a believable, real-life moment. Pick a scene the item belongs in.",
+      "chips": [],
+      "cards": [],
       "button": "Make a lifestyle photo"
-    },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:q5-life-pet-use-r2",
-        "h": "Show the product in use",
-        "d": "A grooming brush, kitchen tool or gadget is easier to understand when hands use it in a real room."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q5-life-earbuds-review",
-        "d": "A styled scene in a feed shows the item as part of a normal day. One clear setting keeps attention on the product."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k5-lifestyle-photos-input-0-good",
-        "bad": "n:guide:q5-life-storage-cropped-r3",
-        "good_label": "Beige storage cubes fully in frame",
-        "bad_label": "Same beige storage cube cut off at the edge"
-      },
-      {
-        "good": "n:guide:k5-lifestyle-photos-input-1-good",
-        "bad": "n:guide:k5-lifestyle-photos-input-1-bad",
-        "good_label": "Kraft tea pouch and cup in focus",
-        "bad_label": "Kraft tea pouch softened by blur"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q5-life-storage-output-r2",
-        "frame": "1:1",
-        "label": "Beige storage cubes holding folded sweaters"
-      },
-      {
-        "ref": "n:guide:q5-life-pack-picker-r2",
-        "frame": "1:1",
-        "label": "Loose-leaf tea poured beside its pouch"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q5-life-laundry-before-after",
-      "zones": [
-        "Your caption",
-        "Shop link"
-      ],
-      "items": [
-        "Write your caption and link in the post, not on the image.",
-        "Check hardware, stitching and color against your product.",
-        "Make a second setting for another season or audience."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "How to make lifestyle product photos in three steps"
-      },
-      "m3": {
-        "h2": "Lifestyle photo formats in use",
-        "lead": "Choose a routine, demo, unboxing or try-on scene for the product."
-      },
-      "m4": {
-        "h2": "Where lifestyle product photos help you sell"
-      },
-      "m5": {
-        "h2": "What photo to upload for a lifestyle scene"
-      },
-      "m6": {
-        "h2": "Lifestyle photo size and credits"
-      },
-      "m7": {
-        "h2": "Add your caption after download"
-      },
-      "gallery": {
-        "h2": "AI lifestyle product photo examples"
-      },
-      "examples": {
-        "h2": "More lifestyle product photos"
-      },
-      "examplesLead": "Browse routines, product demos, outfit checks and food scenes with products in use.",
-      "templates": {
-        "h2": "Lifestyle photo templates",
-        "lead": "Start from a table, room or café scene and adapt it to your product photo."
-      },
-      "faq": {
-        "h2": "Lifestyle product photo FAQs"
-      }
     }
-  },
-  "benefits": [
-    {
-      "t": "Cost-effective scenes",
-      "d": "Get a styled product photo for far less than booking a space, props and a crew."
-    },
-    {
-      "t": "Time-saving",
-      "d": "A scene that would take a shoot to prepare is ready in minutes from one plain photo."
-    },
-    {
-      "t": "No models or props to source",
-      "d": "The setting is generated, so you do not rent a room, gather props or hire a model."
-    },
-    {
-      "t": "Fast testing support",
-      "d": "Make a few different scenes with the same product and see which one fits the listing or ad best."
-    }
-  ]
+  }
 }

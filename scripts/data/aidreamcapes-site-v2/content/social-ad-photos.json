@@ -1,10 +1,10 @@
 {
   "id": "social-ad-photos",
-  "title": "AI Ad Image Generator | AIVideosUGC",
-  "description": "Make a square Facebook or Instagram ad photo from one product shot with clear space left for your headline or offer, added in Ads Manager or Canva.",
-  "h1": "AI Ad Image Generator for Facebook and Instagram",
-  "eyebrow": "Photo tool",
-  "lead": "A feed ad has to make the product clear at thumbnail size and still leave room for your headline, but paying a designer for each new version adds up fast. Make the square ad photo from one product shot with the open space built in, then type and test every word in your ad tool.",
+  "title": "AI Ad Image Generator for Social Feeds | AIVideosUGC",
+  "description": "Create, customize and launch square social ad images from one product photo. A clean product scene with room for your headline, ready in minutes.",
+  "h1": "Turn One Product Photo into Ready-to-Launch Social Ad Images",
+  "eyebrow": "AI ad image generator",
+  "lead": "This AI ad image generator turns one product shot into a clean, feed-ready image. You keep full creative control over the product and the words, and launch without a photoshoot.",
   "secondary_keywords": [
     "Facebook ad image maker",
     "Instagram feed ad photos",
@@ -12,39 +12,35 @@
     "square ad images for social media",
     "AI images for paid social ads"
   ],
-  "benefits_h2": "Why make social ad photos with AI?",
+  "benefits_h2": "Full creative control over your image ads",
   "benefits": [
     {
-      "t": "The product reads at thumbnail size",
-      "d": "One clear item in a simple scene stays recognizable while people scroll, which busy designs lose in a feed."
+      "t": "Your brand, your rules",
+      "d": "Keep the product, colors and claim the way you want them, with open space for your own headline."
     },
     {
-      "t": "Headline space built in",
-      "d": "Ask for an open side or upper area, so your offer fits without covering the product or crowding the frame."
+      "t": "Campaign-ready photoshoots",
+      "d": "Get a styled square product image built for paid social without a camera, a set or a crew."
     },
     {
-      "t": "Words stay editable and correct",
-      "d": "The photo ships without baked-in text; you type the headline and price in Ads Manager or Canva, where spelling is exact."
-    },
-    {
-      "t": "Test several scenes from one photo",
-      "d": "Generate alternative backdrops or one-use moments with the same audience and offer, each with its credit cost shown first."
+      "t": "Easy to add to your process",
+      "d": "Generate the scene here, then type the price and offer in your own editor so every word stays correct."
     }
   ],
-  "steps_h2": "How to make a square social ad photo in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a square ad image with headline space, ready for Ads Manager.",
+  "steps_h2": "How to make a social ad image with AI",
+  "steps_lead": "Three steps. One product shot in, one square ad image out.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear, in-focus product photo. The item has to read instantly when the ad appears at thumbnail size."
+      "d": "Add one clear product photo. The item should read at thumbnail size."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Choose one backdrop or setting and say where the headline goes, such as open space on the left. Simple scenes scroll better."
+      "t": "Pick a Scene and Share Your Idea",
+      "d": "Choose a simple backdrop and say where the headline should go. Share your idea in one sentence."
     },
     {
-      "t": "Add Your Headline and Post",
-      "d": "Download the photo, then type your offer and price in Ads Manager or Canva. Preview it on a phone before launch."
+      "t": "Generate and Download",
+      "d": "Review the square photo and download it. Add headline, price and offer in your ad editor."
     }
   ],
   "maker": {
@@ -66,344 +62,51 @@
   },
   "faq": [
     {
-      "q": "Can the AI put my headline and price on the image?",
-      "a": "No. It creates the product scene with open space but does not render readable campaign text. Compare [macro detail photos](/ai-image-generation/macro-details) when a small product feature must stay visible."
+      "q": "What is an AI ad image generator?",
+      "a": "It is a tool that turns one product shot into a clean square photo built for social feeds. You add the headline and price in your ad editor."
     },
     {
-      "q": "What size are the ad images?",
-      "a": "The examples on this page use square feed images. Other placements may use different dimensions or crops. For placement planning, use [TikTok ads](/platforms/tiktok-ads) and [product video demos](/ai-video-generation/product-video) alongside this square frame."
+      "q": "How do I create an image ad from a photo?",
+      "a": "Upload one product photo, choose a scene and share your idea. The finished square image is ready to download and add to a campaign."
     },
     {
-      "q": "Can I test two scene options?",
-      "a": "Yes. Keep the audience and offer consistent so the scene is the main change between versions. For a fair test, pair this tool with [UGC ad videos](/ai-video-generation/ugc-ad-video) and [the AI UGC video ads guide](/blog/ai-ugc-video-ads-guide)."
+      "q": "Which platforms are the images ready for?",
+      "a": "The square image suits Facebook and Instagram feeds. Your ad platform controls the final crop for other placements."
     },
     {
-      "q": "Do I have to say my ad image was made with AI?",
-      "a": "Disclosure rules vary by platform, location and use. Follow the guidance shown in the ad tool for your campaign. For product detail coverage, see [story ad images](/ai-image-generation/story-ad-vertical) and [size reference images](/ai-image-generation/size-reference)."
+      "q": "Can the image include my headline?",
+      "a": "The scene leaves room for text, but it does not render readable words. Add the headline yourself so it stays correct and easy to change."
     },
     {
-      "q": "What makes a social product photo clear?",
-      "a": "Keep the product recognizable, in focus and engaged in one believable everyday action. For apparel campaigns, compare [fashion and clothing ideas](/industries/fashion-clothing) and [fashion editorial photos](/ai-image-generation/fashion-editorial). Check the crop at phone width, keep the main object separated from nearby props, and compare the final thumbnail with the product page before you publish."
+      "q": "Can I make several versions at once?",
+      "a": "You can generate different scenes with the same product and compare them. Add each version to your ad account and test."
     },
     {
-      "q": "Can I use an outdoor scene?",
-      "a": "Yes. Describe a simple outdoor use moment while keeping the product shape and color consistent. For seasonal campaigns, review [Black Friday campaigns](/occasions/black-friday) and [product launch campaigns](/occasions/product-launch)."
+      "q": "Who is this tool for?",
+      "a": "Ecommerce brands, performance marketers and growth teams that need fresh feed ads without repeated photoshoots."
     },
     {
-      "q": "Can I upload the photo straight into a live ad?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, so after you add approved text you can place the image directly into a Facebook or Instagram ad. Check the placement crop and safe areas in Ads Manager before the campaign goes live."
+      "q": "Can I upload the image straight into a live ad?",
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Check the placement crop and safe areas in your ad tool before launch."
     },
     {
-      "q": "How do I add a price badge without making the ad look fake?",
-      "a": "Add it in your ad tool or Canva after download rather than asking the image to render it. AI lettering can misspell numbers, while an overlay stays sharp, matches your real offer and is easy to change between tests."
+      "q": "Do I have to label the image as AI?",
+      "a": "Disclosure rules vary by platform and region. Follow the guidance shown in your ad tool for each campaign."
     }
   ],
-  "overview": [
-    {
-      "h2": "",
-      "d": "Square product visuals give a feed concept a clear focal point while people scroll. Start with one product photo, choose one scene and leave part of the frame open. Product claims and offers come from your approved campaign details. Plan the rest of the campaign with [white background photos](/ai-image-generation/ecommerce-main-image), [lifestyle photos](/ai-image-generation/lifestyle-scene), [model photos](/ai-image-generation/on-model-generation), [sale campaign visuals](/ai-image-generation/sale-campaign-key-visual), [UGC still ads](/ai-image-generation/ugc-still-ad), [packshot angles](/ai-image-generation/packshot-multi-angle), [color variation photos](/ai-image-generation/colorway-variations), [Instagram ads](/platforms/instagram-ads), [Facebook ads](/platforms/facebook-ads), [the ad sizes guide](/guides/ad-sizes-by-platform), [the testing ad versions guide](/guides/testing-ad-versions), and [the inspiration gallery](/inspiration)."
-    }
-  ],
-  "examples": {
-    "h2": "More square product ad photos for social feeds",
-    "lead": "See product scenes that leave clear space for a headline or offer added in your ad editor.",
-    "groups": [
-      {
-        "label": "Creator-style ad formats",
-        "items": [
-          {
-            "ref": "n:guide:q6-social-example-1",
-            "title": "Texture Demo: Coral lipstick swatch",
-            "kind": "photo",
-            "product": "coral lipstick"
-          },
-          {
-            "ref": "n:guide:q6-social-example-2",
-            "title": "Recipe Demo: Hot sauce on tacos",
-            "kind": "photo",
-            "product": "hot sauce"
-          },
-          {
-            "ref": "n:guide:q6-social-example-3",
-            "title": "Fresh coffee bag opened up close",
-            "kind": "photo",
-            "product": "coffee"
-          }
-        ]
-      },
-      {
-        "label": "Try-On carousel frames",
-        "items": [
-          {
-            "ref": "n:guide:q6-social-example-4",
-            "title": "Brown trainers on a city walk",
-            "kind": "photo",
-            "product": "brown leather trainers"
-          },
-          {
-            "ref": "n:guide:q6-social-example-5",
-            "title": "Brown trainer sole flex in motion",
-            "kind": "photo",
-            "product": "brown leather trainers"
-          }
-        ]
-      }
-    ]
-  },
-  "limitations": {
-    "h2": "Features for a square ad photo",
-    "items": [
-      {
-        "t": "Lead with one product",
-        "d": "Keep one item recognizable at thumbnail size so the feed concept has a clear focal point.",
-        "supported": true
-      },
-      {
-        "t": "Reserve an open area",
-        "d": "Describe an open side or upper area where your approved headline can be added later.",
-        "supported": true
-      },
-      {
-        "t": "Show one useful action",
-        "d": "Use a hand, try-on or first-bite moment to make the product benefit visible.",
-        "supported": true
-      },
-      {
-        "t": "Offer terms stay editable",
-        "d": "Price, promotion dates and discount terms come from your approved campaign; add them after download.",
-        "supported": false
-      },
-      {
-        "t": "Placement controls the crop",
-        "d": "Preview each placement because your ad tool determines the final dimensions and crop.",
-        "supported": false
-      }
-    ]
-  },
   "visual": {
-    "strip": [
-      "n:guide:q6-social-strip-1",
-      "n:guide:k3-social-strip-speaker",
-      "n:guide:q6-social-strip-3",
-      "n:guide:q6-social-strip-4-r2",
-      "n:guide:q6-social-strip-5",
-      "n:guide:q6-social-strip-6"
-    ],
     "steps": {
       "source": "n:guide:k3-social-gallery-city-curb",
       "result": "n:guide:f2-social-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Preserve its color, tread, laces and shape while placing it on a warm wood entryway floor; change the setting only.",
-      "options": [
-        [
-          "Photo",
-          "Your product shot"
-        ],
-        [
-          "Scene",
-          "Soft pink backdrop"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ]
+      "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Preserve its color, tread, laces and shape while placing it on a warm wood entryway floor; change the setting only."
     },
     "picker": {
-      "title": "Choose a format for a square social ad",
-      "lead": "Browse product scenes for social ads, from creator reviews and try-ons to unboxing and recipe formats.",
-      "chips": [
-        {
-          "id": "routine",
-          "label": "GRWM & Routine"
-        },
-        {
-          "id": "tryon",
-          "label": "Try-On"
-        },
-        {
-          "id": "demo",
-          "label": "Product Demo"
-        },
-        {
-          "id": "creator",
-          "label": "Creator Scene"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q6-social-picker-1",
-          "label": "GRWM: Serum drops on the cheek",
-          "chips": [
-            "routine",
-            "demo",
-            "creator"
-          ],
-          "prompt": "Use the uploaded serum as the exact product. An adult presses a drop onto her palm and pats it onto her cheek in a relaxed morning routine.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-social-picker-2-r2",
-          "label": "ASMR Unboxing: Vitamin sachets",
-          "chips": [
-            "demo",
-            "creator"
-          ],
-          "prompt": "Use the uploaded sachets as the exact products. Hands open a mailer and reveal the unbranded vitamin sachets with a tactile unboxing feel.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-social-picker-3",
-          "label": "First-Bite Reaction: Protein snack",
-          "chips": [
-            "demo",
-            "creator"
-          ],
-          "prompt": "Use the uploaded snack bar as the exact product. An adult takes a first bite and reacts naturally; no health claims.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-social-picker-4",
-          "label": "Try-On: Sandals by the shore",
-          "chips": [
-            "tryon",
-            "creator"
-          ],
-          "prompt": "Use the uploaded sandals as the exact product. An adult fastens the straps and walks along a sunny shoreline, with the fit visible.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-social-picker-5",
-          "label": "Try-On: Floral dress mirror check",
-          "chips": [
-            "tryon",
-            "routine",
-            "creator"
-          ],
-          "prompt": "Use the uploaded dress as the exact product. An adult tries it on in a mirror and turns once to show its drape.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-social-picker-6",
-          "label": "Pet Brush Demo: Clear Sofa",
-          "chips": [
-            "demo",
-            "creator"
-          ],
-          "prompt": "Use the uploaded pet brush as the exact product. An adult lifts fur from a sofa cushion and reveals a clean strip.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-social-picker-7-r3",
-          "label": "Hand Demo: Attach a phone grip",
-          "chips": [
-            "demo",
-            "creator"
-          ],
-          "prompt": "Use the uploaded phone grip as the exact product. An adult attaches it to a plain generic phone and shows a secure one-handed hold.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q6-social-picker-8",
-          "label": "Try-On: Workout leggings in a mirror",
-          "chips": [
-            "tryon",
-            "routine",
-            "creator"
-          ],
-          "prompt": "Use the uploaded leggings as the exact product. An adult tries them on and demonstrates a controlled squat in a mirror.",
-          "kind": "photo"
-        }
-      ],
+      "title": "Browse social scenes",
+      "lead": "Each card turns one product into a feed-ready moment. Pick a scene the item belongs in.",
+      "chips": [],
+      "cards": [],
       "button": "Make a social ad photo"
-    },
-    "uses": [
-      {
-        "frame": "split",
-        "ref": "n:guide:q6-social-uses-a",
-        "ref_b": "n:guide:q6-social-uses-b",
-        "h": "A/B Test: Hot sauce recipe or first bite",
-        "d": "Keep the sauce and audience steady while comparing a recipe scene with a taste reaction."
-      },
-      {
-        "frame": "post",
-        "ref": "n:guide:q6-social-uses-feed",
-        "h": "Day in the Life: Pack a protein snack",
-        "d": "Preview a square feed scene of an adult packing a snack before training."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k3-social-input-bottle-good",
-        "bad": "n:guide:t23-social-ad-photos-bad-bottle",
-        "good_label": "Bottle outline and cap in focus",
-        "bad_label": "Bottle details softened by blur"
-      },
-      {
-        "good": "n:guide:k3-social-input-tea-good",
-        "bad": "n:guide:q6-social-bad-tea-r2",
-        "good_label": "Tea pouch and cup fully visible",
-        "bad_label": "Pouch and cup cropped at frame edges"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "n:guide:q6-social-output-bottle-r1",
-        "frame": "1:1",
-        "label": "First Sip: Pale Blue Insulated Bottle"
-      },
-      {
-        "ref": "n:guide:q6-social-output-tea-r1",
-        "frame": "1:1",
-        "label": "First Sip: Tea pouch and glass cup"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q6-social-after",
-      "zones": [
-        "Your headline",
-        "Your price"
-      ],
-      "items": [
-        "Type the headline, price and offer in your ad editor.",
-        "Proofread dates and terms before the ad goes live.",
-        "Preview on a phone: the product should read at thumbnail size."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "How to make a square social ad photo in 3 steps"
-      },
-      "m3": {
-        "h2": "Social ad photo ideas by format",
-        "lead": "Choose an item and leave clear space for your headline."
-      },
-      "m4": {
-        "h2": "Where to use social ad product photos"
-      },
-      "m5": {
-        "h2": "How to leave room for text in a product ad photo"
-      },
-      "m6": {
-        "h2": "Ad image size and credits"
-      },
-      "m7": {
-        "h2": "Add your headline and offer after download"
-      },
-      "gallery": {
-        "h2": "AI social ad photo examples for product feeds"
-      },
-      "examples": {
-        "h2": "More square product ad photos for social feeds"
-      },
-      "examplesLead": "Browse square product scenes with room for your headline after download.",
-      "templates": {
-        "h2": "Social ad photo templates",
-        "lead": "Choose a square product scene that leaves a clear area for your campaign headline."
-      },
-      "faq": {
-        "h2": "Social ad photo FAQs"
-      }
     }
   }
 }
