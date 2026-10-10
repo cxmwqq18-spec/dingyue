@@ -70,7 +70,24 @@
       "f:k4-plat-tiktok-15-visual-strip-3",
       "f:k4-plat-tiktok-16-visual-strip-4",
       "f:q18-tiktok-strip-protein-powder"
-    ]
+    ],
+    "steps": {
+      "source": "n:guide:k4-plat-tiktok-12-visual-steps-source",
+      "result": "f:q18-tiktok-steps-black-headphones-unboxing",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Use the uploaded photo as the exact reference for the black over-ear headphones. Preserve their black finish, padded earcup shape, and headband. Adult hands lift them from a plain box on a bright desk and turn them toward camera; end with the headphones centered. Soft window light, natural phone-video look, top-down close framing. Sound: box flap and tissue rustle; no music.",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok In-Feed"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ]
+      ]
+    }
   },
   "benefits_h2": "A fast way to get high-converting TikTok ads",
   "benefits": [
