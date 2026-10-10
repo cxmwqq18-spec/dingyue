@@ -1,10 +1,10 @@
 {
   "id": "url-to-video",
   "title": "URL to Video: Product Link to Video Ad | AIVideosUGC",
-  "description": "Make a short product video from the photo and name on a public product page. If the page can't be read, upload a product photo and describe the scene.",
+  "description": "Paste your product page link to start a video from the photo and name on that page, write one action, then download. Blocked page? Upload a photo instead.",
   "h1": "URL to Video: Turn a Product Link into a Video Ad",
   "eyebrow": "Video tool",
-  "lead": "Paste your product page link and get a short product video made from the photo and name on that page. Check the captured reference before you describe the action, so the clip starts from the same color, size and variant you sell.",
+  "lead": "Your product page already has a good photo and a name, but turning that listing into an ad clip usually means starting a shoot from scratch. Paste the link into URL to Video and build the clip from the exact variant you sell, without uploading files or shipping samples.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -12,18 +12,39 @@
     "turn a link into a video",
     "Shopify product video"
   ],
+  "benefits_h2": "Why start a video ad from a product link?",
+  "benefits": [
+    {
+      "t": "No files to gather",
+      "d": "The link supplies the product photo and name, so you don't have to export and re-upload assets before making the ad."
+    },
+    {
+      "t": "Starts from the variant you sell",
+      "d": "Review the captured image and name first, so the clip shows the same color and version listed on the page."
+    },
+    {
+      "t": "Describe one scene yourself",
+      "d": "Write the action or spoken line and choose the final pose, keeping every claim tied to facts you control."
+    },
+    {
+      "t": "Photo upload as a fallback",
+      "d": "If the page blocks access or picks the wrong image, replace it with your own upload without leaving the flow."
+    }
+  ],
+  "steps_h2": "How to make a video ad from a product link in 3 simple steps",
+  "steps_lead": "Three steps turn a public product page link into a ready-to-post clip — no shoot, no sample shipment.",
   "steps": [
     {
-      "t": "Paste your product link",
-      "d": "Paste a public product page; the tool reads its main image and name when access is allowed. Use a page that loads without sign-in."
+      "t": "Paste Your Product Link",
+      "d": "Paste a public product page that loads without sign-in. The tool reads its main image and name when the page allows access."
     },
     {
-      "t": "Review the captured image and name",
-      "d": "Check the image, name, color and variant. Choose the one selling point you want to show."
+      "t": "Review the Captured Reference",
+      "d": "Check the image, name, color and variant, and replace the photo if needed. Then choose the one selling point to show."
     },
     {
-      "t": "Write the scene and download",
-      "d": "Describe one action or spoken line, choose the final pose, generate the 15-second clip, then review it before adding your offer."
+      "t": "Write the Scene and Download",
+      "d": "Describe one action or spoken line, choose the length and final pose, then download. Add your offer and price in your editor."
     }
   ],
   "maker": {
@@ -75,12 +96,20 @@
     {
       "q": "Can I choose a different variant after capture?",
       "a": "Yes. Replace the captured image with a clear upload when the page selected the wrong color, size or angle. Check the replacement against the item you ship before you describe the motion. Save the chosen variant before you describe motion so color and scale stay consistent."
+    },
+    {
+      "q": "Do I need a product page to make the video?",
+      "a": "No. A public link is the fastest starting point, but if the page blocks access or has no usable image, upload a product photo and describe the scene the same way. Both routes end with the same kind of clip built around your product."
+    },
+    {
+      "q": "Can I use the video as a paid ad?",
+      "a": "Yes. The download is watermark-free and licensed for commercial use, so you can run it on TikTok, Instagram, Facebook or another ad channel. Put prices and offers in your ad tool, since the page text and reviews are not copied into the clip."
     }
   ],
   "overview": [
     {
       "h2": "Start with the product page you already have",
-      "p": "A public product page can provide a starting photo and name. Describe one everyday action, such as opening a lid or lifting a bag, to turn the listing into a short scene."
+      "p": "A public product page provides the starting photo and name. Share your video idea in one sentence, such as opening a lid or lifting a bag, to turn the listing into a short scene."
     }
   ],
   "examples": {
