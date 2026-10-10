@@ -1,10 +1,10 @@
 {
   "id": "occ-sale-discount",
   "title": "Sale Ad Creatives for Discounts and Promos | AIVideosUGC",
-  "description": "Plan sale ad creatives from your product photos, with room for offer text and short promo clips. Add exact prices, codes, and end dates after download.",
+  "description": "Build one reusable sale visual from a product photo with space for the offer, then retype the price and code for every promo without reshooting.",
   "h1": "Sale Ad Creatives With Room for Your Offer",
   "eyebrow": "Sales and promos",
-  "lead": "Plan sale ad creatives around product views and placements, leaving confirmed discount terms for a separate text layer.",
+  "lead": "Every discount forces you to rebuild the same creative and the product itself never changes. Make one product-first visual with open space, then type the new offer each sale and reuse it.",
   "card": "Clean visuals with room for the percentage off, the code and the end date.",
   "secondary_keywords": [
     "discount ad images",
@@ -60,6 +60,14 @@
     {
       "q": "How much open space should I leave for the offer?",
       "a": "Leave enough clear space for the offer line and code without covering the product. Preview the smallest placement to check that both remain readable."
+    },
+    {
+      "q": "Do I need a creator for sale videos?",
+      "a": "No. The promo visual is generated from your product photo and a chosen scene, so no one has to film it. The offer wording is added afterward as text."
+    },
+    {
+      "q": "Can I run the finished visual as a paid sale ad?",
+      "a": "Yes. Downloaded files are yours to use in paid promotions and carry no AIVideosUGC watermark, as long as the offer and price meet the platform's ad rules."
     }
   ],
   "overview": [
@@ -205,16 +213,16 @@
   "cta_lead": "Stage the product on one side and leave room to add confirmed offer details.",
   "steps": [
     {
-      "t": "Pick the product in the offer",
-      "d": "Upload a clear photo of the item or bundle shoppers can buy during the sale."
+      "t": "Upload Your Product Photo",
+      "d": "Upload a clear photo of the item or bundle. The same product visual is reused for each sale."
     },
     {
-      "t": "Leave room for the offer",
-      "d": "Choose a scene with open space for the price, code, or end date."
+      "t": "Pick a Sale Scene",
+      "d": "Pick a sale scene with open space on one side. A new job gives another promo version."
     },
     {
-      "t": "Download and add sale details",
-      "d": "Enter the current offer terms in an editable layer after download."
+      "t": "Download and Add Sale Details",
+      "d": "Download the file, type price, code and end date as text. Reuse it next sale, no watermark."
     }
   ],
   "visual": {
@@ -488,5 +496,26 @@
         "lead": "Choose another product and leave room for the offer."
       }
     }
-  }
+  },
+  "benefits_h2": "Why make sale ad creatives with AI?",
+  "benefits": [
+    {
+      "t": "One base visual for every sale",
+      "d": "The product scene is made once and reused for the next promotion, so you are not rebuilding the same creative whenever the percentage changes."
+    },
+    {
+      "t": "Offer text stays correct",
+      "d": "Price, code and end date are typed by you in an editable layer after download, keeping AI typos and stale offers out of the ad."
+    },
+    {
+      "t": "Versions from one product photo",
+      "d": "Run separate jobs for a square feed image, a 9:16 phone-first clip or another angle without arranging a shoot for any of them."
+    },
+    {
+      "t": "Yours to run, no watermark",
+      "d": "Downloaded images and clips carry no AIVideosUGC watermark and are yours to use in paid sale posts, with the credit cost shown first."
+    }
+  ],
+  "steps_h2": "How to make a sale ad creative in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a reusable sale visual — no studio, and no rebuild for the next promo."
 }
