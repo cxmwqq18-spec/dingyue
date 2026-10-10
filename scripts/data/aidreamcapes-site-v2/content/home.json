@@ -391,12 +391,28 @@
       "lead": "Recreate the style with your own product and launch a campaign in minutes.",
       "chips": [
         {
+          "id": "skincare",
+          "label": "Skincare"
+        },
+        {
           "id": "beauty",
           "label": "Beauty"
         },
         {
           "id": "fashion",
           "label": "Fashion"
+        },
+        {
+          "id": "food-drink",
+          "label": "Food & Drink"
+        },
+        {
+          "id": "technology",
+          "label": "Technology"
+        },
+        {
+          "id": "fitness",
+          "label": "Fitness"
         },
         {
           "id": "home-decor",
