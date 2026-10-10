@@ -2037,7 +2037,7 @@ function buildNavigation(model) {
   return {
     version: 2,
     menus: [
-      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors")] }], popular: popular(["unbox", "ba", "beauty"]), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
+      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Pick from 24 presenters for your ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["unbox", "ba", "beauty"]), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
       { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.map(tool) }], popular: popular(["size", "color", "box"]), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${model.cards.length} templates →`, href: "/templates" } },
       { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
