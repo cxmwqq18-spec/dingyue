@@ -4,7 +4,7 @@
   "description": "Turn one bottle or can photo into a vertical pour video with ice and fizz. AI food and drink clips, 6 to 30 seconds, built for TikTok and Reels.",
   "h1": "Make AI Food and Drink Videos From a Bottle Photo",
   "eyebrow": "Food & drink template",
-  "lead": "Static bottle and can photos can't show the pour, the fizz or the glass a shopper imagines drinking from. Turn one package photo into a vertical food and drink video with ice, bubbles and a fresh pour, built for TikTok and Reels.",
+  "lead": "A static bottle or can cannot show the pour, fizz or first sip. Turn one package photo into a vertical food and drink video with a clear serving moment for TikTok and Reels.",
   "secondary_keywords": [
     "drink pour video",
     "beverage video ad",
@@ -12,49 +12,39 @@
     "food product video for TikTok",
     "beverage product video"
   ],
-  "intro": [
-    "A quick, close-up pour is the whole idea: your drink flowing from bottle to glass. The sample shows sparkling orange juice splashing over ice next to a sliced orange, with whole fruit on a cutting board behind it.",
-    "A short pour puts the drink's color, fizz, and texture in motion. Use it for juices, sodas, cold brew, kombucha, sauces, or syrups. A 6-second clip can show one pour, while 10 seconds leaves room for a slower pour and a final look at the full glass."
+  "benefits_h2": "Why make AI food and drink videos?",
+  "benefits": [
+    {
+      "t": "Show the serving moment",
+      "d": "Turn one package photo into a pour, first sip or simple preparation so shoppers see how the drink is enjoyed."
+    },
+    {
+      "t": "Create feed-ready clips",
+      "d": "Use a vertical 9:16 video paced around one action for TikTok, Instagram Reels and product pages."
+    },
+    {
+      "t": "Choose the length you need",
+      "d": "Use 6 seconds for one pour, 10 or 15 seconds for a tasting beat, or 30 seconds for a fuller serving story."
+    },
+    {
+      "t": "Use it in your own ads",
+      "d": "Download clips without an AIVideosUGC watermark and add verified flavor, price and allergen details in your editor."
+    }
   ],
-  "tip": "Upload a photo with the bottle upright and the liquid color visible, then mention the glassware, the ice, and what sits on the counter.",
+  "steps_h2": "How to make a drink video in 3 simple steps",
+  "steps_lead": "Three steps turn one bottle or can photo into a ready-to-post drink video.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the full bottle or can, with shape, cap and drink color visible. That package appears in the finished clip."
+      "d": "Show the full bottle or can with its shape, cap and drink color visible."
     },
     {
       "t": "Share Your Video Idea",
-      "d": "Name the glass, garnish and one serving action, then choose 6 to 30 seconds. The credit cost shows first."
+      "d": "Name the glass, garnish and one serving action, then choose the length and size."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip, then add flavor name, price and allergen details as text. You skip the kitchen shoot."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Seasonal flavors",
-      "d": "Swap the orange slice for berries or a cinnamon stick when a new seasonal flavor comes out."
-    },
-    {
-      "t": "Food pours",
-      "d": "Try honey over pancakes, hot sauce over tacos, or syrup swirling into iced coffee."
-    },
-    {
-      "t": "Square for your store",
-      "d": "Make a 1:1 version to sit next to your still photos in a Shopify product gallery."
-    },
-    {
-      "t": "Street taste test",
-      "d": "Use a market-side sip when the seller needs a quick reaction, keeping the clear glass and the bottle together in the frame."
-    },
-    {
-      "t": "Kitchen tutorial",
-      "d": "Show one preparation step, such as oat milk swirling into iced coffee, with the receiving glass and package easy to inspect."
-    },
-    {
-      "t": "ASMR can opening",
-      "d": "Use a macro hand shot for the pull tab, condensation, and first fizz when the sound of opening is the hook."
+      "d": "Check the package, then add flavor, price and allergen details before publishing."
     }
   ],
   "maker": {
@@ -73,193 +63,31 @@
   "faq": [
     {
       "q": "What source photo works for a drink clip?",
-      "a": "Use a straight-on bottle or can photo with the full package and liquid color visible."
+      "a": "Use a sharp photo of the full bottle or can with its shape, cap and visible label area clear."
     },
     {
       "q": "Can the video show a pour?",
-      "a": "Describe one pour into a glass and keep the package in view during the action."
-    },
-    {
-      "q": "Where can I add flavor names?",
-      "a": "Type flavor names, prices, and serving notes in your editor after download."
+      "a": "Yes. Choose a serving scene with a glass, ice or garnish and keep the package visible beside the action."
     },
     {
       "q": "Can the clip show ice and condensation?",
-      "a": "Yes. Describe the glass, ice, and pour in the scene and the generated clip keeps your can as the product."
+      "a": "Yes. A cold drink scene can include ice, bubbles or condensation. Keep claims about flavor and ingredients in your verified listing."
     },
     {
       "q": "What length fits a pour clip?",
-      "a": "Six seconds covers one pour; 10 or 15 seconds fit a pour plus a tasting beat; 30 seconds gives room for prep, pour and first sip. Video jobs cost 24, 40 or 60 credits for 6, 10 or 15 seconds, shown before you run them."
-    },
-    {
-      "q": "Should the can label be blank?",
-      "a": "Use a clean product photo without a date sticker; add brand or flavor text as a separate layer when needed."
-    },
-    {
-      "q": "Can I use a street taste test for a drink ad?",
-      "a": "Yes. Keep the creator chest-up, show one small sip, and hold the bottle or can beside the glass so the serving context is clear."
-    },
-    {
-      "q": "What should a kitchen tutorial show?",
-      "a": "Show one preparation step, such as pouring oat milk into iced coffee, with the package, receiving glass, and liquid color visible."
-    },
-    {
-      "q": "How do I make an ASMR can-opening clip?",
-      "a": "Ask for a close hand shot of the pull tab, condensation, and first fizz, then add licensed sound or keep the recorded click after download."
+      "a": "Use 6 seconds for one pour or opening, 10 or 15 seconds for a tasting beat, and 30 seconds for several serving moments."
     },
     {
       "q": "Where do flavor and allergen details go?",
-      "a": "Add the exact flavor, ingredient, and allergen wording as editable text after download from your approved package information."
+      "a": "Add the verified flavor, ingredients and allergen information as text in your editor or product listing after download."
     },
     {
-      "q": "How do I choose 6 seconds versus 10 to 15 seconds?",
-      "a": "Choose 6 seconds for one pour, sip or opening click; choose 10 or 15 seconds when the clip needs preparation plus a final glass or tasting beat, and 30 seconds for a longer serving story."
-    },
-    {
-      "q": "Can I use these videos as paid ads?",
-      "a": "Yes. Clips you make can be used in your own paid campaigns on TikTok, Instagram, Facebook and other channels, and downloads carry no AIVideosUGC watermark."
-    },
-    {
-      "q": "Do I need a studio or a creator for a pour shot?",
-      "a": "No. The pour, ice and garnish are generated from your package photo, so you skip the studio, the props and shipping samples to a creator."
+      "q": "Do I need a studio or a creator?",
+      "a": "No. The clip is generated from your bottle or can photo, so you can prepare a serving scene without booking a kitchen shoot."
     }
   ],
-  "overview": [
-    {
-      "h2": "Make the liquid do the explaining",
-      "d": "A strong pour scene has three anchors: the package, the receiving food or glass, and one visible texture change. Ask for the liquid to flow, fizz, foam, or glaze while keeping the label and product color in view."
-    },
-    {
-      "h2": "Use the short version for the first sensation",
-      "d": "Six seconds can capture an opening splash or a quick drizzle; ten, fifteen, or thirty gives the viewer more time to see ice settle, foam rise, or a full glass reach its final level. Keep one pour per clip so the action stays legible."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a package for a pour scene",
-    "items": [
-      {
-        "t": "Show the container upright",
-        "d": "A straight bottle, can, pouch, or jar photo gives the generated scene a stable shape to carry into the counter setup."
-      },
-      {
-        "t": "Keep color visible",
-        "d": "For translucent drinks or sauces, use a view where the liquid color is visible instead of hidden behind a dark label."
-      },
-      {
-        "t": "Choose the receiving vessel",
-        "d": "Name a tumbler, coupe, bowl, plate, or spoon so the pour has a clear destination and scale."
-      },
-      {
-        "t": "Call out texture",
-        "d": "Say crushed ice, foam, fizz, syrup ribbon, or glaze; one texture cue gives the shot a specific job."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the finished pour can show",
-    "items": [
-      {
-        "t": "Color and movement",
-        "d": "The package stays part of the composition while the liquid moves into a glass, bowl, or over food."
-      },
-      {
-        "t": "A feed-ready frame",
-        "d": "Choose 9:16 for TikTok or Reels, 1:1 for a product gallery, 16:9 for a wider placement, or 4:3 and 3:4 for another crop."
-      },
-      {
-        "t": "Known credit choices",
-        "d": "Six, ten, fifteen, and thirty seconds cost 24, 40, 60, and 120 credits; the charge is visible before you submit."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Pour scenes for food and drink products",
-    "items": [
-      {
-        "t": "Citrus soda over ice",
-        "d": "A chilled bottle pours into a tall glass with orange peel, cubes, and a bright counter catching the bubbles."
-      },
-      {
-        "t": "Cold brew swirl",
-        "d": "Dark coffee folds into milk over a clear glass beside a small jar of beans and a spoon."
-      },
-      {
-        "t": "Sauce on a bowl",
-        "d": "A squeeze bottle lays a glossy line of chili sauce across a finished noodle bowl from above."
-      },
-      {
-        "t": "Honey on toast",
-        "d": "Golden honey trails from a jar onto warm toast, ending with the jar and crumbs in the same frame."
-      },
-      {
-        "t": "Street berry taste",
-        "d": "An older creator takes one small sip from a clear glass at an outdoor market while holding the plain berry bottle at chest height."
-      },
-      {
-        "t": "Iced coffee tutorial",
-        "d": "Hands pour oat milk into an ice-filled glass beside the bottle, ending when the pale swirl settles through the coffee."
-      },
-      {
-        "t": "ASMR can opening",
-        "d": "A hand lifts the tab on a chilled cream-colored can over a dark counter, with the first fizz visible beside an empty glass."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Add the details your offer needs",
-    "items": [
-      {
-        "t": "Type the flavor and price",
-        "d": "Add the exact name, size, price, or launch date in a clear text layer."
-      },
-      {
-        "t": "Choose the sound",
-        "d": "Pair the pour with licensed music or a satisfying sound effect in your editing tool."
-      },
-      {
-        "t": "Check food presentation",
-        "d": "Review the glass, garnish, and package before publishing so the scene matches the product you sell."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Where a pour works best",
-    "good": [
-      "Bottled drinks, sauces, syrups, and condiments",
-      "Products with visible color or texture",
-      "Short social ads and square product galleries",
-      "One-action food demonstrations"
-    ],
-    "not_ideal": [
-      "Dry goods that do not have a meaningful pour",
-      "Claims that depend on exact serving measurements"
-    ]
-  },
-  "examples": {
-    "h2": "Drink Videos for a Pour or First Sip",
-    "lead": "A creator tastes a chilled drink and loose-leaf tea pours into a cup.",
-    "groups": [
-      {
-        "label": "Drink Moments",
-        "items": [
-          {
-            "ref": "n:guide:q11-drink-example-01-square-r2",
-            "title": "Creator Tries a Chilled Drink",
-            "kind": "scene",
-            "product": "sparkling drink"
-          },
-          {
-            "ref": "n:guide:q11-drink-example-02-square-r2",
-            "title": "Loose-Leaf Tea Poured into a Cup",
-            "kind": "scene",
-            "product": "loose-leaf tea"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Build a food or drink ad around one clear serving action. Keep the package recognizable while a pour, first sip, or simple preparation gives viewers something concrete to watch.",
+    "overview": "Build the ad around one clear serving action. Keep the package recognizable while a pour, first sip or simple preparation gives viewers something concrete to watch.",
     "strip": [
       "n:guide:q11-drink-strip-square-01-r2",
       "n:guide:q11-drink-strip-square-02-r2",
@@ -287,201 +115,14 @@
     },
     "picker": {
       "title": "Choose a food or drink ad format",
-      "lead": "Select a serving, creator, or tasting moment for your product.",
-      "chips": [
-        {
-          "id": "serve",
-          "label": "Serve and pour"
-        },
-        {
-          "id": "review",
-          "label": "Creator review"
-        },
-        {
-          "id": "taste",
-          "label": "First taste"
-        },
-        {
-          "id": "routine",
-          "label": "Daily drink"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:q11-drink-picker-01",
-          "label": "Citrus Soda Pour Demo",
-          "chips": [
-            "serve"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand pours clear citrus soda into an ice-filled tumbler. Use a waist-height product close-up with a gentle push-in. Bright kitchen window light catches the fizz. End with the silver can beside the full glass. Sound: clear fizz and one soft pour. No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q11-drink-picker-02",
-          "label": "Cold Brew Cream Swirl",
-          "chips": [
-            "serve",
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Milk swirls once into a glass of cold brew. Use a macro glass close-up with a short circular camera move. Warm side light reveals the dark coffee and cream. End as the swirl settles in the glass. Sound: ice clink and gentle pour. No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q11-drink-picker-03",
-          "label": "Berry Drink First Sip",
-          "chips": [
-            "review",
-            "taste"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator takes one first sip of the berry drink and reacts to camera. Use a chest-up creator frame with a slight handheld drift. Soft outdoor daylight keeps the drink and glass visible. End with the glass beside the creator. Sound: light outdoor room tone. Voice: \"That berry flavor is bright and crisp.\". No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q11-drink-picker-04",
-          "label": "Cooler Can Grab",
-          "chips": [
-            "serve",
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand selects one chilled beverage can from the refrigerator shelf. Frame the shelf straight-on with a slow push toward the can. Cool refrigerator light meets soft kitchen daylight. End with the selected can fully visible. Sound: fridge hum and can tap. No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q11-drink-picker-05",
-          "label": "Pale Bottle Creator Review",
-          "chips": [
-            "review"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator raises the pale drink bottle beside her face and speaks to camera. Use a chest-up medium shot with a gentle push-in. Bright kitchen window light stays on the bottle. End with the bottle label area facing forward. Sound: quiet kitchen room tone. Voice: \"This bottle is easy to keep chilled.\". No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f16-r10b-drink-picker-iced-tea-pour-r1",
-          "label": "Peach Iced Tea Picnic Pour",
-          "chips": [
-            "serve",
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands pour plain peach iced tea from a clear bottle into an ice-filled glass on an outdoor picnic table. Use a vertical product close-up with a gentle push-in. Bright midday light catches the amber drink. End with the bottle and full glass together. Sound: soft pour and ice clink. No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q11-drink-picker-07",
-          "label": "Matcha Whisk Pour",
-          "chips": [
-            "serve"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A bamboo whisk stirs one smooth circle through bright green matcha. Use a close overhead cup framing with a gentle slide. Soft natural light catches the matcha surface. End on the settled green drink and whisk. Sound: quiet whisking and cup tap. No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q11-drink-picker-08",
-          "label": "Gym Shake Mix Demo",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand shakes one clear protein shaker once beside a gym bench. Use a waist-up product frame with a small handheld move. Bright gym window light keeps the shaker contents visible. End with the settled shake held beside the bench. Sound: ice rattle and shaker sound. No music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f16-tpl-drink-picker-taste-r1",
-          "label": "Berry Soda Taste Test",
-          "chips": [
-            "taste",
-            "review"
-          ],
-          "kind": "video",
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A creator takes one small sip of berry soda from a clear glass while holding the plain bottle beside her. Use a chest-up kitchen frame with a gentle handheld drift. Bright window light keeps the bottle and red drink visible. End with the glass and bottle together in frame. Sound: one sip and quiet kitchen room tone. No music."
-        },
-        {
-          "ref": "n:guide:f16-r10-drink-street-taste-r1",
-          "label": "Street Berry Soda Taste Test",
-          "chips": [
-            "review",
-            "taste"
-          ],
-          "kind": "video",
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. An older creator takes one small sip of berry soda from a clear glass at an outdoor market while holding the plain bottle. Use a chest-up street frame with a gentle handheld drift. End with the glass and bottle together. Sound: one sip and quiet market room tone. Voice: \"The berry flavor is bright and crisp.\". No music."
-        },
-        {
-          "ref": "n:guide:f16-r10-drink-kitchen-tutorial-r1",
-          "label": "Iced Coffee Kitchen Tutorial",
-          "chips": [
-            "serve",
-            "routine"
-          ],
-          "kind": "video",
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands pour plain oat milk into iced coffee in a clear glass beside the bottle. Use a close kitchen counter frame with a slow push-in. Morning window light catches the swirl and ice. End with the bottle and finished glass in frame. Sound: ice clink and soft pour. No music."
-        },
-        {
-          "ref": "n:guide:f16-r10-drink-asmr-can-r1",
-          "label": "Sparkling Drink ASMR Can Opening",
-          "chips": [
-            "serve",
-            "routine"
-          ],
-          "kind": "video",
-          "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. Hands pull the tab on the plain cream-colored sparkling drink can beside a clear glass. Use a macro wood-counter frame and hold on the condensation and first fizz. End with the opened can and glass together. Sound: crisp tab click and fizz. No music."
-        }
-      ],
+      "lead": "Pick a serving, creator or tasting moment that keeps the package clear.",
+      "chips": [],
+      "cards": [],
       "button": "Make a drink video"
-    },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:guide:q11-drink-uses-01-phone",
-        "h": "Preview the silver can in a fridge post",
-        "d": "Keep the pale silver can recognizable as the serving scene appears in a phone feed."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q11-drink-uses-02-r2",
-        "h": "Pair the citrus can with its listing",
-        "d": "Show the silver citrus can beside clear flavor, serving, and package details."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q11-drink-input-01-good-r2",
-        "bad": "n:guide:q11-drink-input-01-bad-r3",
-        "good_label": "Silver citrus can stays sharp and clear",
-        "bad_label": "Silver citrus can blurs with camera shake"
-      },
-      {
-        "good": "n:guide:tpl-drink-reuse-iced-can",
-        "bad": "n:guide:tpl-drink-m5-crop",
-        "good_label": "Cream iced coffee can stays fully in frame",
-        "bad_label": "Cream iced coffee can is clipped at the edge"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:q11-drink-output-01-r2",
-        "frame": "9:16",
-        "length": 6,
-        "label": "Creator presents the silver citrus can"
-      },
-      {
-        "ref": "f:f16-drink-output-cream-can-r2",
-        "frame": "9:16",
-        "length": 6,
-        "label": "Cream iced coffee pours into an ice glass"
-      }
-    ],
-    "after": {
-      "ref": "f:q11-drink-after-r2",
-      "zones": [
-        "Flavor name",
-        "Serving note"
-      ],
-      "items": [
-        "Type the flavor and serving note as editable text in your video editor.",
-        "Add licensed music or a voice track there before publishing."
-      ]
     },
     "titles": {
       "m2": {
-        "h2": "Make vertical food and drink videos from a bottle photo"
+        "h2": "Make a food and drink video from one package photo"
       },
       "m3": {
         "h2": "Choose a fresh drink video moment"
@@ -493,35 +134,14 @@
         "h2": "Start with a clear bottle or can photo"
       },
       "m6": {
-        "h2": "Vertical drink video sample frames"
+        "h2": "Choose a vertical drink video format"
       },
       "m7": {
-        "h2": "Add flavor names after download"
+        "h2": "Add flavor details after download"
       },
       "faq": {
         "h2": "Questions about food and drink videos"
       }
     }
-  },
-  "benefits_h2": "Why make AI food and drink videos?",
-  "benefits": [
-    {
-      "t": "The pour, without a shoot",
-      "d": "A single package photo becomes a close-up pour over ice with bubbles and garnish, so buyers see the drink in use without you staging a kitchen shoot."
-    },
-    {
-      "t": "Made for scrolling feeds",
-      "d": "Each clip is vertical 9:16 and paced around one serving moment, ready for TikTok and Instagram Reels where food and drink content is watched."
-    },
-    {
-      "t": "Room for a full taste story",
-      "d": "Choose 6 seconds for one pour or can-opening click, 10 or 15 seconds to add a tasting beat, or 30 seconds for prep, pour and first sip."
-    },
-    {
-      "t": "Yours to sell with",
-      "d": "Downloaded clips have no AIVideosUGC watermark and can be used in your ads, product pages and social posts."
-    }
-  ],
-  "steps_h2": "How to make a drink video in 3 simple steps",
-  "steps_lead": "Three steps turn one bottle or can photo into a ready-to-post pour video - no kitchen shoot, no props to buy."
+  }
 }

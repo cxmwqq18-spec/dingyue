@@ -1,27 +1,27 @@
 {
   "id": "tpl-story",
   "title": "Instagram Story Ad Images with Square Photos | AIVideosUGC",
-  "description": "Build Instagram and Facebook Story ads from a square product photo placed on a 9:16 canvas. Leave room for headline, price, stickers and the action button.",
+  "description": "Turn a square product photo into an Instagram or Facebook Story ad image on a 9:16 canvas, with room left for your headline, price and button.",
   "h1": "Instagram Story Ad Images Built Around a Square Product Photo",
   "eyebrow": "Ad photo template",
-  "lead": "Story ads disappear fast if they look like a cropped feed photo, and designing a fresh full-screen layout for each offer takes real time. Upload one product photo and get a square image built to sit inside a 9:16 Story canvas with clear room for your headline, price and action button.",
-  "benefits_h2": "Why make Story ad images with AI?",
+  "lead": "A feed photo cropped to Stories rarely leaves room for your headline or button. Upload one product photo and get a square image composed to sit inside a 9:16 Story ad.",
+  "benefits_h2": "Why make Story ad images from one photo?",
   "benefits": [
     {
-      "t": "A layout that fits the full phone screen",
-      "d": "The square product sits centered on a 9:16 canvas with calm space kept above and below. Your headline and offer land in open zones instead of covering the item."
+      "t": "Built for the full phone screen",
+      "d": "The product sits centered on a 9:16 canvas with calm space above and below, so your headline and offer avoid the item."
     },
     {
-      "t": "Designed around stickers and controls",
-      "d": "The product is kept away from the top header and lower action area, so stickers, dates and the call-to-action button remain visible without hiding what you sell."
+      "t": "Clear of stickers and controls",
+      "d": "The product stays away from the top header and lower action area, keeping stickers and the call-to-action button visible."
     },
     {
-      "t": "One image for both Story platforms",
-      "d": "Place the same square download inside Instagram and Facebook Story layouts, then change the surrounding text per campaign. The image also works in feed posts, carousels and listing galleries."
+      "t": "One image, both Story platforms",
+      "d": "Place the same square download in Instagram and Facebook Story layouts, and reuse it in feeds, carousels and listings."
     },
     {
-      "t": "Exact offers added after download",
-      "d": "Type prices, dates, codes and claims in Canva or Ads Manager so words stay accurate. Downloads have no AIVideosUGC watermark and can be used in your own ads."
+      "t": "Exact offers added by you",
+      "d": "Type prices, dates and codes in Canva or Ads Manager after download. The image carries no watermark."
     }
   ],
   "secondary_keywords": [
@@ -30,39 +30,20 @@
     "Facebook Stories ad image",
     "summer product story ads"
   ],
-  "intro": [
-    "This template gives you a square product image with a scene that can sit inside an Instagram or Facebook Story design. Place the image in the middle of a tall canvas, keep the upper and lower areas open for your headline and offer, and finish the layout in Canva or Ads Manager.",
-    "A square photo can also be used in feed posts, carousels, and listing galleries, or placed in a Story layout. For full-screen movement, use the [Video Ads tool](/ai-video-generation/ugc-ad-video) and choose a 9:16 video frame."
-  ],
-  "tip": "Keep the product clear in the square image, then reserve the top and bottom of the Story canvas for your account name, headline, price, and ad button.",
-  "steps_h2": "How to make a Story ad image in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a Story-ready layout — no designer, no shoot, no text baked into the image.",
+  "steps_h2": "Make a Story ad image in 3 steps",
+  "steps_lead": "One product photo becomes a Story-ready square scene, with all text added outside the image.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show one complete product with breathing room, keeping its cap, base and label area visible inside the square crop."
+      "d": "Show one complete product with open space around it."
     },
     {
       "t": "Describe the Setting",
-      "d": "Name a surface, light direction and one prop, with calm space kept above or below for your headline and offer."
+      "d": "Name a surface, light direction and one prop in one sentence."
     },
     {
       "t": "Download and Build Layout",
-      "d": "Place the square download on a 9:16 canvas, add your exact price, date and button, then preview the controls. No AIVideosUGC watermark is added."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Summer and travel",
-      "d": "Sun care, swimwear, and travel minis by a pool, on a beach towel, or in an open suitcase."
-    },
-    {
-      "t": "Holiday gift stories",
-      "d": "Set a gift box on a table with wrapping paper and string lights in the weeks before the holidays."
-    },
-    {
-      "t": "Facebook Stories",
-      "d": "The same square image inside a Story layout runs in Facebook Stories, so the same square image can sit inside both Story layouts in Ads Manager."
+      "d": "Place the square image on a 9:16 canvas and add your price, date and button."
     }
   ],
   "maker": {
@@ -84,180 +65,33 @@
   },
   "faq": [
     {
-      "q": "Can the story image include my price or discount code?",
-      "a": "Put them on after downloading, using Canva, CapCut, or Ads Manager. Words generated inside an image can come out misspelled, so it's made without text."
+      "q": "Can the Story image include my price or code?",
+      "a": "Add it after download in Canva, CapCut or Ads Manager. The generated image contains no text, so nothing is misspelled."
     },
     {
-      "q": "Can I mention SPF or skin benefits in the ad?",
-      "a": "Stick to the wording printed on your product's label, and add it as text yourself. The image shows the product in its setting and shouldn't promise results like protection or clearer skin."
+      "q": "Does the template output a 9:16 file?",
+      "a": "It outputs a square photo composed for a Story layout. Place it on a 9:16 canvas in your design tool and add the text."
     },
     {
-      "q": "Why not crop a square photo to fit Stories?",
-      "a": "A square image remains easy to inspect when it sits inside a Story layout with space around it. Place it on a tall canvas and add your headline, price, and code around the image. If you need the product to move across the full phone screen, make a separate 9:16 video instead."
+      "q": "Why not just crop a square photo for Stories?",
+      "a": "A cropped feed photo can cut off the product and leave no room for text. This template keeps the full item centered with open space."
     },
     {
-      "q": "What dimensions should an Instagram Story image use?",
-      "a": "This template outputs a square still, not a finished Story-size file. Place it on a 9:16 canvas in your design tool."
+      "q": "Can I use the image in Facebook Stories and feeds?",
+      "a": "Yes. The same square image works in Instagram and Facebook Story layouts, feed posts, carousels and listing galleries."
     },
     {
-      "q": "How much room should I leave for Story text?",
-      "a": "Ask for open space across the top or bottom third so your headline fits without covering the product."
+      "q": "When should I use a 9:16 video instead?",
+      "a": "Choose a full-screen video when you need motion to show the product in use. Use this square photo for a simple offer and product view."
     },
     {
-      "q": "Can a Story photo be reused for other offers?",
-      "a": "Yes. Keep the text separate and update the headline or date for different campaigns."
-    },
-    {
-      "q": "What does a Story-ready photo cost?",
-      "a": "Each photo costs 24 credits."
-    },
-    {
-      "q": "Can I use the square result in Facebook Stories too?",
-      "a": "Yes. Place the square image inside a 9:16 Facebook or Instagram Story layout and add the platform text, price, date, and action button yourself. Keep the product away from the header and lower controls, and preview both placements before publishing."
-    },
-    {
-      "q": "What is the safe area for an Instagram Story?",
-      "a": "Keep the square product and any critical detail inside the center of the 9:16 canvas. Leave the top and bottom zones open for the account header, headline, stickers, and action controls, then check the platform preview."
-    },
-    {
-      "q": "Could a sticker or CTA cover the product?",
-      "a": "Yes. Place the product away from the top header and lower action area, and preview the finished Story with stickers and the button visible before publishing."
-    },
-    {
-      "q": "Can I reuse the square image in a feed or carousel?",
-      "a": "Yes. The same square download can run in a feed post, carousel, or listing gallery. Change the surrounding text in your editor while keeping the product and offer details accurate."
-    },
-    {
-      "q": "Can I run the finished layout as a paid Story ad?",
-      "a": "Yes. Images you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You remain responsible for the offer, claims and disclosures in the ad."
-    },
-    {
-      "q": "Should I use this instead of a 9:16 video?",
-      "a": "Use the square-in-Story image when a simple offer and product view are enough. Choose a full-screen 9:16 video when motion is needed to show the product in use."
+      "q": "How much does a Story photo cost?",
+      "a": "Each photo costs 24 credits, and the charge is shown before you start. Downloads carry no watermark."
     }
   ],
-  "overview": [
-    {
-      "h2": "Design the Story layout around a square product image",
-      "p": "Place a square product image in the middle of a tall Story canvas. Keep the areas above and below open for your headline, price, code, and call to action, which you add in the design or ad tool."
-    },
-    {
-      "h2": "Use video when the phone screen should move",
-      "p": "For full-screen movement, make a separate 9:16 video in the [Video Ads tool](/ai-video-generation/ugc-ad-video). The photo template keeps its square product view."
-    }
-  ],
-  "input_guide": {
-    "h2": "Plan a Story-safe square composition",
-    "items": [
-      {
-        "t": "Center the item",
-        "d": "Photograph the whole product with margin around it so the square image remains readable inside a taller Story design."
-      },
-      {
-        "t": "Choose a calm setting",
-        "d": "Use a simple pool deck, shelf, doorway, or wall that supports the product without competing with your message."
-      },
-      {
-        "t": "Add text after download",
-        "d": "Add prices, dates, codes, and claims in Canva, Ads Manager, or your usual editor."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What this square Story asset gives you",
-    "items": [
-      {
-        "t": "A reusable product view",
-        "d": "Use the square image in a feed post, carousel, listing gallery, or Story layout."
-      },
-      {
-        "t": "Room for exact words",
-        "d": "Place it on a tall canvas and add the headline, price, date, or offer around it."
-      },
-      {
-        "t": "A clean handoff",
-        "d": "The photo job uses 24 credits; the cost appears before you start, and the download has no watermark."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Square Story scenes to test",
-    "items": [
-      {
-        "t": "Poolside sunscreen",
-        "d": "Place a white sunscreen tube beside a striped towel on a bright pool deck, leaving calm space around the square frame."
-      },
-      {
-        "t": "Gift-ready candle",
-        "d": "Set a candle jar beside folded tissue and ribbon on a pale table, keeping the label clear."
-      },
-      {
-        "t": "New color launch",
-        "d": "Arrange one product color against a simple backdrop so your Story text can name the shade and launch date accurately."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the Story in your ad editor",
-    "items": [
-      {
-        "t": "Place the square image",
-        "d": "Add it to a 9:16 Story canvas and keep the product away from interface controls."
-      },
-      {
-        "t": "Type exact offer details",
-        "d": "Add the price, date, code, headline, and call to action yourself."
-      },
-      {
-        "t": "Preview the placement",
-        "d": "Preview the Story with its account header and action button before publishing. Choose the Video Ads tool for full-screen motion."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Best uses for a square Story image",
-    "good": [
-      "Story layouts with a product image between a headline and offer",
-      "Feed posts, carousels, and listing galleries needing a matching view",
-      "Seasonal promotions where exact dates and prices are added later"
-    ],
-    "not_ideal": [
-      "A full-screen moving Story that needs a 9:16 video",
-      "Tiny lettering or technical specifications that must be generated perfectly"
-    ]
-  },
   "output": "Square product photo · Story layout",
-  "examples": {
-    "h2": "More Story-style examples",
-    "lead": "Square images with the product centered and clear space above and below for Story stickers and text.",
-    "groups": [
-      {
-        "label": "Centered, with space to spare",
-        "items": [
-          {
-            "ref": "n:q10-story-example-01",
-            "title": "Skincare gift set revealed from tissue",
-            "kind": "photo",
-            "product": "skincare set"
-          },
-          {
-            "ref": "n:q10-story-example-02",
-            "title": "Pack With Me: Travel sunscreen kit",
-            "kind": "photo",
-            "product": "travel skincare kit"
-          },
-          {
-            "ref": "n:q10-story-example-03",
-            "title": "Sports bottle refilled after a workout",
-            "kind": "photo",
-            "product": "sports bottle"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A Story ad works when one product remains easy to find while the surrounding canvas leaves room for an exact message. Create a square scene, place it on a 9:16 layout, and finish the offer in your editor for [Instagram ads](/platforms/instagram-ads), [Facebook Stories](/platforms/facebook-ads), or a seasonal [holiday campaign](/occasions/holidays). Keep the product away from the account header and action controls, and use the source label for claims, dates, prices, and codes instead of asking the image generator to typeset them. The square asset is a component of the finished Story, so plan the empty space before you choose a scene.",
+    "overview": "This template turns one product photo into a square scene made for a Story layout, with the product clear of the header, stickers and action button. Place it on a 9:16 canvas and add your offer text after download.",
     "strip": [
       "n:q10-story-strip-1",
       "n:q10-story-strip-2",
@@ -290,153 +124,11 @@
       "mode": "photo"
     },
     "picker": {
-      "title": "Choose a product scene for a Story ad",
-      "lead": "Choose a Story scene by the message you need to add later: a product demo, a gift reveal, a creator review, or a simple problem-to-fix moment. Keep one adult action and a quiet area for the headline so the finished frame remains readable on a phone. The prompt examples cover common ad openings, while the uploaded product remains consistent: describe the single action, leave the quiet area visible, and stop on a frame where the label can be read. Add any seasonal wording, discount, or disclaimer only after download. A calm background keeps the product legible behind stickers and buttons, while separate text layers let you change a date or offer without regenerating the image. Keep seasonal wording, discounts, disclaimers, and platform text in separate layers so you can update the offer without regenerating the product scene.",
-      "chips": [
-        {
-          "id": "demo",
-          "label": "Product Demos"
-        },
-        {
-          "id": "unbox",
-          "label": "Unboxing Formats"
-        },
-        {
-          "id": "creator",
-          "label": "Creator Ads"
-        },
-        {
-          "id": "response",
-          "label": "Reactions & Fixes"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:q10-story-picker-1",
-          "label": "Product Demo: Sunscreen before beach",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the sunscreen product and preserve its tube shape, color, and label area. In bright beach light, an adult applies sunscreen to one forearm and holds the tube beside a beach bag, leaving clear space for a Story headline and offer. Square ad-photo composition, natural skin texture, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:q10-story-picker-2",
-          "label": "Product Demo: Phone case snap-on",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult fits a plain phone case onto a generic mid-range phone with exactly one small circular rear camera lens, no camera island or extra lenses, then presses each corner. End with the phone back centered. Natural creator-video look, soft daylight. Chest-up handheld close-up with a short push-in. Sound: case snap, light room tone; no music.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:f15-r10-tpl-story-gift-jar-r1",
-          "label": "Skincare Jar, Gift-Box Reveal",
-          "chips": [
-            "unbox"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a plain lavender face-cream jar from tissue in a small gift box on a pale vanity, ending with the jar centered and open space above for a Story headline. Square product-ad composition, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:q10-story-picker-4",
-          "label": "ASMR Unboxing: Skincare set reveal",
-          "chips": [
-            "unbox"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands peel tissue from a plain gift box and lift out two unbranded skincare containers, ending with the set held still in the center. Soft morning window light, natural product-ad look. Top-down handheld close-up with a gentle push-in. Sound: tissue peel, box flap, jar set down; no music.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:q10-story-picker-5",
-          "label": "Creator Review: Vitamin C serum",
-          "chips": [
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator sits beside a bright bathroom window, holds the serum bottle beside their face and says to camera, “I use two drops before moisturizer.” They show one drop on the back of a hand and end with the bottle beside their face. Casual selfie-video look, natural skin texture. Chest-up eye-level framing with slight handheld sway. Diffused bathroom window light. Sound: voice, cap click, room tone; no music.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:q10-story-picker-6",
-          "label": "Fit Check: Running cap adjustment",
-          "chips": [
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a quiet park trail, an adult puts on the running cap, adjusts its brim and looks into the camera, saying, “I keep this one by the door.” End with the cap clearly framed. Casual phone-video look, soft morning light. Chest-up front-facing handheld shot with a small tilt. Sound: voice, fabric rustle, birds; no music.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:f15-r10-tpl-story-stain-pen-r1",
-          "label": "Stain Pen, Coffee-Mark Fix",
-          "chips": [
-            "response"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands dab one small coffee mark on a white shirt cuff with a plain stain-remover pen, leaving a clean strip beside the mark. Square close composition with open space above for a Story headline and below for a CTA, no text or logos.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:f15-r10-tpl-story-handcream-r1",
-          "label": "Hand Cream, Dry-Hands Application",
-          "chips": [
-            "response"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands squeeze a small amount of cream onto the back of one hand beside a clean bathroom sink, with the plain tube upright nearby. Keep calm space above for a Story headline and below for a CTA. Square close composition, no text or logos.",
-          "kind": "photo"
-        }
-      ],
+      "title": "Choose a Story ad photo format",
+      "lead": "Pick a scene, then add your headline and offer on the 9:16 canvas.",
+      "chips": [],
+      "cards": [],
       "button": "Make a Story ad photo"
-    },
-    "uses": [
-      {
-        "frame": "post",
-        "h": "Place a sauce photo on a Story canvas",
-        "d": "Place the square image in the middle of a 9:16 Story canvas when the offer needs room above or below. Add the exact date, price, and link in Ads Manager or your design tool, then preview the account header and button over the layout.",
-        "ref": "n:q10-story-uses-1"
-      },
-      {
-        "frame": "post",
-        "h": "Use a sauce photo in a feed post",
-        "d": "Reuse the clear square view in a feed post or carousel when shoppers need to inspect the product before they tap. Keep the bottle, meal, or accessory centered, change only the surrounding copy, and use the Video Ads tool for full-screen motion.",
-        "ref": "n:q10-story-uses-2"
-      }
-    ],
-    "input": [
-      {
-        "good": "n:q10-story-input-1-good",
-        "bad": "n:q10-story-input-1-bad",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
-      },
-      {
-        "good": "n:guide:c1-fix-story-m5-good",
-        "bad": "n:guide:tpl-story-input-2-crop",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
-      }
-    ],
-    "outputs": [
-      {
-        "label": "Square sauce product photo for a Story ad",
-        "frame": "1:1",
-        "ref": "n:q10-story-outputs-1-r2"
-      },
-      {
-        "label": "Square sauce photo ready for a 9:16 canvas",
-        "frame": "1:1",
-        "ref": "n:q10-story-outputs-2-r2"
-      }
-    ],
-    "after": {
-      "ref": "n:q10-story-after-r2",
-      "zones": [
-        "Headline",
-        "Date",
-        "Price"
-      ],
-      "items": [
-        "Add the date, price, and link as editable text on the 9:16 canvas.",
-        "Keep the headline above the product so the bottle stays clear."
-      ]
     },
     "titles": {
       "m2": {
