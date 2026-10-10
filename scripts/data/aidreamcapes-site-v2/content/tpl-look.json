@@ -1,10 +1,10 @@
 {
   "id": "tpl-look",
   "title": "Fashion Lookbook Photos and Outfit Ads",
-  "description": "Create fashion lookbook photos for full outfits, fit and fabric detail. Choose try-ons, street walks or creator reviews for ads and product pages.",
+  "description": "Turn one outfit photo into a fashion lookbook photo on a model. Street walks, try-ons and creator reviews for collection pages and launch ads.",
   "h1": "AI Fashion Lookbook Photos for Complete Outfits",
   "eyebrow": "Model photo template",
-  "lead": "Use street-walk, try-on and creator-review formats to show how a collection fits, moves and belongs together. Build each source as a complete outfit, keep the visual language consistent, then add launch details after download.",
+  "lead": "Shoppers can't picture how separate pieces work together from flat-lay photos alone. Turn one complete-outfit shot into a fashion lookbook photo that shows the full look on a person, ready for your collection page or launch carousel.",
   "secondary_keywords": [
     "fashion editorial photos",
     "collection launch lookbook",
@@ -15,16 +15,16 @@
   "tip": "Upload each outfit as a full flat lay, top and bottom together, and choose one location for the whole collection so the images feel like one story.",
   "steps": [
     {
-      "t": "Lay out the complete outfit",
-      "d": "Include every garment you want to show and keep the complete look inside the frame; separate layers so details stay visible."
+      "t": "Upload Your Outfit Photo",
+      "d": "Lay out the complete look in one well-lit frame, with layers separated. A full source reads as one outfit, not random pieces."
     },
     {
-      "t": "Choose a setting and mood",
-      "d": "Name one location, light direction, stance, and crop that can repeat across the collection without promising identical fit."
+      "t": "Pick a Lookbook Scene",
+      "d": "Choose a street walk, try-on or review, plus one location and light. You get a square image with the full silhouette readable."
     },
     {
-      "t": "Build the collection after download",
-      "d": "Download each photo, check outfit inventory against stock, then add collection name, verified details, date, price, and links in your editor."
+      "t": "Download and Post",
+      "d": "Download the photo and check each layer against your stock, then add price and links. You launch without a shoot day."
     }
   ],
   "ideas": [
@@ -90,6 +90,14 @@
     {
       "q": "Can I mix lookbook photos and clips?",
       "a": "You can mix them in a campaign when the collection language stays consistent. Label the stills and motion pieces by look, keep product facts in the listing, and choose the format that gives each garment enough room to read. Keep the same season, color story and styling notes beside the gallery so visitors can follow the collection from the first square image to the final clip."
+    },
+    {
+      "q": "Do I need to hire a fashion photographer or models?",
+      "a": "No. Each lookbook photo is generated from an outfit photo you already have, so you can cover a full collection without booking a photographer, models or a shoot location."
+    },
+    {
+      "q": "Is this different from hiring a UGC creator?",
+      "a": "Yes. A creator needs samples shipped, a booking fee and time to film; here you upload one outfit photo, pick a scene and get the image back, and you pay only the credits each job costs."
     }
   ],
   "overview": [
@@ -479,5 +487,26 @@
         "h2": "Questions about lookbook photos"
       }
     }
-  }
+  },
+  "benefits_h2": "Why make lookbook photos with AI?",
+  "benefits": [
+    {
+      "t": "No shoot for every look",
+      "d": "A street-walk, try-on or creator-review image is generated from one outfit photo, so a small brand can show a whole collection without booking models, a location or a photographer."
+    },
+    {
+      "t": "Pieces shown as one outfit",
+      "d": "Each frame keeps the full silhouette head to toe, helping shoppers see how the top, bottom, outer layer and accessories belong together instead of browsing disconnected flat lays."
+    },
+    {
+      "t": "One visual language for a drop",
+      "d": "Repeat the same crop, light and setting across every look, then use the set as an Instagram carousel, launch email or collection page that reads as one campaign."
+    },
+    {
+      "t": "Yours to publish, no watermark",
+      "d": "Downloaded square photos have no AIVideosUGC watermark and can be used in your own ads, product pages and social posts."
+    }
+  ],
+  "steps_h2": "How to make lookbook photos in 3 simple steps",
+  "steps_lead": "Three steps turn one outfit photo into a ready-to-post lookbook image - no studio, no models, no reshoots."
 }
