@@ -70,7 +70,27 @@
       "n:guide:q19-shop-strip-linen-before-after",
       "n:guide:q19-shop-strip-pet-brush",
       "n:guide:q19-shop-strip-snack-bite"
-    ]
+    ],
+    "steps": {
+      "source": "n:guide:q19-shop-step-bowl-source",
+      "result": "n:guide:plat-shopify-c3-m2-result",
+      "mode": "photo",
+      "prompt": "Still square lifestyle photograph of an adult hand serving berries into one bowl from a coordinated ceramic set at a bright dining table; capture the frozen moment as the berries fall into the bowl, soft window light, centered close composition with the bowl set visible, no text or logos.",
+      "options": [
+        [
+          "Template",
+          "Shopify product photos"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Product page · home · social"
+        ]
+      ]
+    }
   },
   "benefits_h2": "3 ways AI helps you scale your Shopify marketing",
   "benefits": [
