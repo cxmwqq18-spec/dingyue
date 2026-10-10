@@ -1,10 +1,10 @@
 {
   "id": "video-ads",
   "title": "AI UGC Video Ads for TikTok and Reels | AIVideosUGC",
-  "description": "Create AI UGC video ads with a casual creator-style look from a product photo. Download the clip and add captions in TikTok, Reels, or Facebook.",
-  "h1": "AI UGC Video Ads With a Casual, Creator-Style Look",
-  "eyebrow": "Creator-style ads",
-  "lead": "Make short UGC-style video ads for TikTok, Reels and Shorts from one product photo. The person in the video is AI-generated, so show the product and explain a real feature instead of presenting a fake review. Build a focused scene that gives a shopper a reason to keep watching.",
+  "description": "Turn one product photo into a creator-style video ad for TikTok, Reels, or Shorts. Skip a studio shoot, test new hooks, and add final copy after download.",
+  "h1": "AI UGC Video Ads for TikTok, Reels, and Shorts",
+  "eyebrow": "AI video ads",
+  "lead": "If you have one product photo, you have what you need to start a UGC video ad. Create a creator-style clip for TikTok, Reels, or Shorts without booking a shoot.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
@@ -13,16 +13,16 @@
   ],
   "steps": [
     {
-      "t": "Upload your product",
-      "d": "Upload a well-lit photo with the whole product in frame, including color and details the presenter must hold or demonstrate."
+      "t": "Upload Your Product Photo",
+      "d": "Add one photo that shows the full product. The product stays visible in the finished scene."
     },
     {
-      "t": "Describe one everyday moment",
-      "d": "Name one setting and action, then choose a configured frame such as 9:16 for TikTok and Reels."
+      "t": "Share Your Video Idea",
+      "d": "Give one scene and one action in a sentence. A focused action keeps the ad easy to follow."
     },
     {
-      "t": "Download, then add your hook",
-      "d": "Download the scene, check the presenter and product, then type the headline, price or offer in your editor."
+      "t": "Download and Post",
+      "d": "Download the clip and add captions, prices, or music in your editor. Your clean master stays ready for each channel."
     }
   ],
   "maker": {
@@ -40,71 +40,65 @@
   },
   "faq": [
     {
-      "q": "What should I write in the description?",
-      "a": "One everyday moment with your product in it. Name the place, the light, and the action, for example “sunny bathroom counter, hand picks up the soap bar and turns it.” Keep it to a single scene so the clip stays focused. For a product demo, name the first frame and the last frame so the action has a clear finish."
+      "q": "What does an AI UGC video ad show?",
+      "a": "It shows your product in a creator-style scene with a short spoken line or visible action. The presenter and setting are AI-generated."
     },
     {
-      "q": "Can I present an AI-generated person as a real customer?",
-      "a": "No. The person and scene are AI-generated; they are not customer footage or a real endorsement. Use disclosure language that your platform and local rules accept."
+      "q": "Do I need a model or a creator?",
+      "a": "No. The presenter is AI-generated, so you can make the scene without booking a creator or studio."
     },
     {
-      "q": "Can I add captions, a price, or music?",
-      "a": "Yes, once the clip is downloaded. Captions and music go on in TikTok or CapCut, and prices or discount codes can be added in CapCut or Ads Manager. Typing text yourself avoids the spelling slips that AI-made lettering can have. Export a clean master first, then add channel-specific text and sound."
+      "q": "Can I run these videos as paid ads?",
+      "a": "Yes. Download the clip, add any required disclosure and campaign text, then review it against the platform rules before launch."
+    },
+    {
+      "q": "Can I add captions, prices, or music?",
+      "a": "Yes. Add exact text and licensed music after download in TikTok, CapCut, or your ad editor."
     },
     {
       "q": "Can I make a product demonstration ad?",
-      "a": "Yes. Start with a clear product reference and describe one believable action a customer can understand. Show the product before the presenter changes pose."
+      "a": "Yes. A visible product action can explain one feature while the presenter keeps the product in view."
     },
     {
-      "q": "Can I choose a square or vertical output?",
-      "a": "Yes. The available video size choices include 9:16, 1:1, 16:9 and other configured ratios. Pick the frame that matches the placement, then confirm its crop in the editor."
+      "q": "Which video lengths can I choose?",
+      "a": "Available lengths are 6, 10, 15, and 30 seconds. Pick the length that gives one action a clear beginning and end."
     },
     {
       "q": "How many credits does a video ad cost?",
-      "a": "A 6-second clip costs 24 credits, a 10-second clip 40 credits and a 15-second clip 60 credits. The editor shows the cost before you generate. The credit total is shown before you submit, so test a shorter version first."
+      "a": "The editor shows the credit cost before you generate. Current examples are 24 credits for 6 seconds, 40 for 10 seconds, and 60 for 15 seconds; 30-second pricing is shown in the editor."
     },
     {
-      "q": "How do I keep an AI presenter honest?",
-      "a": "Use a brand-led explanation or a real, approved customer quote. Identify the person as AI-generated where required, avoid invented experience, and make sure every product benefit can be supported by your own listing or testing. Keep the wording tied to a supported product detail and avoid claims about personal results."
-    },
-    {
-      "q": "What should the first seconds show?",
-      "a": "Show the product and the problem or action immediately: a hand opens the cap, clears a sofa stripe, or lifts the shoe. A single visible action gives the viewer context before the spoken hook or caption appears. Keep the first shot legible even on a small phone screen."
-    }
-  ],
-  "overview": [
-    {
-      "h2": "Keep the product at the center of a casual scene",
-      "p": "A casual scene can show a product in an ordinary moment, such as packing a lunch bag or picking up a speaker. The person and setting are AI-generated."
+      "q": "Can I present an AI-generated person as a real customer?",
+      "a": "No. The presenter is not a real customer or endorsement. Use a brand explanation or an approved customer quote and disclose AI use where required."
     }
   ],
   "examples": {
-    "h2": "Product ad formats",
-    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after. Each format gives the presenter one visible job so the scene can support a specific hook in a paid placement.",
+    "h2": "See what AI UGC generates",
+    "lead": "See creator-style product ads and product showcase videos made for social feeds.",
     "groups": [
       {
-        "label": "Creator-led product scenes",
+        "label": "UGC-Style Product Ads",
         "items": [
           {
             "ref": "n:guide:k3-video-example-speaker",
-            "title": "Desk Setup: compact speaker beside laptop",
+            "title": "UGC-Style Product Ads",
             "kind": "scene",
             "product": "compact speaker"
           },
           {
             "ref": "n:guide:q2-video-ads-example-03",
-            "title": "Park Interview: protein bar first bite",
+            "title": "Social Media Content",
             "kind": "scene",
             "product": "protein bar"
           }
         ]
       },
       {
-        "label": "Product demonstrations",
+        "label": "Product Explainer Videos",
         "items": [
           {
             "ref": "n:guide:k3-video-example-lip-balm",
-            "title": "Lip balm pulled from a jacket pocket outdoors",
+            "title": "Product Explainer Videos",
             "kind": "scene",
             "product": "lip balm"
           }
@@ -127,133 +121,123 @@
       "result": "f:k3-video-step-green-bottle-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult hand lifts the green glass bottle once and holds it still toward the camera. Clean daylight, natural kitchen-ad look. Close side angle with one slow push-in as the bottle rises. End with the bottle held steady above the counter. Sound: a soft bottle-set-down tone and quiet kitchen ambience; no music."
+      "prompt": "Share one product idea and one action."
     },
     "picker": {
-      "title": "Choose a product ad format",
-      "lead": "Choose a scene that shows a product in use, on camera or in a creator-led ad. Pick the format that matches the question your shopper has, then keep one product and one action in frame.",
+      "title": "See What AI UGC Ads Generate",
+      "lead": "Browse real ad formats by product category before you make your own.",
       "chips": [
         {
-          "id": "reviews",
-          "label": "UGC Reviews"
+          "id": "skincare",
+          "label": "Skincare"
         },
         {
-          "id": "spoken",
-          "label": "Spoken Hooks & Try-On"
+          "id": "beauty",
+          "label": "Beauty"
         },
         {
-          "id": "demo",
-          "label": "Product Demos"
+          "id": "fashion",
+          "label": "Fashion"
         },
         {
-          "id": "unboxing",
-          "label": "Unboxing"
+          "id": "food-drink",
+          "label": "Food & Drink"
         },
         {
-          "id": "before-after",
-          "label": "Before & After"
+          "id": "technology",
+          "label": "Technology"
+        },
+        {
+          "id": "fitness",
+          "label": "Fitness"
+        },
+        {
+          "id": "home-decor",
+          "label": "Home Decor"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:f2-r10-video-ads-card-00",
-          "label": "Counter Review: Coffee Grinder",
-          "chips": [
-            "reviews"
-          ],
-          "prompt": "Use the uploaded plain stainless steel coffee grinder as the exact product reference. An older man stands at a bright kitchen counter, points to the grind dial and says: “Here is the setting I use for a smoother cup.” He turns the dial once and ends with the grinder beside a plain mug. Natural creator-review look, chest-up handheld framing. Sound: spoken line, dial click and quiet kitchen tone; no music.",
-          "kind": "video"
-        },
-        {
           "ref": "n:guide:q2-video-ads-card-02",
-          "label": "GRWM: Tinted Lip Balm Before Work",
+          "label": "Skincare Products",
           "chips": [
-            "spoken"
+            "skincare",
+            "beauty"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one pass of tinted lip balm and says: “A quick tint before I head out.” She lowers the balm and pauses facing the lens. Soft morning window light, natural skin texture, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. End facing the mirror with the lip balm tube beside her lips. Sound: her voice and cap click; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q2-video-ads-card-03",
-          "label": "Street Interview: Protein Bar First Bite",
+          "ref": "n:guide:q2-video-ads-card-01",
+          "label": "Skincare Products",
           "chips": [
-            "reviews"
+            "skincare",
+            "beauty"
+          ],
+          "prompt": "Use the uploaded plain vitamin C serum as the exact product reference. In a bright bathroom, an adult creator holds the bottle beside her face and says: “A simple serum step for my morning routine.” She lowers the bottle and pauses toward camera. Natural creator-review look, chest-up vertical framing. Sound: spoken line and quiet bathroom tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q2-video-ads-card-03",
+          "label": "Food & Drink Products",
+          "chips": [
+            "food-drink"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny public park, an adult interviewer holds a plain microphone as an adult participant takes one protein-bar bite and says: “Let’s see how this tastes.” The participant lowers the bar and pauses toward camera. Clearly staged AI-actor interview, candid natural light. Waist-up handheld two-shot with a slight push-in. End with the bitten bar lowered beside the participant’s face in the park. Sound: spoken line, wrapper crinkle and park ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q2-video-ads-card-04",
-          "label": "Unboxing Review: Wireless Earbud Case",
+          "ref": "n:guide:f2-r10-video-ads-card-00",
+          "label": "Food & Drink Products",
           "chips": [
-            "reviews",
-            "unboxing"
+            "food-drink"
           ],
-          "prompt": "Use the uploaded plain wireless-earbud case as the exact product reference. At a tidy desk, an adult creator opens a small plain box, lifts the rounded case and says: “Here is what comes in the box.” They open the case once and end with both earbuds visible. Soft window light, chest-up handheld review framing. Sound: spoken line, packaging rustle and case click; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q2-video-ads-card-05",
-          "label": "Try-On: Crossbody Bag for Errands",
-          "chips": [
-            "spoken"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an apartment mirror, an adult woman puts on the crossbody bag, says: “The strap sits at my waist,” adjusts it once and turns to a relaxed side profile. Natural daylight, casual spoken try-on ad. Waist-up mirror framing with one slow tilt. Sound: spoken line, strap slide and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f2-r10-video-ads-card-05",
-          "label": "Before & After: Leather Boot Polish",
-          "chips": [
-            "demo",
-            "before-after"
-          ],
-          "prompt": "Use the uploaded plain wooden shoe brush as the exact product reference. On an entryway bench, adult hands brush one brown leather boot once, revealing a cleaner polished stripe beside the untouched toe. Tight vertical close-up, warm daylight, practical product-demo ad. End with the brush paused at the clean edge. Sound: brush over leather and room tone; no music.",
+          "prompt": "Use the uploaded plain stainless steel coffee grinder as the exact product reference. An older man stands at a bright kitchen counter, points to the grind dial and says: “Here is the setting I use for a smoother cup.” He turns the dial once and ends with the grinder beside a plain mug. Natural creator-review look, chest-up handheld framing. Sound: spoken line, dial click and quiet kitchen tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q2-video-ads-card-07",
-          "label": "Day in Life: Lunch Bag Packing",
+          "label": "Food & Drink Products",
           "chips": [
-            "demo"
+            "food-drink"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult hand places a sealed snack pouch and lunch container into an open lunch bag, ending with the bag neatly packed and hand still on its handle. Bright morning light, practical routine-ad look. Top-down close-up with one slow push-in. Sound: pouch rustle and fabric movement; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q2-video-ads-card-08",
-          "label": "Three Reasons: Running Belt Details",
-          "chips": [
-            "demo"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult runner stands at a park trailhead, holds the running belt at chest height and says to camera: “Look at the zipper, the stretch and the pocket depth.” They point once to the pocket and end with the belt centered. Natural morning light, direct creator-demo look. Chest-up eye-level handheld framing with slight sway. Sound: spoken line, zipper pull and birds; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q2-video-ads-output-01",
-          "label": "Earbud Review: Case in Hand",
-          "chips": [
-            "spoken"
-          ],
-          "href": "/app/create?tool=video-ads&size=9%3A16&length=15",
-          "prompt": "",
-          "kind": "video"
-        },
-        {
           "ref": "n:guide:f2-r10-video-ads-card-09",
-          "label": "Market Review: Ceramic Travel Mug",
+          "label": "Food & Drink Products",
           "chips": [
-            "reviews"
+            "food-drink"
           ],
           "href": "/app/create?tool=video-ads&size=9%3A16&length=15",
           "prompt": "Use the uploaded plain ceramic travel mug as the exact product reference. At an outdoor market table, a young woman holds the mug beside her face and says: “The lid stays closed while I walk.” She points to the lid and ends with the mug centered. Natural creator-review look, vertical chest-up framing. Sound: spoken line and light market ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q2-video-ads-example-02",
-          "label": "Mirror Try-On: Crossbody Bag Strap",
+          "ref": "n:guide:f2-r10-video-ads-unboxing",
+          "label": "Food & Drink Products",
           "chips": [
-            "spoken"
+            "food-drink"
+          ],
+          "prompt": "Use the uploaded plain glass food container as the exact product reference. Adult hands open a kraft box, lift the container with its bamboo lid and place it on the table. Top-down vertical unboxing frame, paper filling and product fully visible. Sound: box fold, paper rustle and lid tap; no music.",
+          "kind": "video",
+          "href": "/app/create?tool=video-ads&size=9%3A16&length=15"
+        },
+        {
+          "ref": "n:guide:q2-video-ads-card-04",
+          "label": "Technology Products",
+          "chips": [
+            "technology"
+          ],
+          "prompt": "Use the uploaded plain wireless-earbud case as the exact product reference. At a tidy desk, an adult creator opens a small plain box, lifts the rounded case and says: “Here is what comes in the box.” They open the case once and end with both earbuds visible. Soft window light, chest-up handheld review framing. Sound: spoken line, packaging rustle and case click; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q2-video-ads-output-01",
+          "label": "Technology Products",
+          "chips": [
+            "technology"
           ],
           "href": "/app/create?tool=video-ads&size=9%3A16&length=15",
           "prompt": "",
@@ -261,145 +245,144 @@
         },
         {
           "ref": "n:guide:k3-video-case-phonecase",
-          "label": "Phone Case: Install Demo",
+          "label": "Technology Products",
           "chips": [
-            "demo"
+            "technology"
           ],
           "href": "/app/create?tool=video-ads&size=9%3A16&length=15",
           "prompt": "",
           "kind": "video"
         },
         {
-          "ref": "n:guide:f2-r10-video-ads-unboxing",
-          "label": "Unboxing: Glass Food Container",
+          "ref": "n:guide:q2-video-ads-card-05",
+          "label": "Fashion Products",
           "chips": [
-            "unboxing"
+            "fashion"
           ],
-          "prompt": "Use the uploaded plain glass food container as the exact product reference. Adult hands open a kraft box, lift the container with its bamboo lid and place it on the table. Top-down vertical unboxing frame, paper filling and product fully visible. Sound: box fold, paper rustle and lid tap; no music.",
-          "kind": "video",
-          "href": "/app/create?tool=video-ads&size=9%3A16&length=15"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an apartment mirror, an adult woman puts on the crossbody bag, says: “The strap sits at my waist,” adjusts it once and turns to a relaxed side profile. Natural daylight, casual spoken try-on ad. Waist-up mirror framing with one slow tilt. Sound: spoken line, strap slide and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:f2-r10-video-ads-card-05",
+          "label": "Fashion Products",
+          "chips": [
+            "fashion"
+          ],
+          "prompt": "Use the uploaded plain wooden shoe brush as the exact product reference. On an entryway bench, adult hands brush one brown leather boot once, revealing a cleaner polished stripe beside the untouched toe. Tight vertical close-up, warm daylight, practical product-demo ad. End with the brush paused at the clean edge. Sound: brush over leather and room tone; no music.",
+          "kind": "video"
         },
         {
           "ref": "n:guide:f2-r10-video-ads-before-after",
-          "label": "Before & After: White Sneaker",
+          "label": "Fashion Products",
           "chips": [
-            "before-after"
+            "fashion",
+            "fitness"
           ],
           "prompt": "Use the uploaded plain white sneaker as the exact product reference. Adult hands wipe one scuffed stripe with a plain cloth, revealing a cleaner white section beside the untouched scuff. Tight vertical close-up, one clear action and stable ending. Sound: cloth on rubber and quiet room tone; no music.",
           "kind": "video",
           "href": "/app/create?tool=video-ads&size=9%3A16&length=15"
+        },
+        {
+          "ref": "n:guide:q2-video-ads-card-08",
+          "label": "Fitness Products",
+          "chips": [
+            "fitness"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult runner stands at a park trailhead, holds the running belt at chest height and says to camera: “Look at the zipper, the stretch and the pocket depth.” They point once to the pocket and end with the belt centered. Natural morning light, direct creator-demo look. Chest-up eye-level handheld framing with slight sway. Sound: spoken line, zipper pull and birds; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-picker-lamp",
+          "label": "Home Decor Products",
+          "chips": [
+            "home-decor"
+          ],
+          "prompt": "Use the uploaded plain desk lamp as the exact product reference. In a calm living room, an adult hand switches on the lamp and pauses on the warm glow. Clean home product ad, vertical framing, no text or logo.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-template-table-lamp",
+          "label": "Home Decor Products",
+          "chips": [
+            "home-decor"
+          ],
+          "prompt": "Use the uploaded plain portable table lamp as the exact product reference. On a tidy desk, an adult hand switches on the lamp and pauses on the warm light. Clean home product ad, vertical framing, no text or logo.",
+          "kind": "video"
         }
       ],
-      "button": "Try this video idea"
+      "button": "Explore More"
     },
     "uses": [
       {
         "frame": "phone",
         "ref": "n:gen2:examples-g1",
-        "h": "TikTok and Reels",
-        "d": "Creator-led vertical ads fit naturally in short-form social feeds. Open with the product in hand, keep the useful action close, and add captions in the platform editor so the claim is readable when audio is off. Place the product in the first frame and repeat the key detail in captions."
+        "h": "Scripted From Real Input",
+        "d": "The product stays central, so shoppers understand the hook before they scroll."
       },
       {
         "frame": "post",
         "ref": "n:guide:q2-video-ads-uses-01",
-        "h": "Ad testing",
-        "d": "Creator-led ads give you a clear place to test hooks while keeping the product in view. Change one opening line or action at a time, then compare watch-through and clicks for that offer. Keep the hook change small so the watch-through difference has a clear reason."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k3-video-input-shoe-good",
-        "bad": "n:guide:k3-video-input-shoe-bad-dark",
-        "good_label": "Your product, fully in frame with soft highlights",
-        "bad_label": "Your product is cropped at the left edge"
+        "h": "Export-Ready for Paid Platforms",
+        "d": "A finished vertical ad gives paid campaigns a clear asset to test."
       },
       {
-        "good": "n:guide:k3-video-input-socks-good",
-        "bad": "n:guide:b1-video-ads-bad-blur",
-        "good_label": "Your product details are sharp in a square frame",
-        "bad_label": "Your product details are out of focus"
-      }
-    ],
-    "outputs": [
-      {
+        "frame": "reels",
         "ref": "f:f2-video-ads-output-shoe-r2",
-        "frame": "9:16",
-        "label": "Trail Run: Charcoal Shoe in Use",
-        "length": 15
-      },
-      {
-        "ref": "f:f2-video-ads-output-socks-r2",
-        "frame": "16:9",
-        "label": "Texture Demo: Wool Socks Lifted by Hand",
-        "length": 15
+        "h": "Multiple Styles Per Generation",
+        "d": "Fresh scenes give the same product more ways to earn a watch."
       }
     ],
-    "after": {
-      "ref": "n:guide:f2-r10b-video-ads-after-shoe",
-      "zones": [
-        "Caption",
-        "Offer"
-      ],
-      "items": [
-        "Only claim what your product really does, and compare the generated scene with the item you ship.",
-        "Label it as AI-generated where the platform asks you to, then add captions and prices in your editor.",
-        "Don't present the person as a real customer; use a brand explanation or an approved customer quote instead."
-      ]
-    },
     "titles": {
       "m2": {
-        "h2": "How to make an AI UGC video ad in 3 steps"
+        "h2": "How to make a UGC ad video in 3 simple steps"
       },
       "m3": {
-        "h2": "Creator formats for product ads",
-        "lead": "Choose a creator review, try-on, unboxing or product demonstration for your next ad."
+        "h2": "See What Tagshop AI Generates",
+        "lead": "Choose a UGC-style product ad, product explainer, showcase, or social media video."
       },
       "m4": {
-        "h2": "Where creator-style product videos support your ads"
+        "h2": "Why brands choose this AI video ad generator"
       },
       "m5": {
-        "h2": "What product image works best"
+        "h2": "Upload a product photo"
       },
       "m6": {
-        "h2": "Video ad length, size and credits"
+        "h2": "Video ad lengths and formats"
       },
       "m7": {
-        "h2": "Before you run the ad"
+        "h2": "Ready to run your ad"
       },
       "gallery": {
         "h2": "Product ad formats in motion"
       },
       "examples": {
-        "h2": "More creator-led product scenes"
+        "h2": "See what AI UGC generates"
       }
     },
-    "overview": "Choose the ad type that matches the shopper question: UGC review, spoken creator hook, product demo, unboxing, or before-and-after. The prompt can describe a product action and a spoken line; captions, exact prices, and music are added after download in your editor."
+    "overview": "Creator-style ads put the product in a familiar moment. Shoppers see the product, the action, and the reason to keep watching.",
+    "input": [],
+    "outputs": [],
+    "after": null
   },
-  "limitations": {
-    "h2": "What this ad setup supports",
-    "items": [
-      {
-        "t": "Product action from a prompt",
-        "d": "Describe one clear action and final pose in the scene prompt.",
-        "supported": true,
-        "status": "can"
-      },
-      {
-        "t": "Spoken line from a prompt",
-        "d": "A creator scene can include a short spoken line when you request it.",
-        "supported": true,
-        "status": "can"
-      },
-      {
-        "t": "Caption or price text",
-        "d": "Add exact text after download in your editor.",
-        "supported": false
-      },
-      {
-        "t": "Music track",
-        "d": "Add licensed music after download in the platform or editor.",
-        "supported": false
-      }
-    ]
-  }
+  "benefits_h2": "Reasons to use AI UGC video ads",
+  "benefits": [
+    {
+      "t": "Hook viewers from one photo",
+      "d": "Show the product in a creator-style scene that gives shoppers a clear reason to keep watching."
+    },
+    {
+      "t": "More content, less hassle",
+      "d": "Test more hooks without reshooting. Launch a new ad in minutes, not weeks of prep."
+    },
+    {
+      "t": "Ready for paid platforms",
+      "d": "Download a clean vertical clip for TikTok, Reels, or Shorts, then add your final copy."
+    },
+    {
+      "t": "Use a real product claim",
+      "d": "Keep the spoken line tied to a product detail shoppers can verify."
+    }
+  ],
+  "steps_h2": "How to make a UGC ad video in 3 simple steps",
+  "steps_lead": "Turn one product photo into a ready-to-post UGC ad without a studio, models, or reshoots."
 }

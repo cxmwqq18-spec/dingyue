@@ -1,10 +1,10 @@
 {
   "id": "white-background",
-  "title": "White Background Product Photos | AIVideosUGC",
-  "description": "Create a clean white-background product image from one phone photo for your Amazon, Shopify or Etsy listing, with square framing for product grids.",
-  "h1": "White Background Product Photos for Amazon, Shopify and Etsy",
-  "eyebrow": "For marketplace listings",
-  "lead": "Turn a phone photo of your product into a clean white-background image for your Amazon, Shopify or Etsy listing.",
+  "title": "White Background Product Photo Maker | AIVideosUGC",
+  "description": "Add a clean white background to one product photo for Amazon, Shopify, or Etsy. Keep the product clear, create listing-ready images, and reuse the photo.",
+  "h1": "White Background Product Photos for Product Listings",
+  "eyebrow": "White background photos",
+  "lead": "A clean white background helps shoppers see the product first. Turn one product photo into a listing-ready image for Amazon, Shopify, or Etsy without a studio.",
   "secondary_keywords": [
     "white background product photo maker",
     "pure white main image for marketplaces",
@@ -14,16 +14,16 @@
   ],
   "steps": [
     {
-      "t": "Upload the whole product",
-      "d": "Straps, handles and labels in frame and in focus. A cluttered table behind it is fine."
+      "t": "Upload Your Product Photo",
+      "d": "Add a photo with the full product visible. Shoppers can then see its complete shape."
     },
     {
-      "t": "Pick pure white",
-      "d": "Square fits most listing grids. Describe a soft shadow if you want one under the product."
+      "t": "Add a White Background",
+      "d": "Choose a plain white background. The product stands out without extra props."
     },
     {
-      "t": "Download and add it to your listing",
-      "d": "Zoom in on stitching and labels first. If something looks off, make another version."
+      "t": "Download and Post",
+      "d": "Download the new image and add it to your listing. Your catalog gets a clean, consistent first view."
     }
   ],
   "maker": {
@@ -45,91 +45,30 @@
   },
   "faq": [
     {
-      "q": "Can I use this image as an Amazon main photo?",
-      "a": "The tool creates a plain white square product image. Whether it fits a particular main-image slot depends on the current category and listing requirements."
+      "q": "What is the quickest way to put a white backdrop behind a product photo?",
+      "a": "Upload the product photo, then choose a white backdrop. The finished image places the item on a clean white field."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "Use a sharp photo with the whole item, including straps, handles and labels, inside the frame; a simple background helps."
+      "q": "Which white backdrop editor works for listing images?",
+      "a": "Use a white backdrop tool when you need a clear listing image without a studio or manual masking."
     },
     {
-      "q": "Does the output stay square?",
-      "a": "The example settings on this page use square format. Other crops depend on the photo tool you choose."
+      "q": "Do marketplaces ask for white main images?",
+      "a": "Some marketplaces ask for a pure white main image. Check the current category rule before you publish."
     },
     {
-      "q": "Will my product photos be public?",
-      "a": "Your uploads are private to your account. Avoid including personal information or unrelated items in a product photo."
+      "q": "Will a plain white backdrop flatten the product?",
+      "a": "Even lighting and a soft shadow keep depth while the backdrop stays plain."
     },
     {
-      "q": "What makes a white-background photo useful?",
-      "a": "Use even light, a complete product silhouette and a soft contact shadow on a clean white field."
+      "q": "Can I post this image on Amazon or Shopify?",
+      "a": "Yes. Check each channel's current rule, then add the downloaded image to your listing or product media."
     },
     {
-      "q": "Can I show a single product at a time?",
-      "a": "Yes. A single centered item keeps edges, shape and details easy to inspect."
+      "q": "Can one white treatment cover my whole catalog?",
+      "a": "Yes. Applying one white treatment across products keeps your catalog consistent."
     }
   ],
-  "overview": [
-    {
-      "h2": "",
-      "d": "A plain white product photo puts an item against an uncluttered field for a store listing. Upload a phone shot that includes straps, handles and labels, then choose a centered square crop. A soft shadow can help the item sit on the page without adding props or a tabletop scene."
-    }
-  ],
-  "examples": {
-    "h2": "More white background product photos",
-    "lead": "Browse listing heroes, shoe profiles and close product details on a clean white field.",
-    "groups": [
-      {
-        "label": "Listing and Detail Formats",
-        "items": [
-          {
-            "ref": "n:guide:k2-white-example-wallet",
-            "title": "Listing Hero: leather bifold wallet on white",
-            "kind": "photo",
-            "product": "leather bifold wallet"
-          },
-          {
-            "ref": "n:guide:k2-white-example-spray-bottle",
-            "title": "Listing Hero: clear cleaning spray on white",
-            "kind": "photo",
-            "product": "clear spray bottle"
-          },
-          {
-            "ref": "n:guide:k2-white-example-running-shoe",
-            "title": "Side Profile: gray running shoe on white",
-            "kind": "photo",
-            "product": "running shoe"
-          },
-          {
-            "ref": "n:guide:k2-white-example-bag-buckle",
-            "title": "Detail Macro: leather bag buckle on white",
-            "kind": "photo",
-            "product": "bag buckle"
-          }
-        ]
-      }
-    ]
-  },
-  "limitations": {
-    "h2": "What a white background product photo includes",
-    "items": [
-      {
-        "t": "Square product framing",
-        "d": "A centered square crop can align with a typical product-grid layout.",
-        "supported": true
-      },
-      {
-        "t": "Not a listing approval",
-        "d": "Each marketplace and category applies its own main-image requirements.",
-        "supported": false
-      },
-      {
-        "t": "Tiny print may change",
-        "d": "Very small lettering and transparent surfaces can be difficult to reproduce faithfully.",
-        "supported": false
-      }
-    ]
-  },
   "visual": {
     "strip": [
       "n:guide:k2-white-strip-wallet",
@@ -143,7 +82,7 @@
       "source": "n:guide:q5-white-serum-source",
       "result": "n:guide:q5-white-serum-main",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the serum bottle and preserve its exact amber glass, narrow shape, black dropper cap and blank label area. Center the complete bottle on seamless white with a soft contact shadow. Bright even studio light, crisp ecommerce product photography, three-quarter close framing, no text or logo.",
+      "prompt": "Add a clean white background to the product.",
       "options": [
         [
           "Photo",
@@ -160,181 +99,64 @@
       ]
     },
     "picker": {
-      "title": "White Background Product Display Formats",
-      "lead": "Choose a listing hero, pair layout or close detail that keeps the product fully in frame.",
-      "chips": [
-        {
-          "id": "hero",
-          "label": "Listing Hero"
-        },
-        {
-          "id": "pair",
-          "label": "Pair Layout"
-        },
-        {
-          "id": "feature",
-          "label": "Feature View"
-        },
-        {
-          "id": "detail",
-          "label": "Detail Macro"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:k2-white-picker-soap-dispenser",
-          "label": "Soap Dispenser Hero",
-          "chips": [
-            "hero"
-          ],
-          "prompt": "Use the uploaded photo as the ceramic dispenser and preserve its exact sage color, pump, shape and finish. Center the complete dispenser on seamless white with a soft contact shadow. Bright diffused studio light, clean ecommerce catalog framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-white-lip-balm",
-          "label": "Lip Balm Hero",
-          "chips": [
-            "hero",
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the lip balm and preserve its white tube, coral balm and cap shape. Stand the complete tube on seamless white with the cap and product fully visible. Soft studio light, crisp ecommerce framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-white-supplement-output-r2",
-          "label": "Supplement Bottle Hero",
-          "chips": [
-            "hero",
-            "feature"
-          ],
-          "prompt": "Use the uploaded photo as the supplement bottle and preserve its amber glass, black cap, blank label and proportions. Center the full bottle on pure white with a soft contact shadow. Bright even studio light, clean catalog framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-white-pet-brush",
-          "label": "Grooming Brush Feature",
-          "chips": [
-            "feature",
-            "detail"
-          ],
-          "prompt": "Use the uploaded photo as the grooming brush and preserve the wood handle, oval head and bristles. Show the full brush on seamless white in a clear three-quarter view. Soft studio highlights reveal the bristle face, clean product photography, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k2-white-picker-leather-sandals",
-          "label": "Sandals Pair Layout",
-          "chips": [
-            "pair"
-          ],
-          "prompt": "Use the uploaded photo as the sandals and preserve both cognac leather shoes, every strap and each sole. Arrange the complete pair on seamless white with a soft shadow. Bright softbox light, balanced catalog framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k2-white-picker-canvas-tote",
-          "label": "Canvas Tote Hero",
-          "chips": [
-            "hero"
-          ],
-          "prompt": "Use the uploaded photo as the canvas tote and preserve its fabric, handles, seams and full shape. Stand the complete tote on seamless white with both handles visible. Bright softbox light, straight-on catalog framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:q5-white-earbuds",
-          "label": "Earbuds Set Layout",
-          "chips": [
-            "pair",
-            "feature"
-          ],
-          "prompt": "Use the uploaded photo as the earbuds set and preserve the sage color, stemless buds and case shape. Arrange the complete set on seamless white with both buds and open case visible. Bright studio light, clean digital-accessory framing, no text or logo.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:k2-white-picker-reading-glasses",
-          "label": "Glasses Hinge Detail",
-          "chips": [
-            "detail",
-            "feature"
-          ],
-          "prompt": "Use the uploaded photo as the tortoiseshell glasses and preserve the frame pattern, bridge and hinges. Place the open glasses on seamless white with both lenses and hinge detail sharp. Controlled studio highlights, macro catalog framing, no text or logo.",
-          "kind": "photo"
-        }
-      ],
-      "button": "Make a white background photo"
+      "title": "Get Product Photos Ready for Selling",
+      "lead": "Create a clear white-background image for a listing or store page.",
+      "chips": [],
+      "cards": [],
+      "button": "Explore More"
     },
     "uses": [
       {
         "frame": "browser",
         "ref": "n:guide:q5-white-serum-use-r2",
-        "h": "Listing Hero: serum bottle on white",
-        "d": "A centered bottle image keeps the serum easy to recognize in a product listing or collection grid."
+        "h": "Create clean backdrops for product listings",
+        "d": "A plain white image keeps the product easy to recognize in a listing or collection grid."
       },
       {
         "frame": "listing",
         "ref": "n:guide:q5-white-phone-case-use-r2",
-        "h": "Phone Case Detail: green case on white",
-        "d": "A clean background keeps the case outline and single camera opening easy to inspect."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k2-white-input-daypack-open",
-        "bad": "n:guide:q5-white-daypack-cropped-r2",
-        "good_label": "Daypack fully in frame",
-        "bad_label": "Daypack handle cropped"
+        "h": "Make product photos look more polished",
+        "d": "A clean background keeps attention on the item and its details."
       },
       {
-        "good": "n:guide:k2-white-input-running-shoe",
-        "bad": "n:guide:q5-white-shoe-blur-r2",
-        "good_label": "Running shoe details sharp",
-        "bad_label": "Running shoe softened by blur"
-      }
-    ],
-    "outputs": [
-      {
+        "frame": "listing",
         "ref": "n:guide:q5-white-output-daypack-r2",
-        "frame": "1:1",
-        "label": "Olive daypack on white"
+        "h": "Keep listing images consistent across your catalog",
+        "d": "Consistent first images help shoppers compare products across your catalog."
       },
       {
+        "frame": "browser",
         "ref": "n:guide:q5-white-shoe-output-r2",
-        "frame": "1:1",
-        "label": "Gray running shoe on white"
+        "h": "Use a white base for new edits",
+        "d": "A clean base makes new listing crops and versions easier to reuse."
       }
     ],
-    "after": {
-      "ref": "n:guide:k2-white-after-daypack",
-      "zones": [],
-      "items": [
-        "Keep the main image free of text, badges and watermarks if you sell on Amazon.",
-        "Type the title and price in the listing, not on the photo.",
-        "Zoom in on stitching, labels and color before you upload."
-      ]
-    },
     "titles": {
       "m2": {
-        "h2": "How to make a white background product photo in 3 steps"
+        "h2": "How to add a white background in 3 steps"
       },
       "m3": {
-        "h2": "White background product photo formats",
-        "lead": "Choose a single product view, set layout or feature detail on white."
+        "h2": "Get listing photos ready with a clean white background",
+        "lead": "Choose a clean backdrop, a professional product shot, or a consistent listing view."
       },
       "m4": {
-        "h2": "Where white background product photos work well"
+        "h2": "Why a white backdrop helps product listings"
       },
       "m5": {
-        "h2": "How to photograph a product for a white background"
+        "h2": "Upload your product photo"
       },
       "m6": {
-        "h2": "White background photo size and credits"
+        "h2": "White background product photo formats"
       },
       "m7": {
-        "h2": "Before you upload to Amazon or Shopify"
+        "h2": "Keep every listing consistently white"
       },
       "gallery": {
         "h2": "White background product photo examples"
       },
       "examples": {
-        "h2": "More white background product photos"
+        "h2": "See what white background photos generate",
+        "lead": "Preview clean listing images for products sold online."
       },
       "examplesLead": "Browse listing views for bags, skincare, shoes and everyday product details.",
       "templates": {
@@ -344,54 +166,30 @@
       "faq": {
         "h2": "White background photo FAQs"
       }
-    }
+    },
+    "input": [],
+    "outputs": [],
+    "after": null
   },
   "benefits": [
     {
-      "t": "Pure white listing lead",
-      "d": "Create a clean square lead image for Amazon product photos and compare it with the white background Amazon guide."
+      "t": "Create a clean backdrop",
+      "d": "A plain white field removes distractions and keeps the product easy to see."
     },
     {
-      "t": "Complete product silhouette",
-      "d": "Keep handles, straps and closures visible before opening Every Angle or Close-Up Details."
+      "t": "Make product shots look professional",
+      "d": "A consistent white background gives your catalog a familiar retail look."
     },
     {
-      "t": "Square catalog crop",
-      "d": "Use a centered crop for a Shopify product gallery, then add Size Comparison when scale matters."
+      "t": "Keep listings consistently white",
+      "d": "Use the same visual treatment across product pages and marketplace listings."
     },
     {
-      "t": "Detail-ready variants",
-      "d": "Make a second view for color or material checks with Color Variants and a close-up from Product Photo Examples."
-    },
-    {
-      "t": "A practical starting photo",
-      "d": "Shoot in daylight using the product photo guide, then use Change Background when the setting is wrong."
+      "t": "Reuse white as a clean edit base",
+      "d": "Start with a clean image, then make new versions for product pages or campaigns."
     }
   ],
-  "uses": [
-    {
-      "t": "Marketplace main image",
-      "d": "Lead an Amazon gallery with the plain view, then add [Packaging Preview](page:tpl-pack) and bundle sets for questions shoppers ask."
-    },
-    {
-      "t": "Store catalog refresh",
-      "d": "Keep the first image consistent on Shopify, add a lifestyle product photo, and use model photos when the item is worn."
-    },
-    {
-      "t": "Social feed support",
-      "d": "Pair a clean product view with social ad photos, a Facebook ad placement, or an Instagram feed placement."
-    },
-    {
-      "t": "Clothing and shoe listings",
-      "d": "Start with a neutral view for fashion listings, then show a shoe product scene or a worn view on the model."
-    },
-    {
-      "t": "Beauty and wellness details",
-      "d": "Use a white field for beauty products and wellness products, then add a close view of a cap or seal."
-    },
-    {
-      "t": "Food and home catalogs",
-      "d": "Keep labels readable for food and drinks and home products; change the setting only when the product stays clear. For the next campaign, compare [Studio Lighting](page:tpl-light), [Creator-Style Photo](page:tpl-ugc), [Sale Banner](page:tpl-sale), [Launch Promo](page:tpl-launch), [Black Friday Video](page:tpl-bf), [Side-by-Side Video](page:tpl-compare), [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad), [Ad Sizes for Every Platform](page:guide-ad-sizes-by-platform), [Testing Ad Versions](page:guide-testing-ad-versions), [Before You Publish: A Checklist for AI Content](page:blog-ai-video-review-checklist), [Unboxing Videos for Product Launches](page:blog-unboxing-videos-for-launches)."
-    }
-  ]
+  "benefits_h2": "Get product photos ready for selling",
+  "steps_h2": "How to add a white background in 3 steps",
+  "steps_lead": "Three steps turn one product photo into a clean listing image without a studio or reshoot."
 }
