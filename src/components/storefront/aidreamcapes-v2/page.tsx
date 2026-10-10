@@ -215,6 +215,13 @@ function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; fil
   );
 }
 
+// Video types read best as one row: when every group holds a single example,
+// show them side by side with the group name as the card title.
+function oneRowWhenSingles(examples: V2Examples | undefined): V2Examples | undefined {
+  if (!examples?.groups.length || !examples.groups.every((group) => group.items?.length === 1)) return examples;
+  return { ...examples, groups: [{ label: "", items: examples.groups.map((group) => ({ ...group.items[0], title: group.label })) }] };
+}
+
 function VideoHubPage({ data, r }: Props) {
   const visual = data.visual as V2Visual | undefined;
   const maker = data.maker as V2Maker | undefined;
@@ -229,7 +236,7 @@ function VideoHubPage({ data, r }: Props) {
     <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
     <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />
     <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-    <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+    <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>
     <Faq items={data.faq} title="Questions about AI video" r={r} />
     <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
   </>;
