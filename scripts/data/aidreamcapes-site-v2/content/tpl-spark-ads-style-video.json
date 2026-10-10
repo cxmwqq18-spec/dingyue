@@ -1,11 +1,11 @@
 {
   "id": "tpl-spark-ads-style-video",
-  "title": "Spark Ads Style Video Template for TikTok | AIVideosUGC",
-  "description": "Get a native-feeling TikTok video built for Spark Ads from one product photo. Describe one product action; finish authorization and campaigns in TikTok.",
+  "title": "Spark Ads Video Templates for TikTok | AIVideosUGC",
+  "description": "Create a native-feeling TikTok Spark Ads video from one product photo. Add your caption, sound and authorization in TikTok after download.",
   "h1": "Spark Ads Style Videos with Everyday Product Footage",
   "eyebrow": "Spark Ads style template",
-  "lead": "Polished brand ads get skipped on TikTok, where buyers respond to posts that look like everyday footage, but most sellers have no creator posting about their product. Upload one product photo and get a native-style product-use clip ready to authorize and promote as a Spark Ad from your own account.",
-  "benefits_h2": "Why make Spark Ads style videos with AI?",
+  "lead": "Polished brand ads get skipped when a feed feels casual. Upload one product photo and get a native-style product clip ready to post and authorize as a Spark Ad.",
+  "benefits_h2": "Why sellers choose Spark Ads templates",
   "benefits": [
     {
       "t": "Footage that looks like an organic post",
@@ -30,42 +30,20 @@
     "Spark Ads video template",
     "TikTok product footage"
   ],
-  "intro": [
-    "The sample follows an adult creator showing the hinged lid on a sage-green insulated bottle. The scene is AI-generated and is not customer footage or an endorsement.",
-    "Use one clear product action in a creator-style post. Add captions, sound, authorization, audience, and campaign settings in TikTok Ads Manager.",
-    "A Spark Ads style creative should look like a real post that a seller can authorize and promote. Start with an everyday use moment: a creator explains why a bottle lid matters, a runner takes a drink after a hike, or a customer shows one feature beside a desk. Keep the camera close and the product in hand so the organic post feeling comes from the action, not from a decorative background.",
-    "Use one spoken idea and one visible product action in each version. The creator can turn the bottle, demonstrate the hinge, or take one sip while the line names the detail a shopper should notice. Leave captions, sound selection, handle, and offer wording for TikTok or your editor after download so the post can be updated without regenerating the product scene.",
-    "Check the final post before authorization: the product must match the uploaded item, the claim must be supported by your listing, and the frame must fit the selected TikTok placement. Review the first frame, product details, and offer on the destination feed before you authorize the post."
-  ],
-  "tip": "Describe one everyday action in a familiar setting, then complete TikTok authorization and campaign setup before publishing.",
-  "steps_h2": "How to make a Spark Ads style video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into native TikTok footage — no creator outreach, no shoot, no polished ad look.",
+  "steps_h2": "How it works",
+  "steps_lead": "Choose a creator style, add your product, generate. Finish captions and authorization in TikTok.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Choose an item with its color and full outline visible in a clear photo. The clip keeps that exact product in frame."
+      "d": "Add a clear photo that shows the full product and its useful details."
     },
     {
-      "t": "Describe the Action",
-      "d": "Say where the hand moves and what the product does, using one everyday moment. The native-style scene is generated without a creator or shoot."
+      "t": "Pick a Creator Style",
+      "d": "Choose a review, demo or routine scene, then generate the native-style clip."
     },
     {
       "t": "Download and Finish",
-      "d": "Add your caption, sound and offer in TikTok or your editor, then authorize and boost the post. The file has no AIVideosUGC watermark."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Desk routine",
-      "d": "Show a product being picked up, used, and set beside the work someone is doing."
-    },
-    {
-      "t": "Pack and go",
-      "d": "Move from a counter to a bag or coat pocket for a simple leaving-home beat."
-    },
-    {
-      "t": "Clear close-up",
-      "d": "Use a hand, texture, lid, or button when you want a natural product detail."
+      "d": "Download the video, add your caption and sound, then authorize and boost it in TikTok."
     }
   ],
   "maker": {
@@ -87,180 +65,44 @@
   },
   "faq": [
     {
+      "q": "What is a Spark Ads video template?",
+      "a": "It is a ready-made creator-style scene. Add a product photo and generate a TikTok clip that you can post and authorize yourself."
+    },
+    {
+      "q": "Do I need to write prompts to use these templates?",
+      "a": "No. Pick a creator style, upload your product photo and generate. Step two can include one short line about the action if you want."
+    },
+    {
+      "q": "Who are Spark Ads templates built for?",
+      "a": "TikTok sellers, ecommerce teams and agencies that want native-looking product footage without arranging a creator shoot."
+    },
+    {
       "q": "Does this create a real Spark Ad?",
-      "a": "No. The template creates a video file; account authorization and campaign setup stay in TikTok Ads Manager."
+      "a": "No. The template creates a video file. Post it from your account, then complete authorization and campaign setup in TikTok Ads Manager."
     },
     {
       "q": "Will it include captions or trending audio?",
-      "a": "Add music, spoken narration, or captions in TikTok or your editor after download."
+      "a": "Add captions, spoken narration or sound in TikTok or your editor after download."
     },
     {
-      "q": "Will TikTok approve the video or will it perform well?",
-      "a": "No. Platform review and campaign results depend on your account, creative, audience, offer, and TikTok policies."
+      "q": "What size should a Spark Ads video use?",
+      "a": "Use 9:16 for a full-screen TikTok placement. TikTok also lists 1:1 and 16:9 as standard sizes."
     },
     {
-      "q": "What size should a Spark Ads style video use?",
-      "a": "Use 9:16 for a full-screen TikTok placement. TikTok lists 9:16, 1:1, and 16:9 as standard sizes."
-    },
-    {
-      "q": "Does this authorize my TikTok account?",
-      "a": "No. The template creates a style-matched video; authorization and boosting are done in TikTok Ads Manager."
-    },
-    {
-      "q": "What makes a post ready for Spark Ads?",
-      "a": "Use an existing organic-style post, add captions and sound, then boost it following TikTok's authorization steps."
+      "q": "How fast is a Spark Ads video made?",
+      "a": "A clip is generated in minutes after you start the job, with no creator schedule, studio day or reshoot."
     },
     {
       "q": "What does the style clip cost?",
-      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits."
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before you run it."
     },
     {
-      "q": "Can I create another creator ad video from the same source photo?",
-      "a": "Yes. Keep the sage-green bottle as the reference, then change one setting or camera move at a time. Check that the creator review, first sip, or hands-on demo matches the physical bottle. Add the caption, current offer, and product link after download so the post stays easy to update. Keep the creator action natural and short; a cap click, first sip, or close hold is enough to explain why the bottle is in the post. If the account changes its sound or caption, recheck the first frame and the bottle color before promoting."
-    },
-    {
-      "q": "Do I still need a TikTok creator to make a Spark Ad?",
-      "a": "Not for a post from your own account. One product photo becomes a native-style clip for a fixed credit cost, you publish it on your profile, and then authorize that post for Spark Ads in TikTok Ads Manager."
-    },
-    {
-      "q": "Will the video be approved or perform well as a Spark Ad?",
-      "a": "No one can promise approval or results. Review and campaign performance depend on your account, audience, offer and TikTok policies, so check the clip and listing facts before you boost the post."
+      "q": "Can I use the clip in paid ads?",
+      "a": "Yes. Post it from your own account and follow TikTok authorization steps before boosting. Downloads have no AIVideosUGC watermark."
     }
   ],
-  "overview": [
-    {
-      "h2": "Show one useful product detail",
-      "d": "A creator review can make a lid, opening, texture, or everyday use easy to see in a short social post."
-    },
-    {
-      "h2": "Finish the post in TikTok",
-      "d": "Choose the caption, sound, authorization, audience, and campaign settings in TikTok Ads Manager."
-    }
-  ],
-  "input_guide": {
-    "h2": "Give an everyday scene a believable scale",
-    "items": [
-      {
-        "t": "Show the hand-held edge",
-        "d": "Photograph the product with the opening, grip, lid, or button visible so a hand can interact with it naturally."
-      },
-      {
-        "t": "Name a familiar surface",
-        "d": "A desk, counter, gym bench, coat pocket, or kitchen shelf sets a familiar backdrop."
-      },
-      {
-        "t": "Choose one simple action",
-        "d": "Filling, opening, packing, lifting, or setting down is enough; avoid an invented creator performance."
-      },
-      {
-        "t": "Keep text out of the source photo",
-        "d": "Review the finished video, then add any offer or disclosure text in TikTok."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What this style can supply",
-    "items": [
-      {
-        "t": "A natural product moment",
-        "d": "The item appears in a familiar routine with hands and surroundings doing the storytelling."
-      },
-      {
-        "t": "TikTok-friendly framing",
-        "d": "Use the primary 9:16 layout, with 1:1, 16:9, 4:3, and 3:4 also available when another placement needs the same scene."
-      },
-      {
-        "t": "A clear credit choice",
-        "d": "Six seconds costs 24 credits, ten 40, fifteen 60, and thirty 120; the exact amount is shown before a version runs."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Ad formats for creator-led product videos",
-    "items": [
-      {
-        "t": "Talking-Head Review: Bottle Lid",
-        "d": "Preserve the uploaded sage bottle’s exact silhouette, color, hinged lid, and open label area throughout this scene. Beside a bright window, an adult creator holds the insulated bottle beside her face and says, “Here is a close look at the hinged lid.” She opens it once and holds the bottle still. Natural skin texture, casual phone-video look. Medium close framing at eye level, with a slow push toward the hinged lid. Sound: her voice, a soft lid click and room tone; no music."
-      },
-      {
-        "t": "Street Interview: Protein Bar",
-        "d": "Use the uploaded protein-bar photo as the product reference; keep the bar, wrapper, color and blank label area unchanged. On a lively market walkway, an adult woman holds the protein bar, takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up eye-level framing with a slight handheld drift. Sound: her voice, a crisp bite and soft street ambience; no music."
-      },
-      {
-        "t": "Three Reasons: Folding Phone Stand",
-        "d": "Keep the folding stand from the upload consistent in shape, finish, and scale from start to finish. At a clear desk, an adult creator holds a folding phone stand beside a generic phone and says, “It folds flat, holds steady, and fits in my bag.” She demonstrates each visible point with one gesture and ends with the stand open beside the phone. Soft daylight, natural creator-video look. Chest-up framing with a slow push-in. Sound: her voice and one light hinge click; no music."
-      },
-      {
-        "t": "GRWM Routine: Hair Claw",
-        "d": "Use the uploaded hair claw as a fixed product reference; retain its form and color in every frame. At a softly lit bathroom mirror, an adult woman holds a plain hair claw beside her face and says, “Here is how the clip closes around this section.” She clips it into place and looks toward the camera, ending with the claw visible. Casual GRWM phone-video look. Chest-up mirror framing with a gentle handheld sway. Sound: her voice and quiet room tone; no music."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Authorize and publish the Spark post",
-    "items": [
-      {
-        "t": "Download and review the clip",
-        "d": "Check the product shape, color, label area, and first frame against the listing before you share the post."
-      },
-      {
-        "t": "Have the creator authorize the post",
-        "d": "In TikTok, have the creator authorize the organic post for Spark Ads and provide the Spark authorization code."
-      },
-      {
-        "t": "Enter the code in Ads Manager",
-        "d": "In TikTok Ads Manager, choose Spark Ads, enter the creator’s authorization code, then set the audience, budget, placement, and schedule."
-      },
-      {
-        "t": "Add captions and sound in TikTok",
-        "d": "Add captions and select sound in TikTok when preparing the post; keep any offer text aligned with the current product details."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When this style fits",
-    "good": [
-      "Bottles, snacks, desk goods, and beauty items",
-      "Simple hand-led product actions",
-      "AI-generated product scenes for a TikTok feed",
-      "Scenes where the product is the subject"
-    ],
-    "not_ideal": [
-      "A request for a real creator endorsement",
-      "Campaign setup that depends on an automatic account connection"
-    ]
-  },
-  "examples": {
-    "h2": "More Spark Ads-style scenes",
-    "lead": "Everyday product scenes composed for a casual TikTok feed.",
-    "groups": [
-      {
-        "label": "Creator-feed moments",
-        "items": [
-          {
-            "ref": "n:gen2:tpl-spark-ads-style-video-g1",
-            "title": "Phone stand folded flat for a commuter bag",
-            "kind": "scene",
-            "product": "phone stand"
-          },
-          {
-            "ref": "n:gen2:tpl-spark-ads-style-video-g2",
-            "title": "Hiking pack with a water bottle clipped on",
-            "kind": "scene",
-            "product": "water bottle"
-          },
-          {
-            "ref": "n:gen2:tpl-spark-ads-style-video-g3",
-            "title": "Mini massage gun on a calf after a run",
-            "kind": "scene",
-            "product": "mini massage gun"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Show a product in an ad format shoppers recognize: a creator review, first bite, hands-on demo, or everyday routine. Use this format when a sage-green bottle needs a creator review, first sip, or hands-on demonstration that feels at home in a social feed. Keep a person, product, and one reason to watch visible from the first frame, then leave room for the caption, sound, and offer you add after download. Review the cap, finish, and label area against your source before publishing. The first beat should feel like a real post, with the creator handling the bottle before any offer or caption competes for attention.",
+    "overview": "A Spark Ads template gives you a creator-style product moment to post from your own TikTok account and authorize for promotion.",
     "strip": [
       "n:guide:q14-spark-strip-steamer",
       "n:guide:q14-spark-strip-espresso-r2",
@@ -294,95 +136,96 @@
       "mode": "video"
     },
     "picker": {
-      "title": "Choose a creator ad format",
-      "lead": "Pick a format that shows what the product does in a natural social post. Start with one creator action, then choose the scene that keeps the person, product, and reason to watch together.",
+      "title": "Choose a Spark Ads template",
+      "lead": "Browse creator formats, then add your own product photo.",
       "chips": [
         {
-          "id": "reviews",
-          "label": "Creator Reviews"
+          "id": "food-drink",
+          "label": "Food & Drink"
         },
         {
-          "id": "hands",
-          "label": "Product Demos"
+          "id": "fashion",
+          "label": "Fashion"
         },
         {
-          "id": "routines",
-          "label": "Routine Formats"
+          "id": "technology",
+          "label": "Technology"
         },
         {
-          "id": "problem",
-          "label": "Problem-Solution"
+          "id": "home-decor",
+          "label": "Home Decor"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:q14-spark-picker-snack",
-          "label": "Talking-Head Review: Snack Pouch",
+          "label": "Talking Head Product Recommendation",
           "chips": [
-            "reviews"
+            "food-drink"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult creator holds the snack pouch beside her face and says, “The pouch opens wide; here is the snack size.” She turns it once to show the opening and holds it still. Soft window light, natural phone-video look. Chest-up eye-level framing with a gentle push-in. End with the pouch opening held toward the camera. Sound: her voice and light kitchen ambience; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q14-spark-picker-hairclaw",
-          "label": "GRWM: Hair Claw Fit Check",
+          "label": "GRWM Fashion Get Ready Reel",
           "chips": [
-            "routines"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bathroom mirror, an adult woman holds the plain hair claw beside her face and says, “Here is how the clip closes around this section.” She clips it into place and looks toward the lens. Soft morning vanity light, casual GRWM phone-video look. Chest-up mirror framing with gentle handheld sway. End with the clip closed in her hair, teeth visible in the mirror. Sound: her voice and quiet room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q14-spark-picker-headphones",
-          "label": "Hands-on Demo: Headphones from Tote",
+          "label": "Electronics Desk Review UGC",
           "chips": [
-            "hands"
+            "technology"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunlit commuter desk, an adult hand lifts the dark navy over-ear headphones from an open canvas tote, turns the padded ear cups toward the lens and holds them still. Natural lifestyle phone-video look. Close over-shoulder framing with one slow push-in. Broad desk-side window light. End with the headphones above the open tote, ear cups facing lens. Sound: fabric rustle and a soft hinge click; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q14-spark-picker-phonecase-r2",
-          "label": "Hands-on Demo: Single-Hole Case",
+          "label": "Tech Product Demo UGC",
           "chips": [
-            "hands"
+            "technology"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. On a clean work desk, an adult hand fits the plain case with one small circular camera opening onto a generic phone, ending with the case seated and held edge-on. Soft daylight, natural product-demo look. Top-down close-up with a short tilt. Sound: one quiet snap and room tone; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q14-spark-picker-street-interview-r2",
-          "label": "Street Interview: Protein Bar First Bite",
+          "label": "Sensory Food Beverage TikTok Hook",
           "chips": [
-            "reviews"
+            "food-drink"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a lively city sidewalk, an adult creator holds a plain protein bar, takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up eye-level framing with a slight handheld drift. End with the creator holding the bitten bar beside its open wrapper. Sound: her voice, a crisp bite and soft street ambience; no music.",
           "kind": "video"
         },
         {
           "ref": "n:gen2:tpl-spark-ads-style-video-c4",
-          "label": "Problem-Solution: Loose Fur Brushed Away",
+          "label": "Home Cleaning Product UGC",
           "chips": [
-            "problem"
+            "home-decor"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. In a bright living room, an adult hand draws the plain pet brush once through a calm golden dog’s shoulder fur, ending with the brush held beside the coat. Warm window light, natural home-video look. Low close framing at the dog’s level with a gentle push-in. Sound: soft brush strokes and room ambience; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:f5-r10-spark-card-6-keyboard-brush",
-          "label": "Problem-Solution: Keyboard crumbs brushed away",
+          "label": "Electronics Desk Review UGC",
           "chips": [
-            "problem"
+            "technology",
+            "home-decor"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright shared desk, an adult hand draws the small black keyboard brush across a plain computer keyboard, leaving one clean row beside remaining crumbs. Keep the brush and clean-versus-dirty keys visible; show no face or readable screen. Natural daylight, honest phone-video look. Medium close framing with a slow sideward track. End with the brush on the clean row and crumbs still visible nearby. Sound: soft brush movement and quiet desk ambience; no music.",
           "kind": "video"
         },
         {
           "ref": "n:guide:q14-spark-picker-backpack",
-          "label": "Day-in-Life Routine: Commuter Backpack",
+          "label": "Fashion Lifestyle Reel",
           "chips": [
-            "routines"
+            "fashion"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter walks through a bright station wearing the backpack, pauses at a bench and takes a notebook from its front pocket. Natural daylight, candid phone-video look. Medium follow shot with one smooth handheld move. End with the backpack worn and its front pocket facing camera. Sound: footsteps, fabric rustle and low station ambience; no music.",
           "kind": "video"
@@ -390,64 +233,10 @@
       ],
       "button": "Make a Spark Ads-style video"
     },
-    "uses": [
-      {
-        "frame": "phone",
-        "h": "Share the bottle demo as a creator video",
-        "d": "Keep the sage-green bottle centered in a vertical social post. Let the creator show one handling moment, such as lifting the cap or taking a sip, before the final hold. Let the creator finish the bottle action before the cut so the reason to watch is visible.",
-        "ref": "n:guide:c1-tpl-spark-ads-style-video-m4-bottle-video-916"
-      },
-      {
-        "frame": "post",
-        "h": "Use the bottle review in a Spark Ads post",
-        "d": "Add a caption and choose a sound in TikTok before promoting the creator post. Keep the bottle and creator visible together so the post still reads as a product demonstration. Keep the spoken claim limited to what the bottle and the product page can support.",
-        "ref": "n:guide:q14-spark-uses-post-r2"
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q14-spark-input-good-1",
-        "bad": "n:guide:q14-spark-input-blur",
-        "good_label": "Whole bottle and hinged lid stay sharp",
-        "bad_label": "Soft focus hides the lid and body details"
-      },
-      {
-        "good": "n:guide:q14-spark-input-good-2",
-        "bad": "n:guide:q14-spark-input-crop",
-        "good_label": "Full bottle and hinged lid fit the frame",
-        "bad_label": "Top crop cuts off the hinged lid"
-      }
-    ],
-    "outputs": [
-      {
-        "label": "Talking-Head Review: Bottle Lid Detail",
-        "frame": "9:16",
-        "length": 15,
-        "ref": "n:guide:q14-spark-output-talk-r2"
-      },
-      {
-        "label": "Day-in-Life Routine: Bottle after a Hike",
-        "frame": "1:1",
-        "length": 15,
-        "ref": "n:guide:q14-spark-output-hike-r2"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:q14-spark-after-r2",
-      "mock": {
-        "type": "tiktok",
-        "caption": "How I keep water cold all hike"
-      },
-      "zones": [
-        "Post frame",
-        "Caption",
-        "Sound & offer"
-      ],
-      "items": [
-        "The frame shows the TikTok post chrome you add when promoting an existing post. Check the sage-green bottle, cap, and label area, then review the caption, sound choice, and offer in TikTok before promoting the post. Leave the creator face and bottle in the first frame so the post reads as human-made. Keep the bottle label area and the creator mouth visible whenever a spoken review is used.",
-        "Add the caption and sound in TikTok after download. Use Ads Manager for the Spark authorization code, audience, offer, and placement. Read the finished frame at mobile size and keep the bottle unobstructed during the first beat. Place the offer after the product moment so the post still feels like a useful recommendation."
-      ]
-    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null,
     "titles": {
       "m2": {
         "h2": "Make a Spark Ads-style video from a product photo"
@@ -455,27 +244,8 @@
       "m3": {
         "h2": "Choose a Spark Ads-style product moment"
       },
-      "m4": {
-        "h2": "Use Spark Ads-style videos in creator posts"
-      },
-      "m5": {
-        "h2": "Start a Spark Ads video with a clear product photo"
-      },
-      "m6": {
-        "h2": "Choose a vertical Spark Ads video format"
-      },
-      "m7": {
-        "h2": "Add a caption and sound after download"
-      },
       "faq": {
         "h2": "Questions about Spark Ads-style videos"
-      },
-      "examples": {
-        "h2": "TikTok Spark Ads video examples"
-      },
-      "templates": {
-        "h2": "More Spark Ads video templates",
-        "lead": "Browse more vertical video formats for creator-style product ads."
       }
     }
   }
