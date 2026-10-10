@@ -1,11 +1,11 @@
 {
   "id": "ind-electronics",
-  "title": "AI Product Videos for Electronics | AIVideosUGC",
-  "description": "Turn one gadget photo into unboxing, setup, and in-use electronics video ads with an AI creator, no film crew. Watermark-free clips for listings and social.",
-  "h1": "AI Product Videos for Electronics, From Unboxing to Everyday Use",
-  "eyebrow": "Consumer electronics",
-  "lead": "Electronics shoppers scroll past clips that look like slideshows, and a real shoot for every SKU and feature is costly. Turn one product photo into an unboxing, setup, or in-use video ad that shows the gadget working in a real moment.",
-  "card": "What's in the box, scale in a hand and gadgets in everyday use.",
+  "title": "AI Electronics Video Ads From One Photo | AIVideosUGC",
+  "description": "Turn one gadget photo into unboxing, setup and in-use video ads for electronics. Minutes, not weeks, far less than a studio, watermark-free clips.",
+  "h1": "Make AI Product Videos for Electronics That Actually Sell",
+  "eyebrow": "App and tech brands",
+  "lead": "Your next round of gadget ads can start with one product photo. No creator search, no studio booking, no waiting on a shoot date.",
+  "card": "Unboxings, hands-on demos and everyday-carry scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
     "tech product video ads",
@@ -37,28 +37,28 @@
   ],
   "faq": [
     {
-      "q": "Can the video show my charger plugged into a well-known phone brand?",
-      "a": "Another company's logo or trademark can get a request declined, so describe a generic device instead, like \"a black smartphone on a nightstand.\" The scene still makes the use clear."
+      "q": "How quickly can I launch an electronics video ad?",
+      "a": "Minutes. Upload one product photo, share your idea in a sentence, and download a 6-, 10-, 15- or 30-second clip. There is no shoot date to wait for."
     },
     {
-      "q": "Can the screen in the video show my app or interface?",
-      "a": "On-screen text and app layouts tend to come out garbled. Ask for a dark screen or a soft glow instead, then place real screenshots over it in CapCut or Canva."
+      "q": "Can beginners make gadget ads without any video experience?",
+      "a": "Yes. You do not edit footage or learn a timeline. Pick a scene, add your photo and download the clip."
     },
     {
-      "q": "Which video size should I use for an Amazon or Shopify product page?",
-      "a": "16:9 is the usual choice for a video on a product page, and 1:1 also sits well in a listing gallery. Choose 9:16 if the same clip will run on TikTok or YouTube Shorts."
+      "q": "Can I create multiple ad variations for the same gadget?",
+      "a": "Yes. Run one photo through an unboxing, a demo and a travel scene, then split-test the clips in your ad platform. You do not reshoot anything."
     },
     {
-      "q": "My glossy device shows glare and fingerprints. How do I fix that?",
-      "a": "Wipe off dust and fingerprints, peel away any shipping film, and shoot at a slight angle so the device's depth shows. Switch off overhead lights that leave hot spots on glossy cases."
+      "q": "What electronics categories do these scenes work for?",
+      "a": "Speakers, headphones, chargers, tablet and laptop stands, phone cases, fitness trackers and other gadgets with a clear physical form."
+    },
+    {
+      "q": "Who are these scenes designed for?",
+      "a": "DTC gadget brands, app and tech marketers, and sellers on Shopify, Amazon and social channels who need new ads every week."
     },
     {
       "q": "Can I run the clips as paid ads for my gadget?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product videos. Avoid showing other companies' phones or logos, and put real specs and screenshots in yourself."
-    },
-    {
-      "q": "Do I need a model or a spokesperson?",
-      "a": "No for these clips. Generated hands and adult presenters perform the action around your product photo, so you don't hire talent or book a studio. A custom live-action concept may still be worth filming separately."
+      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product videos. Add the real specs and screenshots yourself."
     }
   ],
   "overview": {
@@ -191,7 +191,7 @@
   },
   "examples": {
     "h2": "More electronics examples",
-    "lead": "What's in the box, the device in use and how it packs for travel.",
+    "lead": "One gadget photo, three different selling moments.",
     "groups": [
       {
         "label": "In the box and in use",
@@ -219,44 +219,44 @@
     ]
   },
   "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
-  "cta_lead": "Select one device action or setting to show beside the visible hardware.",
-  "benefits_h2": "Why make electronics videos from a product photo?",
+  "cta_lead": "Upload one gadget photo and see the cost before you start.",
+  "benefits_h2": "Why Fast-Growing Tech Brands Make Ads From a Product Photo",
   "benefits": [
     {
-      "t": "No film crew or studio",
-      "d": "One gadget photo is enough to start. You skip the crew, studio time, and shoot date for each new device and feature."
+      "t": "Time efficient",
+      "d": "Skip the endless hunt for the right creator. A gadget ad is ready in minutes, so a new feature gets its own clip as soon as it goes live."
     },
     {
-      "t": "One photo, every selling moment",
-      "d": "Run the same product photo through an unboxing, cable setup, desk demo, and travel scene. Each clip answers a different buyer question without a reshoot."
+      "t": "Cost effective",
+      "d": "One photo costs far less than creator fees, crew time and a studio. You run the same product through many scenes without paying to reshoot each one."
     },
     {
-      "t": "Show the feature, not just the spec",
-      "d": "A hand pressing a button or a cable clicking in helps shoppers understand what the device does. You keep wattage and battery figures in the text where you control them."
+      "t": "Full control",
+      "d": "Set the scene, the action and the angle yourself. Every clip matches your brand, and the exact specs stay in the listing where you control them."
     },
     {
-      "t": "Ads and listings, commercially cleared",
-      "d": "Downloaded clips are watermark-free and licensed for commercial use on product pages, social feeds, and paid campaigns."
+      "t": "Cleared for ads and listings",
+      "d": "Downloaded clips are watermark-free and licensed for commercial use on product pages, social feeds and paid campaigns."
     }
   ],
-  "steps_h2": "How to make an electronics video ad in 3 simple steps",
-  "steps_lead": "Three steps turn one gadget photo into a ready-to-post clip — no crew, no studio, no reshoots.",
+  "steps_h2": "3 Steps to Your Next Electronics Ad",
+  "steps_lead": "",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one photo with the ports, buttons, and full shape visible. The clip keeps the device's design and key details."
+      "d": "One clear photo of the gadget is all it takes. The clip keeps its shape, color, ports and controls."
     },
     {
-      "t": "Describe Your Video Idea",
-      "d": "Name one moment, such as an unboxing, setup, or button press. Try several scenes from the same photo to show more features."
+      "t": "Share Your Video Idea",
+      "d": "Describe one moment, such as an unboxing or a button press, in a single sentence."
     },
     {
-      "t": "Download and Post",
-      "d": "Review the clip and save it. Add specs and price in your editor, then publish it to your listing or ad."
+      "t": "Generate and Launch",
+      "d": "Your clip is ready to download with no watermark. Add the price and specs in your editor, then post it to your listing or ad."
     }
   ],
   "visual": {
-    "overview": "Electronics shoppers need to see the shape, ports, controls, and scale of a device. Start from a clean product shot, then describe one movement that makes a feature easy to understand.",
+    "overview": "Shoppers see the shape, ports and scale of your gadget before they read a single spec. One short product moment answers the question they actually care about: what is it like to own this?",
     "strip": [
       "n:guide:q16-electronics-speaker-source",
       "f:cinematic-video",
@@ -270,7 +270,7 @@
       "result": "n:guide:q16-electronics-speaker-step-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color, woven grille and controls exactly. At a quiet cafe table, an adult hand presses one top button, ending with the speaker still beside a ceramic cup. Soft window light, natural product-ad look. Table-height close-up with a short push-in. Sound: button click and cafe room tone; no music.",
+      "prompt": "A hand presses one button on the speaker at a quiet cafe table.",
       "options": [
         [
           "Size",
@@ -283,20 +283,20 @@
       ]
     },
     "picker": {
-      "title": "Choose an electronics ad format",
-      "lead": "Pick a clear device moment that shows a feature or answers a shopper question.",
+      "title": "See It. Recreate It. Launch It.",
+      "lead": "Pick a gadget scene you like, add your product photo, and get the same look in minutes.",
       "chips": [
         {
           "id": "unbox",
-          "label": "Reveal & Review"
+          "label": "Unboxing"
         },
         {
           "id": "desk",
-          "label": "Hands-on Demo"
+          "label": "Product Review"
         },
         {
           "id": "detail",
-          "label": "Feature Proof"
+          "label": "Technology"
         },
         {
           "id": "travel",
@@ -306,7 +306,7 @@
       "cards": [
         {
           "ref": "n:guide:f8-electronics-picker-headphones-r1",
-          "label": "Lift headphones → fit → unboxing",
+          "label": "Dark headphones lifted from a box",
           "prompt": "Use the uploaded photo as the dark over-ear headphones and keep the rounded earcups and padded headband exactly. Hands lift them from a plain kraft box with tissue on a tidy desk, ending with both earcups and the simple headband visible. Natural daylight, straightforward unboxing look. No logos or readable text.",
           "chips": [
             "unbox"
@@ -315,7 +315,7 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-headphones-talk",
-          "label": "Tilt headphones → band → review",
+          "label": "Headphones held beside the face",
           "prompt": "Use the uploaded photo as the dark over-ear headphones and keep their rounded earcups and padded headband exactly. An adult woman holds them beside her face in a bright home office, tilts them once toward the lens, and ends with the earcups centered. Natural window light, quiet creator-style product demo. Chest-up front camera with slight handheld movement. Sound: light handling and room tone; no music.",
           "chips": [
             "unbox"
@@ -324,7 +324,7 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-stand-talk",
-          "label": "Turn stand → hinge → product-page",
+          "label": "Foldable tablet stand turned forward",
           "prompt": "Use the uploaded photo as the foldable stand and keep its shape, color and hinge exactly. An adult man holds it at chest height in a bright workspace, turns it once toward the lens, and ends with the hinge visible. Natural daylight, quiet hands-on product demo. Chest-up front camera with slight handheld movement. Sound: light hinge movement and room tone; no music.",
           "chips": [
             "desk"
@@ -333,7 +333,7 @@
         },
         {
           "ref": "n:guide:k9-ind-electronics-commuter-stand",
-          "label": "Fold stand → travel → carry-ad",
+          "label": "Tablet stand folded into a bag",
           "prompt": "Use the uploaded photo as the stand and keep its shape, color and hinge exactly. A hand folds the stand and slides it into an open commuter bag, ending with the bag and folded stand in view. Bright natural light, practical travel-ad style. Overhead close-up with a short follow move. Sound: fabric rustle and a soft hinge click; no music.",
           "chips": [
             "desk"
@@ -342,7 +342,7 @@
         },
         {
           "ref": "n:gen2:tpl-angle-g1",
-          "label": "Rotate speaker → grille → listing",
+          "label": "Black speaker rotating in the dark",
           "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and woven grille exactly. Turn the compact speaker slightly on a dark surface so a narrow light catches the grille, ending with its front centered. Low-key studio lighting, premium product-ad look. Slow close-up slider move. Sound: quiet room tone; no music.",
           "chips": [
             "detail"
@@ -351,7 +351,7 @@
         },
         {
           "ref": "n:gen2:tpl-angle-g3",
-          "label": "Focus controls → buttons → detail",
+          "label": "Speaker controls and grille close-up",
           "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and top controls exactly. Hold a tight view of the buttons and woven grille with one control centered in focus. Soft edge light, precise product-detail look. Table-height macro with a short push-in. End with the top controls centered above the speaker’s woven grille. Sound: one soft button click and quiet room tone; no music.",
           "chips": [
             "detail"
@@ -360,7 +360,7 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-cases-fan",
-          "label": "Fan cases → openings → accessory-listing",
+          "label": "Three plain phone cases fanned out",
           "prompt": "Use the uploaded photo as the cases and keep each shape, color and single round camera opening exactly. A hand fans three plain cases across a clean tabletop, ending with all three backs visible. Bright window light, casual product-demo look. Overhead close-up with one small tilt. Sound: soft case taps on the table; no music.",
           "chips": [
             "travel"
@@ -369,7 +369,7 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-case-fit",
-          "label": "Fit case → edge → social-demo",
+          "label": "Blue phone case fitted on device",
           "prompt": "Use the uploaded photo as the blue case and keep its color, slim shape and single round opening exactly. Hands fit the plain case onto a simple device, ending with the full back and one opening visible. Soft daylight, clear hands-on demo style. Close three-quarter angle with one short push-in. Sound: light case clicks; no music.",
           "chips": [
             "travel"
@@ -378,7 +378,7 @@
         },
         {
           "ref": "n:guide:q16-electronics-picker-stand-demo",
-          "label": "Open stand → support → product-page",
+          "label": "Tablet on an open folding stand",
           "prompt": "Use the uploaded photo as the folding tablet stand and keep its shape, color and hinge exactly. Two adult hands open the hinge beside a bright window, place a plain tablet on it, and end with the hinge and screen support visible. Natural daylight, practical desk-demo look. Three-quarter close-up with one short push-in. Sound: hinge click and light desk movement; no music.",
           "chips": [
             "unbox",
@@ -389,7 +389,7 @@
         },
         {
           "ref": "f:k2-url-picker-charging-pad",
-          "label": "Place phone → contact → travel-ad",
+          "label": "Plain phone on a charging pad",
           "prompt": "Use the uploaded photo as the wireless charging pad and keep its round shape, dark color and cable exactly. A hand places a plain phone onto the pad on a hotel desk, ending with the cable and contact point visible. Soft practical light, clear travel-ad look. Overhead close-up with one gentle tilt. Sound: cable movement and a soft placement tap; no music.",
           "chips": [
             "travel"
@@ -398,7 +398,7 @@
         },
         {
           "ref": "n:guide:f8-electronics-phone-case-r1",
-          "label": "Fit case → opening → social-demo",
+          "label": "Plain phone case fitted on device",
           "prompt": "Use the uploaded photo as the plain phone case and keep its color, slim shape and single opening exactly. Hands turn the case once, fit it onto a simple device, and end with the back and opening clear on a clean desk. Soft daylight, casual creator-demo look. Three-quarter close-up with a short push-in. Sound: light case click; no music.",
           "chips": [
             "travel"
@@ -407,7 +407,7 @@
         },
         {
           "ref": "n:guide:c1-tpl-feature-laptop-stand-square",
-          "label": "Laptop Stand — Height Demo",
+          "label": "Charcoal laptop stand raised higher",
           "prompt": "Use the uploaded photo as the unbranded charcoal laptop stand and keep its adjustable hinge and support arms visible. Adult hands raise the stand to a new height on a pale desk, ending with the open support arms clear. Bright window light, straightforward product-demo look. Overhead close-up with one slow follow move. Sound: hinge movement and a light desk tap; no music.",
           "chips": [
             "desk"
@@ -421,14 +421,14 @@
       {
         "frame": "listing",
         "ref": "n:guide:q16-electronics-charging-pad-demo",
-        "h": "Hand demo: Phone meets the charging pad",
-        "d": "A hand sets a plain graphite phone onto the charcoal pad to show the connection point and cable placement."
+        "h": "On a product page, buyers see the setup before they buy",
+        "d": "A hand sets a plain phone onto the charging pad, so shoppers picture the cable and the contact point on their own desk."
       },
       {
         "frame": "post",
         "ref": "n:guide:ind-electronics-m4-headphones",
-        "h": "Product showcase: Over-ear headphones at a desk",
-        "d": "A clean desk view keeps the padded earcups and adjustable band easy to inspect."
+        "h": "On social feeds, the ad looks like a real desk setup",
+        "d": "Over-ear headphones on a clean desk feel like a creator post, not a catalog shot, so buyers stop and watch."
       }
     ],
     "input": [
