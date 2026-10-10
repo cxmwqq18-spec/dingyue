@@ -1,10 +1,10 @@
 {
   "id": "video-hub",
   "title": "AI Video Generator for Ecommerce | AIVideosUGC",
-  "description": "Our AI video generator for ecommerce turns one product photo into a 6, 10, 15, or 30 second clip for TikTok, Reels, or your store. Pick a video type to start.",
+  "description": "Turn one product photo into a short, watermark-free ad clip with our AI video generator. Pick 6, 10, 15, or 30 seconds for TikTok, Reels, or your store.",
   "h1": "AI Video Generator for Ecommerce: Choose a Video Type",
   "eyebrow": "AI video tools",
-  "lead": "Use an AI video generator for ecommerce to turn a photo or product page into a short product clip. Choose a video type, set the frame and length, then describe the scene.",
+  "lead": "Booking a shoot for every product takes time and money you may not have. This AI video generator turns one product photo into a ready-to-use clip for TikTok, Reels, YouTube Shorts, or your store.",
   "maker": {
     "options": [
       [
@@ -27,34 +27,41 @@
   ],
   "intro": [
     "Choose a video direction for the product moment you want to show: a creator-style ad, a product demonstration, an unboxing, a visible change, or motion added to a still photo. Start from a product photo or a product page link, then describe one clear action.",
-    "Choose a 9:16, 1:1, or 16:9 frame and a length of 6, 10, or 15 seconds. Each run makes one clip, and the credit cost appears before you start."
+    "Choose a 9:16, 1:1, or 16:9 frame and a length of 6, 10, 15, or 30 seconds. Each run makes one clip, and the credit cost appears before you start."
   ],
+  "benefits_h2": "Why make product videos with an AI video generator?",
   "benefits": [
     {
-      "t": "Start from one photo",
-      "d": "A single clear product shot is enough to begin. No photo handy? You can start from a written description instead."
+      "t": "No shoot, no models, no studio",
+      "d": "One product photo is all you upload. The clip is generated around your item, so you skip the camera setup, location, and cast booking of a real shoot."
     },
     {
-      "t": "Sized for where you post",
-      "d": "Vertical, square, and wide formats are built in, so you never have to squeeze a wide clip into a TikTok frame."
+      "t": "One photo, many scenes",
+      "d": "Run the same product photo through a creator ad, demo, unboxing, or before-and-after scene. Each run gives your product a different angle without reshooting it."
     },
     {
-      "t": "Cost shown up front",
-      "d": "The credit cost appears before a job starts. When a video fails, those credits go straight back to your balance."
+      "t": "A length for the full story",
+      "d": "Pick 6, 10, or 15 seconds for a quick hook, or 30 seconds for a complete product story. Vertical, square, and wide frames are built in, so the clip fits TikTok, Reels, Shorts, and your store."
+    },
+    {
+      "t": "Yours to use commercially",
+      "d": "Downloaded videos are watermark-free and licensed for commercial use, so you can run them as paid ads, post them on social feeds, and place them on product pages."
     }
   ],
+  "steps_h2": "How to make a product video in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-post clip — no studio, no models, no reshoots.",
   "steps": [
     {
-      "t": "Your product",
-      "d": "Start with a clear item image or a public product page that shows what you sell."
+      "t": "Upload Your Product Photo",
+      "d": "Add one photo of the whole item, or paste a public product page link. The clip keeps the product's shape and details."
     },
     {
-      "t": "Choose a scene and format",
-      "d": "Pick an action, then set the frame and length for where you will use it."
+      "t": "Pick a Video Type and Format",
+      "d": "Choose an ad, demo, or unboxing scene, then set the frame and length. Test many scenes from one photo without reshoots."
     },
     {
-      "t": "Review and download your result",
-      "d": "Save the version that fits the product and placement."
+      "t": "Download and Post",
+      "d": "Review the clip, save it, and add price or captions in your editor. The watermark-free file is ready for ads and feeds."
     }
   ],
   "faq": [
@@ -72,11 +79,23 @@
     },
     {
       "q": "What does one video job cost?",
-      "a": "The displayed cost depends on length: 6 seconds uses 24 credits, 10 uses 40, 15 uses 60, and 30 uses 120. The workspace currently exposes 6, 10, and 15 seconds."
+      "a": "The displayed cost depends on length: a 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. The exact cost appears on screen before each run, and credits for a failed job are returned automatically."
     },
     {
       "q": "What should the first shot of a product video show?",
       "a": "Show the item clearly before it moves. Use one action that explains its purpose, and keep the label and important parts in view as the scene develops."
+    },
+    {
+      "q": "Do I need a model or a creator to make the video?",
+      "a": "No. People and hands that appear in the clip are generated around your product photo, so you don't book a model, ship samples to a creator, or wait on a filming date. You can still have a real creator review the product later if you want one."
+    },
+    {
+      "q": "Is this different from hiring a UGC creator?",
+      "a": "Yes. A UGC creator films your product and charges for their time, usage rights, and often revisions; here you upload one photo, pick a scene, and pay credits per clip. The people shown are AI-generated actors, not customers or independent reviewers, so describe the video honestly when you post it."
+    },
+    {
+      "q": "Can I run the downloaded videos as paid ads?",
+      "a": "Yes. Downloaded videos are watermark-free and licensed for commercial use, including paid ads on TikTok, Instagram, Facebook, and YouTube. You are responsible for the claims and text you add, and each platform still reviews the ad against its own policies."
     }
   ],
   "overview": [
@@ -86,7 +105,7 @@
     },
     {
       "h2": "Set the format before you start",
-      "p": "Use 9:16 for a vertical feed, 1:1 for a square placement, or 16:9 for a wide video area. Pick 6, 10, or 15 seconds to match the space where you plan to use the clip."
+      "p": "Use 9:16 for a vertical feed, 1:1 for a square placement, or 16:9 for a wide video area. Pick 6, 10, 15, or 30 seconds to match the space where you plan to use the clip."
     }
   ],
   "input_guide": {
@@ -128,6 +147,10 @@
       {
         "t": "15 seconds",
         "d": "More time to show a product in use."
+      },
+      {
+        "t": "30 seconds",
+        "d": "Room for a complete product story: problem, demo, and result."
       }
     ]
   },
@@ -540,7 +563,7 @@
         "h2": "Start with a clear product photo"
       },
       "m6": {
-        "h2": "Choose 6, 10, or 15 seconds"
+        "h2": "Choose 6, 10, 15, or 30 seconds"
       },
       "m7": {
         "h2": "Finish the clip after download"
