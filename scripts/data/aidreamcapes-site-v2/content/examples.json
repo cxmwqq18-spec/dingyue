@@ -469,6 +469,17 @@
       "n:guide:q6-examples-strip-5",
       "n:guide:q6-examples-strip-6"
     ],
+    "steps": {
+      "source": "n:guide:q6-examples-strip-1",
+      "sourceAlt": "A product ready to be turned into a creator-style example.",
+      "result": "n:guide:q6-examples-strip-2",
+      "mode": "video",
+      "prompt": "Pick an example scene for your product.",
+      "options": [
+        ["Scene", "Creator review"],
+        ["Format", "Vertical video"]
+      ]
+    },
     "picker": [
       {
         "id": "creator-review",
