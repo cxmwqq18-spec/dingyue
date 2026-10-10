@@ -111,7 +111,24 @@
       "n:guide:q19-yt-strip-jewelry-unbox",
       "n:guide:q19-yt-strip-charger-demo",
       "n:guide:q19-yt-strip-phonecase-demo"
-    ]
+    ],
+    "steps": {
+      "source": "n:guide:q19-yt-step-steamer-source",
+      "result": "f:k4-plat-youtube-shorts-17-visual-steps-result",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Use the uploaded steamer photo as the product reference and preserve its shape and color. In a bright laundry room, adult hands press the white garment steamer once across a wrinkled blue shirt sleeve; the cloth smooths as steam passes. Close side view with one continuous slow push-in and the steamer centered. Natural window light and realistic fabric texture. End with the steamer clear and still in frame. Sound: soft steam hiss and room tone; no music, captions or on-screen text.",
+      "options": [
+        [
+          "Size",
+          "9:16"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ]
+      ]
+    }
   },
   "benefits_h2": "Why advertisers move to AI video for YouTube",
   "benefits": [
