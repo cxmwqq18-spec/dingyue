@@ -1,61 +1,49 @@
 {
   "id": "templates",
-  "title": "Product Ad Templates for Photos and Videos | AIVideosUGC",
-  "description": "Browse product ad templates for photos and short videos. Pick a style, add your product photo, and receive a new image or clip in the same look. Start today.",
-  "h1": "Product Ad Templates You Can Use With One Photo",
-  "eyebrow": "Template library",
-  "lead": "Browse product ad templates by format, industry, or platform. Open any card to see the example and start from one product photo.",
-  "card": "Ready-made looks for videos and photos. Pick one and add your product.",
+  "title": "AI Product Ad Templates for Photos and Videos | AIVideosUGC",
+  "description": "Find AI product ad templates for photos and short videos. Choose a style, add one product photo, and get a new asset for your store or social feed.",
+  "h1": "See It. Recreate It. Launch It.",
+  "eyebrow": "Product ad templates",
+  "lead": "Need a product ad without planning every shot? Pick a template, add your product photo, and publish a fresh asset for your store or social feed.",
+  "card": "Ready-made styles for product photos and videos. Pick one and add your product.",
   "secondary_keywords": [
     "product photo templates",
     "product video templates",
     "ecommerce ad templates",
     "social media ad templates"
   ],
-  "intro": [
-    "Each template is a ready-made style for a product photo or short video, shown with an example so you know what to expect. Choose one that fits your product and where you'll post it, like a close-up detail shot for Amazon or a drink pour for TikTok. Upload a photo of your own product, add a line about the setting if you like, and you'll get a result with a similar look. Photos are square by default. Videos come in 9:16, 1:1, or 16:9 and last 6, 10, or 15 seconds.",
-    "Add a photo of your product to make a new image or video in a similar style. Photos are square by default; videos can be 9:16, 1:1, or 16:9 and last 6, 10, or 15 seconds."
-  ],
   "faq": [
     {
       "q": "How do I choose a product ad template?",
-      "a": "Choose by the buyer moment you need: unboxing for a reveal, close-up for a detail, try-on for fit, demo for use, or a promotion template when you will add an offer after download."
+      "a": "Choose the buyer moment you need: product showcase, product explainer, UGC-style product ad, or social media content."
     },
     {
       "q": "Can I adapt a template to my own product?",
-      "a": "Yes. Upload a sharp product photo and describe the action and setting you need. The template provides a starting composition; review every result for product drift."
+      "a": "Yes. Add one product photo and review the generated result before publishing."
     },
     {
       "q": "Which video lengths can I choose?",
-      "a": "Video jobs are available in 6, 10 or 15 seconds. Choose the length that gives one action enough time to read."
+      "a": "Video jobs are available in 6, 10, 15, and 30 seconds."
     },
     {
       "q": "Are product photos square?",
-      "a": "Photos are square by default. Crop a downloaded still for a specific placement such as a 4:5 Meta Feed image."
+      "a": "Photos are square by default. Crop a downloaded still for a specific placement when needed."
     },
     {
-      "q": "Which template works for an Amazon listing?",
-      "a": "Start with a white-background or close-up photo template for the gallery, then check the current category rules before uploading the main image."
+      "q": "Can I use a template for an Amazon listing?",
+      "a": "Yes. Start with a clean product photo template, then check the current Amazon category rules."
     },
     {
-      "q": "Can I add a price, code, or headline in the template?",
-      "a": "Add exact prices, codes, headlines, and countdowns after download in your editor so the wording stays correct and easy to update."
+      "q": "Can I add a price, code, or headline?",
+      "a": "Yes. Add exact campaign text after download in your usual editor."
     },
     {
-      "q": "Will the generated result keep my product shape and color?",
-      "a": "Use a clear source photo with the full item visible, then compare the result with the source before publishing. AI output can still need a correction or another run."
-    },
-    {
-      "q": "Can I use one template for both a photo and a video?",
-      "a": "Pick the template's photo or video version. Photos are square; videos can use 9:16, 1:1, or 16:9 and last 6, 10, or 15 seconds."
-    },
-    {
-      "q": "Can templates link to the platform where I sell?",
-      "a": "Yes. Use the platform filters to find TikTok, Instagram, Facebook, YouTube Shorts, Amazon, or Shopify guidance, then open the linked page before you publish."
+      "q": "Will the result keep my product shape and color?",
+      "a": "Use a complete source photo, then compare the result with the item you sell before publishing."
     },
     {
       "q": "Do I need editing experience to start?",
-      "a": "No. Upload one product photo, choose a template, and review the generated result. You can add final text or sound in your usual editor after download."
+      "a": "No. Upload a product photo, choose a template, and download the result for your usual editor."
     }
   ],
   "visual": {
@@ -72,7 +60,7 @@
       "sourceAlt": "Brown leather duffel bag on a dark studio background.",
       "result": "n:guide:q13-templates-steps-result-r2",
       "mode": "photo",
-      "prompt": "A traveler lifts a plain dark brown leather duffel by its handles and settles it on a pale wood bench beside a bright station window. Keep the full bag visible in a square lifestyle product photo.",
+      "prompt": "Pick a template for your product.",
       "options": [
         [
           "Template",
@@ -84,217 +72,95 @@
         ]
       ]
     },
-    "picker": [
-      {
-        "id": "photo",
-        "label": "Photo"
-      },
-      {
-        "id": "video",
-        "label": "Video"
-      },
-      {
-        "id": "beauty-wellness",
-        "label": "Beauty & wellness"
-      },
-      {
-        "id": "fashion-shoes",
-        "label": "Fashion & shoes"
-      },
-      {
-        "id": "electronics",
-        "label": "Electronics"
-      },
-      {
-        "id": "food-drinks",
-        "label": "Food & drink"
-      },
-      {
-        "id": "home-living",
-        "label": "Home"
-      },
-      {
-        "id": "accessories",
-        "label": "Accessories"
-      },
-      {
-        "id": "social-platforms",
-        "label": "Social platforms"
-      },
-      {
-        "id": "amazon",
-        "label": "Amazon"
-      },
-      {
-        "id": "shopify",
-        "label": "Shopify"
-      }
-    ],
-    "uses": [],
-    "input": [],
-    "outputs": [],
+    "picker": [],
     "titles": {
       "m2": {
-        "h2": "How to choose a product ad template in 3 steps"
+        "h2": "How to create product ad content in 3 simple steps"
       },
       "m3": {
-        "h2": "Browse product ad templates",
-        "lead": "Filter the complete template list by format, industry, or platform."
+        "h2": "See It. Recreate It. Launch It.",
+        "lead": "Pick a template, add your product photo, and publish a fresh asset."
       }
     },
     "directoryFilters": {
       "templateGroups": {
-        "beauty-wellness": {
+        "skincare": {
           "industries": [
-            "beauty-skincare",
-            "health-wellness"
+            "beauty-skincare"
           ]
         },
-        "fashion-shoes": {
+        "beauty": {
+          "industries": [
+            "health-wellness",
+            "jewelry-accessories"
+          ]
+        },
+        "fashion": {
           "industries": [
             "fashion-clothing",
             "shoes"
           ]
         },
-        "electronics": {
-          "industries": [
-            "electronics"
-          ]
-        },
-        "food-drinks": {
+        "food-drink": {
           "industries": [
             "food-drinks"
           ]
         },
-        "home-living": {
+        "technology": {
+          "industries": [
+            "electronics"
+          ]
+        },
+        "fitness": {
+          "industries": [
+            "health-wellness"
+          ]
+        },
+        "home-decor": {
           "industries": [
             "home-living"
           ]
-        },
-        "accessories": {
-          "industries": [
-            "jewelry-accessories"
-          ]
-        },
-        "social-platforms": {
-          "platforms": [
-            "tiktok",
-            "instagram",
-            "facebook",
-            "youtube-shorts"
-          ]
-        },
-        "amazon": {
-          "platforms": [
-            "amazon"
-          ]
-        },
-        "shopify": {
-          "platforms": [
-            "shopify"
-          ]
         }
       }
-    }
+    },
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
   },
   "steps": [
     {
-      "t": "Choose a product template",
-      "d": "Pick a style that matches the photo or clip you want to make."
+      "t": "Upload Your Product Photo",
+      "d": "Add one photo of the item you sell. The template keeps the product at the center."
     },
     {
-      "t": "Preview its scene and format",
-      "d": "Compare the example with the placement where you plan to publish the result."
+      "t": "Pick a Template",
+      "d": "Choose a photo or video style for the channel you use. The right format keeps the result easy to place."
     },
     {
-      "t": "Start from your product photo",
-      "d": "Open the linked tool and add a clear image of the item you sell."
+      "t": "Download and Post",
+      "d": "Download the new asset and add it to your store, social feed, or ad campaign."
     }
   ],
-  "directory_specs": {
-    "title": "Pick a template by the ad moment",
-    "lead": "Start with the moment you need to show, then open the linked template for its full example and tool settings.",
-    "columns": [
-      "Use",
-      "What the viewer sees",
-      "Starting format",
-      "Related template"
-    ],
-    "rows": [
-      [
-        "Unboxing",
-        "Hands reveal the item and packaging",
-        "9:16 video",
-        "What's in the Box"
-      ],
-      [
-        "Product detail",
-        "A texture, finish, or component fills the frame",
-        "Square photo",
-        "Close-Up Details"
-      ],
-      [
-        "Try-on",
-        "A person wears or holds the item so scale and fit are clear",
-        "Square photo or 9:16 video",
-        "Clothing Try-On"
-      ],
-      [
-        "How-to demo",
-        "One focused action explains how the product is used",
-        "9:16 video",
-        "How-To Video"
-      ],
-      [
-        "Launch or offer",
-        "A product reveal leaves room for exact offer text added later",
-        "9:16 video or square photo",
-        "Launch Promo / Sale Banner"
-      ],
-      [
-        "Creator-style review",
-        "An adult holds the item and explains one supported detail",
-        "Square photo",
-        "Creator-Style Photo"
-      ]
-    ]
-  },
-  "directory_scenes": [
+  "benefits_h2": "More content, less hassle",
+  "benefits": [
     {
-      "t": "Unboxing: reveal the package",
-      "d": "Use the box, tissue, and hands to show what arrives before the product is used.",
-      "href": "/ai-image-generation/bundle-sets",
-      "image": "n:guide:q1-photo-template-pack"
+      "t": "Start from a proven style",
+      "d": "Choose a ready-made product scene instead of planning every shot from scratch."
     },
     {
-      "t": "Detail: answer one product question",
-      "d": "Fill the frame with texture, finish, or a useful component so a shopper can judge it quickly.",
-      "href": "/ai-image-generation/macro-details",
-      "image": "n:q10-film-more-retargeting"
+      "t": "Turn one photo into new assets",
+      "d": "Reuse one product photo across listing, social, and campaign formats."
     },
     {
-      "t": "Try-on: show fit in motion",
-      "d": "Put the garment or accessory on a person and keep one natural movement visible.",
-      "href": "/ai-image-generation/virtual-try-on",
-      "image": "n:guide:c3-r3-tpl-tryon-knitdress"
+      "t": "Try a fresh angle without another reshoot",
+      "d": "Choose a new scene or format when the next campaign needs a different opening."
     },
     {
-      "t": "How-to: demonstrate one action",
-      "d": "Show the product completing one useful step, with the starting and ending states easy to follow.",
-      "href": "/ai-video-generation/how-to-video",
-      "image": "n:guide:c1-tpl-howto-picker-kettle-action-square"
-    },
-    {
-      "t": "Launch: reveal the new item",
-      "d": "Build a clean reveal for launch day, then add the confirmed price or date in your editor.",
-      "href": "/ai-video-generation/promo-video",
-      "image": "n:guide:q20-occ-holiday-steps-result-r2"
-    },
-    {
-      "t": "Creator-style: hold and explain",
-      "d": "Use an adult presenter with the product in hand and keep the spoken claim tied to a fact you can support.",
-      "href": "/ai-image-generation/ugc-still-ad",
-      "image": "n:guide:q14-retarget-strip-talk"
+      "t": "Launch without a studio",
+      "d": "Create product visuals without booking models, locations, or a full shoot."
     }
-  ]
+  ],
+  "steps_h2": "How to create product ad content in 3 simple steps",
+  "steps_lead": "Choose a style, add one product photo, and download a ready-to-use asset for your next campaign."
 }

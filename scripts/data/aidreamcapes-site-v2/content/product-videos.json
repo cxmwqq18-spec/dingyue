@@ -1,46 +1,46 @@
 {
   "id": "product-videos",
-  "title": "AI Product Video Generator for Demos | AIVideosUGC",
-  "description": "Our AI product video generator shows your item in action, from a lid clicking shut to a lamp switching on. Make a short demo for Etsy, Shopify, or your ads.",
-  "h1": "AI Product Video Generator for Showing How It Works",
-  "eyebrow": "Product demo video",
-  "lead": "Use an AI product video generator to plan a short demo around one visible action, such as a lid closing or a lamp switching on. Add a clear photo of that part and describe the movement you want to show.",
+  "title": "AI Product Video Generator for Product Demos | AIVideosUGC",
+  "description": "Turn one product photo into a product demo that shows how it works. Create videos for Shopify, Etsy, product pages, and paid social in 6, 10, 15, or 30 seconds.",
+  "h1": "AI Product Video Generator for Product Demos",
+  "eyebrow": "AI product videos",
+  "lead": "Show shoppers how your product works without booking a shoot. Turn one product photo into a clear product demo for a store, product page, or paid ad.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
     "Etsy listing video",
     "how it works product video"
   ],
-  "intro": [
-    "Product Videos focuses on one visible product action: a kettle pouring, a chair unfolding, or a drawer organizer holding cutlery. A focused demo can help shoppers understand how a feature works without turning one clip into a full tutorial.",
-    "With AIVideosUGC, upload a product photo and describe one action in a sentence. Pick the clip length and frame that suit the product action, from 6, 10, 15, or 30 seconds and 9:16, 1:1, 16:9, 4:3, or 3:4. It works well for home goods, kitchen tools, gadgets, bags, and other products where movement helps explain the feature."
-  ],
   "benefits": [
     {
-      "t": "Shows the product in use",
-      "d": "A short clip of the lid opening or the light turning on explains more quickly than a list of specs."
+      "t": "Show your products in action",
+      "d": "A visible operation helps shoppers understand the product before they buy."
     },
     {
-      "t": "One feature per clip",
-      "d": "Focused clips are easier to watch and easier to reuse. Make one for each feature and place them where they fit."
+      "t": "Create flawless product shots",
+      "d": "Use a clean product view when shoppers need to inspect shape, finish, or scale."
     },
     {
-      "t": "Formats for store and feed",
-      "d": "Choose 16:9 for a product page, 1:1 for listings, or 9:16 for YouTube Shorts, all from the same photo."
+      "t": "Explain the key product detail",
+      "d": "Show the feature a shopper needs to understand before buying."
+    },
+    {
+      "t": "More demos from one photo",
+      "d": "Create another product demo when a campaign needs a fresh angle."
     }
   ],
   "steps": [
     {
-      "t": "Upload your product",
-      "d": "Show the feature you want to demonstrate, such as a lid, latch, zipper or button, fully in frame. A clear phone image works."
+      "t": "Upload Your Product Photo",
+      "d": "Add one photo that shows the product and its moving part. A complete view gives shoppers useful context."
     },
     {
-      "t": "Describe one action",
-      "d": "Choose one clear action and where you plan to use the result."
+      "t": "Share Your Video Idea",
+      "d": "Give one action in a sentence. One focused operation is easier for shoppers to understand."
     },
     {
-      "t": "Download and show another feature",
-      "d": "Review the result with the real item, then describe the next feature as its own video."
+      "t": "Download and Post",
+      "d": "Download the finished demo and place it beside your product photos. The moving detail answers a buyer question."
     }
   ],
   "maker": {
@@ -58,57 +58,38 @@
   },
   "faq": [
     {
+      "q": "What is an AI product video generator?",
+      "a": "It turns a product photo into a short video that shows the item, an operation, or a product detail."
+    },
+    {
       "q": "How is this different from image to video?",
-      "a": "Image to video adds requested camera movement to an existing still photo. A product demo focuses on one action, such as a zipper opening or a pump being pressed."
+      "a": "Image to video adds motion to a still. Product video focuses on a product operation or buyer question."
     },
     {
       "q": "Can I use the video on Etsy or Shopify?",
-      "a": "Yes. Etsy listing videos run 5 to 15 seconds, so make a 6, 10 or 15 second clip. On Shopify, add it to your product media the same way you add a photo."
+      "a": "Yes. Etsy listing videos follow Etsy’s current listing rules, and Shopify accepts the finished media beside your product photos."
+    },
+    {
+      "q": "Which video lengths can I choose?",
+      "a": "Available lengths are 6, 10, 15, and 30 seconds. Pick the length that gives the operation a clear start and finish."
     },
     {
       "q": "Will the video show my product accurately?",
-      "a": "Only describe actions your product can really do, and watch the clip before posting. If a button, color, or part looks different from the real item, make a new version rather than using that one."
+      "a": "Review the finished clip beside the real item before posting. Use supported product details and replace any result that drifts."
     },
     {
       "q": "Can I add the price and product name?",
-      "a": "Add text later in Canva or CapCut. Letters generated by AI can come out garbled, so typed text is more reliable for names, prices, and dates."
-    },
-    {
-      "q": "What actions work well for product videos?",
-      "a": "Show a clear operation such as opening, switching on, pouring, packing or fitting the product."
+      "a": "Yes. Add exact text later in Canva, CapCut, or your ad editor so names, prices, and dates stay correct."
     },
     {
       "q": "Can I use a close-up operation shot?",
-      "a": "Yes. Close framing helps shoppers inspect a latch, button, lid, seam or other useful detail."
+      "a": "Yes. A close view helps shoppers inspect a latch, button, lid, seam, or other useful detail."
     },
     {
-      "q": "Which aspect ratio should I choose for a product demo?",
-      "a": "Use 9:16 for TikTok or Shorts, 1:1 for a store feed, and 16:9 for a wide product page. Pick 10 or 15 seconds when the action needs a clear start and finish."
-    },
-    {
-      "q": "How should I frame a moving part?",
-      "a": "Keep the full item and the moving part in focus before the action starts. Leave room around the edge, then let the lid, latch, zipper, pump or switch move once and stop."
+      "q": "Can I use product videos for paid ads?",
+      "a": "Yes. Download the demo, add campaign text in your editor, and review the final ad before launch."
     }
   ],
-  "overview": [
-    {
-      "h2": "Show one useful action, not a feature list",
-      "p": "Pick one thing a shopper would ask about (does the lid lock, how big is it inside) and make one short clip of it."
-    }
-  ],
-  "fit": {
-    "h2": "When a product demo is the right format",
-    "good": [
-      "Home goods with a clear open, close, fold, pour, or switch action",
-      "Kitchen tools where the handoff or latch matters",
-      "Bags, organizers, and accessories with useful compartments",
-      "Listings that need one moving explanation beside still photos"
-    ],
-    "not_ideal": [
-      "Products whose value depends mainly on an exact printed claim",
-      "Actions that require a real person to explain results aloud"
-    ]
-  },
   "visual": {
     "strip": [
       "n:guide:f2-product-operation-strip-1",
@@ -124,245 +105,64 @@
       "result": "n:guide:k1-product-videos-step-mug-lift",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult hand lifts the mug, takes one sip and sets it down with the handle facing camera. End on the mug centered on the counter. Soft window light, calm everyday style. Medium close shot with one slow push-in. Sound: a light sip, ceramic set-down and quiet room tone; no music."
+      "prompt": "Share one product action in one sentence."
     },
     "picker": {
-      "title": "Browse product ad formats",
-      "lead": "Choose a card by the moment a shopper needs to see, then adapt the product, hand position, and final hold to your own item. Creator reviews keep the product beside a face while a short line explains a benefit; hands-on demos stay close to the moving part; routines show how the item fits into a familiar task; taste reactions capture a first sip or bite. Each prompt is one operation, with no invented logo or packaging. Use the preview to check that the action, color, and ending frame match what you sell.",
-      "chips": [
-        {
-          "id": "creator",
-          "label": "Creator Reviews"
-        },
-        {
-          "id": "hands",
-          "label": "Hands-On Demos"
-        },
-        {
-          "id": "routine",
-          "label": "Routines & Try-On"
-        },
-        {
-          "id": "taste",
-          "label": "Taste Reactions"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:k1-product-videos-picker-umbrella",
-          "label": "Umbrella opens → cover → listing",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: open an umbrella. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-picker-folding-bike",
-          "label": "Bike unfolds → compact → listing",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: unfold a folding bike. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-picker-lamp",
-          "label": "Lamp switches → glow → feed",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: switch on a lamp. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-picker-drawer",
-          "label": "Trays slide → storage → listing",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: slide in drawer trays. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-picker-charger",
-          "label": "Charger packs → travel → store",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: pack a compact charger. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-picker-bottle-cap",
-          "label": "Cap opens → refill → feed",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: open a flip-top cap. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-picker-laptop-sleeve",
-          "label": "Sleeve opens → fit → listing",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: open a laptop sleeve. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:k1-product-videos-strip-lunchbox-latch",
-          "label": "Latch clicks → seal → listing",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded product reference and show the real operation: press the lunchbox latch. Keep the unbranded product fully visible, with no text or logo.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f11-r10-product-videos-water-bottle-review",
-          "label": "Bottle opens → cap → creator",
-          "chips": [
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright home kitchen, a middle-aged man twists open the reusable water bottle once, checks the cap, and holds the bottle toward the camera. End with the open cap and bottle neck clear. Soft daylight, natural creator style. Chest-up vertical framing with one gentle push-in. Sound: cap twist, bottle tap and quiet kitchen ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q3-product-videos-board-07-power-bank-demo",
-          "label": "Power connects → fit → feed",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult connects the power bank cable to a generic phone and settles both devices together. End with the connector seated and both devices clear. Soft window light, practical tech-demo style. Over-shoulder close framing with one small push-in. Sound: cable click, fingertip tap and quiet cafe ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q3-product-videos-board-03-lip-balm-routine",
-          "label": "Balm applies → swipe → creator",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bathroom mirror, an adult applies one smooth swipe of tinted balm, then holds the tube beside her face. End with the cap and tube visible in the mirror. Soft morning light, clean natural beauty style. Close mirror framing with one gentle tilt. Sound: cap click, sleeve rustle and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q3-product-videos-board-08-citrus-taste-review",
-          "label": "Drink tastes → fizz → creator",
-          "chips": [
-            "taste",
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult takes one sip of the citrus drink and says, \"It tastes bright with a little fizz.\" End with the plain bottle beside the half-full glass. Clear daylight, candid UGC style. Chest-up framing with a gentle handheld sway. Sound: spoken line, sip and faint glass bubbles; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f11-r10-product-videos-fabric-shaver-demo",
-          "label": "Shaver clears → sweater → listing",
-          "chips": [
-            "hands"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a laundry table, adult hands run the plain fabric shaver once across a cream wool sweater, leaving one cleared strip beside the remaining pills. End with the shaver head and the texture visible. Soft daylight, practical hands-on style. Overhead close framing with one slow pass. Sound: motor hum, fabric glide and quiet room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:q3-product-videos-board-06-running-shoe-try-on",
-          "label": "Laces tighten → fit → ad",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a leafy trail, an adult tightens the laces once and steps forward onto the path. End with the plain shoe planted in side profile. Natural morning light, active outdoor style. Low shoe-level angle with one slow tracking move. Sound: lace pull, gravel footstep and birds; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f11-r10-product-videos-sparkling-water-taste",
-          "label": "Water sips → fizz → creator",
-          "chips": [
-            "taste",
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an older woman takes one sip of the sparkling citrus water and says, \"It tastes bright and crisp.\" End with the plain bottle beside the glass. Clear daylight, candid creator style. Chest-up vertical framing with a gentle handheld sway. Sound: spoken line, sip and faint bubbles; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f11-r10-product-videos-mango-yogurt-taste",
-          "label": "Yogurt tastes → bite → creator",
-          "chips": [
-            "taste",
-            "creator"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a warm kitchen table, a middle-aged man takes one spoonful of the plain mango yogurt and says, \"It is smooth and tangy.\" End with the ceramic cup and spoon in view. Warm window light, candid creator style. Chest-up vertical framing with one small push-in. Sound: spoken line, spoon tap and quiet kitchen ambience; no music.",
-          "kind": "video"
-        }
-      ],
-      "button": "Make a video like this"
+      "title": "See Product Videos That Sell",
+      "lead": "See product moments that answer a buyer question before you make your own.",
+      "chips": [],
+      "cards": [],
+      "button": "Explore More"
     },
     "uses": [
       {
         "frame": "split",
         "ref": "n:guide:k1-product-videos-use-bottle-white",
         "ref_b": "n:guide:k1-product-videos-example-frother",
-        "h": "Show the item, then its feature",
-        "d": "A product page needs a clear action that answers one question: what does this item do? Use a wide or square frame to show the item first, then the mechanism in close view. A lid, latch, zipper, pump, or switch should move once and stop clearly. Keep a hand in frame when scale matters, and leave enough space around the product for the page layout. After download, compare the clip with the real item before publishing; an altered button or cap is a reason to make another version."
+        "h": "No Learning Curve",
+        "d": "A clear product moment helps shoppers understand the item without a studio shoot."
       },
       {
         "frame": "post",
         "ref": "n:guide:k1-product-videos-example-lamp",
-        "h": "Add a product clip to a listing",
-        "d": "Short ads work when the feature is visible before the viewer scrolls. Use a vertical framing for a creator review, a taste reaction, or a quick try-on; use a product-level angle for a cable connection or a close operation. Plan one sound that supports the movement, such as a click, pour, zip, or brush pass. Add a typed price or headline later in your editor so the product scene stays clean and the spelling stays correct."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:k1-product-videos-input-lunchbox",
-        "bad": "n:guide:q3-product-videos-input-lunchbox-bad-dark",
-        "good_label": "Your product, fully visible with the feature area in frame",
-        "bad_label": "A crop that hides the moving part or cuts the product edge"
+        "h": "Unmatched Customization",
+        "d": "Show the feature, finish, or use case that matters to your buyer."
       },
       {
-        "good": "n:guide:q3-product-videos-input-lunchbox-good-alt",
-        "bad": "n:guide:q3-product-videos-input-lunchbox-bad-crop",
-        "good_label": "Your product, evenly lit so color and texture are clear",
-        "bad_label": "A dark upload where the control or label area disappears"
-      }
-    ],
-    "outputs": [
-      {
+        "frame": "browser",
         "ref": "n:guide:q3-product-videos-output-lunchbox-lid",
-        "frame": "1:1",
-        "label": "Hands-On Demo: lunchbox lid lifted, 1:1 frame for a clear mechanism view",
-        "length": 10
+        "h": "Play the Director",
+        "d": "Choose the product moment that helps a shopper decide."
       },
       {
+        "frame": "listing",
         "ref": "n:guide:q3-product-videos-output-lunchbox-packed",
-        "frame": "1:1",
-        "label": "Snack Prep: lunchbox packed, 1:1 frame for a finished product-page moment",
-        "length": 10
+        "h": "Built for Unbeatable ROAS",
+        "d": "More useful product media gives every listing and ad more chances to convert."
       }
     ],
     "titles": {
       "m2": {
-        "h2": "How to make a product demo video in 3 steps"
+        "h2": "How to make a product video in 3 simple steps"
       },
       "m3": {
-        "h2": "Product demo ideas: one action per video",
-        "lead": "Lids, latches, zippers, pumps and pours. Each idea shows one action from start to finish."
+        "h2": "Use AI to make product videos that sell",
+        "lead": "Show a clean product shot, a product in action, or a short product explanation."
       },
       "m4": {
-        "h2": "Where product demo videos help you sell"
+        "h2": "Make product videos shoppers want to watch"
       },
       "m5": {
-        "h2": "What to include when showing a product demo"
+        "h2": "Upload a product photo"
       },
       "m6": {
-        "h2": "Demo video size, length and credits"
+        "h2": "Product video lengths and formats"
       },
       "m7": {
-        "h2": "Add text in CapCut or Canva after download"
+        "h2": "Ready to publish your product video"
       },
       "examples": {
-        "h2": "More product demo ideas"
+        "h2": "See what AI product videos generate"
       },
       "templates": {
         "h2": "Product demo video templates"
@@ -374,19 +174,11 @@
         "h2": "Product demo scenes"
       }
     },
-    "overview": "A product demo shows one useful action from the first frame to the last: a dropper lifting, a cap clicking shut, a cable connecting, a brush catching fur, or a shoe tightening before a walk. Start with a complete photo, name one movement, and keep the item stable so shoppers can judge the feature. Use [how-to video templates](/ai-video-generation/how-to-video) for numbered steps, [UGC ad videos](/ai-video-generation/ugc-ad-video) for a first-person review, or [image to video](/ai-video-generation/image-to-video) when the still only needs camera movement. Choose the placement before you write: vertical for [TikTok](/platforms/tiktok-ads) or Shorts, wide for a product page, and square for a store feed.",
-    "after": {
-      "ref": "n:guide:k2-white-use-mug",
-      "zones": [
-        "Feature callout",
-        "Price",
-        "CTA"
-      ],
-      "items": [
-        "Add a typed feature label after download.",
-        "Place the price in your editor, not in the generated image.",
-        "Keep the product name and button copy outside the scene."
-      ]
-    }
-  }
+    "input": [],
+    "outputs": [],
+    "after": null
+  },
+  "benefits_h2": "The AI product video generator for product ads",
+  "steps_h2": "How to make a product video in 3 simple steps",
+  "steps_lead": "Turn one product photo into a clear product demo for your store, product page, or paid social campaign."
 }
