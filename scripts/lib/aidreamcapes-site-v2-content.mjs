@@ -1731,7 +1731,9 @@ function payloadFor(model, page) {
       { title: "Browse industries", links: pageLinksFor(model, ["ind-beauty-skincare", "ind-shoes", "ind-food-drinks", "ind-home-living"]) },
       { title: "Browse platforms", links: pageLinksFor(model, ["plat-amazon", "plat-shopify"]) }
     ] : [];
-    const relatedLinks = relatedLinksFor(model, page);
+    // Tool pages end with one "More tools" card block, as competitor tool pages do; the links a plain related-links list
+    // would add are already in the cards, templates, specs or examples. The photo hub keeps a list of what its cards miss.
+    const relatedLinks = hub ? relatedLinksFor(model, page, relatedSuggestionsFor(model, page).filter((id) => !PHOTO_TOOLS.includes(id))) : undefined;
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
