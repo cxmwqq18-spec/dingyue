@@ -2533,7 +2533,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (page.id === "ai-actors") {
       const scenes = Array.isArray(data.actorScenes) ? data.actorScenes : [];
       const actors = Array.isArray(data.actors) ? data.actors : [];
-      if (actors.length !== 24) errors.push(`ai-actors: expected 24 actor cards, got ${actors.length}`);
+      if (actors.length !== 36) errors.push(`ai-actors: expected 36 actor cards, got ${actors.length}`);
       if (new Set(actors.map((actor) => actor.name)).size !== actors.length) errors.push("ai-actors: actor names must be unique");
       for (const actor of actors) {
         if (!scenes.includes(actor.scene)) errors.push(`ai-actors: unknown scene on ${actor.name}`);

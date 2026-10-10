@@ -26340,6 +26340,114 @@
           640
         ]
       },
+      "mx10-actor-home-1-r1": {
+        "file": "mx10-actor-home-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian woman in her early forties in a home living-room setting speaks to camera while holding a plain woven cotton storage basket.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-home-2-r1": {
+        "file": "mx10-actor-home-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black man in his late forties in a home living-room setting speaks to camera while holding a plain matte ceramic table lamp.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-garden-1-r1": {
+        "file": "mx10-actor-garden-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Middle Eastern woman in her mid-thirties in a garden setting speaks to camera while holding a plain terracotta watering can.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-garden-2-r1": {
+        "file": "mx10-actor-garden-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white nonbinary person in their mid-forties in a garden setting speaks to camera while holding a pair of plain olive gardening gloves.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-fitness-1-r1": {
+        "file": "mx10-actor-fitness-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her mid-thirties in a gym setting speaks to camera while holding a plain coral resistance band.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-fitness-2-r1": {
+        "file": "mx10-actor-fitness-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latino man in his mid-forties in a gym setting speaks to camera while holding a pair of plain charcoal ankle weights.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-beach-1-r1": {
+        "file": "mx10-actor-beach-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Vietnamese woman in her late thirties in a beach setting speaks to camera while holding a plain mineral sunscreen stick.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-beach-2-r1": {
+        "file": "mx10-actor-beach-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white man in his mid-forties in a beach setting speaks to camera while holding a pair of plain teal swim goggles.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-hospital-1-r1": {
+        "file": "mx10-actor-hospital-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Indigenous North American woman in her mid-forties in a hospital setting speaks to camera while holding a plain digital thermometer.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-hospital-2-r1": {
+        "file": "mx10-actor-hospital-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Arab man in his mid-fifties in a hospital setting speaks to camera while holding a plain navy blood-pressure cuff.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-shop-1-r1": {
+        "file": "mx10-actor-shop-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her early fifties in a shop setting speaks to camera while holding a plain sage-green knit sweater.",
+        "variants": [
+          640
+        ]
+      },
+      "mx10-actor-shop-2-r1": {
+        "file": "mx10-actor-shop-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian nonbinary person in their late thirties in a shop setting speaks to camera while holding a plain natural canvas tote bag.",
+        "variants": [
+          640
+        ]
+      },
       "q4-spokesperson-hero": {
         "file": "gen2guide-q4-spokesperson-hero-r1",
         "w": 1024,
