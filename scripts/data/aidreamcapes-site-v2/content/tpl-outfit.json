@@ -1,10 +1,10 @@
 {
   "id": "tpl-outfit",
-  "title": "AI Fashion Reels: Show the Full Outfit | AIVideosUGC",
+  "title": "AI Fashion Reels for Full Outfit Ads | AIVideosUGC",
   "description": "Turn one clothing photo into a 9:16 fashion reel on a model. Head-to-toe try-on videos in 6, 10, 15 or 30 seconds for TikTok and Instagram ads.",
   "h1": "AI Fashion Reels That Show the Whole Look, Head to Toe",
   "eyebrow": "Fashion video template",
-  "lead": "Posting jacket shots on a white background doesn't show shoppers how the whole outfit moves. Turn one clothing photo into a 9:16 fashion reel that puts the full head-to-toe look on a model for TikTok and Instagram.",
+  "lead": "A flat clothing photo leaves the fit hard to picture. Turn one outfit photo into a vertical reel that puts the full look on a model for TikTok and Instagram.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -12,37 +12,39 @@
     "fashion TikTok ad",
     "menswear video ad"
   ],
-  "intro": [
-    "You get a short, full-length outfit clip, the kind shoppers scroll through for styling ideas. Our sample has a young man standing in a light gray studio in a stone-colored zip jacket over a white tee, straight blue jeans, and white sneakers.",
-    "An AI-generated model can show an outfit's silhouette and styling; use your listing's size chart for actual fit details. Use it for new arrivals, outfit pairing ideas, or to give one key piece a styled setting. Menswear, womenswear, and activewear all work."
+  "benefits_h2": "Why make AI fashion reels?",
+  "benefits": [
+    {
+      "t": "Show the whole outfit",
+      "d": "Put the jacket, jeans or complete look on a model from one clothing photo, so shoppers can see the silhouette and styling together."
+    },
+    {
+      "t": "Refresh a launch without a shoot",
+      "d": "Create another look for a new arrival or campaign when booking a model, location and crew would slow the launch."
+    },
+    {
+      "t": "Fit the feed format",
+      "d": "Use a 9:16 reel for TikTok or Instagram and choose 6, 10, 15 or 30 seconds for the moment you need to show."
+    },
+    {
+      "t": "Ready for your channels",
+      "d": "Download the reel without an AIVideosUGC watermark and place it in your own ads, product pages and social posts."
+    }
   ],
-  "tip": "Photograph the outfit laid flat or on a mannequin in one well-lit shot, then describe the model and pose, like \"man in his 20s, hands in pockets, light gray studio.\"",
+  "steps_h2": "How to make a fashion reel in 3 simple steps",
+  "steps_lead": "Three steps turn one clothing photo into a ready-to-post outfit reel.",
   "steps": [
     {
       "t": "Upload Your Clothing Photo",
-      "d": "Use a well-lit photo that keeps hem, collar, closures and seams in frame. Clear details make the model version match your clothes."
+      "d": "Show the full garment with the hem, collar and closures visible."
     },
     {
       "t": "Share Your Video Idea",
-      "d": "Describe the model, backdrop and one action, then pick a 6 to 30-second 9:16 length. The credit cost shows first."
+      "d": "Name the model, setting and one outfit action, then choose the length and size."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip, compare it with the real item, then add sizes, price and link. You skip the shoot day."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "One jacket, three outfits",
-      "d": "Style this jacket with jeans, tailored trousers, and shorts in separate reels to show its range."
-    },
-    {
-      "t": "Season switch",
-      "d": "Move the backdrop from a gray studio to a fall street or a summer boardwalk."
-    },
-    {
-      "t": "Womenswear and activewear",
-      "d": "Describe a different model to show dresses, matching sets, or leggings in a similar way."
+      "d": "Check the garment against your listing, then add price, sizes and the product link."
     }
   ],
   "maker": {
@@ -60,179 +62,32 @@
   },
   "faq": [
     {
-      "q": "Can one model appear in every reel?",
-      "a": "There is no saved model to pick from. Each reel is made on its own, so the face and build can change between videos even when you reuse a description. Keep the garment and action consistent instead."
+      "q": "What source photo works for a fashion reel?",
+      "a": "Use a sharp, well-lit photo that shows the full garment and its important details. A flat lay, mannequin or hanger view can work."
     },
     {
-      "q": "Will the clothes look exactly like mine?",
-      "a": "The video follows your photo, but small details such as buttons, stitching or prints can shift. Watch each clip before posting and regenerate or edit when a product detail is not accurate."
+      "q": "Can shoppers see the full outfit?",
+      "a": "Yes. Choose a full-body scene so the silhouette, hem and footwear stay visible. Use your listing for measurements and fit facts."
     },
     {
-      "q": "Which clothes come out well?",
-      "a": "Garments with a strong outline and solid color, such as jackets, denim, knitwear and dresses, give the model clear cues. Fine patterns or tiny logos may lose sharpness, so shoot close and use good light."
-    },
-    {
-      "q": "What length works for an AI fashion reel?",
-      "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and 30 seconds when you want several styled moments. Pick 9:16 for TikTok or Instagram."
-    },
-    {
-      "q": "Can the clothes be shown head to toe?",
-      "a": "Yes. Ask for a full-body frame and leave floor space so the fit, length and footwear stay in view. A head-to-toe composition is useful for styling, not a substitute for measurements."
+      "q": "Which length should I choose?",
+      "a": "Use 6 seconds for one reveal, 10 or 15 seconds for a turn or walk, and 30 seconds when the look needs several beats. The cost appears before creation."
     },
     {
       "q": "How do I keep the garment accurate?",
-      "a": "Upload a flat, mannequin or hanger photo that shows the whole piece and its details. Review the generated model shot beside that source and keep only a version whose garment remains recognizable."
+      "a": "Compare the export with the source photo. Check the color, collar, closures, seams, print and hem before you publish."
     },
     {
-      "q": "What does a fashion reel cost?",
-      "a": "A 6-, 10- or 15-second reel costs 24, 40 or 60 credits. The cost is shown before creation, so choose the shortest duration that can show the action your placement needs. Review the export before it reaches a paid feed."
+      "q": "Can I use a fashion reel in paid ads?",
+      "a": "Yes. Use the downloaded reel in your own TikTok, Instagram, Facebook or other paid campaigns, with any required disclosure added in the platform editor."
     },
     {
-      "q": "How do I check a reel before posting?",
-      "a": "Watch the full export with the source photo beside it. Check collar, closures, prints, seams, hem, face, hands and footwear, then add the verified size, material, price and disclosure in the platform editor. Check the opening and closing frames at phone size, confirm the garment remains visible during motion, and trim any pause that hides the fit or the product details."
-    },
-    {
-      "q": "Can I run these reels as paid ads?",
-      "a": "Yes. Videos you make can be used in your own ads, including paid TikTok, Instagram and Facebook campaigns. Add any required disclosure or label yourself before the campaign goes live."
-    },
-    {
-      "q": "Do I need a UGC creator for outfit videos?",
-      "a": "No. The reel is generated from your clothing photo with an AI model, so you do not book a creator, ship samples or wait on a filming schedule; each job costs a fixed number of credits shown up front."
+      "q": "Do I need to book a model?",
+      "a": "No. The reel is generated from your clothing photo with an AI model, so you can prepare another outfit scene without a shoot day."
     }
   ],
-  "overview": [
-    {
-      "h2": "Let the full look answer styling questions",
-      "d": "An outfit reel should help a shopper see the silhouette, the relationship between pieces, and the setting where the clothes make sense. Choose one hero garment and one simple pose before adding accessories or a second outfit."
-    },
-    {
-      "h2": "Add fit details after reviewing the clip",
-      "d": "The visual can show length, drape, and color in motion. Add the size range, measurements, material, price, and care details from your listing after checking the rendered clip."
-    }
-  ],
-  "input_guide": {
-    "h2": "Photograph clothing for a readable full look",
-    "items": [
-      {
-        "t": "Show the full hem",
-        "d": "Use a flat lay, mannequin, or hanger photo where the bottom edge and overall length are not cropped."
-      },
-      {
-        "t": "Keep front and back details clear",
-        "d": "Buttons, zips, pockets, and seams should be visible if they are part of the styling story."
-      },
-      {
-        "t": "Include footwear when it matters",
-        "d": "For a head-to-toe look, mention the shoes or leave floor space so the complete outfit has a grounded finish."
-      },
-      {
-        "t": "Name one pose",
-        "d": "Hands in pockets, a walking turn, or a relaxed stand gives the model a single readable action."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the outfit reel can show",
-    "items": [
-      {
-        "t": "A head-to-toe composition",
-        "d": "The clothing sits in a styled scene with the model, floor, and backdrop chosen in your description."
-      },
-      {
-        "t": "Five useful frame choices",
-        "d": "Use 9:16 for Reels, 1:1 for a square feed, 16:9 for a wider lookbook, or 4:3 and 3:4 for other placements."
-      },
-      {
-        "t": "Known credit options",
-        "d": "A six-, ten-, or fifteen-second clip uses 24, 40, or 60 credits; you see the cost before submitting."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Outfit scenes to try",
-    "items": [
-      {
-        "t": "Jacket on a city walk",
-        "d": "A model in a stone jacket walks past a pale wall, pauses, and turns once to show the back seam."
-      },
-      {
-        "t": "Dress in a sunlit room",
-        "d": "A full-length dress moves beside a tall window as the model takes two slow steps across the floor."
-      },
-      {
-        "t": "Active set at a track",
-        "d": "A matching set appears on a running track, with a stretch and a short turn that keeps the waistband visible."
-      },
-      {
-        "t": "Three looks from one piece",
-        "d": "This overshirt appears over a tee, a knit, and a dress in separate clips with the backdrop held consistent."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Add the shopping information",
-    "items": [
-      {
-        "t": "Type sizes and measurements",
-        "d": "Add your product's verified size range and garment measurements from the listing. Include model measurements only when they describe a real model used for that listing."
-      },
-      {
-        "t": "Add the price and link",
-        "d": "Use your current offer and product URL rather than relying on generated lettering."
-      },
-      {
-        "t": "Choose the track",
-        "d": "Add licensed music and any channel-specific disclosure in the platform editor."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When an outfit reel is useful",
-    "good": [
-      "Jackets, dresses, sets, and activewear",
-      "New-arrival styling ideas",
-      "Full-length looks for Instagram and TikTok",
-      "One garment with a clear silhouette"
-    ],
-    "not_ideal": [
-      "Sizing decisions that depend on a real model’s measurements",
-      "Garments whose key details are hidden in a cropped input"
-    ]
-  },
-  "examples": {
-    "h2": "Clothing Looks in Motion",
-    "lead": "Try a mirror fit check, a city coat walk, or a close look at a sweater.",
-    "groups": [
-      {
-        "label": "Outfit Scenes",
-        "items": [
-          {
-            "ref": "n:guide:q11-outfit-example-01-square-r2",
-            "title": "Black Activewear Mirror Fit",
-            "kind": "scene",
-            "product": "activewear set",
-            "prompt": "Mirror fit: adult model checks the black activewear set in a full-length mirror, then shifts one shoulder to show the waistband and side seam."
-          },
-          {
-            "ref": "n:guide:q11-outfit-example-02-square-r2",
-            "title": "Dark Overcoat on a City Walk",
-            "kind": "scene",
-            "product": "overcoat",
-            "prompt": "City walk: adult model takes three measured steps in the dark overcoat beside the river, keeping the hem and shoes visible."
-          },
-          {
-            "ref": "n:guide:q11-outfit-example-03-square-r2",
-            "title": "Gray Sweater Fit Check",
-            "kind": "scene",
-            "product": "gray sweater",
-            "prompt": "Fabric check: adult model wears the gray sweater and black trousers in a bright studio, gently pinching one sleeve to show the knit texture."
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "An outfit reel should help a shopper see the silhouette, the relationship between pieces and the setting where the clothes make sense. Choose one hero garment and one simple action before adding accessories or a second look. A full-length walk, mirror fit check, creator review or detail pass can show movement and styling; it cannot verify a person’s measurements. Keep the product visible in the safe frame, review buttons, prints and seams against the source, and add your real size range, material, price and disclosure in the platform editor. Save the approved export with the source item and use a separate listing image for details the motion clip cannot hold still.",
+    "overview": "Show one complete outfit in a scene shoppers recognize. A full-length turn or walk makes the silhouette and styling easier to judge than a flat product shot.",
     "strip": [
       "n:guide:q11-outfit-strip-square-01",
       "n:guide:q11-outfit-strip-square-02",
@@ -248,8 +103,8 @@
       "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns once to show the side fit of the beige zip jacket. Use a full-length medium frame with a slow tracking move so the collar, cuffs, hem and shoes stay visible. Soft studio daylight keeps the beige jacket and seams clear. End facing forward with the full jacket centered. Sound: quiet room tone and a light fabric rustle. No music. Keep the final pose steady for a thumbnail and leave safe space for platform controls."
     },
     "picker": {
-      "title": "Choose a clothing reel format",
-      "lead": "Pick one feed-native action for the garment: a creator review, a mirror fit check, a street walk or a detail pass. Keep the hero item visible and end on a frame shoppers can compare. Choose the shortest duration that leaves the garment readable at the feed size. Leave room for the platform controls and caption when framing the action.",
+      "title": "Choose a fashion reel format",
+      "lead": "Pick a street look, try-on or detail moment that keeps the garment easy to compare.",
       "chips": [
         {
           "id": "review",
@@ -359,62 +214,9 @@
       ],
       "button": "Make an outfit reel like this"
     },
-    "uses": [
-      {
-        "frame": "post",
-        "ref": "n:guide:q11-outfit-uses-01-r2",
-        "h": "Show the beige jacket beside listing details",
-        "d": "Place the reel beside listing details or in a product feed. Keep the zip front, cuffs, hem and fit visible while the surrounding copy carries accurate sizes, fabric and stock information. Put a still detail beside the reel when hardware or stitching needs close inspection. Keep a thumbnail frame where the garment is unobstructed by feed controls."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:q11-outfit-uses-02b-square-r2",
-        "h": "Compare two outfit silhouettes on a listing",
-        "d": "Use two complete looks on a collection page only when shoppers are comparing silhouettes. Give each garment its own clip and label so a fast feed view does not merge products or offers. Check that each visible layer is available before scheduling the collection post. Keep the first frame distinct for each look so the collection grid stays scannable. Put the size and color beside each clip instead of inside the moving frame."
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:q11-outfit-input-01-good-r2",
-        "bad": "n:guide:q11-outfit-input-01-bad-r3",
-        "good_label": "Full beige zip jacket stays sharp",
-        "bad_label": "Beige zip jacket loses focus"
-      },
-      {
-        "good": "n:guide:q11-outfit-input-02-good-r2",
-        "bad": "n:guide:q11-outfit-input-02-bad-r3",
-        "good_label": "Beige jacket and hem fit the frame",
-        "bad_label": "Beige jacket is clipped at the edges"
-      }
-    ],
-    "outputs": [
-      {
-        "ref": "f:q11-outfit-output-01-r2",
-        "frame": "9:16",
-        "length": 15,
-        "label": "Beige jacket street-walk frame"
-      },
-      {
-        "ref": "f:q11-outfit-output-02-r3",
-        "frame": "9:16",
-        "length": 15,
-        "label": "Beige jacket side-fit frame"
-      }
-    ],
-    "after": {
-      "ref": "f:q11-outfit-after-r2",
-      "zones": [
-        "Your size note",
-        "Your product name"
-      ],
-      "items": [
-        "Add the product name and size notes in an editor after downloading.",
-        "Keep captions and price away from the garment details."
-      ]
-    },
     "titles": {
       "m2": {
-        "h2": "See an outfit reel take shape in three steps"
+        "h2": "Make a fashion reel from one clothing photo"
       },
       "m3": {
         "h2": "Choose a scene for an AI outfit reel"
@@ -423,42 +225,21 @@
         "h2": "Use fashion outfit reels in a feed or listing"
       },
       "m5": {
-        "h2": "Start an AI outfit reel with a clear clothing photo"
+        "h2": "Start with a clear clothing photo"
       },
       "m6": {
-        "h2": "AI outfit reels in the 9:16 format"
+        "h2": "Choose a fashion reel format"
       },
       "m7": {
-        "h2": "Finish your outfit reel in an editor"
+        "h2": "Add product details after download"
       },
       "faq": {
-        "h2": "Questions about AI outfit reels"
+        "h2": "Questions about AI fashion reels"
       },
       "templates": {
-        "h2": "More templates for AI outfit reels",
+        "h2": "More templates for AI fashion reels",
         "lead": "Pick another clothing scene, then add your garment photo."
       }
     }
-  },
-  "benefits_h2": "Why make AI fashion reels?",
-  "benefits": [
-    {
-      "t": "One photo, full head-to-toe look",
-      "d": "The reel puts your jacket, jeans or complete outfit on a model from a single clothing photo, so shoppers see fit, length and movement without you filming anyone."
-    },
-    {
-      "t": "Built for TikTok and Reels",
-      "d": "Every clip is vertical 9:16 with the whole body in frame, ready to post straight to the phone-first feeds where outfit content performs."
-    },
-    {
-      "t": "Lengths for any outfit beat",
-      "d": "Choose 6 seconds for a reveal, 10 or 15 seconds for a turn or walk, or 30 seconds when a look needs several styled moments."
-    },
-    {
-      "t": "Commercial use, no watermark",
-      "d": "Downloaded reels carry no AIVideosUGC watermark and can be used in your ads, product pages and social posts."
-    }
-  ],
-  "steps_h2": "How to make a fashion reel in 3 simple steps",
-  "steps_lead": "Three steps turn one clothing photo into a ready-to-post 9:16 reel - no casting, no shoot, no editing suite."
+  }
 }
