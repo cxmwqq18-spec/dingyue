@@ -12,43 +12,18 @@
     "product reveal video",
     "luxury product video"
   ],
-  "intro": [
-    "Think of this as a short brand film with your product as the star. Our sample puts a matte black speaker on a stone block while pale light falls through tall windows and a mountain view fades into dusk, all with a slow camera move.",
-    "The look suits products where design matters as much as specs: speakers, headphones, watches, perfume bottles, lamps. Use the clip to open a launch, run it as a YouTube Shorts ad, or set it as the video banner at the top of your store. AIVideosUGC doesn't add a soundtrack, so pair the clip with a music track before it goes out.",
-    "A cinematic product clip is still a product demonstration: the viewer should see the same compact speaker, its grille, and the control detail that makes the shot useful. Start from a clean source photo, choose one cool or warm light direction, and make one slow push or side reveal. End with the speaker held in a composed frame that leaves room for an editable headline.",
-    "Use the format when a store hero, YouTube placement, or wide product page needs atmosphere without losing physical accuracy. Describe the surface, the visible feature, and the final camera position rather than asking for several unrelated moves. The generated frame should contain no title, logo, or baked-in claim; add the product name and headline in the editor where they can be revised.",
-    "Check the result at its final 16:9 crop and compare the speaker silhouette with the uploaded photo. Look for preserved controls, edges, and material detail before you publish the clip. If you also need a vertical version, make a separate crop or run with a 9:16 composition so the product remains complete instead of being cut by a wide frame.",
-    "Keep the cinematic idea narrow enough to protect the product. One surface, one light direction, and one controlled camera path can reveal a grille, crown, edge, or finish. If the scene asks for several moves, the product may lose its outline before the final frame.",
-    "Match the ratio to the placement. A [product video](/ai-video-generation/product-video) can carry a wide listing demonstration, [YouTube Shorts ads](/platforms/youtube-shorts-ads) need a vertical version, and [TikTok ads](/platforms/tiktok-ads) or [Instagram ads](/platforms/instagram-ads) benefit from a mobile-first crop. Keep the same source photo when the product stays unchanged.",
-    "Use [commercial lighting](/ai-image-generation/commercial-lighting) when the main need is a controlled still, and try a [promo video](/ai-video-generation/promo-video) or [retargeting video ad](/ai-video-generation/retargeting-video-ad) when the scene needs a clearer sales moment. The [ad sizes guide](/guides/ad-sizes-by-platform) gives the frame context before you prepare the final export."
-  ],
-  "tip": "Name one light source and one surface, such as \"cool light from a tall window, dark stone plinth,\" so the scene stays simple and the product stays in focus.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a sharp photo with a clear outline so the camera move has a definite subject. Your product stays the same item."
+      "d": "Use a sharp photo with a clear outline so the camera move has a definite subject. Your product remains the focal item."
     },
     {
       "t": "Share Your Video Idea",
-      "d": "Name the surface, one light source, a camera move and frame, then choose 6 to 30 seconds. Cost shows first."
+      "d": "Name the surface, one light source, a camera move and frame, then choose a supported duration. Cost shows first."
     },
     {
       "t": "Download and Post",
       "d": "Download the clip, then add a licensed track and product name in your editor. No production budget needed."
-    }
-  ],
-  "ideas": [
-    {
-      "t": "Launch teaser",
-      "d": "Post the clip a few days before release, with your launch date typed on top in CapCut or Canva."
-    },
-    {
-      "t": "Different moods",
-      "d": "Try the same product in warm candlelight, cold morning fog, or beside a rainy window to see which feels right for your brand."
-    },
-    {
-      "t": "Gift-season opener",
-      "d": "Set a watch or fragrance against deep red or gold light to open your holiday ads."
     }
   ],
   "maker": {
@@ -70,184 +45,39 @@
   },
   "faq": [
     {
-      "q": "What kinds of products look good in a cinematic video?",
-      "a": "Anything with a strong shape or a nice finish: speakers, headphones, watches, bottles, lamps, sunglasses. Matte and glossy surfaces both work if your photo is in focus."
+      "q": "What products look good in a cinematic video?",
+      "a": "Products with a clear shape or finish, including speakers, bottles, lamps, watches and sunglasses, suit a slow reveal."
     },
     {
       "q": "Does the clip come with music?",
-      "a": "AIVideosUGC does not add a music track or captions. Add a licensed track in your editor after download."
+      "a": "No. AIVideosUGC does not add a music track or captions; add licensed audio in your editor after download."
     },
     {
       "q": "Can I show my logo in the scene?",
-      "a": "Your own logo on your product photo is fine. If a request shows another company's logo or trademark, it may be turned down."
+      "a": "Your own logo in the uploaded product photo is fine. Another company’s logo or trademark may be rejected."
     },
     {
       "q": "What video size suits a cinematic product video?",
-      "a": "Use 16:9 for a wide site hero or YouTube placement, 9:16 for mobile feeds, and 1:1 for square feeds."
-    },
-    {
-      "q": "Which ratio should a cinematic product clip use?",
-      "a": "16:9 suits a website hero or YouTube; choose 9:16 for TikTok and Reels. Both can be made from the same source photo."
+      "a": "Use 16:9 for a website or YouTube placement and 9:16 for TikTok, Reels and other mobile feeds."
     },
     {
       "q": "How much does a cinematic clip cost?",
-      "a": "A 6-, 10- or 15-second clip costs 24, 40 or 60 credits, displayed before you run it; each job shows its exact cost before you start."
+      "a": "A 6-second clip costs 24 credits, 10 seconds costs 40, 15 seconds costs 60 and 30 seconds costs 120."
     },
     {
       "q": "Can the video add moody lighting to a plain photo?",
-      "a": "Yes. Describe the light direction and mood; after generation, check the product outline and color frame by frame, and rerun if either is wrong."
-    },
-    {
-      "q": "Can I show a 360-degree product reveal?",
-      "a": "Yes. Ask for front, side, and rear angles on a slow turntable, then check that each angle still matches your product photo."
-    },
-    {
-      "q": "What should I do if a frame changes the product outline?",
-      "a": "Pause the preview, compare the frame with your source photo, and rerun with clearer shape and proportion details before publishing."
-    },
-    {
-      "q": "Can viewers understand a cinematic clip with sound off?",
-      "a": "Yes. Keep the action visually clear and add the product name or short cue as editable text after download."
+      "a": "Yes. The generated scene can add moody light and a slow camera move; review the product outline and color frame by frame."
     },
     {
       "q": "Can I use a cinematic clip in paid ads?",
-      "a": "Yes. Clips you make can run in your own paid campaigns as well as website heroes and social posts, and downloads carry no watermark. Add licensed music yourself, since the clip itself ships without a track."
+      "a": "Yes. Clips can run in your own paid campaigns, website heroes and social posts, with no watermark."
     },
     {
       "q": "Do I need a film crew or studio for this look?",
-      "a": "No. The moody lighting, set and slow camera move are generated from one photo, so the brand-film result costs only the credits per job instead of a production budget."
+      "a": "No. The set, lighting and camera move are generated from one photo, without a crew or rental day."
     }
   ],
-  "overview": [
-    {
-      "h2": "Build the mood around one product detail",
-      "d": "A brand film works when the setting supports a single visual idea: a reflective edge, a soft glow, a textured shell, or the way an object sits on a surface. Name that detail first, then let the light and camera movement lead the eye toward it."
-    },
-    {
-      "h2": "Keep atmosphere separate from product facts",
-      "d": "The scene can feel quiet, warm, or dramatic, while your product name, price, release date, and specifications remain your own overlay. This keeps the film expressive without asking generated lettering to carry information it may distort."
-    }
-  ],
-  "input_guide": {
-    "h2": "Give a moody scene a stable reference",
-    "items": [
-      {
-        "t": "Show the finish without glare",
-        "d": "For glass or polished metal, use an angle that reveals the surface instead of a blown-out reflection."
-      },
-      {
-        "t": "Include the product edge",
-        "d": "A complete silhouette helps the object survive low-key lighting and prevents the background from swallowing it."
-      },
-      {
-        "t": "Choose one hero surface",
-        "d": "Stone, wood, brushed metal, or fabric gives the camera a place to land and a texture to contrast with the product."
-      },
-      {
-        "t": "State the camera path",
-        "d": "Say slow push-in, side reveal, or gentle orbit; avoid asking for several unrelated moves in one short clip."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What this film gives you",
-    "items": [
-      {
-        "t": "A controlled visual mood",
-        "d": "The output centers a product in a composed environment instead of trying to explain every specification at once."
-      },
-      {
-        "t": "Flexible framing",
-        "d": "Use 16:9 for a wide store or video placement, 9:16 for a phone feed, 1:1 for a square feed, or 4:3 and 3:4 when the destination needs another crop."
-      },
-      {
-        "t": "A testable credit cost",
-        "d": "A six-, ten-, or fifteen-second version costs 24, 40, or 60 credits; the amount is visible before generation."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Cinematic scenes to try",
-    "items": [
-      {
-        "t": "Speaker at dusk",
-        "d": "A matte speaker rests on dark stone as blue window light slides across its grille and the camera eases closer."
-      },
-      {
-        "t": "Watch on walnut",
-        "d": "A watch lies on walnut beside a folded map while a narrow morning beam reveals the dial and crown."
-      },
-      {
-        "t": "Lamp in a quiet room",
-        "d": "A table lamp warms one corner of a reading chair as the camera crosses from shade to glowing pool of light."
-      },
-      {
-        "t": "Fragrance by rain glass",
-        "d": "A perfume bottle stands beside a rain-streaked window, with one slow move revealing the shoulders and cap."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Add the brand layer yourself",
-    "items": [
-      {
-        "t": "Set the soundtrack",
-        "d": "Choose a licensed track or your own sound bed after reviewing the finished movement."
-      },
-      {
-        "t": "Add launch details",
-        "d": "Add the product name, date, offer, or URL in a readable area that the camera does not cross."
-      },
-      {
-        "t": "Preview the crop",
-        "d": "Review the chosen ratio on the real placement so the hero detail remains visible on phones and wide screens."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Best uses for a brand film",
-    "good": [
-      "Speakers, headphones, watches, and lamps",
-      "Perfume and packaging with a distinctive finish",
-      "Launch openers and store banners",
-      "Products sold through visual mood"
-    ],
-    "not_ideal": [
-      "Instruction-heavy products",
-      "Tiny labels or claims that must be read inside the shot"
-    ]
-  },
-  "examples": {
-    "h2": "More cinematic scenes",
-    "lead": "Moody light, slow pacing and close details for products that sell on look and feel.",
-    "groups": [
-      {
-        "label": "Light and detail",
-        "items": [
-          {
-            "ref": "n:q10-film-example-01",
-            "title": "Camera lens catching a thin strip of window light",
-            "kind": "scene",
-            "product": "camera lens"
-          },
-          {
-            "ref": "n:gen2:tpl-film-g2",
-            "title": "Headphones on a matte pedestal in side light",
-            "kind": "scene",
-            "product": "headphones"
-          },
-          {
-            "ref": "n:q10-film-example-03",
-            "title": "Ceramic vase in a beam of late-day light",
-            "kind": "scene",
-            "product": "ceramic vase"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "A cinematic product video uses light, surface, and a measured camera move to shape the reveal. Keep the product outline clear while the setting adds atmosphere.",
     "strip": [
       "n:guide:c1-tpl-film-strip-perfume-ceramic-round-square",
       "n:guide:c1-tpl-film-strip-watch-field-square",
@@ -277,214 +107,22 @@
         ]
       ],
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its rounded pebble shape, black matte body, angled woven grille, and proportions exactly. In a dark modern room, cool window light makes one slow highlight move across this same speaker on a stone sideboard. High-end cinematic product-film frame, 16:9 landscape, no text or logos.",
+      "prompt": "Give the uploaded speaker one slow cool highlight across a dark sideboard.",
       "mode": "video",
       "resultAlt": "The same rounded pebble speaker catches a cool cinematic highlight."
     },
     "picker": {
-      "title": "Choose a cinematic product-video treatment",
-      "lead": "Pick a light and camera move that keep the product easy to recognize.",
-      "chips": [
-        {
-          "id": "cinematic",
-          "label": "Cinematic Reveals"
-        },
-        {
-          "id": "talking",
-          "label": "Talking-Head Reviews"
-        },
-        {
-          "id": "inuse",
-          "label": "Product-in-Use Demos"
-        },
-        {
-          "id": "texture",
-          "label": "Texture Macros"
-        }
-      ],
-      "cards": [
-        {
-          "ref": "n:guide:c1-tpl-carousel-video-ad-m2-result-square",
-          "label": "Texture Macro: Laptop Sleeve",
-          "chips": [
-            "cinematic",
-            "texture"
-          ],
-          "prompt": "Use the uploaded photo as a plain charcoal laptop sleeve and keep its fabric, zipper and stitched edge visible. Adult hands open the sleeve and slide a laptop halfway inside as a narrow side light reveals the texture. Cinematic detail-ad look, macro side angle with one slow slide, no text or logos. Sound: zipper glide and fabric movement; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g4",
-          "label": "Creator Review: Canvas Crossbody Bag",
-          "chips": [
-            "talking"
-          ],
-          "prompt": "Use the uploaded photo as a plain tan canvas crossbody bag and keep its strap, body and seams visible. An adult presenter holds it at chest height in a softly lit room and explains the fit to camera. Talking-head product review, square framing, no text or logos. Sound: spoken review and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:q10-film-picker-3",
-          "label": "Headphone Demo: Pair headphones",
-          "chips": [
-            "inuse"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and control details exactly. At a tidy desk, an adult puts on plain over-ear headphones and taps the pairing button on a generic phone, ending with the headphones worn and the phone beside them. Cinematic tech-ad look, cool window light. Side medium close-up with one slow push-in. Sound: button click, brief pairing tone, room ambience; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:k7-ind-home-living-step-result-lamp-glow",
-          "label": "In-Use Demo: Lamp Switch-On",
-          "chips": [
-            "inuse"
-          ],
-          "prompt": "Use the uploaded photo as a plain white table lamp and keep its shade, stem and base visible. An adult hand switches it on beside an open book, ending with the warm pool of light and lamp fully in frame. Cinematic home-product demo, square framing, no text or logos. Sound: switch click and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:q10-film-picker-5",
-          "label": "Texture Macro: Wallet stitching",
-          "chips": [
-            "texture",
-            "cinematic"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and stitching exactly. In soft side light, adult hands open the leather wallet and draw one plain card halfway out, ending on the stitched slots in crisp focus. Cinematic detail-ad look, warm neutral tones. Macro side angle with one slow slide. Sound: leather flex, card glide; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:f14-r10-film-360-multi-angle",
-          "label": "360 Reveal: Black Speaker Angles",
-          "chips": [
-            "cinematic",
-            "texture"
-          ],
-          "prompt": "Use the uploaded photo as a plain rounded black portable speaker and keep its woven grille, side curve and rear controls visible. Show a 360-degree multi-angle reveal on a low turntable, presenting front, side and rear views with one controlled highlight. Cinematic product-film look, square framing, no text or logos. Sound: quiet turntable hum and room tone; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:q10-film-after",
-          "label": "Cinematic Fragrance Reflection",
-          "chips": [
-            "cinematic",
-            "texture"
-          ],
-          "prompt": "Use the uploaded photo as a plain rounded fragrance bottle and keep its shape, cap and finish exactly. On a dark stone surface beside still black water, a narrow amber highlight sweeps across the bottle and its reflection in one slow controlled move. Cinematic product-film look, square framing, no text or logos. Sound: quiet room tone and a soft water ripple; no music.",
-          "kind": "video"
-        },
-        {
-          "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g3",
-          "label": "Creator Review: Snack Pouch",
-          "chips": [
-            "talking"
-          ],
-          "prompt": "Use the uploaded photo as a plain snack pouch and keep its shape and blank front panel visible. An adult presenter holds it at chest height in a bright kitchen while describing the first impression to camera. Talking product review, square framing, no text or logos. Sound: spoken review and room tone; no music.",
-          "kind": "video"
-        }
-      ],
-      "button": "Make a cinematic product video"
+      "title": "",
+      "lead": "",
+      "chips": [],
+      "cards": [],
+      "button": ""
     },
-    "uses": [
-      {
-        "frame": "post",
-        "h": "Show a cinematic watch scene in an ad",
-        "d": "Keep the analog watch legible on the wrist, then add the headline and offer as editable text.",
-        "ref": "n:q10-film-uses-1"
-      },
-      {
-        "frame": "browser",
-        "h": "Add a cinematic tote scene to a product page",
-        "d": "Show the canvas tote being carried, with a clear listing image nearby for product details.",
-        "ref": "n:q10-film-uses-2"
-      }
-    ],
-    "input": [
-      {
-        "good": "n:guide:c1-tpl-film-reuse-strip0-square",
-        "bad": "n:guide:c1-reuse-film-m5-1-blur",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
-      },
-      {
-        "good": "n:guide:c1-fix-film-m5-good",
-        "bad": "n:guide:tpl-film-input-2-crop",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
-      }
-    ],
-    "outputs": [
-      {
-        "label": "16:9 cinematic product video",
-        "frame": "16:9",
-        "length": 15,
-        "ref": "n:guide:c1-fix-film-m6-output-1"
-      },
-      {
-        "label": "16:9 wide product reveal",
-        "frame": "16:9",
-        "length": 15,
-        "ref": "n:guide:c1-fix-film-m6-output-2"
-      }
-    ],
-    "after": {
-      "ref": "n:guide:c1-tpl-film-reuse-strip5-wide",
-      "zones": [
-        "Headline",
-        "Product name"
-      ],
-      "items": [
-        "Add the product name and headline as editable text after download.",
-        "Choose licensed audio in your editor before publishing the clip."
-      ]
-    },
-    "titles": {
-      "m2": {
-        "h2": "Create a cinematic product video from one photo"
-      },
-      "m3": {
-        "h2": "Choose a cinematic product-video treatment"
-      },
-      "m4": {
-        "h2": "Use cinematic product videos in ads and listings"
-      },
-      "m5": {
-        "h2": "Start a cinematic video with a clear product photo"
-      },
-      "m6": {
-        "h2": "Choose a cinematic 16:9 video format"
-      },
-      "m7": {
-        "h2": "Add the product name and sound after download"
-      },
-      "faq": {
-        "h2": "Questions about cinematic product videos"
-      },
-      "examples": {
-        "h2": "Cinematic product video examples"
-      },
-      "templates": {
-        "h2": "More cinematic product video templates",
-        "lead": "Try another product video style to control the light, pace, and reveal."
-      }
-    }
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "after": null
   },
-  "benefits_h2": "Why make a cinematic product video?",
-  "benefits": [
-    {
-      "t": "A premium look without a film crew",
-      "d": "Deep shadows, soft directional light and a slow camera move give one ordinary product photo the feel of a brand film, with no set, crew or rental day."
-    },
-    {
-      "t": "Story room when the product needs it",
-      "d": "Choose 6, 10 or 15 seconds for a moody reveal, or 30 seconds for a fuller brand-style sequence built around the same product."
-    },
-    {
-      "t": "Framed for widescreen or feeds",
-      "d": "Pick 16:9 for a website hero or YouTube, or 9:16 for TikTok and Reels, instead of stretching one shape across every placement."
-    },
-    {
-      "t": "No watermark, yours to publish",
-      "d": "Downloaded clips can be used in ads, pages and social posts and carry no AIVideosUGC watermark."
-    }
-  ],
   "steps_h2": "How to make a cinematic video in 3 simple steps",
   "steps_lead": "Three steps turn one photo into a brand-film clip - no crew, no set, no rental."
 }
