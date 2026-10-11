@@ -4,7 +4,7 @@
   "description": "Turn one product photo into correctly sized ads and photos for TikTok, Instagram, Facebook, Shorts, Amazon, and Shopify. Watermark-free files, ready to post.",
   "h1": "Ads and Product Photos for Every Platform You Sell On",
   "eyebrow": "Choose your channel",
-  "lead": "Stop reformatting one clip by hand. Pick a channel to see its real photo and video specs, then turn one product photo into a file that fits it.",
+  "lead": "Get files that fit each channel without rebuilding every size: pick a platform, check its specs, and start with one product photo.",
   "card": "Sizes and ideas for TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify.",
   "secondary_keywords": [
     "social media ad sizes for products",
@@ -56,7 +56,7 @@
     },
     {
       "q": "Do I need a separate video for each platform?",
-      "a": "For shape, yes: vertical for TikTok, Reels, and Shorts, square for feeds and listings. Generate each size from one product photo and one scene, so nothing is re-shot or rebuilt."
+      "a": "For shape, yes: vertical for TikTok, Reels, and Shorts; square for still feeds and listings; 16:9 for Amazon Sponsored Brands video. Generate each format from one product photo and one scene."
     },
     {
       "q": "Can I use the downloaded files in paid ads?",
@@ -66,11 +66,11 @@
   "visual": {
     "strip": [
       "n:guide:k8-platforms-gen2-plat-tiktok-g1",
-      "n:guide:q17-platforms-strip-1",
-      "n:guide:q17-platforms-strip-2",
+      "n:gen2:plat-tiktok-g2",
+      "n:gen2:plat-instagram-g4",
       "n:guide:q17-platforms-strip-3",
       "n:guide:k8-platforms-gen2-tpl-size-g3",
-      "n:guide:q17-platforms-strip-5"
+      "n:gen2:plat-facebook-g1"
     ],
     "steps": {
       "source": "n:guide:b1-url-to-video-source",
@@ -89,26 +89,17 @@
         ]
       ]
     },
-    "picker": [
-      {
-        "id": "social",
-        "label": "Social feeds"
-      },
-      {
-        "id": "product-pages",
-        "label": "Product pages"
-      }
-    ],
+    "picker": [],
     "uses": [],
     "input": [],
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Make a Platform-Ready Asset in 3 Steps"
+        "h2": "How to Make Platform-Ready Product Ads in 3 Simple Steps"
       },
       "m3": {
         "h2": "Browse Platforms",
-        "lead": "Open a channel to see its format, size and photo guidance."
+        "lead": "Open a channel to see its format, size, and photo guidance."
       }
     },
     "directoryFilters": {
@@ -135,32 +126,32 @@
       "itemImages": {
         "/platforms/tiktok-ads": "n:guide:k8-platforms-gen2-plat-tiktok-g3",
         "/platforms/instagram-ads": "n:guide:k8-platforms-gen2-plat-shopify-c2",
-        "/platforms/shopify-product-photos": "n:guide:q17-platforms-shopify-main",
+        "/platforms/shopify-product-photos": "n:gen2:plat-shopify-g1",
         "/platforms/amazon-product-photos": "n:guide:q17-platforms-amazon-main"
       }
     }
   },
-  "benefits_h2": "Why Sellers Size Their Ads Here",
+  "benefits_h2": "Why Sellers Size Ads for Every Platform",
   "benefits": [
     {
       "t": "One photo, every channel size",
       "d": "Generate vertical, square, and wide assets from one product photo. Each file matches the channel specs, so the manual crop-and-export loop ends."
     },
     {
-      "t": "No reshoots per channel",
-      "d": "Film the product once. One photo carries it into TikTok, Reels, Shorts, Amazon and your store without another shoot."
+      "t": "Skip a new shoot for each channel",
+      "d": "Start from one product photo and carry the same item into TikTok, Reels, Shorts, Amazon, and your store without another shoot."
     },
     {
-      "t": "Specs from official rules",
-      "d": "The table lists ratios and pixels such as 1080x1920 and 1440x1800 straight from platform rules, so the app does not crop your creative."
+      "t": "Know the size before you publish",
+      "d": "Use the table to check ratios and pixels such as 1080×1920 and 1440×1800 against the platform rules before you place the asset."
     },
     {
-      "t": "Files ready to post and promote",
+      "t": "Download files ready to post",
       "d": "Downloaded photos and videos are watermark-free and licensed for commercial use on social feeds, marketplaces, and paid campaigns."
     }
   ],
-  "steps_h2": "Make a Platform-Ready Asset in 3 Steps",
-  "steps_lead": "One product photo becomes a correctly sized file for the channel you pick.",
+  "steps_h2": "How to Make Platform-Ready Product Ads in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a correctly sized file for the channel you pick.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -189,37 +180,37 @@
         "TikTok",
         "In-Feed",
         "9:16 · minimum 540×960",
-        "6, 10 or 15-second clips"
+        "6, 10, 15 or 30-second clips"
       ],
       [
         "Instagram",
         "Feed image / Reels video",
         "4:5 · 1440×1800 / 9:16 · 1080×1920",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ],
       [
         "Facebook",
         "Feed image / Reels video",
         "4:5 · 1440×1800 / 9:16",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ],
       [
         "YouTube Shorts",
         "Shorts ad",
         "9:16 · 1080×1920 recommended",
-        "6, 10 or 15-second clips"
+        "6, 10, 15 or 30-second clips"
       ],
       [
         "Amazon",
         "Main image / Sponsored Brands video",
         "Square white-background image / 16:9 video · 6–45 seconds",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ],
       [
         "Shopify",
         "Product gallery / product video",
         "Square · 2048×2048 usually displays well / video up to 10 minutes",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ]
     ]
   },
