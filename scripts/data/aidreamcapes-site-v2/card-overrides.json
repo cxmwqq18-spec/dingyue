@@ -116,12 +116,30 @@
         "alt": "Hand pouring sparkling citrus drink into an ice-filled glass."
       },
       "box": {
-        "ref": "f:q17-ind-food-drinks-picker-4",
-        "alt": "Hands revealing plain snack pouches from an open sampler box."
+        "ref": "n:guide:fx32-food-card-box",
+        "alt": "Adult hands reveal plain snack pouches from an open kraft sampler box."
       }
     },
     "swap": {
       "head": "box"
+    },
+    "tools": {
+      "product-videos": {
+        "ref": "n:guide:fx32-food-tool-product-videos",
+        "alt": "Adult hand tilts a plain drink bottle toward an ice-filled glass in a bright kitchen."
+      },
+      "lifestyle-photos": {
+        "ref": "n:guide:fx32-food-tool-lifestyle",
+        "alt": "Adult sets a plain snack pouch beside fruit on a sunlit breakfast table."
+      },
+      "photo-hub": {
+        "ref": "n:guide:fx32-food-tool-product-photos",
+        "alt": "Plain snack pouches and a serving bowl arranged as a clean product photo."
+      },
+      "white-background": {
+        "ref": "n:guide:fx32-food-tool-white",
+        "alt": "Plain kraft snack pouch centered on white with a soft studio shadow."
+      }
     }
   },
   "ind-health-wellness": {
@@ -136,8 +154,8 @@
         "alt": "Adult prepares a blue yoga mat and foam roller in a bright studio."
       },
       "ugc": {
-        "ref": "n:guide:q16-wellness-bottle-at-desk",
-        "alt": "Adult drinks from a plain sage-green bottle at a desk."
+        "ref": "n:guide:fx32-health-card-bottle",
+        "alt": "Adult with a short tight bun drinks from a plain sage bottle at a desk."
       },
       "carousel-video-ad": {
         "ref": "n:guide:q16-wellness-cork-block-demo",
@@ -150,6 +168,24 @@
       "beauty": {
         "ref": "n:guide:q16-wellness-hand-soap",
         "alt": "Hands press a plain soap dispenser over an open palm."
+      }
+    },
+    "tools": {
+      "lifestyle-photos": {
+        "ref": "n:guide:fx32-health-tool-lifestyle",
+        "alt": "Adult places a plain wellness bottle beside a folded towel in a bright home routine."
+      },
+      "video-ads": {
+        "ref": "n:guide:fx32-health-tool-video",
+        "alt": "Adult holds a plain wellness bottle toward the camera in a sunlit kitchen."
+      },
+      "social-ad-photos": {
+        "ref": "n:guide:fx32-health-tool-social",
+        "alt": "Adult with a short pixie haircut holds a plain hydration bottle beside a window."
+      },
+      "white-background": {
+        "ref": "n:guide:fx32-health-tool-white",
+        "alt": "Plain sage wellness bottle centered on white with a soft studio shadow."
       }
     }
   },

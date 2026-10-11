@@ -952,7 +952,8 @@
       {
         "ref": "food-beverage",
         "product": "citrus soda",
-        "title": "Sparkling citrus drink poured into a glass"
+        "title": "Sparkling citrus drink poured into a glass",
+        "prompt": "Use the uploaded citrus drink photo as the product. Show an adult hand pouring once into an ice-filled glass, then set the plain bottle beside the glass. Bright morning window light, close product-video framing, natural pour and ice sounds, no text or logos."
       },
       {
         "ref": "n:guide:q17-ind-food-drinks-case-granola",
