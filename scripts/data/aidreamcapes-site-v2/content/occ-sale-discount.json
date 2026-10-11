@@ -4,7 +4,7 @@
   "description": "Build a sale ad creative from one product photo. Add the confirmed price, code and end date after download, then reuse the scene when the promotion changes.",
   "h1": "Make Sale Ad Creatives From One Product Photo",
   "eyebrow": "Sale ad creatives",
-  "lead": "Start your sale ad before the offer is final. Build the product scene now, then add the confirmed price, code and date after download.",
+  "lead": "Start your sale ad before the offer is final. Build the product scene now, then add the confirmed price, code and date after download. Need a short sale video ad? [Build one from a product photo](/ai-video-generation/ugc-ad-video).",
   "secondary_keywords": [
     "discount ad images",
     "sale banner for online store",
@@ -82,15 +82,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product shoppers will buy."
+      "d": "Start with one clear photo of the product shoppers will buy. Keep the full item in frame."
     },
     {
       "t": "Pick a Sale Scene",
-      "d": "Choose a product view with clear space for the offer layer."
+      "d": "Choose a product view with clear space for the offer layer. Keep the price, code, and date out of the image."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed price, code and end date in your editor, then post the finished file."
+      "d": "Add the confirmed price, code and end date in your editor. Then post the finished file."
     }
   ],
   "visual": {
@@ -146,7 +146,7 @@
       }
     }
   },
-  "benefits_h2": "Why Sellers Use Sale Ad Creatives",
+  "benefits_h2": "Keep the product scene while the offer changes",
   "benefits": [
     {
       "t": "Launch before the offer is final",
@@ -166,5 +166,18 @@
     }
   ],
   "steps_h2": "How to Create Sale Ad Creatives in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose a sale scene and add the confirmed offer after download."
+  "steps_lead": "Upload one product photo, choose a sale scene and add the confirmed offer after download.",
+  "relatedLinks": [
+    "video-ads",
+    "social-ad-photos",
+    "unboxing-videos",
+    "templates",
+    "guides",
+    "occ-black-friday",
+    "occ-holidays",
+    "product-videos",
+    "lifestyle-photos",
+    "tpl-sale",
+    "pricing"
+  ]
 }
