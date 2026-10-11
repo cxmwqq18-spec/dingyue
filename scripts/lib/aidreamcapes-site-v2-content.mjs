@@ -2014,7 +2014,7 @@ function payloadFor(model, page) {
         { title: "Formats for an actor-led ad", links: pageLinksFor(model, ["tpl-ugc", "tpl-howto", "tpl-film", "tpl-drink", "tpl-home", "tpl-outfit"]) },
         { title: "Placement and review", links: pageLinksFor(model, ["tpl-launch", "tpl-compare", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
       ];
-      out.cta = { title: "Create a product ad with an AI actor", lead: "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true }) };
+      out.cta = { title: c.cta_title || "Create a product ad with an AI actor", lead: c.cta_lead || "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true }) };
     } else if (page.id === "templates") {
       const chips = c.visual?.picker ?? [];
       const groups = c.visual?.directoryFilters?.templateGroups ?? {};
