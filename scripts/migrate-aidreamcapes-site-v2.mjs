@@ -74,8 +74,11 @@ try {
   const settings = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID } });
   assert(settings, `ThemeSettings not found for ${SITE_ID}`);
   const existingBySlug = new Map(existingPages.map((page) => [page.slug, page]));
+  // Pages held back from this release keep their current LivePage row (AIDREAM_HOLD_PAGES=page-id,page-id).
+  const holdPages = new Set((process.env.AIDREAM_HOLD_PAGES ?? "").split(",").map((value) => value.trim()).filter(Boolean));
   const nextPages = build.pages.map((page) => {
     const existing = existingBySlug.get(page.slug);
+    if (existing && (holdPages.has(page.slug) || holdPages.has(page.id) || holdPages.has(page.contentJson?.id))) page = { ...page, title: existing.title, contentJson: existing.contentJson };
     return {
       id: existing?.id ?? fallbackPageId(page),
       siteId: SITE_ID,
