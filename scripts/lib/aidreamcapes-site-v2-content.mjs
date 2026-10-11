@@ -73,10 +73,6 @@ const TEMPLATE_PROMPTS = {
 const VIDEO_TOOLS = ["image-to-video", "url-to-video", "video-ads", "product-videos", "unboxing-videos", "before-after-videos", "spokesperson-videos"];
 // The competitor actor directory has one card for these nine scenes and two
 // for every other scene. Keep this map aligned with the local assign manifest.
-const ACTOR_SCENE_CARD_COUNTS = Object.fromEntries([
-  ["Classroom", 1], ["Bathroom", 1], ["Bedroom", 1], ["Garage", 1], ["Interview", 1],
-  ["Pool", 1], ["Reporting", 1], ["Travel", 1], ["Yoga", 1]
-]);
 const PHOTO_TOOLS = ["photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"];
 const HOME_TOOL_ALTS = {
   "image-to-video": "Plain cream travel mug on a stone counter in a warm room.",
