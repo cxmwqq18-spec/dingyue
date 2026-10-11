@@ -1,10 +1,10 @@
 {
   "id": "tpl-outfit",
-  "title": "AI Fashion Reels for Full Outfit Ads | AIVideosUGC",
-  "description": "Turn one clothing photo into a 9:16 fashion reel on a model. Head-to-toe try-on videos in 6, 10, 15 or 30 seconds for TikTok and Instagram ads.",
-  "h1": "AI Fashion Reels That Show the Whole Look, Head to Toe",
+  "title": "AI Fashion Reels for Clothing Try-On | AIVideosUGC",
+  "description": "Make AI fashion reels from one clothing photo for TikTok, Instagram and product pages. Choose 6, 10, 15 or 30 seconds to post.",
+  "h1": "Show the Full Outfit Before You Book a Shoot",
   "eyebrow": "Fashion video template",
-  "lead": "Show the full fit before you book a shoot. Turn one outfit photo into a vertical reel that puts the complete look on a model for TikTok and Instagram.",
+  "lead": "Turn one product photo into a clothing try-on video that gives shoppers a clear result, ready for the channel where you sell.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -12,39 +12,39 @@
     "fashion TikTok ad",
     "menswear video ad"
   ],
-  "benefits_h2": "Why make AI fashion reels?",
+  "benefits_h2": "Make the clothing try-on result clear",
   "benefits": [
     {
-      "t": "Show the whole outfit at a glance",
-      "d": "Put the jacket, jeans or complete look on a model from one clothing photo, so shoppers see the silhouette and styling together."
+      "t": "Show the result first",
+      "d": "Show the clothing try-on outcome in one clear moment so buyers know what they get."
     },
     {
-      "t": "Launch new looks without a shoot",
-      "d": "Create another scene for a new arrival or campaign without booking a model, location and crew."
+      "t": "Skip another shoot",
+      "d": "Use the photo you already have instead of booking creators, locations or gear."
     },
     {
-      "t": "Fit every feed cut",
-      "d": "Use a 9:16 reel for TikTok or Instagram, then choose 6, 10, 15 or 30 seconds for the moment you need to show."
+      "t": "Make more useful versions",
+      "d": "Create another angle from the same source without reshooting."
     },
     {
-      "t": "Keep the final edit yours",
-      "d": "Download without an AIVideosUGC watermark, then place the reel in your own ads, product pages and social posts."
+      "t": "Keep live details editable",
+      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate."
     }
   ],
-  "steps_h2": "How to Make AI Fashion Reels in 3 Simple Steps",
-  "steps_lead": "Turn one clothing photo into a ready-to-post outfit reel that shows the fit clearly.",
+  "steps_h2": "How to Make Clothing Try-On Videos in 3 Simple Steps",
+  "steps_lead": "Turn one clothing photo into a clear try-on video shoppers can understand at a glance.",
   "steps": [
     {
-      "t": "Upload Your Clothing Photo",
-      "d": "Show the full garment with the hem, collar and closures visible. Keep the source photo sharp and evenly lit."
+      "t": "Upload Your Product",
+      "d": "Add one clear source photo and keep the full product or garment visible. Use even light so color and shape stay easy to judge."
     },
     {
       "t": "Pick a Scene",
-      "d": "Name the model, setting and one outfit action. Choose the length and size for the reel."
+      "d": "Choose one action and describe the setting or comparison shoppers should see. Keep the garment fully in frame for the result."
     },
     {
       "t": "Download and Post",
-      "d": "Download the finished reel. Add price, sizes and the product link in your editor."
+      "d": "Download the result, add exact offer or listing details in your editor, then post. Check the color, fit and final copy before publishing."
     }
   ],
   "maker": {
@@ -58,32 +58,32 @@
         "15 seconds"
       ]
     ],
-    "cta": "Make my outfit reel"
+    "cta": "Make my try-on video"
   },
   "faq": [
     {
-      "q": "What source photo works for a fashion reel?",
+      "q": "What photo should I upload?",
       "a": "Use a sharp, well-lit photo that shows the full garment and its important details. A flat lay, mannequin or hanger view can work."
     },
     {
-      "q": "Can shoppers see the full outfit?",
-      "a": "Yes. Choose a full-body scene so the silhouette, hem and footwear stay visible. Use your listing for measurements and fit facts."
+      "q": "What result does this template show?",
+      "a": "It creates a clothing try-on video that puts the full outfit into a clear scene. Compare the export with your source photo before publishing."
     },
     {
-      "q": "Which length should I choose?",
-      "a": "Use 6 seconds for one reveal, 10 or 15 seconds for a turn or walk, and 30 seconds when the look needs several beats. The cost appears before creation."
+      "q": "Which length or format should I choose?",
+      "a": "Use 9:16 for TikTok and Reels, 1:1 for feeds and listings, or 16:9 for a product page. Choose 6, 10, 15 or 30 seconds based on how much of the look shoppers need to see."
     },
     {
-      "q": "How do I keep the garment accurate?",
-      "a": "Compare the export with the source photo. Check the color, collar, closures, seams, print and hem before you publish."
+      "q": "Can I change details after download?",
+      "a": "Yes. Add exact names, prices, dates, sizes or dimensions in your editor after download. Check every detail against the real garment before posting."
     },
     {
-      "q": "Can I use a fashion reel in paid ads?",
-      "a": "Yes. Use the downloaded reel in your own TikTok, Instagram, Facebook or other paid campaigns, with any required disclosure added in the platform editor."
+      "q": "Do I need a shoot day?",
+      "a": "No. Start from one clear clothing photo and choose a scene that fits the collection. Review the result before you decide whether another shoot is needed."
     },
     {
-      "q": "Do I need to book a model?",
-      "a": "No. The reel is generated from your clothing photo with an AI model, so you can prepare another outfit scene without a shoot day."
+      "q": "Where can I use the clip?",
+      "a": "Use the downloaded clip in your store, product page or paid social campaign. Add your own captions, offer details and any platform-required disclosure in the editor."
     }
   ],
   "visual": {
@@ -541,12 +541,62 @@
         "h2": "Add product details after download"
       },
       "faq": {
-        "h2": "Questions about AI fashion reels"
+        "h2": "Questions about clothing try-on videos"
       },
       "templates": {
         "h2": "More templates for AI fashion reels",
         "lead": "Pick another clothing scene, then add your garment photo."
       }
     }
-  }
+  },
+  "cta_title": "Put the whole look in motion",
+  "cta_lead": "Upload one product photo, see the cost first and make a clothing try-on video.",
+  "more_sections": [
+    {
+      "eyebrow": "Build the next asset",
+      "h2": "Use the try-on clip across your selling channels",
+      "lead": "Choose the next option after the clothing video is ready.",
+      "items": [
+        {
+          "t": "Show the garment on model photos",
+          "d": "Create on-model photos when a listing needs a still view of the fit."
+        },
+        {
+          "t": "Make a vertical video ad",
+          "d": "Turn the same source into video ads when a social feed needs a new opening."
+        },
+        {
+          "t": "Add a product demo angle",
+          "d": "Use product videos to show a close detail or another selling moment."
+        },
+        {
+          "t": "Refresh the setting",
+          "d": "Change the background when the same garment needs a new context."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Prepare each version",
+      "h2": "Match the format to the next place you sell",
+      "lead": "Keep the garment and its confirmed details consistent as you make each version.",
+      "items": [
+        {
+          "t": "Create a feed ad still",
+          "d": "Use feed ad photos for a supporting image beside the try-on clip."
+        },
+        {
+          "t": "Turn a photo into motion",
+          "d": "Use image to video when one source photo needs a simple movement."
+        },
+        {
+          "t": "Keep the clothing details clear",
+          "d": "Use clothing tools for another garment option while the source photo is still ready."
+        },
+        {
+          "t": "Review before publishing",
+          "d": "Check the final file, caption and offer in your own editor before you post."
+        }
+      ]
+    }
+  ]
 }
