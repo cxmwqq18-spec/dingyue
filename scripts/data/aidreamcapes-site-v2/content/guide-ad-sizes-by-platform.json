@@ -4,7 +4,7 @@
   "description": "A plain-English guide to social media ad sizes: when to use vertical 9:16, square 1:1 or wide 16:9 on TikTok, Instagram, Facebook and YouTube.",
   "h1": "Social Media Ad Sizes: Which Shape Goes Where",
   "eyebrow": "Ad size guide",
-  "lead": "One wrong shape means black bars, a cropped product or text hidden behind a button, and you pay for impressions nobody watches clearly. There are only three shapes to plan for, and getting them right before you make the video saves an entire redo.",
+  "lead": "One wrong shape means black bars, a cropped product or text hidden behind a button, and you pay for impressions nobody watches clearly. Most social placements use three common shapes, while the editor also offers 3:4 and 4:3 when a placement calls for them. Getting the shape right before you make the video saves an entire redo.",
   "secondary_keywords": [
     "9:16 vs 1:1 vs 16:9",
     "vertical video ad size",
@@ -33,7 +33,7 @@
       "h2": "Square 1:1 works in every feed",
       "paras": [
         "Square works in the Facebook and Instagram feeds and looks the same on a phone or a laptop. That makes it the safe single file when you aren't sure where an ad will appear, and one square video can cover several ad spots at once.",
-        "Some feeds also accept slightly taller frames that take up more of the screen. Square is still a solid place to start. AIVideosUGC [product photos](page:photo-hub) come out square by default, so they drop straight into feed ads and the photo gallery on your product pages. For matching stills, use [social ad photos](page:social-ad-photos) at the same square size.",
+        "Some feeds also accept slightly taller frames that take up more of the screen. Square is still a solid place to start. A square product photo drops straight into feed ads and the photo gallery on your product pages. For matching stills, use [social ad photos](page:social-ad-photos) at the same square size.",
         "Square is also the usual pick for carousel ads, where shoppers swipe through several products or angles inside one ad. Keeping every card the same shape makes the swipe feel smooth."
       ]
     },
@@ -82,7 +82,7 @@
     },
     {
       "q": "Can I use one video for every platform?",
-      "a": "You can, but it won't look right everywhere. A vertical video fills TikTok and Reels yet gets shrunk or cropped in some feeds. A 9:16 version plus a 1:1 version covers most social spots."
+      "a": "You can, but it will not look right everywhere. A vertical video fills TikTok and Reels yet gets shrunk or cropped in some feeds. A 9:16 version plus a 1:1 version covers most social spots."
     },
     {
       "q": "How do I keep text inside platform safe zones?",
@@ -94,7 +94,19 @@
     },
     {
       "q": "Which video length works for each shape?",
-      "a": "All three shapes can be 6, 10, 15 or 30 seconds. Pick the length by the content: one moment for 6 seconds, a short demo for 10, a simple sequence for 15, and a longer product story for 30."
+      "a": "All five shapes can be 6, 10, 15, or 30 seconds. Pick the length by the content: one moment for 6 seconds, a short demo for 10, a simple sequence for 15, and a longer product story for 30."
+    },
+    {
+      "q": "Does AIVideosUGC offer 4:3 and 3:4?",
+      "a": "Yes. The editor offers 9:16, 1:1, 16:9, 4:3, and 3:4."
+    },
+    {
+      "q": "How many credits does a 10-second video use?",
+      "a": "A 10-second video uses 40 credits, and the exact cost appears before the job starts. Failed jobs return the credits."
+    },
+    {
+      "q": "Which shape should I make first?",
+      "a": "Start with 9:16 for TikTok, Reels, Stories, and Shorts, then add 1:1 for feed placements when you need it."
     }
   ]
 }

@@ -70,16 +70,28 @@
   ],
   "faq": [
     {
-      "q": "What if the video shows something that isn't in my box?",
-      "a": "Don't post that version. Make the clip again and name the exact contents in your description, such as \"a bottle, a pump, and a cotton pouch.\" Shoppers will compare their package with the unboxing they saw."
+      "q": "What if the video shows something that is not in my box?",
+      "a": "Do not post that version. Make the clip again and name the exact contents in your description, such as a bottle, a pump, and a cotton pouch. Shoppers will compare their package with the unboxing they saw."
     },
     {
       "q": "How long should an unboxing video be?",
-      "a": "You can choose 6, 10, 15, or 30 seconds. Use 6 seconds for a quick teaser, 10 seconds to open the box and show the product, 15 seconds for a slower reveal with a closer look, and 30 seconds for a full unboxing of a multi-item kit."
+      "a": "Choose 6, 10, 15, or 30 seconds. Use 6 seconds for a quick teaser, 10 seconds to open the box and show the product, 15 seconds for a slower reveal with a closer look, and 30 seconds for a full unboxing of a multi-item kit."
     },
     {
       "q": "What source should I use for an unboxing video?",
       "a": "Use a clear product or package photo and list every item in the box. Check the opening, reveal, and final contents against the real package."
+    },
+    {
+      "q": "How many credits does an unboxing clip use?",
+      "a": "A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. Failed jobs return the credits."
+    },
+    {
+      "q": "What if my packaging is still changing?",
+      "a": "Wait for the final package or describe a plain unbranded box. Showing packaging that buyers will not receive sets the wrong expectation."
+    },
+    {
+      "q": "Can one package photo create several launch clips?",
+      "a": "Yes. Reuse the package photo and write a separate description for the teaser, reveal, and closer look so each clip has a clear job."
     }
   ]
 }
