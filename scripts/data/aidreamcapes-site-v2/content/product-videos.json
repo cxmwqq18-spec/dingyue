@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a clear demo that shows how the item works. Create videos for stores, product pages and paid social in 6, 10, 15 or 30 seconds.",
   "h1": "Show How Your Product Works in a Short Demo",
   "eyebrow": "AI product video generator",
-  "lead": "Show shoppers how your product works without booking a shoot. Turn one product photo into a clear demo for a store, product page or paid ad.",
+  "lead": "Show shoppers how your product works without booking a shoot. Turn one product photo into a focused demo for a product page, marketplace listing or paid ad.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
@@ -13,33 +13,33 @@
   ],
   "benefits": [
     {
-      "t": "See it work before checkout",
-      "d": "Show the key action in minutes so shoppers can see how the item works before they buy.",
+      "t": "Show the feature before checkout",
+      "d": "Put one useful operation in motion so shoppers understand the item before they buy.",
       "icon": "play"
     },
     {
-      "t": "Answer the buyer before they ask",
-      "d": "Put one feature or use case in motion so shoppers get the detail they need on the listing.",
+      "t": "Answer a listing question",
+      "d": "Use one short action to explain a button, drawer, pump or hinge where still photos leave a gap.",
       "icon": "target"
     },
     {
-      "t": "Skip the second shoot",
-      "d": "Create another product moment from one photo without booking another shoot.",
+      "t": "Make another angle from one photo",
+      "d": "Create a second product moment for a marketplace or paid ad without booking another shoot.",
       "icon": "layers"
     }
   ],
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Keep the product clear while you show how it works. Use one clear photo with the full item and its moving part in frame."
+      "d": "Keep the full item and its moving part in frame. Start with one clear photo so the feature has room to move."
     },
     {
       "t": "Describe the Action",
-      "d": "Show shoppers the action that helps them decide. Write one sentence about the operation or detail they need to see."
+      "d": "Name one operation that helps a shopper decide. Say what moves, where it happens and where the final frame should stop."
     },
     {
       "t": "Download and Post",
-      "d": "Add a short demo beside your listing photos in minutes. Download the demo and place it beside your product photos or in a paid ad."
+      "d": "Review the finished demo beside the real item before publishing. Place it on your product page, marketplace listing or paid ad."
     }
   ],
   "maker": {
@@ -57,41 +57,41 @@
   },
   "faq": [
     {
-      "q": "What is an AI product video generator?",
-      "a": "It turns a product photo into a short demo that shows the item, one operation or one useful detail."
+      "q": "What does a product demo video show?",
+      "a": "It shows one useful operation from start to finish, such as a lid opening, a latch closing, a pour or a switch turning on."
     },
     {
       "q": "How is this different from image to video?",
-      "a": "Image to video adds motion to a still. A product demo focuses on an operation or buyer question."
+      "a": "Image to video adds motion to a still. A product demo focuses on one operation or buyer question so the feature is easy to inspect."
     },
     {
-      "q": "Can I use the demo on a store or product page?",
-      "a": "Yes. Download the demo and place it beside your product photos, then follow the marketplace or store media rules."
+      "q": "What product photo should I upload?",
+      "a": "Use one sharp photo with the full item and the moving part visible. Even light and clear edges give the action more room to read."
     },
     {
-      "q": "Which video lengths can I choose?",
-      "a": "Choose 6, 10, 15 or 30 seconds. Pick the length that gives the operation a clear start and finish."
+      "q": "Which actions work well for product videos?",
+      "a": "Opening, closing, pouring, packing, connecting, switching on and fitting work well when the product can perform the action in real life."
+    },
+    {
+      "q": "Which video sizes and lengths can I choose?",
+      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4, plus 6, 10, 15 or 30 seconds. Pick the frame and length that suit the channel and the action."
     },
     {
       "q": "Will the demo show my product accurately?",
-      "a": "Start with a clear full view and review the finished demo beside the real item before posting. Replace any result that drifts."
+      "a": "Review every result beside the real item before posting. If a button, color or moving part drifts, make another version instead of publishing it."
     },
     {
       "q": "Can I add the price and product name?",
-      "a": "Yes. Add exact names, prices and dates later in Canva, CapCut or your ad editor."
+      "a": "Yes. Add exact names, prices and dates later in Canva, CapCut or your ad editor so the generated scene stays clean."
     },
     {
-      "q": "Can I use a close-up operation shot?",
-      "a": "Yes. A close view helps shoppers inspect a latch, button, lid, seam or other useful detail."
-    },
-    {
-      "q": "Can I use product demos for paid ads?",
-      "a": "Yes. Download the demo, add campaign text in your editor and review the final ad before launch."
+      "q": "Can I use a product demo for a listing or paid ad?",
+      "a": "Yes. Download the demo, place it beside your listing photos or in your ad, and check the marketplace or platform rules before launch."
     }
   ],
   "actor_scene_picker": {
     "title": "Choose your avatar and scene",
-    "lead": "Pick who presents and where, and start your video with both already set.",
+    "lead": "Pick an avatar and setting, then carry both choices into a product demo that keeps the action easy to follow.",
     "button": "Use this avatar and scene"
   },
   "visual": {
@@ -122,25 +122,34 @@
       ]
     },
     "picker": {
-      "title": "See product moments that answer questions",
-      "lead": "Compare product actions, close-ups and use cases before you make your own demo.",
-      "chips": [],
+      "title": "Product demo scenes",
+      "lead": "Choose one real operation, then adapt the hand position and final frame to your product. Each example keeps the item clear and the action easy to review.",
+      "chips": [
+        {
+          "id": "hands-on",
+          "label": "Hands-on demos"
+        },
+        {
+          "id": "everyday",
+          "label": "Everyday operations"
+        }
+      ],
       "cards": [],
-      "button": "Explore More"
+      "button": "Make a product demo"
     },
     "uses": [
       {
         "frame": "split",
         "ref": "n:guide:k1-product-videos-use-bottle-white",
         "ref_b": "n:guide:k1-product-videos-example-frother",
-        "h": "Show the feature that matters",
-        "d": "Put one operation in motion so shoppers can see how the item works."
+        "h": "Show the operation that matters",
+        "d": "Put one operation in motion so shoppers can see what the item does and how the moving part behaves."
       },
       {
         "frame": "post",
         "ref": "n:guide:k1-product-videos-case-kettle",
         "h": "Give every listing a useful demo",
-        "d": "Show the use case that answers a buyer question before they leave the page."
+        "d": "Show the use case that answers a buyer question before they leave the product page."
       },
       {
         "frame": "browser",
@@ -152,19 +161,19 @@
         "frame": "listing",
         "ref": "n:guide:q3-product-videos-output-lunchbox-packed",
         "h": "Add another angle from one photo",
-        "d": "Create a second product moment for a listing or paid ad without another shoot."
+        "d": "Create a second product moment for a marketplace or paid ad without another shoot."
       }
     ],
     "titles": {
       "m2": {
-        "h2": "Create a product demo in 3 steps"
+        "h2": "How to Make Product Demo Videos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "See product moments that answer questions",
-        "lead": "Compare product actions, close-ups and use cases before you make your own demo."
+        "h2": "Product demo scenes",
+        "lead": "Choose one action and show it clearly from the first frame to the last."
       },
       "m4": {
-        "h2": "Show the detail shoppers need to see"
+        "h2": "Where product demos help you sell"
       },
       "m5": {
         "h2": "Start with one clear product photo"
@@ -176,10 +185,13 @@
         "h2": "Download and add the demo to your listing"
       },
       "examples": {
-        "h2": "Product demos shoppers can understand"
+        "h2": "More product demo ideas"
       },
       "gallery": {
-        "h2": "Product demo scenes"
+        "h2": "More product demo scenes"
+      },
+      "faq": {
+        "h2": "Product demo video FAQ"
       }
     },
     "input": [],
@@ -187,6 +199,55 @@
     "after": null
   },
   "benefits_h2": "Show the product detail a buyer needs",
-  "steps_h2": "How to Make Product Demos with an AI Product Video Generator in 3 Simple Steps",
-  "steps_lead": "Go from one clear product photo to a short demo that answers a shopper question."
+  "steps_h2": "How to Make Product Demo Videos in 3 Simple Steps",
+  "steps_lead": "Go from one clear product photo to a short demo that answers a shopper question.",
+  "intro": [
+    "A product demo focuses on one action a shopper can understand: a latch closing, a bottle cap opening, a charger packing away or a kettle pouring. Use the clip beside listing photos when a still image leaves the feature unclear.",
+    "Upload a clear product photo, name one movement and choose a frame for the channel. Review the finished result beside the real item before you publish it to a marketplace, product page or paid ad."
+  ],
+  "overview": [
+    {
+      "h2": "Show one useful action, not a feature list",
+      "p": "Pick one thing a shopper would ask about, such as whether a latch closes or how a compartment works, and make one short clip of it. Review the result beside the real item before you publish it."
+    }
+  ],
+  "fit": {
+    "h2": "When a product demo is the right format",
+    "good": [
+      "Home goods with a clear open, close, fold, pour or switch action",
+      "Kitchen tools where a latch, pour or handoff matters",
+      "Bags, organizers and accessories with useful compartments",
+      "Listings and paid ads that need one moving explanation beside still photos"
+    ],
+    "not_ideal": [
+      "Products whose value depends mainly on an exact printed claim",
+      "Actions that require a real person to explain results aloud"
+    ]
+  },
+  "compare_table": {
+    "title": "Skip the studio demo setup",
+    "lead": "Show one product action first, then make another version when the listing or campaign needs a new angle.",
+    "columns": [
+      "",
+      "Photoshoot or creator",
+      "AIVideosUGC"
+    ],
+    "rows": [
+      [
+        "Preparation",
+        "Ship samples and schedule a filming day",
+        "Start with one clear product photo"
+      ],
+      [
+        "First version",
+        "Film one operation with a creator and setup",
+        "Describe one operation and make the demo"
+      ],
+      [
+        "Next version",
+        "Arrange another shoot for a new angle",
+        "Create another version without reshooting"
+      ]
+    ]
+  }
 }
