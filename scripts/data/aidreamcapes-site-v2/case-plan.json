@@ -850,11 +850,6 @@
     ],
     "ind-fashion-clothing": [
       {
-        "ref": "fashion-try-on-reel",
-        "product": "beige overshirt",
-        "title": "Overshirt checked in a fitting-room mirror"
-      },
-      {
         "ref": "n:guide:q15-fashion-case1-knit-cardigan",
         "product": "knit cardigan",
         "title": "Knit cardigan: buttoned fit check"
