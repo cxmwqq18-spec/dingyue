@@ -8188,6 +8188,17 @@
         1280
       ],
       "source": "Codex imagegen"
+    },
+    "im06-tpl-sale-strip-5-r1": {
+      "file": "im06-tpl-sale-strip-5-r1",
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short blonde bob opens a plain jewelry box with a silver pendant and open space for a sale offer.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "gen.sh"
     }
   },
   "clips": {
@@ -47787,6 +47798,50 @@
           1280,
           1600
         ]
+      },
+      "im06-tpl-jewel-strip-0-r1": {
+        "file": "im06-tpl-jewel-strip-0-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a short silver-blonde pixie wears one plain brushed-silver pendant necklace at her collarbone.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "im06-tpl-jewel-strip-1-r1": {
+        "file": "im06-tpl-jewel-strip-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "One plain brushed-silver signet ring resting on pale linen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "im06-tpl-jewel-strip-4-r1": {
+        "file": "im06-tpl-jewel-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "One plain brushed-silver chain bracelet arranged on pale linen with its clasp visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "im06-tpl-jewel-strip-2-r1": {
+        "file": "im06-tpl-jewel-strip-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short silver-gray pixie wears one plain enamel brooch on a charcoal coat lapel, full face visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }
