@@ -1,7 +1,7 @@
 {
   "id": "examples",
   "title": "AI Product Photo and Video Examples | AIVideosUGC",
-  "description": "See how one product photo becomes a listing image, lifestyle scene or short ad. Compare six product examples and try a direction for your store.",
+  "description": "See six product examples, from one uploaded photo to a finished image or video. Compare the source, scene and result, then make your own in minutes.",
   "h1": "AI Product Photo and Video Examples, Start to Finish",
   "eyebrow": "From photo to ad",
   "lead": "See how one product photo becomes a listing image, lifestyle scene or short ad. Pick a direction, then try it with your own product.",
@@ -12,7 +12,7 @@
     "product photo to video ad",
     "AI social ad image examples"
   ],
-  "intro": "Browse the complete set, filter by product category, and open a scene to try a similar direction with your product.",
+  "intro": "Browse the complete set, filter by product industry, and open a card to try a similar direction with your product.",
   "benefits_h2": "Why use the examples gallery?",
   "benefits": [
     {
@@ -176,10 +176,6 @@
     {
       "q": "Will the result look exactly like the example?",
       "a": "It follows the same shot type and framing, but every result is generated from your specific photo, so details and scene elements differ. Compare the file with your actual product before publishing and rerun the scene if the shape or label drifts."
-    },
-    {
-      "q": "Which format should I try first?",
-      "a": "Start with Square for a product page or feed, 9:16 for short vertical ads, and 16:9 when a wide player or product page calls for it."
     }
   ],
   "overview": [
@@ -374,8 +370,12 @@
     ],
     "picker": {
       "title": "Find a product scene to try today",
-      "lead": "Filter by product category, then open a scene to recreate it with your product.",
+      "lead": "Filter product examples by industry, then open a card to try the scene with your own product.",
       "chips": [
+        {
+          "id": "all",
+          "label": "All"
+        },
         {
           "id": "accessories",
           "label": "Accessories"
@@ -421,6 +421,10 @@
           "label": "Footwear"
         },
         {
+          "id": "home-living",
+          "label": "Home & Living"
+        },
+        {
           "id": "health-fitness",
           "label": "Health & Fitness"
         },
@@ -462,71 +466,34 @@
     "titles": {
       "m3": {
         "h2": "Find a product scene to try today",
-        "lead": "Filter by product category, then open a scene to recreate it with your product."
+        "lead": "Filter by industry, then open a card to try the same direction with your product."
       }
     },
     "directoryFilters": {
       "cases": {
         "tote": [
-          "food-beverage",
-          "e-commerce",
-          "financial-services",
-          "ugc",
-          "viral"
+          "all",
+          "food-beverage"
         ],
         "jacket": [
-          "accessories",
-          "apparel",
-          "clothing",
-          "e-commerce",
-          "food-beverage",
-          "footwear",
-          "jewelry-accessories",
-          "ugc",
-          "viral"
+          "all",
+          "accessories"
         ],
         "lipstick": [
-          "apps",
-          "beauty-personal-care",
-          "education",
-          "explainer",
-          "e-commerce",
-          "kids-toy",
-          "pet",
-          "tech-electronics",
-          "ugc",
-          "viral"
+          "all",
+          "home-living"
         ],
         "hoodie": [
-          "accessories",
-          "apps",
-          "education",
-          "explainer",
-          "financial-services",
-          "jewelry-accessories",
-          "tech-electronics",
-          "ugc",
-          "viral"
+          "all",
+          "accessories"
         ],
         "handbag": [
-          "apparel",
-          "clothing",
-          "e-commerce",
-          "footwear",
-          "health-fitness",
-          "sports-gym",
-          "ugc",
-          "viral"
+          "all",
+          "footwear"
         ],
         "boots": [
-          "beauty-personal-care",
-          "e-commerce",
-          "health-fitness",
-          "kids-toy",
-          "pet",
-          "sports-gym",
-          "ugc",
-          "viral"
+          "all",
+          "beauty-personal-care"
         ]
       }
     }
