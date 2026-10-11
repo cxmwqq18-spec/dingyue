@@ -16,28 +16,56 @@
       "paras": [
         "Upload a picture of what you sell, pick a template or write the scene you want, and get back a square store image or a short AI video ad of 6, 10, 15 or 30 seconds.",
         "Every tool does a job sellers do every week: white background shots, lifestyle scenes, on-model photos, feed ad images and vertical videos for TikTok, Instagram Reels and YouTube Shorts. No design software, no ad agency and no studio day."
-      ]
+      ],
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-about-make-r1.webp",
+        "alt": "Seller arranging a white ceramic bottle beside a laptop on a sunlit worktable.",
+        "width": 1024,
+        "height": 1024
+      },
+      "alt": "Seller arranging a white ceramic bottle beside a laptop on a sunlit worktable."
     },
     {
       "h2": "Who it's for",
       "paras": [
         "It is built for small and growing stores on Shopify, Amazon and Etsy, and for the marketers who run their ads. If you pack orders, write listings and set up campaigns yourself, this is for you.",
         "You don't need editing skills. A clear photo of your product and a sentence about the scene you picture are enough to start, and you can make a fresh version of an ad whenever a hook or an offer needs testing."
-      ]
+      ],
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-about-audience-r1.webp",
+        "alt": "Black woman with short silver hair packing a fabric pouch at a small shop desk.",
+        "width": 1024,
+        "height": 1024
+      },
+      "alt": "Black woman with short silver hair packing a fabric pouch at a small shop desk."
     },
     {
       "h2": "Your photos stay yours",
       "paras": [
         "Everything you upload and everything you make stays in your own account. Your product photos and results are never shown to other customers or made public.",
         "Some requests are turned down, such as ones involving celebrities or other public figures, or logos and trademarks that belong to someone else. That keeps every ad focused on your own products."
-      ]
+      ],
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-about-private-r1.webp",
+        "alt": "Seller with a tied auburn bun holding a ceramic cup beside a closed laptop.",
+        "width": 1024,
+        "height": 1024
+      },
+      "alt": "Seller with a tied auburn bun holding a ceramic cup beside a closed laptop."
     },
     {
       "h2": "Credit costs you can see",
       "paras": [
         "Every photo and video shows its price in credits before the job starts, so nothing spends without your say-so. Plans run from $24.50 a month with 200 credits.",
         "Credits are held while a job runs and used only when the result arrives. Delivered results are generally not refunded, which is why the cost is always on screen before you commit; if a job fails, the credits go back to your balance automatically."
-      ]
+      ],
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-about-credits-r1.webp",
+        "alt": "Man with a shaved head reviewing a product package and laptop at a worktable.",
+        "width": 1024,
+        "height": 1024
+      },
+      "alt": "Man with a shaved head reviewing a product package and laptop at a worktable."
     }
   ],
   "faq": [

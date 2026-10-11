@@ -23692,6 +23692,156 @@
           1280
         ]
       },
+      "fx08-about-hero-r1": {
+        "file": "fx08-about-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a short copper bob holding a white ceramic jar beside a laptop with an abstract preview.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-contact-hero-r1": {
+        "file": "fx08-contact-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with short platinum hair reviewing a white ceramic bottle beside an open laptop at a packing desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-trust-hero-r1": {
+        "file": "fx08-trust-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller comparing a speckled ceramic mug with its product image beside a brass padlock.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-about-make-r1": {
+        "file": "fx08-about-make-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller arranging a white ceramic bottle beside a laptop on a sunlit worktable.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-about-audience-r1": {
+        "file": "fx08-about-audience-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black woman with short silver hair packing a fabric pouch at a small shop desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-about-private-r1": {
+        "file": "fx08-about-private-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a tied auburn bun holding a ceramic cup beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-about-credits-r1": {
+        "file": "fx08-about-credits-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Man with a shaved head reviewing a product package and laptop at a worktable.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-trust-purpose-r1": {
+        "file": "fx08-trust-purpose-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Man with short curls opening a white ceramic bottle at a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-trust-uploads-r1": {
+        "file": "fx08-trust-uploads-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Older Asian woman reviewing a product preview beside a brass padlock and laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-trust-ads-r1": {
+        "file": "fx08-trust-ads-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman with a short blonde buzz cut checking a product ad beside two matching ceramic mugs.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-contact-billing-r1": {
+        "file": "fx08-contact-billing-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black man with a close-cropped haircut reviewing a plan panel beside a product parcel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-contact-credits-r1": {
+        "file": "fx08-contact-credits-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a short dark buzz cut checking a product parcel beside a laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-contact-results-r1": {
+        "file": "fx08-contact-results-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a short strawberry-blonde crop comparing a ceramic cup with its laptop preview.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-contact-privacy-r1": {
+        "file": "fx08-contact-privacy-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman with a close-cropped natural afro using a laptop beside a padlock and product pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx08-contact-partnerships-r1": {
+        "file": "fx08-contact-partnerships-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two shop partners exchanging a plain parcel across an ecommerce desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "k8-trust-commercial-lighting-example-05": {
         "file": "gen2guide-k8-trust-commercial-lighting-example-05",
         "w": 1024,

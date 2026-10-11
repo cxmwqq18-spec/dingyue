@@ -18,7 +18,14 @@
       "h2": "What AIVideosUGC is for",
       "paras": [
         "Online stores use it to turn their own product photos into short AI video ads and store-ready images. Make content for products you sell or are allowed to promote, on your store, marketplaces and social channels."
-      ]
+      ],
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-trust-purpose-r1.webp",
+        "alt": "Man with short curls opening a white ceramic bottle at a bathroom sink.",
+        "width": 1024,
+        "height": 1024
+      },
+      "alt": "Man with short curls opening a white ceramic bottle at a bathroom sink."
     },
     {
       "h2": "What we decline",
@@ -30,13 +37,27 @@
       "h2": "Your uploads and results",
       "paras": [
         "Your uploads and results stay in your account and are never shown to other customers. Only upload photos you own or have permission to use, and compare every result with your real product before you publish it."
-      ]
+      ],
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-trust-uploads-r1.webp",
+        "alt": "Older Asian woman reviewing a product preview beside a brass padlock and laptop.",
+        "width": 1024,
+        "height": 1024
+      },
+      "alt": "Older Asian woman reviewing a product preview beside a brass padlock and laptop."
     },
     {
       "h2": "Using AI content in ads",
       "paras": [
         "Show what your product really does. Add prices, dates and claims yourself in your design or ad tool so they are exactly right, and follow each platform's rules, including any rule about labeling AI-generated content."
-      ]
+      ],
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-trust-ads-r1.webp",
+        "alt": "Woman with a short blonde buzz cut checking a product ad beside two matching ceramic mugs.",
+        "width": 1024,
+        "height": 1024
+      },
+      "alt": "Woman with a short blonde buzz cut checking a product ad beside two matching ceramic mugs."
     },
     {
       "h2": "Report a problem",

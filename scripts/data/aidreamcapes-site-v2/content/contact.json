@@ -18,23 +18,53 @@
   "topics": [
     {
       "t": "Billing and plans",
-      "d": "Questions about your plan, a charge on your statement, or which plan fits the amount of content you make."
+      "d": "Questions about your plan, a charge on your statement, or which plan fits the amount of content you make.",
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-billing-r1.webp",
+        "alt": "Black man with a close-cropped haircut reviewing a plan panel beside a product parcel.",
+        "width": 1024,
+        "height": 1024
+      }
     },
     {
       "t": "Credits and failed jobs",
-      "d": "If a job failed and the credits did not come back, or a cost was not what you expected, tell us what happened and we will check the job."
+      "d": "If a job failed and the credits did not come back, or a cost was not what you expected, tell us what happened and we will check the job.",
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-credits-r1.webp",
+        "alt": "Seller with a short dark buzz cut checking a product parcel beside a laptop.",
+        "width": 1024,
+        "height": 1024
+      }
     },
     {
       "t": "Results that missed the mark",
-      "d": "If a photo or video came out very different from your description, send us the details and we will take a look."
+      "d": "If a photo or video came out very different from your description, send us the details and we will take a look.",
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-results-r1.webp",
+        "alt": "Seller with a short strawberry-blonde crop comparing a ceramic cup with its laptop preview.",
+        "width": 1024,
+        "height": 1024
+      }
     },
     {
       "t": "Account and privacy",
-      "d": "Trouble signing in, or questions about who can see your uploads and results."
+      "d": "Trouble signing in, or questions about who can see your uploads and results.",
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-privacy-r1.webp",
+        "alt": "Woman with a close-cropped natural afro using a laptop beside a padlock and product pouch.",
+        "width": 1024,
+        "height": 1024
+      }
     },
     {
       "t": "Partnerships",
-      "d": "If you run a store, an agency or a creator channel and want to work with us, email a short note about your audience or business and what you have in mind."
+      "d": "If you run a store, an agency or a creator channel and want to work with us, email a short note about your audience or business and what you have in mind.",
+      "img": {
+        "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-partnerships-r1.webp",
+        "alt": "Two shop partners exchanging a plain parcel across an ecommerce desk.",
+        "width": 1024,
+        "height": 1024
+      }
     }
   ],
   "faq": [
