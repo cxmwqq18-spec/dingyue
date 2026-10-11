@@ -1,28 +1,28 @@
 {
   "id": "white-background",
-  "title": "White Background Photos for Online Stores | AIVideosUGC",
-  "description": "Add a clean white background to one product photo for Amazon, Shopify, or Etsy. Keep the product clear, create listing-ready images, and reuse the photo.",
-  "h1": "Put every product on a plain white field",
+  "title": "White Background Product Photos | AIVideosUGC",
+  "description": "Create white background product photos from one clear image for Amazon, Shopify, or Etsy. Keep the whole item visible and ready for listings.",
+  "h1": "AI White Background Product Photos Ready for Your Listings",
   "eyebrow": "White background photos",
-  "lead": "Turn one clear product photo into a clean marketplace image in minutes. Keep the full item in view for Amazon, Shopify or Etsy without booking a studio.",
+  "lead": "Turn one clear product photo into a clean white background product photo in minutes. Keep the full item in view for Amazon, Shopify or Etsy without booking a studio.",
   "secondary_keywords": [
     "white background product photo maker",
-    "pure white main image for marketplaces",
+    "white background main image for marketplaces",
     "product photos on white for Shopify",
     "white background photos for Etsy listings",
     "clean product shots without a studio"
   ],
   "steps": [
     {
-      "t": "Start with a full product photo",
-      "d": "Upload one clear photo so shoppers can see the complete shape."
+      "t": "Upload Your Product Photo",
+      "d": "Add a clear photo with the whole product visible so shoppers can see its complete shape."
     },
     {
-      "t": "Put it on pure white",
-      "d": "Choose an even white field that keeps the product edges clear."
+      "t": "Add a White Background",
+      "d": "Choose a white background that keeps the product edges clear and the listing easy to scan."
     },
     {
-      "t": "Download and post",
+      "t": "Download and Post",
       "d": "Download the finished image and add it to your listing or product page."
     }
   ],
@@ -34,7 +34,7 @@
       ],
       [
         "Background",
-        "Pure white"
+        "White background"
       ],
       [
         "Size",
@@ -45,28 +45,36 @@
   },
   "faq": [
     {
-      "q": "How can I place my item on a pure white field?",
-      "a": "Upload one clear product photo, choose a pure white background and download the finished image for your listing."
+      "q": "How do I make a product photo background white?",
+      "a": "Upload one clear product photo, choose a white background and download the finished image for your listing."
     },
     {
-      "q": "What is the easiest way to make a white marketplace image?",
-      "a": "Use a white background tool when you need the item isolated on an even field without booking a studio or masking it by hand."
+      "q": "What is the easiest way to make white background product photos?",
+      "a": "Use a white background tool when you need the item isolated on an even background without booking a studio or masking it by hand."
     },
     {
-      "q": "Do sales channels expect a plain white main shot?",
-      "a": "Some marketplaces ask for a pure white main image. Check the current rule for your category before you publish."
+      "q": "Does Amazon require a white background for product photos?",
+      "a": "Amazon and other marketplaces can set category rules for the main image. Check the current rule for your category before you publish."
     },
     {
-      "q": "Can a plain white field keep product depth?",
-      "a": "Even light and a soft contact shadow keep the item readable while the background stays plain."
+      "q": "Can a white background keep product depth?",
+      "a": "Even light and a soft contact shadow keep the item readable while the background stays white."
     },
     {
-      "q": "Can I post this image on Amazon or Shopify?",
+      "q": "Can I post white background product photos on Amazon or Shopify?",
       "a": "Yes. Check each channel's current rule, then add the downloaded image to your listing or product media."
     },
     {
       "q": "How many credits does one photo use?",
       "a": "You see the cost before you start. One photo uses 24 credits, and failed jobs return the credits."
+    },
+    {
+      "q": "Can one white background treatment cover my catalog?",
+      "a": "Yes. Apply one treatment across product photos so shoppers see a consistent first image."
+    },
+    {
+      "q": "Can I post this image on Amazon or Shopify?",
+      "a": "Yes. Check the channel's current rule, then add the downloaded image to your listing or product media."
     },
     {
       "q": "Can one white treatment cover my catalog?",
@@ -78,15 +86,15 @@
       "n:guide:k2-white-strip-wallet",
       "n:guide:k2-white-strip-house-slippers",
       "n:guide:k2-white-strip-backpack",
-      "n:guide:q5-white-phone-case-template-r2",
+      "n:guide:ra3-white-background-strip-4-r1",
       "n:guide:k2-white-strip-rectangular-speaker",
       "n:guide:k2-white-strip-insulated-bottle"
     ],
     "steps": {
-      "source": "n:guide:k2-white-step-wallet-source",
-      "result": "n:guide:k2-white-example-wallet",
+      "source": "n:guide:ra3-white-background-steps-1-r1",
+      "result": "n:guide:ra3-white-background-steps-2-r1",
       "mode": "photo",
-      "prompt": "Place this wallet on an even white background with a soft contact shadow.",
+      "prompt": "Place this brown leather bifold wallet on an even white background with a soft contact shadow.",
       "options": [
         [
           "Photo",
@@ -94,7 +102,7 @@
         ],
         [
           "Background",
-          "Pure white"
+          "White background"
         ],
         [
           "Size",
@@ -103,76 +111,97 @@
       ]
     },
     "picker": {
-      "title": "Get product photos ready for selling",
-      "lead": "Create a clear white-background image for a listing or store page.",
+      "title": "Get White Background Product Photos Ready for Selling",
+      "lead": "Create a clear white background product photo for a listing or store page.",
       "chips": [],
       "cards": [],
       "button": "Make a white background photo"
     },
     "uses": [
       {
-        "img": "n:guide:k2-white-use-mug",
+        "frame": "browser",
+        "ref": "n:guide:ra3-white-background-use-1-r1",
         "h": "Create a cleaner listing page",
-        "d": "Put the product on a plain white field so shoppers can compare the item quickly."
+        "d": "Put the product in a white background product photo so shoppers can compare the item quickly."
       },
       {
-        "img": "n:guide:k2-white-use-vase",
+        "frame": "listing",
+        "ref": "n:guide:ra3-white-background-use-2-r1",
         "h": "Show product details without clutter",
-        "d": "A simple background keeps attention on the item, its shape and its finish."
+        "d": "A simple white background keeps attention on the item, its shape and its finish."
       },
       {
-        "img": "n:guide:k2-white-output-crossbody-bag",
+        "frame": "listing",
+        "ref": "n:guide:ra3-white-background-use-3-r1",
         "h": "Keep every listing consistent",
-        "d": "Use one visual treatment across your catalog so each first image feels like part of one store."
+        "d": "Use one white background treatment across your catalog so each first image feels like part of one store."
       },
       {
-        "img": "n:guide:k2-white-output-coaster-set",
+        "frame": "browser",
+        "ref": "n:guide:ra3-white-background-use-4-r1",
         "h": "Reuse one clean base for new edits",
-        "d": "Start with a clear white image, then make crops and versions for product pages or campaigns."
+        "d": "Start with a white background product photo, then make crops and versions for product pages or campaigns."
       }
     ],
     "titles": {
       "m2": {
-        "h2": "Make a white listing image in three steps"
+        "h2": "How to Make White Background Product Photos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Get product photos ready for selling",
-        "lead": "Create a clear white-background image for a listing or store page."
+        "h2": "Get White Background Product Photos Ready for Selling",
+        "lead": "Create a clear white background product photo for a listing or store page."
       },
       "m4": {
-        "h2": "Make product photos easier to compare"
+        "h2": "Why White Background Product Photos Help Shoppers Compare"
       },
       "m5": {
-        "h2": "Upload your product photo"
+        "h2": "Upload a Photo for White Background Product Photos"
       },
       "m6": {
-        "h2": "White background photo formats"
+        "h2": "White Background Product Photo Formats"
       },
       "m7": {
-        "h2": "Keep every listing consistently white"
+        "h2": "Keep White Background Product Photos Consistent"
       },
       "gallery": {
-        "h2": "White backdrop photo examples"
+        "h2": "White Background Product Photo Examples"
       },
       "examples": {
-        "h2": "See what white background photos generate",
+        "h2": "See What White Background Product Photos Generate",
         "lead": "Preview clean listing images for products sold online."
       },
-      "examplesLead": "Browse listing views for bags, skincare, shoes and everyday product details.",
+      "examplesLead": "Browse white background product photos for bags, skincare, shoes and everyday product details.",
       "templates": {
-        "h2": "White background photo templates",
+        "h2": "White Background Product Photo Templates",
         "lead": "Choose a square product layout that keeps the item and its edges in view."
       },
       "faq": {
-        "h2": "White background photo FAQs"
+        "h2": "White Background Product Photo FAQs"
       }
     },
     "input": [],
     "outputs": [],
     "after": null
   },
-  "benefits": [],
-  "benefits_h2": "",
-  "steps_h2": "Make a white listing image in three steps",
-  "steps_lead": "Upload one product photo, choose white, then download the image for your listing."
+  "benefits": [
+    {
+      "t": "Create a clean white background",
+      "d": "A white background removes distractions and keeps the product easy to see."
+    },
+    {
+      "t": "Make white background product photos look polished",
+      "d": "One consistent background gives your catalog a familiar retail look."
+    },
+    {
+      "t": "Keep white background product photos consistent",
+      "d": "Use the same visual treatment across product pages and marketplace listings."
+    },
+    {
+      "t": "Reuse one white background product photo",
+      "d": "Start with a clean image, then make crops and versions for product pages or campaigns."
+    }
+  ],
+  "benefits_h2": "Why White Background Product Photos Make Listings Easier",
+  "steps_h2": "How to Make White Background Product Photos in 3 Simple Steps",
+  "steps_lead": "Upload one product photo, choose a white background, then download the image for your listing."
 }

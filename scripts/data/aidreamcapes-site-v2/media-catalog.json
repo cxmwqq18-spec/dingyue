@@ -42987,6 +42987,105 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "ra3-white-background-steps-1-r1": {
+        "file": "ra3-white-background-steps-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather bifold wallet on a warm marble tabletop as the starting product photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-white-background-steps-2-r1": {
+        "file": "ra3-white-background-steps-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same brown leather bifold wallet centered on a clean white background with a soft shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-change-background-steps-1-r1": {
+        "file": "ra3-change-background-steps-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase on a pale tabletop with a leafy plant in the original room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-change-background-steps-2-r1": {
+        "file": "ra3-change-background-steps-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same blue ceramic vase on a warm neutral studio surface with a changed background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-white-background-strip-4-r1": {
+        "file": "ra3-white-background-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wide terracotta ceramic planter with a simple open rim on white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-white-background-use-1-r1": {
+        "file": "ra3-white-background-use-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream ceramic mug with a broad handle on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-white-background-use-2-r1": {
+        "file": "ra3-white-background-use-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale blue matte ceramic bud vase with a simple rounded neck on white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-white-background-use-3-r1": {
+        "file": "ra3-white-background-use-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain dark brown leather crossbody bag, front view on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "ra3-white-background-use-4-r1": {
+        "file": "ra3-white-background-use-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three slate-blue felt coasters arranged in a neat stack on white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
       }
     }
   }
