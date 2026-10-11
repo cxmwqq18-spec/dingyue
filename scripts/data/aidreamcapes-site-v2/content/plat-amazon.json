@@ -161,15 +161,21 @@
   "benefits": [
     {
       "t": "Reduce listing questions with a clear main image",
-      "d": "Show the complete product on a plain white background so shoppers know what they are viewing."
+      "d": "Show the complete product on a plain white background so shoppers know what they are viewing.",
+      "img": "n:coffee-pack",
+      "alt": "Kraft coffee bag with a blank label and beans on a light studio background."
     },
     {
       "t": "Answer product questions with detail views",
-      "d": "Show one useful feature or use step before a shopper has to guess."
+      "d": "Show one useful feature or use step before a shopper has to guess.",
+      "img": "f:k2-url-use-open-bento",
+      "alt": "Open sage lunch container with its compartments visible on an office desk."
     },
     {
       "t": "Help shoppers picture the item in use",
-      "d": "Add a lifestyle or unboxing view that shows scale and context."
+      "d": "Add a lifestyle or unboxing view that shows scale and context.",
+      "img": "f:k2-url-picker-picnic-basket",
+      "alt": "Woven picnic basket opened on a blanket with simple foods arranged beside it."
     }
   ],
   "steps_h2": "How to Make Amazon Product Photos in 3 Simple Steps",
@@ -182,15 +188,21 @@
       "items": [
         {
           "t": "White main image for every SKU",
-          "d": "Place each product on a plain white background for a consistent main-image grid."
+          "d": "Place each product on a plain white background for a consistent main-image grid.",
+          "img": "n:boots-pack",
+          "alt": "Pair of brown leather Chelsea boots on a light studio background."
         },
         {
           "t": "Consistent images across a catalog",
-          "d": "Keep product scale and framing consistent across the listing set."
+          "d": "Keep product scale and framing consistent across the listing set.",
+          "img": "n:handbag-pack",
+          "alt": "Tan leather handbag on a light studio background."
         },
         {
           "t": "One product set across listings",
-          "d": "Carry the main, detail, and lifestyle views into the listing and related store placements."
+          "d": "Carry the main, detail, and lifestyle views into the listing and related store placements.",
+          "img": "n:candle-pack",
+          "alt": "White ceramic candle jar with its lid beside it on a light studio background."
         }
       ]
     },
@@ -201,19 +213,27 @@
       "items": [
         {
           "t": "Get a usable main image quickly",
-          "d": "Upload one clear product photo and create a listing-ready white main."
+          "d": "Upload one clear product photo and create a listing-ready white main.",
+          "img": "f:k2-url-picker-hot-sauce",
+          "alt": "Plain glass hot sauce bottle with a blank label on a market shelf."
         },
         {
           "t": "Turn one photo into a white main",
-          "d": "Keep the product visible while the background becomes plain white."
+          "d": "Keep the product visible while the background becomes plain white.",
+          "img": "f:q8-tpl-light-input-good-02",
+          "alt": "Complete pale sage mug and bamboo lid fully inside a crisp frame."
         },
         {
           "t": "Add a detail shoppers can inspect",
-          "d": "Create a close view that answers one product question without another shoot."
+          "d": "Create a close view that answers one product question without another shoot.",
+          "img": "f:k2-url-card-drawer-trays",
+          "alt": "Gray organizer trays fitted inside an open wooden kitchen drawer."
         },
         {
           "t": "Show the product in context",
-          "d": "Add a lifestyle view that gives shoppers a clearer sense of scale and use."
+          "d": "Add a lifestyle view that gives shoppers a clearer sense of scale and use.",
+          "img": "n:granola-m5-clean",
+          "alt": "Clear granola jar with berries on a bright breakfast counter."
         }
       ]
     },
@@ -224,27 +244,39 @@
       "items": [
         {
           "t": "Home and Kitchen Gadgets",
-          "d": "Show a gadget solving one everyday task in a clear product frame."
+          "d": "Show a gadget solving one everyday task in a clear product frame.",
+          "img": "f:k3-video-after-toaster",
+          "alt": "Compact stainless toaster on a bright kitchen counter."
         },
         {
           "t": "Electronics and Accessories",
-          "d": "Show the feature or connection shoppers need to inspect."
+          "d": "Show the feature or connection shoppers need to inspect.",
+          "img": "f:k2-url-picker-charging-pad",
+          "alt": "Round wireless charging pad with its cable visible on dark fabric."
         },
         {
           "t": "Fashion and Apparel",
-          "d": "Show the full item, then add a detail shoppers can examine."
+          "d": "Show the full item, then add a detail shoppers can examine.",
+          "img": "f:k2-url-picker-tote-commute",
+          "alt": "Natural canvas tote with a water bottle and notebook on a station bench."
         },
         {
           "t": "Beauty and Personal Care",
-          "d": "Pair a clean pack shot with a simple routine moment."
+          "d": "Pair a clean pack shot with a simple routine moment.",
+          "img": "f:k2-url-card-beauty-serum",
+          "alt": "Hands hold an amber serum bottle beside a bathroom sink."
         },
         {
           "t": "Supplements and Wellness",
-          "d": "Show the pack clearly with a useful, claim-free use context."
+          "d": "Show the pack clearly with a useful, claim-free use context.",
+          "img": "f:q17-ind-food-drinks-picker-7",
+          "alt": "Adult holds a plain protein powder tub and shaker glass."
         },
         {
           "t": "Pet Supplies and Toys",
-          "d": "Show the item with a pet so shoppers can judge scale and use."
+          "d": "Show the item with a pet so shoppers can judge scale and use.",
+          "img": "f:q17-ind-home-living-uses-0",
+          "alt": "Hand wearing a pet grooming glove brushes a dog."
         }
       ]
     }

@@ -98,7 +98,7 @@
         "h2": "How to Make Platform-Ready Product Ads in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Browse Platforms",
+        "h2": "Choose a platform format that fits your next ad",
         "lead": "Open a channel to see its format, size, and photo guidance."
       }
     },
@@ -128,7 +128,8 @@
         "/platforms/instagram-ads": "n:guide:k8-platforms-gen2-plat-shopify-c2",
         "/platforms/shopify-product-photos": "n:gen2:plat-shopify-g1",
         "/platforms/amazon-product-photos": "n:guide:q17-platforms-amazon-main",
-        "/platforms/youtube-shorts-ads": "n:gen2:rb1-platforms-item-youtube-shorts-r1"
+        "/platforms/youtube-shorts-ads": "f:k4-plat-youtube-shorts-15-visual-picker-cards-6-image",
+        "/platforms/facebook-ads": "f:q18-facebook-card-feed-jar"
       }
     }
   },
@@ -136,19 +137,27 @@
   "benefits": [
     {
       "t": "Get a vertical ad without manual resizing",
-      "d": "Choose a 9:16 format for TikTok, Reels, or Shorts and get a file that fits the feed."
+      "d": "Choose a 9:16 format for TikTok, Reels, or Shorts and get a file that fits the feed.",
+      "img": "f:k4-plat-tiktok-18-visual-uses-1-image",
+      "alt": "Open snack pouch on a car dashboard during a vertical product demo."
     },
     {
       "t": "Keep one product across every channel",
-      "d": "Start with one product photo and make versions for Meta, Amazon, and Shopify without another shoot."
+      "d": "Start with one product photo and make versions for Meta, Amazon, and Shopify without another shoot.",
+      "img": "f:q18-facebook-card-feed-jar",
+      "alt": "Small matte white insulated food jar beside a packed lunch on a bright kitchen counter."
     },
     {
       "t": "See the size before you spend credits",
-      "d": "Use 1080×1920 for vertical video and 1440×1800 for a Meta Feed image when those channel specs call for them."
+      "d": "Use 1080×1920 for vertical video and 1440×1800 for a Meta Feed image when those channel specs call for them.",
+      "img": "n:protein-pack",
+      "alt": "White protein powder tub with a scoop on a light studio background."
     },
     {
       "t": "Download the file and post it yourself",
-      "d": "Save watermark-free photos and videos, then upload them to your social feed, marketplace, or store."
+      "d": "Save watermark-free photos and videos, then upload them to your social feed, marketplace, or store.",
+      "img": "n:planter-pack",
+      "alt": "Leafy houseplant in a white ceramic planter on a light studio background."
     }
   ],
   "steps_h2": "How to Make Platform-Ready Product Ads in 3 Simple Steps",
@@ -318,6 +327,61 @@
           "href": "page:ind-home-living",
           "label": "Home & living",
           "img": "n:guide:px1-platforms-area-8-r1"
+        }
+      ]
+    },
+    {
+      "eyebrow": "Related platform tools",
+      "title": "Related platform tools",
+      "lead": "Open the tool or platform page that matches the asset you need next.",
+      "cards": [
+        {
+          "t": "TikTok ad formats",
+          "d": "Make a vertical product ad for TikTok placements.",
+          "href": "/platforms/tiktok-ads",
+          "label": "TikTok ads"
+        },
+        {
+          "t": "Instagram ad formats",
+          "d": "Build a product asset for Instagram Feed or Reels.",
+          "href": "/platforms/instagram-ads",
+          "label": "Instagram ads"
+        },
+        {
+          "t": "Facebook ad formats",
+          "d": "Choose a Facebook Feed or Reels product format.",
+          "href": "/platforms/facebook-ads",
+          "label": "Facebook ads"
+        },
+        {
+          "t": "YouTube Shorts formats",
+          "d": "Create a vertical product file for Shorts.",
+          "href": "/platforms/youtube-shorts-ads",
+          "label": "YouTube Shorts ads"
+        },
+        {
+          "t": "Amazon product photos",
+          "d": "Prepare white main, detail, and lifestyle listing views.",
+          "href": "/platforms/amazon-product-photos",
+          "label": "Amazon product photos"
+        },
+        {
+          "t": "Shopify product photos",
+          "d": "Build square gallery images for a Shopify store.",
+          "href": "/platforms/shopify-product-photos",
+          "label": "Shopify product photos"
+        },
+        {
+          "t": "Product video tool",
+          "d": "Turn one product photo into a short product video.",
+          "href": "/ai-video-generation/product-video",
+          "label": "Product videos"
+        },
+        {
+          "t": "Feed ad still tool",
+          "d": "Make a square still for a social feed ad.",
+          "href": "/ai-image-generation/feed-ad-still",
+          "label": "Feed ad stills"
         }
       ]
     }
