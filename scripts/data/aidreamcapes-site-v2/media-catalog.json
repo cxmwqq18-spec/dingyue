@@ -5011,6 +5011,16 @@
         1280
       ],
       "source": "Codex image generation"
+    },
+    "im03-home-strip-trailshoe-r1": {
+      "file": "im03-home-strip-trailshoe-r1",
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult man with short sandy-blond hair ties a plain gray running shoe on a forest trail.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -47723,6 +47733,116 @@
           640,
           1280,
           1600
+        ]
+      },
+      "im03-home-picker-steamer-r1": {
+        "file": "im03-home-picker-steamer-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with short brown hair uses a plain handheld steamer on a shirt, with a smooth panel beside remaining wrinkles.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-cardigan-r1": {
+        "file": "im03-home-picker-cardigan-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with a short blonde bob wears a plain navy cardigan in four views, showing the sleeves, back and hem.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-trousers-r1": {
+        "file": "im03-home-picker-trousers-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with short silver hair folds plain charcoal trousers on a bright bed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-kitchen-r1": {
+        "file": "im03-home-picker-kitchen-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman holds a plain box grater beside a bowl in a bright kitchen lesson.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-citrus-r1": {
+        "file": "im03-home-picker-citrus-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man pours a plain yellow citrus drink from a clear bottle into a glass of ice.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-shoes-r1": {
+        "file": "im03-home-picker-shoes-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Three unbranded running shoes in charcoal, teal and rust are lined up beside a doorway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-bottle-r1": {
+        "file": "im03-home-picker-bottle-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man holds a plain sage-green insulated bottle at a quiet trail rest stop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-dog-r1": {
+        "file": "im03-home-picker-dog-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with short light-auburn hair brushes a calm golden retriever with a plain pet brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-earbuds-r1": {
+        "file": "im03-home-picker-earbuds-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two matte black stemless earbuds rest beside a closed laptop as an adult hand reaches toward one.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-picker-lipstick-r1": {
+        "file": "im03-home-picker-lipstick-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral-orange lipstick in a plain matte black tube stands beside a matching swatch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im03-home-more-vacuum-r1": {
+        "file": "im03-home-more-vacuum-r1",
+        "w": 1280,
+        "h": 720,
+        "alt": "Adult man uses a plain handheld cordless vacuum to lift crumbs from a dark sofa.",
+        "variants": [
+          640,
+          1280
         ]
       }
     }

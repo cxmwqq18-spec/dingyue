@@ -77,7 +77,7 @@ const PHOTO_TOOLS = ["photo-hub", "white-background", "lifestyle-photos", "model
 const HOME_TOOL_ALTS = {
   "image-to-video": "Plain cream travel mug on a stone counter in a warm room.",
   "url-to-video": "Product page and phone video preview for a plain cream travel mug.",
-  "video-ads": "Adult creator holds a generic square-faced watch with a white band toward the camera.",
+  "video-ads": "Adult man with short tight curls holds a plain black fitness band toward the camera.",
   "product-videos": "Hand operates a compact black espresso machine to pour coffee into a glass.",
   "unboxing-videos": "Adult opens a kraft box to reveal a new product.",
   "before-after-videos": "Closet changes from scattered clothes to neatly arranged shelves.",
