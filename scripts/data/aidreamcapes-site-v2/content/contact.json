@@ -1,7 +1,7 @@
 {
   "id": "contact",
   "title": "Contact Support: Credits, Billing and Results | AIVideosUGC",
-  "description": "Questions about credits, a failed job, billing or your account? Email support@aivideosugc.com for a written answer, usually in two business days.",
+  "description": "Questions about credits, a failed job, billing or your account? Email support@aivideosugc.com for a written answer and help with your next ad.",
   "h1": "Contact AIVideosUGC Support",
   "eyebrow": "Customer support",
   "lead": "Stuck on a photo, a video, your credits or your account? Email us and we'll help you get back to making ads.",
@@ -12,7 +12,7 @@
     "contact AIVideosUGC by email"
   ],
   "intro": [
-    "Email support@aivideosugc.com and the team aims to answer within two business days. Email also leaves you a written record of the question and the fix.",
+    "Email support@aivideosugc.com and include the details below so the team can help in one reply. Email also leaves you a written record of the question and the fix.",
     "To sort it in one reply, include the email address on your account, a short description of the problem and, if it is about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
   ],
   "topics": [
@@ -48,7 +48,7 @@
     },
     {
       "q": "How long does support take to reply?",
-      "a": "The team aims to reply within two business days. Send the account and job details in your first email so the answer does not need a second round."
+      "a": "We will reply as soon as we can. Send the account and job details in your first email so the answer does not need a second round."
     },
     {
       "q": "What details help support find my job?",
@@ -57,6 +57,10 @@
     {
       "q": "What happens to my credits if a job fails?",
       "a": "Failed jobs return their credits to your balance automatically. If you do not see them back, email support with the time of the job and we will check it for you."
+    },
+    {
+      "q": "Which address do I email?",
+      "a": "Email support@aivideosugc.com. Include the email on your account and a short description of what you need."
     }
   ]
 }

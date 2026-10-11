@@ -47,7 +47,7 @@
     },
     {
       "q": "How do I get in touch with the AIVideosUGC team?",
-      "a": "Write to support@aivideosugc.com with your question. The team aims to reply within two business days."
+      "a": "Write to support@aivideosugc.com with your question. Email is the best way to reach the team."
     },
     {
       "q": "What can I upload to make a product asset?",
@@ -60,6 +60,12 @@
     {
       "q": "How much does AIVideosUGC cost?",
       "a": "Monthly plans start at $24.50 with 200 credits, and each photo or video shows its credit cost before the job starts. If a job fails, its credits come back automatically."
+    },
+    {
+      "q": "Do you keep a model I can reuse?",
+      "a": "No. Your uploads and results stay in your account, and each new asset starts from the product reference you provide."
     }
-  ]
+  ],
+  "ctaTitle": "Start with one product photo",
+  "ctaLead": "Pick a photo or video tool, see the cost before you start, and make a store asset for your next listing or ad."
 }
