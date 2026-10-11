@@ -88,8 +88,8 @@
     "tpl-color": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:q7-color-hero-before",
-        "after": "n:guide:q7-color-hero-after"
+        "before": "n:guide:tpl-color-round4-07",
+        "after": "n:guide:tpl-color-round4-08"
       },
       "gallery": [],
       "og": "n:t33-tpl-color-og-r2"

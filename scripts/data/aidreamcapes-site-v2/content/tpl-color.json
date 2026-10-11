@@ -115,8 +115,13 @@
     "uses": [],
     "input": [],
     "outputs": [],
-    "after": null
+    "after": null,
+    "titles": {
+      "faq": {
+        "h2": "Questions about product color variations"
+      }
+    }
   },
-  "steps_h2": "How to make color variation photos in 3 simple steps",
-  "steps_lead": "Three steps turn your shade photos into a coordinated option set - no repeat shoots, no mismatched supplier shots."
+  "steps_h2": "How to Make Product Color Variations in 3 Simple Steps",
+  "steps_lead": "Give every shade the same setting so shoppers compare options. No repeat shoots, no mismatched supplier shots."
 }

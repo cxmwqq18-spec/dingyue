@@ -80,7 +80,7 @@
     "strip": [
       "n:guide:q7-size-strip-0",
       "n:guide:q7-size-strip-1",
-      "n:guide:q7-size-strip-2",
+      "n:gen2:tpl-size-g2",
       "n:guide:q7-size-strip-3",
       "n:guide:q7-size-strip-4",
       "n:guide:q7-size-strip-5"
@@ -115,8 +115,13 @@
     "uses": [],
     "input": [],
     "outputs": [],
-    "after": null
+    "after": null,
+    "titles": {
+      "faq": {
+        "h2": "Questions about product size reference photos"
+      }
+    }
   },
-  "steps_h2": "How to make a size reference photo in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a clear scale image - no measuring tape shoot, no studio."
+  "steps_h2": "How to Make a Product Size Reference Photo in 3 Simple Steps",
+  "steps_lead": "Give shoppers a fast visual sense of scale beside exact measurements. No measuring tape shoot, no studio."
 }

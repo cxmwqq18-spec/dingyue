@@ -82,7 +82,7 @@
       "n:guide:tpl-angle-round4-speaker-controls",
       "n:guide:q7-angle-strip-1",
       "n:guide:q7-angle-strip-2",
-      "n:guide:q7-angle-strip-3",
+      "n:gen2:tpl-angle-c2",
       "n:guide:q7-angle-strip-4",
       "n:guide:q7-angle-strip-5"
     ],
@@ -116,8 +116,13 @@
     "uses": [],
     "input": [],
     "outputs": [],
-    "after": null
+    "after": null,
+    "titles": {
+      "faq": {
+        "h2": "Questions about product packshot photos"
+      }
+    }
   },
-  "steps_h2": "How to make multi-angle packshots in 3 simple steps",
-  "steps_lead": "Three steps turn your side photos into a coordinated gallery set - no turntable, no studio reshoot."
+  "steps_h2": "How to Make Product Packshot Photos in 3 Simple Steps",
+  "steps_lead": "Show every side in one coordinated product packshot set. No turntable, no studio reshoot."
 }
