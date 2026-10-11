@@ -553,19 +553,27 @@
   "benefits": [
     {
       "t": "One look across the whole team",
-      "d": "Use one crop, backdrop and light for every portrait, so your About page reads as one brand while each person keeps their own features."
+      "d": "Use one crop, backdrop and light for every portrait, so your About page reads as one brand while each person keeps their own features.",
+      "img": "n:guide:fx25-tpl-head-benefit-1",
+      "alt": "Professional head-and-shoulders portrait of an adult woman with a short silver pixie haircut against a neutral light-gray studio backdrop."
     },
     {
       "t": "Add new hires without another shoot",
-      "d": "Create a matching portrait from an approved photo instead of scheduling a photographer each time someone joins."
+      "d": "Create a matching portrait from an approved photo instead of scheduling a photographer each time someone joins.",
+      "img": "n:guide:fx25-tpl-head-benefit-2",
+      "alt": "Professional head-and-shoulders portrait of an adult man with a close-cropped haircut and round glasses against a neutral light-gray studio backdrop."
     },
     {
       "t": "Give every role a clear face",
-      "d": "Show founders, designers and operations leads in the same portrait style for your About page, pitch deck or speaker bio."
+      "d": "Show founders, designers and operations leads in the same portrait style for your About page, pitch deck or speaker bio.",
+      "img": "n:guide:fx25-tpl-head-benefit-3",
+      "alt": "Professional head-and-shoulders portrait of an adult woman with a neat tied-back auburn bun against a muted blue-gray studio backdrop."
     },
     {
       "t": "Ready for pages and profiles",
-      "d": "Download square portraits without an AIVideosUGC watermark, then add names, roles and contact details as editable text."
+      "d": "Download square portraits without an AIVideosUGC watermark, then add names, roles and contact details as editable text.",
+      "img": "n:guide:fx25-tpl-head-benefit-4",
+      "alt": "Professional head-and-shoulders portrait of an adult man with a shaved head and trimmed beard against a warm off-white studio backdrop."
     }
   ],
   "relatedLinks": [
