@@ -1,10 +1,10 @@
 {
   "id": "guide-testing-ad-versions",
   "title": "How to Test Ad Creatives on a Small Budget | AIVideosUGC",
-  "description": "Test ad creatives on a small budget without guessing: change one thing at a time, make three versions from one photo, run them together, read the results.",
+  "description": "Test ad creatives on a small budget without guessing: change one thing at a time, make a few versions from one photo, run them together, and read the results.",
   "h1": "How to Test Ad Creatives Without Guessing",
   "eyebrow": "Ad testing guide",
-  "lead": "Stop betting a small budget on one guess: you can't know in advance which video or photo people will stop for. Three cheap versions from one product photo tell you what works, and testing costs credits instead of another creator booking or shoot day.",
+  "lead": "Stop betting a small budget on one guess: you can't know in advance which video or photo people will stop for. A few low-cost versions from one product photo show what works, and testing costs credits instead of another creator booking or shoot day.",
   "secondary_keywords": [
     "ad creative testing for small business",
     "compare ad versions",
@@ -22,18 +22,18 @@
       ]
     },
     {
-      "h2": "Plan three versions from one product",
+      "h2": "Plan a few versions from one product",
       "paras": [
         "Say you sell a plain round wall clock. Keep the product photo, length, and shape the same, and change only how the video starts.",
         "Version one opens on the clock face coming into focus at dawn. Version two opens on a hand hanging the clock on a kitchen tile. Version three opens with the clock [sliding out of its box](page:unboxing-videos).",
-        "Three is a sensible number on a small budget. With many more, each version gets too little spend to tell you anything, and making ten versions is ten jobs instead of three.",
+        "A small set is a sensible starting point on a tight budget. With many more, each version gets too little spend to tell you anything, and every extra version is another job.",
         "[Photo ads](page:social-ad-photos) work the same way. For a ceramic mug in a feed ad, you might test the setting: the mug on a kitchen counter with steam rising, on a home office desk next to a notebook, and wrapped as a gift with a ribbon. Same mug, same angle, same text added afterward."
       ]
     },
     {
       "h2": "Make each version from the same photo",
       "paras": [
-        "Normally, three different openings mean three shoots. Here they mean three jobs. Upload the same product photo each time and choose the same shape and length. Change only the sentence that describes the opening. Each [video ad](page:video-ads) is made separately, and you see the credit cost before each one, so you know what all three will cost before you commit, from 24 credits for a 6-second video to 120 for 30 seconds.",
+        "Normally, three different openings mean three shoots. Here they mean three jobs. Upload the same product photo each time and choose the same shape and length. Change only the sentence that describes the opening. Each video job is made separately, and you see the credit cost before each one, so you know what all three will cost before you commit, from 24 credits for a 6-second video to 120 for 30 seconds.",
         "Download each file and give it a clear name, such as clock-dawn-9x16. Then add the same caption, text, and music to all three in CapCut or TikTok's editor. If one version gets a different headline, the test is no longer about the opening.",
         "AIVideosUGC makes the versions. The comparison happens in your ad platform, where real viewers produce real results."
       ]
@@ -65,7 +65,7 @@
   ],
   "checklist": [
     "Only one difference between versions",
-    "Two to four versions, not ten",
+    "A few versions, not a whole catalog",
     "Same audience, budget, and product page for each",
     "No edits while the test runs",
     "Several days before calling a winner",
@@ -96,6 +96,12 @@
     {
       "q": "What does three test videos cost in credits?",
       "a": "Each video is a separate job with its price shown up front: 24, 40, 60 or 120 credits for a 6, 10, 15 or 30-second video. Three 10-second versions at the same length cost 120 credits total, and failed jobs refund their credits automatically."
+    },
+    {
+      "q": "Do I pay once for every version?",
+      "a": "Yes. Each version is its own job, and the credit cost appears before you start. Failed jobs return credits automatically."
     }
-  ]
+  ],
+  "cta_title": "Find your next winning ad angle",
+  "cta_lead": "Make a few fair versions from one product photo, then take the winning hook into your next campaign."
 }

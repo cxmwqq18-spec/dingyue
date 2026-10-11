@@ -90,6 +90,16 @@
     {
       "q": "How many credits does a white background image cost?",
       "a": "One image costs 24 credits, and the exact cost appears before you start. Credits are set aside while the job runs and return automatically if it fails, so you only pay for delivered results."
+    },
+    {
+      "q": "Will the product shape change?",
+      "a": "No. The tool should keep the product shape and parts while changing the background; compare the result with your real item before upload."
+    },
+    {
+      "q": "What happens if a white background job fails?",
+      "a": "Failed jobs return their credits automatically. The cost appears before you start, so you can retry after checking the source photo."
     }
-  ]
+  ],
+  "cta_title": "Make a clean main image for your listing",
+  "cta_lead": "Turn one complete product photo into a white-background main image, then compare the shape and parts before you upload it."
 }
