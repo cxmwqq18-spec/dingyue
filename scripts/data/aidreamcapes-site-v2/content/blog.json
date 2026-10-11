@@ -1,10 +1,10 @@
 {
   "id": "blog",
   "title": "Ecommerce Product Content Blog for Sellers | AIVideosUGC",
-  "description": "Product photo, AI video, launch, and review guides for small online shops. Learn to prepare images, plan scenes, and check results before publishing.",
+  "description": "Product photo, AI video, launch, and pre-publish guides for small online shops. Make your own listing images and video ads faster, for less, without a shoot.",
   "h1": "An Ecommerce Product Content Blog for Small Shops",
   "eyebrow": "Seller articles",
-  "lead": "This ecommerce product content blog offers straightforward advice on product photos, short video ads, and launch content for Shopify, Amazon, and Etsy sellers who make their own visuals.",
+  "lead": "Make your own product photos, short video ads, and launch clips without booking a shoot. These articles show Shopify, Amazon, and Etsy sellers how to turn one product photo into listing images and ads you can post today.",
   "card": "Articles on product photos, video ads and launches.",
   "secondary_keywords": [
     "product photo tips for online stores",
@@ -13,15 +13,15 @@
     "AI product content tips"
   ],
   "intro": [
-    "Learn how to prepare a product photo, plan a launch video, and review AI-generated images and videos before publishing. These articles cover source photos, scene descriptions, launch clips, model photos, and product checks for sellers who manage their own listings and ads. UGC-style video ads use AI-generated creator-style visuals, not real customer reviews or endorsements.",
-    "New to AI product content? Start with our guide to [AI product photography](page:blog-ai-product-photography-guide) to see how one photo becomes listing and social images, then read the [checklist for AI content](page:blog-ai-video-review-checklist) so you know what to check before anything goes live.",
+    "Stop paying a photographer or creator for every new listing and ad. These articles show how to turn one product photo into more images and short video clips, plan a launch, and confirm every result matches the item you ship, so you can post fresh product content without a shoot. UGC-style video ads use AI-generated creator-style visuals, not real customer reviews or endorsements.",
+    "New to AI product content? Start with the [AI product photography](page:blog-ai-product-photography-guide) guide to see how one photo becomes listing and social images, then run the [checklist for AI content](page:blog-ai-video-review-checklist) so every detail is right before anything goes live.",
     "Selling clothing or jewelry? [Model photos without a photoshoot](page:blog-model-photos-without-a-photoshoot) shows how a flat lay becomes an on-model image. Planning a release? [Unboxing videos for product launches](page:blog-unboxing-videos-for-launches) lays out the clips, and [what makes a creator-style video ad work](page:blog-ai-ugc-video-ads-guide) covers creator-style ads for TikTok, Reels and Shorts.",
     "For step-by-step tasks, such as getting a white background photo ready for Amazon or testing two versions of an ad, see our [how-to guides](page:guides)."
   ],
   "faq": [
     {
       "q": "How do I start making ecommerce product content?",
-      "a": "Start with a clear product photo, make one 6-, 10-, or 15-second video or square photo, then review the output before adding text and publishing."
+      "a": "Start with a clear product photo, make one 6-, 10-, 15-, or 30-second video or square photo, then compare the output with the real product before adding text and publishing."
     },
     {
       "q": "How do I use AI product photography tips with my own tool?",
