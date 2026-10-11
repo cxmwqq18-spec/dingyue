@@ -18,7 +18,7 @@
       "h2": "A good starting photo saves you credits",
       "paras": [
         "Every AI image or video is built from what it can see in your photo. If the label is blurry, the new image has to guess what it says. If your kitchen light turned a white mug slightly yellow, that yellow tends to carry into every version you make.",
-        "A sharp, evenly lit photo gives the tool the real shape, color and details to work from, so the first result usually matches and you spend fewer credits redoing jobs. You see the credit cost on screen before anything starts, and credits come straight back if a job fails."
+        "A sharp, evenly lit photo gives the tool the real shape, color and details to work from. The first result usually matches, so you spend fewer credits redoing jobs. The cost shows on screen before anything starts, and credits come straight back if a job fails."
       ]
     },
     {
@@ -88,8 +88,8 @@
       "a": "It's better not to. Requests that include logos or trademarks you don't own, or famous people, may be refused. Crop them out or reshoot with only your product in the frame."
     },
     {
-      "q": "What file types and sizes can I upload?",
-      "a": "The browser accepts JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF and TIFF images. The default upload limit is 32 MB, so an original phone photo uploads without resizing."
+      "q": "What file types can I upload?",
+      "a": "The browser accepts image uploads, including JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF and TIFF. The default upload limit is 32 MB, so an original phone photo uploads without resizing; deployments may set a different limit."
     },
     {
       "q": "How many credits does one product photo use?",
