@@ -43105,6 +43105,66 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "rb3-ind-electronics-strip-5-1-r1": {
+        "file": "rb3-ind-electronics-strip-5-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage-green phone case with one oval camera opening on a cafe table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb3-ind-food-drinks-strip-3-1-r1": {
+        "file": "rb3-ind-food-drinks-strip-3-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands pack a plain snack pouch into a lunch tote beside fruit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb3-ind-food-drinks-strip-4-1-r1": {
+        "file": "rb3-ind-food-drinks-strip-4-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand opens a chilled plain iced tea can beside a cooler.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb3-ind-food-drinks-strip-6-1-r1": {
+        "file": "rb3-ind-food-drinks-strip-6-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pouring plain tomato sauce over rigatoni on a plate.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb3-ind-food-drinks-card-packaging-1-r1": {
+        "file": "rb3-ind-food-drinks-card-packaging-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a plain snack pouch beside a lunch container on an office desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb3-ind-food-drinks-strip-3-2-r1": {
+        "file": "rb3-ind-food-drinks-strip-3-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand packing a plain snack pouch into a lunch tote beside fruit.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

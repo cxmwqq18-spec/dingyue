@@ -1,7 +1,7 @@
 {
   "id": "ind-food-drinks",
   "title": "AI Food and Drink Product Videos | AIVideosUGC",
-  "description": "Turn one food or drink product photo into appetizing ads for social feeds, delivery apps and listings. Create watermark-free serving clips in minutes.",
+  "description": "Turn one food or drink photo into ads for listings and social feeds. Get watermark-free clips in minutes, not weeks, at far less cost than a kitchen shoot.",
   "h1": "Make AI Food and Drink Product Videos That Drive Cravings",
   "eyebrow": "Food and beverage brands",
   "lead": "Hungry shoppers decide fast. Turn one food or drink photo into a clear package reveal, serving moment or product video that makes the next bite easy to imagine.",
@@ -18,10 +18,6 @@
     "Send in a clean package photo and describe one serving moment: a can cracking open over ice, a cookie snapping in half or honey dripping onto toast. Choose a 6-, 10-, 15-, or 30-second vertical clip for a social ad, or use a square photo for a listing."
   ],
   "faq": [
-    {
-      "q": "How do AI food and drink product videos turn one package photo into an ad?",
-      "a": "Upload a clear package photo, choose one serving action, and download a clip that keeps the product in view. Add exact price, ingredient and offer details after download."
-    },
     {
       "q": "Will my ingredient list and nutrition facts look right in the image?",
       "a": "Don't rely on the image for that. Small print on packaging may not come out exactly as printed, and ingredients, allergens, and nutrition facts should always match your real package. If buyers need to see them, use a clear photo of the actual label."
@@ -53,7 +49,7 @@
   "benefits": [
     {
       "t": "Launch the next flavor in minutes",
-      "d": "Turn a package photo into a serving moment while the new flavor is fresh. Skip a kitchen booking for every small launch."
+      "d": "Turn a package photo into a serving moment in minutes while the new flavor is fresh. Launch a restock without booking a kitchen or crew."
     },
     {
       "t": "Keep the package at the center",
@@ -85,10 +81,10 @@
     "strip": [
       "n:guide:ind-food-drinks-m2-source",
       "f:k7-ind-food-drinks-strip-1-f-food-video-t06",
-      "n:guide:q17-ind-food-drinks-strip-2",
-      "n:guide:q17-ind-food-drinks-strip-3",
+      "n:guide:rb3-ind-food-drinks-strip-3-2-r1",
+      "n:guide:rb3-ind-food-drinks-strip-4-1-r1",
       "n:guide:q17-ind-food-drinks-strip-4",
-      "n:guide:q17-ind-food-drinks-strip-5"
+      "n:guide:rb3-ind-food-drinks-strip-6-1-r1"
     ],
     "steps": {
       "source": "n:guide:ind-food-drinks-m2-source",

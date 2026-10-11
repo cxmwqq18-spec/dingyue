@@ -15,10 +15,6 @@
   ],
   "faq": [
     {
-      "q": "How do AI product videos for home brands show an item in a room?",
-      "a": "Upload a clear whole-product photo, choose a room and one action, and download a clip that keeps the item’s shape and details in view. Add real dimensions after download."
-    },
-    {
       "q": "Can I show a before-and-after of a closet using my organizer?",
       "a": "Yes. Describe both states, such as \"cluttered closet floor with shoes piled up, then that closet with shoes on a three-tier rack.\" Keep the after true to what your product really holds, so buyers aren't surprised when it arrives."
     },
@@ -51,13 +47,13 @@
       "a": "No for these clips. Rooms, props, and adult hands are generated around your product photo at a per-clip credit cost. A large custom set or an original filmed concept can still be produced separately."
     }
   ],
-  "templates_lead": "Choose a room, organizing step, or placement that fits the home product.",
+  "templates_lead": "Choose a room or organizing step that fits the home product.",
   "cta_lead": "Select the room or use scene where your home product belongs.",
   "benefits_h2": "Why Home Brands Turn AI Product Videos for Home Brands Into More Ads",
   "benefits": [
     {
-      "t": "Show the product in place today",
-      "d": "Create a room scene or product demo from one clear photo. Skip a location, crew and new set for every item."
+      "t": "Faster, lower-cost production",
+      "d": "Create a room scene or product demo from one clear photo in minutes. Skip a location, crew, props and another shoot for every new item."
     },
     {
       "t": "Reuse one photo across channels",
@@ -77,11 +73,11 @@
     },
     {
       "t": "Pick a Scene",
-      "d": "Choose a room and one action, such as organizing, cleaning or styling."
+      "d": "Choose a room and one action, such as organizing, cleaning or styling. Run one photo through more rooms to show scale and use."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip, add real dimensions and offer text in your editor, then publish it."
+      "d": "Download and save the clip. Add real dimensions and offer text in your editor, then publish it."
     }
   ],
   "visual": {
