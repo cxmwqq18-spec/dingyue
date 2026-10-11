@@ -1164,12 +1164,21 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       button: picker.button ?? "",
       href: pickerHref
     },
-    uses: (Array.isArray(source.uses) ? source.uses : []).map((item) => ({
-      frame: item.frame,
-      image: visualImage(model, item.ref, video ? "video" : "photo"),
-      ...(item.frame === "split" ? { imageB: visualImage(model, item.ref_b, video ? "video" : "photo") } : {}),
-      h: item.h ?? "", d: item.d ?? ""
-    })),
+    uses: (Array.isArray(source.uses) ? source.uses : []).map((item) => {
+      const imageRef = item.img ?? item.ref;
+      const image = visualImage(model, imageRef, video ? "video" : "photo");
+      const rowImage = typeof item.img === "string" && item.img.trim()
+        ? mediaImage(model, item.img, "gallery")
+        : undefined;
+      return {
+        frame: item.frame,
+        image,
+        ...(rowImage ? { img: item.alt ? { ...rowImage, alt: String(item.alt) } : rowImage } : {}),
+        ...(item.alt ? { alt: String(item.alt) } : {}),
+        ...(item.frame === "split" ? { imageB: visualImage(model, item.ref_b, video ? "video" : "photo") } : {}),
+        h: item.h ?? "", d: item.d ?? ""
+      };
+    }),
     input: (Array.isArray(source.input) ? source.input : []).map((item) => ({
       good: visualImage(model, item.good, "photo"),
       bad: { ...visualImage(model, item.bad, "photo"), ...(item.bad_alt ? { alt: String(item.bad_alt) } : {}) },
@@ -2632,6 +2641,16 @@ export function validateSiteV2(build = buildSiteV2()) {
       }
     }
     if (!isDirectory && uses.length && (uses.length < 2 || uses.length > 4)) errors.push(`${pageId}: visual uses must contain 2-4 rows`);
+    const sourceUses = Array.isArray(source.uses) ? source.uses : [];
+    for (const [index, sourceItem] of sourceUses.entries()) {
+      const compiledItem = uses[index];
+      if (sourceItem?.img !== undefined) {
+        if (typeof sourceItem.img !== "string" || !sourceItem.img.trim()) errors.push(`${pageId}: visual use ${index + 1} img must be a media ref`);
+        if (!compiledItem?.img?.src) errors.push(`${pageId}: visual use ${index + 1} img was not compiled`);
+        if (sourceItem.frame !== undefined && !IMAGE_ITEM_FRAMES.has(sourceItem.frame)) errors.push(`${pageId}: visual use ${index + 1} frame must be phone, browser or none`);
+        if (sourceItem.alt !== undefined && (typeof sourceItem.alt !== "string" || !sourceItem.alt.trim())) errors.push(`${pageId}: visual use ${index + 1} alt must be a non-empty string`);
+      }
+    }
     if (!isDirectory && input.length && (input.length < 2 || input.length > 4)) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
     for (const item of input) {
       if (imageBase(item.good.src) === imageBase(item.bad.src) && !item.darkened) errors.push(`${pageId}: visual input good and bad photos must differ unless the bad image is intentionally darkened`);

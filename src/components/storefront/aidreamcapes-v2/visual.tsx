@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Img, normalizeStepLabel, RichText, Section } from "./parts";
+import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
   V2AfterMock,
@@ -9,7 +9,8 @@ import type {
   V2VisualInput,
   V2VisualOutput,
   V2VisualUse,
-  V2Image
+  V2Image,
+  V2ImageItem
 } from "./types";
 import { TemplateGrid } from "./parts";
 
@@ -261,6 +262,16 @@ function MockFrame({ item, r }: { item: V2VisualUse; r: V2Resolvers }) {
 
 export function VisualUses({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
   if (!visual.uses.length) return null;
+  if (visual.uses.every((item) => item.img?.src)) {
+    const rows: V2ImageItem[] = visual.uses.map((item) => ({
+      t: item.h,
+      d: item.d,
+      img: item.img!,
+      ...(item.alt ? { alt: item.alt } : {}),
+      frame: item.frame === "phone" || item.frame === "browser" || item.frame === "none" ? item.frame : "none"
+    }));
+    return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><ImageItemRows items={rows} r={r} /></Section>;
+  }
   return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><div className="v-use-art-inner"><MockFrame item={item} r={r} /></div></div><div className="v-use-copy"><h3>{item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
 }
 
