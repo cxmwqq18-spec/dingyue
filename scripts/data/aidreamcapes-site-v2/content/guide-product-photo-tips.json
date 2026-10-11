@@ -1,10 +1,10 @@
 {
   "id": "guide-product-photo-tips",
   "title": "How to Take Product Photos for AI | AIVideosUGC",
-  "description": "Learn how to take product photos for AI tools with just a phone: light, angles, framing, and a quick check before upload, for cleaner results. Read the guide.",
+  "description": "Take product photos that work with AI using just a phone: daylight setup, framing, focus and a quick pre-upload look, so your first results match the real item.",
   "h1": "How to Take Product Photos for AI With Just Your Phone",
   "eyebrow": "Photo guide",
-  "lead": "Learn how to take product photos for AI with just a phone and a window: the photo you upload shapes every image and video made from it.",
+  "lead": "Blurry, yellow-lit photos are why AI results come back wrong. Spend ten minutes on the setup below and the same photo produces listing images, lifestyle shots and video ads that actually look like your product.",
   "secondary_keywords": [
     "product photography with a phone",
     "product photo lighting at home",
@@ -12,17 +12,17 @@
     "product photo angles"
   ],
   "read_minutes": 4,
-  "summary": "Shoot a clear, well-lit source photo with details the generator can reference, then review each result against your product.",
+  "summary": "A clear phone photo is the one thing that makes AI product images match the item you ship. Here is how to light, frame and inspect it before you upload.",
   "sections": [
     {
-      "h2": "Why the starting photo matters",
+      "h2": "A good starting photo saves you credits",
       "paras": [
-        "An AI tool can only work with what it can see. If the label is blurry in your photo, the new image has to guess what it says. If your kitchen light turned a white mug slightly yellow, that yellow tends to carry into every version you make.",
-        "A sharp, evenly lit source photo gives the generator clearer product details to work from. Review each result against the real item; the credit cost appears before you start."
+        "Every AI image or video is built from what it can see in your photo. If the label is blurry, the new image has to guess what it says. If your kitchen light turned a white mug slightly yellow, that yellow tends to carry into every version you make.",
+        "A sharp, evenly lit photo gives the tool the real shape, color and details to work from. The first result usually matches, so you spend fewer credits redoing jobs. The cost shows on screen before anything starts, and credits come straight back if a job fails."
       ]
     },
     {
-      "h2": "Set up the shot",
+      "h2": "Set up the shot in daylight",
       "paras": [
         "Start with light. Put a table next to a window during the day, where the light is bright but indirect. If the sun hits the table directly, tape a thin white sheet or baking paper over the glass to soften it. Turn off ceiling lights so warm and cool light don't mix on the product.",
         "Next, the background. A plain surface is enough. A sheet of white poster board, curved so it runs under the product and up the wall behind it, hides the table edge. Plain gray card or a light wooden tabletop also works. Skip patterned tablecloths and busy shelves.",
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "h2": "Frame the shot",
+      "h2": "Frame the product so nothing gets guessed",
       "paras": [
         "Hold the phone at the same height as the product for the main front view. Shooting from above makes bottles and boxes look like they're tipping backward.",
         "Fill most of the frame with the product, but leave a little space on every side so nothing gets cut off. Use the regular 1x lens and step closer instead of pinching to zoom, which softens fine detail.",
@@ -39,22 +39,22 @@
       ]
     },
     {
-      "h2": "Take a few extra angles",
+      "h2": "Take a few extra angles while the setup is out",
       "paras": [
-        "One good front view is the minimum. A few more shots from multiple angles give you options later, when you want a [close-up detail image](page:tpl-detail) or a [video that starts from a different side](page:image-to-video). For [multiple-angle product photos](page:tpl-angle), upload each view instead of asking the tool to guess the unseen side.",
-        "For a ceramic mug, that might be the front with the handle on the right, a top-down shot showing the glaze inside, and a close-up of the stamp on the base. For a sneaker, try the side profile, a three-quarter front view, and the sole. For a serum bottle, shoot the front label, the back label, and the dropper held in a hand for scale.",
+        "One good front view is the minimum. A few more shots from other angles give you options later, when you want a [close-up detail image](page:tpl-detail) or a [video that starts from a different side](page:image-to-video). For [multiple-angle product photos](page:tpl-angle), upload each view instead of asking the tool to guess the unseen side.",
+        "For a ceramic mug, that might be the front with the handle on the right, a top-down shot showing the glaze inside, and a close-up of the stamp on the base. For a sneaker, try the side profile, a three-quarter front view, and the sole. For a cream or lotion, shoot the front label, the back label, and the tube or jar held in a hand for scale.",
         "Clothing needs a little more care. Lay the piece flat on a made bed or hang it on a plain door, smooth out creases with your hands, and shoot straight on from above or in front. Add one close-up of the fabric so the texture and stitching are clear."
       ]
     },
     {
-      "h2": "Check the photo before you upload",
+      "h2": "Inspect the photo before you upload",
       "paras": [
         "Zoom in on your phone screen. Is the text on the label sharp enough to read? Are the product's edges crisp rather than smeared? Hold the real item next to the screen in daylight and compare the color.",
         "Make sure your product is the only thing in the frame. Move anything that pulls attention, like a coffee cup or a laptop lid. Upload the original photo file, not a screenshot or a file transferred through a chat app, since those are usually shrunk."
       ]
     },
     {
-      "h2": "Pair the photo with a clear description",
+      "h2": "Pair the photo with a plain sentence",
       "paras": [
         "In AIVideosUGC, you upload the photo and add a sentence about what you want. Describe the product and the scene in plain words. \"A matte black water bottle on a gym bench, early morning light\" gets you much closer than \"make it look amazing.\" The same goes for video: \"The bottle turns slowly on a wooden counter while sunlight moves across it\" tells the tool what should happen.",
         "Leave out prices, discount codes, and headlines. AI-made lettering can come out with errors, so add those words afterward in Canva or your ads manager, where you control the exact spelling. When your photo is ready, try it with [White Background Photos](page:white-background) for listings or [Product Photos](page:photo-hub) for every other look. For ideas, look through the [product photo and video examples](page:examples) to see what each starting photo became."
@@ -81,7 +81,7 @@
     },
     {
       "q": "Does my photo need a white background before I upload it?",
-      "a": "No. A plain, uncluttered background is enough. If a marketplace asks for a white background, you can make that version from this photo afterward."
+      "a": "No. A plain, uncluttered background is enough. If a marketplace asks for a white background, you can make that version from this photo afterward with the white background tool."
     },
     {
       "q": "Can I upload a photo that shows other brands' logos?",
@@ -89,7 +89,11 @@
     },
     {
       "q": "What file types can I upload?",
-      "a": "The browser accepts image uploads, including JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF, and TIFF. The default upload limit is 32 MB; deployments may configure a different limit."
+      "a": "The browser accepts image uploads, including JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF and TIFF. The default upload limit is 32 MB, so an original phone photo uploads without resizing; deployments may set a different limit."
+    },
+    {
+      "q": "How many credits does one product photo use?",
+      "a": "Each image job uses 24 credits, and the exact cost shows on screen before you start. If the job fails, the credits return to your balance automatically, so a failed attempt costs you nothing."
     }
   ]
 }
