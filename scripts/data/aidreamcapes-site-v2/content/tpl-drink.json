@@ -36,15 +36,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the full bottle or can with its shape, cap and drink color visible."
+      "d": "Show the full bottle or can with its shape, cap and drink color visible. A clear source gives the generated serving scene more to preserve."
     },
     {
       "t": "Share Your Video Idea",
-      "d": "Name the glass, garnish and one serving action, then choose the length and size."
+      "d": "Name the glass, garnish and one serving action, then choose the length and size. Keep the action focused on one serving moment."
     },
     {
       "t": "Download and Post",
-      "d": "Check the package, then add flavor, price and allergen details before publishing."
+      "d": "Check the package, then add flavor, price and allergen details before publishing. Review the package and serving action before you publish it."
     }
   ],
   "maker": {
@@ -84,6 +84,26 @@
     {
       "q": "Do I need a studio or a creator?",
       "a": "No. The clip is generated from your bottle or can photo, so you can prepare a serving scene without booking a kitchen shoot."
+    },
+    {
+      "q": "Can the package label be added after download?",
+      "a": "Yes. Add approved package, flavor or pricing details in your editor after download."
+    },
+    {
+      "q": "Can I show a first sip without making a health claim?",
+      "a": "Yes. Show the sip as a serving moment and keep health wording out unless it is approved for your listing."
+    },
+    {
+      "q": "What should I verify before publishing?",
+      "a": "Verify the package, flavor, ingredient and allergen details against your approved listing before publishing."
+    },
+    {
+      "q": "Should the package stay in frame during a pour?",
+      "a": "Yes. Keep the package visible beside the glass so the serving scene remains tied to the product."
+    },
+    {
+      "q": "Can I use a square version for a product page?",
+      "a": "Yes. Use a square version for a product gallery or feed post, and 9:16 for TikTok and Reels."
     }
   ],
   "visual": {
@@ -554,5 +574,16 @@
         "h2": "Questions about AI food and drink videos"
       }
     }
-  }
+  },
+  "relatedLinks": [
+    "product-videos",
+    "tpl-beauty",
+    "video-ads",
+    "ind-food-drinks",
+    "plat-instagram",
+    "plat-tiktok",
+    "lifestyle-photos",
+    "guide-first-tiktok-video-ad",
+    "blog-ai-ugc-video-ads-guide"
+  ]
 }

@@ -36,15 +36,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add a clear photo of the full bottle, jar or tube with its main details visible."
+      "d": "Add a clear photo of the full bottle, jar or tube. Keep the product fully in frame so its shape stays available."
     },
     {
       "t": "Pick a Beauty Style",
-      "d": "Choose a routine, review or texture scene, then generate the clip in your size and length."
+      "d": "Choose a routine, review or texture scene. Match your wording to the moment you want to show."
     },
     {
       "t": "Download and Post",
-      "d": "Download the video, then add your shade, usage line or offer in your editor."
+      "d": "Download the video, then add your shade, usage line or offer in your editor. Review the package and action before you publish it."
     }
   ],
   "maker": {
@@ -96,6 +96,14 @@
     {
       "q": "Can I use a beauty clip in paid ads?",
       "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for claims and disclosures."
+    },
+    {
+      "q": "What skincare details should remain visible?",
+      "a": "Keep the bottle, cap and label area clear in the source photo so the generated scene can preserve them."
+    },
+    {
+      "q": "What should I check before publishing a skincare ad?",
+      "a": "Check that the product, routine action and usage wording match your approved listing before publishing."
     }
   ],
   "visual": {
@@ -562,5 +570,17 @@
         "h2": "Questions about beauty product video ads"
       }
     }
-  }
+  },
+  "relatedLinks": [
+    "video-ads",
+    "tpl-drink",
+    "tpl-ugc",
+    "social-ad-photos",
+    "ind-beauty-skincare",
+    "plat-instagram",
+    "plat-tiktok",
+    "blog-ai-ugc-video-ads-guide",
+    "guide-first-tiktok-video-ad",
+    "guide-ad-sizes-by-platform"
+  ]
 }
