@@ -1,8 +1,8 @@
 {
   "id": "occ-holidays",
-  "title": "Holiday Ad Creatives for Gift Season | AIVideosUGC",
-  "description": "Build holiday ad creatives from one product photo. Add confirmed shipping dates, prices or offers after download, then reuse the scene as campaigns change.",
-  "h1": "Make Holiday Ad Creatives From One Product Photo",
+  "title": "Holiday Ad Photos and Videos for Gift Season | AIVideosUGC",
+  "description": "Make holiday ad photos and videos from one product photo. Add confirmed dates, prices or offers after download, then reuse the scene as campaigns change.",
+  "h1": "Make Holiday Ad Photos and Videos From One Product Photo",
   "eyebrow": "Holiday ad creatives",
   "lead": "Get a gift-ready holiday scene from one product photo. Add the shipping cutoff, price or offer after download, then reuse the scene for another seasonal push.",
   "secondary_keywords": [
@@ -126,35 +126,35 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Create Holiday Ad Creatives in 3 Simple Steps"
+        "h2": "How to Create Holiday Ad Photos and Videos in 3 Simple Steps"
       },
       "m3": {
         "h2": "Choose a Holiday Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions About Holiday Ad Creatives"
+        "h2": "Questions About Holiday Ad Photos and Videos"
       }
     }
   },
-  "benefits_h2": "Why Sellers Use Holiday Ad Creatives",
+  "benefits_h2": "Why Sellers Use Holiday Ad Photos and Videos",
   "benefits": [
     {
-      "t": "Build gift scenes from one photo",
-      "d": "Use the same product shot for winter and gift campaigns as the season changes."
+      "t": "Go from one photo to a gift ad",
+      "d": "Save shoot prep by turning one product photo into winter and gift scenes in minutes."
     },
     {
-      "t": "Make the gift easy to picture",
-      "d": "Show the item in a wrapped, unboxed or seasonal setting that explains the gift."
+      "t": "Show the gift before you ship it",
+      "d": "Help shoppers picture the wrapped item with a seasonal scene before you prepare a set."
     },
     {
-      "t": "Keep dates and offers editable",
-      "d": "Add shipping cutoffs, prices and codes after download when the details are confirmed."
+      "t": "Change cutoffs without a reshoot",
+      "d": "Add shipping cutoffs, prices and codes after download, so late details do not force a new shoot."
     },
     {
-      "t": "Launch without decorating a set",
-      "d": "Use the downloaded holiday scene in your own posts and paid campaigns."
+      "t": "Skip set costs for seasonal ads",
+      "d": "Create the holiday scene without decorating a room or booking a creator."
     }
   ],
-  "steps_h2": "How to Create Holiday Ad Creatives in 3 Simple Steps",
+  "steps_h2": "How to Create Holiday Ad Photos and Videos in 3 Simple Steps",
   "steps_lead": "Upload one product photo, choose a seasonal gift scene and add current details after download."
 }

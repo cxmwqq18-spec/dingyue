@@ -1,6 +1,6 @@
 {
   "id": "occ-black-friday",
-  "title": "Black Friday Ad Creatives Before Your Offer | AIVideosUGC",
+  "title": "Black Friday Ad Creatives for Your Sale | AIVideosUGC",
   "description": "Build a Black Friday sale scene from one product photo. Add the confirmed discount, code and end date after download, then publish the version you approve.",
   "h1": "Make Black Friday Ad Creatives From One Product Photo",
   "eyebrow": "Black Friday ad creatives",
@@ -23,7 +23,7 @@
     },
     {
       "q": "Do I need a separate video for each platform?",
-      "a": "Use the size your placement needs. Each version is its own generation, with the credit cost shown before you start."
+      "a": "Use the size your channel needs. Each version is its own generation, with the credit cost shown before you start."
     },
     {
       "q": "Which Black Friday details should stay editable until the offer is final?",
@@ -35,7 +35,7 @@
     },
     {
       "q": "Can I run these creatives as paid Black Friday ads?",
-      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in paid placements, subject to each platform’s ad rules."
+      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in paid campaigns, subject to each platform’s ad rules."
     }
   ],
   "examples": {
@@ -52,10 +52,10 @@
             "product": "leather duffel"
           },
           {
-            "ref": "n:guide:q20-occ-bf-example-02",
-            "title": "Bath gift set opened by hand",
+            "ref": "n:guide:f13-occ-black-friday-card-10",
+            "title": "Lunch bag packed for a deal day",
             "kind": "photo",
-            "product": "bath gift set"
+            "product": "insulated lunch bag"
           },
           {
             "ref": "n:guide:q20-occ-bf-output-01-r2",
@@ -138,20 +138,20 @@
   "benefits_h2": "Why Sellers Use Black Friday Ad Creatives",
   "benefits": [
     {
-      "t": "Prepare before the offer is final",
-      "d": "Make the product visual while the Black Friday deal is still being confirmed."
+      "t": "Start sooner, before the offer is final",
+      "d": "Build the product scene in minutes while the Black Friday deal is still being confirmed."
     },
     {
-      "t": "Make one product work across placements",
-      "d": "Create a phone-first version or a square post from the same product photo."
+      "t": "Get more versions from one photo",
+      "d": "Turn one product photo into a square post or phone-first version without booking another shoot."
     },
     {
-      "t": "Keep Black Friday details editable",
-      "d": "Add the discount, code and end date after download when every detail is confirmed."
+      "t": "Change deal details without a reshoot",
+      "d": "Add the discount, code and end date after download, so late changes do not send you back to production."
     },
     {
-      "t": "Launch without a new shoot",
-      "d": "Use the downloaded sale scene in your own posts and paid campaigns."
+      "t": "Skip creator and studio costs",
+      "d": "Use the downloaded sale scene in your posts and paid campaigns with no casting, studio or shoot."
     }
   ],
   "steps_h2": "How to Create Black Friday Ad Creatives in 3 Simple Steps",
