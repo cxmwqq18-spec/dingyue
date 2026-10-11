@@ -100,8 +100,8 @@
       {
         "t": "Ecommerce and D2C brands",
         "d": "Refresh a product page or paid ad without booking a new shoot for every campaign.",
-        "img": "n:gen2:unboxing-videos-g2",
-        "alt": "Skincare minis revealed in an open gift box.",
+        "img": "n:img3-gen2-unboxing-videos-g2-r3",
+        "alt": "Plain white cream tube, round white cream jar and white soap bar revealed in an open gift box.",
         "frame": "browser"
       },
       {
@@ -121,8 +121,8 @@
       {
         "t": "Marketers and agencies",
         "d": "Build client-ready variants from the same source photo, then send each channel its own format.",
-        "img": "n:gen2:spokesperson-videos-g3",
-        "alt": "Adult presenter holds a plain snack pouch at chest height in a bright kitchen.",
+        "img": "n:img3-gen2-spokesperson-videos-g3-r2",
+        "alt": "Adult presenter with short curls holds a plain blank snack pouch at chest height in a bright kitchen.",
         "frame": "phone"
       },
       {
@@ -267,9 +267,9 @@
       "f:carousel-storytelling-v",
       "f:tiktok-reels-shorts-v",
       "n:gen2:photo-hub-c1",
-      "f:q1-home-strip-serum",
+      "f:img3-home-strip-serum-r3",
       "f:q1-home-strip-trailshoe",
-      "f:q1-home-strip-creator-review"
+      "f:img3-home-strip-creator-review-r2"
     ],
     "steps": {
       "source": "n:guide:img1-home-steps-source-r1",
