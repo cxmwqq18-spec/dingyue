@@ -23,7 +23,7 @@
     },
     {
       "q": "Do I need to book a TikTok creator or studio?",
-      "a": "No. Start from your own product photo, so there is no creator booking, studio day or footage queue."
+      "a": "No. Use the product photo you already have, then choose the TikTok moment you want to show."
     },
     {
       "q": "Does the download include music or captions?",
@@ -130,16 +130,16 @@
       "lead": "Move from a product photo to a TikTok-ready clip without arranging a shoot.",
       "items": [
         {
-          "t": "Skip the Creator Booking",
-          "d": "Start from your product photo when you need a new TikTok angle."
+          "t": "Test a New Opening",
+          "d": "Try another first action from the same product photo without arranging a new shoot."
         },
         {
-          "t": "Try More Openings",
-          "d": "Change the first action or line and compare versions without filming the product again."
+          "t": "Use Your Own Product Photo",
+          "d": "Start with the product image you already have and turn it into a TikTok-ready clip."
         },
         {
-          "t": "Keep Your Feed Fresh",
-          "d": "Make another clip from the same photo when you have a new offer or angle."
+          "t": "Download a Clean TikTok File",
+          "d": "Get a clear vertical file, then add your sound, caption and offer in TikTok."
         }
       ]
     },
@@ -149,16 +149,16 @@
       "lead": "Keep the work moving from the idea you wrote to a file you can post.",
       "items": [
         {
-          "t": "Make the First Frame Clear",
-          "d": "Lead with the product action you want viewers to notice."
+          "t": "Lead with the Product Action",
+          "d": "Choose the first movement that gives viewers a reason to stop."
         },
         {
-          "t": "Move from Idea to File",
-          "d": "Write one sentence, choose a length and download the clip after it is ready."
+          "t": "Turn the Idea into a File",
+          "d": "Write one product moment, choose 6, 10, 15 or 30 seconds, and download the clip."
         },
         {
-          "t": "Keep Production Simple",
-          "d": "Use your own photo instead of arranging a creator, studio and shoot day."
+          "t": "Skip the Shoot Day",
+          "d": "Use your own product photo when a new TikTok angle is needed."
         }
       ]
     }
