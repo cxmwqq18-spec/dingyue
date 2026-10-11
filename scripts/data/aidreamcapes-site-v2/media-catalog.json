@@ -26340,6 +26340,46 @@
           640
         ]
       },
+      "cwa-uses-paid-01-r1": {
+        "file": "cwa-uses-paid-01-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "cwa-uses-product-page-02-r1": {
+        "file": "cwa-uses-product-page-02-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "cwa-uses-social-03-r1": {
+        "file": "cwa-uses-social-03-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote at an outdoor market.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "cwa-uses-guide-04-r1": {
+        "file": "cwa-uses-guide-04-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp at a workbench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "sc1-spk-indoor-1": {
         "file": "sc1-spk-indoor-1-r1",
         "w": 864,
