@@ -190,5 +190,9 @@
  "rc3_tpl_tryon_cover_r1": {
   "w": 900,
   "h": 506
+ },
+ "rc3_tpl_jewel_cover_r1": {
+  "w": 900,
+  "h": 506
  }
 }
