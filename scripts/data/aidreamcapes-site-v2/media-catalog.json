@@ -47787,6 +47787,186 @@
           1280,
           1600
         ]
+      },
+      "fx04-blog-photo-shop-scene-r1": {
+        "file": "fx04-blog-photo-shop-scene-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open the same plain tan handbag on a sunlit desk beside a folded sweater.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-photo-source-clear-r1": {
+        "file": "fx04-blog-photo-source-clear-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place the same plain tan handbag upright on a clean pale studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-photo-look-cafe-r1": {
+        "file": "fx04-blog-photo-look-cafe-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand lifts the same plain tan handbag from a softly lit cafe table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-photo-marketplace-r1": {
+        "file": "fx04-blog-photo-marketplace-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place the same plain tan handbag into a simple kraft shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-photo-review-r1": {
+        "file": "fx04-blog-photo-review-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands inspect the same plain tan handbag beside a blank phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-photo-social-scene-r1": {
+        "file": "fx04-blog-photo-social-scene-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand sets the same plain tan handbag beside a folded scarf on an entry table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-ugc-definition-r1": {
+        "file": "fx04-blog-ugc-definition-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold the same plain gray skincare jar beside a bathroom mirror and open its lid.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-ugc-hook-r1": {
+        "file": "fx04-blog-ugc-hook-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands pull the same plain gray skincare jar from a tote onto a bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-ugc-scene-r1": {
+        "file": "fx04-blog-ugc-scene-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands scoop a small amount from the same plain gray skincare jar onto a hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-ugc-length-r1": {
+        "file": "fx04-blog-ugc-length-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands close the same plain gray skincare jar on a neutral bedroom dresser.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-ugc-edit-r1": {
+        "file": "fx04-blog-ugc-edit-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold the same plain gray skincare jar over a vanity beside a blank phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-ugc-test-r1": {
+        "file": "fx04-blog-ugc-test-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands choose between two views of the same plain gray skincare jar on a bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-review-why-r2": {
+        "file": "fx04-blog-review-why-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands check the front pocket and zipper of the same plain black travel backpack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-review-product-r1": {
+        "file": "fx04-blog-review-product-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands count pockets, buckles and straps on the same plain black travel backpack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-review-motion-r1": {
+        "file": "fx04-blog-review-motion-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open the zipper and flap of the same plain black travel backpack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-review-copy-r1": {
+        "file": "fx04-blog-review-copy-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold the same plain black travel backpack beside a blank phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-review-rights-r1": {
+        "file": "fx04-blog-review-rights-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold the same plain black travel backpack beside a plain camera and blank phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx04-blog-review-rules-r1": {
+        "file": "fx04-blog-review-rules-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands check the first frame of the same plain black travel backpack beside blank devices.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
