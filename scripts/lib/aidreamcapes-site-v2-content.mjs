@@ -963,6 +963,16 @@ function appHref(params, video) {
   const query = new URLSearchParams(Object.entries(params).filter(([, value]) => value));
   return `/app/create?${query.toString()}${video ? "#step-video" : ""}`;
 }
+function hrefWithPrompt(href, prompt) {
+  if (typeof href !== "string" || !href.trim() || typeof prompt !== "string" || !prompt.trim()) return href;
+  try {
+    const url = new URL(href, "https://aivideosugc.com");
+    url.searchParams.set("prompt", prompt);
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return href;
+  }
+}
 function toolAppHref(model, page, templateKey, options = {}) {
   if (!page) return "/app/create";
   if (page.group === "video") {
@@ -1256,13 +1266,20 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       const rowImage = typeof item.img === "string" && item.img.trim()
         ? mediaImage(model, item.img, "gallery")
         : undefined;
+      const prompt = typeof item.prompt === "string" && item.prompt.trim() ? item.prompt : undefined;
+      const configuredHref = typeof item.href === "string" && item.href.trim() ? item.href : undefined;
+      const href = prompt
+        ? hrefWithPrompt(configuredHref ?? toolAppHref(model, page, undefined, { promptOverride: prompt }), prompt)
+        : configuredHref;
       return {
         frame: item.frame,
         image,
         ...(rowImage ? { img: item.alt ? { ...rowImage, alt: String(item.alt) } : rowImage } : {}),
         ...(item.alt ? { alt: String(item.alt) } : {}),
         ...(item.frame === "split" ? { imageB: visualImage(model, item.ref_b, video ? "video" : "photo") } : {}),
-        h: item.h ?? "", d: item.d ?? ""
+        h: item.h ?? "", d: item.d ?? "",
+        ...(href ? { href } : {}),
+        ...(prompt ? { prompt } : {})
       };
     }),
     input: (Array.isArray(source.input) ? source.input : []).map((item) => ({
@@ -2077,7 +2094,18 @@ function payloadFor(model, page) {
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
     const makerOptions = (c.maker?.options || []).slice(0, 3);
     const makerLength = video ? displayedMakerVideoLength(makerOptions) : undefined;
-    const maker = { options: makerOptions, cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, TOOL_REL[page.id]?.[0], makerLength ? { length: makerLength } : {}), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const makerPrompt = typeof c.maker?.prompt === "string" && c.maker.prompt.trim()
+      ? c.maker.prompt
+      : typeof c.cta_prompt === "string" && c.cta_prompt.trim()
+        ? c.cta_prompt
+        : page.id === "url-to-video" && typeof c.visual?.steps?.prompt === "string" && c.visual.steps.prompt.trim()
+          ? c.visual.steps.prompt
+          : undefined;
+    const makerTemplate = page.id === "url-to-video" ? undefined : TOOL_REL[page.id]?.[0];
+    const makerHref = typeof c.maker?.href === "string" && c.maker.href.trim()
+      ? hrefWithPrompt(c.maker.href, makerPrompt)
+      : toolAppHref(model, page, makerTemplate, { ...(makerLength ? { length: makerLength } : {}), ...(makerPrompt ? { promptOverride: makerPrompt } : {}) });
+    const maker = { options: makerOptions, cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: makerHref, urlInput: page.id === "url-to-video", ...(makerPrompt ? { prompt: makerPrompt } : {}), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     // Per the tagshop link standard, tool pages have no "Templates for X" grid: the
     // case wall is the visual picker, and the page ends with one related-tools block.
     const wallCases = hub ? [] : caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);

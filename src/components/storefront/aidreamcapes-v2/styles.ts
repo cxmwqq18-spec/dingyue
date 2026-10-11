@@ -40,7 +40,7 @@ export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 .adc2 .v-use-art{height:350px;padding:14px;background:#09090c}
 .adc2 .v-use-art-inner{display:flex;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:radial-gradient(ellipse at 50% 42%,#1b1b22 0,#101014 64%,#0b0b0e 100%)}
 .adc2 .v-use-copy{display:flex;flex-direction:column;justify-content:center;max-width:none;padding:38px 44px}
-.adc2 .v-use-copy h3{font-size:28px;line-height:1.2}
+.adc2 .v-use-copy h3{font-size:28px;line-height:1.2}.adc2 .v-use-copy h3 a{color:inherit;text-decoration:none}
 .adc2 .v-use-copy p{margin-top:12px;color:var(--ink-2);font-size:16px;line-height:1.7}
 .adc2 .v-frame{max-width:100%;box-shadow:0 18px 48px rgba(0,0,0,.34)}
 .adc2 .v-phone{height:85%;width:auto;aspect-ratio:9/16;padding:7px;border-radius:27px}

@@ -275,7 +275,7 @@ export function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolve
         const image = item.alt ? { ...item.img, alt: item.alt } : item.img;
         const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
         return <article className="v-image-item-row" key={`${item.t}-${index}`}>
-          <div className="v-image-item-copy"><h3>{item.t}</h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
+          <div className="v-image-item-copy"><h3>{item.href ? <a href={r.href(item.href)}>{item.t}</a> : item.t}</h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
           <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
         </article>;
       })}

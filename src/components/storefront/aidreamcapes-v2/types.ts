@@ -29,6 +29,8 @@ export type V2VisualUse = {
   imageB?: V2VisualImage;
   img?: V2Image;
   alt?: string;
+  href?: string;
+  prompt?: string;
   h: string;
   d: string;
 };
@@ -71,7 +73,7 @@ export type V2Item = {
   frame?: "phone" | "browser" | "none";
   icon?: V2BenefitIcon;
 };
-export type V2ImageItem = V2Item;
+export type V2ImageItem = V2Item & { href?: string; prompt?: string };
 export type V2Faq = { q: string; a: string };
 export type V2Crumb = { label: string; href: string };
 export type V2Card = { key: string; name: string; line?: string; kind: "video" | "photo"; href: string; image: V2Image; tags: string[]; industries: string[]; platforms: string[]; filterTags?: string[]; cardType?: "template" | "case"; videoExample?: boolean; product?: string; mediaRef?: string; video?: V2Video };
