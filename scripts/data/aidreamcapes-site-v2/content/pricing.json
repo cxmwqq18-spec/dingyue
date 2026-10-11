@@ -21,7 +21,7 @@
   "faq": [
     {
       "q": "Which plan should a small shop start with?",
-      "a": "Match the plan to how often you make new content. If you mainly refresh a few listings, a smaller plan may cover it. If you run ads every week and like to try new versions, a larger credit allowance gives you more room."
+      "a": "Start with Starter at $24.50 for 200 credits if you refresh a few listings. Move to Pro or Premium when you need more credits for weekly ad testing or many products."
     },
     {
       "q": "Can I use the same credits for photos and videos?",
@@ -29,7 +29,7 @@
     },
     {
       "q": "Can I get a refund for a result I don't like?",
-      "a": "If a generation fails, its reserved credits are returned automatically. For a delivered result or payment review, use the current Refunds policy and contact support; this FAQ does not promise a refund."
+      "a": "No. A delivered result is not refunded because you dislike it. If a generation fails, its reserved credits return automatically; for a payment review, use the current Refunds policy and contact support."
     },
     {
       "q": "Are my uploads private on every plan?",
@@ -43,5 +43,7 @@
       "q": "How many credits does a photo or video use?",
       "a": "A product photo costs 24 credits. Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the exact cost before starting a job."
     }
-  ]
+  ],
+  "cta_title": "Choose a plan for your next product photo",
+  "cta_lead": "Compare the credit cost for your next photo or video, then start with the plan that fits your work."
 }

@@ -45,5 +45,7 @@
       "q": "What do product photos and video jobs cost in credits?",
       "a": "A product photo costs 24 credits. Videos use 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The exact cost appears before you start, and failed jobs return their credits."
     }
-  ]
+  ],
+  "cta_title": "Choose a plan after you check the cost",
+  "cta_lead": "Find the answer you need, compare the credit cost, and start with a plan that fits your next product ad."
 }
