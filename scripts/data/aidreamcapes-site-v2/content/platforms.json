@@ -223,31 +223,31 @@
       "cards": [
         {
           "t": "UGC talking ads",
-          "d": "A creator-style performer holds your product and delivers your line in a vertical clip for TikTok, Reels or Shorts. [Open the UGC ad tool](page:video-ads).",
+          "d": "A creator-style performer holds your product and delivers your line in a vertical clip for TikTok, Reels or Shorts.",
           "href": "page:video-ads",
           "label": "UGC ad tool"
         },
         {
           "t": "Unboxing clips",
-          "d": "Show the package opening and first reveal without filming a delivery, so shoppers see exactly what lands on the doorstep. [Open unboxing videos](page:unboxing-videos).",
+          "d": "Show the package opening and first reveal without filming a delivery, so shoppers see exactly what lands on the doorstep.",
           "href": "page:unboxing-videos",
           "label": "Unboxing videos"
         },
         {
           "t": "Before and after clips",
-          "d": "Keep one item and one camera, then show the changed state in the same clip to make the result easy to believe. [Open before and after videos](page:before-after-videos).",
+          "d": "Keep one item and one camera, then show the changed state in the same clip to make the result easy to believe.",
           "href": "page:before-after-videos",
           "label": "Before and after videos"
         },
         {
           "t": "Product demos",
-          "d": "Show how the item works in a short, clear clip for a product page, store or paid slot. [Open product videos](page:product-videos).",
+          "d": "Show how the item works in a short, clear clip for a product page, store or paid slot.",
           "href": "page:product-videos",
           "label": "Product videos"
         },
         {
           "t": "Image-to-video motion",
-          "d": "Turn a still product image into a short moving ad that shows the detail shoppers need to see. [Open image to video](page:image-to-video).",
+          "d": "Turn a still product image into a short moving ad that shows the detail shoppers need to see.",
           "href": "page:image-to-video",
           "label": "Image to video"
         }
@@ -260,49 +260,49 @@
       "cards": [
         {
           "t": "Beauty & skincare",
-          "d": "Texture, routine and result moments for cosmetics and skin products. [Browse beauty ideas](page:ind-beauty-skincare).",
+          "d": "Texture, routine and result moments for cosmetics and skin products.",
           "href": "page:ind-beauty-skincare",
           "label": "Beauty & skincare"
         },
         {
           "t": "Fashion & clothing",
-          "d": "Fit, fabric and try-on moments for apparel. [Browse fashion ideas](page:ind-fashion-clothing).",
+          "d": "Fit, fabric and try-on moments for apparel.",
           "href": "page:ind-fashion-clothing",
           "label": "Fashion & clothing"
         },
         {
           "t": "Shoes",
-          "d": "Sole detail, on-foot fit and wear tests for footwear. [Browse shoe ideas](page:ind-shoes).",
+          "d": "Sole detail, on-foot fit and wear tests for footwear.",
           "href": "page:ind-shoes",
           "label": "Shoes"
         },
         {
           "t": "Jewelry & accessories",
-          "d": "Macro finish, scale and worn-position shots for jewelry. [Browse jewelry ideas](page:ind-jewelry-accessories).",
+          "d": "Macro finish, scale and worn-position shots for jewelry.",
           "href": "page:ind-jewelry-accessories",
           "label": "Jewelry & accessories"
         },
         {
           "t": "Electronics",
-          "d": "Ports, setup and in-use moments for gadgets. [Browse electronics ideas](page:ind-electronics).",
+          "d": "Ports, setup and in-use moments for gadgets.",
           "href": "page:ind-electronics",
           "label": "Electronics"
         },
         {
           "t": "Health & wellness",
-          "d": "Supplement and fitness gear moments shoppers trust. [Browse wellness ideas](page:ind-health-wellness).",
+          "d": "Supplement and fitness gear moments shoppers trust.",
           "href": "page:ind-health-wellness",
           "label": "Health & wellness"
         },
         {
           "t": "Food & drinks",
-          "d": "Pour, first bite and pack shots for food and beverages. [Browse food ideas](page:ind-food-drinks).",
+          "d": "Pour, first bite and pack shots for food and beverages.",
           "href": "page:ind-food-drinks",
           "label": "Food & drinks"
         },
         {
           "t": "Home & living",
-          "d": "Room setups, scale and before-after moments for home goods. [Browse home ideas](page:ind-home-living).",
+          "d": "Room setups, scale and before-after moments for home goods.",
           "href": "page:ind-home-living",
           "label": "Home & living"
         }
