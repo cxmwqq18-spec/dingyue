@@ -35,7 +35,7 @@
         ]
       ],
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, the selected actor holds the sky-blue moisturizer jar toward the camera, then touches one cheek. Natural creator delivery says: \"This is the moisturizer step I keep beside the sink.\" Sound: her voice and quiet bathroom room tone.",
+      "prompt": "This is the moisturizer step I keep beside the sink.",
       "items": [
         {
           "t": "Upload your product photo",
@@ -396,7 +396,7 @@
       "line": "My kitchen counter has a spot reserved for this.",
       "action": "standing at a bright kitchen counter, one hand gesturing while the other rests on the counter",
       "ambient": "their voice and natural kitchen room tone",
-      "ref": "n:guide:ac1-actor-card-kitchen-1-r1"
+      "ref": "n:guide:im08-ai-actors-kitchen-1-r1"
     },
     {
       "id": "kitchen-2",
@@ -981,7 +981,7 @@
     },
     {
       "q": "Can I choose the presenter?",
-      "a": "Yes. Choose from 36 adult presenters across different ages, styles and settings, then open the spokesperson workspace with that presenter selected."
+      "a": "Yes. Choose from 53 adult presenters across different ages, styles and settings, then open the spokesperson workspace with that presenter selected."
     },
     {
       "q": "What sizes and lengths are available?",

@@ -707,7 +707,7 @@ function ActorDirectoryPage({ data, r }: Props) {
     {howTo.length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={text(data.stepsH2) || "Make a spoken product ad"}><Steps items={howTo} /></Section> : null}
     <MoreSections r={r} sections={data.more_sections as never} />
     {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
-    {relatedGroups.length ? <Section eyebrow="Related tools and guides" title="Plan the placement for your actor ad">
+    {relatedGroups.length ? <Section eyebrow="Related tools and guides" title="Plan where the actor ad runs">
       <div className="related">
         {relatedGroups.map((group) => <div key={group.title}>
           <h3>{group.title}</h3>
