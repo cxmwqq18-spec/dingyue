@@ -2155,7 +2155,13 @@ function payloadFor(model, page) {
       assert.ok(!(t === "occasion" && (c.plan || []).length) || String(c.visual.titles?.plan?.h2 || "").trim(), `${page.id}: an occasion page with a plan needs visual.titles.plan.h2`);
     }
     return { ...base, kind: t, intro: linkedCopy.intro, ideas: linkedCopy.groups[0], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
-      cards: [...listed, ...caseCards], heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
+      cards: [...listed, ...caseCards], heroCards: collage,
+      tools: tools.map((id) => {
+        const imageOverride = model.cardOverrides?.[page.id]?.tools?.[id];
+        return t === "industry"
+          ? toolRef(model, id, Boolean(imageOverride?.ref), imageOverride)
+          : toolRef(model, id, false);
+      }),
       appHref: collectionHref,
       ...(visual ? { visual, maker: visualMaker } : {}),
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
