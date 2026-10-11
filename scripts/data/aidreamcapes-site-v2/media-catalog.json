@@ -43339,6 +43339,28 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "tw2-wall-sports-gym-2-r1": {
+        "file": "tw2-wall-sports-gym-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A plain matte kettlebell stands on a glossy black pedestal as orange and lime-green chalk dust bursts behind it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "tw2-wall-tech-electronics-1-r1": {
+        "file": "tw2-wall-tech-electronics-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with a short copper pixie haircut opens a plain sage countertop appliance in a warm evening kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
