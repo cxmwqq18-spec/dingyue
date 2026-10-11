@@ -65,6 +65,15 @@
     },
     "rc3_tpl_head_cover_r1": {
       "alt": "Four distinct adult professionals in matching shoulder-up portraits against a soft light-gray studio backdrop."
+    },
+    "v_howto-r1": {
+      "alt": "White handheld garment steamer photographed alone on a neutral background."
+    },
+    "v_drink-r1": {
+      "alt": "Plain silver beverage can upright on a bright kitchen counter."
+    },
+    "v_beauty-r1": {
+      "alt": "Matte ivory cleanser pump bottle with a pale sage pump on a clean white background."
     }
   },
   "galleries": {
@@ -7786,6 +7795,16 @@
         1200
       ],
       "source": "rc3 image generation"
+    },
+    "rc5-tpl-beauty-og-1-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Unbranded matte ivory cleanser pump bottle with a pale sage pump on a light stone bathroom vanity.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "gen.sh"
     }
   },
   "clips": {
@@ -45744,6 +45763,105 @@
           1280
         ],
         "source": "rc3 image generation"
+      },
+      "rc5-tpl-film-strip-headphones-r1": {
+        "file": "rc5-tpl-film-strip-headphones-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte black over-ear headphones on a charcoal stone pedestal under soft window light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-film-strip-travel-mug-r1": {
+        "file": "rc5-tpl-film-strip-travel-mug-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain olive-green travel mug on a dark slate table in a narrow warm window beam.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-source-r1": {
+        "file": "rc5-tpl-beauty-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte ivory cleanser pump bottle with a pale sage pump on a clean white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-result-r1": {
+        "file": "rc5-tpl-beauty-result-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand presses a matte ivory cleanser pump beside a bright sink, with white foam on fingertips.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-strip-4-r1": {
+        "file": "rc5-tpl-beauty-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Bare hands apply white moisturizer from an unbranded ivory tube on a light stone bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-drink-strip-04-r1": {
+        "file": "rc5-tpl-drink-strip-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Bare hands pour pale pink hibiscus iced tea from a clear glass carafe into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-drink-strip-06-r1": {
+        "file": "rc5-tpl-drink-strip-06-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian woman with dark red hair in a low bun pours clear citrus tonic into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-film-strip-4-r1": {
+        "file": "rc5-tpl-film-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded matte black desk lamp with a warm glow on a dark walnut sideboard in moody cinematic light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-howto-strip-6-r1": {
+        "file": "rc5-tpl-howto-strip-6-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a short black bob mounts a matte black bicycle safety light on a handlebar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

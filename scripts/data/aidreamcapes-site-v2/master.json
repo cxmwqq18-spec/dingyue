@@ -436,7 +436,7 @@
    "url": "/ai-video-generation/how-to-video",
    "label": "How-To Video",
    "primary_keyword": "AI how-to video maker",
-   "img": "v_howto",
+   "img": "v_howto-r1",
    "status": "rewrite",
    "group": "video",
    "industries": [
@@ -478,7 +478,7 @@
    "url": "/ai-video-generation/beauty-routine",
    "label": "Beauty Routine",
    "primary_keyword": "beauty product video ads",
-   "img": "v_beauty",
+   "img": "v_beauty-r1",
    "status": "keep",
    "group": "video",
    "industries": [
@@ -498,7 +498,7 @@
    "url": "/ai-video-generation/food-video",
    "label": "Drink Pour",
    "primary_keyword": "AI food and drink videos",
-   "img": "v_drink",
+   "img": "v_drink-r1",
    "status": "keep",
    "group": "video",
    "industries": [

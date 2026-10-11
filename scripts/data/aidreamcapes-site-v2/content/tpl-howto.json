@@ -1,27 +1,27 @@
 {
   "id": "tpl-howto",
-  "title": "AI How-To Product Videos in Minutes | AIVideosUGC",
-  "description": "Show shoppers how your product works with a how-to video from one photo. Pick 9:16 for Shorts or 16:9 for a product page or ad, without filming a presenter.",
-  "h1": "AI How-To Video Maker for Showing Products in Action",
+  "title": "AI How-To Video Maker: Product Demos in Minutes | AIVideosUGC",
+  "description": "AI how-to video maker: turn one product photo into a clear demo for Shorts and ads without filming a presenter. Choose 9:16 or 16:9 for 6, 10, 15 or 30 seconds.",
+  "h1": "AI How-To Video Maker for Product Demos That Sell",
   "eyebrow": "How-to video template",
-  "lead": "This AI how-to video maker shows one product task from setup to result. Upload one photo and get a clear clip for product pages, Shorts and ads.",
-  "benefits_h2": "Why sellers choose how-to templates",
+  "lead": "An AI how-to video maker turns a product photo into a task demo that shows the work from setup to result for a product page, Short or ad.",
+  "benefits_h2": "Why choose an AI how-to video maker?",
   "benefits": [
     {
-      "t": "Answer \"how does it work\" before checkout",
-      "d": "The clip takes one product from a clear starting state to a visible result, showing the repeatable movement a customer needs. Buyers stop guessing and make the purchase with fewer support questions."
+      "t": "Answer the how-does-it-work question fast",
+      "d": "Show one repeatable task from setup to result, so buyers can see the product doing its job before they buy."
     },
     {
-      "t": "One visible problem, one visible change",
-      "d": "Open on the wrinkled shirt, dry brush or empty mug, show one deliberate action, and hold on the finished state. The product proves its job without a long feature montage."
+      "t": "Make one problem and one fix obvious",
+      "d": "Open on the wrinkled shirt, empty mug or dirty surface, show one deliberate action, then hold on the finished state. Buyers follow the change without a long feature montage."
     },
     {
-      "t": "Cuts for the page and the feed",
-      "d": "Embed 16:9 in a product description and post 9:16 on YouTube Shorts and TikTok. Lengths run 6, 10, 15 or 30 seconds, so a quick task and a full step-by-step lesson both fit."
+      "t": "Use the same demo in feed and listing",
+      "d": "Post 9:16 on TikTok or YouTube Shorts and 16:9 on a product page or ad. Choose 6, 10, 15 or 30 seconds for the task."
     },
     {
-      "t": "Instructions stay accurate after download",
-      "d": "Add step labels and approved safety warnings as editable text in your editor, and use your real product documentation as the source. Downloads have no AIVideosUGC watermark and are cleared for commercial use."
+      "t": "Publish the instructions you approve",
+      "d": "Download without an AIVideosUGC watermark, then add step labels, safety wording or product details in your editor before posting."
     }
   ],
   "secondary_keywords": [
@@ -31,20 +31,20 @@
     "YouTube Shorts product tutorial",
     "instructional product video"
   ],
-  "steps_h2": "How it works",
-  "steps_lead": "Choose a task, add your product, generate. No studio, presenter or reshoot.",
+  "steps_h2": "How to Make AI How-To Videos in 3 Simple Steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-post task demo, with no studio, presenter or reshoot.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add a clear photo of the whole tool or product with its useful details visible."
+      "d": "Show the whole tool or product with its useful working details visible."
     },
     {
       "t": "Pick a How-To Style",
-      "d": "Choose a task scene, then generate a clip that shows the product in action."
+      "d": "Choose the task and one visible change, then generate the clip in your size and length."
     },
     {
-      "t": "Download and Label",
-      "d": "Download the video and add short step labels or approved safety copy in your editor."
+      "t": "Download and Post",
+      "d": "Download the video, then add short step labels or approved safety wording in your editor."
     }
   ],
   "maker": {
@@ -107,14 +107,14 @@
     }
   ],
   "visual": {
-    "overview": "A how-to template shows one product task from setup to result, helping shoppers understand how it works before checkout.",
+    "overview": "An AI how-to video shows one product task from setup to result, so buyers can see how it works before checkout.",
     "strip": [
       "n:q10-howto-strip-1",
       "n:q10-howto-strip-2",
       "n:q10-howto-strip-3",
       "n:q10-howto-strip-4",
       "n:q10-howto-strip-5",
-      "n:q10-howto-strip-6"
+      "n:guide:rc5-tpl-howto-strip-6-r1"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-howto-m2-source",
@@ -151,13 +151,13 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make a vertical how-to video from one product photo"
+        "h2": "Make an AI how-to video from one product photo"
       },
       "m3": {
-        "h2": "Choose a clear action for a how-to video"
+        "h2": "Choose a clear action for your AI how-to video"
       },
       "faq": {
-        "h2": "Questions about product how-to videos"
+        "h2": "Questions about AI how-to videos"
       }
     }
   }
