@@ -101,10 +101,10 @@
   ],
   "visual": {
     "steps": {
-      "source": "n:guide:k3-social-gallery-city-curb",
-      "result": "n:guide:f2-social-steps-result-r1",
+      "source": "n:guide:im13-social-steps-source-r1",
+      "result": "n:guide:im13-social-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Preserve its color, tread, laces and shape while placing it on a warm wood entryway floor; change the setting only."
+      "prompt": "Use the uploaded matte sage-green insulated bottle as the exact product reference. Preserve its shape, color and screw cap while placing it on a warm wood entryway bench; change the setting only."
     },
     "picker": {
       "title": "Browse social ad scenes",

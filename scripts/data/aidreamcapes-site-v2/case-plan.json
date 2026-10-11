@@ -166,7 +166,7 @@
     ],
     "model-photos": [
       {
-        "ref": "n:guide:k5-model-case-1",
+        "ref": "n:guide:im13-model-case-1-r1",
         "product": "camel wool coat",
         "title": "Fashion Style OOTD: camel coat on a city walk"
       },
@@ -200,14 +200,14 @@
     ],
     "social-ad-photos": [
       {
-        "ref": "n:guide:q6-social-case-1",
+        "ref": "n:guide:im13-social-case-1-r1",
         "product": "cold brew coffee",
         "title": "First-Sip Reaction: Open a cold brew can"
       },
       {
-        "ref": "n:guide:q6-social-case-2",
-        "product": "pet hair remover",
-        "title": "Problem to Fix: Pet hair off the sofa"
+        "ref": "n:guide:im13-social-case-2-r1",
+        "product": "ceramic pet bowl",
+        "title": "Pet Feeding: pour kibble into a ceramic bowl"
       },
       {
         "ref": "n:guide:q6-social-case-3",
