@@ -5,7 +5,7 @@
   "h1": "Instagram Story Ad Images Built Around a Square Product Photo",
   "eyebrow": "Ad photo template",
   "lead": "A feed photo cropped to Stories rarely leaves room for your headline or button. Upload one product photo and get a square image composed to sit inside a 9:16 Story ad.",
-  "benefits_h2": "Why make Story ad images from one photo?",
+  "benefits_h2": "Why sellers use Instagram Story ad images",
   "benefits": [
     {
       "t": "Built for the full phone screen",
@@ -30,7 +30,7 @@
     "Facebook Stories ad image",
     "summer product story ads"
   ],
-  "steps_h2": "Make a Story ad image in 3 steps",
+  "steps_h2": "How to make Instagram Story ad images in 3 Simple Steps",
   "steps_lead": "One product photo becomes a Story-ready square scene, with all text added outside the image.",
   "steps": [
     {
@@ -93,12 +93,12 @@
   "visual": {
     "overview": "This template turns one product photo into a square scene made for a Story layout, with the product clear of the header, stickers and action button. Place it on a 9:16 canvas and add your offer text after download.",
     "strip": [
-      "n:q10-story-strip-1",
+      "n:q10-story-picker-1",
       "n:q10-story-strip-2",
-      "n:q10-story-strip-3",
-      "n:q10-story-strip-4",
-      "n:q10-story-strip-5",
-      "n:q10-story-strip-6"
+      "n:q10-story-picker-4",
+      "n:q10-story-picker-6",
+      "n:q10-story-example-02",
+      "n:q10-story-example-03"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-story-m2-source",
@@ -138,7 +138,7 @@
         "h2": "Choose a scene for your product Story ad"
       },
       "m4": {
-        "h2": "Use Story ad photos in vertical social placements"
+        "h2": "Use Story ad photos in vertical social ads"
       },
       "m5": {
         "h2": "Start a Story ad with a clear product photo"
@@ -150,7 +150,7 @@
         "h2": "Add the Story date and offer after download"
       },
       "faq": {
-        "h2": "Questions about Story ad photos"
+        "h2": "Questions about Instagram Story ad images"
       },
       "examples": {
         "h2": "Instagram Story ad image examples"
