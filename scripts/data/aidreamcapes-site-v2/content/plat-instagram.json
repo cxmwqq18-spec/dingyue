@@ -1,11 +1,11 @@
 {
   "id": "plat-instagram",
   "title": "AI Instagram Ads for Reels, Stories and Feed | AIVideosUGC",
-  "description": "Make Instagram Reels and feed ads from one product photo: get a 9:16 clip and a square still to crop 4:5, with no shoot and the cost shown first.",
-  "h1": "AI Instagram Ads From the Product Photos You Already Have",
+  "description": "Make an Instagram ad from one product photo. Choose a 9:16 Reel or square still, see the credit cost first, and download without a watermark.",
+  "h1": "Make Instagram Ads from One Product Photo",
   "eyebrow": "Instagram ads",
-  "lead": "Turn one product photo into an Instagram ad. Get a Reels-style clip or a square still for the feed in minutes, with the credit cost shown first.",
-  "card": "9:16 Reels clips and square product images.",
+  "lead": "Turn one product photo into an Instagram ad. Choose a Reel-style clip or a square still, then download the file when it is ready.",
+  "card": "Reel-style clips and square product images from one photo.",
   "secondary_keywords": [
     "Instagram Reels ads",
     "Instagram Story ad video",
@@ -15,102 +15,52 @@
   "faq": [
     {
       "q": "Can I make an Instagram ad from one product photo?",
-      "a": "Yes. Upload one clear photo, share your idea in one sentence and choose a Reels-style clip or a square still. The credit cost shows before you start."
+      "a": "Yes. Upload one clear photo, describe your product moment and choose a Reel-style clip or square still. The credit cost appears before you start."
     },
     {
       "q": "Which Instagram placements can I make ads for?",
-      "a": "Make a 9:16 clip for Reels and Stories, or a square still to crop for the feed and carousel. Pick the file the placement asks for."
+      "a": "Make a 9:16 clip for Reels or Stories, or a square still to crop for the Feed and carousel. Choose the file the placement asks for."
     },
     {
-      "q": "Do I need to book a creator or a studio?",
-      "a": "No. The clip or still is built from your own product photo, so there is no shoot day and no wait for footage. Start another job when you need a new angle."
+      "q": "Do I need to book an Instagram creator or studio?",
+      "a": "No. Start from your own product photo, so there is no creator booking, studio day or footage queue."
     },
     {
-      "q": "How do I build a carousel ad?",
-      "a": "Run a separate square job for each slide, such as a front view, an in-hand view and a close detail, then put the stills together as one carousel in Instagram."
+      "q": "How do I build an Instagram carousel?",
+      "a": "Run one square job for each slide, such as a front view, in-hand view or close detail, then assemble the stills in Instagram."
     },
     {
-      "q": "Does the file include captions and music?",
-      "a": "No. Add your caption, stickers and sound in Instagram, Canva or Ads Manager after download. The file itself has no text or audio."
+      "q": "Does the download include captions or music?",
+      "a": "No. Add your caption, stickers and sound in Instagram, Canva or Ads Manager after download."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "Use a sharp photo that shows the whole product, with a little space around it. This keeps the item clear when Instagram adds controls or crops the image."
+      "q": "What photo should I upload for Instagram ads?",
+      "a": "Use a sharp photo that shows the whole product and leaves a little space around it for controls and crops."
     },
     {
-      "q": "Can I test different versions?",
-      "a": "Yes. Run another job from the same photo with a different idea and compare the results. You do not reshoot or pay a second creator."
+      "q": "Can I make different Instagram versions?",
+      "a": "Yes. Run another job from the same photo with a different scene or opening without arranging another shoot."
     },
     {
-      "q": "Can I use the ads for paid campaigns?",
-      "a": "Yes. Downloads carry no AIVideosUGC watermark and are yours to use in Instagram ads, subject to Meta's current ad review rules."
+      "q": "Can I use the file in paid Instagram campaigns?",
+      "a": "Yes. Downloads have no AIVideosUGC watermark. Follow Meta's current ad-review rules when you publish."
     }
   ],
-  "examples": {
-    "h2": "More Instagram Examples",
-    "lead": "Beauty routines, product texture, unboxing, and travel use.",
-    "groups": [
-      {
-        "label": "Get Ready With Me",
-        "items": [
-          {
-            "ref": "f:q18-instagram-example-grwm-minis",
-            "title": "Get Ready With Me — Travel Skincare Minis",
-            "kind": "photo",
-            "product": "travel skincare minis"
-          }
-        ]
-      },
-      {
-        "label": "Product Details",
-        "items": [
-          {
-            "ref": "n:guide:k4-plat-instagram-06-examples-groups-0-items-1-image",
-            "title": "Skincare Bottles on Pastel Podiums",
-            "kind": "photo",
-            "product": "skincare bottles"
-          },
-          {
-            "ref": "n:guide:k4-plat-instagram-07-examples-groups-0-items-2-image",
-            "title": "Face Cream Jar Resting on Wet Stone",
-            "kind": "photo",
-            "product": "face cream jar"
-          }
-        ]
-      },
-      {
-        "label": "Unboxing",
-        "items": [
-          {
-            "ref": "f:q18-instagram-example-skincare-unbox",
-            "title": "Unboxing — Serum Mini Lifted from Tissue",
-            "kind": "photo",
-            "product": "serum mini"
-          },
-          {
-            "ref": "f:q18-instagram-example-travel-routine",
-            "title": "Product Review — Travel Skincare Routine",
-            "kind": "photo",
-            "product": "serum and travel pouch"
-          }
-        ]
-      }
-    ]
-  },
-  "templates_lead": "Choose a look for a Reel or square feed post featuring your product.",
-  "cta_lead": "Choose the Instagram placement first, then make an image or clip that fits it.",
+  "examples": null,
+  "templates_lead": "Choose a look for a Reel or square Instagram post featuring your product.",
+  "cta_lead": "Choose the Instagram placement first, then make a still or clip that fits it.",
   "steps": [
     {
-      "t": "Upload your product photo",
-      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
+      "t": "Upload Your Product Photo",
+      "d": "Add one clear photo of the whole product so shoppers recognize it from the first frame."
     },
     {
-      "t": "Share your video idea",
-      "d": "Say what happens in one sentence and pick a clip or square still. The credit cost shows first, before the file is made."
+      "t": "Pick Your Instagram Format",
+      "d": "Describe one product moment and choose a Reel-style clip or square still. See the credit cost before the file is made."
     },
     {
-      "t": "Download and post",
-      "d": "Download the file with no watermark, add your caption and offer, then post it through Instagram or Ads Manager."
+      "t": "Download and Post",
+      "d": "Download the file with no watermark, add your caption and offer, then post through Instagram or Ads Manager."
     }
   ],
   "visual": {
@@ -126,7 +76,7 @@
       "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
       "result": "f:q18-instagram-steps-hand-cream",
       "mode": "photo",
-      "prompt": "Create a square product photo of the plain white hand-cream tube shown in the uploaded image. An adult applies a small amount of cream to the back of one hand while keeping the tube fully visible. Soft natural window light, realistic skin, clean vanity composition.",
+      "prompt": "Show plain white hand-cream tube applied beside a bright bathroom mirror for an Instagram product post.",
       "options": [
         [
           "Template",
@@ -139,73 +89,76 @@
       ],
       "items": [
         {
-          "t": "Upload your product photo",
-          "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
+          "t": "Upload Your Product Photo",
+          "d": "Add one clear photo of the whole product so shoppers recognize it from the first frame."
         },
         {
-          "t": "Share your video idea",
-          "d": "Say what happens in one sentence and pick a clip or square still. The credit cost shows first, before the file is made."
+          "t": "Pick Your Instagram Format",
+          "d": "Describe one product moment and choose a Reel-style clip or square still. See the credit cost before the file is made."
         },
         {
-          "t": "Download and post",
-          "d": "Download the file with no watermark, add your caption and offer, then post it through Instagram or Ads Manager."
+          "t": "Download and Post",
+          "d": "Download the file with no watermark, add your caption and offer, then post through Instagram or Ads Manager."
         }
       ]
     }
   },
-  "benefits_h2": "Why this works for Instagram ads",
+  "benefits_h2": "Make More Instagram Ads, Faster",
   "benefits": [
     {
       "t": "Shorter Production Time",
-      "d": "Instagram demands consistency, and ready-to-make clips let you post and advertise in minutes rather than booking a shoot."
+      "d": "Start an Instagram Reel or still from one product photo and keep the next ad moving.",
+      "icon": "clock"
     },
     {
       "t": "Lower Production Cost",
-      "d": "Your Instagram ads get high-quality visuals at a far lower cost, so content production costs stay in check."
+      "d": "Use your product photo instead of booking a creator, studio and shoot.",
+      "icon": "coins"
     },
     {
       "t": "Variations to Test",
-      "d": "Try clips with a wide range of formats, find what drives the best response, and do more of what works."
+      "d": "Change the format or opening and compare versions without reshooting the product.",
+      "icon": "layers"
     }
   ],
-  "steps_h2": "How to make an Instagram ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post Reel or feed ad — no studio, no creator, no reshoot.",
+  "steps_h2": "How to Make an Instagram Ad in 3 Simple Steps",
+  "steps_lead": "Upload one product photo, choose the Instagram format and download the file for your placement.",
   "more_sections": [
     {
       "eyebrow": "Why sellers choose it",
-      "h2": "Why AI UGC videos work for Instagram ads",
-      "lead": "Consistent, on-brand creative whenever you need it.",
+      "h2": "Why Sellers Use AI Instagram Ads",
+      "lead": "Keep Instagram creative moving from the product photos you already have.",
       "items": [
         {
           "t": "No Creator Wait",
-          "d": "Get fresh, high-quality content in minutes without the wait, so your next ad is ready when you are."
+          "d": "Get the next Instagram ad moving from the photo you already have."
         },
         {
-          "t": "Ready Instagram Templates",
-          "d": "Build high-converting ads using ready, creator-style formats, and scale your clips without a shoot."
+          "t": "Start with a Ready Format",
+          "d": "Choose a Reel-style clip or square still, then add your caption after download."
         },
         {
-          "t": "Sell In Every Market",
-          "d": "Make versions for different audiences without extra production cost, so every market feels local."
+          "t": "Keep Each Market Moving",
+          "d": "Make a separate version for a new audience without arranging another shoot."
         }
       ]
     },
     {
       "eyebrow": "What you can do",
-      "h2": "A practical AI video generator for Instagram",
-      "lead": "Everything in one place, from product photo to ready clip.",
+      "h2": "How AI Helps You Make Instagram Ads",
+      "lead": "Use one product photo to prepare the file each Instagram placement asks for.",
       "items": [
         {
-          "t": "Turn Product Photos Into Ads",
-          "d": "Start from your own product image and end with a finished clip, without switching between tools."
+          "t": "Turn Product Photos into Ads",
+          "d": "Start from your own image and download a file for the placement you choose."
         },
         {
-          "t": "Holding and Demo Formats",
-          "d": "Show the product in a hand or in use, the formats shoppers expect in the feed."
+          "t": "Show the Product in Use",
+          "d": "Use a hand, routine or close detail to make the item easy to understand."
         },
         {
-          "t": "Full Creative Control",
-          "d": "Change the opening, scene or length and make another version whenever you need a fresh take."
+          "t": "Control the Opening",
+          "d": "Change the scene or idea and make another version when the campaign needs it."
         }
       ]
     }
