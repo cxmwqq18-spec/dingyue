@@ -15,16 +15,19 @@
   "benefits_h2": "Get AI Lifestyle Product Photos Shoppers Can Picture",
   "benefits": [
     {
-      "t": "See it in everyday use",
-      "d": "Place the item on a kitchen counter, a bedside table or a cafe table where its use is easy to picture."
+      "t": "Skip the studio setup",
+      "d": "Create a scene from one plain product photo without booking a space, props or a crew.",
+      "icon": "clock"
     },
     {
-      "t": "Realistic scenes that sell",
-      "d": "A natural-light scene helps shoppers imagine owning the product and gives your listing a clear story."
+      "t": "Test more settings quickly",
+      "d": "Try a room, cafe table or counter scene when a new campaign needs a fresh angle.",
+      "icon": "layers"
     },
     {
-      "t": "Create polished visuals from one photo",
-      "d": "Generate a clean lifestyle image in minutes from one photo, without a studio, props or a crew."
+      "t": "Keep the item in focus",
+      "d": "Start with a clear photo that shows the whole product so its shape stays easy to recognize.",
+      "icon": "target"
     }
   ],
   "steps_h2": "How to Create AI Lifestyle Product Photos in 3 Simple Steps",
@@ -126,19 +129,28 @@
     },
     "uses": [
       {
-        "img": "n:guide:k5-lifestyle-gallery-03",
-        "h": "Visualize your product in everyday use",
-        "d": "Show the item in a real setting so shoppers can picture using it."
+        "img": "n:guide:k5-lifestyle-photos-uses-0-image",
+        "h": "Put your product in a real context",
+        "d": "Place the item in a room or on a shelf so shoppers can see where it belongs.",
+        "alt": "Ceramic planter with a fern on a styled shelf, wide banner framing."
       },
       {
-        "img": "n:guide:k5-lifestyle-example-g4",
-        "h": "Boost attention with a realistic scene",
-        "d": "A natural moment gives the product a clear job to do in your shop or feed."
+        "img": "n:guide:k5-lifestyle-photos-uses-1-image",
+        "h": "Visualize the product in everyday use",
+        "d": "Show the item beside the tools, ingredients or surfaces people use with it.",
+        "alt": "Matcha whisk, bowl and tin arranged on a linen tablecloth."
       },
       {
-        "img": "n:guide:k5-lifestyle-template-bg",
-        "h": "Create polished visuals from one photo",
-        "d": "Start with one plain photo and get a styled image in minutes, without props or a crew."
+        "img": "n:guide:k5-lifestyle-photos-picker-cards-7-image",
+        "h": "Make the next shopping decision easier",
+        "d": "Give a listing or social post a believable moment that shows the product doing its job.",
+        "alt": "Linen tote packed at a farmers market stall."
+      },
+      {
+        "img": "n:guide:k5-lifestyle-photos-template-life",
+        "h": "Create polished scenes with less setup",
+        "d": "Generate a finished lifestyle image from one clear photo, without unpacking a shoot kit.",
+        "alt": "White ceramic candle on a bedside table at dusk."
       }
     ],
     "titles": {

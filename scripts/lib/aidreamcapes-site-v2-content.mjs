@@ -1668,7 +1668,9 @@ function autoLinks(model, paras, page) {
 // Benefits lists share the same item shape as steps; pass their descriptions through
 // the same automatic linker so internal links resolve the same way on every layout.
 function benefitsList(model, page, items) {
-  return autoLinkPage(model, page, [], [items]).groups[0];
+  // Benefits can carry page-owned image rows as well as icon cards. Resolve refs here
+  // so the standard benefits section can render image-led competitor use cases before steps.
+  return imageItemsFor(model, page, autoLinkPage(model, page, [], [items]).groups[0]);
 }
 
 const IMAGE_ITEM_FRAMES = new Set(["phone", "browser", "none"]);
@@ -1926,7 +1928,7 @@ function payloadFor(model, page) {
     ] : [];
     const heroCards = page.id === "white-background" || page.id === "spokesperson-videos" ? null
       : hasHero ? [] : hub ? toolHeroCardsForHub(model, page, c.hero_cards) : [];
-    return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
+    return { ...base, group: page.group, intro: linkedCopy.intro, benefits: imageItemsFor(model, page, linkedCopy.groups[0]), steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
       ...(visual ? { visual } : {}),
