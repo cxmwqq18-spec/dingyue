@@ -35,15 +35,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show one complete product with open space around it."
+      "d": "Show one complete product with open space around it. A clean source lets the product stay clear when you add the Story layout."
     },
     {
       "t": "Describe the Setting",
-      "d": "Name a surface, light direction and one prop in one sentence."
+      "d": "Name a surface, light direction and one prop in one sentence. Keep the requested setting simple so the product stays the focal point."
     },
     {
       "t": "Download and Post",
-      "d": "Place the square image on a 9:16 canvas and add your price, date and button."
+      "d": "Place the square image on a 9:16 canvas and add your price, date and button. Check the final phone view before posting."
     }
   ],
   "maker": {
@@ -87,6 +87,26 @@
     {
       "q": "How much does a Story photo cost?",
       "a": "Each photo costs 24 credits, and the charge is shown before you start. Downloads carry no watermark."
+    },
+    {
+      "q": "Can I start with a product photo on a plain background?",
+      "a": "Yes. Upload one complete product photo and describe the Story setting you want around it."
+    },
+    {
+      "q": "Will the output keep my full product visible?",
+      "a": "Yes. The Story composition keeps the product complete and leaves calm space around it for your layout."
+    },
+    {
+      "q": "Can I request a hand or person in the Story scene?",
+      "a": "Yes. Describe the hand or adult action in the setting while keeping the uploaded product as the subject."
+    },
+    {
+      "q": "Can I make several Story scenes from one source photo?",
+      "a": "Yes. Run the same source photo again with a different setting or prop for another Story concept."
+    },
+    {
+      "q": "What should I review before I publish the Story?",
+      "a": "Check the product shape, placement and every offer detail you add after download before posting."
     }
   ],
   "output": "Square product photo · Story layout",
@@ -102,7 +122,7 @@
     ],
     "steps": {
       "source": "n:guide:c1-tpl-story-m2-source",
-      "sourceAlt": "Single hot sauce bottle photographed upright on a pale seamless background.",
+      "sourceAlt": "Single hot sauce bottle photographed upright on a plain pale background.",
       "sourceTitle": "Square product photo",
       "sourceHint": "Center the full product with open space around it.",
       "result": "n:guide:c1-tpl-story-m2-result-square",
@@ -571,5 +591,17 @@
         "lead": "Choose another square ad layout for your Instagram Story campaign."
       }
     }
-  }
+  },
+  "relatedLinks": [
+    "social-ad-photos",
+    "tpl-ugc",
+    "tpl-sale",
+    "plat-instagram",
+    "plat-facebook",
+    "occ-holidays",
+    "guide-ad-sizes-by-platform",
+    "ind-beauty-skincare",
+    "video-ads",
+    "guide-testing-ad-versions"
+  ]
 }

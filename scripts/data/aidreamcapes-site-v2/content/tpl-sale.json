@@ -16,15 +16,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product featured in the sale."
+      "d": "Start with one clear photo of the product featured in the sale. Keep the full product visible so the sale scene can match it."
     },
     {
       "t": "Pick a Sale Scene",
-      "d": "Share the product scene and open offer area in one sentence."
+      "d": "Share the product scene and open offer area in one sentence. Leave the discount, code and end date for your editor."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed discount, code and end date in your editor, then post the image where customers will see it."
+      "d": "Add the confirmed discount, code and end date in your editor, then post. Check every figure on a phone preview first."
     }
   ],
   "maker": {
@@ -604,5 +604,17 @@
       "t": "Fit feed and product pages",
       "d": "Use the square image in Facebook and Instagram feeds, carousels or a product page after you add the final offer."
     }
+  ],
+  "relatedLinks": [
+    "social-ad-photos",
+    "tpl-story",
+    "occ-black-friday",
+    "occ-sale-discount",
+    "occ-holidays",
+    "plat-instagram",
+    "plat-facebook",
+    "ind-fashion-clothing",
+    "guide-testing-ad-versions",
+    "guide-ad-sizes-by-platform"
   ]
 }
