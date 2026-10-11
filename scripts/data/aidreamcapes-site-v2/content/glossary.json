@@ -93,7 +93,7 @@
     },
     {
       "term": "Safe zone",
-      "definition": "A safe zone is the part of a social frame where important text and product details remain visible after the platform places buttons, captions, or profile controls over the edges. AIVideosUGC leaves final text to you. Keep the main subject and text away from the lower and right edges, then inspect the placement preview in each ad manager.",
+      "definition": "A safe zone is the part of a social frame where important text and product details remain visible after the platform places buttons, captions, or profile controls over the edges. AIVideosUGC leaves final text to you. Keep the main subject and text away from the lower and right edges, then inspect the preview in each ad manager.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "guide-first-tiktok-video-ad",
@@ -112,7 +112,7 @@
     },
     {
       "term": "Ads Manager",
-      "definition": "Ads Manager is the platform tool where you upload an ad and set its text, audience, budget, placement, and schedule. AIVideosUGC gives you the product photo or video file; it does not publish campaigns or add prices, captions, music, or targeting. Those final choices stay in TikTok, Meta, or another ad tool.",
+      "definition": "Ads Manager is the platform tool where you upload an ad and set its text, audience, budget, where the ad appears, and schedule. AIVideosUGC gives you the product photo or video file; it does not publish campaigns or add prices, captions, music, or targeting. Those final choices stay in TikTok, Meta, or another ad tool.",
       "related_page_ids": [
         "plat-tiktok",
         "plat-facebook",
@@ -131,7 +131,7 @@
     },
     {
       "term": "Unboxing",
-      "definition": "An unboxing video focuses on the reveal when a package opens and the product comes out. The box, tissue, insert, and order of the reveal come from your description, while the product photo anchors the item itself. Use this format for launches, gift-ready products, or subscription boxes, then add verified product and offer text and music after download.",
+      "definition": "An unboxing video focuses on the reveal when a package opens and the product comes out. The box, tissue, insert, and order of the reveal come from your description, while the product photo anchors the item itself. Use this format for launches, gift-ready products, or subscription boxes, then add accurate product and offer text and music after download.",
       "related_page_ids": [
         "unboxing-videos",
         "blog-unboxing-videos-for-launches",
@@ -158,7 +158,7 @@
     },
     {
       "term": "On-model photo",
-      "definition": "An on-model photo shows clothing, jewelry, a bag, or another wearable item being worn by a generated model. It helps shoppers see drape, scale, and placement alongside a clean product shot. AIVideosUGC does not supply model measurements or confirm clothing fit; keep your size chart and product details with the image.",
+      "definition": "An on-model photo shows clothing, jewelry, a bag, or another wearable item being worn by a generated model. It helps shoppers see drape and scale alongside a clean product shot. AIVideosUGC does not supply model measurements or confirm clothing fit; keep your size chart and product details with the image.",
       "related_page_ids": [
         "model-photos",
         "tpl-jewel",

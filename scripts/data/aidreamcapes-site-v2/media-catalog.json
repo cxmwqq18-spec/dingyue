@@ -45054,6 +45054,46 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "rd1-guide-ad-sizes-by-platform-cover-r1": {
+        "file": "rd1-guide-ad-sizes-by-platform-cover-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult creator with a short blonde bob holds a plain white sunscreen tube beside her face outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rd1-blog-ai-product-photography-guide-cover-r1": {
+        "file": "rd1-blog-ai-product-photography-guide-cover-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult with a short copper pixie haircut sits beside a plain tan handbag on a cafe table with a latte.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rd1-blog-ai-video-review-checklist-cover-r1": {
+        "file": "rd1-blog-ai-video-review-checklist-cover-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult with short silver pixie hair sits beside a plain black travel backpack near a dining chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rd1-blog-unboxing-videos-for-launches-cover-r1": {
+        "file": "rd1-blog-unboxing-videos-for-launches-cover-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands open a blank kraft parcel to reveal a plain ceramic travel mug wrapped in tissue.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

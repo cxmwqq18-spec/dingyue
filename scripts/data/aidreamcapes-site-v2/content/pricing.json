@@ -14,8 +14,8 @@
   ],
   "intro": "Pick a plan based on how much content you make in a month. Starter comes with 200 credits for $24.50 a month, Pro with 300 credits for $35, and Premium with 600 credits for $63. Your credits work across the photo and video tools, so you can spend them on white background shots one week and vertical video ads the next.",
   "credits_explained": [
-    "Credits are how you pay for each photo or video you make. Before you start a job, the screen tells you how many credits it will take, so you're never guessing. Want a second version of an image or a video? That's a new job, and its cost appears on screen the same way.",
-    "When a job begins, its credits are set aside rather than spent. They're only used once your result is delivered, and if the job fails they go straight back to your balance. Delivered results generally can't be refunded, so take a moment to read the cost and your description before you press start."
+    "Credits pay for the jobs you run. A product photo uses 24 credits; video uses 24 for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The exact cost appears before you start.",
+    "The cost appears before you start, and if a job fails its credits return to your balance automatically."
   ],
   "teams": "Need more credits for a team or an agency? Email support@aivideosugc.com with roughly how many videos and photos you make each month, and we'll suggest the right setup.",
   "faq": [
@@ -38,6 +38,10 @@
     {
       "q": "What happens to credits when a job fails?",
       "a": "A failed job releases its reserved credits back to your balance automatically. Check the job status and credit history if the balance does not update."
+    },
+    {
+      "q": "How many credits does a photo or video use?",
+      "a": "A product photo costs 24 credits. Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the exact cost before starting a job."
     }
   ]
 }
