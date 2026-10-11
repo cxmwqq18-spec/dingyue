@@ -43314,6 +43314,17 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "rc1-tpl-size-hero-after-r1": {
+        "file": "rc1-tpl-size-hero-after-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same plain natural cream canvas tote beside a compact black carry-on at an airport, carried by an adult man with short silver-gray hair.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

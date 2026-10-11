@@ -80,10 +80,10 @@
   "visual": {
     "strip": [
       "n:guide:tpl-angle-round4-speaker-controls",
-      "n:guide:q7-angle-strip-1",
+      "n:gen2:tpl-angle-c3",
       "n:guide:q7-angle-strip-2",
       "n:gen2:tpl-angle-c2",
-      "n:guide:q7-angle-strip-4",
+      "n:gen2:tpl-angle-c4",
       "n:guide:q7-angle-strip-5"
     ],
     "steps": {
