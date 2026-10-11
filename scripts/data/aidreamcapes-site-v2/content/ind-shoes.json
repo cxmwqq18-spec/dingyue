@@ -1,10 +1,10 @@
 {
   "id": "ind-shoes",
-  "title": "AI Footwear Video Ads for Shoe Brands | AIVideosUGC",
-  "description": "Turn one shoe photo into on-foot demos, unboxings, fit checks, and creator reviews for footwear ads. Watermark-free clips, ready for social and listings.",
-  "h1": "Shoe UGC Ads That Show the Pair in Motion",
+  "title": "AI Shoe UGC Ads From a Product Photo | AIVideosUGC",
+  "description": "Turn one shoe photo into shoe UGC ads for on-foot demos, unboxings, fit checks, and reviews. Make watermark-free clips for social posts and product pages.",
+  "h1": "Make AI Shoe UGC Ads That Show the Pair in Motion",
   "eyebrow": "Shoe UGC ads",
-  "lead": "Shoppers buy when they can picture the pair on their feet. Turn one shoe photo into an on-foot demo, unboxing, or review that shows shape and visible details.",
+  "lead": "Show shoppers how the pair looks on foot. Turn one clear shoe photo into an on-foot demo, unboxing, fit check, or creator-style shoe UGC ad.",
   "card": "On-foot demos, shoe unboxings, creator reviews, and wear-test scenes for footwear ads.",
   "secondary_keywords": [
     "sneaker product photos",
@@ -14,6 +14,10 @@
     "shoe photos for Amazon listings"
   ],
   "faq": [
+    {
+      "q": "Can I make shoe UGC ads from one shoe photo?",
+      "a": "Yes. A clear side-profile photo can become an on-foot demo, white-background still, or short stride scene. Keep the full toe, heel, collar, and sole visible so the shape stays recognizable."
+    },
     {
       "q": "Can I get sole and heel photos from a single side shot?",
       "a": "Not reliably. The result can only show details visible in your upload. For a tread or heel view, start from a separate photo of the outsole or heel instead of a side shot."
@@ -32,7 +36,7 @@
     },
     {
       "q": "Can one shoe photo produce both a listing image and a walking video?",
-      "a": "Yes. A clear side-profile photo can become a white background or lifestyle still and also feed a short stride video. Keep the full toe, heel and collar visible so the reframe does not crop the shape."
+      "a": "Yes. A clear side-profile photo can become a white-background listing image and a short walking video. Keep the full toe, heel, collar, and sole visible so the reframe does not crop the shape."
     },
     {
       "q": "How do I avoid a branded look when selling unbranded shoes?",
@@ -40,40 +44,40 @@
     },
     {
       "q": "Can I run the clips as paid footwear ads?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product videos. Keep comfort and performance claims to verified facts, and pass the platform's ad review."
+      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product videos. Keep comfort and performance claims to product facts, and pass the platform's ad review."
     },
     {
       "q": "Is an AI on-foot clip different from hiring a UGC creator?",
       "a": "Yes. You upload one photo and pay credits per clip instead of a creator fee, sample shipping, and usage terms. The person is generated and not a real reviewer, so present the video as an ad."
     }
   ],
-  "templates_lead": "Choose a shoe ad format for an on-foot demo, unboxing, wear test, or creator review.",
-  "cta_lead": "Choose a footwear ad format and review the pair before posting.",
-  "benefits_h2": "Why Footwear Brands Are Done Waiting on Shoots",
+  "templates_lead": "Choose a shoe UGC ad format for an on-foot demo, unboxing, wear test, or creator review.",
+  "cta_lead": "Upload one shoe photo, choose a scene, and review the pair before posting.",
+  "benefits_h2": "Why AI Shoe UGC Ads Skip a New Shoot",
   "benefits": [
     {
       "t": "Faster, lower-cost production",
       "d": "Create an on-foot demo or creator review from one shoe photo. Skip talent booking, studio rental, and a new shoot for every pair."
     },
     {
-      "t": "Content that scales across channels",
-      "d": "Run one pair through a step, unboxing, care, and review scene. One source photo feeds product pages, social posts, and ads."
+      "t": "More angles from one pair",
+      "d": "Try a step, unboxing, fit check, and review while the pair stays recognizable across your ad set."
     },
     {
-      "t": "A clearer fit decision",
-      "d": "An on-foot moment shows profile, collar, and visible construction. Keep comfort and performance claims tied to verified product facts."
+      "t": "Show the pair on foot",
+      "d": "An on-foot moment shows profile, collar, and visible construction so shoppers can judge the pair before they buy."
     }
   ],
-  "steps_h2": "Your Next Shoe Ad Is a Swipe Away",
-  "steps_lead": "3 Steps to make creator-style videos for footwear products with AIVideosUGC",
+  "steps_h2": "How to Make AI Shoe UGC Ads in 3 Simple Steps",
+  "steps_lead": "Turn one clear shoe photo into a short, ready-to-post footwear ad.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one side-profile photo in even light with the full shape visible. The clip keeps the shoe's color, sole, and details."
+      "t": "Upload Your Shoe Photo",
+      "d": "Add one side-profile photo in even light with the full shape visible. Keep the toe, heel, collar, and sole in frame."
     },
     {
-      "t": "Pick an Ad Format",
-      "d": "Choose an on-foot demo, unboxing, fit check, or review for the pair. More formats from one photo build a full ad set."
+      "t": "Pick a Shoe Ad Scene",
+      "d": "Choose an on-foot demo, unboxing, fit check, or review. Describe the action in one sentence so the pair stays the focus."
     },
     {
       "t": "Download and Post",
@@ -81,7 +85,7 @@
     }
   ],
   "visual": {
-    "overview": "Show footwear through on-foot demos, unboxings, fit checks, wear-test actions, creator reviews, and close details. Keep claims tied to verified product information.",
+    "overview": "Show footwear through on-foot demos, unboxings, fit checks, wear-test actions, creator reviews, and close details. Keep claims tied to product information.",
     "strip": [
       "n:guide:q15-shoes-strip-0",
       "n:guide:q15-shoes-strip-1",
@@ -94,15 +98,15 @@
       "source": "n:guide:q15-shoes-steps-source",
       "result": "n:guide:q15-shoes-steps-result-laceup-r2",
       "mode": "video",
-      "prompt": "Brown lace-up boots taking one measured step on a quiet trail in soft overcast light.",
+      "prompt": "Show brown lace-up boots taking one measured step on a quiet trail in soft overcast light.",
       "options": [
         [
-          "Format",
-          "Video"
+          "Size",
+          "9:16 · Social feeds"
         ],
         [
-          "Aspect ratio",
-          "1:1"
+          "Length",
+          "15 seconds"
         ]
       ]
     },
@@ -124,7 +128,7 @@
         "h2": "Choose a footwear ad format"
       },
       "faq": {
-        "h2": "Questions about shoe UGC ads"
+        "h2": "Questions About AI Shoe UGC Ads"
       }
     }
   }

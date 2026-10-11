@@ -833,11 +833,6 @@
     ],
     "ind-beauty-skincare": [
       {
-        "ref": "k7-ind-beauty-skincare-case-serum-dropper-r2",
-        "product": "face serum",
-        "title": "Amber serum dropped onto fingertips"
-      },
-      {
         "ref": "n:guide:q15-beauty-case1-clay-mask",
         "product": "clay mask",
         "title": "Evening routine: clay mask applied by hand"
@@ -855,32 +850,22 @@
     ],
     "ind-fashion-clothing": [
       {
-        "ref": "fashion-try-on-reel",
-        "product": "beige overshirt",
-        "title": "Overshirt checked in a fitting-room mirror"
-      },
-      {
-        "ref": "n:guide:q15-fashion-case1-knit-cardigan",
+        "ref": "n:guide:rb2-ind-fashion-clothing-case-cardigan-r2",
         "product": "knit cardigan",
         "title": "Knit cardigan: buttoned fit check"
       },
       {
-        "ref": "n:gen2:ind-fashion-clothing-c3",
+        "ref": "n:gen2:rb2-ind-fashion-clothing-case-skirt-r2",
         "product": "pleated skirt",
         "title": "Pleated skirt worn on a sunny sidewalk"
       },
       {
-        "ref": "n:guide:q15-fashion-case3-denim-jeans",
+        "ref": "n:guide:rb2-ind-fashion-clothing-case-jeans-r2",
         "product": "denim jeans",
         "title": "Denim jeans: waist and cuff fit check"
       }
     ],
     "ind-shoes": [
-      {
-        "ref": "limited-drop-alert",
-        "product": "trail running shoes",
-        "title": "Trail shoes laced up on a mountain path"
-      },
       {
         "ref": "n:gen2:ind-shoes-15",
         "product": "hiking boot",
@@ -899,7 +884,7 @@
     ],
     "ind-jewelry-accessories": [
       {
-        "ref": "n:guide:q16-jewelry-earrings-tryon",
+        "ref": "n:guide:rb2-ind-jewelry-accessories-case-earrings-r1",
         "product": "gold hoop earrings",
         "title": "Try-on: Gold hoops before the mirror"
       },
@@ -914,7 +899,7 @@
         "title": "Styling demo: Silk scarf tied to a tote"
       },
       {
-        "ref": "n:guide:q16-jewelry-sunglasses-beach",
+        "ref": "n:guide:rb2-ind-jewelry-accessories-case-sunglasses-r1",
         "product": "plain sunglasses",
         "title": "Plain sunglasses: Beach try-on"
       }
