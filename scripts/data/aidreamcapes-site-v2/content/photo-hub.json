@@ -184,14 +184,14 @@
   "hero_cards": [
     {
       "ref": "n:guide:img2-photo-hub-hero-source-r1",
-      "name": "Original product photo",
-      "line": "Start with one clear upload",
+      "name": "Your product photo",
+      "line": "One clear photo is all you upload",
       "href": "/ai-image-generation/ecommerce-main-image"
     },
     {
       "ref": "n:guide:img2-photo-hub-hero-result-r1",
-      "name": "Generated vanity scene",
-      "line": "Place it in a shopper-ready setting",
+      "name": "Ready for your store",
+      "line": "Same lipstick, styled into a real scene in minutes",
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
