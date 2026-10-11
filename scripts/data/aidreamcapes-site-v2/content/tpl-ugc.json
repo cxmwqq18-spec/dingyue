@@ -5,7 +5,7 @@
   "h1": "Create UGC Style Product Photos for Social Ads",
   "eyebrow": "Ad photo template",
   "lead": "See a creator-style shot you like, recreate it with your own product. One photo becomes a review, unboxing or demo scene, ready in minutes.",
-  "benefits_h2": "Why sellers recreate UGC photos here",
+  "benefits_h2": "Why sellers choose UGC style product photos",
   "benefits": [
     {
       "t": "No creator or shoot to book",
@@ -30,19 +30,19 @@
     "lifestyle photos for Instagram ads",
     "fitness product lifestyle photos"
   ],
-  "steps_h2": "How it works",
-  "steps_lead": "Pick a style, add your product, generate. No studio booking and no rescheduling.",
+  "steps_h2": "How to Make UGC Style Product Photos in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a creator-style scene you can publish today, with no studio booking and no rescheduling.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
       "d": "Add a clear photo of the whole product with the front label facing the camera."
     },
     {
-      "t": "Pick a Style and Generate",
+      "t": "Pick a Creator Style",
       "d": "Choose a creator-style scene, then generate it with your product in the frame."
     },
     {
-      "t": "Download and Use",
+      "t": "Download and Post",
       "d": "Download the photo and add your caption or offer in your own editor."
     }
   ],
@@ -105,10 +105,10 @@
     "overview": "A creator-style photo shows your product in an everyday moment, ready for social ads and listing galleries.",
     "strip": [
       "n:guide:g1-ugc-running-shoe-review",
-      "n:guide:g1-ugc-hoop-earring-review",
+      "n:guide:rc4-tpl-ugc-strip-earring-hands-r1",
       "n:guide:g1-ugc-phone-stand-review",
-      "n:guide:g1-ugc-protein-bar-reaction",
-      "n:guide:g1-ugc-pet-grooming-review",
+      "n:guide:rc4-tpl-ugc-strip-drink-r1",
+      "n:guide:rc4-tpl-ugc-strip-pet-r1",
       "n:guide:g1-ugc-supplement-selfie"
     ],
     "steps": {
@@ -553,7 +553,7 @@
         "h2": "Pick a creator style"
       },
       "faq": {
-        "h2": "UGC photo template questions"
+        "h2": "UGC Style Product Photo Template Questions"
       }
     }
   }

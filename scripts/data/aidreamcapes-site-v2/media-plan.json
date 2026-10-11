@@ -185,12 +185,12 @@
         "after": "n:guide:q9-media-ugc-output"
       },
       "gallery": [
-        "n:guide:q9-ugc-gallery-weekender-unboxing",
-        "n:guide:q9-ugc-gallery-serum-review",
-        "n:guide:q9-ugc-gallery-earring-grwm",
-        "n:guide:q9-ugc-gallery-protein-reaction",
-        "n:guide:q9-ugc-gallery-pet-hair-demo",
-        "n:guide:q9-ugc-gallery-jacket-tryon"
+        "n:guide:rc4-tpl-ugc-gallery-tube-r1",
+        "n:guide:rc4-tpl-ugc-strip-earring-hands-r1",
+        "n:guide:rc4-tpl-ugc-strip-drink-r1",
+        "n:guide:rc4-tpl-ugc-strip-pet-r1",
+        "n:guide:q9-ugc-gallery-jacket-tryon",
+        "n:guide:rc4-tpl-ugc-gallery-weekender-r1"
       ],
       "og": "n:t33-tpl-ugc-og-r2"
     },
@@ -213,7 +213,7 @@
       "hero": {
         "kind": "pair",
         "before": "g:sale-campaign-key-visual/source-input",
-        "after": "g:sale-campaign-key-visual/hero-output"
+        "after": "n:guide:rc4-tpl-sale-hero-r1"
       },
       "gallery": [
         "g:sale-campaign-key-visual/example-01",
@@ -350,14 +350,14 @@
     "tpl-launch": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q12-tpl-launch-demo-source-r3"
+        "image": "n:guide:rc4-tpl-launch-source-bag-r1"
       },
-      "og": "n:t33-tpl-launch-og-r2",
+      "og": "n:rc4-tpl-launch-og-01-r1",
       "gallery": [
-        "n:guide:q12-tpl-launch-card-01-serum-review",
-        "n:guide:q12-tpl-launch-card-04-protein-first-bite",
+        "n:guide:q12-tpl-launch-strip-extra-02-r1",
+        "n:guide:g1-launch-berry-sparkling-sip-r2",
         "n:guide:q12-tpl-launch-card-07-sunscreen-grwm",
-        "n:guide:q12-tpl-launch-card-08-earbuds-review"
+        "n:guide:rc4-tpl-launch-gallery-supplement-04-r1"
       ]
     },
     "tpl-compare": {
@@ -376,14 +376,14 @@
     "tpl-bf": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q12-tpl-bf-card-01-serum-offer-review"
+        "image": "s:v_bf_rc4"
       },
-      "og": "n:t33-tpl-bf-og-r2",
+      "og": "n:rc4-tpl-bf-og-01-r1",
       "gallery": [
         "n:guide:q12-tpl-bf-card-03-earring-gift-unboxing",
         "n:guide:q12-tpl-bf-card-04-sneaker-try-on",
         "n:guide:q12-tpl-bf-card-05-headphone-demo",
-        "n:guide:q12-tpl-bf-card-07-protein-first-bite"
+        "n:guide:q12-tpl-bf-card-06-resistance-band-unboxing"
       ]
     },
     "home": {

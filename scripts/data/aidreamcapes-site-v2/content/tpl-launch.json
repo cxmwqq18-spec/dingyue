@@ -12,20 +12,20 @@
     "Instagram launch ad",
     "home decor promo video"
   ],
-  "steps_h2": "Create a product launch video in three steps",
-  "steps_lead": "Turn one product photo into a launch video, then add the confirmed release details.",
+  "steps_h2": "How to Make an AI Promo Video in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a launch moment you can publish when the release details are confirmed.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
       "d": "Start with one clear photo of the product you are about to launch."
     },
     {
-      "t": "Share Your Launch Moment",
+      "t": "Pick Your Launch Scene",
       "d": "Share the review, reveal, try-on or demo moment in one sentence."
     },
     {
-      "t": "Download and Add Details",
-      "d": "Add the confirmed release date, price and offer in your editor."
+      "t": "Download and Post",
+      "d": "Add the confirmed release date, price and offer in your editor, then post the launch clip where customers will see it."
     }
   ],
   "maker": {
@@ -56,7 +56,7 @@
     },
     {
       "q": "What length should a launch promo use?",
-      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds when the launch needs a full product story. Choose 9:16 for vertical placements."
+      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds when the launch needs a full product story. Choose 9:16 for vertical channels."
     },
     {
       "q": "Which ratio is best for launch day?",
@@ -84,7 +84,7 @@
     },
     {
       "q": "What should I check before publishing?",
-      "a": "Confirm the product shape, launch date, price, stock status, link, and crop in the final placement."
+      "a": "Confirm the product shape, launch date, price, stock status, link, and crop in the final post."
     },
     {
       "q": "Can I have launch ads ready before the product is in stock?",
@@ -103,10 +103,10 @@
         "label": "Reveal and hero",
         "items": [
           {
-            "ref": "n:guide:q12-tpl-launch-example-unboxing-r2",
-            "title": "Hands reveal two skincare bottles from a gift box",
+            "ref": "n:guide:rc4-tpl-launch-examples-unboxing-01-r1",
+            "title": "Hands Reveal a Sage Cream Jar and Tube",
             "kind": "scene",
-            "product": "skincare"
+            "product": "face cream"
           },
           {
             "ref": "n:guide:k6-tpl-ugc-picker-steaming-mug",
@@ -121,20 +121,20 @@
   "visual": {
     "overview": "Show the new product in a launch moment buyers understand, then add the release details after download.",
     "strip": [
-      "n:guide:q12-tpl-launch-use-social-r1",
-      "n:guide:g1-launch-shoe-fit-check",
-      "n:guide:g1-launch-jewelry-reveal",
-      "n:guide:q12-tpl-launch-strip-extra-01-r1",
+      "n:guide:rc4-tpl-launch-source-bag-r1",
+      "n:guide:q12-tpl-launch-case-phone-case-r2",
+      "n:guide:q12-tpl-launch-case-jewelry-r2",
+      "n:guide:q12-tpl-launch-strip-extra-02-r1",
       "n:guide:g1-launch-citrus-first-sip",
-      "n:guide:q12-tpl-launch-strip-extra-03-r1"
+      "n:guide:rc4-tpl-launch-strip-dog-r1"
     ],
     "steps": {
-      "source": "n:guide:q12-tpl-launch-use-social-r1",
-      "sourceTitle": "Creator holding an amber serum bottle",
-      "sourceHint": "Show the amber bottle and blank label clearly before adding the launch message.",
-      "result": "n:guide:q12-tpl-launch-strip-result-r2",
+      "source": "n:guide:rc4-tpl-launch-source-bag-r1",
+      "sourceTitle": "Product photo of a sage-green canvas crossbody bag",
+      "sourceHint": "Show the uploaded sage-green canvas crossbody bag clearly before choosing the launch scene.",
+      "result": "n:guide:rc4-tpl-launch-result-bag-r1",
       "mode": "video",
-      "prompt": "Share the launch moment in one sentence.",
+      "prompt": "Use the uploaded product photo as the exact featured item. Show one adult creator lifting the uploaded sage-green canvas crossbody bag from a tabletop and holding it toward camera once. Bright home entryway, gentle handheld push-in, clear product focus, natural room sound, no spoken words, no text, labels, logos, numbers, or watermark.",
       "options": [
         [
           "Size",
@@ -577,9 +577,28 @@
         "h2": "Create a vertical product-launch video from one photo"
       },
       "faq": {
-        "h2": "Questions about product-launch videos"
+        "h2": "AI Promo Video Maker Questions"
       }
     }
   },
-  "cta_lead": "Make the launch clip, then add the release details after download."
+  "cta_lead": "Make the launch clip, then add the release details after download.",
+  "benefits_h2": "Why sellers use an AI promo video maker",
+  "benefits": [
+    {
+      "t": "New launch ad in minutes",
+      "d": "Turn one final product photo into a creator review, unboxing or demo before launch day."
+    },
+    {
+      "t": "Spend less than a studio shoot",
+      "d": "Skip casting, booking and gear; make polished launch creative from the photo you already have."
+    },
+    {
+      "t": "Show more launch moments",
+      "d": "Create review, reveal, unboxing or demo versions from the same product photo without reshooting."
+    },
+    {
+      "t": "Keep release details easy to change",
+      "d": "Update the date, price and offer in your editor while the launch video stays reusable."
+    }
+  ]
 }
