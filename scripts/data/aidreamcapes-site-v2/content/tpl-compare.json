@@ -2,26 +2,26 @@
   "id": "tpl-compare",
   "title": "Product Comparison Videos for Clearer Choices | AIVideosUGC",
   "description": "Show shoppers the difference between your colors, sizes or sets. One photo of both options becomes a comparison clip for listings, Shorts and paid ads.",
-  "h1": "Make a Product Comparison Video of Your Own Options",
+  "h1": "Help Shoppers Compare Your Products Side by Side",
   "eyebrow": "Comparison video template",
-  "lead": "Help shoppers choose your size, color or set before they leave. Upload one photo of both options and get a comparison clip that makes the difference clear for listings and ads.",
-  "benefits_h2": "Why sellers use product comparison videos",
+  "lead": "Turn one product photo into a product comparison video that gives shoppers a clear result, ready for the channel where you sell.",
+  "benefits_h2": "Make the product comparison result clear",
   "benefits": [
     {
-      "t": "Fewer undecided shoppers",
-      "d": "A moving side-by-side view shows size, finish or included pieces more clearly than a spec line. Buyers can see which option fits their need instead of opening a support chat or leaving."
+      "t": "See size choices at a glance",
+      "d": "Show small and large stainless bottles together so shoppers can judge scale before choosing."
     },
     {
-      "t": "No second shoot for variants",
-      "d": "One source photo with both options supplies a shared scale and light. You demonstrate a full range without staging each color or size in front of a camera."
+      "t": "Compare colors without another shoot",
+      "d": "Place charcoal and cream tumblers in one frame so the difference is clear from the first second."
     },
     {
-      "t": "Cut for every feed",
-      "d": "Choose 1:1 for a product gallery, 16:9 for a description embed or 9:16 for Shorts. Lengths run 6, 10, 15 or 30 seconds, so a simple pair and a detailed feature walkthrough both fit."
+      "t": "Make finish choices easier",
+      "d": "Show navy and rust knit beanies side by side so shoppers can compare color and texture."
     },
     {
-      "t": "Exact labels stay under your control",
-      "d": "Add variant names, measurements and prices as editable text after download. Your numbers stay accurate, and the finished clip carries no AIVideosUGC watermark."
+      "t": "Show the right capacity",
+      "d": "Arrange two packed backpacks at different sizes so shoppers can see how much each one holds."
     }
   ],
   "secondary_keywords": [
@@ -30,20 +30,20 @@
     "color options video",
     "product size comparison video"
   ],
-  "steps_h2": "How to Make an AI Product Comparison Video in 3 Simple Steps",
-  "steps_lead": "Turn one photo of both options into a clear comparison clip. No second shoot and no studio setup needed.",
+  "steps_h2": "How to Make Product Comparison Videos in 3 Simple Steps",
+  "steps_lead": "Three simple steps turn one product photo into a comparison result you can post where shoppers choose.",
   "steps": [
     {
-      "t": "Upload Both Product Options",
-      "d": "Add one clear photo that shows the two options at a similar scale. Keep each silhouette and finish visible."
+      "t": "Upload Your Product",
+      "d": "Add one clear source photo with both options in view. Keep each full silhouette and surface visible at a similar scale."
     },
     {
       "t": "Pick a Scene",
-      "d": "Choose a side-by-side, fit or feature scene. Add one line about the difference if the options need context."
+      "d": "Choose a side-by-side scene and describe the difference shoppers should see. Keep the action focused on one comparison."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip. Add variant names, measurements or prices in your editor."
+      "d": "Download the result and add exact offer or listing details in your editor. Post the finished comparison where shoppers choose."
     }
   ],
   "maker": {
@@ -61,44 +61,52 @@
         "16:9 · Widescreen"
       ]
     ],
-    "cta": "Make my comparison video"
+    "cta": "Let shoppers see the difference"
   },
   "faq": [
     {
       "q": "What is a product comparison video template?",
-      "a": "It is a ready-made side-by-side scene. Add two of your own options and generate a clip that helps shoppers choose."
+      "a": "It is a ready-made side-by-side scene. Add your own options and generate a comparison that helps shoppers choose."
     },
     {
-      "q": "Do I need to write prompts to use these templates?",
-      "a": "No. Choose a comparison style, upload both options and generate. Step two can include one short line about the difference if you want."
+      "q": "Which products can I compare?",
+      "a": "Compare variants such as sizes, colors, finishes or included pieces when both options are visible in your source photo."
     },
     {
-      "q": "Who are comparison templates built for?",
-      "a": "Ecommerce sellers and agencies that show variants, sizes, finishes or sets on product pages and social ads."
-    },
-    {
-      "q": "Can I compare two of my own products?",
-      "a": "Yes. Use the same source photo for two options in your range so the comparison stays clear and fair."
+      "q": "What photo should I upload?",
+      "a": "Upload one clear photo that shows both options completely, at a similar scale and in even light."
     },
     {
       "q": "Can one photo show both options?",
-      "a": "Yes. A clear frame with both products visible gives the scene one consistent reference."
+      "a": "Yes. A single frame with both products visible gives the comparison one consistent reference."
     },
     {
-      "q": "Can I compare colors, sizes or sets?",
-      "a": "Yes. The clip can show visible differences in color, size, finish or included pieces. Add exact specifications after download."
+      "q": "Can I compare colors, sizes, finishes or sets?",
+      "a": "Yes. The scene can show visible differences in color, size, finish or included pieces."
     },
     {
-      "q": "How fast is a comparison video made?",
-      "a": "A clip is generated in minutes after you start the job, with no second shoot or studio booking."
+      "q": "Do I need to write a prompt?",
+      "a": "No. Choose a comparison scene and add a short description of the difference you want shoppers to see."
     },
     {
-      "q": "What does a comparison video cost?",
-      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before you run it."
+      "q": "Which video size should I choose?",
+      "a": "Use 1:1 for a product gallery, 16:9 for a listing embed or 9:16 for Shorts and Reels."
     },
     {
-      "q": "Can I use a comparison video in paid ads?",
-      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for product claims."
+      "q": "Which length can I choose?",
+      "a": "Choose 6, 10, 15 or 30 seconds; the credit cost is shown before you start."
+    },
+    {
+      "q": "Can I add prices or variant names after download?",
+      "a": "Yes. Add exact names, measurements and prices in your editor after downloading."
+    },
+    {
+      "q": "Do I need a shoot day?",
+      "a": "No. The comparison is generated from your product photo, so you do not need a second shoot or studio booking."
+    },
+    {
+      "q": "Where can I use the comparison video?",
+      "a": "Use the download in product listings, product pages, Shorts, Reels and paid ads that fit your channel."
     }
   ],
   "visual": {
@@ -566,5 +574,7 @@
         "h2": "Questions about AI product comparison videos"
       }
     }
-  }
+  },
+  "cta_title": "Let shoppers see the difference",
+  "cta_lead": "Upload one product photo, see the cost first and make a product comparison video."
 }

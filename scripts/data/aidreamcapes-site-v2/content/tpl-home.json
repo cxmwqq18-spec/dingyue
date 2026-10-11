@@ -2,9 +2,9 @@
   "id": "tpl-home",
   "title": "Home Product Videos for Organizers | AIVideosUGC",
   "description": "Turn one organizer photo into a before-and-after video of a messy drawer, shelf or closet turning neat. 9:16 clips made for TikTok and Reels.",
-  "h1": "Home Product Videos That Turn Clutter Into Order",
+  "h1": "Show Home Organizers in the Space They Fix",
   "eyebrow": "Home video template",
-  "lead": "Show buyers exactly where your organizer fits with a vertical before-and-after video made from one product photo. Turn a cluttered drawer, shelf or closet into a clear reset they can understand.",
+  "lead": "Turn one product photo into a home organization video that gives shoppers a clear result, ready for the channel where you sell.",
   "secondary_keywords": [
     "organizer before and after video",
     "home organization video ad",
@@ -12,39 +12,39 @@
     "drawer organizer video",
     "TikTok home organizing ad"
   ],
-  "benefits_h2": "Why make AI home product videos?",
+  "benefits_h2": "Make the home organization result clear",
   "benefits": [
     {
-      "t": "Make the product's job obvious",
-      "d": "Show a cluttered drawer, shelf or closet becoming orderly around the same organizer, so buyers see the problem and the fix in one beat."
+      "t": "Show the drawer reset",
+      "d": "Show the organizer dividing a crowded drawer so shoppers can see the problem and the fix in one frame."
     },
     {
-      "t": "Show a real home without a shoot",
-      "d": "Create a believable home scene without arranging access to a customer house or booking a film crew."
+      "t": "Make pantry storage easy to picture",
+      "d": "Show jars and bins arranged on pantry shelves so shoppers know where the storage product belongs."
     },
     {
-      "t": "Post one vertical reset",
-      "d": "Use a 9:16 clip paced around one satisfying change for short-form feeds and product pages."
+      "t": "Show the closet shelf at a glance",
+      "d": "Show grouped clothes, folded pieces and bins together so the organizer’s job reads before shoppers scroll."
     },
     {
-      "t": "Keep details editable",
-      "d": "Download without an AIVideosUGC watermark, then add listed dimensions, capacity and price in your editor."
+      "t": "Make desk cable storage clear",
+      "d": "Show a tidy desk organizer holding everyday supplies so shoppers can picture the finished workspace."
     }
   ],
-  "steps_h2": "How to Make AI Home Product Videos in 3 Simple Steps",
-  "steps_lead": "Turn one organizer photo into a ready-to-post reset that shows where the product belongs.",
+  "steps_h2": "How to Make Home Organization Videos in 3 Simple Steps",
+  "steps_lead": "Three simple steps turn one organizer photo into a reset that shows where the product belongs.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Show the empty tray, bin or rack on a plain surface. Keep the full shape and edges visible."
+      "t": "Upload Your Product",
+      "d": "Add one clear source photo and keep the full organizer visible. Use an angle that shows its shape and compartments."
     },
     {
       "t": "Pick a Scene",
-      "d": "Name the drawer, shelf or closet where buyers will use it. Add the everyday items that should appear before the reset."
+      "d": "Choose the drawer, shelf, closet or desk where it belongs. Describe the clutter and the single reset shoppers should see."
     },
     {
       "t": "Download and Post",
-      "d": "Download the finished clip. Add before-and-after labels, dimensions and capacity in your editor."
+      "d": "Download the result and add exact dimensions, capacity or offer details in your editor. Post the reset where shoppers browse."
     }
   ],
   "maker": {
@@ -58,32 +58,32 @@
         "15 seconds"
       ]
     ],
-    "cta": "Make my before-and-after"
+    "cta": "Show where your organizer belongs"
   },
   "faq": [
     {
-      "q": "What kind of organizer can I show?",
-      "a": "Use a tray, bin, divider, rack or another home product with a clear place in a drawer, shelf, closet or desk."
+      "q": "What photo should I upload?",
+      "a": "Upload one clear photo that shows the full organizer, including its edges, compartments and surface."
     },
     {
-      "q": "Do I need to photograph the messy space?",
-      "a": "No. Upload the organizer and choose the home setting. The scene can show the product solving one visible storage problem."
+      "q": "What result does this template show?",
+      "a": "It shows the organizer solving one visible storage task in a drawer, pantry, closet or desk scene."
     },
     {
-      "q": "Can I show a drawer, closet or storage shelf?",
-      "a": "Yes. Name the destination and the everyday items that create the clutter so the reset has a clear purpose."
+      "q": "Which length or format should I choose?",
+      "a": "Choose 6, 10, 15 or 30 seconds; use 9:16 for Shorts and Reels or 1:1 for a product gallery."
     },
     {
-      "q": "How can I explain the change?",
-      "a": "Use before-and-after labels in your editor and add the organizer name, dimensions and capacity from your listing."
+      "q": "Can I change details after download?",
+      "a": "Yes. Add exact dimensions, capacity, names and prices in your editor after downloading."
     },
     {
-      "q": "What does a home organization video cost?",
-      "a": "Choose 6, 10, 15 or 30 seconds. The credit cost is shown before creation."
+      "q": "Do I need a shoot day?",
+      "a": "No. The reset scene is generated from your organizer photo, so you do not need a customer home or film crew."
     },
     {
-      "q": "Do I have to film a real home?",
-      "a": "No. The before-and-after scene is generated from your organizer photo, so no customer home or film crew is needed."
+      "q": "Where can I use the clip?",
+      "a": "Use the download in product listings, product pages, Shorts, Reels and paid ads that fit your channel."
     }
   ],
   "visual": {
@@ -554,5 +554,7 @@
         "h2": "Questions about AI home product videos"
       }
     }
-  }
+  },
+  "cta_title": "Show where your organizer belongs",
+  "cta_lead": "Upload one product photo, see the cost first and make a home organization video."
 }
