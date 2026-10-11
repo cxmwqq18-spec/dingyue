@@ -2,7 +2,7 @@
   "id": "video-ads",
   "title": "AI UGC Video Ads for TikTok, Reels and Shorts | AIVideosUGC",
   "description": "Turn one product photo into a creator-style ad for TikTok, Reels or Shorts. Skip a studio shoot, test new hooks and add final copy after download.",
-  "h1": "Create UGC Video Ads from One Product Photo",
+  "h1": "Create AI UGC Video Ads from One Product Photo",
   "eyebrow": "AI UGC video ads",
   "lead": "Turn one product photo into a creator-style ad you can test on TikTok, Reels or Shorts. Skip a shoot, try a new hook in minutes, then add final copy after download.",
   "secondary_keywords": [
@@ -11,18 +11,24 @@
     "AI UGC ads for TikTok",
     "UGC video ad maker"
   ],
+  "definition": {
+    "title": "What Is an AI UGC Video Ad Generator?",
+    "paras": [
+      "It is software that turns one product photo and a short scene idea into a finished clip, with the performer, setting and edit produced automatically. Sellers use it to ship feed-ready ads without hiring a creator, booking a studio or learning an editing suite."
+    ]
+  },
   "steps": [
     {
-      "t": "Upload the product you want to show",
+      "t": "Upload Your Product Photo",
       "d": "Use one clear photo with the full item in frame so the product carries into the scene."
     },
     {
-      "t": "Write one scene and one action",
-      "d": "Describe where the ad happens and what the person does. One focused action keeps the hook easy to follow."
+      "t": "Describe Your Scene",
+      "d": "Say where the ad happens and what the person does. One focused action keeps the hook easy to follow."
     },
     {
-      "t": "Download, then add your offer",
-      "d": "Download the clean clip and add captions, prices or music in your editor for each channel."
+      "t": "Download and Post",
+      "d": "Download the clean clip, then add captions, prices or music in your editor for each channel."
     }
   ],
   "maker": {
@@ -621,6 +627,47 @@
       "icon": "target"
     }
   ],
-  "steps_h2": "Create a UGC video ad in 3 steps",
-  "steps_lead": "Go from one clear product photo to a short ad ready for your next test."
+  "steps_h2": "How to Make AI UGC Video Ads in 3 Simple Steps",
+  "steps_lead": "Go from one clear product photo to a short ad ready for your next test.",
+  "compare_table": {
+    "title": "AIVideosUGC vs. traditional video ad production",
+    "lead": "Same finished ad on the feed, a much shorter and cheaper path to get there.",
+    "columns": [
+      "",
+      "AIVideosUGC",
+      "Creator or studio shoot"
+    ],
+    "rows": [
+      [
+        "How long it takes",
+        "A finished clip in minutes from one product photo",
+        "Days or weeks of calls, booking, filming and edits"
+      ],
+      [
+        "Creator or studio needed",
+        "No casting, no booking, no studio day",
+        "You hire a creator or crew and arrange a shoot"
+      ],
+      [
+        "Cost of a new version",
+        "A new angle costs only its credits; a 10-second clip is 40 credits",
+        "Another shoot day, creator fee and edit round"
+      ],
+      [
+        "Versions you can test",
+        "As many scenes, hooks and performers as your credits cover, with no reshoot",
+        "One set of takes from the shoot day"
+      ],
+      [
+        "Sizes and lengths",
+        "9:16, 1:1, 16:9, 4:3 and 3:4; clips of 6, 10, 15 or 30 seconds",
+        "You re-edit and re-export for every size and length yourself"
+      ],
+      [
+        "Usage rights",
+        "Watermark-free download licensed for commercial use",
+        "Usage terms and licensing have to be negotiated"
+      ]
+    ]
+  }
 }

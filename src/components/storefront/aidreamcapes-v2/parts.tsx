@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { V2Article, V2BenefitIcon, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
+import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
 import type { V2Company } from "./company";
 
 export function normalizeStepLabel(label: string): string {
@@ -242,6 +242,70 @@ export function DirectoryScenes({ items, r }: { items: V2DirectoryScene[]; r: V2
         </div>)}
       </div>
     </Section>
+  );
+}
+
+// A plain "what is this tool" definition shown right after the hero: heading plus one or two paragraphs.
+export function DefinitionBlock({ definition, r }: { definition: V2Definition; r: V2Resolvers }) {
+  if (!definition?.title || !definition.paras?.length) return null;
+  return (
+    <Section eyebrow="About" title={definition.title}>
+      <Intro paras={definition.paras} r={r} />
+    </Section>
+  );
+}
+
+// A three-column comparison table: row label, our product, the traditional alternative.
+// Reuses the existing .cmp/.cmp-wrap table styling used by the home page comparison.
+export function CompareTableBlock({ block, r }: { block: V2CompareTable; r: V2Resolvers }) {
+  if (!block?.title || !block.columns?.length || !block.rows?.length) return null;
+  return (
+    <Section eyebrow="Compare your options" lead={block.lead ?? ""} title={block.title}>
+      <div className="cmp-wrap">
+        <table className="cmp">
+          <caption className="sr-only">{block.title}</caption>
+          <thead>
+            <tr>
+              {block.columns.map((column, index) => (
+                <th key={`${column}-${index}`} scope="col">{index === 0 ? <span className="sr-only">Topic</span> : column}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {block.rows.map((row, rowIndex) => (
+              <tr key={`${row[0] ?? "row"}-${rowIndex}`}>
+                {block.columns.map((_, columnIndex) => (
+                  <td key={columnIndex}><RichText r={r} text={row[columnIndex] ?? ""} /></td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Section>
+  );
+}
+
+// Text-only linked card sections (format or category directories). No images by design;
+// each card links to the related tool or collection page so shoppers can act on it.
+export function TextSections({ sections, r }: { sections: V2TextSection[]; r: V2Resolvers }) {
+  if (!sections?.length) return null;
+  return (
+    <>
+      {sections.filter((section) => section?.title && section.cards?.length).map((section) => (
+        <Section eyebrow={section.eyebrow} key={`${section.eyebrow}-${section.title}`} lead={section.lead ?? ""} title={section.title}>
+          <div className="ideas">
+            {section.cards.map((card) => (
+              <div key={card.t}>
+                <b>{card.t}</b>
+                <p><RichText r={r} text={card.d} /></p>
+                {card.href ? <p className="meta-line"><a href={r.href(card.href)}>{card.label || card.t} →</a></p> : null}
+              </div>
+            ))}
+          </div>
+        </Section>
+      ))}
+    </>
   );
 }
 

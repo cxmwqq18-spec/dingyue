@@ -1811,6 +1811,65 @@ function enrichmentFor(model, page, c) {
   };
 }
 
+// A plain text definition block (title + paragraphs) placed right after the hero on tool pages.
+function definitionFor(model, page, c) {
+  const value = c.definition;
+  if (!value || typeof value !== "object" || typeof value.title !== "string" || !value.title.trim()) return undefined;
+  const paras = Array.isArray(value.paras) ? value.paras.filter((para) => typeof para === "string" && para.trim()) : [];
+  if (!paras.length) return undefined;
+  return { title: value.title, paras: paras.map((para) => inlineLinks(model, para, page.id)) };
+}
+
+// A three-column comparison table (row header, our column, competitor/traditional column).
+function compareTableFor(model, page, c) {
+  const value = c.compare_table;
+  if (!value || typeof value !== "object" || typeof value.title !== "string" || !value.title.trim()) return undefined;
+  if (!Array.isArray(value.columns) || value.columns.length !== 3) return undefined;
+  const rows = Array.isArray(value.rows)
+    ? value.rows.filter((row) => Array.isArray(row) && row.length === 3 && row.every((cell) => typeof cell === "string" && cell.trim()))
+    : [];
+  if (!rows.length) return undefined;
+  return {
+    title: value.title,
+    ...(typeof value.lead === "string" && value.lead.trim() ? { lead: inlineLinks(model, value.lead, page.id) } : {}),
+    columns: value.columns.map((column) => String(column)),
+    rows: rows.map((row) => row.map((cell) => inlineLinks(model, cell, page.id)))
+  };
+}
+
+// Text-only linked card sections for directory/index pages (format and category blocks have no images).
+function textSectionsFor(model, page, c) {
+  const value = c.text_sections;
+  if (!Array.isArray(value)) return [];
+  return value.map((section) => {
+    const cards = (Array.isArray(section.cards) ? section.cards : []).map((card) => {
+      const d = inlineLinks(model, String(card.d ?? ""), page.id);
+      const out = { t: String(card.t ?? ""), d, ...(card.href ? { href: resolveSectionHref(model, page.id, card.href) } : {}) };
+      if (typeof card.label === "string" && card.label.trim()) out.label = card.label;
+      return out;
+    }).filter((card) => card.t && card.d);
+    return {
+      eyebrow: String(section.eyebrow ?? ""),
+      title: String(section.title ?? ""),
+      ...(typeof section.lead === "string" && section.lead.trim() ? { lead: inlineLinks(model, section.lead, page.id) } : {}),
+      cards
+    };
+  }).filter((section) => section.title && section.cards.length);
+}
+
+function resolveSectionHref(model, where, target) {
+  const value = String(target ?? "");
+  if (value.startsWith("page:")) {
+    const page = model.byId[value.slice(5)];
+    assert.ok(page, `${where}: link target ${value} not found`);
+    return page.url;
+  }
+  const localPath = localPathFromAbsoluteUrl(value);
+  const href = localPath ?? value;
+  assert.ok(href && (model.pages.some((page) => page.url === href) || POLICY_PATHS.includes(href)), `${where}: link target ${value} not found`);
+  return href;
+}
+
 function payloadFor(model, page) {
   const c = model.content[page.id];
   const examples = exampleGalleryFor(model, page);
@@ -1926,6 +1985,10 @@ function payloadFor(model, page) {
     ] : [];
     const heroCards = page.id === "white-background" || page.id === "spokesperson-videos" ? null
       : hasHero ? [] : hub ? toolHeroCardsForHub(model, page, c.hero_cards) : [];
+    // Optional page-owned text blocks (competitor parity): a definition block after the hero
+    // and a vs-traditional comparison table. Both are text-only; visuals stay in the visual modules.
+    const definition = definitionFor(model, page, c);
+    const compareTable = compareTableFor(model, page, c);
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
@@ -1941,7 +2004,9 @@ function payloadFor(model, page) {
         : page.id === "spokesperson-videos" ? { single: mediaImage(model, "n:guide:img2-spokesperson-hero-r1", "hero") }
         : page.id === "photo-hub" ? { cards: heroCards ?? [] }
         : heroCards,
-      siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [] };
+      siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [],
+      ...(definition ? { definition } : {}),
+      ...(compareTable ? { compareTable } : {}) };
   }
   if (t === "template") {
     const key = page.id.slice(4);
@@ -2031,6 +2096,9 @@ function payloadFor(model, page) {
       ...(directoryScenes.length ? { directoryScenes } : {}),
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
       ...(typeof c.steps_h2 === "string" && c.steps_h2.trim() ? { steps: benefitsList(model, page, c.steps ?? []) } : {}) };
+    // Text-only linked card blocks (competitor parity, e.g. format and category directories).
+    const textSections = textSectionsFor(model, page, c);
+    if (textSections.length) out.textSections = textSections;
     const visual = visualFor(model, page, c.visual, { photoOptions: HOME_PHOTO_OPTIONS }, "photo", "/app/create", c);
     if (visual) out.visual = visual;
     if (page.id === "ai-actors") {
@@ -2898,6 +2966,30 @@ export function validateSiteV2(build = buildSiteV2()) {
           if (item?.frame !== undefined && !IMAGE_ITEM_FRAMES.has(item.frame)) errors.push(`${page.id}: more_sections item frame must be phone, browser or none`);
           if (item?.alt !== undefined && (typeof item.alt !== "string" || !item.alt.trim())) errors.push(`${page.id}: more_sections item alt must be a non-empty string`);
           if (item?.img !== undefined && (!item.img || typeof item.img !== "object" || typeof item.img.src !== "string" || typeof item.img.alt !== "string" || !(Number(item.img.width) > 0) || !(Number(item.img.height) > 0))) errors.push(`${page.id}: more_sections item img must be a compiled image`);
+        }
+      }
+    }
+    // Page-owned text-only parity blocks: definition, comparison table (tool pages)
+    // and linked text card sections (directory pages). They never carry images.
+    if (data.definition !== undefined) {
+      const definition = data.definition;
+      if (!definition || typeof definition.title !== "string" || !definition.title.trim() || !Array.isArray(definition.paras) || !definition.paras.length || definition.paras.some((para) => typeof para !== "string" || !para.trim())) errors.push(`${page.id}: invalid definition block shape`);
+    }
+    if (data.compareTable !== undefined) {
+      const table = data.compareTable;
+      if (!table || typeof table.title !== "string" || !table.title.trim() || !Array.isArray(table.columns) || table.columns.length !== 3 || !Array.isArray(table.rows) || !table.rows.length) errors.push(`${page.id}: invalid compareTable block shape`);
+      else for (const row of table.rows) {
+        if (!Array.isArray(row) || row.length !== 3 || row.some((cell) => typeof cell !== "string" || !cell.trim())) errors.push(`${page.id}: invalid compareTable row shape`);
+      }
+    }
+    if (data.textSections !== undefined) {
+      const sections = data.textSections;
+      if (!Array.isArray(sections)) errors.push(`${page.id}: textSections must be an array`);
+      else for (const section of sections) {
+        if (!section || typeof section.eyebrow !== "string" || typeof section.title !== "string" || !section.title.trim() || !Array.isArray(section.cards) || !section.cards.length) errors.push(`${page.id}: invalid textSections section shape`);
+        else for (const card of section.cards) {
+          if (!card || typeof card.t !== "string" || !card.t.trim() || typeof card.d !== "string" || !card.d.trim()) errors.push(`${page.id}: invalid textSections card shape`);
+          if (card.href !== undefined && typeof card.href !== "string") errors.push(`${page.id}: textSections card href must be a string`);
         }
       }
     }
