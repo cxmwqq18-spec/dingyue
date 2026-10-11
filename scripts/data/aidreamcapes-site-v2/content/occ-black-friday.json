@@ -43,25 +43,33 @@
     "lead": "Show deal-ready product scenes, then add the final offer layer after download.",
     "groups": [
       {
-        "label": "Deal week",
+        "label": "Deal-day product demos",
         "items": [
           {
             "ref": "n:gen2:occ-black-friday-g1",
-            "title": "Leather duffel side-lit on a dark backdrop",
+            "title": "Leather duffel opened for a deal-day pack",
             "kind": "photo",
-            "product": "leather duffel"
+            "product": "leather duffel",
+            "prompt": "Use the uploaded product photo as the same leather duffel. Show adult hands packing it on a warm wood table, with clean space beside the bag for the Black Friday offer added after download. No text or logos."
           },
           {
             "ref": "n:guide:f13-occ-black-friday-card-10",
-            "title": "Lunch bag packed for a deal day",
+            "title": "Lunch bag packed for a sale-day commute",
             "kind": "photo",
-            "product": "insulated lunch bag"
-          },
+            "product": "insulated lunch bag",
+            "prompt": "Use the uploaded product photo as the same insulated lunch bag. Show adult hands placing it into a work tote beside a packed lunch, with clear space for the offer added after download. No text or logos."
+          }
+        ]
+      },
+      {
+        "label": "Offer-ready product views",
+        "items": [
           {
             "ref": "n:guide:q20-occ-bf-output-01-r2",
-            "title": "Gaming monitor shown on an evening desk",
+            "title": "Gaming monitor framed for a deal post",
             "kind": "photo",
-            "product": "gaming monitor"
+            "product": "gaming monitor",
+            "prompt": "Use the uploaded product photo as the same gaming monitor. Frame it on a tidy evening desk with clear negative space for the Black Friday offer added after download. No text or logos."
           }
         ]
       }
@@ -96,7 +104,7 @@
       "source": "n:guide:black-friday-m2-source",
       "result": "n:guide:q20-occ-bf-steps-result",
       "mode": "photo",
-      "prompt": "Describe the Black Friday product scene in one sentence.",
+      "prompt": "A plain product in an open gift box, with clear space for the Black Friday offer added after download.",
       "options": [
         [
           "Template",
@@ -135,11 +143,11 @@
       }
     }
   },
-  "benefits_h2": "Why Sellers Use Black Friday Ad Creatives",
+  "benefits_h2": "Change the deal without rebuilding the Black Friday scene",
   "benefits": [
     {
       "t": "Start your sale scene sooner",
-      "d": "Build the product scene in minutes while the Black Friday deal is still being confirmed."
+      "d": "Save rework by building the product scene while the Black Friday deal is still being confirmed."
     },
     {
       "t": "Get more versions from one photo",
@@ -155,5 +163,15 @@
     }
   ],
   "steps_h2": "How to Create Black Friday Ad Creatives in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose a Black Friday sale scene and add the confirmed offer after download."
+  "steps_lead": "Upload one product photo, choose a Black Friday sale scene and add the confirmed offer after download.",
+  "relatedLinks": [
+    "video-ads",
+    "social-ad-photos",
+    "unboxing-videos",
+    "occ-sale-discount",
+    "occ-holidays",
+    "templates",
+    "pricing",
+    "guides"
+  ]
 }
