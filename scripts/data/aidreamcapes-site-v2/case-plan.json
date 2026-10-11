@@ -613,9 +613,9 @@
     ],
     "tpl-home": [
       {
-        "ref": "n:guide:q11-home-case-01-square-r2",
-        "product": "pet hair roller",
-        "title": "Pet hair roller on a sofa"
+        "ref": "n:guide:rc6-tpl-home-case-organizer-r1",
+        "product": "drawer organizer",
+        "title": "Drawer organizer fitted to a kitchen drawer"
       },
       {
         "ref": "n:guide:q11-home-case-02-square-r2",
@@ -640,17 +640,17 @@
         "title": "Blue jacket on a city walk"
       },
       {
-        "ref": "n:guide:q11-outfit-case-02-square-r2",
+        "ref": "n:guide:rc6-tpl-outfit-case-denim-r1",
         "product": "denim jacket",
-        "title": "Denim jacket mirror fit"
+        "title": "Denim jacket laid out for a fit check"
       },
       {
-        "ref": "n:guide:q11-outfit-case-03-square-r2",
+        "ref": "n:guide:rc6-tpl-outfit-case-puffer-r1",
         "product": "puffer coat",
-        "title": "Ivory puffer on a city walk"
+        "title": "Ivory puffer shown for a fit check"
       },
       {
-        "ref": "n:guide:q11-outfit-case-04-square-r2",
+        "ref": "n:guide:rc6-tpl-outfit-case-bag-r1",
         "product": "shoulder bag",
         "title": "Shoulder bag unboxed"
       }
@@ -689,9 +689,9 @@
         "title": "Two legging colors shown in matched try-on views"
       },
       {
-        "ref": "n:guide:q12-tpl-compare-case-harness-sizes-r1",
+        "ref": "n:guide:rc6-tpl-compare-case-harness-r1",
         "product": "dog harnesses",
-        "title": "Dog owner compares two green harness sizes"
+        "title": "Two green harness sizes beside a dog"
       },
       {
         "ref": "n:guide:q12-tpl-compare-case-phone-colors-r1",
@@ -733,9 +733,9 @@
         "title": "Hot sauce poured over noodles"
       },
       {
-        "ref": "n:guide:q13-limited-more-5",
-        "product": "reusable bottle",
-        "title": "Reusable bottle beside a work laptop"
+        "ref": "n:guide:rc6-tpl-limited-case-skincare-r1",
+        "product": "moisturizer",
+        "title": "Moisturizer jar opened beside a matching jar"
       },
       {
         "ref": "n:guide:q13-limited-more-6",

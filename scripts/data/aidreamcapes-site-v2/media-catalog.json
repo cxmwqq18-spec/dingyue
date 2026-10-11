@@ -45094,6 +45094,248 @@
           640,
           1280
         ]
+      },
+      "rc6-tpl-home-strip-organizer-r1": {
+        "file": "rc6-tpl-home-strip-organizer-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands place a gray fabric storage bin on a closet shelf beside folded towels.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-source-canisters-r1": {
+        "file": "rc6-tpl-compare-source-canisters-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Two plain matte slate-gray storage canisters, one small and one large, shown side by side.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-result-canisters-r1": {
+        "file": "rc6-tpl-compare-result-canisters-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands hold the same small and large matte slate-gray storage canisters side by side.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-limited-strip-candle-r1": {
+        "file": "rc6-tpl-limited-strip-candle-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands lift a plain teal ceramic candle jar from a tissue-lined mailer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-limited-strip-shirt-r1": {
+        "file": "rc6-tpl-limited-strip-shirt-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands lift a plain rust cotton overshirt from a tissue-lined mailer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-limited-strip-jacket-r1": {
+        "file": "rc6-tpl-limited-strip-jacket-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands adjust the cuff and front of a plain teal cotton jacket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-limited-strip-drink-r1": {
+        "file": "rc6-tpl-limited-strip-drink-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands lift a plain citrus drink in a glass beside a blank can.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-limited-example-shoe-r1": {
+        "file": "rc6-tpl-limited-example-shoe-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands hold a coral trail shoe and point to its tread outdoors.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-outfit-strip-man-r1": {
+        "file": "rc6-tpl-outfit-strip-man-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult Black man with short cropped hair wearing a plain cream overshirt and olive trousers in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-outfit-strip-blonde-r1": {
+        "file": "rc6-tpl-outfit-strip-blonde-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult woman with a short straight blonde bob wearing a plain muted green midi dress on a leafy city walkway.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-outfit-strip-gray-r1": {
+        "file": "rc6-tpl-outfit-strip-gray-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Older Asian woman with a short silver-gray pixie wearing a plain white knit top and charcoal midi skirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-outfit-strip-blazer-r1": {
+        "file": "rc6-tpl-outfit-strip-blazer-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult Black woman with a short auburn pixie pointing to the lapel seam of a plain navy blazer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-strip-harness-r1": {
+        "file": "rc6-tpl-compare-strip-harness-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Two plain green dog harnesses, one small and one large, held beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-strip-phonecase-r1": {
+        "file": "rc6-tpl-compare-strip-phonecase-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands hold plain sage-green and dusty-blush phone cases side by side.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-card-pumps-r1": {
+        "file": "rc6-tpl-compare-card-pumps-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands hold plain frosted white and lavender pump bottles side by side.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-card-harness-r1": {
+        "file": "rc6-tpl-compare-card-harness-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Two plain teal pet harnesses, one small and one large, sit beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-home-case-organizer-r1": {
+        "file": "rc6-tpl-home-case-organizer-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands place a plain light-gray drawer organizer into a tidy kitchen drawer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-outfit-case-denim-r1": {
+        "file": "rc6-tpl-outfit-case-denim-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "A plain blue denim jacket lies flat over a white shirt on a studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-outfit-case-puffer-r1": {
+        "file": "rc6-tpl-outfit-case-puffer-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "A plain ivory quilted puffer coat lies flat on a light gray studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-outfit-case-bag-r1": {
+        "file": "rc6-tpl-outfit-case-bag-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands lift a plain brown shoulder bag from white tissue in a shipping box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-case-harness-r1": {
+        "file": "rc6-tpl-compare-case-harness-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "A calm dog wears a plain forest-green harness beside a smaller matching harness.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-limited-case-skincare-r1": {
+        "file": "rc6-tpl-limited-case-skincare-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands open a plain white moisturizer jar beside a matching closed jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
       }
     }
   }
