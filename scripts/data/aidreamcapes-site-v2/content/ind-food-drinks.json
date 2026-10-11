@@ -1,10 +1,10 @@
 {
   "id": "ind-food-drinks",
-  "title": "AI Food & Drink Video Ads From One Photo | AIVideosUGC",
-  "description": "Turn one food or drink photo into appetizing ads for social feeds and listings. Minutes, not weeks, far less than a kitchen shoot, watermark-free clips.",
-  "h1": "AI Food and Drink Product Videos That Drive Cravings",
+  "title": "AI Food and Drink Product Videos | AIVideosUGC",
+  "description": "Turn one food or drink photo into ads for listings and social feeds. Get watermark-free clips in minutes, not weeks, at far less cost than a kitchen shoot.",
+  "h1": "Make AI Food and Drink Product Videos That Drive Cravings",
   "eyebrow": "Food and beverage brands",
-  "lead": "Hungry shoppers decide fast. Turn one food or drink photo into a clear package, serving moment, or product video that makes the next bite easy to imagine.",
+  "lead": "Hungry shoppers decide fast. Turn one food or drink photo into a clear package reveal, serving moment or product video that makes the next bite easy to imagine.",
   "card": "Serving scenes, package reveals and product videos from one food photo.",
   "secondary_keywords": [
     "drink pour video",
@@ -15,7 +15,7 @@
   ],
   "intro": [
     "Show the package clearly, then use a serving scene to show the product’s color, texture, or portion. A cold brew needs beads of condensation on the glass, a hot sauce needs a drizzle over tacos, and granola can be shown with a bowl of milk and berries. Packaging matters just as much, because that is what shoppers look for on a store shelf and in a delivery app.",
-    "Send in a clean shot of the package and spell out the serving moment: a can cracking open over ice, a cookie snapping in half, honey dripping from a dipper onto toast. Six- or ten-second vertical clips suit TikTok and Reels, while square photos fit your store and marketplace listings. Prices and offers are easiest to get right when you type them in afterward with Canva or CapCut."
+    "Send in a clean package photo and describe one serving moment: a can cracking open over ice, a cookie snapping in half or honey dripping onto toast. Choose a 6-, 10-, 15-, or 30-second vertical clip for a social ad, or use a square photo for a listing."
   ],
   "faq": [
     {
@@ -45,35 +45,35 @@
   ],
   "templates_lead": "Choose a food ad format that puts one product and one serving moment in focus.",
   "cta_lead": "Upload one package photo and turn its serving moment into an ad.",
-  "benefits_h2": "The Secret Ingredient Your Food Ads Have Been Missing",
+  "benefits_h2": "Why AI Food and Drink Product Videos Skip the Kitchen Shoot",
   "benefits": [
     {
-      "t": "Always On. Always Ready.",
-      "d": "A package photo can become a serving scene in minutes. Launch a new flavor or restock without booking a kitchen or crew."
+      "t": "Launch the next flavor in minutes",
+      "d": "Turn a package photo into a serving moment in minutes while the new flavor is fresh. Launch a restock without booking a kitchen or crew."
     },
     {
-      "t": "Full Creative Control",
-      "d": "Choose the action, setting and frame. Keep the package at the center while you decide which details appear in the ad."
+      "t": "Keep the package at the center",
+      "d": "Choose the action, setting and frame so shoppers can see the product they will receive."
     },
     {
-      "t": "More Variants, Better Testing",
-      "d": "One photo can feed a pour, bite, plate and shelf scene. Test several hooks without paying for a reshoot."
+      "t": "Test more serving moments",
+      "d": "Run one photo through a pour, bite, plate or shelf scene and test the hooks without paying for another reshoot."
     }
   ],
-  "steps_h2": "Turn One Food Photo Into a Ready-to-Post Ad in 3 Steps",
-  "steps_lead": "Three steps make the serving moment easy to picture in a food or drink ad.",
+  "steps_h2": "How to Make AI Food and Drink Product Videos in 3 Simple Steps",
+  "steps_lead": "Show one package and one appetizing action, then add exact offer details before you post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear package photo. The clip keeps the product's shape, color and label area in view."
+      "d": "Add one clear package photo. Keep its shape, color and label area in view."
     },
     {
-      "t": "Share Your Serving Idea",
-      "d": "Name one pour, bite or plated moment in a sentence. Try several ad moments from one package."
+      "t": "Pick a Scene",
+      "d": "Choose one pour, bite or plated moment that makes the serving idea easy to picture."
     },
     {
-      "t": "Generate and Launch",
-      "d": "Review the clip and download it without a watermark. Add exact offer details in your editor, then post."
+      "t": "Download and Post",
+      "d": "Download the clip without a watermark, add exact price and offer details in your editor, then post."
     }
   ],
   "visual": {
@@ -81,17 +81,17 @@
     "strip": [
       "n:guide:ind-food-drinks-m2-source",
       "f:k7-ind-food-drinks-strip-1-f-food-video-t06",
-      "n:guide:q17-ind-food-drinks-strip-2",
-      "n:guide:q17-ind-food-drinks-strip-3",
+      "n:guide:rb3-ind-food-drinks-strip-3-2-r1",
+      "n:guide:rb3-ind-food-drinks-strip-4-1-r1",
       "n:guide:q17-ind-food-drinks-strip-4",
-      "n:guide:q17-ind-food-drinks-strip-5"
+      "n:guide:rb3-ind-food-drinks-strip-6-1-r1"
     ],
     "steps": {
       "source": "n:guide:ind-food-drinks-m2-source",
       "result": "f:k7-ind-food-drinks-steps-result-f-food-video-t06",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand tilts the citrus bottle and pours once into an ice-filled glass, ending when the stream stops and the full bottle remains beside the glass. Bright morning window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. End with the full citrus bottle beside the ice-filled glass. Sound: clear pour and ice clink; no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand tilts the citrus bottle and pours once into an ice-filled glass, ending when the stream stops and the full bottle remains beside the glass. Bright morning window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. Sound: clear pour and ice clink; no music.",
       "options": [
         [
           "Size",
@@ -109,29 +109,29 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make a food and drink video in three steps"
+        "h2": "How to Make AI Food and Drink Product Videos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a food video format"
+        "h2": "AI Food and Drink Product Videos: Choose a Format"
       },
       "m4": {
-        "h2": "Use food videos on product pages and social feeds"
+        "h2": "Use AI Food and Drink Product Videos on Product Pages and Social Feeds"
       },
       "m5": {
-        "h2": "Start with a clear food package photo"
+        "h2": "Start AI Food and Drink Product Videos With a Clear Package Photo"
       },
       "m6": {
-        "h2": "Pick a food video shape and length"
+        "h2": "Pick a Shape and Length for AI Food and Drink Product Videos"
       },
       "m7": {
-        "h2": "Add ingredients and offer details after download"
+        "h2": "Add Ingredients and Offer Details After Downloading AI Food and Drink Product Videos"
       },
       "examples": {
-        "h2": "More food and drink examples",
+        "h2": "More AI Food and Drink Product Videos Examples",
         "lead": "Recipe demos, taste tests, and packable snacks show products in useful moments."
       },
       "faq": {
-        "h2": "Questions about food and drink videos"
+        "h2": "Questions About AI Food and Drink Product Videos"
       }
     }
   }

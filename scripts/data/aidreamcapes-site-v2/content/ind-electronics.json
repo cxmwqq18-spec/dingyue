@@ -1,8 +1,8 @@
 {
   "id": "ind-electronics",
-  "title": "AI Electronics Video Ads From One Photo | AIVideosUGC",
-  "description": "Turn one gadget photo into unboxing, setup and in-use video ads for electronics. Get watermark-free footage in minutes without a studio shoot.",
-  "h1": "Make AI Product Videos for Electronics That Actually Sell",
+  "title": "AI Product Videos for Electronics | AIVideosUGC",
+  "description": "Turn one electronics product photo into unboxing, setup and in-use video ads. Get watermark-free clips in minutes for listings, social feeds and paid campaigns.",
+  "h1": "Make AI Product Videos for Electronics That Sell More Angles",
   "eyebrow": "App and tech brands",
   "lead": "Your next round of gadget ads can start with one product photo. No creator search, no studio booking, no waiting on a shoot date.",
   "card": "Unboxings, hands-on demos and everyday-carry scenes from one gadget photo.",
@@ -14,8 +14,8 @@
     "product video for tech accessories"
   ],
   "intro": [
-    "AI product videos for electronics can use a context scene to show where a device fits: earbuds on a run, a power bank in a carry-on, or a ring light at a desk. Keep verified specifications in the listing and use separate photos to show physical details.",
-    "Upload a clear shot of your product with its ports, buttons, and indicator lights visible, then describe what should happen: a lid lifting off the box, a cable clicking into place, a speaker sitting on a picnic blanket at sunset. Choose a 6-, 10-, 15-, or 30-second clip for the product moment. Battery life, wattage, and other specs belong in the text you add yourself, where you control the exact figures. For gallery photos, photograph the front, side and back so every detail shown comes from a real upload."
+    "Show a gadget where shoppers use it: earbuds on a run, a charger in a carry-on, or a speaker at a desk. One clear product photo gives each ad a real setting without another shoot.",
+    "Upload the product with ports, buttons and indicator lights visible. Describe one action, such as lifting a lid or plugging in a cable. Choose a 6-, 10-, 15-, or 30-second clip; add exact battery and wattage details after download."
   ],
   "faq": [
     {
@@ -45,35 +45,35 @@
   ],
   "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
   "cta_lead": "Upload one gadget photo and see the cost before you start.",
-  "benefits_h2": "Why Fast-Growing Tech Brands Make Ads From a Product Photo",
+  "benefits_h2": "Why AI Product Videos for Electronics Beat Booking a Shoot",
   "benefits": [
     {
-      "t": "Time efficient",
-      "d": "Skip the endless hunt for the right creator. A gadget ad is ready in minutes, so a new feature gets its own clip as soon as it goes live."
+      "t": "New gadget ad in minutes",
+      "d": "Skip creator outreach and a studio day. Start with one clear product photo and get a usable scene ready in minutes while the feature is still fresh."
     },
     {
-      "t": "Cost effective",
-      "d": "One photo costs far less than creator fees, crew time and a studio. You run the same product through many scenes without paying to reshoot each one."
+      "t": "More angles at a lower cost",
+      "d": "One photo costs far less than creator fees, crew time and a studio. Run the same gadget through an unboxing, setup and travel moment without paying to reshoot each one."
     },
     {
-      "t": "Full control",
-      "d": "Set the scene, the action and the angle yourself. Every clip matches your brand, and the exact specs stay in the listing where you control them."
+      "t": "Keep every spec in your hands",
+      "d": "Choose the scene and action yourself, then add exact battery, wattage and compatibility details in the listing or editor."
     }
   ],
-  "steps_h2": "3 Steps to Your Next Electronics Ad",
-  "steps_lead": "",
+  "steps_h2": "How to Make AI Product Videos for Electronics in 3 Simple Steps",
+  "steps_lead": "Show one useful gadget moment, then take the finished clip straight to your listing or ad account.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "One clear photo of the gadget is all it takes. The clip keeps its shape, color, ports and controls."
+      "d": "Add a clear photo that shows the gadget’s shape, ports and controls."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Describe one moment, such as an unboxing or a button press, in a single sentence."
+      "t": "Pick a Scene",
+      "d": "Choose one hands-on action, such as an unboxing, cable connection or travel setup."
     },
     {
-      "t": "Generate and Launch",
-      "d": "Your clip is ready to download with no watermark. Add the price and specs in your editor, then post it to your listing or ad."
+      "t": "Download and Post",
+      "d": "Download the clip without a watermark, add exact specs in your editor, and post it to your listing or ad."
     }
   ],
   "visual": {
@@ -83,7 +83,7 @@
       "f:cinematic-video",
       "n:gen2:tpl-angle-c1",
       "n:guide:k7-ind-electronics-strip-3-n-gen2-tpl-film-g2",
-      "n:guide:q16-electronics-tripod-demo",
+      "n:guide:rb3-ind-electronics-strip-5-1-r1",
       "n:guide:q16-electronics-cable-solution"
     ],
     "steps": {
@@ -91,7 +91,7 @@
       "result": "n:guide:q16-electronics-speaker-step-result",
       "mode": "video",
       "length": 10,
-      "prompt": "A hand presses one button on the speaker at a quiet cafe table.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, a hand presses the speaker's single control once, ending with the full speaker still beside a cup. Soft window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. Sound: one button click and quiet room tone; no music.",
       "options": [
         [
           "Size",
@@ -108,29 +108,29 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Make an electronics product video in three steps"
+        "h2": "How to Make AI Product Videos for Electronics in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose an electronics video format for the first shot"
+        "h2": "AI Product Videos for Electronics: Choose a Format for the First Shot"
       },
       "m4": {
-        "h2": "Use electronics videos on listings and social feeds"
+        "h2": "Use AI Product Videos for Electronics on Listings and Social Feeds"
       },
       "m5": {
-        "h2": "Start with a clear electronics product photo"
+        "h2": "Start AI Product Videos for Electronics With a Clear Product Photo"
       },
       "m6": {
-        "h2": "Pick an electronics video shape and length"
+        "h2": "Pick a Shape and Length for AI Product Videos for Electronics"
       },
       "m7": {
-        "h2": "Add offer details after downloading the electronics video"
+        "h2": "Add Offer Details After Downloading AI Product Videos for Electronics"
       },
       "examples": {
-        "h2": "More electronics examples",
+        "h2": "More AI Product Videos for Electronics Examples",
         "lead": "Hands-on device views, clean product details, and travel-ready accessories for electronics listings and ads."
       },
       "faq": {
-        "h2": "Questions about electronics product videos"
+        "h2": "Questions About AI Product Videos for Electronics"
       }
     }
   }

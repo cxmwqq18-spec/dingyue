@@ -1,8 +1,8 @@
 {
   "id": "ind-health-wellness",
-  "title": "AI UGC Ads and Lifestyle Photos for Wellness | AIVideosUGC",
-  "description": "Turn one product photo into wellness lifestyle photos and creator-style ads in gym, kitchen and routine scenes. Watermark-free, ready to post.",
-  "h1": "Wellness Product Ads and Photos Without a Shoot",
+  "title": "AI Lifestyle Photos for Wellness Brands | AIVideosUGC",
+  "description": "Turn one wellness product photo into lifestyle photos and creator-style ads for routines, product pages and social feeds. Watermark-free files ready to post.",
+  "h1": "Make AI Lifestyle Photos for Wellness Brands Without a Shoot",
   "eyebrow": "Health & wellness",
   "lead": "Wellness sales run on trust, and a plain packshot does not build it. Turn one product photo into lifestyle images and creator-style clips set in real routines.",
   "card": "Supplements, tea and gear shown in the routines where people use them.",
@@ -36,38 +36,38 @@
     },
     {
       "q": "What format are the photos and clips delivered in?",
-      "a": "Photos are square JPGs. Clips are vertical 9:16 at 6, 10 or 15 seconds, so one product works across feeds and listings."
+      "a": "Photos are square JPGs. Clips are vertical 9:16 at 6, 10, 15 or 30 seconds, so one product works across feeds and listings."
     }
   ],
-  "benefits_h2": "Why Wellness Brands Are Done Waiting on Creators",
+  "benefits_h2": "Why AI Lifestyle Photos for Wellness Brands Skip the Photoshoot",
   "benefits": [
     {
       "t": "Faster, lower-cost production",
       "d": "Upload one product photo and get the scene back in minutes. No creator fees, studio rental, or waiting on a shoot date."
     },
     {
-      "t": "Content that scales across channels",
-      "d": "Restage one bottle, tin, or gear in multiple routine scenes. One source photo feeds social posts, ads, and product pages."
+      "t": "Use one photo across channels",
+      "d": "Restage the same bottle, tin or piece of gear for social posts, product pages and paid ads without another shoot."
     },
     {
       "t": "Trust without the hard sell",
       "d": "Shoppers see your product in a routine they recognize. The scene answers how it fits the day, without unsupported health claims."
     }
   ],
-  "steps_h2": "Your Next Wellness Ad Is a Swipe Away",
-  "steps_lead": "3 Steps to make creator-style videos for wellness products with AIVideosUGC",
+  "steps_h2": "How to Make AI Lifestyle Photos for Wellness Brands in 3 Simple Steps",
+  "steps_lead": "Place one wellness product in a routine shoppers recognize, then publish the finished photo or clip.",
   "steps": [
     {
-      "t": "Upload Your Product",
-      "d": "Add one clear photo of the bottle, pouch, tin, or gear. The result keeps its shape, color, and label area."
+      "t": "Upload Your Product Photo",
+      "d": "Add one clear photo of the bottle, pouch, tin or gear. Keep the whole product and label area visible."
     },
     {
-      "t": "Pick a Scene and Format",
-      "d": "Choose a routine setting and a square photo or vertical clip. Run one product through more scenes to build a set."
+      "t": "Pick a Scene",
+      "d": "Choose a routine setting and a square photo or vertical clip that fits the channel."
     },
     {
       "t": "Download and Post",
-      "d": "Review the file, save it, and add approved text in your editor. Then upload it to your store or ad account."
+      "d": "Download and save the file, then add approved text in your editor before you post it to your store or ad account."
     }
   ],
   "visual": {
@@ -85,7 +85,7 @@
       "sourceAlt": "Teal yoga mat partly unrolled on a clean studio floor.",
       "result": "n:guide:q16-wellness-mat-stretch",
       "mode": "photo",
-      "prompt": "A teal yoga mat beside a bright window, ready for a gentle stretch without a health claim.",
+      "prompt": "Place the uploaded teal yoga mat on a bright studio floor beside a window, with an adult beginning a gentle stretch. Keep the mat shape and color unchanged, end with the full mat visible and no health result implied. Natural daylight, clean lifestyle photo, eye-level wide framing.",
       "options": [
         [
           "Template",
@@ -109,14 +109,14 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Your Next Wellness Ad Is a Few Clicks Away"
+        "h2": "How to Make AI Lifestyle Photos for Wellness Brands in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a Wellness Scene",
+        "h2": "AI Lifestyle Photos for Wellness Brands: Choose a Scene",
         "lead": "Open a routine scene and place your product in it."
       },
       "faq": {
-        "h2": "Questions About Wellness Product Photos"
+        "h2": "Questions About AI Lifestyle Photos for Wellness Brands"
       }
     }
   },
