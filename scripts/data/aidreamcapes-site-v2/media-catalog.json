@@ -26125,10 +26125,10 @@
         ]
       },
       "q4-actor-maya": {
-        "file": "gen2guide-q4-actor-maya-r2",
+        "file": "gen2guide-q4-actor-maya-r3",
         "w": 864,
         "h": 1536,
-        "alt": "an adult Latina woman in her early thirties in a car setting speaks to camera while holding a plain amber serum bottle.",
+        "alt": "an adult Black man in his late forties in a car setting speaks to camera while holding a plain pump lotion bottle.",
         "variants": [
           640,
           1280
@@ -26290,12 +26290,13 @@
         ]
       },
       "q4-actor-lisa": {
-        "file": "gen2guide-q4-actor-lisa-r2",
+        "file": "gen2guide-q4-actor-lisa-r3",
         "w": 864,
         "h": 1536,
-        "alt": "An adult Middle Eastern woman in her late fifties on a balcony speaks to camera while holding a plain handheld fabric lint remover.",
+        "alt": "an adult Middle Eastern woman in her late fifties on a balcony speaks to camera while holding a plain terracotta flower pot.",
         "variants": [
-          640
+          640,
+          1280
         ]
       },
       "q4-actor-frankie": {
@@ -26317,10 +26318,10 @@
         ]
       },
       "q4-actor-megha": {
-        "file": "gen2guide-q4-actor-megha-r2",
+        "file": "gen2guide-q4-actor-megha-r3",
         "w": 864,
         "h": 1536,
-        "alt": "an adult South Asian woman in her early twenties in a cafe setting speaks to camera while holding a plain clear bottle of unsweetened iced tea with a blank band.",
+        "alt": "an adult white woman in her early sixties in a cafe setting speaks to camera while holding a plain ceramic espresso cup.",
         "variants": [
           640,
           1280
@@ -42581,11 +42582,11 @@
           1280
         ]
       },
-      "ac1-actor-travel-1-r2": {
-        "file": "ac1-actor-travel-1-r2",
+      "ac1-actor-travel-1-r3": {
+        "file": "ac1-actor-travel-1-r3",
         "w": 864,
         "h": 1536,
-        "alt": "an adult Latina woman in her early thirties in a travel setting speaks to camera while holding a plain tan travel document wallet.",
+        "alt": "an adult East Asian man in his early forties in a travel setting speaks to camera while holding a plain slate-blue packing cube.",
         "variants": [
           640,
           1280
@@ -42641,21 +42642,21 @@
           1280
         ]
       },
-      "ac1-actor-study-room-1-r2": {
-        "file": "ac1-actor-study-room-1-r2",
+      "ac1-actor-study-room-1-r3": {
+        "file": "ac1-actor-study-room-1-r3",
         "w": 864,
         "h": 1536,
-        "alt": "an adult South Asian woman in her mid-twenties in a study room setting speaks to camera while holding a plain blank spiral notebook.",
+        "alt": "an adult white man in his early sixties in a study room setting speaks to camera while holding a plain wooden pencil case.",
         "variants": [
           640,
           1280
         ]
       },
-      "ac1-actor-bathroom-1-r2": {
-        "file": "ac1-actor-bathroom-1-r2",
+      "ac1-actor-bathroom-1-r3": {
+        "file": "ac1-actor-bathroom-1-r3",
         "w": 864,
         "h": 1536,
-        "alt": "an adult Latina woman in her late thirties in a bathroom setting speaks to camera while holding a plain bamboo bath caddy.",
+        "alt": "an adult East Asian man in his early fifties in a bathroom setting speaks to camera while holding a plain ceramic soap dish.",
         "variants": [
           640,
           1280
