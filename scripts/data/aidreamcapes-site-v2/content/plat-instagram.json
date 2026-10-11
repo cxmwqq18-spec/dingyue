@@ -108,17 +108,23 @@
     {
       "t": "Shorter Production Time",
       "d": "Start an Instagram Reel or still from one product photo and keep the next ad moving.",
-      "icon": "clock"
+      "icon": "clock",
+      "img": "n:guide:fx40-plat-instagram-benefit-time",
+      "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf"
     },
     {
       "t": "Lower Production Cost",
       "d": "Use your product photo instead of booking a creator, studio and shoot.",
-      "icon": "coins"
+      "icon": "coins",
+      "img": "n:guide:fx40-plat-instagram-benefit-cost",
+      "alt": "Unbranded ceramic travel mug on linen with one green leaf"
     },
     {
       "t": "Variations to Test",
       "d": "Change the format or opening and compare versions without reshooting the product.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:guide:fx40-plat-instagram-benefit-variations",
+      "alt": "Three pastel lip balm tubes arranged in color groups on a peach surface"
     }
   ],
   "steps_h2": "How to Make an Instagram Ad in 3 Simple Steps",
@@ -131,15 +137,21 @@
       "items": [
         {
           "t": "Test a New Opening",
-          "d": "Try another Reel opening or still from the same product photo without booking a new shoot."
+          "d": "Try another Reel opening or still from the same product photo without booking a new shoot.",
+          "img": "n:guide:fx40-plat-instagram-more-opening",
+          "alt": "Hand applying sunscreen from a white tube to the back of the other hand"
         },
         {
           "t": "Use Your Own Product Photo",
-          "d": "Start with the product image you already have and choose a Reel or square format."
+          "d": "Start with the product image you already have and choose a Reel or square format.",
+          "img": "n:guide:fx40-plat-instagram-more-photo",
+          "alt": "Hand placing a blank product photo card beside a folded canvas pouch"
         },
         {
           "t": "Download a Clean Instagram File",
-          "d": "Get a clear file for Reels, Stories or the Feed, then add your caption and offer."
+          "d": "Get a clear file for Reels, Stories or the Feed, then add your caption and offer.",
+          "img": "n:guide:fx40-plat-instagram-more-file",
+          "alt": "Tan leather wallet beside a cream blank notebook on a clean surface"
         }
       ]
     },
@@ -150,15 +162,21 @@
       "items": [
         {
           "t": "Choose the Format That Fits",
-          "d": "Pick a Reel-style clip for Reels or Stories, or a square still for the Feed."
+          "d": "Pick a Reel-style clip for Reels or Stories, or a square still for the Feed.",
+          "img": "n:guide:fx40-plat-instagram-more-format",
+          "alt": "Lavender ceramic cup and saucer arranged on a balanced square tabletop"
         },
         {
           "t": "Show the Product in Use",
-          "d": "Use a hand, routine or close detail to make the item easy to understand."
+          "d": "Use a hand, routine or close detail to make the item easy to understand.",
+          "img": "n:guide:fx40-plat-instagram-more-use",
+          "alt": "Hand pouring herbal tea from a white ceramic teapot into a plain cup"
         },
         {
           "t": "Try Another Audience Angle",
-          "d": "Change the scene or idea and make another version from the same product photo."
+          "d": "Change the scene or idea and make another version from the same product photo.",
+          "img": "n:guide:fx40-plat-instagram-more-angle",
+          "alt": "White hand-cream tube beside a folded linen towel and a green leaf"
         }
       ]
     }

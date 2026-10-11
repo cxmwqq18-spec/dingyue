@@ -47787,6 +47787,186 @@
           1280,
           1600
         ]
+      },
+      "fx40-plat-tiktok-benefit-trend": {
+        "file": "fx40-plat-tiktok-benefit-trend",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand lifting a coral windbreaker from folded streetwear on a mint tabletop",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-benefit-clips": {
+        "file": "fx40-plat-tiktok-benefit-clips",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand repositioning a cobalt reusable water bottle beside a tabletop light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-benefit-ready": {
+        "file": "fx40-plat-tiktok-benefit-ready",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand placing a green leaf beside a mint insulated tumbler on a kitchen counter",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-more-opening": {
+        "file": "fx40-plat-tiktok-more-opening",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand opening a yellow lunch container on a bright picnic table",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-more-photo": {
+        "file": "fx40-plat-tiktok-more-photo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand setting a blank product photo card beside a natural canvas tote bag",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-more-file": {
+        "file": "fx40-plat-tiktok-more-file",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Fresh tea poured into an unbranded matte ceramic mug on a bright counter",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-more-action": {
+        "file": "fx40-plat-tiktok-more-action",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand snapping shut a coral food container over a pale blue table",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-more-idea": {
+        "file": "fx40-plat-tiktok-more-idea",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Orange insulated bottle beside a blank sheet and pencil on a clean table",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-tiktok-more-shoot": {
+        "file": "fx40-plat-tiktok-more-shoot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woven tote bag hanging on an entryway hook in warm morning light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-benefit-time": {
+        "file": "fx40-plat-instagram-benefit-time",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-benefit-cost": {
+        "file": "fx40-plat-instagram-benefit-cost",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic travel mug on linen with one green leaf",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-benefit-variations": {
+        "file": "fx40-plat-instagram-benefit-variations",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three pastel lip balm tubes arranged in color groups on a peach surface",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-more-opening": {
+        "file": "fx40-plat-instagram-more-opening",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand applying sunscreen from a white tube to the back of the other hand",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-more-photo": {
+        "file": "fx40-plat-instagram-more-photo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand placing a blank product photo card beside a folded canvas pouch",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-more-file": {
+        "file": "fx40-plat-instagram-more-file",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tan leather wallet beside a cream blank notebook on a clean surface",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-more-format": {
+        "file": "fx40-plat-instagram-more-format",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lavender ceramic cup and saucer arranged on a balanced square tabletop",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-more-use": {
+        "file": "fx40-plat-instagram-more-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pouring herbal tea from a white ceramic teapot into a plain cup",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx40-plat-instagram-more-angle": {
+        "file": "fx40-plat-instagram-more-angle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White hand-cream tube beside a folded linen towel and a green leaf",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
