@@ -96,7 +96,7 @@
       "n:guide:g1-retarget-shoe-tread-detail",
       "n:guide:rc7-tpl-retargeting-video-ad-strip-2-r1",
       "n:guide:rc7-tpl-retargeting-video-ad-strip-3-r1",
-      "n:guide:q14-retarget-strip-fit",
+      "n:guide:im11-tpl-retargeting-video-ad-strip-4-r1",
       "n:guide:rc7-tpl-retargeting-video-ad-strip-5-r1"
     ],
     "steps": {
@@ -381,7 +381,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the snack and expression together in one view.",
           "kind": "video"
         },
         {
