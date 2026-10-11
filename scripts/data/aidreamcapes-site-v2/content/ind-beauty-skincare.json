@@ -51,39 +51,31 @@
   "faq": [
     {
       "q": "Can I make beauty UGC ads from one product photo?",
-      "a": "Yes. Upload a clear, straight-on photo and choose a routine, swatch, unboxing, or review scene. The result keeps the product as the subject, so compare the shade and package before posting."
+      "a": "Yes. Upload a clear, straight-on photo and choose a routine, swatch, unboxing, or review scene. The same source can also guide a white background photo; compare the shade and package before posting."
     },
     {
       "q": "Can I make before-and-after videos for a skincare product?",
-      "a": "We’d steer away from it for skin results. A generated face is not evidence of what your product does, and a visible change in skin can read as a promise. Show application, texture, and packaging instead, and leave claims about results out of your request and the claims you use in an ad."
+      "a": "No. We do not recommend before-and-after skin results because a generated face is not evidence of what your product does. Show application, texture, and packaging instead, and keep result claims out of the ad."
     },
     {
       "q": "Will the video match my exact foundation or lipstick shade?",
-      "a": "Color comes from your photo and your wording, so shoot in daylight and name the shade plainly, like \"warm beige liquid\" or \"brick red matte.\" If the tone drifts, make another version; the credit cost is shown before each one."
+      "a": "Color comes from your photo and your wording, so shoot in daylight and name the shade plainly, such as “warm beige liquid” or “brick red matte.” If the tone drifts, make another version; the credit cost is shown before each one."
     },
     {
       "q": "Can I add my price or a promo code to the image?",
-      "a": "Type prices, promo codes, and product names afterward in Canva or CapCut. Lettering made by AI can be misspelled, so keep the image clean and add the words yourself."
+      "a": "Type prices, promo codes, and product names afterward in Canva or CapCut. AI lettering can be misspelled, so keep the generated image clean and add the words yourself."
     },
     {
       "q": "What kind of product photo should I upload for skincare?",
-      "a": "Use a straight-on shot with the label toward the camera, on a plain surface, with no hands or clutter. Glossy tubes and clear glass pick up glare, so shoot beside a window rather than using flash."
+      "a": "Use a straight-on shot with the label area toward the camera, on a plain surface, with no hands or clutter. Glossy tubes and clear glass pick up glare, so shoot beside a window rather than using flash."
     },
     {
       "q": "How long should a beauty ad video be?",
       "a": "Pick 6, 10, 15, or 30 seconds for feed ads. Use a shorter length for one action such as a swatch or pump, and 30 seconds for a longer routine; the credit cost is shown before each length."
     },
     {
-      "q": "Can I use the same product photo for a white background shot and a routine video?",
-      "a": "Yes. Shoot the bottle, tube, or jar straight-on with the whole label visible, and use that file for both the white background photo and a routine or demo video. Keep the original uncropped so the vertical video can reframe without cutting the cap."
-    },
-    {
-      "q": "Do beauty ads need a person in the frame?",
-      "a": "Ad scenes such as GRWM, reviews and shade checks read better with an adult person or hand using the product. Use object-only white background shots for the listing, and reserve shelf or vanity stills for moments where the package itself is the subject."
-    },
-    {
       "q": "Can I run the videos as paid beauty ads?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid social ads. Keep any result or ingredient claim accurate, and add text in your editor so it can be checked before posting."
+      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid social ads. Keep result or ingredient claims accurate, and add text in your editor so it can be checked before posting."
     },
     {
       "q": "Is an AI creator video different from hiring a real UGC creator?",
@@ -148,5 +140,100 @@
         "lead": "Routines, swatches, unboxings, and creator reviews for beauty campaigns."
       }
     }
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Tools for each beauty asset",
+      "h2": "Beauty tools that fit the job",
+      "lead": "Choose the tool that matches the asset you need, then review the result before posting.",
+      "items": [
+        {
+          "t": "Video Ads",
+          "d": "[Video Ads](/ai-video-generation/ugc-ad-video) turn a beauty product photo into a creator-style routine or demo."
+        },
+        {
+          "t": "Lifestyle Photos",
+          "d": "[Lifestyle Photos](/ai-image-generation/lifestyle-scene) place the product in a bathroom routine or social-feed setting."
+        },
+        {
+          "t": "White Background Photos",
+          "d": "[White Background Photos](/ai-image-generation/ecommerce-main-image) keep the package clean and easy to inspect for a listing."
+        },
+        {
+          "t": "Product Photos",
+          "d": "[Product Photos](/ai-image-generation) make a clear beauty product view for a store page or campaign draft."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Sell on the channels you use",
+      "h2": "Ads for the channels you already sell on",
+      "lead": "Match each beauty asset to the platform where shoppers will see it.",
+      "items": [
+        {
+          "t": "Shopify product photos",
+          "d": "[Shopify product photos](/platforms/shopify-product-photos) keep product and collection imagery consistent."
+        },
+        {
+          "t": "Amazon product photos",
+          "d": "[Amazon product photos](/platforms/amazon-product-photos) give a listing a clean main image and supporting views."
+        },
+        {
+          "t": "TikTok ads",
+          "d": "[TikTok ads](/platforms/tiktok-ads) open with the application, swatch, or review moment."
+        },
+        {
+          "t": "Meta ads",
+          "d": "[Facebook ads](/platforms/facebook-ads) leave room to add a reviewed offer after download."
+        },
+        {
+          "t": "YouTube Shorts ads",
+          "d": "[YouTube Shorts ads](/platforms/youtube-shorts-ads) keep one beauty action clear from the first beat."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Keep exploring",
+      "h2": "Related pages",
+      "lead": "Use these pages when a beauty campaign also needs another product category or format.",
+      "items": [
+        {
+          "t": "Fashion & Clothing",
+          "d": "[Fashion & Clothing](/industries/fashion-clothing) for fit and fabric scenes."
+        },
+        {
+          "t": "Jewelry & Accessories",
+          "d": "[Jewelry & Accessories](/industries/jewelry-accessories) for scale and finish details."
+        },
+        {
+          "t": "Health & Wellness",
+          "d": "[Health & Wellness](/industries/health-wellness) for routine scenes without unsupported claims."
+        },
+        {
+          "t": "Home & Living",
+          "d": "[Home & Living](/industries/home-living) for organizing and cleaning products."
+        },
+        {
+          "t": "Video Ads",
+          "d": "[Video Ads](/ai-video-generation/ugc-ad-video) for creator-style product clips."
+        },
+        {
+          "t": "Lifestyle Photos",
+          "d": "[Lifestyle Photos](/ai-image-generation/lifestyle-scene) for a product in a natural setting."
+        },
+        {
+          "t": "White Background Photos",
+          "d": "[White Background Photos](/ai-image-generation/ecommerce-main-image) for a clean listing image."
+        },
+        {
+          "t": "Product Photos",
+          "d": "[Product Photos](/ai-image-generation) for a clear product view."
+        }
+      ]
+    }
+  ],
+  "steps_cta": {
+    "label": "Start creating",
+    "href": "/app/create"
   }
 }
