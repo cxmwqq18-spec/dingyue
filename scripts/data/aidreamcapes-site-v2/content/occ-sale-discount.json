@@ -94,7 +94,7 @@
     }
   ],
   "visual": {
-    "overview": "Show the product clearly, then add the confirmed offer in an editable layer.",
+    "overview": "Show the product clearly in a sale scene, then add the confirmed offer in an editable layer.",
     "strip": [
       "n:guide:q20-occ-sale-gallery-03",
       "f:retargeting-urgency",
