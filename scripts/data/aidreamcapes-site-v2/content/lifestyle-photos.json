@@ -1,10 +1,10 @@
 {
   "id": "lifestyle-photos",
   "title": "AI Product Staging: Lifestyle Photo Maker | AIVideosUGC",
-  "description": "Put your product in a real-life room, table or cafe scene from one plain photo, so shoppers picture using it without booking a photoshoot.",
-  "h1": "Stage Your Products in Real-Life Scenes with AI",
+  "description": "Put your product in a real-life room, table or cafe scene from one plain photo in minutes, so shoppers picture using it without booking a photoshoot.",
+  "h1": "Show shoppers how your product fits their day",
   "eyebrow": "Lifestyle photo maker",
-  "lead": "Set your product in the right surrounding. One plain photo becomes a styled, real-life scene that helps shoppers picture the item in their day.",
+  "lead": "Place one plain product photo in a believable room, table or cafe scene in minutes. Give shoppers a way to picture using it without booking a shoot.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,35 +12,22 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Set the scene that helps shoppers buy",
-  "benefits": [
-    {
-      "t": "See it in everyday use",
-      "d": "Place the item on a kitchen counter, a bedside table or a cafe table where its use is easy to picture."
-    },
-    {
-      "t": "Realistic scenes that sell",
-      "d": "Styled, natural-light photos help shoppers imagine owning the product and add it to the listing."
-    },
-    {
-      "t": "High-quality, made fast",
-      "d": "Generate a clean lifestyle image in minutes from one photo, without a studio, props or a crew."
-    }
-  ],
-  "steps_h2": "How to use product staging",
-  "steps_lead": "Three steps. One plain photo in, one styled scene out.",
+  "benefits_h2": "",
+  "benefits": [],
+  "steps_h2": "How to stage a product photo",
+  "steps_lead": "Start with one plain product photo, choose the setting, then download the styled scene.",
   "steps": [
     {
-      "t": "Create an account",
-      "d": "Add one clear product photo with the whole item in frame. A plain background works best."
+      "t": "Start with one plain product photo",
+      "d": "Upload the whole item on a simple background so its shape and details stay easy to see."
     },
     {
-      "t": "Test different ideas",
-      "d": "Choose a room, a surface or a cafe scene. Share your idea in one sentence and try a few settings."
+      "t": "Choose the scene shoppers need",
+      "d": "Pick a room, surface or cafe moment and describe the setting in one sentence."
     },
     {
-      "t": "Download your image",
-      "d": "Review the styled photo and download it. Add caption, link and price in your own editor."
+      "t": "Download and use it",
+      "d": "Choose the styled image, then add your caption, link or price in your own editor."
     }
   ],
   "maker": {
@@ -63,23 +50,23 @@
   "faq": [
     {
       "q": "What is AI product staging?",
-      "a": "It places your product inside a realistic real-life scene, such as a kitchen counter or a cafe table, starting from one plain product photo. It helps shoppers picture the item in use."
+      "a": "It places your product inside a believable real-life scene, such as a kitchen counter or cafe table, starting from one plain product photo."
     },
     {
       "q": "How does product staging work?",
-      "a": "Upload one clear product photo, choose a setting and describe the scene in one sentence. The generated photo keeps your item and places it in that context."
+      "a": "Upload one clear product photo, choose a setting and describe the scene in one sentence. The generated image keeps your item in that context."
     },
     {
       "q": "Is product staging suitable for ecommerce?",
-      "a": "Yes. The square image works on product pages, Shopify listings and social posts, alongside a plain product photo that shows the exact item."
+      "a": "Yes. Use the square image on product pages, Shopify listings and social posts alongside a plain photo that shows the exact item."
     },
     {
-      "q": "Can I pick the setting for my product?",
-      "a": "Yes. Name a room, a surface, the light and a prop or two, or pick a ready-made scene. One clear setting works best."
+      "q": "Can I choose the setting for my product?",
+      "a": "Yes. Name a room, surface, light and one or two props, or choose a ready-made scene. One clear setting usually works well."
     },
     {
-      "q": "Can I customize the generated background?",
-      "a": "Yes. Ask for fewer props, a different surface or another room, and generate a new version with the same product photo."
+      "q": "Can I customize the generated scene?",
+      "a": "Yes. Ask for fewer props, a different surface or another room, then generate a new version from that product photo."
     },
     {
       "q": "Does it replace my plain product image?",
@@ -87,11 +74,11 @@
     },
     {
       "q": "Can the photo run in social ads?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor, not on the image."
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor."
     },
     {
       "q": "How is this different from a photoshoot?",
-      "a": "A shoot needs props, a space and often a crew. Here the scene is generated from one existing photo in minutes, at far less cost."
+      "a": "A shoot needs props, a space and often a crew. Here the scene comes from one existing photo in minutes, at far less cost."
     }
   ],
   "visual": {
@@ -99,9 +86,23 @@
       "source": "n:guide:q5-life-tote-source-r2",
       "result": "n:guide:q5-life-tote-hero-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the cream canvas tote and preserve its exact color, rectangular shape, long handles and plain woven fabric. Show an adult carrying this tote through a farmers market with a few groceries visible inside. Soft daylight, authentic product-review framing, no text or logo.",
-      "sourceTitle": "Cream canvas tote photo",
-      "sourceHint": "Keep the complete bag and handles visible."
+      "prompt": "A shopper carries this cream canvas tote through a farmers market in soft daylight.",
+      "sourceTitle": "Your product photo",
+      "sourceHint": "Keep the complete bag and both handles visible.",
+      "options": [
+        [
+          "Photo",
+          "Your product shot"
+        ],
+        [
+          "Scene",
+          "Farmers market"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
     },
     "picker": {
       "title": "Browse lifestyle scenes",
@@ -109,6 +110,38 @@
       "chips": [],
       "cards": [],
       "button": "Make a lifestyle photo"
+    },
+    "uses": [
+      {
+        "img": "n:guide:k5-lifestyle-gallery-03",
+        "h": "Visualize your product in everyday use",
+        "d": "Show the item in a real setting so shoppers can picture using it."
+      },
+      {
+        "img": "n:guide:k5-lifestyle-example-g4",
+        "h": "Boost attention with a realistic scene",
+        "d": "A natural moment gives the product a clear job to do in your shop or feed."
+      },
+      {
+        "img": "n:guide:k5-lifestyle-template-bg",
+        "h": "Create polished visuals from one photo",
+        "d": "Start with one plain photo and get a styled image in minutes, without props or a crew."
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "How to stage a product photo"
+      },
+      "m3": {
+        "h2": "Place your product where shoppers picture it",
+        "lead": "Show the item in a believable moment, then use the scene on your store or social feed."
+      },
+      "m4": {
+        "h2": "Show the product in a useful moment"
+      },
+      "faq": {
+        "h2": "Product staging FAQs"
+      }
     }
   }
 }

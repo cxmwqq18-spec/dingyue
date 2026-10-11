@@ -12,15 +12,8 @@
       "hero": {
         "kind": "pair",
         "before": "n:guide:k5-lifestyle-gallery-source",
-        "after": "n:guide:q5-life-tote-market"
+        "after": "n:guide:k5-lifestyle-gallery-hero"
       },
-      "gallery": [
-        "n:guide:q5-life-serum-gallery-r2",
-        "n:guide:q5-life-pet-example-r2",
-        "n:guide:k5-lifestyle-gallery-03",
-        "n:guide:q5-life-skincare-unbox",
-        "n:guide:q5-life-skincare-apply"
-      ],
       "og": "n:t33-lifestyle-photos-og-r2",
       "pairs": []
     },
