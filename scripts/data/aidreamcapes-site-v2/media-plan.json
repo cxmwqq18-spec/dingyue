@@ -285,7 +285,7 @@
     "product-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q3-product-videos-hero-serum"
+        "image": "n:guide:q3-product-videos-template-howto-steamer"
       },
       "og": "n:t33-product-videos-og-r2",
       "gallery": [
