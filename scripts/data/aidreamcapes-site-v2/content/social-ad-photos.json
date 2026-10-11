@@ -30,20 +30,20 @@
       "icon": "layers"
     }
   ],
-  "steps_h2": "How to make a social ad image with AI",
+  "steps_h2": "How to Make Social Ads with an AI Ad Image Generator in 3 Simple Steps",
   "steps_lead": "Three steps. One product shot in, one square ad image out.",
   "steps": [
     {
-      "t": "Upload one clear product photo",
-      "d": "Add one clear product photo. The item should read at thumbnail size."
+      "t": "Upload Your Product Photo",
+      "d": "Make the product read at thumbnail size in every feed. Add one clear product photo with the item easy to recognize."
     },
     {
-      "t": "Pick a scene and share your idea",
-      "d": "Choose a simple backdrop and say where the headline should go. Share your idea in one sentence."
+      "t": "Pick a Scene",
+      "d": "Give your ad a scene that supports the idea. Choose a simple backdrop and say where the headline should go in one sentence."
     },
     {
-      "t": "Generate and download",
-      "d": "Review the square photo and download it. Add headline, price and offer in your ad editor."
+      "t": "Download and Post",
+      "d": "Get a square image ready for your next campaign. Review it, download it, and add your headline, price, and offer in your ad editor."
     }
   ],
   "maker": {

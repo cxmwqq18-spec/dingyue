@@ -35,20 +35,20 @@
       "icon": "target"
     }
   ],
-  "steps_h2": "Turn a product URL into a video in 3 steps",
+  "steps_h2": "How to Make an AI Video with a URL to Video Tool in 3 Simple Steps",
   "steps_lead": "Paste a public product page, confirm the captured reference and download a short clip for ads or social posts.",
   "steps": [
     {
-      "t": "Paste a public product URL",
-      "d": "Use a product page that loads without sign-in and shows the variant you sell."
+      "t": "Paste Your Product URL",
+      "d": "Start from the product page you already maintain. Paste a public product URL that loads without sign-in and shows the variant you sell."
     },
     {
-      "t": "Confirm the captured product",
-      "d": "Check the image and name before generation, then replace the image if the page is blocked."
+      "t": "Confirm Your Product",
+      "d": "Keep the finished video tied to the right product. Confirm its image and name, then replace the image if the page is blocked."
     },
     {
-      "t": "Download the video for your ad",
-      "d": "Watch the result, then download it and add your current offer in your editor."
+      "t": "Download and Post",
+      "d": "Turn a product page into an ad you can post. Watch the result, then download it and add your current offer in your editor."
     }
   ],
   "maker": {
