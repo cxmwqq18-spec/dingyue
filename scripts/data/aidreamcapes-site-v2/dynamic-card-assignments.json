@@ -561,7 +561,7 @@
         "s:v_film"
       ],
       "spark-ads-style-video": [
-        "s:v_creator_ad"
+        "s:v_creator_ad-r2"
       ],
       "retargeting-video-ad": [
         "s:v_compare"
@@ -753,7 +753,7 @@
         "u:broll"
       ],
       "spark-ads-style-video": [
-        "s:v_creator_ad"
+        "s:v_creator_ad-r2"
       ]
     },
     "ind-home-living": {

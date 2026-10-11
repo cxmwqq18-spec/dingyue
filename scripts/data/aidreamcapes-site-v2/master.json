@@ -6,7 +6,7 @@
    "url": "/",
    "label": "Home",
    "primary_keyword": "AI product videos and photos for online stores",
-   "img": "v_creator_ad",
+   "img": "v_creator_ad-r2",
    "status": "rewrite",
    "group": null
   },
@@ -16,7 +16,7 @@
    "url": "/ai-video-generation",
    "label": "AI Video",
    "primary_keyword": "AI video generator for ecommerce",
-   "img": "v_creator_ad",
+   "img": "v_creator_ad-r2",
    "status": "rewrite",
    "group": "video"
   },
@@ -26,7 +26,7 @@
    "url": "/ai-image-generation",
    "label": "Product Photos",
    "primary_keyword": "AI product photo generator",
-   "img": "p_light",
+   "img": "p_light-r2",
    "status": "rewrite",
    "group": "photo"
   },
@@ -46,7 +46,7 @@
    "url": "/ai-video-generation/ugc-ad-video",
    "label": "Video Ads",
    "primary_keyword": "AI UGC video ads",
-   "img": "v_creator_ad",
+   "img": "v_creator_ad-r2",
    "status": "keep",
    "group": "video"
   },
@@ -86,7 +86,7 @@
    "url": "/ai-video-generation/ai-actor-product-ads",
    "label": "Spokesperson Videos",
    "primary_keyword": "AI spokesperson video",
-   "img": "presenter",
+   "img": "presenter-r2",
    "status": "tbd",
    "group": "video"
   },
@@ -96,7 +96,7 @@
    "url": "/ai-video-generation/ai-actors",
    "label": "AI Actors",
    "primary_keyword": "AI actors for UGC ads",
-   "img": "presenter",
+   "img": "presenter-r2",
    "status": "new",
    "group": null
   },
@@ -276,7 +276,7 @@
    "url": "/ai-image-generation/commercial-lighting",
    "label": "Studio Lighting",
    "primary_keyword": "product photo lighting",
-   "img": "p_light",
+   "img": "p_light-r2",
    "status": "keep",
    "group": "photo",
    "industries": [
@@ -691,7 +691,7 @@
    "url": "/ai-video-generation/spark-ads-style-video",
    "label": "Spark Ads Style Video",
    "primary_keyword": "Spark Ads style video",
-   "img": "v_creator_ad",
+   "img": "v_creator_ad-r2",
    "status": "new",
    "group": "video",
    "industries": [
@@ -842,7 +842,7 @@
    "url": "/platforms/tiktok-ads",
    "label": "TikTok",
    "primary_keyword": "AI TikTok ads generator",
-   "img": "v_creator_ad",
+   "img": "v_creator_ad-r2",
    "status": "rewrite",
    "group": null
   },
@@ -962,7 +962,7 @@
    "url": "/pricing",
    "label": "Pricing",
    "primary_keyword": "AIVideosUGC pricing",
-   "img": "p_light",
+   "img": "p_light-r2",
    "status": "rewrite",
    "group": null
   },
@@ -1002,7 +1002,7 @@
    "url": "/guides",
    "label": "How-to Guides",
    "primary_keyword": "product photo and video guides",
-   "img": "p_light",
+   "img": "p_light-r2",
    "status": "rewrite",
    "group": null
   },
@@ -1012,7 +1012,7 @@
    "url": "/guides/product-photo-tips",
    "label": "How to Take a Product Photo That Works",
    "primary_keyword": "how to take product photos for AI",
-   "img": "p_light",
+   "img": "p_light-r2",
    "status": "new",
    "group": null,
    "section": "guides"
@@ -1034,7 +1034,7 @@
    "url": "/guides/first-tiktok-video-ad",
    "label": "Your First TikTok Video Ad",
    "primary_keyword": "how to make a TikTok ad",
-   "img": "v_creator_ad",
+   "img": "v_creator_ad-r2",
    "status": "new",
    "group": null,
    "section": "guides"
@@ -1152,7 +1152,7 @@
    "url": "/ai-info",
    "label": "Company Facts",
    "primary_keyword": "what is AIVideosUGC",
-   "img": "p_light",
+   "img": "p_light-r2",
    "status": "new",
    "group": null
   }
@@ -1237,7 +1237,7 @@
    "creator",
    "video-ads",
    "Creator Video Ad",
-   "v_creator_ad",
+   "v_creator_ad-r2",
    "video",
    [
     "electronics"
@@ -1352,7 +1352,7 @@
    "TikTok",
    "/platforms/tiktok-ads",
    "AI TikTok ads generator",
-   "v_creator_ad",
+   "v_creator_ad-r2",
    "rewrite"
   ],
   [

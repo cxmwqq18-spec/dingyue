@@ -32,6 +32,15 @@
     },
     "f3-home-hero-serum-dropper-c2": {
       "alt": "Plain amber dropper bottle resting on a folded cream towel beside a vanity"
+    },
+    "v_creator_ad-r2": {
+      "alt": "Adult creator holds a plain rounded charcoal fitness band toward the camera"
+    },
+    "presenter-r2": {
+      "alt": "Adult spokesperson holds a plain matte teal pump cleanser bottle toward the camera"
+    },
+    "p_light-r2": {
+      "alt": "Plain matte sky-blue pump cosmetic bottle in a bright studio product photograph"
     }
   },
   "galleries": {
@@ -3905,6 +3914,24 @@
       "w": 864,
       "h": 1536,
       "alt": "An adult woman in a bright bathroom holds a plain amber serum bottle beside her cheek and speaks directly to the camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "img3-home-strip-serum-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman with short auburn hair presses serum into her cheek beside a plain amber pump bottle at a bright vanity.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "img3-home-strip-creator-review-r2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult man with short tight curls holds a plain amber pump serum bottle beside his cheek and speaks to the camera in a bright bathroom.",
       "variants": [
         640,
         1280
@@ -13139,6 +13166,24 @@
       "h": 1024,
       "alt": "Matte ivory ceramic table lamp with a linen shade on a pure white background.",
       "source": "gen.sh"
+    },
+    "img3-gen2-spokesperson-videos-g3-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult woman with short curls holds a plain blank oat snack pouch at chest height in a bright kitchen.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "img3-gen2-unboxing-videos-g2-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Open ribbon-tied gift box with a plain cream tube, round jar and amber pump bottle inside.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "guide": {

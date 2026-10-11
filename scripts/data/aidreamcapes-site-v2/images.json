@@ -174,5 +174,17 @@
  "f3-home-hero-serum-dropper-c2": {
   "w": 240,
   "h": 900
+ },
+ "v_creator_ad-r2": {
+  "w": 864,
+  "h": 1536
+ },
+ "presenter-r2": {
+  "w": 900,
+  "h": 600
+ },
+ "p_light-r2": {
+  "w": 900,
+  "h": 507
  }
 }
