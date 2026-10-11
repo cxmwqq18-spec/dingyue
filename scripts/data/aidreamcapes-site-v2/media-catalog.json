@@ -47787,6 +47787,86 @@
           1280,
           1600
         ]
+      },
+      "fx03-guides-hero-source-to-ad": {
+        "file": "fx03-guides-hero-source-to-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a short copper pixie places a plain cream ceramic mug beside a generic smartphone for a listing photo and short ad.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx03-guides-benefit-source": {
+        "file": "fx03-guides-benefit-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a short auburn bob checks a sharp source photo of a plain sage canvas tote before upload.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx03-guides-benefit-studio": {
+        "file": "fx03-guides-benefit-studio",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on a kitchen table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx03-guides-benefit-rules": {
+        "file": "fx03-guides-benefit-rules",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a short silver-gray pixie positions a plain ceramic plate fully inside a bright white backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx03-guides-benefit-testing": {
+        "file": "fx03-guides-benefit-testing",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two adult sellers compare two plain fabric pouches side by side while choosing an ad version to test.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx03-guides-steps-triptych": {
+        "file": "fx03-guides-steps-triptych",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three-panel story of the same plain matte blue water bottle being photographed, selected in a tool and downloaded.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx03-blog-hero-photo-to-ad": {
+        "file": "fx03-blog-hero-photo-to-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult small-shop seller with a short silver-gray pixie sets a plain olive canvas backpack beside a generic smartphone for a listing image and short ad.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx03-blog-cta-photo-to-ad": {
+        "file": "fx03-blog-cta-photo-to-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a short tight bun holds a plain terracotta travel cup beside a generic smartphone, ready to post a listing image and short ad.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
