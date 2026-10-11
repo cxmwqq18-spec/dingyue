@@ -137,9 +137,9 @@
         "title": "Listing Hero: steel water bottle on white"
       },
       {
-        "ref": "n:guide:q5-white-phone-case",
-        "product": "green phone case",
-        "title": "Single-Item Display: green phone case on white"
+        "ref": "n:guide:white-background-soap-dispenser",
+        "product": "sage ceramic soap dispenser",
+        "title": "Clean Listing: sage ceramic soap dispenser on white"
       },
       {
         "ref": "n:guide:k2-white-case-wood-train",
@@ -159,9 +159,9 @@
         "title": "Taco Sauce Demo: hand pours over tacos"
       },
       {
-        "ref": "n:guide:q5-life-case-tote-market",
-        "product": "canvas market tote",
-        "title": "Market Tote Review: shopper carries a full bag"
+        "ref": "n:guide:k5-lifestyle-case-3",
+        "product": "canvas weekender bag",
+        "title": "Car Trip: canvas weekender bag on a seat"
       }
     ],
     "model-photos": [
@@ -183,14 +183,14 @@
     ],
     "change-background": [
       {
-        "ref": "n:guide:q6-cbg-case-1",
-        "product": "facial serum",
-        "title": "GRWM: Serum dropper before work"
+        "ref": "n:guide:k5-change-background-strip-1",
+        "product": "hand cream tube",
+        "title": "Bathroom Counter: hand cream tube in a clean setting"
       },
       {
-        "ref": "n:guide:q6-cbg-case-2",
-        "product": "white leather walking shoes",
-        "title": "Try-On: White leather shoes"
+        "ref": "n:guide:k5-change-background-strip-2",
+        "product": "matcha bowl set",
+        "title": "Kitchen Demo: matcha bowl set on linen"
       },
       {
         "ref": "n:guide:q6-cbg-case-3",

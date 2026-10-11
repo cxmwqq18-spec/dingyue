@@ -21,7 +21,7 @@
     },
     {
       "t": "Describe Your New Background",
-      "d": "Name one surface, color or room, then choose the setting that fits your campaign."
+      "d": "Choose a shaded outdoor garden table with an oatmeal linen cloth and soft green foliage in the distance, then use that setting for the background."
     },
     {
       "t": "Download Your New Photo",
@@ -119,26 +119,14 @@
     {
       "q": "How is an AI product background changer different from a reshoot?",
       "a": "A reshoot needs space, lights and setup. Here a new setting comes from your existing photo in minutes, at far less cost."
-    },
-    {
-      "q": "What is a product background changer?",
-      "a": "It keeps your product and replaces the setting behind it. Start with one existing photo and download a finished square image with the new background."
-    },
-    {
-      "q": "How do I change a product background?",
-      "a": "Upload one product photo, name the surface, color or room you want, then generate and download the new image."
-    },
-    {
-      "q": "How is this different from a reshoot?",
-      "a": "A reshoot needs space, lights and setup. Here a new setting comes from your existing photo in minutes, at far less cost."
     }
   ],
   "visual": {
     "steps": {
       "source": "n:guide:ra3-change-background-steps-1-r1",
-      "result": "n:guide:ra3-change-background-steps-2-r1",
+      "result": "n:guide:ra3-change-background-steps-2-r2",
       "mode": "photo",
-      "prompt": "Place this blue ceramic vase on a warm neutral studio surface with soft daylight.",
+      "prompt": "Place this blue ceramic vase on a shaded outdoor garden table covered with an oatmeal linen cloth, with soft green foliage in the distance.",
       "options": [
         [
           "Photo",

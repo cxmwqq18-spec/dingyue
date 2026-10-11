@@ -6,7 +6,7 @@
         "image": "n:guide:k2-white-hero-cream-mug"
       },
       "pairs": [],
-      "og": "n:t33-white-background-og-r2"
+      "og": "n:ra3-white-background-og-r1"
     },
     "lifestyle-photos": {
       "hero": {
@@ -14,7 +14,7 @@
         "before": "n:guide:k5-lifestyle-gallery-source",
         "after": "n:guide:k5-lifestyle-gallery-hero"
       },
-      "og": "n:t33-lifestyle-photos-og-r2",
+      "og": "n:ra3-lifestyle-photos-og-r1",
       "pairs": []
     },
     "model-photos": {
@@ -30,10 +30,10 @@
     "change-background": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:k5-background-phonecase-source",
-        "after": "n:guide:k5-background-phonecase-result"
+        "before": "n:guide:ra3-change-background-hero-1-r1",
+        "after": "n:guide:ra3-change-background-hero-2-r1"
       },
-      "og": "n:t33-change-background-og-r2"
+      "og": "n:ra3-change-background-og-r1"
     },
     "social-ad-photos": {
       "hero": {

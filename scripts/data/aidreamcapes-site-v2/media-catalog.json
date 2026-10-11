@@ -7617,6 +7617,33 @@
       "variants": [
         1200
       ]
+    },
+    "ra3-white-background-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Plain cream ceramic mug centered on a white background for a white product photo.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex local crop"
+    },
+    "ra3-change-background-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Matte terracotta-orange ceramic mug on a red-and-cream picnic cloth in a sunlit garden.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex local crop"
+    },
+    "ra3-lifestyle-photos-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Plain canvas tote bag on a market table with flowers and produce.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex local crop"
     }
   },
   "clips": {
@@ -43086,6 +43113,39 @@
           1280
         ],
         "source": "Codex local image edit"
+      },
+      "ra3-change-background-hero-1-r1": {
+        "file": "ra3-change-background-hero-1-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Matte terracotta-orange ceramic mug on a gray tabletop against a white wall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "ra3-change-background-hero-2-r1": {
+        "file": "ra3-change-background-hero-2-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "The same matte terracotta-orange ceramic mug on a red-and-cream picnic cloth in a sunlit garden.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "ra3-change-background-steps-2-r2": {
+        "file": "ra3-change-background-steps-2-r2",
+        "w": 1254,
+        "h": 1254,
+        "alt": "The same blue ceramic vase on an outdoor garden table covered with an oatmeal linen cloth, with green foliage beyond.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
