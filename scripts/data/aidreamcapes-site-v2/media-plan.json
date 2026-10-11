@@ -801,20 +801,20 @@
     }
   },
   "cards": {
-    "angle": "g:packshot-multi-angle/example-02",
+    "angle": "n:sh1-angle-r1",
     "detail": "g:macro-details/hero-output",
     "size": "g:size-reference/hero-output",
-    "color": "g:colorway-variations/hero-output",
-    "box": "g:bundle-sets/hero-output",
+    "color": "n:sh1-color-r1",
+    "box": "n:sh1-box-r1",
     "pack": "g:packaging-mockup/hero-output",
-    "light": "g:commercial-lighting/hero-output",
+    "light": "n:sh1-light-r1",
     "tryon": "g:virtual-try-on/hero-output",
     "jewel": "g:jewelry-positioning/hero-output",
     "look": "g:fashion-editorial/hero-output",
-    "head": "g:professional-headshot/hero-output",
+    "head": "n:sh1-head-r1",
     "ugc": "g:ugc-still-ad/hero-output",
     "story": "g:story-ad-vertical/example-01",
-    "sale": "g:sale-campaign-key-visual/hero-output",
+    "sale": "n:sh1-sale-r1",
     "howto": "f:how-to-video",
     "film": "f:cinematic-video",
     "beauty": "n:guide:rc5-tpl-beauty-source-r1",
@@ -839,8 +839,8 @@
       "n:white-shoe",
       "n:white-backpack",
       "n:white-wallet",
-      "n:white-perfume",
-      "n:white-sneaker"
+      "n:sh1-white-perfume-r1",
+      "n:sh1-white-sneaker-r1"
     ],
     "creator": [
       "n:gen2:product-videos-g5",
@@ -884,9 +884,9 @@
       "f:cinematic-video-t14"
     ],
     "beauty": [
-      "f:beauty-routine-t05",
-      "f:beauty-routine-t10",
-      "f:beauty-routine-t14",
+      "n:sh1-beauty-alt0-r1",
+      "n:sh1-beauty-alt1-r1",
+      "n:sh1-beauty-alt2-r1",
       "n:gen2:tpl-beauty-c2"
     ],
     "home": [
@@ -918,7 +918,7 @@
       "n:hoodie-detail",
       "n:handbag-detail",
       "n:boots-detail",
-      "n:phonecase-back",
+      "n:sh1-phone-detail-r1",
       "n:hotsauce-drip",
       "n:lipstick-swatch"
     ],
@@ -929,7 +929,7 @@
     "pack": [
       "n:coffee-beans",
       "n:hotsauce-peppers",
-      "n:protein-scoop"
+      "n:sh1-pack-no-protein-r1"
     ],
     "box": [
       "n:sunglasses-flatlay",
@@ -942,7 +942,7 @@
       "n:sunglasses-worn"
     ],
     "ugc": [
-      "n:phonecase-hand",
+      "n:sh1-phone-ugc-r1",
       "n:hotsauce-tacos",
       "n:lipstick-ad"
     ],
@@ -958,8 +958,8 @@
     ],
     "bg": [
       "n:boots-doorway",
-      "n:protein-gym",
-      "n:phonecase-desk"
+      "n:sh1-bg-no-protein-r1",
+      "n:sh1-phone-bg-r1"
     ],
     "model": [
       "n:handbag-carry",
@@ -971,7 +971,7 @@
       "n:sunglasses-cafe"
     ],
     "size": [
-      "n:phonecase-hand"
+      "n:sh1-phone-size-r1"
     ]
   },
   "toolImages": {

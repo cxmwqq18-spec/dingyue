@@ -7760,6 +7760,159 @@
       ],
       "source": "Codex local crop"
     },
+    "sh1-angle-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Plain sage-green insulated travel tumbler at a three-quarter angle on a light studio tabletop.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-box-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Two plain white moisturizer jars and a folded cream carton arranged as a skincare bundle on a stone tray.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-color-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Three plain canvas tote bags in coral, teal and mustard lined up on a light studio background.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-light-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Plain matte cream pump bottle on a dark plinth under crisp diagonal studio light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-head-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Professional headshot of an adult Black man with short cropped hair in a navy blazer.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-sale-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Blonde woman in a green puffer jacket and cream knit cap in a snowy mountain-town street.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-white-perfume-r1": {
+      "w": 1536,
+      "h": 1536,
+      "alt": "Plain white moisturizer jar with a separate lid on a white background.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-white-sneaker-r1": {
+      "w": 1536,
+      "h": 1536,
+      "alt": "Plain coral and charcoal knit running shoe on a white background.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-beauty-alt0-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Adult woman with a short silver pixie presses plain moisturizer onto her fingertips at a bright sink.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-beauty-alt1-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Hands dispense plain white lotion from an unbranded pump bottle onto a palm.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-beauty-alt2-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Adult woman with a short black bob applies plain face cream from a low round jar at a vanity.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-phone-detail-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Plain sage-green phone case with one small circular camera opening on a light desk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-phone-ugc-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Adult hand holds a plain teal phone case with one small circular camera opening in a park.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-phone-bg-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Plain peach phone case with one small circular camera opening on a tidy desk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-pack-no-protein-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Hand pours plain roasted coffee beans from a blank kraft pouch into a bowl.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-bg-no-protein-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Hand unrolls a plain teal yoga mat beside a clear water bottle in a bright gym.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "sh1-phone-size-r1": {
+      "w": 1536,
+      "h": 1024,
+      "alt": "Hand holds a plain deep-blue phone case with one small circular camera opening beside a ruler.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
     "t33-tpl-box-og-r3": {
       "w": 1200,
       "h": 630,
