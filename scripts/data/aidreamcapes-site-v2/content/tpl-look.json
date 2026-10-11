@@ -100,10 +100,10 @@
       "n:guide:rc3-look-strip-knit-texture-r1"
     ],
     "steps": {
-      "source": "g:fashion-editorial/source-input",
+      "source": "n:guide:rc3-tpl-look-step-source-r2",
       "result": "n:guide:rc3-tpl-look-step-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and details. An adult wears the light beige tailored suit, smooths the jacket lapel once, and faces the camera with the full outfit visible. Keep the jacket, trousers, shoes and bag inside the frame, with bright studio daylight and natural styling. Full-body fashion-ad still, clean neutral background, no text or logos. End in a calm pose that lets a shopper compare the complete silhouette. Leave clean space around the outfit for a collection crop and keep accessory details unobstructed.",
+      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and details. An adult wears the ivory tailored suit, smooths the jacket lapel once, and faces the camera with the full outfit visible. Keep the jacket, trousers, shoes and bag inside the frame, with bright studio daylight and natural styling. Full-body fashion-ad still, clean neutral background, no text or logos. End in a calm pose that lets a shopper compare the complete silhouette. Leave clean space around the outfit for a collection crop and keep accessory details unobstructed.",
       "options": [
         [
           "Template",
