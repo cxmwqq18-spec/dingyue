@@ -16,34 +16,46 @@
   "benefits": [
     {
       "t": "See it worn, not laid flat",
-      "d": "A top, dress or accessory appears on a model in a styled scene, so shoppers picture how it looks on."
+      "d": "Turn a flat product photo into a worn look shoppers can picture before they buy.",
+      "icon": "sparkle"
     },
     {
       "t": "Launch collections faster",
-      "d": "Move every item from a flat photo to a worn look in minutes, without booking model days."
+      "d": "Move a new item from flat photo to worn look in minutes, without booking model days.",
+      "icon": "bolt"
     },
     {
-      "t": "Consistent on every channel",
-      "d": "Use one style across product pages, feeds and ads, then scale fashion photography without a studio."
+      "t": "Show the look across every channel",
+      "d": "Use a worn view on product pages, feeds and ads, then refresh the scene when a collection changes.",
+      "icon": "layers"
     }
   ],
   "more_sections": [
     {
       "eyebrow": "Why virtual models",
-      "h2": "Produce a whole catalog without repeated shoots",
-      "lead": "Realistic worn looks for a whole catalog, produced from the photos you already have.",
+      "h2": "Scale a fashion catalog without repeat shoots",
+      "lead": "Create worn looks from the flat photos you already have, then reuse them in your store and campaigns.",
       "items": [
         {
           "t": "Skip casting and the studio",
-          "d": "No model booking, photographer or lighting setup for every new item."
+          "d": "Get a worn view without booking a model, photographer or lighting setup for every item.",
+          "img": "n:guide:k5-model-photos-uses-0-image",
+          "alt": "Adult model wearing a linen suit on a sunlit terrace.",
+          "frame": "none"
         },
         {
           "t": "Keep the garment the same",
-          "d": "Color, cut and details follow the flat product photo you upload."
+          "d": "Start from your flat photo so the color, cut and visible details stay tied to the item you sell.",
+          "img": "n:guide:ra4-model-photos-outputs-1-image-r1",
+          "alt": "Adult Black woman with short natural hair wearing a heather-gray pullover hoodie in a plain studio.",
+          "frame": "none"
         },
         {
           "t": "Refresh looks any time",
-          "d": "Change the model or scene and generate a new worn view for a season or a campaign."
+          "d": "Change the scene for a new season or campaign without booking another shoot.",
+          "img": "n:guide:ra4-model-photos-after-image-r1",
+          "alt": "Adult woman with a short bob wearing an ivory satin slip dress on a rooftop at sunset.",
+          "frame": "none"
         }
       ]
     }
@@ -81,6 +93,8 @@
     ],
     "cta": "Make an on-model photo"
   },
+  "cta_title": "Put your next collection on a model",
+  "cta_lead": "Upload one flat product photo, pick a model and see the cost before you start.",
   "faq": [
     {
       "q": "What is an AI fashion model generator?",
@@ -117,10 +131,10 @@
   ],
   "visual": {
     "steps": {
-      "source": "n:guide:k5-model-photos-steps-source",
-      "result": "n:guide:k5-model-photos-steps-result",
+      "source": "n:guide:ra4-model-photos-steps-source-r1",
+      "result": "n:guide:ra4-model-photos-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the garment and preserve its color, cut, seams and blank label area. Show an adult wearing it for a full-length outfit check, ending with the garment and silhouette easy to see. Natural fitting-room light, mirror-view framing."
+      "prompt": "Use the uploaded flat heather-gray pullover hoodie as the exact garment reference. Preserve its gray color, hood, two drawstrings, kangaroo pocket, seams and relaxed cut. Show an adult man with short hair facing the camera in a tree-lined street, with his face and the entire hoodie visible. Change only the model and setting; keep the garment details consistent."
     },
     "picker": {
       "title": "Browse worn looks",

@@ -4,7 +4,7 @@
   "description": "Create, customize and launch square social ad images from one product photo. A clean product scene with room for your headline, ready in minutes.",
   "h1": "Turn One Product Photo into Ready-to-Launch Social Ad Images",
   "eyebrow": "AI ad image generator",
-  "lead": "This AI ad image generator turns one product shot into a clean, feed-ready image. You keep full creative control over the product and the words, and launch without a photoshoot.",
+  "lead": "Turn one product shot into a square feed image with room for your headline. Keep the product clear, add exact words in your editor, and launch without a photoshoot.",
   "secondary_keywords": [
     "Facebook ad image maker",
     "Instagram feed ad photos",
@@ -12,34 +12,37 @@
     "square ad images for social media",
     "AI images for paid social ads"
   ],
-  "benefits_h2": "Full creative control over your image ads",
+  "benefits_h2": "Put a fresh ad in the feed",
   "benefits": [
     {
-      "t": "Your brand, your rules",
-      "d": "Keep the product, colors and claim the way you want them, with open space for your own headline."
+      "t": "Keep the offer accurate",
+      "d": "Leave clean space for your headline, then add the exact price and offer in your editor. There is no AI text to correct.",
+      "icon": "check"
     },
     {
-      "t": "Campaign-ready photoshoots",
-      "d": "Get a styled square product image built for paid social without a camera, a set or a crew."
+      "t": "Launch a new angle without a shoot",
+      "d": "Make a styled square product image for paid social without a camera, set or crew.",
+      "icon": "bolt"
     },
     {
-      "t": "Easy to add to your process",
-      "d": "Generate the scene here, then type the price and offer in your own editor so every word stays correct."
+      "t": "Test scenes from one product shot",
+      "d": "Swap the backdrop in minutes, then compare versions before choosing the final ad.",
+      "icon": "layers"
     }
   ],
   "steps_h2": "How to make a social ad image with AI",
   "steps_lead": "Three steps. One product shot in, one square ad image out.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
+      "t": "Upload one clear product photo",
       "d": "Add one clear product photo. The item should read at thumbnail size."
     },
     {
-      "t": "Pick a Scene and Share Your Idea",
+      "t": "Pick a scene and share your idea",
       "d": "Choose a simple backdrop and say where the headline should go. Share your idea in one sentence."
     },
     {
-      "t": "Generate and Download",
+      "t": "Generate and download",
       "d": "Review the square photo and download it. Add headline, price and offer in your ad editor."
     }
   ],
@@ -60,6 +63,8 @@
     ],
     "cta": "Make a social ad photo"
   },
+  "cta_title": "Put your next ad in the feed",
+  "cta_lead": "Upload one product photo, choose a scene and see the cost before you start.",
   "faq": [
     {
       "q": "What is an AI ad image generator?",
@@ -71,7 +76,7 @@
     },
     {
       "q": "Which platforms are the images ready for?",
-      "a": "The square image suits Facebook and Instagram feeds. Your ad platform controls the final crop for other placements."
+      "a": "The square image suits Facebook and Instagram feeds. Your ad platform controls the final crop for other formats."
     },
     {
       "q": "Can the image include my headline?",
@@ -87,7 +92,7 @@
     },
     {
       "q": "Can I upload the image straight into a live ad?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Check the placement crop and safe areas in your ad tool before launch."
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Check the crop and safe areas in your ad tool before launch."
     },
     {
       "q": "Do I have to label the image as AI?",

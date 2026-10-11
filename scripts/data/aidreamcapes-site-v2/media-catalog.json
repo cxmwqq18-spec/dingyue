@@ -43050,6 +43050,61 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "ra4-model-photos-outputs-1-image-r1": {
+        "file": "ra4-model-photos-outputs-1-image-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult Black woman with short natural hair wearing a heather-gray pullover hoodie in a plain studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "ra4-model-photos-steps-source-r1": {
+        "file": "ra4-model-photos-steps-source-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Heather-gray pullover hoodie laid flat on a pale background, with hood, drawstrings and front pocket visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "ra4-model-photos-steps-result-r1": {
+        "file": "ra4-model-photos-steps-result-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult man with short hair wearing a heather-gray pullover hoodie on a tree-lined sidewalk, facing camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "ra4-model-photos-after-image-r1": {
+        "file": "ra4-model-photos-after-image-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult woman with a short bob wearing an ivory satin slip dress on a rooftop at sunset.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "ra4-social-ad-photos-hero-source-r1": {
+        "file": "ra4-social-ad-photos-hero-source-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Plain white trail-running shoe on a pale studio background, with white mesh, laces and lugged sole.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
