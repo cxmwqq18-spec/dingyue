@@ -47842,6 +47842,50 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "fx44-tpl-box-benefit-count-pieces-r1": {
+        "file": "fx44-tpl-box-benefit-count-pieces-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White cleanser tube, sage cream jar and blue pump bottle arranged as a complete skincare kit.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx44-tpl-box-benefit-seasonal-set-r1": {
+        "file": "fx44-tpl-box-benefit-seasonal-set-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Teal bottle, folded cream scarf and small ceramic ornament arranged in an open seasonal gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx44-tpl-box-benefit-listing-set-r1": {
+        "file": "fx44-tpl-box-benefit-listing-set-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Teal pet harness, rolled leash, plain metal bowl and folded towel arranged as a complete travel kit.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx44-tpl-box-benefit-ad-ready-r1": {
+        "file": "fx44-tpl-box-benefit-ad-ready-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte black phone stand, braided charging cable and blue power bank arranged as a complete desk bundle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
