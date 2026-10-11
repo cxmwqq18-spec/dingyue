@@ -1,7 +1,7 @@
 {
   "id": "tpl-film",
   "title": "AI Cinematic Product Video From One Photo | AIVideosUGC",
-  "description": "Turn one product photo into an AI cinematic product video with moody light and a slow camera move. Use 16:9 for web or 9:16 for Shorts and Reels, with 6, 10, 15 or 30 seconds.",
+  "description": "AI cinematic product video from one photo with moody light and a slow camera move. Use 16:9 for web or 9:16 for Shorts/Reels, with 6, 10, 15 or 30 seconds.",
   "h1": "Create a Cinematic Product Video From One Photo",
   "eyebrow": "Cinematic video template",
   "lead": "Turn a flat product shot into a moody product video with a slow camera move, without booking a film crew or a set.",
@@ -153,7 +153,7 @@
     },
     {
       "t": "Keep your product details in control",
-      "d": "Download without a watermark, then add the product name, licensed audio or offer copy in your editor."
+      "d": "Download without a watermark, then add the product name, licensed audio or offer details in your editor."
     }
   ]
 }
