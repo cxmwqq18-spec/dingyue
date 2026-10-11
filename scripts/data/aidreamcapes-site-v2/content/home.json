@@ -1,10 +1,10 @@
 {
   "id": "home",
   "title": "AI Product Videos & Photos for Online Stores | AIVideosUGC",
-  "description": "Turn one product photo into ready-to-post video ads, white-background photos and lifestyle shots for TikTok, Amazon and Shopify; see the cost first.",
+  "description": "Create AI product videos and photos from one upload for TikTok, Amazon, Shopify and social ads. See the credit cost before each job.",
   "h1": "AI Product Videos and Photos for Online Stores",
-  "eyebrow": "AI video ads and photos from one product photo",
-  "lead": "One product photo is all you need to launch a new ad, refresh a listing or add a lifestyle scene. No studio, no models, no waiting weeks for another shoot, and the price shows before each job starts.",
+  "eyebrow": "Launch more product ads from one clear photo",
+  "lead": "One product photo is all you need to launch a new ad, refresh a listing or add a lifestyle scene. No studio, no models, no waiting weeks for another shoot—download a watermark-free file for your campaign.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -12,219 +12,252 @@
     "white background product photos",
     "AI ads for ecommerce"
   ],
-  "make_title": "One AI video generator for every campaign",
-  "make_lead": "Use one place for creator-style ads, product demos, unboxing clips and product photos across social campaigns.",
+  "make_title": "Turn one product photo into your next ad",
+  "make_lead": "Pick a video or photo tool for the job, then create a version for TikTok, Reels, Amazon, Shopify or your product page.",
   "templates_title": null,
   "templates_lead": null,
   "platforms_title": null,
-  "benefits_h2": "Everything you need to scale your brand",
+  "benefits_h2": "Get more campaign assets without another shoot",
   "benefits": [
     {
-      "t": "Cost-effective",
-      "d": "Skip the photographer, studio and gear fees. Each result is built around a photo of the product you already sell."
+      "t": "Spend far less than a shoot",
+      "d": "Start from a product photo and skip creators, a studio, props and a shoot day.",
+      "icon": "bolt"
     },
     {
-      "t": "Time-saving",
-      "d": "No shoot dates or days of waiting. A clean clip or photo is ready in minutes from your existing image."
+      "t": "Get a new ad in minutes",
+      "d": "Choose a scene, actor or product format and turn the photo into a campaign version while the brief is fresh.",
+      "icon": "clock"
     },
     {
-      "t": "One photo, many results",
-      "d": "Run the same upload through ads, demos, white-background and lifestyle scenes without another booking."
+      "t": "Turn one photo into many versions",
+      "d": "Change the format, scene or opening and test more angles without reshooting the product.",
+      "icon": "layers"
     },
     {
-      "t": "No models or props needed",
-      "d": "People and settings are generated around your item, so there is no casting or set building."
+      "t": "Sell without models or a set",
+      "d": "Show the item in a creator-style ad, demo or lifestyle scene without casting, props or a studio setup.",
+      "icon": "users"
     },
     {
-      "t": "Ready whenever you are",
-      "d": "Make a new ad or listing on a launch day, a holiday or late at night, with the price shown first."
+      "t": "Keep launches fresh",
+      "d": "Make a new scene for an offer or seasonal launch without reshooting the item.",
+      "icon": "refresh"
     },
     {
-      "t": "Fast A/B testing",
-      "d": "Generate several openings and scenes, then split-test them in your ad platform without reshooting."
+      "t": "Test hooks without reshooting",
+      "d": "Swap the opening, actor or scene and compare versions in your ad platform.",
+      "icon": "target"
     }
   ],
-  "steps_h2": "How to create AI UGC ads in 3 steps",
-  "steps_lead": "Turn one product photo into a ready-to-post result in three clear steps.",
+  "steps_h2": "From product photo to campaign asset in three steps",
+  "steps_lead": "Tell us what you sell, choose where the result will run, and download a file ready for your next campaign.",
   "steps": [
     {
-      "t": "Share Your Video Idea",
-      "d": "Upload a clear product photo or paste a product page link, then say what you want in one sentence."
+      "t": "Upload the product you sell",
+      "d": "Add a clear photo of the whole item or start with a product page link in URL to Video."
     },
     {
-      "t": "Choose a Tool, Size and Length",
-      "d": "Pick an ad, demo or photo result, then set the frame and length for where it will run."
+      "t": "Choose the format you need",
+      "d": "Pick a demo, creator-style ad or product photo, then choose the frame and length shown for that tool."
     },
     {
-      "t": "Get a Ready-to-Use Result",
-      "d": "Check the product shape, color and label, then download a watermark-free file for ads and listings."
+      "t": "Download your campaign-ready file",
+      "d": "Get a watermark-free file for your ad, listing or social post."
     }
   ],
   "ugc": {
-    "eyebrow": "AI-generated creator-style ads",
+    "eyebrow": "A clear way to make creator-style ads",
     "title": "What is AI UGC?",
     "paras": [
-      "UGC means user-generated content. Here, a creator-style ad uses an AI-generated person and casual phone-video framing; it is not a real customer review or endorsement.",
-      "An [AI UGC video ad](page:video-ads) gives you that look without hiring a creator or shipping your product to anyone. You upload a photo of your product, pick a style or describe the scene, and AIVideosUGC makes a 6, 10, 15 or 30 second clip built around your real product.",
-      "The people in these clips are generated by AI, not real customers, so use them to show the product rather than as reviews. Captions, music and prices go on afterward in your editor or ad tool, where you control every word."
+      "AI UGC is a creator-style ad made with a generated presenter, product scene and script. It gives ecommerce teams a way to show a product without booking a new shoot.",
+      "Upload the product photo and choose a scene or actor. Get a 6, 10, 15 or 30 second clip built around your real product for a paid ad, product page or social post.",
+      "The presenter is AI-generated, not a real customer; use the clip to show your product."
     ],
     "formats": [
       {
-        "t": "Product review ads",
-        "d": "An AI person gives a first-person review of your product, straight to camera."
+        "t": "Product review-style ads",
+        "d": "Show a presenter explaining the item and its use in a direct-to-camera ad."
       },
       {
-        "t": "Testimonial-style ads",
-        "d": "A problem-to-solution story your shopper can recognize."
+        "t": "Problem-to-solution ads",
+        "d": "Open with a shopper problem, then show the product handling it."
       },
       {
-        "t": "Tutorial and demo videos",
-        "d": "A short walkthrough of how your product looks and works."
+        "t": "Product demos",
+        "d": "Use a short demonstration to make a feature or routine easy to understand."
       },
       {
-        "t": "Unboxing-style ads",
-        "d": "The first reveal as your product comes out of the box."
+        "t": "Unboxing ads",
+        "d": "Reveal the product as it leaves the box and show the first-use moment."
       }
     ]
   },
   "audience": {
-    "title": "Built for teams that move fast",
-    "lead": "Whatever you sell, every result starts from one product photo and is priced per job.",
+    "title": "Built for teams that need fresh creative",
+    "lead": "Start from the product photo you already have, choose the channel, and make a usable version for the next campaign.",
     "items": [
       {
         "t": "Ecommerce and D2C brands",
-        "d": "Launch fresh ads and refresh product pages without booking a shoot for each new campaign."
+        "d": "Refresh a product page or paid ad without booking a new shoot for every campaign.",
+        "img": "n:gen2:unboxing-videos-g2",
+        "alt": "Skincare minis revealed in an open gift box.",
+        "frame": "browser"
       },
       {
         "t": "Dropshippers",
-        "d": "Test a new product with several scenes before spending heavily, paying per job rather than per shoot."
+        "d": "Test whether a product earns attention with a few scenes before ordering a larger creative package.",
+        "img": "n:gen2:video-ads-g3",
+        "alt": "Snack pouch set down beside a lunch container on an office desk.",
+        "frame": "phone"
       },
       {
         "t": "Small businesses",
-        "d": "Explain the product with an AI clip or photo, even on a small budget and timeline."
+        "d": "Explain what your product does with a clear demo you can make on a small production schedule.",
+        "img": "n:gen2:ind-food-drinks-g3",
+        "alt": "Pasta sauce jar beside a finished plate of pasta.",
+        "frame": "browser"
       },
       {
         "t": "Marketers and agencies",
-        "d": "Turn around versions for several clients, with every job's cost shown before you price the work."
+        "d": "Build client-ready variants from the same source photo, then send each channel its own format.",
+        "img": "n:gen2:spokesperson-videos-g3",
+        "alt": "Adult presenter holds a plain snack pouch at chest height in a bright kitchen.",
+        "frame": "phone"
       },
       {
         "t": "Content creators",
-        "d": "Scale your own output with a generated on-camera look, without burning out on filming."
+        "d": "Turn a product brief into a camera-style concept without filming every take yourself.",
+        "img": "n:gen2:video-ads-g2",
+        "alt": "Canvas tote bag packed item by item on a hallway bench.",
+        "frame": "phone"
       },
       {
         "t": "App and SaaS companies",
-        "d": "Explain one visible feature with a presenter or demo and drive signups without heavy production."
+        "d": "Show one product feature with a presenter or demo that gives prospects a concrete next step.",
+        "img": "n:gen2:ind-electronics-g2",
+        "alt": "Tablet stand holds a dark-screen tablet on a tidy desk.",
+        "frame": "browser"
       }
     ]
   },
   "compare": [
     [
-      "Content creation speed",
+      "Planning",
       "Days to weeks of shoot coordination",
       "Minutes from one product photo"
     ],
     [
-      "Cost",
-      "High creator, studio and gear fees",
-      "Low credit price shown up front"
+      "Upfront cost",
+      "Creators, studio time and gear before launch",
+      "Costs far less than creators, a studio and gear"
     ],
     [
-      "Scalability",
-      "Limited by people and locations",
-      "Many scenes from the same upload"
-    ],
-    [
-      "A/B testing",
-      "Another booking and slower rounds",
+      "New versions",
+      "Another shoot for each new angle",
       "Instant variations to test"
     ],
     [
-      "Risk of off-brand content",
-      "Varies with each creator",
+      "Product control",
+      "Changes mean another take or reshoot",
       "You set the product and scene"
+    ],
+    [
+      "Where it runs",
+      "Export and resize for each channel",
+      "Campaign file in the frame and length you choose"
     ]
   ],
   "faq": [
     {
       "q": "What can I make with AIVideosUGC?",
-      "a": "Short video ads, product and unboxing videos, white-background photos, lifestyle photos, model photos and social ad images. Most start from a photo of your product."
+      "a": "You can make short video ads, product and unboxing videos, white-background photos, lifestyle photos, model photos and social ad images. Most start from a photo of your product."
     },
     {
       "q": "What photo should I upload?",
-      "a": "A clear photo of the product you sell, with the whole item in frame. A phone photo on a plain background works well. Only upload photos you own or have permission to use."
+      "a": "Upload a clear photo of the product you sell, with the whole item in frame. A phone photo on a plain background works well. Only upload photos you own or have permission to use."
     },
     {
       "q": "Can I use a product page link to start a video?",
-      "a": "Yes. Paste the link into URL to Video, choose the size and length, and you see the cost before the job starts."
+      "a": "Yes. URL to Video accepts a product page link. Choose the size and length, then check the credit price before the job starts."
     },
     {
       "q": "How much does a video or photo cost?",
-      "a": "Each job shows its credit price before you start. A photo or a 6-second clip is 24 credits, a 10-second clip is 40, 15 seconds is 60 and half a minute is 120. Credits for a failed job go back to your balance."
+      "a": "Each job shows its credit price before you start. A photo or a 6-second clip is 24 credits, a 10-second clip is 40, 15 seconds is 60 and 30 seconds is 120. Credits for a failed job go back to your balance."
     },
     {
       "q": "Is the person in the video a real creator?",
-      "a": "No. The people in these clips are generated by AI, so show the product with them rather than presenting the clip as a customer review. Some platforms ask you to label AI-generated content."
+      "a": "No. The people in these clips are generated by AI. Use them as part of your product marketing, not as customer testimonials, and follow any platform rules for AI-generated content."
     },
     {
       "q": "Can I make multiple versions for A/B testing?",
-      "a": "Yes. Run the same photo with different scenes, actors or openings, then split-test the downloads in your ad platform. You do not need another shoot."
+      "a": "Yes. Run the same photo with different scenes, actors or openings, then compare the downloads in your ad platform. You do not need another shoot."
     },
     {
       "q": "Can I run these videos as paid ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use on TikTok, Instagram, Facebook, YouTube and marketplaces. Add your own captions, prices and offers and follow each platform's AI labeling rules."
+      "a": "Yes. Downloads have no watermark and can be used commercially on TikTok, Instagram, Facebook, YouTube and marketplaces. Add your own captions, prices and offers, then follow each platform's AI labeling rules."
     },
     {
       "q": "Do I need to hire a model or creator?",
-      "a": "No. The results are generated from one product photo, so there is no casting, sample shipping or filming date. Present the people in clips as part of your ad, not as customer reviews."
+      "a": "No. The results start from one product photo, so there is no casting, sample shipping or filming date. Present people in the clips as part of your ad, not as customer reviews."
     }
   ],
   "limitations": {
-    "h2": "What AI can't check for you",
+    "h2": "Check these details before you publish",
     "items": [
       {
-        "t": "Exact size and fit",
-        "d": "Add measurements from your own listing.",
+        "t": "Exact measurements",
+        "d": "Add your own dimensions and fit notes to the listing.",
         "supported": false
       },
       {
-        "t": "Parts your photo doesn't show",
-        "d": "Ports, seams or the back side need a real photo.",
+        "t": "Hidden sides and parts",
+        "d": "Photograph ports, seams, backs or contents the upload does not show.",
         "supported": false
       },
       {
-        "t": "Proof that it works",
-        "d": "A clip of a kettle pouring isn't a test result.",
+        "t": "Performance claims",
+        "d": "Confirm that any result or demonstration matches a real test.",
         "supported": false
       },
       {
-        "t": "Printed words and prices",
-        "d": "Type them in your editor; AI letters can come out wrong.",
+        "t": "Words, prices and offers",
+        "d": "Add final text in your editor and proofread every number.",
         "supported": false
       },
       {
-        "t": "Exact color and what's in the box",
-        "d": "Compare with the real product before you post.",
+        "t": "Color and package contents",
+        "d": "Compare the file with the real product before you post.",
         "supported": false
       }
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "One platform",
-      "h2": "One platform. Unlimited possibilities.",
-      "lead": "Keep product ads and store images together, so every new campaign starts from one product photo.",
+      "eyebrow": "One place for every channel",
+      "h2": "One product photo, several campaign assets",
+      "lead": "Keep ads and store images together, so the next campaign starts with the asset you already have.",
       "items": [
         {
-          "t": "Ads and listings in one place",
-          "d": "A creator-style clip, a clean main image and a lifestyle scene can all come from the same upload, alongside product photos for the same catalog."
+          "t": "Make the next ad from the asset you have",
+          "d": "Turn a product photo into a creator-style clip, a demo or a social image without another shoot.",
+          "img": "n:gen2:product-videos-g4",
+          "alt": "Collapsible silicone water bottle expanded to full size on a desk.",
+          "frame": "phone"
         },
         {
-          "t": "Scale without more shoots",
-          "d": "Build many scenes for a growing catalog while keeping the same product and recognizable look."
+          "t": "Keep each channel on its own format",
+          "d": "Create a vertical ad for social, a square image for a listing or a wider frame where the tool supports it.",
+          "img": "n:gen2:product-videos-c2",
+          "alt": "Handheld vacuum lifts crumbs from a dark sofa in a close product demonstration.",
+          "frame": "phone"
         },
         {
-          "t": "Keep creative fresh",
-          "d": "Test new openings and scenes so ad fatigue does not stall a running campaign."
+          "t": "Refresh the message before ad fatigue sets in",
+          "d": "Swap the opening, scene or actor and compare the downloads in your ad platform.",
+          "img": "n:gen2:before-after-videos-g3",
+          "alt": "Closet shelf shown messy on one side and neatly folded on the other.",
+          "frame": "none"
         }
       ]
     }
@@ -769,5 +802,7 @@
         "h2": "Questions about AI product photos and videos"
       }
     }
-  }
+  },
+  "cta_lead": "Upload one product photo, choose a result and review it before you use it in a campaign.",
+  "cta_title": "Start your next ad with one product photo"
 }
