@@ -69,8 +69,8 @@
       "a": "Each generated angle photo costs 24 credits, and the cost appears before you run it."
     },
     {
-      "q": "Can one front photo generate sides I did not photograph?",
-      "a": "Not reliably. A real photo of each side keeps hidden ports and details from becoming guessed views."
+      "q": "Can I generate a side I never photographed?",
+      "a": "No. A real photo of each side is needed to keep hidden ports, controls and other details from becoming guessed views."
     },
     {
       "q": "Can I run multi-angle images as paid ads?",
@@ -90,7 +90,7 @@
       "source": "n:guide:tpl-angle-round4-speaker-controls",
       "result": "n:guide:tpl-angle-m2-back",
       "mode": "photo",
-      "prompt": "Show the uploaded speaker from the rear with its ports sharp and centered.",
+      "prompt": "Use the uploaded speaker as the exact product. Show it from a clean three-quarter side angle with the top controls and side USB-C port sharp and visible, preserving its shape, color and wrist strap. Neutral studio background, no text or logos.",
       "options": [
         [
           "Template",
