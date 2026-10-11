@@ -1082,7 +1082,9 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
   assert.ok(stepMode === "photo" || stepMode === "video", `${page.id}: visual step mode must be photo or video`);
   const configuredOptions = Array.isArray(maker?.options) ? maker.options.slice(0, 3) : [];
   const options = Array.isArray(steps.options) ? steps.options : (stepMode === "video" ? maker?.videoOptions : maker?.photoOptions) ?? configuredOptions;
-  const displayedLength = stepMode === "video" ? (displayedMakerVideoLength(options) ?? displayedMakerVideoLength(configuredOptions)) : undefined;
+  const displayedLength = stepMode === "video"
+    ? (displayedMakerVideoLength(configuredOptions) ?? (configuredOptions.length ? undefined : displayedMakerVideoLength(options)))
+    : undefined;
   const stepLength = stepMode === "video" ? visualLength(options, steps.length, page.id) : undefined;
   const stepCredits = stepMode === "video" ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
   const stepItems = Array.isArray(content.steps) ? content.steps : Array.isArray(steps.items) ? steps.items : [];
@@ -1851,7 +1853,6 @@ function payloadFor(model, page) {
   if (t === "hub") {
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits]);
     const hubAppHref = appHref({ tool: "video-ads", size: "9:16", length: "15" }, true);
-    const visual = visualFor(model, page, c.visual, { videoOptions: HOME_VIDEO_OPTIONS }, "video", hubAppHref, c);
     const relatedGroups = [
       { title: "Video templates", links: templateLinksFor(model, "video", 8) },
       { title: "Channels and campaigns", links: pageLinksFor(model, ["plat-tiktok", "tpl-bf"]) }
@@ -1861,6 +1862,7 @@ function payloadFor(model, page) {
       cta: c.maker?.cta ?? "Make my video",
       href: hubAppHref
     };
+    const visual = visualFor(model, page, c.visual, maker, "video", hubAppHref, c);
     // The hub template walls show only real video templates, never the dynamic cards
     // whose target is a tool page.
     const heroKeys = ["beauty", "bf", "launch"];
