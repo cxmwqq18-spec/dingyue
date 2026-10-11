@@ -52,7 +52,7 @@
       "a": "Yes. Download a 9:16 clip for TikTok, Instagram Reels or YouTube Shorts, then add the copy and offer details for that channel."
     },
     {
-      "q": "What product photo works best?",
+      "q": "What product photo should I use?",
       "a": "Use a clear, well-lit photo with the full product visible and its important details easy to inspect."
     },
     {
@@ -116,9 +116,9 @@
       "n:guide:q9-ugc-gallery-jacket-tryon"
     ],
     "steps": {
-      "source": "n:guide:k3-video-use-bottle-kitchen",
-      "sourceAlt": "Your product: green glass bottle beside a water glass at a bright kitchen sink.",
-      "result": "f:k3-video-step-green-bottle-result",
+      "source": "n:guide:b1-spokesperson-videos-source",
+      "sourceAlt": "Your product: a matte forest-green water bottle standing alone on a bright kitchen counter.",
+      "result": "n:guide:b1-spokesperson-videos-result",
       "mode": "video",
       "length": 15,
       "prompt": "Use the uploaded product photo as the exact product reference. Keep its shape, color and label area unchanged. Show one person using the product in a familiar setting, ending with the product held clearly in frame. Natural phone-video lighting and steady handheld movement. Sound: clear action audio and room tone; no text, logos or music.",

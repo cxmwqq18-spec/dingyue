@@ -99,8 +99,8 @@
       "n:guide:b1-video-ads-result"
     ],
     "steps": {
-      "source": "n:gen2:plat-amazon-g2",
-      "sourceAlt": "Your product: a ceramic mug held in one hand with its handle visible.",
+      "source": "n:gen2:plat-amazon-g1",
+      "sourceAlt": "Your product: a ceramic mug filling the frame on a pure white background.",
       "result": "n:guide:k1-product-videos-step-mug-lift",
       "mode": "video",
       "length": 10,
