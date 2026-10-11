@@ -13,8 +13,8 @@
   ],
   "steps": [
     {
-      "t": "Collect Team Photos",
-      "d": "Ask each teammate for an approved face-and-shoulders photo with even light. Confirm the business use before upload."
+      "t": "Upload Each Team Photo",
+      "d": "Upload an approved face-and-shoulders photo with even light. Confirm the business use before upload."
     },
     {
       "t": "Pick One Backdrop",
@@ -117,8 +117,32 @@
     "uses": [],
     "input": [],
     "outputs": [],
-    "after": null
+    "after": null,
+    "titles": {
+      "faq": {
+        "h2": "Questions about AI team headshots"
+      }
+    }
   },
   "steps_h2": "How to make team headshots in 3 simple steps",
-  "steps_lead": "Three steps turn each teammate's photo into a matching portrait - no studio, no scheduling."
+  "steps_lead": "Three steps turn each teammate's photo into a matching portrait, with no studio or scheduling.",
+  "benefits_h2": "Why choose AI team headshots",
+  "benefits": [
+    {
+      "t": "One look across the whole team",
+      "d": "Use one crop, backdrop and light for every portrait, so your About page reads as one brand while each person keeps their own features."
+    },
+    {
+      "t": "Add new hires without another shoot",
+      "d": "Create a matching portrait from an approved photo instead of scheduling a photographer each time someone joins."
+    },
+    {
+      "t": "Give every role a clear face",
+      "d": "Show founders, designers and operations leads in the same portrait style for your About page, pitch deck or speaker bio."
+    },
+    {
+      "t": "Ready for pages and profiles",
+      "d": "Download square portraits without an AIVideosUGC watermark, then add names, roles and contact details as editable text."
+    }
+  ]
 }
