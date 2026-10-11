@@ -72,8 +72,8 @@
     "tpl-size": {
       "hero": {
         "kind": "pair",
-        "before": "g:size-reference/source-input",
-        "after": "n:guide:q7-size-hero-after"
+        "before": "n:guide:c3-r3-tpl-size-tote-travel",
+        "after": "n:guide:rc1-tpl-size-hero-after-r1"
       },
       "gallery": [
         "g:size-reference/example-01",

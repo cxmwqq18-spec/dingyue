@@ -79,15 +79,15 @@
   "visual": {
     "strip": [
       "n:guide:q7-size-strip-0",
-      "n:guide:q7-size-strip-1",
-      "n:gen2:tpl-size-g2",
-      "n:guide:q7-size-strip-3",
+      "n:guide:q7-size-ex-1",
+      "n:guide:f3-template-size",
+      "n:guide:c3-r3-tpl-size-tote-laptop",
       "n:guide:q7-size-strip-4",
-      "n:guide:q7-size-strip-5"
+      "n:guide:tpl-size-c3-m2-result"
     ],
     "steps": {
       "source": "n:guide:tpl-size-c3-m2-source",
-      "result": "n:guide:q7-size-steps-result",
+      "result": "n:guide:tpl-size-c3-m7-tote-reference",
       "mode": "photo",
       "prompt": "Show the uploaded tote beside a notebook on a bench so its scale is easy to judge.",
       "options": [
