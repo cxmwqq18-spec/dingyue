@@ -617,15 +617,15 @@
         },
         {
           "t": "Keep the product page clear",
-          "d": "Use ecommerce main images when the listing needs a clean product view."
+          "d": "Use [ecommerce main images](/ai-image-generation/ecommerce-main-image) when the listing needs a clean product view."
         },
         {
           "t": "Make another product cut",
-          "d": "Use product videos to show a second action without another shoot."
+          "d": "Use [Shopify product photos](/platforms/shopify-product-photos) when a storefront needs a second product cut without another shoot."
         },
         {
           "t": "Review before publishing",
-          "d": "Check the final file, caption and offer in your own editor before you post."
+          "d": "Check [pricing](/pricing), the final file, caption and offer in your own editor before you post."
         }
       ]
     }

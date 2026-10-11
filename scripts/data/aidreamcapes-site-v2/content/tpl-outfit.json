@@ -594,15 +594,15 @@
         },
         {
           "t": "Turn a photo into motion",
-          "d": "Use image to video when one source photo needs a simple movement."
+          "d": "Use [image to video](/ai-video-generation/image-to-video) when one source photo needs a simple movement."
         },
         {
           "t": "Keep the clothing details clear",
-          "d": "Use clothing tools for another garment option while the source photo is still ready."
+          "d": "Use [fashion clothing tools](/industries/fashion-clothing) for another garment option while the source photo is still ready."
         },
         {
           "t": "Review before publishing",
-          "d": "Check the final file, caption and offer in your own editor before you post."
+          "d": "Check [pricing](/pricing), the final file, caption and offer in your own editor before you post."
         }
       ]
     }
