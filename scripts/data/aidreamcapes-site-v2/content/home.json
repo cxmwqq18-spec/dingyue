@@ -4,7 +4,7 @@
   "description": "Create AI product videos and photos from one upload for TikTok, Amazon, Shopify and social ads. See the credit cost before each job.",
   "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "Launch more product ads from one clear photo",
-  "lead": "Turn one product photo into a product demo, creator-style ad or listing image when you need a new version. Choose the format, see the credit cost first, and download a watermark-free file for your campaign.",
+  "lead": "One product photo is all you need to launch a new ad, refresh a listing or add a lifestyle scene. No studio, no models, no waiting weeks for another shoot—download a watermark-free file for your campaign.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -17,41 +17,41 @@
   "templates_title": null,
   "templates_lead": null,
   "platforms_title": null,
-  "benefits_h2": "Create more campaigns without another shoot",
+  "benefits_h2": "Get more campaign assets without another shoot",
   "benefits": [
     {
-      "t": "Launch without a shoot",
-      "d": "Start from a product photo you already own. Skip casting, studio booking and sample shipping.",
+      "t": "Spend far less than a shoot",
+      "d": "Start from a product photo and skip creators, a studio, props and a shoot day.",
       "icon": "bolt"
     },
     {
-      "t": "See the cost before you start",
-      "d": "The job shows its credit price before you commit, and failed jobs return credits automatically.",
-      "icon": "coins"
+      "t": "Get a new ad in minutes",
+      "d": "Choose a scene, actor or product format and turn the photo into a campaign version while the brief is fresh.",
+      "icon": "clock"
     },
     {
-      "t": "Make versions for each channel",
-      "d": "Choose a video or photo format for TikTok, Instagram, Amazon, Shopify or your store.",
+      "t": "Turn one photo into many versions",
+      "d": "Change the format, scene or opening and test more angles without reshooting the product.",
       "icon": "layers"
     },
     {
-      "t": "Keep the product in focus",
-      "d": "Upload one clear item and check the shape, color and label before you publish.",
-      "icon": "shield"
+      "t": "Sell without models or a set",
+      "d": "Show the item in a creator-style ad, demo or lifestyle scene without casting, props or a studio setup.",
+      "icon": "users"
     },
     {
-      "t": "Refresh ads when the message changes",
-      "d": "Create a new scene for a launch, offer or seasonal campaign without reshooting the item.",
+      "t": "Keep launches fresh",
+      "d": "Make a new scene for an offer or seasonal launch without reshooting the item.",
       "icon": "refresh"
     },
     {
-      "t": "Test a few hooks",
-      "d": "Try different openings, scenes or actors and compare the downloads in your ad platform.",
+      "t": "Test hooks without reshooting",
+      "d": "Swap the opening, actor or scene and compare versions in your ad platform.",
       "icon": "target"
     }
   ],
   "steps_h2": "From product photo to campaign asset in three steps",
-  "steps_lead": "Tell us what you are selling, choose where the result will run, then review the file before you post.",
+  "steps_lead": "Tell us what you sell, choose where the result will run, and download a file ready for your next campaign.",
   "steps": [
     {
       "t": "Upload the product you sell",
@@ -62,8 +62,8 @@
       "d": "Pick a demo, creator-style ad or product photo, then choose the frame and length shown for that tool."
     },
     {
-      "t": "Review and download",
-      "d": "Check the product shape, colors and claims. Download the watermark-free file when it is ready."
+      "t": "Download your campaign-ready file",
+      "d": "Get a watermark-free file for your ad, listing or social post."
     }
   ],
   "ugc": {
@@ -71,8 +71,8 @@
     "title": "What is AI UGC?",
     "paras": [
       "AI UGC is a creator-style ad made with a generated presenter, product scene and script. It gives ecommerce teams a way to show a product without booking a new shoot.",
-      "Upload the product photo, choose a scene or actor, and get a short video built around the item you sell. Use the result for a paid ad, product page or social post.",
-      "The presenter is AI-generated, not a real customer. Treat the clip as product marketing, check every claim, and add captions, prices or offers in your editor."
+      "Upload the product photo and choose a scene or actor. Get a 6, 10, 15 or 30 second clip built around your real product for a paid ad, product page or social post.",
+      "The presenter is AI-generated, not a real customer; use the clip to show your product."
     ],
     "formats": [
       {
@@ -144,28 +144,28 @@
   "compare": [
     [
       "Planning",
-      "Coordinate a shoot date, people and a location",
-      "Start with one product photo and choose a tool"
+      "Days to weeks of shoot coordination",
+      "Minutes from one product photo"
     ],
     [
       "Upfront cost",
-      "Quote varies with creators, studio time and reshoots",
-      "See the job's credit price before starting"
+      "Creators, studio time and gear before launch",
+      "Costs far less than creators, a studio and gear"
     ],
     [
       "New versions",
-      "Book another round for a different angle or hook",
-      "Create another version from the same upload"
+      "Another shoot for each new angle",
+      "Instant variations to test"
     ],
     [
       "Product control",
-      "Review the final footage after the shoot",
-      "Check the generated file before you download it"
+      "Changes mean another take or reshoot",
+      "You set the product and scene"
     ],
     [
       "Where it runs",
       "Export and resize for each channel",
-      "Choose a supported frame and length in the tool"
+      "Campaign file in the frame and length you choose"
     ]
   ],
   "faq": [
