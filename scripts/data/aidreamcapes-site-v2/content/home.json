@@ -4,7 +4,7 @@
   "description": "Create AI product videos and photos from one upload for TikTok, Amazon, Shopify and social ads. See the credit cost before each job.",
   "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "Launch more product ads from one clear photo",
-  "lead": "Launch a new product ad from one clear photo. Pick a scene, actor or format, then download a file for your next campaign in minutes.\n\n6, 10, 15 or 30 seconds · Square, 9:16 or 16:9 · watermark-free downloads",
+  "lead": "Launch a new product ad from one clear photo. Pick a scene or actor, then download a file for your next campaign in minutes.\n\nFrame options: 9:16 · 1:1 · 16:9 · 4:3 · 3:4 · watermark-free downloads.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -325,7 +325,7 @@
         ],
         [
           "Size",
-          "Square"
+          "9:16 · 1:1 · 16:9 · 4:3 · 3:4"
         ]
       ]
     },
