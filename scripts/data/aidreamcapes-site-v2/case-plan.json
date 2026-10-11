@@ -1148,24 +1148,24 @@
     ],
     "occ-sale-discount": [
       {
-        "ref": "n:guide:q20-occ-sale-case-01-r2",
-        "product": "canvas commuter tote",
-        "title": "Canvas tote held with a laptop for commuting"
+        "ref": "n:guide:q20-occ-sale-discount-card-04",
+        "product": "wireless charger",
+        "title": "Wireless charger lifted from a box"
       },
       {
-        "ref": "n:guide:q20-occ-sale-case-02",
-        "product": "sunscreen bottle",
-        "title": "Creator presents an unbranded sunscreen bottle"
+        "ref": "n:guide:f13-r10-occ-sale-discount-desk-lamp",
+        "product": "desk lamp",
+        "title": "Desk lamp switched on at a home office"
       },
       {
-        "ref": "n:guide:q20-occ-sale-case-03",
-        "product": "crossbody bag",
-        "title": "Adult models a plain crossbody bag on a city walk"
+        "ref": "n:guide:q20-occ-sale-discount-card-06-r2",
+        "product": "trail shoes",
+        "title": "Trail shoes tied at an entry bench"
       },
       {
-        "ref": "n:guide:q20-occ-sale-case-04",
-        "product": "protein shake",
-        "title": "Protein shake mixed beside a gym bag"
+        "ref": "n:guide:f13-r10-occ-sale-discount-bowl",
+        "product": "serving bowl",
+        "title": "Plain serving bowl placed on a dinner table"
       }
     ],
     "occ-black-friday": [
@@ -1175,19 +1175,19 @@
         "title": "Folding e-bike checked over before the big deal"
       },
       {
-        "ref": "n:guide:q20-occ-black-friday-case-02",
-        "product": "over-ear headphones",
-        "title": "Creator turns a headphone ear cup toward camera"
+        "ref": "n:guide:q20-occ-bf-output-02",
+        "product": "espresso machine",
+        "title": "Espresso machine fills a cup"
       },
       {
-        "ref": "n:guide:q20-occ-black-friday-case-03",
-        "product": "pet-hair cleaning tool",
-        "title": "One pass removes loose hair from upholstery"
+        "ref": "n:guide:q20-occ-black-friday-card-04",
+        "product": "running shoes",
+        "title": "Neutral running shoes lifted from tissue"
       },
       {
-        "ref": "n:guide:q20-occ-black-friday-case-04",
+        "ref": "n:guide:f13-r10-occ-black-friday-delivery-unbox",
         "product": "wool scarf",
-        "title": "Adult wraps a plain scarf for a winter outing"
+        "title": "Wool scarf opened from a delivery box"
       }
     ],
     "occ-holidays": [
@@ -1202,9 +1202,9 @@
         "title": "Gold bracelet revealed from tissue in a gift box"
       },
       {
-        "ref": "n:guide:q20-occ-holidays-case-03",
-        "product": "protein cocoa drink",
-        "title": "Adult stirs and tastes a warm cocoa drink"
+        "ref": "n:guide:f13-occ-holidays-rework-card-16-r2",
+        "product": "winter jacket",
+        "title": "Man tries on a winter jacket beside a gift box"
       },
       {
         "ref": "n:guide:q20-occ-holidays-case-04",

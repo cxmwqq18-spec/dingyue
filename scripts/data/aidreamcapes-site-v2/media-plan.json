@@ -588,7 +588,7 @@
       },
       "gallery": [
         "n:guide:q20-occ-sale-gallery-01",
-        "n:guide:q20-occ-sale-gallery-02",
+        "n:guide:f13-occ-sale-discount-card-09-r2",
         "n:guide:q20-occ-sale-gallery-03"
       ],
       "og": "n:t33-occ-sale-discount-og-r2"
@@ -599,7 +599,7 @@
         "image": "g:sale-campaign-key-visual/example-02"
       },
       "gallery": [
-        "n:guide:q20-occ-black-friday-gallery-01",
+        "n:guide:f13-r10-occ-black-friday-bundle",
         "n:handbag-carry"
       ],
       "og": "n:t33-occ-black-friday-og-r2"
@@ -607,11 +607,11 @@
     "occ-holidays": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q20-occ-holiday-media-hero"
+        "image": "n:guide:f13-r10-occ-holidays-order-reminder"
       },
       "gallery": [
         "n:guide:q20-occ-holiday-gallery-01",
-        "n:guide:q20-occ-holiday-gallery-02",
+        "n:guide:f13-r10-occ-holidays-unboxing-candle",
         "n:guide:q20-occ-holiday-gallery-03"
       ],
       "og": "n:t33-occ-holidays-og-r2"

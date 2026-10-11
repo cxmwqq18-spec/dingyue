@@ -1,10 +1,10 @@
 {
   "id": "occ-sale-discount",
-  "title": "Sale Ad Creatives for Discount Promotions | AIVideosUGC",
-  "description": "Create sale ad creatives from one product photo, then add the confirmed price, code and end date in your editor. Reuse the visual for each offer.",
-  "h1": "Create Sale Ad Creatives From One Product Photo",
+  "title": "Sale Ad Creatives With Editable Offers | AIVideosUGC",
+  "description": "Build a sale ad creative from one product photo. Add the confirmed price, code and end date after download, then reuse the scene when the promotion changes.",
+  "h1": "Make Sale Ad Creatives From One Product Photo",
   "eyebrow": "Sale ad creatives",
-  "lead": "Make a clear sale ad creative for the promotion, then add the offer details when the price and dates are confirmed.",
+  "lead": "Start your sale ad before the offer is final. Build the product scene now, then add the confirmed price, code and date after download.",
   "secondary_keywords": [
     "discount ad images",
     "sale banner for online store",
@@ -15,56 +15,56 @@
   "faq": [
     {
       "q": "Can AIVideosUGC put the discount on the image for me?",
-      "a": "We leave the offer off on purpose. AI can garble words and numbers, so type the percentage and code yourself in Ads Manager, CapCut or Canva and check every character."
+      "a": "No. Keep the percentage, price, code and end date as editable text in Canva, CapCut or Ads Manager so you can proofread every character."
     },
     {
       "q": "Can I reuse a sale visual for my next promotion?",
-      "a": "Yes. Since the price is added separately, this background can work for another offer. Swap the text layer and it's ready."
+      "a": "Yes. The product scene stays separate from the offer layer. Replace the text when the promotion changes and keep the same visual."
     },
     {
       "q": "Can I show the original price next to the sale price?",
-      "a": "Only show an original price you actually charged. Many places have advertising rules about comparison pricing, so check what applies where you sell."
+      "a": "Only show an original price you actually charged. Review the comparison-pricing rules that apply where you sell before publishing the claim."
     },
     {
       "q": "How much open space should I leave for the offer?",
-      "a": "Leave enough clear space for the offer line and code without covering the product. Preview the smallest placement to check that both remain readable."
+      "a": "Leave clear space for the offer line and code without covering the product. Preview the smallest screen to make sure both remain readable."
     },
     {
       "q": "Do I need a creator for sale videos?",
-      "a": "No. The promo visual is generated from your product photo and a chosen scene, so no one has to film it. The offer wording is added afterward as text."
+      "a": "No. Start with your product photo and a chosen scene. The generated file gives you the visual, and you add the offer afterward."
     },
     {
       "q": "Can I run the finished visual as a paid sale ad?",
-      "a": "Yes. Downloaded files are yours to use in paid promotions and carry no AIVideosUGC watermark, as long as the offer and price meet the platform's ad rules."
+      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in paid promotions, subject to the platform rules for your ad."
     }
   ],
   "examples": {
-    "h2": "More sale examples",
-    "lead": "Product scenes with open space for your discount, added after download.",
+    "h2": "More Sale Ad Creative Examples",
+    "lead": "Use product scenes with room for the offer layer you add after download.",
     "groups": [
       {
-        "label": "Room for the offer",
+        "label": "Product-in-use sale scenes",
         "items": [
           {
-            "ref": "n:guide:q20-occ-sale-example-02",
-            "title": "Protein bar first bite shown to camera",
+            "ref": "n:guide:q20-occ-sale-discount-card-08",
+            "title": "Hand applies balm from a plain jar",
             "kind": "photo",
-            "product": "protein bar"
+            "product": "face balm"
           },
           {
-            "ref": "n:guide:q20-occ-sale-example-03-r2",
-            "title": "Fabric shaver clears sweater pilling",
+            "ref": "n:guide:q20-occ-sale-gallery-01",
+            "title": "Quilted jacket lifted from a gift box",
             "kind": "photo",
-            "product": "fabric shaver"
+            "product": "quilted jacket"
           }
         ]
       },
       {
-        "label": "More offer layouts",
+        "label": "Offer-ready product views",
         "items": [
           {
             "ref": "n:guide:q20-occ-sale-example-04",
-            "title": "Running jacket fit checked at a mirror",
+            "title": "Running jacket checked in a mirror",
             "kind": "photo",
             "product": "running jacket"
           },
@@ -78,28 +78,28 @@
       }
     ]
   },
-  "cta_lead": "Create the sale ad creative first, then add the confirmed offer details after download.",
+  "cta_lead": "Build the sale ad creative first, then add the confirmed offer after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the item shoppers will buy."
+      "d": "Start with one clear photo of the product shoppers will buy."
     },
     {
-      "t": "Choose a Sale Scene",
-      "d": "Select a product view that leaves room for the promotion."
+      "t": "Pick a Sale Scene",
+      "d": "Choose a product view with clear space for the offer layer."
     },
     {
-      "t": "Download and Add the Offer",
-      "d": "Add the confirmed price, code and end date in your editor."
+      "t": "Download and Post",
+      "d": "Add the confirmed price, code and end date in your editor, then post the finished file."
     }
   ],
   "visual": {
-    "overview": "Show the product clearly in a sale scene, then add the current offer in an editable layer.",
+    "overview": "Show the product clearly in a sale scene, then add the confirmed offer in an editable layer.",
     "strip": [
-      "n:guide:q20-occ-sale-reuse-strip-01-r2",
+      "n:guide:q20-occ-sale-gallery-03",
       "f:retargeting-urgency",
       "n:guide:q20-occ-sale-after",
-      "n:guide:q20-occ-sale-reuse-strip-04",
+      "n:guide:q20-occ-sale-output-01",
       "n:guide:q20-occ-sale-strip-05",
       "n:guide:q20-occ-sale-strip-06"
     ],
@@ -107,11 +107,11 @@
       "source": "n:guide:occ-sale-discount-c3-m2-source",
       "result": "n:guide:q20-occ-sale-discount-steps-result-r2",
       "mode": "photo",
-      "prompt": "Share the sale moment in one sentence.",
+      "prompt": "Describe the product scene and where you want space for the offer.",
       "options": [
         [
           "Template",
-          "Sale product photo"
+          "Sale ad photo"
         ],
         [
           "Size",
@@ -119,13 +119,13 @@
         ],
         [
           "Use",
-          "Feed ad or product page"
+          "Feed post or product page"
         ]
       ]
     },
     "picker": {
-      "title": "Choose a product for your sale ad creative",
-      "lead": "Show the product clearly, then add the current offer in an editable layer.",
+      "title": "Choose a sale ad creative scene",
+      "lead": "Show the product clearly, then add the confirmed offer in an editable layer.",
       "chips": [],
       "cards": [],
       "button": "Make a sale ad photo"
@@ -136,35 +136,35 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Create sale ad creatives in three steps"
+        "h2": "How to Create Sale Ad Creatives in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a product for your sale ad creative"
+        "h2": "Choose a Sale Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions about sale ad creatives"
+        "h2": "Questions About Sale Ad Creatives"
       }
     }
   },
-  "benefits_h2": "Why sellers choose sale ad creatives",
+  "benefits_h2": "Why Sellers Use Sale Ad Creatives",
   "benefits": [
     {
-      "t": "A product view that earns attention",
-      "d": "Put the item first so shoppers understand what the promotion is for."
+      "t": "Launch before the offer is final",
+      "d": "Build the product scene in minutes while the price, code and dates are still being confirmed."
     },
     {
-      "t": "One visual for each offer",
-      "d": "Reuse the same product scene when the price, code or end date changes."
+      "t": "Skip a reshoot when details change",
+      "d": "Swap the price, code or date in your editor and keep the same product scene."
     },
     {
-      "t": "Versions for every placement",
-      "d": "Create a square post or a short clip for the channel where the sale runs."
+      "t": "Get more versions from one photo",
+      "d": "Turn one product photo into a square post or short clip for the channel carrying the sale."
     },
     {
-      "t": "Details stay in your hands",
-      "d": "Add the final price, code and dates after download so every offer stays accurate."
+      "t": "Skip the creator and studio bill",
+      "d": "Make the sale scene yourself in minutes, with no casting, studio day or shoot to pay for."
     }
   ],
-  "steps_h2": "Create sale ad creatives in three steps",
-  "steps_lead": "Turn one product photo into a sale ad creative, then prepare it for the places shoppers see the offer."
+  "steps_h2": "How to Create Sale Ad Creatives in 3 Simple Steps",
+  "steps_lead": "Upload one product photo, choose a sale scene and add the confirmed offer after download."
 }
