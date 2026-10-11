@@ -744,6 +744,7 @@ function ArticlePage({ data, r }: Props) {
             <div key={section.h2}>
               <h2>{section.h2}</h2>
               {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
+              {section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
               {tryBox && sectionIndex === tryAfter ? (
                 <aside className="trybox">
                   <b>{tryBox.title}</b>

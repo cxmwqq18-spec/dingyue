@@ -1757,6 +1757,24 @@ function imageItemsFor(model, page, items) {
   });
 }
 
+// Article sections may carry one page-owned image after their paragraphs. Keep the
+// source ref out of the public payload while preserving the section copy and links.
+function articleSectionsFor(model, page, sections) {
+  assert.ok(Array.isArray(sections), `${page.id}: article sections must be an array`);
+  return sections.map((section, index) => {
+    assert.ok(section && typeof section === "object" && !Array.isArray(section), `${page.id}: article section ${index + 1} must be an object`);
+    assert.ok(Array.isArray(section.paras), `${page.id}: article section ${index + 1} paragraphs must be an array`);
+    const out = { ...section, paras: section.paras.map((para) => inlineLinks(model, para, page.id)) };
+    if (section.img !== undefined) {
+      assert.ok(typeof section.img === "string" && section.img.trim(), `${page.id}: article section ${index + 1} img must be a media ref`);
+      const image = mediaImage(model, section.img, "gallery");
+      out.img = typeof section.alt === "string" && section.alt.trim() ? { ...image, alt: section.alt } : image;
+    }
+    if (section.alt !== undefined) assert.ok(typeof section.alt === "string" && section.alt.trim(), `${page.id}: article section ${index + 1} alt must be a non-empty string`);
+    return out;
+  });
+}
+
 // Optional page-owned sections keep their stored shape; only the item descriptions run
 // through the same automatic internal linker as benefit cards.
 function moreSectionsFor(model, page, sections) {
@@ -2227,7 +2245,7 @@ function payloadFor(model, page) {
   }
   if (t === "article") {
     return { ...base, section: page.section, minutes: c.read_minutes || 5, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, page.label),
-      sections: (c.sections || []).map((section) => ({ ...section, paras: section.paras.map((para) => inlineLinks(model, para, page.id)) })), checklist: c.checklist || [],
+      sections: articleSectionsFor(model, page, c.sections || []), checklist: c.checklist || [],
       related: articleRelatedFor(model, page), ...articleTry(model, page) };
   }
   if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], costs: JOB_COST_ROWS, ...(c.teams ? { teams: c.teams } : {}), plans: PLANS, next: nextLinks(model, t) };
@@ -2371,6 +2389,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const flow of payload.flows ?? []) for (const step of flow.steps ?? []) pushMedia(step.image);
     for (const group of [...(payload.examples?.groups ?? []), ...(payload.exampleGallery?.groups ?? [])]) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
+    if (layoutFor(page) === "article") for (const section of payload.sections ?? []) pushMedia(section?.img);
     for (const image of visualPayloadImages(payload.visual)) pushMedia({ src: image.src, alt: image.alt, width: image.w, height: image.h });
     if (guideReplacesHero(page, payload)) {
       const shown = new Set([...renderedImages(layoutFor(page), payload), ...visualPayloadImages(payload.visual).map((image) => image.src)]);
@@ -2522,7 +2541,10 @@ export function renderedImages(layout, data) {
     (data.articles ?? []).forEach((article) => add(article.image));
     (data.directoryScenes ?? []).forEach((item) => add(item.image));
   }
-  else if (layout === "article") add(data.image);
+  else if (layout === "article") {
+    add(data.image);
+    for (const section of data.sections ?? []) add(section?.img);
+  }
   else if (layout === "examples") { addFlows(data.flows); if (!data.visual) { addPairs(); addCards(data.cards); addExamples(); } }
   else add(data.image);
   for (const item of data.sellerScenarios?.items ?? []) add(item.image);
@@ -2702,6 +2724,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const errors = [];
   const seen = { title: new Map(), description: new Map(), h1: new Map(), slug: new Map() };
   const validationSource = loadSiteV2Source();
+  const validationModel = buildModel(validationSource);
   if (validationSource.cardAssignmentDocument?.version !== 1 || !validationSource.cardAssignmentDocument.pages || typeof validationSource.cardAssignmentDocument.pages !== "object" || Array.isArray(validationSource.cardAssignmentDocument.pages)) errors.push("dynamic card assignments are malformed (expected version 1 and a pages map)");
   const technicalKeys = new Set(["href", "src", "srcset", "sizes", "key", "kind", "industries", "platforms", "id", "section", "tool_id", "mediaref", "ref", "url", "width", "height", "duration", "uploaddate", "w", "h"]);
   const publicText = (value, key = "") => {
@@ -3012,6 +3035,30 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (faq.length && (!ld || ld.mainEntity.length !== faq.length)) errors.push(`${page.id}: FAQ JSON-LD mismatch`);
 
     const sourceContent = validationSource.content[page.id] || {};
+    if (pageMeta?.type === "article") {
+      const sourceSections = sourceContent.sections;
+      const compiledSections = data.sections;
+      if (sourceSections !== undefined && !Array.isArray(sourceSections)) errors.push(`${page.id}: article sections must be an array`);
+      else if (!Array.isArray(compiledSections)) errors.push(`${page.id}: article sections were not compiled`);
+      else for (const [index, sourceSection] of (sourceSections ?? []).entries()) {
+        if (!sourceSection || typeof sourceSection !== "object" || Array.isArray(sourceSection)) {
+          errors.push(`${page.id}: article section ${index + 1} must be an object`);
+          continue;
+        }
+        if (sourceSection.img !== undefined) {
+          if (typeof sourceSection.img !== "string" || !sourceSection.img.trim() || !knownMediaRef(validationModel, sourceSection.img)) {
+            errors.push(`${page.id}: article section ${index + 1} img reference is missing or unknown`);
+          }
+          const image = compiledSections[index]?.img;
+          if (!image || typeof image !== "object" || typeof image.src !== "string" || typeof image.alt !== "string" || !(Number(image.width) > 0) || !(Number(image.height) > 0)) {
+            errors.push(`${page.id}: article section ${index + 1} img was not compiled`);
+          }
+        }
+        if (sourceSection.alt !== undefined && (typeof sourceSection.alt !== "string" || !sourceSection.alt.trim())) {
+          errors.push(`${page.id}: article section ${index + 1} alt must be a non-empty string`);
+        }
+      }
+    }
     if (sourceContent.overview && (!Array.isArray(data.overview) || !data.overview.length)) errors.push(`${page.id}: overview content was dropped from the public payload`);
     for (const [sourceKey, payloadKey] of [["scene_prompt_examples", "scenePromptExamples"], ["troubleshooting", "troubleshooting"], ["tool_chooser", "toolChooser"], ["limitations", "limitations"]]) {
       if (!sourceContent[sourceKey]) continue;
