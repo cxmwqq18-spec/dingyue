@@ -23732,6 +23732,16 @@
           1280
         ]
       },
+      "im12-blog-model-photo-hoodie-street-r1": {
+        "file": "im12-blog-model-photo-hoodie-street-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "k8-spokesperson-lipstick-ad": {
         "file": "gen2guide-k8-spokesperson-lipstick-ad",
         "w": 1024,
@@ -28498,6 +28508,16 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult woman tries on a crossbody bag and adjusts the strap in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im12-video-ads-example-02-r1": {
+        "file": "im12-video-ads-example-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob checks a plain taupe crossbody bag in a bedroom mirror, full face visible.",
         "variants": [
           640,
           1280

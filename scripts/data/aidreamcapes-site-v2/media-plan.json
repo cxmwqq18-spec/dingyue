@@ -682,9 +682,9 @@
     "blog-model-photos-without-a-photoshoot": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-blog-model-photo-hoodie-street"
+        "image": "n:guide:im12-blog-model-photo-hoodie-street-r1"
       },
-      "og": "n:guide:k8-blog-model-photo-hoodie-street"
+      "og": "n:guide:im12-blog-model-photo-hoodie-street-r1"
     },
     "faq": {
       "hero": {
