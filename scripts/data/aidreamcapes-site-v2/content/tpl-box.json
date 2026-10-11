@@ -35,15 +35,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear photo that shows every item, the package and any important insert."
+      "d": "Add one clear photo showing every item, the package and any insert. Keep the full set in frame so shoppers can check the contents."
     },
     {
       "t": "Pick a Bundle Style",
-      "d": "Choose an unboxing, review or product-demo scene, then generate the set image."
+      "d": "Choose an arrangement that keeps every shipped piece visible. Use a clean layout that fits your listing or gift page."
     },
     {
       "t": "Download and Post",
-      "d": "Download the image, compare each object with your contents list and add your price in the editor."
+      "d": "Download the image and compare each object with your contents list. Add your current price in the editor before posting."
     }
   ],
   "maker": {
@@ -99,6 +99,10 @@
     {
       "q": "Can I use the bundle image in paid ads?",
       "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for contents and claims."
+    },
+    {
+      "q": "Can shoppers count every piece?",
+      "a": "Yes. Arrange the full kit so each piece is visible, then compare the image with your written contents list before posting."
     }
   ],
   "visual": {
