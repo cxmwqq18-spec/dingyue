@@ -1,10 +1,10 @@
 {
   "id": "change-background",
-  "title": "AI Product Background Changer for Shop Photos | AIVideosUGC",
-  "description": "Use an AI product background changer to keep one product and swap its setting. Start with one photo and create a clean color, counter or seasonal scene fast.",
-  "h1": "AI Product Background Changer: Keep the Product, Change the Scene",
+  "title": "AI Product Background Changer | AIVideosUGC",
+  "description": "Change a product photo background from one clear image. Keep the item intact, create a new setting for listings or ads, and avoid another studio shoot.",
+  "h1": "Change a product photo background without a reshoot",
   "eyebrow": "Photo tool",
-  "lead": "Use an AI product background changer to give one product photo a fresh setting in minutes. Keep the item in frame and choose a clean surface, brand color or seasonal scene.",
+  "lead": "Keep one product photo and change the setting around it. Create a clean studio, warm counter or seasonal scene without booking another shoot.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -12,59 +12,59 @@
     "new background for Etsy photos",
     "AI backdrop for product shots"
   ],
-  "steps_h2": "How to Use an AI Product Background Changer in 3 Simple Steps",
-  "steps_lead": "Want a fresh look for your products? Change any product image in three simple steps.",
+  "steps_h2": "How to Make Product Background Changes in 3 Simple Steps",
+  "steps_lead": "Start with one clear product photo, choose a setting and download a fresh scene for your listing or ad.",
   "steps": [
     {
       "t": "Upload Your Image",
-      "d": "Add a sharp product photo with the whole item in frame; the original setting can be messy."
+      "d": "Upload one clear product photo with the whole item visible. A tidy outline gives the new setting a clean edge."
     },
     {
       "t": "Describe Your New Background",
-      "d": "Choose a shaded outdoor garden table with an oatmeal linen cloth and soft green foliage in the distance, then use that setting for the background."
+      "d": "Name one surface, room or outdoor setting. Keep the description focused so the product stays the subject."
     },
     {
       "t": "Download and Post",
-      "d": "Compare the result with the original, then download the square image for your store or ad."
+      "d": "Compare the new setting with your original photo. Download the square result for your store or ad editor."
     }
   ],
-  "benefits_h2": "Make More Versions with an AI Product Background Changer",
+  "benefits_h2": "Change the setting without another shoot",
   "benefits": [
     {
-      "t": "Keep listings consistent",
-      "d": "Move a product from a cluttered counter to a clean surface, so every listing feels shot with the same care.",
+      "t": "Keep every listing polished",
+      "d": "Move one item from a cluttered counter to a clean surface so each listing starts with a clear product view.",
       "icon": "layers"
     },
     {
-      "t": "Refresh a campaign fast",
-      "d": "Give the same item a seasonal or brand-color setting without unpacking stock for another shoot.",
+      "t": "Market more angles",
+      "d": "Create a seasonal, studio or outdoor setting from the product photo you already have.",
       "icon": "refresh"
     },
     {
-      "t": "Costs far less than a reshoot",
-      "d": "Start with one existing photo instead of booking space, lights and a crew again.",
+      "t": "Skip another shoot",
+      "d": "Refresh a campaign without unpacking stock, booking space or waiting for a new photo session.",
       "icon": "clock"
     }
   ],
   "more_sections": [
     {
-      "eyebrow": "Why choose it",
-      "h2": "Why an AI Product Background Changer Saves Time",
-      "lead": "Keep the item in focus while you create a setting that fits the next listing or campaign.",
+      "eyebrow": "Why change the setting",
+      "h2": "Keep the product clear in every new setting",
+      "lead": "Change the scene around the item while you check its angle, outline and details before publishing.",
       "items": [
         {
-          "t": "Save hours and dollars",
-          "d": "Create a new setting in minutes instead of booking another studio day.",
+          "t": "Create a setting that fits the next listing",
+          "d": "Move the vase to a bright windowsill when the next listing needs a warmer scene.",
           "img": "n:guide:k5-background-case-1"
         },
         {
-          "t": "Keep edges and scale",
-          "d": "Keep the angle, size and outline in place while the background changes.",
+          "t": "Keep the item easy to inspect",
+          "d": "A plain face cream jar on wet stone keeps the product surface and edge in view.",
           "img": "n:guide:k5-background-case-2"
         },
         {
-          "t": "Download a sharp square",
-          "d": "Get a clean square photo ready for your store or social feed.",
+          "t": "Download a scene ready for the feed",
+          "d": "A brown leather wallet on a cafe table gives a social post a believable setting.",
           "img": "n:guide:k5-background-case-3"
         }
       ]
@@ -85,7 +85,7 @@
         "Square by default"
       ]
     ],
-    "cta": "Change my background"
+    "cta": "Change the background"
   },
   "faq": [
     {
@@ -143,8 +143,8 @@
       ]
     },
     "picker": {
-      "title": "Browse AI Product Background Changer Settings",
-      "lead": "Move one product into a clean color, surface or room that fits the next campaign.",
+      "title": "Choose a new product setting",
+      "lead": "Try a clean studio, warm counter or seasonal scene around one product photo.",
       "chips": [],
       "cards": [],
       "button": "Try this background"
@@ -152,10 +152,10 @@
     "uses": [],
     "titles": {
       "m2": {
-        "h2": "How to Use an AI Product Background Changer in 3 Simple Steps"
+        "h2": "How to Make Product Background Changes in 3 Simple Steps"
       },
       "faq": {
-        "h2": "AI Product Background Changer FAQs"
+        "h2": "Frequently asked questions"
       }
     }
   }
