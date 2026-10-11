@@ -2,7 +2,7 @@
   "id": "platforms",
   "title": "AI Ads and Product Photos by Platform | AIVideosUGC",
   "description": "Turn one product photo into correctly sized ads and photos for TikTok, Instagram, Facebook, Shorts, Amazon, and Shopify. Watermark-free files, ready to post.",
-  "h1": "Ads and Product Photos for Every Platform You Sell On",
+  "h1": "AI Ads and Product Photos for Every Platform You Sell On",
   "eyebrow": "Choose your channel",
   "lead": "Stop reformatting one clip by hand. Pick a channel to see its real photo and video specs, then turn one product photo into a file that fits it.",
   "card": "Sizes and ideas for TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify.",
@@ -16,11 +16,11 @@
   "faq": [
     {
       "q": "Which platform format should I make first?",
-      "a": "Start with the placement where you already buy traffic: 9:16 for TikTok, Reels, and Shorts; 4:5 for Meta Feed images and video; square images for Amazon and Shopify product galleries."
+      "a": "Start with the format where you already buy traffic: 9:16 for TikTok, Reels, and Shorts; 4:5 for Meta Feed images and video; square images for Amazon and Shopify product galleries."
     },
     {
       "q": "Can one vertical video work on TikTok, Reels and Shorts?",
-      "a": "Yes, a 9:16 file fits all three. Each app places buttons and captions differently, so preview the clip in every placement before you spend on it."
+      "a": "Yes, a 9:16 file fits all three. Each app positions buttons and captions differently, so preview the clip in every feed before you spend on it."
     },
     {
       "q": "What size works for a Facebook or Instagram Feed image?",
@@ -32,15 +32,15 @@
     },
     {
       "q": "What size works for a YouTube Short?",
-      "a": "Use a 9:16 vertical file; 1080×1920 is the recommended size for a Shorts ad. Use 16:9 separately for a regular YouTube video or in-stream placement."
+      "a": "Use a 9:16 vertical file; 1080×1920 is the recommended size for a Shorts ad. Use 16:9 separately for a regular YouTube video or in-stream slot."
     },
     {
       "q": "What should I make for an Amazon listing?",
-      "a": "Start with a square plain-white main image, then add lifestyle and detail views that answer the next shopper question. Sponsored Brands video uses a separate 16:9 placement."
+      "a": "Start with a square plain-white main image, then add lifestyle and detail views that answer the next shopper question. Sponsored Brands video uses a separate 16:9 format."
     },
     {
       "q": "What size should Shopify product images be?",
-      "a": "Shopify says square 2048×2048 images usually display well. Keep a consistent crop for the product gallery and make a separate 9:16 asset for social placements."
+      "a": "Shopify says square 2048×2048 images usually display well. Keep a consistent crop for the product gallery and make a separate 9:16 asset for social formats."
     },
     {
       "q": "Do you post the finished ads to my accounts?",
@@ -48,29 +48,29 @@
     },
     {
       "q": "Can one product creative run on every platform?",
-      "a": "Use the product photo as your starting point, then choose the ratio for each placement. One generation uses one selected format; add captions, sound, prices, and offers after download."
+      "a": "Use the product photo as your starting point, then choose the ratio for each channel. One generation uses one selected format; add captions, sound, prices, and offers after download."
     },
     {
       "q": "How do I keep product details clear of platform controls?",
-      "a": "Keep the product and any later text inside the placement safe area, then preview the downloaded file in the exact Feed, Reel, Short, listing, or store slot before publishing."
+      "a": "Keep the product and any later text inside the safe area, then preview the downloaded file in the exact Feed, Reel, Short, listing, or store slot before publishing."
     },
     {
       "q": "Do I need a separate video for each platform?",
-      "a": "For shape, yes: vertical for TikTok, Reels, and Shorts, square for feeds and listings. Generate each size from one product photo and one scene, so nothing is re-shot or rebuilt."
+      "a": "For shape, yes: vertical for TikTok, Reels, and Shorts; square for still feeds and listings; 16:9 for Amazon Sponsored Brands video. Generate each format from one product photo and one scene."
     },
     {
       "q": "Can I use the downloaded files in paid ads?",
-      "a": "Yes. They are watermark-free and licensed for commercial use across social, marketplace, and store placements. Each platform still reviews your ad, and any claims or offer text you add must be accurate."
+      "a": "Yes. They are watermark-free and licensed for commercial use across social, marketplace, and store formats. Each platform still reviews your ad, and any claims or offer text you add must be accurate."
     }
   ],
   "visual": {
     "strip": [
       "n:guide:k8-platforms-gen2-plat-tiktok-g1",
-      "n:guide:q17-platforms-strip-1",
-      "n:guide:q17-platforms-strip-2",
+      "n:gen2:plat-tiktok-g2",
+      "n:gen2:plat-instagram-g4",
       "n:guide:q17-platforms-strip-3",
-      "n:guide:k8-platforms-gen2-tpl-size-g3",
-      "n:guide:q17-platforms-strip-5"
+      "n:gen2:rb1-platforms-strip-4-r1",
+      "n:gen2:plat-facebook-g1"
     ],
     "steps": {
       "source": "n:guide:b1-url-to-video-source",
@@ -89,26 +89,17 @@
         ]
       ]
     },
-    "picker": [
-      {
-        "id": "social",
-        "label": "Social feeds"
-      },
-      {
-        "id": "product-pages",
-        "label": "Product pages"
-      }
-    ],
+    "picker": [],
     "uses": [],
     "input": [],
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Make a Platform-Ready Asset in 3 Steps"
+        "h2": "How to Make Platform-Ready Product Ads in 3 Simple Steps"
       },
       "m3": {
         "h2": "Browse Platforms",
-        "lead": "Open a channel to see its format, size and photo guidance."
+        "lead": "Open a channel to see its format, size, and photo guidance."
       }
     },
     "directoryFilters": {
@@ -135,32 +126,33 @@
       "itemImages": {
         "/platforms/tiktok-ads": "n:guide:k8-platforms-gen2-plat-tiktok-g3",
         "/platforms/instagram-ads": "n:guide:k8-platforms-gen2-plat-shopify-c2",
-        "/platforms/shopify-product-photos": "n:guide:q17-platforms-shopify-main",
-        "/platforms/amazon-product-photos": "n:guide:q17-platforms-amazon-main"
+        "/platforms/shopify-product-photos": "n:gen2:plat-shopify-g1",
+        "/platforms/amazon-product-photos": "n:guide:q17-platforms-amazon-main",
+        "/platforms/youtube-shorts-ads": "n:gen2:rb1-platforms-item-youtube-shorts-r1"
       }
     }
   },
-  "benefits_h2": "Why Sellers Size Their Ads Here",
+  "benefits_h2": "Why Sellers Size Ads for Every Platform",
   "benefits": [
     {
       "t": "One photo, every channel size",
       "d": "Generate vertical, square, and wide assets from one product photo. Each file matches the channel specs, so the manual crop-and-export loop ends."
     },
     {
-      "t": "No reshoots per channel",
-      "d": "Film the product once. One photo carries it into TikTok, Reels, Shorts, Amazon and your store without another shoot."
+      "t": "Skip a new shoot for each channel",
+      "d": "Start from one product photo and carry the same item into TikTok, Reels, Shorts, Amazon, and your store without another shoot."
     },
     {
-      "t": "Specs from official rules",
-      "d": "The table lists ratios and pixels such as 1080x1920 and 1440x1800 straight from platform rules, so the app does not crop your creative."
+      "t": "Know the size before you publish",
+      "d": "Use the table to check ratios and pixels such as 1080×1920 and 1440×1800 against the platform rules before you place the asset."
     },
     {
-      "t": "Files ready to post and promote",
+      "t": "Download files ready to post",
       "d": "Downloaded photos and videos are watermark-free and licensed for commercial use on social feeds, marketplaces, and paid campaigns."
     }
   ],
-  "steps_h2": "Make a Platform-Ready Asset in 3 Steps",
-  "steps_lead": "One product photo becomes a correctly sized file for the channel you pick.",
+  "steps_h2": "How to Make Platform-Ready Product Ads in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a correctly sized file for the channel you pick.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -177,10 +169,10 @@
   ],
   "directory_specs": {
     "title": "Platform formats at a glance",
-    "lead": "Don't let bad sizing kill a placement. Match each feed with the shape and length it accepts.",
+    "lead": "Don't let bad sizing kill a channel slot. Match each feed with the shape and length it accepts.",
     "columns": [
       "Platform",
-      "Placement",
+      "Format",
       "Shape and size",
       "AIVideosUGC options"
     ],
@@ -189,37 +181,37 @@
         "TikTok",
         "In-Feed",
         "9:16 · minimum 540×960",
-        "6, 10 or 15-second clips"
+        "6, 10, 15 or 30-second clips"
       ],
       [
         "Instagram",
         "Feed image / Reels video",
         "4:5 · 1440×1800 / 9:16 · 1080×1920",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ],
       [
         "Facebook",
         "Feed image / Reels video",
         "4:5 · 1440×1800 / 9:16",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ],
       [
         "YouTube Shorts",
         "Shorts ad",
         "9:16 · 1080×1920 recommended",
-        "6, 10 or 15-second clips"
+        "6, 10, 15 or 30-second clips"
       ],
       [
         "Amazon",
         "Main image / Sponsored Brands video",
         "Square white-background image / 16:9 video · 6–45 seconds",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ],
       [
         "Shopify",
         "Product gallery / product video",
         "Square · 2048×2048 usually displays well / video up to 10 minutes",
-        "Square stills; 6, 10 or 15-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips"
       ]
     ]
   },

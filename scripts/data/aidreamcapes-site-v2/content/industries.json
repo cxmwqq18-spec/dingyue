@@ -4,7 +4,7 @@
   "description": "Find product photos and videos matched to your industry, from skincare to sneakers and snacks. Make them from one photo, ready to download and post.",
   "h1": "AI Product Content by Industry, Matched to What You Sell",
   "eyebrow": "Browse by industry",
-  "lead": "Pick the page for what you sell. It shows the photos and short clips shoppers in that category look for, all made from one product photo.",
+  "lead": "Get product photos and short videos that fit what you sell: pick your industry, see the buyer moment to show, and start with one product photo.",
   "card": "Photo and video ideas matched to what you sell.",
   "secondary_keywords": [
     "AI product photos by category",
@@ -18,24 +18,24 @@
   ],
   "features": [
     {
-      "t": "Category-matched shot lists",
-      "d": "Each page names the photos and short videos sellers in that category make first, so you start with the shot that answers a real shopper question."
+      "t": "Know the shot buyers need first",
+      "d": "Each page names the photos and short videos sellers in that category make first, so you start with a shot that answers a real shopper question."
     },
     {
-      "t": "Upload checks by product type",
-      "d": "See what has to stay visible for your item, such as the full label on a bottle, the sole on a shoe, or the finish on a piece of jewelry."
+      "t": "Keep the details buyers inspect visible",
+      "d": "See what should stay in frame for your item, such as a bottle label, a shoe sole, or the finish on a piece of jewelry."
     },
     {
-      "t": "Same photo, every format",
-      "d": "Reuse one product photo across white background shots, lifestyle scenes and vertical videos without a reshoot."
+      "t": "Use one photo across every format",
+      "d": "Reuse one product photo for white background shots, lifestyle scenes, and vertical videos without a reshoot."
     },
     {
-      "t": "Ad moments grouped by use",
-      "d": "Pick real ad types such as unboxing, demo, review and limited-time offer instead of browsing generic room settings."
+      "t": "Choose an ad moment that sells the detail",
+      "d": "Pick a real ad type such as an unboxing, demo, review, or limited-time offer instead of a generic room setting."
     },
     {
-      "t": "Tool and template links",
-      "d": "Every example links to the tool and ready-made template that produced it, so the page ends in an asset you can download."
+      "t": "Reach a downloadable asset faster",
+      "d": "Open the linked tool or template from each example and make the asset shown on the page."
     }
   ],
   "faq": [
@@ -64,8 +64,8 @@
       "a": "They point to the platform pages, where formats are matched to TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify. For example, vertical video fits in-feed placements, while square photos fit listings and most feed ads."
     },
     {
-      "q": "How do I make sure the result looks like my actual product?",
-      "a": "Upload one photo with the product's shape, color and label area fully visible, and keep the scene description focused on that item. The generation keeps the product unchanged while placing it in the scene you choose."
+      "q": "Will the result keep my product shape and color?",
+      "a": "Yes, it keeps the shape and color when your full product is visible in the source photo. Compare the downloaded result with the item you sell before publishing."
     },
     {
       "q": "Which ad moment should I make first for a new product?",
@@ -83,18 +83,18 @@
   "visual": {
     "strip": [
       "n:guide:q14-industries-strip-hiker",
-      "n:guide:q14-industries-strip-protein-unbox",
+      "n:gen2:ind-food-drinks-g2",
       "n:guide:q14-industries-strip-headphones-unbox",
-      "n:guide:f4-industries-strip-serum-r1",
-      "n:guide:f4-industries-strip-denim-r1",
+      "n:gen2:ind-beauty-skincare-g4",
+      "n:gen2:rb1-industries-strip-4-r1",
       "n:guide:f4-industries-strip-running-shoe-r1"
     ],
     "steps": {
-      "source": "n:guide:b1-video-ads-source",
+      "source": "n:gen2:rb1-industries-steps-source-r1",
       "sourceAlt": "Soft sage insulated lunch bag standing on a bright kitchen counter.",
       "sourceTitle": "Your starting product",
       "sourceHint": "Keep the full bag, handle, and zipper visible.",
-      "result": "n:guide:q14-industries-step-lunchbag",
+      "result": "n:gen2:rb1-industries-steps-result-r1",
       "mode": "video",
       "prompt": "Pack a lunch container into the insulated bag and lift it by the handle.",
       "options": [
@@ -112,34 +112,17 @@
         ]
       ]
     },
-    "picker": [
-      {
-        "id": "beauty-accessories",
-        "label": "Beauty & Accessories"
-      },
-      {
-        "id": "fashion-shoes",
-        "label": "Fashion & Shoes"
-      },
-      {
-        "id": "home-tech",
-        "label": "Home & Electronics"
-      },
-      {
-        "id": "food-wellness",
-        "label": "Food & Wellness"
-      }
-    ],
+    "picker": [],
     "uses": [],
     "input": [],
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "How to find ideas for your product category in 3 steps"
+        "h2": "How to Find AI Product Content by Industry in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Filter categories by product group",
-        "lead": "Group the category directory by what you sell, then open the matching industry page."
+        "h2": "Browse Product Content by Industry",
+        "lead": "Open the category that matches what you sell and see which buyer moment to show first."
       }
     },
     "directoryFilters": {
@@ -170,8 +153,8 @@
         ]
       },
       "itemImages": {
-        "/industries/beauty-skincare": "n:guide:q14-industry-beauty-texture",
-        "/industries/fashion-clothing": "n:guide:q14-industry-fashion-outfit",
+        "/industries/beauty-skincare": "n:gen2:rb1-industries-item-beauty-r1",
+        "/industries/fashion-clothing": "n:gen2:rb1-industries-item-fashion-r1",
         "/industries/shoes": "n:guide:q14-industry-shoes-fit",
         "/industries/jewelry-accessories": "n:guide:q14-industry-jewelry-unbox",
         "/industries/electronics": "n:guide:q14-industry-electronics-headphones",
@@ -182,7 +165,7 @@
     },
     "overview": "Group the directory by product type, then open your category for examples matched to what you actually sell."
   },
-  "benefits_h2": "Why start content from your industry page?",
+  "benefits_h2": "Why Start Product Content by Industry?",
   "benefits": [
     {
       "t": "Know what to shoot first",
@@ -201,8 +184,8 @@
       "d": "Downloaded photos and videos are watermark-free and licensed for commercial use, so each industry page ends in a file you can actually publish."
     }
   ],
-  "steps_h2": "How to turn an industry page into a published asset",
-  "steps_lead": "Three steps take you from one product photo to a ready-to-post asset matched to your industry.",
+  "steps_h2": "How to Find AI Product Content by Industry in 3 Simple Steps",
+  "steps_lead": "Start with one product photo, choose the buyer moment for your category, and download an asset you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -306,25 +289,25 @@
       "t": "Electronics: desk demo",
       "d": "Show the gadget being set up and used for one task, with the controls visible in the same frame.",
       "href": "/industries/electronics",
-      "image": "n:guide:q14-industries-strip-speaker"
+      "image": "n:gen2:rb1-industries-scene-electronics-r1"
     },
     {
       "t": "Wellness: routine moment",
       "d": "Place the product in a real morning or gym-bag routine without implying a health outcome you cannot support.",
       "href": "/industries/health-wellness",
-      "image": "n:guide:g1-retarget-electrolyte-gummy-r2"
+      "image": "n:gen2:rb1-industries-scene-wellness-r2"
     },
     {
       "t": "Food: first-sip reaction",
       "d": "Show an adult serving the drink or snack, then taking the first sip or bite so the serving context is clear.",
       "href": "/industries/food-drinks",
-      "image": "n:guide:q1-photo-example-tumbler"
+      "image": "n:gen2:rb1-industries-scene-food-r1"
     },
     {
       "t": "Home: problem to fix",
       "d": "Show the starting clutter or mess, then the product in use during one simple organizing or cleaning step.",
       "href": "/industries/home-living",
-      "image": "n:q10-sale-picker-2"
+      "image": "n:gen2:rb1-industries-scene-home-r1"
     }
   ]
 }
