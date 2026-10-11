@@ -5011,6 +5011,15 @@
         1280
       ],
       "source": "Codex image generation"
+    },
+    "im11-plat-tiktok-lip-tint-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Black man with a short buzz cut compares a plain rose lip balm beside a clean hand swatch.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -47723,6 +47732,96 @@
           640,
           1280,
           1600
+        ]
+      },
+      "im11-tpl-tryon-gallery-01-r1": {
+        "file": "im11-tpl-tryon-gallery-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a short copper pixie wears a plain blue jacket in a fitting-room studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-tpl-tryon-gallery-02-r1": {
+        "file": "im11-tpl-tryon-gallery-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian man with a close-cropped fade wears a plain blue jacket on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-tpl-tryon-gallery-03-r1": {
+        "file": "im11-tpl-tryon-gallery-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a short ash-gray bob wears a plain blue jacket in a neutral studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-tpl-tryon-gallery-04-r1": {
+        "file": "im11-tpl-tryon-gallery-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Latino man with a shaved head wears a plain blue jacket seated on a bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-tpl-tryon-gallery-05-r1": {
+        "file": "im11-tpl-tryon-gallery-05-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult white woman with a short blonde bob shows the back of a plain blue jacket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-tpl-retargeting-video-ad-strip-4-r1": {
+        "file": "im11-tpl-retargeting-video-ad-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a short curly pixie adjusts plain dark navy over-ear headphones beside a train platform.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-occ-black-friday-sale-r1": {
+        "file": "im11-occ-black-friday-sale-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob opens a plain gift box with a blank pump bottle and ceramic mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-occ-holidays-bf-card-r1": {
+        "file": "im11-occ-holidays-bf-card-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult model with a short silver-gray pixie opens a plain holiday gift box with blank bottles and a jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im11-occ-product-launch-case-03-r1": {
+        "file": "im11-occ-product-launch-case-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a plain kraft package to reveal a blank ceramic travel mug.",
+        "variants": [
+          640,
+          1280
         ]
       }
     }
