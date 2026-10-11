@@ -1,11 +1,11 @@
 {
   "id": "plat-facebook",
   "title": "AI Facebook Ad Generator for Online Stores | AIVideosUGC",
-  "description": "Use an AI Facebook ad generator that turns one product photo into a square feed image or 9:16 Reels clip, with no shoot and the credit cost shown first.",
-  "h1": "AI Facebook Ad Generator for Square and Vertical Ads",
+  "description": "Make a Facebook ad from one product photo. Choose a square Feed image or 9:16 Reel, see the credit cost first, and download without a watermark.",
+  "h1": "Make Facebook Ads from One Product Photo",
   "eyebrow": "Facebook ads",
-  "lead": "Turn one product photo into a Facebook ad. Get a square feed image or a Reels-style clip in minutes, with the credit cost shown first.",
-  "card": "Square product images and 9:16 Reels clips.",
+  "lead": "Turn one product photo into a Facebook ad. Choose a square Feed image or a Reels-style clip, then download the file when it is ready.",
+  "card": "Square Feed images and 9:16 Reels clips from one photo.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
     "Facebook feed ad images",
@@ -15,117 +15,68 @@
   "faq": [
     {
       "q": "Can I make a Facebook ad from one product photo?",
-      "a": "Yes. Upload one clear photo, share your idea in one sentence and choose a square image or a Reels-style clip. The credit cost shows before you start."
+      "a": "Yes. Upload one clear photo, describe your product moment and choose a square image or Reels-style clip. The credit cost appears before you start."
     },
     {
-      "q": "Which Facebook placements can I make ads for?",
-      "a": "Make a square still to crop for the Feed, or a 9:16 clip for Reels and Stories. Pick the file the placement asks for."
+      "q": "Can I make ads for the Feed, Reels and Stories?",
+      "a": "Make a square still for the Feed, or a 9:16 clip for Reels and Stories. Choose the file for the format you plan to run."
     },
     {
-      "q": "Do I need to book a creator or a studio?",
-      "a": "No. The image or clip is built from your own product photo, so there is no shoot day and no wait for footage. Start another job when you need a new angle."
+      "q": "Do I need to book a Facebook creator or studio?",
+      "a": "No. Start from your own product photo, so there is no creator booking, studio day or footage queue."
     },
     {
-      "q": "Can I test several versions?",
-      "a": "Yes. Run another job from the same photo with a different idea and compare the results in Ads Manager. You do not reshoot or pay a second creator."
+      "q": "Can I make several Facebook ad versions?",
+      "a": "Yes. Run another job from the same photo with a different scene or opening, without arranging another shoot."
     },
     {
       "q": "Where do I add the headline and price?",
-      "a": "Add the primary text, headline, price and call to action in Ads Manager after download, so they stay easy to change for each audience."
+      "a": "Add the primary text, headline, price and call to action in Ads Manager after download, where you can change them for each audience."
     },
     {
-      "q": "Does the file include sound and captions?",
-      "a": "No. Add any sound and caption text in Ads Manager or an editor after you download the file."
+      "q": "Does the download include sound or captions?",
+      "a": "No. Add sound and caption text in Ads Manager or an editor after you download the file."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "Use a sharp photo that shows the whole product, with a little space around it. This keeps the item clear when Meta crops or adds controls."
+      "q": "What photo should I upload for a Facebook ad?",
+      "a": "Use a sharp photo that shows the whole product and leaves a little space around it for Meta crops and controls."
     },
     {
-      "q": "Do I need to label the ad as AI-made?",
-      "a": "Meta's rules can change by market and creative. Check the current AI-label and ad review requirements in Ads Manager before launch."
+      "q": "Do I need to label a Facebook ad as AI-made?",
+      "a": "Follow Meta's current AI-label and ad-review prompts in Ads Manager for the market where you will run the ad."
     }
   ],
-  "examples": {
-    "h2": "More Facebook Ad Examples",
-    "lead": "Clear product use, pet life, gifts, and color choices for busy feeds.",
-    "groups": [
-      {
-        "label": "Product Demo",
-        "items": [
-          {
-            "ref": "f:q18-facebook-example-lunchbox-pack",
-            "title": "Reusable Lunch Box Packed for Outings",
-            "kind": "photo",
-            "product": "reusable lunch box"
-          }
-        ]
-      },
-      {
-        "label": "Product Review",
-        "items": [
-          {
-            "ref": "n:guide:k8-facebook-gen2-plat-facebook-g2",
-            "title": "Product Review — Cat Resting in Pet Bed",
-            "kind": "photo",
-            "product": "round pet bed"
-          }
-        ]
-      },
-      {
-        "label": "Unboxing",
-        "items": [
-          {
-            "ref": "f:q18-facebook-example-earring-gift",
-            "title": "Unboxing — Gold Hoop Earrings Gift",
-            "kind": "photo",
-            "product": "gold hoop earrings"
-          }
-        ]
-      },
-      {
-        "label": "Before & After",
-        "items": [
-          {
-            "ref": "f:q18-facebook-example-lip-shades",
-            "title": "Before & After — Three Lip Balm Shades",
-            "kind": "photo",
-            "product": "lip balms"
-          }
-        ]
-      }
-    ]
-  },
-  "templates_lead": "Pick a scene that keeps your product clear in the Facebook placement you choose.",
-  "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager.",
+  "examples": null,
+  "templates_lead": "Pick a scene that keeps your product clear in the Facebook format you choose.",
+  "cta_lead": "Choose the Facebook format, then prepare product media for Ads Manager.",
   "steps": [
     {
-      "t": "Upload your product photo",
-      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
+      "t": "Upload Your Product Photo",
+      "d": "Add one clear photo of the whole product so shoppers recognize it from the first frame."
     },
     {
-      "t": "Share your video idea",
-      "d": "Say what happens in one sentence and pick an image or Reels clip. The credit cost shows first, before the file is made."
+      "t": "Pick Your Facebook Format",
+      "d": "Describe one product moment and choose a square image or Reels clip. See the credit cost before the file is made."
     },
     {
-      "t": "Download and post",
+      "t": "Download and Post",
       "d": "Download the file with no watermark, add your headline and offer in Ads Manager, then run your campaign."
     }
   ],
   "visual": {
     "strip": [
-      "f:q18-facebook-strip-serum-review",
-      "f:q18-facebook-strip-pet-hair-roller",
+      "f:q18-facebook-strip-headphone-unbox",
       "f:k8-facebook-guide-plat-facebook-size-portrait-backpack",
       "n:guide:k8-facebook-gen2-plat-facebook-c2",
       "f:q18-facebook-strip-baby-bath-unbox",
-      "n:gen2:tpl-ugc-g1"
+      "f:q18-facebook-picker-cable-tray",
+      "f:rb4-plat-facebook-strip-01-r1"
     ],
     "steps": {
-      "source": "n:guide:k8-facebook-gen2-plat-facebook-g3",
+      "source": "f:q18-facebook-after-bottle-offer",
       "result": "f:q18-facebook-steps-bottle-pour",
       "mode": "photo",
-      "prompt": "Create a square still photo using the pale-blue insulated bottle shown in the uploaded image as the exact product reference. Preserve its body shape, blue color, loop cap, and metal collar. An adult hand pours water from it into a clear glass on a sunny breakfast desk; keep bottle and glass fully visible in soft morning light.",
+      "prompt": "Show pale-blue insulated bottle pouring water into a clear glass on a bright desk for a Facebook Feed ad.",
       "options": [
         [
           "Template",
@@ -138,73 +89,76 @@
       ],
       "items": [
         {
-          "t": "Upload your product photo",
-          "d": "Add one clear photo of the whole product. The first frame shows what you sell, so shoppers recognize it at a glance."
+          "t": "Upload Your Product Photo",
+          "d": "Add one clear photo of the whole product so shoppers recognize it from the first frame."
         },
         {
-          "t": "Share your video idea",
-          "d": "Say what happens in one sentence and pick an image or Reels clip. The credit cost shows first, before the file is made."
+          "t": "Pick Your Facebook Format",
+          "d": "Describe one product moment and choose a square image or Reels clip. See the credit cost before the file is made."
         },
         {
-          "t": "Download and post",
+          "t": "Download and Post",
           "d": "Download the file with no watermark, add your headline and offer in Ads Manager, then run your campaign."
         }
       ]
     }
   },
-  "benefits_h2": "Reasons to switch to AI UGC for Facebook ads",
+  "benefits_h2": "Keep Facebook Ads Running Without Shoot Delays",
   "benefits": [
     {
-      "t": "Better Returns",
-      "d": "Make clear Facebook ads with UGC-style clips that help your budget work harder, without booking creators."
+      "t": "Clear Product Ads",
+      "d": "Make a square or Reels ad from one product photo and keep the item easy to recognize.",
+      "icon": "target"
     },
     {
       "t": "Always-On Content",
-      "d": "Clips are ready when you are, so you stay consistent and scale fast without waiting on shoots."
+      "d": "Stay ready for a new campaign with another clip from the same photo.",
+      "icon": "refresh"
     },
     {
       "t": "No Creative Fatigue",
-      "d": "Fresh, scroll-ready content on demand keeps your ads from feeling repetitive and your audience engaged."
+      "d": "Refresh the opening or scene without filming the product again.",
+      "icon": "layers"
     }
   ],
-  "steps_h2": "How to make a Facebook ad in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-run Feed or Reels ad — no studio, no creator, no reshoot.",
+  "steps_h2": "How to Make a Facebook Ad in 3 Simple Steps",
+  "steps_lead": "Upload one product photo, choose the Facebook format and download the file for Ads Manager.",
   "more_sections": [
     {
-      "eyebrow": "Why sellers use it",
-      "h2": "Why teams use AI for Facebook UGC ads",
-      "lead": "Creator-style clips without the creator delays.",
+      "eyebrow": "Why sellers choose it",
+      "h2": "Why Sellers Use AI Facebook Ads",
+      "lead": "Move from a product photo to a Facebook-ready file without booking a creator.",
       "items": [
         {
           "t": "No Creator Hold-Ups",
-          "d": "Skip the wait and get fresh, high-quality content in minutes, ready to go for Facebook."
+          "d": "Get a new Facebook ad moving without booking a creator or studio."
         },
         {
-          "t": "Ready Facebook Templates",
-          "d": "Build high-converting ads with ready creator-style formats, and scale clips without a shoot."
+          "t": "Use a Ready Ad Format",
+          "d": "Choose a square Feed image or Reels clip, then add your headline in Ads Manager."
         },
         {
-          "t": "Localize For Every Audience",
-          "d": "Make versions for different audiences without extra production cost, so every market feels familiar."
+          "t": "Localize the Message",
+          "d": "Make another version for a different audience while keeping the product photo consistent."
         }
       ]
     },
     {
-      "eyebrow": "The business case",
-      "h2": "The business case for Facebook ads made with AI",
-      "lead": "A faster path from product photo to a clip that converts.",
+      "eyebrow": "The practical case",
+      "h2": "A Practical Case for AI Facebook Ads",
+      "lead": "Give each audience a clear product moment and a file you can edit in Ads Manager.",
       "items": [
         {
-          "t": "Ads That Actually Convert",
-          "d": "Show the product in real, familiar moments so shoppers understand it and want to buy."
+          "t": "Show the Product Clearly",
+          "d": "Use a familiar product moment so shoppers can see what the item does."
         },
         {
-          "t": "Scale Video Ads Easily",
-          "d": "Make more clips without adding people or production days, even during busy campaign weeks."
+          "t": "Make More Ad Versions",
+          "d": "Change the scene or opening without adding another shoot day."
         },
         {
-          "t": "Made for Personalization",
-          "d": "Change the scene or opening for each audience and keep the message relevant."
+          "t": "Keep Your Plan Flexible",
+          "d": "Download the file, add your offer in Ads Manager and launch when ready."
         }
       ]
     }
