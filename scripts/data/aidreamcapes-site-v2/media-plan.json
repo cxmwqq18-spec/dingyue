@@ -739,15 +739,15 @@
           "after": "n:white-wallet"
         },
         {
-          "before": "g:commercial-lighting/source-input",
-          "after": "n:white-perfume"
+          "before": "n:yogamat-rolled",
+          "after": "n:yogamat-pack"
         },
         {
-          "before": "g:colorway-variations/source-input",
-          "after": "n:white-sneaker"
+          "before": "n:gen2:h1-examples-candle-living",
+          "after": "n:candle-pack"
         }
       ],
-      "og": "f:ugc-ad-video"
+      "og": "n:white-wallet"
     },
     "templates": {
       "og": "n:t33-templates-og-r2"
