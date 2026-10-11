@@ -1,27 +1,27 @@
 {
   "id": "tpl-beauty",
-  "title": "Beauty Product Video Ads for Skincare | AIVideosUGC",
-  "description": "Place a serum, cream or oil inside a simple routine. One product photo becomes a beauty clip for TikTok, Reels, listings and paid social ads.",
-  "h1": "Beauty Product Video Ads Built Around a Daily Routine",
+  "title": "Beauty Product Video Ads for Skincare Brands | AIVideosUGC",
+  "description": "Turn one skincare product photo into a beauty product video ad built around a routine, review or texture moment. Use 9:16 for TikTok and Reels with 6, 10, 15 or 30 seconds.",
+  "h1": "Beauty Product Video Ads for a Routine Shoppers Can Picture",
   "eyebrow": "Beauty video template",
-  "lead": "Shoppers buy skincare they can picture using. Upload one product photo and get a routine-led beauty clip for TikTok, Reels and product pages.",
-  "benefits_h2": "Why sellers choose beauty video templates",
+  "lead": "A bottle on a plain counter leaves the routine out of sight. Turn one skincare photo into a beauty product video ad that shows a routine, review or texture moment for TikTok, Reels and product pages.",
+  "benefits_h2": "Why make beauty product video ads?",
   "benefits": [
     {
-      "t": "Show the routine, not just the bottle",
-      "d": "A 9:16 clip places the product in a believable morning or evening moment, so shoppers see when and how they would use it. The packaging stays the focus from the first frame."
+      "t": "Show the routine, not just the package",
+      "d": "Put a cleanser, cream or tube into a simple morning or evening action so shoppers can picture when they would use it."
     },
     {
-      "t": "Texture that still photos cannot show",
-      "d": "Show a dropper lift, two drops on a fingertip, a pump press or a swatch on the back of a hand. Buyers see cream, gel or oil consistency without booking a close-up shoot."
+      "t": "Make texture easy to judge",
+      "d": "Show a pump, foam, cream spread or swatch in close frame, without booking a close-up shoot."
     },
     {
-      "t": "One product, several skincare angles",
-      "d": "Run an evening-routine version, a hands-only texture shot or a sidewalk creator review from the same source photo. Test which angle gets attention without reshooting."
+      "t": "Try more angles without reshooting",
+      "d": "Reuse one source photo for a routine, hands-only texture scene or creator-style product moment. Test the angle that earns attention."
     },
     {
-      "t": "Claims stay in your control",
-      "d": "Add shade names, ingredient lines and usage instructions as editable text after download, and keep any result claim to approved wording. Clips carry no AIVideosUGC watermark and are yours for commercial use."
+      "t": "Keep every claim in your hands",
+      "d": "Download without a watermark, then add shade names, ingredient lines and usage wording in your editor from your approved listing."
     }
   ],
   "secondary_keywords": [
@@ -31,8 +31,8 @@
     "skincare routine video",
     "cosmetics product video"
   ],
-  "steps_h2": "How it works",
-  "steps_lead": "Choose a beauty style, add your product, generate. No studio, model booking or reshoot.",
+  "steps_h2": "How to make beauty product video ads in 3 simple steps",
+  "steps_lead": "Three steps turn one skincare product photo into a ready-to-post clip, with no studio, model booking or reshoot.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -40,11 +40,11 @@
     },
     {
       "t": "Pick a Beauty Style",
-      "d": "Choose a routine, review or texture scene, then generate the clip."
+      "d": "Choose a routine, review or texture scene, then generate the clip in your size and length."
     },
     {
-      "t": "Download and Use",
-      "d": "Download the video and add your shade, usage line or offer in your own editor."
+      "t": "Download and Post",
+      "d": "Download the video, then add your shade, usage line or offer in your editor."
     }
   ],
   "maker": {
@@ -99,21 +99,25 @@
     }
   ],
   "visual": {
-    "overview": "A beauty template puts your serum, cream or oil inside a routine shoppers recognize, so the product is easier to picture using.",
+    "overview": "A beauty product video ad puts your cleanser, cream or tube inside a routine shoppers recognize, so the product is easier to picture using.",
     "strip": [
-      "n:guide:q11-beauty-strip-square-01",
-      "n:guide:tpl-beauty-round4-serum-pump",
+      "n:guide:tpl-beauty-round4-m1-cleanser-tube",
+      "n:guide:tpl-beauty-round4-sunscreen-tube",
       "n:guide:tpl-beauty-round4-cream-jar",
-      "n:guide:k6-industries-card-skincare",
+      "n:guide:tpl-beauty-round4-m1-cream-jar",
       "n:guide:q11-beauty-strip-square-05",
-      "n:guide:q11-beauty-strip-square-06"
+      "n:guide:tpl-beauty-reuse-cream-tube"
     ],
     "steps": {
-      "source": "n:guide:q11-beauty-step-source-r2",
-      "result": "n:guide:tpl-beauty-m2-result",
+      "source": "n:guide:rc5-tpl-beauty-source-r1",
+      "sourceAlt": "Unbranded matte ivory cleanser pump bottle with a pale sage pump on a clean white background.",
+      "sourceTitle": "Your product",
+      "sourceHint": "Keep the full bottle and pump head visible.",
+      "result": "n:guide:rc5-tpl-beauty-result-r1",
+      "resultAlt": "Matte ivory cleanser pump pressed beside a bright sink with white foam on fingertips.",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand lifts one dropper of serum above the open amber glass bottle. Frame at counter height with a slow push-in. Soft morning window light remains visible behind the bottle. End with the dropper poised above the full bottle. Sound: quiet room tone and one soft glass click. No music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a bright ceramic sink, an adult hand presses the matte ivory cleanser pump once and catches a small amount of white foam on fingertips. Keep the full bottle upright and clearly visible. Close three-quarter framing with a gentle push-in. Soft morning window light. End with the bottle and foamed fingertips in frame. Sound: a single pump and quiet bathroom room tone; no music.",
       "options": [
         [
           "Size",
@@ -138,13 +142,13 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make skincare video ads from one product photo"
+        "h2": "Make beauty product video ads from one product photo"
       },
       "m3": {
-        "h2": "Choose a beauty routine scene for skincare"
+        "h2": "Choose a beauty routine scene for beauty product video ads"
       },
       "faq": {
-        "h2": "Questions about skincare video ads"
+        "h2": "Questions about beauty product video ads"
       }
     }
   }

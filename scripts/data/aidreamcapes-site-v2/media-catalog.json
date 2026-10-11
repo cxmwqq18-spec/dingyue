@@ -21,6 +21,9 @@
     "v_film": {
       "alt": "Black speaker sits beside a tall window"
     },
+    "v_beauty-r1": {
+      "alt": "Unbranded matte ivory cleanser pump bottle with a pale sage pump on a clean white background."
+    },
     "v_launch": {
       "alt": "White desk lamp glows beside a laptop"
     },
@@ -44416,6 +44419,28 @@
           640,
           1280
         ]
+      },
+      "rc5-tpl-beauty-source-r1": {
+        "file": "rc5-tpl-beauty-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded matte ivory cleanser pump bottle with a pale sage pump on a clean white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-result-r1": {
+        "file": "rc5-tpl-beauty-result-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand presses the same matte ivory cleanser pump beside a bright sink, with white foam on fingertips.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
       }
     }
   }
