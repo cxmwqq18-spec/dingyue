@@ -38,18 +38,18 @@
     "social-ad-photos": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:ra4-social-ad-photos-hero-source-r1",
-        "after": "n:guide:q6-social-hero-result"
+        "before": "n:guide:im13-social-main-source-r1",
+        "after": "n:guide:im13-social-main-result-r1"
       },
       "gallery": [
-        "n:guide:q6-social-gallery-01",
-        "n:guide:q6-social-gallery-02",
-        "n:guide:q6-social-gallery-03",
-        "n:guide:q6-social-gallery-04",
-        "n:guide:q6-social-gallery-05",
-        "n:guide:q6-social-gallery-06"
+        "n:guide:im13-social-gallery-01-r1",
+        "n:guide:im13-social-gallery-02-r1",
+        "n:guide:im13-social-gallery-03-r1",
+        "n:guide:im13-social-gallery-04-r1",
+        "n:guide:im13-social-gallery-05-r1",
+        "n:guide:im13-social-gallery-06-r1"
       ],
-      "og": "n:t33-social-ad-photos-og-r2",
+      "og": "n:guide:im13-social-og-r1",
       "pairs": []
     },
     "tpl-angle": {

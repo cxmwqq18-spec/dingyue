@@ -47724,6 +47724,182 @@
           1280,
           1600
         ]
+      },
+      "im13-white-background-strip-speaker-r1": {
+        "file": "im13-white-background-strip-speaker-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain slate-blue ceramic storage box with a simple lid seam on white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-model-photos-after-r1": {
+        "file": "im13-model-photos-after-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian woman with a tight low bun wearing the same heather-gray pullover hoodie in a bright courtyard.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-main-source-r1": {
+        "file": "im13-social-main-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte sage-green insulated bottle standing on a pale studio surface.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-main-result-r1": {
+        "file": "im13-social-main-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte sage-green insulated bottle standing on a warm wood cafe counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-steps-source-r1": {
+        "file": "im13-social-steps-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte sage-green insulated bottle lying at an angle on a pale studio tabletop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-steps-result-r1": {
+        "file": "im13-social-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same matte sage-green insulated bottle standing on a warm wood entryway bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-gallery-01-r1": {
+        "file": "im13-social-gallery-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands inspect the handle of a plain cream ceramic travel mug on a cafe table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-gallery-02-r1": {
+        "file": "im13-social-gallery-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short black bob packs a plain cream canvas tote into an open weekend bag.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-gallery-03-r1": {
+        "file": "im13-social-gallery-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with short copper-red pixie hair holds a plain teal pump cleanser bottle beside a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-gallery-04-r1": {
+        "file": "im13-social-gallery-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands adjust a plain walnut desk lamp on a clean wooden desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-gallery-05-r1": {
+        "file": "im13-social-gallery-05-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with close-cropped silver hair opens a plain red sauce jar over tacos.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-gallery-06-r1": {
+        "file": "im13-social-gallery-06-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a tight braided bun wears a plain olive canvas backpack on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-case-1-r1": {
+        "file": "im13-social-case-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short ash-blonde bob opens a plain matte cold-brew coffee can at a picnic table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-case-2-r1": {
+        "file": "im13-social-case-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with a short gray crew cut pours kibble into a plain ceramic pet bowl for a dog.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-social-og-r1": {
+        "file": "im13-social-og-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte sage-green insulated bottle on a warm cafe counter with room for ad copy.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im13-model-case-1-r1": {
+        "file": "im13-model-case-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with close-cropped hair wearing a plain camel wool coat on a sunny city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
