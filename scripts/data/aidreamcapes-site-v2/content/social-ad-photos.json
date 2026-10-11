@@ -1,10 +1,10 @@
 {
   "id": "social-ad-photos",
-  "title": "AI Ad Image Generator for Social Feeds | AIVideosUGC",
-  "description": "Create, customize and launch square social ad images from one product photo. A clean product scene with room for your headline, ready in minutes.",
-  "h1": "Turn One Product Photo into Ready-to-Launch Social Ad Images",
+  "title": "Social Ad Image Generator | AIVideosUGC",
+  "description": "Create square social ad images from one product photo. Keep the product clear, add exact copy in your editor, and test fresh scenes without a photoshoot.",
+  "h1": "Create a social ad image from one product photo",
   "eyebrow": "AI ad image generator",
-  "lead": "Turn one product shot into a square feed image with room for your headline. Keep the product clear, add exact words in your editor, and launch without a photoshoot.",
+  "lead": "Turn one product photo into a square social ad with room for your exact headline. Choose the scene, keep the product clear, and finish the offer in your editor.",
   "secondary_keywords": [
     "Facebook ad image maker",
     "Instagram feed ad photos",
@@ -12,38 +12,38 @@
     "square ad images for social media",
     "AI images for paid social ads"
   ],
-  "benefits_h2": "Put a fresh ad in the feed",
+  "benefits_h2": "Full creative control for every social ad",
   "benefits": [
     {
       "t": "Keep the offer accurate",
-      "d": "Leave clean space for your headline, then add the exact price and offer in your editor. There is no AI text to correct.",
+      "d": "Leave clean room for your headline, then add the exact price and offer in your editor. Change the copy whenever the promotion changes.",
       "icon": "check"
     },
     {
-      "t": "Launch a new angle without a shoot",
-      "d": "Make a styled square product image for paid social without a camera, set or crew.",
+      "t": "Launch another angle without a shoot",
+      "d": "Create a styled square image from one product shot without booking a camera, set or crew.",
       "icon": "bolt"
     },
     {
       "t": "Test scenes from one product shot",
-      "d": "Swap the backdrop in minutes, then compare versions before choosing the final ad.",
+      "d": "Try a city curb, warm entryway or clean studio backdrop, then compare versions before choosing your ad.",
       "icon": "layers"
     }
   ],
-  "steps_h2": "How to Make Social Ads with an AI Ad Image Generator in 3 Simple Steps",
-  "steps_lead": "Three steps. One product shot in, one square ad image out.",
+  "steps_h2": "How to Make Social Ad Images in 3 Simple Steps",
+  "steps_lead": "Three steps turn one clear product photo into a square image you can finish and post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Make the product read at thumbnail size in every feed. Add one clear product photo with the item easy to recognize."
+      "d": "Start with a clear product photo that stays easy to recognize. Keep the whole item in frame so its shape reads at thumbnail size."
     },
     {
       "t": "Pick a Scene",
-      "d": "Give your ad a scene that supports the idea. Choose a simple backdrop and say where the headline should go in one sentence."
+      "d": "Choose a backdrop that fits the way people use the product. Name the setting and where you want clean room for your headline."
     },
     {
       "t": "Download and Post",
-      "d": "Get a square image ready for your next campaign. Review it, download it, and add your headline, price, and offer in your ad editor."
+      "d": "Download the square image when the scene looks right. Add your headline, price and offer in your ad editor, then post it to your campaign."
     }
   ],
   "maker": {
@@ -54,44 +54,44 @@
       ],
       [
         "Scene",
-        "Soft pink backdrop"
+        "Warm entryway"
       ],
       [
         "Size",
         "Square"
       ]
     ],
-    "cta": "Make a social ad photo"
+    "cta": "Create a social ad image"
   },
   "cta_title": "Put your next ad in the feed",
   "cta_lead": "Upload one product photo, choose a scene and see the cost before you start.",
   "faq": [
     {
       "q": "What is an AI ad image generator?",
-      "a": "It is a tool that turns one product shot into a clean square photo built for social feeds. You add the headline and price in your ad editor."
+      "a": "It turns one product photo into a clean square image for a social feed. You add the headline and price in your ad editor."
     },
     {
       "q": "How do I create an image ad from a photo?",
-      "a": "Upload one product photo, choose a scene and share your idea. The finished square image is ready to download and add to a campaign."
+      "a": "Upload one clear product photo, choose a scene and describe the idea. Download the square result and add it to your campaign."
     },
     {
       "q": "Which platforms are the images ready for?",
-      "a": "The square image suits Facebook and Instagram feeds. Your ad platform controls the final crop for other formats."
+      "a": "The square image suits Facebook and Instagram feeds. Your ad platform controls any final crop for other placements."
     },
     {
       "q": "Can the image include my headline?",
-      "a": "The scene leaves room for text, but it does not render readable words. Add the headline yourself so it stays correct and easy to change."
+      "a": "The scene leaves room for copy, but it does not render readable words. Add the headline yourself so it stays correct and easy to change."
     },
     {
-      "q": "Can I make several versions at once?",
-      "a": "You can generate different scenes with the same product and compare them. Add each version to your ad account and test."
+      "q": "Can I make several versions with one photo?",
+      "a": "Yes. Generate different scenes from the same product photo and compare the versions before you choose the ad."
     },
     {
       "q": "Who is this tool for?",
       "a": "Ecommerce brands, performance marketers and growth teams that need fresh feed ads without repeated photoshoots."
     },
     {
-      "q": "Can I upload the image straight into a live ad?",
+      "q": "Can I use the image in a live ad?",
       "a": "Yes. Downloads have no watermark and are licensed for commercial use. Check the crop and safe areas in your ad tool before launch."
     },
     {
@@ -107,11 +107,69 @@
       "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Preserve its color, tread, laces and shape while placing it on a warm wood entryway floor; change the setting only."
     },
     "picker": {
-      "title": "Browse social scenes",
-      "lead": "Each card turns one product into a feed-ready moment. Pick a scene the item belongs in.",
+      "title": "Browse social ad scenes",
+      "lead": "Choose a setting that gives your product a clear, useful moment in the feed.",
       "chips": [],
       "cards": [],
-      "button": "Make a social ad photo"
+      "button": "Create a social ad image"
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to Make Social Ad Images in 3 Simple Steps"
+      },
+      "m3": {
+        "h2": "Browse social ad scenes",
+        "lead": "Choose a setting that gives your product a clear, useful moment in the feed."
+      },
+      "m4": {
+        "h2": "Use each ad image where buyers see it"
+      },
+      "m5": {
+        "h2": "Upload a product photo that stays easy to inspect"
+      },
+      "m6": {
+        "h2": "Download a square social ad image"
+      },
+      "faq": {
+        "h2": "Frequently asked questions"
+      }
     }
-  }
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Full creative control",
+      "h2": "Shape every part of the ad",
+      "lead": "Keep the product clear, choose the setting and finish the copy in your editor.",
+      "items": [
+        {
+          "t": "Keep the product clear",
+          "d": "Start from one product photo and keep its shape and color easy to inspect."
+        },
+        {
+          "t": "Leave room for exact copy",
+          "d": "Reserve open space for the headline, price or offer you will add after download."
+        },
+        {
+          "t": "Switch the scene",
+          "d": "Move the same item from a city curb to a warm entryway or clean studio look."
+        },
+        {
+          "t": "Export a square image",
+          "d": "Download a square asset sized for a social feed and ready for your campaign editor."
+        },
+        {
+          "t": "Compare before you post",
+          "d": "Make a few scene versions, check the product details and choose the clearest angle."
+        }
+      ]
+    }
+  ],
+  "relatedLinks": [
+    "page:white-background",
+    "page:lifestyle-photos",
+    "page:model-photos",
+    "page:change-background",
+    "page:photo-hub",
+    "page:templates"
+  ]
 }
