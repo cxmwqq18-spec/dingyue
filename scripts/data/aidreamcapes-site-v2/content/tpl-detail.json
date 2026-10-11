@@ -81,7 +81,7 @@
       "n:guide:q7-detail-strip-0",
       "n:guide:q7-detail-strip-1",
       "n:guide:q7-detail-strip-2",
-      "n:guide:q7-detail-strip-3",
+      "n:gen2:tpl-detail-c4",
       "n:guide:q7-detail-strip-4",
       "n:guide:tpl-detail-round4-wallet-zipper"
     ],
@@ -115,8 +115,13 @@
     "uses": [],
     "input": [],
     "outputs": [],
-    "after": null
+    "after": null,
+    "titles": {
+      "faq": {
+        "h2": "Questions about product detail photos"
+      }
+    }
   },
-  "steps_h2": "How to make a product detail photo in 3 simple steps",
-  "steps_lead": "Three steps turn one sharp photo into a gallery-ready close-up - no macro gear, no studio."
+  "steps_h2": "How to make product detail photos in 3 Simple Steps",
+  "steps_lead": "Show the stitching, grain or hardware shoppers inspect without booking macro gear or a studio."
 }
