@@ -5,7 +5,7 @@
   "h1": "AI Virtual Try-On for Clothing: Your Garment on a Model",
   "eyebrow": "Model photo template",
   "lead": "Shoppers skip clothing they can only see flat, while booking a model for every arrival is expensive. Upload one garment photo and get an on-model view for listings and social ads.",
-  "benefits_h2": "Why sellers choose virtual try-on",
+  "benefits_h2": "Why sellers choose AI virtual try-on for clothing",
   "benefits": [
     {
       "t": "Show the garment on a body",
@@ -30,7 +30,7 @@
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "steps_h2": "How it works",
+  "steps_h2": "How to Make AI Virtual Try-On Photos for Clothing in 3 Simple Steps",
   "steps_lead": "Choose a fashion style, add your garment, generate. No casting call and no studio booking.",
   "steps": [
     {
@@ -151,7 +151,7 @@
         "h2": "Choose a virtual try-on scene for your garment"
       },
       "faq": {
-        "h2": "Questions about on-model try-on photos"
+        "h2": "Questions about AI virtual try-on for clothing"
       }
     }
   }
