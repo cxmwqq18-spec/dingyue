@@ -2,10 +2,10 @@
   "id": "templates",
   "title": "AI Product Ad Templates for Photos and Videos | AIVideosUGC",
   "description": "Find AI product ad templates for photos and short videos. Choose a style, add one product photo, and get a new asset for your store or social feed.",
-  "h1": "See It. Recreate It. Launch It.",
+  "h1": "Product Ad Templates: See It, Recreate It, Launch It",
   "eyebrow": "Product ad templates",
-  "lead": "Need a product ad without planning every shot? Pick a template, add your product photo, and publish a fresh asset for your store or social feed.",
-  "card": "Ready-made styles for product photos and videos. Pick one and add your product.",
+  "lead": "Get a product ad ready faster: pick a template, add your product photo, and download an asset for your store, social feed, or campaign.",
+  "card": "Ready-made styles for product photos and videos. Pick one, add your product, and publish the next asset.",
   "secondary_keywords": [
     "product photo templates",
     "product video templates",
@@ -15,11 +15,11 @@
   "faq": [
     {
       "q": "How do I choose a product ad template?",
-      "a": "Choose the buyer moment you need: product showcase, product explainer, UGC-style product ad, or social media content."
+      "a": "Start with the buyer moment you need: a product showcase, explainer, UGC-style ad, or social post."
     },
     {
-      "q": "Can I adapt a template to my own product?",
-      "a": "Yes. Add one product photo and review the generated result before publishing."
+      "q": "Can I adapt a product ad template to my own product?",
+      "a": "Yes. Upload one clear product photo, choose a template, then compare the result with the item you sell before publishing."
     },
     {
       "q": "Which video lengths can I choose?",
@@ -30,7 +30,7 @@
       "a": "Photos are square by default. Crop a downloaded still for a specific placement when needed."
     },
     {
-      "q": "Can I use a template for an Amazon listing?",
+      "q": "Can I use a product ad template for an Amazon listing?",
       "a": "Yes. Start with a clean product photo template, then check the current Amazon category rules."
     },
     {
@@ -38,8 +38,8 @@
       "a": "Yes. Add exact campaign text after download in your usual editor."
     },
     {
-      "q": "Will the result keep my product shape and color?",
-      "a": "Use a complete source photo, then compare the result with the item you sell before publishing."
+      "q": "How do I check that the result still matches my product?",
+      "a": "Use a complete source photo and compare the downloaded result with the item you sell before publishing."
     },
     {
       "q": "Do I need editing experience to start?",
@@ -50,7 +50,7 @@
     "strip": [
       "n:guide:q13-templates-strip-0",
       "n:guide:q13-templates-strip-1-r2",
-      "n:guide:q13-templates-strip-2",
+      "n:gen2:tpl-box-g2",
       "n:guide:q13-templates-strip-3",
       "n:guide:q13-templates-strip-4",
       "n:guide:q13-templates-strip-5-r1"
@@ -75,11 +75,11 @@
     "picker": [],
     "titles": {
       "m2": {
-        "h2": "How to create product ad content in 3 simple steps"
+        "h2": "How to Use Product Ad Templates in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Pick a style, add your product",
-        "lead": "Pick a template, add your product photo, and publish a fresh asset."
+        "h2": "Pick a Product Ad Template for Your Next Campaign",
+        "lead": "Choose a template, add one product photo, and publish a fresh asset."
       }
     },
     "directoryFilters": {
@@ -142,6 +142,6 @@
       "d": "Download the new asset and add it to your store, social feed, or ad campaign."
     }
   ],
-  "steps_h2": "How to create product ad content in 3 simple steps",
-  "steps_lead": "Choose a style, add one product photo, and download a ready-to-use asset for your next campaign."
+  "steps_h2": "How to Use Product Ad Templates in 3 Simple Steps",
+  "steps_lead": "Choose a product ad template, add one product photo, and download an asset for your next campaign."
 }
