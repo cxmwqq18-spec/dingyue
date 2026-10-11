@@ -1839,17 +1839,19 @@ function compareTableFor(model, page, c) {
   };
 }
 
-// Text-only linked card sections for directory/index pages (format and category blocks have no images).
+// Linked card sections for directory/index pages (format and category blocks may carry page-owned images).
 function textSectionsFor(model, page, c) {
   const value = c.text_sections;
   if (!Array.isArray(value)) return [];
   return value.map((section) => {
-    const cards = (Array.isArray(section.cards) ? section.cards : []).map((card) => {
+    const cards = imageItemsFor(model, page, (Array.isArray(section.cards) ? section.cards : []).map((card) => {
       const d = inlineLinks(model, String(card.d ?? ""), page.id);
       const out = { t: String(card.t ?? ""), d, ...(card.href ? { href: resolveSectionHref(model, page.id, card.href) } : {}) };
       if (typeof card.label === "string" && card.label.trim()) out.label = card.label;
+      if (typeof card.img === "string" && card.img.trim()) out.img = card.img;
+      if (typeof card.alt === "string" && card.alt.trim()) out.alt = card.alt;
       return out;
-    }).filter((card) => card.t && card.d);
+    })).filter((card) => card.t && card.d);
     return {
       eyebrow: String(section.eyebrow ?? ""),
       title: String(section.title ?? ""),
@@ -2992,6 +2994,7 @@ export function validateSiteV2(build = buildSiteV2()) {
         else for (const card of section.cards) {
           if (!card || typeof card.t !== "string" || !card.t.trim() || typeof card.d !== "string" || !card.d.trim()) errors.push(`${page.id}: invalid textSections card shape`);
           if (card.href !== undefined && typeof card.href !== "string") errors.push(`${page.id}: textSections card href must be a string`);
+          if (card.img !== undefined && (!card.img || typeof card.img !== "object" || typeof card.img.src !== "string" || typeof card.img.alt !== "string" || !(Number(card.img.width) > 0) || !(Number(card.img.height) > 0))) errors.push(`${page.id}: textSections card img must be a compiled image`);
         }
       }
     }

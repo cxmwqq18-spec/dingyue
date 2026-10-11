@@ -86,7 +86,7 @@ export type V2DirectoryScene = { t: string; d: string; href?: string; image?: V2
 // three-column comparison table. Neither carries images or internal metadata.
 export type V2Definition = { title: string; paras: string[] };
 export type V2CompareTable = { title: string; lead?: string; columns: string[]; rows: string[][] };
-export type V2TextSectionCard = { t: string; d: string; href?: string; label?: string };
+export type V2TextSectionCard = { t: string; d: string; href?: string; label?: string; img?: V2Image };
 export type V2TextSection = { eyebrow: string; title: string; lead?: string; cards: V2TextSectionCard[] };
 export type V2Article = { title: string; href: string; text: string; minutes: number; section: string };
 
