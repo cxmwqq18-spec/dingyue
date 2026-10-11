@@ -1,10 +1,10 @@
 {
   "id": "platforms",
   "title": "AI Ads and Product Photos by Platform | AIVideosUGC",
-  "description": "Turn one product photo into correctly sized ads and photos for TikTok, Instagram, Facebook, Shorts, Amazon, and Shopify. Watermark-free files, ready to post.",
+  "description": "Turn one product photo into ads and photos for TikTok, Instagram, Facebook, Shorts, Amazon, and Shopify. See the specs and download a watermark-free file.",
   "h1": "AI Ads and Product Photos for Every Platform You Sell On",
   "eyebrow": "Choose your channel",
-  "lead": "Stop reformatting one clip by hand. Pick a channel to see its real photo and video specs, then turn one product photo into a file that fits it.",
+  "lead": "One product photo, six channel-ready files. Choose 9:16, 4:5, 1:1, or 16:9, then download the file and upload it where you sell.",
   "card": "Sizes and ideas for TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify.",
   "secondary_keywords": [
     "social media ad sizes for products",
@@ -12,7 +12,7 @@
     "product photos for Amazon and Shopify",
     "ecommerce ads by channel"
   ],
-  "intro": "Each channel shows product photos and short videos in its own shape and slots. Open a platform page for its sizes and examples, then download the file and upload it where you sell.",
+  "intro": "Give each channel the shape it expects without rebuilding the product from scratch. Pick a platform, check its specs, then download and upload the file yourself.",
   "faq": [
     {
       "q": "Which platform format should I make first?",
@@ -48,7 +48,7 @@
     },
     {
       "q": "Can one product creative run on every platform?",
-      "a": "Use the product photo as your starting point, then choose the ratio for each channel. One generation uses one selected format; add captions, sound, prices, and offers after download."
+      "a": "Use one product photo as your starting point, then choose the ratio for each channel. One generation uses one selected format; add captions, sound, prices, and offers after download."
     },
     {
       "q": "How do I keep product details clear of platform controls?",
@@ -132,23 +132,23 @@
       }
     }
   },
-  "benefits_h2": "Why Sellers Size Ads for Every Platform",
+  "benefits_h2": "Get the right file for every channel",
   "benefits": [
     {
-      "t": "One photo, every channel size",
-      "d": "Generate vertical, square, and wide assets from one product photo. Each file matches the channel specs, so the manual crop-and-export loop ends."
+      "t": "Get a vertical ad without manual resizing",
+      "d": "Choose a 9:16 format for TikTok, Reels, or Shorts and get a file that fits the feed."
     },
     {
-      "t": "Skip a new shoot for each channel",
-      "d": "Start from one product photo and carry the same item into TikTok, Reels, Shorts, Amazon, and your store without another shoot."
+      "t": "Keep one product across every channel",
+      "d": "Start with one product photo and make versions for Meta, Amazon, and Shopify without another shoot."
     },
     {
-      "t": "Know the size before you publish",
-      "d": "Use the table to check ratios and pixels such as 1080×1920 and 1440×1800 against the platform rules before you place the asset."
+      "t": "See the size before you spend credits",
+      "d": "Use 1080×1920 for vertical video and 1440×1800 for a Meta Feed image when those channel specs call for them."
     },
     {
-      "t": "Download files ready to post",
-      "d": "Downloaded photos and videos are watermark-free and licensed for commercial use on social feeds, marketplaces, and paid campaigns."
+      "t": "Download the file and post it yourself",
+      "d": "Save watermark-free photos and videos, then upload them to your social feed, marketplace, or store."
     }
   ],
   "steps_h2": "How to Make Platform-Ready Product Ads in 3 Simple Steps",
@@ -160,7 +160,7 @@
     },
     {
       "t": "Pick the Platform and Format",
-      "d": "Choose where you will publish and select the matching size. Run one photo through more channels to build the full set."
+      "d": "Choose the channel and format first. The credit cost appears before you make the file."
     },
     {
       "t": "Download and Post",
@@ -169,7 +169,7 @@
   ],
   "directory_specs": {
     "title": "Platform formats at a glance",
-    "lead": "Don't let bad sizing kill a channel slot. Match each feed with the shape and length it accepts.",
+    "lead": "Match each channel with its format, size, file length, and upload destination.",
     "columns": [
       "Platform",
       "Format",
@@ -181,77 +181,77 @@
         "TikTok",
         "In-Feed",
         "9:16 · minimum 540×960",
-        "6, 10, 15 or 30-second clips"
+        "6, 10, 15 or 30-second clips; upload in TikTok Ads Manager"
       ],
       [
         "Instagram",
         "Feed image / Reels video",
         "4:5 · 1440×1800 / 9:16 · 1080×1920",
-        "Square stills; 6, 10, 15 or 30-second clips"
+        "Square stills; 6, 10, 15 or 30-second clips; upload in Instagram"
       ],
       [
         "Facebook",
         "Feed image / Reels video",
-        "4:5 · 1440×1800 / 9:16",
-        "Square stills; 6, 10, 15 or 30-second clips"
+        "4:5 · 1440×1800 / 9:16 · 1080×1920",
+        "Square stills; 6, 10, 15 or 30-second clips; upload in Meta Ads Manager"
       ],
       [
         "YouTube Shorts",
         "Shorts ad",
         "9:16 · 1080×1920 recommended",
-        "6, 10, 15 or 30-second clips"
+        "6, 10, 15 or 30-second clips; upload in Google Ads or YouTube"
       ],
       [
         "Amazon",
         "Main image / Sponsored Brands video",
-        "Square white-background image / 16:9 video · 6–45 seconds",
-        "Square stills; 6, 10, 15 or 30-second clips"
+        "Square white-background image / 16:9 video",
+        "Square stills; 6, 10, 15 or 30-second clips; add them in Seller Central or Ads Manager"
       ],
       [
         "Shopify",
         "Product gallery / product video",
-        "Square · 2048×2048 usually displays well / video up to 10 minutes",
-        "Square stills; 6, 10, 15 or 30-second clips"
+        "Square · 2048×2048 usually displays well / video",
+        "Square stills; 6, 10, 15 or 30-second clips; add them in Shopify admin or your social channel"
       ]
     ]
   },
   "text_sections": [
     {
       "eyebrow": "Social video",
-      "title": "Popular social video formats you can make here",
-      "lead": "Every format below starts from the same product photo and links straight to the tool that builds it, so you can pick the shape that fits the channel and make it now.",
+      "title": "Make a platform-ready file from one product photo",
+      "lead": "Pick the format that matches your next campaign, then open the tool and add your product photo.",
       "cards": [
         {
-          "t": "UGC talking ads",
-          "d": "A creator-style performer holds your product and delivers your line in a vertical clip for TikTok, Reels or Shorts.",
+          "t": "Show the product in a vertical opening",
+          "d": "Open with one clear product action for TikTok, Reels, or Shorts.",
           "href": "page:video-ads",
           "label": "UGC ad tool",
           "img": "n:guide:px1-platforms-format-1-r1"
         },
         {
-          "t": "Unboxing clips",
-          "d": "Show the package opening and first reveal without filming a delivery, so shoppers see exactly what lands on the doorstep.",
+          "t": "Reveal the package before delivery",
+          "d": "Show the first unboxing moment so shoppers know what arrives.",
           "href": "page:unboxing-videos",
           "label": "Unboxing videos",
           "img": "n:guide:px1-platforms-format-2-r1"
         },
         {
-          "t": "Before and after clips",
-          "d": "Keep one item and one camera, then show the changed state in the same clip to make the result easy to believe.",
+          "t": "Show the change in one short clip",
+          "d": "Keep the product and action clear while the clip shows the before and after.",
           "href": "page:before-after-videos",
           "label": "Before and after videos",
           "img": "n:guide:px1-platforms-format-3-r2"
         },
         {
-          "t": "Product demos",
-          "d": "Show how the item works in a short, clear clip for a product page, store or paid slot.",
+          "t": "Explain the product in a short demo",
+          "d": "Show one useful feature for a product page, store, or paid ad.",
           "href": "page:product-videos",
           "label": "Product videos",
           "img": "n:guide:px1-platforms-format-4-r1"
         },
         {
-          "t": "Image-to-video motion",
-          "d": "Turn a still product image into a short moving ad that shows the detail shoppers need to see.",
+          "t": "Add motion to a still product photo",
+          "d": "Turn a product still into a short moving scene that reveals a useful detail.",
           "href": "page:image-to-video",
           "label": "Image to video",
           "img": "n:guide:px1-platforms-format-5-r1"
@@ -260,8 +260,8 @@
     },
     {
       "eyebrow": "By content area",
-      "title": "By the content area you sell in",
-      "lead": "Shoppers look for different proof in each category. Open your industry page for the formats, shots and specs other sellers start with.",
+      "title": "Find the next product format by category",
+      "lead": "Open an industry page for the shots and formats sellers use in that category.",
       "cards": [
         {
           "t": "Beauty & skincare",
@@ -324,37 +324,37 @@
   ],
   "directory_scenes": [
     {
-      "t": "TikTok in-feed hook",
-      "d": "Bring the product into frame early and finish one clear use moment before the clip ends.",
+      "t": "TikTok in-feed: keyboard demo",
+      "d": "Bring the keyboard into frame early and finish one clear use moment before the clip ends.",
       "href": "/platforms/tiktok-ads",
       "image": "n:guide:g1-launch-graphite-keyboard-demo-r2"
     },
     {
-      "t": "Instagram Reels demo",
-      "d": "Show one tactile action close to camera so the product reads before the viewer scrolls.",
+      "t": "Instagram Reels: face-mist spray",
+      "d": "Show one tactile spray action close to camera so the product reads before the viewer scrolls.",
       "href": "/platforms/instagram-ads",
       "image": "n:guide:g1-launch-face-mist-spray-r2"
     },
     {
-      "t": "Facebook Feed detail",
+      "t": "Facebook Feed: product detail",
       "d": "Use a 4:5 product view with room for the offer you add in Ads Manager.",
       "href": "/platforms/facebook-ads",
       "image": "n:guide:q14-retarget-og"
     },
     {
-      "t": "Shorts first-second reveal",
-      "d": "Put the product and the start of its main action in the opening beat of the Short.",
+      "t": "YouTube Shorts: berry drink reveal",
+      "d": "Put the drink and the start of its main action in the opening beat of the Short.",
       "href": "/platforms/youtube-shorts-ads",
       "image": "n:guide:g1-launch-berry-sparkling-sip-r2"
     },
     {
-      "t": "Amazon listing gallery",
+      "t": "Amazon listing: white main image",
       "d": "Lead with a plain-white main image, then answer one shopper question with a lifestyle or detail view.",
       "href": "/platforms/amazon-product-photos",
       "image": "n:guide:g1-launch-olive-sandal-first-look-r2"
     },
     {
-      "t": "Shopify product gallery",
+      "t": "Shopify gallery: dog harness fit",
       "d": "Keep square collection images consistent, then add a short product video when motion explains the item.",
       "href": "/platforms/shopify-product-photos",
       "image": "n:guide:g1-launch-dog-harness-fit-r2"
