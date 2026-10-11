@@ -29,7 +29,7 @@ export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 .adc2 .v-step-submit{justify-content:center;width:100%;padding:9px 12px;font-size:13px;pointer-events:none}
 .adc2 .v-step-result{padding:0;aspect-ratio:4/3;overflow:hidden;border-radius:0}
 .adc2 .v-step-result>img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center}
-.adc2 .v-step-result>img.v-step-result-portrait{object-position:center bottom}.adc2 .v-step-result>img[src*="url-to-video-concept"]{object-fit:contain;background:#f8f6f1}
+.adc2 .v-step-result>img.v-step-result-portrait{object-position:center bottom}.adc2 .v-step-result>img.v-step-result-portrait.v-step-result-actor{object-position:center 20%}.adc2 .v-step-result>img[src*="url-to-video-concept"]{object-fit:contain;background:#f8f6f1}
 .adc2 .v-download{z-index:1;right:14px;bottom:14px;padding:10px 16px;border-color:rgba(255,255,255,.65);background:rgba(5,5,5,.76);font-size:14px;line-height:1.2}
 .adc2 .v-step-copy{flex:1;padding:18px 20px 20px}
 .adc2 .v-step-number{display:block;margin-bottom:8px;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--ink-3)}
