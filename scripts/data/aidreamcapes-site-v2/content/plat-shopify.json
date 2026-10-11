@@ -4,7 +4,7 @@
   "description": "Create Shopify product photos for product pages, collection tiles, and social crops from one upload, with matching scenes and no reshoot.",
   "h1": "AI Shopify Product Photos and Videos From One Upload",
   "eyebrow": "Shopify stores",
-  "lead": "Give every product page and collection tile a matching look from one upload. Create square product photos and short clips without reshooting older items, with the credit cost shown first.",
+  "lead": "Give every product page and collection tile a matching look from one upload. Create square product photos and short clips without reshooting older items.",
   "card": "Matching square product photos, lifestyle scenes, and short clips for each Shopify product page.",
   "secondary_keywords": [
     "Shopify product images",
@@ -69,7 +69,7 @@
       "n:guide:q19-shop-after-bowl-use",
       "n:guide:q19-shop-strip-linen-before-after",
       "n:guide:q19-shop-strip-pet-brush",
-      "n:guide:q19-shop-use-protein-pour"
+      "n:guide:q19-shop-picker-04-lamp-product-hero"
     ],
     "steps": {
       "source": "n:guide:c4-shopify-bowls-main-angle",
@@ -122,7 +122,7 @@
     }
   ],
   "steps_h2": "How to Make Shopify Product Photos in 3 Simple Steps",
-  "steps_lead": "Turn one Shopify product photo into a store-ready image or short clip in three steps, with the credit cost shown first.",
+  "steps_lead": "Turn one Shopify product photo into a store-ready image or short clip in three steps.",
   "more_sections": [
     {
       "eyebrow": "From photo to store media",

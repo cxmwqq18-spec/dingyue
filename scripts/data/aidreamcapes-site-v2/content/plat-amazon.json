@@ -1,7 +1,7 @@
 {
   "id": "plat-amazon",
   "title": "Amazon Product Photos for Listings | AIVideosUGC",
-  "description": "Create Amazon product photos for a clean main image, useful detail views, and lifestyle shots from one upload, with the credit cost shown first.",
+  "description": "Create Amazon product photos for a clean main image, detail views, and lifestyle shots from one upload, without a reshoot, with the credit cost shown first.",
   "h1": "AI Amazon Product Photos That Fill Your Listing Gallery",
   "eyebrow": "Amazon listings",
   "lead": "Get a clean main image and useful gallery shots from one product photo. Build white-background, detail, and lifestyle images without booking a studio.",
@@ -186,7 +186,7 @@
         },
         {
           "t": "Sponsored Ad Image",
-          "d": "Clear product shots made for search and ad placements, with a fresh look ready to test."
+          "d": "Clear product shots made for search and ads, with a fresh look ready to test."
         },
         {
           "t": "Off-Amazon Traffic",
