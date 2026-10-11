@@ -1,10 +1,10 @@
 {
   "id": "occ-product-launch",
-  "title": "New Product Launch Video and Photos | AIVideosUGC",
-  "description": "Build anticipation for a new product with launch teasers, reveal clips and listing photos made from one product photo. No studio booking, no reshoot.",
-  "h1": "Create Product Launch Content Before Launch Day",
+  "title": "Product Launch Video and Photos | AIVideosUGC",
+  "description": "Create product launch videos and photos from one product image: make a teaser, reveal, and listing asset before launch day, without a studio booking.",
+  "h1": "Product Launch Video and Photos Before Launch Day",
   "eyebrow": "New product launch",
-  "lead": "Build anticipation for your reveal from one product photo. Make a teaser, a reveal clip and listing images before the launch date, without booking a shoot.",
+  "lead": "Build a teaser, reveal, and listing image from one product photo. Add the launch date after download, with no studio booking or reshoot.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
@@ -13,12 +13,12 @@
   ],
   "faq": [
     {
-      "q": "Can I make launch content before production is finished?",
-      "a": "Start from a clear photo of the current sample or prototype. The teaser, reveal and listing images all use that one photo, so assets exist while production finishes."
+      "q": "Can I make product launch videos and photos before production is finished?",
+      "a": "Start from a clear photo of the current sample or prototype. The teaser, reveal, and listing images all use that one photo, so assets exist while production finishes."
     },
     {
       "q": "Can I change the launch date after making the video?",
-      "a": "Yes. Add the date, price and code as editable text after download, so confirmed details can change without regenerating the scene."
+      "a": "Yes. Add the date, price, and code as editable text after download, so confirmed details can change without regenerating the scene."
     },
     {
       "q": "Will anyone see my unreleased product?",
@@ -26,11 +26,11 @@
     },
     {
       "q": "What video size should a product launch use?",
-      "a": "Use 9:16 for Stories, Reels and TikTok, 1:1 for feeds, and 16:9 for a wide page or YouTube placement. Each size is its own generation."
+      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feeds, and 16:9 for a wide page or YouTube placement. Each size is its own generation."
     },
     {
       "q": "How long can a launch video be?",
-      "a": "Clips run 6, 10, 15 or 30 seconds. A 6-second clip works for a quick reveal; use 15 or 30 seconds when the launch needs a fuller product story."
+      "a": "Clips run 6, 10, 15, or 30 seconds. A 6-second clip works for a quick reveal; use 15 or 30 seconds when the launch needs a fuller product story."
     },
     {
       "q": "Can I run the finished clips as launch ads?",
@@ -51,10 +51,10 @@
             "product": "lip tint"
           },
           {
-            "ref": "n:guide:q20-occ-launch-example-02-r2",
-            "title": "Product in Hand: Amber serum",
+            "ref": "n:guide:q20-occ-product-launch-output-01",
+            "title": "Product in Use: Canvas Tote",
             "kind": "photo",
-            "product": "amber skincare serum"
+            "product": "canvas tote"
           },
           {
             "ref": "n:gen2:occ-product-launch-g3",
@@ -73,29 +73,29 @@
       "d": "Use a clear photo of the final item or sample. Every launch asset starts from that one shot."
     },
     {
-      "t": "Pick Teaser, Reveal or Listing",
-      "d": "Choose a first look, reveal or first-use scene. Each job makes the next launch asset."
+      "t": "Pick Teaser, Reveal, or Listing",
+      "d": "Choose a first look, reveal, or first-use scene. Each job makes the next launch asset."
     },
     {
       "t": "Download and Add Launch Details",
-      "d": "Type the name, date and price in your editor. The file is yours to run, no watermark."
+      "d": "Type the name, date, and price in your editor. The file is yours to run, with no watermark."
     }
   ],
   "visual": {
     "overview": "A teaser, a reveal and listing photos all come from one sample photo, so the launch set is ready while production finishes.",
     "strip": [
       "n:guide:q20-occ-launch-strip-01",
-      "n:gen2:spokesperson-videos-g4",
-      "n:guide:plat-shopify-c3-size-square-product",
+      "n:guide:q20-occ-launch-media-gallery-03",
       "n:guide:q20-occ-launch-strip-03",
       "n:guide:q20-occ-launch-strip-04",
-      "n:guide:q20-occ-launch-strip-05"
+      "n:guide:q20-occ-launch-strip-05",
+      "n:guide:q20-occ-product-launch-output-02"
     ],
     "steps": {
       "source": "n:guide:occ-product-launch-c3-m2-source",
-      "result": "n:guide:q20-occ-product-launch-steps-result-r2",
+      "result": "n:guide:occ-product-launch-c3-m2-result",
       "mode": "photo",
-      "prompt": "Share the launch moment in one sentence.",
+      "prompt": "Still square product photograph of a matte blue water bottle upright on a pale stone ledge beside a folded towel; soft outdoor morning light, centered composition with the full bottle visible and crisp product detail, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos.",
       "options": [
         [
           "Template",
@@ -107,7 +107,7 @@
         ],
         [
           "Use",
-          "Reveal or product page"
+          "Teaser · reveal · listing"
         ]
       ]
     },
@@ -133,25 +133,25 @@
       }
     }
   },
-  "benefits_h2": "Why sellers choose product launch creatives",
+  "benefits_h2": "Product Launch Video and Photos That Build Anticipation",
   "benefits": [
     {
-      "t": "Launch assets from one photo",
-      "d": "Build a teaser, reveal and listing image from the same product shot while production finishes."
+      "t": "Start the teaser before production ends",
+      "d": "Build the first look from a current sample photo while the final run is still in progress."
     },
     {
-      "t": "A clear first look",
-      "d": "Show the new item in a scene buyers can understand before launch day."
+      "t": "Reveal the product when the date is set",
+      "d": "Use a complete product view for launch day, then place it in the channel where you will announce it."
     },
     {
-      "t": "Details stay editable",
-      "d": "Add the confirmed name, price and date after download as the launch plan changes."
+      "t": "Keep launch details editable",
+      "d": "Add the confirmed name, price, and date after download as the launch plan changes."
     },
     {
-      "t": "Ready to run without a watermark",
+      "t": "Run the launch without a watermark",
       "d": "Use downloaded launch images and clips in your own posts and paid campaigns."
     }
   ],
-  "steps_h2": "Create product launch creatives in three steps",
-  "steps_lead": "Turn one product photo into a launch teaser, reveal or listing image before launch day."
+  "steps_h2": "How to Make Product Launch Videos and Photos in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a teaser, reveal, or listing asset in three steps, then add confirmed launch details after download."
 }
