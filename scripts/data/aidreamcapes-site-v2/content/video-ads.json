@@ -116,9 +116,9 @@
       "n:guide:q9-ugc-gallery-jacket-tryon"
     ],
     "steps": {
-      "source": "n:guide:b1-spokesperson-videos-source",
-      "sourceAlt": "Your product: a matte forest-green water bottle standing alone on a bright kitchen counter.",
-      "result": "n:guide:b1-spokesperson-videos-result",
+      "source": "n:gen2:plat-facebook-g3",
+      "sourceAlt": "Your product: an insulated bottle shown alone on a pure white background.",
+      "result": "n:gen2:plat-facebook-g4",
       "mode": "video",
       "length": 15,
       "prompt": "Use the uploaded product photo as the exact product reference. Keep its shape, color and label area unchanged. Show one person using the product in a familiar setting, ending with the product held clearly in frame. Natural phone-video lighting and steady handheld movement. Sound: clear action audio and room tone; no text, logos or music.",
