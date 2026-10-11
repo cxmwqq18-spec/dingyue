@@ -95,7 +95,7 @@
     },
     {
       "q": "Can I use the clip in paid ads?",
-      "a": "Yes. Use the download in TikTok, Instagram, Facebook, or other ad placements."
+      "a": "Yes. Use the download in TikTok, Instagram, Facebook, or other ad channels."
     }
   ],
   "cta_lead": "Start with one product URL and see the credit cost before generation.",
@@ -132,24 +132,24 @@
         {
           "t": "Write the angle you need",
           "d": "Choose the scene and the point you want buyers to notice first.",
-          "img": "n:guide:q2-url-to-video-strip-02",
+          "img": "n:guide:q2-url-to-video-case-02",
           "frame": "none"
         },
         {
-          "t": "Keep creative control",
-          "d": "Set the scene and final length for each version before you generate.",
+          "t": "Control the final format",
+          "d": "Set the frame and length for each version before you generate.",
           "img": "n:guide:q2-url-to-video-strip-03",
           "frame": "none"
         },
         {
-          "t": "Test campaign angles",
-          "d": "Compare product moments before your campaign goes live.",
+          "t": "Compare versions before launch",
+          "d": "See each product moment side by side before your campaign goes live.",
           "img": "n:guide:q2-url-to-video-strip-04",
           "frame": "none"
         },
         {
-          "t": "Use the image customers see",
-          "d": "Start from the product image and name already shown on your listing.",
+          "t": "Keep product details intact",
+          "d": "Carry the listing's product image into each draft so its shape and color stay familiar.",
           "img": "n:guide:q2-url-to-video-strip-05",
           "frame": "none"
         }
@@ -158,23 +158,23 @@
     {
       "eyebrow": "More content, less hassle",
       "h2": "Make more product videos from one listing",
-      "lead": "Reuse a product reference when you need another ad angle, placement or opening.",
+      "lead": "Reuse a product reference when you need another ad angle, format or opening.",
       "items": [
         {
-          "t": "Test more ad angles",
-          "d": "Compare different hooks before a campaign goes live.",
+          "t": "Refresh the same listing",
+          "d": "Turn one product reference into another opening when your campaign needs fresh creative.",
           "img": "n:guide:q2-url-to-video-case-01",
           "frame": "none"
         },
         {
           "t": "Scale product clips",
           "d": "Reuse one listing to make several short ads for your channels.",
-          "img": "n:guide:q2-url-to-video-case-02",
+          "img": "n:guide:q2-url-to-video-output-01",
           "frame": "none"
         },
         {
-          "t": "Keep review time short",
-          "d": "Move from product page to draft without a studio shoot.",
+          "t": "Spend less time on production",
+          "d": "Move from product page to draft without booking a studio shoot.",
           "img": "n:guide:q2-url-to-video-case-03",
           "frame": "none"
         }
@@ -222,7 +222,7 @@
       },
       {
         "frame": "post",
-        "ref": "n:guide:q2-url-to-video-example-03",
+        "ref": "n:guide:ra2-url-to-video-example-05-r1",
         "h": "Social media videos",
         "d": "Use the downloaded clip in an Instagram, YouTube or TikTok post made for this product."
       }

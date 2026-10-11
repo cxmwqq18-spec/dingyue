@@ -7635,6 +7635,15 @@
         640,
         1280
       ]
+    },
+    "ra2-url-to-video-hero-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Black man with short close-cropped hair holds a plain white skincare tube toward the camera inside a bright parked car.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "clips": {
@@ -27523,6 +27532,16 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult runner adjusts a plain running belt at a sunny trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ra2-url-to-video-example-05-r1": {
+        "file": "ra2-url-to-video-example-05-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult male runner adjusts a plain black running belt at a sunny mountain trailhead.",
         "variants": [
           640,
           1280

@@ -30,7 +30,7 @@
     }
   ],
   "steps_h2": "Turn one product image into a video in 3 steps",
-  "steps_lead": "Upload one clear product image, describe one movement and download the clip for your placement.",
+  "steps_lead": "Upload one clear product image, describe one movement and download the clip for your ad.",
   "steps": [
     {
       "t": "Upload the product you want to animate",
@@ -41,7 +41,7 @@
       "d": "Write one sentence that tells the tool what should turn, open, pour or change."
     },
     {
-      "t": "Download the clip for your placement",
+      "t": "Download the clip for your ad",
       "d": "Watch the result, then download the short video for your ad, feed or product page."
     }
   ],
@@ -72,7 +72,7 @@
       "a": "No. Start with one product image."
     },
     {
-      "q": "What image works best?",
+      "q": "What image should I use?",
       "a": "Use a clear, well-lit photo with the full product visible."
     },
     {

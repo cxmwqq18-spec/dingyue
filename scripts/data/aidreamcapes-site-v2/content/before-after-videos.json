@@ -24,8 +24,8 @@
       "icon": "shield"
     },
     {
-      "t": "Explain the moment clearly",
-      "d": "Add one short line that names the action. Download the clip, then add your own caption if you need one.",
+      "t": "Say what changed in one line",
+      "d": "Name the action in one short line so buyers understand the result. Download the clip and add your own caption if you need one.",
       "icon": "check"
     }
   ],
@@ -59,8 +59,8 @@
         },
         {
           "t": "One photo to direct",
-          "d": "Keep one product reference, then describe the action that takes it from the starting state to the result.",
-          "img": "n:guide:q3-before-after-videos-board-07-pet-bed-roller",
+          "d": "Keep one product reference, then describe the action that takes it from the starting state to the result. The clip is generated for you in minutes.",
+          "img": "n:guide:f11-r10b-before-after-videos-canvas-stain-cleanup",
           "frame": "phone"
         }
       ]
@@ -73,36 +73,30 @@
         {
           "t": "Start without a crew",
           "d": "Describe the starting point and the action, then skip a studio setup or filming date.",
-          "img": "n:guide:q3-before-after-videos-board-01-pet-hair-review",
+          "img": "n:guide:q3-product-videos-case-handheld-vacuum",
           "frame": "phone"
         },
         {
           "t": "Control the visible result",
           "d": "Keep the product, camera and claim fixed while you adjust the scene or action.",
-          "img": "n:guide:q3-before-after-videos-case-02-shoe-brush",
+          "img": "n:guide:q3-before-after-videos-output-watch-wipe",
           "frame": "phone"
         },
         {
           "t": "Write the opening you need",
           "d": "Give one short line that frames the problem or change for your ad.",
-          "img": "n:guide:q3-before-after-videos-case-03-silver-necklace",
+          "img": "n:guide:q3-product-videos-board-07-power-bank-demo",
           "frame": "phone"
         },
         {
-          "t": "Test new openings quickly",
-          "d": "Make fresh first moments for a campaign without arranging another shoot.",
-          "img": "n:guide:q3-before-after-videos-case-04-phone-case",
-          "frame": "phone"
+          "t": "Test more hooks without reshooting",
+          "d": "Try fresh first moments for a campaign without arranging another shoot.",
+          "img": "n:guide:f17-home-vacuum-demo",
+          "frame": "none"
         },
         {
-          "t": "Use the same item throughout",
-          "d": "The product stays in the frame, so the before and after read as one demonstration.",
-          "img": "n:guide:q3-before-after-videos-case-04-phone-case-single-camera",
-          "frame": "phone"
-        },
-        {
-          "t": "Download a file you can finish",
-          "d": "Add offer text or before-and-after labels in your editor after the clip is ready.",
+          "t": "Finish more versions from one base",
+          "d": "Keep the demonstration ready, then add your offer or before-and-after labels without rebuilding the clip.",
           "img": "n:guide:q3-before-after-videos-output-watch-compare",
           "frame": "none"
         }
@@ -171,26 +165,7 @@
       "cards": [],
       "button": "Try this video idea"
     },
-    "uses": [
-      {
-        "frame": "phone",
-        "ref": "n:guide:q3-before-after-videos-board-02-shoe-brush-review",
-        "h": "Shoe cleanup before checkout",
-        "d": "Show a scuffed shoe and the cleaned section in one product ad, so buyers can see the change before they order."
-      },
-      {
-        "frame": "phone",
-        "ref": "n:guide:q3-before-after-videos-board-06-grout-cleaning-demo",
-        "h": "Grout cleaning proof",
-        "d": "Show one tile seam before and after the brush pass, giving a practical cleaning demo for the product page."
-      },
-      {
-        "frame": "phone",
-        "ref": "n:guide:q3-before-after-videos-board-08-suitcase-zipper-fix",
-        "h": "Suitcase fix in one take",
-        "d": "Show the stuck zipper opening and closing smoothly, then use the short result in a travel ad."
-      }
-    ],
+    "uses": [],
     "titles": {
       "m2": {
         "h2": "Create a before and after video in 3 simple steps"
