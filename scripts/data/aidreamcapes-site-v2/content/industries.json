@@ -139,19 +139,27 @@
   "benefits": [
     {
       "t": "Know what to shoot first",
-      "d": "Each page names the moments shoppers in that category actually watch for: texture for beauty, fit for clothing, the pour for drinks. You stop guessing and start with the shot that answers a buying question."
+      "d": "Each page names the moments shoppers in that category actually watch for: texture for beauty, fit for clothing, the pour for drinks. You stop guessing and start with the shot that answers a buying question.",
+      "img": "n:guide:fx29-industries-benefit-shot",
+      "alt": "Adult seller applies a plain coral moisturizer tube beside a vanity mirror."
     },
     {
       "t": "No shoot for every category",
-      "d": "One product photo becomes the photos and clips on the page. You skip the model, studio, and location a real shoot for each product line would need."
+      "d": "One product photo becomes the photos and clips on the page. You skip the model, studio, and location a real shoot for each product line would need.",
+      "img": "n:guide:fx29-industries-benefit-fit",
+      "alt": "Adult seller checks the fit of a plain olive overshirt in a fitting room."
     },
     {
       "t": "One photo, every format",
-      "d": "Reuse the same upload for white background shots, lifestyle scenes, and vertical videos. The product stays recognizable while you build assets for listings, feeds, and ads."
+      "d": "Reuse the same upload for white background shots, lifestyle scenes, and vertical videos. The product stays recognizable while you build assets for listings, feeds, and ads.",
+      "img": "n:guide:fx29-industries-benefit-electronics",
+      "alt": "Adult man places a compact charging stand on a tidy desk."
     },
     {
       "t": "Assets you can use commercially",
-      "d": "Downloaded photos and videos are watermark-free and licensed for commercial use, so each industry page ends in a file you can actually publish."
+      "d": "Downloaded photos and videos are watermark-free and licensed for commercial use, so each industry page ends in a file you can actually publish.",
+      "img": "n:guide:fx29-industries-benefit-food",
+      "alt": "Adult seller pours a plain sparkling fruit drink into a glass."
     }
   ],
   "steps_h2": "How to Make AI Product Content by Industry in 3 Simple Steps",

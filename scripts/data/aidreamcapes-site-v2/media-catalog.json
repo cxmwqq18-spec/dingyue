@@ -47787,6 +47787,138 @@
           1280,
           1600
         ]
+      },
+      "fx29-industries-benefit-shot": {
+        "file": "fx29-industries-benefit-shot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller applies a plain coral moisturizer tube beside a vanity mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-industries-benefit-fit": {
+        "file": "fx29-industries-benefit-fit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller checks the fit of a plain olive overshirt in a fitting room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-industries-benefit-electronics": {
+        "file": "fx29-industries-benefit-electronics",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man places a compact charging stand on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-industries-benefit-food": {
+        "file": "fx29-industries-benefit-food",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller pours a plain sparkling fruit drink into a glass.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-benefit-routine": {
+        "file": "fx29-beauty-benefit-routine",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain pump-bottle moisturizers arranged beside a bathroom mirror with a hand reaching for one.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-benefit-swatch": {
+        "file": "fx29-beauty-benefit-swatch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream texture swatch on a hand beside a plain moisturizer tube.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-benefit-versions": {
+        "file": "fx29-beauty-benefit-versions",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller holds a plain sage pump-bottle moisturizer beside a matching bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-tool-video-ads": {
+        "file": "fx29-beauty-tool-video-ads",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a plain ivory cosmetic tube toward a phone camera in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-tool-lifestyle": {
+        "file": "fx29-beauty-tool-lifestyle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand reaches for a plain blush-pink moisturizer tube on a bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-tool-white-bg": {
+        "file": "fx29-beauty-tool-white-bg",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain pale-blue cosmetic jar standing alone on seamless white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-tool-product-photo": {
+        "file": "fx29-beauty-tool-product-photo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain ivory skincare tube and cap on a warm neutral stone surface.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx29-beauty-studio-lighting": {
+        "file": "fx29-beauty-studio-lighting",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a plain sage pump bottle under warm studio lighting.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

@@ -184,8 +184,8 @@
   "ind-beauty-skincare": {
     "images": {
       "light": {
-        "ref": "n:guide:q15-beauty-template-studio-lighting",
-        "alt": "Amber serum bottle revealed in a warm beam of light."
+        "ref": "n:guide:fx29-beauty-studio-lighting",
+        "alt": "Adult hand holds a plain sage pump bottle under warm studio lighting."
       },
       "beauty": {
         "ref": "n:gen2:tpl-beauty-g1",
@@ -194,6 +194,24 @@
       "box": {
         "ref": "n:guide:q15-beauty-template-what-s-in-the-box",
         "alt": "Hands lift a skincare set from an open carton."
+      }
+    },
+    "tools": {
+      "video-ads": {
+        "ref": "n:guide:fx29-beauty-tool-video-ads",
+        "alt": "Adult creator holds a plain ivory cosmetic tube toward a phone camera in a bright bathroom."
+      },
+      "lifestyle-photos": {
+        "ref": "n:guide:fx29-beauty-tool-lifestyle",
+        "alt": "Adult hand reaches for a plain blush-pink moisturizer tube on a bathroom shelf."
+      },
+      "white-background": {
+        "ref": "n:guide:fx29-beauty-tool-white-bg",
+        "alt": "Plain pale-blue cosmetic jar standing alone on seamless white."
+      },
+      "photo-hub": {
+        "ref": "n:guide:fx29-beauty-tool-product-photo",
+        "alt": "Plain ivory skincare tube and cap on a warm neutral stone surface."
       }
     }
   },
