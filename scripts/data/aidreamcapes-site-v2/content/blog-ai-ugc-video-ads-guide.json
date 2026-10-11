@@ -4,7 +4,7 @@
   "description": "Plan an AI-generated creator-style product ad, check that it is not presented as a customer review, then edit the opening, scene, and final details.",
   "h1": "AI UGC Video Ads Guide: Creator-Style Clips for Your Shop",
   "eyebrow": "Video ad guide",
-  "lead": "Make a scroll-stopping creator-style ad without paying a creator or shipping samples. Upload one product photo, write a sentence about the scene, and get a short AI UGC video for TikTok, Reels, or Shorts. The person on screen is AI-generated, not a real customer or reviewer, so this guide also shows how to present it honestly.",
+  "lead": "Make a creator-style product ad without paying a creator or shipping samples. Upload one product photo, write a sentence about the scene, and get a short AI UGC video for TikTok, Reels, or Shorts. The person on screen is AI-generated, not a real customer or reviewer, so this guide also shows how to present it honestly.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator style product videos",
@@ -27,7 +27,7 @@
       "h2": "Plan the first second before anything else",
       "paras": [
         "People decide quickly whether to keep watching, so the opening frame should already show the product doing something. Try not to start on an empty room or on a person with nothing in their hands.",
-        "Some opening ideas for different products: a reusable water bottle pulled out of a gym bag and tipped back for a drink; a phone case snapped onto a phone, then tossed onto a sofa cushion; a rope toy thrown across a living room for a dog; [a serum dropper squeezed over the back of a hand](page:tpl-beauty).",
+        "For the gray skincare jar, open the lid in the first frame, scoop a small amount onto the back of a hand, or hold the jar beside a bathroom mirror. Keep one action per clip so the product is clear immediately.",
         "Stick to one main action per clip. A 10-second video has room for one clear moment and a little context, not a whole story. Planning your first TikTok ad? Start with [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad)."
       ]
     },
@@ -35,7 +35,7 @@
       "h2": "Write the scene in one sentence",
       "paras": [
         "Your sentence is all the video has to go on, so make it count. Cover four things: who is in the shot, where they are, what they do with the product, and how it's filmed.",
-        "Here's an example for a cold brew bottle: \"A woman in her 30s at a sunny kitchen counter pours iced coffee from our glass bottle into a tall glass, filmed handheld on a phone.\" And one for a backpack: \"A college student unzips our gray backpack on a library table and pulls out a laptop, close-up, natural window light.\" Food and drink sellers can find more scene ideas on our [food and drinks page](page:ind-food-drinks).",
+        "Here is a focused example for the gray jar: \"An adult woman at a bright bathroom counter opens the plain gray skincare jar, scoops a little onto the back of her hand and turns the jar toward the phone camera.\" The action, setting and camera style give the clip a clear job.",
         "Leave out any words you want on screen, famous faces, and logos that aren't yours. Requests like these may be refused, and lettering drawn by AI is likely to come out wrong anyway."
       ]
     },
@@ -43,7 +43,7 @@
       "h2": "Choose a length and a shape",
       "paras": [
         "Six seconds is enough for a single action, like a lid twisting off. Ten seconds fits an action plus a second angle or a reaction. Fifteen seconds lets you show a short sequence, such as taking the product out, using it, and setting it down. Thirty seconds gives a longer demonstration room to breathe.",
-        "For TikTok, Reels, and Shorts, pick 9:16 so the video fills the phone screen. Use 1:1 for square feed ads and 16:9 for a regular YouTube video or a wide banner on your product page. You can also pick 3:4 or 4:3. The [ad sizes guide](page:guide-ad-sizes-by-platform) shows where each shape fits.",
+        "For TikTok, Reels, and Shorts, pick 9:16 so the gray-jar demo fills the phone screen. Use 1:1 for a square feed ad, 16:9 for a regular YouTube video, or 3:4 and 4:3 when that is the shape your page or campaign needs. The [ad sizes guide](page:guide-ad-sizes-by-platform) shows where each shape fits.",
         "Videos are made one at a time. If you want another version with a different opening or setting, generate it as a new video; the credit cost appears before each one starts."
       ]
     },
@@ -79,6 +79,36 @@
     {
       "q": "What should I add after downloading an AI UGC ad?",
       "a": "Add accurate captions, price, offer, music, and disclosure in TikTok, CapCut, Canva, or Ads Manager. The generated clip does not supply those items."
+    },
+    {
+      "q": "What video sizes can I choose for a UGC-style ad?",
+      "a": "You can choose 9:16, 1:1, 16:9, 4:3 or 3:4. Pick the shape that matches the feed, page or ad placement where you will post."
+    },
+    {
+      "q": "How many credits does a short video use?",
+      "a": "A 6-second video uses 24 credits, a 10-second video uses 40, a 15-second video uses 60 and a 30-second video uses 120. The exact cost appears before you start."
+    },
+    {
+      "q": "Can I describe the generated person as a customer?",
+      "a": "No. The person is AI-generated, so do not present them as a real customer or reviewer. Describe the product and its use, then add any required AI disclosure."
     }
-  ]
+  ],
+  "steps_h2": "How to Make a UGC-Style Video Ad in 3 Simple Steps",
+  "steps_lead": "Use one clear gray-jar photo to plan one focused action from opening frame to downloaded ad.",
+  "steps": [
+    {
+      "t": "Plan the opening action",
+      "d": "Upload the same plain gray skincare jar photo you will show in the ad and choose one opening action. You start with the product in view instead of an empty room."
+    },
+    {
+      "t": "Describe the scene",
+      "d": "Write who uses the gray jar, where the action happens, and how the camera moves. You give the generated clip one clear moment that is easy to edit."
+    },
+    {
+      "t": "Download and Post",
+      "d": "Download the finished gray-jar clip and review the product before posting. Add captions, price, offer and AI disclosure in your ad editor."
+    }
+  ],
+  "cta_title": "Make a creator-style ad from one product photo",
+  "cta_lead": "Upload your product photo, choose one opening action and download a short clip ready for your editing app."
 }
