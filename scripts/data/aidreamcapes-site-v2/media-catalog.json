@@ -46209,6 +46209,17 @@
         ],
         "source": "Codex image generation"
       },
+      "px1-platforms-format-3-r2": {
+        "file": "px1-platforms-format-3-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Black creator presents a sage green sweater covered in pills beside the same sweater smooth and de-pilled.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
       "px1-platforms-format-4-r1": {
         "file": "px1-platforms-format-4-r1",
         "w": 864,
@@ -46291,6 +46302,17 @@
         "w": 864,
         "h": 1536,
         "alt": "Adult athlete holds a plain cobalt shaker bottle beside a resistance band after exercise.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-6-r2": {
+        "file": "px1-platforms-area-6-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "East Asian creator stretches a plain coral resistance band in a bright home workout studio.",
         "variants": [
           640,
           1280
