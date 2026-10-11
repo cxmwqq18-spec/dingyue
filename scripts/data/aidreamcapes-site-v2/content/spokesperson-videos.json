@@ -238,565 +238,480 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:sc1-spk-indoor-1",
-          "label": "Indoor: hand cream",
+          "ref": "n:guide:sk1-spk-indoor-1-r1",
+          "label": "Indoor: entryway greeting",
           "chips": [
             "indoor"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright apartment entryway, an adult creator holds the hand cream tube beside her cheek and says: “I keep this by the door for dry hands.” She turns the tube once. Direct-to-camera chest-up selfie, soft window light, natural skin. End with the tube steady beside her face. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "A woman in her early thirties with short straight black bob and round face with subtle freckles wears a cream crewneck in an indoor setting. She is standing in a bright entryway giving a friendly opening line and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-indoor-2",
-          "label": "Indoor: candle",
+          "ref": "n:guide:sk1-spk-indoor-2-r1",
+          "label": "Indoor: home corner chat",
           "chips": [
             "indoor"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a warm living room, an adult creator holds the amber candle jar beside his chest and says: “This small candle is my five-minute evening reset.” He lifts the lid once. Handheld chest-up selfie, warm window light, natural skin. End with the lid beside the open jar. Sound: clear speech and soft room tone; no music, text or logos.",
+          "prompt": "A man in his late forties with close-cropped salt-and-pepper curls and wide jaw and trimmed beard wears an olive overshirt in an indoor setting. He is seated in a quiet home corner speaking with relaxed hands and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-02",
-          "label": "Home: moisturizer",
+          "ref": "n:guide:sk1-spk-home-1-r1",
+          "label": "Home: sofa welcome",
           "chips": [
             "home"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright bathroom sink, an adult creator holds the moisturizer beside their cheek and says: “This is the step I do before makeup.” They pat a small amount onto one cheek. Direct-to-camera selfie, natural light, realistic skin. End with the moisturizer beside the cheek and the applied layer visible. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "A woman in her late twenties with platinum pixie cut and heart-shaped face and soft freckles wears a rust cardigan in a home setting. She is standing beside a sofa in a casual home welcome and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "f:k8-spokesperson-output-audio-safe",
-          "label": "Home: skincare bottle",
+          "ref": "n:guide:sk1-spk-home-2-r1",
+          "label": "Home: table explanation",
           "chips": [
             "home"
           ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
+          "prompt": "A man in his mid-thirties with neat buzz cut and oval face and rectangular glasses wears a blue chambray shirt in a home setting. He is seated at a bright home table giving a calm explanation and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-after",
-          "label": "Outdoor: sunscreen",
+          "ref": "n:guide:sk1-spk-outdoor-1-r3",
+          "label": "Outdoor: park greeting",
           "chips": [
             "outdoor"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny outdoor patio, an adult creator holds the sunscreen tube at chest height and says: “This is the one I keep in my bag for afternoons outside.” They tilt the tube once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin. End with the tube held steady beside the creator’s face. Sound: clear speech and light outdoor ambience; no music, text or logos.",
+          "prompt": "A woman in her early forties with short blonde pixie and square face and light freckles wears a navy knit top in an outdoor setting. She is standing on a leafy path greeting the camera and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:spokesperson-videos-g1",
-          "label": "Outdoor: water bottle",
+          "ref": "n:guide:sk1-spk-outdoor-2-r1",
+          "label": "Outdoor: walkway update",
           "chips": [
             "outdoor"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a park bench on a bright day, an adult creator holds the steel water bottle toward the camera and says: “This is what I bring on every walk.” They turn the bottle once to show the lid. Handheld chest-up selfie, natural daylight, realistic skin. End with the bottle held steady near the creator’s face. Sound: clear speech and soft park ambience; no music, text or logos.",
+          "prompt": "A man in his early sixties with short silver side-part and long face and neat gray beard wears a charcoal polo in an outdoor setting. He is standing by a park walkway delivering a quick outdoor update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-04",
-          "label": "Living Room: earbuds",
+          "ref": "n:guide:sk1-spk-living-room-1-r1",
+          "label": "Living Room: sofa check-in",
           "chips": [
             "living-room"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lived-in living room, an adult creator opens a small plain box, lifts a round wireless-earbud case and says: “Let’s open the case and see what comes in the box.” Eye-level handheld chest-up shot, natural skin texture. Soft side light from the living-room window. End with the open earbud case above the box and both earbuds visible. Sound: speech and soft packaging rustle; no music, text or logos.",
+          "prompt": "A woman in her mid-fifties with short textured afro and round face and warm smile wears a mustard blouse in a living room setting. She is seated on a sofa speaking in a relaxed living-room check-in and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:spokesperson-videos-1",
-          "label": "Living Room: smart speaker",
+          "ref": "n:guide:sk1-spk-living-room-2-r1",
+          "label": "Living Room: lounge introduction",
           "chips": [
             "living-room"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult creator holds the smart speaker at chest height and says: “Here is the speaker I put on my shelf this week.” They turn it once to show the top buttons. Eye-level handheld chest-up shot, soft window light, realistic skin. End with the speaker held steady facing the camera. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "A man in his late twenties with short wavy chestnut crop and angular face and faint mustache wears a forest-green tee in a living room setting. He is standing beside a lounge chair giving a friendly home introduction and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-studio-1",
-          "label": "Studio: lipstick",
+          "ref": "n:guide:sk1-spk-studio-1-r3",
+          "label": "Studio: creator intro",
           "chips": [
             "studio"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a pale studio, an adult creator holds the open coral lipstick beside her face and says: “I keep this shade in my everyday bag.” She turns the tube once. Chest-up front-camera framing, soft daylight, natural skin. End with the lipstick bullet facing camera. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "A woman in her mid-thirties with close-cropped natural curls and oval face and small beauty mark wears a lavender sweatshirt in a studio setting. She is seated in a clean creator studio giving a polished talking-head intro and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-studio-2",
-          "label": "Studio: supplement bottle",
+          "ref": "n:guide:sk1-spk-studio-2-r1",
+          "label": "Studio: studio talking head",
           "chips": [
             "studio"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a clean studio, an adult creator holds the plain blue supplement bottle at chest height and says: “I check the serving details before I add this to my routine.” He turns the blank bottle once. Eye-level handheld chest-up, soft daylight, natural skin. End with the bottle held still. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "A man in his early forties with shaved head and square face and trimmed beard wears a sand overshirt in a studio setting. He is standing against a softly lit studio backdrop speaking clearly and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-08",
-          "label": "Office: phone stand",
+          "ref": "n:guide:sk1-spk-office-1-r1",
+          "label": "Office: desk explanation",
           "chips": [
             "office"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home-office desk, an adult creator opens a folding phone stand and says: “If your phone keeps sliding on calls, this stand holds the angle in place.” They set a phone into the cradle. Handheld eye-level selfie, window light. End with the phone seated upright in the open stand cradle. Sound: speech and a light hinge click; no music, text or logos.",
+          "prompt": "A woman in her late forties with salt-and-pepper crop and long face and thin glasses wears a teal blouse in an office setting. She is seated at a desk with an open laptop showing only abstract color blocks and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "f:f2-r10b-spokesperson-card-11",
-          "label": "Office: charger",
+          "ref": "n:guide:sk1-spk-office-2-r1",
+          "label": "Office: workday update",
           "chips": [
             "office"
           ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
+          "prompt": "A man in his mid-fifties with short coiled fade and round face and close beard wears a terracotta shirt in an office setting. He is standing beside a desk giving a concise workday explanation and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-garden-1",
-          "label": "Garden: gloves",
+          "ref": "n:guide:sk1-spk-garden-1-r1",
+          "label": "Garden: garden update",
           "chips": [
             "garden"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a backyard garden, an adult creator holds the pair of garden gloves palms-forward and says: “These are the gloves I reach for before planting.” She flips them once. Front-camera chest-up, bright natural light, realistic skin. End with both gloves centered. Sound: clear speech and soft birds; no music, text or logos.",
+          "prompt": "A woman in her early thirties with chin-length auburn bob and oval face and freckles wears a light denim jacket in a garden setting. She is standing among garden beds giving a cheerful garden update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-garden-2",
-          "label": "Garden: plant sprayer",
+          "ref": "n:guide:sk1-spk-garden-2-r1",
+          "label": "Garden: greenhouse chat",
           "chips": [
             "garden"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a leafy backyard garden, an adult creator holds the blue plant sprayer and says: “I mist the seedlings without soaking the soil.” They press the trigger once toward a nearby herb. Handheld chest-up selfie, bright daylight. End with the sprayer held still beside the herbs. Sound: speech, a light spray and garden ambience; no music, text or logos.",
+          "prompt": "A man in his late thirties with short curly black hair and heart-shaped face and mustache wears a gray henley in a garden setting. He is standing near a greenhouse bench speaking with an easy smile and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-07",
-          "label": "Gym: shaker",
+          "ref": "n:guide:sk1-spk-gym-1-r3",
+          "label": "Gym: pre-workout greeting",
           "chips": [
             "gym"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator holds a plain shaker and says: “One squeeze shows how the cap opens with one hand.” They press the lid once and hold the bottle still. Chest-up front-camera view, natural skin, soft daylight. End with the shaker upright and its opened cap facing camera. Sound: speech and a light shaker rattle; no music, text or logos.",
+          "prompt": "A woman in her early fifties with short silver pixie and square face and cat-eye glasses wears a cobalt sweater in a gym setting. She is standing near weight racks giving a pre-workout greeting and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k8-spokesperson-gen2-spokesperson-videos-c3",
-          "label": "Gym: protein shaker",
+          "ref": "n:guide:sk1-spk-gym-2-r1",
+          "label": "Gym: bench check-in",
           "chips": [
             "gym"
           ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
+          "prompt": "A man in his mid-sixties with thin white crew cut and long face and full white beard wears a brown cardigan in a gym setting. He is seated on a gym bench speaking after a training set and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-06",
-          "label": "Cafe: cardigan",
+          "ref": "n:guide:sk1-spk-cafe-1-r2",
+          "label": "Cafe: window-seat chat",
           "chips": [
             "cafe"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe window seat, an adult creator wears a plain cardigan and says: “Same cardigan, three layers: tee, button-down and tank.” They gesture to the neckline and sleeve. Casual front-camera selfie, natural window light. End facing camera with the cardigan neckline and sleeve in view. Sound: speech and low cafe ambience; no music, text or logos.",
+          "prompt": "A woman in her late twenties with short tapered curls and round face and dimpled smile wears a coral tee in a cafe setting. She is seated by a cafe window delivering a casual recommendation and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-strip-05",
-          "label": "Cafe: cardigan review",
+          "ref": "n:guide:sk1-spk-cafe-2-r1",
+          "label": "Cafe: counter introduction",
           "chips": [
             "cafe"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe window seat, an adult creator wears a plain cardigan and says: “I can style this cardigan for a coffee run or a late meeting.” They adjust one sleeve. Casual front-camera selfie, natural window light. End facing camera with the cardigan neckline and sleeve in view. Sound: speech and low cafe ambience; no music, text or logos.",
+          "prompt": "A man in his early thirties with short dark side part and oval face and faint stubble wears a maroon overshirt in a cafe setting. He is standing at a cafe counter giving a quick conversational intro and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-03",
-          "label": "Kitchen: spatula",
+          "ref": "n:guide:sk1-spk-kitchen-1-r1",
+          "label": "Kitchen: island explanation",
           "chips": [
             "kitchen"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a home kitchen counter, an adult creator holds a silicone spatula and says: “This edge reaches along the curve of the pan.” They guide it once around a plain skillet, then face the lens. Casual phone selfie, natural window light. End with the spatula resting in the skillet, curved edge visible. Sound: speech and a light pan scrape; no music, text or logos.",
+          "prompt": "A woman in her mid-forties with tight dark bun and angular face and straight brows wears a sage blouse in a kitchen setting. She is standing at a bright kitchen island giving a cooking-day explanation and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "f:f2-r10b-spokesperson-card-10",
-          "label": "Kitchen: snack pouch",
+          "ref": "n:guide:sk1-spk-kitchen-2-r1",
+          "label": "Kitchen: counter chat",
           "chips": [
             "kitchen"
           ],
-          "href": "/app/create?tool=spokesperson-videos&size=9%3A16&length=15",
-          "prompt": "",
+          "prompt": "A man in his late fifties with short salt-and-pepper crop and wide jaw and square glasses wears a cream polo in a kitchen setting. He is seated at a kitchen counter speaking in a friendly review style and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-05",
-          "label": "Podcast: headphones",
+          "ref": "n:guide:sk1-spk-podcast-1-r2",
+          "label": "Podcast: microphone opener",
           "chips": [
             "podcast"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a small podcast table, an adult creator holds plain over-ear headphones and says: “Here are three details I can show: the ear cups, hinge and button placement.” They turn the headphones once. Front-camera medium close-up, soft room light. End with both ear cups forward beside the podcast table. Sound: speech and quiet room tone; no music, text or logos.",
+          "prompt": "A woman in her early sixties with short gray coils and long face and bright smile wears a plum cardigan in a podcast setting. She is seated at a podcast desk speaking beside a plain broadcast microphone and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-strip-06",
-          "label": "Podcast: over-ear headphones",
+          "ref": "n:guide:sk1-spk-podcast-2-r2",
+          "label": "Podcast: podcast intro",
           "chips": [
             "podcast"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a podcast table, an adult creator holds the over-ear headphones at the podcast table and says: “These are the ones I wear for every recording.” They fold one ear cup once. Front-camera medium close-up, soft room light, realistic skin. End with the headphones held steady facing the camera. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "A man in his mid-twenties with short undercut and angular face and round glasses wears a black crewneck in a podcast setting. He is leaning toward a podcast microphone delivering an opening line and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-fitness-1",
-          "label": "Fitness: yoga mat",
+          "ref": "n:guide:sk1-spk-fitness-1-r3",
+          "label": "Fitness: recovery tip",
           "chips": [
             "fitness"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitness studio, an adult creator holds the rolled slate-blue yoga mat and says: “This roll fits beside my desk for a quick stretch.” They loosen one edge. Chest-up front-camera view, soft daylight, natural skin. End with the rolled mat upright and its edge visible. Sound: clear speech and light room tone; no music, text or logos.",
+          "prompt": "A woman in her late thirties with straight honey-blonde bob and heart-shaped face and freckles wears a soft blue shirt in a fitness setting. She is seated on a studio mat giving a recovery tip and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-fitness-2",
-          "label": "Fitness: resistance band",
+          "ref": "n:guide:sk1-spk-fitness-2-r1",
+          "label": "Fitness: routine explanation",
           "chips": [
             "fitness"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a practical gym, an adult creator stretches the coral resistance band once between both hands and says: “I can change the tension without changing my setup.” Chest-up handheld selfie, daylight, natural skin. End with the band held in a relaxed loop. Sound: speech and a soft band stretch; no music, text or logos.",
+          "prompt": "A man in his early fifties with short curly fade and round face and neat beard wears an olive bomber in a fitness setting. He is standing in a bright fitness room describing a simple routine and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-beach-1",
-          "label": "Beach: sun hat",
+          "ref": "n:guide:sk1-spk-beach-1-r1",
+          "label": "Beach: shoreline greeting",
           "chips": [
             "beach"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny beach, an adult creator holds the woven sun hat beside her face and says: “The wide brim is what I pack for long afternoons outside.” She tilts the brim once. Chest-up front-camera selfie, bright natural light. End with the brim facing the lens. Sound: clear speech and gentle surf; no music, text or logos.",
+          "prompt": "A woman in her mid-twenties with short braided crown with cropped sides and oval face and beauty mark wears a yellow sweatshirt in a beach setting. She is standing on a sunny shoreline greeting the camera and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-beach-2",
-          "label": "Beach: towel",
+          "ref": "n:guide:sk1-spk-beach-2-r1",
+          "label": "Beach: boardwalk update",
           "chips": [
             "beach"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a bright beach boardwalk, an adult creator holds the folded turquoise beach towel and says: “This towel folds small enough for my day bag.” They open one corner to show the terry texture. Chest-up handheld selfie, natural daylight. End with the towel corner held still. Sound: speech and soft beach ambience; no music, text or logos.",
+          "prompt": "A man in his mid-forties with close-cropped gray curls and long face and trimmed beard wears a navy overshirt in a beach setting. He is standing on a beach boardwalk giving a relaxed travel-style update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-picker-01",
-          "label": "Car: serum",
+          "ref": "n:guide:sk1-spk-car-1-r1",
+          "label": "Car: driver-seat selfie",
           "chips": [
             "car"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum beside their face and says: “Here is the pump detail I wanted to show.” They turn it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin, slight handheld sway. End with the serum held steady beside the creator’s face, pump visible. Sound: clear speech and soft car ambience; no music, text or logos.",
+          "prompt": "A woman in her early forties with short dark angled bob and square face and subtle freckles wears a white linen shirt in a car setting. She is seated in the driver seat with hands resting low, speaking to camera and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:q4-spokesperson-strip-01",
-          "label": "Car: serum bottle",
+          "ref": "n:guide:sk1-spk-car-2-r1",
+          "label": "Car: passenger-seat chat",
           "chips": [
             "car"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum bottle beside their cheek and says: “This is the bottle I keep in my bag.” They tilt it once toward the lens. Front-camera chest-up selfie, natural daylight, realistic skin. End with the bottle held steady beside the creator’s face. Sound: clear speech and soft car ambience; no music, text or logos.",
+          "prompt": "A man in his late twenties with short sponge curls and wide jaw and faint mustache wears an orange polo in a car setting. He is seated in the parked passenger seat giving a casual car-selfie introduction and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-hospital-1",
-          "label": "Hospital: travel tumbler",
+          "ref": "n:guide:sk1-spk-hospital-1-r1",
+          "label": "Hospital: staff-room update",
           "chips": [
             "hospital"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a hospital staff break room, an adult creator in solid teal scrubs holds the insulated tumbler and says: “I keep this close during a long shift.” They lift the lid once. Chest-up front-camera framing, bright soft light. End with the lid and rim visible. Sound: clear speech and quiet room tone; no music, text or logos.",
+          "prompt": "A woman in her mid-fifties with short copper pixie and round face and thin glasses wears a forest cardigan in a hospital setting. She is standing in a clean staff break room in solid scrubs giving an update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-hospital-2",
-          "label": "Hospital: power bank",
+          "ref": "n:guide:sk1-spk-hospital-2-r1",
+          "label": "Hospital: corridor briefing",
           "chips": [
             "hospital"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet hospital visitor corridor, an adult creator holds the slim power bank and says: “I bring a backup charge when the waiting room runs long.” They plug the short cable into its round port. Handheld chest-up selfie, soft corridor light. End with the cable seated and the power bank facing camera. Sound: speech and a light connector click; no music, text or logos.",
+          "prompt": "A man in his early sixties with bald with gray beard and oval face and deep smile lines wears a blue flannel in a hospital setting. He is standing in a quiet hospital corridor giving a calm informational line and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-balcony-1",
-          "label": "Balcony: herb pot",
+          "ref": "n:guide:sk1-spk-balcony-1-r1",
+          "label": "Balcony: railing greeting",
           "chips": [
             "balcony"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny apartment balcony, an adult creator holds the small basil herb pot and says: “Fresh leaves are right outside my kitchen door.” They turn the pot once. Chest-up front-camera selfie, natural morning light. End with the plant centered and leaves visible. Sound: clear speech and light city ambience; no music, text or logos.",
+          "prompt": "A woman in her late thirties with short natural coils and heart-shaped face and dimple wears a red knit top in a balcony setting. She is standing at a sunny apartment balcony railing giving a morning greeting and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-balcony-2",
-          "label": "Balcony: plant mister",
+          "ref": "n:guide:sk1-spk-balcony-2-r1",
+          "label": "Balcony: plant-side update",
           "chips": [
             "balcony"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a small balcony filled with greenery, an adult creator holds the translucent plant mister and says: “A few fine sprays keep these leaves looking fresh.” They press the pump once. Handheld chest-up view, warm daylight. End with the mister held still beside the plants. Sound: speech, a soft mist and city ambience; no music, text or logos.",
+          "prompt": "A man in his mid-thirties with short straight black hair and square face and stubble wears a beige overshirt in a balcony setting. He is standing among balcony plants speaking with a relaxed home update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-pet-1",
-          "label": "Pet: dog treats",
+          "ref": "n:guide:sk1-spk-pet-1-r3",
+          "label": "Pet: dog cuddle chat",
           "chips": [
             "pet"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a cozy living room, an adult creator holds the kraft dog treat pouch and says: “This is the pouch I grab before our walk.” A friendly dog enters on a simple leash. Chest-up handheld selfie, natural window light. End with the pouch and dog both visible. Sound: clear speech, a soft leash jingle and room tone; no music, text or logos.",
+          "prompt": "A woman in her late forties with short chestnut pixie and long face and freckles wears a teal cardigan in a pet setting. She is cuddling a calm dog beside the chest while speaking to camera and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-pet-2",
-          "label": "Pet: cat teaser",
+          "ref": "n:guide:sk1-spk-pet-2-r1",
+          "label": "Pet: cat cuddle chat",
           "chips": [
             "pet"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult creator holds the feather cat teaser and says: “One quick play session gets my cat moving.” They move the feather once while a gray cat watches. Chest-up front-camera selfie, natural light. End with the feather held beside the creator. Sound: speech and a light toy swish; no music, text or logos.",
+          "prompt": "A man in his early forties with short textured crop and round face and small mustache wears a gray sweatshirt in a pet setting. He is holding a calm cat close to the chest while giving a playful introduction and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-shop-1",
-          "label": "Shopping: canvas tote",
+          "ref": "n:guide:sk1-spk-shopping-1-r1",
+          "label": "Shopping: shop aisle update",
           "chips": [
             "shopping"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Inside a small clothing shop, an adult creator holds the plain canvas tote and says: “This is the bag I use for every market run.” They open the handles once. Chest-up handheld selfie, warm shop light. End with the tote held open toward the lens. Sound: clear speech and quiet shop ambience; no music, text or logos.",
+          "prompt": "A woman in her mid-thirties with close-cropped curls and angular face and cat-eye glasses wears a blue blazer in a shopping setting. She is standing in a bright shop aisle with a plain shopping bag at the side and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc1-spk-shop-2",
-          "label": "Shopping: ceramic cup",
+          "ref": "n:guide:sk1-spk-shopping-2-r1",
+          "label": "Shopping: clothing-rack chat",
           "chips": [
             "shopping"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Behind a small cafe counter, an adult creator holds the matte ceramic cup and says: “The rounded handle is what makes this cup easy to carry.” They turn the handle once. Chest-up front-camera selfie, warm window light. End with the handle facing camera. Sound: speech and soft cafe ambience; no music, text or logos.",
+          "prompt": "A man in his late fifties with short silver crop and wide jaw and salt beard wears a brown overshirt in a shopping setting. He is standing near a clothing rack speaking with a relaxed shopping update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-sports-1",
-          "label": "Sports: foam ball",
+          "ref": "n:guide:sk1-spk-sports-1-r1",
+          "label": "Sports: racket court tip",
           "chips": [
             "sports"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an outdoor community sports court, an adult Black woman holds the orange foam practice ball at chest height and says: “This lightweight ball is easy to keep in our practice kit.” The presenter turns the ball once toward the lens. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the ball held steady with court lines behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her early thirties with short ash-blonde pixie and oval face and freckles wears a lavender knit top in a sports setting. She is standing on an outdoor court beside a plain tennis racket, giving a quick tip and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-sports-2",
-          "label": "Sports: paddle",
+          "ref": "n:guide:sk1-spk-sports-2-r1",
+          "label": "Sports: ball court chat",
           "chips": [
             "sports"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an outdoor community sports court, an adult South Asian man holds the blue pickleball paddle with its face toward camera and says: “This paddle gives me a clear, comfortable grip for a quick game.” The presenter tilts the paddle once to show its face. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the paddle centered in front of the court. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A man in his mid-forties with short black waves and heart-shaped face and close beard wears an olive tee in a sports setting. He is standing near a community court with a plain basketball at the side, speaking to camera and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-study-room-1",
-          "label": "Study Room: keyboard",
+          "ref": "n:guide:sk1-spk-study-room-1-r1",
+          "label": "Study Room: desk study chat",
           "chips": [
             "study-room"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet study room, an adult East Asian woman holds the compact mechanical keyboard at chest height and says: “The compact layout keeps my desk clear during focused work.” The presenter tilts the keyboard once toward the lens. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the keyboard steady above the desk. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her early fifties with tight black bun and square face and warm smile wears a rust blouse in a study room setting. She is seated at a study desk with a laptop showing abstract color blocks and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-study-room-2",
-          "label": "Study Room: reading glasses",
+          "ref": "n:guide:sk1-spk-study-room-2-r1",
+          "label": "Study Room: notebook routine",
           "chips": [
             "study-room"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet study room, an adult Middle Eastern man holds the round reading glasses by one temple and says: “These light frames stay on my desk when I need a closer look.” The presenter turns the glasses once to catch the window light. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the glasses held steady with the study desk behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A man in his late thirties with short coiled fade and long face and neat beard wears a cream henley in a study room setting. He is seated beside a quiet desk with a blank notebook, explaining a study routine and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-classroom-1",
-          "label": "Classroom: ruler",
+          "ref": "n:guide:sk1-spk-classroom-1-r1",
+          "label": "Classroom: lesson introduction",
           "chips": [
             "classroom"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright classroom, an adult Black woman holds the wooden ruler upright beside her face and says: “This clear edge makes quick classroom measuring easy.” The presenter slides the ruler once through her hand. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the ruler upright with the blank board behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her late twenties with short curly bob and round face and small beauty mark wears a sky-blue tee in a classroom setting. She is standing before a blank classroom board, giving a clear lesson introduction and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-classroom-2",
-          "label": "Classroom: pencil case",
-          "chips": [
-            "classroom"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright classroom, an adult white man holds the translucent pencil case open toward the lens and says: “This case keeps my everyday writing tools together.” The presenter opens the zipper once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open case held steady above a classroom desk. Sound: clear speech and natural scene ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-terrace-1",
-          "label": "Terrace: solar lantern",
+          "ref": "n:guide:sk1-spk-terrace-1-r1",
+          "label": "Terrace: rooftop greeting",
           "chips": [
             "terrace"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny rooftop terrace, an adult Latina woman holds the rectangular solar lantern by its handle and says: “This small lantern adds a soft glow when the terrace gets dark.” The presenter turns the lantern once to show its panel. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the lantern steady with the skyline behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A man in his early seventies with thin silver hair and long face and white mustache wears a charcoal cardigan in a terrace setting. He is standing on a sunny rooftop terrace giving a hosting-style greeting and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-terrace-2",
-          "label": "Terrace: patio cushion",
+          "ref": "n:guide:sk1-spk-terrace-2-r1",
+          "label": "Terrace: patio chat",
           "chips": [
             "terrace"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny rooftop terrace, an adult East Asian man holds the striped patio cushion at chest height and says: “This cushion makes a hard outdoor seat more comfortable.” The presenter flips one corner to show the fabric. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the cushion held flat with the terrace parapet behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her mid-forties with short layered bob and angular face and round glasses wears a mustard blouse in a terrace setting. She is seated beside patio furniture on a rooftop terrace speaking to camera and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-bathroom-1",
-          "label": "Bathroom: bar soap",
+          "ref": "n:guide:sk1-spk-bathroom-1-r1",
+          "label": "Bathroom: robe mirror selfie",
           "chips": [
             "bathroom"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright modern bathroom, an adult South Asian woman holds the oval bar of soap beside her cheek and says: “This gentle bar is the one I keep by the morning sink.” The presenter turns the soap once in her palm. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the soap held steady with the sink behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A man in his early thirties with short brushed-up hair and oval face and faint stubble wears a teal overshirt in a bathroom setting. He is standing in a bright bathroom mirror selfie wearing a plain robe and speaking naturally and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-bathroom-2",
-          "label": "Bathroom: hairbrush",
-          "chips": [
-            "bathroom"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright modern bathroom, an adult Black man holds the wooden hairbrush with its bristles facing camera and says: “The wide handle makes this brush easy to use one-handed.” The presenter turns the brush once to show the bristles. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the brush steady beside his face. Sound: clear speech and natural scene ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-exercise-1",
-          "label": "Exercise: jump rope",
+          "ref": "n:guide:sk1-spk-exercise-1-r3",
+          "label": "Exercise: warm-up explanation",
           "chips": [
             "exercise"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright home exercise corner, an adult white woman holds the jump rope handles and lets the rope hang clearly and says: “This rope is ready for a short workout in a small space.” The presenter lifts both handles once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the handles held steady with the open floor behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her late fifties with short gray pixie and square face and freckles wears a plum sweater in an exercise setting. She is standing in a home exercise corner giving a warm-up explanation and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-exercise-2",
-          "label": "Exercise: foam roller",
+          "ref": "n:guide:sk1-spk-exercise-2-r1",
+          "label": "Exercise: mat recovery chat",
           "chips": [
             "exercise"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright home exercise corner, an adult East Asian man holds the dark blue foam roller horizontally at chest height and says: “This firm roller is easy to keep beside my home workout area.” The presenter turns the roller once to show its texture. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the roller steady with the exercise mat behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A man in his mid-fifties with close-cropped curls and round face and full beard wears a navy cardigan in an exercise setting. He is seated on an exercise mat giving a calm recovery explanation and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-bedroom-1",
-          "label": "Bedroom: sleep mask",
+          "ref": "n:guide:sk1-spk-bedroom-1-r3",
+          "label": "Bedroom: bedroom mirror selfie",
           "chips": [
             "bedroom"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm bedroom, an adult Latina woman holds the navy satin sleep mask beside her face and says: “I keep this mask on my bedside table for early nights.” The presenter lifts the mask strap once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the mask steady with the bed and pillows behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her early forties with short dark pixie and heart-shaped face and dimple wears a cream blouse in a bedroom setting. She is standing in a calm bedroom mirror selfie speaking softly and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-bedroom-2",
-          "label": "Bedroom: linen throw",
-          "chips": [
-            "bedroom"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm bedroom, an adult Middle Eastern man holds the folded linen throw against his chest and says: “This light throw is the extra layer I reach for before bed.” The presenter opens one corner to show the weave. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the folded throw steady with the bed behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-garage-1",
-          "label": "Garage: drill",
+          "ref": "n:guide:sk1-spk-garage-1-r1",
+          "label": "Garage: storage shelf update",
           "chips": [
             "garage"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tidy residential garage, an adult Black man holds the teal cordless drill upright with the bit visible and says: “This compact drill handles the small fixes on my weekend list.” The presenter turns the drill once to show the grip. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the drill steady with the garage bench behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A man in his late twenties with short wavy crop and angular face and small mustache wears a rust tee in a garage setting. He is standing beside a tidy garage storage shelf giving a practical update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-garage-2",
-          "label": "Garage: wrench",
-          "chips": [
-            "garage"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tidy residential garage, an adult East Asian woman holds the silver ratchet wrench horizontally at chest height and says: “The ratchet head lets me work in a tight space.” The presenter rotates the wrench once to show the head. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the wrench steady with the tool wall behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-interview-1",
-          "label": "Interview: lunch box",
+          "ref": "n:guide:sk1-spk-interview-1-r1",
+          "label": "Interview: street interview answer",
           "chips": [
             "interview"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lively pedestrian street, an adult white woman holds the stainless lunch box while an interviewer brings a plain microphone into frame and says: “This lunch box is what I pack when I am out all day.” The presenter opens the lid once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open lunch box steady during the street interview. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "prompt": "A woman in her mid-thirties with short straight blonde bob and oval face and light freckles wears a green overshirt in an interview setting. She is standing on a lively pedestrian street answering an off-camera interviewer and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-interview-2",
-          "label": "Interview: food jar",
-          "chips": [
-            "interview"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lively pedestrian street, an adult South Asian man holds the insulated food jar while an interviewer brings a plain microphone into frame and says: “This jar keeps a warm meal ready for my commute.” The presenter twists the lid once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the jar steady while the microphone remains in frame. Sound: clear speech and natural street ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-pool-1",
-          "label": "Pool: goggles",
+          "ref": "n:guide:sk1-spk-pool-1-r1",
+          "label": "Pool: poolside greeting",
           "chips": [
             "pool"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright outdoor swimming pool, an adult Black woman holds the clear swim goggles by the strap beside her face and says: “These goggles sit comfortably for a quick lap.” The presenter turns the goggles once to show both lenses. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the goggles steady with the pool lanes behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her mid-thirties with golden blonde high ponytail and oval face with sun freckles wears a pink athletic tank in a pool setting. She is standing beside a bright pool with palm trees giving a swim-day greeting and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-pool-2",
-          "label": "Pool: swim cap",
-          "chips": [
-            "pool"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright indoor swimming pool, an adult white man holds the navy silicone swim cap open toward the lens and says: “This cap folds flat in my swim bag.” The presenter stretches the rim once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the cap steady with the pool water behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-reporting-1",
-          "label": "Reporting: microphone",
+          "ref": "n:guide:sk1-spk-reporting-1-r3",
+          "label": "Reporting: sidewalk report",
           "chips": [
             "reporting"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a city sidewalk, an adult Latina woman holds the plain handheld microphone near her mouth and says: “I am testing this compact microphone for a clear street report.” The presenter turns the microphone once to show its grille. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the microphone steady as the city corner stays in view. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "prompt": "A woman in her late forties with short silver pixie and long face and glasses wears a blue cardigan in a reporting setting. She is standing on a city sidewalk speaking into a plain handheld microphone and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-reporting-2",
-          "label": "Reporting: directional mic",
-          "chips": [
-            "reporting"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a city park entrance, an adult East Asian man holds the short directional microphone with its gray windscreen toward the lens and says: “This directional microphone keeps my outdoor report focused.” The presenter tilts the microphone once toward the park. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the microphone steady with the park entrance behind him. Sound: clear speech and natural street ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-travel-1",
-          "label": "Travel: packing cube",
+          "ref": "n:guide:sk1-spk-travel-1-r1",
+          "label": "Travel: airport lounge update",
           "chips": [
             "travel"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright airport lounge, an adult Black woman holds the olive travel packing cube by its handle and says: “This cube keeps small travel layers easy to find.” The presenter opens the zipper once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open cube steady with terminal seating behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A man in his mid-forties with short dark crop and square face and faint stubble wears a black overshirt in a travel setting. He is standing in an airport lounge beside a plain carry-on bag giving a travel update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:sc2-travel-2",
-          "label": "Travel: neck pillow",
-          "chips": [
-            "travel"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright airport terminal, an adult white man holds the gray travel neck pillow around his neck and says: “This pillow gives my head support between flights.” The presenter lifts one side once to show its shape. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the pillow steady with terminal windows behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-yoga-1",
-          "label": "Yoga: yoga block",
+          "ref": "n:guide:sk1-spk-yoga-1-r1",
+          "label": "Yoga: breathing introduction",
           "chips": [
             "yoga"
           ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm yoga studio, an adult South Asian woman holds the natural cork yoga block at chest height and says: “This block gives my stretch a little more support.” The presenter turns the block once to show its edges. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the block steady with studio mats behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
-          "kind": "video"
-        },
-        {
-          "ref": "n:guide:sc2-yoga-2",
-          "label": "Yoga: yoga strap",
-          "chips": [
-            "yoga"
-          ],
-          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm yoga studio, an adult Black man holds the sand-colored yoga strap with its buckle visible and says: “This strap helps me keep a steady reach during a pose.” The presenter pulls the strap gently once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the strap relaxed in a loop with the studio behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "prompt": "A woman in her early sixties with short salt-and-pepper bob and round face and beauty mark wears a coral knit top in a yoga setting. She is seated on a yoga mat in a calm studio giving a breathing introduction and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         }
       ],

@@ -42892,6 +42892,886 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "sk1-spk-indoor-1-r1": {
+        "file": "sk1-spk-indoor-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian woman with short straight black bob in an indoor setting, speaking to camera standing in a bright entryway giving a friendly opening line.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-indoor-2-r1": {
+        "file": "sk1-spk-indoor-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black man with close-cropped salt-and-pepper curls in an indoor setting, speaking to camera seated in a quiet home corner speaking with relaxed hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-home-1-r1": {
+        "file": "sk1-spk-home-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with platinum pixie cut in a home setting, speaking to camera standing beside a sofa in a casual home welcome.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-home-2-r1": {
+        "file": "sk1-spk-home-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian man with neat buzz cut in a home setting, speaking to camera seated at a bright home table giving a calm explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-outdoor-1-r1": {
+        "file": "sk1-spk-outdoor-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with tight blonde bun in an outdoor setting, speaking to camera standing on a leafy path greeting the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-outdoor-2-r1": {
+        "file": "sk1-spk-outdoor-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern man with short silver side-part in an outdoor setting, speaking to camera standing by a park walkway delivering a quick outdoor update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-living-room-1-r1": {
+        "file": "sk1-spk-living-room-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short textured afro in a living room setting, speaking to camera seated on a sofa speaking in a relaxed living-room check-in.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-living-room-2-r1": {
+        "file": "sk1-spk-living-room-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short wavy chestnut crop in a living room setting, speaking to camera standing beside a lounge chair giving a friendly home introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-studio-1-r1": {
+        "file": "sk1-spk-studio-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian woman with cropped natural curls in a studio setting, speaking to camera seated in a clean creator studio giving a polished talking-head intro.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-studio-2-r1": {
+        "file": "sk1-spk-studio-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with shaved head in a studio setting, speaking to camera standing against a softly lit studio backdrop speaking clearly.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-office-1-r1": {
+        "file": "sk1-spk-office-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with salt-and-pepper crop in an office setting, speaking to camera seated at a desk with an open laptop showing only abstract color blocks.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-office-2-r1": {
+        "file": "sk1-spk-office-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black man with short coiled fade in an office setting, speaking to camera standing beside a desk giving a concise workday explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-garden-1-r1": {
+        "file": "sk1-spk-garden-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with chin-length auburn bob in a garden setting, speaking to camera standing among garden beds giving a cheerful garden update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-garden-2-r1": {
+        "file": "sk1-spk-garden-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Arab man with short curly black hair in a garden setting, speaking to camera standing near a greenhouse bench speaking with an easy smile.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-gym-1-r1": {
+        "file": "sk1-spk-gym-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian woman with short silver pixie in a gym setting, speaking to camera standing near weight racks giving a pre-workout greeting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-gym-2-r1": {
+        "file": "sk1-spk-gym-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white man with thin white crew cut in a gym setting, speaking to camera seated on a gym bench speaking after a training set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-cafe-1-r1": {
+        "file": "sk1-spk-cafe-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short tapered curls in a cafe setting, speaking to camera seated by a cafe window delivering a casual recommendation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-cafe-2-r1": {
+        "file": "sk1-spk-cafe-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with short dark side part in a cafe setting, speaking to camera standing at a cafe counter giving a quick conversational intro.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-kitchen-1-r1": {
+        "file": "sk1-spk-kitchen-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern woman with tight dark bun in a kitchen setting, speaking to camera standing at a bright kitchen island giving a cooking-day explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-kitchen-2-r1": {
+        "file": "sk1-spk-kitchen-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian man with short salt-and-pepper crop in a kitchen setting, speaking to camera seated at a kitchen counter speaking in a friendly review style.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-podcast-1-r1": {
+        "file": "sk1-spk-podcast-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short gray coils in a podcast setting, speaking to camera seated at a podcast desk speaking beside a plain broadcast microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-podcast-2-r1": {
+        "file": "sk1-spk-podcast-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short undercut in a podcast setting, speaking to camera leaning toward a podcast microphone delivering an opening line.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-fitness-1-r1": {
+        "file": "sk1-spk-fitness-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with straight honey-blonde bob in a fitness setting, speaking to camera seated on a studio mat giving a recovery tip.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-fitness-2-r1": {
+        "file": "sk1-spk-fitness-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with short curly fade in a fitness setting, speaking to camera standing in a bright fitness room describing a simple routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-beach-1-r1": {
+        "file": "sk1-spk-beach-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian woman with short braided crown with cropped sides in a beach setting, speaking to camera standing on a sunny shoreline greeting the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-beach-2-r1": {
+        "file": "sk1-spk-beach-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern man with close-cropped gray curls in a beach setting, speaking to camera standing on a beach boardwalk giving a relaxed travel-style update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-car-1-r1": {
+        "file": "sk1-spk-car-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with short dark angled bob in a car setting, speaking to camera seated in the driver seat with hands resting low, speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-car-2-r1": {
+        "file": "sk1-spk-car-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black man with short sponge curls in a car setting, speaking to camera seated in the parked passenger seat giving a casual car-selfie introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-hospital-1-r1": {
+        "file": "sk1-spk-hospital-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with short copper pixie in a hospital setting, speaking to camera standing in a clean staff break room in solid scrubs giving an update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-hospital-2-r1": {
+        "file": "sk1-spk-hospital-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white man with bald with gray beard in a hospital setting, speaking to camera standing in a quiet hospital corridor giving a calm informational line.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-balcony-1-r1": {
+        "file": "sk1-spk-balcony-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East African woman with short natural coils in a balcony setting, speaking to camera standing at a sunny apartment balcony railing giving a morning greeting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-balcony-2-r1": {
+        "file": "sk1-spk-balcony-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian man with short straight black hair in a balcony setting, speaking to camera standing among balcony plants speaking with a relaxed home update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-pet-1-r1": {
+        "file": "sk1-spk-pet-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Arab woman with short chestnut bob in a pet setting, speaking to camera cuddling a calm dog beside the chest while speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-pet-2-r1": {
+        "file": "sk1-spk-pet-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short textured crop in a pet setting, speaking to camera holding a calm cat close to the chest while giving a playful introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-shopping-1-r1": {
+        "file": "sk1-spk-shopping-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with close-cropped curls in a shopping setting, speaking to camera standing in a bright shop aisle with a plain shopping bag at the side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-shopping-2-r1": {
+        "file": "sk1-spk-shopping-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with short silver crop in a shopping setting, speaking to camera standing near a clothing rack speaking with a relaxed shopping update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-sports-1-r1": {
+        "file": "sk1-spk-sports-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with short ash-blonde pixie in a sports setting, speaking to camera standing on an outdoor court beside a plain tennis racket, giving a quick tip.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-sports-2-r1": {
+        "file": "sk1-spk-sports-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern man with short black waves in a sports setting, speaking to camera standing near a community court with a plain basketball at the side, speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-study-room-1-r1": {
+        "file": "sk1-spk-study-room-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian woman with tight black bun in a study room setting, speaking to camera seated at a study desk with a laptop showing abstract color blocks.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-study-room-2-r1": {
+        "file": "sk1-spk-study-room-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black man with short coiled fade in a study room setting, speaking to camera seated beside a quiet desk with a blank notebook, explaining a study routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-classroom-1-r1": {
+        "file": "sk1-spk-classroom-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with short curly bob in a classroom setting, speaking to camera standing before a blank classroom board, giving a clear lesson introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-terrace-1-r1": {
+        "file": "sk1-spk-terrace-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white man with thin silver hair in a terrace setting, speaking to camera standing on a sunny rooftop terrace giving a hosting-style greeting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-terrace-2-r1": {
+        "file": "sk1-spk-terrace-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian woman with short layered bob in a terrace setting, speaking to camera seated beside patio furniture on a rooftop terrace speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-bathroom-1-r1": {
+        "file": "sk1-spk-bathroom-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian man with short brushed-up hair in a bathroom setting, speaking to camera standing in a bright bathroom mirror selfie wearing a plain robe and speaking naturally.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-exercise-1-r1": {
+        "file": "sk1-spk-exercise-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short gray pixie in an exercise setting, speaking to camera standing in a home exercise corner giving a warm-up explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-exercise-2-r1": {
+        "file": "sk1-spk-exercise-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Arab man with close-cropped curls in an exercise setting, speaking to camera seated on an exercise mat giving a calm recovery explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-bedroom-1-r1": {
+        "file": "sk1-spk-bedroom-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with cropped dark pixie in a bedroom setting, speaking to camera standing in a calm bedroom mirror selfie speaking softly.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-garage-1-r1": {
+        "file": "sk1-spk-garage-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with short wavy crop in a garage setting, speaking to camera standing beside a tidy garage storage shelf giving a practical update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-interview-1-r1": {
+        "file": "sk1-spk-interview-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with short straight blonde bob in an interview setting, speaking to camera standing on a lively pedestrian street answering an off-camera interviewer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-pool-1-r1": {
+        "file": "sk1-spk-pool-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with golden blonde high ponytail in a pool setting, speaking to camera standing beside a bright pool with palm trees giving a swim-day greeting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-reporting-1-r1": {
+        "file": "sk1-spk-reporting-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern woman with short silver curls in a reporting setting, speaking to camera standing on a city sidewalk speaking into a plain handheld microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-travel-1-r1": {
+        "file": "sk1-spk-travel-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short dark crop in a travel setting, speaking to camera standing in an airport lounge beside a plain carry-on bag giving a travel update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-yoga-1-r1": {
+        "file": "sk1-spk-yoga-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with short salt-and-pepper bob in a yoga setting, speaking to camera seated on a yoga mat in a calm studio giving a breathing introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-home-1r2": {
+        "file": "sk1-spk-home-1r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with platinum pixie cut in a home setting, speaking to camera standing beside a sofa in a casual home welcome.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-office-1r2": {
+        "file": "sk1-spk-office-1r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with salt-and-pepper crop in an office setting, speaking to camera seated at a desk with an open laptop showing only abstract color blocks.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-podcast-2r2": {
+        "file": "sk1-spk-podcast-2r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short undercut in a podcast setting, speaking to camera leaning toward a podcast microphone delivering an opening line.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-interview-1r2": {
+        "file": "sk1-spk-interview-1r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with short straight blonde bob in an interview setting, speaking to camera standing on a lively pedestrian street answering an off-camera interviewer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-home-1-r2": {
+        "file": "sk1-spk-home-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with platinum pixie cut in a home setting, speaking to camera standing beside a sofa in a casual home welcome.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-office-1-r2": {
+        "file": "sk1-spk-office-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with salt-and-pepper crop in an office setting, speaking to camera seated at a desk with an open laptop showing only abstract color blocks.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-podcast-2-r2": {
+        "file": "sk1-spk-podcast-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short undercut in a podcast setting, speaking to camera leaning toward a podcast microphone delivering an opening line.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-interview-1-r2": {
+        "file": "sk1-spk-interview-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with short straight blonde bob in an interview setting, speaking to camera standing on a lively pedestrian street answering an off-camera interviewer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-pool-1-r2": {
+        "file": "sk1-spk-pool-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with golden blonde high ponytail in a pool setting, speaking to camera standing beside a bright pool with palm trees giving a swim-day greeting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-reporting-1-r2": {
+        "file": "sk1-spk-reporting-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern woman with short silver curls in a reporting setting, speaking to camera standing on a city sidewalk speaking into a plain handheld microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-yoga-1-r2": {
+        "file": "sk1-spk-yoga-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with short salt-and-pepper bob in a yoga setting, speaking to camera seated on a yoga mat in a calm studio giving a breathing introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-outdoor-1-r2": {
+        "file": "sk1-spk-outdoor-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with tight blonde bun in an outdoor setting, speaking to camera standing on a leafy path greeting the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-outdoor-2-r2": {
+        "file": "sk1-spk-outdoor-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern man with short silver side-part in an outdoor setting, speaking to camera standing by a park walkway delivering a quick outdoor update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-studio-1-r2": {
+        "file": "sk1-spk-studio-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian woman with cropped natural curls in a studio setting, speaking to camera seated in a clean creator studio giving a polished talking-head intro.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-studio-2-r2": {
+        "file": "sk1-spk-studio-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with shaved head in a studio setting, speaking to camera standing against a softly lit studio backdrop speaking clearly.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-gym-1-r2": {
+        "file": "sk1-spk-gym-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian woman with short silver pixie in a gym setting, speaking to camera standing near weight racks giving a pre-workout greeting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-gym-2-r2": {
+        "file": "sk1-spk-gym-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white man with thin white crew cut in a gym setting, speaking to camera seated on a gym bench speaking after a training set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-cafe-1-r2": {
+        "file": "sk1-spk-cafe-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short tapered curls in a cafe setting, speaking to camera seated by a cafe window delivering a casual recommendation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-cafe-2-r2": {
+        "file": "sk1-spk-cafe-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with short dark side part in a cafe setting, speaking to camera standing at a cafe counter giving a quick conversational intro.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-podcast-1-r2": {
+        "file": "sk1-spk-podcast-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short gray coils in a podcast setting, speaking to camera seated at a podcast desk speaking beside a plain broadcast microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-fitness-1-r2": {
+        "file": "sk1-spk-fitness-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with straight honey-blonde bob in a fitness setting, speaking to camera seated on a studio mat giving a recovery tip.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-fitness-2-r2": {
+        "file": "sk1-spk-fitness-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with short curly fade in a fitness setting, speaking to camera standing in a bright fitness room describing a simple routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-pet-1-r2": {
+        "file": "sk1-spk-pet-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Arab woman with short chestnut bob in a pet setting, speaking to camera cuddling a calm dog beside the chest while speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-pet-2-r2": {
+        "file": "sk1-spk-pet-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short textured crop in a pet setting, speaking to camera holding a calm cat close to the chest while giving a playful introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-exercise-1-r2": {
+        "file": "sk1-spk-exercise-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short gray pixie in an exercise setting, speaking to camera standing in a home exercise corner giving a warm-up explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-exercise-2-r2": {
+        "file": "sk1-spk-exercise-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Arab man with close-cropped curls in an exercise setting, speaking to camera seated on an exercise mat giving a calm recovery explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-bedroom-1-r2": {
+        "file": "sk1-spk-bedroom-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with cropped dark pixie in a bedroom setting, speaking to camera standing in a calm bedroom mirror selfie speaking softly.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-outdoor-1-r3": {
+        "file": "sk1-spk-outdoor-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with short blonde pixie tucked behind bare ears in an outdoor setting, speaking to camera standing on a leafy path greeting the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-studio-1-r3": {
+        "file": "sk1-spk-studio-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian woman with close-cropped natural curls tucked behind bare ears in a studio setting, speaking to camera seated in a clean creator studio giving a polished talking-head intro.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-fitness-1-r3": {
+        "file": "sk1-spk-fitness-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with straight honey-blonde bob tucked behind bare ears in a fitness setting, speaking to camera seated on a studio mat giving a recovery tip.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-pet-1-r3": {
+        "file": "sk1-spk-pet-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Arab woman with short chestnut pixie tucked behind bare ears in a pet setting, speaking to camera cuddling a calm dog beside the chest while speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-exercise-1-r3": {
+        "file": "sk1-spk-exercise-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short gray pixie tucked behind bare ears in an exercise setting, speaking to camera standing in a home exercise corner giving a warm-up explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-bedroom-1-r3": {
+        "file": "sk1-spk-bedroom-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with short dark pixie tucked behind bare ears in a bedroom setting, speaking to camera standing in a calm bedroom mirror selfie speaking softly.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-reporting-1-r3": {
+        "file": "sk1-spk-reporting-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern woman with short silver pixie tucked behind bare ears in a reporting setting, speaking to camera standing on a city sidewalk speaking into a plain handheld microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-gym-1-r3": {
+        "file": "sk1-spk-gym-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian woman with short silver pixie in a gym setting, speaking to camera standing near weight racks giving a pre-workout greeting.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

@@ -71,6 +71,12 @@ const TEMPLATE_PROMPTS = {
   bf: "The product in a festive setting with space for an offer."
 };
 const VIDEO_TOOLS = ["image-to-video", "url-to-video", "video-ads", "product-videos", "unboxing-videos", "before-after-videos", "spokesperson-videos"];
+// The competitor actor directory has one card for these nine scenes and two
+// for every other scene. Keep this map aligned with the local assign manifest.
+const ACTOR_SCENE_CARD_COUNTS = Object.fromEntries([
+  ["Classroom", 1], ["Bathroom", 1], ["Bedroom", 1], ["Garage", 1], ["Interview", 1],
+  ["Pool", 1], ["Reporting", 1], ["Travel", 1], ["Yoga", 1]
+]);
 const PHOTO_TOOLS = ["photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"];
 const HOME_TOOL_ALTS = {
   "image-to-video": "Plain cream travel mug on a stone counter in a warm room.",
@@ -2638,7 +2644,11 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (pageId === "examples") return (data.flows ?? []).filter((flow) => flow.filterTags?.includes(id)).length;
         return cards.filter((card) => card.chips?.includes(id)).length;
       };
-      for (const chip of chips) if (filterCount(chip.id) < 2) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
+      // Actor directories mirror the competitor's card count, so some scenes
+      // intentionally have one card. Other picker pages retain the two-card
+      // minimum used to catch incomplete galleries.
+      const minCardsPerFilter = ["ai-actors", "spokesperson-videos"].includes(pageId) ? 1 : 2;
+      for (const chip of chips) if (filterCount(chip.id) < minCardsPerFilter) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
       for (const card of cards) {
         const labelWords = wordCount(card.label);
         if (labelWords < 2 || labelWords > 6) errors.push(`${pageId}: visual picker card labels must contain 2-6 words (${card.label})`);
@@ -2772,7 +2782,8 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (!scenes.length) errors.push("ai-actors: actor scenes are missing");
       for (const scene of scenes) {
         const count = actors.filter((actor) => actor.scene === scene).length;
-        if (count !== 2) errors.push(`ai-actors: scene ${scene} must have exactly 2 actor cards, got ${count}`);
+        const expected = ACTOR_SCENE_CARD_COUNTS[scene] ?? 2;
+        if (count !== expected) errors.push(`ai-actors: scene ${scene} must have exactly ${expected} actor cards, got ${count}`);
       }
       if (new Set(actors.map((actor) => actor.name)).size !== actors.length) errors.push("ai-actors: actor names must be unique");
       for (const actor of actors) {
