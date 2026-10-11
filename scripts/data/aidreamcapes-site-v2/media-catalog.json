@@ -8155,6 +8155,116 @@
       "variants": [
         1200
       ]
+    },
+    "im14-industries-beauty-strip-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short red bob applies a plain pump moisturizer to the back of her hand beside a bright bathroom mirror.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-industries-fashion-strip-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult man in a plain olive field jacket checks the sleeve and front pockets in a bright courtyard.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-industries-electronics-scene-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult hand places a plain compact foldable device stand on a desk beside a turned-away tablet.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-ind-beauty-light-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain round white cream jar on a pale stone pedestal in a soft diagonal beam of warm window light.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-ind-fashion-tryon-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short blonde bob wears a plain blue denim jacket and turns to show its fit.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-ind-fashion-look-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with short silver-gray hair wears a plain cream knit top and charcoal trousers in a bright courtyard.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-ind-shoes-detail-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Close view of a plain charcoal sneaker showing the toe, flat laces, stitching, mesh texture and outsole edge.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-ind-shoes-pack-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult hands lift the lid of a plain cream shoe box containing one unbranded charcoal sneaker.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-ind-electronics-angle-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Four views of one plain compact graphite foldable device stand arranged on a neutral desk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-plat-instagram-jewelry-model-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short auburn bob wears one plain silver pendant necklace over a black top.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
+    },
+    "im14-plat-youtube-shorts-charger-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult hands plug a plain compact black charger into a generic phone on a clean desk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "im14"
     }
   },
   "clips": {

@@ -85,8 +85,8 @@
       "n:guide:q14-industries-strip-hiker",
       "n:gen2:ind-food-drinks-g2",
       "n:guide:q14-industries-strip-headphones-unbox",
-      "n:gen2:ind-beauty-skincare-g4",
-      "n:gen2:rb1-industries-strip-4-r1",
+      "n:im14-industries-beauty-strip-r1",
+      "n:im14-industries-fashion-strip-r1",
       "n:guide:f4-industries-strip-running-shoe-r1"
     ],
     "steps": {
@@ -289,7 +289,7 @@
       "t": "Electronics: desk demo",
       "d": "Show the gadget being set up and used for one task, with the controls visible in the same frame.",
       "href": "/industries/electronics",
-      "image": "n:gen2:rb1-industries-scene-electronics-r1"
+      "image": "n:im14-industries-electronics-scene-r1"
     },
     {
       "t": "Wellness: routine moment",
