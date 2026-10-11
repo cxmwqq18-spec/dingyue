@@ -115,7 +115,7 @@
         "label": "Coastal",
         "items": [
           {
-            "ref": "n:guide:k5-lifestyle-gallery-04",
+            "ref": "n:im07-photo-hub-tote-r1",
             "title": "Coastal: linen tote on a beach blanket",
             "kind": "photo",
             "product": "linen tote bag"
@@ -209,13 +209,13 @@
         "audience": "Home decor shop",
         "tool": "lifestyle-photos",
         "task": "Show the finished room around your linen pillow without moving a single sofa.",
-        "ref": "n:rx3-photo-hub-scenario-2-r1"
+        "ref": "n:im07-photo-hub-pillow-r1"
       },
       {
         "audience": "Fashion seller",
         "tool": "model-photos",
         "task": "See your knit dress on a model before you pay for a shoot.",
-        "ref": "n:rx3-photo-hub-scenario-3-r1"
+        "ref": "n:im07-photo-hub-dress-r1"
       },
       {
         "audience": "Food seller",
