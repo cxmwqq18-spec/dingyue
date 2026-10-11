@@ -1,10 +1,10 @@
 {
   "id": "trust",
   "title": "Trust and Safety for AI Product Content | AIVideosUGC",
-  "description": "AI content trust and safety at AIVideosUGC: what you can make, what we decline, how your uploads stay private and how to report a problem with a result.",
+  "description": "How AIVideosUGC keeps AI product ads on the level: what you can make, what requests we decline, how your uploads stay private and how to report a problem.",
   "h1": "Trust and Safety for AI Product Content",
   "eyebrow": "Trust & Safety",
-  "lead": "Trust and safety for AI content starts with who it's for: AIVideosUGC is built for stores making content about their own products. Here is what that means for your uploads, your results and the people who see them.",
+  "lead": "AIVideosUGC is built for stores making ads about their own products. Here is what that means for your uploads, your results and the people who see them.",
   "card": "What you can make, how uploads stay private and how to report a problem.",
   "secondary_keywords": [
     "AI content rules",
@@ -17,50 +17,58 @@
     {
       "h2": "What AIVideosUGC is for",
       "paras": [
-        "AIVideosUGC helps online stores turn their own product photos into short video ads and store-ready images. Use it for products you sell or are allowed to promote, on your store, marketplaces and social channels."
+        "Online stores use it to turn their own product photos into short AI video ads and store-ready images. Make content for products you sell or are allowed to promote, on your store, marketplaces and social channels."
       ]
     },
     {
       "h2": "What we decline",
       "paras": [
-        "Requests that involve celebrities or public figures, brand logos or trademarks you don't own, or large amounts of text may be declined. We also don't allow content that impersonates real people, misleads buyers, sexualizes anyone, targets minors or promotes harm."
+        "Requests that involve celebrities or other public figures, brand logos or trademarks you do not own, or large amounts of text may be declined. We also do not allow content that impersonates real people, misleads buyers, sexualizes anyone, targets minors or promotes harm."
       ]
     },
     {
       "h2": "Your uploads and results",
       "paras": [
-        "Your uploads and results stay in your account and are not shown publicly. Only upload photos you own or have permission to use, and check every result against your real product before you publish it."
+        "Your uploads and results stay in your account and are never shown to other customers. Only upload photos you own or have permission to use, and compare every result with your real product before you publish it."
       ]
     },
     {
       "h2": "Using AI content in ads",
       "paras": [
-        "Show what your product really does. Add prices, dates and claims yourself in your design or ad tool so they are exactly right, and follow each platform's rules, including any rules about labeling AI-generated content."
+        "Show what your product really does. Add prices, dates and claims yourself in your design or ad tool so they are exactly right, and follow each platform's rules, including any rule about labeling AI-generated content."
       ]
     },
     {
       "h2": "Report a problem",
       "paras": [
-        "If you see content made with AIVideosUGC that breaks these rules, or you think your rights have been affected, email support@aivideosugc.com with the details. We aim to reply within two business days."
+        "If you see content made with AIVideosUGC that breaks these rules, or think your rights have been affected, email support@aivideosugc.com with the details. The team aims to reply within two business days."
       ]
     }
   ],
   "faq": [
     {
       "q": "Can I download the product assets made in my account?",
-      "a": "Yes. Download the photos and videos from your signed-in account; review source-photo rights and each platform’s rules before publishing."
+      "a": "Yes. Download the photos and videos from your signed-in account and use them commercially without a watermark. Make sure you own the source photo and follow the rules of the platform you post on."
     },
     {
       "q": "Are my uploads used to show other customers?",
-      "a": "No. Your uploads and results stay in your account and are not shown publicly."
+      "a": "No. Your uploads and results stay in your account and are not shown publicly or to other customers."
     },
     {
       "q": "What should I check before publishing AI-generated product content?",
-      "a": "Compare the result with your product, add accurate prices and claims in your editor, and follow the destination platform’s rules for labeling AI-generated content."
+      "a": "Compare the result with your product, add accurate prices and claims in your editor, and follow the destination platform's rules for labeling AI-generated content."
+    },
+    {
+      "q": "Can I make an ad with a celebrity or a brand I don't own?",
+      "a": "No. Requests involving celebrities, other public figures, or logos and trademarks you do not own may be declined. Use the tool for your own products and your own brand."
     },
     {
       "q": "Where should I check content and data-use rules?",
-      "a": "Use the current Privacy, Terms, Content, and Refunds pages for policy details; this FAQ only states account-scoped storage and failed-job credit returns."
+      "a": "Read the current Privacy, Terms, Content and Refunds pages for the full policy. This page covers what you can make, how uploads stay private and how a failed job returns credits to your balance."
+    },
+    {
+      "q": "How do I report content that breaks these rules?",
+      "a": "Email support@aivideosugc.com with the link or details of the content and the problem. The team aims to reply within two business days."
     }
   ]
 }
