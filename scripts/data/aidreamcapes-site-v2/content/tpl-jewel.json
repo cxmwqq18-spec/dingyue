@@ -92,16 +92,16 @@
   "visual": {
     "overview": "An on-model jewelry image answers scale and fit while keeping the piece recognizable. Use a worn view or hand demonstration, then pair it with the standalone product photo and stated measurements.",
     "strip": [
-      "n:guide:q9-jewel-alt-gold-hoop",
+      "n:guide:rc3-jewel-strip-gold-hoop-r1",
       "n:guide:tpl-jewel-m1-hoop",
       "n:guide:q9-jewel-alt-brooch",
       "n:guide:q9-jewel-alt-silver-pendant",
       "n:guide:tpl-jewel-round4-hoop-earrings",
-      "n:guide:q9-jewel-alt-stud-earring"
+      "n:guide:rc3-jewel-strip-stud-r1"
     ],
     "steps": {
       "source": "n:guide:tpl-jewel-m2-source",
-      "result": "n:guide:tpl-jewel-m2-square",
+      "result": "n:guide:rc3-jewel-step-result-r1",
       "mode": "photo",
       "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Keep the full pendant and chain curve inside the crop, with soft window light and natural skin texture. Chest-up product-ad framing, clean styling, no text or logos. End with the piece still enough for a shopper to compare with the source image. Leave room around the neckline so the result can sit beside material, length and care details in a listing.",
       "options": [

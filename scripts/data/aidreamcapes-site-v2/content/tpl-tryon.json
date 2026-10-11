@@ -105,11 +105,11 @@
     "overview": "A virtual try-on scene puts your garment on a model so shoppers can see the silhouette before opening the size chart.",
     "strip": [
       "n:guide:tpl-tryon-c3-strip-bomber-front",
-      "n:guide:tpl-tryon-c3-strip-cardigan-side",
+      "n:guide:rc3-tpl-tryon-strip-cardigan-r1",
       "n:guide:ind-shoes-m2-result",
-      "f:q8-tpl-tryon-strip-04",
+      "n:guide:rc3-tpl-tryon-strip-trench-r1",
       "n:guide:tpl-tryon-c3-strip-overshirt",
-      "f:q8-tpl-tryon-strip-06"
+      "n:guide:rc3-tpl-tryon-strip-bomber-back-r1"
     ],
     "steps": {
       "source": "n:guide:tpl-tryon-c3-m2-source",

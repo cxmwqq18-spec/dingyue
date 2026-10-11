@@ -44258,6 +44258,171 @@
           640,
           1280
         ]
+      },
+      "rc3-tpl-tryon-strip-cardigan-r1": {
+        "file": "rc3-tpl-tryon-strip-cardigan-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short black hair wearing a cream cardigan in a plain studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-tryon-strip-trench-r1": {
+        "file": "rc3-tpl-tryon-strip-trench-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with close-cropped hair wearing an olive trench coat on a quiet city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-tryon-strip-bomber-back-r1": {
+        "file": "rc3-tpl-tryon-strip-bomber-back-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short curly black hair showing the back of a plain navy bomber jacket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-hero-output-r1": {
+        "file": "rc3-jewel-hero-output-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper bob wearing the exact silver teardrop pendant necklace at her collarbone.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-step-result-r1": {
+        "file": "rc3-jewel-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper bob wearing the exact silver teardrop pendant necklace in a square studio photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-strip-gold-hoop-r1": {
+        "file": "rc3-jewel-strip-gold-hoop-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a close-cropped haircut wearing one plain brushed-gold hoop earring.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-strip-stud-r1": {
+        "file": "rc3-jewel-strip-stud-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short tight curls wearing one small silver stud earring.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-pleated-skirt-r1": {
+        "file": "rc3-look-strip-pleated-skirt-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short auburn pixie wearing a white blouse and navy pleated skirt on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-beige-suit-r1": {
+        "file": "rc3-look-strip-beige-suit-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with close-cropped hair wearing a tailored beige suit in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-layered-r1": {
+        "file": "rc3-look-strip-layered-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob wearing a charcoal sweater, black trousers and taupe coat on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-crossbody-r1": {
+        "file": "rc3-look-strip-crossbody-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian man with short black hair wearing a cream sweater and black crossbody bag in a home office.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-knit-texture-r1": {
+        "file": "rc3-look-strip-knit-texture-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close view of an adult woman with a short copper bob holding the sleeve of a plain warm-gray chunky knit sweater.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-source-r1": {
+        "file": "rc3-head-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Professional source portrait of an adult East Asian man with close-cropped black hair in a dark green shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-hero-output-r1": {
+        "file": "rc3-head-hero-output-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Professional headshot of the same adult East Asian man in a black blazer against a soft light-gray office background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-step-result-r1": {
+        "file": "rc3-head-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matching team headshot of the same adult East Asian man in a charcoal blazer against a pale gray studio background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
       }
     }
   }

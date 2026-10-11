@@ -88,8 +88,8 @@
       "n:guide:tpl-head-round4-07"
     ],
     "steps": {
-      "source": "g:professional-headshot/source-input",
-      "result": "n:guide:q9-head-step-output",
+      "source": "n:guide:rc3-head-source-r1",
+      "result": "n:guide:rc3-head-step-result-r1",
       "mode": "photo",
       "prompt": "Make a square portrait from the uploaded person with a soft gray backdrop and even light.",
       "options": [

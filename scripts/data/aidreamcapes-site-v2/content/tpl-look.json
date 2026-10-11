@@ -92,12 +92,12 @@
   "visual": {
     "overview": "A lookbook photo shows one complete outfit on a person in a styled setting, so shoppers can picture the pieces worn together before they buy.",
     "strip": [
-      "n:guide:q9-look-alt-pleated-skirt",
+      "n:guide:rc3-look-strip-pleated-skirt-r1",
       "n:guide:q9-look-alt-knit-beanie",
-      "n:guide:q9-look-alt-beige-suit",
-      "n:guide:q9-look-alt-layered-streetwear",
-      "n:guide:q9-look-alt-crossbody-outfit",
-      "n:guide:q9-look-alt-knit-texture"
+      "n:guide:rc3-look-strip-beige-suit-r1",
+      "n:guide:rc3-look-strip-layered-r1",
+      "n:guide:rc3-look-strip-crossbody-r1",
+      "n:guide:rc3-look-strip-knit-texture-r1"
     ],
     "steps": {
       "source": "g:fashion-editorial/source-input",

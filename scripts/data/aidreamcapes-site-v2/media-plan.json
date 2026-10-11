@@ -155,7 +155,7 @@
       "hero": {
         "kind": "pair",
         "before": "n:guide:q9-media-jewel-source",
-        "after": "n:guide:q9-media-jewel-output"
+        "after": "n:guide:rc3-jewel-hero-output-r1"
       },
       "gallery": [],
       "og": "n:t33-tpl-jewel-og-r2"
@@ -172,8 +172,8 @@
     "tpl-head": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:q9-media-head-source",
-        "after": "n:guide:q9-media-head-output"
+        "before": "n:guide:rc3-head-source-r1",
+        "after": "n:guide:rc3-head-hero-output-r1"
       },
       "gallery": [],
       "og": "n:t33-tpl-head-og-r2"
