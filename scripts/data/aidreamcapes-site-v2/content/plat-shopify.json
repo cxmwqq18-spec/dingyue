@@ -1,11 +1,11 @@
 {
   "id": "plat-shopify",
-  "title": "Shopify Product Photos That Match Your Store | AIVideosUGC",
-  "description": "Get matching Shopify product photos without reshooting your catalog: one photo gives you square page shots, collection tiles, social crops and a clip.",
-  "h1": "Shopify Product Photos and Videos From One Upload",
+  "title": "AI Shopify Product Photos and Videos | AIVideosUGC",
+  "description": "Create Shopify product photos for product pages, collection tiles, and social crops from one upload, with matching scenes and no reshoot.",
+  "h1": "AI Shopify Product Photos and Videos From One Upload",
   "eyebrow": "Shopify stores",
-  "lead": "Turn one product photo into matching Shopify media. Get square page and collection images, plus a short clip, with the credit cost shown first.",
-  "card": "Matching square photos, lifestyle shots and a short clip for each product page.",
+  "lead": "Give every product page and collection tile a matching look from one upload. Create square product photos and short clips without reshooting older items.",
+  "card": "Matching square product photos, lifestyle scenes, and short clips for each Shopify product page.",
   "secondary_keywords": [
     "Shopify product images",
     "Shopify collection page photos",
@@ -39,7 +39,7 @@
     },
     {
       "q": "What photo should I upload?",
-      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front or three-quarter view works best."
+      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front or three-quarter view works well."
     },
     {
       "q": "Are the files mine to use on my store?",
@@ -50,15 +50,15 @@
   "cta_lead": "Start with one product and plan matching images for its collection and detail pages.",
   "steps": [
     {
-      "t": "Upload your product photo",
+      "t": "Upload Your Product Photo",
       "d": "Add one clear photo from your Shopify product page. There is no link to paste and no product data to sync."
     },
     {
-      "t": "Pick the scene",
+      "t": "Pick the Scene",
       "d": "Choose the format you want, from a clean product shot to a creator-style scene, and see the credit cost first."
     },
     {
-      "t": "Render, download and launch",
+      "t": "Render, Download and Launch",
       "d": "Preview the result, make another version if you need one, then download the file and add it to your store or ad."
     }
   ],
@@ -66,16 +66,16 @@
     "strip": [
       "n:guide:q19-shop-strip-glasses-tryon",
       "n:guide:q19-shop-strip-serum-apply",
-      "n:guide:q19-shop-strip-tote-commute",
+      "n:guide:q19-shop-after-bowl-use",
       "n:guide:q19-shop-strip-linen-before-after",
       "n:guide:q19-shop-strip-pet-brush",
-      "n:guide:q19-shop-strip-snack-bite"
+      "n:guide:q19-shop-picker-04-lamp-product-hero"
     ],
     "steps": {
-      "source": "n:guide:q19-shop-step-bowl-source",
+      "source": "n:guide:c4-shopify-bowls-main-angle",
       "result": "n:guide:plat-shopify-c3-m2-result",
       "mode": "photo",
-      "prompt": "Still square lifestyle photograph of an adult hand serving berries into one bowl from a coordinated ceramic set at a bright dining table; capture the frozen moment as the berries fall into the bowl, soft window light, centered close composition with the bowl set visible, no text or logos.",
+      "prompt": "Still square product photograph of four coordinated ceramic bowls in cream, blue, sage, and charcoal glazes arranged with fresh fruit on a light dining table; soft window light, centered composition with every bowl fully visible and crisp product detail, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos.",
       "options": [
         [
           "Template",
@@ -92,15 +92,15 @@
       ],
       "items": [
         {
-          "t": "Upload your product photo",
+          "t": "Upload Your Product Photo",
           "d": "Add one clear photo from your Shopify product page. There is no link to paste and no product data to sync."
         },
         {
-          "t": "Pick the scene",
+          "t": "Pick the Scene",
           "d": "Choose the format you want, from a clean product shot to a creator-style scene, and see the credit cost first."
         },
         {
-          "t": "Render, download and launch",
+          "t": "Render, Download and Launch",
           "d": "Preview the result, make another version if you need one, then download the file and add it to your store or ad."
         }
       ]
@@ -109,25 +109,25 @@
   "benefits_h2": "3 ways AI helps you scale your Shopify marketing",
   "benefits": [
     {
-      "t": "Clear video ads on a small budget",
+      "t": "Run clear video ads on a small budget",
       "d": "Turn one product photo into clear video ads without the cost and wait of booked UGC creators and designers."
     },
     {
-      "t": "Unmatched creative freedom",
+      "t": "Make several ad versions in minutes",
       "d": "Make several ad versions in minutes, not weeks, with full control over the scene and the message."
     },
     {
-      "t": "AI creators for every audience",
+      "t": "Create creator-style scenes for each market",
       "d": "Use creator-style scenes for different markets, so each audience sees an ad that feels made for them."
     }
   ],
-  "steps_h2": "How to get started",
-  "steps_lead": "Turn a Shopify product photo into an ad-ready clip or image in a few steps.",
+  "steps_h2": "How to Make Shopify Product Photos in 3 Simple Steps",
+  "steps_lead": "Turn one Shopify product photo into a store-ready image or short clip in three steps.",
   "more_sections": [
     {
-      "eyebrow": "From photo to winning ad",
-      "h2": "From one product photo to a winning ad in minutes",
-      "lead": "No manual editing. The product photo becomes the clip or store image in one flow.",
+      "eyebrow": "From photo to store media",
+      "h2": "From One Shopify Product Photo to a Winning Ad in Minutes",
+      "lead": "Keep the product look consistent while you make page, collection, and ad versions.",
       "items": [
         {
           "t": "Add Your Product Photo",

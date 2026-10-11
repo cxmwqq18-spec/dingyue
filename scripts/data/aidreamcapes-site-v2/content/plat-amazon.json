@@ -1,11 +1,11 @@
 {
   "id": "plat-amazon",
-  "title": "Amazon Product Photos on White and in Use | AIVideosUGC",
-  "description": "Meet Amazon main-image rules with one product photo: get a white-background main, lifestyle and detail shots without a reshoot, with the cost shown first.",
-  "h1": "Amazon Product Photos for Your Main Image and Listing Gallery",
+  "title": "Amazon Product Photos for Listings | AIVideosUGC",
+  "description": "Create Amazon product photos for a clean main image, detail views, and lifestyle shots from one upload, without a reshoot, with the credit cost shown first.",
+  "h1": "AI Amazon Product Photos That Fill Your Listing Gallery",
   "eyebrow": "Amazon listings",
-  "lead": "Turn one product photo into an Amazon-ready image set. Get a white-background main, plus lifestyle and detail shots that follow Amazon's rules, with the credit cost shown first.",
-  "card": "A clean white main image, then photos for size, detail and use.",
+  "lead": "Get a clean main image and useful gallery shots from one product photo. Build white-background, detail, and lifestyle images without booking a studio.",
+  "card": "One upload for a clean white main image, useful details, and product-in-use shots.",
   "secondary_keywords": [
     "Amazon main image white background",
     "Amazon listing images",
@@ -27,7 +27,7 @@
     },
     {
       "q": "Which images should follow the main image?",
-      "a": "Add a lifestyle shot, a close detail and a size cue, in that order. Each image should answer the shopper's next question about the product."
+      "a": "Add a lifestyle shot, a close detail, and a size cue, in that order. Each image should answer the shopper's next question about the product."
     },
     {
       "q": "Can I add text callouts to my images?",
@@ -35,7 +35,7 @@
     },
     {
       "q": "What photo should I upload?",
-      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front view works best for a main image rebuild."
+      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front view works well for a main image rebuild."
     },
     {
       "q": "Can I make a video for my Amazon listing?",
@@ -54,10 +54,10 @@
         "label": "White main images",
         "items": [
           {
-            "ref": "n:guide:q19-amz-example-vitamin-main",
-            "title": "White Main — Vitamin Bottle Centered",
+            "ref": "n:guide:q19-amz-picker-02-white-protein",
+            "title": "White Main — Plain Protein Pouch Centered",
             "kind": "photo",
-            "product": "vitamin bottle"
+            "product": "protein pouch"
           },
           {
             "ref": "n:guide:q19-amz-example-daypack-main",
@@ -71,10 +71,10 @@
         "label": "Detail shots",
         "items": [
           {
-            "ref": "n:guide:q19-amz-example-trail-sole",
-            "title": "Detail Shot — Trail Shoe Tread and Mesh",
+            "ref": "n:guide:q19-amz-strip-soap-use",
+            "title": "Detail Shot — Cleanser Pump in Hand",
             "kind": "photo",
-            "product": "trail shoe"
+            "product": "cleanser"
           },
           {
             "ref": "n:guide:q19-amz-example-daypack-pocket",
@@ -101,32 +101,32 @@
   "cta_lead": "Build a listing photo set around the main view, useful details, and product use.",
   "steps": [
     {
-      "t": "Upload your product photo",
+      "t": "Upload Your Product Photo",
       "d": "Add one clear photo of the whole item. Every gallery shot starts from that single product photo."
     },
     {
-      "t": "Pick main, lifestyle or detail",
-      "d": "Choose a white main, a lifestyle scene or a close detail. The credit cost shows first, before the file is made."
+      "t": "Pick a Listing Image",
+      "d": "Choose a white main, a lifestyle scene, or a close detail. The credit cost shows first, before the file is made."
     },
     {
-      "t": "Download and list",
+      "t": "Download and List",
       "d": "Download the square file with no watermark, add any callouts yourself, then use it in your Amazon listing."
     }
   ],
   "visual": {
     "strip": [
-      "n:guide:q19-amz-strip-first-sip",
-      "n:guide:q19-amz-strip-coffee-pouch",
-      "n:guide:q19-amz-strip-white-lamp",
-      "n:guide:q19-amz-strip-white-bottle",
-      "n:guide:q19-amz-strip-soap-use",
-      "n:guide:q19-amz-strip-cable-demo"
+      "n:guide:q19-amz-picker-05-size-bottle-hand",
+      "n:guide:q19-amz-picker-06-cleanser-use",
+      "n:guide:q19-amz-picker-07-headphone-unbox",
+      "n:guide:q19-amz-picker-08-pet-bundle",
+      "n:guide:q19-amz-use-notebook-write",
+      "n:guide:q19-amz-override-compare-lipbalm"
     ],
     "steps": {
       "source": "n:guide:plat-amazon-c3-m2-source",
       "result": "n:guide:q19-amz-step-mug-use",
       "mode": "photo",
-      "prompt": "Still square product photograph of an adult hand lifting a plain ceramic mug at a bright breakfast table, the mug held at the frozen moment just above the table; soft morning window light, close composition with the mug and hand centered, crisp product detail, no text or logos.",
+      "prompt": "Still square product photograph of an adult hand lifting a plain ceramic mug at a bright breakfast table, the mug held at the frozen moment just above the table; soft morning window light, close composition with the mug and hand centered, crisp product detail, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos.",
       "options": [
         [
           "Template",
@@ -143,60 +143,60 @@
       ],
       "items": [
         {
-          "t": "Upload your product photo",
+          "t": "Upload Your Product Photo",
           "d": "Add one clear photo of the whole item. Every gallery shot starts from that single product photo."
         },
         {
-          "t": "Pick main, lifestyle or detail",
-          "d": "Choose a white main, a lifestyle scene or a close detail. The credit cost shows first, before the file is made."
+          "t": "Pick a Listing Image",
+          "d": "Choose a white main, a lifestyle scene, or a close detail. The credit cost shows first, before the file is made."
         },
         {
-          "t": "Download and list",
+          "t": "Download and List",
           "d": "Download the square file with no watermark, add any callouts yourself, then use it in your Amazon listing."
         }
       ]
     }
   },
-  "benefits_h2": "Amazon-ready image formats that help search and sales",
+  "benefits_h2": "Amazon Product Photos That Help Search and Sales",
   "benefits": [
     {
-      "t": "Main Listing Image",
-      "d": "A clean square shot on plain white, the first image shoppers see when they open the listing."
+      "t": "Get a clean main image shoppers expect",
+      "d": "Place the complete product on pure white so shoppers see the item first."
     },
     {
-      "t": "Detail and How-To Shots",
+      "t": "Cut questions and returns with detail shots",
       "d": "Show a useful feature or use step, the images that cut questions and returns."
     },
     {
-      "t": "Lifestyle and Unboxing",
-      "d": "Place the product in a real scene or show what is in the box, so shoppers know what to expect."
+      "t": "Help shoppers picture the product in use",
+      "d": "Add a lifestyle or unboxing view so shoppers know how the item fits their routine."
     }
   ],
-  "steps_h2": "How to make Amazon product photos in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into listing-ready main and gallery images — no studio, no reshoot.",
+  "steps_h2": "How to Make Amazon Product Photos in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into listing-ready main and gallery images in three steps, without a studio or reshoot.",
   "more_sections": [
     {
-      "eyebrow": "Made for each placement",
-      "h2": "Optimized for Amazon image placements",
-      "lead": "A square set for the listing, brand store and sponsored ads.",
+      "eyebrow": "Made for each Amazon destination",
+      "h2": "Optimized for Amazon Listings and Ads",
+      "lead": "Create a square set for listing pages, Brand Stores, sponsored ads, and off-Amazon traffic.",
       "items": [
         {
           "t": "Listing and Brand Store",
           "d": "Square main and gallery images that keep shoppers on the product page longer."
         },
         {
-          "t": "Sponsored Ad Creative",
-          "d": "Clear product shots made for search and ad placements, with a fresh look ready to test."
+          "t": "Sponsored Ad Image",
+          "d": "Clear product shots made for search and ads, with a fresh look ready to test."
         },
         {
           "t": "Off-Amazon Traffic",
-          "d": "Use the same square assets in social ads that send traffic back to the listing."
+          "d": "Reuse the same square assets in social ads that send traffic back to the listing."
         }
       ]
     },
     {
       "eyebrow": "Why sellers scale with it",
-      "h2": "Why growing sellers scale Amazon images here",
+      "h2": "Why Sellers Scale Amazon Content Here",
       "lead": "No more weeks of production cycles for each new SKU.",
       "items": [
         {
@@ -204,35 +204,47 @@
           "d": "See what works in your category and apply the same visual ideas to your own products."
         },
         {
-          "t": "Photo Ready In Minutes",
-          "d": "Start from one product photo and get a listing image without a studio booking."
+          "t": "Get a Listing Image in Minutes",
+          "d": "Start from one product photo and get a usable listing image without a studio booking."
         },
         {
-          "t": "White Background to Lifestyle",
-          "d": "Turn one plain product photo into a white main and a real lifestyle scene."
+          "t": "Move from White to Lifestyle",
+          "d": "Turn one plain product photo into a white main and a real product-use scene."
+        },
+        {
+          "t": "Add Detail Without a Reshoot",
+          "d": "Create a close view that answers a shopper question without setting up another shoot."
         }
       ]
     },
     {
       "eyebrow": "By top categories",
-      "h2": "AI image solutions for top Amazon categories",
+      "h2": "AI Amazon Product Photos for Top Categories",
       "lead": "The visual language that drives clicks in each niche.",
       "items": [
         {
           "t": "Home and Kitchen Gadgets",
-          "d": "Clear problem-and-use shots that show the benefit fast."
+          "d": "Show the product solving a small everyday task in a clear, useful frame."
         },
         {
           "t": "Electronics and Accessories",
-          "d": "Clean feature and detail shots that make technical points easy to see."
+          "d": "Use clean feature and detail shots that make the important parts easy to see."
+        },
+        {
+          "t": "Fashion and Apparel",
+          "d": "Give shoppers a full product view plus a useful detail they can inspect."
         },
         {
           "t": "Beauty and Personal Care",
-          "d": "Routine-style shots and close details that build trust."
+          "d": "Pair a clean pack shot with a routine-style use moment."
+        },
+        {
+          "t": "Supplements and Wellness",
+          "d": "Show the pack clearly and add a simple use context without burning claims into the image."
         },
         {
           "t": "Pet Supplies and Toys",
-          "d": "Warm, real-life scenes that show the product with a pet."
+          "d": "Show the item with a pet so shoppers understand its scale and use."
         }
       ]
     }
