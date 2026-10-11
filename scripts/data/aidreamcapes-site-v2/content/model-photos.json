@@ -1,10 +1,10 @@
 {
   "id": "model-photos",
-  "title": "AI Virtual Model Photos for Fashion | AIVideosUGC",
-  "description": "Show clothing and accessories on AI-generated fashion models from one flat product photo, so shoppers see the look without booking a model or a studio.",
-  "h1": "Show Your Products on AI-Generated Fashion Models",
-  "eyebrow": "Virtual model photo maker",
-  "lead": "See your products worn by AI fashion models. One flat product photo becomes a styled look that helps shoppers picture the item on.",
+  "title": "AI Model Photos for Fashion | AIVideosUGC",
+  "description": "Create on-model fashion photos from one flat product image, so shoppers see the look without booking a model or studio. Use the result on product pages and ads.",
+  "h1": "Bring your products to life on AI fashion models",
+  "eyebrow": "AI fashion model photos",
+  "lead": "Turn one flat clothing photo into a worn look in minutes. Show shoppers the cut, color and context without booking a model day or a studio.",
   "secondary_keywords": [
     "on-model photos for clothing",
     "AI fashion model images",
@@ -12,47 +12,47 @@
     "AI photos of bags being worn",
     "jewelry on model photos"
   ],
-  "benefits_h2": "See your products worn by AI models",
+  "benefits_h2": "Show the look before you publish",
   "benefits": [
     {
       "t": "See it worn, not laid flat",
-      "d": "Turn a flat product photo into a worn look shoppers can picture before they buy.",
+      "d": "Give shoppers the cut, color and context before they decide.",
       "icon": "sparkle"
     },
     {
       "t": "Launch collections faster",
-      "d": "Move a new item from flat photo to worn look in minutes, without booking model days.",
+      "d": "Create the next worn look from the flat photo you already have, without booking a model day.",
       "icon": "bolt"
     },
     {
-      "t": "Show the look across every channel",
-      "d": "Use a worn view on product pages, feeds and ads, then refresh the scene when a collection changes.",
+      "t": "Keep one worn view across every channel",
+      "d": "Use the same item view on a product page, feed or ad when a collection changes.",
       "icon": "layers"
     }
   ],
   "more_sections": [
     {
-      "eyebrow": "Why virtual models",
-      "h2": "Scale a fashion catalog without repeat shoots",
-      "lead": "Create worn looks from the flat photos you already have, then reuse them in your store and campaigns.",
+      "eyebrow": "Scale your fashion catalog",
+      "h2": "Compare a flat photo with a worn look",
+      "lead": "Check the garment beside a model, then refresh the scene for the next launch without repeating a shoot.",
       "items": [
         {
-          "t": "Skip casting and the studio",
-          "d": "Get a worn view without booking a model, photographer or lighting setup for every item.",
+          "t": "Check the garment before you publish",
+          "d": "See the flat item beside a worn view so color, shape and visible details are easy to compare.",
           "img": "n:guide:k5-model-photos-uses-0-image",
           "alt": "Adult model wearing a linen suit on a sunlit terrace.",
           "frame": "none"
         },
         {
-          "t": "Keep the garment the same",
-          "d": "Start from your flat photo so the color, cut and visible details stay tied to the item you sell.",
+          "t": "Keep the same item across channels",
+          "d": "Carry the garment from a product page to a feed or ad while keeping the reference item in view.",
           "img": "n:guide:ra4-model-photos-outputs-1-image-r1",
           "alt": "Adult Black woman with short natural hair wearing a heather-gray pullover hoodie in a plain studio.",
           "frame": "none"
         },
         {
-          "t": "Refresh looks any time",
-          "d": "Change the scene for a new season or campaign without booking another shoot.",
+          "t": "Refresh the scene for each launch",
+          "d": "Try a new setting from the flat photo you already have when the season or campaign changes.",
           "img": "n:guide:ra4-model-photos-after-image-r1",
           "alt": "Adult woman with a short bob wearing an ivory satin slip dress on a rooftop at sunset.",
           "frame": "none"
@@ -61,19 +61,19 @@
     }
   ],
   "steps_h2": "How to Make AI Model Photos for Clothing in 3 Simple Steps",
-  "steps_lead": "Three steps. One flat photo in, one worn look out.",
+  "steps_lead": "Start with one clear garment photo, choose a model, then download a worn look for your store or campaign.",
   "steps": [
     {
-      "t": "Upload Your Clothing Photo",
-      "d": "Show the fit without booking a model or studio. Upload a flat or hanging photo with the whole garment, strap, or clasp in frame."
+      "t": "Upload your clothing photo",
+      "d": "Add a flat or hanging photo with the whole garment and key details in frame."
     },
     {
-      "t": "Choose Your Model",
-      "d": "See the clothing on a look that fits your audience. Pick an adult model and a scene that suit both your shoppers and the item."
+      "t": "Choose your model",
+      "d": "Pick an adult look and a scene that fit your audience and item. Compare the preview with your real garment before you publish."
     },
     {
       "t": "Download and Post",
-      "d": "Get a usable fashion image without a reshoot. Download the worn look, then add measurements and a size chart in your listing."
+      "d": "Download the worn look for your product page, feed or ad. Keep measurements and a size chart beside it so shoppers can check fit."
     }
   ],
   "maker": {
@@ -94,27 +94,27 @@
     "cta": "Make an on-model photo"
   },
   "cta_title": "Put your next collection on a model",
-  "cta_lead": "Upload one flat product photo, pick a model and see the cost before you start.",
+  "cta_lead": "Upload one flat product photo, choose a model, and see the cost before you start.",
   "faq": [
     {
       "q": "What is an AI fashion model generator?",
-      "a": "It shows your clothing or accessory worn by an AI-generated model. You start from one flat product photo and get a styled, on-body image for your store."
+      "a": "It shows your clothing or accessory worn by an AI-generated model. Start with one flat product photo and get a styled on-body image for your store."
     },
     {
       "q": "How does virtual model photography work?",
-      "a": "Upload a flat garment photo, choose a model and a scene, and generate. The item is placed on the model while its color and cut follow your photo."
+      "a": "Upload a flat garment photo, choose a model and a scene, then generate. The item follows the color and cut in your reference photo."
     },
     {
       "q": "Which products work on a virtual model?",
-      "a": "Tops, dresses, outerwear, bags and jewelry work well. A clear flat garment or accessory photo gives the best reference."
+      "a": "Tops, dresses, outerwear and bags work well. A clear flat garment or accessory photo gives the model a better reference."
     },
     {
       "q": "Is it suitable for ecommerce stores?",
-      "a": "Yes. Use the worn view on product pages and social posts, and keep a separate plain product photo for details and measurements."
+      "a": "Yes. Use the worn view on a product page or social post, and keep a plain product photo for exact details and measurements."
     },
     {
       "q": "Can I choose the model and background?",
-      "a": "Yes. Pick a general adult look and a styled scene. Do not request a real celebrity, and small differences between results are normal."
+      "a": "Yes. Pick a general adult look and a styled scene. Do not request a real celebrity, and expect small differences between results."
     },
     {
       "q": "Does the image prove how clothing fits?",
@@ -122,11 +122,11 @@
     },
     {
       "q": "Can I run the photo in paid ads?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor, not on the image."
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add a price or offer in your ad editor after download."
     },
     {
       "q": "Do the garment details stay the same?",
-      "a": "Color and cut are kept from the flat photo, but small print or closure details can shift. Compare each result with the real item."
+      "a": "Color and cut follow the flat photo, but small print or closure details can shift. Compare each result with the real item before publishing."
     }
   ],
   "visual": {
@@ -134,14 +134,46 @@
       "source": "n:guide:ra4-model-photos-steps-source-r1",
       "result": "n:guide:ra4-model-photos-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded flat heather-gray pullover hoodie as the exact garment reference. Preserve its gray color, hood, two drawstrings, kangaroo pocket, seams and relaxed cut. Show an adult man with short hair facing the camera in a tree-lined street, with his face and the entire hoodie visible. Change only the model and setting; keep the garment details consistent."
+      "prompt": "Use the uploaded flat heather-gray pullover hoodie as the exact garment reference. Preserve its gray color, hood, two drawstrings, kangaroo pocket, seams and relaxed cut. Show an adult man with short hair facing the camera in a tree-lined street, with his face and the entire hoodie visible. Change only the model and setting; keep the garment details consistent.",
+      "sourceTitle": "Your clothing photo",
+      "sourceHint": "Keep the complete hoodie, hood, drawstrings and pocket visible.",
+      "options": [
+        [
+          "Photo",
+          "Your clothing item"
+        ],
+        [
+          "Look",
+          "Casual streetwear"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
     },
     "picker": {
-      "title": "Browse worn looks",
-      "lead": "Each card places one product on a model in a styled fashion scene.",
+      "title": "Visualize your products on AI fashion models",
+      "lead": "Choose a product-first scene to see how one garment could look in a catalog, on a street or in a seasonal setting.",
       "chips": [],
       "cards": [],
       "button": "Make an on-model photo"
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to Make AI Model Photos for Clothing in 3 Simple Steps"
+      },
+      "faq": {
+        "h2": "Frequently asked questions"
+      }
     }
-  }
+  },
+  "relatedLinks": [
+    "photo-hub",
+    "white-background",
+    "lifestyle-photos",
+    "change-background",
+    "social-ad-photos",
+    "templates"
+  ]
 }
