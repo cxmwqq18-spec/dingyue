@@ -13917,6 +13917,76 @@
         1280
       ],
       "source": "Codex imagegen"
+    },
+    "gen2:fx33-ind-home-living-benefit-vacuum": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "fx33 image generation"
+    },
+    "gen2:fx33-ind-home-living-benefit-organizer": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hands placing folded shirts into a plain fabric closet organizer.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "fx33 image generation"
+    },
+    "gen2:fx33-ind-home-living-benefit-lamp": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "fx33 image generation"
+    },
+    "gen2:fx33-ind-home-living-tool-before-after": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hands placing plain woven baskets into a messy and tidy entryway shelf.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "fx33 image generation"
+    },
+    "gen2:fx33-ind-home-living-tool-product-video": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand placing a plain drawer divider among wooden utensils.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "fx33 image generation"
+    },
+    "gen2:fx33-ind-home-living-tool-change-background": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "The same plain ceramic vase shown on a light background and in a styled living room.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "fx33 image generation"
+    },
+    "gen2:fx33-ind-home-living-tool-lifestyle": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand setting a plain woven storage basket beside a console in a bright entryway.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "fx33 image generation"
     }
   },
   "guide": {

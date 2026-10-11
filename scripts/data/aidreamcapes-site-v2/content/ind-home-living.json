@@ -53,15 +53,21 @@
   "benefits": [
     {
       "t": "Faster, lower-cost production",
-      "d": "Create a room scene or product demo from one clear photo in minutes. Skip a location, crew, props and another shoot for every new item."
+      "d": "Create a room scene or product demo from one clear photo in minutes. Skip a location, crew, props and another shoot for every new item.",
+      "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
+      "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
     },
     {
       "t": "Reuse one photo across channels",
-      "d": "Place one item in a styling, cleaning or organizing moment for product pages, social posts and paid ads."
+      "d": "Place one item in a styling, cleaning or organizing moment for product pages, social posts and paid ads.",
+      "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
+      "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
     },
     {
       "t": "Help shoppers judge the fit",
-      "d": "Show where the product belongs and what it does so buyers can picture scale and use before they add it to the cart."
+      "d": "Show where the product belongs and what it does so buyers can picture scale and use before they add it to the cart.",
+      "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
+      "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair."
     }
   ],
   "steps_h2": "How to Make AI Product Videos for Home Brands in 3 Simple Steps",

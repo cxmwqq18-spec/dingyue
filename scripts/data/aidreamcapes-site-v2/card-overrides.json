@@ -167,6 +167,24 @@
     },
     "swap": {
       "drink": "demo"
+    },
+    "tools": {
+      "before-after-videos": {
+        "ref": "n:gen2:fx33-ind-home-living-tool-before-after",
+        "alt": "Adult hands placing plain woven baskets into a messy and tidy entryway shelf."
+      },
+      "product-videos": {
+        "ref": "n:gen2:fx33-ind-home-living-tool-product-video",
+        "alt": "Adult hand placing a plain drawer divider among wooden utensils."
+      },
+      "change-background": {
+        "ref": "n:gen2:fx33-ind-home-living-tool-change-background",
+        "alt": "The same plain ceramic vase shown on a light background and in a styled living room."
+      },
+      "lifestyle-photos": {
+        "ref": "n:gen2:fx33-ind-home-living-tool-lifestyle",
+        "alt": "Adult hand setting a plain woven storage basket beside a console in a bright entryway."
+      }
     }
   },
   "ind-jewelry-accessories": {
