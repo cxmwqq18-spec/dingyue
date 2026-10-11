@@ -139,8 +139,419 @@
     "picker": {
       "title": "Choose a Spark Ads template",
       "lead": "Browse creator formats, then add your own product photo.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "accessories",
+          "label": "Accessories"
+        },
+        {
+          "id": "apparel",
+          "label": "Apparel"
+        },
+        {
+          "id": "apps",
+          "label": "Apps"
+        },
+        {
+          "id": "beauty-personal-care",
+          "label": "Beauty & Personal Care"
+        },
+        {
+          "id": "clothing",
+          "label": "Clothing"
+        },
+        {
+          "id": "e-commerce",
+          "label": "E-Commerce"
+        },
+        {
+          "id": "education",
+          "label": "Education"
+        },
+        {
+          "id": "explainer",
+          "label": "Explainer"
+        },
+        {
+          "id": "financial-services",
+          "label": "Financial Services"
+        },
+        {
+          "id": "food-beverage",
+          "label": "Food & Beverage"
+        },
+        {
+          "id": "footwear",
+          "label": "Footwear"
+        },
+        {
+          "id": "health-fitness",
+          "label": "Health & Fitness"
+        },
+        {
+          "id": "jewelry-accessories",
+          "label": "Jewelry & Accessories"
+        },
+        {
+          "id": "kids-toy",
+          "label": "Kids & Toy"
+        },
+        {
+          "id": "pet",
+          "label": "Pet"
+        },
+        {
+          "id": "sports-gym",
+          "label": "Sports & Gym"
+        },
+        {
+          "id": "tech-electronics",
+          "label": "Tech & Electronics"
+        },
+        {
+          "id": "ugc",
+          "label": "UGC"
+        },
+        {
+          "id": "viral",
+          "label": "Viral"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:tw1-wall-accessories-1",
+          "label": "ASMR Unboxing: Makeup Tools",
+          "chips": [
+            "accessories"
+          ],
+          "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-accessories-2",
+          "label": "Cinematic Watch Detail",
+          "chips": [
+            "accessories"
+          ],
+          "prompt": "A cinematic close-up can hold your watch in warm light while the camera glides across its face and strap.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-apparel-1",
+          "label": "Bedroom Try-On: Knitwear",
+          "chips": [
+            "apparel"
+          ],
+          "prompt": "Show your knitwear in a bedroom try-on as the creator turns in the mirror so the fit and sleeves stay visible.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-apparel-2",
+          "label": "Street Style: Linen Set",
+          "chips": [
+            "apparel"
+          ],
+          "prompt": "Take your linen set outdoors for a street-style walk that shows the fabric, movement and full silhouette.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-apps-1",
+          "label": "Lifestyle App Recommendation",
+          "chips": [
+            "apps"
+          ],
+          "prompt": "A creator can recommend your app from a real kitchen table while tapping through a clean, abstract interface on a phone.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-apps-2",
+          "label": "Streamer Reaction: App",
+          "chips": [
+            "apps"
+          ],
+          "prompt": "Use a streamer-style reaction to show the moment your app surprises a viewer, with the device screen kept clear and easy to follow.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-beauty-personal-care-1",
+          "label": "Routine Demo: Cream",
+          "chips": [
+            "beauty-personal-care"
+          ],
+          "prompt": "Film a quick morning routine where a creator opens your cream jar and applies it at a bright vanity.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-beauty-personal-care-2",
+          "label": "Bathroom Review: Moisturizer",
+          "chips": [
+            "beauty-personal-care"
+          ],
+          "prompt": "Let a creator give a direct bathroom review while holding your moisturizer beside his face and turning the jar toward the camera.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-clothing-1",
+          "label": "GRWM Unboxing: Knitwear",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "Build a get-ready moment around opening your knit sweater parcel and holding the full garment up before styling it.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-clothing-2",
+          "label": "Mirror Selfie: Denim",
+          "chips": [
+            "clothing"
+          ],
+          "prompt": "A mirror selfie can show your denim overshirt from collar to hem as the creator checks the fit before heading out.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-e-commerce-1",
+          "label": "360 Showcase: Linen Shirt",
+          "chips": [
+            "e-commerce"
+          ],
+          "prompt": "Rotate your linen shirt through a clean 360 showcase so shoppers can inspect the collar, seams and full shape.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-e-commerce-2",
+          "label": "Street Interview: Fitness Gear",
+          "chips": [
+            "e-commerce"
+          ],
+          "prompt": "Ask a passerby to explain how your resistance band fits a workout, keeping the product in his hands as he answers.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-education-1",
+          "label": "Tutor Demo: Study Tool",
+          "chips": [
+            "education"
+          ],
+          "prompt": "A teacher can demonstrate your study tool at a classroom desk with a simple lesson that keeps the product in use.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-education-2",
+          "label": "Talking Head: Skin Lesson",
+          "chips": [
+            "education"
+          ],
+          "prompt": "Use a clear talking-head lesson to explain how your moisturizer fits a simple daily routine, with the jar held beside the speaker.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-explainer-1",
+          "label": "POV Discovery: Court Gear",
+          "chips": [
+            "explainer"
+          ],
+          "prompt": "Open from an athlete's point of view as your court gear is picked up and shown where the next play starts.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-explainer-2",
+          "label": "Hook: Home App Walkthrough",
+          "chips": [
+            "explainer"
+          ],
+          "prompt": "Start with a strong home-search hook, then let the creator walk through your app on a tablet with the property view kept abstract.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-financial-services-1",
+          "label": "Finance Hook: Phone Demo",
+          "chips": [
+            "financial-services"
+          ],
+          "prompt": "Use a direct phone demo to introduce your finance app and show the key navigation without exposing private figures.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-financial-services-2",
+          "label": "Realtor Walkthrough: Home",
+          "chips": [
+            "financial-services"
+          ],
+          "prompt": "A realtor can walk viewers through your home service outdoors while holding a tablet with a simple abstract property view.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-food-beverage-1",
+          "label": "Sensory Hook: Citrus Sip",
+          "chips": [
+            "food-beverage"
+          ],
+          "prompt": "Lead with the first sip of your citrus drink and capture the creator's sensory reaction in a tight cafe close-up.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw1-wall-food-beverage-2",
+          "label": "Street Interview: Snack Bite",
+          "chips": [
+            "food-beverage"
+          ],
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-footwear-1",
+          "label": "Running Shoe Creator Showcase",
+          "chips": [
+            "footwear"
+          ],
+          "prompt": "A runner holds your slate-blue shoe toward the camera during a riverside product recommendation.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-footwear-2",
+          "label": "Trail Shoe Lace-Up Demo",
+          "chips": [
+            "footwear"
+          ],
+          "prompt": "A trail runner tightens your olive-gray shoe laces on a forest path before heading out.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-health-fitness-1",
+          "label": "Berry Bowl First Bite Reel",
+          "chips": [
+            "health-fitness"
+          ],
+          "prompt": "A creator takes the first bite of your fresh berry snack in a bright kitchen routine.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-health-fitness-2",
+          "label": "Resistance Band Home Demo",
+          "chips": [
+            "health-fitness"
+          ],
+          "prompt": "A home workout creator demonstrates your resistance band through one clear movement.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-jewelry-accessories-1",
+          "label": "Pendant Creator Try-On",
+          "chips": [
+            "jewelry-accessories"
+          ],
+          "prompt": "A creator touches your brushed-gold pendant at the collarbone in a relaxed bedroom showcase.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-jewelry-accessories-2",
+          "label": "Silver Signet Macro Reveal",
+          "chips": [
+            "jewelry-accessories"
+          ],
+          "prompt": "A close product shot shows hands rotating your brushed-silver signet ring on linen.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-kids-toy-1",
+          "label": "Wooden Toy Parent Play",
+          "chips": [
+            "kids-toy"
+          ],
+          "prompt": "A parent and child stack your wooden shape toy together during a warm playtime scene.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-pet-1",
+          "label": "Dog Harness Park Setup",
+          "chips": [
+            "pet"
+          ],
+          "prompt": "A dog owner clips your teal harness onto a golden retriever before a park walk.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-pet-2",
+          "label": "Pet Brush Living Room Demo",
+          "chips": [
+            "pet"
+          ],
+          "prompt": "A pet owner brushes a calm dog with your wooden pin brush in a cozy living room.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-sports-gym-1",
+          "label": "Post-Workout Bottle Check-In",
+          "chips": [
+            "sports-gym"
+          ],
+          "prompt": "A gym creator raises your teal sports bottle after finishing a workout.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-sports-gym-2-r1",
+          "label": "Kettlebell Powder Reveal Reel",
+          "chips": [
+            "sports-gym"
+          ],
+          "prompt": "A cinematic burst of orange and green dust reveals your plain matte kettlebell on a reflective black pedestal.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
+          "label": "Kitchen Appliance Evening Demo Reel",
+          "chips": [
+            "tech-electronics"
+          ],
+          "prompt": "A creator demonstrates your plain countertop appliance during an evening kitchen routine, showing its shape and controls in warm light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-tech-electronics-2",
+          "label": "Low Profile Keyboard Review",
+          "chips": [
+            "tech-electronics"
+          ],
+          "prompt": "A desk creator points out your charcoal mechanical keyboard while pressing its keys.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-ugc-1-r1",
+          "label": "Pump Moisturizer Routine Reel",
+          "chips": [
+            "ugc"
+          ],
+          "prompt": "A male creator applies your coral pump moisturizer to one cheek at a bright bathroom vanity.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-ugc-2",
+          "label": "Sage Overshirt Unboxing",
+          "chips": [
+            "ugc"
+          ],
+          "prompt": "A creator lifts your sage overshirt from a blank kraft mailer for a first-look unboxing.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-viral-1",
+          "label": "Mint Face Mist Hook",
+          "chips": [
+            "viral"
+          ],
+          "prompt": "A creator opens with a playful reaction while holding your mint face mist beside her cheek.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:tw2-wall-viral-2",
+          "label": "Stadium Hydration Fan Moment",
+          "chips": [
+            "viral"
+          ],
+          "prompt": "A fan raises your orange hydration bottle during a lively stadium game moment.",
+          "kind": "video"
+        }
+      ],
       "button": "Explore More"
     },
     "uses": [],
