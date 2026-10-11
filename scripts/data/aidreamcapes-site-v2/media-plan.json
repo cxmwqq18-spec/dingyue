@@ -37,36 +37,10 @@
     "change-background": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:q6-cbg-hero-source",
-        "after": "n:guide:q6-cbg-hero-result"
+        "before": "n:guide:k5-background-phonecase-source",
+        "after": "n:guide:k5-background-phonecase-result"
       },
-      "gallery": [
-        "n:guide:q6-cbg-gallery-01",
-        "n:guide:q6-cbg-gallery-02",
-        "n:guide:q6-cbg-gallery-03",
-        "n:guide:q6-cbg-gallery-04-r2",
-        "n:guide:q6-cbg-gallery-05",
-        "n:guide:q6-cbg-gallery-06"
-      ],
-      "og": "n:t33-change-background-og-r2",
-      "pairs": [
-        {
-          "before": "n:guide:k5-background-phonecase-source",
-          "after": "n:guide:q6-cbg-pair-phonecase-after"
-        },
-        {
-          "before": "n:yogamat-pack",
-          "after": "n:guide:q6-cbg-pair-yogamat-after"
-        },
-        {
-          "before": "n:boots-pack",
-          "after": "n:guide:q6-cbg-pair-boots-after"
-        },
-        {
-          "before": "n:protein-pack",
-          "after": "n:guide:q6-cbg-pair-protein-after"
-        }
-      ]
+      "og": "n:t33-change-background-og-r2"
     },
     "social-ad-photos": {
       "hero": {

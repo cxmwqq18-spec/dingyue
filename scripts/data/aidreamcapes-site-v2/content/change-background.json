@@ -1,10 +1,10 @@
 {
   "id": "change-background",
   "title": "AI Product Background Changer for Shop Photos | AIVideosUGC",
-  "description": "Keep the product and swap the background behind it. A clean color, counter or seasonal setting in one square photo, ready for listings or ads.",
-  "h1": "AI Product Background Changer",
+  "description": "Keep the product and swap the background behind it. Put one existing photo on a clean color, counter or seasonal setting in minutes, ready for listings or ads.",
+  "h1": "Change the background, keep the product",
   "eyebrow": "Photo tool",
-  "lead": "Remove and replace the background behind your product in seconds. Keep the item exactly as it is and set it on a clean surface, a brand color or a seasonal scene.",
+  "lead": "Give one product photo a fresh setting in minutes. Keep the item in frame and place it on a clean surface, brand color or seasonal scene.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -12,54 +12,60 @@
     "new background for Etsy photos",
     "AI backdrop for product shots"
   ],
-  "steps_h2": "How to change a product background with AIVideosUGC",
-  "steps_lead": "Want a fresh look for your products? Change any product image in three simple steps.",
+  "steps_h2": "How to change a product background in three steps",
+  "steps_lead": "Upload one photo, describe the setting, then download the new square image.",
   "steps": [
     {
-      "t": "Upload Your Image",
-      "d": "Add one sharp photo with the whole product in frame. A messy room behind it is fine."
+      "t": "Upload one product photo",
+      "d": "Add a sharp photo with the whole item in frame; the original setting can be messy."
     },
     {
-      "t": "Give Your Prompt",
-      "d": "Name one surface, color or room, such as white marble or pale sage. You can also pick a ready-made option."
+      "t": "Describe the new setting",
+      "d": "Name one surface, color or room, then choose the setting that fits your campaign."
     },
     {
-      "t": "Download Your New Photo",
-      "d": "Review the edges against the original and download the finished square photo. Add logos and text in your own editor."
+      "t": "Download the new photo",
+      "d": "Compare the result with the original, then download the square image for your store or ad."
     }
   ],
-  "benefits_h2": "Why you need an AI product background changer",
+  "benefits_h2": "Make more versions without another shoot",
   "benefits": [
     {
-      "t": "Keep it professional",
-      "d": "Move a product off a cluttered counter and onto a clean surface, so listings and ads look shot in one place."
+      "t": "Keep listings consistent",
+      "d": "Move a product from a cluttered counter to a clean surface, so every listing feels shot with the same care.",
+      "icon": "layers"
     },
     {
-      "t": "Market those ads",
-      "d": "Give the same item a fresh backdrop for a new campaign or season without unpacking stock again."
+      "t": "Refresh a campaign fast",
+      "d": "Give the same item a seasonal or brand-color setting without unpacking stock for another shoot.",
+      "icon": "refresh"
     },
     {
-      "t": "Cost effective",
-      "d": "Skip the reshoot, the crew and the studio day. One existing photo is all you need."
+      "t": "Skip the reshoot",
+      "d": "Start with one existing photo instead of booking space, lights and a crew again.",
+      "icon": "clock"
     }
   ],
   "more_sections": [
     {
-      "eyebrow": "Why AIVideosUGC",
-      "h2": "A precise product background replacer",
-      "lead": "The item stays the same while only the setting changes.",
+      "eyebrow": "Why this works",
+      "h2": "Keep the product, refresh the setting",
+      "lead": "You get a new scene while the item stays the focus.",
       "items": [
         {
           "t": "Save hours and dollars",
-          "d": "A new background is ready in minutes, for far less than booking space and lights."
+          "d": "Create a new setting in minutes instead of booking another studio day.",
+          "img": "n:guide:k5-background-case-color"
         },
         {
-          "t": "Precise product keeping",
-          "d": "The angle, scale and edges of your product are preserved while the backdrop changes."
+          "t": "Keep edges and scale",
+          "d": "Keep the angle, size and outline in place while the background changes.",
+          "img": "n:guide:q6-cbg-output-backpack-r1"
         },
         {
-          "t": "Sharp square results",
-          "d": "Download a high-resolution square photo ready for your store and your feed."
+          "t": "Download a sharp square",
+          "d": "Get a clean square photo ready for your store or social feed.",
+          "img": "n:guide:q6-cbg-output-mug-r1"
         }
       ]
     }
@@ -83,44 +89,58 @@
   },
   "faq": [
     {
-      "q": "What is an AI product background changer?",
-      "a": "It is a tool that keeps your product and replaces the setting behind it. You start from one existing photo and get a finished square photo with the new background in place."
+      "q": "What is a product background changer?",
+      "a": "It keeps your product and replaces the setting behind it. Start with one existing photo and download a finished square image with the new background."
     },
     {
       "q": "How do I change a product background?",
-      "a": "Upload one product photo, name the surface, color or room you want, and generate. Then review the edges and download the new image."
+      "a": "Upload one product photo, name the surface, color or room you want, then generate and download the new image."
     },
     {
-      "q": "Will my product change when the background changes?",
-      "a": "The item should stay the same: same angle, same scale, same edges. Small printed details can shift, so compare each result with the real product before you publish."
+      "q": "Will the product change when the background changes?",
+      "a": "The item should keep its angle, scale and edges. Compare the result with the real product before publishing because small printed details can shift."
     },
     {
       "q": "Do I get a transparent cut-out?",
-      "a": "No. You get a complete photo with the new setting already in place, ready to upload. For a plain white version, use the white background photo tool."
+      "a": "No. You get a complete photo with the new setting already in place. Use the white background photo tool for a plain white version."
     },
     {
-      "q": "Which backgrounds work best?",
-      "a": "Simple surfaces and colors keep attention on the item: marble, light wood, stone, linen or a solid brand color. Busy patterns can compete with the product."
+      "q": "Which backgrounds suit product photos?",
+      "a": "Simple surfaces and colors keep attention on the item: marble, light wood, stone, linen or one brand color."
     },
     {
-      "q": "Can the new photo run in paid ads?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Keep the product identical to what you sell, and add any price or offer in your ad tool."
+      "q": "Can I use the new photo in paid ads?",
+      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor."
     },
     {
-      "q": "Can I pick a seasonal or outdoor setting?",
-      "a": "Yes. Name one room, surface or outdoor scene, such as a holiday shelf or a garden table. One clear setting works best."
+      "q": "Can I choose a seasonal or outdoor setting?",
+      "a": "Yes. Name one room, surface or outdoor scene, such as a holiday shelf or garden table."
     },
     {
       "q": "How is this different from a reshoot?",
-      "a": "A reshoot means booking space and setting up lights again. Here the new setting is generated from your existing photo in minutes, at far less cost."
+      "a": "A reshoot needs space, lights and setup. Here a new setting comes from your existing photo in minutes, at far less cost."
     }
   ],
   "visual": {
     "steps": {
-      "source": "n:guide:q19-shop-hero-serum",
-      "result": "n:guide:f18-change-bg-steps-result-r2",
+      "source": "n:guide:k6-video-hub-step-source",
+      "result": "n:guide:k6-video-hub-step-result",
       "mode": "photo",
-      "prompt": "Use the uploaded amber serum dropper as the exact product reference. Keep the adult woman shown in the source, her white textured bathrobe, cheek application pose, hands, bottle, dropper, camera angle and framing. Change only the background to a soft muted sage-green bathroom with gentle tile detail and natural light"
+      "prompt": "Place this mug on a light wood kitchen counter beside a window.",
+      "options": [
+        [
+          "Photo",
+          "Your product shot"
+        ],
+        [
+          "Background",
+          "Color, surface or setting"
+        ],
+        [
+          "Size",
+          "Square by default"
+        ]
+      ]
     },
     "picker": {
       "title": "Browse product settings",
@@ -128,6 +148,7 @@
       "chips": [],
       "cards": [],
       "button": "Try this background"
-    }
+    },
+    "uses": []
   }
 }
