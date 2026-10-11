@@ -14,28 +14,29 @@
   "definition": {
     "title": "What Is an AI UGC Video Ad Generator?",
     "paras": [
-      "It is software that turns one product photo and a short scene idea into a finished clip, with the performer, setting and edit produced automatically. Sellers use it to ship feed-ready ads without hiring a creator, booking a studio or learning an editing suite."
+      "Start with one product photo and one scene idea, then get a short creator-style clip that shows one clear product action.",
+      "The presenter and setting are AI-generated. Download the clip and add final captions, prices or licensed music in your editor."
     ]
   },
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use one clear photo with the full item in frame so the product carries into the scene."
+      "d": "Upload one clear product photo with the full item visible. Keep the important details easy to inspect."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Say where the ad happens and what the person does. One focused action keeps the hook easy to follow."
+      "d": "Describe where the ad happens and what the person does. Keep one focused action so shoppers follow the hook."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clean clip, then add captions, prices or music in your editor for each channel."
+      "d": "Download the clean clip when the render is ready. Add captions, prices or licensed music in your editor for each channel."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · TikTok, Reels and Shorts"
+        "9:16 · 1:1 · 16:9 · 4:3 · 3:4"
       ],
       [
         "Length",
@@ -46,23 +47,23 @@
   },
   "faq": [
     {
-      "q": "What is an AI UGC video ad?",
-      "a": "It is a short creator-style ad that shows your product in a scene with a spoken line or visible action. The presenter and setting are AI-generated."
+      "q": "What does an AI UGC video ad show?",
+      "a": "It shows your product in one clear scene with a spoken line or visible action. The presenter and setting are AI-generated."
     },
     {
-      "q": "Do I need a creator or studio?",
-      "a": "No. Start with one product photo and a focused idea, then make the scene without casting, booking or a studio day."
+      "q": "Can I make an ad without hiring a creator or studio?",
+      "a": "Yes. Start with one product photo and a focused idea, then make the scene without casting, booking or a studio day."
     },
     {
-      "q": "Can I use the ad on TikTok, Reels or Shorts?",
-      "a": "Yes. Download a 9:16 clip for TikTok, Instagram Reels or YouTube Shorts, then add the copy and offer details for that channel."
+      "q": "Where can I post the finished ad?",
+      "a": "Post a 9:16 clip to TikTok, Instagram Reels or YouTube Shorts, then add the copy and offer details for that channel."
     },
     {
-      "q": "What product photo should I use?",
+      "q": "What product photo gives the clearest result?",
       "a": "Use a clear, well-lit photo with the full product visible and its important details easy to inspect."
     },
     {
-      "q": "Can I add captions, prices or music?",
+      "q": "Can I add captions, prices or music after download?",
       "a": "Yes. Add exact text and licensed music after download in TikTok, CapCut or your ad editor."
     },
     {
@@ -79,8 +80,8 @@
     }
   ],
   "examples": {
-    "h2": "See formats you can put to work",
-    "lead": "Compare creator-style product ads and product showcases made for social feeds.",
+    "h2": "See product ads shoppers understand",
+    "lead": "Compare clear product actions, creator reviews and demonstrations made for social feeds.",
     "groups": [
       {
         "label": "Creator-style product ads",
@@ -89,13 +90,15 @@
             "ref": "n:guide:k3-video-example-speaker",
             "title": "Compact speaker, desk showcase",
             "kind": "scene",
-            "product": "compact speaker"
+            "product": "compact speaker",
+            "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy desk, one hand presses the compact speaker control while the creator points out its size, ending with the speaker centered. Natural handheld close-up, soft window light. Sound: button click and room tone; no music, text or logos."
           },
           {
             "ref": "n:guide:im12-video-ads-example-02-r1",
             "title": "Crossbody bag, mirror fit check",
             "kind": "scene",
-            "product": "crossbody bag"
+            "product": "crossbody bag",
+            "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bedroom mirror, an adult checks the crossbody bag strap and turns once so the fit stays visible from shoulder to hem. Natural full-body mirror framing, soft daylight. Sound: room tone and fabric movement; no music, text or logos."
           }
         ]
       },
@@ -106,7 +109,8 @@
             "ref": "n:guide:k3-video-example-lip-balm",
             "title": "Tinted lip balm, pocket showcase",
             "kind": "scene",
-            "product": "lip balm"
+            "product": "lip balm",
+            "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Outdoors, an adult opens the lip balm beside a jacket pocket and holds it still for a clear pocket showcase. Handheld close-up, soft daylight. Sound: cap click and light street ambience; no music, text or logos."
           }
         ]
       }
@@ -114,7 +118,7 @@
   },
   "seller_scenarios": {
     "title": "Turn one product photo into an ad shoppers can understand",
-    "lead": "Example scenes: one product photo becomes an ad that shows the product, the moment and the payoff.",
+    "lead": "Choose a product action that answers a shopper question, then open the matching tool with a clear scene to edit.",
     "items": [
       {
         "audience": "Skincare shop",
@@ -161,7 +165,7 @@
       "options": [
         [
           "Size",
-          "9:16 · TikTok, Reels and Shorts"
+          "9:16 · 1:1 · 16:9 · 4:3 · 3:4"
         ],
         [
           "Length",
@@ -170,422 +174,378 @@
       ]
     },
     "picker": {
-      "title": "See the ad formats you can test",
-      "lead": "Compare creator-style, product showcase and demo moments before you make your own.",
+      "title": "Choose an ad format to test",
+      "lead": "Pick a proven product moment, then open the workspace with its scene prompt ready to edit.",
       "chips": [
         {
-          "id": "accessories",
-          "label": "Accessories"
+          "id": "hook",
+          "label": "Opening hooks"
         },
         {
-          "id": "apparel",
-          "label": "Apparel"
+          "id": "demo",
+          "label": "Product demos"
         },
         {
-          "id": "apps",
-          "label": "Apps"
+          "id": "unboxing",
+          "label": "Unboxings"
         },
         {
-          "id": "beauty-personal-care",
-          "label": "Beauty & Personal Care"
+          "id": "try-on",
+          "label": "Try-ons"
         },
         {
-          "id": "clothing",
-          "label": "Clothing"
+          "id": "review",
+          "label": "Creator reviews"
         },
         {
-          "id": "e-commerce",
-          "label": "E-Commerce"
+          "id": "interview",
+          "label": "Interviews"
         },
         {
-          "id": "education",
-          "label": "Education"
+          "id": "showcase",
+          "label": "Product showcases"
         },
         {
-          "id": "explainer",
-          "label": "Explainer"
-        },
-        {
-          "id": "financial-services",
-          "label": "Financial Services"
-        },
-        {
-          "id": "food-beverage",
-          "label": "Food & Beverage"
-        },
-        {
-          "id": "footwear",
-          "label": "Footwear"
-        },
-        {
-          "id": "health-fitness",
-          "label": "Health & Fitness"
-        },
-        {
-          "id": "jewelry-accessories",
-          "label": "Jewelry & Accessories"
-        },
-        {
-          "id": "kids-toy",
-          "label": "Kids & Toy"
-        },
-        {
-          "id": "pet",
-          "label": "Pet"
-        },
-        {
-          "id": "sports-gym",
-          "label": "Sports & Gym"
-        },
-        {
-          "id": "tech-electronics",
-          "label": "Tech & Electronics"
-        },
-        {
-          "id": "ugc",
-          "label": "UGC"
-        },
-        {
-          "id": "viral",
-          "label": "Trending"
+          "id": "detail",
+          "label": "Product details"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Makeup tools, tissue unboxing",
           "chips": [
-            "accessories"
+            "unboxing"
           ],
-          "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Watch, cinematic detail",
           "chips": [
-            "accessories"
+            "detail"
           ],
-          "prompt": "A cinematic close-up can hold your watch in warm light while the camera glides across its face and strap.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a cinematic close-up can hold your watch in warm light while the camera glides across its face and strap. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-apparel-1",
-          "label": "Bedroom Try-On: Knitwear",
+          "label": "Knitwear, bedroom try-on",
           "chips": [
-            "apparel"
+            "try-on"
           ],
-          "prompt": "Show your knitwear in a bedroom try-on as the creator turns in the mirror so the fit and sleeves stay visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. show your knitwear in a bedroom try-on as the creator turns in the mirror so the fit and sleeves stay visible. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-apparel-2",
-          "label": "Street Style: Linen Set",
+          "label": "Linen set, street try-on",
           "chips": [
-            "apparel"
+            "try-on"
           ],
-          "prompt": "Take your linen set outdoors for a street-style walk that shows the fabric, movement and full silhouette.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. take your linen set outdoors for a street-style walk that shows the fabric, movement and full silhouette. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-apps-1",
-          "label": "Lifestyle App Recommendation",
+          "label": "Lifestyle app, table recommendation",
           "chips": [
-            "apps"
+            "demo"
           ],
-          "prompt": "A creator can recommend your app from a real kitchen table while tapping through a clean, abstract interface on a phone.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a creator can recommend your app from a real kitchen table while tapping through a clean, abstract interface on a phone. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "App, streamer reaction",
           "chips": [
-            "apps"
+            "hook"
           ],
-          "prompt": "Use a streamer-style reaction to show the moment your app surprises a viewer, with the device screen kept clear and easy to follow.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. use a streamer-style reaction to show the moment your app surprises a viewer, with the device screen kept clear and easy to follow. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-beauty-personal-care-1",
-          "label": "Routine Demo: Cream",
+          "label": "Cream, morning routine",
           "chips": [
-            "beauty-personal-care"
+            "demo"
           ],
-          "prompt": "Film a quick morning routine where a creator opens your cream jar and applies it at a bright vanity.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. film a quick morning routine where a creator opens your cream jar and applies it at a bright vanity. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-beauty-personal-care-2",
-          "label": "Bathroom Review: Moisturizer",
+          "label": "Moisturizer, bathroom review",
           "chips": [
-            "beauty-personal-care"
+            "review"
           ],
-          "prompt": "Let a creator give a direct bathroom review while holding your moisturizer beside his face and turning the jar toward the camera.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. let a creator give a direct bathroom review while holding your moisturizer beside his face and turning the jar toward the camera. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Knit sweater, parcel unboxing",
           "chips": [
-            "clothing"
+            "unboxing"
           ],
-          "prompt": "Build a get-ready moment around opening your knit sweater parcel and holding the full garment up before styling it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. build a get-ready moment around opening your knit sweater parcel and holding the full garment up before styling it. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-clothing-2",
-          "label": "Mirror Selfie: Denim",
+          "label": "Denim overshirt, mirror fit check",
           "chips": [
-            "clothing"
+            "try-on"
           ],
-          "prompt": "A mirror selfie can show your denim overshirt from collar to hem as the creator checks the fit before heading out.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a mirror selfie can show your denim overshirt from collar to hem as the creator checks the fit before heading out. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Linen shirt, 360 showcase",
           "chips": [
-            "e-commerce"
+            "detail"
           ],
-          "prompt": "Rotate your linen shirt through a clean 360 showcase so shoppers can inspect the collar, seams and full shape.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. rotate your linen shirt through a clean 360 showcase so shoppers can inspect the collar, seams and full shape. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-2",
-          "label": "Street Interview: Fitness Gear",
+          "label": "Resistance band, street interview",
           "chips": [
-            "e-commerce"
+            "interview"
           ],
-          "prompt": "Ask a passerby to explain how your resistance band fits a workout, keeping the product in his hands as he answers.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. ask a passerby to explain how your resistance band fits a workout, keeping the product in his hands as he answers. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-education-1",
-          "label": "Tutor Demo: Study Tool",
+          "label": "Study tool, tutor demo",
           "chips": [
-            "education"
+            "demo"
           ],
-          "prompt": "A teacher can demonstrate your study tool at a classroom desk with a simple lesson that keeps the product in use.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a teacher can demonstrate your study tool at a classroom desk with a simple lesson that keeps the product in use. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Moisturizer, skin lesson",
           "chips": [
-            "education"
+            "review"
           ],
-          "prompt": "Use a clear talking-head lesson to explain how your moisturizer fits a simple daily routine, with the jar held beside the speaker.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. use a clear talking-head lesson to explain how your moisturizer fits a simple daily routine, with the jar held beside the speaker. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "Court gear, POV discovery",
           "chips": [
-            "explainer"
+            "hook"
           ],
-          "prompt": "Open from an athlete's point of view as your court gear is picked up and shown where the next play starts.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. open from an athlete's point of view as your court gear is picked up and shown where the next play starts. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home app, walkthrough hook",
           "chips": [
-            "explainer"
+            "hook"
           ],
-          "prompt": "Start with a strong home-search hook, then let the creator walk through your app on a tablet with the property view kept abstract.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. start with a strong home-search hook, then let the creator walk through your app on a tablet with the property view kept abstract. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance app, phone demo",
           "chips": [
-            "financial-services"
+            "demo"
           ],
-          "prompt": "Use a direct phone demo to introduce your finance app and show the key navigation without exposing private figures.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. use a direct phone demo to introduce your finance app and show the key navigation without exposing private figures. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-2",
-          "label": "Realtor Walkthrough: Home",
+          "label": "Home service, realtor walkthrough",
           "chips": [
-            "financial-services"
+            "interview"
           ],
-          "prompt": "A realtor can walk viewers through your home service outdoors while holding a tablet with a simple abstract property view.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a realtor can walk viewers through your home service outdoors while holding a tablet with a simple abstract property view. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "Citrus drink, sensory sip",
           "chips": [
-            "food-beverage"
+            "hook"
           ],
-          "prompt": "Lead with the first sip of your citrus drink and capture the creator's sensory reaction in a tight cafe close-up.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. lead with the first sip of your citrus drink and capture the creator's sensory reaction in a tight cafe close-up. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-2",
-          "label": "Street Interview: Snack Bite",
+          "label": "Snack, street first bite",
           "chips": [
-            "food-beverage"
+            "interview"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-footwear-1",
-          "label": "Running Shoe Creator Showcase",
+          "label": "Running shoe, creator showcase",
           "chips": [
-            "footwear"
+            "showcase"
           ],
-          "prompt": "A runner holds your slate-blue shoe toward the camera during a riverside product recommendation.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a runner holds your slate-blue shoe toward the camera during a riverside product recommendation. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-footwear-2",
-          "label": "Trail Shoe Lace-Up Demo",
+          "label": "Trail shoe, lace-up demo",
           "chips": [
-            "footwear"
+            "demo"
           ],
-          "prompt": "A trail runner tightens your olive-gray shoe laces on a forest path before heading out.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a trail runner tightens your olive-gray shoe laces on a forest path before heading out. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry snack, first bite",
           "chips": [
-            "health-fitness"
+            "interview"
           ],
-          "prompt": "A creator takes the first bite of your fresh berry snack in a bright kitchen routine.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a creator takes the first bite of your fresh berry snack in a bright kitchen routine. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-2",
-          "label": "Resistance Band Home Demo",
+          "label": "Resistance band, home workout",
           "chips": [
-            "health-fitness"
+            "showcase"
           ],
-          "prompt": "A home workout creator demonstrates your resistance band through one clear movement.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a home workout creator demonstrates your resistance band through one clear movement. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-1",
-          "label": "Pendant Creator Try-On",
+          "label": "Gold pendant, creator try-on",
           "chips": [
-            "jewelry-accessories"
+            "try-on"
           ],
-          "prompt": "A creator touches your brushed-gold pendant at the collarbone in a relaxed bedroom showcase.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a creator touches your brushed-gold pendant at the collarbone in a relaxed bedroom showcase. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Signet ring, macro reveal",
           "chips": [
-            "jewelry-accessories"
+            "detail"
           ],
-          "prompt": "A close product shot shows hands rotating your brushed-silver signet ring on linen.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a close product shot shows hands rotating your brushed-silver signet ring on linen. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-kids-toy-1",
-          "label": "Wooden Toy Parent Play",
+          "label": "Wooden toy, parent play",
           "chips": [
-            "kids-toy"
+            "showcase"
           ],
-          "prompt": "A parent and child stack your wooden shape toy together during a warm playtime scene.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a parent and child stack your wooden shape toy together during a warm playtime scene. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-pet-1",
-          "label": "Dog Harness Park Setup",
+          "label": "Dog harness, park setup",
           "chips": [
-            "pet"
+            "showcase"
           ],
-          "prompt": "A dog owner clips your teal harness onto a golden retriever before a park walk.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a dog owner clips your teal harness onto a golden retriever before a park walk. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-pet-2",
-          "label": "Pet Brush Living Room Demo",
+          "label": "Pet brush, living-room demo",
           "chips": [
-            "pet"
+            "demo"
           ],
-          "prompt": "A pet owner brushes a calm dog with your wooden pin brush in a cozy living room.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a pet owner brushes a calm dog with your wooden pin brush in a cozy living room. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-1",
-          "label": "Post-Workout Bottle Check-In",
+          "label": "Sports bottle, post-workout check-in",
           "chips": [
-            "sports-gym"
+            "showcase"
           ],
-          "prompt": "A gym creator raises your teal sports bottle after finishing a workout.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a gym creator raises your teal sports bottle after finishing a workout. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell, powder reveal",
           "chips": [
-            "sports-gym"
+            "hook"
           ],
-          "prompt": "A cinematic burst of orange and green dust reveals your plain matte kettlebell on a reflective black pedestal.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a cinematic burst of orange and green dust reveals your plain matte kettlebell on a reflective black pedestal. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Countertop appliance, evening demo",
           "chips": [
-            "tech-electronics"
+            "demo"
           ],
-          "prompt": "A creator demonstrates your plain countertop appliance during an evening kitchen routine, showing its shape and controls in warm light.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a creator demonstrates your plain countertop appliance during an evening kitchen routine, showing its shape and controls in warm light. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Charcoal keyboard, desk review",
           "chips": [
-            "tech-electronics"
+            "review"
           ],
-          "prompt": "A desk creator points out your charcoal mechanical keyboard while pressing its keys.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a desk creator points out your charcoal mechanical keyboard while pressing its keys. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump moisturizer, bathroom routine",
           "chips": [
-            "ugc"
+            "review"
           ],
-          "prompt": "A male creator applies your coral pump moisturizer to one cheek at a bright bathroom vanity.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a male creator applies your coral pump moisturizer to one cheek at a bright bathroom vanity. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-ugc-2",
-          "label": "Sage Overshirt Unboxing",
+          "label": "Sage overshirt, parcel unboxing",
           "chips": [
-            "ugc"
+            "unboxing"
           ],
-          "prompt": "A creator lifts your sage overshirt from a blank kraft mailer for a first-look unboxing.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a creator lifts your sage overshirt from a blank kraft mailer for a first-look unboxing. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Face mist, reaction hook",
           "chips": [
-            "viral"
+            "hook"
           ],
-          "prompt": "A creator opens with a playful reaction while holding your mint face mist beside her cheek.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a creator opens with a playful reaction while holding your mint face mist beside her cheek. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:tw2-wall-viral-2",
-          "label": "Stadium Hydration Fan Moment",
+          "label": "Hydration bottle, stadium fan moment",
           "chips": [
-            "viral"
+            "showcase"
           ],
-          "prompt": "A fan raises your orange hydration bottle during a lively stadium game moment.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. a fan raises your orange hydration bottle during a lively stadium game moment. Natural creator framing, one clear action, soft available light. Sound: the action and room tone; no music, text or logos.",
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "Browse all ad formats"
     },
     "uses": [
       {
@@ -609,11 +569,11 @@
     ],
     "titles": {
       "m2": {
-        "h2": "Create a UGC video ad in 3 steps"
+        "h2": "How to Make AI UGC Video Ads in 3 Simple Steps"
       },
       "m3": {
-        "h2": "See the ad formats you can test",
-        "lead": "Compare creator-style product ads, explainers, showcases and social clips before you make your own."
+        "h2": "Choose a product ad format to test",
+        "lead": "Start with an action shoppers can understand, from an unboxing to a fit check or first sip."
       },
       "m4": {
         "h2": "Make more ad versions from one upload"
@@ -634,7 +594,7 @@
         "h2": "See formats you can put to work"
       }
     },
-    "overview": "Turn one product photo into a short creator-style ad. Show one action, keep the product clear and try another hook without a new shoot.",
+    "overview": "Turn one product photo into a short ad with one clear action. Test another opening, scene or presenter without arranging a new shoot.",
     "input": [],
     "outputs": [],
     "after": null
@@ -643,17 +603,17 @@
   "benefits": [
     {
       "t": "Ship a first ad in minutes",
-      "d": "Start with one product photo and one idea. Get a creator-style draft without casting, booking or a studio day.",
+      "d": "Start with one product photo and one scene idea. Get a creator-style draft without casting, booking or a studio day.",
       "icon": "clock"
     },
     {
       "t": "Test hooks from one upload",
-      "d": "Swap the opening, scene or presenter to compare angles without reshooting the product.",
+      "d": "Swap the opening or scene to compare angles. Keep testing moving without arranging another product shoot.",
       "icon": "layers"
     },
     {
       "t": "Keep the product in the story",
-      "d": "Show one product action or detail in a short vertical ad, then add your price or offer after download.",
+      "d": "Show one product action or detail in a short vertical ad. Add your price or offer after download in your editor.",
       "icon": "target"
     }
   ],
@@ -661,7 +621,7 @@
   "steps_lead": "Go from one clear product photo to a short ad ready for your next test.",
   "compare_table": {
     "title": "AIVideosUGC vs. traditional video ad production",
-    "lead": "Same finished ad on the feed, a much shorter and cheaper path to get there.",
+    "lead": "See what changes when one product photo replaces a shoot brief.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -669,35 +629,37 @@
     ],
     "rows": [
       [
-        "How long it takes",
-        "A finished clip in minutes from one product photo",
-        "Days or weeks of calls, booking, filming and edits"
+        "Input",
+        "One product photo and one scene idea",
+        "A shoot brief, product samples and a cast"
       ],
       [
-        "Creator or studio needed",
-        "No casting, no booking, no studio day",
-        "You hire a creator or crew and arrange a shoot"
+        "Preparation",
+        "Write one action and choose a setting",
+        "Book a creator, location and shoot time"
       ],
       [
-        "Cost of a new version",
-        "A new angle costs only its credits; a 10-second clip is 40 credits",
-        "Another shoot day, creator fee and edit round"
+        "Versions",
+        "Try another opening without reshooting",
+        "Arrange another shoot for a new opening"
       ],
       [
-        "Versions you can test",
-        "As many scenes, hooks and performers as your credits cover, with no reshoot",
-        "One set of takes from the shoot day"
-      ],
-      [
-        "Sizes and lengths",
-        "9:16, 1:1, 16:9, 4:3 and 3:4; clips of 6, 10, 15 or 30 seconds",
-        "You re-edit and re-export for every size and length yourself"
-      ],
-      [
-        "Usage rights",
-        "Watermark-free download licensed for commercial use",
-        "Usage terms and licensing have to be negotiated"
+        "Review",
+        "Download the clip and review it before posting",
+        "Review the filmed takes and edit before posting"
       ]
     ]
-  }
+  },
+  "relatedLinks": [
+    "image-to-video",
+    "url-to-video",
+    "product-videos",
+    "unboxing-videos",
+    "before-after-videos",
+    "templates",
+    "plat-tiktok",
+    "plat-instagram",
+    "plat-youtube-shorts",
+    "spokesperson-videos"
+  ]
 }
