@@ -4,7 +4,7 @@
   "description": "AI video generator for ads from one product photo. Choose 6, 10, 15, or 30 seconds, see the credit cost first, and download for social or your store.",
   "h1": "AI Video Generator for Ecommerce Ads from One Product Photo",
   "eyebrow": "AI video tools for online sellers",
-  "lead": "Publish videos faster, spend far less than a real shoot, and scale your content from one product photo. Choose a format, describe the moment, and download a clip ready to test.",
+  "lead": "Make a product ad from one clear photo in minutes. Choose 9:16, 1:1 or 16:9, describe one action, and download a clip ready to test.",
   "maker": {
     "options": [
       [
@@ -27,28 +27,28 @@
   ],
   "intro": [
     "Turn a product photo and a scene idea into a short clip for your store or ad. Set the format and explain the moment you want to show; the result stays centered on your product.",
-    "Use one upload to make a creator-style ad, product demo, unboxing or before-and-after clip, then choose a 9:16, 1:1, 16:9, 4:3 or 3:4 frame and 6, 10, 15 or 30 seconds. The workspace shows the credit cost before you start, so you can choose a version that fits the job."
+    "Use one upload to make a creator-style ad, product demo, unboxing or before-and-after clip. Choose 9:16, 1:1 or 16:9 and 6, 10, 15 or 30 seconds. The workspace shows the credit cost before generation."
   ],
   "benefits_h2": "Reasons sellers use an AI video generator",
   "benefits": [
     {
-      "t": "Launch a test ad sooner",
-      "d": "Get a finished clip in minutes, not weeks. No creators, studios or gear to book.",
+      "t": "Change the opening without another shoot",
+      "d": "Try a different first moment from the same product photo when the ad needs a new hook.",
       "icon": "bolt"
     },
     {
-      "t": "Build more versions from one upload",
-      "d": "Change the hook, scene or actor and compare the clips without reshooting the product.",
+      "t": "Pick the frame for each feed",
+      "d": "Choose a vertical, square or wide frame for the channel where you will test the clip.",
       "icon": "layers"
     },
     {
-      "t": "Fit the frame to your channel",
-      "d": "Choose a vertical, square or wide frame for TikTok, Reels, Shorts, feeds or a product page.",
+      "t": "Show one product action clearly",
+      "d": "Describe one movement or talking point so the product stays easy to understand.",
       "icon": "target"
     },
     {
-      "t": "Ready to run, no watermark",
-      "d": "Download a watermark-free file for commercial work, then add your own prices or captions.",
+      "t": "Download a file you can finish in your editor",
+      "d": "Download the clip and add your own prices, captions or offers before posting.",
       "icon": "shield"
     }
   ],
@@ -57,15 +57,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Turn one product photo into more ad options. Upload a clear full-item photo and keep that product in the finished clip."
+      "d": "Upload a clear full-item photo so the product stays recognizable. Keep the important edges and details visible."
     },
     {
       "t": "Pick a Format and Scene",
-      "d": "Pick the format that fits your next campaign. Choose a video type and frame, then describe one action or talking point for the clip."
+      "d": "Choose 9:16, 1:1 or 16:9 and describe one action or talking point. The workspace shows the credit cost before generation."
     },
     {
       "t": "Download and Post",
-      "d": "Get a watermark-free file ready for your next post. Download it for your ad, feed, or store, then add your own prices or captions."
+      "d": "Download the clip and add your own prices or captions in your editor before posting."
     }
   ],
   "faq": [
@@ -79,7 +79,7 @@
     },
     {
       "q": "Which video sizes and lengths are available?",
-      "a": "The workspace accepts 9:16, 1:1, 16:9, 4:3 and 3:4 frames, with 6, 10, 15 or 30 seconds available for video jobs."
+      "a": "The workspace accepts 9:16, 1:1 and 16:9 frames, with 6, 10, 15 or 30 seconds available for video jobs."
     },
     {
       "q": "What does a video cost?",
@@ -100,14 +100,6 @@
     {
       "q": "Is the person in an AI video a real customer?",
       "a": "No. Any presenter or creator-style person is generated for the ad, not a real customer review. Show the clip as a scripted product ad and disclose AI content when a platform requires it."
-    },
-    {
-      "q": "How long does a video take to make?",
-      "a": "A finished clip is ready in minutes. The exact time varies with the length and server load, so you can start another version while you wait."
-    },
-    {
-      "q": "Do I need to hire a model or creator?",
-      "a": "No. The people in the clips are generated around your product photo, so there is no casting, sample shipping or filming date. You can still work with a real creator later."
     }
   ],
   "examples": {
@@ -191,7 +183,7 @@
       {
         "audience": "Outdoor apparel shop",
         "tool": "video-ads",
-        "task": "Get a seasonal movement clip from one jacket photo, no model day needed.",
+        "task": "Tool: Video Ads — get a seasonal movement clip from one jacket photo and test the result.",
         "ref": "n:rx3-video-hub-scenario-3-r1"
       },
       {
@@ -231,8 +223,8 @@
       ]
     },
     "picker": {
-      "title": "Recreate what you love",
-      "lead": "Recreate the style with your own product and launch a campaign in minutes.",
+      "title": "Recreate a Product Ad with Your Photo",
+      "lead": "Turn one product photo into a product ad you can test in the format that fits your channel.",
       "chips": [
         {
           "id": "accessories",
@@ -307,7 +299,7 @@
           "label": "UGC"
         },
         {
-          "id": "viral",
+          "id": "trending",
           "label": "Trending"
         }
       ],
@@ -318,7 +310,7 @@
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A commuter folds a compact bicycle beside a train platform and carries it through an open train doorway. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A commuter folds a compact bicycle beside a train platform and carries it through an open train doorway. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -328,7 +320,7 @@
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. Two adult hands peel back plain tissue and lift a round matte sage-green charging case holding stemless bean-shaped earbuds from a kraft box, ending with the round case centered. Realistic vertical product framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; warm handheld close-up.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. Two adult hands peel back plain tissue and lift a round matte sage-green charging case holding stemless bean-shaped earbuds from a kraft box, ending with the round case centered. Realistic vertical product framing, warm handheld close-up.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -338,7 +330,7 @@
           "chips": [
             "apparel"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult model presents a plain olive overshirt with the full front and sleeves visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult model presents a plain olive overshirt with the full front and sleeves visible. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -348,7 +340,7 @@
           "chips": [
             "apparel"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman adjusts a plain cream knit sweater in a mirror with the full garment visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman adjusts a plain cream knit sweater in a mirror with the full garment visible. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -358,7 +350,7 @@
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Phone tripod set up on a bedroom desk, natural light. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Phone tripod set up on a bedroom desk, natural light. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -368,7 +360,7 @@
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain adjustable tablet stand holding a dark-screen tablet on a desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain adjustable tablet stand holding a dark-screen tablet on a desk. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -378,7 +370,7 @@
           "chips": [
             "beauty-personal-care"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Red lipstick standing uncapped on a white marble vanity. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Red lipstick standing uncapped on a white marble vanity. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -388,7 +380,7 @@
           "chips": [
             "beauty-personal-care"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Sheet mask pouch with opened on a bathroom counter. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Sheet mask pouch with opened on a bathroom counter. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -398,7 +390,7 @@
           "chips": [
             "clothing"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands hold a plain denim shirt toward the camera with collar and seams visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands hold a plain denim shirt toward the camera with collar and seams visible. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -408,7 +400,7 @@
           "chips": [
             "clothing"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult folds plain charcoal trousers on a clean bed with the full garment visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult folds plain charcoal trousers on a clean bed with the full garment visible. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -418,7 +410,7 @@
           "chips": [
             "e-commerce"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Open laptop beside a plain ceramic mug on a bright desk, with an abstract product listing on screen. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Open laptop beside a plain ceramic mug on a bright desk, with an abstract product listing on screen. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -428,7 +420,7 @@
           "chips": [
             "e-commerce"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands compare plain silicone phone cases side by side on a clean desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands compare plain silicone phone cases side by side on a clean desk. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -438,7 +430,7 @@
           "chips": [
             "education"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand sprays a plain fabric-safe cleaner on a visible coffee stain on a white shirt and lifts the stain with one cloth pass. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand sprays a plain fabric-safe cleaner on a visible coffee stain on a white shirt and lifts the stain with one cloth pass. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -448,7 +440,7 @@
           "chips": [
             "education"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Close view of an adult opening a commuter backpack to reveal a lunchbox leak, then wiping the inner lining clean with a cloth; show the leak remover spray nearby. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Close view of an adult opening a commuter backpack to reveal a lunchbox leak, then wiping the inner lining clean with a cloth; show the leak remover spray nearby. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -458,7 +450,7 @@
           "chips": [
             "explainer"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Hands fitting a bamboo cutlery organizer into a kitchen drawer. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Hands fitting a bamboo cutlery organizer into a kitchen drawer. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -468,7 +460,7 @@
           "chips": [
             "explainer"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -478,7 +470,7 @@
           "chips": [
             "financial-services"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Small desk plant beside an open laptop. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Small desk plant beside an open laptop. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -488,7 +480,7 @@
           "chips": [
             "financial-services"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult advisor points beside a generic laptop with a softly blurred abstract chart and no text. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult advisor points beside a generic laptop with a softly blurred abstract chart and no text. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -498,7 +490,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Hot sauce bottle with a blank cream label, red chilies and a small sauce bowl. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Hot sauce bottle with a blank cream label, red chilies and a small sauce bowl. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -508,7 +500,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain glass bottle of golden citrus drink beside iced citrus water on a sunny counter. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain glass bottle of golden citrus drink beside iced citrus water on a sunny counter. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -518,7 +510,7 @@
           "chips": [
             "footwear"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult runner steps into a plain performance shoe and turns one foot toward camera on a track, clear side profile and laces visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult runner steps into a plain performance shoe and turns one foot toward camera on a track, clear side profile and laces visible. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -528,7 +520,7 @@
           "chips": [
             "footwear"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A runner in plain trail shoes steps through a shallow wet patch on a wooded path, with water droplets and the shoe tread visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A runner in plain trail shoes steps through a shallow wet patch on a wooded path, with water droplets and the shoe tread visible. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -538,7 +530,7 @@
           "chips": [
             "health-fitness"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult athlete finishes a set in a bright gym and lifts a plain shaker filled with protein drink for a post-workout sip. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult athlete finishes a set in a bright gym and lifts a plain shaker filled with protein drink for a post-workout sip. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -548,7 +540,7 @@
           "chips": [
             "health-fitness"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain brushed steel water bottle on a park bench beside a folded running jacket. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain brushed steel water bottle on a park bench beside a folded running jacket. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -558,7 +550,7 @@
           "chips": [
             "sports-gym"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult runner holds a plain waist belt and explains the zip pocket at a trailhead. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult runner holds a plain waist belt and explains the zip pocket at a trailhead. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -568,7 +560,7 @@
           "chips": [
             "jewelry-accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Soft wool scarf lifted from a plain mailer onto a bed. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Soft wool scarf lifted from a plain mailer onto a bed. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -578,7 +570,7 @@
           "chips": [
             "jewelry-accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands fasten a plain silver bracelet at a wrist beside a bright vanity. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands fasten a plain silver bracelet at a wrist beside a bright vanity. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -588,7 +580,7 @@
           "chips": [
             "kids-toy"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A child plays with a plain wooden toy train while an adult hand demonstrates it. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A child plays with a plain wooden toy train while an adult hand demonstrates it. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -598,7 +590,7 @@
           "chips": [
             "kids-toy"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands open a plain toy box with colorful wooden blocks and no letters or logos. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands open a plain toy box with colorful wooden blocks and no letters or logos. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -608,7 +600,7 @@
           "chips": [
             "pet"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult owner brushes a calm golden dog with a plain grooming brush in a bright room. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult owner brushes a calm golden dog with a plain grooming brush in a bright room. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -618,7 +610,7 @@
           "chips": [
             "pet"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult owner fits a plain teal harness onto a calm dog at a bright entryway. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult owner fits a plain teal harness onto a calm dog at a bright entryway. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -628,7 +620,7 @@
           "chips": [
             "sports-gym"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand scoops protein powder from a plain pouch into a clear shaker at a gym bench. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand scoops protein powder from a plain pouch into a clear shaker at a gym bench. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -638,7 +630,7 @@
           "chips": [
             "tech-electronics"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Matte-black over-ear headphones lifted from an open kraft box with pale tissue. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Matte-black over-ear headphones lifted from an open kraft box with pale tissue. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -648,7 +640,7 @@
           "chips": [
             "tech-electronics"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands fit a muted sage-green phone case with one circular camera opening onto a generic smartphone. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands fit a muted sage-green phone case with one circular camera opening onto a generic smartphone. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -658,7 +650,7 @@
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. An adult Black man with close-cropped hair holds a plain supplement tub and a clear mixed drink while explaining it to the camera in a bright gym corner. Realistic vertical creator framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; natural skin and handheld light.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. An adult Black man with close-cropped hair holds a plain supplement tub and a clear mixed drink while explaining it to the camera in a bright gym corner. Realistic vertical creator framing, natural skin and handheld light.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -668,7 +660,7 @@
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain over-ear headphones arranged inside an open gray box. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain over-ear headphones arranged inside an open gray box. Realistic vertical product video framing, natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -676,9 +668,9 @@
           "ref": "n:guide:img3-video-fragrance-r1",
           "label": "Fragrance Reveal Reaction",
           "chips": [
-            "viral"
+            "trending"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. An adult man with short textured curls holds a plain cylindrical amber fragrance bottle toward the camera and reacts with delight as warm light catches the bottle on dark stone. Realistic vertical reaction framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; handheld cinematic light.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. An adult man with short textured curls holds a plain cylindrical amber fragrance bottle toward the camera and reacts with delight as warm light catches the bottle on dark stone. Realistic vertical reaction framing, handheld cinematic light.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -686,9 +678,9 @@
           "ref": "n:guide:img3-video-phone-case-compare-r1",
           "label": "Phone Case Compare Hook",
           "chips": [
-            "viral"
+            "trending"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. Two adult hands hold two plain silicone phone cases side by side; each case has one single circular camera opening only. Realistic vertical comparison framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; bright soft desk light.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. Two adult hands hold two plain silicone phone cases side by side; each case has one single circular camera opening only. Realistic vertical comparison framing, bright soft desk light.",
           "kind": "video",
           "tool": "image-to-video"
         }
@@ -700,12 +692,25 @@
         "h2": "How to make a product video in 3 steps"
       },
       "m3": {
-        "h2": "Recreate what you love",
-        "lead": "Recreate the style with your own product and launch a campaign in minutes."
+        "h2": "Recreate a Product Ad with Your Photo",
+        "lead": "Turn one product photo into a product ad you can test in the format that fits your channel."
       }
     },
     "uses": []
   },
   "cta_lead": "Start with a clear product photo, choose a format, and see the credit cost before generation.",
-  "cta_title": "Turn your next product photo into a video ad"
+  "cta_title": "Turn your next product photo into a video ad",
+  "relatedLinks": [
+    "image-to-video",
+    "url-to-video",
+    "video-ads",
+    "product-videos",
+    "unboxing-videos",
+    "before-after-videos",
+    "ai-actors",
+    "plat-tiktok",
+    "plat-instagram",
+    "plat-youtube-shorts",
+    "templates"
+  ]
 }
