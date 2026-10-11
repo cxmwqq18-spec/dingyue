@@ -3928,6 +3928,15 @@
         1280
       ]
     },
+    "img3-home-strip-serum-r3": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman with a short auburn bob touches her cheek beside a plain white cream jar at a bright bathroom vanity.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
     "img3-home-strip-creator-review-r2": {
       "w": 864,
       "h": 1536,
@@ -13180,6 +13189,15 @@
       "w": 1280,
       "h": 1280,
       "alt": "Open ribbon-tied gift box with a plain cream tube, round jar and amber pump bottle inside.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "img3-gen2-unboxing-videos-g2-r3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Open gift box with a plain white cream tube, round white cream jar and white soap bar inside.",
       "variants": [
         640,
         1280
