@@ -817,7 +817,7 @@
     "sale": "n:sh1-sale-r1",
     "howto": "f:how-to-video",
     "film": "f:cinematic-video",
-    "beauty": "n:sh1-beauty-r1",
+    "beauty": "n:guide:rc5-tpl-beauty-source-r1",
     "drink": "f:food-video",
     "home": "f:home-organization",
     "outfit": "f:fashion-try-on-reel",
