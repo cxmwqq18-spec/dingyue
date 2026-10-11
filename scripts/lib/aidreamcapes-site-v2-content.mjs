@@ -1632,6 +1632,28 @@ function benefitsList(model, page, items) {
   return autoLinkPage(model, page, [], [items]).groups[0];
 }
 
+const IMAGE_ITEM_FRAMES = new Set(["phone", "browser", "none"]);
+
+// More-section and audience cards may opt into the image-led row treatment. Resolve
+// their media references here so the public payload contains the same complete image
+// shape as every other storefront image and never exposes an internal media ref.
+function imageItemsFor(model, page, items) {
+  return (items || []).map((item) => {
+    const out = { ...item };
+    if (typeof out.img === "string" && out.img.trim()) {
+      const image = mediaImage(model, out.img, "gallery");
+      out.img = typeof out.alt === "string" && out.alt.trim() ? { ...image, alt: out.alt } : image;
+    }
+    if (out.frame !== undefined && !IMAGE_ITEM_FRAMES.has(out.frame)) {
+      assert.fail(`${page.id}: image item frame must be phone, browser or none`);
+    }
+    if (out.alt !== undefined && (typeof out.alt !== "string" || !out.alt.trim())) {
+      assert.fail(`${page.id}: image item alt must be a non-empty string`);
+    }
+    return out;
+  });
+}
+
 // Optional page-owned sections keep their stored shape; only the item descriptions run
 // through the same automatic internal linker as benefit cards.
 function moreSectionsFor(model, page, sections) {
@@ -1642,7 +1664,7 @@ function moreSectionsFor(model, page, sections) {
     eyebrow: section.eyebrow ?? "",
     h2: section.h2,
     ...(section.lead ? { lead: section.lead } : {}),
-    items: linked[index]
+    items: imageItemsFor(model, page, linked[index])
   }));
 }
 
@@ -1811,7 +1833,7 @@ function payloadFor(model, page) {
         { title: "Ad sizes and testing", links: pageLinksFor(model, ["guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-ugc-video-ads-guide"]) }
       ],
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
-      ...(c.audience ? { audience: { ...c.audience, items: (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) })) } } : {}),
+      ...(c.audience ? { audience: { ...c.audience, items: imageItemsFor(model, page, (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) }))) } } : {}),
       exampleGallery: examples,
       examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
     };
@@ -2273,6 +2295,7 @@ function visualPayloadImages(visual) {
 export function renderedImages(layout, data) {
   const out = [];
   const add = (image) => { if (image?.src) out.push(image.src); };
+  const addImageItems = (items) => (items ?? []).forEach((item) => add(item?.img));
   const addMedia = (media) => {
     if (!media) return false;
     if (media.kind === "pair") { add(media.before); add(media.after); }
@@ -2322,6 +2345,8 @@ export function renderedImages(layout, data) {
   else if (layout === "examples") { addFlows(data.flows); if (!data.visual) { addPairs(); addCards(data.cards); addExamples(); } }
   else add(data.image);
   for (const image of visualPayloadImages(data.visual)) add(image);
+  addImageItems(data.more_sections?.flatMap((section) => section.items ?? []));
+  addImageItems(data.audience?.items);
   return out;
 }
 
@@ -2798,8 +2823,26 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (!section || typeof section.eyebrow !== "string" || typeof section.h2 !== "string" || !section.h2.trim()) errors.push(`${page.id}: invalid more_sections section shape`);
         else if (section.lead !== undefined && typeof section.lead !== "string") errors.push(`${page.id}: more_sections lead must be a string`);
         if (!Array.isArray(section?.items) || !section.items.length) errors.push(`${page.id}: more_sections section must list items`);
-        else for (const item of section.items) if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid more_sections item shape`);
+        else for (const item of section.items) {
+          if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid more_sections item shape`);
+          if (item?.frame !== undefined && !IMAGE_ITEM_FRAMES.has(item.frame)) errors.push(`${page.id}: more_sections item frame must be phone, browser or none`);
+          if (item?.alt !== undefined && (typeof item.alt !== "string" || !item.alt.trim())) errors.push(`${page.id}: more_sections item alt must be a non-empty string`);
+          if (item?.img !== undefined && (!item.img || typeof item.img !== "object" || typeof item.img.src !== "string" || typeof item.img.alt !== "string" || !(Number(item.img.width) > 0) || !(Number(item.img.height) > 0))) errors.push(`${page.id}: more_sections item img must be a compiled image`);
+        }
       }
+    }
+    const validateImageItems = (items, label) => {
+      if (!Array.isArray(items)) return;
+      for (const item of items) {
+        if (item?.frame !== undefined && !IMAGE_ITEM_FRAMES.has(item.frame)) errors.push(`${page.id}: ${label} item frame must be phone, browser or none`);
+        if (item?.alt !== undefined && (typeof item.alt !== "string" || !item.alt.trim())) errors.push(`${page.id}: ${label} item alt must be a non-empty string`);
+        if (item?.img !== undefined && (!item.img || typeof item.img !== "object" || typeof item.img.src !== "string" || typeof item.img.alt !== "string" || !(Number(item.img.width) > 0) || !(Number(item.img.height) > 0))) errors.push(`${page.id}: ${label} item img must be a compiled image`);
+      }
+    };
+    validateImageItems(data.audience?.items, "audience");
+    validateImageItems(data.benefits, "benefits");
+    for (const item of Array.isArray(data.benefits) ? data.benefits : []) {
+      if (item?.icon !== undefined && !["bolt", "layers", "target", "coins", "clock", "refresh", "globe", "shield", "sparkle", "check", "users", "play"].includes(item.icon)) errors.push(`${page.id}: benefits icon is not supported (${item.icon})`);
     }
     if (page.id === "glossary") {
       const entries = Array.isArray(data.entries) ? data.entries : [];
