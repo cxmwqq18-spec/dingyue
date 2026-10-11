@@ -324,7 +324,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping food and expression together in one frame.",
           "kind": "video"
         },
         {
