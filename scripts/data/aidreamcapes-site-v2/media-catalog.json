@@ -47704,6 +47704,28 @@
           1280
         ]
       },
+      "im05-tpl-launch-strip-jewelry-r1": {
+        "file": "im05-tpl-launch-strip-jewelry-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a plain kraft jewelry box to reveal one brushed-silver signet ring on a pale wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "im05-tpl-launch-case-pendant-r1": {
+        "file": "im05-tpl-launch-case-pendant-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a plain kraft jewelry box to reveal one brushed-silver pendant on a short chain.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
       "rc4-tpl-ugc-gallery-weekender-r1": {
         "file": "rc4-tpl-ugc-gallery-weekender-r1",
         "w": 1024,
