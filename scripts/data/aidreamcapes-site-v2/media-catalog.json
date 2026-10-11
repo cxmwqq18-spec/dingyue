@@ -4889,6 +4889,46 @@
         1280
       ],
       "source": "codex-imagegen"
+    },
+    "img3-video-strip-car-r1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult man with short tight curls holds a plain electrolyte sachet beside his face in a parked car and speaks to the camera.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "img3-video-strip-headphones-r1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman with a short blonde pixie haircut holds plain matte-black over-ear headphones beside her face and speaks to the camera in a bright home office.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "img3-video-strip-street-r1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult interviewer listens as an adult close-cropped runner takes a first sip from a plain electrolyte drink on a sunny city sidewalk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "img3-video-strip-bag-r1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult man with a short buzz cut wears a plain charcoal crossbody bag on a city walk and turns to show the strap and fit.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
     }
   },
   "gen": {
@@ -42887,6 +42927,61 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult woman with a short straight copper bob applies the same plain coral lip balm at a bright vanity mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img3-home-earbuds-r1": {
+        "file": "img3-home-earbuds-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two matte sage-green stemless bean-shaped earbuds rest separately on pure white with no charging case.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img3-video-earbud-box-r1": {
+        "file": "img3-video-earbud-box-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Two adult hands lift a round matte sage-green charging case holding stemless bean-shaped earbuds from a kraft box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img3-video-supplement-creator-r1": {
+        "file": "img3-video-supplement-creator-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult Black man with close-cropped hair holds a plain supplement tub and a clear mixed drink while explaining it to the camera in a bright gym.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img3-video-fragrance-r1": {
+        "file": "img3-video-fragrance-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult man with short textured curls holds a plain cylindrical amber fragrance bottle toward the camera and reacts with delight.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img3-video-phone-case-compare-r1": {
+        "file": "img3-video-phone-case-compare-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Two adult hands hold plain silicone phone cases side by side, each with one single circular camera opening.",
         "variants": [
           640,
           1280

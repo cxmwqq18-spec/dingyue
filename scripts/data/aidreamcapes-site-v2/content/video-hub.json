@@ -175,11 +175,11 @@
   "visual": {
     "strip": [
       "f:q1-video-strip-protein",
-      "f:q1-video-strip-car",
+      "f:img3-video-strip-car-r1",
       "f:q1-video-strip-steamer-v2",
-      "f:q1-video-strip-headphones",
-      "f:q1-video-strip-street",
-      "f:q1-video-strip-bag"
+      "f:img3-video-strip-headphones-r1",
+      "f:img3-video-strip-street-r1",
+      "f:img3-video-strip-bag-r1"
     ],
     "steps": {
       "source": "n:guide:img1-video-hub-steps-source-r1",
@@ -293,12 +293,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-ex-earbuds",
+          "ref": "n:guide:img3-video-earbud-box-r1",
           "label": "Earbud Box Reveal UGC",
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands peel back tissue and lift a plain wireless earbud case from a small kraft box, ending with the case centered. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. Two adult hands peel back plain tissue and lift a round matte sage-green charging case holding stemless bean-shaped earbuds from a kraft box, ending with the round case centered. Realistic vertical product framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; warm handheld close-up.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -623,12 +623,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q3-product-videos-board-05-collagen-review",
+          "ref": "n:guide:img3-video-supplement-creator-r1",
           "label": "Supplement Creator Demo UGC",
           "chips": [
             "ugc"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult creator holds a plain supplement tub and a mixed drink. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. An adult Black man with close-cropped hair holds a plain supplement tub and a clear mixed drink while explaining it to the camera in a bright gym corner. Realistic vertical creator framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; natural skin and handheld light.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -643,22 +643,22 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-ex-fragrance",
+          "ref": "n:guide:img3-video-fragrance-r1",
           "label": "Fragrance Reveal Reaction",
           "chips": [
             "viral"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A fragrance bottle catches warm reflected light on a dark stone surface. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. An adult man with short textured curls holds a plain cylindrical amber fragrance bottle toward the camera and reacts with delight as warm light catches the bottle on dark stone. Realistic vertical reaction framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; handheld cinematic light.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-card-compare",
+          "ref": "n:guide:img3-video-phone-case-compare-r1",
           "label": "Phone Case Compare Hook",
           "chips": [
             "viral"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands hold plain silicone phone cases side by side at equal distance from the lens. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape, color and label area exactly. Two adult hands hold two plain silicone phone cases side by side; each case has one single circular camera opening only. Realistic vertical comparison framing, no earrings, no jewelry, no religious objects, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos or watermark; bright soft desk light.",
           "kind": "video",
           "tool": "image-to-video"
         }

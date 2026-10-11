@@ -382,12 +382,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-photo-picker-earbuds-v2",
-          "label": "Wireless Earbud Case Product Detail",
+          "ref": "n:guide:img3-home-earbuds-r1",
+          "label": "Stemless Earbud Product Detail",
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Pair of matte sage-green stemless bean-shaped earbuds beside a low pill-shaped charging case on pure white. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two matte sage-green stemless bean-shaped earbuds rest separately on pure white with no charging case. Realistic square product framing, no readable text, logos, or watermark; soft natural light.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
