@@ -75,6 +75,18 @@
     {
       "q": "Can I use the headshots beyond the About page?",
       "a": "Yes. With each person’s approval, downloads can be used on LinkedIn, pitch decks, speaker bios and other business materials."
+    },
+    {
+      "q": "Can each teammate approve the final portrait?",
+      "a": "Yes. Show each person the finished portrait and get approval for the page or material where it will appear before publishing."
+    },
+    {
+      "q": "Can I use the portraits in a pitch deck?",
+      "a": "Yes. With the person’s approval, use the downloaded portrait in a pitch deck, speaker bio or other business material."
+    },
+    {
+      "q": "Can a new hire match an existing team set?",
+      "a": "Yes. Use an approved face-and-shoulders photo and the same backdrop, crop and light brief, then let the new hire review the result."
     }
   ],
   "cta_lead": "Upload one clear photo of the person. See the cost before you start.",
@@ -555,5 +567,15 @@
       "t": "Ready for pages and profiles",
       "d": "Download square portraits without an AIVideosUGC watermark, then add names, roles and contact details as editable text."
     }
+  ],
+  "relatedLinks": [
+    "photo-hub",
+    "model-photos",
+    "tpl-look",
+    "tpl-tryon",
+    "ind-fashion-clothing",
+    "plat-instagram",
+    "plat-shopify",
+    "blog-model-photos-without-a-photoshoot"
   ]
 }

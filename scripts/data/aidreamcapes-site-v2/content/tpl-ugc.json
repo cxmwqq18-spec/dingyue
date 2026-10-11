@@ -99,6 +99,14 @@
     {
       "q": "Can I use these photos in paid ads?",
       "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for ad claims and disclosures."
+    },
+    {
+      "q": "Can I reuse one product photo across several scenes?",
+      "a": "Yes. Reuse the same clear product photo for a routine, unboxing or demo scene and generate a fresh version for each angle."
+    },
+    {
+      "q": "Should prices and product claims go inside the generated photo?",
+      "a": "Keep prices, offers and approved claims as editable caption or page text, then add them in your own editor after download."
     }
   ],
   "visual": {
@@ -556,5 +564,17 @@
         "h2": "UGC Style Product Photo Template Questions"
       }
     }
-  }
+  },
+  "relatedLinks": [
+    "social-ad-photos",
+    "tpl-story",
+    "video-ads",
+    "tpl-beauty",
+    "tpl-drink",
+    "plat-instagram",
+    "plat-tiktok",
+    "guide-ad-sizes-by-platform",
+    "blog-ai-ugc-video-ads-guide",
+    "guide-first-tiktok-video-ad"
+  ]
 }
