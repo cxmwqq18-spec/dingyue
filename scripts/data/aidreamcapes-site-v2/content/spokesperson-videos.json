@@ -256,7 +256,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-home-1-r1",
+          "ref": "n:guide:sk1-spk-home-1-r3",
           "label": "Home: sofa welcome",
           "chips": [
             "home"
@@ -292,7 +292,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-living-room-1-r1",
+          "ref": "n:guide:sk1-spk-living-room-1-r2",
           "label": "Living Room: sofa check-in",
           "chips": [
             "living-room"
@@ -346,7 +346,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-garden-1-r1",
+          "ref": "n:guide:sk1-spk-garden-1-r2",
           "label": "Garden: garden update",
           "chips": [
             "garden"
@@ -382,7 +382,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-cafe-1-r2",
+          "ref": "n:guide:sk1-spk-cafe-1-r3",
           "label": "Cafe: window-seat chat",
           "chips": [
             "cafe"
@@ -391,7 +391,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-cafe-2-r1",
+          "ref": "n:guide:sk1-spk-cafe-2-r2",
           "label": "Cafe: counter introduction",
           "chips": [
             "cafe"
@@ -418,7 +418,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-podcast-1-r2",
+          "ref": "n:guide:sk1-spk-podcast-1-r3",
           "label": "Podcast: microphone opener",
           "chips": [
             "podcast"
@@ -445,7 +445,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-fitness-2-r1",
+          "ref": "n:guide:sk1-spk-fitness-2-r2",
           "label": "Fitness: routine explanation",
           "chips": [
             "fitness"
@@ -508,7 +508,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-balcony-1-r1",
+          "ref": "n:guide:sk1-spk-balcony-1-r2",
           "label": "Balcony: railing greeting",
           "chips": [
             "balcony"
@@ -598,7 +598,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-classroom-1-r1",
+          "ref": "n:guide:sk1-spk-classroom-1-r2",
           "label": "Classroom: lesson introduction",
           "chips": [
             "classroom"
@@ -634,7 +634,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-exercise-1-r3",
+          "ref": "n:guide:sk1-spk-exercise-1-r4",
           "label": "Exercise: warm-up explanation",
           "chips": [
             "exercise"
@@ -670,7 +670,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-interview-1-r1",
+          "ref": "n:guide:sk1-spk-interview-1-r3",
           "label": "Interview: street interview answer",
           "chips": [
             "interview"
@@ -697,7 +697,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-travel-1-r1",
+          "ref": "n:guide:sk1-spk-travel-1-r2",
           "label": "Travel: airport lounge update",
           "chips": [
             "travel"

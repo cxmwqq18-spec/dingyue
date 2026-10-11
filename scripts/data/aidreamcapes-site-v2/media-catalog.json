@@ -43772,6 +43772,106 @@
           640,
           1280
         ]
+      },
+      "sk1-spk-home-1-r3": {
+        "file": "sk1-spk-home-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with platinum pixie cut in a home setting, speaking to camera standing beside a sofa in a casual home welcome.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-living-room-1-r2": {
+        "file": "sk1-spk-living-room-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short textured afro in a living room setting, speaking to camera seated on a sofa speaking in a relaxed living-room check-in.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-garden-1-r2": {
+        "file": "sk1-spk-garden-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with chin-length auburn bob in a garden setting, speaking to camera standing among garden beds giving a cheerful garden update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-cafe-1-r3": {
+        "file": "sk1-spk-cafe-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short tapered curls in a cafe setting, speaking to camera seated by a cafe window delivering a casual recommendation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-podcast-1-r3": {
+        "file": "sk1-spk-podcast-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short gray coils in a podcast setting, speaking to camera seated at a podcast desk speaking beside a plain broadcast microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-balcony-1-r2": {
+        "file": "sk1-spk-balcony-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East African woman with short natural coils in a balcony setting, speaking to camera standing at a sunny apartment balcony railing giving a morning greeting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-classroom-1-r2": {
+        "file": "sk1-spk-classroom-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with short curly bob in a classroom setting, speaking to camera standing before a blank classroom board, giving a clear lesson introduction.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-exercise-1-r4": {
+        "file": "sk1-spk-exercise-1-r4",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black woman with short gray pixie in an exercise setting, speaking to camera standing in a home exercise corner giving a warm-up explanation.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-interview-1-r3": {
+        "file": "sk1-spk-interview-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with short straight blonde bob in an interview setting, speaking to camera standing on a lively pedestrian street answering an off-camera interviewer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-travel-1-r2": {
+        "file": "sk1-spk-travel-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East Asian man with short dark crop in a travel setting, speaking to camera standing in an airport lounge beside a plain carry-on bag giving a travel update.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
