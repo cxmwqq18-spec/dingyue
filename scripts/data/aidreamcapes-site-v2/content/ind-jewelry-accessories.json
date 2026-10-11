@@ -45,14 +45,10 @@
     {
       "q": "Can I use the generated photos in paid jewelry ads?",
       "a": "Yes. Downloaded images are watermark-free and licensed for commercial use, including paid ads, listings, and Stories. Check stone count and metal tone against the real piece, and keep size and care claims accurate."
-    },
-    {
-      "q": "Do I still need a jewelry photographer or a hand model?",
-      "a": "Not for standard macro and worn shots: you pay credits per generated image from one upload. For a custom campaign, a real catalog shoot or a genuine customer photo can still be arranged on top of these assets."
     }
   ],
   "templates_lead": "Choose a jewelry product photo format for close-up detail, a worn try-on, or a gift scene.",
-  "cta_lead": "Upload a clear jewelry photo and choose the detail or scale view to review.",
+  "cta_lead": "Upload a clear jewelry photo, choose a close-up or try-on scene, and review the credit cost before you start.",
   "benefits_h2": "Why AI Jewelry Product Photos Skip a Model Shoot",
   "benefits": [
     {
@@ -72,12 +68,12 @@
   "steps_lead": "Turn one clear jewelry photo into a gallery-ready detail or worn scene.",
   "steps": [
     {
-      "t": "Upload Your Jewelry Photo",
+      "t": "Upload Product Photo",
       "d": "Add one sharp photo in diffused daylight, even a phone macro shot. Keep the piece, stones, and finish clearly visible."
     },
     {
-      "t": "Pick a Jewelry Photo Scene",
-      "d": "Choose a macro, hand, neckline, wrist, or gift scene. Describe the setting in one sentence so the piece stays the focus."
+      "t": "Choose a Scene",
+      "d": "Pick a macro, hand, neckline, wrist, or gift scene. Describe one setting so the piece stays the focus."
     },
     {
       "t": "Download and Post",
@@ -131,5 +127,16 @@
         "h2": "Questions About AI Jewelry Product Photos"
       }
     }
-  }
+  },
+  "cta_title": "Create a jewelry product photo",
+  "relatedLinks": [
+    "ind-beauty-skincare",
+    "ind-fashion-clothing",
+    "ind-shoes",
+    "ind-home-living",
+    "model-photos",
+    "photo-hub",
+    "white-background",
+    "templates"
+  ]
 }
