@@ -4,7 +4,7 @@
   "description": "Create AI product videos and photos from one upload for TikTok, Amazon, Shopify and social ads. See the credit cost before each job.",
   "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "Launch more product ads from one clear photo",
-  "lead": "One product photo is all you need to launch a new ad, refresh a listing or add a lifestyle scene. No studio, no models, no waiting weeks for another shoot—download a watermark-free file for your campaign.",
+  "lead": "Launch a new product ad from one clear photo. Pick a scene or actor, then download a file for your next campaign in minutes.\n\nFrame options: 9:16 · 1:1 · 16:9 · 4:3 · 3:4 · watermark-free downloads.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -26,12 +26,12 @@
     },
     {
       "t": "Get a new ad in minutes",
-      "d": "Choose a scene, actor or product format and turn the photo into a campaign version while the brief is fresh.",
+      "d": "Choose a scene, actor or product format and turn the photo into a campaign version in minutes.",
       "icon": "clock"
     },
     {
       "t": "Turn one photo into many versions",
-      "d": "Change the format, scene or opening and test more angles without reshooting the product.",
+      "d": "Change the format, scene or opening and test another angle from the same product photo.",
       "icon": "layers"
     },
     {
@@ -40,13 +40,13 @@
       "icon": "users"
     },
     {
-      "t": "Keep launches fresh",
-      "d": "Make a new scene for an offer or seasonal launch without reshooting the item.",
+      "t": "Keep launches moving",
+      "d": "Make a new scene for an offer or seasonal launch from the approved product photo.",
       "icon": "refresh"
     },
     {
       "t": "Test hooks without reshooting",
-      "d": "Swap the opening, actor or scene and compare versions in your ad platform.",
+      "d": "Swap the opening, actor or scene and compare the downloads in your ad platform.",
       "icon": "target"
     }
   ],
@@ -59,11 +59,11 @@
     },
     {
       "t": "Share Your Ad Idea",
-      "d": "Say in one line who holds it and where. Pick a template and size, and see the credit cost before you start."
+      "d": "Describe who holds the product and where the action happens. Pick a template and size, then see the credit cost before the job starts."
     },
     {
       "t": "Download and Post",
-      "d": "Turn one upload into a file you can post. Download a watermark-free asset for your ad, listing, or social post."
+      "d": "Download and post the file, then add your own price or caption in your editor before posting."
     }
   ],
   "ugc": {
@@ -94,7 +94,7 @@
     ]
   },
   "audience": {
-    "title": "Built for teams that need fresh creative",
+    "title": "Give every campaign team a usable version",
     "lead": "Start from the product photo you already have, choose the channel, and make a usable version for the next campaign.",
     "items": [
       {
@@ -168,6 +168,17 @@
       "Campaign file in the frame and length you choose"
     ]
   ],
+  "pricingSummary": {
+    "h2": "Simple credit plans for your next ad",
+    "plans": [
+      {"name": "Starter", "price": "$24.50", "credits": 200},
+      {"name": "Pro", "price": "$35", "credits": 300},
+      {"name": "Premium", "price": "$63", "credits": 600}
+    ],
+    "lead": "Credits work across photos and videos.",
+    "href": "/pricing",
+    "cta": "See all plans"
+  },
   "faq": [
     {
       "q": "What can I make with AIVideosUGC?",
@@ -314,13 +325,13 @@
         ],
         [
           "Size",
-          "Square"
+          "9:16 · 1:1 · 16:9 · 4:3 · 3:4"
         ]
       ]
     },
     "picker": {
       "title": "Recreate what you love",
-      "lead": "Recreate the style with your own product and launch a campaign in minutes.",
+      "lead": "Recreate a product scene with your own photo and launch a campaign in minutes.",
       "chips": [
         {
           "id": "accessories",
@@ -395,7 +406,7 @@
           "label": "UGC"
         },
         {
-          "id": "viral",
+          "id": "trending",
           "label": "Trending"
         }
       ],
@@ -406,7 +417,7 @@
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Natural canvas tote bag shown upright on seamless white. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Canvas tote bag shown upright in a clean product-detail scene, with the full shape and handles visible.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -800,7 +811,7 @@
           "ref": "n:guide:k5-home-lipstick-swatch",
           "label": "Coral Lipstick Swatch",
           "chips": [
-            "viral"
+            "trending"
           ],
           "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Coral lipstick beside a matching color swatch. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
@@ -811,7 +822,7 @@
           "ref": "n:guide:k5-home-card-color",
           "label": "Mug Color Reveal Hook",
           "chips": [
-            "viral"
+            "trending"
           ],
           "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Three simple ceramic mugs in distinct glaze colors. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
@@ -823,11 +834,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to make AI product photos and videos in 3 steps"
+        "h2": "How to Make AI Product Videos and Photos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Recreate what you love",
-        "lead": "Recreate the style with your own product and launch a campaign in minutes."
+        "h2": "Recreate What You Love with Your Product",
+        "lead": "Recreate a product scene with your own photo and launch a campaign in minutes."
       },
       "faq": {
         "h2": "Questions about AI product photos and videos"
