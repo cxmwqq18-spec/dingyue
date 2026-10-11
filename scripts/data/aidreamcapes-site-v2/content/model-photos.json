@@ -16,34 +16,46 @@
   "benefits": [
     {
       "t": "See it worn, not laid flat",
-      "d": "A top, dress or accessory appears on a model in a styled scene, so shoppers picture how it looks on."
+      "d": "Turn a flat product photo into a worn look shoppers can picture before they buy.",
+      "icon": "sparkle"
     },
     {
       "t": "Launch collections faster",
-      "d": "Move every item from a flat photo to a worn look in minutes, without booking model days."
+      "d": "Move a new item from flat photo to worn look in minutes, without booking model days.",
+      "icon": "bolt"
     },
     {
-      "t": "Consistent on every channel",
-      "d": "Use one style across product pages, feeds and ads, then scale fashion photography without a studio."
+      "t": "Show the look across every channel",
+      "d": "Use a worn view on product pages, feeds and ads, then refresh the scene when a collection changes.",
+      "icon": "layers"
     }
   ],
   "more_sections": [
     {
       "eyebrow": "Why virtual models",
-      "h2": "Produce a whole catalog without repeated shoots",
-      "lead": "Realistic worn looks for a whole catalog, produced from the photos you already have.",
+      "h2": "Scale a fashion catalog without repeat shoots",
+      "lead": "Create worn looks from the flat photos you already have, then reuse them in your store and campaigns.",
       "items": [
         {
           "t": "Skip casting and the studio",
-          "d": "No model booking, photographer or lighting setup for every new item."
+          "d": "Get a worn view without booking a model, photographer or lighting setup for every item.",
+          "img": "n:guide:k5-model-photos-uses-0-image",
+          "alt": "Adult model wearing a linen suit on a sunlit terrace.",
+          "frame": "none"
         },
         {
           "t": "Keep the garment the same",
-          "d": "Color, cut and details follow the flat product photo you upload."
+          "d": "Start from your flat photo so the color, cut and visible details stay tied to the item you sell.",
+          "img": "n:guide:k5-model-photos-outputs-1-image",
+          "alt": "Seated model wearing a ribbed knit top.",
+          "frame": "none"
         },
         {
           "t": "Refresh looks any time",
-          "d": "Change the model or scene and generate a new worn view for a season or a campaign."
+          "d": "Change the scene for a new season or campaign without booking another shoot.",
+          "img": "n:guide:k5-model-photos-after-image",
+          "alt": "Model wearing a slip dress outfit on a rooftop at sunset.",
+          "frame": "none"
         }
       ]
     }
@@ -81,6 +93,8 @@
     ],
     "cta": "Make an on-model photo"
   },
+  "cta_title": "Put your next collection on a model",
+  "cta_lead": "Upload one flat product photo, pick a model and see the cost before you start.",
   "faq": [
     {
       "q": "What is an AI fashion model generator?",
@@ -92,7 +106,7 @@
     },
     {
       "q": "Which products work on a virtual model?",
-      "a": "Tops, dresses, outerwear, bags and jewelry work well. A clear flat garment or accessory photo gives the best reference."
+      "a": "Tops, dresses, outerwear, bags and jewelry work well. A clear flat garment or accessory photo gives a useful reference."
     },
     {
       "q": "Is it suitable for ecommerce stores?",
