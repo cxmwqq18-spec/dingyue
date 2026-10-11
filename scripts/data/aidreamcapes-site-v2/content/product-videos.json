@@ -15,17 +15,23 @@
     {
       "t": "Show the feature before checkout",
       "d": "Put one useful operation in motion so shoppers understand the item before they buy.",
-      "icon": "play"
+      "icon": "play",
+      "img": "n:guide:q3-product-videos-board-03-lip-balm-routine",
+      "alt": "Adult applies plain lip balm at a bathroom mirror."
     },
     {
       "t": "Answer a listing question",
       "d": "Use one short action to explain a button, drawer, pump or hinge where still photos leave a gap.",
-      "icon": "target"
+      "icon": "target",
+      "img": "n:guide:q3-product-videos-board-06-running-shoe-try-on",
+      "alt": "Adult wears plain charcoal running shoes on a trail."
     },
     {
       "t": "Make another angle from one photo",
       "d": "Create a second product moment for a marketplace or paid ad without booking another shoot.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:guide:q3-product-videos-board-08-citrus-taste-review",
+      "alt": "Adult tastes a clear citrus drink beside a plain bottle."
     }
   ],
   "steps": [
@@ -99,8 +105,8 @@
       "n:guide:f2-product-operation-strip-1",
       "n:guide:f2-product-operation-strip-2",
       "n:guide:k1-product-videos-case-vacuum",
-      "n:guide:k1-product-videos-strip-lunchbox-latch",
-      "n:guide:k1-product-videos-example-lamp",
+      "n:guide:k1-product-videos-strip-bike-pump",
+      "n:guide:k1-product-videos-strip-trail-shoe",
       "n:guide:b1-video-ads-result"
     ],
     "steps": {
@@ -124,21 +130,94 @@
     "picker": {
       "title": "Product demo scenes",
       "lead": "Choose one real operation, then adapt the hand position and final frame to your product. Each example keeps the item clear and the action easy to review.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "hands-on",
+          "label": "Hands-on demos"
+        },
+        {
+          "id": "everyday",
+          "label": "Everyday operations"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:k1-product-videos-picker-umbrella",
+          "label": "Umbrella opens for coverage",
+          "chips": [
+            "everyday"
+          ],
+          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands open the compact umbrella on a rainy sidewalk, ending with the canopy fully open and centered. Natural overcast light, practical product demo style, close handheld framing. Sound: fabric snap and rain ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-picker-folding-bike",
+          "label": "Folding bike hinge opens",
+          "chips": [
+            "hands-on"
+          ],
+          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands unfold the compact bicycle once and pause on the central hinge fully open. Outdoor morning light, clear hands-on demo style, medium close framing with one slow push-in. Sound: hinge click and light street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-picker-lamp",
+          "label": "Desk lamp switches on",
+          "chips": [
+            "everyday"
+          ],
+          "prompt": "Use the uploaded product photo as the exact product reference. A hand presses the desk lamp switch once and the warm light spreads across the desk, ending with the lamp glowing steadily. Evening desk setting, natural product demo look, close side framing. Sound: switch click and quiet room tone; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-picker-drawer",
+          "label": "Drawer trays slide into place",
+          "chips": [
+            "hands-on"
+          ],
+          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands slide the divided trays into an open drawer and stop with the compartments aligned. Bright home light, practical organization demo style, overhead close framing. Sound: smooth drawer glide and item movement; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-picker-charger",
+          "label": "Travel charger packs away",
+          "chips": [
+            "hands-on"
+          ],
+          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands coil the cable and pack the compact charger into a fabric travel pouch, ending with the pouch closed and centered. Soft window light, tidy travel demo style, overhead close framing. Sound: cable movement and zipper pull; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-picker-laptop-sleeve",
+          "label": "Laptop sleeve opens for fit",
+          "chips": [
+            "hands-on"
+          ],
+          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands open the padded laptop sleeve and slide a generic laptop halfway inside, ending with the interior and fit visible. Soft desk light, practical tech demo style, over-shoulder close framing. Sound: zipper and fabric movement; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:k1-product-videos-strip-lunchbox-latch",
+          "label": "Lunchbox latch clicks shut",
+          "chips": [
+            "everyday"
+          ],
+          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands close the divided lunchbox lid and press the side latch once, ending with the seal fully closed. Bright kitchen light, clear food-storage demo style, close tabletop framing. Sound: lid click and quiet kitchen ambience; no music, text or logos.",
+          "kind": "video"
+        }
+      ],
       "button": "Make a product demo"
     },
     "uses": [
       {
         "frame": "split",
-        "ref": "n:guide:k1-product-videos-use-bottle-white",
+        "ref": "n:guide:f2-product-operation-strip-3",
         "ref_b": "n:guide:k1-product-videos-example-frother",
         "h": "Show the operation that matters",
         "d": "Put one operation in motion so shoppers can see what the item does and how the moving part behaves."
       },
       {
         "frame": "post",
-        "ref": "n:guide:k1-product-videos-case-kettle",
+        "ref": "n:guide:k1-product-videos-example-lamp",
         "h": "Give every listing a useful demo",
         "d": "Show the use case that answers a buyer question before they leave the product page."
       },
@@ -150,7 +229,7 @@
       },
       {
         "frame": "listing",
-        "ref": "n:guide:q3-product-videos-output-lunchbox-packed",
+        "ref": "n:guide:k1-product-videos-example-cutlery",
         "h": "Add another angle from one photo",
         "d": "Create a second product moment for a marketplace or paid ad without another shoot."
       }
@@ -239,6 +318,40 @@
         "Arrange another shoot for a new angle",
         "Create another version without reshooting"
       ]
+    ]
+  },
+  "seller_scenarios": {
+    "title": "Product demos for the work you already have to do",
+    "lead": "Start with the channel or task in front of you, then review the finished action before you publish it.",
+    "items": [
+      {
+        "audience": "Independent store seller",
+        "tool": "product-videos",
+        "task": "Turn one lip balm photo into a close routine demo for a product page or social listing.",
+        "prompt": "Use the uploaded product photo as the exact product reference and show one clear lip balm application.",
+        "ref": "n:guide:q3-product-videos-board-03-lip-balm-routine"
+      },
+      {
+        "audience": "Marketplace listing seller",
+        "tool": "product-videos",
+        "task": "Show the fit of a running shoe from one photo before adding the clip to a marketplace listing.",
+        "prompt": "Use the uploaded product photo as the exact product reference and show one lace-up and fit check.",
+        "ref": "n:guide:q3-product-videos-board-06-running-shoe-try-on"
+      },
+      {
+        "audience": "Paid testing team",
+        "tool": "product-videos",
+        "task": "Test a first-sip angle for a citrus drink without booking another shoot for each opening.",
+        "prompt": "Use the uploaded product photo as the exact product reference and show one citrus drink sip reaction.",
+        "ref": "n:guide:q3-product-videos-board-08-citrus-taste-review"
+      },
+      {
+        "audience": "Agency managing many listings",
+        "tool": "product-videos",
+        "task": "Show the cleared panel from a fabric shaver demo, then review the result before delivery.",
+        "prompt": "Use the uploaded product photo as the exact product reference and show one fabric shaver pass.",
+        "ref": "n:guide:f11-r10-product-videos-fabric-shaver-demo"
+      }
     ]
   }
 }

@@ -255,7 +255,10 @@
       },
       "og": "n:t33-product-videos-og-r2",
       "gallery": [
-        "n:guide:k1-product-videos-gallery-espresso-shot"
+        "n:guide:k1-product-videos-gallery-espresso-shot",
+        "n:guide:k1-product-videos-gallery-espresso-cup",
+        "n:guide:k1-product-videos-template-coffee-maker",
+        "n:guide:k1-product-videos-after-speaker"
       ]
     },
     "before-after-videos": {

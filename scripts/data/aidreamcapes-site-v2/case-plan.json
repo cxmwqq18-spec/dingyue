@@ -59,19 +59,19 @@
     ],
     "product-videos": [
       {
-        "ref": "n:guide:k1-product-videos-after-speaker",
-        "product": "portable speaker",
-        "title": "Speaker Demo: Open Box and Cable"
+        "ref": "n:guide:f11-r10-product-videos-water-bottle-review",
+        "product": "reusable water bottle",
+        "title": "Water Bottle Demo: Cap Twists Open"
       },
       {
-        "ref": "n:guide:q3-product-videos-case-handheld-vacuum",
-        "product": "handheld vacuum",
-        "title": "Vacuum Demo: Crumbs Lifted from Sofa"
+        "ref": "n:guide:f11-r10-product-videos-sparkling-water-taste",
+        "product": "sparkling citrus water",
+        "title": "Drink Demo: First Sip Reaction"
       },
       {
-        "ref": "n:guide:k1-product-videos-case-kettle",
-        "product": "gooseneck kettle",
-        "title": "Pour Demo: Kettle Fills a Glass"
+        "ref": "n:guide:f11-r10-product-videos-mango-yogurt-taste",
+        "product": "mango yogurt",
+        "title": "Yogurt Demo: Spoonful Tasted"
       }
     ],
     "unboxing-videos": [
