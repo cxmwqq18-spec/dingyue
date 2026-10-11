@@ -44,16 +44,16 @@
   },
   "faq": [
     {
-      "q": "Which product details work well in close-up?",
-      "a": "Materials, stitching, clasps, zippers, rims and finishes answer quality questions that a wide product shot cannot."
+      "q": "Which details sell quality?",
+      "a": "Close-ups of stitching, grain, clasps, zippers, rims and finish help shoppers judge how the item is made."
     },
     {
       "q": "How close should the source photo be?",
       "a": "Keep the feature sharp with enough surrounding product to show where it sits. One close-up should answer one detail question."
     },
     {
-      "q": "Where should a detail photo go?",
-      "a": "Place it after the full product image in a listing gallery, carousel or social post built around one quality point."
+      "q": "Can I use a close-up in a social carousel?",
+      "a": "Yes. Pair the close-up with a full product image and a short caption about the feature it shows."
     },
     {
       "q": "How do I get a sharp close-up?",
@@ -74,6 +74,14 @@
     {
       "q": "Do I need a macro lens or professional camera?",
       "a": "No. A sharp phone photo can be the source; the close-up is generated from it and the download has no watermark."
+    },
+    {
+      "q": "Where should a close-up sit in a gallery?",
+      "a": "Place it after the full product image and before lifestyle shots so the detail answers a quality question while the item is still fresh."
+    },
+    {
+      "q": "How many detail views should one product have?",
+      "a": "Start with one close-up per material or construction question; add another only when it shows a different feature."
     }
   ],
   "visual": {
