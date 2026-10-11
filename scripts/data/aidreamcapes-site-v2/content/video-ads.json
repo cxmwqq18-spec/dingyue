@@ -1,10 +1,10 @@
 {
   "id": "video-ads",
-  "title": "AI UGC Video Ads for TikTok and Reels | AIVideosUGC",
-  "description": "Turn one product photo into a creator-style video ad for TikTok, Reels, or Shorts. Skip a studio shoot, test new hooks, and add final copy after download.",
-  "h1": "AI UGC Video Ads for TikTok, Reels, and Shorts",
-  "eyebrow": "AI video ads",
-  "lead": "If you have one product photo, you have what you need to start a UGC video ad. Create a creator-style clip for TikTok, Reels, or Shorts without booking a shoot.",
+  "title": "AI UGC Video Ads for TikTok, Reels and Shorts | AIVideosUGC",
+  "description": "Turn one product photo into a creator-style ad for TikTok, Reels or Shorts. Skip a studio shoot, test new hooks and add final copy after download.",
+  "h1": "Create UGC Video Ads from One Product Photo",
+  "eyebrow": "AI UGC video ads",
+  "lead": "Turn one product photo into a creator-style ad you can test on TikTok, Reels or Shorts. Skip a shoot, try a new hook in minutes, then add final copy after download.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
@@ -13,92 +13,92 @@
   ],
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one photo that shows the full product. The product stays visible in the finished scene."
+      "t": "Upload the product you want to show",
+      "d": "Use one clear photo with the full item in frame so the product carries into the scene."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Give one scene and one action in a sentence. A focused action keeps the ad easy to follow."
+      "t": "Write one scene and one action",
+      "d": "Describe where the ad happens and what the person does. One focused action keeps the hook easy to follow."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the clip and add captions, prices, or music in your editor. Your clean master stays ready for each channel."
+      "t": "Download, then add your offer",
+      "d": "Download the clean clip and add captions, prices or music in your editor for each channel."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 · TikTok, Reels and Shorts"
       ],
       [
         "Length",
-        "15 seconds"
+        "6, 10, 15 or 30 seconds"
       ]
     ],
-    "cta": "Make my UGC ad"
+    "cta": "Create my UGC ad"
   },
   "faq": [
     {
-      "q": "What does an AI UGC video ad show?",
-      "a": "It shows your product in a creator-style scene with a short spoken line or visible action. The presenter and setting are AI-generated."
+      "q": "What is an AI UGC video ad?",
+      "a": "It is a short creator-style ad that shows your product in a scene with a spoken line or visible action. The presenter and setting are AI-generated."
     },
     {
-      "q": "Do I need a model or a creator?",
-      "a": "No. The presenter is AI-generated, so you can make the scene without booking a creator or studio."
+      "q": "Do I need a creator or studio?",
+      "a": "No. Start with one product photo and a focused idea, then make the scene without casting, booking or a studio day."
     },
     {
-      "q": "Can I run these videos as paid ads?",
-      "a": "Yes. Download the clip, add any required disclosure and campaign text, then review it against the platform rules before launch."
+      "q": "Can I use the ad on TikTok, Reels or Shorts?",
+      "a": "Yes. Download a 9:16 clip for TikTok, Instagram Reels or YouTube Shorts, then add the copy and offer details for that channel."
     },
     {
-      "q": "Can I add captions, prices, or music?",
-      "a": "Yes. Add exact text and licensed music after download in TikTok, CapCut, or your ad editor."
+      "q": "What product photo should I use?",
+      "a": "Use a clear, well-lit photo with the full product visible and its important details easy to inspect."
     },
     {
-      "q": "Can I make a product demonstration ad?",
-      "a": "Yes. A visible product action can explain one feature while the presenter keeps the product in view."
+      "q": "Can I add captions, prices or music?",
+      "a": "Yes. Add exact text and licensed music after download in TikTok, CapCut or your ad editor."
     },
     {
       "q": "Which video lengths can I choose?",
-      "a": "Available lengths are 6, 10, 15, and 30 seconds. Pick the length that gives one action a clear beginning and end."
+      "a": "Choose 6, 10, 15 or 30 seconds. Pick the length that gives one action a clear beginning and end."
     },
     {
       "q": "How many credits does a video ad cost?",
-      "a": "The editor shows the credit cost before you generate. Current examples are 24 credits for 6 seconds, 40 for 10 seconds, and 60 for 15 seconds; 30-second pricing is shown in the editor."
+      "a": "A 6-second video uses 24 credits, 10 seconds uses 40, 15 seconds uses 60 and 30 seconds uses 120. Failed jobs return credits automatically."
     },
     {
-      "q": "Can I present an AI-generated person as a real customer?",
-      "a": "No. The presenter is not a real customer or endorsement. Use a brand explanation or an approved customer quote and disclose AI use where required."
+      "q": "Is the presenter a real customer?",
+      "a": "No. The presenter is an AI-generated brand performer, not a customer endorsement. Use a factual script and disclose AI content when a platform requires it."
     }
   ],
   "examples": {
-    "h2": "See what AI UGC generates",
-    "lead": "See creator-style product ads and product showcase videos made for social feeds.",
+    "h2": "See formats you can put to work",
+    "lead": "Compare creator-style product ads and product showcases made for social feeds.",
     "groups": [
       {
-        "label": "UGC-Style Product Ads",
+        "label": "Creator-style product ads",
         "items": [
           {
             "ref": "n:guide:k3-video-example-speaker",
-            "title": "UGC-Style Product Ads",
+            "title": "Compact speaker, desk showcase",
             "kind": "scene",
             "product": "compact speaker"
           },
           {
-            "ref": "n:guide:q2-video-ads-example-03",
-            "title": "Social Media Content",
+            "ref": "n:guide:q2-video-ads-example-02",
+            "title": "Crossbody bag, mirror fit check",
             "kind": "scene",
-            "product": "protein bar"
+            "product": "crossbody bag"
           }
         ]
       },
       {
-        "label": "Product Explainer Videos",
+        "label": "Product explainer videos",
         "items": [
           {
             "ref": "n:guide:k3-video-example-lip-balm",
-            "title": "Product Explainer Videos",
+            "title": "Tinted lip balm, pocket showcase",
             "kind": "scene",
             "product": "lip balm"
           }
@@ -108,24 +108,34 @@
   },
   "visual": {
     "strip": [
-      "n:guide:q2-video-ads-strip-00",
-      "n:guide:q2-video-ads-strip-01",
-      "n:guide:q2-video-ads-strip-02",
-      "n:guide:q2-video-ads-strip-03",
-      "n:guide:q2-video-ads-strip-04",
-      "n:guide:q2-video-ads-strip-05"
+      "n:guide:k1-unboxing-example-diffuser",
+      "n:guide:q9-ugc-phone-grip",
+      "n:guide:q9-ugc-bottle-review",
+      "n:guide:q9-ugc-jacket-transition",
+      "n:guide:q1-home-picker-lipbalm",
+      "n:guide:q9-ugc-gallery-jacket-tryon"
     ],
     "steps": {
-      "source": "n:guide:k3-video-use-bottle-kitchen",
-      "sourceAlt": "Your product: green glass bottle beside a water glass at a bright kitchen sink.",
-      "result": "f:k3-video-step-green-bottle-result",
+      "source": "n:gen2:plat-facebook-g3",
+      "sourceAlt": "Your product: an insulated bottle shown alone on a pure white background.",
+      "result": "n:gen2:plat-facebook-g4",
       "mode": "video",
       "length": 15,
-      "prompt": "Share one product idea and one action."
+      "prompt": "Use the uploaded product photo as the exact product reference. Keep its shape, color and label area unchanged. Show one person using the product in a familiar setting, ending with the product held clearly in frame. Natural phone-video lighting and steady handheld movement. Sound: clear action audio and room tone; no text, logos or music.",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok, Reels and Shorts"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ]
+      ]
     },
     "picker": {
-      "title": "See What AI UGC Ads Generate",
-      "lead": "Browse real ad formats by product category before you make your own.",
+      "title": "See the ad formats you can test",
+      "lead": "Compare creator-style, product showcase and demo moments before you make your own.",
       "chips": [],
       "cards": [],
       "button": "Explore More"
@@ -134,73 +144,72 @@
       {
         "frame": "phone",
         "ref": "n:gen2:examples-g1",
-        "h": "Scripted From Real Input",
-        "d": "The product stays central, so shoppers understand the hook before they scroll."
+        "h": "Show the product in a real moment",
+        "d": "Put the product into a familiar action so shoppers understand the hook before they scroll."
       },
       {
         "frame": "post",
         "ref": "n:guide:q2-video-ads-uses-01",
-        "h": "Export-Ready for Paid Platforms",
-        "d": "A finished vertical ad gives paid campaigns a clear asset to test."
+        "h": "Test a paid ad without another shoot",
+        "d": "Download a clean ad frame for a paid campaign, then add the offer details in your editor."
       },
       {
         "frame": "reels",
         "ref": "f:f2-video-ads-output-shoe-r2",
-        "h": "Multiple Styles Per Generation",
-        "d": "Fresh scenes give that product more ways to earn a watch."
+        "h": "Try another angle without reshooting",
+        "d": "Switch the scene or opening to test a fresh way to present the product."
       }
     ],
     "titles": {
       "m2": {
-        "h2": "How to make a UGC ad video in 3 simple steps"
+        "h2": "Create a UGC video ad in 3 steps"
       },
       "m3": {
-        "h2": "See What Tagshop AI Generates",
-        "lead": "Choose a UGC-style product ad, product explainer, showcase, or social media video."
+        "h2": "See the ad formats you can test",
+        "lead": "Compare creator-style product ads, explainers, showcases and social clips before you make your own."
       },
       "m4": {
-        "h2": "Why brands choose this AI video ad generator"
+        "h2": "Make more ad versions from one upload"
       },
       "m5": {
-        "h2": "Upload a product photo"
+        "h2": "Start with one clear product photo"
       },
       "m6": {
-        "h2": "Video ad lengths and formats"
+        "h2": "Pick a format and length for the channel"
       },
       "m7": {
-        "h2": "Ready to run your ad"
+        "h2": "Download the clip and finish the offer"
       },
       "gallery": {
-        "h2": "Product ad formats in motion"
+        "h2": "Product ad moments shoppers understand"
       },
       "examples": {
-        "h2": "See what AI UGC generates"
+        "h2": "See formats you can put to work"
       }
     },
-    "overview": "Creator-style ads put the product in a familiar moment. Shoppers see the product, the action, and the reason to keep watching.",
+    "overview": "Turn one product photo into a short creator-style ad. Show one action, keep the product clear and try another hook without a new shoot.",
     "input": [],
     "outputs": [],
     "after": null
   },
-  "benefits_h2": "Reasons to use AI UGC video ads",
+  "benefits_h2": "Make more ad versions without another shoot",
   "benefits": [
     {
-      "t": "Hook viewers from one photo",
-      "d": "Show the product in a creator-style scene that gives shoppers a clear reason to keep watching."
+      "t": "Ship a first ad in minutes",
+      "d": "Start with one product photo and one idea. Get a creator-style draft without casting, booking or a studio day.",
+      "icon": "clock"
     },
     {
-      "t": "More content, less hassle",
-      "d": "Test more hooks without reshooting. Launch a new ad in minutes, not weeks of prep."
+      "t": "Test hooks from one upload",
+      "d": "Swap the opening, scene or presenter to compare angles without reshooting the product.",
+      "icon": "layers"
     },
     {
-      "t": "Ready for paid platforms",
-      "d": "Download a clean vertical clip for TikTok, Reels, or Shorts, then add your final copy."
-    },
-    {
-      "t": "Use a real product claim",
-      "d": "Keep the spoken line tied to a product detail shoppers can verify."
+      "t": "Keep the product in the story",
+      "d": "Show one product action or detail in a short vertical ad, then add your price or offer after download.",
+      "icon": "target"
     }
   ],
-  "steps_h2": "How to make a UGC ad video in 3 simple steps",
-  "steps_lead": "Turn one product photo into a ready-to-post UGC ad without a studio, models, or reshoots."
+  "steps_h2": "Create a UGC video ad in 3 steps",
+  "steps_lead": "Go from one clear product photo to a short ad ready for your next test."
 }

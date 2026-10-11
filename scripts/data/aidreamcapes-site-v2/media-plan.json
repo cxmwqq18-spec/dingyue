@@ -262,7 +262,7 @@
     "video-ads": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q2-video-ads-hero"
+        "image": "n:guide:q2-video-ads-card-08"
       },
       "gallery": [
         "f:k3-video-gallery-try-on",
@@ -274,7 +274,7 @@
     "unboxing-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q3-unboxing-videos-hero-serum-box"
+        "image": "n:guide:q3-unboxing-videos-board-08-power-bank-unbox"
       },
       "og": "n:t33-unboxing-videos-og-r2",
       "gallery": [
@@ -285,7 +285,7 @@
     "product-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q3-product-videos-hero-serum"
+        "image": "n:guide:q3-product-videos-template-howto-steamer"
       },
       "og": "n:t33-product-videos-og-r2",
       "gallery": [
