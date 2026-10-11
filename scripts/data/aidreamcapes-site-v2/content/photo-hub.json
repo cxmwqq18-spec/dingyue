@@ -1,10 +1,10 @@
 {
   "id": "photo-hub",
   "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
-  "description": "Turn one product photo into listing, lifestyle and ad images for your store. See the credit cost before you start.",
+  "description": "Turn one product photo into listing, lifestyle and ad images for your store. Skip the studio bookings and see the credit cost before you start.",
   "h1": "Make Listing and Ad Images with an AI Product Photo Generator",
   "eyebrow": "AI product photo generator",
-  "lead": "Turn one clear product photo into a listing, lifestyle or ad image in minutes. Choose the scene and frame that fits where shoppers will see it.",
+  "lead": "Turn one clear product photo into listing, lifestyle and ad images without renting a studio or booking a model. Switch scenes in minutes and choose the version for your store or ad.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -15,7 +15,7 @@
   "benefits": [
     {
       "t": "Skip the studio booking",
-      "d": "Create a polished product image without booking a photographer, studio or gear.",
+      "d": "Costs far less than booking a photographer, studio and gear; each image uses 24 credits.",
       "icon": "coins"
     },
     {
@@ -45,26 +45,26 @@
     }
   ],
   "steps_h2": "How to Make Store-Ready Photos with an AI Product Photo Generator in 3 Simple Steps",
-  "steps_lead": "Upload one clear product photo, choose the scene, then generate, refine and use the format that fits your store or ad.",
+  "steps_lead": "Upload one clear product photo, choose the scene, then download a square image for your store or ad.",
   "steps": [
     {
-      "t": "Describe or Upload",
-      "d": "Upload a clear full-item photo with the shape and color visible. Keep the whole product in frame, or describe the image you need."
+      "t": "Upload Your Product Photo",
+      "d": "Get cleaner product photos for every channel. Upload the whole item on a simple background so its shape, color, and details stay easy to see."
     },
     {
-      "t": "Choose Your Scene",
-      "d": "Choose a coastal, desert, minimalist or indoor scene for the way you sell. Pick the setting first, then generate the format you need."
+      "t": "Pick a Scene",
+      "d": "Match the scene to the way you sell. Pick a listing, lifestyle, on-model, or social-ad look, then keep the square format."
     },
     {
-      "t": "Generate, Refine, and Use",
-      "d": "Review the result, refine the scene if needed, and download it for your listing or ad. Add your price or offer in your editor after download."
+      "t": "Download and Post",
+      "d": "Put a finished image in your store or ad today. Choose the look, rerun it if needed, then download it."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "Square · 9:16 · 16:9"
+        "Square · 1:1"
       ],
       [
         "Start with",
@@ -80,7 +80,7 @@
     },
     {
       "q": "How does AI product photo generation work?",
-      "a": "Upload a product photo or describe the image you need, choose a scene, then generate a result in the format you select. The credit cost appears before you start."
+      "a": "Upload a product photo or describe the image you need, choose a photo type and scene, then generate a square result. The credit cost appears before you start."
     },
     {
       "q": "Is there a free way to make AI product photos?",
@@ -92,11 +92,11 @@
     },
     {
       "q": "What kinds of product photos can I make?",
-      "a": "Choose a coastal, desert, minimalist or indoor scene, then make listing, lifestyle, on-model, close-detail or social ad images. Every result starts with the product photo or description you provide."
+      "a": "Choose clean listing, lifestyle, on-model, close-detail or social ad images. Every result starts with the product photo or description you provide."
     },
     {
       "q": "What are the benefits of using AI product photos?",
-      "a": "You can skip a studio booking and avoid model or prop logistics, then test new backgrounds or scenes from one product photo."
+      "a": "You skip a studio booking, avoid model and prop logistics, and test new backgrounds or scenes from one product photo."
     },
     {
       "q": "Are AI product photos copyright-free?",
@@ -108,8 +108,8 @@
     }
   ],
   "examples": {
-    "h2": "Pick a listing look you can post today",
-    "lead": "Compare coastal, desert, minimalist and indoor examples made from one starting photo, then choose the look that fits your store or ad.",
+    "h2": "AI Product Photo Examples Shoppers Notice",
+    "lead": "Compare listing, lifestyle and detail examples made from one starting photo, then choose the look that fits your store or ad.",
     "groups": [
       {
         "label": "Coastal",
@@ -191,7 +191,7 @@
     {
       "ref": "n:guide:img2-photo-hub-hero-result-r1",
       "name": "Ready for your store",
-      "line": "Same lip balm, styled into a real scene in minutes",
+      "line": "Same lipstick, styled into a real scene in minutes",
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
@@ -247,24 +247,7 @@
     "picker": {
       "title": "Place your product where shoppers picture it",
       "lead": "Start with one clear photo, then compare coastal, desert, minimalist and indoor scenes for your listing or ad.",
-      "chips": [
-        {
-          "id": "coastal",
-          "label": "Coastal"
-        },
-        {
-          "id": "desert",
-          "label": "Desert"
-        },
-        {
-          "id": "minimalist",
-          "label": "Minimalist"
-        },
-        {
-          "id": "indoor",
-          "label": "Indoor"
-        }
-      ],
+      "chips": [],
       "cards": [],
       "button": "Open the photo creator"
     },
@@ -275,37 +258,9 @@
       "m3": {
         "h2": "Place your product where shoppers picture it",
         "lead": "Start with one clear photo, then compare coastal, desert, minimalist and indoor scenes for your listing or ad."
-      },
-      "m6": {
-        "h2": "Photo formats for listings and ads"
-      },
-      "m7": {
-        "h2": "Add prices and offers after download"
       }
-    },
-    "specs": {
-      "title": "Photo formats for listings and ads",
-      "formats": [
-        "Square",
-        "9:16",
-        "16:9"
-      ]
-    },
-    "after_download": {
-      "title": "Add prices and offers after download",
-      "text": "Add prices, offers and logo text in your editor after download, where you control the final wording."
     }
   },
   "cta_title": "Put your next product photo to work",
-  "cta_lead": "Upload one clear product photo, choose a scene and see the credit cost before you start.",
-  "related": [
-    "photo-hub",
-    "white-background",
-    "lifestyle-photos",
-    "social-ad-photos",
-    "change-background",
-    "model-photos",
-    "product-videos",
-    "url-to-video"
-  ]
+  "cta_lead": "Upload one clear product photo, choose a scene and see the credit cost before you start."
 }
