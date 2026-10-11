@@ -1,10 +1,10 @@
 {
   "id": "guides",
   "title": "Product Photo and Video Guides | AIVideosUGC",
-  "description": "Product photo and video guides for online sellers: shoot a usable photo, meet Amazon's white background rules, size ads, and compare versions. Pick a guide.",
+  "description": "Free product photo and video guides for online sellers: shoot a usable photo on your phone, meet Amazon's main image rules, size ads and test versions.",
   "h1": "Product Photo and Video Guides for Online Sellers",
   "eyebrow": "How-to guides",
-  "lead": "These product photo and video guides are practical reads for Shopify, Amazon, and Etsy sellers. Each guide walks through one task, from your first product photo to your first ad.",
+  "lead": "Doing your own photos and ads without a studio or an agency? These product photo and video guides walk you through one job at a time, from your first usable phone photo to your first paid ad.",
   "card": "Short how-to guides for sellers, from first photo to first ad.",
   "secondary_keywords": [
     "product photography tips for online sellers",
@@ -12,7 +12,42 @@
     "ecommerce ad creative tips",
     "Amazon main image tips"
   ],
-  "intro": "These guides are for sellers who handle their own photos and ads. You won't need a studio or a design background. Each one walks through a single job with plain steps and real product examples: shooting a clear photo on your phone, getting a white background main image ready for Amazon, planning a short TikTok ad, choosing the right shape for each platform, and comparing a few ad versions without guessing. Read them in any order, and keep the checklists handy for your next listing or campaign.",
+  "intro": "Each guide answers the question a seller actually has before spending money or credits: how to shoot a photo an AI tool can work from, how to turn it into an Amazon-ready white background image, how to plan a first TikTok ad, which video shape goes on which platform, and how to compare a few ad versions without guessing. The steps need only a phone, daylight and a plain surface, and every guide ends with a short checklist you can keep open while you work. Read them in any order, then put the result straight into your next listing or campaign.",
+  "benefits_h2": "Why sellers read these guides before opening the tool",
+  "benefits": [
+    {
+      "t": "Fewer wasted jobs",
+      "d": "A sharp, well-lit starting photo means the first image or video is far more likely to match your real product, so you spend fewer credits redoing jobs."
+    },
+    {
+      "t": "No studio or agency needed",
+      "d": "Every walkthrough uses a phone, a window and things you already own. You plan, shoot and publish the listing photo or ad yourself."
+    },
+    {
+      "t": "Rules you can check in minutes",
+      "d": "Amazon's white background rules and each platform's video shape are written as plain steps with checklists, so your file is right the first time you upload."
+    },
+    {
+      "t": "Ads that improve with every round",
+      "d": "The testing guide shows how to make a few cheap versions, change one thing at a time, and keep whatever brings sales instead of guessing."
+    }
+  ],
+  "steps_h2": "How to go from a phone photo to a posted ad in 3 simple steps",
+  "steps_lead": "The same three moves run through every guide: shoot one clear product photo, turn it into the image or video you need, then post it.",
+  "steps": [
+    {
+      "t": "Shoot Your Product Photo",
+      "d": "Put the product in daylight on a plain surface and take one sharp, well-lit photo with your phone. The photo guide shows the exact setup."
+    },
+    {
+      "t": "Make the Image or Video",
+      "d": "Upload the photo to the matching tool, pick a template or describe the scene in one sentence, and see the credit cost before you start."
+    },
+    {
+      "t": "Download and Post",
+      "d": "Download the square image or 9:16 video, add any text in your ad editor, and put it in your listing or campaign. Files are yours to use commercially, with no watermark."
+    }
+  ],
   "faq": [
     {
       "q": "Do I need a camera or a studio to follow these guides?",
@@ -20,11 +55,15 @@
     },
     {
       "q": "Which guide should I read first?",
-      "a": "Start with the product photo guide. The photo you shoot is the starting point for every image and video you make, so getting it right saves time on everything after."
+      "a": "Start with the product photo guide. The photo you shoot is the starting point for every image and video you make, so getting it right saves credits and time on everything after."
     },
     {
       "q": "Do these guides state platform requirements?",
-      "a": "The platform guides link to current official requirements. Check the linked TikTok, Meta, Amazon, Shopify, or Google page on the day you publish because specs can change."
+      "a": "The platform guides link to the current official requirements. Open the linked TikTok, Meta, Amazon, Shopify or Google page on the day you publish, because specs can change."
+    },
+    {
+      "q": "How much do the images and videos in the guides cost?",
+      "a": "You pay in credits and see the exact cost before each job starts. A product photo is 24 credits; videos are 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds. If a job fails, its credits go back to your balance."
     }
   ]
 }
