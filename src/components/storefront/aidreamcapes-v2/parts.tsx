@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
+import type { V2Article, V2BenefitIcon, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
 import type { V2Company } from "./company";
 
 export function normalizeStepLabel(label: string): string {
@@ -124,18 +124,79 @@ export function GlossaryEntries({ entries, r }: { entries: V2GlossaryEntry[]; r:
   </dl>;
 }
 
+const BENEFIT_ICON_PATHS: Record<V2BenefitIcon, ReactNode> = {
+  bolt: <path d="M13 2 4.5 13h5L8 22l8.5-11h-5L13 2Z" fill="currentColor" stroke="none" />,
+  layers: <><path d="m12 3 8 4-8 4-8-4 8-4Z" /><path d="m4 12 8 4 8-4" /><path d="m4 17 8 4 8-4" /></>,
+  target: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" /></>,
+  coins: <><ellipse cx="9" cy="7" rx="5" ry="2.5" /><path d="M4 7v5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V7" /><path d="M14 10.5c2.2.2 4 1.1 4 2.5s-1.8 2.5-4 2.5" /><path d="M14 15.5c2.2.2 4 1.1 4 2.5s-1.8 2.5-4 2.5" /></>,
+  clock: <><circle cx="12" cy="12" r="8" /><path d="M12 7v5l3 2" /></>,
+  refresh: <><path d="M20 11a8 8 0 0 0-14.8-3L3 11" /><path d="M3 6v5h5" /><path d="M4 13a8 8 0 0 0 14.8 3L21 13" /><path d="M21 18v-5h-5" /></>,
+  globe: <><circle cx="12" cy="12" r="8" /><path d="M4 12h16M12 4c2.2 2.3 3.3 5 3.3 8s-1.1 5.7-3.3 8c-2.2-2.3-3.3-5-3.3-8S9.8 6.3 12 4Z" /></>,
+  shield: <path d="M12 3 19 6v5c0 4.4-2.9 7.3-7 9-4.1-1.7-7-4.6-7-9V6l7-3Z" />,
+  sparkle: <><path d="m12 3 1.4 5.6L19 10l-5.6 1.4L12 17l-1.4-5.6L5 10l5.6-1.4L12 3Z" /><path d="m19 16 .6 2.4L22 19l-2.4.6L19 22l-.6-2.4L16 19l2.4-.6L19 16Z" /></>,
+  check: <path d="m5 12 4 4 10-10" />,
+  users: <><circle cx="9" cy="9" r="3" /><path d="M3.5 20c.6-3.1 2.4-4.5 5.5-4.5s4.9 1.4 5.5 4.5" /><path d="M15 7.5a3 3 0 0 1 0 5.8M17 15.5c1.7.7 2.8 2.1 3.3 4.5" /></>,
+  play: <path d="m9 6 9 6-9 6V6Z" fill="currentColor" stroke="none" />
+};
+
+function BenefitIcon({ name }: { name: V2BenefitIcon }) {
+  return <span aria-hidden="true" className="v-benefit-icon"><svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" viewBox="0 0 24 24" width="24">{BENEFIT_ICON_PATHS[name]}</svg></span>;
+}
+
+function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolvers }) {
+  return <>
+    <style dangerouslySetInnerHTML={{ __html: `
+      .adc2 .v-image-item-rows{display:flex;flex-direction:column;gap:22px}
+      .adc2 .v-image-item-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:48px;align-items:center;padding:26px 0;border-top:1px solid var(--line)}
+      .adc2 .v-image-item-row:first-child{border-top:0;padding-top:0}
+      .adc2 .v-image-item-row:nth-child(even){grid-template-columns:minmax(300px,.9fr) minmax(0,1fr)}
+      .adc2 .v-image-item-row:nth-child(even) .v-image-item-copy{order:2}
+      .adc2 .v-image-item-row:nth-child(even) .v-image-item-media{order:1}
+      .adc2 .v-image-item-copy{max-width:540px}
+      .adc2 .v-image-item-copy h3{font-size:clamp(22px,2.8vw,32px);margin-bottom:10px}
+      .adc2 .v-image-item-copy p{color:var(--ink-2);font-size:17px;line-height:1.65}
+      .adc2 .v-image-item-media{display:flex;justify-content:center;min-width:0}
+      .adc2 .v-image-item-media figure{margin:0;width:min(100%,440px);overflow:hidden;border:1px solid var(--line-2);border-radius:20px;background:#0b0b0d}
+      .adc2 .v-image-item-media figure.v-image-frame-none{border-radius:16px}
+      .adc2 .v-image-item-media img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+      .adc2 .v-image-item-media figure.v-image-frame-phone{width:min(100%,300px);padding:10px;border-radius:28px;background:#070709;box-shadow:0 18px 44px rgba(0,0,0,.38)}
+      .adc2 .v-image-item-media figure.v-image-frame-phone img{border-radius:19px;aspect-ratio:9/16}
+      .adc2 .v-image-item-media figure.v-image-frame-browser{padding:38px 10px 10px;position:relative}
+      .adc2 .v-image-item-media figure.v-image-frame-browser::before{content:"";position:absolute;left:14px;right:14px;top:15px;height:10px;border-radius:999px;background:radial-gradient(circle at 4px 5px,#ef6a83 0 3px,transparent 3.5px),radial-gradient(circle at 18px 5px,#f2c14e 0 3px,transparent 3.5px),radial-gradient(circle at 32px 5px,#55c98a 0 3px,transparent 3.5px);opacity:.9}
+      .adc2 .v-image-item-media figure.v-image-frame-browser img{border-radius:10px;aspect-ratio:4/3}
+      .adc2 .v-benefit-icon{display:grid;place-items:center;width:38px;height:38px;margin-bottom:4px;border:1px solid rgba(139,92,246,.45);border-radius:12px;background:rgba(139,92,246,.14);color:#c4b5fd}
+      @media(max-width:760px){.adc2 .v-image-item-row,.adc2 .v-image-item-row:nth-child(even){grid-template-columns:minmax(0,1fr);gap:20px;padding-block:22px}.adc2 .v-image-item-row:nth-child(even) .v-image-item-copy,.adc2 .v-image-item-row:nth-child(even) .v-image-item-media{order:initial}.adc2 .v-image-item-copy{max-width:none}.adc2 .v-image-item-media{justify-content:flex-start}}
+    ` }} />
+    <div className="v-image-item-rows">
+      {items.map((item, index) => {
+        if (!item.img) return null;
+        const image = item.alt ? { ...item.img, alt: item.alt } : item.img;
+        const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
+        return <article className="v-image-item-row" key={`${item.t}-${index}`}>
+          <div className="v-image-item-copy"><h3>{item.t}</h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
+          <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
+        </article>;
+      })}
+    </div>
+  </>;
+}
+
+function hasImageItems(items: V2Item[]): items is V2ImageItem[] {
+  return items.length > 0 && items.every((item) => item && typeof item.img === "object" && Boolean(item.img.src));
+}
+
 export function Boxes({ items, className = "ben", r }: { items: V2Item[]; className?: string; r?: V2Resolvers }) {
   if (!items.length) return null;
-  return (
-    <div className={className}>
-      {items.map((item) => (
-        <div key={item.t}>
-          <b>{item.t}</b>
-          <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p>
-        </div>
-      ))}
-    </div>
-  );
+  if (hasImageItems(items) && r) return <ImageItemRows items={items} r={r} />;
+  return <div className={className}>
+    {items.map((item) => (
+      <div key={item.t}>
+        {item.icon ? <BenefitIcon name={item.icon} /> : null}
+        <b>{item.t}</b>
+        <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p>
+      </div>
+    ))}
+  </div>;
 }
 
 export function Steps({ items }: { items: V2Item[] }) {
