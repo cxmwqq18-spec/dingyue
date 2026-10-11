@@ -18,8 +18,8 @@
       "a": "Yes. Upload one clear photo, describe your product moment and choose a Reel-style clip or square still. The credit cost appears before you start."
     },
     {
-      "q": "Which Instagram placements can I make ads for?",
-      "a": "Make a 9:16 clip for Reels or Stories, or a square still to crop for the Feed and carousel. Choose the file the placement asks for."
+      "q": "Can I make ads for Reels, Stories and the Feed?",
+      "a": "Make a 9:16 clip for Reels or Stories, or a square still for the Feed and carousel. Choose the file for where your ad runs."
     },
     {
       "q": "Do I need to book an Instagram creator or studio?",
@@ -48,7 +48,7 @@
   ],
   "examples": null,
   "templates_lead": "Choose a look for a Reel or square Instagram post featuring your product.",
-  "cta_lead": "Choose the Instagram placement first, then make a still or clip that fits it.",
+  "cta_lead": "Choose Reels, Stories or the Feed first, then make a still or clip that fits it.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -69,8 +69,8 @@
       "f:q18-instagram-strip-hand-cream-grwm",
       "f:q18-instagram-strip-mask-texture",
       "n:guide:k4-plat-instagram-29-visual-strip-3",
-      "f:q18-instagram-strip-sunscreen-routine",
-      "n:guide:k4-plat-instagram-31-visual-strip-5"
+      "f:q18-instagram-picker-iced-pour",
+      "f:q18-instagram-picker-skincare-unbox"
     ],
     "steps": {
       "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
@@ -122,7 +122,7 @@
     }
   ],
   "steps_h2": "How to Make an Instagram Ad in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose the Instagram format and download the file for your placement.",
+  "steps_lead": "Upload one product photo, choose the Instagram format and download the file for where your ad runs.",
   "more_sections": [
     {
       "eyebrow": "Why sellers choose it",
@@ -146,11 +146,11 @@
     {
       "eyebrow": "What you can do",
       "h2": "How AI Helps You Make Instagram Ads",
-      "lead": "Use one product photo to prepare the file each Instagram placement asks for.",
+      "lead": "Use one product photo to prepare the file for each Instagram format you choose.",
       "items": [
         {
           "t": "Turn Product Photos into Ads",
-          "d": "Start from your own image and download a file for the placement you choose."
+          "d": "Start from your own image and download a file for the Instagram format you choose."
         },
         {
           "t": "Show the Product in Use",

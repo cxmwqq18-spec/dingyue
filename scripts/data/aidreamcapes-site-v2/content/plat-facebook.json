@@ -18,8 +18,8 @@
       "a": "Yes. Upload one clear photo, describe your product moment and choose a square image or Reels-style clip. The credit cost appears before you start."
     },
     {
-      "q": "Which Facebook placements can I make ads for?",
-      "a": "Make a square still for the Feed, or a 9:16 clip for Reels and Stories. Choose the file the placement asks for."
+      "q": "Can I make ads for the Feed, Reels and Stories?",
+      "a": "Make a square still for the Feed, or a 9:16 clip for Reels and Stories. Choose the file for the format you plan to run."
     },
     {
       "q": "Do I need to book a Facebook creator or studio?",
@@ -47,8 +47,8 @@
     }
   ],
   "examples": null,
-  "templates_lead": "Pick a scene that keeps your product clear in the Facebook placement you choose.",
-  "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager.",
+  "templates_lead": "Pick a scene that keeps your product clear in the Facebook format you choose.",
+  "cta_lead": "Choose the Facebook format, then prepare product media for Ads Manager.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -65,15 +65,15 @@
   ],
   "visual": {
     "strip": [
-      "f:q18-facebook-strip-serum-review",
+      "f:q18-facebook-strip-headphone-unbox",
       "f:k8-facebook-guide-plat-facebook-size-portrait-backpack",
       "n:guide:k8-facebook-gen2-plat-facebook-c2",
       "f:q18-facebook-strip-baby-bath-unbox",
-      "n:gen2:tpl-ugc-g1",
+      "f:q18-facebook-picker-cable-tray",
       "f:rb4-plat-facebook-strip-01-r1"
     ],
     "steps": {
-      "source": "n:guide:k8-facebook-gen2-plat-facebook-g3",
+      "source": "f:q18-facebook-after-bottle-offer",
       "result": "f:q18-facebook-steps-bottle-pour",
       "mode": "photo",
       "prompt": "Show pale-blue insulated bottle pouring water into a clear glass on a bright desk for a Facebook Feed ad.",

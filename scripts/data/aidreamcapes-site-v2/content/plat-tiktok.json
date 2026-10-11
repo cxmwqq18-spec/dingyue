@@ -47,7 +47,7 @@
     }
   ],
   "templates_lead": "Choose a look that puts one clear product action at the center of your TikTok opening.",
-  "cta_lead": "Upload one product photo, choose a TikTok action and download a clip for the placement you plan to use.",
+  "cta_lead": "Upload one product photo, choose a TikTok action and download a clip for where your ad runs.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -66,10 +66,10 @@
     "strip": [
       "f:k4-plat-tiktok-13-visual-strip-0",
       "f:how-to-tutorial-v",
-      "n:guide:k4-plat-tiktok-24-example-bottle",
+      "f:q18-tiktok-picker-cable-organizer",
       "f:k4-plat-tiktok-15-visual-strip-3",
       "f:k4-plat-tiktok-16-visual-strip-4",
-      "f:q18-tiktok-strip-protein-powder"
+      "f:q18-tiktok-picker-sneaker-detail"
     ],
     "steps": {
       "source": "n:guide:k4-plat-tiktok-12-visual-steps-source",
