@@ -12,15 +12,15 @@
     "Instagram launch ad",
     "home decor promo video"
   ],
-  "steps_h2": "Create a product launch video in three steps",
-  "steps_lead": "Turn one product photo into a launch video, then add the confirmed release details.",
+  "steps_h2": "How to make an AI promo video in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a launch moment you can publish when the release details are confirmed.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
       "d": "Start with one clear photo of the product you are about to launch."
     },
     {
-      "t": "Share Your Launch Moment",
+      "t": "Pick Your Launch Scene",
       "d": "Share the review, reveal, try-on or demo moment in one sentence."
     },
     {
@@ -121,20 +121,20 @@
   "visual": {
     "overview": "Show the new product in a launch moment buyers understand, then add the release details after download.",
     "strip": [
-      "n:guide:q12-tpl-launch-use-social-r1",
-      "n:guide:g1-launch-shoe-fit-check",
-      "n:guide:g1-launch-jewelry-reveal",
-      "n:guide:q12-tpl-launch-strip-extra-01-r1",
+      "n:guide:rc4-tpl-launch-source-bag-r1",
+      "n:guide:q12-tpl-launch-case-phone-case-r2",
+      "n:guide:q12-tpl-launch-case-jewelry-r2",
+      "n:guide:q12-tpl-launch-strip-extra-02-r1",
       "n:guide:g1-launch-citrus-first-sip",
-      "n:guide:q12-tpl-launch-strip-extra-03-r1"
+      "n:guide:rc4-tpl-launch-strip-dog-r1"
     ],
     "steps": {
-      "source": "n:guide:q12-tpl-launch-use-social-r1",
-      "sourceTitle": "Creator holding an amber serum bottle",
-      "sourceHint": "Show the amber bottle and blank label clearly before adding the launch message.",
-      "result": "n:guide:q12-tpl-launch-strip-result-r2",
+      "source": "n:guide:rc4-tpl-launch-source-bag-r1",
+      "sourceTitle": "Product photo of a sage-green canvas crossbody bag",
+      "sourceHint": "Show the uploaded sage-green canvas crossbody bag clearly before choosing the launch scene.",
+      "result": "n:guide:rc4-tpl-launch-result-bag-r1",
       "mode": "video",
-      "prompt": "Share the launch moment in one sentence.",
+      "prompt": "Use the uploaded product photo as the exact featured item. Show one adult creator lifting the uploaded sage-green canvas crossbody bag from a tabletop and holding it toward camera once. Bright home entryway, gentle handheld push-in, clear product focus, natural room sound, no spoken words, no text, labels, logos, numbers, or watermark.",
       "options": [
         [
           "Size",
@@ -166,9 +166,28 @@
         "h2": "Create a vertical product-launch video from one photo"
       },
       "faq": {
-        "h2": "Questions about product-launch videos"
+        "h2": "AI Promo Video Maker Questions"
       }
     }
   },
-  "cta_lead": "Make the launch clip, then add the release details after download."
+  "cta_lead": "Make the launch clip, then add the release details after download.",
+  "benefits_h2": "Why sellers use an AI promo video maker",
+  "benefits": [
+    {
+      "t": "Prepare launch creative from one photo",
+      "d": "Turn a clear photo of the final product into a launch scene before a shoot or full inventory is ready."
+    },
+    {
+      "t": "Show the product in a real moment",
+      "d": "Use a creator review, reveal, unboxing or demo so shoppers can understand what is new."
+    },
+    {
+      "t": "Add release details after download",
+      "d": "Keep the confirmed date, price and offer as editable text so the clip stays accurate as plans change."
+    },
+    {
+      "t": "Make versions for each placement",
+      "d": "Create 9:16 Stories and Reels creative or a 1:1 feed version from the same product photo."
+    }
+  ]
 }

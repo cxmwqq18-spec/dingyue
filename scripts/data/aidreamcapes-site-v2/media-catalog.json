@@ -41,6 +41,9 @@
     },
     "p_light-r2": {
       "alt": "Plain matte sky-blue pump cosmetic bottle in a bright studio product photograph"
+    },
+    "v_bf_rc4": {
+      "alt": "Adult creator presents a sage-green pump bottle in a warm seasonal room."
     }
   },
   "galleries": {
@@ -44242,6 +44245,116 @@
         "w": 864,
         "h": 1536,
         "alt": "An adult Latina woman with a straight pale-blonde bob speaks to camera on a pedestrian street.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-ugc-strip-earring-hands-r1": {
+        "file": "rc4-tpl-ugc-strip-earring-hands-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a plain jewelry box to show simple gold hoop earrings.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-ugc-strip-drink-r1": {
+        "file": "rc4-tpl-ugc-strip-drink-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator drinks from a plain pale-blue sports bottle beside a city park.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-ugc-strip-pet-r1": {
+        "file": "rc4-tpl-ugc-strip-pet-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pet owner with a short copper-red pixie haircut holds a gray grooming brush beside a calm golden retriever.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-ugc-gallery-tube-r1": {
+        "file": "rc4-tpl-ugc-gallery-tube-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator with a short blonde bob holds a plain ivory skincare tube in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-bf-source-pump-r1": {
+        "file": "rc4-tpl-bf-source-pump-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage-green pump bottle on a dark neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-bf-result-pump-r1": {
+        "file": "rc4-tpl-bf-result-pump-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator uses the same sage-green pump bottle in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-bf-strip-pet-harness-r1": {
+        "file": "rc4-tpl-bf-strip-pet-harness-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator with a short copper bob checks a teal harness on a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-launch-source-bag-r1": {
+        "file": "rc4-tpl-launch-source-bag-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage-green canvas crossbody bag on a light tabletop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-launch-result-bag-r1": {
+        "file": "rc4-tpl-launch-result-bag-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator with a short copper-red bob presents the same sage-green canvas crossbody bag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-launch-strip-dog-r1": {
+        "file": "rc4-tpl-launch-strip-dog-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short silver-gray hair adjusts a teal harness on a calm black-and-white dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-ugc-gallery-weekender-r1": {
+        "file": "rc4-tpl-ugc-gallery-weekender-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short salt-and-pepper hair opens a plain canvas weekender bag and lifts a folded shirt.",
         "variants": [
           640,
           1280

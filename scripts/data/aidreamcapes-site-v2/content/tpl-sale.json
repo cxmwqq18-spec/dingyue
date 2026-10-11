@@ -11,15 +11,15 @@
     "holiday sale photo for Facebook",
     "winter clearance banner"
   ],
-  "steps_h2": "Create a sale banner in three steps",
-  "steps_lead": "Turn one product photo into a sale banner, then add the confirmed offer.",
+  "steps_h2": "How to make sale banner images in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a sale scene with room for the exact offer your customers should read.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
       "d": "Start with one clear photo of the product featured in the sale."
     },
     {
-      "t": "Share Your Sale Scene",
+      "t": "Pick a Sale Scene",
       "d": "Share the product scene and open offer area in one sentence."
     },
     {
@@ -137,7 +137,7 @@
       "source": "n:guide:tpl-sale-c3-m2-source",
       "result": "n:guide:f14-sale-steps-result-r2",
       "mode": "photo",
-      "prompt": "Share the sale scene in one sentence.",
+      "prompt": "Use the uploaded product photo as the exact featured item. Place it in a seasonal sale scene with a calm, uncluttered area beside it for an offer added later. Keep the full product visible, use soft directional light, and include no text, logos, labels, numbers, or watermarks.",
       "options": [
         [
           "Template",
@@ -170,9 +170,28 @@
         "h2": "Make sale product photos in three steps"
       },
       "faq": {
-        "h2": "Questions about sale product photos"
+        "h2": "Sale Banner Maker Questions"
       }
     }
   },
-  "cta_lead": "Create the sale banner, then add the confirmed offer after download."
+  "cta_lead": "Create the sale banner, then add the confirmed offer after download.",
+  "benefits_h2": "Why sellers choose a sale banner maker",
+  "benefits": [
+    {
+      "t": "Start from one product photo",
+      "d": "Turn a clear product photo into a seasonal sale scene, so your team can prepare creative without booking a new shoot."
+    },
+    {
+      "t": "Leave room for the offer",
+      "d": "Keep a calm area open for the confirmed discount, dates and code you add after download."
+    },
+    {
+      "t": "Reuse the scene for new offers",
+      "d": "Update the editable offer layer when the promotion changes while the product image stays useful."
+    },
+    {
+      "t": "Fit feed and product pages",
+      "d": "Use the square image in Facebook and Instagram feeds, carousels or a product page after you add the final offer."
+    }
+  ]
 }
