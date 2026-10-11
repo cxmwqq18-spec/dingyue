@@ -1,10 +1,10 @@
 {
   "id": "occ-black-friday",
-  "title": "Black Friday Ad Creatives for Your Sale | AIVideosUGC",
-  "description": "Create Black Friday ad creatives from one product photo, then add the confirmed discount, code and end date after download. Prepare the sale scene early.",
-  "h1": "Create Black Friday Ad Creatives From One Product Photo",
+  "title": "Black Friday Ad Creatives Before Your Offer | AIVideosUGC",
+  "description": "Build a Black Friday sale scene from one product photo. Add the confirmed discount, code and end date after download, then publish the version you approve.",
+  "h1": "Make Black Friday Ad Creatives From One Product Photo",
   "eyebrow": "Black Friday ad creatives",
-  "lead": "Make the Black Friday product scene early, then add the confirmed discount, code and end date when the offer is ready.",
+  "lead": "Get the Black Friday product scene ready before the offer is final. Add the exact discount, code and end date after download, then publish the version you approve.",
   "secondary_keywords": [
     "Black Friday video ads",
     "Black Friday banner ideas",
@@ -15,32 +15,32 @@
   "faq": [
     {
       "q": "How early should I make my Black Friday ads?",
-      "a": "Several weeks ahead gives you time to try a few versions and finish the visuals before your discounts are set."
+      "a": "Start before the offer is final so you have time to make versions and finish the visuals before launch."
     },
     {
       "q": "Can you add a countdown timer to my video?",
-      "a": "No. Add the countdown in CapCut or with your ad platform's own tools, where you control the exact end time."
+      "a": "No. Add the countdown in CapCut or with your ad platform tools, where you control the exact end time."
     },
     {
       "q": "Do I need a separate video for each platform?",
-      "a": "Usually a 9:16 version covers TikTok, Reels and Stories, and a 1:1 version covers the feeds. Each one is its own generation, with its credit cost shown up front."
+      "a": "Use the size your placement needs. Each version is its own generation, with the credit cost shown before you start."
     },
     {
       "q": "Which Black Friday details should stay editable until the offer is final?",
-      "a": "Keep the price, discount, code, and end date editable so you can update the wording after download without rebuilding the product scene."
+      "a": "Keep the price, discount, code and end date editable so you can update the wording after download without rebuilding the product scene."
     },
     {
       "q": "Do I need a creator or a shoot?",
-      "a": "No. The clips and banners are generated from the product photo you upload and a chosen scene, so the sale set does not depend on filming anyone."
+      "a": "No. Start from the product photo you upload and a chosen scene, so the sale set does not depend on filming anyone."
     },
     {
       "q": "Can I run these creatives as paid Black Friday ads?",
-      "a": "Yes. Downloaded files are yours to use across paid placements and carry no AIVideosUGC watermark, provided the deal text follows each platform's ad rules."
+      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in paid placements, subject to each platform’s ad rules."
     }
   ],
   "examples": {
-    "h2": "More Black Friday examples",
-    "lead": "Dark, dramatic product shots with space for a deal badge, plus a brighter take for Cyber Monday.",
+    "h2": "More Black Friday Ad Creative Examples",
+    "lead": "Show deal-ready product scenes, then add the final offer layer after download.",
     "groups": [
       {
         "label": "Deal week",
@@ -58,62 +58,66 @@
             "product": "bath gift set"
           },
           {
-            "ref": "n:guide:q20-occ-bf-example-03",
-            "title": "Lint roller clears a furry sofa",
+            "ref": "n:guide:q20-occ-bf-output-01-r2",
+            "title": "Gaming monitor shown on an evening desk",
             "kind": "photo",
-            "product": "pet hair roller"
+            "product": "gaming monitor"
           }
         ]
       }
     ]
   },
-  "cta_lead": "Create the Black Friday product scene first, then add the confirmed offer details after download.",
+  "cta_lead": "Build the Black Friday product scene first, then add the confirmed offer after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
       "d": "Start with one clear photo of the product or bundle featured in the sale."
     },
     {
-      "t": "Choose a Black Friday Scene",
-      "d": "Share the sale scene you want in one sentence, such as a gift reveal or product demo."
+      "t": "Pick a Black Friday Scene",
+      "d": "Choose a sale moment such as a gift reveal or product demo."
     },
     {
-      "t": "Download and Add the Deal",
-      "d": "Add the confirmed price, code and end date in your editor."
+      "t": "Download and Post",
+      "d": "Add the confirmed price, code and end date in your editor, then post the finished file."
     }
   ],
   "visual": {
     "overview": "Show the Black Friday product clearly, then add the confirmed offer in an editable layer after download.",
     "strip": [
-      "n:guide:q20-occ-bf-strip-01",
+      "n:guide:q20-occ-bf-uses-01",
       "n:guide:k8-blackfriday-gen2-plat-amazon-g1",
       "n:guide:q20-occ-bf-strip-02",
       "n:guide:k8-blackfriday-gen2-product-videos-g2",
-      "n:guide:q20-occ-bf-strip-04",
+      "n:guide:q20-occ-bf-after",
       "n:guide:q20-occ-bf-strip-05"
     ],
     "steps": {
       "source": "n:guide:black-friday-m2-source",
       "result": "n:guide:q20-occ-bf-steps-result",
       "mode": "photo",
-      "prompt": "Share the Black Friday scene in one sentence.",
+      "prompt": "Describe the Black Friday product scene in one sentence.",
       "options": [
         [
           "Template",
-          "Sale product photo"
+          "Black Friday sale photo"
         ],
         [
           "Size",
-          "Square"
+          "Square 1:1"
+        ],
+        [
+          "Use",
+          "Feed post or product page"
         ]
       ]
     },
     "picker": {
-      "title": "Choose a Black Friday scene",
+      "title": "Choose a Black Friday ad creative scene",
       "lead": "Show the product in a sale moment, then add the confirmed offer after download.",
       "chips": [],
       "cards": [],
-      "button": "Make a sale product photo"
+      "button": "Make a Black Friday sale photo"
     },
     "uses": [],
     "input": [],
@@ -121,35 +125,35 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make your Black Friday product photo before prices are set"
+        "h2": "How to Create Black Friday Ad Creatives in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a product or gift bundle to feature"
+        "h2": "Choose a Black Friday Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions about Black Friday ad creatives"
+        "h2": "Questions About Black Friday Ad Creatives"
       }
     }
   },
-  "benefits_h2": "Why sellers choose Black Friday ad creatives",
+  "benefits_h2": "Why Sellers Use Black Friday Ad Creatives",
   "benefits": [
     {
-      "t": "Prepare the sale scene early",
-      "d": "Make the product visual before the Black Friday offer is final."
+      "t": "Prepare before the offer is final",
+      "d": "Make the product visual while the Black Friday deal is still being confirmed."
     },
     {
-      "t": "One product photo, many placements",
-      "d": "Create separate versions for phone-first feeds or square posts from the same item."
+      "t": "Make one product work across placements",
+      "d": "Create a phone-first version or a square post from the same product photo."
     },
     {
-      "t": "Offer details stay editable",
+      "t": "Keep Black Friday details editable",
       "d": "Add the discount, code and end date after download when every detail is confirmed."
     },
     {
-      "t": "Ready for your own campaigns",
-      "d": "Use downloaded Black Friday images and clips in your posts and paid ads."
+      "t": "Launch without a new shoot",
+      "d": "Use the downloaded sale scene in your own posts and paid campaigns."
     }
   ],
-  "steps_h2": "Create Black Friday ad creatives in three steps",
-  "steps_lead": "Turn one product photo into a Black Friday sale scene, then add the confirmed offer after download."
+  "steps_h2": "How to Create Black Friday Ad Creatives in 3 Simple Steps",
+  "steps_lead": "Upload one product photo, choose the Black Friday moment and add the confirmed offer after download."
 }
