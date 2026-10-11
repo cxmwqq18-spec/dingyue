@@ -21,8 +21,8 @@
       "d": "Describe the backdrop, crop, light and clothing once and reuse the brief. Each portrait keeps a personal face."
     },
     {
-      "t": "Download and Arrange",
-      "d": "Download the portraits, arrange the grid, then add names, roles and contact details as text. No studio day."
+      "t": "Download and Post",
+      "d": "Download the matching portraits and put them on your team page, deck or profiles. Add names and roles as text. No studio day."
     }
   ],
   "maker": {
@@ -124,7 +124,7 @@
       }
     }
   },
-  "steps_h2": "How to make team headshots in 3 simple steps",
+  "steps_h2": "How to Make AI Team Headshots in 3 Simple Steps",
   "steps_lead": "Three steps turn each teammate's photo into a matching portrait, with no studio or scheduling.",
   "benefits_h2": "Why choose AI team headshots",
   "benefits": [
