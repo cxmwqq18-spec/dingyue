@@ -92,7 +92,7 @@
             "product": "compact speaker"
           },
           {
-            "ref": "n:guide:q2-video-ads-example-02",
+            "ref": "n:guide:im12-video-ads-example-02-r1",
             "title": "Crossbody bag, mirror fit check",
             "kind": "scene",
             "product": "crossbody bag"
@@ -428,7 +428,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame.",
           "kind": "video"
         },
         {
