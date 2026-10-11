@@ -262,7 +262,7 @@
     "video-ads": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q2-video-ads-hero"
+        "image": "n:guide:q2-video-ads-card-08"
       },
       "gallery": [
         "f:k3-video-gallery-try-on",
