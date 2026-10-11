@@ -47842,6 +47842,138 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "fx51-url-steps-result-r1": {
+        "file": "fx51-url-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open the same sage-green lunch container with its silver metal clasp and side latches visible on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-skincare-strip-r1": {
+        "file": "fx51-url-skincare-strip-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with hair in a neat bun applies cream from a plain white jar at a bright sink.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-benefit-link-r1": {
+        "file": "fx51-url-benefit-link-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place a sage-green insulated lunch container with a silver clasp on a pale counter beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-benefit-photo-r1": {
+        "file": "fx51-url-benefit-photo-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand points to a matte-gray folding phone stand on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-benefit-version-r1": {
+        "file": "fx51-url-benefit-version-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lace a plain gray trail running shoe at a trailhead.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-benefit-judge-r1": {
+        "file": "fx51-url-benefit-judge-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand dispenses cream from a plain cream pump bottle at a bright sink.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-page-main-r1": {
+        "file": "fx51-url-page-main-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "One unbranded matte-black over-ear headphone set rests on a pale desk while an adult hand adjusts the headband.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-seller-angle-r1": {
+        "file": "fx51-url-seller-angle-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand points at one plain cobalt-blue insulated bottle on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-format-r1": {
+        "file": "fx51-url-format-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands set a plain matte-gray folding phone stand upright on a pale desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-another-version-r1": {
+        "file": "fx51-url-another-version-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands turn one plain gray trail running shoe to show its side profile on a pale bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-strip-tote-r1": {
+        "file": "fx51-url-strip-tote-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift one plain natural-canvas tote by its handles on a pale table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx51-url-strip-phone-stand-r1": {
+        "file": "fx51-url-strip-phone-stand-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands unfold one plain matte-gray folding phone stand on a pale desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

@@ -17,22 +17,30 @@
     {
       "t": "Paste the link, skip the download",
       "d": "Paste a public product URL and keep the main product image as your starting reference.",
-      "icon": "clock"
+      "icon": "clock",
+      "img": "n:guide:fx51-url-benefit-link-r1",
+      "alt": "Adult hands place a sage-green insulated lunch container with a silver clasp on a pale counter beside a closed laptop."
     },
     {
       "t": "Use the photo already on the page",
       "d": "Confirm the image and name captured from the listing before you make a video.",
-      "icon": "check"
+      "icon": "check",
+      "img": "n:guide:fx51-url-benefit-photo-r1",
+      "alt": "Adult hand points to a matte-gray folding phone stand on a tidy desk."
     },
     {
       "t": "Make another version from the same link",
       "d": "Reuse one public URL to test a new scene, opening or length for the same item.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:guide:fx51-url-benefit-version-r1",
+      "alt": "Adult hands lace a plain gray trail running shoe at a trailhead."
     },
     {
       "t": "Show one moment shoppers can judge",
       "d": "Turn one product detail into a clear scene buyers can understand before purchase.",
-      "icon": "target"
+      "icon": "target",
+      "img": "n:guide:fx51-url-benefit-judge-r1",
+      "alt": "Adult hand dispenses cream from a plain cream pump bottle at a bright sink."
     }
   ],
   "steps_h2": "How to Make a Video from a Product URL in 3 Simple Steps",
@@ -63,7 +71,7 @@
       ],
       [
         "Length",
-        "6, 10, 15 or 30 seconds"
+        "6, 10 or 15 seconds"
       ]
     ],
     "cta": "Make a video from this link"
@@ -126,39 +134,50 @@
         {
           "t": "The page's main image",
           "d": "Use the product image already on the listing as the starting reference.",
-          "img": "n:guide:q2-url-to-video-strip-01",
-          "frame": "none"
+          "img": "n:guide:fx51-url-page-main-r1",
+          "frame": "none",
+          "alt": "One unbranded matte-black over-ear headphone set rests on a pale desk while an adult hand adjusts the headband."
         },
         {
           "t": "Your selling point",
           "d": "Write the one feature or benefit you want the video to show.",
-          "img": "n:guide:q2-url-to-video-case-02",
-          "frame": "none"
+          "img": "n:guide:fx51-url-seller-angle-r1",
+          "frame": "none",
+          "alt": "Adult hand points at one plain cobalt-blue insulated bottle on a pale counter."
         },
         {
           "t": "A frame and length",
           "d": "Choose 9:16 and 6, 10, 15 or 30 seconds for each version.",
-          "img": "n:guide:q2-url-to-video-strip-03",
-          "frame": "none"
+          "img": "n:guide:fx51-url-format-r1",
+          "frame": "none",
+          "alt": "Adult hands set a plain matte-gray folding phone stand upright on a pale desk."
         },
         {
           "t": "Another version from the same link",
           "d": "Paste the same public URL again when you need a fresh opening or scene.",
-          "img": "n:guide:q2-url-to-video-strip-04",
-          "frame": "none"
+          "img": "n:guide:fx51-url-another-version-r1",
+          "frame": "none",
+          "alt": "Adult hands turn one plain gray trail running shoe to show its side profile on a pale bench."
         }
       ]
     }
   ],
   "visual": {
-    "strip": [],
+    "strip": [
+      "n:guide:fx51-url-skincare-strip-r1",
+      "n:guide:q2-url-to-video-strip-02",
+      "n:guide:q2-url-to-video-strip-05",
+      "n:guide:fx51-url-strip-phone-stand-r1",
+      "n:guide:q2-url-to-video-strip-03",
+      "n:guide:fx51-url-strip-tote-r1"
+    ],
     "steps": {
       "source": "n:guide:k2-url-step-lunchbox-source",
-      "sourceAlt": "Your product: closed sage-green lunch container on a pale counter, viewed from the front.",
-      "result": "n:guide:q2-url-to-video-steps-result",
+      "sourceAlt": "Your product: closed sage-green lunch container with its silver clasp visible on a pale counter.",
+      "result": "n:guide:fx51-url-steps-result-r1",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the captured product image as the product and keep its shape, color and label area exactly. A hand opens the sage-green lunch container on a bright kitchen counter and sets the lid beside it. Front-left medium framing with one slow push-in. Sound: lid click, light container tap and quiet room tone; no music, text or logos.",
+      "prompt": "Use the captured product image as the product and keep its shape, color and label area exactly. A hand opens the sage-green lunch container while its silver metal front clasp and side latches remain visible, then sets the lid beside it on a bright kitchen counter. Front-left medium framing with one slow push-in. Sound: lid click, light container tap and quiet room tone; no music, text or logos.",
       "sourceTitle": "Paste your product page link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
@@ -173,27 +192,27 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:guide:q2-url-to-video-uses-00",
+        "ref": "n:guide:q2-url-to-video-uses-01",
         "h": "E-commerce product videos",
-        "d": "Turn the listing reference into a clear product moment that helps shoppers decide on the page."
+        "d": "Show one useful product action on the listing page so shoppers can judge the item."
       },
       {
         "frame": "post",
-        "ref": "n:guide:q2-url-to-video-uses-01",
+        "ref": "n:guide:q2-url-to-video-case-02",
         "h": "Product demos",
-        "d": "Show one useful action, such as opening the package or using the product, in a short demo."
+        "d": "Use one clear action, such as unfolding a phone stand, in a short demo."
       },
       {
         "frame": "reels",
-        "ref": "n:guide:q2-url-to-video-example-01",
+        "ref": "n:guide:q2-url-to-video-example-03",
         "h": "Advertising videos",
-        "d": "Build a paid ad around one product point, then compare another opening from that listing."
+        "d": "Build a paid ad around one selling point from the product listing."
       },
       {
         "frame": "post",
-        "ref": "n:guide:ra2-url-to-video-example-05-r1",
+        "ref": "n:guide:q2-url-to-video-example-05",
         "h": "Social media videos",
-        "d": "Use the downloaded clip in an Instagram, YouTube or TikTok post made for this product."
+        "d": "Post a fresh 9:16 version to TikTok, Instagram or YouTube Shorts."
       }
     ],
     "input": [],
