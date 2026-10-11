@@ -25311,6 +25311,16 @@
           1280
         ]
       },
+      "rb2-ind-fashion-clothing-strip-4-r3": {
+        "file": "rb2-ind-fashion-clothing-strip-4-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing a floral summer dress by a bright window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "k7-ind-fashion-clothing-strip-4-n-gen2-tpl-look-c1": {
         "file": "k7-ind-fashion-clothing-strip-4-n-gen2-tpl-look-c1",
         "w": 1024,
