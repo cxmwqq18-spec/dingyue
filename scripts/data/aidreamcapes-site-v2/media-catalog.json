@@ -47714,6 +47714,28 @@
           1280
         ]
       },
+      "im04-tpl-ugc-strip-01-r1": {
+        "file": "im04-tpl-ugc-strip-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator with a short dark-auburn crop holds a plain folding phone stand beside a desk in a bright home office.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "im04-tpl-ugc-gallery-01b-r1": {
+        "file": "im04-tpl-ugc-gallery-01b-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator with a short silver-gray buzz cut demonstrates a plain gray cable organizer at a tidy home office desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
       "rc4-tpl-sale-hero-r1": {
         "file": "rc4-tpl-sale-hero-r1",
         "w": 1600,
