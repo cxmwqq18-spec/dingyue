@@ -23,7 +23,7 @@
     },
     {
       "q": "Do I need to book an Instagram creator or studio?",
-      "a": "No. Start from your own product photo, so there is no creator booking, studio day or footage queue."
+      "a": "No. Use the product photo you already have, then choose the Instagram format you need."
     },
     {
       "q": "How do I build an Instagram carousel?",
@@ -130,16 +130,16 @@
       "lead": "Keep Instagram creative moving from the product photos you already have.",
       "items": [
         {
-          "t": "No Creator Wait",
-          "d": "Get the next Instagram ad moving from the photo you already have."
+          "t": "Test a New Opening",
+          "d": "Try another Reel opening or still from the same product photo without booking a new shoot."
         },
         {
-          "t": "Start with a Ready Format",
-          "d": "Choose a Reel-style clip or square still, then add your caption after download."
+          "t": "Use Your Own Product Photo",
+          "d": "Start with the product image you already have and choose a Reel or square format."
         },
         {
-          "t": "Keep Each Market Moving",
-          "d": "Make a separate version for a new audience without arranging another shoot."
+          "t": "Download a Clean Instagram File",
+          "d": "Get a clear file for Reels, Stories or the Feed, then add your caption and offer."
         }
       ]
     },
@@ -149,16 +149,16 @@
       "lead": "Use one product photo to prepare the file for each Instagram format you choose.",
       "items": [
         {
-          "t": "Turn Product Photos into Ads",
-          "d": "Start from your own image and download a file for the Instagram format you choose."
+          "t": "Choose the Format That Fits",
+          "d": "Pick a Reel-style clip for Reels or Stories, or a square still for the Feed."
         },
         {
           "t": "Show the Product in Use",
           "d": "Use a hand, routine or close detail to make the item easy to understand."
         },
         {
-          "t": "Control the Opening",
-          "d": "Change the scene or idea and make another version when the campaign needs it."
+          "t": "Try Another Audience Angle",
+          "d": "Change the scene or idea and make another version from the same product photo."
         }
       ]
     }
