@@ -225,31 +225,36 @@
           "t": "UGC talking ads",
           "d": "A creator-style performer holds your product and delivers your line in a vertical clip for TikTok, Reels or Shorts.",
           "href": "page:video-ads",
-          "label": "UGC ad tool"
+          "label": "UGC ad tool",
+          "img": "n:guide:px1-platforms-format-1-r1"
         },
         {
           "t": "Unboxing clips",
           "d": "Show the package opening and first reveal without filming a delivery, so shoppers see exactly what lands on the doorstep.",
           "href": "page:unboxing-videos",
-          "label": "Unboxing videos"
+          "label": "Unboxing videos",
+          "img": "n:guide:px1-platforms-format-2-r1"
         },
         {
           "t": "Before and after clips",
           "d": "Keep one item and one camera, then show the changed state in the same clip to make the result easy to believe.",
           "href": "page:before-after-videos",
-          "label": "Before and after videos"
+          "label": "Before and after videos",
+          "img": "n:guide:px1-platforms-format-3-r1"
         },
         {
           "t": "Product demos",
           "d": "Show how the item works in a short, clear clip for a product page, store or paid slot.",
           "href": "page:product-videos",
-          "label": "Product videos"
+          "label": "Product videos",
+          "img": "n:guide:px1-platforms-format-4-r1"
         },
         {
           "t": "Image-to-video motion",
           "d": "Turn a still product image into a short moving ad that shows the detail shoppers need to see.",
           "href": "page:image-to-video",
-          "label": "Image to video"
+          "label": "Image to video",
+          "img": "n:guide:px1-platforms-format-5-r1"
         }
       ]
     },
@@ -262,49 +267,57 @@
           "t": "Beauty & skincare",
           "d": "Texture, routine and result moments for cosmetics and skin products.",
           "href": "page:ind-beauty-skincare",
-          "label": "Beauty & skincare"
+          "label": "Beauty & skincare",
+          "img": "n:guide:px1-platforms-area-1-r1"
         },
         {
           "t": "Fashion & clothing",
           "d": "Fit, fabric and try-on moments for apparel.",
           "href": "page:ind-fashion-clothing",
-          "label": "Fashion & clothing"
+          "label": "Fashion & clothing",
+          "img": "n:guide:px1-platforms-area-2-r1"
         },
         {
           "t": "Shoes",
           "d": "Sole detail, on-foot fit and wear tests for footwear.",
           "href": "page:ind-shoes",
-          "label": "Shoes"
+          "label": "Shoes",
+          "img": "n:guide:px1-platforms-area-3-r1"
         },
         {
           "t": "Jewelry & accessories",
           "d": "Macro finish, scale and worn-position shots for jewelry.",
           "href": "page:ind-jewelry-accessories",
-          "label": "Jewelry & accessories"
+          "label": "Jewelry & accessories",
+          "img": "n:guide:px1-platforms-area-4-r1"
         },
         {
           "t": "Electronics",
           "d": "Ports, setup and in-use moments for gadgets.",
           "href": "page:ind-electronics",
-          "label": "Electronics"
+          "label": "Electronics",
+          "img": "n:guide:px1-platforms-area-5-r1"
         },
         {
           "t": "Health & wellness",
           "d": "Supplement and fitness gear moments shoppers trust.",
           "href": "page:ind-health-wellness",
-          "label": "Health & wellness"
+          "label": "Health & wellness",
+          "img": "n:guide:px1-platforms-area-6-r1"
         },
         {
           "t": "Food & drinks",
           "d": "Pour, first bite and pack shots for food and beverages.",
           "href": "page:ind-food-drinks",
-          "label": "Food & drinks"
+          "label": "Food & drinks",
+          "img": "n:guide:px1-platforms-area-7-r1"
         },
         {
           "t": "Home & living",
           "d": "Room setups, scale and before-after moments for home goods.",
           "href": "page:ind-home-living",
-          "label": "Home & living"
+          "label": "Home & living",
+          "img": "n:guide:px1-platforms-area-8-r1"
         }
       ]
     }

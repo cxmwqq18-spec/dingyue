@@ -286,17 +286,24 @@ export function CompareTableBlock({ block, r }: { block: V2CompareTable; r: V2Re
   );
 }
 
-// Text-only linked card sections (format or category directories). No images by design;
-// each card links to the related tool or collection page so shoppers can act on it.
+// Linked card sections (format or category directories). Cards can carry a page-owned
+// image above the copy while retaining the original text-only treatment when no image is set.
 export function TextSections({ sections, r }: { sections: V2TextSection[]; r: V2Resolvers }) {
   if (!sections?.length) return null;
   return (
     <>
       {sections.filter((section) => section?.title && section.cards?.length).map((section) => (
         <Section eyebrow={section.eyebrow} key={`${section.eyebrow}-${section.title}`} lead={section.lead ?? ""} title={section.title}>
-          <div className="ideas">
+          <style dangerouslySetInnerHTML={{ __html: `
+            .adc2 .text-section-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+            .adc2 .text-section-grid .text-section-media{margin:-18px -18px 14px;overflow:hidden;border-radius:14px 14px 0 0;background:#0b0b0d}
+            .adc2 .text-section-grid .text-section-media img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain}
+            @media(max-width:560px){.adc2 .text-section-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adc2 .text-section-grid>div{padding:10px}.adc2 .text-section-grid .text-section-media{margin:-10px -10px 10px;border-radius:10px 10px 0 0}}
+          ` }} />
+          <div className={section.cards.some((card) => card.img) ? "ideas text-section-grid" : "ideas"}>
             {section.cards.map((card) => (
               <div key={card.t}>
+                {card.img ? <div className="text-section-media"><Img image={card.img} r={r} /></div> : null}
                 <b>{card.t}</b>
                 <p><RichText r={r} text={card.d} /></p>
                 {card.href ? <p className="meta-line"><a href={r.href(card.href)}>{card.label || card.t} →</a></p> : null}

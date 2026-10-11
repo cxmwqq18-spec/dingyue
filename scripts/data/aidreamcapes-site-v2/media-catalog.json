@@ -45862,6 +45862,149 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "px1-platforms-format-1-r1": {
+        "file": "px1-platforms-format-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Black creator with short natural curls holds a plain teal pump bottle and speaks to camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-format-2-r1": {
+        "file": "px1-platforms-format-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "East Asian creator lifts a plain white portable charger from tissue in a kraft box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-format-3-r1": {
+        "file": "px1-platforms-format-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Black creator presents the same plain running shoe in dusty and clean states side by side.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-format-4-r1": {
+        "file": "px1-platforms-format-4-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Latino creator uses a plain black garment steamer on a light blue shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-format-5-r1": {
+        "file": "px1-platforms-format-5-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain coral insulated bottle appears in motion above a pale tabletop with a flowing ribbon.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-1-r1": {
+        "file": "px1-platforms-area-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "South Asian creator applies plain peach cream from a pump bottle beside a bright mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-2-r1": {
+        "file": "px1-platforms-area-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "East Asian creator with a short silver bob adjusts a plain rust linen overshirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-3-r1": {
+        "file": "px1-platforms-area-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Black runner ties the laces of a plain charcoal road-running shoe on a park path.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-4-r1": {
+        "file": "px1-platforms-area-4-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult with a short copper pixie cut fastens a simple geometric gold pendant necklace.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-5-r1": {
+        "file": "px1-platforms-area-5-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Older Black creator presses a control on a compact matte teal portable speaker.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-6-r1": {
+        "file": "px1-platforms-area-6-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult athlete holds a plain cobalt shaker bottle beside a resistance band after exercise.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-7-r1": {
+        "file": "px1-platforms-area-7-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Latina creator pours a sparkling citrus drink from a plain clear bottle into a glass of ice.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "px1-platforms-area-8-r1": {
+        "file": "px1-platforms-area-8-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "East Asian creator uses a compact handheld vacuum along a sofa seam.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
       }
     }
   }
