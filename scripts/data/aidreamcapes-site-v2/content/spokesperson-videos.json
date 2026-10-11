@@ -1,45 +1,48 @@
 {
   "id": "spokesperson-videos",
   "title": "AI Spokesperson Video Maker for Product Ads | AIVideosUGC",
-  "description": "Turn one product photo into an AI spokesperson ad. Pick a realistic actor and scene, write one line, and get a talking video in minutes.",
-  "h1": "Create Spokesperson Videos with Realistic AI Actors",
+  "description": "Turn one product photo into an AI spokesperson video. Choose a person and scene, write a selling point, and review a 9:16 product ad before you publish.",
+  "h1": "Explain Your Product on Camera with an AI Spokesperson",
   "eyebrow": "AI spokesperson video",
-  "lead": "Some products sell once a feature is explained out loud. Pick a realistic AI actor and a scene, write one line, and get a talking ad in minutes. No casting, no studio day.",
+  "lead": "Give shoppers the one detail they need to understand. Add your product photo, choose an on-camera spokesperson, and hand them a short line that explains the benefit. Review a vertical ad without booking a creator or a shoot.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
     "AI actor product ads",
     "on-camera product showcase"
   ],
-  "benefits_h2": "Why brands choose spokesperson videos with AIVideosUGC",
+  "benefits_h2": "Put your product’s key point on camera",
   "benefits": [
     {
-      "t": "Speed",
-      "d": "Get a talking ad in minutes. Skip the casting, the booking and the weeks of prep before a shoot."
+      "t": "Skip casting for your next product explanation",
+      "d": "Choose a spokesperson, give them one approved line, and review a vertical draft without booking a creator or studio time.",
+      "icon": "clock"
     },
     {
-      "t": "Scale",
-      "d": "Try different actors and hooks with the same product photo. Make fresh versions and split-test them in your ad account."
+      "t": "Test more ways to explain one product",
+      "d": "Keep the product photo, then swap the spokesperson, opening line, or scene to make versions for your ad tests.",
+      "icon": "layers"
     },
     {
-      "t": "Straight",
-      "d": "Write one factual line about a feature. The actor delivers it exactly, so no review is invented."
+      "t": "Keep the claim in your hands",
+      "d": "Write a factual line about one feature. The spokesperson follows your script, so your team can check every word before publishing.",
+      "icon": "check"
     }
   ],
-  "steps_h2": "How to make a spokesperson video with AI",
-  "steps_lead": "Three steps. No casting, no studio, no filming.",
+  "steps_h2": "Turn a product photo into a clear spokesperson ad",
+  "steps_lead": "Give shoppers one useful explanation in three steps. Review the result before you publish.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo. Keep the whole product in view with its shape and color visible."
+      "t": "Start with one clear product photo",
+      "d": "Upload a full view with the product’s shape and color visible. That same item stays in the spoken scene."
     },
     {
-      "t": "Pick an Actor and Share Your Idea",
-      "d": "Choose an actor and a scene that fit your audience. Share your video idea in one sentence."
+      "t": "Choose who delivers the point",
+      "d": "Pick a spokesperson and setting, then write one short line about the feature a shopper should remember."
     },
     {
-      "t": "Generate and Download",
-      "d": "Review the generated clip and download it. Add captions, price and offer text in your own editor."
+      "t": "Review the clip, then add your offer",
+      "d": "Check the product, line and lip movement. Download the vertical file, then add captions, price or offer text in your editor."
     }
   ],
   "maker": {
@@ -51,42 +54,46 @@
       [
         "Length",
         "10 seconds"
+      ],
+      [
+        "Credits",
+        "Shown before you start"
       ]
     ],
-    "cta": "Make my spokesperson video"
+    "cta": "Create my spokesperson ad"
   },
   "faq": [
     {
       "q": "What is an AI spokesperson video?",
-      "a": "It is a video where an AI-generated actor holds your product and speaks one line to camera. You make it from a single product photo and use it as a brand-led ad."
+      "a": "It is a short ad where a generated on-camera spokesperson holds your product and explains one approved point. Start with one product photo and a line your team has checked."
     },
     {
-      "q": "How does the actor speak my line?",
-      "a": "Write the line and choose an actor. The generated clip matches the actor's mouth to your words, so keep the line short for a calm delivery."
+      "q": "How do I give the spokesperson a script?",
+      "a": "Write one short sentence in the workspace. The spokesperson speaks that line with matched mouth movement, so keep claims specific and review the result before posting."
     },
     {
-      "q": "Can I choose how the actor looks?",
-      "a": "Yes. Pick from the available adult actors, age ranges and scenes. Small differences between generated results are normal."
+      "q": "Can I choose the person and setting?",
+      "a": "Yes. Choose from the available adult spokesperson scenes, then match the setting to where your product is used. Results can vary slightly, so review each draft."
     },
     {
-      "q": "Which products work best?",
-      "a": "Handheld products show best: skincare, jewelry, snacks, drinks, pet and fitness items. Pick something with a shape or action that stays clear in one hand."
+      "q": "Which products work for a spokesperson ad?",
+      "a": "Handheld items with one clear feature work well, including skincare, snacks, drinks, pet supplies and fitness gear. Keep the product fully visible in the source photo."
     },
     {
-      "q": "Which platforms can I run the video on?",
-      "a": "Downloads have no watermark and can be used commercially. Run them on TikTok Ads, Instagram Reels, YouTube Shorts or your product page, and label AI content where required."
+      "q": "Where can I use the finished video?",
+      "a": "Use the downloaded 9:16 file in TikTok Ads, Instagram Reels, YouTube Shorts or a product page. Add any required AI disclosure and platform copy before launch."
     },
     {
-      "q": "Is the presenter a real customer?",
-      "a": "No. The presenter is AI-generated, so never present them as a real buyer. Use the clip as a brand explanation and add an AI disclosure where the platform asks."
-    },
-    {
-      "q": "How is this different from hiring a UGC creator?",
-      "a": "A UGC creator films with your real product and can improvise. The AI actor speaks your exact line from a photo, so it is ready in minutes and costs far less."
+      "q": "Is the spokesperson a real customer?",
+      "a": "No. It is an AI-generated brand presenter, not a buyer or reviewer. Use it to explain your product and never invent a customer experience."
     },
     {
       "q": "Are these videos cleared for commercial use?",
-      "a": "Yes. Downloads are licensed for commercial use under our terms. Any captions, music or offers you add still need separate rights."
+      "a": "Yes. Downloads are cleared for commercial use under our terms. Any captions, music or offer artwork you add still need separate rights."
+    },
+    {
+      "q": "How much does one video cost?",
+      "a": "The workspace shows the credit cost before you start, and failed jobs return their reserved credits automatically. Check the displayed cost for your chosen length."
     }
   ],
   "visual": {
@@ -511,7 +518,7 @@
     },
     "titles": {
       "m4": {
-        "h2": "Different Ways to Use Videos Made with AI Actors"
+        "h2": "Give shoppers the explanation they need"
       },
       "m5": {
         "h2": ""
@@ -524,27 +531,29 @@
       {
         "frame": "post",
         "ref": "n:guide:q4-spokesperson-strip-04",
-        "h": "Paid Ads.",
-        "d": "Spend less on creators, sets and crews. Pick an AI actor and a scene that fit the people you sell to. Make a new version of one ad in minutes and test which one gets the click."
+        "h": "Paid ads that explain the product fast",
+        "d": "Put one verified product point into a vertical ad. Show the item in a scene, then add your final offer in your editor."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q4-spokesperson-use-01",
-        "h": "Official Websites",
-        "d": "Put an AI actor on your product page as the face of your brand. The actor holds the product and points out one key feature, so shoppers see it in use before they buy."
+        "h": "Product pages that answer one question",
+        "d": "Place a spokesperson clip beside your product photos. A short explanation helps shoppers understand one feature before they buy."
       },
       {
         "frame": "tiktok",
         "ref": "n:gen2:spokesperson-videos-c1",
-        "h": "Social Media Channels",
-        "d": "Keep your feeds full without booking a new shoot each week. Use one presenter across posts for a steady look, or switch actors and scenes for each audience on TikTok, Reels and Shorts."
+        "h": "Social posts with a clear hook",
+        "d": "Use one spoken point for TikTok, Reels or Shorts. Change the opening line or scene when you need a new angle."
       },
       {
         "frame": "1:1",
         "ref": "n:guide:q4-spokesperson-strip-02",
-        "h": "Product Guides",
-        "d": "Use an AI actor as a guide who shows your product one step at a time. Short clips can cover setup, sizing or daily use, so buyers have fewer questions after they order."
+        "h": "Short product guides for setup",
+        "d": "Use a short spoken walkthrough to cover setup, sizing or daily use. Keep each clip focused on one buyer question."
       }
     ]
-  }
+  },
+  "cta_title": "Put your product explanation to work",
+  "cta_lead": "Upload one product photo, write one clear product point, and review the credit cost before you start."
 }
