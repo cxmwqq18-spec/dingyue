@@ -37,6 +37,10 @@
     {
       "q": "Can I use the holiday clips and images as paid ads?",
       "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in seasonal ads, subject to each platform’s current review rules."
+    },
+    {
+      "q": "Can I add holiday music to a generated clip?",
+      "a": "Yes. Add holiday music after download in CapCut or your ad editor; AIVideosUGC does not add music to the file."
     }
   ],
   "examples": {
@@ -44,25 +48,28 @@
     "lead": "Show gift moments and seasonal product scenes, then add current dates or offers after download.",
     "groups": [
       {
-        "label": "Through the year",
+        "label": "Gift season",
         "items": [
           {
             "ref": "n:guide:f13-occ-holidays-rework-card-15",
-            "title": "Plain skincare gift set lifted from tissue",
+            "title": "Skincare gift set lifted from tissue",
             "kind": "photo",
-            "product": "skincare gift set"
+            "product": "skincare gift set",
+            "prompt": "Use the uploaded product photo as the same skincare gift set. Show adult hands lifting it from cream tissue in a warm gift scene, with clear space for the shipping cutoff added after download. No text or logos."
           },
           {
             "ref": "n:gen2:occ-holidays-g2",
-            "title": "Gift unwrapped to a plain bottle held in both hands",
+            "title": "Gift bottle held in both hands",
             "kind": "photo",
-            "product": "gift bottle"
+            "product": "gift bottle",
+            "prompt": "Use the uploaded product photo as the same bottle. Show an adult with a fully visible face holding it beside an open gift box in soft winter light, with clear space for the shipping cutoff added after download. No text or logos."
           },
           {
             "ref": "n:guide:q20-occ-holiday-example-03",
             "title": "Winter jacket revealed from a gift box",
             "kind": "photo",
-            "product": "winter jacket"
+            "product": "winter jacket",
+            "prompt": "Use the uploaded product photo as the same winter jacket. Show adult hands lifting it from a plain gift box, with clear space for a holiday offer added after download. No text or logos."
           }
         ]
       }
@@ -97,7 +104,7 @@
       "source": "n:guide:occ-holidays-c3-m2-source",
       "result": "n:guide:occ-holidays-c3-m2-result",
       "mode": "photo",
-      "prompt": "Describe the holiday product scene in one sentence.",
+      "prompt": "A gift-ready product scene with clear space for the shipping cutoff added after download.",
       "options": [
         [
           "Template",
@@ -136,11 +143,11 @@
       }
     }
   },
-  "benefits_h2": "Why Sellers Use Holiday Ad Photos and Videos",
+  "benefits_h2": "Show the gift before the shipping cutoff",
   "benefits": [
     {
       "t": "Go from one photo to a gift ad",
-      "d": "Save shoot prep by turning one product photo into winter and gift scenes in minutes."
+      "d": "Save shoot prep by turning one product photo into a gift scene while the shipping cutoff is still being confirmed."
     },
     {
       "t": "Show the gift before you ship it",
@@ -156,5 +163,15 @@
     }
   ],
   "steps_h2": "How to Create Holiday Ad Photos and Videos in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose a seasonal gift scene and add current details after download."
+  "steps_lead": "Upload one product photo, choose a seasonal gift scene and add current details after download.",
+  "relatedLinks": [
+    "video-ads",
+    "social-ad-photos",
+    "unboxing-videos",
+    "occ-black-friday",
+    "occ-sale-discount",
+    "templates",
+    "pricing",
+    "blog-unboxing-videos-for-launches"
+  ]
 }
