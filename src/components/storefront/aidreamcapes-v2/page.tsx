@@ -510,9 +510,10 @@ function IndexPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
       {visual ? <>
         {data.id === "templates" ? <>
-          {cards.length ? <VisualDirectoryFilter eyebrow="Template gallery" pageId={data.id} visual={visual}>
-            <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
-          </VisualDirectoryFilter> : null}
+          <VisualPicker pageId={data.id} visual={visual} r={r} />
+          {cards.length ? <Section eyebrow="Template gallery" lead={visual.titles?.m3?.lead} title={visual.titles?.m3?.h2 ?? "Pick a product ad template for your next campaign"}>
+            <TemplateGrid cards={cards} r={r} />
+          </Section> : null}
           <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
           <Faq items={data.faq} title="Questions" r={r} />
           {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}

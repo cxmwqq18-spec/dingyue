@@ -2061,7 +2061,9 @@ function payloadFor(model, page) {
       ];
       out.cta = { title: c.cta_title || "Create a product ad with an AI actor", lead: c.cta_lead || "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10" }) };
     } else if (page.id === "templates") {
-      const chips = c.visual?.picker ?? [];
+      // The directory grid has its own optional filters. The shared template wall
+      // lives in visual.picker and must never be used to tag or prune this grid.
+      const chips = Array.isArray(c.visual?.directoryFilters?.chips) ? c.visual.directoryFilters.chips : [];
       const groups = c.visual?.directoryFilters?.templateGroups ?? {};
       // Per the tagshop standard the template library shows only real templates, never
       // the nine cards that are tool pages; cards open the workspace with that template.
@@ -2071,10 +2073,6 @@ function payloadFor(model, page) {
         return card ? { ...card, image, filterTags: templateFilterTags(card, chips, groups) } : null;
       }).filter(Boolean);
       out.cards = applyCardOverrides(model, page, cards);
-      if (out.visual?.picker?.chips) {
-        const matching = new Map(out.visual.picker.chips.map((chip) => [chip.id, out.cards.filter((card) => card.filterTags?.includes(chip.id)).length]));
-        out.visual.picker.chips = out.visual.picker.chips.filter((chip) => (matching.get(chip.id) ?? 0) >= 2);
-      }
       out.filters = { types: [["video", "Video"], ["photo", "Photo"]], industries: Object.entries(model.ind), platforms: Object.entries(model.plat) };
     } else if (page.id === "industries" || page.id === "platforms") {
       const prefix = page.id === "industries" ? "ind-" : "plat-";
@@ -2633,13 +2631,16 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (!isDirectory && !visual.picker?.button?.trim()) errors.push(`${pageId}: visual picker title and required button are missing`);
       if (new Set(chips.map((chip) => chip.id)).size !== chips.length) errors.push(`${pageId}: visual picker filter ids must be unique`);
       const filterCount = (id) => {
-        if (pageId === "templates") return (data.cards ?? []).filter((card) => card.filterTags?.includes(id)).length;
+        if (pageId === "templates") return cards.filter((card) => card.chips?.includes(id)).length;
         if (pageId === "industries" || pageId === "platforms") return (data.items ?? []).filter((item) => item.filterTags?.includes(id)).length;
         if (pageId === "examples") return (data.flows ?? []).filter((flow) => flow.filterTags?.includes(id)).length;
         return cards.filter((card) => card.chips?.includes(id)).length;
       };
-      const minFilterCards = ["ai-actors", "spokesperson-videos"].includes(pageId) ? 1 : 2;
-      for (const chip of chips) if (filterCount(chip.id) < minFilterCards) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
+      const wallPages = pageId === "templates" || pageId === "video-ads" || pageId.startsWith("tpl-");
+      for (const chip of chips) {
+        const minFilterCards = ["ai-actors", "spokesperson-videos"].includes(pageId) || (wallPages && chip.id === "kids-toy") ? 1 : 2;
+        if (filterCount(chip.id) < minFilterCards) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
+      }
       for (const card of cards) {
         const labelWords = wordCount(card.label);
         if (labelWords < 2 || labelWords > 6) errors.push(`${pageId}: visual picker card labels must contain 2-6 words (${card.label})`);

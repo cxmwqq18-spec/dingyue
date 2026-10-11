@@ -106,11 +106,11 @@
       ]
     },
     "picker": {
-      "title": "",
-      "lead": "",
+      "title": "Show Every Product Color Side by Side",
+      "lead": "Give shoppers a quick way to compare finishes with one coordinated square set.",
       "chips": [],
       "cards": [],
-      "button": ""
+      "button": "Explore More"
     },
     "uses": [],
     "input": [],

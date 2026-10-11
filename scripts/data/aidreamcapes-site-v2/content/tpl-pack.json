@@ -88,11 +88,11 @@
       "n:guide:tpl-pack-c3-m3-shelf-boxes"
     ],
     "picker": {
-      "title": "",
-      "lead": "",
+      "title": "Preview Your Packaging in a Real Shelf Scene",
+      "lead": "See a pouch, box, or bottle in context before you commit to a print run.",
       "chips": [],
       "cards": [],
-      "button": ""
+      "button": "Explore More"
     },
     "steps": {
       "source": "n:guide:tpl-pack-c3-m2-source",
