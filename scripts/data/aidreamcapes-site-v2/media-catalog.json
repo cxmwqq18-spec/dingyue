@@ -7653,6 +7653,33 @@
       "variants": [
         1200
       ]
+    },
+    "ra2-before-after-videos-hero-r1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult woman holds a plain shoe brush beside one scuffed and one cleaned gray running shoe.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "ra2-image-to-video-hero-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult man turns a plain matte teal water bottle toward the camera at a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "ra2-url-to-video-hero-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Black man with short close-cropped hair holds a plain white skincare tube toward the camera inside a bright parked car.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "clips": {
@@ -27568,6 +27595,16 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult runner adjusts a plain running belt at a sunny trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ra2-url-to-video-example-05-r1": {
+        "file": "ra2-url-to-video-example-05-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult male runner adjusts a plain black running belt at a sunny mountain trailhead.",
         "variants": [
           640,
           1280

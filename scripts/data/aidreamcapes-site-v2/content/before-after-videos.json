@@ -11,73 +11,94 @@
     "transformation video for ads",
     "before and after TikTok video"
   ],
-  "benefits_h2": "Use before and after videos for products that sell",
+  "benefits_h2": "Show the result shoppers need to see",
   "benefits": [
     {
-      "t": "Show the fix in action",
-      "d": "Place your product in a real moment and let one action reveal the change, so shoppers see the result instead of reading about it."
+      "t": "Put the change on camera",
+      "d": "Start with one product photo and show the action that changes it, so buyers can judge the result.",
+      "icon": "target"
     },
     {
-      "t": "Clear, honest product shots",
-      "d": "The same item stays in frame from start to finish, with no cut to a different product."
+      "t": "Keep the comparison honest",
+      "d": "Keep one item and one camera from start to finish, so shoppers see the same product before and after.",
+      "icon": "shield"
     },
     {
-      "t": "Give your product a voice",
-      "d": "Add one short line about what just happened, spoken by the actor or added as a caption after download."
+      "t": "Say what changed in one line",
+      "d": "Name the action in one short line so buyers understand the result. Download the clip and add your own caption if you need one.",
+      "icon": "check"
     }
   ],
   "steps_h2": "Create a before and after video in 3 simple steps",
-  "steps_lead": "Three steps. Same item, same camera, one visible change.",
+  "steps_lead": "Show one product, one action and one visible result in a short ad you can test.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the item that makes the change, fully in frame."
+      "t": "Upload the product that makes the change",
+      "d": "Add one clear photo with the full item in frame so one product carries through the clip."
     },
     {
-      "t": "Pick a Scene and Share Your Idea",
-      "d": "Choose a scene that fits the product. Share your idea in one sentence, from the starting state to the fixed state."
+      "t": "Describe the starting point and the fix",
+      "d": "Write one sentence that names the starting state, the action and the result shoppers should see."
     },
     {
-      "t": "Generate and Download",
-      "d": "Review the clip and download it. Add Before and After labels in your own editor."
+      "t": "Download the result for your ad",
+      "d": "Watch the clip, then download it and add your own offer or before-and-after labels in your editor."
     }
   ],
   "more_sections": [
     {
       "eyebrow": "The comparison",
-      "h2": "The Old Way vs. the AIVideosUGC Way",
-      "lead": "Showing a change used to mean two setups. Now it starts with one product photo.",
+      "h2": "One photo replaces two setups",
+      "lead": "A before-and-after ad used to mean matching two shoots. Start with one product photo and direct one clear change.",
       "items": [
         {
-          "t": "Film the before and the after",
-          "d": "Stage the starting scene, reset for the fixed state, and try to match the same light and camera."
+          "t": "Two setups to match",
+          "d": "Stage the starting scene, reset for the fixed state and try to match the same camera and light.",
+          "img": "n:guide:q3-before-after-videos-board-05-snack-bin-reset",
+          "frame": "phone"
         },
         {
-          "t": "Describe the change once",
-          "d": "Keep one photo and one camera. The starting state and the fixed state are generated for you in minutes."
+          "t": "One photo to direct",
+          "d": "Keep one product reference, then describe the action that takes it from the starting state to the result. The clip is generated for you in minutes.",
+          "img": "n:guide:f11-r10b-before-after-videos-canvas-stain-cleanup",
+          "frame": "phone"
         }
       ]
     },
     {
       "eyebrow": "Why sellers use it",
-      "h2": "Built for clear, testable product ads.",
-      "lead": "Simple from the first try, and easy to adapt while you test what works.",
+      "h2": "Make product demos easier to test",
+      "lead": "Give buyers a clear comparison, then make another opening when your campaign needs a fresh angle.",
       "items": [
         {
-          "t": "No learning curve",
-          "d": "Describe the change in one sentence. You do not need editing skills or a studio setup."
+          "t": "Start without a crew",
+          "d": "Describe the starting point and the action, then skip a studio setup or filming date.",
+          "img": "n:guide:q3-product-videos-case-handheld-vacuum",
+          "frame": "phone"
         },
         {
-          "t": "Control every version",
-          "d": "Keep the product, camera and claim the way you want them, and change only the scene or action."
+          "t": "Control the visible result",
+          "d": "Keep the product, camera and claim fixed while you adjust the scene or action.",
+          "img": "n:guide:q3-before-after-videos-output-watch-wipe",
+          "frame": "phone"
         },
         {
-          "t": "Pick the actor and scene",
-          "d": "Choose an adult actor and a room that fit the product, from kitchen to entryway."
+          "t": "Write the opening you need",
+          "d": "Give one short line that frames the problem or change for your ad.",
+          "img": "n:guide:q3-product-videos-board-07-power-bank-demo",
+          "frame": "phone"
         },
         {
-          "t": "Play the director",
-          "d": "Give one line and one action, then make fresh openings to test in your ad account."
+          "t": "Test more hooks without reshooting",
+          "d": "Try fresh first moments for a campaign without arranging another shoot.",
+          "img": "n:guide:f17-home-vacuum-demo",
+          "frame": "none"
+        },
+        {
+          "t": "Finish more versions from one base",
+          "d": "Keep the demonstration ready, then add your offer or before-and-after labels without rebuilding the clip.",
+          "img": "n:guide:q3-before-after-videos-output-watch-compare",
+          "frame": "none"
         }
       ]
     }
@@ -90,7 +111,7 @@
       ],
       [
         "Length",
-        "6, 10 or 15 seconds"
+        "6, 10, 15 or 30 seconds"
       ]
     ],
     "cta": "Make my before & after video"
@@ -135,7 +156,7 @@
       "result": "n:guide:b1-before-after-videos-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, an adult hand feeds three loose cords through the organizer slots, leaving the tabletop clear. End with the cords arranged in place. Soft daylight, practical home-demo style. Overhead medium framing with one slow push-in. Sound: cord slide, organizer tap and quiet room tone; no music."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, an adult hand feeds three loose cords through the organizer slots, leaving the tabletop clear. End with the cords arranged in place. Soft daylight, practical home-demo style. Overhead medium framing with one slow push-in. Sound: cord slide, organizer tap and quiet room tone; no music, text or logos."
     },
     "picker": {
       "title": "Browse before and after scenes",
@@ -143,6 +164,15 @@
       "chips": [],
       "cards": [],
       "button": "Try this video idea"
+    },
+    "uses": [],
+    "titles": {
+      "m2": {
+        "h2": "Create a before and after video in 3 simple steps"
+      },
+      "m4": {
+        "h2": "Show the change where buyers make decisions"
+      }
     }
   }
 }
