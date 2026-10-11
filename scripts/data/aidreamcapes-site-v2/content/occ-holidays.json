@@ -58,7 +58,7 @@
             "prompt": "Use the uploaded product photo as the same skincare gift set. Show adult hands lifting it from cream tissue in a warm gift scene, with clear space for the shipping cutoff added after download. No text or logos."
           },
           {
-            "ref": "n:gen2:occ-holidays-g2",
+            "ref": "n:guide:fx02-occ-holidays-g2",
             "title": "Gift bottle held in both hands",
             "kind": "photo",
             "product": "gift bottle",
@@ -123,13 +123,81 @@
     "picker": {
       "title": "Choose a holiday ad creative scene",
       "lead": "Show the product in a seasonal gift moment, then add current details after download.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "gift-reveal",
+          "label": "Gift reveal"
+        },
+        {
+          "id": "seasonal-use",
+          "label": "Seasonal use"
+        },
+        {
+          "id": "gift-guide",
+          "label": "Gift guide"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:fx02-occ-holidays-picker-gift",
+          "label": "Lipstick Gift Reveal",
+          "chips": [
+            "gift-reveal",
+            "seasonal-use"
+          ],
+          "prompt": "Use the uploaded product photo as the product. Adult hands reveal it from cream tissue beside evergreen branches, with clear space for the holiday offer added after download. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx02-occ-holidays-picker-use",
+          "label": "Seasonal Product Use",
+          "chips": [
+            "seasonal-use",
+            "gift-guide"
+          ],
+          "prompt": "Use the uploaded product photo as the product. An adult hand uses it beside a wrapped gift in warm window light, with clear space for the shipping cutoff added after download. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx02-occ-holidays-picker-pack",
+          "label": "Gift-Guide Product Pack",
+          "chips": [
+            "gift-guide",
+            "gift-reveal"
+          ],
+          "prompt": "Use the uploaded product photo as the product. Adult hands hold it beside a wrapped parcel near a snowy window, with clear space for the shipping cutoff added after download. No text or logos.",
+          "kind": "photo"
+        }
+      ],
       "button": "Make a holiday product photo"
     },
     "uses": [],
-    "input": [],
-    "outputs": [],
+    "input": [
+      {
+        "good": "n:guide:fx02-occ-holidays-good-a",
+        "bad": "n:guide:fx02-occ-holidays-bad-a",
+        "good_label": "Good product photo",
+        "bad_label": "Crop and blur issue"
+      },
+      {
+        "good": "n:guide:fx02-occ-holidays-good-b",
+        "bad": "n:guide:fx02-occ-holidays-bad-b",
+        "good_label": "Good product photo",
+        "bad_label": "Exposure and obstruction issue"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:fx02-occ-holidays-output-a",
+        "frame": "1:1",
+        "label": "Candle gift-box scene"
+      },
+      {
+        "ref": "n:guide:fx02-occ-holidays-output-b",
+        "frame": "1:1",
+        "label": "Gift-wrap product scene"
+      }
+    ],
     "after": null,
     "titles": {
       "m2": {
@@ -147,19 +215,27 @@
   "benefits": [
     {
       "t": "Go from one photo to a gift ad",
-      "d": "Save shoot prep by turning one product photo into a gift scene while the shipping cutoff is still being confirmed."
+      "d": "Save shoot prep by turning one product photo into a gift scene while the shipping cutoff is still being confirmed.",
+      "img": "n:guide:fx02-occ-holidays-benefit-lipstick",
+      "alt": "Adult hands lift a lipstick tube from a cream gift box."
     },
     {
       "t": "Show the gift before you ship it",
-      "d": "Help shoppers picture the wrapped item with a seasonal scene before you prepare a set."
+      "d": "Help shoppers picture the wrapped item with a seasonal scene before you prepare a set.",
+      "img": "n:guide:fx02-occ-holidays-benefit-jacket",
+      "alt": "Adult creator holds a wool winter jacket beside a gift box."
     },
     {
       "t": "Change cutoffs without a reshoot",
-      "d": "Add shipping cutoffs, prices and codes after download, so late details do not force a new shoot."
+      "d": "Add shipping cutoffs, prices and codes after download, so late details do not force a new shoot.",
+      "img": "n:guide:fx02-occ-holidays-benefit-shipping",
+      "alt": "Adult hands tie ribbon around a plain parcel beside a jar."
     },
     {
       "t": "Skip set costs for seasonal ads",
-      "d": "Create the holiday scene without decorating a room or booking a creator."
+      "d": "Create the holiday scene without decorating a room or booking a creator.",
+      "img": "n:guide:fx02-occ-holidays-benefit-guide",
+      "alt": "Adult hands arrange a jar, tube and scarf gift guide set."
     }
   ],
   "steps_h2": "How to Create Holiday Ad Photos and Videos in 3 Simple Steps",

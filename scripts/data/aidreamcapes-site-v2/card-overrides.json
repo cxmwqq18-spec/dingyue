@@ -325,8 +325,8 @@
     },
     "images": {
       "sale": {
-        "ref": "n:guide:q20-occ-bf-override-sale",
-        "alt": "Adult creator opens a plain bath gift bundle and lifts a skincare bottle to camera."
+        "ref": "n:guide:fx02-occ-bf-replace",
+        "alt": "Adult woman opens a plain gift box with a pump bottle and mug for a Black Friday ad."
       },
       "creator": {
         "ref": "n:guide:q20-occ-bf-override-creator",
@@ -340,8 +340,8 @@
     },
     "images": {
       "bf": {
-        "ref": "n:guide:q20-occ-holidays-bf-card",
-        "alt": "Adult creator opens a plain skincare gift set and speaks to camera."
+        "ref": "n:guide:fx02-occ-holidays-replace",
+        "alt": "Adult model opens a plain cream gift box for a holiday ad."
       },
       "ugc": {
         "ref": "n:guide:q20-occ-holiday-override-ugc",

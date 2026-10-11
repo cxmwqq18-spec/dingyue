@@ -123,13 +123,75 @@
     "picker": {
       "title": "Choose a Black Friday ad creative scene",
       "lead": "Show the product in a sale moment, then add the confirmed offer after download.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "gift-reveal",
+          "label": "Gift reveal"
+        },
+        {
+          "id": "sale-demo",
+          "label": "Sale demo"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:fx02-occ-bf-picker-gift",
+          "label": "Gift Reveal Product Bundle",
+          "chips": [
+            "gift-reveal"
+          ],
+          "prompt": "Use the uploaded product photo as the product. Adult hands reveal it from cream tissue in a kraft gift box, warm neutral light, with clear space for the Black Friday offer added after download. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx02-occ-bf-picker-demo",
+          "label": "Deal-Day Product Demo",
+          "chips": [
+            "sale-demo"
+          ],
+          "prompt": "Use the uploaded product photo as the product. An adult hand demonstrates it smoothing a folded shirt in warm sale-season light, with clear space for the Black Friday offer added after download. No text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx02-occ-bf-picker-phone",
+          "label": "Phone-First Sale Post",
+          "chips": [
+            "gift-reveal",
+            "sale-demo"
+          ],
+          "prompt": "Use the uploaded product photo as the product. An adult hand holds it beside a plain parcel in a phone-first feed composition, with clear space for the Black Friday offer added after download. No text or logos.",
+          "kind": "photo"
+        }
+      ],
       "button": "Make a Black Friday sale photo"
     },
     "uses": [],
-    "input": [],
-    "outputs": [],
+    "input": [
+      {
+        "good": "n:guide:fx02-occ-bf-good-a",
+        "bad": "n:guide:fx02-occ-bf-bad-a",
+        "good_label": "Good product photo",
+        "bad_label": "Crop and low-light issue"
+      },
+      {
+        "good": "n:guide:fx02-occ-bf-good-b",
+        "bad": "n:guide:fx02-occ-bf-bad-b",
+        "good_label": "Good product photo",
+        "bad_label": "Blur and crop issue"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:fx02-occ-bf-output-a",
+        "frame": "1:1",
+        "label": "Deal-day packing scene"
+      },
+      {
+        "ref": "n:guide:fx02-occ-bf-output-b",
+        "frame": "1:1",
+        "label": "Gift reveal with offer space"
+      }
+    ],
     "after": null,
     "titles": {
       "m2": {
@@ -147,19 +209,27 @@
   "benefits": [
     {
       "t": "Start your sale scene sooner",
-      "d": "Save rework by building the product scene while the Black Friday deal is still being confirmed."
+      "d": "Save rework by building the product scene while the Black Friday deal is still being confirmed.",
+      "img": "n:guide:fx02-occ-bf-benefit-gift",
+      "alt": "Adult hands lift a pump bottle from a kraft gift box for a Black Friday ad."
     },
     {
       "t": "Get more versions from one photo",
-      "d": "Turn one product photo into a square post or phone-first version without booking another shoot."
+      "d": "Turn one product photo into a square post or phone-first version without booking another shoot.",
+      "img": "n:guide:fx02-occ-bf-benefit-shoe",
+      "alt": "Adult creator holds a plain knit slip-on shoe toward camera in a deal-day demo."
     },
     {
       "t": "Change deal details without a reshoot",
-      "d": "Add the discount, code and end date after download, so late changes do not send you back to production."
+      "d": "Add the discount, code and end date after download, so late changes do not send you back to production.",
+      "img": "n:guide:fx02-occ-bf-benefit-lunch",
+      "alt": "Adult hands place an insulated lunch bag into a kraft shipping box."
     },
     {
       "t": "Skip creator and studio costs",
-      "d": "Use the downloaded sale scene in your posts and paid campaigns with no casting, studio or shoot."
+      "d": "Use the downloaded sale scene in your posts and paid campaigns with no casting, studio or shoot.",
+      "img": "n:guide:fx02-occ-bf-benefit-pet",
+      "alt": "Adult hand uses a pet-hair roller beside a calm dog on a sofa."
     }
   ],
   "steps_h2": "How to Create Black Friday Ad Creatives in 3 Simple Steps",
