@@ -82,6 +82,12 @@ export type V2GlossaryEntry = { term: string; definition: string; related: { lab
 export type V2SpecRow = [label: string, value: string, links?: { label: string; href: string }[]];
 export type V2DirectorySpecs = { title: string; lead?: string; columns: string[]; rows: string[][] };
 export type V2DirectoryScene = { t: string; d: string; href?: string; image?: V2Image };
+// Page-owned text blocks used for competitor parity: a plain definition and a
+// three-column comparison table. Neither carries images or internal metadata.
+export type V2Definition = { title: string; paras: string[] };
+export type V2CompareTable = { title: string; lead?: string; columns: string[]; rows: string[][] };
+export type V2TextSectionCard = { t: string; d: string; href?: string; label?: string };
+export type V2TextSection = { eyebrow: string; title: string; lead?: string; cards: V2TextSectionCard[] };
 export type V2Article = { title: string; href: string; text: string; minutes: number; section: string };
 
 export type V2Base = {
