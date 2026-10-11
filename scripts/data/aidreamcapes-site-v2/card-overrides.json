@@ -176,8 +176,8 @@
         "alt": "Small pendant resting on an open palm."
       },
       "detail": {
-        "ref": "n:gen2:unboxing-videos-g4",
-        "alt": "Small jewelry box opened to reveal a gold ring on velvet."
+        "ref": "n:guide:fx31-ind-jewelry-card-detail",
+        "alt": "Plain silver pendant necklace on linen in a sharp close-up."
       }
     }
   },
@@ -356,8 +356,16 @@
         "alt": "Hand picking up a compact speaker from a desk beside a laptop."
       },
       "howto": {
-        "ref": "n:guide:q16-electronics-charging-pad-demo",
-        "alt": "Adult hand setting a plain graphite phone onto a charcoal wireless charging pad."
+        "ref": "n:guide:fx31-ind-electronics-card-howto",
+        "alt": "Adult hands connect a plain braided cable to a compact matte-black charging hub."
+      },
+      "angle": {
+        "ref": "n:guide:fx31-ind-electronics-card-angle",
+        "alt": "Four views of the same compact matte-graphite gadget on a neutral studio desk."
+      },
+      "bf": {
+        "ref": "n:guide:fx31-ind-electronics-card-black-friday",
+        "alt": "Compact matte-graphite countertop appliance on a warm wood table with an adult hand at its control."
       }
     }
   },

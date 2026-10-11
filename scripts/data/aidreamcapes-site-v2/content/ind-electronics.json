@@ -49,15 +49,21 @@
   "benefits": [
     {
       "t": "New gadget ad in minutes",
-      "d": "Skip creator outreach and a studio day. Start with one clear product photo and get a usable scene ready in minutes while the feature is still fresh."
+      "d": "Skip creator outreach and a studio day. Start with one clear product photo and get a usable scene ready in minutes while the feature is still fresh.",
+      "img": "n:guide:fx31-ind-electronics-benefit-speaker",
+      "alt": "Adult hand setting up a compact matte-graphite rectangular speaker on a wooden desk."
     },
     {
       "t": "More angles at a lower cost",
-      "d": "One photo costs far less than creator fees, crew time and a studio. Run the same gadget through an unboxing, setup and travel moment without paying to reshoot each one."
+      "d": "One photo costs far less than creator fees, crew time and a studio. Run the same gadget through an unboxing, setup and travel moment without paying to reshoot each one.",
+      "img": "n:guide:fx31-ind-electronics-benefit-cable",
+      "alt": "Adult hand connecting a plain braided cable to a compact matte-black charging hub."
     },
     {
       "t": "Keep every spec in your hands",
-      "d": "Choose the scene and action yourself, then add exact battery, wattage and compatibility details in the listing or editor."
+      "d": "Choose the scene and action yourself, then add exact battery, wattage and compatibility details in the listing or editor.",
+      "img": "n:guide:fx31-ind-electronics-benefit-ports",
+      "alt": "Adult fingers holding a compact matte-graphite gadget to show its ports and controls."
     }
   ],
   "steps_h2": "How to Make AI Product Videos for Electronics in 3 Simple Steps",
@@ -160,6 +166,37 @@
         {
           "t": "Facebook feeds",
           "d": "Use a square or feed-ready [Facebook ad](page:plat-facebook) when shoppers need a clear product detail before they click."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Tools that fit",
+      "h2": "Tools That Fit Electronics Ads",
+      "lead": "Choose the format that shows a gadget clearly in a listing or feed.",
+      "items": [
+        {
+          "t": "Product Videos",
+          "d": "Show one useful device action with [Product Videos](page:product-videos).",
+          "img": "n:guide:fx31-ind-electronics-tool-product",
+          "alt": "Adult hand pressing a tactile control on a compact matte-graphite speaker."
+        },
+        {
+          "t": "Unboxing Videos",
+          "d": "Open the package and reveal the device with [Unboxing Videos](page:unboxing-videos).",
+          "img": "n:guide:fx31-ind-electronics-tool-unbox",
+          "alt": "Adult hands lifting a compact matte-black charging hub from a plain kraft box."
+        },
+        {
+          "t": "White Background Photos",
+          "d": "Keep the product shape clear for [White Background Photos](page:white-background).",
+          "img": "n:guide:fx31-ind-electronics-tool-white",
+          "alt": "Compact matte-black charging hub and plain braided cable on a white background."
+        },
+        {
+          "t": "Video Ads",
+          "d": "Turn a product detail into a feed-ready scene with [Video Ads](page:video-ads).",
+          "img": "n:guide:fx31-ind-electronics-tool-video-ad",
+          "alt": "Adult holding a compact matte-graphite gadget beside their cheek in daylight."
         }
       ]
     }

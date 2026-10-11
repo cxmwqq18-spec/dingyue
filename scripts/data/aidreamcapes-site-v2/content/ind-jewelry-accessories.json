@@ -53,15 +53,21 @@
   "benefits": [
     {
       "t": "Faster, lower-cost production",
-      "d": "Create macro and worn scenes from one product photo. Skip model casting, studio rental, and a new shoot for every piece."
+      "d": "Create macro and worn scenes from one product photo. Skip model casting, studio rental, and a new shoot for every piece.",
+      "img": "n:guide:fx31-ind-jewelry-benefit-macro",
+      "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
     },
     {
       "t": "More views from one piece",
-      "d": "Show one item in close detail, a try-on, a gift scene, and a daily-carry moment while the piece stays recognizable."
+      "d": "Show one item in close detail, a try-on, a gift scene, and a daily-carry moment while the piece stays recognizable.",
+      "img": "n:guide:fx31-ind-jewelry-benefit-watch",
+      "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
     },
     {
       "t": "Make scale easy to judge",
-      "d": "A close view shows finish, setting, and scale beside a familiar object. Exact measurements and materials stay in the listing."
+      "d": "A close view shows finish, setting, and scale beside a familiar object. Exact measurements and materials stay in the listing.",
+      "img": "n:guide:fx31-ind-jewelry-benefit-bag",
+      "alt": "Adult hand carrying a plain brown leather shoulder bag outdoors."
     }
   ],
   "steps_h2": "How to Make AI Jewelry Product Photos in 3 Simple Steps",
@@ -138,5 +144,59 @@
     "photo-hub",
     "white-background",
     "templates"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Where the files go",
+      "h2": "Post Jewelry Ads Where Shoppers Find Them",
+      "lead": "Use the same product photo process for a listing page or a social feed, then add your approved offer details.",
+      "items": [
+        {
+          "t": "Amazon listings",
+          "d": "Use a clear accessory view on your [Amazon product page](page:plat-amazon), then add the exact material and size details."
+        },
+        {
+          "t": "Shopify product pages",
+          "d": "Place a worn or tabletop detail beside your product media on [Shopify](page:plat-shopify), keeping the jewelry and specs consistent."
+        },
+        {
+          "t": "TikTok feeds",
+          "d": "Use a quick try-on or unboxing in a vertical [TikTok ad](page:plat-tiktok) and add the offer in your editor."
+        },
+        {
+          "t": "Instagram Reels",
+          "d": "Turn a clasp, texture, or neckline detail into a vertical [Instagram Reel](page:plat-instagram) for a launch or restock."
+        },
+        {
+          "t": "Facebook feeds",
+          "d": "Use a square or feed-ready [Facebook ad](page:plat-facebook) when shoppers need a clear jewelry detail before they click."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Tools that fit",
+      "h2": "Tools That Fit Jewelry Listings",
+      "lead": "Pick the visual tool that matches the next view shoppers need.",
+      "items": [
+        {
+          "t": "Model Photos",
+          "d": "Show a pendant worn at the neckline with [Model Photos](page:model-photos).",
+          "img": "n:guide:fx31-ind-jewelry-tool-model",
+          "alt": "Adult wearing a plain silver pendant over a neutral crew-neck top."
+        },
+        {
+          "t": "Product Photos",
+          "d": "Create a sharp accessory detail with [Product Photos](page:photo-hub).",
+          "img": "n:guide:fx31-ind-jewelry-tool-product",
+          "alt": "Plain silver bracelet arranged on natural linen in a clean product photo."
+        },
+        {
+          "t": "White Background Photos",
+          "d": "Keep a belt or scarf clear for a listing with [White Background Photos](page:white-background).",
+          "img": "n:guide:fx31-ind-jewelry-tool-white",
+          "alt": "Plain tan leather belt laid in a gentle curve on a white background."
+        }
+      ]
+    }
   ]
 }

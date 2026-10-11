@@ -47787,6 +47787,196 @@
           1280,
           1600
         ]
+      },
+      "fx31-ind-jewelry-benefit-macro": {
+        "file": "fx31-ind-jewelry-benefit-macro",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain silver pendant necklace resting on natural linen in a close macro view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-jewelry-benefit-watch": {
+        "file": "fx31-ind-jewelry-benefit-watch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-jewelry-benefit-bag": {
+        "file": "fx31-ind-jewelry-benefit-bag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand carrying a plain brown leather shoulder bag outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-jewelry-card-pendant": {
+        "file": "fx31-ind-jewelry-card-pendant",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain silver pendant necklace on linen beside a small gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-jewelry-tool-model": {
+        "file": "fx31-ind-jewelry-tool-model",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a plain silver pendant over a neutral crew-neck top.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-jewelry-tool-product": {
+        "file": "fx31-ind-jewelry-tool-product",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain silver bracelet arranged on natural linen in a clean product photo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-jewelry-tool-white": {
+        "file": "fx31-ind-jewelry-tool-white",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain tan leather belt laid in a gentle curve on a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-benefit-speaker": {
+        "file": "fx31-ind-electronics-benefit-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand setting up a compact matte-graphite rectangular speaker on a wooden desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-benefit-cable": {
+        "file": "fx31-ind-electronics-benefit-cable",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand connecting a plain braided cable to a compact matte-black charging hub.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-benefit-ports": {
+        "file": "fx31-ind-electronics-benefit-ports",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult fingers holding a compact matte-graphite gadget to show its ports and controls.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-card-angle": {
+        "file": "fx31-ind-electronics-card-angle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four views of the same compact matte-graphite gadget on a neutral studio desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-tool-product": {
+        "file": "fx31-ind-electronics-tool-product",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand pressing a tactile control on a compact matte-graphite speaker.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-tool-unbox": {
+        "file": "fx31-ind-electronics-tool-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lifting a compact matte-black charging hub from a plain kraft box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-tool-white": {
+        "file": "fx31-ind-electronics-tool-white",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact matte-black charging hub and plain braided cable on a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-tool-video-ad": {
+        "file": "fx31-ind-electronics-tool-video-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holding a compact matte-graphite gadget beside their cheek in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-card-black-friday": {
+        "file": "fx31-ind-electronics-card-black-friday",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact matte-graphite countertop appliance on a warm wood table with an adult hand at its control.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-jewelry-card-detail": {
+        "file": "fx31-ind-jewelry-card-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain silver pendant necklace on linen in a sharp close-up.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-case-control": {
+        "file": "fx31-ind-electronics-case-control",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand pressing a tactile control on a compact matte-graphite electronics hub.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx31-ind-electronics-card-howto": {
+        "file": "fx31-ind-electronics-card-howto",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands connect a plain braided cable to a compact matte-black charging hub.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

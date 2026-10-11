@@ -884,9 +884,9 @@
     ],
     "ind-jewelry-accessories": [
       {
-        "ref": "n:guide:rb2-ind-jewelry-accessories-case-earrings-r1",
-        "product": "gold hoop earrings",
-        "title": "Try-on: Gold hoops before the mirror"
+        "ref": "n:guide:fx31-ind-jewelry-card-pendant",
+        "product": "silver pendant necklace",
+        "title": "Macro: Silver pendant detail"
       },
       {
         "ref": "n:gen2:ind-jewelry-accessories-c2",
@@ -906,9 +906,9 @@
     ],
     "ind-electronics": [
       {
-        "ref": "trending-audio-sync",
-        "product": "transparent synth",
-        "title": "Hand demo: Synth pad lights up"
+        "ref": "n:guide:fx31-ind-electronics-case-control",
+        "product": "compact electronics control hub",
+        "title": "Desk demo: Compact device control"
       },
       {
         "ref": "n:gen2:ind-electronics-5",
