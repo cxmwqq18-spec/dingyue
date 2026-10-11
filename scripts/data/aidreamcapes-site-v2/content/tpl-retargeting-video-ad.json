@@ -1,27 +1,27 @@
 {
   "id": "tpl-retargeting-video-ad",
   "title": "Retargeting Video Ad Template | AIVideosUGC",
-  "description": "Bring viewed products back with a retargeting video from one photo. Add your offer, audience and frequency in your ad platform.",
-  "h1": "Retargeting Video Ads for a Second Look",
+  "description": "Bring viewed products back with a retargeting video from one photo. Show a clear detail, add a confirmed offer after download, and post where they shop.",
+  "h1": "Give Viewed Products a Fresh Reason to Return",
   "eyebrow": "Retargeting video template",
-  "lead": "Bring a viewed product back with a fresh second-look clip, without a second shoot. Upload one product photo and show the detail a returning buyer is still weighing.",
-  "benefits_h2": "Why Make Retargeting Video Ads From One Photo?",
+  "lead": "Turn one product photo into a retargeting video ad that gives returning shoppers a clear reason to look again.",
+  "benefits_h2": "Make the retargeting video ad result clear",
   "benefits": [
     {
-      "t": "Bring back the detail",
-      "d": "Give returning shoppers a new reason to look without a new shoot. Show one detail they are still weighing instead of repeating the same product shot, such as a cushion, pocket or seam."
+      "t": "Show the detail they missed",
+      "d": "Bring a viewed product back with one useful detail in focus. Show a seam, pocket, finish or everyday use moment instead of repeating the same product shot."
     },
     {
-      "t": "Test new creative for credits",
-      "d": "Test another angle for the same production credits. Make a routine version and a close-detail version from one photo, then see which earns the second look."
+      "t": "Test another angle quickly",
+      "d": "Create a routine version and a close-detail version from the source photo. Compare the creative in your campaign without booking another shoot."
     },
     {
-      "t": "Fit every remarketing format",
-      "d": "Reuse the same story in feed and Reels formats. Use 1:1 in feed formats and 9:16 in Reels, with clips at 6, 10, 15 or 30 seconds."
+      "t": "Fit the feed you buy",
+      "d": "Prepare a clear product moment for feed or Reels. Use 1:1 for feed or 9:16 for Reels, then choose 6, 10, 15 or 30 seconds for the story."
     },
     {
-      "t": "Keep audience data in your platform",
-      "d": "Keep audience rules and budget in your platform instead of rebuilding the clip. Set the audience, offer and frequency there; the clip carries no watermark."
+      "t": "Keep live details editable",
+      "d": "Add the confirmed offer, price, date or product link after download. Your audience rules and frequency stay in the ad platform where the campaign runs."
     }
   ],
   "secondary_keywords": [
@@ -31,19 +31,19 @@
     "retargeting creative"
   ],
   "steps_h2": "How to Make a Retargeting Video Ad in 3 Simple Steps",
-  "steps_lead": "One product photo becomes a second-look clip, with no second shoot and no new audience data.",
+  "steps_lead": "Turn one source photo into a focused second look, then add campaign details after download.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Use a clear image that shows the product shape and one detail worth revisiting."
+      "t": "Upload Your Product",
+      "d": "Add a clear source photo with the full product visible. Keep the detail to revisit in frame."
     },
     {
-      "t": "Describe the Second Look",
-      "d": "Share one short moment, such as inspecting the ear cups before putting the headphones away."
+      "t": "Pick a Scene",
+      "d": "Choose one focused second look, such as a seam, pocket or use moment. Keep the product as the subject."
     },
     {
       "t": "Download and Post",
-      "d": "Add your offer and product page, then choose visitors, cart users and frequency in your ad platform."
+      "d": "Download the result, then add your confirmed offer or link in your editor. Set audience and frequency in your ad platform."
     }
   ],
   "maker": {
@@ -65,28 +65,48 @@
   },
   "faq": [
     {
+      "q": "What is a retargeting video ad?",
+      "a": "It is a new product creative for shoppers who have already seen an item. Set the audience, offer and frequency in your ad platform."
+    },
+    {
       "q": "Does AIVideosUGC choose my retargeting audience?",
       "a": "No. Choose visitors, cart users, exclusions, budget and frequency in your ad platform."
     },
     {
-      "q": "Can the video say someone viewed a product or left a cart?",
-      "a": "No. The clip does not know a viewer's history. Keep claims about browsing or cart activity out of the scene."
+      "q": "Can the video know that someone viewed a product or left a cart?",
+      "a": "No. The clip does not receive a viewer history. Keep browsing or cart claims out of the scene unless your ad platform supplies them."
     },
     {
-      "q": "Will the video add my offer or price?",
-      "a": "No. Add the current offer, price and dates in your editor or ad platform."
+      "q": "What photo should I upload?",
+      "a": "Upload one clear photo that shows the complete product and the detail you want shoppers to revisit."
     },
     {
-      "q": "Who sees the retargeting ad?",
-      "a": "Your ad platform matches the audience you configure to each impression. The video only supplies the creative."
+      "q": "What result does this template show?",
+      "a": "It shows one focused product moment, such as a feature close-up, routine use or a return-to-cart reminder."
     },
     {
-      "q": "What length should I use?",
-      "a": "A 6- or 10-second reminder fits cart audiences, while a 15- or 30-second clip can answer a hesitancy in full."
+      "q": "Which length or format should I choose?",
+      "a": "Choose 6, 10, 15 or 30 seconds. Use 1:1 for feed or 9:16 for Reels when those formats match your campaign."
+    },
+    {
+      "q": "Can I change details after download?",
+      "a": "Yes. Add the confirmed price, offer, date or product link in your editor or ad platform after the scene is ready."
+    },
+    {
+      "q": "Do I need a shoot day?",
+      "a": "No. Start with one product photo, choose a scene and review the generated result before posting."
+    },
+    {
+      "q": "Where can I use the clip?",
+      "a": "Use it as creative in a retargeting campaign, feed post or Reels ad. Configure targeting and destination in the platform where you buy media."
     },
     {
       "q": "How much do the videos cost?",
-      "a": "Clips cost 24, 40, 60 or 120 credits at 6, 10, 15 or 30 seconds, and you see the charge before you start."
+      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, and you see the charge before you start."
+    },
+    {
+      "q": "Can I test more than one second look?",
+      "a": "Yes. Create another scene from the source photo and compare the versions in your ad platform without reshooting."
     }
   ],
   "visual": {
@@ -569,5 +589,19 @@
         "h2": "More retargeting video templates"
       }
     }
-  }
+  },
+  "cta_title": "Give Viewed Products a Fresh Reason to Return",
+  "cta_lead": "Upload one product photo, see the credit cost first and prepare a retargeting video for your next campaign.",
+  "relatedLinks": [
+    "video-ads",
+    "product-videos",
+    "image-to-video",
+    "url-to-video",
+    "tpl-compare",
+    "tpl-howto",
+    "plat-tiktok",
+    "plat-instagram",
+    "ind-electronics",
+    "templates"
+  ]
 }
