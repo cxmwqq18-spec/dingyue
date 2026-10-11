@@ -13202,6 +13202,16 @@
         640,
         1280
       ]
+    },
+    "gen2:rb2-ind-fashion-clothing-case-skirt-r2": {
+      "w": 1280,
+      "h": 1707,
+      "alt": "Adult model wears a pale blue pleated skirt with a short straight red bob on a sunny sidewalk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
     }
   },
   "guide": {
@@ -43150,6 +43160,39 @@
         "w": 1254,
         "h": 1254,
         "alt": "Plain white trail-running shoe on a pale studio background, with white mesh, laces and lugged sole.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rb2-ind-fashion-clothing-strip-2-r2": {
+        "file": "rb2-ind-fashion-clothing-strip-2-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model in a blue denim jacket with a short straight golden-blonde bob in a neutral studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rb2-ind-fashion-clothing-case-cardigan-r2": {
+        "file": "rb2-ind-fashion-clothing-case-cardigan-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model in a cream knit cardigan with a short straight platinum-blonde bob in a bright home interior.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rb2-ind-fashion-clothing-case-jeans-r2": {
+        "file": "rb2-ind-fashion-clothing-case-jeans-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wears mid-blue jeans with rolled cuffs; the full-body panel has a short straight silver-gray bob.",
         "variants": [
           640,
           1280

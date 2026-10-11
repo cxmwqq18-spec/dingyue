@@ -5,7 +5,7 @@
   "h1": "Make Shoe UGC Ads That Show the Pair in Motion",
   "eyebrow": "Shoe UGC ads",
   "lead": "Show shoppers how the pair looks on foot. Turn one clear shoe photo into an on-foot demo, unboxing, fit check, or creator-style shoe UGC ad.",
-  "card": "Shoe UGC ads for on-foot demos, unboxings, fit checks, and reviews.",
+  "card": "On-foot demos, shoe unboxings, creator reviews, and wear-test scenes for footwear ads.",
   "secondary_keywords": [
     "sneaker product photos",
     "shoe color option photos",
@@ -44,7 +44,7 @@
     },
     {
       "q": "Can I run the clips as paid footwear ads?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product videos. Keep comfort and performance claims to verified facts, and pass the platform's ad review."
+      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product videos. Keep comfort and performance claims to product facts, and pass the platform's ad review."
     },
     {
       "q": "Is an AI on-foot clip different from hiring a UGC creator?",
@@ -53,11 +53,11 @@
   ],
   "templates_lead": "Choose a shoe UGC ad format for an on-foot demo, unboxing, wear test, or creator review.",
   "cta_lead": "Upload one shoe photo, choose a scene, and review the pair before posting.",
-  "benefits_h2": "Why Shoe UGC Ads Skip a New Shoot",
+  "benefits_h2": "Why AI Shoe UGC Ads Skip a New Shoot",
   "benefits": [
     {
-      "t": "New shoe ads without a shoot",
-      "d": "Start with one shoe photo and make an on-foot demo or creator review without booking talent, a studio, or another shoot."
+      "t": "Faster, lower-cost production",
+      "d": "Create an on-foot demo or creator review from one shoe photo. Skip talent booking, studio rental, and a new shoot for every pair."
     },
     {
       "t": "More angles from one pair",
@@ -68,7 +68,7 @@
       "d": "An on-foot moment shows profile, collar, and visible construction so shoppers can judge the pair before they buy."
     }
   ],
-  "steps_h2": "How to Make Shoe UGC Ads in 3 Simple Steps",
+  "steps_h2": "How to Make AI Shoe UGC Ads in 3 Simple Steps",
   "steps_lead": "Turn one clear shoe photo into a short, ready-to-post footwear ad.",
   "steps": [
     {
@@ -81,11 +81,11 @@
     },
     {
       "t": "Download and Post",
-      "d": "Compare the clip with the real pair, then add price and verified product details in your editor before posting."
+      "d": "Compare the clip with the real pair and save it. Add price and claims in your editor, then publish the ad."
     }
   ],
   "visual": {
-    "overview": "Show footwear through on-foot demos, unboxings, fit checks, wear-test actions, creator reviews, and close details. Keep claims tied to verified product information.",
+    "overview": "Show footwear through on-foot demos, unboxings, fit checks, wear-test actions, creator reviews, and close details. Keep claims tied to product information.",
     "strip": [
       "n:guide:q15-shoes-strip-0",
       "n:guide:q15-shoes-strip-1",
@@ -122,25 +122,13 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Create Shoe UGC Ads From a Product Photo"
+        "h2": "Create a footwear ad from a product photo"
       },
       "m3": {
-        "h2": "Choose a Shoe UGC Ad Format"
-      },
-      "m4": {
-        "h2": "Put Shoe UGC Ads to Work Across Channels"
-      },
-      "m5": {
-        "h2": "Start Shoe UGC Ads With a Clear Product Photo"
-      },
-      "m6": {
-        "h2": "See the Shoe UGC Ad Format Before You Post"
-      },
-      "m7": {
-        "h2": "Add Details to Your Shoe UGC Ad After Download"
+        "h2": "Choose a footwear ad format"
       },
       "faq": {
-        "h2": "Questions About Shoe UGC Ads"
+        "h2": "Questions About AI Shoe UGC Ads"
       }
     }
   }

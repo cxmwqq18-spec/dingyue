@@ -850,17 +850,17 @@
     ],
     "ind-fashion-clothing": [
       {
-        "ref": "n:guide:q15-fashion-case1-knit-cardigan",
+        "ref": "n:guide:rb2-ind-fashion-clothing-case-cardigan-r2",
         "product": "knit cardigan",
         "title": "Knit cardigan: buttoned fit check"
       },
       {
-        "ref": "n:gen2:ind-fashion-clothing-c3",
+        "ref": "n:gen2:rb2-ind-fashion-clothing-case-skirt-r2",
         "product": "pleated skirt",
         "title": "Pleated skirt worn on a sunny sidewalk"
       },
       {
-        "ref": "n:guide:q15-fashion-case3-denim-jeans",
+        "ref": "n:guide:rb2-ind-fashion-clothing-case-jeans-r2",
         "product": "denim jeans",
         "title": "Denim jeans: waist and cuff fit check"
       }

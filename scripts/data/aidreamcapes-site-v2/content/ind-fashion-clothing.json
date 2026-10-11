@@ -1,10 +1,10 @@
 {
   "id": "ind-fashion-clothing",
   "title": "AI Fashion Video Ads From a Garment Photo | AIVideosUGC",
-  "description": "Turn one garment photo into fashion video ads for try-ons, fit checks, and reviews. Make watermark-free clips for social and product pages.",
+  "description": "Turn one garment photo into try-on, fit-check and review video ads for clothing brands. Produce watermark-free clips quickly on a studio-free budget.",
   "h1": "Make AI Fashion Video Ads That Show the Fit",
   "eyebrow": "Fashion video ads",
-  "lead": "AI model photos and videos for fashion brands help shoppers picture the fit before they order. Turn one garment photo into a try-on, fit check, or creator-style fashion video ad for social and product pages.",
+  "lead": "Turn a flat garment photo into a styled try-on, fit check or creator review. Ready in minutes with AI, for streetwear, luxury and everyday brands.",
   "card": "Fashion video ads for try-ons, fit checks, lookbooks, and reviews.",
   "secondary_keywords": [
     "AI on-model clothing photos",
@@ -18,10 +18,6 @@
     "Build fashion video ads for try-ons, fit checks, lookbooks, and creator reviews. Keep measurements, fabric, and closures aligned with the real garment."
   ],
   "faq": [
-    {
-      "q": "Can I make fashion video ads from a flat garment photo?",
-      "a": "Yes. Lay the garment flat or hang it on a plain wall, smooth out wrinkles, and photograph the whole piece in even light. Then describe the person and setting you want to show."
-    },
     {
       "q": "Can I turn a photo of a garment laid flat into an on-model photo?",
       "a": "Yes. Lay the garment flat or hang it on a plain wall, smooth out the wrinkles, and photograph the whole piece in even light. Then describe the person and setting, for example \"full-length, standing in a bright studio.\""
@@ -61,10 +57,10 @@
   ],
   "templates_lead": "Choose a fashion video ad format for try-ons, fit checks, creator reviews, or fabric details.",
   "cta_lead": "Upload one garment photo, choose a scene, and review the fit before posting.",
-  "benefits_h2": "Why Fashion Video Ads Skip the Studio Day",
+  "benefits_h2": "Why AI Fashion Video Ads Skip the Studio Day",
   "benefits": [
     {
-      "t": "New try-ons without a studio day",
+      "t": "No casting or studio",
       "d": "Start with one garment photo and show it on an adult model without casting, booking, or reshooting each style."
     },
     {
@@ -76,8 +72,8 @@
       "d": "Test a try-on, lookbook, fit check, and creator review while the garment stays recognizable."
     }
   ],
-  "steps_h2": "How to Make Fashion Video Ads in 3 Simple Steps",
-  "steps_lead": "Turn one clear garment photo into a short, ready-to-post fashion ad.",
+  "steps_h2": "How to Make AI Fashion Video Ads in 3 Simple Steps",
+  "steps_lead": "Three steps turn one garment photo into a ready-to-post on-model clip — no casting, no studio, no reshoots.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
@@ -89,7 +85,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Compare the clip with the garment, then add price and size details in your editor before posting."
+      "d": "Compare the clip with the garment and save it. Add price and details in your editor, then publish it to your feed or ad."
     }
   ],
   "visual": {
@@ -97,7 +93,7 @@
     "strip": [
       "n:guide:rb2-ind-fashion-clothing-strip-1-r1",
       "n:guide:ind-fashion-clothing-m2-result",
-      "n:guide:k7-ind-fashion-clothing-strip-2-n-gen2-tpl-tryon-c1",
+      "n:guide:rb2-ind-fashion-clothing-strip-2-r2",
       "n:guide:k7-ind-fashion-clothing-strip-3-n-gen2-tpl-tryon-c2",
       "n:guide:rb2-ind-fashion-clothing-strip-5-r1",
       "n:guide:q15-fashion-strip-5"
@@ -123,29 +119,29 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Create Fashion Video Ads From a Garment Photo"
+        "h2": "Create a fashion ad from a garment photo"
       },
       "m3": {
-        "h2": "Choose a Fashion Video Ad Format"
+        "h2": "Choose a fashion ad format"
       },
       "m4": {
-        "h2": "Put Fashion Video Ads to Work Across Channels"
+        "h2": "Use fashion ads in product and social campaigns"
       },
       "m5": {
-        "h2": "Start Fashion Video Ads With a Clear Garment Photo"
+        "h2": "Start with a clear garment photo"
       },
       "m6": {
-        "h2": "See the Fashion Video Ad Format Before You Post"
+        "h2": "Square 1:1 clothing videos for product pages"
       },
       "m7": {
-        "h2": "Add Details to Your Fashion Video Ad After Download"
+        "h2": "Add size and fit details after download"
+      },
+      "faq": {
+        "h2": "Questions About AI Fashion Video Ads"
       },
       "examples": {
         "h2": "More Fashion Video Ad Scenes",
         "lead": "Try-ons, fit checks, fabric details, and creator reviews for clothing campaigns."
-      },
-      "faq": {
-        "h2": "Questions About Fashion Video Ads"
       }
     }
   }

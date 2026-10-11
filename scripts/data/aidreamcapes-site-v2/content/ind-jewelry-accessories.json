@@ -4,7 +4,7 @@
   "description": "Turn one jewelry photo into macro details, worn try-ons, and gift scenes. Make watermark-free images for listings, social posts, and ads.",
   "h1": "Make Jewelry Product Photos That Show Scale and Detail",
   "eyebrow": "Jewelry product photos",
-  "lead": "Help shoppers judge small pieces before they buy. Turn one clear jewelry photo into a macro detail, worn try-on, or styled gift scene.",
+  "lead": "Small pieces are hard to judge on a white card. Turn one jewelry photo into a macro detail or worn scene that shows finish, scale, and where the piece sits.",
   "card": "Jewelry product photos for close-up detail, try-ons, and daily styling.",
   "secondary_keywords": [
     "AI jewelry model photos",
@@ -52,12 +52,12 @@
     }
   ],
   "templates_lead": "Choose a jewelry product photo format for close-up detail, a worn try-on, or a gift scene.",
-  "cta_lead": "Upload one jewelry photo, choose a view, and review the result before posting.",
-  "benefits_h2": "Why Jewelry Product Photos Skip a Model Shoot",
+  "cta_lead": "Upload a clear jewelry photo and choose the detail or scale view to review.",
+  "benefits_h2": "Why AI Jewelry Product Photos Skip a Model Shoot",
   "benefits": [
     {
-      "t": "New jewelry images without model booking",
-      "d": "Start with one product photo and make macro or worn scenes without booking a model, studio, or new shoot for every piece."
+      "t": "Faster, lower-cost production",
+      "d": "Create macro and worn scenes from one product photo. Skip model casting, studio rental, and a new shoot for every piece."
     },
     {
       "t": "More views from one piece",
@@ -65,10 +65,10 @@
     },
     {
       "t": "Make scale easy to judge",
-      "d": "Place the piece beside a hand or familiar object so shoppers can judge its size, finish, and setting before they buy."
+      "d": "A close view shows finish, setting, and scale beside a familiar object. Exact measurements and materials stay in the listing."
     }
   ],
-  "steps_h2": "How to Make Jewelry Product Photos in 3 Simple Steps",
+  "steps_h2": "How to Make AI Jewelry Product Photos in 3 Simple Steps",
   "steps_lead": "Turn one clear jewelry photo into a gallery-ready detail or worn scene.",
   "steps": [
     {
@@ -81,7 +81,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Compare the image with the real piece, then add metal, size, and care details in your editor before posting."
+      "d": "Compare the image with the real piece and save it. Add metal, size, and care text in your editor, then publish."
     }
   ],
   "visual": {
@@ -122,25 +122,13 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Create Jewelry Product Photos From One Product Photo"
+        "h2": "Create a jewelry product photo in three steps"
       },
       "m3": {
-        "h2": "Choose a Jewelry Product Photo Format"
-      },
-      "m4": {
-        "h2": "Put Jewelry Product Photos to Work Across Channels"
-      },
-      "m5": {
-        "h2": "Start Jewelry Product Photos With a Clear Product Photo"
-      },
-      "m6": {
-        "h2": "See the Jewelry Product Photo Format Before You Post"
-      },
-      "m7": {
-        "h2": "Add Details to Your Jewelry Product Photo After Download"
+        "h2": "Choose a jewelry ad format that shows detail"
       },
       "faq": {
-        "h2": "Questions About Jewelry Product Photos"
+        "h2": "Questions About AI Jewelry Product Photos"
       }
     }
   }
