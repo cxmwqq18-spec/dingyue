@@ -87,9 +87,9 @@
     ],
     "steps": {
       "source": "f:q8-tpl-light-input-good-01",
-      "result": "n:guide:f15-r2-tpl-light-output-white-mug-r1",
+      "result": "n:guide:f15-r2-tpl-light-output-white-mug-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded plain white ceramic mug as the exact product. Place it beside a bright window with a soft highlight across the glaze while keeping its rim, handle and color unchanged.",
+      "prompt": "Use the uploaded plain white ceramic mug as the exact product. Relight it beside a bright window with warm side light, a defined cast shadow and a clear highlight across the glaze while keeping its rim, handle and color unchanged.",
       "options": [
         [
           "Template",

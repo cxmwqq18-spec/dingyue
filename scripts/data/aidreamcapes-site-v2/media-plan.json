@@ -108,7 +108,7 @@
         "g:bundle-sets/example-05",
         "g:bundle-sets/example-06"
       ],
-      "og": "n:t33-tpl-box-og-r2"
+      "og": "n:t33-tpl-box-og-r3"
     },
     "tpl-pack": {
       "hero": {
@@ -133,7 +133,7 @@
         "after": "g:commercial-lighting/hero-output"
       },
       "gallery": [],
-      "og": "n:t33-tpl-light-og-r2"
+      "og": "n:t33-tpl-light-og-r3"
     },
     "tpl-tryon": {
       "hero": {

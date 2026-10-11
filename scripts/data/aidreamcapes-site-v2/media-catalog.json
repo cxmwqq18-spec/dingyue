@@ -7241,6 +7241,15 @@
         1200
       ]
     },
+    "t33-tpl-box-og-r3": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Plain kraft coffee pouch, black hand grinder and speckled white ceramic mug arranged as a complete kit on a sunlit cafe counter.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex image generation"
+    },
     "t33-tpl-pack-og-r2": {
       "w": 1200,
       "h": 630,
@@ -7256,6 +7265,15 @@
       "variants": [
         1200
       ]
+    },
+    "t33-tpl-light-og-r3": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Plain white ceramic mug in warm side-window light with a clear cast shadow across a pale stone table.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex image generation"
     },
     "t33-tpl-tryon-og-r2": {
       "w": 1200,
@@ -22569,6 +22587,17 @@
           640,
           1280
         ]
+      },
+      "rc2-tpl-box-coffee-result-square-r2": {
+        "file": "rc2-tpl-box-coffee-result-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same plain kraft coffee pouch, black hand grinder and speckled white ceramic mug arranged as a complete kit on a bright wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
       },
       "k1-unboxing-output-wallet": {
         "file": "k1-unboxing-output-wallet",
@@ -41176,6 +41205,17 @@
         ],
         "source": "Codex image generation",
         "file": "f15-r2-tpl-light-output-white-mug-r1"
+      },
+      "f15-r2-tpl-light-output-white-mug-r2": {
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same plain white ceramic mug with warm side-window light, a clear cast shadow and a bright glaze highlight.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation",
+        "file": "f15-r2-tpl-light-output-white-mug-r2"
       },
       "f15-r2-tpl-light-output-sage-mug-r1": {
         "w": 1280,
