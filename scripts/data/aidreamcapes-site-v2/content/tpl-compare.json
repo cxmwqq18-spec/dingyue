@@ -4,8 +4,8 @@
   "description": "Show shoppers the difference between your colors, sizes or sets. One photo of both options becomes a comparison clip for listings, Shorts and paid ads.",
   "h1": "Make a Product Comparison Video of Your Own Options",
   "eyebrow": "Comparison video template",
-  "lead": "When shoppers cannot tell your colors, sizes or sets apart, they leave. Upload one photo of both options and get a comparison clip that makes the choice clear for listings and ads.",
-  "benefits_h2": "Why sellers use comparison videos",
+  "lead": "Help shoppers choose your size, color or set before they leave. Upload one photo of both options and get a comparison clip that makes the difference clear for listings and ads.",
+  "benefits_h2": "Why sellers use product comparison videos",
   "benefits": [
     {
       "t": "Fewer undecided shoppers",
@@ -16,7 +16,7 @@
       "d": "One source photo with both options supplies a shared scale and light. You demonstrate a full range without staging each color or size in front of a camera."
     },
     {
-      "t": "Cut to fit every placement",
+      "t": "Cut for every feed",
       "d": "Choose 1:1 for a product gallery, 16:9 for a description embed or 9:16 for Shorts. Lengths run 6, 10, 15 or 30 seconds, so a simple pair and a detailed feature walkthrough both fit."
     },
     {
@@ -30,20 +30,20 @@
     "color options video",
     "product size comparison video"
   ],
-  "steps_h2": "How it works",
-  "steps_lead": "Choose a comparison style, add both options, generate. No second shoot and no studio setup.",
+  "steps_h2": "How to make an AI product comparison video in 3 Simple Steps",
+  "steps_lead": "Turn one photo of both options into a clear comparison clip. No second shoot and no studio setup needed.",
   "steps": [
     {
       "t": "Upload Both Product Options",
-      "d": "Add one clear photo that shows the two options at a similar scale."
+      "d": "Add one clear photo that shows the two options at a similar scale. Keep each silhouette and finish visible."
     },
     {
-      "t": "Pick a Comparison Style",
-      "d": "Choose a side-by-side, fit or feature scene, then generate the clip."
+      "t": "Pick a Scene",
+      "d": "Choose a side-by-side, fit or feature scene. Add one line about the difference if the options need context."
     },
     {
-      "t": "Download and Label",
-      "d": "Download the video and add variant names, measurements or prices in your editor."
+      "t": "Download and Post",
+      "d": "Download the clip. Add variant names, measurements or prices in your editor."
     }
   ],
   "maker": {
@@ -104,20 +104,20 @@
   "visual": {
     "overview": "A comparison video puts two options side by side so shoppers can choose the size, finish or set that suits them.",
     "strip": [
-      "n:guide:q12-tpl-compare-demo-size-source-r4",
-      "n:guide:q12-tpl-compare-demo-size-output-02-r4",
+      "n:guide:rc6-tpl-compare-source-canisters-r1",
+      "n:guide:rc6-tpl-compare-result-canisters-r1",
       "n:guide:q12-tpl-compare-strip-extra-01-r1",
       "n:guide:q12-tpl-compare-strip-extra-02-r1",
-      "n:guide:q12-tpl-compare-strip-extra-03-r1",
-      "n:guide:q12-tpl-compare-strip-extra-04-r1"
+      "n:guide:rc6-tpl-compare-strip-harness-r1",
+      "n:guide:rc6-tpl-compare-strip-phonecase-r1"
     ],
     "steps": {
-      "source": "n:guide:q12-tpl-compare-demo-size-source-r4",
-      "sourceTitle": "Two sizes of an amber glass bottle",
-      "sourceHint": "Keep the small and large amber bottles, white droppers and blank labels fully visible.",
-      "result": "n:guide:q12-tpl-compare-demo-size-output-02-r4",
+      "source": "n:guide:rc6-tpl-compare-source-canisters-r1",
+      "sourceTitle": "Two sizes of a matte storage canister",
+      "sourceHint": "Keep the small and large slate-gray canisters, rounded lids and blank surfaces fully visible.",
+      "result": "n:guide:rc6-tpl-compare-result-canisters-r1",
       "mode": "video",
-      "prompt": "Use the uploaded pair as the exact options: one small and one large amber glass dropper bottle with white rubber bulbs, ribbed white caps and blank white labels. Preserve each bottle silhouette, cap and relative size. An adult creator holds one bottle in each hand beside her face and says, \"Here are the two sizes side by side.\" She raises both equally and finishes with the full bottles facing the lens. Bright vanity daylight, natural skin texture. Chest-up front-facing handheld framing. Sound: her voice and two soft bottle taps; no music.",
+      "prompt": "Use the uploaded pair as the exact options: one small and one large matte slate-gray storage canister with rounded lids and blank surfaces. Preserve each silhouette and relative size. An adult holds one in each hand beside a pale wood table and raises both equally to show the scale difference. Bright natural home light, chest-up front-facing framing. Sound: soft room tone and two gentle ceramic taps; no music.",
       "options": [
         [
           "Size",
@@ -152,7 +152,7 @@
         "h2": "Choose a product-comparison video scene"
       },
       "faq": {
-        "h2": "Questions about product-comparison videos"
+        "h2": "Questions about AI product comparison videos"
       }
     }
   }

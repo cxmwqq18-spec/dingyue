@@ -4,7 +4,7 @@
   "description": "Turn one clothing photo into a 9:16 fashion reel on a model. Head-to-toe try-on videos in 6, 10, 15 or 30 seconds for TikTok and Instagram ads.",
   "h1": "AI Fashion Reels That Show the Whole Look, Head to Toe",
   "eyebrow": "Fashion video template",
-  "lead": "A flat clothing photo leaves the fit hard to picture. Turn one outfit photo into a vertical reel that puts the full look on a model for TikTok and Instagram.",
+  "lead": "Show the full fit before you book a shoot. Turn one outfit photo into a vertical reel that puts the complete look on a model for TikTok and Instagram.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -15,36 +15,36 @@
   "benefits_h2": "Why make AI fashion reels?",
   "benefits": [
     {
-      "t": "Show the whole outfit",
-      "d": "Put the jacket, jeans or complete look on a model from one clothing photo, so shoppers can see the silhouette and styling together."
+      "t": "Show the whole outfit at a glance",
+      "d": "Put the jacket, jeans or complete look on a model from one clothing photo, so shoppers see the silhouette and styling together."
     },
     {
-      "t": "Refresh a launch without a shoot",
-      "d": "Create another look for a new arrival or campaign when booking a model, location and crew would slow the launch."
+      "t": "Launch new looks without a shoot",
+      "d": "Create another scene for a new arrival or campaign without booking a model, location and crew."
     },
     {
-      "t": "Fit the feed format",
-      "d": "Use a 9:16 reel for TikTok or Instagram and choose 6, 10, 15 or 30 seconds for the moment you need to show."
+      "t": "Fit every feed cut",
+      "d": "Use a 9:16 reel for TikTok or Instagram, then choose 6, 10, 15 or 30 seconds for the moment you need to show."
     },
     {
-      "t": "Ready for your channels",
-      "d": "Download the reel without an AIVideosUGC watermark and place it in your own ads, product pages and social posts."
+      "t": "Keep the final edit yours",
+      "d": "Download without an AIVideosUGC watermark, then place the reel in your own ads, product pages and social posts."
     }
   ],
-  "steps_h2": "How to make a fashion reel in 3 simple steps",
-  "steps_lead": "Three steps turn one clothing photo into a ready-to-post outfit reel.",
+  "steps_h2": "How to make AI fashion reels in 3 Simple Steps",
+  "steps_lead": "Turn one clothing photo into a ready-to-post outfit reel that shows the fit clearly.",
   "steps": [
     {
       "t": "Upload Your Clothing Photo",
-      "d": "Show the full garment with the hem, collar and closures visible."
+      "d": "Show the full garment with the hem, collar and closures visible. Keep the source photo sharp and evenly lit."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Name the model, setting and one outfit action, then choose the length and size."
+      "t": "Pick a Scene",
+      "d": "Name the model, setting and one outfit action. Choose the length and size for the reel."
     },
     {
       "t": "Download and Post",
-      "d": "Check the garment against your listing, then add price, sizes and the product link."
+      "d": "Download the finished reel. Add price, sizes and the product link in your editor."
     }
   ],
   "maker": {
@@ -89,10 +89,10 @@
   "visual": {
     "overview": "Show one complete outfit in a scene shoppers recognize. A full-length turn or walk makes the silhouette and styling easier to judge than a flat product shot.",
     "strip": [
-      "n:guide:q11-outfit-strip-square-01",
-      "n:guide:q11-outfit-strip-square-02",
-      "n:guide:q11-outfit-strip-square-03",
-      "n:guide:q11-outfit-strip-square-04",
+      "n:guide:rc6-tpl-outfit-strip-man-r1",
+      "n:guide:rc6-tpl-outfit-strip-blonde-r1",
+      "n:guide:rc6-tpl-outfit-strip-gray-r1",
+      "n:guide:rc6-tpl-outfit-strip-blazer-r1",
       "n:guide:q11-outfit-strip-square-05-r2",
       "n:guide:q11-outfit-strip-square-06"
     ],

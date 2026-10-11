@@ -4,27 +4,27 @@
   "description": "Drive urgency for a small release or restock with a drop alert video from one product photo. Add your date, quantity and notify link after download.",
   "h1": "Limited Drop Alert Videos for Restocks and New Drops",
   "eyebrow": "Limited drop video template",
-  "lead": "A small release sells out only when buyers know about it in the short window it is available, while arranging a shoot for every drop is too slow. Upload one product photo and get a limited drop alert video that makes the release feel timely, with room for the exact date, stock count and notify link you control.",
+  "lead": "Create a timely alert from one product photo, then add the exact date, stock count and notify link after download. You can prepare the next restock or small release without arranging a shoot for every drop.",
   "secondary_keywords": [
     "restock alert video",
     "limited release ad",
     "shoe drop video",
     "product restock reel"
   ],
-  "steps_h2": "Create a limited drop alert video in three steps",
-  "steps_lead": "Turn one product photo into a drop alert, then add the confirmed release details.",
+  "steps_h2": "How to make an AI limited drop alert video in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a clear drop moment, then add the confirmed release details.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product in the limited drop."
+      "d": "Start with one clear photo of the product in the limited drop. Keep its full shape and color visible."
     },
     {
-      "t": "Share Your Drop Moment",
-      "d": "Share the reveal, unboxing or in-use moment in one sentence."
+      "t": "Pick a Scene",
+      "d": "Choose a reveal, unboxing or in-use moment. Name the one action that should make the release feel timely."
     },
     {
-      "t": "Download and Add Details",
-      "d": "Add the confirmed date, quantity and notify link in your editor."
+      "t": "Download and Post",
+      "d": "Download the finished alert. Add the confirmed date, quantity and notify link in your editor."
     }
   ],
   "maker": {
@@ -55,7 +55,7 @@
     },
     {
       "q": "What video length fits a limited drop alert?",
-      "a": "Use 6 seconds for one product-and-date beat or 10–15 seconds for a reveal plus call to action. Add the exact stock count and drop date after download."
+      "a": "Use 6 seconds for one product-and-date beat, 10 or 15 seconds for a reveal plus call to action, and 30 seconds for a longer sequence. Add the exact stock count and drop date after download."
     },
     {
       "q": "Can I show a live countdown?",
@@ -71,7 +71,7 @@
     },
     {
       "q": "Can I create a second limited-drop video from the same source photo?",
-      "a": "Yes. Keep the coral trail shoe as the reference, then change one setting or camera move at a time. Check that the shown color, size note, release time, and available quantity against the live offer. Add the current date, price, and notify link after download so those details stay easy to update. Keep one release date and one quantity source for every version so the alert cannot drift from the live offer. Recheck the live quantity before each scheduled placement; a limited message is only useful while that number is current."
+      "a": "Yes. Keep the coral trail shoe as the reference, then change one setting or camera move at a time. Add the current date, price and notify link after download so each version stays easy to update."
     },
     {
       "q": "Can I run the alert as a paid ad during the drop window?",
@@ -102,8 +102,8 @@
             "product": "jacket"
           },
           {
-            "ref": "n:guide:q13-limited-examples-2",
-            "title": "Trail shoe grip on a rocky hike",
+            "ref": "n:guide:rc6-tpl-limited-example-shoe-r1",
+            "title": "Trail shoe grip shown before a hike",
             "kind": "scene",
             "product": "trail shoe"
           }
@@ -114,20 +114,20 @@
   "visual": {
     "overview": "Show the limited-release product in a clear reveal, then add timing and availability after download.",
     "strip": [
-      "n:guide:g1-limited-skincare-restock",
-      "n:guide:g1-limited-jewelry-reveal",
-      "n:guide:g1-limited-apparel-fit-check",
+      "n:guide:rc6-tpl-limited-strip-candle-r1",
+      "n:guide:rc6-tpl-limited-strip-shirt-r1",
+      "n:guide:rc6-tpl-limited-strip-jacket-r1",
       "n:guide:q13-limited-strip-3",
       "n:guide:g1-limited-phone-case-reveal",
-      "n:guide:g1-limited-citrus-first-sip"
+      "n:guide:rc6-tpl-limited-strip-drink-r1"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-limited-drop-alert-video-m2-source",
-      "sourceTitle": "Product photo",
+      "sourceTitle": "Coral trail shoes",
       "sourceHint": "Show the full shoe shape and color in a clear view.",
       "result": "n:guide:q13-limited-steps-result-r3",
       "mode": "video",
-      "prompt": "Share the drop moment in one sentence.",
+      "prompt": "Use the uploaded photo as the product and preserve the coral trail shoes shape, color and outsole exactly. An adult hiker ties the uploaded coral trail shoes on a rocky trail, then stands to show the tread and full pair. Use a vertical medium frame with one slow push-in; end on both shoes steady in the center with safe space above for an editable date layer. Sound: lace pull, gravel steps and quiet wind; no music.",
       "options": [
         [
           "Size",
@@ -159,7 +159,7 @@
         "h2": "Make a limited-drop alert video for a new product"
       },
       "faq": {
-        "h2": "Questions about limited-drop alert videos"
+        "h2": "Questions about AI limited drop alert videos"
       }
     }
   },

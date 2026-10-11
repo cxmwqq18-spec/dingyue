@@ -4,7 +4,7 @@
   "description": "Turn one organizer photo into a before-and-after video of a messy drawer, shelf or closet turning neat. 9:16 clips made for TikTok and Reels.",
   "h1": "Home Product Videos That Turn Clutter Into Order",
   "eyebrow": "Home video template",
-  "lead": "An organizer shot alone leaves shoppers guessing where it belongs. Turn one product photo into a vertical before-and-after video that shows a real drawer, shelf or closet becoming neat.",
+  "lead": "Show buyers exactly where your organizer fits with a vertical before-and-after video made from one product photo. Turn a cluttered drawer, shelf or closet into a clear reset they can understand.",
   "secondary_keywords": [
     "organizer before and after video",
     "home organization video ad",
@@ -12,39 +12,39 @@
     "drawer organizer video",
     "TikTok home organizing ad"
   ],
-  "benefits_h2": "Why make AI home organization videos?",
+  "benefits_h2": "Why make AI home product videos?",
   "benefits": [
     {
-      "t": "Show the problem and solution",
-      "d": "Move from a cluttered drawer, shelf or closet to the same space organized, so buyers understand the product’s job."
+      "t": "Make the product's job obvious",
+      "d": "Show a cluttered drawer, shelf or closet becoming orderly around the same organizer, so buyers see the problem and the fix in one beat."
     },
     {
-      "t": "Create a room scene without a shoot",
-      "d": "Show the organizer in a believable home setting without arranging access to a customer’s house or a film crew."
+      "t": "Show a real home without a shoot",
+      "d": "Create a believable home scene without arranging access to a customer house or booking a film crew."
     },
     {
-      "t": "Built for TikTok and Reels",
-      "d": "Use a vertical 9:16 clip paced around one satisfying reset for short-form feeds and product pages."
+      "t": "Post one vertical reset",
+      "d": "Use a 9:16 clip paced around one satisfying change for short-form feeds and product pages."
     },
     {
-      "t": "Ready for your channels",
-      "d": "Download the clip without an AIVideosUGC watermark and add verified dimensions, capacity and price in your editor."
+      "t": "Keep details editable",
+      "d": "Download without an AIVideosUGC watermark, then add listed dimensions, capacity and price in your editor."
     }
   ],
-  "steps_h2": "How to make a home organization video in 3 simple steps",
-  "steps_lead": "Three steps turn one organizer photo into a ready-to-post before-and-after clip.",
+  "steps_h2": "How to make AI home product videos in 3 Simple Steps",
+  "steps_lead": "Turn one organizer photo into a ready-to-post reset that shows where the product belongs.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the empty tray, bin or rack on a plain surface with its shape clear."
+      "d": "Show the empty tray, bin or rack on a plain surface. Keep the full shape and edges visible."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Name the home space and the everyday items that belong there before the reset."
+      "t": "Pick a Scene",
+      "d": "Name the drawer, shelf or closet where buyers will use it. Add the everyday items that should appear before the reset."
     },
     {
       "t": "Download and Post",
-      "d": "Check the organizer, then add before-and-after labels and verified product details."
+      "d": "Download the finished clip. Add before-and-after labels, dimensions and capacity in your editor."
     }
   ],
   "maker": {
@@ -75,7 +75,7 @@
     },
     {
       "q": "How can I explain the change?",
-      "a": "Use before-and-after labels in your editor and add the organizer name, dimensions and capacity from your verified listing."
+      "a": "Use before-and-after labels in your editor and add the organizer name, dimensions and capacity from your listing."
     },
     {
       "q": "What does a home organization video cost?",
@@ -92,7 +92,7 @@
       "f:tpl-home-r4-strip-01",
       "n:guide:q11-home-strip-square-02",
       "n:guide:q11-home-strip-square-03",
-      "n:guide:q11-home-strip-square-04",
+      "n:guide:rc6-tpl-home-strip-organizer-r1",
       "n:guide:q11-home-strip-square-05",
       "n:guide:q11-home-strip-square-06"
     ],
@@ -140,7 +140,7 @@
         "h2": "Add before-and-after labels after download"
       },
       "faq": {
-        "h2": "Questions about home organization videos"
+        "h2": "Questions about AI home product videos"
       }
     }
   }
