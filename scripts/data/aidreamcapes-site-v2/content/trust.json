@@ -41,7 +41,7 @@
     {
       "h2": "Report a problem",
       "paras": [
-        "If you see content made with AIVideosUGC that breaks these rules, or think your rights have been affected, email support@aivideosugc.com with the details. The team aims to reply within two business days."
+        "If you see content made with AIVideosUGC that breaks these rules, or think your rights have been affected, email support@aivideosugc.com with the details."
       ]
     }
   ],
@@ -68,7 +68,9 @@
     },
     {
       "q": "How do I report content that breaks these rules?",
-      "a": "Email support@aivideosugc.com with the link or details of the content and the problem. The team aims to reply within two business days."
+      "a": "Email support@aivideosugc.com with the link or details of the content and the problem."
     }
-  ]
+  ],
+  "ctaTitle": "Start a private product test",
+  "ctaLead": "Use your own product photo, then compare every result with the real item before you publish it."
 }
