@@ -14,11 +14,15 @@
   "faq": [
     {
       "q": "Can I make launch content before production is finished?",
-      "a": "Start from a clear photo of the current sample or prototype. The teaser, reveal and listing images all use that one photo, so assets exist while production finishes."
+      "a": "Yes. Start from a clear photo of the current sample or prototype. The teaser, reveal and listing images all use that one photo, so assets exist while production finishes."
     },
     {
       "q": "Can I change the launch date after making the video?",
       "a": "Yes. Add the date, price, and code as editable text after download, so confirmed details can change without regenerating the scene."
+    },
+    {
+      "q": "Can I add a countdown timer to a launch video?",
+      "a": "No. Add a countdown in CapCut or your ad platform after download, where you can edit the date safely."
     },
     {
       "q": "Will anyone see my unreleased product?",
@@ -133,15 +137,15 @@
       }
     }
   },
-  "benefits_h2": "Product Launch Video and Photos That Build Anticipation",
+  "benefits_h2": "Launch the first look before the product ships",
   "benefits": [
     {
-      "t": "Start building demand before production ends",
+      "t": "Build demand before production ends",
       "d": "Build the first look from a current sample photo while the final run is still in progress."
     },
     {
       "t": "Give buyers a first look before launch day",
-      "d": "Show the complete product early so buyers can understand what is coming before launch day."
+      "d": "Show the complete product early so buyers understand what is coming before launch day."
     },
     {
       "t": "Change launch details without remaking the scene",
@@ -153,5 +157,18 @@
     }
   ],
   "steps_h2": "How to Make Product Launch Videos and Photos in 3 Simple Steps",
-  "steps_lead": "Turn one product photo into a teaser, reveal, or listing asset in three steps, then add confirmed launch details after download."
+  "steps_lead": "Turn one product photo into a teaser, reveal, or listing asset in three steps, then add confirmed launch details after download.",
+  "relatedLinks": [
+    "video-ads",
+    "social-ad-photos",
+    "unboxing-videos",
+    "templates",
+    "guides",
+    "occ-black-friday",
+    "occ-holidays",
+    "product-videos",
+    "lifestyle-photos",
+    "tpl-launch",
+    "pricing"
+  ]
 }
