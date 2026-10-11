@@ -295,7 +295,7 @@
    "url": "/ai-image-generation/virtual-try-on",
    "label": "Clothing Try-On",
    "primary_keyword": "AI virtual try-on for clothing",
-   "img": "p_tryon",
+   "img": "rc3_tpl_tryon_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -314,7 +314,7 @@
    "url": "/ai-image-generation/jewelry-positioning",
    "label": "Jewelry On Model",
    "primary_keyword": "AI jewelry model photos",
-   "img": "p_jewel",
+   "img": "rc3_tpl_jewel_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -334,7 +334,7 @@
    "url": "/ai-image-generation/fashion-editorial",
    "label": "Lookbook",
    "primary_keyword": "AI lookbook photos",
-   "img": "p_look",
+   "img": "rc3_tpl_look_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -355,7 +355,7 @@
    "url": "/ai-image-generation/professional-headshot",
    "label": "Team Headshots",
    "primary_keyword": "AI team headshots",
-   "img": "p_head",
+   "img": "rc3_tpl_head_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [],

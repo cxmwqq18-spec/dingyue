@@ -53,6 +53,18 @@
     },
     "p_light-r3": {
       "alt": "White glossy ceramic mug with a crisp rim and soft window highlight on a pale counter"
+    },
+    "rc3_tpl_tryon_cover_r1": {
+      "alt": "Adult model wearing a plain olive utility jacket in a bright fitting-room studio."
+    },
+    "rc3_tpl_jewel_cover_r1": {
+      "alt": "Adult Black woman with a short copper pixie wearing one simple silver pendant necklace at her collarbone."
+    },
+    "rc3_tpl_look_cover_r1": {
+      "alt": "Adult South Asian man with short tight black curls wearing a plain sand-colored overshirt on a quiet city sidewalk."
+    },
+    "rc3_tpl_head_cover_r1": {
+      "alt": "Four distinct adult professionals in matching shoulder-up portraits against a soft light-gray studio backdrop."
     }
   },
   "galleries": {
@@ -7756,6 +7768,24 @@
         1200
       ],
       "source": "Codex image generation"
+    },
+    "rc3-tpl-look-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult South Asian woman in a light beige tailored suit against a soft neutral studio background.",
+      "variants": [
+        1200
+      ],
+      "source": "rc3 image generation"
+    },
+    "rc3-tpl-head-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult East Asian man in a charcoal blazer and pale blue shirt against a soft light-gray studio background.",
+      "variants": [
+        1200
+      ],
+      "source": "rc3 image generation"
     }
   },
   "clips": {
@@ -45527,6 +45557,193 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "rc3-tpl-tryon-strip-cardigan-r1": {
+        "file": "rc3-tpl-tryon-strip-cardigan-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short black hair wearing a cream cardigan in a plain studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-tryon-strip-trench-r1": {
+        "file": "rc3-tpl-tryon-strip-trench-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with close-cropped hair wearing an olive trench coat on a quiet city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-tryon-strip-bomber-back-r1": {
+        "file": "rc3-tpl-tryon-strip-bomber-back-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short curly black hair showing the back of a plain navy bomber jacket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-hero-output-r1": {
+        "file": "rc3-jewel-hero-output-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper bob wearing the exact silver teardrop pendant necklace at her collarbone.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-step-result-r1": {
+        "file": "rc3-jewel-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper bob wearing the exact silver teardrop pendant necklace in a square studio photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-strip-gold-hoop-r1": {
+        "file": "rc3-jewel-strip-gold-hoop-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a close-cropped haircut wearing one plain brushed-gold hoop earring.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-strip-stud-r1": {
+        "file": "rc3-jewel-strip-stud-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short tight curls wearing one small silver stud earring.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-pleated-skirt-r1": {
+        "file": "rc3-look-strip-pleated-skirt-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short auburn pixie wearing a white blouse and navy pleated skirt on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-beige-suit-r1": {
+        "file": "rc3-look-strip-beige-suit-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with close-cropped hair wearing a tailored beige suit in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-layered-r1": {
+        "file": "rc3-look-strip-layered-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob wearing a charcoal sweater, black trousers and taupe coat on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-crossbody-r1": {
+        "file": "rc3-look-strip-crossbody-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian man with short black hair wearing a cream sweater and black crossbody bag in a home office.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-knit-texture-r1": {
+        "file": "rc3-look-strip-knit-texture-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close view of an adult woman with a short copper bob holding the sleeve of a plain warm-gray chunky knit sweater.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-look-hero-after-r1": {
+        "file": "rc3-tpl-look-hero-after-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian woman with dark hair in a neat low bun wearing a light beige tailored blazer and matching trousers in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-look-step-result-r1": {
+        "file": "rc3-tpl-look-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same adult South Asian woman with dark hair in a neat low bun wearing the light beige tailored suit in a square studio photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-source-r1": {
+        "file": "rc3-head-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Professional source portrait of an adult East Asian man with close-cropped black hair in a dark green shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-hero-output-r1": {
+        "file": "rc3-head-hero-output-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Professional headshot of the same adult East Asian man in a black blazer against a soft light-gray office background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-step-result-r1": {
+        "file": "rc3-head-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matching team headshot of the same adult East Asian man in a charcoal blazer against a pale gray studio background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
       }
     }
   }

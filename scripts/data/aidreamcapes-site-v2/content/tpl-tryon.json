@@ -5,7 +5,7 @@
   "h1": "AI Virtual Try-On for Clothing: Your Garment on a Model",
   "eyebrow": "Model photo template",
   "lead": "Shoppers skip clothing they can only see flat, while booking a model for every arrival is expensive. Upload one garment photo and get an on-model view for listings and social ads.",
-  "benefits_h2": "Why sellers choose virtual try-on",
+  "benefits_h2": "Why sellers choose AI virtual try-on for clothing",
   "benefits": [
     {
       "t": "Show the garment on a body",
@@ -30,7 +30,7 @@
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "steps_h2": "How it works",
+  "steps_h2": "How to Make AI Virtual Try-On Photos for Clothing in 3 Simple Steps",
   "steps_lead": "Choose a fashion style, add your garment, generate. No casting call and no studio booking.",
   "steps": [
     {
@@ -42,8 +42,8 @@
       "d": "Choose an on-model scene, then generate the garment in that setting."
     },
     {
-      "t": "Download and Use",
-      "d": "Download the try-on photo and add your size chart or offer in your own editor."
+      "t": "Download and Post",
+      "d": "Download the try-on photo, add your size chart or offer in your own editor, and post it."
     }
   ],
   "maker": {
@@ -105,11 +105,11 @@
     "overview": "A virtual try-on scene puts your garment on a model so shoppers can see the silhouette before opening the size chart.",
     "strip": [
       "n:guide:tpl-tryon-c3-strip-bomber-front",
-      "n:guide:tpl-tryon-c3-strip-cardigan-side",
+      "n:guide:rc3-tpl-tryon-strip-cardigan-r1",
       "n:guide:ind-shoes-m2-result",
-      "f:q8-tpl-tryon-strip-04",
+      "n:guide:rc3-tpl-tryon-strip-trench-r1",
       "n:guide:tpl-tryon-c3-strip-overshirt",
-      "f:q8-tpl-tryon-strip-06"
+      "n:guide:rc3-tpl-tryon-strip-bomber-back-r1"
     ],
     "steps": {
       "source": "n:guide:tpl-tryon-c3-m2-source",
@@ -151,7 +151,7 @@
         "h2": "Choose a virtual try-on scene for your garment"
       },
       "faq": {
-        "h2": "Questions about on-model try-on photos"
+        "h2": "Questions about AI virtual try-on for clothing"
       }
     }
   }
