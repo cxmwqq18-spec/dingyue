@@ -1,48 +1,48 @@
 {
   "id": "unboxing-videos",
-  "title": "AI Unboxing Video Maker for Product Reveals | AIVideosUGC",
-  "description": "Create an unboxing video from one product photo. Show the package opening and product reveal for TikTok, Shorts, store pages or paid ads.",
+  "title": "AI Unboxing Video Maker | AIVideosUGC",
+  "description": "Create unboxing videos from one product photo. Show the box, tissue, product and included pieces for TikTok, Shorts, store pages and paid ads.",
   "h1": "Create an Unboxing Video from One Product Photo",
   "eyebrow": "AI unboxing video maker",
-  "lead": "Show the package opening and product reveal from one product photo. Build the scene without filming a new delivery.",
+  "lead": "Show how a package opens and what arrives inside from one product photo. Set the box, tissue, reveal order and final frame for a product page or paid ad.",
   "secondary_keywords": [
     "unboxing video maker",
     "product unboxing video for TikTok",
     "packaging reveal video",
     "AI unboxing ad"
   ],
-  "benefits_h2": "Make one reveal do more work",
+  "benefits_h2": "Make one product reveal useful across your store",
   "benefits": [
     {
-      "t": "Skip sample shipping and a filming day",
-      "d": "Get a clear package-to-product reveal in minutes from one product photo, with no sample shipment or filming day.",
+      "t": "Show the package path clearly",
+      "d": "Open on the parcel, move through tissue and finish on the product so shoppers can follow the reveal from first frame to last.",
       "icon": "play"
     },
     {
-      "t": "Make more openings from one photo",
-      "d": "Swap the box, tissue, hand position or first move to test another reveal without a new delivery shoot.",
+      "t": "Test another opening from one photo",
+      "d": "Change the box, tissue or hand position to try another hook without shipping another sample or booking another shoot.",
       "icon": "target"
     },
     {
-      "t": "Help buyers see the full set",
-      "d": "Show the product and included pieces in context so your product page and ads answer what arrives before checkout.",
+      "t": "Explain what the set includes",
+      "d": "Place the main item first, then lay out its accessories so product pages and paid ads answer what arrives before checkout.",
       "icon": "layers"
     }
   ],
-  "steps_h2": "How to Make an AI Unboxing Video in 3 Simple Steps",
-  "steps_lead": "Turn one clear product photo into an open-and-reveal clip for your store or ad.",
+  "steps_h2": "How to Make Unboxing Videos in 3 Simple Steps",
+  "steps_lead": "Go from one clear product photo to an unboxing reveal that fits a product page, social post or paid ad.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Build a reveal around the product you actually sell. Use one clear photo with the full item visible so its shape carries into the scene."
+      "d": "Start with the product you actually sell and keep its full shape visible. A clear photo gives the reveal a reliable product reference."
     },
     {
       "t": "Choose the Reveal",
-      "d": "Show what shoppers will see when the package opens. Describe the box, tissue, and one reveal action in a single sentence."
+      "d": "Describe the parcel, tissue and one opening action in a short sentence. Name the order shoppers should see: package, main item, then included pieces."
     },
     {
       "t": "Download and Post",
-      "d": "Turn one product photo into a postable reveal in minutes. Download the clip for your product page, social feed, or ad after a quick review."
+      "d": "Review the clip beside your product before publishing. Download it for store, social or paid ads, then add final text in an editor."
     }
   ],
   "maker": {
@@ -61,27 +61,27 @@
   "faq": [
     {
       "q": "Do I need a photo of the packaging?",
-      "a": "No. Start with a clear product photo and describe the package style you want to show."
+      "a": "No. Start with a clear product photo and describe the box, mailer or tissue style you want to show."
     },
     {
-      "q": "Can I make a gift set reveal?",
-      "a": "Yes. Describe the set and its main pieces, then keep the first reveal focused on the item shoppers need to see."
+      "q": "Can I make a gift set or bundle reveal?",
+      "a": "Yes. Name the main product and its included pieces, then show the main item before the accessories."
     },
     {
       "q": "What video lengths can I choose?",
-      "a": "Choose 6, 10, 15 or 30 seconds."
+      "a": "Choose 6, 10, 15 or 30 seconds, then use the length that gives the opening and reveal a clear finish."
     },
     {
-      "q": "Which formats work?",
-      "a": "Use 9:16, 1:1 or 16:9 for supported channels."
+      "q": "Which video formats are supported?",
+      "a": "The supported formats are 9:16, 1:1, 16:9, 4:3 and 3:4; choose the frame required by the channel where you will post."
     },
     {
       "q": "Can I use the clip on a product page?",
-      "a": "Yes. Download the clip and place it on your store page or in a social ad, then follow the channel rules."
+      "a": "Yes. Download the clip, place it with your listing media and follow the store or marketplace media rules."
     },
     {
       "q": "Will logos and printed words render correctly?",
-      "a": "AI lettering can vary. Add final brand text in your editor after download."
+      "a": "AI lettering can vary. Review every label and add final brand text in your editor after download."
     },
     {
       "q": "How many credits does an unboxing video use?",
@@ -89,40 +89,40 @@
     },
     {
       "q": "Can I use the clip for paid ads?",
-      "a": "Yes. Review the result, add your campaign text in an editor and follow the platform rules before launch."
+      "a": "Yes. Check the product, package and accessories first, add campaign text in an editor and follow the platform rules before launch."
     }
   ],
-  "cta_lead": "Start with one product photo and see the credit cost before generation.",
+  "cta_lead": "Start with a clear product photo, choose the reveal length and review the credit cost before generation.",
   "more_sections": [
     {
       "eyebrow": "Product reveal benefits",
-      "h2": "Build a reveal that sells the whole set",
-      "lead": "Plan each beat so shoppers follow the package, product and extras from opening to final frame.",
+      "h2": "Build a reveal shoppers can follow",
+      "lead": "Plan each beat so the package, main item and included pieces stay clear from opening to final frame.",
       "items": [
         {
-        "t": "Give the reveal a clear starting point",
-        "d": "Open on the box, tissue or seal so viewers know where the reveal begins."
-      },
-      {
-        "t": "Make the opening easy to follow",
-        "d": "Keep the flap, hands and product path visible as the box opens so viewers can follow the motion."
-      },
-      {
-        "t": "Show the product before the extras",
-        "d": "Bring the main item into view before smaller extras so shoppers focus on what they may order."
-      },
-      {
-        "t": "Make the full set easy to understand",
-        "d": "Lay out each accessory after the product so the package contents read clearly."
-      },
-      {
-        "t": "Leave a frame buyers can inspect",
-        "d": "Pause with the product centered and unobstructed so its shape and finish stay easy to inspect."
-      },
-      {
-        "t": "Fit the reveal into a social feed",
-        "d": "Keep the box and product centered in a 9:16 composition so the reveal fills a social feed."
-      }
+          "t": "Open the package",
+          "d": "Start with the sealed mailer or box, then make the opening action easy to see."
+        },
+        {
+          "t": "Keep the path visible",
+          "d": "Keep the flap, hands and product path in frame as tissue moves aside."
+        },
+        {
+          "t": "Show the main item first",
+          "d": "Bring the product into view before smaller extras so shoppers know what they are considering."
+        },
+        {
+          "t": "Lay out accessories",
+          "d": "Place each included piece beside the main item so the set is easy to understand."
+        },
+        {
+          "t": "Pause on the product",
+          "d": "End with the product centered and unobstructed so shoppers can inspect its shape and finish."
+        },
+        {
+          "t": "Frame for 9:16",
+          "d": "Keep the box and product centered when the reveal is intended for a vertical social feed."
+        }
       ]
     }
   ],
@@ -135,14 +135,14 @@
       },
       {
         "t": "AI unboxing video",
-        "d": "Start with one product photo, make a reveal in minutes, and try another opening without a new shoot."
+        "d": "Start with one product photo, set the reveal and try another opening without a new shoot."
       }
     ]
   },
   "actor_scene_picker": {
-    "title": "Choose your avatar and scene",
-    "lead": "Pick who presents and where, and start your video with both already set.",
-    "button": "Use this avatar and scene"
+    "title": "Choose an avatar and reveal scene",
+    "lead": "Pick a presenter and setting for the opening, then carry the reveal direction into your video.",
+    "button": "Use this reveal setup"
   },
   "visual": {
     "strip": [],
@@ -152,7 +152,7 @@
       "result": "n:guide:k1-unboxing-step-result-candle",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded product photo as the exact product reference. Keep its shape, color and label area unchanged. Adult hands open a plain shipping box, fold back tissue and lift the product toward the camera, ending with the item centered and steady. Warm natural light, realistic handheld product-video look. Sound: box and tissue movement; no text, logos or music.",
+      "prompt": "Use the uploaded product photo as the exact product reference. Keep its shape and color unchanged. Adult hands open a plain shipping box, fold back tissue and lift the product toward the camera, ending with the item centered and steady. Warm natural light, realistic handheld product-video look. Sound: box and tissue movement; no text, logos or music.",
       "options": [
         [
           "Size",
@@ -177,7 +177,10 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Create an unboxing video in 3 steps"
+        "h2": "How to Make Unboxing Videos in 3 Simple Steps"
+      },
+      "gallery": {
+        "h2": "What Unboxing Videos Look Like"
       }
     },
     "overview": "",
