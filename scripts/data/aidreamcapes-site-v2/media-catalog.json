@@ -44683,6 +44683,39 @@
           640,
           1280
         ]
+      },
+      "rc7-tpl-spark-ads-style-video-hero-r2": {
+        "file": "rc7-tpl-spark-ads-style-video-hero-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with short blond hair holds a sage-green insulated bottle in a bright home office.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rc7-tpl-retargeting-video-ad-strip-2-r1": {
+        "file": "rc7-tpl-retargeting-video-ad-strip-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with short dark hair inspects the hidden pocket of a plain olive rain jacket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rc7-tpl-retargeting-video-ad-hero-r1": {
+        "file": "rc7-tpl-retargeting-video-ad-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man wears dark navy over-ear headphones at an empty shared work desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
