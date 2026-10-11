@@ -49,13 +49,15 @@
             "ref": "n:guide:q20-occ-sale-discount-card-08",
             "title": "Hand applies balm from a plain jar",
             "kind": "photo",
-            "product": "face balm"
+            "product": "face balm",
+            "prompt": "Create an offer-ready sale scene for my face balm: an adult smooths a small amount onto the back of a hand from a plain jar, leave clear empty space for the offer layer, no text or logos."
           },
           {
             "ref": "n:guide:q20-occ-sale-gallery-01",
             "title": "Quilted jacket lifted from a gift box",
             "kind": "photo",
-            "product": "quilted jacket"
+            "product": "quilted jacket",
+            "prompt": "Create an offer-ready sale scene for my quilted jacket: adult hands lift it from a gift box on a clean bed, preserve the garment, leave clear empty space for offer details, no text or logos."
           }
         ]
       },
@@ -66,13 +68,15 @@
             "ref": "n:guide:q20-occ-sale-example-04",
             "title": "Running jacket checked in a mirror",
             "kind": "photo",
-            "product": "running jacket"
+            "product": "running jacket",
+            "prompt": "Create an offer-ready mirror scene for my running jacket: an adult checks the fit in a bright entryway mirror, preserve the jacket, leave clear space for the offer layer, no text or logos."
           },
           {
             "ref": "n:guide:q20-occ-sale-example-05",
             "title": "Gold necklace revealed from tissue",
             "kind": "photo",
-            "product": "gold necklace"
+            "product": "gold necklace",
+            "prompt": "Create an offer-ready reveal for my gold necklace: adult hands lift it from tissue in a small gift box, preserve the necklace, leave clear space for offer details, no text or logos."
           }
         ]
       }
@@ -107,7 +111,7 @@
       "source": "n:guide:occ-sale-discount-c3-m2-source",
       "result": "n:guide:q20-occ-sale-discount-steps-result-r2",
       "mode": "photo",
-      "prompt": "Describe the product scene and where you want space for the offer.",
+      "prompt": "Square product photo of pastel skincare bottles and jars on a pale neutral counter, with open space beside the set for an offer line added after download; no words, numbers, prices, discount symbols or labels.",
       "options": [
         [
           "Template",
@@ -126,13 +130,106 @@
     "picker": {
       "title": "Choose a sale ad creative scene",
       "lead": "Show the product clearly, then add the confirmed offer in an editable layer.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "review",
+          "label": "Product review"
+        },
+        {
+          "id": "unbox",
+          "label": "Unbox reveal"
+        },
+        {
+          "id": "demo",
+          "label": "Product in use"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:fx01-occ-sale-discount-picker-offer",
+          "label": "Offer-ready product view",
+          "chips": [
+            "review",
+            "unbox"
+          ],
+          "kind": "photo",
+          "prompt": "Create an offer-ready sale photo from my uploaded product image: show a plain denim jacket on a hanger against a clean wall with generous empty space on the left for later offer details, no words, numbers, prices, discount symbols, labels or watermark."
+        },
+        {
+          "ref": "n:guide:fx01-occ-sale-discount-picker-in-use",
+          "label": "Product-in-use sale scene",
+          "chips": [
+            "demo"
+          ],
+          "kind": "photo",
+          "prompt": "Create a product-in-use sale scene from my uploaded product image: show a hand applying a small amount of cream from a plain jar on a warm bathroom counter, preserve the jar, no words, numbers, prices, discount symbols, labels or watermark."
+        },
+        {
+          "ref": "n:guide:fx01-occ-sale-discount-picker-short",
+          "label": "Short sale clip opening",
+          "chips": [
+            "review"
+          ],
+          "kind": "photo",
+          "prompt": "Create the opening frame for a short sale ad from my uploaded product image: show a plain brass desk lamp switched on at a tidy home office with clear empty space for the offer layer, no words, numbers, prices, discount symbols, labels or watermark."
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-sale-discount-tea-bundle",
+          "label": "Tea bundle unbox scene",
+          "chips": [
+            "unbox"
+          ],
+          "kind": "photo",
+          "prompt": "Create an unbox sale scene from my uploaded product photo: adult hands arrange a plain travel mug and tea pouch on a bright kitchen counter, preserve both products, no words, prices, discount symbols or logos."
+        },
+        {
+          "ref": "n:guide:f13-r10-occ-sale-discount-picnic-blanket",
+          "label": "Picnic blanket in use",
+          "chips": [
+            "demo"
+          ],
+          "kind": "photo",
+          "prompt": "Create a product-in-use sale scene from my uploaded product photo: adult hands fold a plain checked picnic blanket beside a basket in a sunny park, leave open space for later offer details, no words, prices or logos."
+        },
+        {
+          "ref": "n:guide:f13-occ-sale-discount-card-09-r2",
+          "label": "Organizer review scene",
+          "chips": [
+            "review"
+          ],
+          "kind": "photo",
+          "prompt": "Create an offer-ready review scene from my uploaded product photo: an adult presents a plain travel organizer bundle on a bed, preserve the products and leave open space for later offer details, no words, prices or logos."
+        }
+      ],
       "button": "Make a sale ad photo"
     },
     "uses": [],
-    "input": [],
-    "outputs": [],
+    "input": [
+      {
+        "good": "n:guide:fx01-occ-sale-discount-input-good-alt",
+        "bad": "n:guide:fx01-occ-sale-discount-input-bad-blur",
+        "good_label": "Sharp product photo shows the full jar",
+        "bad_label": "Blurred source hides the jar detail"
+      },
+      {
+        "good": "n:guide:fx01-occ-sale-discount-input-good-alt2",
+        "bad": "n:guide:fx01-occ-sale-discount-input-bad-crop",
+        "good_label": "Full product set stays clear in frame",
+        "bad_label": "Product set is cropped at the edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:occ-sale-discount-c3-m2-result",
+        "frame": "1:1",
+        "label": "Square skincare sale result"
+      },
+      {
+        "ref": "n:guide:fx01-occ-sale-discount-output-alt",
+        "frame": "1:1",
+        "label": "Square skincare offer-ready result"
+      }
+    ],
     "after": null,
     "titles": {
       "m2": {
@@ -150,19 +247,31 @@
   "benefits": [
     {
       "t": "Launch before the offer is final",
-      "d": "Build the product scene in minutes while the price, code and dates are still being confirmed."
+      "d": "Build the product scene in minutes while the price, code and dates are still being confirmed.",
+      "img": "n:guide:fx01-occ-sale-discount-benefit-offer",
+      "alt": "Denim jacket on a hanger against a pale wall with open space for an offer.",
+      "frame": "none"
     },
     {
       "t": "Skip a reshoot when details change",
-      "d": "Swap the price, code or date in your editor and keep the same product scene."
+      "d": "Swap the price, code or date in your editor and keep the same product scene.",
+      "img": "n:guide:fx01-occ-sale-discount-benefit-reshoot",
+      "alt": "Adult hands fold a checked picnic blanket beside a basket at a park table.",
+      "frame": "none"
     },
     {
       "t": "Get more versions from one photo",
-      "d": "Turn one product photo into a square post or short clip for the channel carrying the sale."
+      "d": "Turn one product photo into a square post or short clip for the channel carrying the sale.",
+      "img": "n:guide:fx01-occ-sale-discount-benefit-versions",
+      "alt": "Adult hand places a wireless charging pad on a dark desk.",
+      "frame": "none"
     },
     {
       "t": "Skip the creator and studio bill",
-      "d": "Make the sale scene yourself in minutes, with no casting, studio day or shoot to pay for."
+      "d": "Make the sale scene yourself in minutes, with no casting, studio day or shoot to pay for.",
+      "img": "n:guide:fx01-occ-sale-discount-benefit-no-shoot",
+      "alt": "Adult hands prepare a kraft tea pouch beside a plain travel mug in a bright kitchen.",
+      "frame": "none"
     }
   ],
   "steps_h2": "How to Create Sale Ad Creatives in 3 Simple Steps",
