@@ -41,6 +41,7 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
   const visible = groups.filter((group) => group.links?.length);
   if (!visible.length) return null;
   return <Section eyebrow="Related tools" title={title}>
+    <style dangerouslySetInnerHTML={{ __html: ".adc2 .related-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.adc2 .related-groups>div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px}.adc2 .related-groups h3{margin:0 0 12px;font-size:16px;color:var(--ink)}.adc2 .related-groups ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px}.adc2 .related-groups a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}.adc2 .related-groups a:hover{color:var(--ink)}@media(max-width:520px){.adc2 .related-groups ul{grid-template-columns:1fr}}" }} />
     <div className="related-groups">
       {visible.map((group) => <div key={group.title}>
         <h3>{group.title}</h3>

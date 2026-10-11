@@ -474,11 +474,9 @@ function cardRef(model, key, role = "alt", force = false) {
   model.currentPageCardCount += 1;
   const result = {
     key, name: card.name, line: LINES[key], kind: card.kind,
-    // Template cards open the workspace with that template (tagshop pattern); dynamic
-    // cards that target a tool page keep the tool-page link.
-    href: model.byId[card.pageId]?.type === "template"
-      ? toolAppHref(model, model.byId[card.made_with ?? card.tool] ?? model.byId[card.pageId], model.byId[card.pageId]?.type === "template" ? key : undefined)
-      : model.byId[card.pageId].url,
+    // Template cards open the workspace with that template (tagshop pattern),
+    // including cards whose template lives on a tool page.
+    href: toolAppHref(model, model.byId[card.made_with ?? card.tool] ?? model.byId[card.pageId], key),
     image: ref ? mediaImage(model, ref, "card") : imageRef(model, card.img, `${card.name} template preview`),
     tags: [],
     industries: [], platforms: []
@@ -1086,7 +1084,9 @@ function sellerScenariosFor(model, page, source) {
     return {
       audience: String(item.audience ?? ""),
       tool: tool.label,
-      href: tool.url,
+      // Opens the workspace for that tool; a link back to a tool page (often
+      // this very page) is not a next step for the reader.
+      href: toolAppHref(model, tool),
       task: String(item.task ?? ""),
       image: mediaImage(model, ref, "card")
     };
@@ -1185,11 +1185,11 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
         const target = routeTool ? model.byId[routeTool] : undefined;
         assert.ok(!routeTool || target, `${page.id}: visual picker tool ${routeTool} does not exist`);
         const entry = { kind: cardKind === "video" ? "scene" : "photo" };
-        // Tool-page picker cards are make-this examples and open the workspace
-        // with their prompt. The two hub pages retain their existing tool-card
-        // links; their hub structure is explicitly outside the tool-page rewrite.
+        // Picker cards are make-this examples on every page, hubs included: each
+        // opens the workspace with its own prompt (as the competitor's
+        // "Recreate what you love" cards do), never a generic tool page.
         const promptOverride = card.prompt || genericCasePrompt(model, page, card);
-        const preserveHubToolLink = (page.id === "video-hub" || page.id === "photo-hub") && target;
+        const preserveHubToolLink = false;
         const href = preserveHubToolLink
           ? target.url
           : target
@@ -1996,8 +1996,8 @@ function payloadFor(model, page) {
       steps: c.steps, compare: c.compare, plans: PLANS,
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
       relatedGroups: [
-        { title: "Photo and listing prep", links: pageLinksFor(model, ["platforms", "guide-product-photo-tips", "guide-white-background-amazon", "blog-ai-product-photography-guide"]) },
-        { title: "Ad sizes and testing", links: pageLinksFor(model, ["guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-ugc-video-ads-guide"]) }
+        { title: "Video tools", links: pageLinksFor(model, ["product-videos", "url-to-video", "image-to-video", "ai-actors", "spokesperson-videos"]) },
+        { title: "Photo tools", links: pageLinksFor(model, ["white-background", "lifestyle-photos", "change-background", "model-photos"]) }
       ],
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
       ...(c.audience ? { audience: { ...c.audience, items: imageItemsFor(model, page, (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) }))) } } : {}),
@@ -2195,7 +2195,7 @@ function payloadFor(model, page) {
       }));
       out.relatedGroups = [
         { title: "Formats for an actor-led ad", links: pageLinksFor(model, ["tpl-ugc", "tpl-howto", "tpl-film", "tpl-drink", "tpl-home", "tpl-outfit"]) },
-        { title: "Placement and review", links: pageLinksFor(model, ["tpl-launch", "tpl-compare", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
+        { title: "Ad sizes and testing", links: pageLinksFor(model, ["tpl-launch", "tpl-compare", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
       ];
       out.cta = { title: c.cta_title || "Create a product ad with an AI actor", lead: c.cta_lead || "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10" }) };
     } else if (page.id === "templates") {
@@ -2786,7 +2786,9 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (!Array.isArray(card.chips) || !card.chips.length || card.chips.some((id) => !chips.some((chip) => chip.id === id))) errors.push(`${pageId}: visual picker card has an unknown or missing filter (${card.label})`);
         if (card.tool) {
           const target = validationSource.master.pages.find((page) => page.id === card.tool);
-          if (!isHub || !target || card.href !== target.url) errors.push(`${pageId}: tool card does not link to its matching tool page (${card.label})`);
+          // Hub cards are make-this examples: they open the workspace on their own tool with their prompt.
+          const opensOwnTool = typeof card.href === "string" && card.href.startsWith("/app/create?") && new URLSearchParams(card.href.split("?")[1].split("#")[0]).get("tool") === card.tool && /[?&]prompt=/.test(card.href);
+          if (!isHub || !target || !opensOwnTool) errors.push(`${pageId}: tool card does not open the workspace on its matching tool with its prompt (${card.label})`);
           if (pageId === "video-hub" && !VIDEO_TOOLS.includes(card.tool)) errors.push(`${pageId}: card links to a non-video tool (${card.tool})`);
           if (pageId === "photo-hub" && !PHOTO_TOOLS.slice(1).includes(card.tool)) errors.push(`${pageId}: card links to a non-photo tool (${card.tool})`);
           continue;
