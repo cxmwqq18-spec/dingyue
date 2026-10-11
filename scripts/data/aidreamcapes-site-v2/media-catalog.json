@@ -6394,6 +6394,15 @@
         1280
       ]
     },
+    "rc4-tpl-sale-examples-01-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short blonde bob pulls a matte blue hard-shell suitcase through a bright airport terminal.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
     "q10-sale-example-02": {
       "w": 1280,
       "h": 1280,
@@ -7419,6 +7428,14 @@
         1200
       ]
     },
+    "rc4-tpl-launch-og-01-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult woman with a short copper-red bob holds a matte sage face cream jar beside her face in a bright bathroom.",
+      "variants": [
+        1200
+      ]
+    },
     "t33-tpl-compare-og-r2": {
       "w": 1200,
       "h": 630,
@@ -7431,6 +7448,14 @@
       "w": 1200,
       "h": 630,
       "alt": "Adult creator demonstrates one drop from a pale frosted serum bottle in a warm vanity scene.",
+      "variants": [
+        1200
+      ]
+    },
+    "rc4-tpl-bf-og-01-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult man with short silver-gray hair holds a matte coral pump bottle in a warm holiday scene.",
       "variants": [
         1200
       ]
@@ -34591,6 +34616,16 @@
           1280
         ]
       },
+      "rc4-tpl-launch-gallery-supplement-04-r1": {
+        "file": "rc4-tpl-launch-gallery-supplement-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short auburn hair holds matte sage wireless headphones toward the camera in a bright gym.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "q12-tpl-compare-strip-runner-r2": {
         "file": "q12-tpl-compare-strip-runner-r2",
         "w": 1024,
@@ -34606,6 +34641,16 @@
         "w": 1024,
         "h": 1024,
         "alt": "Hands open a plain skincare gift set on a holiday table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-bf-examples-unboxing-01-r1": {
+        "file": "rc4-tpl-bf-examples-unboxing-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a dark gift box to reveal a coral face cream jar and squeeze tube among holiday lights.",
         "variants": [
           640,
           1280
@@ -34676,6 +34721,16 @@
         "w": 1024,
         "h": 1024,
         "alt": "Hands unbox two plain skincare products from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc4-tpl-launch-examples-unboxing-01-r1": {
+        "file": "rc4-tpl-launch-examples-unboxing-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a sage gift box to reveal a matte sage face cream jar and squeeze tube.",
         "variants": [
           640,
           1280
@@ -44358,6 +44413,17 @@
         "variants": [
           640,
           1280
+        ]
+      },
+      "rc4-tpl-sale-hero-r1": {
+        "file": "rc4-tpl-sale-hero-r1",
+        "w": 1600,
+        "h": 900,
+        "alt": "Adult woman with a short platinum-blonde pixie cut wears the same sage-olive hooded puffer jacket in a snowy mountain valley.",
+        "variants": [
+          640,
+          1280,
+          1600
         ]
       }
     }

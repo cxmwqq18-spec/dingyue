@@ -22,8 +22,8 @@
       "d": "Share the review, try-on, unboxing or demo moment in one sentence."
     },
     {
-      "t": "Download and Add the Deal",
-      "d": "Add the confirmed discount, code and end date in your editor."
+      "t": "Download and Post",
+      "d": "Add the confirmed discount, code and end date in your editor, then post the clip where customers will see it."
     }
   ],
   "maker": {
@@ -105,10 +105,10 @@
         "label": "Offer-ready product scenes",
         "items": [
           {
-            "ref": "n:guide:q12-tpl-bf-strip-unboxing-r2",
-            "title": "Hands reveal a skincare gift set",
+            "ref": "n:guide:rc4-tpl-bf-examples-unboxing-01-r1",
+            "title": "Hands Reveal a Coral Cream Jar and Tube",
             "kind": "scene",
-            "product": "skincare gift set"
+            "product": "face cream set"
           },
           {
             "ref": "n:guide:f16-r10-bf-example-headphones-r1",
@@ -171,26 +171,26 @@
       }
     }
   },
-  "steps_h2": "How to make Black Friday video ads in 3 Simple Steps",
+  "steps_h2": "How to Make Black Friday Video Ads in 3 Simple Steps",
   "steps_lead": "Turn one product photo into a clear Black Friday product moment, then add the confirmed deal details.",
   "cta_lead": "Make the Black Friday clip, then add the confirmed offer after download.",
   "benefits_h2": "Why sellers use Black Friday video ads",
   "benefits": [
     {
-      "t": "Prepare the product scene early",
-      "d": "Build a Black Friday product clip from one clear photo while the final price and code are still being confirmed."
+      "t": "Launch the ad before the deal is final",
+      "d": "Save days by turning one product photo into a Black Friday clip while the price and code are still changing."
     },
     {
-      "t": "Keep offer details editable",
-      "d": "Add the approved discount, dates and code after download so every number stays exact when the deal changes."
+      "t": "Spend less than a fresh shoot",
+      "d": "Skip casting, studio time and gear; create a seasonal product moment from the photo you already have."
     },
     {
-      "t": "Show one clear product action",
-      "d": "Use a review, unboxing, try-on or demo moment that keeps the featured item easy to recognize."
+      "t": "Test more hooks without reshooting",
+      "d": "Swap review, unboxing, try-on or demo scenes and compare more versions from the same product photo."
     },
     {
-      "t": "Choose a placement-ready length",
-      "d": "Make a 6, 10, 15 or 30 second version for Stories, Reels, feeds or a product page."
+      "t": "Keep the offer ready to change",
+      "d": "Update the discount, code and end date in your editor while the product action stays reusable."
     }
   ]
 }

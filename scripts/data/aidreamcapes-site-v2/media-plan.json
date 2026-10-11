@@ -213,7 +213,7 @@
       "hero": {
         "kind": "pair",
         "before": "g:sale-campaign-key-visual/source-input",
-        "after": "g:sale-campaign-key-visual/hero-output"
+        "after": "n:guide:rc4-tpl-sale-hero-r1"
       },
       "gallery": [
         "g:sale-campaign-key-visual/example-01",
@@ -352,12 +352,12 @@
         "kind": "image",
         "image": "n:guide:rc4-tpl-launch-source-bag-r1"
       },
-      "og": "n:t33-tpl-launch-og-r2",
+      "og": "n:rc4-tpl-launch-og-01-r1",
       "gallery": [
         "n:guide:q12-tpl-launch-strip-extra-02-r1",
         "n:guide:g1-launch-berry-sparkling-sip-r2",
         "n:guide:q12-tpl-launch-card-07-sunscreen-grwm",
-        "n:guide:q12-tpl-launch-strip-supplement-demo-r2"
+        "n:guide:rc4-tpl-launch-gallery-supplement-04-r1"
       ]
     },
     "tpl-compare": {
@@ -378,7 +378,7 @@
         "kind": "image",
         "image": "s:v_bf_rc4"
       },
-      "og": "n:t33-tpl-bf-og-r2",
+      "og": "n:rc4-tpl-bf-og-01-r1",
       "gallery": [
         "n:guide:q12-tpl-bf-card-03-earring-gift-unboxing",
         "n:guide:q12-tpl-bf-card-04-sneaker-try-on",

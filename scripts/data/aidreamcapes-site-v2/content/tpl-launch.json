@@ -12,7 +12,7 @@
     "Instagram launch ad",
     "home decor promo video"
   ],
-  "steps_h2": "How to make an AI promo video in 3 Simple Steps",
+  "steps_h2": "How to Make an AI Promo Video in 3 Simple Steps",
   "steps_lead": "Turn one product photo into a launch moment you can publish when the release details are confirmed.",
   "steps": [
     {
@@ -24,8 +24,8 @@
       "d": "Share the review, reveal, try-on or demo moment in one sentence."
     },
     {
-      "t": "Download and Add Details",
-      "d": "Add the confirmed release date, price and offer in your editor."
+      "t": "Download and Post",
+      "d": "Add the confirmed release date, price and offer in your editor, then post the launch clip where customers will see it."
     }
   ],
   "maker": {
@@ -56,7 +56,7 @@
     },
     {
       "q": "What length should a launch promo use?",
-      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds when the launch needs a full product story. Choose 9:16 for vertical placements."
+      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds when the launch needs a full product story. Choose 9:16 for vertical channels."
     },
     {
       "q": "Which ratio is best for launch day?",
@@ -84,7 +84,7 @@
     },
     {
       "q": "What should I check before publishing?",
-      "a": "Confirm the product shape, launch date, price, stock status, link, and crop in the final placement."
+      "a": "Confirm the product shape, launch date, price, stock status, link, and crop in the final post."
     },
     {
       "q": "Can I have launch ads ready before the product is in stock?",
@@ -103,10 +103,10 @@
         "label": "Reveal and hero",
         "items": [
           {
-            "ref": "n:guide:q12-tpl-launch-example-unboxing-r2",
-            "title": "Hands reveal two skincare bottles from a gift box",
+            "ref": "n:guide:rc4-tpl-launch-examples-unboxing-01-r1",
+            "title": "Hands Reveal a Sage Cream Jar and Tube",
             "kind": "scene",
-            "product": "skincare"
+            "product": "face cream"
           },
           {
             "ref": "n:guide:k6-tpl-ugc-picker-steaming-mug",
@@ -174,20 +174,20 @@
   "benefits_h2": "Why sellers use an AI promo video maker",
   "benefits": [
     {
-      "t": "Prepare launch creative from one photo",
-      "d": "Turn a clear photo of the final product into a launch scene before a shoot or full inventory is ready."
+      "t": "New launch ad in minutes",
+      "d": "Turn one final product photo into a creator review, unboxing or demo before launch day."
     },
     {
-      "t": "Show the product in a real moment",
-      "d": "Use a creator review, reveal, unboxing or demo so shoppers can understand what is new."
+      "t": "Spend less than a studio shoot",
+      "d": "Skip casting, booking and gear; make polished launch creative from the photo you already have."
     },
     {
-      "t": "Add release details after download",
-      "d": "Keep the confirmed date, price and offer as editable text so the clip stays accurate as plans change."
+      "t": "Show more launch moments",
+      "d": "Create review, reveal, unboxing or demo versions from the same product photo without reshooting."
     },
     {
-      "t": "Make versions for each placement",
-      "d": "Create 9:16 Stories and Reels creative or a 1:1 feed version from the same product photo."
+      "t": "Keep release details easy to change",
+      "d": "Update the date, price and offer in your editor while the launch video stays reusable."
     }
   ]
 }

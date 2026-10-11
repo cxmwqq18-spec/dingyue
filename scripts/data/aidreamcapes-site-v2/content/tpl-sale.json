@@ -11,7 +11,7 @@
     "holiday sale photo for Facebook",
     "winter clearance banner"
   ],
-  "steps_h2": "How to make sale banner images in 3 Simple Steps",
+  "steps_h2": "How to Make Sale Banner Images in 3 Simple Steps",
   "steps_lead": "Turn one product photo into a sale scene with room for the exact offer your customers should read.",
   "steps": [
     {
@@ -23,8 +23,8 @@
       "d": "Share the product scene and open offer area in one sentence."
     },
     {
-      "t": "Download and Add the Offer",
-      "d": "Add the confirmed discount, code and end date in your editor."
+      "t": "Download and Post",
+      "d": "Add the confirmed discount, code and end date in your editor, then post the image where customers will see it."
     }
   ],
   "maker": {
@@ -102,8 +102,8 @@
         "label": "Space for the offer",
         "items": [
           {
-            "ref": "n:q10-sale-example-01",
-            "title": "Pack With Me: Suitcase through the airport",
+            "ref": "n:rc4-tpl-sale-examples-01-r1",
+            "title": "Pack With Me: Blue Suitcase through the Airport",
             "kind": "photo",
             "product": "hard-shell suitcase"
           },
