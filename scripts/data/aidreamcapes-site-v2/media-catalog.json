@@ -47787,6 +47787,94 @@
           1280,
           1600
         ]
+      },
+      "fx27-howto-benefit-1": {
+        "file": "fx27-howto-benefit-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands run a compact fabric shaver across an olive knit sweater, leaving a clean panel beside the remaining pills.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx27-howto-benefit-2": {
+        "file": "fx27-howto-benefit-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand scrubs one grout seam with a plain handheld cleaning brush, leaving a clean section beside the dirty tile.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx27-howto-benefit-3": {
+        "file": "fx27-howto-benefit-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator demonstrates a plain resistance band beside a phone on a small tripod in a home workout corner.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx27-howto-benefit-4": {
+        "file": "fx27-howto-benefit-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult reviews a product demo on a generic laptop with a blank screen while holding a plain stainless travel mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx27-film-benefit-1": {
+        "file": "fx27-film-benefit-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte ceramic skincare bottle catches a narrow amber rim light on black stone in a dark studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx27-film-benefit-2": {
+        "file": "fx27-film-benefit-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain analog watch with a dark leather strap catches a cool highlight on a charcoal stone slab.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx27-film-benefit-3": {
+        "file": "fx27-film-benefit-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte-black over-ear headphones sit on a dark plinth under a controlled cool highlight.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx27-film-benefit-4": {
+        "file": "fx27-film-benefit-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sculptural desk lamp glows on a dark side table beside a blank wall with a narrow pool of light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

@@ -568,19 +568,27 @@
   "benefits": [
     {
       "t": "Give a flat shot a launch-ready mood",
-      "d": "Add a controlled highlight, shadow or reflection around the product so a plain photo can open a campaign."
+      "d": "Add a controlled highlight, shadow or reflection around the product so a plain photo can open a campaign.",
+      "img": "n:guide:fx27-film-benefit-1",
+      "alt": "Plain matte ceramic skincare bottle catches a narrow amber rim light on black stone in a dark studio."
     },
     {
       "t": "Show the finish without a film crew",
-      "d": "Use one slow reveal to show glass, metal, fabric or a clean silhouette without booking a set, crew or rental day."
+      "d": "Use one slow reveal to show glass, metal, fabric or a clean silhouette without booking a set, crew or rental day.",
+      "img": "n:guide:fx27-film-benefit-2",
+      "alt": "Plain analog watch with a dark leather strap catches a cool highlight on a charcoal stone slab."
     },
     {
       "t": "Cut one look for web and feed",
-      "d": "Use 16:9 for YouTube and product pages or 9:16 for Shorts, Reels and TikTok. Choose 6, 10, 15 or 30 seconds."
+      "d": "Use 16:9 for YouTube and product pages or 9:16 for Shorts, Reels and TikTok. Choose 6, 10, 15 or 30 seconds.",
+      "img": "n:guide:fx27-film-benefit-3",
+      "alt": "Plain matte-black over-ear headphones sit on a dark plinth under a controlled cool highlight."
     },
     {
       "t": "Keep your product details in control",
-      "d": "Download without a watermark, then add the product name, licensed audio or offer details in your editor."
+      "d": "Download without a watermark, then add the product name, licensed audio or offer details in your editor.",
+      "img": "n:guide:fx27-film-benefit-4",
+      "alt": "Plain sculptural desk lamp glows on a dark side table beside a blank wall with a narrow pool of light."
     }
   ],
   "relatedLinks": [
