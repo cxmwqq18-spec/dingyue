@@ -328,7 +328,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-office-1-r1",
+          "ref": "n:guide:sk1-spk-office-1-r2",
           "label": "Office: desk explanation",
           "chips": [
             "office"
@@ -454,7 +454,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-beach-1-r1",
+          "ref": "n:guide:sk1-spk-beach-1-r2",
           "label": "Beach: shoreline greeting",
           "chips": [
             "beach"
@@ -472,7 +472,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-car-1-r1",
+          "ref": "n:guide:sk1-spk-car-1-r2",
           "label": "Car: driver-seat selfie",
           "chips": [
             "car"
@@ -490,7 +490,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-hospital-1-r1",
+          "ref": "n:guide:sk1-spk-hospital-1-r3",
           "label": "Hospital: staff-room update",
           "chips": [
             "hospital"
@@ -625,12 +625,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-bathroom-1-r1",
+          "ref": "n:guide:sk1-spk-bathroom-1-r2",
           "label": "Bathroom: robe mirror selfie",
           "chips": [
             "bathroom"
           ],
-          "prompt": "A man in his early thirties with short brushed-up hair and oval face and faint stubble wears a teal overshirt in a bathroom setting. He is standing in a bright bathroom mirror selfie wearing a plain robe and speaking naturally and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
+          "prompt": "A man in his early thirties with short brushed-up hair and oval face and faint stubble wears a teal robe in a bathroom setting. He is standing in a bright bathroom mirror selfie speaking naturally and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
@@ -679,7 +679,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-pool-1-r1",
+          "ref": "n:guide:sk1-spk-pool-1-r2",
           "label": "Pool: poolside greeting",
           "chips": [
             "pool"

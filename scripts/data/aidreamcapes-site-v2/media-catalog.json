@@ -43872,6 +43872,46 @@
           640,
           1280
         ]
+      },
+      "sk1-spk-beach-1-r2": {
+        "file": "sk1-spk-beach-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian woman with short braided crown with cropped sides in a beach setting, speaking to camera standing on a sunny shoreline greeting the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-car-1-r2": {
+        "file": "sk1-spk-car-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with short dark angled bob in a car setting, speaking to camera seated in the driver seat with hands resting low, speaking to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-hospital-1-r3": {
+        "file": "sk1-spk-hospital-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latina woman with short copper pixie in a hospital setting, speaking to camera standing in a clean staff break room in solid scrubs giving an update.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sk1-spk-bathroom-1-r2": {
+        "file": "sk1-spk-bathroom-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian man with short brushed-up hair in a bathroom setting, speaking to camera standing in a bright bathroom mirror selfie wearing a plain robe and speaking naturally.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
