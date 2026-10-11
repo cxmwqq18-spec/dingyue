@@ -13,11 +13,11 @@ import type {
 } from "./types";
 import { TemplateGrid } from "./parts";
 
-const DIRECTORY_FILTER_SELECTORS = Array.from({ length: 20 }, (_, index) => {
+const DIRECTORY_FILTER_SELECTORS = Array.from({ length: 40 }, (_, index) => {
   const value = index + 1;
   return `.adc2 .v-filter[data-filter-index="${value}"]:checked~.v-filter-grid .v-filter-card:not([data-filter-indexes~="${value}"])`;
 });
-const DIRECTORY_FILTER_FOCUS_SELECTORS = Array.from({ length: 20 }, (_, index) => {
+const DIRECTORY_FILTER_FOCUS_SELECTORS = Array.from({ length: 40 }, (_, index) => {
   const value = index + 1;
   return `.adc2 .v-filter[data-filter-index="${value}"]:focus-visible~.v-picker-chips label[data-filter-index="${value}"]`;
 });

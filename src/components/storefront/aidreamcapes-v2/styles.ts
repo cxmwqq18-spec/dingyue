@@ -133,7 +133,7 @@ export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 `;
 // Scene filters are CSS-only radios; one selector per filter position. 20 covers the
 // largest competitor filter set (19 categories; All is handled separately).
-const PICKER_FILTER_MAX = 20;
+const PICKER_FILTER_MAX = 40;
 const pickerSelectors = (rule: (n: number) => string) => Array.from({ length: PICKER_FILTER_MAX }, (_, i) => rule(i + 1)).join(",");
 const PICKER_CHIP_ON = pickerSelectors((n) => `.adc2 .v-filter[data-filter-index="${n}"]:checked~.v-picker-chips label[data-filter-index="${n}"]`);
 const PICKER_CARD_OFF = pickerSelectors((n) => `.adc2 .v-filter[data-filter-index="${n}"]:checked~.v-picker-grid .v-pick-card:not([data-filter-indexes~="${n}"])`);
