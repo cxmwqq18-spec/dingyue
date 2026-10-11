@@ -13,7 +13,7 @@
     "AI backdrop for product shots"
   ],
   "steps_h2": "How to Use an AI Product Background Changer in 3 Simple Steps",
-  "steps_lead": "Upload one photo, describe the setting, then download the new square image.",
+  "steps_lead": "Want a fresh look for your products? Change any product image in three simple steps.",
   "steps": [
     {
       "t": "Upload Your Image",
@@ -41,7 +41,7 @@
       "icon": "refresh"
     },
     {
-      "t": "Skip the reshoot",
+      "t": "Costs far less than a reshoot",
       "d": "Start with one existing photo instead of booking space, lights and a crew again.",
       "icon": "clock"
     }
