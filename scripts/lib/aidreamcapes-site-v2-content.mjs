@@ -1015,6 +1015,14 @@ const VISUAL_VIDEO_LENGTHS = [6, 10, 15];
 const HOME_VIDEO_OPTIONS = [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"], ["Template", "Creator video ad"]];
 const HOME_PHOTO_OPTIONS = [["Template", "White background"], ["Size", "Square"]];
 
+// A maker can show one exact video length or a list of supported lengths. Only
+// an exact value can safely prefill links without changing a page's promise.
+function displayedMakerVideoLength(options) {
+  const configured = Array.isArray(options) ? options.find(([label]) => String(label).toLowerCase() === "length")?.[1] : undefined;
+  const matches = [...String(configured ?? "").matchAll(/\b(6|10|15|30)\b/g)].map((match) => match[1]);
+  return matches.length === 1 ? matches[0] : undefined;
+}
+
 function visualLength(options, requested, pageId) {
   const configured = options.find(([label]) => String(label).toLowerCase() === "length")?.[1];
   const raw = requested ?? configured;
@@ -1029,8 +1037,24 @@ function realTemplateCount(model) {
 }
 
 // The photo hub hero collage shows the first photo tools as cards, matching its picker.
-function toolHeroCardsForHub(model, page) {
+function toolHeroCardsForHub(model, page, configured) {
   if (page.id !== "photo-hub") return undefined;
+  if (Array.isArray(configured) && configured.length) {
+    return configured.map((item, index) => {
+      const image = mediaImage(model, String(item.ref), "card");
+      return {
+        key: `photo-hub-hero-${index + 1}`,
+        name: String(item.name ?? "Product photo"),
+        line: String(item.line ?? "Product photo for your store or ad"),
+        kind: "photo",
+        href: String(item.href ?? page.url),
+        image,
+        tags: [],
+        industries: [],
+        platforms: []
+      };
+    });
+  }
   return applyCardOverrides(model, page, (TOOL_REL[page.id] || []).slice(0, 3).map((key) => cardRef(model, key, "primary")).filter(Boolean));
 }
 
@@ -1074,6 +1098,9 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
   assert.ok(stepMode === "photo" || stepMode === "video", `${page.id}: visual step mode must be photo or video`);
   const configuredOptions = Array.isArray(maker?.options) ? maker.options.slice(0, 3) : [];
   const options = Array.isArray(steps.options) ? steps.options : (stepMode === "video" ? maker?.videoOptions : maker?.photoOptions) ?? configuredOptions;
+  const displayedLength = stepMode === "video"
+    ? (displayedMakerVideoLength(configuredOptions) ?? (configuredOptions.length ? undefined : displayedMakerVideoLength(options)))
+    : undefined;
   const stepLength = stepMode === "video" ? visualLength(options, steps.length, page.id) : undefined;
   const stepCredits = stepMode === "video" ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
   const stepItems = Array.isArray(content.steps) ? content.steps : Array.isArray(steps.items) ? steps.items : [];
@@ -1105,7 +1132,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
           ? target.url
           : target
           ? target.group === "video"
-            ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? "15", promptOverride })
+            ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? displayedLength ?? "15", promptOverride })
             : toolAppHref(model, target, card.template, { promptOverride })
           : caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", promptOverride);
         return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? genericCasePrompt(model, page, card) ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}) };
@@ -1137,8 +1164,10 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       source: { ...visualImage(model, steps.source, "photo"), ...(steps.sourceAlt ? { alt: String(steps.sourceAlt) } : {}) },
       ...(steps.sourceTitle ? { sourceTitle: normalizeStepLabel(String(steps.sourceTitle)) } : {}),
       ...(steps.sourceHint ? { sourceHint: String(steps.sourceHint) } : {}),
-      ...(steps.hideSourceCopy === true ? { hideSourceCopy: true } : {}),
-      result: visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
+      result: {
+        ...visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
+        ...(steps.resultPosition ? { objectPosition: String(steps.resultPosition) } : {})
+      },
       options,
       credits: `${stepCredits} credits`,
       ...(steps.prompt ? { prompt: String(steps.prompt) } : {}),
@@ -1154,12 +1183,21 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       button: picker.button ?? "",
       href: pickerHref
     },
-    uses: (Array.isArray(source.uses) ? source.uses : []).map((item) => ({
-      frame: item.frame,
-      image: visualImage(model, item.ref, video ? "video" : "photo"),
-      ...(item.frame === "split" ? { imageB: visualImage(model, item.ref_b, video ? "video" : "photo") } : {}),
-      h: item.h ?? "", d: item.d ?? ""
-    })),
+    uses: (Array.isArray(source.uses) ? source.uses : []).map((item) => {
+      const imageRef = item.img ?? item.ref;
+      const image = visualImage(model, imageRef, video ? "video" : "photo");
+      const rowImage = typeof item.img === "string" && item.img.trim()
+        ? mediaImage(model, item.img, "gallery")
+        : undefined;
+      return {
+        frame: item.frame,
+        image,
+        ...(rowImage ? { img: item.alt ? { ...rowImage, alt: String(item.alt) } : rowImage } : {}),
+        ...(item.alt ? { alt: String(item.alt) } : {}),
+        ...(item.frame === "split" ? { imageB: visualImage(model, item.ref_b, video ? "video" : "photo") } : {}),
+        h: item.h ?? "", d: item.d ?? ""
+      };
+    }),
     input: (Array.isArray(source.input) ? source.input : []).map((item) => ({
       good: visualImage(model, item.good, "photo"),
       bad: { ...visualImage(model, item.bad, "photo"), ...(item.bad_alt ? { alt: String(item.bad_alt) } : {}) },
@@ -1633,6 +1671,28 @@ function benefitsList(model, page, items) {
   return autoLinkPage(model, page, [], [items]).groups[0];
 }
 
+const IMAGE_ITEM_FRAMES = new Set(["phone", "browser", "none"]);
+
+// More-section and audience cards may opt into the image-led row treatment. Resolve
+// their media references here so the public payload contains the same complete image
+// shape as every other storefront image and never exposes an internal media ref.
+function imageItemsFor(model, page, items) {
+  return (items || []).map((item) => {
+    const out = { ...item };
+    if (typeof out.img === "string" && out.img.trim()) {
+      const image = mediaImage(model, out.img, "gallery");
+      out.img = typeof out.alt === "string" && out.alt.trim() ? { ...image, alt: out.alt } : image;
+    }
+    if (out.frame !== undefined && !IMAGE_ITEM_FRAMES.has(out.frame)) {
+      assert.fail(`${page.id}: image item frame must be phone, browser or none`);
+    }
+    if (out.alt !== undefined && (typeof out.alt !== "string" || !out.alt.trim())) {
+      assert.fail(`${page.id}: image item alt must be a non-empty string`);
+    }
+    return out;
+  });
+}
+
 // Optional page-owned sections keep their stored shape; only the item descriptions run
 // through the same automatic internal linker as benefit cards.
 function moreSectionsFor(model, page, sections) {
@@ -1643,7 +1703,7 @@ function moreSectionsFor(model, page, sections) {
     eyebrow: section.eyebrow ?? "",
     h2: section.h2,
     ...(section.lead ? { lead: section.lead } : {}),
-    items: linked[index]
+    items: imageItemsFor(model, page, linked[index])
   }));
 }
 
@@ -1759,6 +1819,7 @@ function payloadFor(model, page) {
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
     faq: (c.faq || []).map((item) => ({ q: item.q, a: inlineLinks(model, item.a, page.id) })),
     startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
+    ...(typeof c.cta_title === "string" ? { ctaTitle: c.cta_title } : {}),
     ...(typeof c.cta_lead === "string" ? { ctaLead: c.cta_lead } : {}),
     ...(typeof c.templates_lead === "string" ? { templatesLead: c.templates_lead } : {}),
     ...(typeof c.benefits_h2 === "string" && c.benefits_h2.trim() ? { benefitsH2: c.benefits_h2 } : {}),
@@ -1789,7 +1850,7 @@ function payloadFor(model, page) {
       ...(visual ? { visual } : {}),
       // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
       hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
-        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["f3-home-hero-serum-dropper-a", "f3-home-hero-serum-dropper-b", "f3-home-hero-serum-dropper-c2"].map((key) => imageRef(model, key, "Plain amber dropper bottle in a product scene")) }),
+        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["n:guide:img2-home-hero-shoe-r2-a", "n:guide:img2-home-hero-shoe-r2-b", "n:guide:img2-home-hero-shoe-r2-c"].map((ref) => mediaImage(model, ref, "inset")) }),
         videoHref, photoHref },
       make: {
         title: c.make_title,
@@ -1812,7 +1873,7 @@ function payloadFor(model, page) {
         { title: "Ad sizes and testing", links: pageLinksFor(model, ["guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-ugc-video-ads-guide"]) }
       ],
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
-      ...(c.audience ? { audience: { ...c.audience, items: (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) })) } } : {}),
+      ...(c.audience ? { audience: { ...c.audience, items: imageItemsFor(model, page, (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) }))) } } : {}),
       exampleGallery: examples,
       examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
     };
@@ -1820,7 +1881,6 @@ function payloadFor(model, page) {
   if (t === "hub") {
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits]);
     const hubAppHref = appHref({ tool: "video-ads", size: "9:16", length: "15" }, true);
-    const visual = visualFor(model, page, c.visual, { videoOptions: HOME_VIDEO_OPTIONS }, "video", hubAppHref, c);
     const relatedGroups = [
       { title: "Video templates", links: templateLinksFor(model, "video", 8) },
       { title: "Channels and campaigns", links: pageLinksFor(model, ["plat-tiktok", "tpl-bf"]) }
@@ -1830,6 +1890,7 @@ function payloadFor(model, page) {
       cta: c.maker?.cta ?? "Make my video",
       href: hubAppHref
     };
+    const visual = visualFor(model, page, c.visual, maker, "video", hubAppHref, c);
     // The hub template walls show only real video templates, never the dynamic cards
     // whose target is a tool page.
     const heroKeys = ["beauty", "bf", "launch"];
@@ -1851,7 +1912,9 @@ function payloadFor(model, page) {
     const platformIds = Object.entries(PLAT_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `plat-${slug}`).slice(0, 5);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
-    const maker = { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, TOOL_REL[page.id]?.[0]), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const makerOptions = (c.maker?.options || []).slice(0, 3);
+    const makerLength = video ? displayedMakerVideoLength(makerOptions) : undefined;
+    const maker = { options: makerOptions, cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, TOOL_REL[page.id]?.[0], makerLength ? { length: makerLength } : {}), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     // Per the tagshop link standard, tool pages have no "Templates for X" grid: the
     // case wall is the visual picker, and the page ends with one related-tools block.
     const wallCases = hub ? [] : caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
@@ -1862,7 +1925,7 @@ function payloadFor(model, page) {
       { title: "Browse platforms", links: pageLinksFor(model, ["plat-amazon", "plat-shopify"]) }
     ] : [];
     const heroCards = page.id === "white-background" || page.id === "spokesperson-videos" ? null
-      : hasHero ? [] : hub ? toolHeroCardsForHub(model, page) : [];
+      : hasHero ? [] : hub ? toolHeroCardsForHub(model, page, c.hero_cards) : [];
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
@@ -1875,7 +1938,8 @@ function payloadFor(model, page) {
         ...(OCCASION_TOOLS.includes(page.id) ? [["Good for", names(OCCASION_IDS), specLinks(model, OCCASION_IDS)]] : [])
       ],
       hero: page.id === "white-background" ? { single: imageRef(model, "p_white", "Running shoe on a pure white background") }
-        : page.id === "spokesperson-videos" ? { single: imageRef(model, "presenter", "AI-generated presenter holding a skincare bottle") }
+        : page.id === "spokesperson-videos" ? { single: mediaImage(model, "n:guide:img2-spokesperson-hero-r1", "hero") }
+        : page.id === "photo-hub" ? { cards: heroCards ?? [] }
         : heroCards,
       siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [] };
   }
@@ -1890,7 +1954,9 @@ function payloadFor(model, page) {
     // Per the tagshop standard, template detail pages no longer show a "More templates"
     // sibling grid; their case-plan cases join the visual picker wall.
     const wallCases = caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
-    const maker = { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const makerOptions = (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3);
+    const makerLength = page.group === "video" ? displayedMakerVideoLength(makerOptions) : undefined;
+    const maker = { options: makerOptions, cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key, makerLength ? { length: makerLength } : {}), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c, wallCases);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
@@ -1993,7 +2059,7 @@ function payloadFor(model, page) {
         { title: "Formats for an actor-led ad", links: pageLinksFor(model, ["tpl-ugc", "tpl-howto", "tpl-film", "tpl-drink", "tpl-home", "tpl-outfit"]) },
         { title: "Placement and review", links: pageLinksFor(model, ["tpl-launch", "tpl-compare", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
       ];
-      out.cta = { title: "Create a product ad with an AI actor", lead: "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true }) };
+      out.cta = { title: c.cta_title || "Create a product ad with an AI actor", lead: c.cta_lead || "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10" }) };
     } else if (page.id === "templates") {
       const chips = c.visual?.picker ?? [];
       const groups = c.visual?.directoryFilters?.templateGroups ?? {};
@@ -2274,6 +2340,7 @@ function visualPayloadImages(visual) {
 export function renderedImages(layout, data) {
   const out = [];
   const add = (image) => { if (image?.src) out.push(image.src); };
+  const addImageItems = (items) => (items ?? []).forEach((item) => add(item?.img));
   const addMedia = (media) => {
     if (!media) return false;
     if (media.kind === "pair") { add(media.before); add(media.after); }
@@ -2323,6 +2390,8 @@ export function renderedImages(layout, data) {
   else if (layout === "examples") { addFlows(data.flows); if (!data.visual) { addPairs(); addCards(data.cards); addExamples(); } }
   else add(data.image);
   for (const image of visualPayloadImages(data.visual)) add(image);
+  addImageItems(data.more_sections?.flatMap((section) => section.items ?? []));
+  addImageItems(data.audience?.items);
   return out;
 }
 
@@ -2558,8 +2627,8 @@ export function validateSiteV2(build = buildSiteV2()) {
     const cards = Array.isArray(visual.picker?.cards) ? visual.picker.cards : [];
     const pickerPresent = chips.length > 0 || cards.length > 0;
     if (pickerPresent) {
-      if (chips.length > 20) errors.push(`${pageId}: visual picker must contain at most 20 filters`);
-      if (cards.length > 40) errors.push(`${pageId}: visual picker card count is outside the page range`);
+      if (chips.length > 40) errors.push(`${pageId}: visual picker must contain at most 40 filters`);
+      if (cards.length > 80) errors.push(`${pageId}: visual picker card count is outside the page range`);
       if (!isDirectory && !visual.picker?.title?.trim()) errors.push(`${pageId}: visual picker title and required button are missing`);
       if (!isDirectory && !visual.picker?.button?.trim()) errors.push(`${pageId}: visual picker title and required button are missing`);
       if (new Set(chips.map((chip) => chip.id)).size !== chips.length) errors.push(`${pageId}: visual picker filter ids must be unique`);
@@ -2592,6 +2661,16 @@ export function validateSiteV2(build = buildSiteV2()) {
       }
     }
     if (!isDirectory && uses.length && (uses.length < 2 || uses.length > 4)) errors.push(`${pageId}: visual uses must contain 2-4 rows`);
+    const sourceUses = Array.isArray(source.uses) ? source.uses : [];
+    for (const [index, sourceItem] of sourceUses.entries()) {
+      const compiledItem = uses[index];
+      if (sourceItem?.img !== undefined) {
+        if (typeof sourceItem.img !== "string" || !sourceItem.img.trim()) errors.push(`${pageId}: visual use ${index + 1} img must be a media ref`);
+        if (!compiledItem?.img?.src) errors.push(`${pageId}: visual use ${index + 1} img was not compiled`);
+        if (sourceItem.frame !== undefined && !IMAGE_ITEM_FRAMES.has(sourceItem.frame)) errors.push(`${pageId}: visual use ${index + 1} frame must be phone, browser or none`);
+        if (sourceItem.alt !== undefined && (typeof sourceItem.alt !== "string" || !sourceItem.alt.trim())) errors.push(`${pageId}: visual use ${index + 1} alt must be a non-empty string`);
+      }
+    }
     if (!isDirectory && input.length && (input.length < 2 || input.length > 4)) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
     for (const item of input) {
       if (imageBase(item.good.src) === imageBase(item.bad.src) && !item.darkened) errors.push(`${pageId}: visual input good and bad photos must differ unless the bad image is intentionally darkened`);
@@ -2690,7 +2769,11 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (page.id === "ai-actors") {
       const scenes = Array.isArray(data.actorScenes) ? data.actorScenes : [];
       const actors = Array.isArray(data.actors) ? data.actors : [];
-      if (actors.length !== 36) errors.push(`ai-actors: expected 36 actor cards, got ${actors.length}`);
+      if (!scenes.length) errors.push("ai-actors: actor scenes are missing");
+      for (const scene of scenes) {
+        const count = actors.filter((actor) => actor.scene === scene).length;
+        if (count !== 2) errors.push(`ai-actors: scene ${scene} must have exactly 2 actor cards, got ${count}`);
+      }
       if (new Set(actors.map((actor) => actor.name)).size !== actors.length) errors.push("ai-actors: actor names must be unique");
       for (const actor of actors) {
         if (!scenes.includes(actor.scene)) errors.push(`ai-actors: unknown scene on ${actor.name}`);
@@ -2799,8 +2882,26 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (!section || typeof section.eyebrow !== "string" || typeof section.h2 !== "string" || !section.h2.trim()) errors.push(`${page.id}: invalid more_sections section shape`);
         else if (section.lead !== undefined && typeof section.lead !== "string") errors.push(`${page.id}: more_sections lead must be a string`);
         if (!Array.isArray(section?.items) || !section.items.length) errors.push(`${page.id}: more_sections section must list items`);
-        else for (const item of section.items) if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid more_sections item shape`);
+        else for (const item of section.items) {
+          if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid more_sections item shape`);
+          if (item?.frame !== undefined && !IMAGE_ITEM_FRAMES.has(item.frame)) errors.push(`${page.id}: more_sections item frame must be phone, browser or none`);
+          if (item?.alt !== undefined && (typeof item.alt !== "string" || !item.alt.trim())) errors.push(`${page.id}: more_sections item alt must be a non-empty string`);
+          if (item?.img !== undefined && (!item.img || typeof item.img !== "object" || typeof item.img.src !== "string" || typeof item.img.alt !== "string" || !(Number(item.img.width) > 0) || !(Number(item.img.height) > 0))) errors.push(`${page.id}: more_sections item img must be a compiled image`);
+        }
       }
+    }
+    const validateImageItems = (items, label) => {
+      if (!Array.isArray(items)) return;
+      for (const item of items) {
+        if (item?.frame !== undefined && !IMAGE_ITEM_FRAMES.has(item.frame)) errors.push(`${page.id}: ${label} item frame must be phone, browser or none`);
+        if (item?.alt !== undefined && (typeof item.alt !== "string" || !item.alt.trim())) errors.push(`${page.id}: ${label} item alt must be a non-empty string`);
+        if (item?.img !== undefined && (!item.img || typeof item.img !== "object" || typeof item.img.src !== "string" || typeof item.img.alt !== "string" || !(Number(item.img.width) > 0) || !(Number(item.img.height) > 0))) errors.push(`${page.id}: ${label} item img must be a compiled image`);
+      }
+    };
+    validateImageItems(data.audience?.items, "audience");
+    validateImageItems(data.benefits, "benefits");
+    for (const item of Array.isArray(data.benefits) ? data.benefits : []) {
+      if (item?.icon !== undefined && !["bolt", "layers", "target", "coins", "clock", "refresh", "globe", "shield", "sparkle", "check", "users", "play"].includes(item.icon)) errors.push(`${page.id}: benefits icon is not supported (${item.icon})`);
     }
     if (page.id === "glossary") {
       const entries = Array.isArray(data.entries) ? data.entries : [];

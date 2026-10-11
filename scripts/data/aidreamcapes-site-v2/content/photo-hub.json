@@ -1,57 +1,63 @@
 {
   "id": "photo-hub",
   "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
-  "description": "Turn one product photo into listing, lifestyle, on-model and social shots with our AI product photo generator. Watermark-free images, ready to publish.",
-  "h1": "AI Product Photo Generator for Listing, Lifestyle, and Detail Photos",
-  "eyebrow": "AI photo tools",
-  "lead": "Have a product idea that never made it to a shoot because it felt too complicated? This AI photo generator places your item into new backdrops, looks and scenes instantly from one image.",
+  "description": "Turn one product photo into listing, lifestyle and ad images for your store. Skip studio bookings and see the credit cost before you start.",
+  "h1": "Make Listing and Ad Images with an AI Product Photo Generator",
+  "eyebrow": "AI product photo generator",
+  "lead": "Turn one clear product photo into listing, lifestyle and ad images without renting a studio or booking a model. Switch scenes in minutes and choose the version for your store or ad.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
     "ecommerce product photo AI",
     "AI product photo templates"
   ],
-  "benefits_h2": "Benefits of AI Product Shots Generator",
+  "benefits_h2": "Make more product photos without another shoot",
   "benefits": [
     {
-      "t": "Cost-effective",
-      "d": "Cut the shoot budget: skip the photographer, studio and gear fees, and pay a small credit price per image."
+      "t": "Skip the studio booking",
+      "d": "Costs far less than booking a photographer, studio and gear; each image uses 24 credits.",
+      "icon": "coins"
     },
     {
-      "t": "Time-saving",
-      "d": "No more waiting days for shoots. Get clean, usable product photos in minutes, fast and fuss-free."
+      "t": "Create a new scene in minutes",
+      "d": "Switch from a plain listing view to a lifestyle or ad scene without setting another shoot date.",
+      "icon": "clock"
     },
     {
-      "t": "Scalability",
-      "d": "Need several shots? Generate multiple product images at once for a growing catalog."
+      "t": "Build a full product set",
+      "d": "Use one product photo to make listing, lifestyle, detail and social images for the same item.",
+      "icon": "layers"
     },
     {
-      "t": "No models or props",
-      "d": "Ditch the models and props. Instantly create polished product scenes from one upload."
+      "t": "Sell without a model",
+      "d": "Show clothing, accessories or handheld products in context without booking a model or props.",
+      "icon": "users"
     },
     {
-      "t": "Ready day or night",
-      "d": "Your photo tool is ready whenever you are, on a launch day, a holiday or late at night."
+      "t": "Keep launches moving",
+      "d": "Make a fresh image when a new product, promotion or seasonal scene is ready, with no shoot calendar to manage.",
+      "icon": "refresh"
     },
     {
-      "t": "Fast A/B testing",
-      "d": "Try different backgrounds, styles and compositions, generate variations and see which one works."
+      "t": "Compare more looks for each ad",
+      "d": "Create different backgrounds, crops or compositions and compare the images for your store or ad.",
+      "icon": "target"
     }
   ],
-  "steps_h2": "Steps to generate an AI product photo",
-  "steps_lead": "Three steps take one image to a ready-to-publish square photo.",
+  "steps_h2": "How to make listing-ready product photos",
+  "steps_lead": "Upload one clear product photo, choose the scene, then download a square image for your store or ad.",
   "steps": [
     {
-      "t": "Describe or Upload Your Input",
-      "d": "Type the image you want, or upload one clear product photo for image-to-image generation."
+      "t": "Start with one clear product photo",
+      "d": "Upload the whole item on a simple background so its shape, color and details stay easy to see."
     },
     {
-      "t": "Choose a Photo Type and Scene",
-      "d": "Pick a white-background, lifestyle, on-model or social result and the square size."
+      "t": "Choose the scene your store needs",
+      "d": "Pick a clean listing view, lifestyle setting, on-model scene or social ad look, then keep the square format."
     },
     {
-      "t": "Generate, Refine and Use",
-      "d": "Review the result, refine it with another run, then download and use it in your store or ad."
+      "t": "Download and post",
+      "d": "Choose the look you want, rerun it if needed, then download the image for your store or ad."
     }
   ],
   "maker": {
@@ -70,40 +76,40 @@
   "faq": [
     {
       "q": "What is AI product photo generation?",
-      "a": "It is an AI tool that builds realistic product images automatically, so an online store gets professional-looking photos without a traditional photoshoot."
+      "a": "It turns one clear product photo into a new product image for a listing, lifestyle scene, detail view or ad. Review the result before you publish."
     },
     {
       "q": "How does AI product photo generation work?",
-      "a": "You give the tool a product photo and a short description. It builds new product photos around your item, and you can change the backdrop, light and look."
+      "a": "Upload a product photo or describe the image you need, choose a photo type and scene, then generate a square result. The credit cost appears before you start."
     },
     {
       "q": "Is there a free way to make AI product photos?",
-      "a": "There is no free plan right now. Each image uses 24 credits, and the price shows before the job starts; the pricing page lists the planned monthly plans."
+      "a": "There is no free plan listed. Each image uses 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300 and Premium is $63 for 600. Credits work across photos and videos."
     },
     {
       "q": "Are AI product photos good for ecommerce?",
-      "a": "Yes. They are professional, consistent and affordable for storefronts, catalogs and ad campaigns, as long as you compare each result with the item you ship."
+      "a": "Yes. Use them for listing, lifestyle and ad images, then check each result against the product you ship before publishing. That review keeps the color, shape and details accurate."
     },
     {
       "q": "What kinds of product photos can I make?",
-      "a": "White-background main shots, coastal and indoor lifestyle scenes, on-model views, close details and social ad stills. Every image starts from a photo of your product."
+      "a": "Choose clean listing, lifestyle, on-model, close-detail or social ad images. Every result starts with the product photo or description you provide."
     },
     {
       "q": "What are the benefits of using AI product photos?",
-      "a": "Fast image creation, a consistent look, easy background changes and multiple product variations in minutes instead of days."
+      "a": "You skip a studio booking, avoid model and prop logistics, and test new backgrounds or scenes from one product photo."
     },
     {
       "q": "Are AI product photos copyright-free?",
-      "a": "Downloaded images are watermark-free and licensed for commercial use on Amazon, Shopify, social feeds and ads. Start from photos you own or have permission to use."
+      "a": "Downloads are watermark-free and licensed for commercial use on Amazon, Shopify, social feeds and ads under our terms. That does not make every input photo copyright-free, so start with photos you own or have permission to use."
     },
     {
       "q": "Can I add a price or logo to the photo?",
-      "a": "Type prices, offers and logos in your editor after you download, since generated lettering can come out wrong. That keeps every word and brand mark accurate."
+      "a": "Add prices, offers and logo text in your editor after download. Generated lettering can be wrong, so keep final brand marks and offer details under your control."
     }
   ],
   "examples": {
-    "h2": "Examples of AI Generated Product Photos",
-    "lead": "Real products placed in coastal, minimalist and indoor scenes from one starting photo.",
+    "h2": "AI Product Photo Examples Shoppers Notice",
+    "lead": "Compare listing, lifestyle and detail examples made from one starting photo, then choose the look that fits your store or ad.",
     "groups": [
       {
         "label": "Coastal",
@@ -126,10 +132,10 @@
         "label": "Desert",
         "items": [
           {
-            "ref": "n:guide:mx1w-photo-hub-desert-1-r1",
-            "title": "Desert: amber bottle on stone",
+            "ref": "n:guide:img1-photo-hub-desert-r1",
+            "title": "Desert: ceramic kettle on stone",
             "kind": "photo",
-            "product": "amber skincare bottle"
+            "product": "sea-glass ceramic kettle"
           },
           {
             "ref": "n:guide:mx1w-photo-hub-desert-2-r1",
@@ -175,12 +181,26 @@
       }
     ]
   },
+  "hero_cards": [
+    {
+      "ref": "n:guide:img2-photo-hub-hero-source-r1",
+      "name": "Your product photo",
+      "line": "One clear photo is all you upload",
+      "href": "/ai-image-generation/ecommerce-main-image"
+    },
+    {
+      "ref": "n:guide:img2-photo-hub-hero-result-r1",
+      "name": "Ready for your store",
+      "line": "Same lipstick, styled into a real scene in minutes",
+      "href": "/ai-image-generation/lifestyle-scene"
+    }
+  ],
   "visual": {
     "strip": [],
     "steps": {
       "source": "n:guide:q1-photo-steps-source",
       "sourceAlt": "Plain coral lip balm tube fully in frame on pure white, cap beside it, blank label area and soft even light.",
-      "result": "n:guide:q1-photo-steps-result",
+      "result": "n:guide:img1-photo-hub-steps-result-r1",
       "mode": "photo",
       "prompt": "A clean vanity photo as I apply this lip balm before work.",
       "options": [
@@ -195,20 +215,22 @@
       ]
     },
     "picker": {
-      "title": "Give your product a fresh look",
-      "lead": "Drop your product into a coastal, simple or indoor look in seconds.",
+      "title": "Place your product where shoppers picture it",
+      "lead": "Start with one clear photo, then compare coastal, desert, minimalist and indoor scenes for your listing or ad.",
       "chips": [],
       "cards": [],
       "button": "Open the photo creator"
     },
     "titles": {
       "m2": {
-        "h2": "Steps to generate an AI product photo"
+        "h2": "How to make listing-ready product photos"
       },
       "m3": {
-        "h2": "Give your product a fresh look",
-        "lead": "Drop your product into a coastal, simple or indoor look in seconds."
+        "h2": "Place your product where shoppers picture it",
+        "lead": "Start with one clear photo, then compare coastal, desert, minimalist and indoor scenes for your listing or ad."
       }
     }
-  }
+  },
+  "cta_title": "Put your next product photo to work",
+  "cta_lead": "Upload one clear product photo, choose a scene and see the credit cost before you start."
 }

@@ -1,15 +1,15 @@
 {
   "id": "ai-actors",
-  "title": "AI Actor Generator for Realistic UGC Video Ads | AIVideosUGC",
-  "description": "Make realistic UGC video ads with AI actors. Write a line, pick a presenter, and get a 9:16 ad in minutes, no casting, studio or creator contract.",
-  "h1": "Create More Ad Versions Faster with AI Actors",
+  "title": "AI Actors for UGC Ads | AIVideosUGC",
+  "description": "Get AI actor UGC ads from one product photo. Write the line, choose a presenter, and make clips for paid social, product pages, or short-form posts.",
+  "h1": "Make More UGC Ads with AI Actors",
   "eyebrow": "AI actor generator",
-  "lead": "Give your script to a realistic on-screen presenter and test more hooks, actors and offers every week, without casting calls, studios or creator contracts.",
+  "lead": "Get a product ad in minutes without booking a creator or studio. Write the line, choose an actor and keep new angles moving before the offer goes stale.",
   "actor_visual": {
     "titles": {
       "m2": {
-        "h2": "Create an AI Actor Video in Three Steps",
-        "lead": "One product photo, one line, and a presenter who speaks it on camera."
+        "h2": "Make an AI Actor Video in Minutes",
+        "lead": "Upload one product photo, write one line and pick a presenter who says it on camera."
       }
     },
     "steps": {
@@ -19,6 +19,7 @@
       "sourceHint": "One clear product photo is enough to start",
       "hideSourceCopy": true,
       "result": "n:aa3-ai-actors-kavya-result",
+      "resultPosition": "center 20%",
       "options": [
         [
           "Frame",
@@ -37,16 +38,16 @@
       "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, the selected actor holds the sky-blue moisturizer jar toward the camera, then touches one cheek. Natural creator delivery says: \"This is the moisturizer step I keep beside the sink.\" Sound: her voice and quiet bathroom room tone.",
       "items": [
         {
-          "t": "Upload Your Product Photo",
-          "d": "One clear photo becomes a 9:16 ad you can check against the real item before anyone sees it."
+          "t": "Upload your product photo",
+          "d": "Upload one clear product photo and get an actor-led ad around the item your customer will receive."
         },
         {
-          "t": "Write a Line and Pick a Presenter",
-          "d": "Share your video idea in one sentence, then choose a presenter who speaks the words with matching lip movement."
+          "t": "Write your line and pick an actor",
+          "d": "Write one short line, then choose a face and setting that fit the product and audience."
         },
         {
-          "t": "Generate, Download and Run It",
-          "d": "Get a 10-second vertical clip ready for paid social and short-form feeds, and make a fresh version whenever the offer changes."
+          "t": "Download and post your ad",
+          "d": "Download the vertical ad, then swap the actor, hook or offer when you need another angle."
         }
       ],
       "actor_cards": [
@@ -1108,75 +1109,92 @@
   "benefits_h2": "Why Sellers Choose AI Actors",
   "benefits": [
     {
-      "t": "Speed",
-      "d": "Get a fresh presenter-led ad while the campaign is still running, instead of waiting days on casting, booking and edits."
+      "t": "Make a fresh ad in minutes, not days",
+      "d": "Write one line, choose an actor and skip casting, booking and a studio day for the next angle.",
+      "icon": "clock"
     },
     {
-      "t": "Scale",
-      "d": "Make many versions of one ad and test the presenter, hook and offer, so a small team can review more ideas every week."
+      "t": "Test more hooks without reshooting",
+      "d": "Change the opening line or offer and make another version without a casting call.",
+      "icon": "layers"
     },
     {
-      "t": "Straight",
-      "d": "Every presenter reads your approved line with the same message, with no back and forth before the shoot."
+      "t": "Keep every line on message",
+      "d": "Your chosen actor follows the line you write with matching lip movement, so each version says what you planned.",
+      "icon": "check"
     }
   ],
   "more_sections": [
     {
       "eyebrow": "Use cases",
-      "h2": "Different Use-Cases for AI Actor Videos",
-      "lead": "The same presenters fit the places sellers actually need a talking video.",
+      "h2": "Where AI Actor Videos Sell for You",
+      "lead": "Put AI actor videos where shoppers compare, learn and decide.",
       "items": [
         {
-          "t": "Paid Ads.",
-          "d": "Test presenters, hooks and offers against different audiences without paying creators, sets or crews for every new angle."
+          "t": "Test paid ad angles without booking creators",
+          "d": "Put an actor beside the product in a phone feed. Test hooks and offers without paying creators, sets or crews for every new angle.",
+          "img": "n:guide:cwa-uses-paid-01-r1",
+          "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway for a paid social ad.",
+          "frame": "phone"
         },
         {
-          "t": "Official Websites",
-          "d": "Let a presenter walk visitors through a key feature and answer a common question, so shoppers see the item in use before they buy."
+          "t": "Answer buying questions on your product page",
+          "d": "Let an actor explain a key feature beside the product, so shoppers can watch before they add to cart.",
+          "img": "n:guide:cwa-uses-product-page-02-r1",
+          "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk for a product page video.",
+          "frame": "browser"
         },
         {
-          "t": "Social Media Channels",
-          "d": "Keep a steady flow of fresh vertical clips for short-form feeds without running out of content between launches."
+          "t": "Keep social feeds fresh without another shoot",
+          "d": "Line up vertical actor videos for Reels, TikTok and Shorts without booking a new creator each time.",
+          "img": "n:guide:cwa-uses-social-03-r1",
+          "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote for a vertical social clip.",
+          "frame": "phone"
         },
         {
-          "t": "Product Guides",
-          "d": "Turn setup steps and usage instructions into a short presenter-led video that shoppers can watch instead of reading a long manual."
+          "t": "Show the setup instead of a long manual",
+          "d": "Have an actor demonstrate one useful action, so shoppers can watch instead of reading a long manual.",
+          "img": "n:guide:cwa-uses-guide-04-r1",
+          "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp for a product guide.",
+          "frame": "none"
         }
       ]
     }
   ],
+  "cta_title": "Start your next UGC ad with one product photo",
+  "cta_lead": "Choose an actor, write the line and make a first cut before you spend on a shoot.",
   "faq": [
     {
       "q": "What is an AI actor?",
-      "a": "An AI actor is a realistic generated presenter built for video. You choose the person, give them your line and get a video of them speaking it on camera."
+      "a": "An AI actor is a generated presenter for a product video. You choose the person, give them a line and review the delivery on camera."
     },
     {
       "q": "How do AI actors turn a script into a video?",
-      "a": "You write or paste a short line, choose a presenter, and the video is generated with their voice and lip movement matched to your words."
+      "a": "Write a short line, choose a presenter and generate the clip. The actor's voice and lip movement follow the words you provide."
     },
     {
-      "q": "Where can I use videos made with AI actors?",
-      "a": "Sellers run them as paid social ads, on product pages, in organic social posts and in short product guides and explainers."
+      "q": "What product photo should I upload?",
+      "a": "Upload one clear photo that shows the full product, its color and the details the actor needs to hold or explain."
     },
     {
-      "q": "How do I make a product ad with an AI actor?",
-      "a": "Upload one clear product photo, write a short line, pick a presenter and generate the clip, then download it and add captions or your offer in your own editor."
+      "q": "Can I choose the presenter?",
+      "a": "Yes. Choose from 36 adult presenters across different ages, styles and settings, then open the spokesperson workspace with that presenter selected."
     },
     {
       "q": "What sizes and lengths are available?",
-      "a": "Actor videos come in a vertical 9:16 format at 6, 10, 15 or 30 seconds. The directory starts you with a 10-second draft for a first review."
-    },
-    {
-      "q": "Can I choose how the presenter looks?",
-      "a": "Yes. The directory has 36 presenters across different ages, styles and settings, and each card links to the same spokesperson workspace with that person selected."
+      "a": "The actor tool starts with a 9:16 vertical clip. The workspace offers 6, 10, 15 or 30 seconds, and this directory starts with 10 seconds."
     },
     {
       "q": "How much does an actor video cost?",
-      "a": "Videos are paid with credits. A 10-second actor video costs 40 credits, and plans start with 200 credits; unused credits do not roll over."
+      "a": "A 10-second actor video costs 40 credits. The cost is shown before you start, and a failed job returns its credits."
     },
     {
-      "q": "Do I need to say the presenter is AI-generated?",
-      "a": "Follow the disclosure rules of the platform where you run the ad, and never present an AI actor as a real customer or reviewer."
+      "q": "Where can I use videos made with AI actors?",
+      "a": "Use them as paid social ads, on product pages, in organic social posts and in short product guides after you review the final clip."
+    },
+    {
+      "q": "Is the presenter a real customer?",
+      "a": "No. The presenter is generated, so do not frame the video as a real customer review and follow the disclosure rules for the platform where you publish it."
     }
   ]
 }

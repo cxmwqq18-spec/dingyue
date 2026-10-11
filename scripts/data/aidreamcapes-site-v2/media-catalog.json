@@ -42671,6 +42671,502 @@
           640,
           1280
         ]
+      },
+      "cwa-uses-paid-01-r1": {
+        "file": "cwa-uses-paid-01-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "cwa-uses-product-page-02-r1": {
+        "file": "cwa-uses-product-page-02-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "cwa-uses-social-03-r1": {
+        "file": "cwa-uses-social-03-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote at an outdoor market.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "cwa-uses-guide-04-r1": {
+        "file": "cwa-uses-guide-04-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp at a workbench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mx10-actor-shop-1-r1": {
+        "file": "mx10-actor-shop-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her early fifties in a shop setting speaks to camera while holding a plain sage-green knit sweater.",
+        "variants": [
+          640
+        ]
+      },
+      "sc2-sports-1": {
+        "file": "sc2-sports-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black woman on an outdoor community sports court speaks to camera while holding a plain orange foam practice ball.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-sports-2": {
+        "file": "sc2-sports-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult South Asian man on an outdoor community sports court speaks to camera while holding a plain blue pickleball paddle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-study-room-1": {
+        "file": "sc2-study-room-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian woman in a quiet study room speaks to camera while holding a plain compact mechanical keyboard.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-study-room-2": {
+        "file": "sc2-study-room-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Middle Eastern man in a quiet study room speaks to camera while holding plain round reading glasses.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-classroom-1": {
+        "file": "sc2-classroom-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black woman in a classroom speaks to camera while holding a plain wooden ruler.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-classroom-2": {
+        "file": "sc2-classroom-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white man in a classroom speaks to camera while holding a plain translucent pencil case.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-terrace-1": {
+        "file": "sc2-terrace-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Latina woman on a sunny rooftop terrace speaks to camera while holding a plain rectangular solar lantern.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-terrace-2": {
+        "file": "sc2-terrace-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian man on a sunny rooftop terrace speaks to camera while holding a plain striped patio cushion.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-bathroom-1": {
+        "file": "sc2-bathroom-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult South Asian woman in a bright bathroom speaks to camera while holding a plain oval bar of soap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-bathroom-2": {
+        "file": "sc2-bathroom-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black man in a bright bathroom speaks to camera while holding a plain wooden hairbrush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-exercise-1": {
+        "file": "sc2-exercise-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white woman in a home exercise corner speaks to camera while holding a plain jump rope.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-exercise-2": {
+        "file": "sc2-exercise-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian man in a home exercise corner speaks to camera while holding a plain dark blue foam roller.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-bedroom-1": {
+        "file": "sc2-bedroom-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Latina woman in a calm bedroom speaks to camera while holding a plain navy satin sleep mask.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-bedroom-2": {
+        "file": "sc2-bedroom-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Middle Eastern man in a calm bedroom speaks to camera while holding a plain folded linen throw blanket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-garage-1": {
+        "file": "sc2-garage-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black man in a residential garage speaks to camera while holding a plain teal cordless drill.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-garage-2": {
+        "file": "sc2-garage-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian woman in a residential garage speaks to camera while holding a plain silver ratchet wrench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-interview-1": {
+        "file": "sc2-interview-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white woman on a pedestrian street speaks to camera while holding a plain stainless lunch box during a street interview.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-interview-2": {
+        "file": "sc2-interview-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult South Asian man on a pedestrian street speaks to camera while holding a plain insulated food jar during a street interview.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-pool-1": {
+        "file": "sc2-pool-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black woman beside an outdoor pool speaks to camera while holding plain clear swim goggles.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-pool-2": {
+        "file": "sc2-pool-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white man beside an indoor pool speaks to camera while holding a plain navy silicone swim cap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-reporting-1": {
+        "file": "sc2-reporting-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Latina woman on a city sidewalk reports to camera while holding a plain handheld microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-reporting-2": {
+        "file": "sc2-reporting-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult East Asian man at a city park entrance reports to camera while holding a plain directional microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-travel-1": {
+        "file": "sc2-travel-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black woman in an airport lounge speaks to camera while holding a plain olive travel packing cube.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-travel-2": {
+        "file": "sc2-travel-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult white man in an airport terminal speaks to camera while holding a plain gray travel neck pillow.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-yoga-1": {
+        "file": "sc2-yoga-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult South Asian woman in a yoga studio speaks to camera while holding a plain cork yoga block.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "sc2-yoga-2": {
+        "file": "sc2-yoga-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "adult Black man in a yoga studio speaks to camera while holding a plain sand-colored yoga strap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "img1-video-hub-hero-beauty-r1": {
+        "file": "img1-video-hub-hero-beauty-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with a short silver-blonde pixie haircut holds a plain coral lip balm beside her face at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-video-hub-steps-source-r1": {
+        "file": "img1-video-hub-steps-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte teal insulated water bottle with an integrated black loop handle, fully visible on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-video-hub-steps-result-r1": {
+        "file": "img1-video-hub-steps-result-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with a short close-cropped haircut holds the same plain matte teal insulated water bottle with its black loop handle visible in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-photo-hub-desert-r1": {
+        "file": "img1-photo-hub-desert-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-glass green ceramic kettle on pale desert stone in warm sunset light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-photo-hub-steps-result-r1": {
+        "file": "img1-photo-hub-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short straight copper bob applies the same plain coral lip balm at a bright vanity mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-home-steps-source-r1": {
+        "file": "img1-home-steps-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte navy insulated travel mug with a simple black lid, fully visible on a clean white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-home-steps-result-r1": {
+        "file": "img1-home-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short gray hair holds the same plain matte navy insulated travel mug beside his face in a parked car.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-a": {
+        "file": "img2-home-hero-shoe-a",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain charcoal trail running shoe with a muted rust-orange heel accent on a damp forest trail at dawn.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-b": {
+        "file": "img2-home-hero-shoe-b",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain charcoal trail running shoe with a muted rust-orange heel accent on a wet rock beside a forest path.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-c": {
+        "file": "img2-home-hero-shoe-c",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain charcoal trail running shoe with a muted rust-orange heel accent suspended above a rocky forest path.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-r2-a": {
+        "file": "img2-home-hero-shoe-r2-a",
+        "w": 864,
+        "h": 1536,
+        "alt": "Light gray knit running shoe with white laces and a thick white sole on an urban running track at sunrise.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-r2-b": {
+        "file": "img2-home-hero-shoe-r2-b",
+        "w": 864,
+        "h": 1536,
+        "alt": "Light gray knit running shoe with white laces and a thick white sole on a warm wood gym floor.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-r2-c": {
+        "file": "img2-home-hero-shoe-r2-c",
+        "w": 864,
+        "h": 1536,
+        "alt": "Light gray knit running shoe with white laces and a thick white sole on a lakeside stone walkway.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-spokesperson-hero-r1": {
+        "file": "img2-spokesperson-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with a short salt-and-pepper fade speaks to camera while holding a plain forest-green water bottle in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-spokesperson-step-result-r1": {
+        "file": "img2-spokesperson-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a straight chin-length dark bob looks into the camera while holding a matching plain forest-green water bottle at chest height.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-photo-hub-hero-source-r1": {
+        "file": "img2-photo-hub-hero-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain coral lip balm tube and matching cap fully visible on pure white with a blank label area.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-photo-hub-hero-result-r1": {
+        "file": "img2-photo-hub-hero-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short straight copper bob applies the same plain coral lip balm at a bright vanity mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

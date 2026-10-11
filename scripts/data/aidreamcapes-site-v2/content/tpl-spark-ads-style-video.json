@@ -117,6 +117,7 @@
       "sourceTitle": "Your starting product",
       "sourceHint": "Keep the whole bottle and hinged lid sharp in natural light.",
       "result": "n:guide:q14-spark-step-hiker-r2",
+      "resultPosition": "center 20%",
       "options": [
         [
           "Size",

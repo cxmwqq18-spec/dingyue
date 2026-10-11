@@ -17,6 +17,14 @@ export function isAidreamcapesV2Section(section: SectionInstance | undefined): b
 
 type Props = { data: V2Data; r: V2Resolvers };
 
+function ctaTitle(data: V2Data, fallback: string): string {
+  return text(data.ctaTitle) || fallback;
+}
+
+function ctaLead(data: V2Data, fallback: string): string {
+  return text(data.ctaLead) || fallback;
+}
+
 // The "why use it" block shows on every layout once the page data lists benefits.
 export function BenefitsSection({ data, r, fallbackTitle, eyebrow }: { data: V2Data; r: V2Resolvers; fallbackTitle: string; eyebrow?: string }) {
   const items = list<V2Item>(data.benefits);
@@ -177,7 +185,7 @@ function HomePage({ data, r }: Props) {
         </div>
       </Section>
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />
-      <CtaBand href="/app/create" lead={text(data.ctaLead) || "Upload a photo, pick a template and get a video ad or store-ready photos."} r={r} title="Your next ad starts with one product photo" />
+      <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />
       <AidreamcapesV2HeroTabs />
       <AidreamcapesV2MotionPreference />
     </>
@@ -231,14 +239,14 @@ function VideoHubPage({ data, r }: Props) {
     <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
       <Maker note={text(data.startNote)} maker={maker ?? { options: [], cta: "Make my video", href: text(data.appHref) }} r={r} />
     </PageHero>
-    <VisualStrip includeOverview visual={visual} r={r} />
+    <VisualStrip visual={visual} r={r} />
     <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>
     <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
     <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />
     <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
     <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>
     <Faq items={data.faq} title="Questions about AI video" r={r} />
-    <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
+    <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />
   </>;
   return (
     <>
@@ -264,7 +272,7 @@ function VideoHubPage({ data, r }: Props) {
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Faq items={data.faq} title="Questions about AI video" r={r} />
-      <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
+      <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />
     </>
   );
 }
@@ -341,7 +349,7 @@ function ToolPage({ data, r }: Props) {
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
       </>}
-      <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title={`Make your first ${video ? "video" : "photo"} today`} />
+      <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />
     </>
   );
 }
@@ -374,7 +382,7 @@ function TemplatePage({ data, r }: Props) {
       ) : null}
       <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
       <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions about this template"} r={r} />
-      <CtaBand href={maker.href} lead={text(data.ctaLead) || "Upload one product photo. See the cost before you start."} r={r} title={`Try ${data.label} with your product`} />
+      <CtaBand href={maker.href} lead={ctaLead(data, "Upload one product photo. See the cost before you start.")} r={r} title={ctaTitle(data, `Try ${data.label} with your product`)} />
     </>
   );
   return (
@@ -402,7 +410,7 @@ function TemplatePage({ data, r }: Props) {
       {list<V2Card>(data.more).length ? <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section> : null}
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Faq items={data.faq} title="Questions about this template" r={r} />
-      <CtaBand href={maker.href} lead={text(data.ctaLead) || "Upload one product photo. See the cost before you start."} r={r} title={`Try ${data.label} with your product`} />
+      <CtaBand href={maker.href} lead={ctaLead(data, "Upload one product photo. See the cost before you start.")} r={r} title={ctaTitle(data, `Try ${data.label} with your product`)} />
     </>
   );
 }
@@ -440,7 +448,7 @@ function CollectionPage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
       {list<V2Tool>(data.tools).length ? <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section> : null}
       <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions"} r={r} />
-      <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and choose a look for your next campaign."} r={r} title={`Make ${data.label} content today`} />
+      <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and choose a look for your next campaign.")} r={r} title={ctaTitle(data, `Make ${data.label} content today`)} />
     </>
   );
   return (
@@ -476,7 +484,7 @@ function CollectionPage({ data, r }: Props) {
       <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title="Questions" r={r} />
-      <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and pick a template."} r={r} title={`Make ${data.label} content today`} />
+      <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and pick a template.")} r={r} title={ctaTitle(data, `Make ${data.label} content today`)} />
     </>
   );
 }
@@ -744,7 +752,7 @@ function ArticlePage({ data, r }: Props) {
         </div>
       </article>
       <Faq items={data.faq} title="Questions" r={r} />
-      <CtaBand note={text(data.startNote)} href={tryBox?.href ?? "/app/create"} lead="Upload a product photo and try it." r={r} title="Put it into practice" />
+      <CtaBand note={text(data.startNote)} href={tryBox?.href ?? "/app/create"} lead={ctaLead(data, "Upload a product photo and try it.")} r={r} title={ctaTitle(data, "Put it into practice")} />
     </>
   );
 }
@@ -791,11 +799,11 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         ) : null}
         <Faq items={data.faq} title="Pricing questions" r={r} />
         <NextLinks data={data} r={r} />
-        <CtaBand note={text(data.startNote)} href="/app/create" lead="Pick a plan when you are ready." r={r} title="Start with one product photo" />
+        <CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Pick a plan when you are ready.")} r={r} title={ctaTitle(data, "Start with one product photo")} />
       </>
     );
   }
-  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" r={r} /><NextLinks data={data} r={r} /><CtaBand note={text(data.startNote)} href="/app/create" lead="Upload one product photo and see the cost before you start." r={r} title="Ready to try it?" /></>;
+  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" r={r} /><NextLinks data={data} r={r} /><CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Upload one product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Ready to try it?")} /></>;
   if (layout === "contact") {
     return (
       <>
@@ -821,7 +829,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         {layout === "about" && company ? <Section eyebrow="Company" lead={`${BRAND_NAME} is operated by ${company.name}.`} title={`Who runs ${BRAND_NAME}`}><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" r={r} />
         <NextLinks data={data} r={r} />
-        {layout === "about" || layout === "trust" ? <CtaBand note={text(data.startNote)} href="/app/create" lead="Upload a product photo and try a template." r={r} title="See what you can make" /> : null}
+        {layout === "about" || layout === "trust" ? <CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Upload a product photo and try a template.")} r={r} title={ctaTitle(data, "See what you can make")} /> : null}
       </>
     );
   }

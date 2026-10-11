@@ -1,45 +1,48 @@
 {
   "id": "spokesperson-videos",
   "title": "AI Spokesperson Video Maker for Product Ads | AIVideosUGC",
-  "description": "Turn one product photo into an AI spokesperson ad. Pick a realistic actor and scene, write one line, and get a talking video in minutes.",
-  "h1": "Create Spokesperson Videos with Realistic AI Actors",
+  "description": "Make an AI spokesperson video from one product photo. Choose a person and scene, write your selling point, and get a talking 9:16 ad in minutes.",
+  "h1": "Explain Your Product on Camera with an AI Spokesperson",
   "eyebrow": "AI spokesperson video",
-  "lead": "Some products sell once a feature is explained out loud. Pick a realistic AI actor and a scene, write one line, and get a talking ad in minutes. No casting, no studio day.",
+  "lead": "Turn one product photo into a talking ad in minutes. Pick a spokesperson, give them your key selling point, and put your product in front of shoppers. No casting, no studio day.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
     "AI actor product ads",
     "on-camera product showcase"
   ],
-  "benefits_h2": "Why brands choose spokesperson videos with AIVideosUGC",
+  "benefits_h2": "Put your product’s key point on camera",
   "benefits": [
     {
-      "t": "Speed",
-      "d": "Get a talking ad in minutes. Skip the casting, the booking and the weeks of prep before a shoot."
+      "t": "Get a talking ad in minutes",
+      "d": "Pick a spokesperson, add one product photo and a short line, and have a vertical draft ready without casting, booking or a studio day.",
+      "icon": "clock"
     },
     {
-      "t": "Scale",
-      "d": "Try different actors and hooks with the same product photo. Make fresh versions and split-test them in your ad account."
+      "t": "Test more hooks without reshooting",
+      "d": "Keep the same product photo, then swap the spokesperson, opening line or scene to make new angles for your ad tests.",
+      "icon": "layers"
     },
     {
-      "t": "Straight",
-      "d": "Write one factual line about a feature. The actor delivers it exactly, so no review is invented."
+      "t": "Says exactly what you wrote",
+      "d": "Write one factual line about your product. The spokesperson delivers your script word for word, so each version stays on message.",
+      "icon": "check"
     }
   ],
-  "steps_h2": "How to make a spokesperson video with AI",
-  "steps_lead": "Three steps. No casting, no studio, no filming.",
+  "steps_h2": "Get a talking product ad in three steps",
+  "steps_lead": "Upload your product, choose who explains it, then get a vertical ad you can put to work.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear photo. Keep the whole product in view with its shape and color visible."
+      "t": "Upload the product you want to sell",
+      "d": "Add one clear full view. Keep its shape and color visible so the item carries into the scene."
     },
     {
-      "t": "Pick an Actor and Share Your Idea",
-      "d": "Choose an actor and a scene that fit your audience. Share your video idea in one sentence."
+      "t": "Give your selling point a voice",
+      "d": "Pick a spokesperson and setting, then write one short line that tells shoppers why the feature matters."
     },
     {
-      "t": "Generate and Download",
-      "d": "Review the generated clip and download it. Add captions, price and offer text in your own editor."
+      "t": "Get the clip, then add your offer",
+      "d": "Download the vertical file and finish it in your editor with captions, a price or a promotion."
     }
   ],
   "maker": {
@@ -51,42 +54,46 @@
       [
         "Length",
         "10 seconds"
+      ],
+      [
+        "Credits",
+        "Shown before you start"
       ]
     ],
-    "cta": "Make my spokesperson video"
+    "cta": "Create my spokesperson ad"
   },
   "faq": [
     {
       "q": "What is an AI spokesperson video?",
-      "a": "It is a video where an AI-generated actor holds your product and speaks one line to camera. You make it from a single product photo and use it as a brand-led ad."
+      "a": "It is a short ad where a generated on-camera spokesperson holds your product and explains one approved point. Start with one product photo and a line your team has checked."
     },
     {
-      "q": "How does the actor speak my line?",
-      "a": "Write the line and choose an actor. The generated clip matches the actor's mouth to your words, so keep the line short for a calm delivery."
+      "q": "How do I give the spokesperson a script?",
+      "a": "Write one short sentence in the workspace. The spokesperson speaks that line with matched mouth movement, so keep claims specific and review the result before posting."
     },
     {
-      "q": "Can I choose how the actor looks?",
-      "a": "Yes. Pick from the available adult actors, age ranges and scenes. Small differences between generated results are normal."
+      "q": "Can I choose the person and setting?",
+      "a": "Yes. Choose from the available adult spokesperson scenes, then match the setting to where your product is used. Results can vary slightly, so review each draft."
     },
     {
-      "q": "Which products work best?",
-      "a": "Handheld products show best: skincare, jewelry, snacks, drinks, pet and fitness items. Pick something with a shape or action that stays clear in one hand."
-    },
-    {
-      "q": "Which platforms can I run the video on?",
-      "a": "Downloads have no watermark and can be used commercially. Run them on TikTok Ads, Instagram Reels, YouTube Shorts or your product page, and label AI content where required."
-    },
-    {
-      "q": "Is the presenter a real customer?",
-      "a": "No. The presenter is AI-generated, so never present them as a real buyer. Use the clip as a brand explanation and add an AI disclosure where the platform asks."
+      "q": "Which products work for a spokesperson ad?",
+      "a": "Handheld items with one clear feature work well, including skincare, snacks, drinks, pet supplies and fitness gear. Keep the product fully visible in the source photo."
     },
     {
       "q": "How is this different from hiring a UGC creator?",
-      "a": "A UGC creator films with your real product and can improvise. The AI actor speaks your exact line from a photo, so it is ready in minutes and costs far less."
+      "a": "A UGC creator films with your real product and may improvise. An AI spokesperson starts from your photo and follows your line, so you can make an ad in minutes at a far lower cost."
     },
     {
-      "q": "Are these videos cleared for commercial use?",
-      "a": "Yes. Downloads are licensed for commercial use under our terms. Any captions, music or offers you add still need separate rights."
+      "q": "Where can I use the finished video?",
+      "a": "Use the downloaded 9:16 file in TikTok Ads, Instagram Reels, YouTube Shorts or a product page. Add any required AI disclosure and platform copy before launch."
+    },
+    {
+      "q": "Is the spokesperson a real customer?",
+      "a": "No. It is an AI-generated brand presenter, not a buyer or reviewer. Use it to explain your product and never invent a customer experience."
+    },
+    {
+      "q": "Are these videos commercial, and how much does one cost?",
+      "a": "Yes. Downloads are cleared for commercial use under our terms. A 10-second spokesperson video uses 40 credits, shown before you start, and failed jobs return their credits automatically. Any captions, music or offer artwork you add still need separate rights."
     }
   ],
   "visual": {
@@ -95,7 +102,7 @@
       "sourceAlt": "Plain forest-green bottle shown fully from cap to base on a light neutral background.",
       "sourceTitle": "Your product",
       "sourceHint": "Start with a clear view of the full item.",
-      "result": "n:guide:b1-spokesperson-videos-result",
+      "result": "n:guide:img2-spokesperson-step-result-r1",
       "mode": "video",
       "length": 10,
       "prompt": "Use the uploaded plain forest-green bottle as the exact product reference. Preserve its matte green body and black cap while a presenter holds it at chest height and explains its everyday use. No labels or logos."
@@ -173,8 +180,60 @@
           "label": "Pet"
         },
         {
-          "id": "shop",
-          "label": "Shop"
+          "id": "shopping",
+          "label": "Shopping"
+        },
+        {
+          "id": "sports",
+          "label": "Sports"
+        },
+        {
+          "id": "study-room",
+          "label": "Study Room"
+        },
+        {
+          "id": "classroom",
+          "label": "Classroom"
+        },
+        {
+          "id": "terrace",
+          "label": "Terrace"
+        },
+        {
+          "id": "bathroom",
+          "label": "Bathroom"
+        },
+        {
+          "id": "exercise",
+          "label": "Exercise"
+        },
+        {
+          "id": "bedroom",
+          "label": "Bedroom"
+        },
+        {
+          "id": "garage",
+          "label": "Garage"
+        },
+        {
+          "id": "interview",
+          "label": "Interview"
+        },
+        {
+          "id": "pool",
+          "label": "Pool"
+        },
+        {
+          "id": "reporting",
+          "label": "Reporting"
+        },
+        {
+          "id": "travel",
+          "label": "Travel"
+        },
+        {
+          "id": "yoga",
+          "label": "Yoga"
         }
       ],
       "cards": [
@@ -490,20 +549,254 @@
         },
         {
           "ref": "n:guide:sc1-spk-shop-1",
-          "label": "Shop: canvas tote",
+          "label": "Shopping: canvas tote",
           "chips": [
-            "shop"
+            "shopping"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Inside a small clothing shop, an adult creator holds the plain canvas tote and says: “This is the bag I use for every market run.” They open the handles once. Chest-up handheld selfie, warm shop light. End with the tote held open toward the lens. Sound: clear speech and quiet shop ambience; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:sc1-spk-shop-2",
-          "label": "Shop: ceramic cup",
+          "label": "Shopping: ceramic cup",
           "chips": [
-            "shop"
+            "shopping"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Behind a small cafe counter, an adult creator holds the matte ceramic cup and says: “The rounded handle is what makes this cup easy to carry.” They turn the handle once. Chest-up front-camera selfie, warm window light. End with the handle facing camera. Sound: speech and soft cafe ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-sports-1",
+          "label": "Sports: foam ball",
+          "chips": [
+            "sports"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an outdoor community sports court, an adult Black woman holds the orange foam practice ball at chest height and says: “This lightweight ball is easy to keep in our practice kit.” The presenter turns the ball once toward the lens. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the ball held steady with court lines behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-sports-2",
+          "label": "Sports: paddle",
+          "chips": [
+            "sports"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an outdoor community sports court, an adult South Asian man holds the blue pickleball paddle with its face toward camera and says: “This paddle gives me a clear, comfortable grip for a quick game.” The presenter tilts the paddle once to show its face. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the paddle centered in front of the court. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-study-room-1",
+          "label": "Study Room: keyboard",
+          "chips": [
+            "study-room"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet study room, an adult East Asian woman holds the compact mechanical keyboard at chest height and says: “The compact layout keeps my desk clear during focused work.” The presenter tilts the keyboard once toward the lens. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the keyboard steady above the desk. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-study-room-2",
+          "label": "Study Room: reading glasses",
+          "chips": [
+            "study-room"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet study room, an adult Middle Eastern man holds the round reading glasses by one temple and says: “These light frames stay on my desk when I need a closer look.” The presenter turns the glasses once to catch the window light. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the glasses held steady with the study desk behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-classroom-1",
+          "label": "Classroom: ruler",
+          "chips": [
+            "classroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright classroom, an adult Black woman holds the wooden ruler upright beside her face and says: “This clear edge makes quick classroom measuring easy.” The presenter slides the ruler once through her hand. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the ruler upright with the blank board behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-classroom-2",
+          "label": "Classroom: pencil case",
+          "chips": [
+            "classroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright classroom, an adult white man holds the translucent pencil case open toward the lens and says: “This case keeps my everyday writing tools together.” The presenter opens the zipper once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open case held steady above a classroom desk. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-terrace-1",
+          "label": "Terrace: solar lantern",
+          "chips": [
+            "terrace"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny rooftop terrace, an adult Latina woman holds the rectangular solar lantern by its handle and says: “This small lantern adds a soft glow when the terrace gets dark.” The presenter turns the lantern once to show its panel. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the lantern steady with the skyline behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-terrace-2",
+          "label": "Terrace: patio cushion",
+          "chips": [
+            "terrace"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny rooftop terrace, an adult East Asian man holds the striped patio cushion at chest height and says: “This cushion makes a hard outdoor seat more comfortable.” The presenter flips one corner to show the fabric. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the cushion held flat with the terrace parapet behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bathroom-1",
+          "label": "Bathroom: bar soap",
+          "chips": [
+            "bathroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright modern bathroom, an adult South Asian woman holds the oval bar of soap beside her cheek and says: “This gentle bar is the one I keep by the morning sink.” The presenter turns the soap once in her palm. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the soap held steady with the sink behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bathroom-2",
+          "label": "Bathroom: hairbrush",
+          "chips": [
+            "bathroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright modern bathroom, an adult Black man holds the wooden hairbrush with its bristles facing camera and says: “The wide handle makes this brush easy to use one-handed.” The presenter turns the brush once to show the bristles. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the brush steady beside his face. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-exercise-1",
+          "label": "Exercise: jump rope",
+          "chips": [
+            "exercise"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright home exercise corner, an adult white woman holds the jump rope handles and lets the rope hang clearly and says: “This rope is ready for a short workout in a small space.” The presenter lifts both handles once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the handles held steady with the open floor behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-exercise-2",
+          "label": "Exercise: foam roller",
+          "chips": [
+            "exercise"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright home exercise corner, an adult East Asian man holds the dark blue foam roller horizontally at chest height and says: “This firm roller is easy to keep beside my home workout area.” The presenter turns the roller once to show its texture. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the roller steady with the exercise mat behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bedroom-1",
+          "label": "Bedroom: sleep mask",
+          "chips": [
+            "bedroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm bedroom, an adult Latina woman holds the navy satin sleep mask beside her face and says: “I keep this mask on my bedside table for early nights.” The presenter lifts the mask strap once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the mask steady with the bed and pillows behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bedroom-2",
+          "label": "Bedroom: linen throw",
+          "chips": [
+            "bedroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm bedroom, an adult Middle Eastern man holds the folded linen throw against his chest and says: “This light throw is the extra layer I reach for before bed.” The presenter opens one corner to show the weave. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the folded throw steady with the bed behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-garage-1",
+          "label": "Garage: drill",
+          "chips": [
+            "garage"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tidy residential garage, an adult Black man holds the teal cordless drill upright with the bit visible and says: “This compact drill handles the small fixes on my weekend list.” The presenter turns the drill once to show the grip. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the drill steady with the garage bench behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-garage-2",
+          "label": "Garage: wrench",
+          "chips": [
+            "garage"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tidy residential garage, an adult East Asian woman holds the silver ratchet wrench horizontally at chest height and says: “The ratchet head lets me work in a tight space.” The presenter rotates the wrench once to show the head. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the wrench steady with the tool wall behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-interview-1",
+          "label": "Interview: lunch box",
+          "chips": [
+            "interview"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lively pedestrian street, an adult white woman holds the stainless lunch box while an interviewer brings a plain microphone into frame and says: “This lunch box is what I pack when I am out all day.” The presenter opens the lid once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open lunch box steady during the street interview. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-interview-2",
+          "label": "Interview: food jar",
+          "chips": [
+            "interview"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lively pedestrian street, an adult South Asian man holds the insulated food jar while an interviewer brings a plain microphone into frame and says: “This jar keeps a warm meal ready for my commute.” The presenter twists the lid once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the jar steady while the microphone remains in frame. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-pool-1",
+          "label": "Pool: goggles",
+          "chips": [
+            "pool"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright outdoor swimming pool, an adult Black woman holds the clear swim goggles by the strap beside her face and says: “These goggles sit comfortably for a quick lap.” The presenter turns the goggles once to show both lenses. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the goggles steady with the pool lanes behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-pool-2",
+          "label": "Pool: swim cap",
+          "chips": [
+            "pool"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright indoor swimming pool, an adult white man holds the navy silicone swim cap open toward the lens and says: “This cap folds flat in my swim bag.” The presenter stretches the rim once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the cap steady with the pool water behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-reporting-1",
+          "label": "Reporting: microphone",
+          "chips": [
+            "reporting"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a city sidewalk, an adult Latina woman holds the plain handheld microphone near her mouth and says: “I am testing this compact microphone for a clear street report.” The presenter turns the microphone once to show its grille. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the microphone steady as the city corner stays in view. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-reporting-2",
+          "label": "Reporting: directional mic",
+          "chips": [
+            "reporting"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a city park entrance, an adult East Asian man holds the short directional microphone with its gray windscreen toward the lens and says: “This directional microphone keeps my outdoor report focused.” The presenter tilts the microphone once toward the park. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the microphone steady with the park entrance behind him. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-travel-1",
+          "label": "Travel: packing cube",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright airport lounge, an adult Black woman holds the olive travel packing cube by its handle and says: “This cube keeps small travel layers easy to find.” The presenter opens the zipper once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open cube steady with terminal seating behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-travel-2",
+          "label": "Travel: neck pillow",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright airport terminal, an adult white man holds the gray travel neck pillow around his neck and says: “This pillow gives my head support between flights.” The presenter lifts one side once to show its shape. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the pillow steady with terminal windows behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-yoga-1",
+          "label": "Yoga: yoga block",
+          "chips": [
+            "yoga"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm yoga studio, an adult South Asian woman holds the natural cork yoga block at chest height and says: “This block gives my stretch a little more support.” The presenter turns the block once to show its edges. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the block steady with studio mats behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-yoga-2",
+          "label": "Yoga: yoga strap",
+          "chips": [
+            "yoga"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm yoga studio, an adult Black man holds the sand-colored yoga strap with its buckle visible and says: “This strap helps me keep a steady reach during a pose.” The presenter pulls the strap gently once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the strap relaxed in a loop with the studio behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
           "kind": "video"
         }
       ],
@@ -511,7 +804,7 @@
     },
     "titles": {
       "m4": {
-        "h2": "Different Ways to Use Videos Made with AI Actors"
+        "h2": "Put one clear product point to work"
       },
       "m5": {
         "h2": ""
@@ -522,29 +815,35 @@
     },
     "uses": [
       {
-        "frame": "post",
-        "ref": "n:guide:q4-spokesperson-strip-04",
-        "h": "Paid Ads.",
-        "d": "Spend less on creators, sets and crews. Pick an AI actor and a scene that fit the people you sell to. Make a new version of one ad in minutes and test which one gets the click."
+        "img": "n:guide:q4-spokesperson-strip-04",
+        "alt": "Adult East Asian man holds a plain dark wireless earbud case while speaking to camera in a living room.",
+        "frame": "none",
+        "h": "Paid ads that make the point fast",
+        "d": "Stop paying creators for every new angle. Put one product benefit in a vertical ad, then test the offer that gets the click."
       },
       {
+        "img": "n:guide:q4-spokesperson-use-01",
+        "alt": "Adult East Asian woman holds plain over-ear headphones while speaking to camera in a studio corner.",
         "frame": "browser",
-        "ref": "n:guide:q4-spokesperson-use-01",
-        "h": "Official Websites",
-        "d": "Put an AI actor on your product page as the face of your brand. The actor holds the product and points out one key feature, so shoppers see it in use before they buy."
+        "h": "Product pages that answer before checkout",
+        "d": "Place a spokesperson clip beside your product photos so shoppers hear the feature before they buy."
       },
       {
-        "frame": "tiktok",
-        "ref": "n:gen2:spokesperson-videos-c1",
-        "h": "Social Media Channels",
-        "d": "Keep your feeds full without booking a new shoot each week. Use one presenter across posts for a steady look, or switch actors and scenes for each audience on TikTok, Reels and Shorts."
+        "img": "n:gen2:spokesperson-videos-c1",
+        "alt": "Adult holds a plain toner bottle at eye level while speaking in a bright bathroom.",
+        "frame": "phone",
+        "h": "Social posts with a fresh hook",
+        "d": "Reuse your product photo with a new opening line or scene when your TikTok, Reels or Shorts feed needs another angle."
       },
       {
-        "frame": "1:1",
-        "ref": "n:guide:q4-spokesperson-strip-02",
-        "h": "Product Guides",
-        "d": "Use an AI actor as a guide who shows your product one step at a time. Short clips can cover setup, sizing or daily use, so buyers have fewer questions after they order."
+        "img": "n:guide:q4-spokesperson-strip-02",
+        "alt": "Adult East Asian woman speaks to camera while holding a plain moisturizer jar in a bathroom.",
+        "frame": "none",
+        "h": "Product guides that cut follow-up questions",
+        "d": "Walk through setup, sizing or daily use in a short spoken clip so buyers know what to do after delivery."
       }
     ]
-  }
+  },
+  "cta_title": "Make the next product point count",
+  "cta_lead": "Upload a product photo, write one selling line, and get a talking ad ready to test in minutes. See the credit cost before you start."
 }
