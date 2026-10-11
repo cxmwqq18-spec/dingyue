@@ -1,10 +1,10 @@
 {
   "id": "photo-hub",
   "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
-  "description": "Turn one product photo into listing, lifestyle and ad images for your store. Skip studio bookings and review the credit cost before you start.",
+  "description": "Turn one product photo into listing, lifestyle and ad images for your store. Skip studio bookings and see the credit cost before you start.",
   "h1": "Make Listing and Ad Images with an AI Product Photo Generator",
   "eyebrow": "AI product photo generator",
-  "lead": "Turn one clear product photo into listing, lifestyle and ad images without renting a studio or booking a model. Switch scenes in minutes, then review the result before you publish.",
+  "lead": "Turn one clear product photo into listing, lifestyle and ad images without renting a studio or booking a model. Switch scenes in minutes and choose the version for your store or ad.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -15,7 +15,7 @@
   "benefits": [
     {
       "t": "Skip the studio booking",
-      "d": "Start from a product photo you already have; no studio, lighting kit or photographer is needed.",
+      "d": "Costs far less than booking a photographer, studio and gear; each image uses 24 credits.",
       "icon": "coins"
     },
     {
@@ -39,25 +39,25 @@
       "icon": "refresh"
     },
     {
-      "t": "Test the look before you publish",
+      "t": "Compare more looks for each ad",
       "d": "Create different backgrounds, crops or compositions and compare the images for your store or ad.",
       "icon": "target"
     }
   ],
   "steps_h2": "How to make listing-ready product photos",
-  "steps_lead": "Upload one clear product photo, choose the scene, then review a square image before you publish.",
+  "steps_lead": "Upload one clear product photo, choose the scene, then download a square image for your store or ad.",
   "steps": [
     {
       "t": "Start with one clear product photo",
-      "d": "Upload the whole item on a simple background so its shape, color and details stay easy to check."
+      "d": "Upload the whole item on a simple background so its shape, color and details stay easy to see."
     },
     {
       "t": "Choose the scene your store needs",
       "d": "Pick a clean listing view, lifestyle setting, on-model scene or social ad look, then keep the square format."
     },
     {
-      "t": "Review, refine and download",
-      "d": "Check the product shape and details, rerun a look if needed, then download the image for your store or ad."
+      "t": "Download and post",
+      "d": "Choose the look you want, rerun it if needed, then download the image for your store or ad."
     }
   ],
   "maker": {
@@ -84,11 +84,11 @@
     },
     {
       "q": "Is there a free way to make AI product photos?",
-      "a": "There is no free plan listed. Starter is $24.50 a month for 200 credits, Pro is $35 for 300 and Premium is $63 for 600. Credits work across photos and videos."
+      "a": "There is no free plan listed. Each image uses 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300 and Premium is $63 for 600. Credits work across photos and videos."
     },
     {
       "q": "Are AI product photos good for ecommerce?",
-      "a": "Use them for listing, lifestyle and ad images, then check each result against the product you ship before publishing. That review keeps the color, shape and details accurate."
+      "a": "Yes. Use them for listing, lifestyle and ad images, then check each result against the product you ship before publishing. That review keeps the color, shape and details accurate."
     },
     {
       "q": "What kinds of product photos can I make?",
@@ -100,7 +100,7 @@
     },
     {
       "q": "Are AI product photos copyright-free?",
-      "a": "They are licensed for commercial use under our terms, but that does not make every input photo copyright-free. Start with photos you own or have permission to use."
+      "a": "Downloads are watermark-free and licensed for commercial use on Amazon, Shopify, social feeds and ads under our terms. That does not make every input photo copyright-free, so start with photos you own or have permission to use."
     },
     {
       "q": "Can I add a price or logo to the photo?",
@@ -108,8 +108,8 @@
     }
   ],
   "examples": {
-    "h2": "See the product photo views shoppers need",
-    "lead": "Review listing, lifestyle and detail examples made from one starting photo, then choose the look that fits your store or ad.",
+    "h2": "AI Product Photo Examples Shoppers Notice",
+    "lead": "Compare listing, lifestyle and detail examples made from one starting photo, then choose the look that fits your store or ad.",
     "groups": [
       {
         "label": "Coastal",
@@ -218,5 +218,5 @@
     }
   },
   "cta_title": "Put your next product photo to work",
-  "cta_lead": "Upload one clear product photo, choose a scene and review the credit cost before you start."
+  "cta_lead": "Upload one clear product photo, choose a scene and see the credit cost before you start."
 }
