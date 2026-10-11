@@ -7726,6 +7726,16 @@
         1200
       ],
       "source": "Codex local crop"
+    },
+    "rc5-tpl-beauty-og-1-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Unbranded matte ivory cleanser pump bottle with a pale sage pump on a light stone bathroom vanity.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "gen.sh"
     }
   },
   "clips": {
@@ -44469,6 +44479,61 @@
           1280
         ],
         "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-strip-4-r1": {
+        "file": "rc5-tpl-beauty-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Bare hands apply white moisturizer from an unbranded ivory tube on a light stone bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-drink-strip-04-r1": {
+        "file": "rc5-tpl-drink-strip-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Bare hands pour pale pink hibiscus iced tea from a clear glass carafe into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-drink-strip-06-r1": {
+        "file": "rc5-tpl-drink-strip-06-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian woman with dark red hair in a low bun pours clear citrus tonic into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-film-strip-4-r1": {
+        "file": "rc5-tpl-film-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded matte black desk lamp with a warm glow on a dark walnut sideboard in moody cinematic light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-howto-strip-6-r1": {
+        "file": "rc5-tpl-howto-strip-6-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a short black bob mounts a matte black bicycle safety light on a handlebar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }
