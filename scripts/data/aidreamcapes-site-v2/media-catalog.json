@@ -47787,6 +47787,325 @@
           1280,
           1600
         ]
+      },
+      "fx18-social-benefit-offer": {
+        "file": "fx18-social-benefit-offer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a clean city curb with open space for a headline.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-benefit-editor": {
+        "file": "fx18-social-benefit-editor",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a pale studio surface with clean space for exact ad copy.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-benefit-scene": {
+        "file": "fx18-social-benefit-scene",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a warm oak entryway floor beside a neutral mat.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-curb": {
+        "file": "fx18-social-picker-curb",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a broad city sidewalk curb in dappled morning light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-entryway": {
+        "file": "fx18-social-picker-entryway",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a warm oak entryway floor beside a blank cream wall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-studio": {
+        "file": "fx18-social-picker-studio",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a seamless pale gray studio sweep with a soft shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-input-good": {
+        "file": "fx18-social-input-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A clear product photo of a plain charcoal hiking shoe, large and complete on a pale studio surface.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-input-bad": {
+        "file": "fx18-social-input-bad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe shown too small inside a large pale empty border.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-output-final": {
+        "file": "fx18-social-output-final",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a pale stone walkway beside low greenery, framed for a square social ad.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-use-tote": {
+        "file": "fx18-social-use-tote",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand placing a plain sage insulated bottle into an unbranded canvas tote on an entryway bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-use-carry": {
+        "file": "fx18-social-use-carry",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult carrying a plain cream canvas tote along a quiet city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-use-mug": {
+        "file": "fx18-social-use-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifting a plain cream ceramic mug beside a closed laptop on an oak desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-use-gym": {
+        "file": "fx18-social-use-gym",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand setting a plain matte teal bottle on a clean gym bench beside a folded towel.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-input-good-r2": {
+        "file": "fx18-social-input-good-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe shown large and complete at a slight three-quarter angle on pale stone.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-input-bad-r2": {
+        "file": "fx18-social-input-bad-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe cropped at the lower edge so part of the sole is missing.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-output-alt": {
+        "file": "fx18-social-output-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain charcoal hiking shoe on a warm neutral stone step beside a blank plaster wall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-bottle": {
+        "file": "fx18-social-picker-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte sage insulated bottle on an entryway bench as an adult hand reaches to pick it up.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-mug": {
+        "file": "fx18-social-picker-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream ceramic mug beside a closed laptop on an oak desk as an adult hand lifts it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-tote": {
+        "file": "fx18-social-picker-tote",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream canvas tote carried by an adult along a quiet sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-speaker": {
+        "file": "fx18-social-picker-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact unbranded rounded graphite speaker on a tidy desk as an adult hand presses one button.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-phone-stand": {
+        "file": "fx18-social-picker-phone-stand",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded folding graphite phone stand holding a plain phone with one small circular camera opening.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-bowl": {
+        "file": "fx18-social-picker-bowl",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream ceramic serving bowl as an adult hand pours red sauce over vegetables.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-jacket": {
+        "file": "fx18-social-picker-jacket",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain olive utility jacket on a wooden peg as an adult hand adjusts the cuff.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-organizer": {
+        "file": "fx18-social-picker-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain walnut desk organizer as an adult hand places a pen inside.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-lamp": {
+        "file": "fx18-social-picker-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte cream desk lamp as an adult hand turns its switch beside a notebook.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-leash": {
+        "file": "fx18-social-picker-leash",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain teal pet leash as an adult hand clips it to a calm dog collar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-candle": {
+        "file": "fx18-social-picker-candle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream candle jar on a wooden side table as an adult hand lifts the lid.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-sandal": {
+        "file": "fx18-social-picker-sandal",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cognac leather sandal on a pale stone step as an adult hand adjusts the strap.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx18-social-picker-coffee": {
+        "file": "fx18-social-picker-coffee",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft coffee pouch beside a hand grinder as adult hands pour beans into the grinder.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

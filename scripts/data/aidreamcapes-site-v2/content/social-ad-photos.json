@@ -17,17 +17,23 @@
     {
       "t": "Keep the offer accurate",
       "d": "Leave clean room for your headline, then add the exact price and offer in your editor. Change the copy whenever the promotion changes.",
-      "icon": "check"
+      "icon": "check",
+      "img": "n:guide:fx18-social-benefit-offer",
+      "alt": "A plain charcoal hiking shoe on a clean city curb with open space for a headline."
     },
     {
       "t": "Launch another angle without a shoot",
       "d": "Create a styled square image from one product shot without booking a camera, set or crew.",
-      "icon": "bolt"
+      "icon": "bolt",
+      "img": "n:guide:fx18-social-benefit-editor",
+      "alt": "A plain charcoal hiking shoe on a pale studio surface with clean space above the product."
     },
     {
       "t": "Test scenes from one product shot",
       "d": "Try a city curb, warm entryway or clean studio backdrop, then compare versions before choosing your ad.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:guide:fx18-social-benefit-scene",
+      "alt": "A plain charcoal hiking shoe on a warm oak entryway floor beside a neutral mat."
     }
   ],
   "steps_h2": "How to Make Social Ad Images in 3 Simple Steps",
@@ -109,8 +115,178 @@
     "picker": {
       "title": "Browse social ad scenes",
       "lead": "Choose a setting that gives your product a clear, useful moment in the feed.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "feed-ready",
+          "label": "Feed ready"
+        },
+        {
+          "id": "product-focus",
+          "label": "Product focus"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:fx18-social-picker-curb",
+          "label": "Charcoal hiking shoe city curb",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Place it on a clean city curb in soft morning light with open space for later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-entryway",
+          "label": "Charcoal hiking shoe entryway",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Place it on a warm oak entryway floor beside a blank cream wall with room for later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-studio",
+          "label": "Charcoal hiking shoe studio",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Set it on a seamless pale gray studio sweep with a soft shadow and blank space for later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-bottle",
+          "label": "Sage bottle entryway",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Place a plain matte sage insulated bottle on a bright entryway bench as an adult hand reaches to pick it up. Keep the bottle fully visible with clean blank wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-mug",
+          "label": "Cream mug desk",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain cream ceramic mug beside a closed laptop on a tidy oak desk as an adult hand lifts it. Keep the handle clear and leave blank wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-tote",
+          "label": "Canvas tote sidewalk",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain cream canvas tote carried by an adult through a quiet sidewalk. Keep the full bag visible with clear sky space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-speaker",
+          "label": "Graphite speaker desk",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a compact unbranded rounded graphite speaker on a tidy desk as an adult hand presses one button. Keep the speaker fully visible with clean wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-phone-stand",
+          "label": "Folding phone stand",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show an unbranded folding graphite phone stand holding a plain phone with one small circular camera opening as an adult hand adjusts it on a desk. Leave blank wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-bowl",
+          "label": "Cream bowl sauce demo",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain cream ceramic serving bowl as an adult hand pours red sauce over vegetables on a clean kitchen counter. Keep the bowl fully visible with clear wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-jacket",
+          "label": "Olive jacket cuff",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain olive utility jacket on a simple wooden peg as an adult hand adjusts the cuff. Keep the full garment visible with clean wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-organizer",
+          "label": "Walnut organizer desk",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain walnut desk organizer with open compartments as an adult hand places a pen inside. Keep the organizer fully visible with blank wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-lamp",
+          "label": "Cream lamp desk",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain matte cream desk lamp as an adult hand turns its small switch beside a notebook. Keep the lamp fully visible with clean wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-leash",
+          "label": "Teal leash dog",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain teal pet leash as an adult hand clips it to a calm dog collar on a clean bench. Keep the hardware visible with blank wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-candle",
+          "label": "Cream candle jar",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain cream candle jar on a wooden side table as an adult hand lifts the lid. Keep the jar fully visible with clean wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-sandal",
+          "label": "Leather sandal strap",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain cognac leather sandal on a pale stone step as an adult hand adjusts the strap. Keep the full sandal visible with blank wall space for a later HTML headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx18-social-picker-coffee",
+          "label": "Kraft coffee pour",
+          "chips": [
+            "feed-ready",
+            "product-focus"
+          ],
+          "prompt": "Show a plain kraft coffee pouch with no label beside a hand grinder as adult hands pour beans into the grinder. Keep the products visible with clean wall space for a later HTML headline.",
+          "kind": "photo"
+        }
+      ],
       "button": "Create a social ad image"
     },
     "titles": {
@@ -133,7 +309,59 @@
       "faq": {
         "h2": "Frequently asked questions"
       }
-    }
+    },
+    "uses": [
+      {
+        "img": "n:guide:fx18-social-use-tote",
+        "h": "Show the product in a daily routine",
+        "d": "Place a plain bottle in a work tote so the ad shows how it fits a morning commute.",
+        "alt": "Adult hand placing a plain sage insulated bottle into an unbranded canvas tote on an entryway bench."
+      },
+      {
+        "img": "n:guide:fx18-social-use-carry",
+        "h": "Make the use moment obvious",
+        "d": "Show the tote in motion on a sidewalk, giving shoppers a clear context for the product.",
+        "alt": "Adult carrying a plain cream canvas tote on a quiet city sidewalk."
+      },
+      {
+        "img": "n:guide:fx18-social-use-mug",
+        "h": "Give the offer a calm setting",
+        "d": "Use a clean desk scene to keep the product and the key promise easy to scan.",
+        "alt": "Adult hand lifting a plain cream ceramic mug beside a closed laptop on an oak desk."
+      },
+      {
+        "img": "n:guide:fx18-social-use-gym",
+        "h": "Set the scene for the next campaign",
+        "d": "Put the bottle in a gym moment when the campaign needs a fresh angle.",
+        "alt": "Adult hand setting a plain matte teal bottle on a clean gym bench beside a folded towel."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:fx18-social-input-good",
+        "bad": "n:guide:fx18-social-input-bad",
+        "good_label": "Clear product photo",
+        "bad_label": "Too much empty space"
+      },
+      {
+        "good": "n:guide:fx18-social-input-good-r2",
+        "bad": "n:guide:fx18-social-input-bad-r2",
+        "good_label": "Clear three-quarter photo",
+        "bad_label": "Product cropped at the edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:fx18-social-output-final",
+        "frame": "1:1",
+        "label": "Square social ad"
+      },
+      {
+        "ref": "n:guide:fx18-social-output-alt",
+        "frame": "1:1",
+        "label": "Alternate square ad"
+      }
+    ]
   },
   "more_sections": [
     {
@@ -163,13 +391,5 @@
         }
       ]
     }
-  ],
-  "relatedLinks": [
-    "page:white-background",
-    "page:lifestyle-photos",
-    "page:model-photos",
-    "page:change-background",
-    "page:photo-hub",
-    "page:templates"
   ]
 }
