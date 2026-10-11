@@ -4,28 +4,28 @@
   "description": "Create an unboxing video from one product photo. Show the package opening and product reveal for TikTok, Shorts, store pages or paid ads.",
   "h1": "Create an Unboxing Video from One Product Photo",
   "eyebrow": "AI unboxing video maker",
-  "lead": "Show the package opening and product reveal before checkout. Build the scene from one product photo without filming a new delivery.",
+  "lead": "Show the package opening and product reveal from one product photo. Build the scene without filming a new delivery.",
   "secondary_keywords": [
     "unboxing video maker",
     "product unboxing video for TikTok",
     "packaging reveal video",
     "AI unboxing ad"
   ],
-  "benefits_h2": "Show what arrives before checkout",
+  "benefits_h2": "Make one reveal do more work",
   "benefits": [
     {
-      "t": "Know what arrives before checkout",
-      "d": "See the product and included pieces together so shoppers know what they receive.",
+      "t": "Skip sample shipping and a filming day",
+      "d": "Get a clear package-to-product reveal in minutes from one product photo, with no sample shipment or filming day.",
       "icon": "play"
     },
     {
-      "t": "Get a first look before buying",
-      "d": "See how the package opens and what shoppers receive before they buy.",
+      "t": "Make more openings from one photo",
+      "d": "Swap the box, tissue, hand position or first move to test another reveal without a new delivery shoot.",
       "icon": "target"
     },
     {
-      "t": "Try a new opening without a reshoot",
-      "d": "Change the opening or hand position without another delivery shoot.",
+      "t": "Help buyers see the full set",
+      "d": "Show the product and included pieces in context so your product page and ads answer what arrives before checkout.",
       "icon": "layers"
     }
   ],
@@ -73,7 +73,7 @@
     },
     {
       "q": "Which formats work?",
-      "a": "Use 9:16, 1:1 or 16:9 for supported placements."
+      "a": "Use 9:16, 1:1 or 16:9 for supported channels."
     },
     {
       "q": "Can I use the clip on a product page?",
@@ -96,46 +96,46 @@
   "more_sections": [
     {
       "eyebrow": "Product reveal benefits",
-      "h2": "An unboxing video shoppers can follow",
-      "lead": "A clear reveal shows what arrives and gives shoppers a useful first look before checkout.",
+      "h2": "Build a reveal that sells the whole set",
+      "lead": "Plan each beat so shoppers follow the package, product and extras from opening to final frame.",
       "items": [
         {
-          "t": "See every included piece at a glance",
-          "d": "Keep the package, product and included pieces visible in one clear reveal."
-        },
-        {
-          "t": "Follow the reveal at a glance",
-          "d": "Move from closed package to product in one clear sequence so viewers do not lose the thread."
-        },
-        {
-          "t": "See the full set before checkout",
-          "d": "Show the item and included pieces before the scene ends so buyers can decide with context."
-        },
-        {
-          "t": "Open from another angle",
-          "d": "Try a different opening or hand position without another delivery shoot."
-        },
-        {
-          "t": "See the product as soon as the box opens",
-          "d": "Bring the item into view early so shoppers can inspect it before the clip ends."
-        },
-        {
-          "t": "Finish with a frame shoppers can inspect",
-          "d": "Hold the product steady at the end so its shape and contents stay easy to see."
-        }
+        "t": "Give the reveal a clear starting point",
+        "d": "Open on the box, tissue or seal so viewers know where the reveal begins."
+      },
+      {
+        "t": "Make the opening easy to follow",
+        "d": "Keep the flap, hands and product path visible as the box opens so viewers can follow the motion."
+      },
+      {
+        "t": "Show the product before the extras",
+        "d": "Bring the main item into view before smaller extras so shoppers focus on what they may order."
+      },
+      {
+        "t": "Make the full set easy to understand",
+        "d": "Lay out each accessory after the product so the package contents read clearly."
+      },
+      {
+        "t": "Leave a frame buyers can inspect",
+        "d": "Pause with the product centered and unobstructed so its shape and finish stay easy to inspect."
+      },
+      {
+        "t": "Fit the reveal into a social feed",
+        "d": "Keep the box and product centered in a 9:16 composition so the reveal fills a social feed."
+      }
       ]
     }
   ],
   "compare": {
-    "h2": "A studio unboxing or an AI reveal",
+    "h2": "Skip the studio unboxing setup",
     "items": [
       {
         "t": "Studio unboxing",
-        "d": "Coordinate a crew, props and a delivery sample before filming."
+        "d": "Ship a sample, book a crew and wait for edits before one reveal is ready."
       },
       {
         "t": "AI unboxing video",
-        "d": "Start with one product photo and show the reveal in a short clip."
+        "d": "Start with one product photo, make a reveal in minutes, and try another opening without a new shoot."
       }
     ]
   },
