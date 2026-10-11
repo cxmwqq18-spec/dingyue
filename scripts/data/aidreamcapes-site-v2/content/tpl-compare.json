@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "See size choices at a glance",
-      "d": "Show small and large stainless bottles together so shoppers can judge scale before choosing."
+      "d": "Show small and large stainless bottles together so shoppers can judge scale before choosing.",
+      "img": "n:guide:fx20-compare-benefit-size-r1",
+      "alt": "Small and large plain stainless bottles standing side by side while an adult hand points between them."
     },
     {
       "t": "Compare colors without another shoot",
-      "d": "Place charcoal and cream tumblers in one frame so the difference is clear from the first second."
+      "d": "Place charcoal and cream tumblers in one frame so the difference is clear from the first second.",
+      "img": "n:guide:fx20-compare-benefit-color-r1",
+      "alt": "Charcoal and warm cream plain insulated tumblers aligned side by side by adult hands."
     },
     {
       "t": "Make finish choices easier",
-      "d": "Show navy and rust knit beanies side by side so shoppers can compare color and texture."
+      "d": "Show navy and rust knit beanies side by side so shoppers can compare color and texture.",
+      "img": "n:guide:fx20-compare-benefit-finish-r1",
+      "alt": "Navy and rust plain knit beanies shown side by side while adult hands turn them."
     },
     {
       "t": "Show the right capacity",
-      "d": "Arrange two packed backpacks at different sizes so shoppers can see how much each one holds."
+      "d": "Arrange two packed backpacks at different sizes so shoppers can see how much each one holds.",
+      "img": "n:guide:fx20-compare-benefit-capacity-r1",
+      "alt": "Two plain canvas backpacks in different sizes shown side by side as an adult opens the larger bag."
     }
   ],
   "secondary_keywords": [

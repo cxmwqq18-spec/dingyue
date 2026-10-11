@@ -47787,6 +47787,94 @@
           1280,
           1600
         ]
+      },
+      "fx20-compare-benefit-size-r1": {
+        "file": "fx20-compare-benefit-size-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small and large plain stainless bottles standing side by side while an adult hand points between them.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx20-compare-benefit-color-r1": {
+        "file": "fx20-compare-benefit-color-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal and warm cream plain insulated tumblers aligned side by side by adult hands.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx20-compare-benefit-finish-r1": {
+        "file": "fx20-compare-benefit-finish-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Navy and rust plain knit beanies shown side by side while adult hands turn them.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx20-compare-benefit-capacity-r1": {
+        "file": "fx20-compare-benefit-capacity-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two plain canvas backpacks in different sizes shown side by side as an adult opens the larger bag.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx20-home-benefit-drawer-r1": {
+        "file": "fx20-home-benefit-drawer-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands slide a plain dark gray divider tray into a crowded kitchen drawer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx20-home-benefit-pantry-r1": {
+        "file": "fx20-home-benefit-pantry-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place plain clear pantry bins and unmarked jars onto a shelf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx20-home-benefit-closet-r1": {
+        "file": "fx20-home-benefit-closet-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place a plain woven shelf organizer into a closet cubby beside folded clothes.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx20-home-benefit-desk-r1": {
+        "file": "fx20-home-benefit-desk-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands guide loose desk cables into a plain black cable organizer beneath a wooden desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }
