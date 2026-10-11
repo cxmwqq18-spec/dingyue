@@ -114,13 +114,18 @@
       "drink": {
         "ref": "f:q17-ind-food-drinks-card-drink",
         "alt": "Hand pouring sparkling citrus drink into an ice-filled glass."
+      },
+      "box": {
+        "ref": "f:q17-ind-food-drinks-picker-4",
+        "alt": "Hands revealing plain snack pouches from an open sampler box."
       }
     }
   },
   "ind-health-wellness": {
     "swap": {
       "outfit": "howto",
-      "launch": "ugc"
+      "launch": "ugc",
+      "sale": "howto"
     },
     "images": {
       "howto": {
@@ -133,7 +138,15 @@
       },
       "carousel-video-ad": {
         "ref": "n:guide:q16-wellness-cork-block-demo",
-        "alt": "Adult supports a seated side stretch with a natural cork yoga block."
+        "alt": "Adult using a natural cork yoga block during a seated stretch."
+      },
+      "bf": {
+        "ref": "n:gen2:ind-health-wellness-c3",
+        "alt": "Plain vitamin bottle beside a glass of water at breakfast."
+      },
+      "beauty": {
+        "ref": "n:guide:q16-wellness-hand-soap",
+        "alt": "Hands press a plain soap dispenser over an open palm."
       }
     }
   },
@@ -151,6 +164,9 @@
         "ref": "f:k7-ind-home-living-picker-02-planter-water",
         "alt": "Hand pouring water into the reservoir of a self-watering planter."
       }
+    },
+    "swap": {
+      "drink": "demo"
     }
   },
   "ind-jewelry-accessories": {
@@ -338,6 +354,10 @@
       "creator": {
         "ref": "n:gen2:video-ads-g1",
         "alt": "Hand picking up a compact speaker from a desk beside a laptop."
+      },
+      "howto": {
+        "ref": "n:guide:q16-electronics-charging-pad-demo",
+        "alt": "Adult hand setting a plain graphite phone onto a charcoal wireless charging pad."
       }
     }
   },

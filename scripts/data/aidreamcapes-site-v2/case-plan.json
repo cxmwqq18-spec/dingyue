@@ -931,9 +931,9 @@
         "title": "Travel demo: Charger at the gate"
       },
       {
-        "ref": "n:gen2:ind-electronics-c3",
-        "product": "smart speaker",
-        "title": "Cinematic hero: Smart speaker on a shelf"
+        "ref": "n:guide:q16-electronics-speaker-button",
+        "product": "compact portable speaker",
+        "title": "Speaker control demo: one button press"
       },
       {
         "ref": "n:guide:k7-ind-electronics-case-plan-3-ref-n-gen2-ind-electronics-c4",
