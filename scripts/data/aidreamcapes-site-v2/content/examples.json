@@ -1,18 +1,18 @@
 {
   "id": "examples",
   "title": "AI Product Photo and Video Examples | AIVideosUGC",
-  "description": "See real product examples: one photo becomes a finished image or video, from a folding e-bike ad to lipstick, hoodies, handbags and boots. Make yours.",
+  "description": "See six product examples from one uploaded photo to a finished image or video. Compare the source, scene and result, then make your own.",
   "h1": "AI Product Photo and Video Examples, Start to Finish",
   "eyebrow": "From photo to ad",
-  "lead": "Stuck on what a good product ad should look like? Each example follows one item from the uploaded photo to the finished image or video, so you can copy a proven direction with your product.",
-  "card": "Fifteen products, from lipstick to a folding e-bike, shown in finished photos and video.",
+  "lead": "Stuck on what a good product ad should look like? Each example follows one item from the uploaded photo to the finished image or video, so you can choose a clear direction for your product.",
+  "card": "Six products, from a travel mug to sunscreen, shown in finished photos and video.",
   "secondary_keywords": [
     "AI product video ad examples",
     "AI lifestyle photo examples",
     "product photo to video ad",
     "AI social ad image examples"
   ],
-  "intro": "Each example follows one product through a set of photo or video outputs. Browse the complete set, filter by category or format, and open a tool link to try a similar direction with your product.",
+  "intro": "Each example follows one product through a set of photo or video outputs. Browse the complete set and open a tool link to try a similar direction with your product.",
   "benefits_h2": "Why use the examples gallery?",
   "benefits": [
     {
@@ -20,19 +20,19 @@
       "d": "Every card pairs the uploaded starting photo with the finished result, so you see exactly what one image becomes before you spend a credit."
     },
     {
-      "t": "Proven directions, not blank-page ideas",
-      "d": "Pick a format that already works for a similar item instead of inventing a scene from scratch. Each example links to the tool that produced it."
+      "t": "Choose a clear direction",
+      "d": "Compare a source photo, scene and finished result instead of inventing a shot from scratch, then choose a direction that fits your product."
     },
     {
-      "t": "Copy the structure with your product",
-      "d": "Use the same shot type, movement, and framing with your own photo. The product changes but the pattern behind the ad stays proven."
+      "t": "Keep the product consistent",
+      "d": "Use the same product across the source, scene and result so the finished ad stays easy to review."
     },
     {
       "t": "Results you can publish",
       "d": "Files you generate from these directions are watermark-free and licensed for commercial use in listings, feeds, and paid ads."
     }
   ],
-  "steps_h2": "How to turn an example into your own ad",
+  "steps_h2": "How to Make AI Product Examples in 3 Simple Steps",
   "steps_lead": "Three steps take you from an example to a finished image or video of your product.",
   "steps": [
     {
@@ -40,7 +40,7 @@
       "d": "Add one photo of the item you want to promote. The result is built around that product, just like the example's starting photo."
     },
     {
-      "t": "Pick an Example and Scene",
+      "t": "Pick a Scene",
       "d": "Choose a finished look you like and open its tool. Apply the same shot type and action to your own product."
     },
     {
@@ -50,206 +50,93 @@
   ],
   "cases": [
     {
-      "id": "ebike",
-      "t": "Creator Review: Folding e-bike hinge check",
-      "d": "An adult creator holds the handlebar, looks into the camera and explains the folding hinge in a concise product review.",
-      "imageLabels": [
-        "Uploaded e-bike photo",
-        "Creator Review: Folding e-bike"
-      ],
-      "imageRefs": [
-        "n:guide:plat-youtube-shorts-size-portrait-ebike",
-        "n:guide:q6-examples-ebike-review"
-      ]
-    },
-    {
-      "id": "lipstick",
-      "t": "GRWM: Tinted lip balm before work",
-      "d": "An adult creator applies a coral tinted lip balm, then faces the camera holding the product to describe its shade as part of a getting-ready routine.",
-      "imageRefs": [
-        "n:gen2:h1-examples-lipstick-source",
-        "n:guide:q6-examples-lipstick-application",
-        "n:guide:q6-examples-lipstick-review"
-      ],
-      "imageLabels": [
-        "Uploaded lip product",
-        "GRWM: Lip balm application",
-        "Creator Review: Coral lip balm"
-      ]
-    },
-    {
-      "id": "hoodie",
-      "t": "Try-On: Gray hoodie fit and drape",
-      "d": "Start with the fabric detail, then show an adult trying on the hoodie and turning once so shoppers can see its fit and drape.",
-      "imageRefs": [
-        "n:hoodie-detail",
-        "n:gen2:tpl-tryon-c3",
-        "n:guide:q6-examples-hoodie-tryon"
-      ],
-      "imageLabels": [
-        "Fabric detail",
-        "Try-On: Hoodie fit",
-        "Try-On: Hoodie drape"
-      ]
-    },
-    {
-      "id": "handbag",
-      "t": "Day in the Life: Pack a leather handbag",
-      "d": "An adult opens a leather handbag, puts in daily essentials and carries it out from a cafe.",
-      "imageRefs": [
-        null,
-        "n:guide:q6-examples-handbag-day",
-        null
-      ],
-      "imageLabels": [
-        "Uploaded bag photo",
-        "Day in the Life: Pack essentials",
-        "Day in the Life: Carry the bag"
-      ]
-    },
-    {
-      "id": "boots",
-      "t": "Try-On: Chelsea boots on a city walk",
-      "d": "Show leather and stitching, then an adult wearing the boots on a city walk with the fit clear.",
-      "imageRefs": [
-        "n:guide:ind-shoes-m6-boot-detail",
-        null,
-        "n:guide:q6-examples-boots-walk"
-      ],
-      "imageLabels": [
-        "Leather detail",
-        "Try-On: First steps",
-        "Try-On: City walk"
-      ]
-    },
-    {
       "id": "tote",
-      "t": "Day in the Life: Pack and carry a tote",
-      "d": "An adult packs everyday essentials into a linen tote, then carries it toward a city bike.",
+      "t": "Product Scene: Matte travel mug on a desk",
+      "d": "Start with a matte white travel mug, place it in a clean desk scene and review the finished product image.",
       "imageRefs": [
-        null,
-        "n:guide:q6-examples-tote-pack",
-        null
+        "g:ecommerce-main-image/source-input",
+        "g:ecommerce-main-image/example-03",
+        "g:ecommerce-main-image/hero-output"
       ],
       "imageLabels": [
-        "Uploaded tote photo",
-        "Day in the Life: Pack essentials",
-        "Day in the Life: Carry the tote"
-      ]
-    },
-    {
-      "id": "sunglasses",
-      "t": "Try-On: Black sunglasses fit check",
-      "d": "An adult takes black sunglasses from a case, tries them on in a mirror, and checks the fit outdoors.",
-      "imageRefs": [
-        null,
-        "n:guide:q6-examples-sunglasses-mirror-black-r1",
-        "n:guide:q6-examples-sunglasses-outdoor-black-r1"
-      ],
-      "imageLabels": [
-        "Uploaded black sunglasses",
-        "Try-On: Black frames in a mirror",
-        "Try-On: Black frames on a city walk"
-      ]
-    },
-    {
-      "id": "coffee",
-      "t": "ASMR Unboxing: Open a coffee bag",
-      "d": "Hands open a blank-label coffee bag and reveal its beans, then an adult takes a first sip from a clear glass while the coffee package stays visible.",
-      "imageRefs": [
-        null,
-        "n:guide:q6-examples-coffee-open-r2",
-        "n:guide:q6-examples-coffee-sip-r2"
-      ],
-      "imageLabels": [
-        "Uploaded coffee bag",
-        "ASMR Unboxing: Open the bag",
-        "First-Sip Reaction: Fresh coffee"
-      ]
-    },
-    {
-      "id": "necklace",
-      "t": "Try-On: Silver necklace scale check",
-      "d": "An adult wears the silver pendant to show its scale, followed by a close view of its shape and finish.",
-      "imageRefs": [
-        null,
-        "g:jewelry-positioning/example-07",
-        null
-      ]
-    },
-    {
-      "id": "candle",
-      "t": "Problem to Fix: Pet hair off the sofa",
-      "d": "A reusable pet brush gathers fur from an upholstered sofa; the adult shows the clean strip and collected fur.",
-      "imageRefs": [
-        "n:guide:q6-examples-petbrush-source",
-        "n:guide:q6-examples-petbrush-problem",
-        "n:guide:q6-examples-petbrush-result"
-      ],
-      "imageLabels": [
-        "Source product photo",
-        "Problem to Fix: Lift pet hair",
-        "Before & After: Clean sofa"
-      ]
-    },
-    {
-      "id": "phonecase",
-      "t": "Hand Demo: Fit a generic phone case",
-      "d": "Use a generic case with one small oval camera opening; show it fitting a plain phone and the protective edge in an adult hand.",
-      "imageRefs": [
-        "n:guide:q6-examples-phonecase-source",
-        "n:guide:q6-examples-phonecase-fit",
-        "n:guide:q6-examples-phonecase-drop"
-      ],
-      "imageLabels": [
-        "Source product photo",
-        "Hand Demo: Fit the case",
-        "Hand Demo: Check the edge"
+        "Uploaded travel mug photo",
+        "Travel mug in a desk scene",
+        "Finished travel mug image"
       ]
     },
     {
       "id": "jacket",
-      "t": "Try-On: Blue jacket fit and fabric",
-      "d": "Show the uploaded jacket, an adult wearing it outdoors and a close fabric view for fit and material.",
+      "t": "Lifestyle Scene: Linen tote for a city day",
+      "d": "Start with a linen tote, show it beside an everyday outfit and review the finished lifestyle image.",
       "imageRefs": [
-        "g:virtual-try-on/source-input",
-        "g:virtual-try-on/example-05",
-        "g:virtual-try-on/example-07"
+        "g:lifestyle-scene/source-input",
+        "g:lifestyle-scene/example-01",
+        "g:lifestyle-scene/example-03"
       ],
       "imageLabels": [
-        "Uploaded jacket photo",
-        "Try-On: Jacket outdoors",
-        "Texture Demo: Jacket fabric"
+        "Uploaded linen tote photo",
+        "Linen tote in a lifestyle scene",
+        "Finished linen tote image"
       ]
     },
     {
-      "id": "yogamat",
-      "t": "Routine: Unroll a yoga mat and stretch",
-      "d": "An adult unrolls a teal fitness mat, then stretches on it in a bright workout space.",
+      "id": "lipstick",
+      "t": "Product Scene: Fluted vase with flowers",
+      "d": "Start with a white fluted vase, place it with flowers in a bright room and review the finished product image.",
       "imageRefs": [
-        "n:yogamat-rolled",
-        "n:guide:q6-examples-yogamat-use",
-        null
+        "g:background-remove-replace/source-input",
+        "g:background-remove-replace/example-01",
+        "g:background-remove-replace/example-03"
       ],
       "imageLabels": [
-        "Uploaded yoga mat",
-        "Routine: Unroll the mat",
-        "Routine: Stretch"
+        "Uploaded fluted vase photo",
+        "Fluted vase with flowers",
+        "Finished vase image"
       ]
     },
     {
-      "id": "hotsauce",
-      "t": "Recipe Demo: Hot sauce taco first bite",
-      "d": "Pour hot sauce over a taco, then show an adult tasting it and reacting naturally.",
+      "id": "hoodie",
+      "t": "Detail Scene: Brown leather wallet",
+      "d": "Start with a brown leather wallet, show its material and finish in close detail and review the finished image.",
       "imageRefs": [
-        null,
-        null,
-        "n:guide:q6-examples-hotsauce-reaction"
+        "g:macro-details/source-input",
+        "g:macro-details/hero-output",
+        "g:macro-details/example-02"
       ],
       "imageLabels": [
-        "Uploaded sauce bottle",
-        "Recipe Demo: Sauce on tacos",
-        "First-Bite Reaction"
+        "Uploaded leather wallet photo",
+        "Leather wallet detail",
+        "Finished wallet image"
+      ]
+    },
+    {
+      "id": "handbag",
+      "t": "Product Scene: Gray running shoe for a feed ad",
+      "d": "Start with a gray knit running shoe, set it in a simple feed-ad scene and review the finished product image.",
+      "imageRefs": [
+        "g:feed-ad-still/example-02",
+        "g:feed-ad-still/example-01",
+        "g:feed-ad-still/hero-output"
+      ],
+      "imageLabels": [
+        "Running shoe starting photo",
+        "Running shoe in a feed scene",
+        "Finished running shoe image"
+      ]
+    },
+    {
+      "id": "boots",
+      "t": "Vertical Scene: Sunscreen tube for a short ad",
+      "d": "Start with a plain sunscreen tube, frame it for a vertical scene and review the finished product image.",
+      "imageRefs": [
+        "g:story-ad-vertical/source-input",
+        "g:story-ad-vertical/example-01",
+        "g:story-ad-vertical/hero-output"
+      ],
+      "imageLabels": [
+        "Uploaded sunscreen tube photo",
+        "Sunscreen tube in a vertical scene",
+        "Finished sunscreen image"
       ]
     }
   ],
@@ -462,48 +349,34 @@
   },
   "visual": {
     "strip": [
-      "n:guide:q6-examples-strip-1",
-      "n:guide:q6-examples-strip-2",
-      "n:guide:q6-examples-strip-3",
-      "n:guide:q6-examples-strip-4",
-      "n:guide:q6-examples-strip-5",
-      "n:guide:q6-examples-strip-6"
+      "g:ecommerce-main-image/example-04",
+      "g:lifestyle-scene/example-02",
+      "g:background-remove-replace/example-07",
+      "g:macro-details/example-04",
+      "g:feed-ad-still/example-07",
+      "g:story-ad-vertical/example-02"
     ],
     "steps": {
-      "source": "n:guide:q6-examples-strip-1",
-      "sourceAlt": "A product ready to be turned into a creator-style example.",
-      "result": "n:guide:q6-examples-strip-2",
-      "mode": "video",
-      "prompt": "Pick an example scene for your product.",
+      "source": "g:ecommerce-main-image/example-05",
+      "sourceAlt": "A matte ceramic travel mug ready for an example scene.",
+      "result": "g:ecommerce-main-image/example-02",
+      "mode": "photo",
+      "prompt": "Pick a product scene.",
       "options": [
-        ["Scene", "Creator review"],
-        ["Format", "Vertical video"]
+        [
+          "Scene",
+          "Clean desk"
+        ],
+        [
+          "Format",
+          "Product image"
+        ]
       ]
     },
     "picker": [
       {
-        "id": "creator-review",
-        "label": "Creator Review"
-      },
-      {
-        "id": "tryon",
-        "label": "Try-On"
-      },
-      {
-        "id": "routine",
-        "label": "GRWM & Routine"
-      },
-      {
-        "id": "demo",
-        "label": "Hand Demo & Unboxing"
-      },
-      {
-        "id": "food-demo",
-        "label": "Recipe & First Bite"
-      },
-      {
         "id": "video",
-        "label": "Video"
+        "label": "Product Examples"
       }
     ],
     "uses": [],
@@ -517,51 +390,23 @@
     },
     "directoryFilters": {
       "cases": {
-        "ebike": [
-          "creator-review",
+        "tote": [
+          "video"
+        ],
+        "jacket": [
           "video"
         ],
         "lipstick": [
-          "creator-review",
-          "routine",
           "video"
         ],
         "hoodie": [
-          "tryon"
+          "video"
         ],
         "handbag": [
-          "routine"
+          "video"
         ],
         "boots": [
-          "tryon"
-        ],
-        "tote": [
-          "routine"
-        ],
-        "sunglasses": [
-          "tryon"
-        ],
-        "coffee": [
-          "demo",
-          "food-demo"
-        ],
-        "necklace": [
-          "tryon"
-        ],
-        "candle": [
-          "problem-fix"
-        ],
-        "phonecase": [
-          "demo"
-        ],
-        "jacket": [
-          "tryon"
-        ],
-        "yogamat": [
-          "routine"
-        ],
-        "hotsauce": [
-          "food-demo"
+          "video"
         ]
       }
     }

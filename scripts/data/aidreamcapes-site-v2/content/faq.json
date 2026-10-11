@@ -40,6 +40,10 @@
     {
       "q": "Can I request a refund for unused credits?",
       "a": "You can request a refund for purchased credits within 30 days if none of those credits have been used. See the [Refund Policy](/refunds)."
+    },
+    {
+      "q": "What do product photos and video jobs cost in credits?",
+      "a": "A product photo costs 24 credits. Videos use 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The exact cost appears before you start, and failed jobs return their credits."
     }
   ]
 }

@@ -640,9 +640,9 @@
     "guide-ad-sizes-by-platform": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q12-guide-ad-sizes-sunscreen"
+        "image": "n:guide:rd1-guide-ad-sizes-by-platform-cover-r1"
       },
-      "og": "n:guide:q12-guide-ad-sizes-sunscreen"
+      "og": "n:guide:rd1-guide-ad-sizes-by-platform-cover-r1"
     },
     "guide-testing-ad-versions": {
       "hero": {
@@ -654,9 +654,9 @@
     "blog-ai-product-photography-guide": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-blog-product-photo-handbag-cafe"
+        "image": "n:guide:rd1-blog-ai-product-photography-guide-cover-r1"
       },
-      "og": "n:guide:k8-blog-product-photo-handbag-cafe"
+      "og": "n:guide:rd1-blog-ai-product-photography-guide-cover-r1"
     },
     "blog-ai-ugc-video-ads-guide": {
       "hero": {
@@ -668,16 +668,16 @@
     "blog-ai-video-review-checklist": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-blog-review-size-reference-example-02"
+        "image": "n:guide:rd1-blog-ai-video-review-checklist-cover-r1"
       },
-      "og": "n:guide:k8-blog-review-size-reference-example-02"
+      "og": "n:guide:rd1-blog-ai-video-review-checklist-cover-r1"
     },
     "blog-unboxing-videos-for-launches": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-blog-unboxing-unboxing"
+        "image": "n:guide:rd1-blog-unboxing-videos-for-launches-cover-r1"
       },
-      "og": "n:guide:k8-blog-unboxing-unboxing"
+      "og": "n:guide:rd1-blog-unboxing-videos-for-launches-cover-r1"
     },
     "blog-model-photos-without-a-photoshoot": {
       "hero": {
