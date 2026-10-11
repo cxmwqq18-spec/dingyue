@@ -47787,6 +47787,160 @@
           1280,
           1600
         ]
+      },
+      "fx16-model-photos-benefit-studio-r1": {
+        "file": "fx16-model-photos-benefit-studio-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with short silver hair wearing a plain heather-gray hoodie in a neutral studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-benefit-street-r1": {
+        "file": "fx16-model-photos-benefit-street-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short auburn hair wearing a plain denim jacket on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-benefit-face-r1": {
+        "file": "fx16-model-photos-benefit-face-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-picker-studio-r1": {
+        "file": "fx16-model-photos-picker-studio-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model with short straight gray hair wearing a plain charcoal sweatshirt in a neutral studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-picker-street-r1": {
+        "file": "fx16-model-photos-picker-street-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model with a short straight bob wearing a plain denim jacket on a quiet city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-picker-sunset-r1": {
+        "file": "fx16-model-photos-picker-sunset-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model with a tight bun wearing a plain olive overshirt on a terrace at sunset.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-scale-tote-pair-r1": {
+        "file": "fx16-model-photos-scale-tote-pair-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Split view of an unbranded rust-orange tote laid flat and the same tote carried by an adult model.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-scale-denim-pair-r1": {
+        "file": "fx16-model-photos-scale-denim-pair-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Split view of a plain denim jacket laid flat and the same jacket worn by an adult model.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-scale-knit-pair-r1": {
+        "file": "fx16-model-photos-scale-knit-pair-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Split view of a plain cream knit top laid flat and the same top worn by an adult model.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-input-hoodie-good-r2": {
+        "file": "fx16-model-photos-input-hoodie-good-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Complete heather-gray pullover hoodie laid flat on a pale studio surface, with hood, drawstrings and front pocket visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "fx16-model-photos-input-hoodie-bad-r1": {
+        "file": "fx16-model-photos-input-hoodie-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Heather-gray pullover hoodie with the top of its hood cropped by the frame.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex local image edit"
+      },
+      "fx16-model-photos-input-hoodie-good-r3": {
+        "file": "fx16-model-photos-input-hoodie-good-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Complete heather-gray pullover hoodie hanging straight on a pale wall, with hood, drawstrings, pocket and full sleeves visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-input-hoodie-bad-r2": {
+        "file": "fx16-model-photos-input-hoodie-bad-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Heather-gray pullover hoodie with its right sleeve cropped by the frame.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx16-model-photos-output-hoodie-street-r1": {
+        "file": "fx16-model-photos-output-hoodie-street-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper pixie wearing a heather-gray pullover hoodie on a tree-lined street.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
