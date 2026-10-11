@@ -47787,6 +47787,16 @@
           1280,
           1600
         ]
+      },
+      "fx07-faq-hero-r1": {
+        "file": "fx07-faq-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a short copper bob checks a plain gray ceramic jar product image and download preview on a laptop.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
