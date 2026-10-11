@@ -5011,6 +5011,24 @@
         1280
       ],
       "source": "Codex image generation"
+    },
+    "fx11-video-ads-gallery-speaker": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult man with a close-cropped haircut presses a plain compact charcoal speaker control at a wooden desk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "fx11-video-ads-gallery-lip-balm": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult woman with a short blonde pixie opens a plain rose lip balm beside a jacket pocket outdoors.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -8183,6 +8201,36 @@
       "w": 1024,
       "h": 1024,
       "alt": "Adult East Asian woman with a short straight platinum-blonde bob wears a plain rust knit midi dress beside a full-length mirror.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "fx11-video-ads-benefit-opening": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Black man with short coiled hair holds an unbranded sage insulated bottle toward the camera at a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "fx11-video-ads-benefit-scene": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Asian woman with a short straight bob places a plain charcoal desktop speaker beside a laptop on a tidy work desk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "fx11-video-ads-benefit-presenter": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short copper-red bob holds a plain coral face-cream tube beside her face in a bright home office.",
       "variants": [
         640,
         1280
