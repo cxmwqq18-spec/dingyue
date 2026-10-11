@@ -102,10 +102,11 @@
       "sourceAlt": "Plain forest-green bottle shown fully from cap to base on a light neutral background.",
       "sourceTitle": "Your product",
       "sourceHint": "Start with a clear view of the full item.",
-      "result": "n:guide:img2-spokesperson-step-result-r1",
+      "result": "n:guide:im02-spokesperson-videos-step-result-r1",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded plain forest-green bottle as the exact product reference. Preserve its matte green body and black cap while a presenter holds it at chest height and explains its everyday use. No labels or logos."
+      "prompt": "Use the uploaded plain forest-green bottle as the exact product reference. Preserve its matte forest-green cylindrical body and black ribbed screw cap with no handle and no metal ring while an adult presenter holds it at chest height and explains its everyday use. No labels or logos.",
+      "resultAlt": "Adult East Asian woman with a straight chin-length black bob holds the exact matte forest-green bottle with a black ribbed cap at chest height in a bright kitchen."
     },
     "picker": {
       "title": "Choose your actor",
@@ -283,12 +284,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-outdoor-2-r1",
+          "ref": "n:guide:im02-spokesperson-videos-picker-outdoor-r1",
           "label": "Outdoor: walkway update",
           "chips": [
             "outdoor"
           ],
-          "prompt": "A man in his early sixties with short silver side-part and long face and neat gray beard wears a charcoal polo in an outdoor setting. He is standing by a park walkway delivering a quick outdoor update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
+          "prompt": "A man in his early sixties with short silver side-part and long face and neat gray beard wears a charcoal polo in an outdoor setting. He is standing beside a clear leafy park walkway delivering a quick outdoor update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
@@ -346,7 +347,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-garden-1-r2",
+          "ref": "n:guide:im02-spokesperson-videos-picker-garden-r1",
           "label": "Garden: garden update",
           "chips": [
             "garden"
@@ -436,12 +437,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-fitness-1-r3",
+          "ref": "n:guide:im02-spokesperson-videos-picker-fitness-r2",
           "label": "Fitness: recovery tip",
           "chips": [
             "fitness"
           ],
-          "prompt": "A woman in her late thirties with straight honey-blonde bob and heart-shaped face and freckles wears a soft blue shirt in a fitness setting. She is seated on a studio mat giving a recovery tip and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
+          "prompt": "A woman in her late thirties with straight honey-blonde bob and heart-shaped face and freckles wears a soft blue shirt in a fitness setting. She is seated on a studio mat in a plain workout corner giving a recovery tip and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
@@ -508,7 +509,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-balcony-1-r2",
+          "ref": "n:guide:im02-spokesperson-videos-picker-balcony-r1",
           "label": "Balcony: railing greeting",
           "chips": [
             "balcony"
@@ -625,12 +626,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-bathroom-1-r2",
+          "ref": "n:guide:im02-spokesperson-videos-picker-bathroom-r1",
           "label": "Bathroom: robe mirror selfie",
           "chips": [
             "bathroom"
           ],
-          "prompt": "A man in his early thirties with short brushed-up hair and oval face and faint stubble wears a teal robe in a bathroom setting. He is standing in a bright bathroom mirror selfie speaking naturally and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
+          "prompt": "A man in his early thirties with short brushed-up hair and oval face and faint stubble wears a teal robe in a bathroom setting. He is standing in a bright bathroom mirror selfie with a clean counter, speaking naturally to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
@@ -661,12 +662,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:sk1-spk-garage-1-r1",
+          "ref": "n:guide:im02-spokesperson-videos-picker-garage-r1",
           "label": "Garage: storage shelf update",
           "chips": [
             "garage"
           ],
-          "prompt": "A man in his late twenties with short wavy crop and angular face and small mustache wears a rust tee in a garage setting. He is standing beside a tidy garage storage shelf giving a practical update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
+          "prompt": "A man in his late twenties with short wavy crop and angular face and small mustache wears a rust tee in a garage setting. He is standing beside an organized storage shelf giving a practical update and talks directly to camera about your uploaded product. Vertical 9:16 handheld selfie framing with natural light.",
           "kind": "video"
         },
         {
@@ -737,8 +738,8 @@
         "d": "Stop paying creators for every new angle. Put one product benefit in a vertical ad, then test the offer that gets the click."
       },
       {
-        "img": "n:guide:q4-spokesperson-use-01",
-        "alt": "Adult East Asian woman holds plain over-ear headphones while speaking to camera in a studio corner.",
+        "img": "n:guide:im02-spokesperson-videos-use-product-pages-r1",
+        "alt": "Adult East Asian woman with a straight chin-length black bob holds plain charcoal over-ear headphones while speaking in a simple studio corner.",
         "frame": "browser",
         "h": "Product pages that answer before checkout",
         "d": "Place a spokesperson clip beside your product photos so shoppers hear the feature before they buy."
