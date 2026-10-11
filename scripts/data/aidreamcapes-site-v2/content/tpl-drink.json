@@ -1,7 +1,7 @@
 {
   "id": "tpl-drink",
   "title": "AI Food and Drink Videos With a Fresh Pour | AIVideosUGC",
-  "description": "Turn one bottle or can photo into a vertical pour video with ice and fizz. AI food and drink clips, 6 to 30 seconds, built for TikTok and Reels.",
+  "description": "Turn one bottle or can photo into a vertical pour video with ice and fizz. Use 9:16 for TikTok and Reels with 6, 10, 15 or 30 seconds.",
   "h1": "Make AI Food and Drink Videos From a Bottle Photo",
   "eyebrow": "Food & drink template",
   "lead": "A static bottle or can cannot show the pour, fizz or first sip. Turn one package photo into a vertical food and drink video with a clear serving moment for TikTok and Reels.",
@@ -31,8 +31,8 @@
       "d": "Download clips without an AIVideosUGC watermark and add verified flavor, price and allergen details in your editor."
     }
   ],
-  "steps_h2": "How to make a drink video in 3 simple steps",
-  "steps_lead": "Three steps turn one bottle or can photo into a ready-to-post drink video.",
+  "steps_h2": "How to make AI food and drink videos in 3 simple steps",
+  "steps_lead": "Three steps turn one bottle or can photo into a ready-to-post AI food and drink video.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -87,13 +87,13 @@
     }
   ],
   "visual": {
-    "overview": "Build the ad around one clear serving action. Keep the package recognizable while a pour, first sip or simple preparation gives viewers something concrete to watch.",
+    "overview": "An AI food and drink video keeps the package recognizable while a pour, first sip or simple preparation gives viewers one clear serving moment.",
     "strip": [
       "n:guide:q11-drink-strip-square-01-r2",
       "n:guide:q11-drink-strip-square-02-r2",
       "n:guide:q11-drink-strip-square-03-r2",
       "n:guide:q11-drink-strip-square-04",
-      "n:guide:q11-drink-strip-square-05",
+      "n:guide:tpl-drink-round4-case-citrus-soda",
       "n:guide:q11-drink-strip-square-06-r2"
     ],
     "steps": {
@@ -125,7 +125,7 @@
         "h2": "Make a food and drink video from one package photo"
       },
       "m3": {
-        "h2": "Choose a fresh drink video moment"
+        "h2": "Choose a serving scene for AI food and drink videos"
       },
       "m4": {
         "h2": "Use drink videos in feeds and product pages"
@@ -140,7 +140,7 @@
         "h2": "Add flavor details after download"
       },
       "faq": {
-        "h2": "Questions about food and drink videos"
+        "h2": "Questions about AI food and drink videos"
       }
     }
   }
