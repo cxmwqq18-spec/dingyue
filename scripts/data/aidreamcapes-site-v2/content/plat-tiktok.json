@@ -1,11 +1,11 @@
 {
   "id": "plat-tiktok",
   "title": "AI TikTok Ads Generator for Product Videos | AIVideosUGC",
-  "description": "Skip the creator shoot and turn one product photo into a 9:16 TikTok ad clip of 6, 10, 15 or 30 seconds, with the credit cost shown before you start.",
-  "h1": "AI TikTok Ads Generator for Small Online Shops",
+  "description": "Make a TikTok ad from one product photo. Choose a 6, 10, 15 or 30 second vertical clip, see the credit cost before you start, and download without a watermark.",
+  "h1": "Make AI TikTok Ads from One Product Photo",
   "eyebrow": "TikTok ads",
-  "lead": "Turn one product photo into a UGC-style TikTok ad. Make a vertical 6, 10, 15 or 30-second clip in minutes, with the credit cost shown before you start.",
-  "card": "Vertical 9:16 clips for the For You feed, from one product photo.",
+  "lead": "Turn one product photo into a vertical TikTok ad. Choose 6, 10, 15 or 30 seconds, then download the clip when it is ready.",
+  "card": "Vertical TikTok ad clips from one product photo.",
   "secondary_keywords": [
     "TikTok video ads for products",
     "vertical product video for TikTok",
@@ -14,51 +14,51 @@
   ],
   "faq": [
     {
-      "q": "Can I make a TikTok ad from just one product photo?",
-      "a": "Yes. Upload one clear photo, share your idea in one sentence and pick 6, 10, 15 or 30 seconds. The credit cost shows before the clip is made."
+      "q": "Can I make a TikTok ad from one product photo?",
+      "a": "Yes. Upload one clear photo, describe the product moment in one sentence and choose 6, 10, 15 or 30 seconds. The credit cost appears before you start."
     },
     {
-      "q": "How long should my TikTok ad video be?",
-      "a": "AIVideosUGC makes clips of 6, 10, 15 or 30 seconds, all in the vertical 9:16 shape. Pick the length that fits the offer and keep the product in view from the first frame."
+      "q": "What length can a TikTok ad be?",
+      "a": "Choose 6, 10, 15 or 30 seconds. A short clip can show one action; a longer clip gives a demo more room to finish."
     },
     {
-      "q": "Do I have to book a creator or a studio?",
-      "a": "No. The clip is built from your own product photo, so there is no creator to book, no shoot day and no wait for footage. Make a new version whenever you need a different opening."
+      "q": "Do I need to book a TikTok creator or studio?",
+      "a": "No. Start from your own product photo, so there is no creator booking, studio day or footage queue."
     },
     {
-      "q": "Does the video include music and captions?",
-      "a": "No. The download has no sound or captions, so add a sound and your caption in TikTok or CapCut, then upload the file to Ads Manager."
+      "q": "Does the download include music or captions?",
+      "a": "No. Add sound, captions and your offer in TikTok, CapCut or Ads Manager after download."
     },
     {
-      "q": "Can I send the video straight to TikTok Ads Manager?",
-      "a": "No. Download the file first, then upload it yourself in TikTok Ads Manager or the TikTok app. That is also where you add captions, sound and your offer."
+      "q": "Can I send the file straight to TikTok Ads Manager?",
+      "a": "Download the file first, then upload it yourself in TikTok Ads Manager or the TikTok app."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "Use a sharp photo that shows the whole product. Leave a little space around it so TikTok's buttons and caption do not cover the item in the vertical clip."
+      "q": "What photo should I upload for a TikTok ad?",
+      "a": "Use a sharp photo that shows the whole product and leaves a little space around it for TikTok controls and captions."
     },
     {
-      "q": "Can I make more than one version?",
-      "a": "Yes. Run another job from the same photo with a different idea and get a new opening to test. You do not reshoot or pay for a second creator."
+      "q": "Can I make another version from the same photo?",
+      "a": "Yes. Run another job with a different opening or product moment without arranging another shoot."
     },
     {
-      "q": "Do I need to label the ad as AI-generated?",
-      "a": "TikTok's AI-content label can be required depending on the creative and market. Apply the label in Ads Manager when it asks for it."
+      "q": "When should I add TikTok AI-content labels?",
+      "a": "Follow TikTok's current AI-content and ad-review prompts in Ads Manager for the market where you will run the ad."
     }
   ],
-  "templates_lead": "Pick a look that puts one clear product action at the center of your TikTok opening.",
-  "cta_lead": "Build your TikTok clip around a clear product action and a placement you plan to use.",
+  "templates_lead": "Choose a look that puts one clear product action at the center of your TikTok opening.",
+  "cta_lead": "Upload one product photo, choose a TikTok action and download a clip for the placement you plan to use.",
   "steps": [
     {
-      "t": "Upload your product photo",
-      "d": "Add one clear photo of the whole product. The first frame shows what you sell, so viewers recognize it right away."
+      "t": "Upload Your Product Photo",
+      "d": "Add one clear photo of the whole product so viewers know what you sell from the first frame."
     },
     {
-      "t": "Share your video idea",
-      "d": "Say what happens in one sentence and choose the clip length. The credit cost shows first, before the file is made."
+      "t": "Pick Your TikTok Scene",
+      "d": "Describe one product action and choose a clip length. See the credit cost before the file is made."
     },
     {
-      "t": "Download and post",
+      "t": "Download and Post",
       "d": "Download the 9:16 file with no watermark, add your sound and offer, then upload it to TikTok Ads Manager."
     }
   ],
@@ -76,7 +76,7 @@
       "result": "f:q18-tiktok-steps-black-headphones-unboxing",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the exact reference for the black over-ear headphones. Preserve their black finish, padded earcup shape, and headband. Adult hands lift them from a plain box on a bright desk and turn them toward camera; end with the headphones centered. Soft window light, natural phone-video look, top-down close framing. Sound: box flap and tissue rustle; no music.",
+      "prompt": "Show black over-ear headphones being lifted from a plain box for a TikTok unboxing opening.",
       "options": [
         [
           "Size",
@@ -89,75 +89,79 @@
       ],
       "items": [
         {
-          "t": "Upload your product photo",
-          "d": "Add one clear photo of the whole product. The first frame shows what you sell, so viewers recognize it right away."
+          "t": "Upload Your Product Photo",
+          "d": "Add one clear photo of the whole product so viewers know what you sell from the first frame."
         },
         {
-          "t": "Share your video idea",
-          "d": "Say what happens in one sentence and choose the clip length. The credit cost shows first, before the file is made."
+          "t": "Pick Your TikTok Scene",
+          "d": "Describe one product action and choose a clip length. See the credit cost before the file is made."
         },
         {
-          "t": "Download and post",
+          "t": "Download and Post",
           "d": "Download the 9:16 file with no watermark, add your sound and offer, then upload it to TikTok Ads Manager."
         }
       ]
     }
   },
-  "benefits_h2": "A fast way to get high-converting TikTok ads",
+  "benefits_h2": "Launch More TikTok Ads, Faster",
   "benefits": [
     {
       "t": "Stay On-Trend",
-      "d": "Jump on a TikTok trend or challenge while it is still hot, and get a ready-to-post clip without waiting on a creator."
+      "d": "Start from one product photo and make a fresh TikTok opening when the next idea is ready.",
+      "icon": "bolt"
     },
     {
-      "t": "Fresh Clips On Demand",
-      "d": "One product photo is all you need to build a new clip, so the feed always has a fresh angle to run."
+      "t": "Make Fresh Clips on Demand",
+      "d": "Change the first action or line and compare versions without filming the product again.",
+      "icon": "layers"
     },
     {
       "t": "Ready-to-Post TikTok Ads",
-      "d": "Get fast, fresh clips built to scale. There is no waiting and no shoot day, just content made when you need it."
+      "d": "Download a clear vertical clip, then add your sound, caption and offer in your own tools.",
+      "icon": "check"
     }
   ],
-  "steps_h2": "How to make a TikTok ad video in 3 simple steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post TikTok ad — no studio, no creator, no reshoot.",
+  "steps_h2": "How to Make a TikTok Ad in 3 Simple Steps",
+  "steps_lead": "Upload one product photo, choose the TikTok moment to show and download the finished vertical file.",
   "more_sections": [
     {
-      "eyebrow": "Why sellers switch",
-      "h2": "Why performance marketers prefer AI TikTok ads",
-      "lead": "Results-first creative without the production overhead.",
+      "eyebrow": "Why sellers choose it",
+      "h2": "Why Sellers Use AI TikTok Ads",
+      "lead": "Move from a product photo to a TikTok-ready clip without arranging a shoot.",
       "items": [
         {
-          "t": "Cut Costs, Not Quality",
-          "d": "Skip pricey creators and production teams, and make clear UGC-style clips for far less than a booked shoot."
+          "t": "Skip the Creator Booking",
+          "d": "Start from your product photo when you need a new TikTok angle."
         },
         {
-          "t": "Make More, Faster",
-          "d": "Stop waiting on creators one at a time. Each clip is built on demand from your own product photo."
+          "t": "Try More Openings",
+          "d": "Change the first action or line and compare versions without filming the product again."
         },
         {
-          "t": "Test More, Improve More",
-          "d": "Make versions with different openings and find what works, without extra filming or setup costs."
+          "t": "Keep Your Feed Fresh",
+          "d": "Make another clip from the same photo when you have a new offer or angle."
         }
       ]
     },
     {
-      "eyebrow": "How it keeps work moving",
-      "h2": "How AI streamlines TikTok video creation",
-      "lead": "Fewer bottlenecks between an idea and a clip you can run.",
+      "eyebrow": "How the work moves",
+      "h2": "How AI Speeds Up TikTok Ad Creation",
+      "lead": "Keep the work moving from the idea you wrote to a file you can post.",
       "items": [
         {
-          "t": "Test More Openings",
-          "d": "Produce many TikTok-style clips for far less than one booked creator, and scale content without scaling the budget."
+          "t": "Make the First Frame Clear",
+          "d": "Lead with the product action you want viewers to notice."
         },
         {
-          "t": "Speed to Market, Any Week",
-          "d": "Launch a fresh, native-style ad in minutes without arranging a shoot or waiting on footage."
+          "t": "Move from Idea to File",
+          "d": "Write one sentence, choose a length and download the clip after it is ready."
         },
         {
-          "t": "Zero Production Bottlenecks",
-          "d": "There is no studio, crew or edit queue to schedule. The clip is built from your own product photo."
+          "t": "Keep Production Simple",
+          "d": "Use your own photo instead of arranging a creator, studio and shoot day."
         }
       ]
     }
-  ]
+  ],
+  "examples": null
 }
