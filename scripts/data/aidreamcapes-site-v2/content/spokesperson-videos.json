@@ -1,10 +1,10 @@
 {
   "id": "spokesperson-videos",
   "title": "AI Spokesperson Video Maker for Product Ads | AIVideosUGC",
-  "description": "Turn one product photo into an AI spokesperson video. Choose a person and scene, write a selling point, and review a 9:16 product ad before you publish.",
+  "description": "Make an AI spokesperson video from one product photo. Choose a person and scene, write your selling point, and get a talking 9:16 ad in minutes.",
   "h1": "Explain Your Product on Camera with an AI Spokesperson",
   "eyebrow": "AI spokesperson video",
-  "lead": "Give shoppers the one detail they need to understand. Add your product photo, choose an on-camera spokesperson, and hand them a short line that explains the benefit. Review a vertical ad without booking a creator or a shoot.",
+  "lead": "Turn one product photo into a talking ad in minutes. Pick a spokesperson, give them your key selling point, and put your product in front of shoppers. No casting, no studio day.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
@@ -14,35 +14,35 @@
   "benefits_h2": "Put your product’s key point on camera",
   "benefits": [
     {
-      "t": "Skip casting for your next product explanation",
-      "d": "Choose a spokesperson, give them one approved line, and review a vertical draft without booking a creator or studio time.",
+      "t": "Get a talking ad in minutes",
+      "d": "Pick a spokesperson, add one product photo and a short line, and have a vertical draft ready without casting, booking or a studio day.",
       "icon": "clock"
     },
     {
-      "t": "Test more ways to explain one product",
-      "d": "Keep the product photo, then swap the spokesperson, opening line, or scene to make versions for your ad tests.",
+      "t": "Test more hooks without reshooting",
+      "d": "Keep the same product photo, then swap the spokesperson, opening line or scene to make new angles for your ad tests.",
       "icon": "layers"
     },
     {
-      "t": "Keep the claim in your hands",
-      "d": "Write a factual line about one feature. The spokesperson follows your script, so your team can check every word before publishing.",
+      "t": "Says exactly what you wrote",
+      "d": "Write one factual line about your product. The spokesperson delivers your script word for word, so each version stays on message.",
       "icon": "check"
     }
   ],
-  "steps_h2": "Turn a product photo into a clear spokesperson ad",
-  "steps_lead": "Give shoppers one useful explanation in three steps. Review the result before you publish.",
+  "steps_h2": "Get a talking product ad in three steps",
+  "steps_lead": "Upload your product, choose who explains it, then get a vertical ad you can put to work.",
   "steps": [
     {
-      "t": "Start with one clear product photo",
-      "d": "Upload a full view with the product’s shape and color visible. That same item stays in the spoken scene."
+      "t": "Upload the product you want to sell",
+      "d": "Add one clear full view. Keep its shape and color visible so the item carries into the scene."
     },
     {
-      "t": "Choose who delivers the point",
-      "d": "Pick a spokesperson and setting, then write one short line about the feature a shopper should remember."
+      "t": "Give your selling point a voice",
+      "d": "Pick a spokesperson and setting, then write one short line that tells shoppers why the feature matters."
     },
     {
-      "t": "Review the clip, then add your offer",
-      "d": "Check the product, line and lip movement. Download the vertical file, then add captions, price or offer text in your editor."
+      "t": "Get the clip, then add your offer",
+      "d": "Download the vertical file and finish it in your editor with captions, a price or a promotion."
     }
   ],
   "maker": {
@@ -80,6 +80,10 @@
       "a": "Handheld items with one clear feature work well, including skincare, snacks, drinks, pet supplies and fitness gear. Keep the product fully visible in the source photo."
     },
     {
+      "q": "How is this different from hiring a UGC creator?",
+      "a": "A UGC creator films with your real product and may improvise. An AI spokesperson starts from your photo and follows your line, so you can make an ad in minutes at a far lower cost."
+    },
+    {
       "q": "Where can I use the finished video?",
       "a": "Use the downloaded 9:16 file in TikTok Ads, Instagram Reels, YouTube Shorts or a product page. Add any required AI disclosure and platform copy before launch."
     },
@@ -88,12 +92,8 @@
       "a": "No. It is an AI-generated brand presenter, not a buyer or reviewer. Use it to explain your product and never invent a customer experience."
     },
     {
-      "q": "Are these videos cleared for commercial use?",
-      "a": "Yes. Downloads are cleared for commercial use under our terms. Any captions, music or offer artwork you add still need separate rights."
-    },
-    {
-      "q": "How much does one video cost?",
-      "a": "The workspace shows the credit cost before you start, and failed jobs return their reserved credits automatically. Check the displayed cost for your chosen length."
+      "q": "Are these videos commercial, and how much does one cost?",
+      "a": "Yes. Downloads are cleared for commercial use under our terms. The workspace shows the credit cost before you start, and failed jobs return their reserved credits automatically. Any captions, music or offer artwork you add still need separate rights."
     }
   ],
   "visual": {
@@ -518,7 +518,7 @@
     },
     "titles": {
       "m4": {
-        "h2": "Give shoppers the explanation they need"
+        "h2": "Put one clear product point to work"
       },
       "m5": {
         "h2": ""
@@ -529,31 +529,35 @@
     },
     "uses": [
       {
-        "frame": "post",
-        "ref": "n:guide:q4-spokesperson-strip-04",
-        "h": "Paid ads that explain the product fast",
-        "d": "Put one verified product point into a vertical ad. Show the item in a scene, then add your final offer in your editor."
+        "img": "n:guide:q4-spokesperson-strip-04",
+        "alt": "Adult East Asian man holds a plain dark wireless earbud case while speaking to camera in a living room.",
+        "frame": "none",
+        "h": "Paid ads that make the point fast",
+        "d": "Stop paying creators for every new angle. Put one product benefit in a vertical ad, then test the offer that gets the click."
       },
       {
+        "img": "n:guide:q4-spokesperson-use-01",
+        "alt": "Adult East Asian woman holds plain over-ear headphones while speaking to camera in a studio corner.",
         "frame": "browser",
-        "ref": "n:guide:q4-spokesperson-use-01",
-        "h": "Product pages that answer one question",
-        "d": "Place a spokesperson clip beside your product photos. A short explanation helps shoppers understand one feature before they buy."
+        "h": "Product pages that answer before checkout",
+        "d": "Place a spokesperson clip beside your product photos so shoppers hear the feature before they buy."
       },
       {
-        "frame": "tiktok",
-        "ref": "n:gen2:spokesperson-videos-c1",
-        "h": "Social posts with a clear hook",
-        "d": "Use one spoken point for TikTok, Reels or Shorts. Change the opening line or scene when you need a new angle."
+        "img": "n:gen2:spokesperson-videos-c1",
+        "alt": "Adult holds a plain toner bottle at eye level while speaking in a bright bathroom.",
+        "frame": "phone",
+        "h": "Social posts with a fresh hook",
+        "d": "Reuse your product photo with a new opening line or scene when your TikTok, Reels or Shorts feed needs another angle."
       },
       {
-        "frame": "1:1",
-        "ref": "n:guide:q4-spokesperson-strip-02",
-        "h": "Short product guides for setup",
-        "d": "Use a short spoken walkthrough to cover setup, sizing or daily use. Keep each clip focused on one buyer question."
+        "img": "n:guide:q4-spokesperson-strip-02",
+        "alt": "Adult East Asian woman speaks to camera while holding a plain moisturizer jar in a bathroom.",
+        "frame": "none",
+        "h": "Product guides that cut follow-up questions",
+        "d": "Walk through setup, sizing or daily use in a short spoken clip so buyers know what to do after delivery."
       }
     ]
   },
-  "cta_title": "Put your product explanation to work",
-  "cta_lead": "Upload one product photo, write one clear product point, and review the credit cost before you start."
+  "cta_title": "Make the next product point count",
+  "cta_lead": "Upload a product photo, write one selling line, and get a talking ad ready to test in minutes. See the credit cost before you start."
 }

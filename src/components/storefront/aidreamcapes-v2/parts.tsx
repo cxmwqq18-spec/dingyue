@@ -143,7 +143,7 @@ function BenefitIcon({ name }: { name: V2BenefitIcon }) {
   return <span aria-hidden="true" className="v-benefit-icon"><svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" viewBox="0 0 24 24" width="24">{BENEFIT_ICON_PATHS[name]}</svg></span>;
 }
 
-function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolvers }) {
+export function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolvers }) {
   return <>
     <style dangerouslySetInnerHTML={{ __html: `
       .adc2 .v-image-item-rows{display:flex;flex-direction:column;gap:22px}
