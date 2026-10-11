@@ -47842,6 +47842,94 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "fx48-benefit-shoe": {
+        "file": "fx48-benefit-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold a wooden shoe brush beside one gray running shoe shown scuffed and cleaned.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx48-benefit-tote": {
+        "file": "fx48-benefit-tote",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands wipe a coffee stain from a plain canvas tote, with clean fabric beside it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx48-benefit-watch": {
+        "file": "fx48-benefit-watch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands wipe a plain round cream-dial watch with dusty and clean halves.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx48-steps-cable-organizer": {
+        "file": "fx48-steps-cable-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three plain cables routed through a matte-black organizer with three front slots on a light wood desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx48-demo-pet-hair": {
+        "file": "fx48-demo-pet-hair",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands roll a plain pet-hair remover across a sofa, leaving a clean strip.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx48-demo-shelf-dust": {
+        "file": "fx48-demo-shelf-dust",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands wipe dust from a wooden shelf, leaving one half clean.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx48-demo-zipper": {
+        "file": "fx48-demo-zipper",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands pull a plain suitcase zipper from a stuck section into a smooth closed section.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx48-demo-tile-grout": {
+        "file": "fx48-demo-tile-grout",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands scrub a dark grout line between pale tiles, leaving one section clean.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }
