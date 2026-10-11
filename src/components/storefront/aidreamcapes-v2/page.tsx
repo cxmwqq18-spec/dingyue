@@ -239,7 +239,7 @@ function VideoHubPage({ data, r }: Props) {
     <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
       <Maker note={text(data.startNote)} maker={maker ?? { options: [], cta: "Make my video", href: text(data.appHref) }} r={r} />
     </PageHero>
-    <VisualStrip includeOverview visual={visual} r={r} />
+    <VisualStrip visual={visual} r={r} />
     <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>
     <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
     <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />
