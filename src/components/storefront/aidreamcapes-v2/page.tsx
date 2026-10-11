@@ -51,6 +51,15 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
   </Section>;
 }
 
+function RelatedLinksSection({ links, r }: { links: { label: string; href: string }[]; r: V2Resolvers }) {
+  if (!links.length) return null;
+  return <Section eyebrow="Related pages" title="Related pages">
+    <div className="related">
+      {links.map((link) => <a className="card-title" href={r.href(link.href)} key={link.href}>{link.label}</a>)}
+    </div>
+  </Section>;
+}
+
 function splitPhotoHubExamples(examples: V2Examples | undefined) {
   if (!examples) return { fresh: [], gallery: undefined as V2Examples | undefined };
   const fresh: { label: string; image: V2Image }[] = [];
@@ -291,6 +300,7 @@ function ToolPage({ data, r }: Props) {
   const maker = data.maker as V2Maker;
   const visual = data.visual as V2Visual | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  const relatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
   const video = data.group === "video";
   const photoHub = data.id === "photo-hub";
   const actorScenePicker = data.actorScenePicker as V2ActorScenePicker | undefined;
@@ -363,6 +373,7 @@ function ToolPage({ data, r }: Props) {
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
       </>}
+      <RelatedLinksSection links={relatedLinks} r={r} />
       <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />
     </>
   );

@@ -16,6 +16,7 @@ export type V2ActorScenePicker = {
   length: number;
   actors: V2ActorSceneChoice[];
   scenes: string[];
+  cta?: { label: string; prompt: string };
 };
 export type V2VisualStep = { source: V2VisualImage; sourceTitle?: string; sourceHint?: string; hideSourceCopy?: boolean; result: V2VisualImage; options: [string, string][]; credits: string; prompt?: string; mode?: "photo" | "video"; items: V2Item[]; actorCards?: V2VisualActorCard[] };
 export type V2VisualTitle = { h2: string; lead?: string };

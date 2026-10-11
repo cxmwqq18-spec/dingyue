@@ -1102,6 +1102,10 @@ function sellerScenariosFor(model, page, source) {
 function actorScenePickerFor(model, page) {
   const actorSource = model.content["ai-actors"]?.actor_visual ?? {};
   const copy = model.content[page.id]?.actor_scene_picker ?? {};
+  const pageCta = copy.actor_picker?.cta;
+  const cta = pageCta && typeof pageCta === "object" && typeof pageCta.prompt === "string" && pageCta.prompt.trim()
+    ? { label: typeof pageCta.label === "string" && pageCta.label.trim() ? pageCta.label : String(copy.button ?? "Use this avatar and scene"), prompt: pageCta.prompt }
+    : undefined;
   const configured = Array.isArray(actorSource.steps?.actor_cards) ? actorSource.steps.actor_cards : [];
   const byRef = new Map((model.content["ai-actors"]?.actor_cards ?? []).map((actor) => [actor.ref, actor]));
   const actors = configured.map((item, index) => {
@@ -1129,7 +1133,8 @@ function actorScenePickerFor(model, page) {
     size,
     length: 10,
     actors,
-    scenes
+    scenes,
+    ...(cta ? { cta } : {})
   };
 }
 
@@ -1305,7 +1310,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
 // Footer "Related links" block: 8-12 canonical public pages that match the
 // page task. Suggestions are derived from the page type and its industry,
 // platform, tool and template fields; content may provide an explicit list.
-const RELATED_PAGE_TYPES = new Set(["tool", "hub-tool", "hub", "template", "industry", "platform", "occasion"]);
+const RELATED_PAGE_TYPES = new Set(["tool", "hub-tool", "hub", "template", "industry", "platform", "occasion", "article"]);
 const RELATED_INDEX_IDS = new Set(["templates", "industries", "platforms"]);
 
 function isRelatedPage(model, page, id) {
@@ -2083,6 +2088,7 @@ function payloadFor(model, page) {
       { title: "Browse industries", links: pageLinksFor(model, ["ind-beauty-skincare", "ind-shoes", "ind-food-drinks", "ind-home-living"]) },
       { title: "Browse platforms", links: pageLinksFor(model, ["plat-amazon", "plat-shopify"]) }
     ] : [];
+    const relatedLinks = relatedLinksFor(model, page);
     const heroCards = page.id === "white-background" || page.id === "spokesperson-videos" ? null
       : hasHero ? [] : hub ? toolHeroCardsForHub(model, page, c.hero_cards) : [];
     // Optional page-owned text blocks (competitor parity): a definition block after the hero
@@ -2092,6 +2098,7 @@ function payloadFor(model, page) {
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: imageItemsFor(model, page, linkedCopy.groups[0]), steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
+      ...(relatedLinks?.length ? { relatedLinks } : {}),
       ...(visual ? { visual } : {}),
       ...(actorScenePicker ? { actorScenePicker } : {}),
       specs: [

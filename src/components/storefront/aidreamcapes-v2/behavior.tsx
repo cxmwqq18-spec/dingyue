@@ -146,12 +146,13 @@ export function AidreamcapesV2ActorScenePicker() {
       const prompt = form?.querySelector<HTMLInputElement>('input[name="prompt"]');
       const actor = form?.querySelector<HTMLInputElement>('input[name="actor"]');
       const scene = form?.querySelector<HTMLInputElement>('input[name="scene"]');
+      const pagePrompt = form?.dataset.pagePrompt;
       const apply = () => {
         const selectedActor = root.querySelector<HTMLInputElement>('input[type="radio"][name^="actor-choice-"]:checked');
         const selectedScene = root.querySelector<HTMLInputElement>('input[type="radio"][name^="scene-choice-"]:checked');
         const sceneValue = selectedScene?.value ?? "";
         const template = selectedActor?.dataset.actorPrompt ?? "";
-        if (prompt && template) prompt.value = template.replaceAll("{{scene}}", sceneValue);
+        if (prompt && !pagePrompt && template) prompt.value = template.replaceAll("{{scene}}", sceneValue);
         if (actor && selectedActor) actor.value = selectedActor.value;
         if (scene && selectedScene) scene.value = selectedScene.value;
       };
