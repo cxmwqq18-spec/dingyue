@@ -2,9 +2,8 @@
   "pages": {
     "white-background": {
       "hero": {
-        "kind": "pair",
-        "before": "n:guide:q5-white-serum-source-hero-r2",
-        "after": "n:guide:q5-white-serum-result-hero-r2"
+        "kind": "image",
+        "image": "n:guide:k2-white-hero-cream-mug"
       },
       "pairs": [],
       "og": "n:t33-white-background-og-r2"
