@@ -4,24 +4,24 @@
   "description": "Bring viewed products back with a retargeting video from one photo. Add your offer, audience and frequency in your ad platform.",
   "h1": "Retargeting Video Ads for a Second Look",
   "eyebrow": "Retargeting video template",
-  "lead": "Shoppers who only viewed a product usually need a reason to come back. Upload one product photo and make a retargeting video that shows the item again with the detail a returning buyer is still weighing.",
-  "benefits_h2": "Why make retargeting ads from one photo?",
+  "lead": "Bring a viewed product back with a fresh second-look clip, without a second shoot. Upload one product photo and show the detail a returning buyer is still weighing.",
+  "benefits_h2": "Why Make Retargeting Video Ads From One Photo?",
   "benefits": [
     {
       "t": "Bring back the detail",
-      "d": "Show one detail a returning shopper is still weighing, such as a cushion, a pocket or a seam, instead of repeating the same product shot."
+      "d": "Give returning shoppers a new reason to look without a new shoot. Show one detail they are still weighing instead of repeating the same product shot, such as a cushion, pocket or seam."
     },
     {
       "t": "Test new creative for credits",
-      "d": "Make a routine version and a close-detail version from the same photo, then see which one earns the second look."
+      "d": "Test another angle for the same production credits. Make a routine version and a close-detail version from one photo, then see which earns the second look."
     },
     {
-      "t": "Fit every remarketing placement",
-      "d": "Use 1:1 in feed placements and 9:16 in Reels, with clips at 6, 10, 15 or 30 seconds."
+      "t": "Fit every remarketing format",
+      "d": "Reuse the same story in feed and Reels formats. Use 1:1 in feed formats and 9:16 in Reels, with clips at 6, 10, 15 or 30 seconds."
     },
     {
       "t": "Keep audience data in your platform",
-      "d": "Set the audience, offer and frequency in your ad platform. The clip carries no watermark and works in your own paid ads."
+      "d": "Keep audience rules and budget in your platform instead of rebuilding the clip. Set the audience, offer and frequency there; the clip carries no watermark."
     }
   ],
   "secondary_keywords": [
@@ -30,7 +30,7 @@
     "returning shopper ad",
     "retargeting creative"
   ],
-  "steps_h2": "Make a retargeting video ad in 3 steps",
+  "steps_h2": "How to Make a Retargeting Video Ad in 3 Simple Steps",
   "steps_lead": "One product photo becomes a second-look clip, with no second shoot and no new audience data.",
   "steps": [
     {
@@ -92,12 +92,12 @@
   "visual": {
     "overview": "A retargeting video puts the product back in a shopper's feed with one clear reason to return. Show it in a familiar routine or focus on a detail the buyer is still weighing, then add your offer and product link after download.",
     "strip": [
-      "n:guide:g1-retarget-serum-application",
+      "n:guide:rc7-tpl-retargeting-video-ad-strip-0-r1",
       "n:guide:g1-retarget-shoe-tread-detail",
       "n:guide:g1-retarget-snack-first-bite",
-      "n:guide:q14-retarget-strip-duffel",
+      "n:guide:rc7-tpl-retargeting-video-ad-strip-3-r1",
       "n:guide:q14-retarget-strip-fit",
-      "n:guide:g1-retarget-pet-grooming-glove"
+      "n:guide:rc7-tpl-retargeting-video-ad-strip-5-r1"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-retargeting-video-ad-m2-source",

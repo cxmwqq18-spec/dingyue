@@ -4,24 +4,24 @@
   "description": "Put one product feature in the spotlight with a callout video from a single photo. Show the detail in action, then add the exact label as text.",
   "h1": "Product Feature Callout Videos for One Clear Detail",
   "eyebrow": "Feature callout video template",
-  "lead": "A key feature buried in a spec list rarely helps shoppers decide. Upload one product photo and make a callout video that shows the detail in action, so buyers see why it matters.",
+  "lead": "Give shoppers proof of the detail that matters without booking a close-up shoot. Upload one product photo and make a callout video that shows the feature in action.",
   "benefits_h2": "Why make feature callout videos from one photo?",
   "benefits": [
     {
       "t": "Turn a spec into proof",
-      "d": "Show a pump press, clasp close, hinge opening or texture spread in close frame, so buyers see the feature working."
+      "d": "Show the feature once instead of booking another close-up shoot. A pump press, clasp close, hinge opening or texture spread makes the detail clear."
     },
     {
       "t": "One detail per clip",
-      "d": "Give each feature its own short video and link it to the matching part of your product page, with no new shoots."
+      "d": "Create one focused clip per feature without reshooting. Link each short video to the matching part of your product page."
     },
     {
       "t": "Fit every selling channel",
-      "d": "Use 9:16 in TikTok and Reels, 1:1 in feeds, or 16:9 on a product page, with clips at 6, 10, 15 or 30 seconds."
+      "d": "Reuse one clip across feed and product formats. Use 9:16 in TikTok and Reels, 1:1 in feeds, or 16:9 on a product page, with clips at 6, 10, 15 or 30 seconds."
     },
     {
       "t": "Add exact labels yourself",
-      "d": "Type feature names, measurements and ingredients in your editor after download. The video carries no watermark."
+      "d": "Keep every label and number exact after download. Type feature names, measurements and ingredients in your editor; the video carries no watermark."
     }
   ],
   "secondary_keywords": [
@@ -30,8 +30,8 @@
     "single benefit product video",
     "ecommerce feature video"
   ],
-  "steps_h2": "Make a feature callout video in 3 steps",
-  "steps_lead": "One product photo becomes a single-detail clip, with no presenter and no close-up shoot.",
+  "steps_h2": "How to Make a Product Feature Callout Video in 3 Simple Steps",
+  "steps_lead": "Turn one product photo into a single-detail clip without filming a host or booking a close-up shoot.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -95,8 +95,8 @@
       "n:guide:q13-feature-strip-0",
       "n:guide:q13-feature-strip-1-r2",
       "n:guide:q13-feature-strip-2",
-      "n:guide:q13-feature-strip-3-r2",
-      "n:guide:q13-feature-strip-4-r2",
+      "n:guide:rc7-tpl-product-feature-callout-video-strip-3-r1",
+      "n:guide:rc7-tpl-product-feature-callout-video-strip-4-r1",
       "n:guide:q13-feature-strip-5-r2"
     ],
     "steps": {
