@@ -1015,6 +1015,14 @@ const VISUAL_VIDEO_LENGTHS = [6, 10, 15];
 const HOME_VIDEO_OPTIONS = [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"], ["Template", "Creator video ad"]];
 const HOME_PHOTO_OPTIONS = [["Template", "White background"], ["Size", "Square"]];
 
+// A maker can show one exact video length or a list of supported lengths. Only
+// an exact value can safely prefill links without changing a page's promise.
+function displayedMakerVideoLength(options) {
+  const configured = Array.isArray(options) ? options.find(([label]) => String(label).toLowerCase() === "length")?.[1] : undefined;
+  const matches = [...String(configured ?? "").matchAll(/\b(6|10|15|30)\b/g)].map((match) => match[1]);
+  return matches.length === 1 ? matches[0] : undefined;
+}
+
 function visualLength(options, requested, pageId) {
   const configured = options.find(([label]) => String(label).toLowerCase() === "length")?.[1];
   const raw = requested ?? configured;
@@ -1074,6 +1082,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
   assert.ok(stepMode === "photo" || stepMode === "video", `${page.id}: visual step mode must be photo or video`);
   const configuredOptions = Array.isArray(maker?.options) ? maker.options.slice(0, 3) : [];
   const options = Array.isArray(steps.options) ? steps.options : (stepMode === "video" ? maker?.videoOptions : maker?.photoOptions) ?? configuredOptions;
+  const displayedLength = stepMode === "video" ? (displayedMakerVideoLength(options) ?? displayedMakerVideoLength(configuredOptions)) : undefined;
   const stepLength = stepMode === "video" ? visualLength(options, steps.length, page.id) : undefined;
   const stepCredits = stepMode === "video" ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
   const stepItems = Array.isArray(content.steps) ? content.steps : Array.isArray(steps.items) ? steps.items : [];
@@ -1105,7 +1114,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
           ? target.url
           : target
           ? target.group === "video"
-            ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? "15", promptOverride })
+            ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? displayedLength ?? "15", promptOverride })
             : toolAppHref(model, target, card.template, { promptOverride })
           : caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", promptOverride);
         return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? genericCasePrompt(model, page, card) ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}) };
@@ -1780,6 +1789,7 @@ function payloadFor(model, page) {
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
     faq: (c.faq || []).map((item) => ({ q: item.q, a: inlineLinks(model, item.a, page.id) })),
     startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
+    ...(typeof c.cta_title === "string" ? { ctaTitle: c.cta_title } : {}),
     ...(typeof c.cta_lead === "string" ? { ctaLead: c.cta_lead } : {}),
     ...(typeof c.templates_lead === "string" ? { templatesLead: c.templates_lead } : {}),
     ...(typeof c.benefits_h2 === "string" && c.benefits_h2.trim() ? { benefitsH2: c.benefits_h2 } : {}),
@@ -1872,7 +1882,9 @@ function payloadFor(model, page) {
     const platformIds = Object.entries(PLAT_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `plat-${slug}`).slice(0, 5);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
-    const maker = { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, TOOL_REL[page.id]?.[0]), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const makerOptions = (c.maker?.options || []).slice(0, 3);
+    const makerLength = video ? displayedMakerVideoLength(makerOptions) : undefined;
+    const maker = { options: makerOptions, cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, TOOL_REL[page.id]?.[0], makerLength ? { length: makerLength } : {}), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     // Per the tagshop link standard, tool pages have no "Templates for X" grid: the
     // case wall is the visual picker, and the page ends with one related-tools block.
     const wallCases = hub ? [] : caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
@@ -1911,7 +1923,9 @@ function payloadFor(model, page) {
     // Per the tagshop standard, template detail pages no longer show a "More templates"
     // sibling grid; their case-plan cases join the visual picker wall.
     const wallCases = caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
-    const maker = { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const makerOptions = (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3);
+    const makerLength = page.group === "video" ? displayedMakerVideoLength(makerOptions) : undefined;
+    const maker = { options: makerOptions, cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key, makerLength ? { length: makerLength } : {}), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c, wallCases);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
@@ -2014,7 +2028,7 @@ function payloadFor(model, page) {
         { title: "Formats for an actor-led ad", links: pageLinksFor(model, ["tpl-ugc", "tpl-howto", "tpl-film", "tpl-drink", "tpl-home", "tpl-outfit"]) },
         { title: "Placement and review", links: pageLinksFor(model, ["tpl-launch", "tpl-compare", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
       ];
-      out.cta = { title: c.cta_title || "Create a product ad with an AI actor", lead: c.cta_lead || "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true }) };
+      out.cta = { title: c.cta_title || "Create a product ad with an AI actor", lead: c.cta_lead || "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10" }) };
     } else if (page.id === "templates") {
       const chips = c.visual?.picker ?? [];
       const groups = c.visual?.directoryFilters?.templateGroups ?? {};
