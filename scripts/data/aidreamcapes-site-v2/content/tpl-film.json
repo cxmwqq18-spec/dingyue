@@ -15,7 +15,7 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a sharp photo with a clear outline so the product stays the focal item."
+      "d": "Use a sharp photo with a clear outline so the product stays the focal item. Keep the full silhouette in frame."
     },
     {
       "t": "Share Your Video Idea",
@@ -75,6 +75,22 @@
     {
       "q": "Do I need a film crew or studio for this look?",
       "a": "No. The set, lighting and camera move are generated from one photo, without a crew or rental day."
+    },
+    {
+      "q": "What source photo gives the cleanest silhouette?",
+      "a": "Use a sharp photo with the full product in frame, clear edges and enough contrast against its background."
+    },
+    {
+      "q": "Can I choose a different camera move?",
+      "a": "Yes. Name one move in your video idea, such as a slow push-in or a short side glide, and review the result before posting."
+    },
+    {
+      "q": "Can I use a reflective product in a dark scene?",
+      "a": "Yes. A clear outline and controlled highlight help reflective finishes read in a darker scene; review every frame for unwanted glare."
+    },
+    {
+      "q": "How should I prepare the clip for a product page?",
+      "a": "Choose 16:9 for a product page, then add the product name or offer details in your editor after download."
     }
   ],
   "visual": {
@@ -566,5 +582,15 @@
       "t": "Keep your product details in control",
       "d": "Download without a watermark, then add the product name, licensed audio or offer details in your editor."
     }
+  ],
+  "relatedLinks": [
+    "image-to-video",
+    "product-videos",
+    "unboxing-videos",
+    "tpl-howto",
+    "plat-facebook",
+    "blog-ai-video-review-checklist",
+    "guide-first-tiktok-video-ad",
+    "guide-ad-sizes-by-platform"
   ]
 }
