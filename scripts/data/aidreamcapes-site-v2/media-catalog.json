@@ -44423,6 +44423,28 @@
           1280
         ]
       },
+      "rc5-tpl-film-strip-headphones-r1": {
+        "file": "rc5-tpl-film-strip-headphones-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte black over-ear headphones on a charcoal stone pedestal under soft window light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-film-strip-travel-mug-r1": {
+        "file": "rc5-tpl-film-strip-travel-mug-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain olive-green travel mug on a dark slate table in a narrow warm window beam.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
       "rc5-tpl-beauty-source-r1": {
         "file": "rc5-tpl-beauty-source-r1",
         "w": 1024,
