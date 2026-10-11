@@ -2,7 +2,7 @@
   "id": "plat-amazon",
   "title": "Amazon Product Photos for Listings | AIVideosUGC",
   "description": "Create Amazon product photos for a clean main image, useful detail views, and lifestyle shots from one upload, without a reshoot.",
-  "h1": "Amazon Product Photos That Fill Your Listing Gallery",
+  "h1": "AI Amazon Product Photos That Fill Your Listing Gallery",
   "eyebrow": "Amazon listings",
   "lead": "Get a clean main image and useful gallery shots from one product photo. Build white-background, detail, and lifestyle images without booking a studio.",
   "card": "One upload for a clean white main image, useful details, and product-in-use shots.",
@@ -14,8 +14,12 @@
   ],
   "faq": [
     {
-      "q": "How do Amazon product photos meet the main-image rules?",
-      "a": "Use a pure-white main image with the complete product filling most of the square frame, with no text, badges, or props. Check Seller Central for the current rules."
+      "q": "Can Amazon product photos include lifestyle and detail views in one listing?",
+      "a": "Yes. Start with one clear product photo, then make a white-background main image, detail views, and lifestyle scenes for the listing gallery. Check Amazon's current category rules before publishing."
+    },
+    {
+      "q": "What are Amazon's main image requirements?",
+      "a": "The main image needs a pure white background and a product that fills about 85% of the square frame, with no text, badges or props. Check Seller Central for the current rules."
     },
     {
       "q": "Can I make a white-background main from a regular photo?",
@@ -35,7 +39,7 @@
     },
     {
       "q": "What photo should I upload?",
-      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front view works best for a main image rebuild."
+      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front view works well for a main image rebuild."
     },
     {
       "q": "Can I make a video for my Amazon listing?",
@@ -71,10 +75,10 @@
         "label": "Detail shots",
         "items": [
           {
-            "ref": "n:guide:q19-amz-example-trail-sole",
-            "title": "Detail Shot — Trail Shoe Tread and Mesh",
+            "ref": "n:guide:q19-amz-strip-soap-use",
+            "title": "Detail Shot — Cleanser Pump in Hand",
             "kind": "photo",
-            "product": "trail shoe"
+            "product": "cleanser"
           },
           {
             "ref": "n:guide:q19-amz-example-daypack-pocket",
@@ -120,7 +124,7 @@
       "n:guide:q19-amz-picker-07-headphone-unbox",
       "n:guide:q19-amz-picker-08-pet-bundle",
       "n:guide:q19-amz-use-notebook-write",
-      "n:guide:q19-amz-use-phonefolio"
+      "n:guide:q19-amz-override-compare-lipbalm"
     ],
     "steps": {
       "source": "n:guide:plat-amazon-c3-m2-source",
@@ -176,8 +180,8 @@
   "steps_lead": "Turn one product photo into listing-ready main and gallery images in three steps, without a studio or reshoot.",
   "more_sections": [
     {
-      "eyebrow": "Made for each placement",
-      "h2": "Optimized for Amazon Listing and Ad Placements",
+      "eyebrow": "Made for each Amazon destination",
+      "h2": "Optimized for Amazon Listings and Ads",
       "lead": "Create a square set for listing pages, Brand Stores, sponsored ads, and off-Amazon traffic.",
       "items": [
         {
@@ -186,7 +190,7 @@
         },
         {
           "t": "Sponsored Ad Image",
-          "d": "Use focused product shots in ad placements that send shoppers to the listing."
+          "d": "Use focused product shots in ads that send shoppers to the listing."
         },
         {
           "t": "Off-Amazon Traffic",
