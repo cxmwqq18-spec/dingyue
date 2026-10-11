@@ -14,18 +14,18 @@
   "benefits_h2": "Show what arrives before checkout",
   "benefits": [
     {
-      "t": "Show the box and item clearly",
-      "d": "Keep the package, product and included pieces easy to see in one reveal.",
+      "t": "Know what arrives before checkout",
+      "d": "See the product and included pieces together so shoppers know what they receive.",
       "icon": "play"
     },
     {
-      "t": "Give shoppers a first look",
-      "d": "Let viewers see what arrives and how the product is presented before they buy.",
+      "t": "Get a first look before buying",
+      "d": "See how the package opens and what shoppers receive before they buy.",
       "icon": "target"
     },
     {
-      "t": "Test another reveal angle",
-      "d": "Create a fresh unboxing moment from one product photo without another delivery shoot.",
+      "t": "Try a new opening without a reshoot",
+      "d": "Change the opening or hand position without another delivery shoot.",
       "icon": "layers"
     }
   ],
@@ -41,8 +41,8 @@
       "d": "Describe the box, tissue and one reveal action in a single sentence."
     },
     {
-      "t": "Review, then download",
-      "d": "Watch the reveal and download the clip for your product page, social feed or ad."
+      "t": "Download and post the reveal",
+      "d": "Download the clip for your product page, social feed or ad after a quick review."
     }
   ],
   "maker": {
@@ -100,28 +100,28 @@
       "lead": "A clear reveal shows what arrives and gives shoppers a useful first look before checkout.",
       "items": [
         {
-          "t": "Show the box and item",
-          "d": "Keep the package and product easy to see as the reveal begins."
+          "t": "See every included piece at a glance",
+          "d": "Keep the package, product and included pieces visible in one clear reveal."
         },
         {
-          "t": "Keep the reveal easy to follow",
-          "d": "Move from closed package to product in one clear sequence."
+          "t": "Follow the reveal at a glance",
+          "d": "Move from closed package to product in one clear sequence so viewers do not lose the thread."
         },
         {
-          "t": "Stage a complete first look",
-          "d": "Show the item and its included pieces before the scene ends."
+          "t": "See the full set before checkout",
+          "d": "Show the item and included pieces before the scene ends so buyers can decide with context."
         },
         {
-          "t": "Test another reveal angle",
+          "t": "Open from another angle",
           "d": "Try a different opening or hand position without another delivery shoot."
         },
         {
-          "t": "Keep the product central",
-          "d": "Let shoppers see the item as soon as the package opens."
+          "t": "See the product as soon as the box opens",
+          "d": "Bring the item into view early so shoppers can inspect it before the clip ends."
         },
         {
-          "t": "Guide the viewer to the item",
-          "d": "End with the product held steady and easy to inspect."
+          "t": "Finish with a frame shoppers can inspect",
+          "d": "Hold the product steady at the end so its shape and contents stay easy to see."
         }
       ]
     }

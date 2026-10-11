@@ -13,18 +13,18 @@
   ],
   "benefits": [
     {
-      "t": "Show the product in action",
-      "d": "Put one operation in motion so shoppers can see how the item works before they buy.",
+      "t": "See it work before checkout",
+      "d": "Show the key action in minutes so shoppers can see how the item works before they buy.",
       "icon": "play"
     },
     {
-      "t": "Answer one buyer question",
-      "d": "Choose the feature, finish or use case that needs a closer look and show it clearly.",
+      "t": "Answer the buyer before they ask",
+      "d": "Put one feature or use case in motion so shoppers get the detail they need on the listing.",
       "icon": "target"
     },
     {
-      "t": "Make another angle from one photo",
-      "d": "Create a second product moment for a listing or paid ad without booking another shoot.",
+      "t": "Skip the second shoot",
+      "d": "Create another product moment from one photo without booking another shoot.",
       "icon": "layers"
     }
   ],
@@ -95,7 +95,7 @@
       "n:guide:f2-product-operation-strip-2",
       "n:guide:k1-product-videos-case-vacuum",
       "n:guide:k1-product-videos-strip-lunchbox-latch",
-      "n:guide:q9-ugc-gallery-weekender-unboxing",
+      "n:guide:k1-product-videos-example-lamp",
       "n:guide:b1-video-ads-result"
     ],
     "steps": {

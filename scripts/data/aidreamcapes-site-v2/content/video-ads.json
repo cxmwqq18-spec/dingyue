@@ -108,11 +108,11 @@
   },
   "visual": {
     "strip": [
-      "n:guide:q9-ugc-weekender-unboxing",
+      "n:guide:k1-unboxing-example-diffuser",
       "n:guide:q9-ugc-phone-grip",
       "n:guide:q9-ugc-bottle-review",
       "n:guide:q9-ugc-jacket-transition",
-      "n:guide:q9-ugc-balm-review",
+      "n:guide:q1-home-picker-lipbalm",
       "n:guide:q9-ugc-gallery-jacket-tryon"
     ],
     "steps": {
@@ -150,7 +150,7 @@
       {
         "frame": "post",
         "ref": "n:guide:q2-video-ads-uses-01",
-        "h": "Export a vertical asset for testing",
+        "h": "Test a paid ad without another shoot",
         "d": "Download a clean ad frame for a paid campaign, then add the offer details in your editor."
       },
       {
