@@ -81,7 +81,7 @@
     }
   ],
   "visual": {
-    "overview": "Home shoppers judge scale, texture, and how a piece fits the room. Start with a clear photo of this two-pillow set, then show it styled on a reading chair.",
+    "overview": "Home shoppers judge scale, texture, and where a piece fits. Start with a clear photo of a leafy houseplant in a plain ceramic planter, then show it styled by a sunny window.",
     "strip": [
       "n:guide:q17-ind-home-living-strip-0",
       "f:q17-ind-home-living-strip-1",
@@ -126,7 +126,7 @@
       "lead": "Show a clear result, a hands-on demo, or a creator explaining the product.",
       "chips": [],
       "cards": [],
-      "button": "Make a product video"
+      "button": "Create product video"
     },
     "uses": [],
     "input": [],
@@ -142,5 +142,44 @@
         "h2": "Questions About AI Product Videos for Home Brands"
       }
     }
-  }
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Sell it where customers shop",
+      "h2": "Ads for the channels you already sell on",
+      "lead": "Send each home product asset to the channel that needs it next.",
+      "items": [
+        {
+          "t": "Shopify product pages",
+          "d": "Use a clean product scene on your [Shopify product page](/platforms/shopify-product-photos), then add the real dimensions and care details."
+        },
+        {
+          "t": "Amazon listings",
+          "d": "Pair the home-use moment with an [Amazon product image](/platforms/amazon-product-photos) that keeps the item easy to inspect."
+        },
+        {
+          "t": "TikTok ads",
+          "d": "Turn the cleaning or organizing action into a short [TikTok ad](/platforms/tiktok-ads) with the hook added after download."
+        },
+        {
+          "t": "Meta ads",
+          "d": "Use a room or before-and-after scene in a [Meta ad](/platforms/facebook-ads) and keep claims tied to the real product."
+        },
+        {
+          "t": "YouTube Shorts",
+          "d": "Show one useful home action in a [YouTube Shorts ad](/platforms/youtube-shorts-ads), with offer text added in your editor."
+        }
+      ]
+    }
+  ],
+  "relatedLinks": [
+    "ind-fashion-clothing",
+    "ind-food-drinks",
+    "ind-health-wellness",
+    "ind-electronics",
+    "before-after-videos",
+    "product-videos",
+    "change-background",
+    "lifestyle-photos"
+  ]
 }
