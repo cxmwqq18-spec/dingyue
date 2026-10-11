@@ -43787,6 +43787,46 @@
           640,
           1280
         ]
+      },
+      "ac1-actor-card-exercise-1-r3": {
+        "file": "ac1-actor-card-exercise-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "A middle-aged Black woman in a white sun visor and blue athletic tank speaks on a sunny waterfront trail while holding a plain clear water bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-pet-2-r3": {
+        "file": "ac1-actor-card-pet-2-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult South Asian woman with dark hair in a tidy low bun cuddles a calm gray cat on a sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-terrace-1-r3": {
+        "file": "ac1-actor-card-terrace-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult Latina woman with a straight copper-red bob speaks among planters on a sunny rooftop terrace.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-interview-1-r3": {
+        "file": "ac1-actor-card-interview-1-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult Latina woman with a straight pale-blonde bob speaks to camera on a pedestrian street.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
