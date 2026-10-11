@@ -974,7 +974,7 @@ function toolAppHref(model, page, templateKey, options = {}) {
   return appHref({ tool_id: "image_generator", tool: page.id, template: templateKey, prompt }, false);
 }
 function actorSeedancePrompt(actor) {
-  return `Use the uploaded product image and preserve its shape, colors and label. In a ${actor.scene} setting, ${actor.talent} holds the ${actor.product} and says: "${actor.line}" ${actor.action} Handheld front-camera selfie, eye-level chest-up framing, natural light and skin texture, casual creator delivery with slight natural sway. Sound: ${actor.ambient}; no music, text or logos.`;
+  return `Use the uploaded product image as context. In a ${actor.scene} setting, ${actor.talent} speaks to camera about the uploaded product and says: "${actor.line}" ${actor.action} Handheld front-camera selfie, eye-level chest-up framing, natural light and skin texture, casual creator delivery with slight natural sway. Sound: ${actor.ambient}; no music, text or logos.`;
 }
 function canonical(page) { return `${BASE}${page.url === "/" ? "/" : page.url}`; }
 function breadcrumbTrail(model, page) {
@@ -2638,7 +2638,8 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (pageId === "examples") return (data.flows ?? []).filter((flow) => flow.filterTags?.includes(id)).length;
         return cards.filter((card) => card.chips?.includes(id)).length;
       };
-      for (const chip of chips) if (filterCount(chip.id) < 2) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
+      const minFilterCards = ["ai-actors", "spokesperson-videos"].includes(pageId) ? 1 : 2;
+      for (const chip of chips) if (filterCount(chip.id) < minFilterCards) errors.push(`${pageId}: filter ${chip.id} has too few matching cards`);
       for (const card of cards) {
         const labelWords = wordCount(card.label);
         if (labelWords < 2 || labelWords > 6) errors.push(`${pageId}: visual picker card labels must contain 2-6 words (${card.label})`);
@@ -2769,10 +2770,19 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (page.id === "ai-actors") {
       const scenes = Array.isArray(data.actorScenes) ? data.actorScenes : [];
       const actors = Array.isArray(data.actors) ? data.actors : [];
+      const expectedSceneCounts = {
+        Indoor: 2, Home: 2, Outdoor: 2, "Living Room": 2, Studio: 2, Office: 2, Garden: 2,
+        Gym: 2, Cafe: 2, Kitchen: 2, Podcast: 2, Fitness: 2, Beach: 2, Car: 2, Hospital: 2,
+        Balcony: 2, Pet: 2, Shopping: 2, Sports: 2, "Study Room": 2, Classroom: 1, Terrace: 2,
+        Bathroom: 1, Exercise: 2, Bedroom: 1, Garage: 1, Interview: 1, Pool: 1, Reporting: 1,
+        Travel: 1, Yoga: 1
+      };
       if (!scenes.length) errors.push("ai-actors: actor scenes are missing");
+      if (actors.length !== 53) errors.push(`ai-actors: expected 53 actor cards, got ${actors.length}`);
       for (const scene of scenes) {
         const count = actors.filter((actor) => actor.scene === scene).length;
-        if (count !== 2) errors.push(`ai-actors: scene ${scene} must have exactly 2 actor cards, got ${count}`);
+        const expected = expectedSceneCounts[scene] ?? 0;
+        if (count !== expected) errors.push(`ai-actors: scene ${scene} must have ${expected} actor cards, got ${count}`);
       }
       if (new Set(actors.map((actor) => actor.name)).size !== actors.length) errors.push("ai-actors: actor names must be unique");
       for (const actor of actors) {

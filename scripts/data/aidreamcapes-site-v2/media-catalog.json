@@ -43167,6 +43167,536 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "ac1-actor-card-indoor-1-r1": {
+        "file": "ac1-actor-card-indoor-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian woman in her twenties in an indoor setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-indoor-2-r1": {
+        "file": "ac1-actor-card-indoor-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her thirties in an indoor setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-home-1-r1": {
+        "file": "ac1-actor-card-home-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian man in his thirties in a home setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-home-2-r1": {
+        "file": "ac1-actor-card-home-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her forties in a home setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-outdoor-1-r1": {
+        "file": "ac1-actor-card-outdoor-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a outdoor setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-outdoor-2-r1": {
+        "file": "ac1-actor-card-outdoor-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latino man in his thirties in a outdoor setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-living-room-1-r1": {
+        "file": "ac1-actor-card-living-room-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian woman in her thirties in a living room setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-living-room-2-r1": {
+        "file": "ac1-actor-card-living-room-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white man in his sixties in a living room setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-studio-1-r1": {
+        "file": "ac1-actor-card-studio-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian man in his thirties in a studio setting speaks to camera with plain black broadcast microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-studio-2-r1": {
+        "file": "ac1-actor-card-studio-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black man in his twenties in a studio setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-office-1-r1": {
+        "file": "ac1-actor-card-office-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Arab man in his forties in a office setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-office-2-r1": {
+        "file": "ac1-actor-card-office-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a office setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-garden-1-r1": {
+        "file": "ac1-actor-card-garden-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her thirties in a garden setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-garden-2-r1": {
+        "file": "ac1-actor-card-garden-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her thirties in a garden setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-gym-1-r1": {
+        "file": "ac1-actor-card-gym-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her thirties in a gym setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-gym-2-r1": {
+        "file": "ac1-actor-card-gym-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a gym setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-cafe-1-r1": {
+        "file": "ac1-actor-card-cafe-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her twenties in a cafe setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-cafe-2-r1": {
+        "file": "ac1-actor-card-cafe-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Middle Eastern woman in her thirties in a cafe setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-kitchen-1-r1": {
+        "file": "ac1-actor-card-kitchen-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a kitchen setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-kitchen-2-r1": {
+        "file": "ac1-actor-card-kitchen-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latina woman in her thirties in a kitchen setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-podcast-1-r1": {
+        "file": "ac1-actor-card-podcast-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a podcast setting speaks to camera with plain black podcast microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-podcast-2-r1": {
+        "file": "ac1-actor-card-podcast-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her twenties in a podcast setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-fitness-1-r1": {
+        "file": "ac1-actor-card-fitness-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black man in his thirties in a fitness setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-fitness-2-r1": {
+        "file": "ac1-actor-card-fitness-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a fitness setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-beach-1-r1": {
+        "file": "ac1-actor-card-beach-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her thirties in a beach setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-beach-2-r1": {
+        "file": "ac1-actor-card-beach-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her thirties in a beach setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-car-1-r1": {
+        "file": "ac1-actor-card-car-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latino man in his thirties in a car setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-car-2-r1": {
+        "file": "ac1-actor-card-car-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her thirties in a car setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-hospital-1-r1": {
+        "file": "ac1-actor-card-hospital-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white man in his thirties in a hospital setting speaks to camera with plain blank clipboard.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-hospital-2-r1": {
+        "file": "ac1-actor-card-hospital-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a hospital setting speaks to camera with plain stethoscope.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-balcony-1-r1": {
+        "file": "ac1-actor-card-balcony-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latina woman in her thirties in a balcony setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-balcony-2-r1": {
+        "file": "ac1-actor-card-balcony-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her forties in a balcony setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-pet-1-r1": {
+        "file": "ac1-actor-card-pet-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her thirties in a pet setting speaks to camera with calm golden retriever.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-pet-2-r1": {
+        "file": "ac1-actor-card-pet-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a pet setting speaks to camera with calm gray cat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-shopping-1-r1": {
+        "file": "ac1-actor-card-shopping-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her thirties in a shopping setting speaks to camera with two plain shopping bags.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-shopping-2-r1": {
+        "file": "ac1-actor-card-shopping-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian woman in her twenties in a shopping setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-sports-1-r1": {
+        "file": "ac1-actor-card-sports-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black man in his thirties in a sports setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-sports-2-r1": {
+        "file": "ac1-actor-card-sports-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latina woman in her twenties in a sports setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-study-room-1-r1": {
+        "file": "ac1-actor-card-study-room-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white man in his thirties in a study room setting speaks to camera with open laptop with abstract screen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-study-room-2-r1": {
+        "file": "ac1-actor-card-study-room-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her thirties in a study room setting speaks to camera with open laptop with abstract screen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-classroom-1-r1": {
+        "file": "ac1-actor-card-classroom-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white man in his twenties in a classroom setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-terrace-1-r1": {
+        "file": "ac1-actor-card-terrace-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latina woman in her thirties in a terrace setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-terrace-2-r1": {
+        "file": "ac1-actor-card-terrace-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian man in his thirties in a terrace setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-bathroom-1-r1": {
+        "file": "ac1-actor-card-bathroom-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a bathroom setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-exercise-1-r1": {
+        "file": "ac1-actor-card-exercise-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her thirties in a exercise setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-exercise-2-r1": {
+        "file": "ac1-actor-card-exercise-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian man in his thirties in a exercise setting speaks to camera with foam roller on floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-bedroom-1-r1": {
+        "file": "ac1-actor-card-bedroom-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult white woman in her thirties in a bedroom setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-garage-1-r1": {
+        "file": "ac1-actor-card-garage-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black man in his fifties in a garage setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-interview-1-r1": {
+        "file": "ac1-actor-card-interview-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latina woman in her thirties in a interview setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-pool-1-r1": {
+        "file": "ac1-actor-card-pool-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her thirties in a pool setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-reporting-1-r1": {
+        "file": "ac1-actor-card-reporting-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Latina woman in her thirties in a reporting setting speaks to camera with plain black handheld microphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-travel-1-r1": {
+        "file": "ac1-actor-card-travel-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman in her thirties in a travel setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-yoga-1-r1": {
+        "file": "ac1-actor-card-yoga-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties in a yoga setting speaks to camera with plain yoga mat.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
