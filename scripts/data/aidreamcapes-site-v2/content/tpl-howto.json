@@ -36,15 +36,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the whole tool or product with its useful working details visible."
+      "d": "Show the whole product with working details visible. Keep the tool fully in frame."
     },
     {
       "t": "Pick a How-To Style",
-      "d": "Choose the task and one visible change, then generate the clip in your size and length."
+      "d": "Choose the task and one visible change, then generate the clip in your size and length. Keep one change in view."
     },
     {
       "t": "Download and Post",
-      "d": "Download the video, then add short step labels or approved safety wording in your editor."
+      "d": "Download the video, then add step labels or approved safety wording in your editor. Check the clip before posting."
     }
   ],
   "maker": {
@@ -104,6 +104,10 @@
     {
       "q": "Can I use a how-to video in paid ads?",
       "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for instructions and claims."
+    },
+    {
+      "q": "Can I keep the same product shape in the generated demo?",
+      "a": "Yes. Upload a clear photo of the whole product and review its outline and working parts before posting."
     }
   ],
   "visual": {
@@ -571,5 +575,15 @@
         "h2": "Questions about AI how-to videos"
       }
     }
-  }
+  },
+  "relatedLinks": [
+    "product-videos",
+    "image-to-video",
+    "tpl-film",
+    "plat-shopify",
+    "blog-ai-video-review-checklist",
+    "guide-first-tiktok-video-ad",
+    "guide-ad-sizes-by-platform",
+    "unboxing-videos"
+  ]
 }
