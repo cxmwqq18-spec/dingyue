@@ -102,7 +102,7 @@
       "sourceAlt": "Plain forest-green bottle shown fully from cap to base on a light neutral background.",
       "sourceTitle": "Your product",
       "sourceHint": "Start with a clear view of the full item.",
-      "result": "n:guide:b1-spokesperson-videos-result",
+      "result": "n:guide:img2-spokesperson-step-result-r1",
       "mode": "video",
       "length": 10,
       "prompt": "Use the uploaded plain forest-green bottle as the exact product reference. Preserve its matte green body and black cap while a presenter holds it at chest height and explains its everyday use. No labels or logos."

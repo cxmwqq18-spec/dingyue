@@ -42816,11 +42816,55 @@
         ],
         "source": "Codex imagegen"
       },
+      "img2-home-hero-shoe-r2-a": {
+        "file": "img2-home-hero-shoe-r2-a",
+        "w": 864,
+        "h": 1536,
+        "alt": "Light gray knit running shoe with white laces and a thick white sole on an urban running track at sunrise.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-r2-b": {
+        "file": "img2-home-hero-shoe-r2-b",
+        "w": 864,
+        "h": 1536,
+        "alt": "Light gray knit running shoe with white laces and a thick white sole on a warm wood gym floor.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-r2-c": {
+        "file": "img2-home-hero-shoe-r2-c",
+        "w": 864,
+        "h": 1536,
+        "alt": "Light gray knit running shoe with white laces and a thick white sole on a lakeside stone walkway.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
       "img2-spokesperson-hero-r1": {
         "file": "img2-spokesperson-hero-r1",
         "w": 1024,
         "h": 1024,
         "alt": "Adult Black man with a short salt-and-pepper fade speaks to camera while holding a plain forest-green water bottle in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-spokesperson-step-result-r1": {
+        "file": "img2-spokesperson-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a straight chin-length dark bob looks into the camera while holding a matching plain forest-green water bottle at chest height.",
         "variants": [
           640,
           1280

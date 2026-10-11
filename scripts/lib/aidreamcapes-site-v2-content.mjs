@@ -1850,7 +1850,7 @@ function payloadFor(model, page) {
       ...(visual ? { visual } : {}),
       // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
       hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
-        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["n:guide:img2-home-hero-shoe-a", "n:guide:img2-home-hero-shoe-b", "n:guide:img2-home-hero-shoe-c"].map((ref) => mediaImage(model, ref, "inset")) }),
+        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["n:guide:img2-home-hero-shoe-r2-a", "n:guide:img2-home-hero-shoe-r2-b", "n:guide:img2-home-hero-shoe-r2-c"].map((ref) => mediaImage(model, ref, "inset")) }),
         videoHref, photoHref },
       make: {
         title: c.make_title,
