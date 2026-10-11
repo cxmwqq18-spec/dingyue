@@ -143,29 +143,6 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Tools for each beauty asset",
-      "h2": "Beauty tools that fit the job",
-      "lead": "Choose the tool that matches the asset you need, then review the result before posting.",
-      "items": [
-        {
-          "t": "Video Ads",
-          "d": "[Video Ads](/ai-video-generation/ugc-ad-video) turn a beauty product photo into a creator-style routine or demo."
-        },
-        {
-          "t": "Lifestyle Photos",
-          "d": "[Lifestyle Photos](/ai-image-generation/lifestyle-scene) place the product in a bathroom routine or social-feed setting."
-        },
-        {
-          "t": "White Background Photos",
-          "d": "[White Background Photos](/ai-image-generation/ecommerce-main-image) keep the package clean and easy to inspect for a listing."
-        },
-        {
-          "t": "Product Photos",
-          "d": "[Product Photos](/ai-image-generation) make a clear beauty product view for a store page or campaign draft."
-        }
-      ]
-    },
-    {
       "eyebrow": "Sell on the channels you use",
       "h2": "Ads for the channels you already sell on",
       "lead": "Match each beauty asset to the platform where shoppers will see it.",
