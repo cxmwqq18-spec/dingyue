@@ -27,16 +27,16 @@
       "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, the selected actor holds the sky-blue moisturizer jar toward the camera, then touches one cheek. Natural creator delivery says: \"This is the moisturizer step I keep beside the sink.\" Sound: her voice and quiet bathroom room tone.",
       "items": [
         {
-          "t": "Show the product shoppers need to see",
+          "t": "Upload your product photo",
           "d": "Upload one clear product photo and get an actor-led ad around the item your customer will receive."
         },
         {
-          "t": "Put your message on camera",
+          "t": "Write your line and pick an actor",
           "d": "Write one short line, then choose a face and setting that fit the product and audience."
         },
         {
-          "t": "Test another angle in minutes",
-          "d": "Swap the actor, hook or offer and make the next vertical ad without another casting call."
+          "t": "Download and post your ad",
+          "d": "Download the vertical ad, then swap the actor, hook or offer when you need another angle."
         }
       ],
       "actor_cards": [
@@ -650,9 +650,9 @@
   "benefits_h2": "Why Sellers Choose AI Actors",
   "benefits": [
     {
-      "t": "Show the feature that sells",
-      "d": "Start with one clear product photo and put an actor beside the feature shoppers need to see.",
-      "icon": "target"
+      "t": "Make a fresh ad in minutes, not days",
+      "d": "Write one line, choose an actor and skip casting, booking and a studio day for the next angle.",
+      "icon": "clock"
     },
     {
       "t": "Test more hooks without reshooting",
@@ -668,35 +668,35 @@
   "more_sections": [
     {
       "eyebrow": "Use cases",
-      "h2": "Reach shoppers where they decide",
-      "lead": "Put actor-led videos where shoppers compare, learn and decide.",
+      "h2": "Where AI Actor Videos Sell for You",
+      "lead": "Put AI actor videos where shoppers compare, learn and decide.",
       "items": [
         {
-          "t": "Test paid ad angles",
-          "d": "Put a presenter beside the product in a phone feed, then test the hook, offer and audience in paid social.",
-          "img": "n:guide:q4-spokesperson-use-02",
-          "alt": "Adult Black man presents a plain crossbody bag for a paid social ad.",
+          "t": "Test paid ad angles without booking creators",
+          "d": "Put an actor beside the product in a phone feed. Test hooks and offers without paying creators, sets or crews for every new angle.",
+          "img": "n:guide:cwa-uses-paid-01-r1",
+          "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway for a paid social ad.",
           "frame": "phone"
         },
         {
-          "t": "Answer questions on the product page",
-          "d": "Explain a buying question beside the product, so visitors can see a feature before they add to cart.",
-          "img": "n:guide:q4-spokesperson-case-01",
-          "alt": "Adult Black woman explains a plain toner bottle for a product page video.",
+          "t": "Answer buying questions on your product page",
+          "d": "Let an actor explain a key feature beside the product, so shoppers can watch before they add to cart.",
+          "img": "n:guide:cwa-uses-product-page-02-r1",
+          "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk for a product page video.",
           "frame": "browser"
         },
         {
-          "t": "Keep your social feed fresh",
-          "d": "Keep a row of vertical presenter clips ready for Reels, TikTok and Shorts when your calendar needs another post.",
-          "img": "n:guide:q4-spokesperson-case-02",
-          "alt": "Adult East Asian man reviews plain over-ear headphones for a vertical social clip.",
+          "t": "Keep social feeds fresh without another shoot",
+          "d": "Line up vertical actor videos for Reels, TikTok and Shorts without booking a new creator each time.",
+          "img": "n:guide:cwa-uses-social-03-r1",
+          "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote for a vertical social clip.",
           "frame": "phone"
         },
         {
-          "t": "Show setup in one clear take",
-          "d": "Show the setup or one useful action with a presenter holding the product, so shoppers can follow along.",
-          "img": "n:guide:q4-spokesperson-case-03",
-          "alt": "Adult Latina woman demonstrates a plain protein shaker for a product guide.",
+          "t": "Show the setup instead of a long manual",
+          "d": "Have an actor demonstrate one useful action, so shoppers can watch instead of reading a long manual.",
+          "img": "n:guide:cwa-uses-guide-04-r1",
+          "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp for a product guide.",
           "frame": "none"
         }
       ]
