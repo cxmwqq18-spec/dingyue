@@ -77,6 +77,21 @@
     },
     "v_bf_rc4": {
       "alt": "Adult creator presents a sage-green pump bottle in a warm seasonal room."
+    },
+    "im09-v-film-cover": {
+      "alt": "Plain charcoal rectangular desktop speaker with a flat grille on a stone plinth in warm window light."
+    },
+    "im09-v-beauty-cover": {
+      "alt": "Adult Black man with close-cropped hair holds a plain ivory pump moisturizer bottle beside his cheek in a bright bathroom."
+    },
+    "im09-v-outfit-cover": {
+      "alt": "Adult East Asian woman with a short straight copper bob models a plain sage overshirt over a cream tee in a fitting-room studio."
+    },
+    "im09-v-carousel-cover": {
+      "alt": "Plain charcoal rectangular desktop speaker on a stone plinth in warm window light for a carousel video ad."
+    },
+    "im09-v-beauty-blog-cover": {
+      "alt": "Adult Black man with close-cropped hair holds a plain ivory pump moisturizer bottle beside his cheek in a bright bathroom."
     }
   },
   "galleries": {
@@ -8155,6 +8170,56 @@
       "variants": [
         1200
       ]
+    },
+    "im09-film-main": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain charcoal rectangular desktop speaker on a stone plinth in warm window light.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
+    },
+    "im09-film-alt-1": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Bare hand adjusts a plain charcoal rectangular desktop speaker on a walnut desk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
+    },
+    "im09-film-alt-2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain matte charcoal rectangular desktop speaker on a shelf beside a plant in evening light.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
+    },
+    "im09-film-alt-3": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain deep-blue rectangular desktop speaker on a pale studio pedestal with cool rim light.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
+    },
+    "im09-drink-card": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Bare hand pours a pale citrus sparkling drink from a plain glass bottle into a tumbler of ice beside fresh citrus.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
     }
   },
   "clips": {

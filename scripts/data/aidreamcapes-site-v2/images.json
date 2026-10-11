@@ -234,5 +234,25 @@
   "v_bf_rc4": {
     "w": 1024,
     "h": 1024
+  },
+  "im09-v-film-cover": {
+    "w": 400,
+    "h": 400
+  },
+  "im09-v-beauty-cover": {
+    "w": 400,
+    "h": 400
+  },
+  "im09-v-outfit-cover": {
+    "w": 400,
+    "h": 400
+  },
+  "im09-v-carousel-cover": {
+    "w": 400,
+    "h": 400
+  },
+  "im09-v-beauty-blog-cover": {
+    "w": 400,
+    "h": 400
   }
 }

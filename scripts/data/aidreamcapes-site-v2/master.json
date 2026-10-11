@@ -456,7 +456,7 @@
    "url": "/ai-video-generation/cinematic-video",
    "label": "Brand Film",
    "primary_keyword": "cinematic product video",
-   "img": "v_film",
+   "img": "im09-v-film-cover",
    "status": "keep",
    "group": "video",
    "industries": [
@@ -538,7 +538,7 @@
    "url": "/ai-video-generation/fashion-try-on-reel",
    "label": "Outfit Reel",
    "primary_keyword": "AI fashion reels",
-   "img": "v_outfit",
+   "img": "im09-v-outfit-cover",
    "status": "keep",
    "group": "video",
    "industries": [
@@ -670,7 +670,7 @@
    "url": "/ai-video-generation/carousel-video-ad",
    "label": "Carousel Video Ad",
    "primary_keyword": "carousel video ad",
-   "img": "v_film",
+   "img": "im09-v-carousel-cover",
    "status": "new",
    "group": "video",
    "industries": [
@@ -752,7 +752,7 @@
    "url": "/industries/beauty-skincare",
    "label": "Beauty & Skincare",
    "primary_keyword": "AI product videos and photos for beauty brands",
-   "img": "v_beauty",
+   "img": "im09-v-beauty-cover",
    "status": "new",
    "group": null
   },
@@ -1088,7 +1088,7 @@
    "url": "/blog/ai-ugc-video-ads-guide",
    "label": "What Makes a UGC-Style Video Ad Work",
    "primary_keyword": "AI UGC video ads guide",
-   "img": "v_beauty",
+   "img": "im09-v-beauty-blog-cover",
    "status": "rewrite",
    "group": null,
    "section": "blog"
