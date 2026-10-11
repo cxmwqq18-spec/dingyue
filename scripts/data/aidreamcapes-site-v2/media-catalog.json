@@ -42782,6 +42782,72 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-a": {
+        "file": "img2-home-hero-shoe-a",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain charcoal trail running shoe with a muted rust-orange heel accent on a damp forest trail at dawn.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-b": {
+        "file": "img2-home-hero-shoe-b",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain charcoal trail running shoe with a muted rust-orange heel accent on a wet rock beside a forest path.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-home-hero-shoe-c": {
+        "file": "img2-home-hero-shoe-c",
+        "w": 864,
+        "h": 1536,
+        "alt": "Plain charcoal trail running shoe with a muted rust-orange heel accent suspended above a rocky forest path.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-spokesperson-hero-r1": {
+        "file": "img2-spokesperson-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with a short salt-and-pepper fade speaks to camera while holding a plain forest-green water bottle in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-photo-hub-hero-source-r1": {
+        "file": "img2-photo-hub-hero-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain coral lip balm tube and matching cap fully visible on pure white with a blank label area.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img2-photo-hub-hero-result-r1": {
+        "file": "img2-photo-hub-hero-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short straight copper bob applies the same plain coral lip balm at a bright vanity mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

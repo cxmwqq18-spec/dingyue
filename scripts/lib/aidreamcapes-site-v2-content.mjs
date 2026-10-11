@@ -1037,8 +1037,24 @@ function realTemplateCount(model) {
 }
 
 // The photo hub hero collage shows the first photo tools as cards, matching its picker.
-function toolHeroCardsForHub(model, page) {
+function toolHeroCardsForHub(model, page, configured) {
   if (page.id !== "photo-hub") return undefined;
+  if (Array.isArray(configured) && configured.length) {
+    return configured.map((item, index) => {
+      const image = mediaImage(model, String(item.ref), "card");
+      return {
+        key: `photo-hub-hero-${index + 1}`,
+        name: String(item.name ?? "Product photo"),
+        line: String(item.line ?? "Product photo for your store or ad"),
+        kind: "photo",
+        href: String(item.href ?? page.url),
+        image,
+        tags: [],
+        industries: [],
+        platforms: []
+      };
+    });
+  }
   return applyCardOverrides(model, page, (TOOL_REL[page.id] || []).slice(0, 3).map((key) => cardRef(model, key, "primary")).filter(Boolean));
 }
 
@@ -1148,7 +1164,10 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       source: { ...visualImage(model, steps.source, "photo"), ...(steps.sourceAlt ? { alt: String(steps.sourceAlt) } : {}) },
       ...(steps.sourceTitle ? { sourceTitle: normalizeStepLabel(String(steps.sourceTitle)) } : {}),
       ...(steps.sourceHint ? { sourceHint: String(steps.sourceHint) } : {}),
-      result: visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
+      result: {
+        ...visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
+        ...(steps.resultPosition ? { objectPosition: String(steps.resultPosition) } : {})
+      },
       options,
       credits: `${stepCredits} credits`,
       ...(steps.prompt ? { prompt: String(steps.prompt) } : {}),
@@ -1831,7 +1850,7 @@ function payloadFor(model, page) {
       ...(visual ? { visual } : {}),
       // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
       hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
-        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["f3-home-hero-serum-dropper-a", "f3-home-hero-serum-dropper-b", "f3-home-hero-serum-dropper-c2"].map((key) => imageRef(model, key, "Plain amber dropper bottle in a product scene")) }),
+        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["n:guide:img2-home-hero-shoe-a", "n:guide:img2-home-hero-shoe-b", "n:guide:img2-home-hero-shoe-c"].map((ref) => mediaImage(model, ref, "inset")) }),
         videoHref, photoHref },
       make: {
         title: c.make_title,
@@ -1906,7 +1925,7 @@ function payloadFor(model, page) {
       { title: "Browse platforms", links: pageLinksFor(model, ["plat-amazon", "plat-shopify"]) }
     ] : [];
     const heroCards = page.id === "white-background" || page.id === "spokesperson-videos" ? null
-      : hasHero ? [] : hub ? toolHeroCardsForHub(model, page) : [];
+      : hasHero ? [] : hub ? toolHeroCardsForHub(model, page, c.hero_cards) : [];
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
@@ -1919,7 +1938,8 @@ function payloadFor(model, page) {
         ...(OCCASION_TOOLS.includes(page.id) ? [["Good for", names(OCCASION_IDS), specLinks(model, OCCASION_IDS)]] : [])
       ],
       hero: page.id === "white-background" ? { single: imageRef(model, "p_white", "Running shoe on a pure white background") }
-        : page.id === "spokesperson-videos" ? { single: imageRef(model, "presenter", "AI-generated presenter holding a skincare bottle") }
+        : page.id === "spokesperson-videos" ? { single: mediaImage(model, "n:guide:img2-spokesperson-hero-r1", "hero") }
+        : page.id === "photo-hub" ? { cards: heroCards ?? [] }
         : heroCards,
       siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [] };
   }

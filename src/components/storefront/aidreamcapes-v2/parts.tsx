@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { V2Article, V2BenefitIcon, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
 import type { V2Company } from "./company";
 
@@ -17,7 +17,7 @@ function resolveSrcSet(srcSet: string, r: V2Resolvers): string {
     .join(", ");
 }
 
-export function Img({ image, r, className, eager }: { image: V2Image; r: V2Resolvers; className?: string; eager?: boolean }) {
+export function Img({ image, r, className, eager, style }: { image: V2Image; r: V2Resolvers; className?: string; eager?: boolean; style?: CSSProperties }) {
   return (
     <img
       alt={image.alt}
@@ -26,6 +26,7 @@ export function Img({ image, r, className, eager }: { image: V2Image; r: V2Resol
       fetchPriority={eager ? "high" : undefined}
       height={image.height}
       loading={eager ? "eager" : "lazy"}
+      style={style}
       sizes={image.srcSet ? image.sizes : undefined}
       src={r.asset(image.src)}
       srcSet={image.srcSet ? resolveSrcSet(image.srcSet, r) : undefined}

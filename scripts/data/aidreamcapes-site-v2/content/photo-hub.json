@@ -181,6 +181,20 @@
       }
     ]
   },
+  "hero_cards": [
+    {
+      "ref": "n:guide:img2-photo-hub-hero-source-r1",
+      "name": "Original product photo",
+      "line": "Start with one clear upload",
+      "href": "/ai-image-generation/ecommerce-main-image"
+    },
+    {
+      "ref": "n:guide:img2-photo-hub-hero-result-r1",
+      "name": "Generated vanity scene",
+      "line": "Place it in a shopper-ready setting",
+      "href": "/ai-image-generation/lifestyle-scene"
+    }
+  ],
   "visual": {
     "strip": [],
     "steps": {

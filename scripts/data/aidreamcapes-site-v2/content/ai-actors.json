@@ -18,6 +18,7 @@
       "sourceTitle": "Upload your product photo",
       "sourceHint": "One clear product photo is enough to start",
       "result": "n:aa3-ai-actors-kavya-result",
+      "resultPosition": "center 20%",
       "options": [
         ["Frame", "9:16 vertical"],
         ["Length", "10 seconds"],

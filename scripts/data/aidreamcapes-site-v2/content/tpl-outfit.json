@@ -99,6 +99,7 @@
     "steps": {
       "source": "n:guide:tpl-outfit-c3-m2-source",
       "result": "n:guide:tpl-outfit-c3-m2-result-9x16",
+      "resultPosition": "center 20%",
       "mode": "video",
       "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns once to show the side fit of the beige zip jacket. Use a full-length medium frame with a slow tracking move so the collar, cuffs, hem and shoes stay visible. Soft studio daylight keeps the beige jacket and seams clear. End facing forward with the full jacket centered. Sound: quiet room tone and a light fabric rustle. No music. Keep the final pose steady for a thumbnail and leave safe space for platform controls."
     },

@@ -185,6 +185,7 @@
       "source": "n:guide:img1-video-hub-steps-source-r1",
       "sourceAlt": "Plain matte teal insulated water bottle with an integrated black loop handle, fully visible on a pale counter.",
       "result": "n:guide:img1-video-hub-steps-result-r1",
+      "resultPosition": "center 20%",
       "mode": "video",
       "length": 10,
       "prompt": "I wanted to show you this insulated bottle before I head out.",

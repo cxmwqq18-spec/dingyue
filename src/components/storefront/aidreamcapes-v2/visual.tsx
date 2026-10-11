@@ -30,7 +30,7 @@ const DIRECTORY_FILTER_CSS = `${DIRECTORY_FILTER_SELECTORS.join(",")}{display:no
 @media(max-width:720px){.adc2 .v-directory-related ul{grid-template-columns:repeat(2,minmax(0,1fr))}}`;
 
 function VisualImage({ image, r, className }: { image: V2VisualImage; r: V2Resolvers; className?: string }) {
-  return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} />;
+  return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined} />;
 }
 
 function visualRatio(image: V2VisualImage): string {

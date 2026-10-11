@@ -2,7 +2,7 @@
 // (sections.v2_main.settings.data). Built by scripts/lib/aidreamcapes-site-v2-content.mjs.
 
 export type V2Image = { src: string; alt: string; width?: number; height?: number; srcSet?: string; sizes?: string };
-export type V2VisualImage = { src: string; w: number; h: number; alt: string; kind: "photo" | "video" };
+export type V2VisualImage = { src: string; w: number; h: number; alt: string; kind: "photo" | "video"; objectPosition?: string };
 export type V2VisualFrame = "1:1" | "9:16" | "16:9" | "4:5";
 export type V2VisualStripItem = V2VisualImage;
 export type V2VisualActorCard = { image: V2VisualImage; label: string; selected?: boolean };
