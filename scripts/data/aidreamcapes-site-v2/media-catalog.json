@@ -7694,6 +7694,166 @@
         1280
       ]
     },
+    "rx3-home-scenario-1-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a neat low bun reaches toward a plain white face cream jar on a bright bathroom vanity.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-home-scenario-2-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult man slides a plain bamboo drawer organizer into a tidy light wood drawer.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-home-scenario-3-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short copper-red bob holds a plain natural canvas shoulder bag outside a cafe.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-home-scenario-4-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a braided bun opens a plain snack pouch from a cardboard box in a bright kitchen.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-ads-scenario-1-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Black woman with short natural curls applies plain face cream beside a bright bathroom sink.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-ads-scenario-2-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Asian man places a plain shelf organizer into a cube shelf in a bright entryway.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-ads-scenario-3-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short blonde pixie pours pale iced tea into a clear glass at a sunny cafe table.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-ads-scenario-4-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short silver-gray crop wears a plain charcoal blazer in a light studio.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-photo-hub-scenario-1-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult bald man holds a plain pale-blue face mist pump bottle beside a bright white vanity.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-photo-hub-scenario-2-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a long auburn braid places a plain natural linen pillow on a light sofa.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-photo-hub-scenario-3-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with shoulder-length curly red hair wears a plain rust knit dress beside a mirror.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-photo-hub-scenario-4-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult man with short curly gray hair pours olive oil from a plain dark-green bottle into a ceramic bowl.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-hub-scenario-1-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a blonde top knot holds a plain white pump cleanser bottle in a bright bathroom.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-hub-scenario-2-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult bald man collapses a plain pale-blue reusable water bottle beside a picnic bench.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-hub-scenario-3-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult woman with a short dark auburn pixie wears a plain olive jacket on a leafy park path.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "rx3-video-hub-scenario-4-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult man with short tight black curls lifts plain matte black over-ear headphones from a kraft box.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
     "ra3-white-background-og-r1": {
       "w": 1200,
       "h": 630,

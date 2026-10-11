@@ -196,32 +196,32 @@
     }
   ],
   "seller_scenarios": {
-    "title": "How sellers like you use these tools",
-    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "title": "Make product photos that show where the item belongs",
+    "lead": "These example scenes show how sellers can place one product photo in a useful setting and get a page-ready image.",
     "items": [
       {
         "audience": "Beauty seller",
         "tool": "photo-hub",
-        "task": "Make a polished face-mist image for a product detail page.",
-        "ref": "f:q18-instagram-output-face-mist"
+        "task": "With one face mist photo, a beauty seller can make a polished product-page image without a new vanity shoot.",
+        "ref": "n:rx3-photo-hub-scenario-1-r1"
       },
       {
         "audience": "Home decor shop",
         "tool": "lifestyle-photos",
-        "task": "Place a linen pillow in a calm room scene for a collection page.",
-        "ref": "f:k7-ind-home-living-uses-00-linen-pillow"
+        "task": "With one linen pillow photo, a home decor seller can show the finished room scene without moving a sofa.",
+        "ref": "n:rx3-photo-hub-scenario-2-r1"
       },
       {
         "audience": "Fashion seller",
         "tool": "model-photos",
-        "task": "Preview a knit dress on a model before planning a shoot.",
-        "ref": "f:q8-tpl-tryon-case-04"
+        "task": "With one knit dress photo, a fashion seller can preview the fit on a model before planning a shoot.",
+        "ref": "n:rx3-photo-hub-scenario-3-r1"
       },
       {
         "audience": "Food seller",
         "tool": "lifestyle-photos",
-        "task": "Show olive oil in a bright kitchen scene for a launch post.",
-        "ref": "f:k7-ind-food-drinks-uses-1-ref-n-gen2-url-to-video-g1"
+        "task": "With one olive oil photo, a food seller can create a bright kitchen image for a launch post without reshooting.",
+        "ref": "n:rx3-photo-hub-scenario-4-r1"
       }
     ]
   },

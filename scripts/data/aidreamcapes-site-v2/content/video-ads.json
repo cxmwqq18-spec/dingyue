@@ -107,32 +107,32 @@
     ]
   },
   "seller_scenarios": {
-    "title": "How sellers like you use these tools",
-    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "title": "Turn one product photo into an ad shoppers can understand",
+    "lead": "These example scenes show how different sellers can turn one product photo into a clear ad and skip a reshoot.",
     "items": [
       {
         "audience": "Skincare shop",
         "tool": "video-ads",
-        "task": "Build a short product ad around a clean routine and a close-up texture shot.",
-        "ref": "f:q8-tpl-box-case-01"
+        "task": "With one face cream photo, a skincare seller can build a routine ad with a texture close-up without a studio day.",
+        "ref": "n:rx3-video-ads-scenario-1-r1"
       },
       {
         "audience": "Home organizer",
         "tool": "product-videos",
-        "task": "Show the shelf organizer solving one small storage task.",
-        "ref": "f:k2-url-card-shelf-organizer"
+        "task": "With one shelf organizer photo, a home seller can show the storage problem and the tidy fix in one short ad.",
+        "ref": "n:rx3-video-ads-scenario-2-r1"
       },
       {
         "audience": "Drink seller",
         "tool": "video-ads",
-        "task": "Turn an iced tea pour into a simple social feed opening.",
-        "ref": "f:q18-instagram-picker-iced-tea-reaction"
+        "task": "With one iced tea photo, a drink seller can open a social ad with a pour and first-sip moment in minutes.",
+        "ref": "n:rx3-video-ads-scenario-3-r1"
       },
       {
         "audience": "Apparel shop",
         "tool": "video-ads",
-        "task": "Give a new blazer a quick try-on reveal for a campaign draft.",
-        "ref": "f:q8-tpl-tryon-case-03"
+        "task": "With one blazer photo, an apparel seller can show the fit in a quick try-on ad without arranging a new shoot.",
+        "ref": "n:rx3-video-ads-scenario-4-r1"
       }
     ]
   },
@@ -422,7 +422,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in one frame.",
           "kind": "video"
         },
         {

@@ -263,32 +263,32 @@
     }
   ],
   "seller_scenarios": {
-    "title": "How sellers like you use these tools",
-    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "title": "One product photo, four ways to start selling",
+    "lead": "These example scenes show how skincare, home, accessories and snack sellers can turn one product photo into a ready-to-use asset.",
     "items": [
       {
         "audience": "Shopify skincare shop",
         "tool": "photo-hub",
-        "task": "Turn one jar photo into a clean product-page image and a fresh social ad.",
-        "ref": "f:k2-url-card-beauty-serum"
+        "task": "With one face cream jar photo, a skincare seller can make a clean product image and a fresh social ad without another shoot.",
+        "ref": "n:rx3-home-scenario-1-r1"
       },
       {
         "audience": "Home goods seller",
         "tool": "product-videos",
-        "task": "Show how a drawer organizer fits into a tidy everyday setup.",
-        "ref": "f:k2-url-card-drawer-trays"
+        "task": "With one drawer organizer photo, a home goods seller can show the tidy setup shoppers want without staging a full room.",
+        "ref": "n:rx3-home-scenario-2-r1"
       },
       {
         "audience": "Accessories seller",
         "tool": "video-ads",
-        "task": "Create a casual bag clip for a new collection launch.",
-        "ref": "f:q18-instagram-picker-canvas-tote"
+        "task": "With one canvas bag photo, an accessories seller can make a casual launch clip without booking a model day.",
+        "ref": "n:rx3-home-scenario-3-r1"
       },
       {
         "audience": "Snack brand",
         "tool": "unboxing-videos",
-        "task": "Reveal a pouch from its box and introduce the first taste moment.",
-        "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g3"
+        "task": "With one snack pouch photo, a food seller can turn the unboxing into a first-taste video in minutes.",
+        "ref": "n:rx3-home-scenario-4-r1"
       }
     ]
   },

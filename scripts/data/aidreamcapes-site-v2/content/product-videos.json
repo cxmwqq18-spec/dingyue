@@ -91,7 +91,7 @@
   ],
   "actor_scene_picker": {
     "title": "Choose your avatar and scene",
-    "lead": "Pick a presenter and setting, then carry both choices into the video workspace.",
+    "lead": "Pick who presents and where, and start your video with both already set.",
     "button": "Use this avatar and scene"
   },
   "visual": {

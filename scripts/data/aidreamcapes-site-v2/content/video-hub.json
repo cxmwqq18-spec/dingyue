@@ -173,32 +173,32 @@
   },
   "more_sections": null,
   "seller_scenarios": {
-    "title": "How sellers like you use these tools",
-    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "title": "From one product photo to a video idea worth testing",
+    "lead": "These example scenes show how sellers can turn one product photo into a focused video moment and save a reshoot.",
     "items": [
       {
         "audience": "Beauty shop",
         "tool": "video-ads",
-        "task": "Turn a serum review moment into a short social video draft.",
-        "ref": "f:q18-facebook-strip-serum-review"
+        "task": "With one cleanser photo, a beauty seller can make a quick review video without another bathroom shoot.",
+        "ref": "n:rx3-video-hub-scenario-1-r1"
       },
       {
         "audience": "Housewares seller",
         "tool": "product-videos",
-        "task": "Demonstrate a collapsible bottle in one clear everyday action.",
-        "ref": "f:k6-video-hub-frame-square-demo"
+        "task": "With one collapsible bottle photo, a housewares seller can show the key action in one clear clip.",
+        "ref": "n:rx3-video-hub-scenario-2-r1"
       },
       {
         "audience": "Outdoor apparel shop",
         "tool": "video-ads",
-        "task": "Create a quick jacket movement clip for a seasonal campaign.",
-        "ref": "f:q8-tpl-tryon-case-02"
+        "task": "With one lightweight jacket photo, an outdoor apparel seller can create a movement clip for a seasonal ad without a model day.",
+        "ref": "n:rx3-video-hub-scenario-3-r1"
       },
       {
         "audience": "Electronics seller",
         "tool": "unboxing-videos",
-        "task": "Open the package and reveal the headphones for a launch draft.",
-        "ref": "f:q18-facebook-picker-headphone-review"
+        "task": "With one headphone photo, an electronics seller can turn the unboxing into a launch video in minutes.",
+        "ref": "n:rx3-video-hub-scenario-4-r1"
       }
     ]
   },
