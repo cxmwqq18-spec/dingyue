@@ -30,19 +30,19 @@
   },
   "steps": [
     {
-      "t": "Upload your package photo",
+      "t": "Upload Your Package Photo",
       "d": "Add one clear photo of the pouch, box or bottle you will ship. The shape in your photo stays the shape in the preview."
     },
     {
-      "t": "Name the scene",
+      "t": "Pick a Packaging Scene",
       "d": "Pick a shelf, counter or cafe setting. The credit cost shows before the square preview is made."
     },
     {
-      "t": "Download and review",
+      "t": "Download and Review",
       "d": "Save the square file with no watermark, then compare it with your artwork and your printer proof."
     }
   ],
-  "steps_h2": "How to make a packaging mockup in 3 steps",
+  "steps_h2": "How to make a packaging mockup in 3 Simple Steps",
   "steps_lead": "One package photo becomes a styled scene preview - no studio, no print order, no wait.",
   "faq": [
     {
@@ -98,12 +98,23 @@
       "source": "n:guide:tpl-pack-c3-m2-source",
       "result": "n:f15-r10-tpl-pack-steps-open-r1",
       "mode": "photo",
-      "prompt": "Open the uploaded package on a cafe counter with the front panel visible.",
+      "prompt": "Use the uploaded plain kraft coffee pouch as the exact package. Place it on a cafe counter with its front panel visible and the pouch shape unchanged.",
       "sourceTitle": "Your product"
     },
     "uses": [],
     "input": [],
     "outputs": [],
-    "after": null
+    "after": null,
+    "titles": {
+      "m2": {
+        "h2": "Make a packaging mockup from one package photo"
+      },
+      "m3": {
+        "h2": "Choose a packaging mockup scene"
+      },
+      "faq": {
+        "h2": "Questions about packaging mockup generators"
+      }
+    }
   }
 }
