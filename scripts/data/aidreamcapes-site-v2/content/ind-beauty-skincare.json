@@ -2,7 +2,7 @@
   "id": "ind-beauty-skincare",
   "title": "AI Beauty UGC Ads From a Product Photo | AIVideosUGC",
   "description": "Turn one product photo into beauty UGC ads for routines, swatches, and reviews. Make watermark-free clips for social and product pages.",
-  "h1": "Make Beauty UGC Ads That Show the Shade in Use",
+  "h1": "Make AI Beauty UGC Ads That Show the Shade in Use",
   "eyebrow": "Beauty UGC ads",
   "lead": "Show shoppers how your beauty product is used. Turn one clear product photo into a routine, swatch, or creator-style beauty UGC ad for social and product pages.",
   "card": "Beauty UGC ads for routines, swatches, unboxings, and product demos.",
@@ -54,6 +54,10 @@
       "a": "Yes. Upload a clear, straight-on photo and choose a routine, swatch, unboxing, or review scene. The result keeps the product as the subject, so compare the shade and package before posting."
     },
     {
+      "q": "Can I make before-and-after videos for a skincare product?",
+      "a": "We’d steer away from it for skin results. A generated face is not evidence of what your product does, and a visible change in skin can read as a promise. Show application, texture, and packaging instead, and leave claims about results out of your request and the claims you use in an ad."
+    },
+    {
       "q": "Will the video match my exact foundation or lipstick shade?",
       "a": "Color comes from your photo and your wording, so shoot in daylight and name the shade plainly, like \"warm beige liquid\" or \"brick red matte.\" If the tone drifts, make another version; the credit cost is shown before each one."
     },
@@ -72,6 +76,10 @@
     {
       "q": "Can I use the same product photo for a white background shot and a routine video?",
       "a": "Yes. Shoot the bottle, tube, or jar straight-on with the whole label visible, and use that file for both the white background photo and a routine or demo video. Keep the original uncropped so the vertical video can reframe without cutting the cap."
+    },
+    {
+      "q": "Do beauty ads need a person in the frame?",
+      "a": "Ad scenes such as GRWM, reviews and shade checks read better with an adult person or hand using the product. Use object-only white background shots for the listing, and reserve shelf or vanity stills for moments where the package itself is the subject."
     },
     {
       "q": "Can I run the videos as paid beauty ads?",

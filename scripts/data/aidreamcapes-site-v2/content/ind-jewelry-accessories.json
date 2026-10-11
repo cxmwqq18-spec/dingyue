@@ -19,6 +19,10 @@
       "a": "Yes. One sharp photo of a ring, necklace, watch, bag, or sunglasses can become a macro detail, worn try-on, or styled scene. Compare the result with the real piece before listing it."
     },
     {
+      "q": "Will the AI keep my stones and metal color accurate?",
+      "a": "The result follows the color of your upload, so a flat, evenly lit photo gives the truest tone. Before listing, compare stone count, prong shape, and metal color against the real piece."
+    },
+    {
       "q": "Can I show my necklace on a model without a photoshoot?",
       "a": "Yes. One photo of the necklace laid flat can become a tight collarbone shot with a plain neckline. Close crops keep attention on the chain and pendant rather than the person wearing it."
     },
@@ -86,7 +90,7 @@
       "n:guide:q16-jewelry-necklace-clasp",
       "n:guide:q16-jewelry-ring-tryon",
       "n:guide:k7-ind-jewelry-accessories-strip-2-n-gen2-tpl-jewel-28",
-      "n:guide:q16-jewelry-sunglasses-tryon",
+      "n:guide:rb2-ind-jewelry-accessories-strip-4-r1",
       "n:guide:k7-ind-jewelry-accessories-strip-4-n-gen2-tpl-jewel-72",
       "n:guide:q16-jewelry-belt-fastening"
     ],

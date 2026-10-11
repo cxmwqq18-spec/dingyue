@@ -25077,6 +25077,26 @@
           1280
         ]
       },
+      "rb2-ind-fashion-clothing-strip-5-r1": {
+        "file": "rb2-ind-fashion-clothing-strip-5-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model walks away in a cream sweater and brown pleated skirt on a cobblestone street.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb2-ind-fashion-clothing-strip-1-r1": {
+        "file": "rb2-ind-fashion-clothing-strip-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller holds a blue-gray hoodie toward the camera in a bright home interior.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "k7-ind-fashion-clothing-strip-5-n-gen2-image-to-video-g3": {
         "file": "k7-ind-fashion-clothing-strip-5-n-gen2-image-to-video-g3",
         "w": 1024,
@@ -33769,11 +33789,31 @@
           1280
         ]
       },
+      "rb2-ind-jewelry-accessories-strip-4-r1": {
+        "file": "rb2-ind-jewelry-accessories-strip-4-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman tries on plain black sunglasses on a beach boardwalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "q16-jewelry-sunglasses-beach": {
         "file": "q16-jewelry-sunglasses-beach",
         "w": 1280,
         "h": 1280,
         "alt": "Adult woman adjusts plain black sunglasses by the beach.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb2-ind-jewelry-accessories-case-sunglasses-r1": {
+        "file": "rb2-ind-jewelry-accessories-case-sunglasses-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman adjusts plain black sunglasses beside the beach at sunset.",
         "variants": [
           640,
           1280
@@ -33854,6 +33894,16 @@
         "w": 1280,
         "h": 1280,
         "alt": "Adult woman adjusts a plain gold hoop earring at a vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rb2-ind-jewelry-accessories-case-earrings-r1": {
+        "file": "rb2-ind-jewelry-accessories-case-earrings-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman adjusts a plain gold hoop earring at a bathroom vanity.",
         "variants": [
           640,
           1280

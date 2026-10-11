@@ -884,7 +884,7 @@
     ],
     "ind-jewelry-accessories": [
       {
-        "ref": "n:guide:q16-jewelry-earrings-tryon",
+        "ref": "n:guide:rb2-ind-jewelry-accessories-case-earrings-r1",
         "product": "gold hoop earrings",
         "title": "Try-on: Gold hoops before the mirror"
       },
@@ -899,7 +899,7 @@
         "title": "Styling demo: Silk scarf tied to a tote"
       },
       {
-        "ref": "n:guide:q16-jewelry-sunglasses-beach",
+        "ref": "n:guide:rb2-ind-jewelry-accessories-case-sunglasses-r1",
         "product": "plain sunglasses",
         "title": "Plain sunglasses: Beach try-on"
       }
