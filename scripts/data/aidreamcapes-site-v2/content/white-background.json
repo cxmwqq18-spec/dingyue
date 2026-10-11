@@ -105,32 +105,7 @@
       "cards": [],
       "button": "Make a white background photo"
     },
-    "uses": [
-      {
-        "frame": "browser",
-        "ref": "n:guide:ra3-white-background-use-1-r1",
-        "h": "Create a cleaner listing page",
-        "d": "Put the product in a white background product photo so shoppers can compare the item quickly."
-      },
-      {
-        "frame": "listing",
-        "ref": "n:guide:ra3-white-background-use-2-r1",
-        "h": "Show product details without clutter",
-        "d": "A simple white background keeps attention on the item, its shape and its finish."
-      },
-      {
-        "frame": "listing",
-        "ref": "n:guide:ra3-white-background-use-3-r1",
-        "h": "Keep every listing consistent",
-        "d": "Use one white background treatment across your catalog so each first image feels like part of one store."
-      },
-      {
-        "frame": "browser",
-        "ref": "n:guide:ra3-white-background-use-4-r1",
-        "h": "Reuse one clean base for new edits",
-        "d": "Start with a white background product photo, then make crops and versions for product pages or campaigns."
-      }
-    ],
+    "uses": [],
     "titles": {
       "m2": {
         "h2": "How to Make White Background Product Photos in 3 Simple Steps"
@@ -173,23 +148,70 @@
   },
   "benefits": [
     {
-      "t": "Create a clean white background",
-      "d": "A white background removes distractions and keeps the product easy to see."
+      "t": "Prepare a clear main image for every marketplace",
+      "d": "A complete view gives shoppers the shape and finish they need before you publish.",
+      "img": "n:guide:k2-white-picker-canvas-tote",
+      "alt": "Natural canvas tote bag with sturdy handles, upright on white."
     },
     {
-      "t": "Make white background product photos look polished",
-      "d": "One consistent background gives your catalog a familiar retail look."
+      "t": "Show the product ready to sell",
+      "d": "Use the white shot as the first look on a listing or store page.",
+      "img": "n:guide:k2-white-picker-desk-organizer",
+      "alt": "Walnut desk organizer with several empty compartments on white."
     },
     {
-      "t": "Keep white background product photos consistent",
-      "d": "Use the same visual treatment across product pages and marketplace listings."
+      "t": "Make product details easier to scan",
+      "d": "A plain background holds attention on the item's edges and surface.",
+      "img": "n:guide:k2-white-use-mug",
+      "alt": "Plain cream ceramic mug with a broad handle on pure white."
     },
     {
-      "t": "Reuse one white background product photo",
-      "d": "Start with a clean image, then make crops and versions for product pages or campaigns."
+      "t": "Make product photos look more professional",
+      "d": "Consistent framing and a gentle shadow make each product feel ready for retail.",
+      "img": "n:guide:k2-white-picker-desk-lamp",
+      "alt": "Curved brass desk lamp with a simple shade on pure white."
+    },
+    {
+      "t": "Keep your whole store visually consistent",
+      "d": "Apply the same background approach to product pages and marketplace listings.",
+      "img": "n:guide:k2-white-picker-serving-bowl",
+      "alt": "Cream stoneware serving bowl with a softly rounded rim on white."
+    },
+    {
+      "t": "Reuse a clean base for new versions",
+      "d": "Start from the clean shot when you need a new layout or campaign version.",
+      "img": "n:guide:k2-white-strip-planter",
+      "alt": "Wide terracotta ceramic planter with a simple open rim on white."
     }
   ],
   "benefits_h2": "Why White Background Product Photos Make Listings Easier",
   "steps_h2": "How to Make White Background Product Photos in 3 Simple Steps",
-  "steps_lead": "Three steps turn one product photo into a clean listing image without a studio or reshoot."
+  "steps_lead": "Three steps turn one product photo into a clean listing image without a studio or reshoot.",
+  "more_sections": [
+    {
+      "eyebrow": "Scale your catalog",
+      "h2": "From first listing to your whole catalog",
+      "lead": "Start with the next product you need to publish, then carry the same clean treatment across the range.",
+      "items": [
+        {
+          "t": "Start with one listing",
+          "d": "Make a clean main image for your next product page from one clear product photo.",
+          "img": "n:guide:k2-white-picker-reading-glasses",
+          "alt": "Tortoiseshell reading glasses opened and centered on white."
+        },
+        {
+          "t": "Keep every channel ready",
+          "d": "Reuse the white image on Amazon, Shopify or Etsy after checking each channel's current rules.",
+          "img": "n:guide:k2-white-case-linen-shade-lamp",
+          "alt": "Ceramic table lamp with an ivory linen shade on pure white."
+        },
+        {
+          "t": "Grow without another shoot",
+          "d": "Apply the same white treatment across new product photos as your catalog expands.",
+          "img": "n:guide:k2-white-case-wood-train",
+          "alt": "Natural wooden toy train set arranged together on pure white."
+        }
+      ]
+    }
+  ]
 }

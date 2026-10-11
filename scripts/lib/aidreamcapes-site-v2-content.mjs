@@ -1668,7 +1668,9 @@ function autoLinks(model, paras, page) {
 // Benefits lists share the same item shape as steps; pass their descriptions through
 // the same automatic linker so internal links resolve the same way on every layout.
 function benefitsList(model, page, items) {
-  return autoLinkPage(model, page, [], [items]).groups[0];
+  // Benefits can carry page-owned image rows as well as icon cards. Resolve refs here
+  // so the standard benefits section can render image-led competitor use cases before steps.
+  return imageItemsFor(model, page, autoLinkPage(model, page, [], [items]).groups[0]);
 }
 
 const IMAGE_ITEM_FRAMES = new Set(["phone", "browser", "none"]);
@@ -1989,7 +1991,7 @@ function payloadFor(model, page) {
     // and a vs-traditional comparison table. Both are text-only; visuals stay in the visual modules.
     const definition = definitionFor(model, page, c);
     const compareTable = compareTableFor(model, page, c);
-    return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
+    return { ...base, group: page.group, intro: linkedCopy.intro, benefits: imageItemsFor(model, page, linkedCopy.groups[0]), steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
       ...(visual ? { visual } : {}),
