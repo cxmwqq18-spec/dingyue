@@ -14,36 +14,48 @@
   ],
   "faq": [
     {
-      "q": "How do I choose a product ad template?",
-      "a": "Start with the buyer moment you need: a product showcase, explainer, UGC-style ad, or social post."
+      "q": "What are AI UGC video ad templates?",
+      "a": "They are ready-made ad formats that place your product photo into a creator-style scene, product demo, or social post layout."
     },
     {
-      "q": "Can I adapt a product ad template to my own product?",
-      "a": "Yes. Upload one clear product photo, choose a template, then compare the result with the item you sell before publishing."
+      "q": "How do AI UGC video templates work?",
+      "a": "Upload one clear product photo, choose a template, and review the generated asset before you post it."
     },
     {
-      "q": "Which video lengths can I choose?",
-      "a": "Video jobs are available in 6, 10, 15, and 30 seconds."
+      "q": "Why use AI-generated UGC ads instead of filming creators?",
+      "a": "Templates help you test new hooks and product scenes without booking a creator, studio, or reshoot for every version."
     },
     {
-      "q": "Are product photos square?",
-      "a": "Photos are square by default. Crop a downloaded still for the channel where you will use it."
+      "q": "Who are these templates designed for?",
+      "a": "They are for sellers, brands, and creators who need product assets for stores, social feeds, or paid campaigns."
     },
     {
-      "q": "Can I use a product ad template for an Amazon listing?",
-      "a": "Yes. Start with a clean product photo template, then check the current Amazon category rules."
+      "q": "Can beginners use these templates?",
+      "a": "Yes. Start with a clear product photo, pick a format, and download the result without editing experience."
     },
     {
-      "q": "Can I add a price, code, or headline?",
-      "a": "Yes. Add exact campaign text after download in your usual editor."
+      "q": "What industries are these templates suitable for?",
+      "a": "They suit beauty, clothing, food and beverage, home, jewelry, accessories, apps, and other product categories shown in the template library."
     },
     {
-      "q": "Will the result keep my product shape and color?",
-      "a": "Yes, it keeps the shape and color. Compare the downloaded result with the item you sell before publishing."
+      "q": "Can I upload my own product images and videos?",
+      "a": "You can upload your own product image; the template starts from one photo, so a video upload is not required."
     },
     {
-      "q": "Do I need editing experience to start?",
-      "a": "No. Upload a product photo, choose a template, and download the result for your usual editor."
+      "q": "Which platforms are these templates optimized for?",
+      "a": "Use the resulting assets on your store, social feed, or ad campaign, then choose the final placement and crop in the channel where you post."
+    },
+    {
+      "q": "Are the templates free to use?",
+      "a": "Templates are included with a paid plan, and the current plans and credit allowances are listed on the pricing page."
+    },
+    {
+      "q": "Can I use these video templates for commercial purposes?",
+      "a": "Yes. Downloads are cleared for commercial use and have no watermark, subject to the rules and claims for the platform where you publish."
+    },
+    {
+      "q": "Why use templates instead of creating ads from scratch?",
+      "a": "A template gives you a starting structure, so you can spend your time choosing the product angle and testing versions instead of building every layout from a blank page."
     }
   ],
   "visual": {
@@ -53,7 +65,7 @@
       "sourceAlt": "Brown leather duffel bag on a dark studio background.",
       "result": "n:guide:q13-templates-steps-result-r2",
       "mode": "photo",
-      "prompt": "Pick a template for your product.",
+      "prompt": "Use the uploaded product photo as the exact product. Place it in a clean product ad template with the product fully visible and no text or logos.",
       "options": [
         [
           "Template",
@@ -485,7 +497,7 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to Use Product Ad Templates in 3 Simple Steps"
+        "h2": "How to Make Product Ad Templates in 3 Simple Steps"
       },
       "m3": {
         "h2": "Pick a Product Ad Template for Your Next Campaign",
@@ -541,17 +553,17 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one photo of the item you sell. The template keeps the product at the center."
+      "d": "Add one clear photo of the product you sell. A clean source keeps the item easy to inspect when you review the result."
     },
     {
       "t": "Pick a Template",
-      "d": "Choose a photo or video style for the channel you use. The right format keeps the result easy to place."
+      "d": "Choose a template for the channel and buyer moment. The preview uses your uploaded item for a quick comparison before posting."
     },
     {
       "t": "Download and Post",
-      "d": "Download the new asset and add it to your store, social feed, or ad campaign."
+      "d": "Download the asset when the product and framing look right. Add price or headline in your editor, then post it to your store or campaign."
     }
   ],
-  "steps_h2": "How to Use Product Ad Templates in 3 Simple Steps",
-  "steps_lead": "Choose a product ad template, add one product photo, and download an asset for your next campaign."
+  "steps_h2": "How to Make Product Ad Templates in 3 Simple Steps",
+  "steps_lead": "Add one product photo, choose a ready-made format, and download an asset for the channel where you sell."
 }
