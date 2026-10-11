@@ -7617,6 +7617,24 @@
       "variants": [
         1200
       ]
+    },
+    "ra2-before-after-videos-hero-r1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult woman holds a plain shoe brush beside one scuffed and one cleaned gray running shoe.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "ra2-image-to-video-hero-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult man turns a plain matte teal water bottle toward the camera at a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "clips": {

@@ -295,7 +295,7 @@
     "before-after-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q3-before-after-videos-hero-pet-hair"
+        "image": "n:ra2-before-after-videos-hero-r1"
       },
       "og": "n:t33-before-after-videos-og-r2",
       "gallery": []
@@ -311,7 +311,7 @@
     "image-to-video": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q2-image-to-video-hero"
+        "image": "n:ra2-image-to-video-hero-r1"
       },
       "og": "n:t33-image-to-video-og-r2"
     },

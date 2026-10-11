@@ -11,35 +11,38 @@
     "turn image into video ad",
     "AI photo animation for ads"
   ],
-  "benefits_h2": "Why choose AI for product image to video?",
+  "benefits_h2": "Make a moving ad from one product photo",
   "benefits": [
     {
-      "t": "Product scenes in motion",
-      "d": "Give shoppers a clearer view of how the product looks in use."
+      "t": "Show the detail in motion",
+      "d": "Turn one still product image into a focused movement that lets shoppers see how it opens, pours, turns or works.",
+      "icon": "bolt"
     },
     {
-      "t": "Fast delivery",
-      "d": "Create a short clip from one product image without a camera crew."
+      "t": "Skip the reshoot",
+      "d": "Create a short clip from one photo before you book another camera day.",
+      "icon": "clock"
     },
     {
-      "t": "Save studio costs",
-      "d": "Test a product video before paying for a reshoot."
+      "t": "Test more ad openings",
+      "d": "Try different movements or lengths with the same product image and compare the results.",
+      "icon": "refresh"
     }
   ],
-  "steps_h2": "How to generate video from an image",
-  "steps_lead": "Three steps turn one product image into a short product video.",
+  "steps_h2": "Turn one product image into a video in 3 steps",
+  "steps_lead": "Upload one clear product image, describe one movement and download the clip for your placement.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo with the full product visible."
+      "t": "Upload the product you want to animate",
+      "d": "Add one clear photo with the full product visible and its key details easy to see."
     },
     {
-      "t": "Choose the Movement",
-      "d": "Share one video idea in a sentence."
+      "t": "Describe one movement",
+      "d": "Write one sentence that tells the tool what should turn, open, pour or change."
     },
     {
-      "t": "Get Your Video",
-      "d": "Review the result, then download the clip for your placement."
+      "t": "Download the clip for your placement",
+      "d": "Watch the result, then download the short video for your ad, feed or product page."
     }
   ],
   "maker": {
@@ -50,7 +53,7 @@
       ],
       [
         "Length",
-        "6 seconds"
+        "6, 10, 15 or 30 seconds"
       ],
       [
         "Start from",
@@ -116,7 +119,7 @@
       "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Show the product with one clear movement."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A slow curl of steam rises from the cream ceramic mug with blue flecks on a wooden counter as morning light moves across its glaze. Medium close-up with one gentle push-in. Sound: soft room tone and a faint ceramic set-down; no music, text or logos."
     },
     "picker": {
       "title": "",
@@ -126,13 +129,41 @@
       "button": "",
       "href": ""
     },
-    "uses": [],
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:q2-image-to-video-uses-00",
+        "h": "A/B test paid ads",
+        "d": "Compare a focused product movement in your paid feed and find the opening that earns the click."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:q2-image-to-video-example-01",
+        "h": "Show a marketplace detail",
+        "d": "Give shoppers a moving detail that helps them decide on a listing or product page."
+      },
+      {
+        "frame": "reels",
+        "ref": "n:guide:q2-image-to-video-example-02",
+        "h": "Add motion to social posts",
+        "d": "Use a short turn, pour or reveal in a TikTok or Reel without another shoot."
+      },
+      {
+        "frame": "post",
+        "ref": "n:guide:q2-image-to-video-example-03",
+        "h": "Explain one product feature",
+        "d": "Use one focused movement to show how the product opens, pours or fits in an educational video."
+      }
+    ],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to turn a product into a video in 3 steps"
+        "h2": "Turn one product image into a video in 3 steps"
+      },
+      "m4": {
+        "h2": "Put moving product details to work"
       }
     },
     "overview": ""

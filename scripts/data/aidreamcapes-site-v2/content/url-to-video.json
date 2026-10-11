@@ -12,39 +12,43 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Key advantages of starting with a product URL",
+  "benefits_h2": "Turn a product page into a ready-to-test video",
   "benefits": [
     {
       "t": "Save setup time",
-      "d": "Start with the image and name already on your page."
+      "d": "Start with the product image and name already on a public page, then move straight to a video idea.",
+      "icon": "clock"
     },
     {
       "t": "Skip manual uploads",
-      "d": "A public URL can supply the first product reference."
+      "d": "Paste one public URL and use its main product reference instead of downloading and re-uploading the first photo.",
+      "icon": "check"
     },
     {
       "t": "Create more versions",
-      "d": "Use one listing to test different scenes and lengths."
+      "d": "Reuse one listing to test different scenes, openings and lengths for the same product.",
+      "icon": "layers"
     },
     {
-      "t": "Build buyer confidence",
-      "d": "A clear product scene helps shoppers understand the item before they buy."
+      "t": "Give buyers a clearer look",
+      "d": "Show one product moment in motion so shoppers understand the item before they buy.",
+      "icon": "target"
     }
   ],
-  "steps_h2": "How to turn a product URL into a video",
-  "steps_lead": "Three steps move from a public product page to a short clip for ads and social posts.",
+  "steps_h2": "Turn a product URL into a video in 3 steps",
+  "steps_lead": "Paste a public product page, confirm the captured reference and download a short clip for ads or social posts.",
   "steps": [
     {
-      "t": "Paste Your Product URL",
-      "d": "Paste a public product page that loads without sign-in."
+      "t": "Paste a public product URL",
+      "d": "Use a product page that loads without sign-in and shows the variant you sell."
     },
     {
-      "t": "Review the Product Reference",
-      "d": "Check the captured image and name before generation."
+      "t": "Confirm the captured product",
+      "d": "Check the image and name before generation, then replace the image if the page is blocked."
     },
     {
-      "t": "Generate Your Video",
-      "d": "Download the clip and place your current offer in your ad editor."
+      "t": "Download the video for your ad",
+      "d": "Watch the result, then download it and add your current offer in your editor."
     }
   ],
   "maker": {
@@ -59,7 +63,7 @@
       ],
       [
         "Length",
-        "15 seconds"
+        "6, 10, 15 or 30 seconds"
       ]
     ],
     "cta": "Paste a product link"
@@ -115,44 +119,64 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Why brands choose URL to video",
-      "h2": "Why brands choose AIVideosUGC for URL to video",
-      "lead": "A product URL gives your ad a clear starting reference.",
+      "eyebrow": "Why sellers use it",
+      "h2": "Keep the product page as your starting point",
+      "lead": "Use the listing customers already know, then shape a video around the selling point you want to test.",
       "items": [
         {
-          "t": "Create from the Product Page",
-          "d": "Turn a listed product into an ad concept without starting a new shoot."
+          "t": "Start with the product page",
+          "d": "Turn the listed item into a video idea without arranging a new shoot.",
+          "img": "n:guide:q2-url-to-video-strip-01",
+          "frame": "none"
         },
         {
-          "t": "Keep Creative Control",
-          "d": "Choose the scene and the final length for each ad."
+          "t": "Write the angle you need",
+          "d": "Choose the scene and the point you want buyers to notice first.",
+          "img": "n:guide:q2-url-to-video-strip-02",
+          "frame": "none"
         },
         {
-          "t": "Test Campaign Angles",
-          "d": "Compare different product moments before a campaign goes live."
+          "t": "Keep creative control",
+          "d": "Set the scene and final length for each version before you generate.",
+          "img": "n:guide:q2-url-to-video-strip-03",
+          "frame": "none"
         },
         {
-          "t": "Use the Product Image You Sell",
-          "d": "Start from the image and name customers already see."
+          "t": "Test campaign angles",
+          "d": "Compare product moments before your campaign goes live.",
+          "img": "n:guide:q2-url-to-video-strip-04",
+          "frame": "none"
+        },
+        {
+          "t": "Use the image customers see",
+          "d": "Start from the product image and name already shown on your listing.",
+          "img": "n:guide:q2-url-to-video-strip-05",
+          "frame": "none"
         }
       ]
     },
     {
       "eyebrow": "More content, less hassle",
-      "h2": "More Product Content With Less Hassle",
-      "lead": "Build more ad versions with the same product reference.",
+      "h2": "Make more product videos from one listing",
+      "lead": "Reuse a product reference when you need another ad angle, placement or opening.",
       "items": [
         {
-          "t": "Test More Ad Angles",
-          "d": "Compare hooks before a campaign goes live."
+          "t": "Test more ad angles",
+          "d": "Compare different hooks before a campaign goes live.",
+          "img": "n:guide:q2-url-to-video-case-01",
+          "frame": "none"
         },
         {
-          "t": "Scale Product Clips",
-          "d": "Reuse one listing to make several short ads."
+          "t": "Scale product clips",
+          "d": "Reuse one listing to make several short ads for your channels.",
+          "img": "n:guide:q2-url-to-video-case-02",
+          "frame": "none"
         },
         {
-          "t": "Keep Review Time Short",
-          "d": "Move from product page to draft without a studio shoot."
+          "t": "Keep review time short",
+          "d": "Move from product page to draft without a studio shoot.",
+          "img": "n:guide:q2-url-to-video-case-03",
+          "frame": "none"
         }
       ]
     }
@@ -165,7 +189,7 @@
       "result": "n:guide:q2-url-to-video-steps-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Show the product opening in a bright, practical scene.",
+      "prompt": "Use the captured product image as the product and keep its shape, color and label area exactly. A hand opens the sage-green lunch container on a bright kitchen counter and sets the lid beside it. Front-left medium framing with one slow push-in. Sound: lid click, light container tap and quiet room tone; no music, text or logos.",
       "sourceTitle": "Paste your product page link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
@@ -177,13 +201,41 @@
       "button": "",
       "href": ""
     },
-    "uses": [],
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:guide:q2-url-to-video-uses-00",
+        "h": "E-commerce product videos",
+        "d": "Turn the listing reference into a clear product moment that helps shoppers decide on the page."
+      },
+      {
+        "frame": "post",
+        "ref": "n:guide:q2-url-to-video-uses-01",
+        "h": "Product demos",
+        "d": "Show one useful action, such as opening the package or using the product, in a short demo."
+      },
+      {
+        "frame": "reels",
+        "ref": "n:guide:q2-url-to-video-example-01",
+        "h": "Advertising videos",
+        "d": "Build a paid ad around one product point, then compare another opening from that listing."
+      },
+      {
+        "frame": "post",
+        "ref": "n:guide:q2-url-to-video-example-03",
+        "h": "Social media videos",
+        "d": "Use the downloaded clip in an Instagram, YouTube or TikTok post made for this product."
+      }
+    ],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to turn a product link into a video in 3 steps"
+        "h2": "Turn a product URL into a video in 3 steps"
+      },
+      "m4": {
+        "h2": "Give each product listing more ways to sell"
       }
     },
     "overview": ""
