@@ -22,7 +22,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download the image, compare silhouette and color with the item, then add the finish note. You skip the lighting kit."
+      "d": "Download the image and compare its silhouette, color and finish with the real item. Add any final offer text after export."
     }
   ],
   "maker": {
@@ -72,8 +72,16 @@
       "a": "Even front fill with a readable product face suits a listing image; reserve dramatic highlights for ads and detail pages."
     },
     {
-      "q": "Can relighting fix glare on glass or metal?",
-      "a": "It can reshape highlights while keeping the uploaded product as the subject. Review the label and edges at full size."
+      "q": "Which materials benefit most from relighting?",
+      "a": "Glass, metal, ceramic and glossy finishes benefit most because directional light can make their edges and surface changes easier to see."
+    },
+    {
+      "q": "Should I use dramatic light on a listing image?",
+      "a": "Use even front fill when shoppers need a clear product face; save stronger contrast for ads and detail views."
+    },
+    {
+      "q": "Can I describe a specific light direction?",
+      "a": "Yes. Describe the direction, shadow softness and the surface you want to read, then compare the result with the real item."
     }
   ],
   "visual": {

@@ -39,7 +39,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Save the square file with no watermark, then compare it with your artwork and your printer proof."
+      "d": "Save the square file with no watermark. Compare it with your artwork and printer proof before approving production."
     }
   ],
   "steps_h2": "How to Make a Packaging Mockup in 3 Simple Steps",
@@ -76,6 +76,14 @@
     {
       "q": "Can I share the preview with clients or retailers?",
       "a": "Yes. Downloaded files have no watermark and can support a retailer deck or pitch before print production."
+    },
+    {
+      "q": "Can I test a package concept before ordering prints?",
+      "a": "Yes. Use the mockup to compare shelf, counter or cafe presentation before you commit to a print run."
+    },
+    {
+      "q": "What source photo gives the cleanest mockup?",
+      "a": "Use a sharp photo with the full package visible and limited glare so its outline and front panel stay easy to compare."
     }
   ],
   "visual": {
