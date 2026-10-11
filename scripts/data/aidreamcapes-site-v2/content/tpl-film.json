@@ -1,10 +1,10 @@
 {
   "id": "tpl-film",
-  "title": "Cinematic Product Video With Moody Lighting | AIVideosUGC",
-  "description": "Turn one product photo into a cinematic video with moody light and a slow camera move. 9:16 or 16:9 clips from 6 to 30 seconds, ready to post.",
+  "title": "AI Cinematic Product Video From One Photo | AIVideosUGC",
+  "description": "Turn one product photo into an AI cinematic product video with moody light and a slow camera move. Use 16:9 for web or 9:16 for Shorts and Reels, with 6, 10, 15 or 30 seconds.",
   "h1": "Create a Cinematic Product Video From One Photo",
   "eyebrow": "Cinematic video template",
-  "lead": "A flat product shot can feel ordinary, while a real brand film needs a crew. Turn one photo into a moody clip with a slow camera move.",
+  "lead": "Turn a flat product shot into a moody product video with a slow camera move, without booking a film crew or a set.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a sharp photo with a clear outline so the camera move has a definite subject. Your product remains the focal item."
+      "d": "Use a sharp photo with a clear outline so the product stays the focal item."
     },
     {
       "t": "Share Your Video Idea",
-      "d": "Name the surface, one light source, a camera move and frame, then choose a supported duration. Cost shows first."
+      "d": "Name the surface, one light source and one camera move, then choose the size and duration. The cost shows first."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip, then add a licensed track and product name in your editor. No production budget needed."
+      "d": "Download the clip, then add a licensed track, product name or offer in your editor."
     }
   ],
   "maker": {
@@ -107,9 +107,9 @@
         ]
       ],
       "length": 15,
-      "prompt": "Give the uploaded speaker one slow cool highlight across a dark sideboard.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a dark sideboard beside a tall window, a compact black speaker catches one cool highlight as the camera makes a slow push-in. Keep the woven grille and rounded silhouette centered. End with the speaker still in the pool of light. Sound: quiet room tone; no music.",
       "mode": "video",
-      "resultAlt": "The same rounded pebble speaker catches a cool cinematic highlight."
+      "resultAlt": "Rounded pebble-shaped black speaker catches a cool cinematic highlight on a dark sideboard."
     },
     "picker": {
       "title": "",
@@ -121,8 +121,39 @@
     "uses": [],
     "input": [],
     "outputs": [],
-    "after": null
+    "after": null,
+    "overview": "An AI cinematic product video gives one product photo a controlled light move and a polished reveal for ads, product pages and social feeds.",
+    "titles": {
+      "m2": {
+        "h2": "Make an AI cinematic product video from one photo"
+      },
+      "m3": {
+        "h2": "Choose a cinematic treatment for your AI product video"
+      },
+      "faq": {
+        "h2": "Questions about AI cinematic product videos"
+      }
+    }
   },
-  "steps_h2": "How to make a cinematic video in 3 simple steps",
-  "steps_lead": "Three steps turn one photo into a brand-film clip - no crew, no set, no rental."
+  "steps_h2": "How to make a cinematic product video in 3 simple steps",
+  "steps_lead": "Three steps turn one product photo into a ready-to-post product film, with no crew, set or rental day.",
+  "benefits_h2": "Why choose an AI cinematic product video?",
+  "benefits": [
+    {
+      "t": "Give a flat shot a launch-ready mood",
+      "d": "Add a controlled highlight, shadow or reflection around the product so a plain photo can open a campaign."
+    },
+    {
+      "t": "Show the finish without a film crew",
+      "d": "Use one slow reveal to show glass, metal, fabric or a clean silhouette without booking a set, crew or rental day."
+    },
+    {
+      "t": "Cut one look for web and feed",
+      "d": "Use 16:9 for YouTube and product pages or 9:16 for Shorts, Reels and TikTok. Choose 6, 10, 15 or 30 seconds."
+    },
+    {
+      "t": "Keep your product details in control",
+      "d": "Download without a watermark, then add the product name, licensed audio or offer copy in your editor."
+    }
+  ]
 }
