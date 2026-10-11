@@ -8171,56 +8171,6 @@
         1200
       ]
     },
-    "im09-film-main": {
-      "w": 1536,
-      "h": 864,
-      "alt": "Plain charcoal rectangular desktop speaker on a stone plinth in warm window light.",
-      "variants": [
-        640,
-        1280
-      ],
-      "source": "Codex image generation"
-    },
-    "im09-film-alt-1": {
-      "w": 1536,
-      "h": 864,
-      "alt": "Bare hand adjusts a plain charcoal rectangular desktop speaker on a walnut desk.",
-      "variants": [
-        640,
-        1280
-      ],
-      "source": "Codex image generation"
-    },
-    "im09-film-alt-2": {
-      "w": 1536,
-      "h": 864,
-      "alt": "Plain matte charcoal rectangular desktop speaker on a shelf beside a plant in evening light.",
-      "variants": [
-        640,
-        1280
-      ],
-      "source": "Codex image generation"
-    },
-    "im09-film-alt-3": {
-      "w": 1536,
-      "h": 864,
-      "alt": "Plain deep-blue rectangular desktop speaker on a pale studio pedestal with cool rim light.",
-      "variants": [
-        640,
-        1280
-      ],
-      "source": "Codex image generation"
-    },
-    "im09-drink-card": {
-      "w": 1536,
-      "h": 864,
-      "alt": "Bare hand pours a pale citrus sparkling drink from a plain glass bottle into a tumbler of ice beside fresh citrus.",
-      "variants": [
-        640,
-        1280
-      ],
-      "source": "Codex image generation"
-    },
     "im07-photo-hub-tote-r1": {
       "file": "im07-photo-hub-tote-r1",
       "w": 1024,
@@ -8253,6 +8203,41 @@
         1280
       ],
       "source": "Codex imagegen"
+    },
+    "im09-film-main": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain charcoal rectangular desktop speaker on a stone plinth in warm window light.",
+      "variants": [640, 1280],
+      "source": "Codex image generation"
+    },
+    "im09-film-alt-1": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Bare hand adjusts a plain charcoal rectangular desktop speaker on a walnut desk.",
+      "variants": [640, 1280],
+      "source": "Codex image generation"
+    },
+    "im09-film-alt-2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain matte charcoal rectangular desktop speaker on a shelf beside a plant in evening light.",
+      "variants": [640, 1280],
+      "source": "Codex image generation"
+    },
+    "im09-film-alt-3": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain deep-blue rectangular desktop speaker on a pale studio pedestal with cool rim light.",
+      "variants": [640, 1280],
+      "source": "Codex image generation"
+    },
+    "im09-drink-card": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Bare hand pours a pale citrus sparkling drink from a plain glass bottle into a tumbler of ice beside fresh citrus.",
+      "variants": [640, 1280],
+      "source": "Codex image generation"
     }
   },
   "clips": {
@@ -23797,6 +23782,16 @@
           1280
         ]
       },
+      "im12-blog-model-photo-hoodie-street-r1": {
+        "file": "im12-blog-model-photo-hoodie-street-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "k8-spokesperson-lipstick-ad": {
         "file": "gen2guide-k8-spokesperson-lipstick-ad",
         "w": 1024,
@@ -28563,6 +28558,16 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult woman tries on a crossbody bag and adjusts the strap in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im12-video-ads-example-02-r1": {
+        "file": "im12-video-ads-example-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob checks a plain taupe crossbody bag in a bedroom mirror, full face visible.",
         "variants": [
           640,
           1280
@@ -44498,6 +44503,16 @@
         "w": 864,
         "h": 1536,
         "alt": "an adult Middle Eastern woman in her thirties in a cafe setting speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im08-ai-actors-kitchen-1-r1": {
+        "file": "im08-ai-actors-kitchen-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in her thirties with a short dark bob speaks to camera with empty hands in a bright kitchen.",
         "variants": [
           640,
           1280
