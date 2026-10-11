@@ -45705,7 +45705,18 @@
         "file": "rc3-tpl-look-step-result-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "The same adult South Asian woman with dark hair in a neat low bun wearing the light beige tailored suit in a square studio photo.",
+        "alt": "The same adult South Asian woman with dark hair in a neat low bun wearing the ivory tailored suit in a square studio photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-look-step-source-r2": {
+        "file": "rc3-tpl-look-step-source-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ivory tailored blazer and matching straight-leg trousers arranged flat on a pale studio surface.",
         "variants": [
           640,
           1280
@@ -45739,6 +45750,17 @@
         "w": 1024,
         "h": 1024,
         "alt": "Matching team headshot of the same adult East Asian man in a charcoal blazer against a pale gray studio background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-strip-6-r1": {
+        "file": "rc3-head-strip-6-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an older East Asian woman with a short silver-gray bob against a muted sage-gray studio backdrop.",
         "variants": [
           640,
           1280

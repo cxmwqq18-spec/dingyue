@@ -85,7 +85,7 @@
       "n:guide:tpl-head-round4-04",
       "n:guide:tpl-head-round4-05",
       "n:guide:tpl-head-round4-06",
-      "n:guide:tpl-head-round4-07"
+      "n:guide:rc3-head-strip-6-r1"
     ],
     "steps": {
       "source": "n:guide:rc3-head-source-r1",
@@ -108,7 +108,7 @@
       ]
     },
     "picker": {
-      "title": "Give Every Team Member the Same Headshot Look",
+      "title": "Give Every Team Member a Matching Headshot Look",
       "lead": "Create a consistent team photo set from each person's approved portrait for a more polished About page.",
       "chips": [],
       "cards": [],
