@@ -44,6 +44,36 @@
     },
     "rc1-tpl-color-cover": {
       "alt": "Four insulated tumblers in four colors lined up in the same studio light."
+    },
+    "p_box-r1": {
+      "alt": "Coffee starter kit with a plain coffee bag, hand grinder and ceramic mug arranged together"
+    },
+    "p_pack-r1": {
+      "alt": "Plain hot sauce bottle with a blank graphic label on a farmers market shelf"
+    },
+    "p_light-r3": {
+      "alt": "White glossy ceramic mug with a crisp rim and soft window highlight on a pale counter"
+    },
+    "rc3_tpl_tryon_cover_r1": {
+      "alt": "Adult model wearing a plain olive utility jacket in a bright fitting-room studio."
+    },
+    "rc3_tpl_jewel_cover_r1": {
+      "alt": "Adult Black woman with a short copper pixie wearing one simple silver pendant necklace at her collarbone."
+    },
+    "rc3_tpl_look_cover_r1": {
+      "alt": "Adult South Asian man with short tight black curls wearing a plain sand-colored overshirt on a quiet city sidewalk."
+    },
+    "rc3_tpl_head_cover_r1": {
+      "alt": "Four distinct adult professionals in matching shoulder-up portraits against a soft light-gray studio backdrop."
+    },
+    "v_howto-r1": {
+      "alt": "White handheld garment steamer photographed alone on a neutral background."
+    },
+    "v_drink-r1": {
+      "alt": "Plain silver beverage can upright on a bright kitchen counter."
+    },
+    "v_beauty-r1": {
+      "alt": "Matte ivory cleanser pump bottle with a pale sage pump on a clean white background."
     }
   },
   "galleries": {
@@ -7891,6 +7921,52 @@
         640,
         1280
       ]
+    },
+    "t33-tpl-box-og-r3": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Plain kraft coffee pouch, black hand grinder and speckled white ceramic mug arranged as a complete kit on a sunlit cafe counter.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex image generation"
+    },
+    "t33-tpl-light-og-r3": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Plain white ceramic mug in warm side-window light with a clear cast shadow across a pale stone table.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex image generation"
+    },
+    "rc3-tpl-look-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult South Asian woman in a light beige tailored suit against a soft neutral studio background.",
+      "variants": [
+        1200
+      ],
+      "source": "rc3 image generation"
+    },
+    "rc3-tpl-head-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult East Asian man in a charcoal blazer and pale blue shirt against a soft light-gray studio background.",
+      "variants": [
+        1200
+      ],
+      "source": "rc3 image generation"
+    },
+    "rc5-tpl-beauty-og-1-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Unbranded matte ivory cleanser pump bottle with a pale sage pump on a light stone bathroom vanity.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "gen.sh"
     }
   },
   "clips": {
@@ -45608,6 +45684,346 @@
           640,
           1280
         ]
+      },
+      "rc2-tpl-box-coffee-result-square-r1": {
+        "file": "rc2-tpl-box-coffee-result-square-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Coffee starter kit with a kraft pouch, hand grinder and ceramic mug in a square scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc2-tpl-box-coffee-result-square-r2": {
+        "file": "rc2-tpl-box-coffee-result-square-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same plain kraft coffee pouch, black hand grinder and speckled white ceramic mug arranged as a complete kit on a bright wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "f15-r2-tpl-light-output-white-mug-r2": {
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same plain white ceramic mug with warm side-window light, a clear cast shadow and a bright glaze highlight.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation",
+        "file": "f15-r2-tpl-light-output-white-mug-r2"
+      },
+      "rx2-white-benefit-jewelry-dish": {
+        "file": "rx2-white-benefit-jewelry-dish",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rx2-lifestyle-market-man": {
+        "file": "rx2-lifestyle-market-man",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray-haired man reaches into a cream linen tote at a farmers market stall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rc3-tpl-tryon-strip-cardigan-r1": {
+        "file": "rc3-tpl-tryon-strip-cardigan-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short black hair wearing a cream cardigan in a plain studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-tryon-strip-trench-r1": {
+        "file": "rc3-tpl-tryon-strip-trench-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with close-cropped hair wearing an olive trench coat on a quiet city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-tryon-strip-bomber-back-r1": {
+        "file": "rc3-tpl-tryon-strip-bomber-back-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short curly black hair showing the back of a plain navy bomber jacket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-hero-output-r1": {
+        "file": "rc3-jewel-hero-output-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper bob wearing the exact silver teardrop pendant necklace at her collarbone.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-step-result-r1": {
+        "file": "rc3-jewel-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper bob wearing the exact silver teardrop pendant necklace in a square studio photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-strip-gold-hoop-r1": {
+        "file": "rc3-jewel-strip-gold-hoop-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a close-cropped haircut wearing one plain brushed-gold hoop earring.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-jewel-strip-stud-r1": {
+        "file": "rc3-jewel-strip-stud-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short tight curls wearing one small silver stud earring.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-pleated-skirt-r1": {
+        "file": "rc3-look-strip-pleated-skirt-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short auburn pixie wearing a white blouse and navy pleated skirt on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-beige-suit-r1": {
+        "file": "rc3-look-strip-beige-suit-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with close-cropped hair wearing a tailored beige suit in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-layered-r1": {
+        "file": "rc3-look-strip-layered-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob wearing a charcoal sweater, black trousers and taupe coat on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-crossbody-r1": {
+        "file": "rc3-look-strip-crossbody-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian man with short black hair wearing a cream sweater and black crossbody bag in a home office.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-look-strip-knit-texture-r1": {
+        "file": "rc3-look-strip-knit-texture-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close view of an adult woman with a short copper bob holding the sleeve of a plain warm-gray chunky knit sweater.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-look-hero-after-r1": {
+        "file": "rc3-tpl-look-hero-after-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian woman with dark hair in a neat low bun wearing a light beige tailored blazer and matching trousers in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-look-step-result-r1": {
+        "file": "rc3-tpl-look-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same adult South Asian woman with dark hair in a neat low bun wearing the light beige tailored suit in a square studio photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-source-r1": {
+        "file": "rc3-head-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Professional source portrait of an adult East Asian man with close-cropped black hair in a dark green shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-hero-output-r1": {
+        "file": "rc3-head-hero-output-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Professional headshot of the same adult East Asian man in a black blazer against a soft light-gray office background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-head-step-result-r1": {
+        "file": "rc3-head-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matching team headshot of the same adult East Asian man in a charcoal blazer against a pale gray studio background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc5-tpl-film-strip-headphones-r1": {
+        "file": "rc5-tpl-film-strip-headphones-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte black over-ear headphones on a charcoal stone pedestal under soft window light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-film-strip-travel-mug-r1": {
+        "file": "rc5-tpl-film-strip-travel-mug-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain olive-green travel mug on a dark slate table in a narrow warm window beam.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-source-r1": {
+        "file": "rc5-tpl-beauty-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte ivory cleanser pump bottle with a pale sage pump on a clean white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-result-r1": {
+        "file": "rc5-tpl-beauty-result-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand presses a matte ivory cleanser pump beside a bright sink, with white foam on fingertips.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc5-tpl-beauty-strip-4-r1": {
+        "file": "rc5-tpl-beauty-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Bare hands apply white moisturizer from an unbranded ivory tube on a light stone bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-drink-strip-04-r1": {
+        "file": "rc5-tpl-drink-strip-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Bare hands pour pale pink hibiscus iced tea from a clear glass carafe into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-drink-strip-06-r1": {
+        "file": "rc5-tpl-drink-strip-06-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian woman with dark red hair in a low bun pours clear citrus tonic into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-film-strip-4-r1": {
+        "file": "rc5-tpl-film-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded matte black desk lamp with a warm glow on a dark walnut sideboard in moody cinematic light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "rc5-tpl-howto-strip-6-r1": {
+        "file": "rc5-tpl-howto-strip-6-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a short black bob mounts a matte black bicycle safety light on a handlebar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

@@ -235,7 +235,7 @@
    "url": "/ai-image-generation/bundle-sets",
    "label": "What's in the Box",
    "primary_keyword": "product bundle photos",
-   "img": "p_box",
+   "img": "p_box-r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -255,7 +255,7 @@
    "url": "/ai-image-generation/packaging-mockup",
    "label": "Packaging Preview",
    "primary_keyword": "packaging mockup generator",
-   "img": "p_pack",
+   "img": "p_pack-r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -276,7 +276,7 @@
    "url": "/ai-image-generation/commercial-lighting",
    "label": "Studio Lighting",
    "primary_keyword": "product photo lighting",
-   "img": "p_light-r2",
+   "img": "p_light-r3",
    "status": "keep",
    "group": "photo",
    "industries": [
@@ -295,7 +295,7 @@
    "url": "/ai-image-generation/virtual-try-on",
    "label": "Clothing Try-On",
    "primary_keyword": "AI virtual try-on for clothing",
-   "img": "p_tryon",
+   "img": "rc3_tpl_tryon_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -314,7 +314,7 @@
    "url": "/ai-image-generation/jewelry-positioning",
    "label": "Jewelry On Model",
    "primary_keyword": "AI jewelry model photos",
-   "img": "p_jewel",
+   "img": "rc3_tpl_jewel_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -334,7 +334,7 @@
    "url": "/ai-image-generation/fashion-editorial",
    "label": "Lookbook",
    "primary_keyword": "AI lookbook photos",
-   "img": "p_look",
+   "img": "rc3_tpl_look_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [
@@ -355,7 +355,7 @@
    "url": "/ai-image-generation/professional-headshot",
    "label": "Team Headshots",
    "primary_keyword": "AI team headshots",
-   "img": "p_head",
+   "img": "rc3_tpl_head_cover_r1",
    "status": "rewrite",
    "group": "photo",
    "industries": [],
@@ -436,7 +436,7 @@
    "url": "/ai-video-generation/how-to-video",
    "label": "How-To Video",
    "primary_keyword": "AI how-to video maker",
-   "img": "v_howto",
+   "img": "v_howto-r1",
    "status": "rewrite",
    "group": "video",
    "industries": [
@@ -478,7 +478,7 @@
    "url": "/ai-video-generation/beauty-routine",
    "label": "Beauty Routine",
    "primary_keyword": "beauty product video ads",
-   "img": "v_beauty",
+   "img": "v_beauty-r1",
    "status": "keep",
    "group": "video",
    "industries": [
@@ -498,7 +498,7 @@
    "url": "/ai-video-generation/food-video",
    "label": "Drink Pour",
    "primary_keyword": "AI food and drink videos",
-   "img": "v_drink",
+   "img": "v_drink-r1",
    "status": "keep",
    "group": "video",
    "industries": [

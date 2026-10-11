@@ -5,7 +5,7 @@
   "h1": "Product Bundle Photos for Items Sold Together",
   "eyebrow": "Product photo template",
   "lead": "Bundle shoppers want one clear answer: what exactly comes in the box? Upload a photo of the complete kit and get a bundle image that lets buyers count the pieces before ordering.",
-  "benefits_h2": "Why sellers choose bundle templates",
+  "benefits_h2": "Product bundle photos that answer buyer questions",
   "benefits": [
     {
       "t": "Answer \"what do I get\" at a glance",
@@ -30,11 +30,11 @@
     "gift set product photography",
     "kit and bundle listing images"
   ],
-  "steps_h2": "How it works",
+  "steps_h2": "How to make product bundle photos in 3 Simple Steps",
   "steps_lead": "Choose a bundle style, add every item, generate. No props, shoot day or missing pieces.",
   "steps": [
     {
-      "t": "Upload the Full Kit",
+      "t": "Upload Your Product Photo",
       "d": "Add one clear photo that shows every item, the package and any important insert."
     },
     {
@@ -42,7 +42,7 @@
       "d": "Choose an unboxing, review or product-demo scene, then generate the set image."
     },
     {
-      "t": "Download and Verify",
+      "t": "Download and Post",
       "d": "Download the image, compare each object with your contents list and add your price in the editor."
     }
   ],
@@ -105,19 +105,19 @@
     "overview": "A bundle template keeps every item in one frame so shoppers can see what the set includes before they order.",
     "strip": [
       "n:guide:g1-box-burgundy-sandal-unboxing-r2",
-      "n:guide:g1-box-earring-unboxing",
+      "n:guide:k1-unboxing-picker-tea-set",
       "n:guide:g1-box-baby-care-unboxing",
-      "f:q8-tpl-box-strip-04",
+      "n:guide:k1-unboxing-picker-camping-kit",
       "n:guide:g1-box-snack-box-unboxing",
       "n:guide:ind-electronics-m3-headphones"
     ],
     "steps": {
-      "source": "n:guide:c1-tpl-box-m2-source",
+      "source": "n:guide:k1-unboxing-input-coffee-kit",
       "sourceTitle": "Your product",
-      "sourceHint": "Include every item and package that ships with the bundle.",
-      "result": "n:guide:c1-tpl-box-m2-result-square",
+      "sourceHint": "Include the coffee bag, grinder, mug and every piece that ships with the kit.",
+      "result": "n:guide:rc2-tpl-box-coffee-result-square-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the full set from a plain box on a bright table, with every item visible. Natural window light, candid UGC photo, top-down framing, no text or logos.",
+      "prompt": "Use the uploaded coffee starter kit as the exact product set: preserve its plain kraft pouch, black hand grinder, speckled white mug and their colors. Show the complete kit together on a bright wood table with every item visible. Natural window light, square product photo, no text or logos.",
       "options": [
         [
           "Template",
@@ -146,13 +146,13 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Create a what's-in-the-box photo from one set image"
+        "h2": "Create product bundle photos from one set image"
       },
       "m3": {
-        "h2": "Choose a what's-in-the-box photo arrangement"
+        "h2": "Choose a product bundle photo arrangement"
       },
       "faq": {
-        "h2": "Questions about what's-in-the-box photos"
+        "h2": "Questions about product bundle photos"
       }
     }
   }

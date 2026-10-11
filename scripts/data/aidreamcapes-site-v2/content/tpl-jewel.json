@@ -4,7 +4,7 @@
   "description": "Turn one jewelry photo into an on-model shot. AI model photos for necklaces, earrings, rings and bracelets, for social ads and product pages.",
   "h1": "AI Jewelry Model Photos for On-Model Ad Scenes",
   "eyebrow": "Model photo template",
-  "lead": "A jewelry photo on a plain surface leaves scale and placement unclear. Turn one piece photo into an on-model image that shows how it sits, catches light and looks in use.",
+  "lead": "A jewelry photo on a plain surface leaves scale and how it sits unclear. Turn one piece photo into an on-model image that shows how it looks in use and catches light.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
@@ -27,10 +27,10 @@
     },
     {
       "t": "Ready to publish",
-      "d": "Download the square image without an AIVideosUGC watermark and add your verified material, size and care details."
+      "d": "Download the square image without an AIVideosUGC watermark and add your listed material, size and care details."
     }
   ],
-  "steps_h2": "How to make a jewelry model photo in 3 simple steps",
+  "steps_h2": "How to Make AI Jewelry Model Photos in 3 Simple Steps",
   "steps_lead": "Three steps turn one jewelry photo into an on-model image for listings and ads.",
   "steps": [
     {
@@ -70,7 +70,7 @@
     },
     {
       "q": "Can I show how a necklace sits?",
-      "a": "Yes. Choose an on-model scene that keeps the necklace and neckline in frame. Use your listing for the verified length and material."
+      "a": "Yes. Choose an on-model scene that keeps the necklace and neckline in frame. Use your listing for the stated length and material."
     },
     {
       "q": "Which pieces work well in an on-model photo?",
@@ -90,18 +90,18 @@
     }
   ],
   "visual": {
-    "overview": "An on-model jewelry image answers scale and placement while keeping the piece recognizable. Use a worn view or hand demonstration, then pair it with the standalone product photo and verified measurements.",
+    "overview": "An on-model jewelry image answers scale and fit while keeping the piece recognizable. Use a worn view or hand demonstration, then pair it with the standalone product photo and stated measurements.",
     "strip": [
-      "n:guide:q9-jewel-alt-gold-hoop",
+      "n:guide:rc3-jewel-strip-gold-hoop-r1",
       "n:guide:tpl-jewel-m1-hoop",
       "n:guide:q9-jewel-alt-brooch",
       "n:guide:q9-jewel-alt-silver-pendant",
       "n:guide:tpl-jewel-round4-hoop-earrings",
-      "n:guide:q9-jewel-alt-stud-earring"
+      "n:guide:rc3-jewel-strip-stud-r1"
     ],
     "steps": {
       "source": "n:guide:tpl-jewel-m2-source",
-      "result": "n:guide:tpl-jewel-m2-square",
+      "result": "n:guide:rc3-jewel-step-result-r1",
       "mode": "photo",
       "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Keep the full pendant and chain curve inside the crop, with soft window light and natural skin texture. Chest-up product-ad framing, clean styling, no text or logos. End with the piece still enough for a shopper to compare with the source image. Leave room around the neckline so the result can sit beside material, length and care details in a listing.",
       "options": [
@@ -131,7 +131,7 @@
         "h2": "Make jewelry model photos from one clear piece photo"
       },
       "m3": {
-        "h2": "Choose a jewelry placement shoppers can see"
+        "h2": "Choose a jewelry view shoppers can see"
       },
       "m4": {
         "h2": "Use jewelry photos on listings and social feeds"
@@ -146,7 +146,7 @@
         "h2": "Add jewelry details after download"
       },
       "faq": {
-        "h2": "Questions about jewelry model photos"
+        "h2": "Questions about AI jewelry model photos"
       }
     }
   }

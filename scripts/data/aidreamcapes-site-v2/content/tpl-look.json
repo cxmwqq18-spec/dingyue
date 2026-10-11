@@ -1,6 +1,6 @@
 {
   "id": "tpl-look",
-  "title": "Fashion Lookbook Photos and Outfit Ads",
+  "title": "AI Fashion Lookbook Photos and Outfit Ads | AIVideosUGC",
   "description": "Turn one outfit photo into a fashion lookbook photo on a person. Street walks, try-ons and reviews for collection pages and launch ads.",
   "h1": "AI Fashion Lookbook Photos for Complete Outfits",
   "eyebrow": "Model photo template",
@@ -11,7 +11,7 @@
     "menswear lookbook photos",
     "Instagram lookbook images"
   ],
-  "benefits_h2": "Why make lookbook photos from one photo?",
+  "benefits_h2": "Why make AI lookbook photos from one outfit?",
   "benefits": [
     {
       "t": "No shoot for every look",
@@ -30,7 +30,7 @@
       "d": "Square downloads carry no AIVideosUGC watermark and can run in your own ads, product pages and social posts."
     }
   ],
-  "steps_h2": "Make lookbook photos in 3 steps",
+  "steps_h2": "How to Make AI Lookbook Photos in 3 Simple Steps",
   "steps_lead": "One outfit photo becomes a ready-to-post lookbook image, with no studio, models or reshoot.",
   "steps": [
     {
@@ -92,16 +92,16 @@
   "visual": {
     "overview": "A lookbook photo shows one complete outfit on a person in a styled setting, so shoppers can picture the pieces worn together before they buy.",
     "strip": [
-      "n:guide:q9-look-alt-pleated-skirt",
+      "n:guide:rc3-look-strip-pleated-skirt-r1",
       "n:guide:q9-look-alt-knit-beanie",
-      "n:guide:q9-look-alt-beige-suit",
-      "n:guide:q9-look-alt-layered-streetwear",
-      "n:guide:q9-look-alt-crossbody-outfit",
-      "n:guide:q9-look-alt-knit-texture"
+      "n:guide:rc3-look-strip-beige-suit-r1",
+      "n:guide:rc3-look-strip-layered-r1",
+      "n:guide:rc3-look-strip-crossbody-r1",
+      "n:guide:rc3-look-strip-knit-texture-r1"
     ],
     "steps": {
       "source": "g:fashion-editorial/source-input",
-      "result": "n:guide:tpl-look-m2-result",
+      "result": "n:guide:rc3-tpl-look-step-result-r1",
       "mode": "photo",
       "prompt": "Use the uploaded photo as the garment and preserve its shape, color and details. An adult wears the light beige tailored suit, smooths the jacket lapel once, and faces the camera with the full outfit visible. Keep the jacket, trousers, shoes and bag inside the frame, with bright studio daylight and natural styling. Full-body fashion-ad still, clean neutral background, no text or logos. End in a calm pose that lets a shopper compare the complete silhouette. Leave clean space around the outfit for a collection crop and keep accessory details unobstructed.",
       "options": [
@@ -146,7 +146,7 @@
         "h2": "Add collection details after download"
       },
       "faq": {
-        "h2": "Questions about lookbook photos"
+        "h2": "Questions about AI lookbook photos"
       }
     }
   }
