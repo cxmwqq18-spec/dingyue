@@ -19,6 +19,10 @@
   ],
   "faq": [
     {
+      "q": "Can one garment photo make both a TikTok video and a listing image?",
+      "a": "Yes. Choose 9:16 and 6, 10, 15, or 30 seconds for a turn or short walk, and use the same garment photo for a model still or listing image. Keep the whole garment visible and check the fit before publishing."
+    },
+    {
       "q": "Can I turn a photo of a garment laid flat into an on-model photo?",
       "a": "Yes. Lay the garment flat or hang it on a plain wall, smooth out the wrinkles, and photograph the whole piece in even light. Then describe the person and setting, for example \"full-length, standing in a bright studio.\""
     },
@@ -31,16 +35,8 @@
       "a": "You can describe the person you want to see, including height, build, and age range, such as \"petite woman in her 40s\" or \"tall man with a broad frame.\" Showing your real customer helps shoppers picture themselves in the piece."
     },
     {
-      "q": "How do I make a TikTok video of my clothes being worn?",
-      "a": "Choose 9:16 and a length of 6, 10, 15, or 30 seconds, then describe a slow turn or short walk. Run another version when you want a different setting."
-    },
-    {
       "q": "What photo works best for putting my garment on a model?",
       "a": "Use a flat-lay or hanger shot with the whole garment visible, front side up and even light. The outline, color, print, and fastenings have to be clear because the generated model keeps those details."
-    },
-    {
-      "q": "Can I show the same outfit as separate photo and video ads?",
-      "a": "Yes. One clear garment photo can produce a model photo and a short fit or turn video. Use the still for the listing or a square feed ad, and use the moving version in the feed, where the walk or turn shows the fit."
     },
     {
       "q": "How do I keep fabric color accurate?",
@@ -144,5 +140,71 @@
         "lead": "Try-ons, fit checks, fabric details, and creator reviews for clothing campaigns."
       }
     }
-  }
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Channels",
+      "h2": "Ads for the channels you already sell on",
+      "items": [
+        {
+          "t": "Shopify",
+          "d": "[Create product photos for Shopify](/platforms/shopify-product-photos)."
+        },
+        {
+          "t": "Amazon",
+          "d": "[Prepare Amazon product images and ads](/platforms/amazon-product-photos)."
+        },
+        {
+          "t": "TikTok",
+          "d": "[Build TikTok ad videos](/platforms/tiktok-ads)."
+        },
+        {
+          "t": "Meta",
+          "d": "[Adapt product ads for Facebook](/platforms/facebook-ads)."
+        },
+        {
+          "t": "YouTube",
+          "d": "[Plan YouTube Shorts ads](/platforms/youtube-shorts-ads)."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Keep exploring",
+      "h2": "Related pages",
+      "items": [
+        {
+          "t": "Shoes",
+          "d": "[Shoes](/industries/shoes)."
+        },
+        {
+          "t": "Jewelry & Accessories",
+          "d": "[Jewelry & Accessories](/industries/jewelry-accessories)."
+        },
+        {
+          "t": "Beauty & Skincare",
+          "d": "[Beauty & Skincare](/industries/beauty-skincare)."
+        },
+        {
+          "t": "Home & Living",
+          "d": "[Home & Living](/industries/home-living)."
+        },
+        {
+          "t": "Model Photos",
+          "d": "[Model Photos](/ai-image-generation/on-model-generation)."
+        },
+        {
+          "t": "Lifestyle Photos",
+          "d": "[Lifestyle Photos](/ai-image-generation/lifestyle-scene)."
+        },
+        {
+          "t": "Video Ads",
+          "d": "[Video Ads](/ai-video-generation/ugc-ad-video)."
+        },
+        {
+          "t": "Social Ad Photos",
+          "d": "[Social Ad Photos](/ai-image-generation/feed-ad-still)."
+        }
+      ]
+    }
+  ]
 }

@@ -15,8 +15,8 @@
   ],
   "faq": [
     {
-      "q": "Can I make shoe UGC ads from one shoe photo?",
-      "a": "Yes. A clear side-profile photo can become an on-foot demo, white-background still, or short stride scene. Keep the full toe, heel, collar, and sole visible so the shape stays recognizable."
+      "q": "Can one shoe photo produce both a listing image and a walking video?",
+      "a": "Yes. Use a clear side-profile photo for a white-background listing image and a short on-foot scene. Keep the full toe, heel, collar, and sole visible so the pair stays recognizable."
     },
     {
       "q": "Can I get sole and heel photos from a single side shot?",
@@ -33,10 +33,6 @@
     {
       "q": "What angles should I shoot for shoe ads?",
       "a": "Start with one full side profile, then add a top view and a sole or heel shot. Those three views answer fit, shape and tread questions without asking the generated image to invent details it cannot see."
-    },
-    {
-      "q": "Can one shoe photo produce both a listing image and a walking video?",
-      "a": "Yes. A clear side-profile photo can become a white-background listing image and a short walking video. Keep the full toe, heel, collar, and sole visible so the reframe does not crop the shape."
     },
     {
       "q": "How do I avoid a branded look when selling unbranded shoes?",
@@ -131,5 +127,71 @@
         "h2": "Questions About AI Shoe UGC Ads"
       }
     }
-  }
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Channels",
+      "h2": "Ads for the channels you already sell on",
+      "items": [
+        {
+          "t": "Shopify",
+          "d": "[Create product photos for Shopify](/platforms/shopify-product-photos)."
+        },
+        {
+          "t": "Amazon",
+          "d": "[Prepare Amazon product images and ads](/platforms/amazon-product-photos)."
+        },
+        {
+          "t": "TikTok",
+          "d": "[Build TikTok ad videos](/platforms/tiktok-ads)."
+        },
+        {
+          "t": "Meta",
+          "d": "[Adapt product ads for Facebook](/platforms/facebook-ads)."
+        },
+        {
+          "t": "YouTube",
+          "d": "[Plan YouTube Shorts ads](/platforms/youtube-shorts-ads)."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Keep exploring",
+      "h2": "Related pages",
+      "items": [
+        {
+          "t": "Fashion & Clothing",
+          "d": "[Fashion & Clothing](/industries/fashion-clothing)."
+        },
+        {
+          "t": "Health & Wellness",
+          "d": "[Health & Wellness](/industries/health-wellness)."
+        },
+        {
+          "t": "Home & Living",
+          "d": "[Home & Living](/industries/home-living)."
+        },
+        {
+          "t": "Electronics",
+          "d": "[Electronics](/industries/electronics)."
+        },
+        {
+          "t": "White Background Photos",
+          "d": "[White Background Photos](/ai-image-generation/ecommerce-main-image)."
+        },
+        {
+          "t": "Product Photos",
+          "d": "[Product Photos](/ai-image-generation)."
+        },
+        {
+          "t": "Video Ads",
+          "d": "[Video Ads](/ai-video-generation/ugc-ad-video)."
+        },
+        {
+          "t": "Lifestyle Photos",
+          "d": "[Lifestyle Photos](/ai-image-generation/lifestyle-scene)."
+        }
+      ]
+    }
+  ]
 }
