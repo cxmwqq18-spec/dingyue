@@ -72,7 +72,7 @@
     "social-ad-photos": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:k3-social-hero-trainer-source",
+        "before": "n:guide:ra4-social-ad-photos-hero-source-r1",
         "after": "n:guide:q6-social-hero-result"
       },
       "gallery": [

@@ -46,15 +46,15 @@
         {
           "t": "Keep the garment the same",
           "d": "Start from your flat photo so the color, cut and visible details stay tied to the item you sell.",
-          "img": "n:guide:k5-model-photos-outputs-1-image",
-          "alt": "Seated model wearing a ribbed knit top.",
+          "img": "n:guide:ra4-model-photos-outputs-1-image-r1",
+          "alt": "Adult Black woman with short natural hair wearing a heather-gray pullover hoodie in a plain studio.",
           "frame": "none"
         },
         {
           "t": "Refresh looks any time",
           "d": "Change the scene for a new season or campaign without booking another shoot.",
-          "img": "n:guide:k5-model-photos-after-image",
-          "alt": "Model wearing a slip dress outfit on a rooftop at sunset.",
+          "img": "n:guide:ra4-model-photos-after-image-r1",
+          "alt": "Adult woman with a short bob wearing an ivory satin slip dress on a rooftop at sunset.",
           "frame": "none"
         }
       ]
@@ -106,7 +106,7 @@
     },
     {
       "q": "Which products work on a virtual model?",
-      "a": "Tops, dresses, outerwear, bags and jewelry work well. A clear flat garment or accessory photo gives a useful reference."
+      "a": "Tops, dresses, outerwear, bags and jewelry work well. A clear flat garment or accessory photo gives the best reference."
     },
     {
       "q": "Is it suitable for ecommerce stores?",
@@ -131,10 +131,10 @@
   ],
   "visual": {
     "steps": {
-      "source": "n:guide:k5-model-photos-steps-source",
-      "result": "n:guide:k5-model-photos-steps-result",
+      "source": "n:guide:ra4-model-photos-steps-source-r1",
+      "result": "n:guide:ra4-model-photos-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the garment and preserve its color, cut, seams and blank label area. Show an adult wearing it for a full-length outfit check, ending with the garment and silhouette easy to see. Natural fitting-room light, mirror-view framing."
+      "prompt": "Use the uploaded flat heather-gray pullover hoodie as the exact garment reference. Preserve its gray color, hood, two drawstrings, kangaroo pocket, seams and relaxed cut. Show an adult man with short hair facing the camera in a tree-lined street, with his face and the entire hoodie visible. Change only the model and setting; keep the garment details consistent."
     },
     "picker": {
       "title": "Browse worn looks",

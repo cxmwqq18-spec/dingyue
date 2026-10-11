@@ -15,8 +15,8 @@
   "benefits_h2": "Put a fresh ad in the feed",
   "benefits": [
     {
-      "t": "Keep every word editable",
-      "d": "Leave space for a headline, then add the exact price and offer in your editor.",
+      "t": "Keep the offer accurate",
+      "d": "Leave clean space for your headline, then add the exact price and offer in your editor. There is no AI text to correct.",
       "icon": "check"
     },
     {
@@ -26,7 +26,7 @@
     },
     {
       "t": "Test scenes from one product shot",
-      "d": "Change the backdrop, compare versions and keep your final copy editable.",
+      "d": "Swap the backdrop in minutes, then compare versions before choosing the final ad.",
       "icon": "layers"
     }
   ],
