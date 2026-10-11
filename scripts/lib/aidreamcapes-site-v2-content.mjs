@@ -2607,8 +2607,8 @@ export function validateSiteV2(build = buildSiteV2()) {
     const cards = Array.isArray(visual.picker?.cards) ? visual.picker.cards : [];
     const pickerPresent = chips.length > 0 || cards.length > 0;
     if (pickerPresent) {
-      if (chips.length > 20) errors.push(`${pageId}: visual picker must contain at most 20 filters`);
-      if (cards.length > 40) errors.push(`${pageId}: visual picker card count is outside the page range`);
+      if (chips.length > 40) errors.push(`${pageId}: visual picker must contain at most 40 filters`);
+      if (cards.length > 80) errors.push(`${pageId}: visual picker card count is outside the page range`);
       if (!isDirectory && !visual.picker?.title?.trim()) errors.push(`${pageId}: visual picker title and required button are missing`);
       if (!isDirectory && !visual.picker?.button?.trim()) errors.push(`${pageId}: visual picker title and required button are missing`);
       if (new Set(chips.map((chip) => chip.id)).size !== chips.length) errors.push(`${pageId}: visual picker filter ids must be unique`);
@@ -2749,7 +2749,11 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (page.id === "ai-actors") {
       const scenes = Array.isArray(data.actorScenes) ? data.actorScenes : [];
       const actors = Array.isArray(data.actors) ? data.actors : [];
-      if (actors.length !== 36) errors.push(`ai-actors: expected 36 actor cards, got ${actors.length}`);
+      if (!scenes.length) errors.push("ai-actors: actor scenes are missing");
+      for (const scene of scenes) {
+        const count = actors.filter((actor) => actor.scene === scene).length;
+        if (count !== 2) errors.push(`ai-actors: scene ${scene} must have exactly 2 actor cards, got ${count}`);
+      }
       if (new Set(actors.map((actor) => actor.name)).size !== actors.length) errors.push("ai-actors: actor names must be unique");
       for (const actor of actors) {
         if (!scenes.includes(actor.scene)) errors.push(`ai-actors: unknown scene on ${actor.name}`);
