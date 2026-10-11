@@ -2,7 +2,7 @@
   "id": "templates",
   "title": "AI Product Ad Templates for Photos and Videos | AIVideosUGC",
   "description": "Find AI product ad templates for photos and short videos. Choose a style, add one product photo, and get a new asset for your store or social feed.",
-  "h1": "Product Ad Templates: See It, Recreate It, Launch It",
+  "h1": "AI Product Ad Templates: See It, Recreate It, Launch It",
   "eyebrow": "Product ad templates",
   "lead": "Get a product ad ready faster: pick a template, add your product photo, and download an asset for your store, social feed, or campaign.",
   "card": "Ready-made styles for product photos and videos. Pick one, add your product, and publish the next asset.",
@@ -27,7 +27,7 @@
     },
     {
       "q": "Are product photos square?",
-      "a": "Photos are square by default. Crop a downloaded still for a specific placement when needed."
+      "a": "Photos are square by default. Crop a downloaded still for the channel where you will use it."
     },
     {
       "q": "Can I use a product ad template for an Amazon listing?",
@@ -38,8 +38,8 @@
       "a": "Yes. Add exact campaign text after download in your usual editor."
     },
     {
-      "q": "How do I check that the result still matches my product?",
-      "a": "Use a complete source photo and compare the downloaded result with the item you sell before publishing."
+      "q": "Will the result keep my product shape and color?",
+      "a": "Yes, it keeps the shape and color. Compare the downloaded result with the item you sell before publishing."
     },
     {
       "q": "Do I need editing experience to start?",
@@ -49,10 +49,10 @@
   "visual": {
     "strip": [
       "n:guide:q13-templates-strip-0",
-      "n:guide:q13-templates-strip-1-r2",
+      "n:gen2:rb1-templates-strip-1-r1",
       "n:gen2:tpl-box-g2",
-      "n:guide:q13-templates-strip-3",
-      "n:guide:q13-templates-strip-4",
+      "n:gen2:rb1-templates-strip-3-r1",
+      "n:gen2:rb1-templates-strip-4-r2",
       "n:guide:q13-templates-strip-5-r1"
     ],
     "steps": {

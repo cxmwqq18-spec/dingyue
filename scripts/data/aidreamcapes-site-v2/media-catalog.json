@@ -13202,6 +13202,166 @@
         640,
         1280
       ]
+    },
+    "gen2:rb1-templates-strip-1-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Empty light wood armchair with a rust throw in a bright living room.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-templates-strip-3-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Desk set with a notebook, pen and organizer tray.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-templates-strip-4-r1": {
+      "w": 1280,
+      "h": 960,
+      "alt": "Baby bath set with a hooded towel, sponge and pump bottle.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-strip-4-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Field jacket shown front-on in neutral light.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-item-beauty-r1": {
+      "w": 1280,
+      "h": 2276,
+      "alt": "Cream pumped onto the back of a hand beside a mirror and folded towel.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-item-fashion-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Blue jeans laid flat with the waistband and cuffs visible.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-steps-source-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Sage-green insulated lunch container closed on a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-steps-result-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "The same sage-green lunch container open with its lid beside it.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-scene-electronics-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Charcoal speaker and cable arranged on a desk beside its open box.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-scene-wellness-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Protein powder pouch and shaker on a gym bench after a workout.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-scene-food-r1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult man takes a first sip of a sparkling berry drink beside a blank bottle.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-scene-home-r1": {
+      "w": 1280,
+      "h": 960,
+      "alt": "Tangled desk cables on one side and the same cables tidied into a cable box on the other.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-platforms-strip-4-r1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Canvas tote beside a carry-on suitcase.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-platforms-item-youtube-shorts-r1": {
+      "w": 1280,
+      "h": 2276,
+      "alt": "Garlic press crushing a clove in a close-up vertical scene.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-industries-og-r1": {
+      "w": 1280,
+      "h": 672,
+      "alt": "Sage-green insulated lunch container on a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
+    },
+    "gen2:rb1-templates-strip-4-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Baby bath set with a hooded towel, sponge and pump bottle.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "rollout-rb1-rework"
     }
   },
   "guide": {

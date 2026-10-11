@@ -40,8 +40,8 @@
   ],
   "faq": [
     {
-      "q": "Which industry page should I use for my product content?",
-      "a": "Start with the page that matches your main product, then borrow scene ideas from another relevant category. The same photo and video tools work across categories."
+      "q": "Which industry page should I use for a mixed catalog?",
+      "a": "Start with the page that matches your main product, then borrow scene ideas from the other relevant category. The same photo and video tools work across categories."
     },
     {
       "q": "My category isn't listed. Can I still use AIVideosUGC?",
@@ -64,8 +64,8 @@
       "a": "They point to the platform pages, where formats are matched to TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify. For example, vertical video fits in-feed placements, while square photos fit listings and most feed ads."
     },
     {
-      "q": "How do I check that the result still matches my product?",
-      "a": "Upload one photo with the shape, color, and label area fully visible. Compare the result with the item you sell before publishing; if details drift, try a sharper source photo or another scene."
+      "q": "Will the result keep my product shape and color?",
+      "a": "Yes, it keeps the shape and color when your full product is visible in the source photo. Compare the downloaded result with the item you sell before publishing."
     },
     {
       "q": "Which ad moment should I make first for a new product?",
@@ -86,15 +86,15 @@
       "n:gen2:ind-food-drinks-g2",
       "n:guide:q14-industries-strip-headphones-unbox",
       "n:gen2:ind-beauty-skincare-g4",
-      "n:guide:f4-industries-strip-denim-r1",
+      "n:gen2:rb1-industries-strip-4-r1",
       "n:guide:f4-industries-strip-running-shoe-r1"
     ],
     "steps": {
-      "source": "n:guide:b1-video-ads-source",
+      "source": "n:gen2:rb1-industries-steps-source-r1",
       "sourceAlt": "Soft sage insulated lunch bag standing on a bright kitchen counter.",
       "sourceTitle": "Your starting product",
       "sourceHint": "Keep the full bag, handle, and zipper visible.",
-      "result": "n:guide:q14-industries-step-lunchbag",
+      "result": "n:gen2:rb1-industries-steps-result-r1",
       "mode": "video",
       "prompt": "Pack a lunch container into the insulated bag and lift it by the handle.",
       "options": [
@@ -153,8 +153,8 @@
         ]
       },
       "itemImages": {
-        "/industries/beauty-skincare": "n:guide:q14-industry-beauty-texture",
-        "/industries/fashion-clothing": "n:guide:q14-industry-fashion-outfit",
+        "/industries/beauty-skincare": "n:gen2:rb1-industries-item-beauty-r1",
+        "/industries/fashion-clothing": "n:gen2:rb1-industries-item-fashion-r1",
         "/industries/shoes": "n:guide:q14-industry-shoes-fit",
         "/industries/jewelry-accessories": "n:guide:q14-industry-jewelry-unbox",
         "/industries/electronics": "n:guide:q14-industry-electronics-headphones",
@@ -289,25 +289,25 @@
       "t": "Electronics: desk demo",
       "d": "Show the gadget being set up and used for one task, with the controls visible in the same frame.",
       "href": "/industries/electronics",
-      "image": "n:guide:q14-industries-strip-speaker"
+      "image": "n:gen2:rb1-industries-scene-electronics-r1"
     },
     {
       "t": "Wellness: routine moment",
       "d": "Place the product in a real morning or gym-bag routine without implying a health outcome you cannot support.",
       "href": "/industries/health-wellness",
-      "image": "n:guide:g1-retarget-electrolyte-gummy-r2"
+      "image": "n:gen2:rb1-industries-scene-wellness-r1"
     },
     {
       "t": "Food: first-sip reaction",
       "d": "Show an adult serving the drink or snack, then taking the first sip or bite so the serving context is clear.",
       "href": "/industries/food-drinks",
-      "image": "n:guide:q1-photo-example-tumbler"
+      "image": "n:gen2:rb1-industries-scene-food-r1"
     },
     {
       "t": "Home: problem to fix",
       "d": "Show the starting clutter or mess, then the product in use during one simple organizing or cleaning step.",
       "href": "/industries/home-living",
-      "image": "n:q10-sale-picker-2"
+      "image": "n:gen2:rb1-industries-scene-home-r1"
     }
   ]
 }
