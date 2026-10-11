@@ -2443,6 +2443,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const flow of payload.flows ?? []) for (const step of flow.steps ?? []) pushMedia(step.image);
     for (const group of [...(payload.examples?.groups ?? []), ...(payload.exampleGallery?.groups ?? [])]) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
+    for (const item of payload.more_sections?.flatMap((section) => section.items ?? []) ?? []) pushMedia(item?.img);
     if (["article", "about", "trust"].includes(layoutFor(page))) for (const section of payload.sections ?? []) pushMedia(section?.img);
     for (const image of visualPayloadImages(payload.visual)) pushMedia({ src: image.src, alt: image.alt, width: image.w, height: image.h });
     if (guideReplacesHero(page, payload)) {
