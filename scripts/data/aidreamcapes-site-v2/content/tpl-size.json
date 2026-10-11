@@ -18,11 +18,11 @@
     },
     {
       "t": "Pick a Reference Object",
-      "d": "Name one familiar object - a palm, carry-on or notebook - plus the setting. The square image uses natural proportion."
+      "d": "Name one familiar object such as a palm, carry-on or notebook. The generated proportion is a visual cue; compare it with measured dimensions."
     },
     {
       "t": "Download and Post",
-      "d": "Download the image and check the comparison looks natural, then add written measurements beside it."
+      "d": "Download the image and check the comparison looks natural. Add the real length, width, height or capacity in your listing text."
     }
   ],
   "maker": {
@@ -48,24 +48,28 @@
       "a": "No. It is a visual guide, and generated scale can be slightly off. Put the real length, width, height or capacity in the listing text."
     },
     {
-      "q": "Can I use this as an Amazon listing image?",
-      "a": "Yes. A scale comparison can be one of the extra images in an Amazon gallery when it shows the real item."
+      "q": "Which object gives a useful size cue?",
+      "a": "Choose one familiar, unbranded object such as a hand, notebook, carry-on or common bottle. Pick the object shoppers will recognize fastest for your product."
     },
     {
-      "q": "What object shows a product’s size well?",
-      "a": "A familiar, unbranded object such as a hand, notebook, carry-on or common bottle gives shoppers a quick reference."
+      "q": "Should each image use one reference object?",
+      "a": "Yes. One clear reference object keeps the comparison easy to read. Use a separate image when you need a different cue."
+    },
+    {
+      "q": "Where should exact measurements appear?",
+      "a": "Put exact length, width, height and capacity in your listing text or dimension table. Keep the reference photo as the quick visual guide beside those facts."
+    },
+    {
+      "q": "Can I use this as an Amazon listing image?",
+      "a": "Yes. A scale comparison can be one of the extra images in an Amazon gallery when it shows the real item."
     },
     {
       "q": "Where can I use a size reference photo?",
       "a": "Use the square image in a product page, Amazon or Shopify gallery, feed post or carousel beside exact dimensions."
     },
     {
-      "q": "What does a size photo cost?",
-      "a": "Each product size reference photo costs 24 credits, shown before the job starts."
-    },
-    {
-      "q": "Can the reference photo replace my dimension table?",
-      "a": "No. It gives shoppers a fast sense of scale; exact measurements and capacity still belong in editable listing text."
+      "q": "Can I make several size scenes from one product photo?",
+      "a": "Yes. Reuse one clear product photo to try another familiar cue or setting. Compare each result with your measured dimensions before posting."
     },
     {
       "q": "Do I need props or a studio?",
@@ -74,6 +78,10 @@
     {
       "q": "Can shoppers judge fit from the image?",
       "a": "They can orient themselves faster, but the listing still needs exact measurements for a purchase decision."
+    },
+    {
+      "q": "What does a size reference photo cost?",
+      "a": "Each product size reference photo costs 24 credits, shown before the job starts."
     }
   ],
   "visual": {
