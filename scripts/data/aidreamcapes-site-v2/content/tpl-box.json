@@ -115,7 +115,7 @@
       "source": "n:guide:k1-unboxing-input-coffee-kit",
       "sourceTitle": "Your product",
       "sourceHint": "Include the coffee bag, grinder, mug and every piece that ships with the kit.",
-      "result": "n:guide:rc2-tpl-box-coffee-result-square-r2",
+      "result": "n:guide:rc2-tpl-box-coffee-result-square-r3",
       "mode": "photo",
       "prompt": "Use the uploaded coffee starter kit as the exact product set: preserve its plain kraft pouch, black hand grinder, speckled white mug and their colors. Show the complete kit together on a bright wood table with every item visible. Natural window light, square product photo, no text or logos.",
       "options": [
