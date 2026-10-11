@@ -817,7 +817,7 @@
     "sale": "g:sale-campaign-key-visual/hero-output",
     "howto": "f:how-to-video",
     "film": "f:cinematic-video",
-    "beauty": "f:beauty-routine",
+    "beauty": "n:guide:rc5-tpl-beauty-source-r1",
     "drink": "f:food-video",
     "home": "f:home-organization",
     "outfit": "f:fashion-try-on-reel",
