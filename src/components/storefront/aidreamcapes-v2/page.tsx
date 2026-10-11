@@ -366,11 +366,11 @@ function TemplatePage({ data, r }: Props) {
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
+      <VisualPicker pageId={data.id} visual={visual} r={r} />
       <VisualStrip includeOverview visual={visual} r={r} />
       <BenefitsSection data={data} fallbackTitle="Why sellers start from this template" r={r} />
       <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
       <MoreSections r={r} sections={data.more_sections as never} />
-      <VisualPicker pageId={data.id} visual={visual} r={r} />
       <VisualUses visual={visual} r={r} />
       <VisualInput visual={visual} r={r} />
       <VisualOutputs visual={visual} r={r} />
