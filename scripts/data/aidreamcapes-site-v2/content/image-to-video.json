@@ -16,27 +16,37 @@
     {
       "t": "Show one useful motion",
       "d": "Turn one product photo into a focused movement so shoppers can see how it opens, pours, turns or works.",
-      "icon": "bolt"
+      "icon": "bolt",
+      "img": "n:guide:fx10-image-to-video-benefit-motion-r1",
+      "alt": "Adult hand presses a plain coral cleanser bottle pump into an open palm beside a bright sink."
     },
     {
       "t": "Test another opening",
       "d": "Try a different first movement with the same product photo so you can compare ad openings without a reshoot.",
-      "icon": "refresh"
+      "icon": "refresh",
+      "img": "n:guide:fx10-image-to-video-benefit-opening-r1",
+      "alt": "Adult hands twist open a plain teal reusable bottle on a sunlit kitchen counter."
     },
     {
       "t": "Add a product detail to a feed ad",
       "d": "Show one feature in motion, such as a lid opening or fabric stretching, before the shopper scrolls.",
-      "icon": "target"
+      "icon": "target",
+      "img": "n:guide:fx10-image-to-video-benefit-detail-r1",
+      "alt": "Adult hands stretch a plain linen shirt sleeve across a neutral table to show its drape."
     },
     {
       "t": "Pick a frame that fits",
       "d": "Choose 9:16, 1:1 or 16:9 to match the feed, listing or product page where the clip will run.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:guide:fx10-image-to-video-benefit-frame-r1",
+      "alt": "Adult hand flips open the latch of a plain sage-green lunch container on a kitchen counter."
     },
     {
       "t": "Pick a length that fits",
       "d": "Choose 6, 10, 15 or 30 seconds when you plan the opening and the detail the shopper needs.",
-      "icon": "clock"
+      "icon": "clock",
+      "img": "n:guide:fx10-image-to-video-benefit-length-r1",
+      "alt": "Adult hands stretch a plain charcoal resistance band over a yoga mat."
     }
   ],
   "steps_h2": "How to Make an Image-to-Video Ad in 3 Simple Steps",
@@ -63,7 +73,7 @@
       ],
       [
         "Length",
-        "6, 10, 15 or 30 seconds"
+        "6, 10, 15 or 30"
       ],
       [
         "Start from",
@@ -128,8 +138,8 @@
   "visual": {
     "strip": [],
     "steps": {
-      "source": "n:guide:b1-image-to-video-source",
-      "sourceAlt": "Your product: cream ceramic mug with blue flecks on a wooden counter.",
+      "source": "n:guide:fx10-image-to-video-source-r2",
+      "sourceAlt": "Cream ceramic mug with blue flecks filled with coffee on a wooden counter.",
       "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
