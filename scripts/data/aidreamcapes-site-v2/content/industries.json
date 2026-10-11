@@ -16,36 +16,10 @@
     "Every category sells a little differently. A serum buyer wants to see texture, a sneaker buyer checks the sole, and a coffee buyer wants to watch the pour. These pages sort ideas by what you sell, so you can start with the shots that answer your shoppers' real questions instead of guessing. Each one covers the photos and short videos worth making first, the details to get right in your upload, and questions other sellers in that category often ask.",
     "Start on the page for your main product, even if your catalog spans several categories. The examples there are matched to how people shop for that item: close texture shots for beauty, fit and fabric shots for clothing, scale and setting shots for home goods. You can open the photo or video tool from each example and reuse the same product photo across every look."
   ],
-  "features": [
-    {
-      "t": "Know the shot buyers need first",
-      "d": "Each page names the photos and short videos sellers in that category make first, so you start with a shot that answers a real shopper question."
-    },
-    {
-      "t": "Keep the details buyers inspect visible",
-      "d": "See what should stay in frame for your item, such as a bottle label, a shoe sole, or the finish on a piece of jewelry."
-    },
-    {
-      "t": "Use one photo across every format",
-      "d": "Reuse one product photo for white background shots, lifestyle scenes, and vertical videos without a reshoot."
-    },
-    {
-      "t": "Choose an ad moment that sells the detail",
-      "d": "Pick a real ad type such as an unboxing, demo, review, or limited-time offer instead of a generic room setting."
-    },
-    {
-      "t": "Reach a downloadable asset faster",
-      "d": "Open the linked tool or template from each example and make the asset shown on the page."
-    }
-  ],
   "faq": [
     {
-      "q": "Which industry page should I use for a mixed catalog?",
-      "a": "Start with the page that matches your main product, then borrow scene ideas from the other relevant category. The same photo and video tools work across categories."
-    },
-    {
-      "q": "My category isn't listed. Can I still use AIVideosUGC?",
-      "a": "Yes. The tools aren't limited to these categories. Pet supplies, toys, stationery, and outdoor gear sellers can make white background photos, lifestyle scenes, and short video ads the same way."
+      "q": "Which industry page should I use for a mixed or unlisted catalog?",
+      "a": "Start with the page that matches your main product, then borrow a scene from another category when it fits. Pet supplies, toys, stationery, and outdoor gear can use the same photo and video tools."
     },
     {
       "q": "Can I use a phone photo to get started?",
@@ -53,31 +27,27 @@
     },
     {
       "q": "What's the difference between the industry pages and the templates?",
-      "a": "The industry pages explain what to shoot for your product and why shoppers need it; templates apply a chosen look to the photo you upload. Open an industry page to plan the shot, then pick a linked template to produce it."
+      "a": "Industry pages help you choose the buyer detail to show; templates apply a chosen look to the photo you upload. Plan the shot on an industry page, then open a linked template to produce it."
     },
     {
       "q": "Can one product photo be used for both photos and videos?",
-      "a": "Yes. A clear square photo with the whole product visible can produce white background and lifestyle photos, and it also works as the source for vertical video styles. Keep the original uncropped so each format has room to reframe."
+      "a": "Yes. A clear square photo with the whole product visible can produce white background and lifestyle photos, and it can also guide vertical video scenes. Keep the original uncropped so each format has room to reframe."
     },
     {
       "q": "Do the industry pages cover which ad format works for each platform?",
-      "a": "They point to the platform pages, where formats are matched to TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify. For example, vertical video fits the feed, while square photos fit listings and most feed ads."
+      "a": "Yes. Open the linked platform page for the format used on TikTok, Instagram, Facebook, YouTube Shorts, Amazon, or Shopify. The platform page explains the slot and the file shape to choose."
     },
     {
       "q": "Will the result keep my product shape and color?",
-      "a": "Yes, it keeps the shape and color when your full product is visible in the source photo. Compare the downloaded result with the item you sell before publishing."
+      "a": "It keeps the shape and color more reliably when your full product is visible in the source photo. Compare the downloaded result with the item you sell before publishing."
     },
     {
       "q": "Which ad moment should I make first for a new product?",
-      "a": "Start with the moment that answers the buyer's first question: texture for beauty, fit for clothing and shoes, scale for jewelry and home goods, setup for electronics, routine for wellness, or taste and serving for food."
+      "a": "Start with the moment that answers the buyer’s first question: texture for beauty, fit for clothing and shoes, scale for jewelry and home goods, setup for electronics, routine for wellness, or taste and serving for food."
     },
     {
       "q": "Can I use the photos and videos from these pages in paid ads?",
-      "a": "Yes. Files you download are watermark-free and licensed for commercial use, including paid ads, listings, and social posts. The claims, prices, and text you add still have to be true and must pass each platform's ad review."
-    },
-    {
-      "q": "Do I still need a creator or a photoshoot?",
-      "a": "Not for the assets on these pages. You generate scenes around one product photo, so you don't book a model or creator for standard demos and lifestyle shots. For a custom concept or a real customer testimonial, you may still want to hire one."
+      "a": "Yes. Downloaded files are watermark-free and licensed for commercial use, including paid ads, listings, and social posts. Keep any claims, prices, and added text accurate and follow each platform’s ad review rules."
     }
   ],
   "visual": {
@@ -184,7 +154,7 @@
       "d": "Downloaded photos and videos are watermark-free and licensed for commercial use, so each industry page ends in a file you can actually publish."
     }
   ],
-  "steps_h2": "How to Find AI Product Content by Industry in 3 Simple Steps",
+  "steps_h2": "How to Make AI Product Content by Industry in 3 Simple Steps",
   "steps_lead": "Start with one product photo, choose the buyer moment for your category, and download an asset you can post.",
   "steps": [
     {
@@ -200,114 +170,126 @@
       "d": "Review the result and save it. Add exact wording in your editor, then publish it to your listing, feed, or paid ad."
     }
   ],
-  "directory_specs": {
-    "title": "The first buyer question by category",
-    "lead": "Choose a scene that makes the product detail a shopper needs to judge visible in one glance.",
-    "columns": [
-      "Industry",
-      "Show first",
-      "Ad moment",
-      "Category page"
-    ],
-    "rows": [
-      [
-        "Beauty & Skincare",
-        "Texture and application",
-        "GRWM routine or review close-up",
-        "Beauty & Skincare"
-      ],
-      [
-        "Fashion & Clothing",
-        "Fit, fabric and movement",
-        "Outfit check or try-on",
-        "Fashion & Clothing"
-      ],
-      [
-        "Shoes",
-        "Tread, profile and fit",
-        "On-foot step test",
-        "Shoes"
-      ],
-      [
-        "Jewelry & Accessories",
-        "Scale, clasp and finish",
-        "Gift unboxing or worn detail",
-        "Jewelry & Accessories"
-      ],
-      [
-        "Electronics",
-        "Setup and controls",
-        "Desk demo or everyday use",
-        "Electronics"
-      ],
-      [
-        "Health & Wellness",
-        "When and how it is used",
-        "Routine or gym-bag use",
-        "Health & Wellness"
-      ],
-      [
-        "Food & Drinks",
-        "Serving, texture and portion",
-        "First-sip or first-bite reaction",
-        "Food & Drinks"
-      ],
-      [
-        "Home & Living",
-        "The problem it helps organize",
-        "Before-and-after or how-to",
-        "Home & Living"
-      ]
-    ]
-  },
   "directory_scenes": [
     {
       "t": "Beauty: GRWM texture check",
       "d": "Show an adult applying a small amount and holding the package beside the finished texture for a clear routine moment.",
-      "href": "/industries/beauty-skincare",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+An+adult+creator+applies+a+small+amount+beside+a+bright+vanity+mirror%2C+then+holds+the+package+beside+the+finished+texture.+Natural+handheld+close-up%2C+soft+daylight.+Sound%3A+light+room+ambience%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:guide:g1-retarget-coral-lip-balm-use-r2"
     },
     {
       "t": "Fashion: outfit check",
       "d": "Show the garment on a person in motion so shoppers can judge fit, fabric and the finished look.",
-      "href": "/industries/fashion-clothing",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+An+adult+creator+wears+the+garment+and+turns+once+in+a+bright+fitting+room+so+the+fit+and+fabric+drape+are+clear.+Medium+handheld+framing%2C+soft+daylight.+Sound%3A+quiet+room+ambience%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:guide:c3-r3-tpl-outfit-walk"
     },
     {
       "t": "Shoes: tread close-up",
       "d": "Hold the shoe up on the trail and point to the outsole lugs so buyers see the grip before the first step.",
-      "href": "/industries/shoes",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+An+adult+hand+holds+the+shoe+over+a+trail+and+points+to+the+outsole+tread+before+one+careful+step.+Close+handheld+detail%2C+natural+daylight.+Sound%3A+light+footsteps+and+outdoor+ambience%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:guide:q13-limited-card-spark-r1"
     },
     {
       "t": "Jewelry: gift unboxing",
       "d": "Use hands to open the package, lift one piece and hold it close enough to show scale and finish.",
-      "href": "/industries/jewelry-accessories",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+Adult+hands+open+a+plain+gift+box%2C+lift+one+piece+and+hold+it+still+near+the+camera+to+show+scale+and+finish.+Top-down+handheld+close-up%2C+warm+daylight.+Sound%3A+box+and+tissue+rustle%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:guide:g1-launch-silver-bracelet-reveal-r2"
     },
     {
       "t": "Electronics: desk demo",
       "d": "Show the gadget being set up and used for one task, with the controls visible in the same frame.",
-      "href": "/industries/electronics",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+An+adult+sets+the+gadget+on+a+tidy+desk+and+uses+one+control+for+a+clear+everyday+task.+Eye-level+handheld+medium+close-up%2C+soft+window+light.+Sound%3A+the+control+click+and+room+ambience%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:gen2:rb1-industries-scene-electronics-r1"
     },
     {
       "t": "Wellness: routine moment",
       "d": "Place the product in a real morning or gym-bag routine without implying a health outcome you cannot support.",
-      "href": "/industries/health-wellness",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+An+adult+places+the+item+in+a+morning+or+gym-bag+routine+and+demonstrates+one+normal+use+without+a+health+claim.+Handheld+medium+close-up%2C+natural+light.+Sound%3A+ordinary+room+ambience%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:gen2:rb1-industries-scene-wellness-r2"
     },
     {
       "t": "Food: first-sip reaction",
       "d": "Show an adult serving the drink or snack, then taking the first sip or bite so the serving context is clear.",
-      "href": "/industries/food-drinks",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+An+adult+pours+the+drink+or+serves+the+snack%2C+takes+the+first+sip+or+bite%2C+and+reacts+naturally+to+the+camera.+Handheld+chest-up+framing%2C+warm+daylight.+Sound%3A+pour%2C+bite+and+voice%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:gen2:rb1-industries-scene-food-r1"
     },
     {
       "t": "Home: problem to fix",
       "d": "Show the starting clutter or mess, then the product in use during one simple organizing or cleaning step.",
-      "href": "/industries/home-living",
+      "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+Adult+hands+show+one+small+cluttered+area%2C+use+the+organizer+or+cleaner%2C+and+end+with+the+cleared+area+in+frame.+Handheld+close-up%2C+natural+window+light.+Sound%3A+product+movement+and+room+ambience%3B+no+music%2C+text+or+logos.#step-video",
       "image": "n:gen2:rb1-industries-scene-home-r1"
     }
-  ]
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Sell on the channels you use",
+      "h2": "Ads for the channels you already sell on",
+      "lead": "Make the asset, then open the platform guide for the slot and file shape your listing or campaign needs.",
+      "items": [
+        {
+          "t": "Shopify product photos",
+          "d": "[Shopify product photos](/platforms/shopify-product-photos) keep collection and product-page media consistent."
+        },
+        {
+          "t": "Amazon product photos",
+          "d": "[Amazon product photos](/platforms/amazon-product-photos) start with a clean main image and useful supporting views."
+        },
+        {
+          "t": "TikTok ads",
+          "d": "[TikTok ads](/platforms/tiktok-ads) use a fast opening and a clear product action in the feed."
+        },
+        {
+          "t": "Meta ads",
+          "d": "[Facebook ads](/platforms/facebook-ads) give you feed-ready creative with room for the offer you add later."
+        },
+        {
+          "t": "YouTube Shorts ads",
+          "d": "[YouTube Shorts ads](/platforms/youtube-shorts-ads) keep the product and its main action visible from the opening beat."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Keep exploring",
+      "h2": "Related pages",
+      "lead": "Open another product category when your catalog spans more than one shelf.",
+      "items": [
+        {
+          "t": "Beauty & Skincare",
+          "d": "[Beauty & Skincare](/industries/beauty-skincare) for texture, shade, and routine scenes."
+        },
+        {
+          "t": "Fashion & Clothing",
+          "d": "[Fashion & Clothing](/industries/fashion-clothing) for fit, fabric, and try-on scenes."
+        },
+        {
+          "t": "Shoes",
+          "d": "[Shoes](/industries/shoes) for tread, profile, and on-foot views."
+        },
+        {
+          "t": "Jewelry & Accessories",
+          "d": "[Jewelry & Accessories](/industries/jewelry-accessories) for scale, clasp, and finish details."
+        },
+        {
+          "t": "Electronics",
+          "d": "[Electronics](/industries/electronics) for setup and everyday-use demonstrations."
+        },
+        {
+          "t": "Health & Wellness",
+          "d": "[Health & Wellness](/industries/health-wellness) for routine and gym-bag moments."
+        },
+        {
+          "t": "Food & Drinks",
+          "d": "[Food & Drinks](/industries/food-drinks) for serving, texture, and first-sip scenes."
+        },
+        {
+          "t": "Home & Living",
+          "d": "[Home & Living](/industries/home-living) for organizing, cleaning, and before-and-after moments."
+        }
+      ]
+    }
+  ],
+  "steps_cta": {
+    "label": "Start creating",
+    "href": "/app/create"
+  }
 }
