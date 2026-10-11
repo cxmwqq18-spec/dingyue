@@ -47724,6 +47724,36 @@
           1280,
           1600
         ]
+      },
+      "im10-ind-health-wellness-strip-first-stretch-r1": {
+        "file": "im10-ind-health-wellness-strip-first-stretch-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a short silver-blonde bob stretches on a plain teal yoga mat in a sunny studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im10-ind-health-wellness-card-bottle-desk-r1": {
+        "file": "im10-ind-health-wellness-card-bottle-desk-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Asian man with short black hair drinks from a plain sage-green bottle at a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im10-ind-jewelry-accessories-card-necklace-tryon-r1": {
+        "file": "im10-ind-jewelry-accessories-card-necklace-tryon-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a short copper pixie adjusts a plain silver pendant necklace before a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
