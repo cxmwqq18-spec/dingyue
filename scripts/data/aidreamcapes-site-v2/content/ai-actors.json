@@ -1,15 +1,15 @@
 {
   "id": "ai-actors",
   "title": "AI Actors for UGC Ads | AIVideosUGC",
-  "description": "Create AI actor UGC ads from one product photo. Write the line, choose a presenter, and review a clip for paid social, product pages, or short-form posts.",
+  "description": "Get AI actor UGC ads from one product photo. Write the line, choose a presenter, and make clips for paid social, product pages, or short-form posts.",
   "h1": "Make More UGC Ads with AI Actors",
   "eyebrow": "AI actor generator",
-  "lead": "Write the line, choose an actor and review a product ad before the offer goes stale—without booking a creator or studio.",
+  "lead": "Get a product ad in minutes without booking a creator or studio. Write the line, choose an actor and keep new angles moving before the offer goes stale.",
   "actor_visual": {
     "titles": {
       "m2": {
-        "h2": "Create an AI Actor Video in Three Steps",
-        "lead": "One product photo, one line, and a presenter who speaks it on camera."
+        "h2": "Get a Talking Ad in Minutes",
+        "lead": "Upload one product photo, write one line and pick a presenter who says it on camera."
       }
     },
     "steps": {
@@ -27,16 +27,16 @@
       "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, the selected actor holds the sky-blue moisturizer jar toward the camera, then touches one cheek. Natural creator delivery says: \"This is the moisturizer step I keep beside the sink.\" Sound: her voice and quiet bathroom room tone.",
       "items": [
         {
-          "t": "Start with one product photo",
-          "d": "Upload a clear product photo so the presenter can show the item your customer will receive."
+          "t": "Show the product shoppers need to see",
+          "d": "Upload one clear product photo and get an actor-led ad around the item your customer will receive."
         },
         {
-          "t": "Write the line and choose an actor",
-          "d": "Give the presenter one approved line, then choose a face and setting that fit the product and audience."
+          "t": "Put your message on camera",
+          "d": "Write one short line, then choose a face and setting that fit the product and audience."
         },
         {
-          "t": "Review the clip and make the next version",
-          "d": "Check the product, delivery and claims before you download a vertical ad for the next test."
+          "t": "Test another angle in minutes",
+          "d": "Swap the actor, hook or offer and make the next vertical ad without another casting call."
         }
       ],
       "actor_cards": [
@@ -650,50 +650,50 @@
   "benefits_h2": "Why Sellers Choose AI Actors",
   "benefits": [
     {
-      "t": "Build the ad around the product",
-      "d": "Start with one clear product photo, then put an actor beside the feature shoppers need to see.",
+      "t": "Show the feature that sells",
+      "d": "Start with one clear product photo and put an actor beside the feature shoppers need to see.",
       "icon": "target"
     },
     {
-      "t": "Compare hooks from one brief",
-      "d": "Change the opening line or offer and review another version without another casting call.",
+      "t": "Test more hooks without reshooting",
+      "d": "Change the opening line or offer and make another version without a casting call.",
       "icon": "layers"
     },
     {
-      "t": "Keep the promise in your words",
-      "d": "Your chosen actor reads the approved line with matching lip movement, so every version stays on message.",
+      "t": "Keep every line on message",
+      "d": "Your chosen actor follows the line you write with matching lip movement, so each version says what you planned.",
       "icon": "check"
     }
   ],
   "more_sections": [
     {
       "eyebrow": "Use cases",
-      "h2": "Put AI actor ads where shoppers decide",
-      "lead": "Show the same actor-led video where shoppers already compare, learn and decide.",
+      "h2": "Reach shoppers where they decide",
+      "lead": "Put actor-led videos where shoppers compare, learn and decide.",
       "items": [
         {
-          "t": "Paid ads",
+          "t": "Test paid ad angles",
           "d": "Put a presenter beside the product in a phone feed, then test the hook, offer and audience in paid social.",
           "img": "n:guide:q4-spokesperson-use-02",
           "alt": "Adult Black man presents a plain crossbody bag for a paid social ad.",
           "frame": "phone"
         },
         {
-          "t": "Official websites",
-          "d": "Answer a buying question beside the product on its page, so visitors can see a feature explained before they add to cart.",
+          "t": "Answer questions on the product page",
+          "d": "Explain a buying question beside the product, so visitors can see a feature before they add to cart.",
           "img": "n:guide:q4-spokesperson-case-01",
           "alt": "Adult Black woman explains a plain toner bottle for a product page video.",
           "frame": "browser"
         },
         {
-          "t": "Social media channels",
+          "t": "Keep your social feed fresh",
           "d": "Keep a row of vertical presenter clips ready for Reels, TikTok and Shorts when your calendar needs another post.",
           "img": "n:guide:q4-spokesperson-case-02",
           "alt": "Adult East Asian man reviews plain over-ear headphones for a vertical social clip.",
           "frame": "phone"
         },
         {
-          "t": "Product guides",
+          "t": "Show setup in one clear take",
           "d": "Show the setup or one useful action with a presenter holding the product, so shoppers can follow along.",
           "img": "n:guide:q4-spokesperson-case-03",
           "alt": "Adult Latina woman demonstrates a plain protein shaker for a product guide.",
@@ -703,11 +703,11 @@
     }
   ],
   "cta_title": "Start your next UGC ad with one product photo",
-  "cta_lead": "Choose an actor, write the approved line and review the first cut before you spend on a shoot.",
+  "cta_lead": "Choose an actor, write the line and make a first cut before you spend on a shoot.",
   "faq": [
     {
       "q": "What is an AI actor?",
-      "a": "An AI actor is a generated presenter for a product video. You choose the person, give them an approved line and review the delivery on camera."
+      "a": "An AI actor is a generated presenter for a product video. You choose the person, give them a line and review the delivery on camera."
     },
     {
       "q": "How do AI actors turn a script into a video?",
