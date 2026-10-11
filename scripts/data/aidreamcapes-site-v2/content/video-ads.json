@@ -121,27 +121,31 @@
     "lead": "Choose a product action that answers a shopper question, then open the matching tool with a clear scene to edit.",
     "items": [
       {
-        "audience": "Skincare shop",
+        "audience": "Face cream, texture routine",
         "tool": "video-ads",
         "task": "Run a routine ad with a texture close-up of your face cream, no studio day.",
+        "prompt": "Use the uploaded face-cream photo as the exact product. Show an adult applying a small amount at a bright bathroom sink, with one texture close-up and a clear product hold; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-1-r1"
       },
       {
-        "audience": "Home organizer",
+        "audience": "Shelf organizer, tidy fix",
         "tool": "product-videos",
         "task": "Show the mess and the tidy fix with your shelf organizer in one short ad.",
+        "prompt": "Use the uploaded shelf-organizer photo as the exact product. Show an adult placing it on a shelf, then placing two items inside so the tidy fix is clear; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-2-r1"
       },
       {
-        "audience": "Drink seller",
+        "audience": "Iced tea, pour and sip",
         "tool": "video-ads",
         "task": "Open your ad with a pour and a first sip of your iced tea, ready in minutes.",
+        "prompt": "Use the uploaded iced-tea photo as the exact product. Open with a close pour over ice, then show an adult taking one sip at a kitchen table; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-3-r1"
       },
       {
-        "audience": "Apparel shop",
+        "audience": "Blazer, quick try-on",
         "tool": "video-ads",
         "task": "Show how your blazer fits in a quick try-on ad, no new shoot to arrange.",
+        "prompt": "Use the uploaded blazer photo as the exact product. Show an adult putting it on in a bright bedroom mirror shot, turning once to show the fit; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-4-r1"
       }
     ]
