@@ -1137,6 +1137,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       source: { ...visualImage(model, steps.source, "photo"), ...(steps.sourceAlt ? { alt: String(steps.sourceAlt) } : {}) },
       ...(steps.sourceTitle ? { sourceTitle: normalizeStepLabel(String(steps.sourceTitle)) } : {}),
       ...(steps.sourceHint ? { sourceHint: String(steps.sourceHint) } : {}),
+      ...(steps.hideSourceCopy === true ? { hideSourceCopy: true } : {}),
       result: visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
       options,
       credits: `${stepCredits} credits`,

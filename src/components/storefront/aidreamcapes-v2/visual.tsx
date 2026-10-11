@@ -81,6 +81,10 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
       .adc2 .v-step-actor-card.is-selected::after{content:"✓";position:absolute;right:4px;top:4px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:#c4b5fd;color:#17131f;font-size:11px;font-weight:700}
       .adc2 .v-step-actor-card img.v-step-actor-image{width:100%;aspect-ratio:1;object-fit:cover;object-position:center top}
       .adc2 .v-step-actor-card span{display:block;padding:4px 5px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .adc2 .v-step-actor-maker .opts .opt:not(:first-child),.adc2 .v-step-actor-maker .maker-foot,.adc2 .v-step-actor-maker .v-step-submit{display:none}
+      .adc2 .v-step-actor-maker .opts{margin-top:0}
+      .adc2 .v-step-source-only .v-step-drop{display:block;padding:0}
+      .adc2 .v-step-source-only .v-step-drop img.v-step-thumb{display:block;width:100%;height:100%;min-height:0;object-fit:cover;border-radius:12px}
     ` }} />
   ) : null;
   return (
@@ -89,10 +93,10 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
       {actorStepStyles}
       <div className="v-steps">
         <article className="v-step-card">
-          <div className="v-step-art v-step-source">
+          <div className={`v-step-art v-step-source${step.hideSourceCopy ? " v-step-source-only" : ""}`}>
             <div className="drop v-step-drop">
               <VisualImage image={step.source} r={r} className="v-step-thumb" />
-              <div><b>{step.sourceTitle ? normalizeStepLabel(step.sourceTitle) : "Drop your product photo here"}</b><span>{step.sourceHint ?? "JPG, PNG or WebP · any clear photo works"}</span></div>
+              {step.hideSourceCopy ? null : <div><b>{step.sourceTitle ? normalizeStepLabel(step.sourceTitle) : "Drop your product photo here"}</b><span>{step.sourceHint ?? "JPG, PNG or WebP · any clear photo works"}</span></div>}
             </div>
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 01</span><h3>{normalizeStepLabel(step.items[0]?.t ?? "")}</h3><p>{step.items[0]?.d}</p></div>
@@ -124,7 +128,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
         </article>
         <article className="v-step-card">
           <div className="v-step-art v-step-result">
-            <VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? "v-step-result-portrait" : undefined} />
+            <VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? `v-step-result-portrait${step.hideSourceCopy ? " v-step-result-actor" : ""}` : undefined} />
             <span aria-hidden="true" className="btn btn-ghost v-download">Download</span>
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 03</span><h3>{normalizeStepLabel(step.items[2]?.t ?? "")}</h3><p>{step.items[2]?.d}</p></div>
