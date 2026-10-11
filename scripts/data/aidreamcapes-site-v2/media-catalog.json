@@ -5011,6 +5011,46 @@
         1280
       ],
       "source": "Codex image generation"
+    },
+    "fx47-tpl-tryon-benefit-silhouette": {
+      "w": 1254,
+      "h": 1254,
+      "alt": "Adult model wearing a plain olive utility jacket in a clean front view, full silhouette visible.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
+    },
+    "fx47-tpl-tryon-benefit-back-view": {
+      "w": 1254,
+      "h": 1254,
+      "alt": "Adult model showing the back of a plain cream knit cardigan in a rear three-quarter view.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
+    },
+    "fx47-tpl-tryon-benefit-listing-gallery": {
+      "w": 1254,
+      "h": 1254,
+      "alt": "Adult model wearing a plain rust overshirt and dark trousers in a clean ecommerce studio.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
+    },
+    "fx47-tpl-tryon-benefit-launch-lookbook": {
+      "w": 1254,
+      "h": 1254,
+      "alt": "Adult model walking in a plain teal satin midi skirt in a warm editorial room.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex image generation"
     }
   },
   "gen": {

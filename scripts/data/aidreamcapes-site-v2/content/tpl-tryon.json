@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "Show the garment on a body",
-      "d": "Flat lays cannot show where the hem falls or how sleeves sit. The model view answers those questions from one uploaded photo, so buyers can judge the piece before choosing a size."
+      "d": "Flat lays cannot show where the hem falls or how sleeves sit. The model view answers those questions from one uploaded photo, so buyers can judge the piece before choosing a size.",
+      "img": "f:fx47-tpl-tryon-benefit-silhouette",
+      "alt": "Adult model wearing a plain olive utility jacket in a clean front view, full silhouette visible."
     },
     {
       "t": "New arrivals on models the week they land",
-      "d": "Each garment gets a person and a believable room without coordinating a shoot. Your new-in collection can show clothes being worn rather than hanging on a rail."
+      "d": "Each garment gets a person and a believable room without coordinating a shoot. Your new-in collection can show clothes being worn rather than hanging on a rail.",
+      "img": "f:fx47-tpl-tryon-benefit-back-view",
+      "alt": "Adult model showing the back of a plain cream knit cardigan in a rear three-quarter view."
     },
     {
       "t": "Front and back views on demand",
-      "d": "Run a second version from a back source or a clear back description to show collar and rear seams. You give shoppers both sides without asking anyone to pose twice."
+      "d": "Run a second version from a back source or a clear back description to show collar and rear seams. You give shoppers both sides without asking anyone to pose twice.",
+      "img": "f:fx47-tpl-tryon-benefit-listing-gallery",
+      "alt": "Adult model wearing a plain rust overshirt and dark trousers in a clean ecommerce studio."
     },
     {
       "t": "Ready for Shopify and social",
-      "d": "The square photo sits beside your existing flat lays on the product page and works in launch posts. Add your real measurements and size chart as text after download."
+      "d": "The square photo sits beside your existing flat lays on the product page and works in launch posts. Add your real measurements and size chart as text after download.",
+      "img": "f:fx47-tpl-tryon-benefit-launch-lookbook",
+      "alt": "Adult model walking in a plain teal satin midi skirt in a warm editorial room."
     }
   ],
   "secondary_keywords": [
