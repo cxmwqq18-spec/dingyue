@@ -35,15 +35,15 @@
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "Add a clear photo of the whole garment with its shape and key details visible."
+      "d": "Add a clear garment photo with its shape and details visible. Keep the collar, closures, sleeves, pockets and hem inside the frame."
     },
     {
       "t": "Pick a Fashion Style",
-      "d": "Choose an on-model scene, then generate the garment in that setting."
+      "d": "Choose an on-model scene, then generate the garment in that setting. Describe the pose, base layer or view you need."
     },
     {
       "t": "Download and Post",
-      "d": "Download the try-on photo, add your size chart or offer in your own editor, and post it."
+      "d": "Download the try-on photo and add your real size chart and garment measurements. Check the fit and color against the physical piece before you post."
     }
   ],
   "maker": {
@@ -65,40 +65,32 @@
   },
   "faq": [
     {
-      "q": "What is an AI virtual try-on template?",
-      "a": "It is a ready-made fashion scene. Add a garment photo and generate an on-model view for a listing, campaign or social post."
+      "q": "What are AI virtual try-on templates for clothing?",
+      "a": "They turn one flat-lay or hanger photo into an on-model product photo. Use the result to show silhouette and styling on a listing or social post."
     },
     {
-      "q": "Do I need to write prompts to use these templates?",
-      "a": "No. Pick a style, upload your garment photo and generate. Step two can include one short line about the scene if you want."
+      "q": "How do the clothing templates work?",
+      "a": "Upload a clear garment photo, choose a fashion scene and generate the on-model view. Check the product shape, color, seams and closures against the physical piece before publishing."
     },
     {
-      "q": "Who are these clothing templates built for?",
-      "a": "Clothing sellers, ecommerce teams and agencies that need on-model product photos without arranging a model shoot."
+      "q": "What clothing categories do these templates cover?",
+      "a": "They cover garments such as jackets, knitwear, dresses, skirts, shirts and trousers. Use a full, well-lit source so the model view can show the right silhouette."
     },
     {
-      "q": "Can I use a flat-lay or hanger photo?",
-      "a": "Yes. Use a clear flat-lay or hanger photo that shows the full garment and its main details."
+      "q": "Can I create multiple photo variations for different styles or collections?",
+      "a": "Yes. Reuse one garment photo across mirror, walk and lookbook scenes to create different listing or launch views. For a back view, provide a clear back source or description, then compare the seams and hem with the physical item."
     },
     {
-      "q": "Will the model wear my exact garment?",
-      "a": "The result uses your uploaded garment as the reference. Check the shape, color, seams and closures against the physical piece before publishing."
+      "q": "Who are the clothing templates designed for?",
+      "a": "They are for clothing sellers, ecommerce teams and agencies that need on-model photos without arranging a shoot. Add the real size chart and garment notes for shoppers."
     },
     {
-      "q": "Can I make several views from one garment photo?",
-      "a": "Yes. Reuse the source across mirror, walk and lookbook scenes to create another view without a second shoot."
+      "q": "Can beginners use these templates without video production experience?",
+      "a": "Yes. Upload the garment, pick a style and generate, with no video production experience required. Start with a clear front or hanger photo and a simple pose."
     },
     {
-      "q": "How fast is a try-on photo made?",
-      "a": "A photo is generated in minutes after you start the job, with no casting, studio day or reshoot in between."
-    },
-    {
-      "q": "What does a virtual try-on photo cost?",
-      "a": "Each photo costs 24 credits, and the charge is shown before the job starts."
-    },
-    {
-      "q": "Can I use a try-on image in paid ads?",
-      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for product claims and disclosures."
+      "q": "How quickly can I launch a clothing product photo?",
+      "a": "You can generate a photo in minutes after starting the job. Download it, add accurate size details, and check fit and color before posting."
     }
   ],
   "visual": {
