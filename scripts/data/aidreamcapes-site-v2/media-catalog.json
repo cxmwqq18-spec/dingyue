@@ -22560,6 +22560,16 @@
           1280
         ]
       },
+      "rc2-tpl-box-coffee-result-square-r1": {
+        "file": "rc2-tpl-box-coffee-result-square-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Coffee starter kit with a kraft pouch, hand grinder and ceramic mug in a square scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "k1-unboxing-output-wallet": {
         "file": "k1-unboxing-output-wallet",
         "w": 1024,
