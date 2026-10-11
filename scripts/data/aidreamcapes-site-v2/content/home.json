@@ -143,7 +143,7 @@
   },
   "compare": [
     [
-      "Planning",
+      "Time to first ad",
       "Days to weeks of shoot coordination",
       "Minutes from one product photo"
     ],
@@ -803,6 +803,6 @@
       }
     }
   },
-  "cta_lead": "Upload one product photo, choose a result and review it before you use it in a campaign.",
+  "cta_lead": "Upload one product photo, pick a result and see the cost before you start.",
   "cta_title": "Start your next ad with one product photo"
 }
