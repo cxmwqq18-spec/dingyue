@@ -994,7 +994,7 @@ function breadcrumbTrail(model, page) {
 const JOB_CREDITS = { photo: 24, video6: 24, video10: 40, video15: 60, video30: 120 };
 const planEstimate = (credits) => `About ${Math.floor(Number(credits) / JOB_CREDITS.photo)} product photos or ${Math.floor(Number(credits) / JOB_CREDITS.video15)} fifteen-second videos a month`;
 const PLANS_BASE = [
-  { name: "Starter", price: "$24.50", credits: "200", who: "For trying video ads and product photos.", features: ["Videos and photos", "All templates", "9:16, 1:1 and 16:9 video sizes", "No watermark"], popular: false },
+  { name: "Starter", price: "$24.50", credits: "200", who: "For trying video ads and product photos.", features: ["Videos and photos", "All templates", "9:16, 1:1, 16:9, 4:3 and 3:4 video sizes", "No watermark"], popular: false },
   { name: "Pro", price: "$35", credits: "300", who: "For stores testing new ads every week.", features: ["Everything in Starter", "100 more credits than Starter", "Room for weekly ad testing"], popular: true },
   { name: "Premium", price: "$63", credits: "600", who: "For brands and agencies with many products.", features: ["Everything in Pro", "Twice the credits of Pro", "Most room for new products"], popular: false }
 ];

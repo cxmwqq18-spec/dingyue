@@ -94,8 +94,8 @@
     ]
   },
   "audience": {
-    "title": "Give every campaign team a usable version",
-    "lead": "Start from the product photo you already have, choose the channel, and make a usable version for the next campaign.",
+    "title": "Built for Teams That Launch Fast",
+    "lead": "Start from the product photo you already have, pick the channel, and get a ready-to-post ad for your next campaign.",
     "items": [
       {
         "t": "Ecommerce and D2C brands",
@@ -171,9 +171,21 @@
   "pricingSummary": {
     "h2": "Simple credit plans for your next ad",
     "plans": [
-      {"name": "Starter", "price": "$24.50", "credits": 200},
-      {"name": "Pro", "price": "$35", "credits": 300},
-      {"name": "Premium", "price": "$63", "credits": 600}
+      {
+        "name": "Starter",
+        "price": "$24.50",
+        "credits": 200
+      },
+      {
+        "name": "Pro",
+        "price": "$35",
+        "credits": 300
+      },
+      {
+        "name": "Premium",
+        "price": "$63",
+        "credits": 600
+      }
     ],
     "lead": "Credits work across photos and videos.",
     "href": "/pricing",
@@ -838,7 +850,7 @@
       },
       "m3": {
         "h2": "Recreate What You Love with Your Product",
-        "lead": "Recreate a product scene with your own photo and launch a campaign in minutes."
+        "lead": "Pick a scene you like, upload your product photo, and get that look with your own product in it."
       },
       "faq": {
         "h2": "Questions about AI product photos and videos"
