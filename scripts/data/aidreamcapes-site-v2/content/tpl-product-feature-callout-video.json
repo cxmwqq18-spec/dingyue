@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "Show the result first",
-      "d": "Show the product feature callout outcome in one clear moment so buyers know what they get."
+      "d": "Show the product feature callout outcome in one clear moment so buyers know what they get.",
+      "img": "n:guide:fx22-tpl-feature-benefit-result",
+      "alt": "Hand pressing the pump of a white cleanser bottle by a sink."
     },
     {
       "t": "Skip another shoot",
-      "d": "Use the photo you already have instead of booking creators, locations or gear."
+      "d": "Use the photo you already have instead of booking creators, locations or gear.",
+      "img": "n:guide:fx22-tpl-feature-benefit-noshoot",
+      "alt": "Hands opening the lid of an olive travel mug."
     },
     {
       "t": "Make more useful versions",
-      "d": "Create another angle from the same source without reshooting."
+      "d": "Create another angle from the same source without reshooting.",
+      "img": "n:guide:fx22-tpl-feature-benefit-versions",
+      "alt": "Adult opening the hinged lid of a cream storage box."
     },
     {
       "t": "Keep live details editable",
-      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate."
+      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate.",
+      "img": "n:guide:fx22-tpl-feature-benefit-editable",
+      "alt": "Hand rotating a pale blue ceramic container with a clasp."
     }
   ],
   "secondary_keywords": [
