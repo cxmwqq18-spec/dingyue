@@ -1,10 +1,10 @@
 {
   "id": "ind-home-living",
-  "title": "AI Home Product Videos Without a Set | AIVideosUGC",
-  "description": "Turn one product photo into home product videos for room styling, cleaning demos, and organizing moments. Watermark-free files, ready for listings and ads.",
-  "h1": "Home Product Videos That Show the Product in Use",
+  "title": "AI Product Videos for Home Brands | AIVideosUGC",
+  "description": "Turn one home product photo into room styling, cleaning and organizing video ads. Get watermark-free clips in minutes for listings, social feeds and paid ads.",
+  "h1": "Make AI Product Videos for Home Brands That Show Use",
   "eyebrow": "Home & living",
-  "lead": "Home shoppers need to see where a product fits and what it does. Turn one product photo into a room scene, cleaning demo, or organizing moment without building a set.",
+  "lead": "Home shoppers need to see where a product fits and what it does. Turn one clear product photo into a room scene, cleaning demo or organizing moment without building a set.",
   "card": "Products in lived-in rooms, plus before-and-after clips for organizers.",
   "secondary_keywords": [
     "home decor product videos",
@@ -14,6 +14,10 @@
     "storage product video ads"
   ],
   "faq": [
+    {
+      "q": "How do AI product videos for home brands show an item in a room?",
+      "a": "Upload a clear whole-product photo, choose a room and one action, and download a clip that keeps the item’s shape and details in view. Add real dimensions after download."
+    },
     {
       "q": "Can I show a before-and-after of a closet using my organizer?",
       "a": "Yes. Describe both states, such as \"cluttered closet floor with shoes piled up, then that closet with shoes on a three-tier rack.\" Keep the after true to what your product really holds, so buyers aren't surprised when it arrives."
@@ -49,35 +53,35 @@
   ],
   "templates_lead": "Choose a room, organizing step, or placement that fits the home product.",
   "cta_lead": "Select the room or use scene where your home product belongs.",
-  "benefits_h2": "Why Home Brands Are Done Waiting on Shoots",
+  "benefits_h2": "Why Home Brands Turn One Product Photo Into More Ads",
   "benefits": [
     {
-      "t": "Faster, lower-cost production",
-      "d": "Create a room scene or product demo from one photo. Skip a location, crew, props, and another shoot for every new item."
+      "t": "Show the product in place today",
+      "d": "Create a room scene or product demo from one clear photo. Skip a location, crew and new set for every item."
     },
     {
-      "t": "Content that scales across channels",
-      "d": "Place one item in room styling, cleaning, and organizing scenes. One source photo feeds product pages, social posts, and ads."
+      "t": "Reuse one photo across channels",
+      "d": "Place one item in a styling, cleaning or organizing moment for product pages, social posts and paid ads."
     },
     {
-      "t": "Clearer decisions for shoppers",
-      "d": "A useful room or action shows where the product belongs. Buyers can judge scale and use before they add it to the cart."
+      "t": "Help shoppers judge the fit",
+      "d": "Show where the product belongs and what it does so buyers can picture scale and use before they add it to the cart."
     }
   ],
-  "steps_h2": "Your Next Home Ad Is a Swipe Away",
-  "steps_lead": "3 Steps to make creator-style videos for home products with AIVideosUGC",
+  "steps_h2": "How to Make AI Product Videos for Home Brands in 3 Simple Steps",
+  "steps_lead": "Show one useful home action, then add the real dimensions and offer details before you post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one photo of the whole item, including legs, handles, or cords. The clip keeps the product's shape, material, and details."
+      "d": "Add one photo of the whole item, including legs, handles or cords."
     },
     {
-      "t": "Pick a Room Scene",
-      "d": "Choose a room and one action, such as organizing, cleaning, or styling. Run one photo through more rooms to show scale and use."
+      "t": "Pick a Scene",
+      "d": "Choose a room and one action, such as organizing, cleaning or styling."
     },
     {
       "t": "Download and Post",
-      "d": "Review the clip and save it. Add real dimensions and offer text in your editor, then publish it."
+      "d": "Download the clip, add real dimensions and offer text in your editor, then publish it."
     }
   ],
   "visual": {
@@ -95,7 +99,7 @@
       "result": "f:q17-ind-home-living-r2-steps-pillow",
       "mode": "video",
       "length": 10,
-      "prompt": "Two linen pillows arranged on a reading chair in soft window light.",
+      "prompt": "Use the uploaded photo as the product and keep both pillow shapes, colors and seams exactly. In a bright living room, a hand places the ivory and muted-sage linen pillow pair on a cream reading chair, ending with both pillows fully visible. Soft window light, natural commercial phone-video look. Medium shot at chair height with one gentle push-in. Sound: quiet room tone; no music.",
       "options": [
         [
           "Size",
@@ -133,7 +137,7 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Make a home product video in three steps"
+        "h2": "How to Make AI Product Videos for Home Brands in 3 Simple Steps"
       },
       "m3": {
         "h2": "Choose a home-product ad format"
