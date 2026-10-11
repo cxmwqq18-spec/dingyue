@@ -8155,6 +8155,15 @@
       "variants": [
         1200
       ]
+    },
+    "im02-spokesperson-videos-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult South Asian man with a short silver side-part holds a plain matte forest-green bottle with a black ribbed cap in a bright kitchen.",
+      "variants": [
+        1200
+      ],
+      "source": "Codex imagegen"
     }
   },
   "clips": {
@@ -47724,6 +47733,94 @@
           1280,
           1600
         ]
+      },
+      "im02-spokesperson-videos-step-result-r1": {
+        "file": "im02-spokesperson-videos-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a straight chin-length black bob holds the exact matte forest-green bottle with a black ribbed cap at chest height in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im02-spokesperson-videos-picker-outdoor-r1": {
+        "file": "im02-spokesperson-videos-picker-outdoor-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Middle Eastern man with short silver side-part stands beside a leafy park walkway while delivering an outdoor update.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im02-spokesperson-videos-picker-garden-r1": {
+        "file": "im02-spokesperson-videos-picker-garden-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Southeast Asian woman with a chin-length auburn bob stands among garden beds and gives a cheerful garden update.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im02-spokesperson-videos-picker-fitness-r2": {
+        "file": "im02-spokesperson-videos-picker-fitness-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult white woman with a straight honey-blonde bob sits on an exercise mat and gives a recovery tip in a plain fitness corner.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im02-spokesperson-videos-picker-balcony-r1": {
+        "file": "im02-spokesperson-videos-picker-balcony-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult East African woman with short natural coils gives a morning greeting at a sunny apartment balcony railing.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im02-spokesperson-videos-picker-bathroom-r1": {
+        "file": "im02-spokesperson-videos-picker-bathroom-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult South Asian man with short brushed-up hair gives a bathroom mirror selfie update in a plain teal robe, with a clean counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im02-spokesperson-videos-picker-garage-r1": {
+        "file": "im02-spokesperson-videos-picker-garage-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Latino man with a short wavy crop stands beside an organized garage storage shelf and gives a practical update.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "im02-spokesperson-videos-use-product-pages-r1": {
+        "file": "im02-spokesperson-videos-use-product-pages-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian woman with a straight chin-length black bob holds plain charcoal over-ear headphones while speaking in a simple studio corner.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
