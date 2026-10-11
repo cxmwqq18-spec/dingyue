@@ -599,14 +599,14 @@
       "gallery": [
         "n:guide:q19-shop-gallery-planter-hand",
         "n:guide:q19-shop-gallery-protein-pour",
-        "n:guide:q19-shop-gallery-boot-tryon"
+        "n:guide:q19-amz-strip-white-lamp"
       ],
       "og": "n:t33-plat-shopify-og-r2"
     },
     "occ-product-launch": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q20-occ-launch-media-hero"
+        "image": "n:guide:q19-amz-strip-white-bottle"
       },
       "gallery": [
         "f:promo-video",

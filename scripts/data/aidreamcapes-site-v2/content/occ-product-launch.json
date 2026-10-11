@@ -1,10 +1,10 @@
 {
   "id": "occ-product-launch",
-  "title": "Product Launch Video and Photos | AIVideosUGC",
+  "title": "New Product Launch Video and Photos | AIVideosUGC",
   "description": "Create product launch videos and photos from one product image: make a teaser, reveal, and listing asset before launch day, without a studio booking.",
   "h1": "AI Product Launch Video and Photos Before Launch Day",
   "eyebrow": "New product launch",
-  "lead": "Build a teaser, reveal, and listing image from one product photo. Add the launch date after download, with no studio booking or reshoot.",
+  "lead": "Build anticipation for your reveal from one product photo, without booking a shoot. Make a teaser, a reveal clip and listing images before the launch date.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
@@ -12,10 +12,6 @@
     "new product announcement photos"
   ],
   "faq": [
-    {
-      "q": "Can product launch videos and photos use one prototype photo for teaser and reveal?",
-      "a": "Yes. Start from a clear photo of the current sample or prototype, then make a teaser, reveal, and listing image from that one photo."
-    },
     {
       "q": "Can I make launch content before production is finished?",
       "a": "Start from a clear photo of the current sample or prototype. The teaser, reveal and listing images all use that one photo, so assets exist while production finishes."
@@ -93,7 +89,7 @@
       "n:guide:q20-occ-launch-strip-03",
       "n:guide:q20-occ-launch-uses-01",
       "n:guide:q20-occ-launch-strip-05",
-      "n:guide:q20-occ-bf-output-02"
+      "n:guide:q19-amz-strip-coffee-pouch"
     ],
     "steps": {
       "source": "n:guide:occ-product-launch-c3-m2-source",
@@ -140,19 +136,19 @@
   "benefits_h2": "Product Launch Video and Photos That Build Anticipation",
   "benefits": [
     {
-      "t": "Start the teaser before production ends",
+      "t": "Start building demand before production ends",
       "d": "Build the first look from a current sample photo while the final run is still in progress."
     },
     {
-      "t": "Reveal the product when the date is set",
-      "d": "Use a complete product view for launch day, then place it in the channel where you will announce it."
+      "t": "Give buyers a first look before launch day",
+      "d": "Show the complete product early so buyers can understand what is coming before launch day."
     },
     {
-      "t": "Keep launch details editable",
+      "t": "Change launch details without remaking the scene",
       "d": "Add the confirmed name, price, and date after download as the launch plan changes."
     },
     {
-      "t": "Run the launch without a watermark",
+      "t": "Publish launch assets without a watermark",
       "d": "Use downloaded launch images and clips in your own posts and paid campaigns."
     }
   ],

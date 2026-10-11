@@ -1,7 +1,7 @@
 {
   "id": "plat-amazon",
   "title": "Amazon Product Photos for Listings | AIVideosUGC",
-  "description": "Create Amazon product photos for a clean main image, useful detail views, and lifestyle shots from one upload, without a reshoot.",
+  "description": "Create Amazon product photos for a clean main image, useful detail views, and lifestyle shots from one upload, with the credit cost shown first.",
   "h1": "AI Amazon Product Photos That Fill Your Listing Gallery",
   "eyebrow": "Amazon listings",
   "lead": "Get a clean main image and useful gallery shots from one product photo. Build white-background, detail, and lifestyle images without booking a studio.",
@@ -13,10 +13,6 @@
     "Amazon lifestyle product photos"
   ],
   "faq": [
-    {
-      "q": "Can Amazon product photos include lifestyle and detail views in one listing?",
-      "a": "Yes. Start with one clear product photo, then make a white-background main image, detail views, and lifestyle scenes for the listing gallery. Check Amazon's current category rules before publishing."
-    },
     {
       "q": "What are Amazon's main image requirements?",
       "a": "The main image needs a pure white background and a product that fills about 85% of the square frame, with no text, badges or props. Check Seller Central for the current rules."
@@ -58,10 +54,10 @@
         "label": "White main images",
         "items": [
           {
-            "ref": "n:guide:q19-amz-example-vitamin-main",
-            "title": "White Main — Vitamin Bottle Centered",
+            "ref": "n:guide:q19-amz-picker-02-white-protein",
+            "title": "White Main — Plain Protein Pouch Centered",
             "kind": "photo",
-            "product": "vitamin bottle"
+            "product": "protein pouch"
           },
           {
             "ref": "n:guide:q19-amz-example-daypack-main",
@@ -161,18 +157,18 @@
       ]
     }
   },
-  "benefits_h2": "Get the Amazon Product Photos Each Listing Needs",
+  "benefits_h2": "Amazon Product Photos That Help Search and Sales",
   "benefits": [
     {
-      "t": "Lead with a clean main image",
+      "t": "Get a clean main image shoppers expect",
       "d": "Place the complete product on pure white so shoppers see the item first."
     },
     {
-      "t": "Answer the next buying question",
-      "d": "Show a close detail or use moment that makes size and function easier to judge."
+      "t": "Cut questions and returns with detail shots",
+      "d": "Show a useful feature or use step, the images that cut questions and returns."
     },
     {
-      "t": "Show the product in context",
+      "t": "Help shoppers picture the product in use",
       "d": "Add a lifestyle or unboxing view so shoppers know how the item fits their routine."
     }
   ],
@@ -186,11 +182,11 @@
       "items": [
         {
           "t": "Listing and Brand Store",
-          "d": "Keep the main image and gallery shots clear across your product page."
+          "d": "Square main and gallery images that keep shoppers on the product page longer."
         },
         {
           "t": "Sponsored Ad Image",
-          "d": "Use focused product shots in ads that send shoppers to the listing."
+          "d": "Clear product shots made for search and ad placements, with a fresh look ready to test."
         },
         {
           "t": "Off-Amazon Traffic",
@@ -201,11 +197,11 @@
     {
       "eyebrow": "Why sellers scale with it",
       "h2": "Why Sellers Scale Amazon Content Here",
-      "lead": "Make each new SKU ready for its next listing slot without another studio cycle.",
+      "lead": "No more weeks of production cycles for each new SKU.",
       "items": [
         {
-          "t": "Keep a Consistent Catalog Look",
-          "d": "Start from one repeatable product view so related SKUs sit cleanly together."
+          "t": "Study Best-Selling Listings",
+          "d": "See what works in your category and apply the same visual ideas to your own products."
         },
         {
           "t": "Get a Listing Image in Minutes",
@@ -223,8 +219,8 @@
     },
     {
       "eyebrow": "By top categories",
-      "h2": "Amazon Product Photos for Top Categories",
-      "lead": "Choose a visual treatment that helps shoppers understand each type of product.",
+      "h2": "AI Amazon Product Photos for Top Categories",
+      "lead": "The visual language that drives clicks in each niche.",
       "items": [
         {
           "t": "Home and Kitchen Gadgets",

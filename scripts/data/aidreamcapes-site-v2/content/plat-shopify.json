@@ -1,10 +1,10 @@
 {
   "id": "plat-shopify",
-  "title": "Shopify Product Photos That Match Your Store | AIVideosUGC",
+  "title": "AI Shopify Product Photos and Videos | AIVideosUGC",
   "description": "Create Shopify product photos for product pages, collection tiles, and social crops from one upload, with matching scenes and no reshoot.",
-  "h1": "AI Shopify Product Photos That Keep Your Store Consistent",
+  "h1": "AI Shopify Product Photos and Videos From One Upload",
   "eyebrow": "Shopify stores",
-  "lead": "Give every product page and collection tile a matching look from one upload. Create square product photos and short clips without reshooting older items.",
+  "lead": "Give every product page and collection tile a matching look from one upload. Create square product photos and short clips without reshooting older items, with the credit cost shown first.",
   "card": "Matching square product photos, lifestyle scenes, and short clips for each Shopify product page.",
   "secondary_keywords": [
     "Shopify product images",
@@ -69,7 +69,7 @@
       "n:guide:q19-shop-after-bowl-use",
       "n:guide:q19-shop-strip-linen-before-after",
       "n:guide:q19-shop-strip-pet-brush",
-      "n:guide:q19-shop-strip-snack-bite"
+      "n:guide:q19-shop-use-protein-pour"
     ],
     "steps": {
       "source": "n:guide:c4-shopify-bowls-main-angle",
@@ -106,19 +106,19 @@
       ]
     }
   },
-  "benefits_h2": "Shopify Product Photos That Keep Your Catalog Moving",
+  "benefits_h2": "3 ways AI helps you scale your Shopify marketing",
   "benefits": [
     {
-      "t": "Create a consistent collection grid",
-      "d": "Use a related square treatment so products sit neatly beside each other on collection pages."
+      "t": "Run clear video ads on a small budget",
+      "d": "Turn one product photo into clear video ads without the cost and wait of booked UGC creators and designers."
     },
     {
-      "t": "Refresh older products without a reshoot",
-      "d": "Start from the photo you already have, then match new arrivals to the same store look."
+      "t": "Make several ad versions in minutes",
+      "d": "Make several ad versions in minutes, not weeks, with full control over the scene and the message."
     },
     {
-      "t": "Make store and ad versions together",
-      "d": "Build a product-page image, a collection tile, or a short clip from the same product photo."
+      "t": "Create creator-style scenes for each market",
+      "d": "Use creator-style scenes for different markets, so each audience sees an ad that feels made for them."
     }
   ],
   "steps_h2": "How to Make Shopify Product Photos in 3 Simple Steps",
@@ -126,24 +126,24 @@
   "more_sections": [
     {
       "eyebrow": "From photo to store media",
-      "h2": "From One Product Photo to Shopify Store Media",
+      "h2": "From One Shopify Product Photo to a Winning Ad in Minutes",
       "lead": "Keep the product look consistent while you make page, collection, and ad versions.",
       "items": [
         {
           "t": "Add Your Product Photo",
-          "d": "Start from the clear photo already on your Shopify product page."
+          "d": "Start from the photo you already have on Shopify instead of filming anything new."
         },
         {
-          "t": "Match Your Collection Look",
-          "d": "Choose a related square treatment so neighboring products read as one catalog."
+          "t": "Pick a Winning Reference",
+          "d": "Choose a proven ad style and let your own product fill the scene, instead of guessing what works."
         },
         {
-          "t": "Create a Product Page Scene",
-          "d": "Add a useful product-use moment when shoppers need more context."
+          "t": "Generate Fresh Hooks",
+          "d": "Try several openings and keep the version that holds attention, with no extra shoot."
         },
         {
-          "t": "Download Store and Ad Files",
-          "d": "Save the square image or short clip, then place it in your store or ad."
+          "t": "Customize for Conversion",
+          "d": "Change the scene, length or format and keep the file ready for store pages or ads."
         }
       ]
     }
