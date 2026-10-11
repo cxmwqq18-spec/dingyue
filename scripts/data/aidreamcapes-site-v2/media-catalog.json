@@ -43697,6 +43697,96 @@
           640,
           1280
         ]
+      },
+      "ac1-actor-card-cafe-2-r2": {
+        "file": "ac1-actor-card-cafe-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Middle Eastern woman with a light-brown chin-length bob in a cafe speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-car-2-r2": {
+        "file": "ac1-actor-card-car-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman with a tight short natural haircut in a car speaks to camera with empty hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-terrace-2-r2": {
+        "file": "ac1-actor-card-terrace-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult Black woman with short natural curls in a planted rooftop terrace gives two thumbs-up gestures.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-exercise-1-r2": {
+        "file": "ac1-actor-card-exercise-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "a middle-aged Black woman in a white sun visor and blue athletic top speaks on a waterside trail while holding a plain clear water bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-exercise-2-r2": {
+        "file": "ac1-actor-card-exercise-2-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian woman with a straight black bob sits cross-legged on a park exercise mat with open hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-bathroom-1-r2": {
+        "file": "ac1-actor-card-bathroom-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult South Asian woman in a dusty-rose bathrobe takes a bathroom mirror selfie with a plain dark phone with one circular lens.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-pool-1-r2": {
+        "file": "ac1-actor-card-pool-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "a young white woman with a blonde high ponytail in a pink athletic tank top speaks beside a palm-lined pool.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-travel-1-r2": {
+        "file": "ac1-actor-card-travel-1-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "a young white man in a navy flight jacket speaks from an airplane seat with both hands gesturing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ac1-actor-card-shopping-2-r3": {
+        "file": "ac1-actor-card-shopping-2-r3",
+        "w": 864,
+        "h": 1536,
+        "alt": "an adult East Asian woman with a short black bob and round glasses speaks in a beauty and personal-care store aisle.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
