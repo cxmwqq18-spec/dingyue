@@ -36,11 +36,8 @@ function validateWall(wall) {
 }
 
 function targetFiles() {
-  const files = ["templates.json", "video-ads.json"];
-  const templatePages = fs.readdirSync(contentDir)
-    .filter((name) => /^tpl-[^/]+\.json$/u.test(name))
-    .sort();
-  return files.concat(templatePages).map((name) => path.join(contentDir, name));
+  // Category template pages carry their own category cards (competitor category pages show only that category).
+  return ["templates.json", "video-ads.json"].map((name) => path.join(contentDir, name));
 }
 
 function withWall(content, wall) {

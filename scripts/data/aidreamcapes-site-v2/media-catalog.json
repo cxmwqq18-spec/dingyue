@@ -8220,6 +8220,39 @@
         1280
       ],
       "source": "Codex image generation"
+    },
+    "im07-photo-hub-tote-r1": {
+      "file": "im07-photo-hub-tote-r1",
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain natural linen tote bag centered on a blue-and-white beach blanket beside a straw sunhat and closed notebook with the ocean behind it.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "im07-photo-hub-pillow-r1": {
+      "file": "im07-photo-hub-pillow-r1",
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult Black man with a shaved head places a plain natural linen throw pillow on a light sofa in a bright living room.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
+    "im07-photo-hub-dress-r1": {
+      "file": "im07-photo-hub-dress-r1",
+      "w": 1024,
+      "h": 1024,
+      "alt": "Adult East Asian woman with a short straight platinum-blonde bob wears a plain rust knit midi dress beside a full-length mirror.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
     }
   },
   "clips": {
