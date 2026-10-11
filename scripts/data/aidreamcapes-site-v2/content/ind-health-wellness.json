@@ -121,5 +121,15 @@
     }
   },
   "templates_lead": "Pick a routine scene for your wellness product.",
-  "cta_lead": "Place your wellness product in a real routine, starting from one photo."
+  "cta_lead": "Place your wellness product in a real routine, starting from one photo.",
+  "relatedLinks": [
+    "ind-beauty-skincare",
+    "ind-food-drinks",
+    "ind-home-living",
+    "ind-fashion-clothing",
+    "lifestyle-photos",
+    "video-ads",
+    "social-ad-photos",
+    "white-background"
+  ]
 }

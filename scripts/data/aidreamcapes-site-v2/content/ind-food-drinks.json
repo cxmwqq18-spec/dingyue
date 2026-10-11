@@ -134,5 +134,15 @@
         "h2": "Questions About AI Food and Drink Product Videos"
       }
     }
-  }
+  },
+  "relatedLinks": [
+    "ind-home-living",
+    "ind-health-wellness",
+    "ind-beauty-skincare",
+    "ind-electronics",
+    "product-videos",
+    "lifestyle-photos",
+    "photo-hub",
+    "templates"
+  ]
 }

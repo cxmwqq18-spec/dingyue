@@ -119,6 +119,9 @@
         "ref": "f:q17-ind-food-drinks-picker-4",
         "alt": "Hands revealing plain snack pouches from an open sampler box."
       }
+    },
+    "swap": {
+      "head": "box"
     }
   },
   "ind-health-wellness": {
