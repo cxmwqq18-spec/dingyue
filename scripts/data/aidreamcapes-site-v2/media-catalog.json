@@ -44533,6 +44533,17 @@
           1280
         ]
       },
+      "rb3-ind-electronics-strip-5-1-r2": {
+        "file": "rb3-ind-electronics-strip-5-1-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage-green phone case with one small round camera hole on a cafe table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
       "rb3-ind-food-drinks-strip-3-1-r1": {
         "file": "rb3-ind-food-drinks-strip-3-1-r1",
         "w": 864,
