@@ -164,10 +164,10 @@
       "hero": {
         "kind": "pair",
         "before": "n:guide:q9-media-look-source",
-        "after": "n:guide:q9-media-look-output"
+        "after": "n:guide:rc3-tpl-look-hero-after-r1"
       },
       "gallery": [],
-      "og": "n:t33-tpl-look-og-r2"
+      "og": "n:rc3-tpl-look-og-r1"
     },
     "tpl-head": {
       "hero": {
@@ -176,7 +176,7 @@
         "after": "n:guide:rc3-head-hero-output-r1"
       },
       "gallery": [],
-      "og": "n:t33-tpl-head-og-r2"
+      "og": "n:rc3-tpl-head-og-r1"
     },
     "tpl-ugc": {
       "hero": {

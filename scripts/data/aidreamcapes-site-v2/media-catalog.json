@@ -7292,6 +7292,24 @@
         1200
       ]
     },
+    "rc3-tpl-look-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult South Asian woman in a light beige tailored suit against a soft neutral studio background.",
+      "variants": [
+        1200
+      ],
+      "source": "rc3 image generation"
+    },
+    "rc3-tpl-head-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult East Asian man in a charcoal blazer and pale blue shirt against a soft light-gray studio background.",
+      "variants": [
+        1200
+      ],
+      "source": "rc3 image generation"
+    },
     "t33-tpl-ugc-og-r2": {
       "w": 1200,
       "h": 630,
@@ -44385,6 +44403,28 @@
         "w": 1024,
         "h": 1024,
         "alt": "Close view of an adult woman with a short copper bob holding the sleeve of a plain warm-gray chunky knit sweater.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-look-hero-after-r1": {
+        "file": "rc3-tpl-look-hero-after-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult South Asian woman with dark hair in a neat low bun wearing a light beige tailored blazer and matching trousers in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "rc3 image generation"
+      },
+      "rc3-tpl-look-step-result-r1": {
+        "file": "rc3-tpl-look-step-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same adult South Asian woman with dark hair in a neat low bun wearing the light beige tailored suit in a square studio photo.",
         "variants": [
           640,
           1280
