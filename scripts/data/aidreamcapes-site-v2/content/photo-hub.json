@@ -197,30 +197,30 @@
   ],
   "seller_scenarios": {
     "title": "Make product photos that show where the item belongs",
-    "lead": "These example scenes show how sellers can place one product photo in a useful setting and get a page-ready image.",
+    "lead": "Example scenes: one product photo, placed where shoppers can picture it, ready for your product page.",
     "items": [
       {
         "audience": "Beauty seller",
         "tool": "photo-hub",
-        "task": "With one face mist photo, a beauty seller can make a polished product-page image without a new vanity shoot.",
+        "task": "A polished product-page image of your face mist, without setting up a vanity shoot.",
         "ref": "n:rx3-photo-hub-scenario-1-r1"
       },
       {
         "audience": "Home decor shop",
         "tool": "lifestyle-photos",
-        "task": "With one linen pillow photo, a home decor seller can show the finished room scene without moving a sofa.",
+        "task": "Show the finished room around your linen pillow without moving a single sofa.",
         "ref": "n:rx3-photo-hub-scenario-2-r1"
       },
       {
         "audience": "Fashion seller",
         "tool": "model-photos",
-        "task": "With one knit dress photo, a fashion seller can preview the fit on a model before planning a shoot.",
+        "task": "See your knit dress on a model before you pay for a shoot.",
         "ref": "n:rx3-photo-hub-scenario-3-r1"
       },
       {
         "audience": "Food seller",
         "tool": "lifestyle-photos",
-        "task": "With one olive oil photo, a food seller can create a bright kitchen image for a launch post without reshooting.",
+        "task": "A bright kitchen shot of your olive oil for launch day, no reshoot.",
         "ref": "n:rx3-photo-hub-scenario-4-r1"
       }
     ]

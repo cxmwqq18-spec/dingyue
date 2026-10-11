@@ -108,30 +108,30 @@
   },
   "seller_scenarios": {
     "title": "Turn one product photo into an ad shoppers can understand",
-    "lead": "These example scenes show how different sellers can turn one product photo into a clear ad and skip a reshoot.",
+    "lead": "Example scenes: one product photo becomes an ad that shows the product, the moment and the payoff.",
     "items": [
       {
         "audience": "Skincare shop",
         "tool": "video-ads",
-        "task": "With one face cream photo, a skincare seller can build a routine ad with a texture close-up without a studio day.",
+        "task": "Run a routine ad with a texture close-up of your face cream, no studio day.",
         "ref": "n:rx3-video-ads-scenario-1-r1"
       },
       {
         "audience": "Home organizer",
         "tool": "product-videos",
-        "task": "With one shelf organizer photo, a home seller can show the storage problem and the tidy fix in one short ad.",
+        "task": "Show the mess and the tidy fix with your shelf organizer in one short ad.",
         "ref": "n:rx3-video-ads-scenario-2-r1"
       },
       {
         "audience": "Drink seller",
         "tool": "video-ads",
-        "task": "With one iced tea photo, a drink seller can open a social ad with a pour and first-sip moment in minutes.",
+        "task": "Open your ad with a pour and a first sip of your iced tea, ready in minutes.",
         "ref": "n:rx3-video-ads-scenario-3-r1"
       },
       {
         "audience": "Apparel shop",
         "tool": "video-ads",
-        "task": "With one blazer photo, an apparel seller can show the fit in a quick try-on ad without arranging a new shoot.",
+        "task": "Show how your blazer fits in a quick try-on ad, no new shoot to arrange.",
         "ref": "n:rx3-video-ads-scenario-4-r1"
       }
     ]

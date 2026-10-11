@@ -174,30 +174,30 @@
   "more_sections": null,
   "seller_scenarios": {
     "title": "From one product photo to a video idea worth testing",
-    "lead": "These example scenes show how sellers can turn one product photo into a focused video moment and save a reshoot.",
+    "lead": "Example scenes: one product photo becomes a short clip you can test this week, with no reshoot.",
     "items": [
       {
         "audience": "Beauty shop",
         "tool": "video-ads",
-        "task": "With one cleanser photo, a beauty seller can make a quick review video without another bathroom shoot.",
+        "task": "Skip the bathroom reshoot: one cleanser photo becomes a quick review video.",
         "ref": "n:rx3-video-hub-scenario-1-r1"
       },
       {
         "audience": "Housewares seller",
         "tool": "product-videos",
-        "task": "With one collapsible bottle photo, a housewares seller can show the key action in one clear clip.",
+        "task": "Show the one action that sells your collapsible bottle, in one short clip.",
         "ref": "n:rx3-video-hub-scenario-2-r1"
       },
       {
         "audience": "Outdoor apparel shop",
         "tool": "video-ads",
-        "task": "With one lightweight jacket photo, an outdoor apparel seller can create a movement clip for a seasonal ad without a model day.",
+        "task": "Get a seasonal movement clip from one jacket photo, no model day needed.",
         "ref": "n:rx3-video-hub-scenario-3-r1"
       },
       {
         "audience": "Electronics seller",
         "tool": "unboxing-videos",
-        "task": "With one headphone photo, an electronics seller can turn the unboxing into a launch video in minutes.",
+        "task": "Make an unboxing launch video for your headphones in minutes.",
         "ref": "n:rx3-video-hub-scenario-4-r1"
       }
     ]
