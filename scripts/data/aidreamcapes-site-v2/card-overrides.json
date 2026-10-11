@@ -99,6 +99,24 @@
         "ref": "n:guide:k7-ind-fashion-clothing-card-life-linen-outfit",
         "alt": "Adult wearing a linen overshirt and navy trousers on a city walk."
       }
+    },
+    "tools": {
+      "model-photos": {
+        "ref": "n:guide:fx30-fashion-tool-model-r1",
+        "alt": "Adult model wears a plain sand overshirt and trousers in a clean studio."
+      },
+      "lifestyle-photos": {
+        "ref": "n:guide:fx30-fashion-tool-lifestyle-r1",
+        "alt": "Adult woman in a plain navy jacket walks past a storefront with a small tote."
+      },
+      "video-ads": {
+        "ref": "n:guide:fx30-fashion-tool-video-r1",
+        "alt": "Adult model turns in a plain terracotta cardigan in a bright fitting room."
+      },
+      "social-ad-photos": {
+        "ref": "n:guide:fx30-fashion-tool-social-r1",
+        "alt": "Hands style a plain cream knit top on a hanger beside folded trousers."
+      }
     }
   },
   "ind-food-drinks": {
@@ -210,6 +228,32 @@
       "feed": {
         "ref": "n:guide:q15-shoes-template-feed-ad",
         "alt": "Running shoe steps down from a city curb."
+      },
+      "detail": {
+        "ref": "n:guide:fx30-shoes-detail-r1",
+        "alt": "Close-up of a plain tan leather shoe showing toe cap, laces, stitching and outsole edge."
+      },
+      "pack": {
+        "ref": "n:guide:fx30-shoes-pack-r1",
+        "alt": "Open plain cream shoe box with tissue and one unbranded sage-green walking shoe."
+      }
+    },
+    "tools": {
+      "white-background": {
+        "ref": "n:guide:fx30-shoes-tool-white-r1",
+        "alt": "Plain cream walking shoe centered alone on a pure white background."
+      },
+      "photo-hub": {
+        "ref": "n:guide:fx30-shoes-tool-product-r1",
+        "alt": "Macro view of a plain navy canvas shoe showing eyelets, stitching and textured upper."
+      },
+      "video-ads": {
+        "ref": "n:guide:fx30-shoes-tool-video-r1",
+        "alt": "Adult takes one step in plain burgundy walking shoes on a clean sidewalk."
+      },
+      "lifestyle-photos": {
+        "ref": "n:guide:fx30-shoes-tool-lifestyle-r1",
+        "alt": "Adult woman in a plain cream shoe walks beside a storefront, cropped to the knees."
       }
     }
   },
