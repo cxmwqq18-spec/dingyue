@@ -42,7 +42,16 @@ export type V2HeroMedia =
   | { kind: "image"; image: V2Image }
   | { kind: "video"; video: V2Video }
   | { kind: "loop"; video: V2Video; inset?: V2Image };
-export type V2Item = { t: string; d: string };
+export type V2BenefitIcon = "bolt" | "layers" | "target" | "coins" | "clock" | "refresh" | "globe" | "shield" | "sparkle" | "check" | "users" | "play";
+export type V2Item = {
+  t: string;
+  d: string;
+  img?: V2Image;
+  alt?: string;
+  frame?: "phone" | "browser" | "none";
+  icon?: V2BenefitIcon;
+};
+export type V2ImageItem = V2Item;
 export type V2Faq = { q: string; a: string };
 export type V2Crumb = { label: string; href: string };
 export type V2Card = { key: string; name: string; line?: string; kind: "video" | "photo"; href: string; image: V2Image; tags: string[]; industries: string[]; platforms: string[]; filterTags?: string[]; cardType?: "template" | "case"; videoExample?: boolean; product?: string; mediaRef?: string; video?: V2Video };
@@ -54,7 +63,7 @@ export type V2FlowStep = { label: string; image: V2Image; tall?: boolean };
 export type V2Flow = { t: string; d: string; steps: V2FlowStep[]; id?: string; filterTags?: string[]; cta?: { label: string; href: string } };
 export type V2Maker = { options: [string, string][]; cta: string; href: string; urlInput?: boolean; uploadTitle?: string };
 export type V2Plan = { name: string; price: string; credits: string; who: string; features: string[]; popular: boolean };
-export type V2MoreSection = { eyebrow: string; h2: string; lead?: string; items: V2Item[] };
+export type V2MoreSection = { eyebrow: string; h2: string; lead?: string; items: V2ImageItem[] };
 export type V2Section = { h2: string; paras: string[] };
 export type V2EnrichmentSection = { h2: string; paras: string[]; items?: V2Item[] };
 export type V2EnrichmentBlock = { h2: string; items: V2Item[] };
