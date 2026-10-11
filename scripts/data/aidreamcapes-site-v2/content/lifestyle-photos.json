@@ -20,13 +20,13 @@
       "icon": "clock"
     },
     {
-      "t": "Test more settings quickly",
-      "d": "Try a room, cafe table or counter scene when a new campaign needs a fresh angle.",
+      "t": "Realistic scenes that sell",
+      "d": "Try a room, cafe table or counter scene in minutes when a new campaign needs a fresh angle.",
       "icon": "layers"
     },
     {
-      "t": "Keep the item in focus",
-      "d": "Start with a clear photo that shows the whole product so its shape stays easy to recognize.",
+      "t": "Ready in minutes",
+      "d": "Get a clean lifestyle image from one photo in minutes, and the product in it stays the one you uploaded.",
       "icon": "target"
     }
   ],
@@ -149,7 +149,7 @@
       {
         "img": "n:guide:k5-lifestyle-photos-template-life",
         "h": "Create polished scenes with less setup",
-        "d": "Generate a finished lifestyle image from one clear photo, without unpacking a shoot kit.",
+        "d": "Get a finished lifestyle image from one clear photo in minutes, without unpacking a shoot kit.",
         "alt": "White ceramic candle on a bedside table at dusk."
       }
     ],
