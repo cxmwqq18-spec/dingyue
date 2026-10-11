@@ -365,12 +365,12 @@
         "kind": "image",
         "image": "n:guide:rc6-tpl-compare-source-canisters-r1"
       },
-      "og": "n:t33-tpl-compare-og-r2",
+      "og": "n:rc6-tpl-compare-og-r1",
       "gallery": [
         "n:guide:rc6-tpl-compare-card-pumps-r1",
         "n:guide:q12-tpl-compare-card-02-headphone-review",
         "n:guide:rc6-tpl-compare-card-harness-r1",
-        "n:guide:q12-tpl-compare-card-08-package-refresh"
+        "n:guide:rc6-tpl-compare-card-package-r1"
       ]
     },
     "tpl-bf": {

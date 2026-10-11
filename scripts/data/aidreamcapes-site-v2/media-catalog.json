@@ -7427,6 +7427,15 @@
         1200
       ]
     },
+    "rc6-tpl-compare-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "Adult holds two plain slate-gray storage canisters, one small and one large, in a bright kitchen.",
+      "variants": [
+        1200
+      ],
+      "source": "codex-imagegen"
+    },
     "t33-tpl-bf-og-r2": {
       "w": 1200,
       "h": 630,
@@ -45265,6 +45274,17 @@
         "w": 1254,
         "h": 1254,
         "alt": "Two plain teal pet harnesses, one small and one large, sit beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "codex-imagegen"
+      },
+      "rc6-tpl-compare-card-package-r1": {
+        "file": "rc6-tpl-compare-card-package-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands hold matching opaque white and pale gray pump bottles side by side.",
         "variants": [
           640,
           1280
