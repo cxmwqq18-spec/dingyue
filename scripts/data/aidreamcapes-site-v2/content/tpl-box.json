@@ -115,7 +115,7 @@
       "source": "n:guide:k1-unboxing-input-coffee-kit",
       "sourceTitle": "Your product",
       "sourceHint": "Include the coffee bag, grinder, mug and every piece that ships with the kit.",
-      "result": "n:guide:k8-facebook-gen2-tpl-box-c2",
+      "result": "n:guide:c1-reuse-tpl-box-case-coffee",
       "mode": "photo",
       "prompt": "Use the uploaded coffee starter kit as the exact product set: preserve the bag, grinder, mug and their colors. Adult hands arrange the complete kit in an open kraft box on a bright table, with every item visible. Natural window light, top-down square product photo, no text or logos.",
       "options": [
