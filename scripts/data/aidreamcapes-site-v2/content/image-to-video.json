@@ -29,20 +29,20 @@
       "icon": "refresh"
     }
   ],
-  "steps_h2": "Turn one product image into a video in 3 steps",
+  "steps_h2": "How to Make Clips with AI Image to Video in 3 Simple Steps",
   "steps_lead": "Upload one clear product image, describe one movement and download the clip for your ad.",
   "steps": [
     {
-      "t": "Upload the product you want to animate",
-      "d": "Add one clear photo with the full product visible and its key details easy to see."
+      "t": "Upload Your Product Photo",
+      "d": "Bring a still product photo to life without a reshoot. Upload one clear photo with the full product visible and key details easy to see."
     },
     {
-      "t": "Describe one movement",
-      "d": "Write one sentence that tells the tool what should turn, open, pour or change."
+      "t": "Describe the Motion",
+      "d": "Give the product one clear motion shoppers can notice. Write one sentence that tells the tool what should turn, open, pour, or change."
     },
     {
-      "t": "Download the clip for your ad",
-      "d": "Watch the result, then download the short video for your ad, feed or product page."
+      "t": "Download and Post",
+      "d": "Add movement to your next ad in minutes. Watch the result, then download the short video for your ad, feed, or product page."
     }
   ],
   "maker": {

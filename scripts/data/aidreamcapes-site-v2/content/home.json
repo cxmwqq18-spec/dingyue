@@ -50,20 +50,20 @@
       "icon": "target"
     }
   ],
-  "steps_h2": "From product photo to campaign asset in three steps",
+  "steps_h2": "How to Make AI Product Videos and Photos for Online Stores in 3 Simple Steps",
   "steps_lead": "Tell us what you sell, choose where the result will run, and download a file ready for your next campaign.",
   "steps": [
     {
-      "t": "Upload the product you sell",
-      "d": "Add a clear photo of the whole item or start with a product page link in URL to Video."
+      "t": "Upload Your Product Photo",
+      "d": "Keep the product you sell at the center. Upload a clear full-item photo, or start with a product page link in URL to Video."
     },
     {
-      "t": "Choose the format you need",
-      "d": "Pick a demo, creator-style ad or product photo, then choose the frame and length shown for that tool."
+      "t": "Choose Your Format",
+      "d": "Choose the format for your next ad or listing. Pick a demo, creator-style ad, or product photo, then choose its frame and length."
     },
     {
-      "t": "Download your campaign-ready file",
-      "d": "Get a watermark-free file for your ad, listing or social post."
+      "t": "Download and Post",
+      "d": "Turn one upload into a file you can post. Download a watermark-free asset for your ad, listing, or social post."
     }
   ],
   "ugc": {

@@ -52,20 +52,20 @@
       "icon": "shield"
     }
   ],
-  "steps_h2": "How to make a product video in 3 steps",
+  "steps_h2": "How to Make Ads with an AI Video Generator for Ecommerce in 3 Simple Steps",
   "steps_lead": "Go from one clear photo to a downloadable ad clip for your next campaign.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a clear photo with the full item in frame; keep the product you want in the finished clip."
+      "d": "Turn one product photo into more ad options. Upload a clear full-item photo and keep that product in the finished clip."
     },
     {
       "t": "Pick a Format and Scene",
-      "d": "Choose a video type and frame, then describe one action or talking point for the clip."
+      "d": "Pick the format that fits your next campaign. Choose a video type and frame, then describe one action or talking point for the clip."
     },
     {
-      "t": "Download Your Ad-Ready Clip",
-      "d": "Download a watermark-free file for your ad, feed or store, then add your own prices or captions."
+      "t": "Download and Post",
+      "d": "Get a watermark-free file ready for your next post. Download it for your ad, feed, or store, then add your own prices or captions."
     }
   ],
   "faq": [

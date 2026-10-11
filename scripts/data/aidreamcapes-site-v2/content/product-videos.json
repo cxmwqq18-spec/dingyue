@@ -30,16 +30,16 @@
   ],
   "steps": [
     {
-      "t": "Upload the product you want to show",
-      "d": "Use one clear photo with the full item and its moving part in frame."
+      "t": "Upload Your Product Photo",
+      "d": "Keep the product clear while you show how it works. Use one clear photo with the full item and its moving part in frame."
     },
     {
-      "t": "Describe one product action",
-      "d": "Write one sentence about the operation or detail shoppers need to see."
+      "t": "Describe the Action",
+      "d": "Show shoppers the action that helps them decide. Write one sentence about the operation or detail they need to see."
     },
     {
-      "t": "Download and add it to your listing",
-      "d": "Download the demo and place it beside your product photos or in a paid ad."
+      "t": "Download and Post",
+      "d": "Add a short demo beside your listing photos in minutes. Download the demo and place it beside your product photos or in a paid ad."
     }
   ],
   "maker": {
@@ -187,6 +187,6 @@
     "after": null
   },
   "benefits_h2": "Show the product detail a buyer needs",
-  "steps_h2": "Create a product demo in 3 steps",
+  "steps_h2": "How to Make Product Demos with an AI Product Video Generator in 3 Simple Steps",
   "steps_lead": "Go from one clear product photo to a short demo that answers a shopper question."
 }
