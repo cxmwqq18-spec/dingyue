@@ -44001,7 +44001,7 @@
         "file": "ra3-change-background-steps-2-r2",
         "w": 1254,
         "h": 1254,
-        "alt": "The same blue ceramic vase on an outdoor garden table covered with an oatmeal linen cloth, with green foliage beyond.",
+        "alt": "Blue ceramic vase on an outdoor garden table covered with an oatmeal linen cloth, with green foliage beyond.",
         "variants": [
           640,
           1280
@@ -47787,6 +47787,138 @@
           1280,
           1600
         ]
+      },
+      "fx17-change-background-benefit-studio-r1": {
+        "file": "fx17-change-background-benefit-studio-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-benefit-seasonal-r1": {
+        "file": "fx17-change-background-benefit-seasonal-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-benefit-outdoor-r1": {
+        "file": "fx17-change-background-benefit-outdoor-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-picker-studio-r1": {
+        "file": "fx17-change-background-picker-studio-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a clean neutral studio surface with a pale warm wall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-picker-wood-r1": {
+        "file": "fx17-change-background-picker-wood-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a warm wood counter beside folded linen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-picker-garden-r1": {
+        "file": "fx17-change-background-picker-garden-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a shaded garden table with an oatmeal linen cloth.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-input-good-r1": {
+        "file": "fx17-change-background-input-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase fully visible on a clear pale tabletop in a simple room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-input-bad-r1": {
+        "file": "fx17-change-background-input-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a cluttered counter with a distracting background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-output-studio-r1": {
+        "file": "fx17-change-background-output-studio-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a clean neutral studio surface with a soft contact shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-output-garden-r1": {
+        "file": "fx17-change-background-output-garden-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a shaded garden table with soft green foliage.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-input-good-alt-r1": {
+        "file": "fx17-change-background-input-good-alt-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase upright and centered on a clear pale tabletop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx17-change-background-input-bad-alt-r1": {
+        "file": "fx17-change-background-input-bad-alt-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue ceramic vase on a crowded counter with distracting objects behind it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
