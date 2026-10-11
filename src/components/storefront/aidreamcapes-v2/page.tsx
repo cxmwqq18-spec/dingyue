@@ -1,11 +1,11 @@
 import type { SectionInstance } from "@/lib/types";
-import { AidreamcapesV2ActorFilters, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
+import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel
+  BRAND_NAME, ActorScenePanel, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, SellerScenarioSection, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
-import { list, text, type V2Card, type V2Data, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
+import { list, text, type V2ActorScenePicker, type V2Card, type V2Data, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SellerScenarioBlock, type V2SpecRow, type V2Tool } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual } from "./types";
 
@@ -91,6 +91,7 @@ function HomePage({ data, r }: Props) {
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
   return (
     <>
       <section className="hero">
@@ -184,6 +185,7 @@ function HomePage({ data, r }: Props) {
           </table>
         </div>
       </Section>
+      {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />
       <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />
       <AidreamcapesV2HeroTabs />
@@ -234,6 +236,7 @@ function VideoHubPage({ data, r }: Props) {
   const visual = data.visual as V2Visual | undefined;
   const maker = data.maker as V2Maker | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
   if (visual) return <>
     <Crumbs items={data.breadcrumbs} r={r} />
     <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
@@ -245,6 +248,7 @@ function VideoHubPage({ data, r }: Props) {
     <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />
     <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
     <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>
+    {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
     <Faq items={data.faq} title="Questions about AI video" r={r} />
     <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />
   </>;
@@ -271,6 +275,7 @@ function VideoHubPage({ data, r }: Props) {
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+      {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
       <Faq items={data.faq} title="Questions about AI video" r={r} />
       <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />
     </>
@@ -287,13 +292,17 @@ function ToolPage({ data, r }: Props) {
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const video = data.group === "video";
   const photoHub = data.id === "photo-hub";
+  const actorScenePicker = data.actorScenePicker as V2ActorScenePicker | undefined;
+  const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
   const photoExamples = photoHub ? splitPhotoHubExamples(data.examples as V2Examples | undefined) : undefined;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} label={maker.cta} r={r} />} right={photoHub && visual ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
+        {actorScenePicker ? <ActorScenePanel pageId={data.id} picker={actorScenePicker} r={r} /> : null}
       </PageHero>
+      {actorScenePicker ? <AidreamcapesV2ActorScenePicker /> : null}
       {visual && !photoHub ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null}
       {visual && photoHub ? <>
         <VisualFreshLook heading={visual.titles?.m3?.h2} lead={visual.titles?.m3?.lead} items={photoExamples?.fresh ?? []} button={visual.picker.button} href={maker.href} r={r} />
@@ -344,8 +353,10 @@ function ToolPage({ data, r }: Props) {
       </>}
       {visual && !photoHub ? <>
         {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
+        {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
         <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       </> : <>
+      {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
       </>}

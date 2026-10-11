@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { V2Article, V2BenefitIcon, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
+import type { V2ActorScenePicker, V2Article, V2BenefitIcon, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SellerScenarioBlock, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene } from "./types";
 import type { V2Company } from "./company";
 
 export function normalizeStepLabel(label: string): string {
@@ -69,6 +69,106 @@ export function Section({ eyebrow, title, lead, children, id }: { eyebrow: strin
         {children}
       </div>
     </section>
+  );
+}
+
+/** A first-screen, no-network picker shared by the AI actor directory and video tools. */
+export function ActorScenePanel({ picker, r, pageId }: { picker: V2ActorScenePicker; r: V2Resolvers; pageId: string }) {
+  if (!picker.actors.length || !picker.scenes.length) return null;
+  const firstActor = picker.actors.find((actor) => actor.selected) ?? picker.actors[0];
+  const firstScene = firstActor.scene || picker.scenes[0];
+  const formAction = (r.direct ?? r.href)("/app/create");
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .adc2 .actor-scene-panel{margin-top:20px;padding:16px;border:1px solid var(--line-2);border-radius:18px;background:rgba(10,10,12,.7)}
+        .adc2 .actor-scene-panel-head{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+        .adc2 .actor-scene-panel-head h2{font-size:20px;line-height:1.25}
+        .adc2 .actor-scene-panel-head p{color:var(--ink-3);font-size:13px;line-height:1.5}
+        .adc2 .actor-scene-picker-form{display:flex;flex-direction:column;gap:14px}
+        .adc2 .actor-scene-picker-form fieldset{min-width:0;margin:0;padding:0;border:0}
+        .adc2 .actor-scene-picker-form legend{margin-bottom:7px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+        .adc2 .actor-scene-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+        .adc2 .actor-scene-choice{position:relative;display:block;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#0c0c0f;cursor:pointer}
+        .adc2 .actor-scene-choice input{position:absolute;width:1px;height:1px;opacity:0}
+        .adc2 .actor-scene-choice:has(input:checked){border-color:#c4b5fd;box-shadow:0 0 0 2px rgba(196,181,253,.45)}
+        .adc2 .actor-scene-choice img{width:100%;aspect-ratio:1;object-fit:cover;object-position:center top}
+        .adc2 .actor-scene-choice span{display:block;padding:5px 6px;color:var(--ink-2);font-size:11px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .adc2 .actor-scene-chips{display:flex;flex-wrap:wrap;gap:6px;max-height:112px;overflow:auto;padding-right:2px}
+        .adc2 .actor-scene-chip{position:relative;display:inline-flex;cursor:pointer}
+        .adc2 .actor-scene-chip input{position:absolute;width:1px;height:1px;opacity:0}
+        .adc2 .actor-scene-chip span{display:inline-flex;padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--ink-2);font-size:12px;line-height:1.2}
+        .adc2 .actor-scene-chip:has(input:checked) span{border-color:#c4b5fd;background:rgba(139,92,246,.2);color:var(--ink)}
+        .adc2 .actor-scene-picker-form .btn{align-self:flex-start;padding:10px 14px;font-size:13px}
+        @media(max-width:500px){.adc2 .actor-scene-choices{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.adc2 .actor-scene-choice span{font-size:10px;padding-inline:4px}.adc2 .actor-scene-panel{padding:13px}}
+      ` }} />
+      <section aria-labelledby={`actor-scene-panel-${pageId}`} className="actor-scene-panel" data-actor-scene-picker>
+        <div className="actor-scene-panel-head">
+          <h2 id={`actor-scene-panel-${pageId}`}>{picker.title}</h2>
+          <p>{picker.lead}</p>
+        </div>
+        <form action={formAction} className="actor-scene-picker-form" method="get">
+          <input name="tool" type="hidden" value={picker.tool} />
+          <input name="size" type="hidden" value={picker.size} />
+          <input name="length" type="hidden" value={picker.length} />
+          <input name="actor" type="hidden" value={firstActor.id} />
+          <input name="scene" type="hidden" value={firstScene} />
+          <input name="prompt" type="hidden" value={firstActor.promptTemplate.replaceAll("{{scene}}", firstScene)} />
+          <fieldset>
+            <legend>Choose an avatar</legend>
+            <div className="actor-scene-choices" role="radiogroup" aria-label="Choose an avatar">
+              {picker.actors.map((actor) => <label className="actor-scene-choice" key={actor.id}>
+                <input data-actor-prompt={actor.promptTemplate} defaultChecked={actor.id === firstActor.id} name={`actor-choice-${pageId}`} type="radio" value={actor.id} />
+                <Img image={actor.image} r={r} />
+                <span>{actor.name}</span>
+              </label>)}
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Choose a scene</legend>
+            <div className="actor-scene-chips" role="radiogroup" aria-label="Choose a scene">
+              {picker.scenes.map((scene) => <label className="actor-scene-chip" key={scene}>
+                <input defaultChecked={scene === firstScene} name={`scene-choice-${pageId}`} type="radio" value={scene} />
+                <span>{scene}</span>
+              </label>)}
+            </div>
+          </fieldset>
+          <button className="btn btn-grad" type="submit">{picker.button} →</button>
+        </form>
+      </section>
+    </>
+  );
+}
+
+/** Illustrative seller workflows; this block intentionally has no testimonial claims. */
+export function SellerScenarioSection({ scenarios, r }: { scenarios: V2SellerScenarioBlock; r: V2Resolvers }) {
+  if (!scenarios.items.length) return null;
+  return (
+    <Section eyebrow="Example seller scenes" lead={scenarios.lead} title={scenarios.title}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .adc2 .seller-scenario-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+        .adc2 .seller-scenario-card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+        .adc2 .seller-scenario-card figure{margin:0;aspect-ratio:1;overflow:hidden;background:#0d0d10}
+        .adc2 .seller-scenario-card figure img{width:100%;height:100%;object-fit:cover}
+        .adc2 .seller-scenario-copy{display:flex;flex-direction:column;gap:7px;padding:15px}
+        .adc2 .seller-scenario-copy h3{font-size:17px;line-height:1.25}
+        .adc2 .seller-scenario-tool{font-size:12px;color:#c4b5fd}
+        .adc2 .seller-scenario-tool a{text-decoration:underline;text-underline-offset:3px}
+        .adc2 .seller-scenario-copy>p:last-child{color:var(--ink-3);font-size:14px;line-height:1.55}
+        @media(max-width:900px){.adc2 .seller-scenario-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        @media(max-width:500px){.adc2 .seller-scenario-grid{grid-template-columns:minmax(0,1fr)}}
+      ` }} />
+      <div className="seller-scenario-grid">
+        {scenarios.items.map((item) => <article className="seller-scenario-card" key={`${item.audience}-${item.tool}`}>
+          <figure><Img image={item.image} r={r} /></figure>
+          <div className="seller-scenario-copy">
+            <h3>{item.audience}</h3>
+            <p className="seller-scenario-tool">Tool: <a href={r.href(item.href)}>{item.tool}</a></p>
+            <p>{item.task}</p>
+          </div>
+        </article>)}
+      </div>
+    </Section>
   );
 }
 

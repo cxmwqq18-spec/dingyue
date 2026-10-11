@@ -172,6 +172,36 @@
     ]
   },
   "more_sections": null,
+  "seller_scenarios": {
+    "title": "How sellers like you use these tools",
+    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "items": [
+      {
+        "audience": "Beauty shop",
+        "tool": "video-ads",
+        "task": "Turn a serum review moment into a short social video draft.",
+        "ref": "f:q18-facebook-strip-serum-review"
+      },
+      {
+        "audience": "Housewares seller",
+        "tool": "product-videos",
+        "task": "Demonstrate a collapsible bottle in one clear everyday action.",
+        "ref": "f:k6-video-hub-frame-square-demo"
+      },
+      {
+        "audience": "Outdoor apparel shop",
+        "tool": "video-ads",
+        "task": "Create a quick jacket movement clip for a seasonal campaign.",
+        "ref": "f:q8-tpl-tryon-case-02"
+      },
+      {
+        "audience": "Electronics seller",
+        "tool": "unboxing-videos",
+        "task": "Open the package and reveal the headphones for a launch draft.",
+        "ref": "f:q18-facebook-picker-headphone-review"
+      }
+    ]
+  },
   "visual": {
     "strip": [
       "f:q1-video-strip-protein",

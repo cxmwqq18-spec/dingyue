@@ -262,6 +262,36 @@
       ]
     }
   ],
+  "seller_scenarios": {
+    "title": "How sellers like you use these tools",
+    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "items": [
+      {
+        "audience": "Shopify skincare shop",
+        "tool": "photo-hub",
+        "task": "Turn one jar photo into a clean product-page image and a fresh social ad.",
+        "ref": "f:k2-url-card-beauty-serum"
+      },
+      {
+        "audience": "Home goods seller",
+        "tool": "product-videos",
+        "task": "Show how a drawer organizer fits into a tidy everyday setup.",
+        "ref": "f:k2-url-card-drawer-trays"
+      },
+      {
+        "audience": "Accessories seller",
+        "tool": "video-ads",
+        "task": "Create a casual bag clip for a new collection launch.",
+        "ref": "f:q18-instagram-picker-canvas-tote"
+      },
+      {
+        "audience": "Snack brand",
+        "tool": "unboxing-videos",
+        "task": "Reveal a pouch from its box and introduce the first taste moment.",
+        "ref": "f:k8-spokesperson-gen2-spokesperson-videos-g3"
+      }
+    ]
+  },
   "visual": {
     "strip": [
       "f:carousel-storytelling-v",

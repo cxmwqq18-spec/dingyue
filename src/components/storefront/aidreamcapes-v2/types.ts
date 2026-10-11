@@ -6,6 +6,17 @@ export type V2VisualImage = { src: string; w: number; h: number; alt: string; ki
 export type V2VisualFrame = "1:1" | "9:16" | "16:9" | "4:5";
 export type V2VisualStripItem = V2VisualImage;
 export type V2VisualActorCard = { image: V2VisualImage; label: string; selected?: boolean };
+export type V2ActorSceneChoice = { id: string; name: string; scene: string; image: V2Image; promptTemplate: string; selected?: boolean };
+export type V2ActorScenePicker = {
+  title: string;
+  lead: string;
+  button: string;
+  tool: string;
+  size: string;
+  length: number;
+  actors: V2ActorSceneChoice[];
+  scenes: string[];
+};
 export type V2VisualStep = { source: V2VisualImage; sourceTitle?: string; sourceHint?: string; hideSourceCopy?: boolean; result: V2VisualImage; options: [string, string][]; credits: string; prompt?: string; mode?: "photo" | "video"; items: V2Item[]; actorCards?: V2VisualActorCard[] };
 export type V2VisualTitle = { h2: string; lead?: string };
 export type V2VisualTitles = Partial<Record<"m2" | "m3" | "m4" | "m5" | "m6" | "m7" | "m8" | "examples" | "templates" | "faq" | "beforeAfter" | "gallery" | "plan", V2VisualTitle>>;
@@ -72,6 +83,8 @@ export type V2Flow = { t: string; d: string; steps: V2FlowStep[]; id?: string; f
 export type V2Maker = { options: [string, string][]; cta: string; href: string; urlInput?: boolean; uploadTitle?: string };
 export type V2Plan = { name: string; price: string; credits: string; who: string; features: string[]; popular: boolean };
 export type V2MoreSection = { eyebrow: string; h2: string; lead?: string; items: V2ImageItem[] };
+export type V2SellerScenario = { audience: string; tool: string; href: string; task: string; image: V2Image };
+export type V2SellerScenarioBlock = { title: string; lead: string; items: V2SellerScenario[] };
 export type V2Section = { h2: string; paras: string[] };
 export type V2EnrichmentSection = { h2: string; paras: string[]; items?: V2Item[] };
 export type V2EnrichmentBlock = { h2: string; items: V2Item[] };

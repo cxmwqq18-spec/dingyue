@@ -106,6 +106,36 @@
       }
     ]
   },
+  "seller_scenarios": {
+    "title": "How sellers like you use these tools",
+    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "items": [
+      {
+        "audience": "Skincare shop",
+        "tool": "video-ads",
+        "task": "Build a short product ad around a clean routine and a close-up texture shot.",
+        "ref": "f:q8-tpl-box-case-01"
+      },
+      {
+        "audience": "Home organizer",
+        "tool": "product-videos",
+        "task": "Show the shelf organizer solving one small storage task.",
+        "ref": "f:k2-url-card-shelf-organizer"
+      },
+      {
+        "audience": "Drink seller",
+        "tool": "video-ads",
+        "task": "Turn an iced tea pour into a simple social feed opening.",
+        "ref": "f:q18-instagram-picker-iced-tea-reaction"
+      },
+      {
+        "audience": "Apparel shop",
+        "tool": "video-ads",
+        "task": "Give a new blazer a quick try-on reveal for a campaign draft.",
+        "ref": "f:q8-tpl-tryon-case-03"
+      }
+    ]
+  },
   "visual": {
     "strip": [
       "n:guide:k1-unboxing-example-diffuser",

@@ -195,6 +195,36 @@
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
+  "seller_scenarios": {
+    "title": "How sellers like you use these tools",
+    "lead": "Example seller scenes show how different shops can turn one product photo into a useful asset.",
+    "items": [
+      {
+        "audience": "Beauty seller",
+        "tool": "photo-hub",
+        "task": "Make a polished face-mist image for a product detail page.",
+        "ref": "f:q18-instagram-output-face-mist"
+      },
+      {
+        "audience": "Home decor shop",
+        "tool": "lifestyle-photos",
+        "task": "Place a linen pillow in a calm room scene for a collection page.",
+        "ref": "f:k7-ind-home-living-uses-00-linen-pillow"
+      },
+      {
+        "audience": "Fashion seller",
+        "tool": "model-photos",
+        "task": "Preview a knit dress on a model before planning a shoot.",
+        "ref": "f:q8-tpl-tryon-case-04"
+      },
+      {
+        "audience": "Food seller",
+        "tool": "lifestyle-photos",
+        "task": "Show olive oil in a bright kitchen scene for a launch post.",
+        "ref": "f:k7-ind-food-drinks-uses-1-ref-n-gen2-url-to-video-g1"
+      }
+    ]
+  },
   "visual": {
     "strip": [],
     "steps": {
