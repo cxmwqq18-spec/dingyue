@@ -240,12 +240,16 @@
     "unboxing-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q3-unboxing-videos-board-08-power-bank-unbox"
+        "image": "n:guide:fx13-unboxing-hero-candle"
       },
       "og": "n:t33-unboxing-videos-og-r2",
       "gallery": [
         "n:guide:k1-unboxing-gallery-headphones-hands",
-        "n:guide:q3-unboxing-videos-gallery-baby-wrap"
+        "n:guide:q3-unboxing-videos-gallery-baby-wrap",
+        "n:guide:fx13-unboxing-gallery-candle-hands",
+        "n:guide:fx13-unboxing-gallery-powerbank",
+        "n:guide:fx13-unboxing-gallery-apparel",
+        "n:guide:fx13-unboxing-gallery-lunchbox"
       ]
     },
     "product-videos": {
