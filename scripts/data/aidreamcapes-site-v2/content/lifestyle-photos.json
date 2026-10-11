@@ -17,17 +17,20 @@
     {
       "t": "Give the product useful context",
       "d": "Place one clear product photo on a shelf, cafe table or counter so shoppers can picture where it belongs.",
-      "icon": "clock"
+      "img": "n:guide:fx15-lifestyle-benefit-context-r1",
+      "alt": "Matte ceramic planter with a fern on a warm wood shelf in a bright living room."
     },
     {
       "t": "Make the product pop in a real scene",
       "d": "Keep the item clear while the setting adds the use moment shoppers need to understand.",
-      "icon": "layers"
+      "img": "n:guide:fx15-lifestyle-benefit-pop-r1",
+      "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup."
     },
     {
       "t": "Ready for a listing",
       "d": "Build a polished scene from one photo without booking a space, props or a crew.",
-      "icon": "target"
+      "img": "n:guide:fx15-lifestyle-benefit-listing-r1",
+      "alt": "Plain brushed steel insulated bottle on an entryway console with a folded cloth."
     }
   ],
   "steps_h2": "How to Create AI Lifestyle Product Photos in 3 Simple Steps",
@@ -102,7 +105,7 @@
       "source": "n:guide:q5-life-tote-source-r2",
       "result": "n:guide:q5-life-tote-hero-r2",
       "mode": "photo",
-      "prompt": "A shopper carries this cream canvas tote through a farmers market in soft daylight.",
+      "prompt": "Use the uploaded cream canvas tote as the exact product reference. Place it on a wooden stall table at a farmers market with fresh produce behind it; preserve its shape and color, with no text or logos.",
       "sourceTitle": "Your product photo",
       "sourceHint": "Keep the complete bag and both handles visible.",
       "options": [
@@ -123,8 +126,52 @@
     "picker": {
       "title": "Choose a setting shoppers can picture",
       "lead": "Place one product in a room, cafe or market moment that makes its use easy to understand.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "room-shelf",
+          "label": "Room shelf"
+        },
+        {
+          "id": "cafe-table",
+          "label": "Cafe table"
+        },
+        {
+          "id": "farmers-market",
+          "label": "Farmers market"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:fx15-lifestyle-picker-room-r1",
+          "label": "Basket on a room shelf",
+          "chips": [
+            "room-shelf",
+            "cafe-table"
+          ],
+          "prompt": "Use my uploaded product photo as the exact product reference. Place it on a pale wood room shelf with folded linen nearby; preserve its shape and color, with no readable text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx15-lifestyle-picker-cafe-r1",
+          "label": "Bag on a cafe table",
+          "chips": [
+            "cafe-table",
+            "farmers-market"
+          ],
+          "prompt": "Use my uploaded product photo as the exact product reference. Place it on a marble cafe table beside one plain ceramic cup in soft window light; preserve the product, with no readable text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx15-lifestyle-picker-market-r1",
+          "label": "Tote at a farmers market",
+          "chips": [
+            "farmers-market",
+            "room-shelf"
+          ],
+          "prompt": "Use my uploaded product photo as the exact product reference. Show it carried at a bright farmers market stall with unmarked produce crates behind it; keep the product fully visible, with no readable text or logos.",
+          "kind": "photo"
+        }
+      ],
       "button": "Create a lifestyle photo"
     },
     "uses": [
@@ -138,19 +185,13 @@
         "img": "n:guide:k5-lifestyle-photos-uses-1-image",
         "h": "Make the product pop out",
         "d": "Add the tools or ingredients that make the use case clear at a glance.",
-        "alt": "Matcha whisk, bowl and tin arranged on a linen tablecloth."
+        "alt": "Matcha whisk, bowl and plain tin arranged on a linen tablecloth."
       },
       {
-        "img": "n:guide:rx2-lifestyle-market-man",
-        "h": "Show the product in everyday use",
-        "d": "Give a listing or social post a believable moment that shows the product doing its job.",
-        "alt": "Gray-haired man reaches into a cream linen tote at a farmers market stall."
-      },
-      {
-        "img": "n:guide:k5-lifestyle-photos-template-life",
+        "img": "n:guide:k5-lifestyle-photos-strip-3",
         "h": "Create a polished scene without a shoot setup",
         "d": "Place the item in a bright daily scene for a store page or social post without unpacking a shoot kit.",
-        "alt": "White ceramic candle on a bedside table at dusk."
+        "alt": "Plain iced tea can opened on a sunny balcony."
       }
     ],
     "titles": {
@@ -174,8 +215,35 @@
         "h2": "Download a square lifestyle product photo"
       }
     },
-    "input": [],
-    "outputs": []
+    "input": [
+      {
+        "good": "n:guide:q5-life-tote-example-r2",
+        "bad": "n:guide:fx15-lifestyle-tote-input-bad-1-r2",
+        "good_label": "Tote held fully in frame",
+        "bad_label": "Handle cropped at the frame edge",
+        "bad_alt": "Cream canvas tote with one handle cropped at the left frame edge.",
+        "good_alt": "Cream canvas tote held fully in frame at a farm stand."
+      },
+      {
+        "good": "n:guide:q5-life-tote-market",
+        "bad": "n:guide:fx15-lifestyle-tote-input-bad-2-r2",
+        "good_label": "Product shown cleanly in its scene",
+        "bad_label": "Bag handle cut off at the top",
+        "bad_alt": "Cream canvas tote in a market scene with one handle cropped at the upper edge."
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:q5-life-case-tote-market",
+        "frame": "1:1",
+        "label": "Market carry scene"
+      },
+      {
+        "ref": "n:guide:rx2-lifestyle-market-man",
+        "frame": "1:1",
+        "label": "Farm stand shopping scene"
+      }
+    ]
   },
   "more_sections": [
     {
@@ -184,12 +252,10 @@
       "lead": "Give shoppers one familiar moment that shows how the item fits into a normal day.",
       "items": [
         {
-          "t": "Carry it through the market",
-          "d": "Show the tote where shoppers would actually take it, with the full shape easy to read."
-        },
-        {
-          "t": "Fill it at the farm stand",
-          "d": "Add a second use moment with the same tote so the product feels ready for a real errand."
+          "t": "Cafe stop",
+          "d": "Let shoppers picture the tote beside a coffee while the product stays prominent.",
+          "img": "n:guide:k5-lifestyle-gallery-01",
+          "alt": "Linen tote bag beside a coffee cup at a sunny cafe."
         }
       ]
     },
@@ -199,12 +265,10 @@
       "lead": "Use the finished scene to answer the shopper question: where would I use this?",
       "items": [
         {
-          "t": "Keep the carry moment clear",
-          "d": "A complete tote and a recognizable market setting make the use case easy to grasp."
-        },
-        {
-          "t": "Make the use case easy to read",
-          "d": "A hand reaching into the bag shows what the product does in the moment."
+          "t": "Neighborhood carry",
+          "d": "A familiar street setting helps shoppers picture when they would carry the product.",
+          "img": "n:guide:k5-lifestyle-gallery-06",
+          "alt": "Hand holding a linen tote bag on a neighborhood street."
         }
       ]
     },
@@ -214,16 +278,22 @@
       "lead": "Keep the product consistent while you test the room, surface or market moment around it.",
       "items": [
         {
-          "t": "Cafe stop",
-          "d": "Let shoppers picture the tote beside a coffee while the product stays prominent."
-        },
-        {
           "t": "Park carry",
-          "d": "Use a simple outdoor setting to show how the bag fits into a weekend routine."
+          "d": "Use a simple outdoor setting to show how the bag fits into a weekend routine.",
+          "img": "n:guide:k5-lifestyle-gallery-03",
+          "alt": "Linen tote bag carried beside a city bike."
         },
         {
           "t": "Picnic setup",
-          "d": "Give the same product a second surface and a new reason to use it."
+          "d": "Give the same product a second surface and a new reason to use it.",
+          "img": "n:guide:k5-lifestyle-gallery-04",
+          "alt": "Linen tote bag on a beach picnic blanket."
+        },
+        {
+          "t": "Home entryway",
+          "d": "Show the tote in a final everyday setting before shoppers choose their scene.",
+          "img": "n:guide:k5-lifestyle-gallery-05",
+          "alt": "Linen tote bag hanging in a bright home entryway."
         }
       ]
     }

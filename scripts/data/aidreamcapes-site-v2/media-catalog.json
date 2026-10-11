@@ -47777,6 +47777,86 @@
           1280
         ]
       },
+      "fx15-lifestyle-benefit-context-r1": {
+        "file": "fx15-lifestyle-benefit-context-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte ceramic planter with a fern on a warm wood shelf in a bright living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx15-lifestyle-benefit-pop-r1": {
+        "file": "fx15-lifestyle-benefit-pop-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx15-lifestyle-benefit-listing-r1": {
+        "file": "fx15-lifestyle-benefit-listing-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain brushed steel insulated bottle on an entryway console with a folded cloth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx15-lifestyle-picker-room-r1": {
+        "file": "fx15-lifestyle-picker-room-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded woven storage basket on a pale wood room shelf with folded linen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx15-lifestyle-picker-cafe-r1": {
+        "file": "fx15-lifestyle-picker-cafe-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage canvas crossbody bag on a cafe table beside a ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx15-lifestyle-picker-market-r1": {
+        "file": "fx15-lifestyle-picker-market-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand carries a plain natural canvas tote at a farmers market stall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx15-lifestyle-tote-input-bad-1-r2": {
+        "file": "fx15-lifestyle-tote-input-bad-1-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream canvas tote with one handle cropped at the left frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx15-lifestyle-tote-input-bad-2-r2": {
+        "file": "fx15-lifestyle-tote-input-bad-2-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream canvas tote in a market scene with one handle cropped at the upper edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "rc4-tpl-sale-hero-r1": {
         "file": "rc4-tpl-sale-hero-r1",
         "w": 1600,

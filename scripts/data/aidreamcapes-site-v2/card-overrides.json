@@ -548,20 +548,20 @@
   "lifestyle-photos": {
     "images": {
       "bg": {
-        "ref": "n:guide:q5-life-hiking-template-r2",
-        "alt": "Adult wears brown lace-up hiking boots while stepping along a forest trail."
+        "ref": "n:guide:k5-lifestyle-photos-picker-cards-0-image",
+        "alt": "Ceramic planter beside a linen sofa."
       },
       "ugc": {
-        "ref": "n:guide:k5-lifestyle-template-ugc",
-        "alt": "Plain sea-blue protective phone case with one oval camera opening, held loosely in one hand; no phone visible."
+        "ref": "n:guide:k5-lifestyle-photos-picker-cards-2-image",
+        "alt": "Snack bag packed in a lunch bag with fresh fruit."
       },
       "life": {
-        "ref": "n:guide:q5-life-serum-routine",
-        "alt": "Adult applies facial serum from an amber dropper bottle during a morning routine."
+        "ref": "n:guide:k5-lifestyle-photos-picker-cards-3-image",
+        "alt": "Pasta sauce jar beside a finished plate of pasta."
       },
       "pack": {
-        "ref": "n:guide:q5-life-packaging-card-r2",
-        "alt": "Blank kraft supplement pouch and matching carton standing upright on a light studio surface."
+        "ref": "n:guide:k5-lifestyle-photos-picker-cards-5-image",
+        "alt": "Silk scarf knotted on a handbag handle."
       }
     }
   },
