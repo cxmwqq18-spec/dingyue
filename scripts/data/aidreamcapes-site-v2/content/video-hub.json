@@ -129,7 +129,7 @@
         "label": "Product Explainer Videos",
         "items": [
           {
-            "ref": "n:gen2:video-hub-g2",
+            "ref": "n:guide:im01-video-hub-bento-r1",
             "title": "Bento Lunchbox Explainer",
             "kind": "scene",
             "product": "bento lunchbox"
@@ -208,7 +208,7 @@
       "f:img3-video-strip-car-r1",
       "f:q1-video-strip-steamer-v2",
       "f:img3-video-strip-headphones-r1",
-      "f:img3-video-strip-street-r1",
+      "f:im01-video-hub-strip-street-r1",
       "f:img3-video-strip-bag-r1"
     ],
     "steps": {
@@ -313,12 +313,12 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:q1-video-ex-bike",
+          "ref": "n:guide:im01-video-hub-bike-r2",
           "label": "Folding Bike Commute UGC",
           "chips": [
             "accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A commuter folds a compact bicycle beside a train platform and carries it through an open train doorway. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult commuter folds a generic full-size bicycle with two large wheels beside a train platform and carries it through an open train doorway. Realistic vertical product video framing, no recognizable brand geometry, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -343,42 +343,42 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:mx1w-video-hub-apparel-2-r1",
+          "ref": "n:guide:im01-video-hub-sweater-r1",
           "label": "Knit Sweater Mirror UGC",
           "chips": [
             "apparel"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman adjusts a plain cream knit sweater in a mirror with the full garment visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult woman with a short copper pixie haircut adjusts a plain cream knit sweater in a mirror with the full garment visible. Realistic vertical product video framing, no earrings, no jewelry, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:k7-ind-electronics-strip-4-n-gen2-tpl-spark-ads-style-video-c1",
+          "ref": "n:guide:im01-video-hub-tripod-r1",
           "label": "Phone Tripod App Setup",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Phone tripod set up on a bedroom desk, natural light. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand clips a generic unbranded phone with a blank abstract color screen into a plain phone tripod on a tidy bedroom desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:k1-unboxing-output-tablet-stand",
+          "ref": "n:guide:im01-video-hub-tablet-r1",
           "label": "Tablet Stand App Demo",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain adjustable tablet stand holding a dark-screen tablet on a desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A plain adjustable tablet stand holds a generic tablet showing soft abstract blue and cream color blocks while an adult hand adjusts the stand on a clean desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-0-ref-n-gen2-image-to-video-c3",
+          "ref": "n:guide:im01-video-hub-balm-r1",
           "label": "Tinted Balm Vanity Reel",
           "chips": [
             "beauty-personal-care"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Red lipstick standing uncapped on a white marble vanity. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A plain coral tinted lip balm stick with a rounded balm tip stands beside its cap on a bright vanity while an adult hand reaches toward it. Realistic vertical product video framing, no red lipstick, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -413,22 +413,22 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:k2-url-hero-link-to-video",
+          "ref": "n:guide:im01-video-hub-laptop-r2",
           "label": "Product Listing Screen Demo",
           "chips": [
             "e-commerce"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Open laptop beside a plain ceramic mug on a bright desk, with an abstract product listing on screen. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand points to a simple soft gradient of blue, cream and sage color blocks on a generic laptop screen, with blank keycaps and no icons or interface text. Realistic square product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:q1-video-output-cases",
+          "ref": "n:guide:im01-video-hub-cases-r2",
           "label": "Silicone Case Compare Ad",
           "chips": [
             "e-commerce"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands compare plain silicone phone cases side by side on a clean desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands compare plain silicone phone cases side by side; each has exactly one circular camera opening and no square camera island. Realistic wide product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -473,12 +473,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:k3-video-strip-desk-plant",
+          "ref": "n:guide:im01-video-hub-finance-r1",
           "label": "Finance Desk Dashboard UGC",
           "chips": [
             "financial-services"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Small desk plant beside an open laptop. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult advisor points beside a generic laptop showing a softly blurred abstract chart made of colored bars and lines with no words or numerals. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },
@@ -563,12 +563,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-scarf",
+          "ref": "n:guide:im01-video-hub-scarf-r1",
           "label": "Silk Scarf Unboxing ASMR",
           "chips": [
             "jewelry-accessories"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Soft wool scarf lifted from a plain mailer onto a bed. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands lift a smooth plain silk scarf from an unmarked mailer onto a neatly made bed. Realistic square product video framing, no fringe, readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },

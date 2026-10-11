@@ -5002,6 +5002,16 @@
       ],
       "source": "Codex imagegen"
     },
+    "im01-video-hub-strip-street-r1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult interviewer listens as an adult close-cropped runner takes a first sip from a plain electrolyte drink on a sunny city sidewalk.",
+      "variants": [
+        640,
+        1280
+      ],
+      "source": "Codex imagegen"
+    },
     "rb4-plat-facebook-strip-01-r1": {
       "w": 1024,
       "h": 1024,
@@ -5014,6 +5024,14 @@
     }
   },
   "gen": {
+    "im01-video-hub-og-r1": {
+      "w": 1200,
+      "h": 630,
+      "alt": "An adult man with short silver-gray hair holds a plain frosted pump bottle beside his face in a bright bathroom.",
+      "variants": [
+        1200
+      ]
+    },
     "skincare-vertical": {
       "w": 1152,
       "h": 2048,
@@ -13893,6 +13911,166 @@
       1280
     ],
     "items": {
+      "im01-video-hub-grwm-r2": {
+        "file": "im01-video-hub-grwm-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman with a short silver-blonde pixie haircut holds a plain coral tinted lip balm beside her face at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-grwm-r1": {
+        "file": "im01-video-hub-grwm-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman with a short silver-blonde pixie haircut holds a plain coral tinted lip balm beside her face at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-drink-r1": {
+        "file": "im01-video-hub-drink-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult man pours a pale citrus sparkling drink from a plain clear bottle into a glass filled with ice on a sunny kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-tripod-r1": {
+        "file": "im01-video-hub-tripod-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult hand clips a generic phone with a blank abstract color screen into a plain tripod on a tidy bedroom desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-tablet-r1": {
+        "file": "im01-video-hub-tablet-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A plain adjustable tablet stand holds a generic tablet showing soft abstract blue and cream color blocks on a clean desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-balm-r1": {
+        "file": "im01-video-hub-balm-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A plain coral tinted lip balm stick stands beside its cap on a bright vanity as an adult hand reaches toward it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-bike-r2": {
+        "file": "im01-video-hub-bike-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult commuter folds a generic full-size bicycle beside a train platform before carrying it aboard.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-sweater-r1": {
+        "file": "im01-video-hub-sweater-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman with a short copper pixie haircut adjusts a plain cream knit sweater in a mirror with the full garment visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-laptop-r2": {
+        "file": "im01-video-hub-laptop-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand points to an abstract color-block layout on a generic laptop with blank keycaps.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-cases-r2": {
+        "file": "im01-video-hub-cases-r2",
+        "w": 1536,
+        "h": 864,
+        "alt": "Two adult hands compare plain silicone phone cases, each with one circular camera opening, on a clean desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-dog-r1": {
+        "file": "im01-video-hub-dog-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult man with a short buzz cut brushes a calm golden dog with a plain grooming brush in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-finance-r1": {
+        "file": "im01-video-hub-finance-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult advisor points beside a generic laptop showing a softly blurred abstract chart with no text.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-scarf-r1": {
+        "file": "im01-video-hub-scarf-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a smooth plain silk scarf from an unmarked mailer onto a bed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-bento-r1": {
+        "file": "im01-video-hub-bento-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a plain bento lunchbox to reveal separate empty compartments on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-home-r1": {
+        "file": "im01-video-hub-home-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult hand slides a clear organizer into a cluttered closet shelf beside neatly folded clothes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "im01-video-hub-bf-r1": {
+        "file": "im01-video-hub-bf-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult runner holds a plain neutral performance shoe beside softly lit evergreen branches and warm lights.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "home-bottle-cropped": {
         "file": "gen2guide-home-bottle-cropped",
         "w": 1280,
