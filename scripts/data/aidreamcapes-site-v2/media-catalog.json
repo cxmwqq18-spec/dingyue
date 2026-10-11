@@ -42405,6 +42405,83 @@
           640,
           1280
         ]
+      },
+      "img1-video-hub-hero-beauty-r1": {
+        "file": "img1-video-hub-hero-beauty-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with a short silver-blonde pixie haircut holds a plain coral lip balm beside her face at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-video-hub-steps-source-r1": {
+        "file": "img1-video-hub-steps-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte teal insulated water bottle with an integrated black loop handle, fully visible on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-video-hub-steps-result-r1": {
+        "file": "img1-video-hub-steps-result-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with a short close-cropped haircut holds the same plain matte teal insulated water bottle with its black loop handle visible in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-photo-hub-desert-r1": {
+        "file": "img1-photo-hub-desert-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-glass green ceramic kettle on pale desert stone in warm sunset light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-photo-hub-steps-result-r1": {
+        "file": "img1-photo-hub-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short straight copper bob applies the same plain coral lip balm at a bright vanity mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-home-steps-source-r1": {
+        "file": "img1-home-steps-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte navy insulated travel mug with a simple black lid, fully visible on a clean white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "img1-home-steps-result-r1": {
+        "file": "img1-home-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short gray hair holds the same plain matte navy insulated travel mug beside his face in a parked car.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
