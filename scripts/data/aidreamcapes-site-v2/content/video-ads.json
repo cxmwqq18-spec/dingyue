@@ -112,6 +112,36 @@
       }
     ]
   },
+  "seller_scenarios": {
+    "title": "Turn one product photo into an ad shoppers can understand",
+    "lead": "Example scenes: one product photo becomes an ad that shows the product, the moment and the payoff.",
+    "items": [
+      {
+        "audience": "Skincare shop",
+        "tool": "video-ads",
+        "task": "Run a routine ad with a texture close-up of your face cream, no studio day.",
+        "ref": "n:rx3-video-ads-scenario-1-r1"
+      },
+      {
+        "audience": "Home organizer",
+        "tool": "product-videos",
+        "task": "Show the mess and the tidy fix with your shelf organizer in one short ad.",
+        "ref": "n:rx3-video-ads-scenario-2-r1"
+      },
+      {
+        "audience": "Drink seller",
+        "tool": "video-ads",
+        "task": "Open your ad with a pour and a first sip of your iced tea, ready in minutes.",
+        "ref": "n:rx3-video-ads-scenario-3-r1"
+      },
+      {
+        "audience": "Apparel shop",
+        "tool": "video-ads",
+        "task": "Show how your blazer fits in a quick try-on ad, no new shoot to arrange.",
+        "ref": "n:rx3-video-ads-scenario-4-r1"
+      }
+    ]
+  },
   "visual": {
     "strip": [
       "n:guide:k1-unboxing-example-diffuser",
@@ -398,7 +428,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in one frame.",
           "kind": "video"
         },
         {

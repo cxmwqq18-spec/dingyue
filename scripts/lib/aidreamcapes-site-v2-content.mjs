@@ -1072,6 +1072,66 @@ const CASE_WALL_PAGES = new Set([
   "image-to-video", "url-to-video", "video-ads", "product-videos", "unboxing-videos", "before-after-videos",
   "spokesperson-videos", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"
 ]);
+const ACTOR_SCENE_PAGES = new Set(["product-videos", "unboxing-videos", "before-after-videos"]);
+
+function sellerScenariosFor(model, page, source) {
+  if (!source || typeof source !== "object" || !Array.isArray(source.items)) return undefined;
+  const items = source.items.map((item, index) => {
+    assert.ok(item && typeof item === "object", `${page.id}: seller scenario ${index + 1} must be an object`);
+    const toolId = String(item.tool ?? "");
+    const tool = model.byId[toolId];
+    assert.ok(tool, `${page.id}: seller scenario ${index + 1} tool ${toolId} does not exist`);
+    const ref = String(item.ref ?? "");
+    assert.ok(ref, `${page.id}: seller scenario ${index + 1} needs a media ref`);
+    return {
+      audience: String(item.audience ?? ""),
+      tool: tool.label,
+      href: tool.url,
+      task: String(item.task ?? ""),
+      image: mediaImage(model, ref, "card")
+    };
+  }).filter((item) => item.audience && item.task && item.image);
+  if (!items.length) return undefined;
+  return {
+    title: String(source.title ?? "How sellers like you use these tools"),
+    lead: String(source.lead ?? "Example seller scenes show where each workflow fits."),
+    items
+  };
+}
+
+function actorScenePickerFor(model, page) {
+  const actorSource = model.content["ai-actors"]?.actor_visual ?? {};
+  const copy = model.content[page.id]?.actor_scene_picker ?? {};
+  const configured = Array.isArray(actorSource.steps?.actor_cards) ? actorSource.steps.actor_cards : [];
+  const byRef = new Map((model.content["ai-actors"]?.actor_cards ?? []).map((actor) => [actor.ref, actor]));
+  const actors = configured.map((item, index) => {
+    const ref = typeof item === "string" ? item : item?.ref;
+    const actor = byRef.get(ref);
+    assert.ok(actor, `${page.id}: actor scene picker actor ${ref ?? index + 1} does not exist`);
+    return {
+      id: actor.id,
+      name: actor.name,
+      scene: actor.scene,
+      image: mediaImage(model, ref, "card"),
+      promptTemplate: actorSeedancePrompt({ ...actor, scene: "{{scene}}" }),
+      ...(index === 0 ? { selected: true } : {})
+    };
+  });
+  const scenes = Array.isArray(model.content["ai-actors"]?.actor_scenes)
+    ? model.content["ai-actors"].actor_scenes.map(String).filter(Boolean)
+    : [];
+  const size = displayedMakerVideoSize(model, page) ?? "9:16";
+  return {
+    title: String(copy.title ?? "Choose your avatar and scene"),
+    lead: String(copy.lead ?? "Pick a presenter and setting, then carry both choices into the video workspace."),
+    button: String(copy.button ?? "Use this avatar and scene"),
+    tool: page.id,
+    size,
+    length: 10,
+    actors,
+    scenes
+  };
+}
 
 // A case card's pre-filled prompt. Pick up the prompt the case plan recorded when it has
 // one, otherwise describe the finished scene from the case title and product so every
@@ -1879,6 +1939,7 @@ function resolveSectionHref(model, where, target) {
 function payloadFor(model, page) {
   const c = model.content[page.id];
   const examples = exampleGalleryFor(model, page);
+  const sellerScenarios = sellerScenariosFor(model, page, c.seller_scenarios);
   const base = {
     id: page.id, label: page.label, eyebrow: c.eyebrow || page.label, h1: c.h1, lead: c.lead,
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
@@ -1893,6 +1954,7 @@ function payloadFor(model, page) {
     ...(typeof c.maker?.upload_title === "string" ? { maker: { uploadTitle: c.maker.upload_title } } : {}),
     ...(Array.isArray(c.more_sections) ? { more_sections: moreSectionsFor(model, page, c.more_sections) } : {}),
     ...(examples ? { examples } : {}),
+    ...(sellerScenarios ? { sellerScenarios } : {}),
     ...enrichmentFor(model, page, c)
   };
   const t = page.type;
@@ -1984,6 +2046,7 @@ function payloadFor(model, page) {
     // case wall is the visual picker, and the page ends with one related-tools block.
     const wallCases = hub ? [] : caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
     const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c, hub ? [] : wallCases);
+    const actorScenePicker = ACTOR_SCENE_PAGES.has(page.id) ? actorScenePickerFor(model, page) : undefined;
     const relatedGroups = hub ? [
       { title: "Photo templates", links: templateLinksFor(model, "photo", 4) },
       { title: "Browse industries", links: pageLinksFor(model, ["ind-beauty-skincare", "ind-shoes", "ind-food-drinks", "ind-home-living"]) },
@@ -1999,6 +2062,7 @@ function payloadFor(model, page) {
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
       ...(visual ? { visual } : {}),
+      ...(actorScenePicker ? { actorScenePicker } : {}),
       specs: [
         ...(video ? [["Sizes", "9:16 · 1:1 · 16:9"], ["Length", "6, 10, 15 or 30 seconds"], ["You start with", page.id === "url-to-video" ? "A product page link" : "1 product photo"], ["Cost", "Shown before you start"]]
           : [["Size", "Square by default"], ["You upload", "1 product photo"], ["You get", "A new product photo"], ["Cost", "Shown before you start"]]),
@@ -2461,6 +2525,7 @@ export function renderedImages(layout, data) {
   else if (layout === "article") add(data.image);
   else if (layout === "examples") { addFlows(data.flows); if (!data.visual) { addPairs(); addCards(data.cards); addExamples(); } }
   else add(data.image);
+  for (const item of data.sellerScenarios?.items ?? []) add(item.image);
   for (const image of visualPayloadImages(data.visual)) add(image);
   addImageItems(data.more_sections?.flatMap((section) => section.items ?? []));
   addImageItems(data.audience?.items);

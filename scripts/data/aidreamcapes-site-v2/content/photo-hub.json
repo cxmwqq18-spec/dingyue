@@ -195,6 +195,36 @@
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
+  "seller_scenarios": {
+    "title": "Make product photos that show where the item belongs",
+    "lead": "Example scenes: one product photo, placed where shoppers can picture it, ready for your product page.",
+    "items": [
+      {
+        "audience": "Beauty seller",
+        "tool": "photo-hub",
+        "task": "A polished product-page image of your face mist, without setting up a vanity shoot.",
+        "ref": "n:rx3-photo-hub-scenario-1-r1"
+      },
+      {
+        "audience": "Home decor shop",
+        "tool": "lifestyle-photos",
+        "task": "Show the finished room around your linen pillow without moving a single sofa.",
+        "ref": "n:rx3-photo-hub-scenario-2-r1"
+      },
+      {
+        "audience": "Fashion seller",
+        "tool": "model-photos",
+        "task": "See your knit dress on a model before you pay for a shoot.",
+        "ref": "n:rx3-photo-hub-scenario-3-r1"
+      },
+      {
+        "audience": "Food seller",
+        "tool": "lifestyle-photos",
+        "task": "A bright kitchen shot of your olive oil for launch day, no reshoot.",
+        "ref": "n:rx3-photo-hub-scenario-4-r1"
+      }
+    ]
+  },
   "visual": {
     "strip": [],
     "steps": {

@@ -262,6 +262,36 @@
       ]
     }
   ],
+  "seller_scenarios": {
+    "title": "One product photo, four ways to start selling",
+    "lead": "Example scenes: four sellers, four products, one photo each, and something ready to post in minutes.",
+    "items": [
+      {
+        "audience": "Shopify skincare shop",
+        "tool": "photo-hub",
+        "task": "Get a clean product shot and a fresh social ad from one face cream jar photo, no new shoot.",
+        "ref": "n:rx3-home-scenario-1-r1"
+      },
+      {
+        "audience": "Home goods seller",
+        "tool": "product-videos",
+        "task": "Show shoppers the tidy drawer they want, straight from one organizer photo. No room to stage.",
+        "ref": "n:rx3-home-scenario-2-r1"
+      },
+      {
+        "audience": "Accessories seller",
+        "tool": "video-ads",
+        "task": "Turn one canvas bag photo into a casual launch clip without booking a model.",
+        "ref": "n:rx3-home-scenario-3-r1"
+      },
+      {
+        "audience": "Snack brand",
+        "tool": "unboxing-videos",
+        "task": "Have a first-taste unboxing video ready in minutes from one snack pouch photo.",
+        "ref": "n:rx3-home-scenario-4-r1"
+      }
+    ]
+  },
   "visual": {
     "strip": [
       "f:carousel-storytelling-v",

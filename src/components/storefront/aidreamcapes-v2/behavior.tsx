@@ -135,6 +135,35 @@ export function AidreamcapesV2ActorFilters() {
   return null;
 }
 
+// The actor/scene panel is a plain GET form. This only combines already-rendered
+// radio choices into the prompt query value; it never loads public data.
+export function AidreamcapesV2ActorScenePicker() {
+  useEffect(() => {
+    const roots = Array.from(document.querySelectorAll<HTMLElement>("[data-actor-scene-picker]"));
+    const cleanups: Array<() => void> = [];
+    roots.forEach((root) => {
+      const form = root.querySelector<HTMLFormElement>("form");
+      const prompt = form?.querySelector<HTMLInputElement>('input[name="prompt"]');
+      const actor = form?.querySelector<HTMLInputElement>('input[name="actor"]');
+      const scene = form?.querySelector<HTMLInputElement>('input[name="scene"]');
+      const apply = () => {
+        const selectedActor = root.querySelector<HTMLInputElement>('input[type="radio"][name^="actor-choice-"]:checked');
+        const selectedScene = root.querySelector<HTMLInputElement>('input[type="radio"][name^="scene-choice-"]:checked');
+        const sceneValue = selectedScene?.value ?? "";
+        const template = selectedActor?.dataset.actorPrompt ?? "";
+        if (prompt && template) prompt.value = template.replaceAll("{{scene}}", sceneValue);
+        if (actor && selectedActor) actor.value = selectedActor.value;
+        if (scene && selectedScene) scene.value = selectedScene.value;
+      };
+      root.addEventListener("change", apply);
+      apply();
+      cleanups.push(() => root.removeEventListener("change", apply));
+    });
+    return () => cleanups.forEach((cleanup) => cleanup());
+  }, []);
+  return null;
+}
+
 export function AidreamcapesV2HeroTabs() {
   useEffect(() => {
     const box = document.getElementById("adc2-home-maker");
