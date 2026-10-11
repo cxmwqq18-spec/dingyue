@@ -282,9 +282,9 @@
       "use": "Jewelry & gifts",
       "category": "Jewelry",
       "talent": "an adult South Asian woman in her late thirties",
-      "product": "pair of simple gold-tone hoop earrings",
-      "line": "The curved edges catch the light when I turn these hoops.",
-      "action": "She brings one hoop closer to the lens, then holds it steady.",
+      "product": "plain silver-tone pendant necklace",
+      "line": "The smooth silver pendant catches the light when I turn it.",
+      "action": "She brings the pendant closer to the lens, then holds it steady in her open hand.",
       "ambient": "her voice and soft room tone",
       "ref": "n:guide:q4-actor-anvesha"
     },
@@ -670,7 +670,7 @@
       "line": "The knit feels light enough for an everyday layer.",
       "action": "She smooths the sweater front once and holds its neckline toward the lens.",
       "ambient": "her voice and low clothing-shop room tone",
-      "ref": "n:guide:mx10-actor-shop-1-r1"
+      "ref": "n:guide:mx10-actor-shop-1-r2"
     },
     {
       "id": "kenji",
@@ -734,7 +734,7 @@
       "line": "I keep the next study task on one clean page.",
       "action": "She opens the notebook to a blank page and points to the top line.",
       "ambient": "her voice and quiet study-room tone",
-      "ref": "n:guide:ac1-actor-study-room-1-r1"
+      "ref": "n:guide:ac1-actor-study-room-1-r2"
     },
     {
       "id": "elias",
@@ -814,7 +814,7 @@
       "line": "This tray keeps a small terrace serve easy to carry.",
       "action": "She lifts the tray by both sides and holds it level.",
       "ambient": "her voice and soft rooftop ambience",
-      "ref": "n:guide:ac1-actor-terrace-2-r1"
+      "ref": "n:guide:ac1-actor-terrace-2-r2"
     },
     {
       "id": "priya",
@@ -830,7 +830,7 @@
       "line": "I keep the things I use in the bath within easy reach.",
       "action": "She steadies the caddy and points to its open compartments.",
       "ambient": "her voice and soft bathroom room tone",
-      "ref": "n:guide:ac1-actor-bathroom-1-r1"
+      "ref": "n:guide:ac1-actor-bathroom-1-r2"
     },
     {
       "id": "luca",
@@ -922,11 +922,11 @@
       "use": "Home & tools",
       "category": "Tools",
       "talent": "an adult Latina woman in her early forties",
-      "product": "plain red tire pressure gauge",
-      "line": "I check the tire pressure before the next drive.",
-      "action": "She turns the gauge face toward the lens and holds it steady.",
+      "product": "plain gray plastic garage storage box",
+      "line": "This storage box keeps small garage tools together before the next drive.",
+      "action": "She holds the closed box steady so its blank front and lid face the lens.",
       "ambient": "her voice and quiet garage ambience",
-      "ref": "n:guide:ac1-actor-garage-1-r1"
+      "ref": "n:guide:ac1-actor-garage-1-r2"
     },
     {
       "id": "connor",
@@ -958,7 +958,7 @@
       "line": "I am asking shoppers what they notice first about this new product.",
       "action": "She holds the microphone toward a listener while looking back at the lens.",
       "ambient": "her voice, a listener reply and city sidewalk ambience",
-      "ref": "n:guide:ac1-actor-interview-1-r1"
+      "ref": "n:guide:ac1-actor-interview-1-r2"
     },
     {
       "id": "raymond",
@@ -974,7 +974,7 @@
       "line": "I ask one quick question, then let the shopper answer in their own words.",
       "action": "He holds the microphone between himself and an adult guest beside him.",
       "ambient": "his voice, a guest reply and street ambience",
-      "ref": "n:guide:ac1-actor-interview-2-r1"
+      "ref": "n:guide:ac1-actor-interview-2-r2"
     },
     {
       "id": "aisha",
@@ -1022,7 +1022,7 @@
       "line": "I am reporting from the street with the key detail in one clear sentence.",
       "action": "She holds the microphone close and gestures once toward the street behind her.",
       "ambient": "her voice and light city traffic ambience",
-      "ref": "n:guide:ac1-actor-reporting-1-r1"
+      "ref": "n:guide:ac1-actor-reporting-1-r2"
     },
     {
       "id": "elliot",
@@ -1054,7 +1054,7 @@
       "line": "I keep the travel documents together in this slim wallet.",
       "action": "She opens the wallet once and holds its blank interior toward the lens.",
       "ambient": "her voice and soft airport terminal ambience",
-      "ref": "n:guide:ac1-actor-travel-1-r1"
+      "ref": "n:guide:ac1-actor-travel-1-r2"
     },
     {
       "id": "hassan",
