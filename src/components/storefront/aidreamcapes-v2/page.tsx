@@ -150,7 +150,7 @@ function HomePage({ data, r }: Props) {
             )}
           </div>
           <div className="trust">
-            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10 or 15 second videos</span>
+            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10, 15 or 30 second videos</span>
           </div>
         </div>
       </section>
