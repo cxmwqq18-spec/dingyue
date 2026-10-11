@@ -97,16 +97,16 @@
     "tpl-box": {
       "hero": {
         "kind": "pair",
-        "before": "g:bundle-sets/source-input",
-        "after": "g:bundle-sets/hero-output"
+        "before": "n:guide:rc2-tpl-box-hero-before-r1",
+        "after": "n:guide:rc2-tpl-box-hero-after-r1"
       },
       "gallery": [
-        "g:bundle-sets/example-01",
-        "g:bundle-sets/example-02",
-        "g:bundle-sets/example-03",
-        "g:bundle-sets/example-04",
-        "g:bundle-sets/example-05",
-        "g:bundle-sets/example-06"
+        "n:guide:rc2-tpl-box-gallery-01-r1",
+        "n:guide:rc2-tpl-box-gallery-02-r1",
+        "n:guide:rc2-tpl-box-gallery-03-r1",
+        "n:guide:rc2-tpl-box-gallery-04-r1",
+        "n:guide:rc2-tpl-box-gallery-05-r1",
+        "n:guide:rc2-tpl-box-gallery-06-r1"
       ],
       "og": "n:t33-tpl-box-og-r3"
     },
@@ -129,8 +129,8 @@
     "tpl-light": {
       "hero": {
         "kind": "pair",
-        "before": "g:commercial-lighting/source-input",
-        "after": "g:commercial-lighting/hero-output"
+        "before": "n:guide:rc2-tpl-light-hero-before-r1",
+        "after": "n:guide:rc2-tpl-light-hero-after-r1"
       },
       "gallery": [],
       "og": "n:t33-tpl-light-og-r3"

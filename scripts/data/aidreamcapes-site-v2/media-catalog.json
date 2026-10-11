@@ -22599,6 +22599,94 @@
         ],
         "source": "Codex image generation"
       },
+      "rc2-tpl-box-hero-before-r1": {
+        "file": "rc2-tpl-box-hero-before-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft coffee pouch, black hand grinder and speckled white mug nestled in an open shipping box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-box-hero-after-r1": {
+        "file": "rc2-tpl-box-hero-after-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft coffee pouch, black hand grinder and speckled white mug arranged as a complete kit on a wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-box-gallery-01-r1": {
+        "file": "rc2-tpl-box-gallery-01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch, hand grinder and speckled mug on a breakfast table with morning light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-box-gallery-02-r1": {
+        "file": "rc2-tpl-box-gallery-02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch, hand grinder and speckled mug on a cafe counter with warm side light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-box-gallery-03-r1": {
+        "file": "rc2-tpl-box-gallery-03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch, hand grinder and speckled mug arranged on a pale kitchen shelf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-box-gallery-04-r1": {
+        "file": "rc2-tpl-box-gallery-04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch, hand grinder and speckled mug on an outdoor picnic blanket in daylight.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-box-gallery-05-r1": {
+        "file": "rc2-tpl-box-gallery-05-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch, hand grinder and speckled mug on a walnut cafe table under warm light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-box-gallery-06-r1": {
+        "file": "rc2-tpl-box-gallery-06-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch, hand grinder and speckled mug on a sunlit patio table with garden greenery.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
       "k1-unboxing-output-wallet": {
         "file": "k1-unboxing-output-wallet",
         "w": 1024,
@@ -41216,6 +41304,28 @@
         ],
         "source": "Codex image generation",
         "file": "f15-r2-tpl-light-output-white-mug-r2"
+      },
+      "rc2-tpl-light-hero-before-r1": {
+        "file": "rc2-tpl-light-hero-before-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic mug in diffuse neutral daylight on a pale stone counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
+      "rc2-tpl-light-hero-after-r1": {
+        "file": "rc2-tpl-light-hero-after-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic mug with warm side-window light, glaze highlight and defined cast shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
       },
       "f15-r2-tpl-light-output-sage-mug-r1": {
         "w": 1280,
