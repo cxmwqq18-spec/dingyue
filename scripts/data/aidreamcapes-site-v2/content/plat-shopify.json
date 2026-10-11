@@ -2,7 +2,7 @@
   "id": "plat-shopify",
   "title": "Shopify Product Photos That Match Your Store | AIVideosUGC",
   "description": "Create Shopify product photos for product pages, collection tiles, and social crops from one upload, with matching scenes and no reshoot.",
-  "h1": "Shopify Product Photos That Keep Your Store Consistent",
+  "h1": "AI Shopify Product Photos That Keep Your Store Consistent",
   "eyebrow": "Shopify stores",
   "lead": "Give every product page and collection tile a matching look from one upload. Create square product photos and short clips without reshooting older items.",
   "card": "Matching square product photos, lifestyle scenes, and short clips for each Shopify product page.",
@@ -39,7 +39,7 @@
     },
     {
       "q": "What photo should I upload?",
-      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front or three-quarter view works best."
+      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front or three-quarter view works well."
     },
     {
       "q": "Are the files mine to use on my store?",
@@ -66,16 +66,16 @@
     "strip": [
       "n:guide:q19-shop-strip-glasses-tryon",
       "n:guide:q19-shop-strip-serum-apply",
-      "n:guide:q19-shop-strip-tote-commute",
+      "n:guide:q19-shop-after-bowl-use",
       "n:guide:q19-shop-strip-linen-before-after",
       "n:guide:q19-shop-strip-pet-brush",
       "n:guide:q19-shop-strip-snack-bite"
     ],
     "steps": {
-      "source": "n:guide:q19-shop-step-bowl-source",
+      "source": "n:guide:c4-shopify-bowls-main-angle",
       "result": "n:guide:plat-shopify-c3-m2-result",
       "mode": "photo",
-      "prompt": "Still square product photograph of four coordinated cream and pale-blue ceramic bowls arranged with fruit on a light dining table; soft window light, centered composition with every bowl fully visible and crisp product detail, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos.",
+      "prompt": "Still square product photograph of four coordinated ceramic bowls in cream, blue, sage, and charcoal glazes arranged with fresh fruit on a light dining table; soft window light, centered composition with every bowl fully visible and crisp product detail, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos.",
       "options": [
         [
           "Template",
