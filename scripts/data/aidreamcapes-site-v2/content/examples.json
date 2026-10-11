@@ -1,7 +1,7 @@
 {
   "id": "examples",
   "title": "AI Product Photo and Video Examples | AIVideosUGC",
-  "description": "See six product examples from one uploaded photo to a finished image or video. Compare the source, scene and result, then make your own.",
+  "description": "See six product examples, from one uploaded photo to a finished image or video. Compare the source, scene and result, then make your own in minutes.",
   "h1": "AI Product Photo and Video Examples, Start to Finish",
   "eyebrow": "From photo to ad",
   "lead": "Stuck on what a good product ad should look like? Each example follows one item from the uploaded photo to the finished image or video, so you can choose a clear direction for your product.",
@@ -356,23 +356,6 @@
       "g:feed-ad-still/example-07",
       "n:guide:k4-plat-instagram-30-visual-strip-4"
     ],
-    "steps": {
-      "source": "g:ecommerce-main-image/example-05",
-      "sourceAlt": "A matte ceramic travel mug ready for an example scene.",
-      "result": "n:white-mug",
-      "mode": "photo",
-      "prompt": "Pick a product scene.",
-      "options": [
-        [
-          "Scene",
-          "Clean desk"
-        ],
-        [
-          "Format",
-          "Product image"
-        ]
-      ]
-    },
     "picker": [
       {
         "id": "video",

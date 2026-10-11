@@ -47,14 +47,7 @@
     }
   ],
   "visual": {
-    "strip": [
-      "n:guide:q13-templates-strip-0",
-      "n:gen2:rb1-templates-strip-1-r1",
-      "n:gen2:tpl-box-g2",
-      "n:gen2:rb1-templates-strip-3-r1",
-      "n:gen2:rb1-templates-strip-4-r2",
-      "n:guide:q13-templates-strip-5-r1"
-    ],
+    "strip": [],
     "steps": {
       "source": "n:guide:k6-templates-step-source",
       "sourceAlt": "Brown leather duffel bag on a dark studio background.",
