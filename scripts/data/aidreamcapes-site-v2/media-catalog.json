@@ -22599,6 +22599,17 @@
         ],
         "source": "Codex image generation"
       },
+      "rc2-tpl-box-coffee-result-square-r3": {
+        "file": "rc2-tpl-box-coffee-result-square-r3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same plain kraft coffee pouch, black hand grinder and speckled white ceramic mug arranged as a complete kit in an open kraft paper gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex image generation"
+      },
       "rc2-tpl-box-hero-before-r1": {
         "file": "rc2-tpl-box-hero-before-r1",
         "w": 1024,
