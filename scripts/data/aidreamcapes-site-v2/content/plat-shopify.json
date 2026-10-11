@@ -1,11 +1,11 @@
 {
   "id": "plat-shopify",
   "title": "AI Shopify Product Photos and Videos | AIVideosUGC",
-  "description": "Create Shopify product photos for product pages, collection tiles, and social crops from one upload, with matching scenes and no reshoot.",
-  "h1": "AI Shopify Product Photos and Videos From One Upload",
+  "description": "Make Shopify product photos, collection tiles, and short product videos from one upload. Choose square or social-ready formats, then add files in Shopify admin.",
+  "h1": "Shopify Product Photos and Videos from One Upload",
   "eyebrow": "Shopify stores",
-  "lead": "Give every product page and collection tile a matching look from one upload. Create square product photos and short clips without reshooting older items.",
-  "card": "Matching square product photos, lifestyle scenes, and short clips for each Shopify product page.",
+  "lead": "Give product pages, collection tiles, and social ads a consistent look from one upload. Choose a square photo or short clip, then add the download in Shopify admin.",
+  "card": "Shopify product photos, collection tiles, and short product videos from one upload.",
   "secondary_keywords": [
     "Shopify product images",
     "Shopify collection page photos",
@@ -19,7 +19,7 @@
     },
     {
       "q": "What image size works for Shopify product pages?",
-      "a": "A square file around 2048 by 2048 pixels usually displays well, and it also works on a collection card. Check how your storefront shows it."
+      "a": "A square file around 2048 x 2048 pixels is a practical suggestion; check your store's current settings before upload."
     },
     {
       "q": "How do I make a whole collection look consistent?",
@@ -38,8 +38,8 @@
       "a": "Keep the square images in the product gallery and make a separate vertical file for Stories or Reels, so the grid stays even."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "Use a sharp, well-lit photo that shows the whole product. A clear front or three-quarter view works well."
+      "q": "What should I upload for a Shopify product photo?",
+      "a": "Start with a clear, well-lit shot with the whole item in frame. A front or three-quarter view works well."
     },
     {
       "q": "Are the files mine to use on my store?",
@@ -51,15 +51,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear photo from your Shopify product page. There is no link to paste and no product data to sync."
+      "d": "Add one clear photo of the whole item from your Shopify product page. Every result starts from that source."
     },
     {
       "t": "Pick the Scene",
-      "d": "Choose the format you want, from a clean product shot to a creator-style scene, and see the credit cost first."
+      "d": "Choose a product page image, collection tile, short clip, or ad scene, and see the credit cost before the file is made."
     },
     {
       "t": "Download and Post",
-      "d": "Preview the result, make another version if you need one, then download the file and add it to your store or ad."
+      "d": "Preview the result, download the file, and add it yourself in Shopify admin or your ad platform."
     }
   ],
   "visual": {
@@ -93,57 +93,138 @@
       "items": [
         {
           "t": "Upload Your Product Photo",
-          "d": "Add one clear photo from your Shopify product page. There is no link to paste and no product data to sync."
+          "d": "Add one clear photo of the whole item from your Shopify product page. Every result starts from that source."
         },
         {
           "t": "Pick the Scene",
-          "d": "Choose the format you want, from a clean product shot to a creator-style scene, and see the credit cost first."
+          "d": "Choose a product page image, collection tile, short clip, or ad scene, and see the credit cost before the file is made."
         },
         {
-          "t": "Render, Download and Launch",
-          "d": "Preview the result, make another version if you need one, then download the file and add it to your store or ad."
+          "t": "Download and Post",
+          "d": "Preview the result, download the file, and add it yourself in Shopify admin or your ad platform."
         }
       ]
     }
   },
-  "benefits_h2": "3 ways AI helps you scale your Shopify marketing",
+  "benefits_h2": "Shopify assets that stay consistent and ready to test",
   "benefits": [
     {
-      "t": "Run clear video ads on a small budget",
-      "d": "Turn one product photo into clear video ads without the cost and wait of booked UGC creators and designers."
+      "t": "Keep every collection tile consistent",
+      "d": "Use one square treatment across product pages and collection tiles, so shoppers see a consistent grid."
     },
     {
-      "t": "Make several ad versions in minutes",
-      "d": "Make several ad versions in minutes, not weeks, with full control over the scene and the message."
+      "t": "Make store and ad versions from one photo",
+      "d": "Turn one uploaded product photo into a store image and a social ad version for the same item."
     },
     {
-      "t": "Create creator-style scenes for each market",
-      "d": "Use creator-style scenes for different markets, so each audience sees an ad that feels made for them."
+      "t": "Test a new scene without reshooting",
+      "d": "Try another background or use moment from the same source photo when a new scene would help."
     }
   ],
   "steps_h2": "How to Make Shopify Product Photos in 3 Simple Steps",
-  "steps_lead": "Turn one Shopify product photo into a store-ready image or short clip in three steps.",
+  "steps_lead": "Turn one Shopify product photo into a store-ready image or short clip, then add the download where you sell.",
   "more_sections": [
     {
       "eyebrow": "From photo to store media",
-      "h2": "From One Shopify Product Photo to a Winning Ad in Minutes",
+      "h2": "From One Product Photo to Store and Ad Images in Minutes",
       "lead": "Keep the product look consistent while you make page, collection, and ad versions.",
       "items": [
         {
-          "t": "Add Your Product Photo",
-          "d": "Start from the photo you already have on Shopify instead of filming anything new."
+          "t": "Add your product photo",
+          "d": "Start with the clear product photo you already have instead of setting up another shoot."
         },
         {
-          "t": "Pick a Winning Reference",
-          "d": "Choose a proven ad style and let your own product fill the scene, instead of guessing what works."
+          "t": "Pick a proven look",
+          "d": "Choose a visual direction that keeps your product recognizable across store and ad assets."
         },
         {
-          "t": "Generate Fresh Hooks",
-          "d": "Try several openings and keep the version that holds attention, with no extra shoot."
+          "t": "Try a fresh opening",
+          "d": "Make another first frame or product moment when the campaign needs a new angle."
         },
         {
-          "t": "Customize for Conversion",
-          "d": "Change the scene, length or format and keep the file ready for store pages or ads."
+          "t": "Tune it for your store or ad",
+          "d": "Choose the square store asset or social-ready file that matches where you will publish it."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Where each file goes",
+      "h2": "Put Each Shopify Asset in the Right Place",
+      "lead": "Choose the destination first, then download a file sized for that use.",
+      "items": [
+        {
+          "t": "Product page",
+          "d": "Use a square 1:1 image to show the item clearly in the product gallery. Start with [Product Photos](/ai-image-generation)."
+        },
+        {
+          "t": "Collection grid",
+          "d": "Use a square 1:1 tile so products line up cleanly as shoppers browse. Start with [White Background Photos](/ai-image-generation/ecommerce-main-image)."
+        },
+        {
+          "t": "Shopify product media",
+          "d": "Add a square image or a short clip to the product media area yourself after download. Start with [Product Videos](/ai-video-generation/product-video)."
+        },
+        {
+          "t": "Social ad",
+          "d": "Choose a 9:16 vertical or 1:1 asset, then upload it to the ad platform after download. Start with [Social Ad Photos](/ai-image-generation/feed-ad-still)."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Format choices",
+      "h2": "Choose a Frame for the Destination",
+      "lead": "Use the frame your store or ad destination calls for; Shopify does not publish files automatically.",
+      "items": [
+        {
+          "t": "Wide 16:9",
+          "d": "Use a wide frame when the ad placement calls for landscape video."
+        },
+        {
+          "t": "Vertical 9:16",
+          "d": "Use full-screen vertical for Reels, Stories, and Shorts."
+        },
+        {
+          "t": "Square 1:1",
+          "d": "Use a square product image for pages and collection grids."
+        },
+        {
+          "t": "Landscape 4:3",
+          "d": "Use a 4:3 frame when a landscape slot needs more height than wide video."
+        },
+        {
+          "t": "Portrait 3:4",
+          "d": "Use a 3:4 frame when a portrait feed slot needs more height than square."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Shopify product categories",
+      "h2": "Scenes for the Products You Sell",
+      "lead": "Choose a scene that matches the product and the shopper moment you need to show.",
+      "items": [
+        {
+          "t": "Dropshipping products",
+          "d": "Show a plain everyday item in a useful setting without implying competitor research."
+        },
+        {
+          "t": "Beauty products",
+          "d": "Show a simple routine or texture moment. Explore [Beauty and Personal Care](/industries/beauty-skincare)."
+        },
+        {
+          "t": "Home products",
+          "d": "Show the item solving a small task in a real room. Explore [Home and Living](/industries/home-living)."
+        },
+        {
+          "t": "Fashion products",
+          "d": "Show fit, fabric, or a try-on moment. Explore [Fashion and Clothing](/industries/fashion-clothing)."
+        },
+        {
+          "t": "Health products",
+          "d": "Show a clear everyday use moment without adding unsupported claims. Explore [Health and Wellness](/industries/health-wellness)."
+        },
+        {
+          "t": "Home and living products",
+          "d": "Show the product in a lived-in room with the action easy to understand. Explore [Home and Living](/industries/home-living)."
         }
       ]
     }
