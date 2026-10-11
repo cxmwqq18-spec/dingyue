@@ -1,10 +1,10 @@
 {
   "id": "video-hub",
   "title": "AI Video Generator for Ecommerce Ads | AIVideosUGC",
-  "description": "Turn one product photo into a watermark-free ad clip with an AI video generator. See the credit cost first, then download a file for social or your store.",
+  "description": "AI video generator for ads from one product photo. Choose 6, 10, 15, or 30 seconds, see the credit cost first, and download for social or your store.",
   "h1": "AI Video Generator for Ecommerce Ads from One Product Photo",
   "eyebrow": "AI video tools for online sellers",
-  "lead": "Turn one product photo into a short ad you can test today. Choose the format, describe the moment, and review the product before you download.",
+  "lead": "Publish videos faster, spend far less than a real shoot, and scale your content from one product photo. Choose a format, describe the moment, and download a clip ready to test.",
   "maker": {
     "options": [
       [
@@ -13,7 +13,7 @@
       ],
       [
         "Length",
-        "6, 10, or 15 seconds"
+        "6, 10, 15, or 30 seconds"
       ]
     ],
     "cta": "Make my video"
@@ -26,14 +26,14 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "An AI video generator turns a product photo and a scene idea into a short clip for your store or ad. You set the format and explain the moment you want to show; the result stays centered on your product.",
-    "Use one upload to make a creator-style ad, product demo, unboxing or before-and-after clip. The workspace shows the credit cost before you start, so you can choose a version that fits the job."
+    "Turn a product photo and a scene idea into a short clip for your store or ad. Set the format and explain the moment you want to show; the result stays centered on your product.",
+    "Use one upload to make a creator-style ad, product demo, unboxing or before-and-after clip, then choose a 9:16, 1:1, 16:9, 4:3 or 3:4 frame and 6, 10, 15 or 30 seconds. The workspace shows the credit cost before you start, so you can choose a version that fits the job."
   ],
   "benefits_h2": "Reasons sellers use an AI video generator",
   "benefits": [
     {
       "t": "Launch a test ad sooner",
-      "d": "Turn one product photo into a short clip without booking a shoot, cast or edit day.",
+      "d": "Turn one product photo into a short clip without booking creators, studios or gear.",
       "icon": "bolt"
     },
     {
@@ -42,18 +42,18 @@
       "icon": "layers"
     },
     {
-      "t": "Match the placement",
+      "t": "Fit the frame to your channel",
       "d": "Choose a vertical, square or wide frame for TikTok, Reels, Shorts, feeds or a product page.",
       "icon": "target"
     },
     {
-      "t": "Keep the final say",
-      "d": "Review the product, add exact prices or captions after download, and use the file for commercial work.",
+      "t": "Ready to run, no watermark",
+      "d": "Download a watermark-free file for commercial work, then add your own prices or captions.",
       "icon": "shield"
     }
   ],
   "steps_h2": "How to make a product video in 3 steps",
-  "steps_lead": "Go from one clear photo to a clip you can review and place in your next campaign.",
+  "steps_lead": "Go from one clear photo to a downloadable ad clip for your next campaign.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -64,8 +64,8 @@
       "d": "Choose a video type and frame, then describe one action or talking point for the clip."
     },
     {
-      "t": "Review, Then Download",
-      "d": "Check the product shape and details, then download the watermark-free file for your ad, feed or store."
+      "t": "Download Your Ad-Ready Clip",
+      "d": "Download a watermark-free file for your ad, feed or store, then add your own prices or captions."
     }
   ],
   "faq": [
@@ -79,11 +79,11 @@
     },
     {
       "q": "Which video sizes and lengths are available?",
-      "a": "The workspace accepts 9:16, 1:1, 16:9, 4:3 and 3:4 frames, with 6, 10 or 15 seconds available for video jobs."
+      "a": "The workspace accepts 9:16, 1:1, 16:9, 4:3 and 3:4 frames, with 6, 10, 15 or 30 seconds available for video jobs."
     },
     {
       "q": "What does a video cost?",
-      "a": "The workspace shows the credit charge before you confirm a generation. If a job fails, its credits return automatically."
+      "a": "A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60 and 30 seconds uses 120. The charge appears before you start, and credits return automatically if a job fails."
     },
     {
       "q": "Can I make several versions for A/B testing?",
@@ -100,11 +100,19 @@
     {
       "q": "Is the person in an AI video a real customer?",
       "a": "No. Any presenter or creator-style person is generated for the ad, not a real customer review. Show the clip as a scripted product ad and disclose AI content when a platform requires it."
+    },
+    {
+      "q": "How long does a video take to make?",
+      "a": "A finished clip is ready in minutes. The exact time varies with the length and server load, so you can start another version while you wait."
+    },
+    {
+      "q": "Do I need to hire a model or creator?",
+      "a": "No. The people in the clips are generated around your product photo, so there is no casting, sample shipping or filming date. You can still work with a real creator later."
     }
   ],
   "examples": {
     "h2": "Types of videos you can generate",
-    "lead": "Choose a format for the job: creator-style ads open with a human hook, explainers make one feature clear, showcases focus on finish, avatar videos deliver a script, and social clips give a channel-ready story.",
+    "lead": "Pick a format and put it to work for what you sell.",
     "groups": [
       {
         "label": "UGC-Style Product Ads",
