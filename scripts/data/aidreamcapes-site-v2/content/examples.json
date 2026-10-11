@@ -41,7 +41,7 @@
     },
     {
       "t": "Pick a Scene",
-      "d": "Choose a finished look you like and open its tool. Apply the same shot type and action to your own product."
+      "d": "Choose a finished look you like and open its tool. Apply that shot type and action to your own product."
     },
     {
       "t": "Download and Post",
@@ -350,16 +350,16 @@
   "visual": {
     "strip": [
       "g:ecommerce-main-image/example-04",
-      "g:lifestyle-scene/example-02",
+      "n:guide:k5-lifestyle-gallery-02",
       "g:background-remove-replace/example-07",
-      "g:macro-details/example-04",
+      "n:gen2:white-background-g1",
       "g:feed-ad-still/example-07",
-      "g:story-ad-vertical/example-02"
+      "n:guide:k4-plat-instagram-30-visual-strip-4"
     ],
     "steps": {
       "source": "g:ecommerce-main-image/example-05",
       "sourceAlt": "A matte ceramic travel mug ready for an example scene.",
-      "result": "g:ecommerce-main-image/example-02",
+      "result": "n:white-mug",
       "mode": "photo",
       "prompt": "Pick a product scene.",
       "options": [
