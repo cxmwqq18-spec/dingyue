@@ -2,7 +2,7 @@
   "id": "occ-product-launch",
   "title": "Product Launch Video and Photos | AIVideosUGC",
   "description": "Create product launch videos and photos from one product image: make a teaser, reveal, and listing asset before launch day, without a studio booking.",
-  "h1": "Product Launch Video and Photos Before Launch Day",
+  "h1": "AI Product Launch Video and Photos Before Launch Day",
   "eyebrow": "New product launch",
   "lead": "Build a teaser, reveal, and listing image from one product photo. Add the launch date after download, with no studio booking or reshoot.",
   "secondary_keywords": [
@@ -13,8 +13,12 @@
   ],
   "faq": [
     {
-      "q": "Can I make product launch videos and photos before production is finished?",
-      "a": "Start from a clear photo of the current sample or prototype. The teaser, reveal, and listing images all use that one photo, so assets exist while production finishes."
+      "q": "Can product launch videos and photos use one prototype photo for teaser and reveal?",
+      "a": "Yes. Start from a clear photo of the current sample or prototype, then make a teaser, reveal, and listing image from that one photo."
+    },
+    {
+      "q": "Can I make launch content before production is finished?",
+      "a": "Start from a clear photo of the current sample or prototype. The teaser, reveal and listing images all use that one photo, so assets exist while production finishes."
     },
     {
       "q": "Can I change the launch date after making the video?",
@@ -26,7 +30,7 @@
     },
     {
       "q": "What video size should a product launch use?",
-      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feeds, and 16:9 for a wide page or YouTube placement. Each size is its own generation."
+      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feeds, and 16:9 for a wide page or YouTube video. Each size is its own generation."
     },
     {
       "q": "How long can a launch video be?",
@@ -45,22 +49,22 @@
         "label": "Launch week",
         "items": [
           {
-            "ref": "n:guide:q20-occ-product-launch-example-01",
-            "title": "Lip tint lifted from a launch box",
+            "ref": "n:guide:q20-occ-launch-strip-01",
+            "title": "New Water Bottle Packed for Launch",
             "kind": "photo",
-            "product": "lip tint"
+            "product": "water bottle"
           },
           {
-            "ref": "n:guide:q20-occ-product-launch-output-01",
-            "title": "Product in Use: Canvas Tote",
+            "ref": "n:guide:q20-occ-product-launch-card-04",
+            "title": "Product in Use: Cable Organizer",
             "kind": "photo",
-            "product": "canvas tote"
+            "product": "cable organizer"
           },
           {
-            "ref": "n:gen2:occ-product-launch-g3",
-            "title": "New bottle in use on a morning run",
+            "ref": "n:guide:q20-occ-product-launch-output-02",
+            "title": "Coffee Grinder in a First-Use Scene",
             "kind": "photo",
-            "product": "new water bottle"
+            "product": "coffee grinder"
           }
         ]
       }
@@ -84,12 +88,12 @@
   "visual": {
     "overview": "A teaser, a reveal and listing photos all come from one sample photo, so the launch set is ready while production finishes.",
     "strip": [
-      "n:guide:q20-occ-launch-strip-01",
-      "n:guide:q20-occ-launch-media-gallery-03",
+      "n:guide:q20-occ-product-launch-card-08",
+      "n:guide:q20-occ-product-launch-card-06",
       "n:guide:q20-occ-launch-strip-03",
-      "n:guide:q20-occ-launch-strip-04",
+      "n:guide:q20-occ-launch-uses-01",
       "n:guide:q20-occ-launch-strip-05",
-      "n:guide:q20-occ-product-launch-output-02"
+      "n:guide:q20-occ-bf-output-02"
     ],
     "steps": {
       "source": "n:guide:occ-product-launch-c3-m2-source",
