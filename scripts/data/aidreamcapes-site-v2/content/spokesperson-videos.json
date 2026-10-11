@@ -173,8 +173,60 @@
           "label": "Pet"
         },
         {
-          "id": "shop",
-          "label": "Shop"
+          "id": "shopping",
+          "label": "Shopping"
+        },
+        {
+          "id": "sports",
+          "label": "Sports"
+        },
+        {
+          "id": "study-room",
+          "label": "Study Room"
+        },
+        {
+          "id": "classroom",
+          "label": "Classroom"
+        },
+        {
+          "id": "terrace",
+          "label": "Terrace"
+        },
+        {
+          "id": "bathroom",
+          "label": "Bathroom"
+        },
+        {
+          "id": "exercise",
+          "label": "Exercise"
+        },
+        {
+          "id": "bedroom",
+          "label": "Bedroom"
+        },
+        {
+          "id": "garage",
+          "label": "Garage"
+        },
+        {
+          "id": "interview",
+          "label": "Interview"
+        },
+        {
+          "id": "pool",
+          "label": "Pool"
+        },
+        {
+          "id": "reporting",
+          "label": "Reporting"
+        },
+        {
+          "id": "travel",
+          "label": "Travel"
+        },
+        {
+          "id": "yoga",
+          "label": "Yoga"
         }
       ],
       "cards": [
@@ -490,20 +542,254 @@
         },
         {
           "ref": "n:guide:sc1-spk-shop-1",
-          "label": "Shop: canvas tote",
+          "label": "Shopping: canvas tote",
           "chips": [
-            "shop"
+            "shopping"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Inside a small clothing shop, an adult creator holds the plain canvas tote and says: “This is the bag I use for every market run.” They open the handles once. Chest-up handheld selfie, warm shop light. End with the tote held open toward the lens. Sound: clear speech and quiet shop ambience; no music, text or logos.",
           "kind": "video"
         },
         {
           "ref": "n:guide:sc1-spk-shop-2",
-          "label": "Shop: ceramic cup",
+          "label": "Shopping: ceramic cup",
           "chips": [
-            "shop"
+            "shopping"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Behind a small cafe counter, an adult creator holds the matte ceramic cup and says: “The rounded handle is what makes this cup easy to carry.” They turn the handle once. Chest-up front-camera selfie, warm window light. End with the handle facing camera. Sound: speech and soft cafe ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-sports-1",
+          "label": "Sports: foam ball",
+          "chips": [
+            "sports"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an outdoor community sports court, an adult Black woman holds the orange foam practice ball at chest height and says: “This lightweight ball is easy to keep in our practice kit.” The presenter turns the ball once toward the lens. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the ball held steady with court lines behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-sports-2",
+          "label": "Sports: paddle",
+          "chips": [
+            "sports"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In an outdoor community sports court, an adult South Asian man holds the blue pickleball paddle with its face toward camera and says: “This paddle gives me a clear, comfortable grip for a quick game.” The presenter tilts the paddle once to show its face. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the paddle centered in front of the court. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-study-room-1",
+          "label": "Study Room: keyboard",
+          "chips": [
+            "study-room"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet study room, an adult East Asian woman holds the compact mechanical keyboard at chest height and says: “The compact layout keeps my desk clear during focused work.” The presenter tilts the keyboard once toward the lens. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the keyboard steady above the desk. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-study-room-2",
+          "label": "Study Room: reading glasses",
+          "chips": [
+            "study-room"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a quiet study room, an adult Middle Eastern man holds the round reading glasses by one temple and says: “These light frames stay on my desk when I need a closer look.” The presenter turns the glasses once to catch the window light. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the glasses held steady with the study desk behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-classroom-1",
+          "label": "Classroom: ruler",
+          "chips": [
+            "classroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright classroom, an adult Black woman holds the wooden ruler upright beside her face and says: “This clear edge makes quick classroom measuring easy.” The presenter slides the ruler once through her hand. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the ruler upright with the blank board behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-classroom-2",
+          "label": "Classroom: pencil case",
+          "chips": [
+            "classroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright classroom, an adult white man holds the translucent pencil case open toward the lens and says: “This case keeps my everyday writing tools together.” The presenter opens the zipper once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open case held steady above a classroom desk. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-terrace-1",
+          "label": "Terrace: solar lantern",
+          "chips": [
+            "terrace"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny rooftop terrace, an adult Latina woman holds the rectangular solar lantern by its handle and says: “This small lantern adds a soft glow when the terrace gets dark.” The presenter turns the lantern once to show its panel. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the lantern steady with the skyline behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-terrace-2",
+          "label": "Terrace: patio cushion",
+          "chips": [
+            "terrace"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny rooftop terrace, an adult East Asian man holds the striped patio cushion at chest height and says: “This cushion makes a hard outdoor seat more comfortable.” The presenter flips one corner to show the fabric. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the cushion held flat with the terrace parapet behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bathroom-1",
+          "label": "Bathroom: bar soap",
+          "chips": [
+            "bathroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright modern bathroom, an adult South Asian woman holds the oval bar of soap beside her cheek and says: “This gentle bar is the one I keep by the morning sink.” The presenter turns the soap once in her palm. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the soap held steady with the sink behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bathroom-2",
+          "label": "Bathroom: hairbrush",
+          "chips": [
+            "bathroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright modern bathroom, an adult Black man holds the wooden hairbrush with its bristles facing camera and says: “The wide handle makes this brush easy to use one-handed.” The presenter turns the brush once to show the bristles. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the brush steady beside his face. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-exercise-1",
+          "label": "Exercise: jump rope",
+          "chips": [
+            "exercise"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright home exercise corner, an adult white woman holds the jump rope handles and lets the rope hang clearly and says: “This rope is ready for a short workout in a small space.” The presenter lifts both handles once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the handles held steady with the open floor behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-exercise-2",
+          "label": "Exercise: foam roller",
+          "chips": [
+            "exercise"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright home exercise corner, an adult East Asian man holds the dark blue foam roller horizontally at chest height and says: “This firm roller is easy to keep beside my home workout area.” The presenter turns the roller once to show its texture. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the roller steady with the exercise mat behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bedroom-1",
+          "label": "Bedroom: sleep mask",
+          "chips": [
+            "bedroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm bedroom, an adult Latina woman holds the navy satin sleep mask beside her face and says: “I keep this mask on my bedside table for early nights.” The presenter lifts the mask strap once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the mask steady with the bed and pillows behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-bedroom-2",
+          "label": "Bedroom: linen throw",
+          "chips": [
+            "bedroom"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm bedroom, an adult Middle Eastern man holds the folded linen throw against his chest and says: “This light throw is the extra layer I reach for before bed.” The presenter opens one corner to show the weave. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the folded throw steady with the bed behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-garage-1",
+          "label": "Garage: drill",
+          "chips": [
+            "garage"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tidy residential garage, an adult Black man holds the teal cordless drill upright with the bit visible and says: “This compact drill handles the small fixes on my weekend list.” The presenter turns the drill once to show the grip. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the drill steady with the garage bench behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-garage-2",
+          "label": "Garage: wrench",
+          "chips": [
+            "garage"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tidy residential garage, an adult East Asian woman holds the silver ratchet wrench horizontally at chest height and says: “The ratchet head lets me work in a tight space.” The presenter rotates the wrench once to show the head. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the wrench steady with the tool wall behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-interview-1",
+          "label": "Interview: lunch box",
+          "chips": [
+            "interview"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lively pedestrian street, an adult white woman holds the stainless lunch box while an interviewer brings a plain microphone into frame and says: “This lunch box is what I pack when I am out all day.” The presenter opens the lid once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open lunch box steady during the street interview. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-interview-2",
+          "label": "Interview: food jar",
+          "chips": [
+            "interview"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a lively pedestrian street, an adult South Asian man holds the insulated food jar while an interviewer brings a plain microphone into frame and says: “This jar keeps a warm meal ready for my commute.” The presenter twists the lid once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the jar steady while the microphone remains in frame. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-pool-1",
+          "label": "Pool: goggles",
+          "chips": [
+            "pool"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright outdoor swimming pool, an adult Black woman holds the clear swim goggles by the strap beside her face and says: “These goggles sit comfortably for a quick lap.” The presenter turns the goggles once to show both lenses. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the goggles steady with the pool lanes behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-pool-2",
+          "label": "Pool: swim cap",
+          "chips": [
+            "pool"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright indoor swimming pool, an adult white man holds the navy silicone swim cap open toward the lens and says: “This cap folds flat in my swim bag.” The presenter stretches the rim once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the cap steady with the pool water behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-reporting-1",
+          "label": "Reporting: microphone",
+          "chips": [
+            "reporting"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a city sidewalk, an adult Latina woman holds the plain handheld microphone near her mouth and says: “I am testing this compact microphone for a clear street report.” The presenter turns the microphone once to show its grille. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the microphone steady as the city corner stays in view. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-reporting-2",
+          "label": "Reporting: directional mic",
+          "chips": [
+            "reporting"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a city park entrance, an adult East Asian man holds the short directional microphone with its gray windscreen toward the lens and says: “This directional microphone keeps my outdoor report focused.” The presenter tilts the microphone once toward the park. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the microphone steady with the park entrance behind him. Sound: clear speech and natural street ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-travel-1",
+          "label": "Travel: packing cube",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright airport lounge, an adult Black woman holds the olive travel packing cube by its handle and says: “This cube keeps small travel layers easy to find.” The presenter opens the zipper once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the open cube steady with terminal seating behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-travel-2",
+          "label": "Travel: neck pillow",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright airport terminal, an adult white man holds the gray travel neck pillow around his neck and says: “This pillow gives my head support between flights.” The presenter lifts one side once to show its shape. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the pillow steady with terminal windows behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-yoga-1",
+          "label": "Yoga: yoga block",
+          "chips": [
+            "yoga"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm yoga studio, an adult South Asian woman holds the natural cork yoga block at chest height and says: “This block gives my stretch a little more support.” The presenter turns the block once to show its edges. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the block steady with studio mats behind her. Sound: clear speech and natural scene ambience; no music, text or logos.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:sc2-yoga-2",
+          "label": "Yoga: yoga strap",
+          "chips": [
+            "yoga"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a calm yoga studio, an adult Black man holds the sand-colored yoga strap with its buckle visible and says: “This strap helps me keep a steady reach during a pose.” The presenter pulls the strap gently once. Direct-to-camera chest-up handheld phone framing, natural daylight, realistic skin. End with the strap relaxed in a loop with the studio behind him. Sound: clear speech and natural scene ambience; no music, text or logos.",
           "kind": "video"
         }
       ],
