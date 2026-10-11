@@ -45336,6 +45336,96 @@
           1280
         ],
         "source": "codex-imagegen"
+      },
+      "rc7-tpl-product-feature-callout-video-strip-3-r1": {
+        "file": "rc7-tpl-product-feature-callout-video-strip-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man demonstrates the hinge of plain black eyeglass frames in bright window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-product-feature-callout-video-strip-4-r1": {
+        "file": "rc7-tpl-product-feature-callout-video-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up detail: adult hand opens a plain backpack buckle on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-carousel-video-ad-strip-2-r1": {
+        "file": "rc7-tpl-carousel-video-ad-strip-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult opens a plain olive shoulder bag to show its inner compartments.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-carousel-video-ad-strip-4-r1": {
+        "file": "rc7-tpl-carousel-video-ad-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands pack a plain lunch tote with a steel container and napkin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-spark-ads-style-video-strip-5-r1": {
+        "file": "rc7-tpl-spark-ads-style-video-strip-5-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult adjusts a compact desk tripod in a bright home office.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-spark-ads-style-video-strip-6-r1": {
+        "file": "rc7-tpl-spark-ads-style-video-strip-6-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands arrange pens and cables in a plain drawer organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-retargeting-video-ad-strip-0-r1": {
+        "file": "rc7-tpl-retargeting-video-ad-strip-0-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies plain face cream from a low round jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-retargeting-video-ad-strip-3-r1": {
+        "file": "rc7-tpl-retargeting-video-ad-strip-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult traveler carries a plain canvas duffel through a bright terminal.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "rc7-tpl-retargeting-video-ad-strip-5-r1": {
+        "file": "rc7-tpl-retargeting-video-ad-strip-5-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand brushes a calm dog with a plain grooming glove.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

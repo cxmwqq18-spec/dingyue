@@ -4,24 +4,24 @@
   "description": "Create a native-feeling TikTok Spark Ads video from one product photo. Add your caption, sound and authorization in TikTok after download, then boost the post.",
   "h1": "Spark Ads Style Videos with Everyday Product Footage",
   "eyebrow": "Spark Ads style template",
-  "lead": "Polished brand ads get skipped when a feed feels casual. Upload one product photo and get a native-style product clip ready to post and authorize as a Spark Ad.",
-  "benefits_h2": "Why sellers choose Spark Ads templates",
+  "lead": "Post creator-style product footage from one photo without arranging a shoot. Upload your product and get a native-style clip ready for TikTok.",
+  "benefits_h2": "Why Sellers Choose Spark Ads Style Videos",
   "benefits": [
     {
       "t": "Footage that looks like an organic post",
-      "d": "The clip shows one everyday action in a familiar setting, so the ad sits naturally in the feed instead of looking like a polished commercial. The product stays in hand and easy to recognize."
+      "d": "Get native-style footage without booking a creator shoot. The clip shows one everyday action in a familiar setting instead of a polished commercial, with the product easy to recognize."
     },
     {
       "t": "Promote a post from your own account",
-      "d": "The file is built to be authorized and boosted as a Spark Ad, which keeps the ad tied to your profile and lets viewers visit it directly. Account connection and setup stay in TikTok."
+      "d": "Boost a post from your own profile without handing off account access. The file stays tied to your profile, and viewers can visit it directly."
     },
     {
-      "t": "Cut for TikTok placements",
-      "d": "Use 9:16 for full-screen placement, with clips at 6, 10, 15 or 30 seconds for one quick product action or a fuller creator explanation. TikTok lists 9:16, 1:1 and 16:9 as standard sizes."
+      "t": "Cut for TikTok formats",
+      "d": "Reach TikTok viewers with one vertical cut. Use 9:16 for full-screen TikTok, with clips at 6, 10, 15 or 30 seconds for one quick product action or a fuller creator explanation. TikTok lists 9:16, 1:1 and 16:9 as standard sizes."
     },
     {
       "t": "Captions and offers stay flexible",
-      "d": "Add sound, captions and your offer in TikTok or your editor after download, so the post can be updated without regenerating the scene. Downloads have no AIVideosUGC watermark and are cleared for your own commercial use."
+      "d": "Change captions or offers without regenerating the scene. Add sound, captions and your offer in TikTok or your editor after download; downloads have no AIVideosUGC watermark."
     }
   ],
   "secondary_keywords": [
@@ -30,7 +30,7 @@
     "Spark Ads video template",
     "TikTok product footage"
   ],
-  "steps_h2": "How it works",
+  "steps_h2": "How to Make Spark Ads Style Videos in 3 Simple Steps",
   "steps_lead": "Choose a creator style, add your product, generate. Finish captions and authorization in TikTok.",
   "steps": [
     {
@@ -86,7 +86,7 @@
     },
     {
       "q": "What size should a Spark Ads video use?",
-      "a": "Use 9:16 for a full-screen TikTok placement. TikTok also lists 1:1 and 16:9 as standard sizes."
+      "a": "Use 9:16 for a full-screen TikTok format. TikTok also lists 1:1 and 16:9 as standard sizes."
     },
     {
       "q": "How fast is a Spark Ads video made?",
@@ -108,8 +108,8 @@
       "n:guide:q14-spark-strip-espresso-r2",
       "n:guide:q14-spark-strip-jacket",
       "n:guide:q14-spark-strip-phonecase-r2",
-      "n:guide:q14-spark-strip-tripod-r2",
-      "n:guide:q14-spark-strip-organizer"
+      "n:guide:rc7-tpl-spark-ads-style-video-strip-5-r1",
+      "n:guide:rc7-tpl-spark-ads-style-video-strip-6-r1"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-spark-ads-style-video-m2-source",

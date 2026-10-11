@@ -4,24 +4,24 @@
   "description": "Turn one product photo into an ordered video story: open, reveal, use and finish. Add your headline, price and call to action after download.",
   "h1": "Carousel Video Ads That Tell One Product Story",
   "eyebrow": "Carousel video ad template",
-  "lead": "One product shot rarely answers every shopping question, while a full carousel takes several cards to design. Upload one photo and get an ordered story clip for feeds and ads.",
-  "benefits_h2": "Why sellers choose carousel video templates",
+  "lead": "Give shoppers an ordered product story from one photo, without designing and uploading separate cards. Upload one photo and get a story clip for feeds and ads.",
+  "benefits_h2": "Why Sellers Choose Carousel Video Ads",
   "benefits": [
     {
       "t": "One file instead of several cards",
-      "d": "The ordered clip plays open, reveal, use and finish in one video, so you get the persuasive flow of a carousel without designing and uploading separate panels."
+      "d": "Save card-design time with one ordered video. It plays open, reveal, use and finish in one file."
     },
     {
       "t": "Every beat answers a shopper question",
-      "d": "The first beat earns attention, the next shows the feature, another proves it in use and the last gives the next step. Buyers move through the story instead of scrolling past."
+      "d": "Help shoppers reach the next answer without another card instead of scrolling past the story. The first beat earns attention, the next shows the feature, and the last gives the next step."
     },
     {
-      "t": "Cut for feed placements",
-      "d": "Use 1:1 in feed placements and 9:16 in Reels and Stories, with clips at 6, 10, 15 or 30 seconds. A longer cut lets each beat breathe when the product needs explanation."
+      "t": "Cut for feed formats",
+      "d": "Post one story in each feed format without rebuilding it. Use 1:1 in feed formats and 9:16 in Reels and Stories, with clips at 6, 10, 15 or 30 seconds. A longer cut lets each beat breathe when the product needs explanation."
     },
     {
       "t": "Facts added after download",
-      "d": "Place headlines, prices, dimensions and calls to action in your editor so every number stays exact. The download carries no AIVideosUGC watermark and can run in your own ads."
+      "d": "Keep prices and dimensions accurate without regenerating the scene. Place headlines, prices, dimensions and calls to action in your editor; downloads carry no AIVideosUGC watermark."
     }
   ],
   "secondary_keywords": [
@@ -30,7 +30,7 @@
     "Instagram carousel video",
     "sequenced product ad"
   ],
-  "steps_h2": "How it works",
+  "steps_h2": "How to Make Carousel Video Ads in 3 Simple Steps",
   "steps_lead": "Choose a story style, add your product, generate. No card design and no multi-file upload.",
   "steps": [
     {
@@ -86,7 +86,7 @@
     },
     {
       "q": "Which sizes can I use?",
-      "a": "Use 1:1 for a square feed or 9:16 for a vertical placement. Choose the frame that fits where the clip will live."
+      "a": "Use 1:1 for a square feed or 9:16 for a vertical format. Choose the frame that fits where the clip will live."
     },
     {
       "q": "How fast is a carousel video made?",
@@ -106,9 +106,9 @@
     "strip": [
       "n:guide:q13-carousel-strip-0",
       "n:guide:q13-carousel-strip-1-r2",
-      "n:guide:q13-carousel-strip-2-r2",
+      "n:guide:rc7-tpl-carousel-video-ad-strip-2-r1",
       "n:guide:q13-carousel-strip-3",
-      "n:guide:q13-carousel-strip-4",
+      "n:guide:rc7-tpl-carousel-video-ad-strip-4-r1",
       "n:guide:q13-carousel-strip-5-r2"
     ],
     "steps": {
