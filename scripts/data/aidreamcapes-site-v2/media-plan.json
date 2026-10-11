@@ -2,27 +2,19 @@
   "pages": {
     "white-background": {
       "hero": {
-        "kind": "pair",
-        "before": "n:guide:q5-white-serum-source-hero-r2",
-        "after": "n:guide:q5-white-serum-result-hero-r2"
+        "kind": "image",
+        "image": "n:guide:k2-white-hero-cream-mug"
       },
       "pairs": [],
-      "og": "n:t33-white-background-og-r2"
+      "og": "n:ra3-white-background-og-r1"
     },
     "lifestyle-photos": {
       "hero": {
         "kind": "pair",
         "before": "n:guide:k5-lifestyle-gallery-source",
-        "after": "n:guide:q5-life-tote-market"
+        "after": "n:guide:k5-lifestyle-gallery-hero"
       },
-      "gallery": [
-        "n:guide:q5-life-serum-gallery-r2",
-        "n:guide:q5-life-pet-example-r2",
-        "n:guide:k5-lifestyle-gallery-03",
-        "n:guide:q5-life-skincare-unbox",
-        "n:guide:q5-life-skincare-apply"
-      ],
-      "og": "n:t33-lifestyle-photos-og-r2",
+      "og": "n:ra3-lifestyle-photos-og-r1",
       "pairs": []
     },
     "model-photos": {
@@ -38,36 +30,10 @@
     "change-background": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:q6-cbg-hero-source",
-        "after": "n:guide:q6-cbg-hero-result"
+        "before": "n:guide:ra3-change-background-hero-1-r1",
+        "after": "n:guide:ra3-change-background-hero-2-r1"
       },
-      "gallery": [
-        "n:guide:q6-cbg-gallery-01",
-        "n:guide:q6-cbg-gallery-02",
-        "n:guide:q6-cbg-gallery-03",
-        "n:guide:q6-cbg-gallery-04-r2",
-        "n:guide:q6-cbg-gallery-05",
-        "n:guide:q6-cbg-gallery-06"
-      ],
-      "og": "n:t33-change-background-og-r2",
-      "pairs": [
-        {
-          "before": "n:guide:k5-background-phonecase-source",
-          "after": "n:guide:q6-cbg-pair-phonecase-after"
-        },
-        {
-          "before": "n:yogamat-pack",
-          "after": "n:guide:q6-cbg-pair-yogamat-after"
-        },
-        {
-          "before": "n:boots-pack",
-          "after": "n:guide:q6-cbg-pair-boots-after"
-        },
-        {
-          "before": "n:protein-pack",
-          "after": "n:guide:q6-cbg-pair-protein-after"
-        }
-      ]
+      "og": "n:ra3-change-background-og-r1"
     },
     "social-ad-photos": {
       "hero": {
