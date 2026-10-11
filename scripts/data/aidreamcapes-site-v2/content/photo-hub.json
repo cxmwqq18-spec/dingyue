@@ -132,10 +132,10 @@
         "label": "Desert",
         "items": [
           {
-            "ref": "n:guide:mx1w-photo-hub-desert-1-r1",
-            "title": "Desert: amber bottle on stone",
+            "ref": "n:guide:img1-photo-hub-desert-r1",
+            "title": "Desert: ceramic kettle on stone",
             "kind": "photo",
-            "product": "amber skincare bottle"
+            "product": "sea-glass ceramic kettle"
           },
           {
             "ref": "n:guide:mx1w-photo-hub-desert-2-r1",
@@ -186,7 +186,7 @@
     "steps": {
       "source": "n:guide:q1-photo-steps-source",
       "sourceAlt": "Plain coral lip balm tube fully in frame on pure white, cap beside it, blank label area and soft even light.",
-      "result": "n:guide:q1-photo-steps-result",
+      "result": "n:guide:img1-photo-hub-steps-result-r1",
       "mode": "photo",
       "prompt": "A clean vanity photo as I apply this lip balm before work.",
       "options": [

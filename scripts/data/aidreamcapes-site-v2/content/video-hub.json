@@ -182,12 +182,12 @@
       "f:q1-video-strip-bag"
     ],
     "steps": {
-      "source": "n:guide:q1-video-steps-source",
-      "sourceAlt": "A single unbranded amber serum bottle with dropper cap, front facing and label area blank.",
-      "result": "n:guide:q1-video-steps-result",
+      "source": "n:guide:img1-video-hub-steps-source-r1",
+      "sourceAlt": "Plain matte teal insulated water bottle with an integrated black loop handle, fully visible on a pale counter.",
+      "result": "n:guide:img1-video-hub-steps-result-r1",
       "mode": "video",
       "length": 10,
-      "prompt": "I wanted to show you this serum before I head out.",
+      "prompt": "I wanted to show you this insulated bottle before I head out.",
       "options": [
         [
           "Frame",

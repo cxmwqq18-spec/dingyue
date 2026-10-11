@@ -272,10 +272,11 @@
       "f:q1-home-strip-creator-review"
     ],
     "steps": {
-      "source": "n:guide:q1-home-steps-source",
-      "result": "n:guide:q1-home-steps-result",
+      "source": "n:guide:img1-home-steps-source-r1",
+      "sourceAlt": "Plain matte navy insulated travel mug with a simple black lid, fully visible on a clean white background.",
+      "result": "n:guide:img1-home-steps-result-r1",
       "mode": "photo",
-      "prompt": "A quick, natural look at this serum in my car before I head out.",
+      "prompt": "A quick, natural look at this insulated travel mug in my car before I head out.",
       "options": [
         [
           "Template",
