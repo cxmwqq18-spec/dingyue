@@ -34,7 +34,7 @@
       "h2": "Pick a look, then describe it in plain words",
       "paras": [
         "Templates are the quickest route when you already know the kind of image you need: a white background for a marketplace, studio lighting for your main product shot, a close-up for texture, or one image per color. When you have a specific setting in mind, write it out instead.",
-        "A useful description names the surface, the place, the light, and one or two props. For example: \"A ceramic mug on a wooden kitchen counter, morning light from a window, a plate of toast blurred in the background.\" That paints a clear picture without crowding the product. To see how a plain starting photo turns into finished scenes, browse our [AI product photo examples](page:examples), from lipstick and hoodies to handbags and boots.",
+        "A useful description names the surface, the place, the light, and one or two props. For example: \"A tan handbag on a light wood cafe table, soft morning window light, a folded scarf blurred in the background.\" That paints a clear picture without crowding the product. To see how a plain starting photo turns into finished scenes, browse our [AI product photo examples](page:examples), from handbags and boots to jackets.",
         "Leave out printed words, famous faces, and logos you don't own. Lettering inside AI images often comes out misspelled, and requests involving public figures or other companies' marks may be turned down."
       ]
     },
@@ -43,7 +43,7 @@
       "paras": [
         "Decide where an image is going before you make it. [Amazon](page:plat-amazon), for example, asks for a pure white background on the main image, while the images after it can show the product in use, next to a familiar object for size, or up close.",
         "On your own store, a consistent look matters more than variety. If your collection pages use soft gray backdrops, keep new images in that same style so the grid stays tidy. For [social posts and feed ads](page:social-ad-photos), a lived-in scene with some empty space is handy, because you can drop your offer into that space later in Canva or Ads Manager.",
-        "Images come out square by default, which suits product grids, marketplace galleries, and feed posts."
+        "Square images suit product grids, marketplace galleries, and feed posts. Start with the full tan handbag in frame, then leave empty space only where your editor will add an offer."
       ]
     },
     {
@@ -87,6 +87,36 @@
     {
       "q": "Can I start AI product photography without studio lighting?",
       "a": "Yes. A sharp phone photo near a window works; use even light, keep the full product in frame, and avoid glare and heavy filters."
+    },
+    {
+      "q": "How many credits does one product photo use?",
+      "a": "One product photo uses 24 credits. You see the credit cost before the generation starts."
+    },
+    {
+      "q": "Do white-background and lifestyle images count as separate tasks?",
+      "a": "Yes. Each generated image is its own task, so a white-background shot and a lifestyle shot each show their own cost before you start."
+    },
+    {
+      "q": "What happens if a product photo job fails?",
+      "a": "Failed jobs return their credits to your balance automatically. You can try again with a sharper source photo or a clearer scene description."
     }
-  ]
+  ],
+  "steps_h2": "How to Make AI Product Photos in 3 Simple Steps",
+  "steps_lead": "Use one clear handbag photo to make a finished image you can place in a listing or ad.",
+  "steps": [
+    {
+      "t": "Capture a clear source photo",
+      "d": "Upload a sharp photo of the tan handbag with its full shape and handles in frame. You keep that same handbag as the reference for every finished image."
+    },
+    {
+      "t": "Choose a look and write the scene",
+      "d": "Choose a background or describe the setting, light and one prop for the handbag. You get a scene that suits the listing or ad while the product stays the focus."
+    },
+    {
+      "t": "Download and Post",
+      "d": "Download the finished handbag image after comparing it with the original photo. Add your price or offer in your store or ad editor."
+    }
+  ],
+  "cta_title": "Turn one handbag photo into your next listing set",
+  "cta_lead": "Upload a clear handbag photo, choose a scene and download a finished image for your store or ad."
 }
