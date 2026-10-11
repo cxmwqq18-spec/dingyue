@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "Show the result first",
-      "d": "Show the carousel video ad outcome in one clear moment so buyers know what they get."
+      "d": "Show the carousel video ad outcome in one clear moment so buyers know what they get.",
+      "img": "n:guide:fx19-carousel-benefit-story-01",
+      "alt": "Adult woman opens a plain charcoal commuter backpack at a cafe table."
     },
     {
       "t": "Skip another shoot",
-      "d": "Use the photo you already have instead of booking creators, locations or gear."
+      "d": "Use the photo you already have instead of booking creators, locations or gear.",
+      "img": "n:guide:fx19-carousel-benefit-shoot-02",
+      "alt": "Adult man pulls a plain teal lunch tote from a kraft mailer."
     },
     {
       "t": "Make more useful versions",
-      "d": "Create another angle from the same source without reshooting."
+      "d": "Create another angle from the same source without reshooting.",
+      "img": "n:guide:fx19-carousel-benefit-versions-03",
+      "alt": "Adult woman raises a plain orange sports bottle after a park run."
     },
     {
       "t": "Keep live details editable",
-      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate."
+      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate.",
+      "img": "n:guide:fx19-carousel-benefit-editable-04",
+      "alt": "Adult man rotates a plain coral cream jar on a clean tabletop."
     }
   ],
   "secondary_keywords": [
@@ -556,5 +564,52 @@
     }
   },
   "cta_title": "Give shoppers the whole product story",
-  "cta_lead": "Upload one product photo, see the cost first and make a carousel video ad video."
+  "cta_lead": "Upload one product photo, see the cost first and make a carousel video ad video.",
+  "examples": {
+    "h2": "More carousel video ad examples",
+    "lead": "Pick an ordered product moment, then add the exact offer or listing details after download.",
+    "groups": [
+      {
+        "label": "Product story beats",
+        "items": [
+          {
+            "ref": "n:guide:fx19-carousel-example-open-01",
+            "title": "Canvas toiletry pouch, sink opening",
+            "kind": "scene",
+            "product": "canvas toiletry pouch"
+          },
+          {
+            "ref": "n:guide:fx19-carousel-example-reveal-02",
+            "title": "Blue insulated bottle, tissue reveal",
+            "kind": "scene",
+            "product": "blue insulated bottle"
+          },
+          {
+            "ref": "n:guide:fx19-carousel-example-use-03",
+            "title": "Wooden pet brush, dog grooming",
+            "kind": "scene",
+            "product": "wooden pet brush"
+          },
+          {
+            "ref": "n:guide:fx19-carousel-example-compare-04",
+            "title": "Storage bins, side-by-side comparison",
+            "kind": "scene",
+            "product": "storage bins"
+          },
+          {
+            "ref": "n:guide:fx19-carousel-example-finish-05",
+            "title": "Navy running cap, final product hold",
+            "kind": "scene",
+            "product": "navy running cap"
+          },
+          {
+            "ref": "n:guide:fx19-carousel-example-feature-06",
+            "title": "Teal dog harness, park setup",
+            "kind": "scene",
+            "product": "teal dog harness"
+          }
+        ]
+      }
+    ]
+  }
 }

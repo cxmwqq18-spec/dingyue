@@ -78,15 +78,39 @@
         "items": [
           {
             "ref": "n:guide:rc4-tpl-bf-examples-unboxing-01-r1",
-            "title": "Hands Reveal a Coral Cream Jar and Tube",
+            "title": "Coral cream set, gift-box reveal",
             "kind": "scene",
             "product": "face cream set"
           },
           {
             "ref": "n:guide:f16-r10-bf-example-headphones-r1",
-            "title": "Hands Fold Over-Ear Headphones",
+            "title": "Over-ear headphones, fold-down demo",
             "kind": "scene",
-            "product": "headphones"
+            "product": "over-ear headphones"
+          },
+          {
+            "ref": "n:guide:fx19-bf-example-unbox-01",
+            "title": "Cobalt water bottle, gift unboxing",
+            "kind": "scene",
+            "product": "cobalt water bottle"
+          },
+          {
+            "ref": "n:guide:fx19-bf-example-tryon-02",
+            "title": "Olive jacket, hallway try-on",
+            "kind": "scene",
+            "product": "olive jacket"
+          },
+          {
+            "ref": "n:guide:fx19-bf-example-band-demo-03",
+            "title": "Blue pet leash, park setup",
+            "kind": "scene",
+            "product": "blue pet leash"
+          },
+          {
+            "ref": "n:guide:fx19-bf-example-gift-reveal-04",
+            "title": "Lavender travel bag, gift reveal",
+            "kind": "scene",
+            "product": "lavender travel bag"
           }
         ]
       }
@@ -561,19 +585,27 @@
   "benefits": [
     {
       "t": "Show the result first",
-      "d": "Show the Black Friday video ad outcome in one clear moment so buyers know what they get."
+      "d": "Show the Black Friday video ad outcome in one clear moment so buyers know what they get.",
+      "img": "n:guide:fx19-bf-benefit-result-01",
+      "alt": "Adult woman holds a plain coral face-cream jar above an open kraft gift box."
     },
     {
       "t": "Skip another shoot",
-      "d": "Use the photo you already have instead of booking creators, locations or gear."
+      "d": "Use the photo you already have instead of booking creators, locations or gear.",
+      "img": "n:guide:fx19-bf-benefit-shoot-02",
+      "alt": "Adult man closes a plain olive insulated lunch tote on a kitchen counter."
     },
     {
       "t": "Make more useful versions",
-      "d": "Create another angle from the same source without reshooting."
+      "d": "Create another angle from the same source without reshooting.",
+      "img": "n:guide:fx19-bf-benefit-versions-03",
+      "alt": "Adult woman stretches a plain teal resistance band in a home gym."
     },
     {
       "t": "Keep live details editable",
-      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate."
+      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate.",
+      "img": "n:guide:fx19-bf-benefit-editable-04",
+      "alt": "Adult man rotates a plain sage pump bottle in a clean studio."
     }
   ],
   "cta_title": "Make the deal easy to see"
