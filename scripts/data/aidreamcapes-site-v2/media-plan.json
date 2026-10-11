@@ -788,14 +788,14 @@
     "tpl-spark-ads-style-video": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q14-spark-hero-r2"
+        "image": "n:guide:rc7-tpl-spark-ads-style-video-hero-r2"
       },
       "og": "n:t33-tpl-spark-ads-style-video-og-r2"
     },
     "tpl-retargeting-video-ad": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q14-retarget-hero-focus"
+        "image": "n:guide:rc7-tpl-retargeting-video-ad-hero-r1"
       },
       "og": "n:t33-tpl-retargeting-video-ad-og-r2"
     }
