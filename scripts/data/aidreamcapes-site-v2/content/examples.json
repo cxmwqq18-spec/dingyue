@@ -50,7 +50,7 @@
   ],
   "cases": [
     {
-      "id": "tote",
+      "id": "travel-mug",
       "t": "Product Scene: Matte travel mug on a desk",
       "d": "Start with a matte white travel mug, place it in a clean desk scene and review the finished product image.",
       "imageRefs": [
@@ -67,7 +67,7 @@
       "ctaPrompt": "Recreate a matte white travel mug product scene from my uploaded product photo on a clean desk, keeping the mug shape, lid and colors consistent."
     },
     {
-      "id": "jacket",
+      "id": "linen-tote",
       "t": "Lifestyle Scene: Linen tote for a city day",
       "d": "Start with a linen tote, show it beside an everyday outfit and review the finished lifestyle image.",
       "imageRefs": [
@@ -84,7 +84,7 @@
       "ctaPrompt": "Recreate a linen tote lifestyle scene from my uploaded product photo beside an everyday outfit in bright natural light, keeping the tote shape and color consistent."
     },
     {
-      "id": "lipstick",
+      "id": "fluted-vase",
       "t": "Product Scene: Fluted vase with flowers",
       "d": "Start with a white fluted vase, place it with flowers in a bright room and review the finished product image.",
       "imageRefs": [
@@ -101,7 +101,7 @@
       "ctaPrompt": "Recreate a white fluted vase room scene from my uploaded product photo with flowers in a bright room, keeping the vase shape and color consistent."
     },
     {
-      "id": "hoodie",
+      "id": "leather-wallet",
       "t": "Detail Scene: Brown leather wallet",
       "d": "Start with a brown leather wallet, show its material and finish in close detail and review the finished image.",
       "imageRefs": [
@@ -118,7 +118,7 @@
       "ctaPrompt": "Recreate a brown leather wallet detail scene from my uploaded product photo, keeping the wallet shape, stitching and color consistent."
     },
     {
-      "id": "handbag",
+      "id": "running-shoe",
       "t": "Product Scene: Gray running shoe for a feed ad",
       "d": "Start with a gray knit running shoe, set it in a simple feed-ad scene and review the finished product image.",
       "imageRefs": [
@@ -135,7 +135,7 @@
       "ctaPrompt": "Recreate a gray knit running shoe feed scene from my uploaded product photo, keeping the shoe shape, sole and color consistent."
     },
     {
-      "id": "boots",
+      "id": "sunscreen",
       "t": "Vertical Scene: Sunscreen tube for a short ad",
       "d": "Start with a plain sunscreen tube, frame it for a vertical scene and review the finished product image.",
       "imageRefs": [
@@ -467,14 +467,14 @@
     },
     "directoryFilters": {
       "cases": {
-        "tote": [
+        "travel-mug": [
           "food-beverage",
           "e-commerce",
           "financial-services",
           "ugc",
           "viral"
         ],
-        "jacket": [
+        "linen-tote": [
           "accessories",
           "apparel",
           "clothing",
@@ -485,7 +485,7 @@
           "ugc",
           "viral"
         ],
-        "lipstick": [
+        "fluted-vase": [
           "apps",
           "beauty-personal-care",
           "education",
@@ -497,7 +497,7 @@
           "ugc",
           "viral"
         ],
-        "hoodie": [
+        "leather-wallet": [
           "accessories",
           "apps",
           "education",
@@ -508,7 +508,7 @@
           "ugc",
           "viral"
         ],
-        "handbag": [
+        "running-shoe": [
           "apparel",
           "clothing",
           "e-commerce",
@@ -518,7 +518,7 @@
           "ugc",
           "viral"
         ],
-        "boots": [
+        "sunscreen": [
           "beauty-personal-care",
           "e-commerce",
           "health-fitness",

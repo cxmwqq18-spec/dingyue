@@ -941,7 +941,7 @@ function plannedRefs(model, pageId) {
   refs.push(...(plan.gallery ?? []), ...(plan.pairs ?? []).flatMap((pair) => [pair.before, pair.after]));
   const flows = pageId === "home" ? model.content.home?.example_flows : pageId === "examples" ? model.content.examples?.cases : [];
   for (const item of flows ?? []) {
-    const flow = EXAMPLE_FLOWS[item.id];
+    const flow = EXAMPLE_FLOWS[exampleFlowKey(item.id)];
     if (flow) refs.push(...flow[1].map(([, file]) => (flow[0] ? `g:${flow[0]}/${file}` : file)));
   }
   return refs.filter(Boolean);
@@ -1501,8 +1501,8 @@ const ARTICLE_TOOL = {
 
 // The tool behind each start-to-finish example, so a visitor can make the same kind of result.
 const FLOW_TOOL = {
-  ebike: "video-ads", bottle: "social-ad-photos", tote: "lifestyle-photos", necklace: "model-photos", jacket: "social-ad-photos", lipstick: "lifestyle-photos",
-  hoodie: "model-photos", handbag: "lifestyle-photos", boots: "model-photos", sunglasses: "lifestyle-photos", coffee: "lifestyle-photos", candle: "lifestyle-photos",
+  ebike: "video-ads", bottle: "social-ad-photos", "travel-mug": "lifestyle-photos", necklace: "model-photos", "linen-tote": "social-ad-photos", "fluted-vase": "lifestyle-photos",
+  "leather-wallet": "model-photos", "running-shoe": "lifestyle-photos", sunscreen: "model-photos", sunglasses: "lifestyle-photos", coffee: "lifestyle-photos", candle: "lifestyle-photos",
   phonecase: "lifestyle-photos", yogamat: "lifestyle-photos", hotsauce: "social-ad-photos"
 };
 
@@ -1813,13 +1813,13 @@ function specLinks(model, ids) {
 // ("n:" references, a plain product photo first and then scenes made from it).
 const EXAMPLE_FLOWS = {
   ebike: [null, [["Your product", "n:guide:plat-youtube-shorts-size-portrait-ebike"], ["Video ad", "f:video-hub-h1-bike"]]],
-  tote: ["lifestyle-scene", [["Your product", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
+  "travel-mug": ["lifestyle-scene", [["Your product", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
   necklace: ["jewelry-positioning", [["Your product", "source-input"], ["Worn on a dark top", "example-01"], ["Pendant detail", "example-05"]]],
-  jacket: ["sale-campaign-key-visual", [["Your product", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
-  lipstick: [null, [["Your product", "n:lipstick-pack"], ["On a vanity", "n:lipstick-vanity"], ["Shade swatch", "n:lipstick-swatch"]]],
-  hoodie: [null, [["Your product", "n:hoodie-pack"], ["Worn outdoors", "n:hoodie-street"], ["Flat lay", "n:hoodie-flatlay"]]],
-  handbag: [null, [["Your product", "n:handbag-pack"], ["Cafe table", "n:handbag-cafe"], ["Carried outdoors", "n:handbag-carry"]]],
-  boots: [null, [["Your product", "n:boots-pack"], ["On cobblestones", "n:boots-street"], ["By the door", "n:boots-doorway"]]],
+  "linen-tote": ["sale-campaign-key-visual", [["Your product", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
+  "fluted-vase": [null, [["Your product", "n:lipstick-pack"], ["On a vanity", "n:lipstick-vanity"], ["Shade swatch", "n:lipstick-swatch"]]],
+  "leather-wallet": [null, [["Your product", "n:hoodie-pack"], ["Worn outdoors", "n:hoodie-street"], ["Flat lay", "n:hoodie-flatlay"]]],
+  "running-shoe": [null, [["Your product", "n:handbag-pack"], ["Cafe table", "n:handbag-cafe"], ["Carried outdoors", "n:handbag-carry"]]],
+  sunscreen: [null, [["Your product", "n:boots-pack"], ["On cobblestones", "n:boots-street"], ["By the door", "n:boots-doorway"]]],
   sunglasses: [null, [["Your product", "n:sunglasses-pack"], ["Cafe table", "n:sunglasses-cafe"], ["Worn outdoors", "n:sunglasses-worn"]]],
   coffee: [null, [["Your product", "n:coffee-pack"], ["Kitchen counter", "n:coffee-counter"], ["Breakfast table", "n:coffee-breakfast"]]],
   candle: [null, [["Your product", "n:candle-pack"], ["Living room", "n:candle-table"], ["Bath edge", "n:candle-bath"]]],
@@ -1828,20 +1828,29 @@ const EXAMPLE_FLOWS = {
   hotsauce: [null, [["Your product", "n:hotsauce-pack"], ["Over tacos", "n:hotsauce-tacos"], ["With fresh chilies", "n:hotsauce-peppers"]]]
 };
 
-function flowCta(model, id) {
-  const tool = model.byId[FLOW_TOOL[id]];
-  return tool ? { cta: { label: "Try this with your product", href: toolAppHref(model, tool) } } : {};
+// These aliases let older home-page data render while the public examples use the descriptive IDs.
+const EXAMPLE_ID_ALIASES = { tote: "travel-mug", jacket: "linen-tote", lipstick: "fluted-vase", hoodie: "leather-wallet", handbag: "running-shoe", boots: "sunscreen" };
+function exampleFlowKey(id) {
+  return EXAMPLE_FLOWS[id] ? id : EXAMPLE_ID_ALIASES[id] ?? id;
+}
+
+function flowCta(model, id, item) {
+  const tool = model.byId[FLOW_TOOL[exampleFlowKey(id)]];
+  if (!tool) return {};
+  const label = typeof item?.ctaLabel === "string" && item.ctaLabel.trim() ? item.ctaLabel : "Try this with your product";
+  const prompt = typeof item?.ctaPrompt === "string" && item.ctaPrompt.trim() ? item.ctaPrompt : undefined;
+  return { cta: { label, href: toolAppHref(model, tool, undefined, prompt ? { promptOverride: prompt } : {}) } };
 }
 
 function exampleFlow(model, item) {
   if (item.id === "bottle") {
-    return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: [
+    return { t: item.t, d: item.d, ...flowCta(model, item.id, item), steps: [
       { label: "Lifestyle photo", image: imageRef(model, "bottle", "Green water bottle in a living room scene") },
       { label: "Feed ad", image: imageRef(model, "feedbottle", "Same water bottle in a sunlit feed ad") }] };
   }
-  const flow = EXAMPLE_FLOWS[item.id];
+  const flow = EXAMPLE_FLOWS[exampleFlowKey(item.id)];
   assert.ok(flow, `unknown example flow ${item.id}`);
-  return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: flow[1].map(([label, file], index) => ({
+  return { t: item.t, d: item.d, ...flowCta(model, item.id, item), steps: flow[1].map(([label, file], index) => ({
     label: normalizeStepLabel(item.imageLabels?.[index] || label),
     image: mediaImage(model, item.imageRefs?.[index] || (flow[0] ? `g:${flow[0]}/${file}` : file), "gallery")
   })) };
