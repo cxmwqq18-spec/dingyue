@@ -94,6 +94,12 @@
     {
       "q": "How many credits does one product photo use?",
       "a": "Each image job uses 24 credits, and the exact cost shows on screen before you start. If the job fails, the credits return to your balance automatically, so a failed attempt costs you nothing."
+    },
+    {
+      "q": "Should I use portrait mode for a product photo?",
+      "a": "No. Use the regular 1x lens without portrait mode, filters or beauty settings so the product edges and colors stay accurate."
     }
-  ]
+  ],
+  "cta_title": "Create a product photo you can use",
+  "cta_lead": "Start with one clear phone photo, then make a listing image or ad-ready scene you can compare with the real item."
 }
