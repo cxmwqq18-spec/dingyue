@@ -44,7 +44,7 @@
     }
   ],
   "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
-  "cta_lead": "Upload one gadget photo and see the cost before you start.",
+  "cta_lead": "Upload one clear gadget photo, choose a hands-on scene, and review the credit cost before you start.",
   "benefits_h2": "Why AI Product Videos for Electronics Beat Booking a Shoot",
   "benefits": [
     {
@@ -64,12 +64,12 @@
   "steps_lead": "Show one useful gadget moment, then take the finished clip straight to your listing or ad account.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add a clear photo that shows the gadget’s shape, ports and controls."
+      "t": "Upload Product Photo",
+      "d": "Add a clear photo that shows the gadget’s shape, ports, and controls."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose one hands-on action, such as an unboxing, cable connection or travel setup."
+      "t": "Choose a Scene",
+      "d": "Pick one hands-on action, such as an unboxing, cable connection, or travel setup."
     },
     {
       "t": "Download and Post",
@@ -133,5 +133,45 @@
         "h2": "Questions About AI Product Videos for Electronics"
       }
     }
-  }
+  },
+  "cta_title": "Create an electronics product video",
+  "more_sections": [
+    {
+      "eyebrow": "Where the files go",
+      "h2": "Post Electronics Ads Where Shoppers Find Them",
+      "lead": "Use the same product photo process for a listing page or a social feed, then add your approved offer details.",
+      "items": [
+        {
+          "t": "Amazon listings",
+          "d": "Use a clear product view on your [Amazon product page](page:plat-amazon), then add the exact compatibility and power details."
+        },
+        {
+          "t": "Shopify product pages",
+          "d": "Place a hands-on demo beside your product media on [Shopify](page:plat-shopify), keeping the gadget and specs consistent."
+        },
+        {
+          "t": "TikTok feeds",
+          "d": "Use a quick setup or unboxing in a vertical [TikTok ad](page:plat-tiktok) and add the offer in your editor."
+        },
+        {
+          "t": "Instagram Reels",
+          "d": "Turn a cable connection or desk demo into a vertical [Instagram Reel](page:plat-instagram) for a product launch or restock."
+        },
+        {
+          "t": "Facebook feeds",
+          "d": "Use a square or feed-ready [Facebook ad](page:plat-facebook) when shoppers need a clear product detail before they click."
+        }
+      ]
+    }
+  ],
+  "relatedLinks": [
+    "ind-beauty-skincare",
+    "ind-fashion-clothing",
+    "ind-home-living",
+    "ind-food-drinks",
+    "product-videos",
+    "unboxing-videos",
+    "white-background",
+    "video-ads"
+  ]
 }
