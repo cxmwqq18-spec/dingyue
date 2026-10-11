@@ -12,43 +12,43 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Turn a product page into a ready-to-test video",
+  "benefits_h2": "Start from the product page",
   "benefits": [
     {
-      "t": "Save setup time",
-      "d": "Start with the product image and name already on a public page, then move straight to a video idea.",
+      "t": "Paste the link, skip the download",
+      "d": "Paste a public product URL and keep the main product image as your starting reference.",
       "icon": "clock"
     },
     {
-      "t": "Skip manual uploads",
-      "d": "Paste one public URL and use its main product reference instead of downloading and re-uploading the first photo.",
+      "t": "Use the photo already on the page",
+      "d": "Confirm the image and name captured from the listing before you make a video.",
       "icon": "check"
     },
     {
-      "t": "Create more versions",
-      "d": "Reuse one listing to test different scenes, openings and lengths for the same product.",
+      "t": "Make another version from the same link",
+      "d": "Reuse one public URL to test a new scene, opening or length for the same item.",
       "icon": "layers"
     },
     {
-      "t": "Give buyers a clearer look",
-      "d": "Show one product moment in motion so shoppers understand the item before they buy.",
+      "t": "Show one moment shoppers can judge",
+      "d": "Turn one product detail into a clear scene buyers can understand before purchase.",
       "icon": "target"
     }
   ],
-  "steps_h2": "How to Make an AI Video with a URL to Video Tool in 3 Simple Steps",
-  "steps_lead": "Paste a public product page, confirm the captured reference and download a short clip for ads or social posts.",
+  "steps_h2": "How to Make a Video from a Product URL in 3 Simple Steps",
+  "steps_lead": "Paste a public product page, confirm the captured reference and download a short video for ads or social posts.",
   "steps": [
     {
       "t": "Paste Your Product URL",
-      "d": "Start from the product page you already maintain. Paste a public product URL that loads without sign-in and shows the variant you sell."
+      "d": "Open the product page you already maintain. Paste a public URL that loads without sign-in and shows the variant you sell."
     },
     {
       "t": "Confirm Your Product",
-      "d": "Keep the finished video tied to the right product. Confirm its image and name, then replace the image if the page is blocked."
+      "d": "Keep the finished video tied to the right item. Confirm the captured image and name, then upload a photo if the page is blocked."
     },
     {
       "t": "Download and Post",
-      "d": "Turn a product page into an ad you can post. Watch the result, then download it and add your current offer in your editor."
+      "d": "Turn the product page into an ad you can post. Watch the result, download it and add your current offer in your editor."
     }
   ],
   "maker": {
@@ -59,14 +59,14 @@
       ],
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 · TikTok, Reels & Shorts"
       ],
       [
         "Length",
         "6, 10, 15 or 30 seconds"
       ]
     ],
-    "cta": "Paste a product link"
+    "cta": "Make a video from this link"
   },
   "faq": [
     {
@@ -74,16 +74,16 @@
       "a": "A readable public page supplies its main product image and name as the starting reference."
     },
     {
-      "q": "Which product pages work?",
-      "a": "Use a public page that loads without sign-in and shows the variant you sell."
+      "q": "Can I use a public Shopify or Amazon product page?",
+      "a": "Yes. Use a public Shopify or Amazon product page that loads without sign-in and shows the variant you sell."
     },
     {
-      "q": "What if the page cannot be read?",
-      "a": "Upload the product photo directly when the page blocks access or has no usable image."
+      "q": "What if the page requires a login?",
+      "a": "Upload the product photo directly when the page requires a login, blocks access or has no usable image."
     },
     {
-      "q": "Can I change the captured image?",
-      "a": "Yes. Replace it with your own upload before generation."
+      "q": "Can I use the same link for another version?",
+      "a": "Yes. Paste the same public URL again and choose a new scene, opening or length for another version."
     },
     {
       "q": "Does the URL include prices or reviews?",
@@ -91,91 +91,60 @@
     },
     {
       "q": "How long can the video be?",
-      "a": "Choose 6, 10, 15, or 30 seconds."
+      "a": "Choose 6, 10, 15 or 30 seconds."
     },
     {
-      "q": "Can I use the clip in paid ads?",
-      "a": "Yes. Use the download in TikTok, Instagram, Facebook, or other ad channels."
+      "q": "Can I use the video in paid ads?",
+      "a": "Yes. Use the download in TikTok, Instagram, Facebook or other ad channels."
     }
   ],
   "cta_lead": "Start with one product URL and see the credit cost before generation.",
   "uses": [
     {
       "t": "E-commerce Videos",
-      "d": "Show product features and benefits in a short ad."
+      "d": "Show the product page's main image in an on-page product moment shoppers can judge."
     },
     {
       "t": "Product Demos",
-      "d": "Explain how the product works in a clear scene."
+      "d": "Use one clear action, such as opening a lunch container or setting a phone stand."
     },
     {
       "t": "Advertising Videos",
-      "d": "Build an ad around one selling point."
+      "d": "Build a paid ad around one selling point from the listing."
     },
     {
       "t": "Social Media Videos",
-      "d": "Create a clip for Instagram, YouTube, or TikTok."
+      "d": "Post a 9:16 video to TikTok, Instagram or YouTube Shorts."
     }
   ],
   "more_sections": [
     {
-      "eyebrow": "Why sellers use it",
-      "h2": "Keep the product page as your starting point",
-      "lead": "Use the listing customers already know, then shape a video around the selling point you want to test.",
+      "eyebrow": "What you keep from the product page",
+      "h2": "What you keep from the product page",
+      "lead": "Carry the listing's useful details into each draft so you can test another angle without starting over.",
       "items": [
         {
-          "t": "Start with the product page",
-          "d": "Turn the listed item into a video idea without arranging a new shoot.",
+          "t": "The page's main image",
+          "d": "Use the product image already on the listing as the starting reference.",
           "img": "n:guide:q2-url-to-video-strip-01",
           "frame": "none"
         },
         {
-          "t": "Write the angle you need",
-          "d": "Choose the scene and the point you want buyers to notice first.",
+          "t": "Your selling point",
+          "d": "Write the one feature or benefit you want the video to show.",
           "img": "n:guide:q2-url-to-video-case-02",
           "frame": "none"
         },
         {
-          "t": "Control the final format",
-          "d": "Set the frame and length for each version before you generate.",
+          "t": "A frame and length",
+          "d": "Choose 9:16 and 6, 10, 15 or 30 seconds for each version.",
           "img": "n:guide:q2-url-to-video-strip-03",
           "frame": "none"
         },
         {
-          "t": "Compare versions before launch",
-          "d": "See each product moment side by side before your campaign goes live.",
+          "t": "Another version from the same link",
+          "d": "Paste the same public URL again when you need a fresh opening or scene.",
           "img": "n:guide:q2-url-to-video-strip-04",
-          "frame": "none"
-        },
-        {
-          "t": "Keep product details intact",
-          "d": "Carry the listing's product image into each draft so its shape and color stay familiar.",
-          "img": "n:guide:q2-url-to-video-strip-05",
-          "frame": "none"
-        }
-      ]
-    },
-    {
-      "eyebrow": "More content, less hassle",
-      "h2": "Make more product videos from one listing",
-      "lead": "Reuse a product reference when you need another ad angle, format or opening.",
-      "items": [
-        {
-          "t": "Refresh the same listing",
-          "d": "Turn one product reference into another opening when your campaign needs fresh creative.",
-          "img": "n:guide:q2-url-to-video-case-01",
-          "frame": "none"
-        },
-        {
-          "t": "Scale product clips",
-          "d": "Reuse one listing to make several short ads for your channels.",
-          "img": "n:guide:q2-url-to-video-output-01",
-          "frame": "none"
-        },
-        {
-          "t": "Spend less time on production",
-          "d": "Move from product page to draft without booking a studio shoot.",
-          "img": "n:guide:q2-url-to-video-case-03",
           "frame": "none"
         }
       ]
