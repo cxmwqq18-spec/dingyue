@@ -47787,6 +47787,204 @@
           1280,
           1600
         ]
+      },
+      "fx05-model-when": {
+        "file": "fx05-model-when",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with short copper hair wearing a plain gray hoodie on an autumn city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-model-garment": {
+        "file": "fx05-model-garment",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands smooth a plain gray hoodie beside a wooden hanger on a light surface.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-model-setting": {
+        "file": "fx05-model-setting",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with short natural hair wearing a plain gray hoodie by a brick wall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-model-fit": {
+        "file": "fx05-model-fit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult East Asian man checking the sleeve and hem of a plain gray hoodie in a fitting room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-model-set": {
+        "file": "fx05-model-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with short auburn hair wearing a plain gray hoodie by a leafy park path.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-model-work": {
+        "file": "fx05-model-work",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short silver hair wearing a plain gray hoodie outside a storefront.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-unbox-why": {
+        "file": "fx05-unbox-why",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a blank kraft parcel to reveal one plain cream ceramic travel mug wrapped in tissue.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-unbox-ready": {
+        "file": "fx05-unbox-ready",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands place one plain cream ceramic travel mug beside its matching blank kraft parcel and folded tissue.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-unbox-clips": {
+        "file": "fx05-unbox-clips",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift the lid of a blank kraft parcel to begin revealing one plain cream ceramic travel mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-unbox-sentence": {
+        "file": "fx05-unbox-sentence",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands pull one plain cream ceramic travel mug from tissue inside its blank kraft parcel.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-unbox-details": {
+        "file": "fx05-unbox-details",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands hold one plain cream ceramic travel mug above its open blank kraft parcel and tissue.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-unbox-after": {
+        "file": "fx05-unbox-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands set one plain cream ceramic travel mug beside its open blank kraft parcel after the reveal.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-guide-shapes": {
+        "file": "fx05-guide-shapes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white sunscreen tube shown inside vertical, square, and wide blank frame shapes.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-guide-vertical": {
+        "file": "fx05-guide-vertical",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short dark bob holds a plain white sunscreen tube in a tall phone-shaped composition.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-guide-square": {
+        "file": "fx05-guide-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black man with short hair holds a plain white sunscreen tube centered in a square feed composition.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-guide-wide": {
+        "file": "fx05-guide-wide",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand presents a plain white sunscreen tube in a wide horizontal tabletop scene.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-guide-first": {
+        "file": "fx05-guide-first",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with short curly hair holds a plain white sunscreen tube upright in a vertical social ad scene.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx05-guide-mistakes": {
+        "file": "fx05-guide-mistakes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand checks a plain white sunscreen tube inside a simple phone preview frame with generous margins.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
