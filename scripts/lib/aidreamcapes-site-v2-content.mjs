@@ -1757,22 +1757,26 @@ function imageItemsFor(model, page, items) {
   });
 }
 
-// Article sections may carry one page-owned image after their paragraphs. Keep the
+// Prose sections may carry one page-owned image after their paragraphs. Keep the
 // source ref out of the public payload while preserving the section copy and links.
-function articleSectionsFor(model, page, sections) {
-  assert.ok(Array.isArray(sections), `${page.id}: article sections must be an array`);
+function proseSectionsFor(model, page, sections, label = "section") {
+  assert.ok(Array.isArray(sections), `${page.id}: ${label}s must be an array`);
   return sections.map((section, index) => {
-    assert.ok(section && typeof section === "object" && !Array.isArray(section), `${page.id}: article section ${index + 1} must be an object`);
-    assert.ok(Array.isArray(section.paras), `${page.id}: article section ${index + 1} paragraphs must be an array`);
+    assert.ok(section && typeof section === "object" && !Array.isArray(section), `${page.id}: ${label} ${index + 1} must be an object`);
+    assert.ok(Array.isArray(section.paras), `${page.id}: ${label} ${index + 1} paragraphs must be an array`);
     const out = { ...section, paras: section.paras.map((para) => inlineLinks(model, para, page.id)) };
     if (section.img !== undefined) {
-      assert.ok(typeof section.img === "string" && section.img.trim(), `${page.id}: article section ${index + 1} img must be a media ref`);
+      assert.ok(typeof section.img === "string" && section.img.trim(), `${page.id}: ${label} ${index + 1} img must be a media ref`);
       const image = mediaImage(model, section.img, "gallery");
       out.img = typeof section.alt === "string" && section.alt.trim() ? { ...image, alt: section.alt } : image;
     }
-    if (section.alt !== undefined) assert.ok(typeof section.alt === "string" && section.alt.trim(), `${page.id}: article section ${index + 1} alt must be a non-empty string`);
+    if (section.alt !== undefined) assert.ok(typeof section.alt === "string" && section.alt.trim(), `${page.id}: ${label} ${index + 1} alt must be a non-empty string`);
     return out;
   });
+}
+
+function articleSectionsFor(model, page, sections) {
+  return proseSectionsFor(model, page, sections, "article section");
 }
 
 // Optional page-owned sections keep their stored shape; only the item descriptions run
@@ -2257,8 +2261,8 @@ function payloadFor(model, page) {
   if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], costs: JOB_COST_ROWS, ...(c.teams ? { teams: c.teams } : {}), plans: PLANS, next: nextLinks(model, t) };
   if (t === "faq") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
   if (t === "contact") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aivideosugc.com", next: nextLinks(model, t) };
-  if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
-  if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
+  if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: proseSectionsFor(model, page, c.sections || [], "about section"), next: nextLinks(model, t) };
+  if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: proseSectionsFor(model, page, c.sections || [], "trust section"), next: nextLinks(model, t) };
   if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
   if (t === "examples") {
     const visual = visualFor(model, page, c.visual, {}, "photo", "/app/create", c);
@@ -2395,7 +2399,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const flow of payload.flows ?? []) for (const step of flow.steps ?? []) pushMedia(step.image);
     for (const group of [...(payload.examples?.groups ?? []), ...(payload.exampleGallery?.groups ?? [])]) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
-    if (layoutFor(page) === "article") for (const section of payload.sections ?? []) pushMedia(section?.img);
+    if (["article", "about", "trust"].includes(layoutFor(page))) for (const section of payload.sections ?? []) pushMedia(section?.img);
     for (const image of visualPayloadImages(payload.visual)) pushMedia({ src: image.src, alt: image.alt, width: image.w, height: image.h });
     if (guideReplacesHero(page, payload)) {
       const shown = new Set([...renderedImages(layoutFor(page), payload), ...visualPayloadImages(payload.visual).map((image) => image.src)]);
@@ -2547,7 +2551,7 @@ export function renderedImages(layout, data) {
     (data.articles ?? []).forEach((article) => add(article.image));
     (data.directoryScenes ?? []).forEach((item) => add(item.image));
   }
-  else if (layout === "article") {
+  else if (["article", "about", "trust"].includes(layout)) {
     add(data.image);
     for (const section of data.sections ?? []) add(section?.img);
   }
@@ -3041,27 +3045,28 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (faq.length && (!ld || ld.mainEntity.length !== faq.length)) errors.push(`${page.id}: FAQ JSON-LD mismatch`);
 
     const sourceContent = validationSource.content[page.id] || {};
-    if (pageMeta?.type === "article") {
+    if (["article", "about", "trust"].includes(pageMeta?.type)) {
       const sourceSections = sourceContent.sections;
       const compiledSections = data.sections;
-      if (sourceSections !== undefined && !Array.isArray(sourceSections)) errors.push(`${page.id}: article sections must be an array`);
-      else if (!Array.isArray(compiledSections)) errors.push(`${page.id}: article sections were not compiled`);
+      const sectionLabel = pageMeta.type === "article" ? "article section" : `${pageMeta.type} section`;
+      if (sourceSections !== undefined && !Array.isArray(sourceSections)) errors.push(`${page.id}: ${sectionLabel}s must be an array`);
+      else if (!Array.isArray(compiledSections)) errors.push(`${page.id}: ${sectionLabel}s were not compiled`);
       else for (const [index, sourceSection] of (sourceSections ?? []).entries()) {
         if (!sourceSection || typeof sourceSection !== "object" || Array.isArray(sourceSection)) {
-          errors.push(`${page.id}: article section ${index + 1} must be an object`);
+          errors.push(`${page.id}: ${sectionLabel} ${index + 1} must be an object`);
           continue;
         }
         if (sourceSection.img !== undefined) {
           if (typeof sourceSection.img !== "string" || !sourceSection.img.trim() || !knownMediaRef(validationModel, sourceSection.img)) {
-            errors.push(`${page.id}: article section ${index + 1} img reference is missing or unknown`);
+            errors.push(`${page.id}: ${sectionLabel} ${index + 1} img reference is missing or unknown`);
           }
           const image = compiledSections[index]?.img;
           if (!image || typeof image !== "object" || typeof image.src !== "string" || typeof image.alt !== "string" || !(Number(image.width) > 0) || !(Number(image.height) > 0)) {
-            errors.push(`${page.id}: article section ${index + 1} img was not compiled`);
+            errors.push(`${page.id}: ${sectionLabel} ${index + 1} img was not compiled`);
           }
         }
         if (sourceSection.alt !== undefined && (typeof sourceSection.alt !== "string" || !sourceSection.alt.trim())) {
-          errors.push(`${page.id}: article section ${index + 1} alt must be a non-empty string`);
+          errors.push(`${page.id}: ${sectionLabel} ${index + 1} alt must be a non-empty string`);
         }
       }
     }
@@ -3433,7 +3438,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     const main = heroImageOf(data.heroMedia);
-    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after]), ...[...(data.examples?.groups ?? []), ...(data.exampleGallery?.groups ?? [])].flatMap((group) => (group.items ?? []).map((item) => item.image))].filter(Boolean)) {
+    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after]), ...(data.sections ?? []).map((section) => section?.img), ...[...(data.examples?.groups ?? []), ...(data.exampleGallery?.groups ?? [])].flatMap((group) => (group.items ?? []).map((item) => item.image))].filter(Boolean)) {
       if (!image.alt || image.alt.length < 12) errors.push(`${page.id}: image without a proper description (${image.src})`);
       if (/\bunbranded\b|\bplaceholder\b|\bprompt\b/i.test(image.alt)) errors.push(`${page.id}: internal wording in an image description (${image.alt})`);
       if (!image.src.startsWith("/assets/sites/site_aidreamcapes/")) errors.push(`${page.id}: image outside the Aidreamcapes asset folder (${image.src})`);

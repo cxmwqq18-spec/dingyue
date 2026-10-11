@@ -774,13 +774,14 @@ function ArticlePage({ data, r }: Props) {
   );
 }
 
-function ProseSections({ sections }: { sections: V2Section[] }) {
+function ProseSections({ sections, r }: { sections: V2Section[]; r: V2Resolvers }) {
   return (
     <div className="wrap prose" style={{ paddingBottom: 60 }}>
       {sections.map((section) => (
         <div key={section.h2}>
           <h2>{section.h2}</h2>
           {section.paras.map((para, index) => <p key={index}>{para}</p>)}
+          {section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
         </div>
       ))}
     </div>
@@ -842,7 +843,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
     return (
       <>
         {hero}
-        <ProseSections sections={list<V2Section>(data.sections)} />
+        <ProseSections sections={list<V2Section>(data.sections)} r={r} />
         {layout === "about" && company ? <Section eyebrow="Company" lead={`${BRAND_NAME} is operated by ${company.name}.`} title={`Who runs ${BRAND_NAME}`}><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" r={r} />
         <NextLinks data={data} r={r} />
