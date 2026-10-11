@@ -118,6 +118,30 @@
             "title": "Running shoes tried on before a jog",
             "kind": "photo",
             "product": "running shoes"
+          },
+          {
+            "ref": "n:guide:fx26-tpl-sale-example-black-friday-r1",
+            "title": "Black Friday: Tote with offer space",
+            "kind": "photo",
+            "product": "canvas tote"
+          },
+          {
+            "ref": "n:guide:fx26-tpl-sale-example-season-end-r1",
+            "title": "Season End: Knit cardigan on model",
+            "kind": "photo",
+            "product": "knit cardigan"
+          },
+          {
+            "ref": "n:guide:fx26-tpl-sale-example-free-shipping-r1",
+            "title": "Free Shipping: Wallet unboxing",
+            "kind": "photo",
+            "product": "leather wallet"
+          },
+          {
+            "ref": "n:guide:fx26-tpl-sale-example-last-day-r1",
+            "title": "Last Day: Ceramic lunch container",
+            "kind": "photo",
+            "product": "lunch container"
           }
         ]
       }
@@ -130,7 +154,7 @@
       "n:q10-sale-strip-2",
       "n:q10-sale-strip-3",
       "n:q10-sale-strip-4",
-      "n:q10-sale-strip-5",
+      "n:guide:fx26-tpl-sale-strip-4-r1",
       "n:q10-sale-strip-6"
     ],
     "steps": {
@@ -152,7 +176,7 @@
           "Feed or product page"
         ]
       ],
-      "resultAlt": "Adult pulls the same blue hard-shell suitcase through a bright airport terminal."
+      "resultAlt": "Adult pulls a blue hard-shell suitcase through a bright airport terminal."
     },
     "picker": {
       "title": "Choose the product for your sale photo",
@@ -590,19 +614,27 @@
   "benefits": [
     {
       "t": "Start from one product photo",
-      "d": "Turn a clear product photo into a seasonal sale scene, so your team can prepare creative without booking a new shoot."
+      "d": "Turn a clear product photo into a seasonal sale scene, so your team can prepare creative without booking a new shoot.",
+      "img": "n:guide:fx26-tpl-sale-benefit-photo-r1",
+      "alt": "Adult hands present a plain natural canvas tote on a light stone table with open space for an offer."
     },
     {
       "t": "Leave room for the offer",
-      "d": "Keep a calm area open for the confirmed discount, dates and code you add after download."
+      "d": "Keep a calm area open for the confirmed discount, dates and code you add after download.",
+      "img": "n:guide:fx26-tpl-sale-benefit-offer-r1",
+      "alt": "Adult with a short blonde pixie haircut holds a plain teal insulated lunch container beside a bright kitchen counter."
     },
     {
       "t": "Reuse the scene for new offers",
-      "d": "Update the editable offer layer when the promotion changes while the product image stays useful."
+      "d": "Update the editable offer layer when the promotion changes while the product image stays useful.",
+      "img": "n:guide:fx26-tpl-sale-benefit-reuse-r1",
+      "alt": "Adult with a short buzz cut lifts a plain olive daypack by its top handle in a bright entryway."
     },
     {
       "t": "Fit feed and product pages",
-      "d": "Use the square image in Facebook and Instagram feeds, carousels or a product page after you add the final offer."
+      "d": "Use the square image in Facebook and Instagram feeds, carousels or a product page after you add the final offer.",
+      "img": "n:guide:fx26-tpl-sale-benefit-channels-r1",
+      "alt": "Adult woman with a short straight dark bob holds a plain rust canvas crossbody bag at a bright market stall."
     }
   ],
   "relatedLinks": [

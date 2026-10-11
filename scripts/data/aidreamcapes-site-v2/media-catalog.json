@@ -47787,6 +47787,149 @@
           1280,
           1600
         ]
+      },
+      "fx26-tpl-story-benefit-phone-screen-r1": {
+        "file": "fx26-tpl-story-benefit-phone-screen-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a plain sunscreen tube centered with open space above and below on a pale coral wall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-story-benefit-safe-controls-r1": {
+        "file": "fx26-tpl-story-benefit-safe-controls-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold a plain charcoal phone case with one small round camera opening against a pale blue background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-story-benefit-platforms-r1": {
+        "file": "fx26-tpl-story-benefit-platforms-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper bob places a plain cleanser pump bottle on a pale square card.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-story-benefit-offers-r1": {
+        "file": "fx26-tpl-story-benefit-offers-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short close-cropped hair holds a plain sage sports bottle beside a sunlit gym bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-benefit-photo-r1": {
+        "file": "fx26-tpl-sale-benefit-photo-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands present a plain natural canvas tote on a light stone table with open space for an offer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-benefit-offer-r1": {
+        "file": "fx26-tpl-sale-benefit-offer-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with a short blonde pixie haircut holds a plain teal insulated lunch container beside a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-benefit-reuse-r1": {
+        "file": "fx26-tpl-sale-benefit-reuse-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with a short buzz cut lifts a plain olive daypack by its top handle in a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-benefit-channels-r1": {
+        "file": "fx26-tpl-sale-benefit-channels-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short straight dark bob holds a plain rust canvas crossbody bag at a bright market stall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-strip-4-r1": {
+        "file": "fx26-tpl-sale-strip-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with a short light-brown crop haircut holds a plain matte sage pump bottle beside a pale stone vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-example-black-friday-r1": {
+        "file": "fx26-tpl-sale-example-black-friday-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold a plain dark-green canvas tote over a charcoal tabletop with open space beside it for an offer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-example-season-end-r1": {
+        "file": "fx26-tpl-sale-example-season-end-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with short silver-gray hair wears a plain rust knit cardigan and turns slightly to show the fit.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-example-free-shipping-r1": {
+        "file": "fx26-tpl-sale-example-free-shipping-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a plain kraft mailer and lift a plain cream leather wallet toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx26-tpl-sale-example-last-day-r1": {
+        "file": "fx26-tpl-sale-example-last-day-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with short dark hair holds a plain matte ceramic lunch container beside a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
