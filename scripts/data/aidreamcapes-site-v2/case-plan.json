@@ -867,11 +867,6 @@
     ],
     "ind-shoes": [
       {
-        "ref": "limited-drop-alert",
-        "product": "trail running shoes",
-        "title": "Trail shoes laced up on a mountain path"
-      },
-      {
         "ref": "n:gen2:ind-shoes-15",
         "product": "hiking boot",
         "title": "Tan hiking boot on a mossy rock"
