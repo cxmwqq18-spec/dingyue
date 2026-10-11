@@ -45043,6 +45043,28 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "rx2-white-benefit-jewelry-dish": {
+        "file": "rx2-white-benefit-jewelry-dish",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "rx2-lifestyle-market-man": {
+        "file": "rx2-lifestyle-market-man",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray-haired man reaches into a cream linen tote at a farmers market stall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
