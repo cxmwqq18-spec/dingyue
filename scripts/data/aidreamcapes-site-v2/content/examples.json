@@ -1,10 +1,10 @@
 {
   "id": "examples",
   "title": "AI Product Photo and Video Examples | AIVideosUGC",
-  "description": "See six product examples, from one uploaded photo to a finished image or video. Compare the source, scene and result, then make your own in minutes.",
+  "description": "See how one product photo becomes a listing image, lifestyle scene or short ad. Compare six product examples and try a direction for your store.",
   "h1": "AI Product Photo and Video Examples, Start to Finish",
   "eyebrow": "From photo to ad",
-  "lead": "Stuck on what a good product ad should look like? Each example follows one item from the uploaded photo to the finished image or video, so you can choose a clear direction for your product.",
+  "lead": "See how one product photo becomes a listing image, lifestyle scene or short ad. Pick a direction, then try it with your own product.",
   "card": "Six products, from a travel mug to sunscreen, shown in finished photos and video.",
   "secondary_keywords": [
     "AI product video ad examples",
@@ -12,7 +12,7 @@
     "product photo to video ad",
     "AI social ad image examples"
   ],
-  "intro": "Each example follows one product through a set of photo or video outputs. Browse the complete set and open a tool link to try a similar direction with your product.",
+  "intro": "Browse the complete set, filter by product category, and open a scene to try a similar direction with your product.",
   "benefits_h2": "Why use the examples gallery?",
   "benefits": [
     {
@@ -62,7 +62,9 @@
         "Uploaded travel mug photo",
         "Travel mug in a desk scene",
         "Finished travel mug image"
-      ]
+      ],
+      "ctaLabel": "Try the travel mug product scene",
+      "ctaPrompt": "Recreate a matte white travel mug product scene from my uploaded product photo on a clean desk, keeping the mug shape, lid and colors consistent."
     },
     {
       "id": "jacket",
@@ -77,7 +79,9 @@
         "Uploaded linen tote photo",
         "Linen tote in a lifestyle scene",
         "Finished linen tote image"
-      ]
+      ],
+      "ctaLabel": "Try the linen tote lifestyle scene",
+      "ctaPrompt": "Recreate a linen tote lifestyle scene from my uploaded product photo beside an everyday outfit in bright natural light, keeping the tote shape and color consistent."
     },
     {
       "id": "lipstick",
@@ -92,7 +96,9 @@
         "Uploaded fluted vase photo",
         "Fluted vase with flowers",
         "Finished vase image"
-      ]
+      ],
+      "ctaLabel": "Try the vase room scene",
+      "ctaPrompt": "Recreate a white fluted vase room scene from my uploaded product photo with flowers in a bright room, keeping the vase shape and color consistent."
     },
     {
       "id": "hoodie",
@@ -107,7 +113,9 @@
         "Uploaded leather wallet photo",
         "Leather wallet detail",
         "Finished wallet image"
-      ]
+      ],
+      "ctaLabel": "Try the wallet detail scene",
+      "ctaPrompt": "Recreate a brown leather wallet detail scene from my uploaded product photo, keeping the wallet shape, stitching and color consistent."
     },
     {
       "id": "handbag",
@@ -122,7 +130,9 @@
         "Running shoe starting photo",
         "Running shoe in a feed scene",
         "Finished running shoe image"
-      ]
+      ],
+      "ctaLabel": "Try the running shoe feed scene",
+      "ctaPrompt": "Recreate a gray knit running shoe feed scene from my uploaded product photo, keeping the shoe shape, sole and color consistent."
     },
     {
       "id": "boots",
@@ -137,7 +147,9 @@
         "Uploaded sunscreen tube photo",
         "Sunscreen tube in a vertical scene",
         "Finished sunscreen image"
-      ]
+      ],
+      "ctaLabel": "Try the sunscreen vertical scene",
+      "ctaPrompt": "Recreate a plain sunscreen tube vertical scene from my uploaded product photo in clear daylight, keeping the tube shape and cap color consistent."
     }
   ],
   "faq": [
@@ -164,6 +176,10 @@
     {
       "q": "Will the result look exactly like the example?",
       "a": "It follows the same shot type and framing, but every result is generated from your specific photo, so details and scene elements differ. Compare the file with your actual product before publishing and rerun the scene if the shape or label drifts."
+    },
+    {
+      "q": "Which format should I try first?",
+      "a": "Start with Square for a product page or feed, 9:16 for short vertical ads, and 16:9 when a wide player or product page calls for it."
     }
   ],
   "overview": [
@@ -356,40 +372,161 @@
       "g:feed-ad-still/example-07",
       "n:guide:k4-plat-instagram-30-visual-strip-4"
     ],
-    "picker": [
-      {
-        "id": "video",
-        "label": "Product Examples"
-      }
-    ],
+    "picker": {
+      "title": "Find a product scene to try today",
+      "lead": "Filter by product category, then open a scene to recreate it with your product.",
+      "chips": [
+        {
+          "id": "accessories",
+          "label": "Accessories"
+        },
+        {
+          "id": "apparel",
+          "label": "Apparel"
+        },
+        {
+          "id": "apps",
+          "label": "Apps"
+        },
+        {
+          "id": "beauty-personal-care",
+          "label": "Beauty & Personal Care"
+        },
+        {
+          "id": "clothing",
+          "label": "Clothing"
+        },
+        {
+          "id": "e-commerce",
+          "label": "E-Commerce"
+        },
+        {
+          "id": "education",
+          "label": "Education"
+        },
+        {
+          "id": "explainer",
+          "label": "Explainer"
+        },
+        {
+          "id": "financial-services",
+          "label": "Financial Services"
+        },
+        {
+          "id": "food-beverage",
+          "label": "Food & Beverage"
+        },
+        {
+          "id": "footwear",
+          "label": "Footwear"
+        },
+        {
+          "id": "health-fitness",
+          "label": "Health & Fitness"
+        },
+        {
+          "id": "jewelry-accessories",
+          "label": "Jewelry & Accessories"
+        },
+        {
+          "id": "kids-toy",
+          "label": "Kids & Toy"
+        },
+        {
+          "id": "pet",
+          "label": "Pet"
+        },
+        {
+          "id": "sports-gym",
+          "label": "Sports & Gym"
+        },
+        {
+          "id": "tech-electronics",
+          "label": "Tech & Electronics"
+        },
+        {
+          "id": "ugc",
+          "label": "UGC"
+        },
+        {
+          "id": "viral",
+          "label": "Trending"
+        }
+      ],
+      "cards": [],
+      "button": "Try this with your product"
+    },
     "uses": [],
     "input": [],
     "outputs": [],
     "titles": {
       "m3": {
-        "h2": "Browse product examples",
-        "lead": "Browse formats from creator reviews and try-ons to recipe demos and before-and-after scenes."
+        "h2": "Find a product scene to try today",
+        "lead": "Filter by product category, then open a scene to recreate it with your product."
       }
     },
     "directoryFilters": {
       "cases": {
         "tote": [
-          "video"
+          "food-beverage",
+          "e-commerce",
+          "financial-services",
+          "ugc",
+          "viral"
         ],
         "jacket": [
-          "video"
+          "accessories",
+          "apparel",
+          "clothing",
+          "e-commerce",
+          "food-beverage",
+          "footwear",
+          "jewelry-accessories",
+          "ugc",
+          "viral"
         ],
         "lipstick": [
-          "video"
+          "apps",
+          "beauty-personal-care",
+          "education",
+          "explainer",
+          "e-commerce",
+          "kids-toy",
+          "pet",
+          "tech-electronics",
+          "ugc",
+          "viral"
         ],
         "hoodie": [
-          "video"
+          "accessories",
+          "apps",
+          "education",
+          "explainer",
+          "financial-services",
+          "jewelry-accessories",
+          "tech-electronics",
+          "ugc",
+          "viral"
         ],
         "handbag": [
-          "video"
+          "apparel",
+          "clothing",
+          "e-commerce",
+          "footwear",
+          "health-fitness",
+          "sports-gym",
+          "ugc",
+          "viral"
         ],
         "boots": [
-          "video"
+          "beauty-personal-care",
+          "e-commerce",
+          "health-fitness",
+          "kids-toy",
+          "pet",
+          "sports-gym",
+          "ugc",
+          "viral"
         ]
       }
     }
