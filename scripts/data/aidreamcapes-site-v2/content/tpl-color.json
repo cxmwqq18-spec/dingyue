@@ -48,12 +48,12 @@
       "a": "The set uses a shared view, light and background so shoppers compare the finish instead of a changing setup."
     },
     {
-      "q": "Can the tool create a different product color?",
-      "a": "It can render a described color change, but a generated shade is not a substitute for a photo of the real option."
+      "q": "Can AI create a color I have not photographed?",
+      "a": "It can suggest a color concept, but a generated shade cannot stand in for a real option. Upload a photo of each shade you sell and compare it with the physical swatch."
     },
     {
-      "q": "Where should each variation image go?",
-      "a": "Attach each downloaded image to its matching product option in a listing gallery, feed post or carousel."
+      "q": "How should I order color options in a gallery?",
+      "a": "Lead with one clear product photo, then group matching shade images so shoppers can compare options without hunting."
     },
     {
       "q": "Do I need a photo for each color?",
@@ -68,12 +68,20 @@
       "a": "Each variation photo costs 24 credits, and the total appears before you create the set."
     },
     {
-      "q": "Can the tool invent a new color from one photo?",
-      "a": "It can show a color concept, but selling an option calls for a photo of that actual shade and a review against the sample."
+      "q": "Can I use colorway photos in a listing gallery?",
+      "a": "Yes. Add each image to its matching option and keep the real shade photo available when exact color matters."
     },
     {
       "q": "Do I need a reshoot for every color variation?",
       "a": "No. Once the real shades are photographed, the same coordinated scene can be applied without repeat styled shoots."
+    },
+    {
+      "q": "How do I compare actual swatches?",
+      "a": "Place each real shade photo in the same scene, then compare every result with the physical swatch before you publish."
+    },
+    {
+      "q": "Can one scene cover several products?",
+      "a": "Yes. Describe one consistent setting and apply it to each uploaded product and shade, then check every result against the real item."
     }
   ],
   "visual": {
