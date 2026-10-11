@@ -43361,6 +43361,17 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "tw2-wall-ugc-1-r1": {
+        "file": "tw2-wall-ugc-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult Black man with short salt-and-pepper curls applies plain coral pump moisturizer to his cheek in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }
