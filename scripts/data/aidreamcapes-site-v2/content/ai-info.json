@@ -1,10 +1,10 @@
 {
   "id": "ai-info",
-  "title": "What Is AIVideosUGC? Company Facts | AIVideosUGC",
-  "description": "Learn what AIVideosUGC makes for product photos and videos, how credits work, and which editing and publishing tasks you handle after download.",
+  "title": "What Is AIVideosUGC? Company Facts for Sellers | AIVideosUGC",
+  "description": "What AIVideosUGC makes from your product photos, how credits and plans work, what the tools don't do, and what you finish yourself after download.",
   "h1": "What Is AIVideosUGC? Company Facts",
   "eyebrow": "Company facts",
-  "lead": "What is AIVideosUGC? It turns product photos into store images and short video ads, or product page links into video. AIVideosUGC does not add voiceover, music, or captions. Add offer text in your editor after download.",
+  "lead": "AIVideosUGC turns one product photo into store images and short AI video ads in minutes, with no studio or casting. Here is exactly what it does, what it costs and what you finish yourself.",
   "secondary_keywords": [
     "what is AIVideosUGC",
     "AIVideosUGC pricing",
@@ -44,7 +44,11 @@
     ],
     [
       "Credits",
-      "Held when a job starts, used when it is delivered, returned if a job fails"
+      "Held when a job starts, used when it is delivered, returned automatically if a job fails"
+    ],
+    [
+      "Commercial use",
+      "Downloaded photos and videos are cleared for commercial use and arrive without a watermark"
     ],
     [
       "Privacy",
@@ -56,9 +60,8 @@
     ]
   ],
   "not_offered": [
-    "spoken narration, lip sync or translation",
-    "Music or caption generation",
-    "A library of saved presenters",
+    "Spoken narration, music or captions on product clips (add them in your editor after download; AI actor clips speak the line you write)",
+    "A library of saved presenters you keep for reuse",
     "Automatic publishing to ad platforms",
     "A public API"
   ],
@@ -72,15 +75,23 @@
     },
     {
       "q": "How much does AIVideosUGC cost?",
-      "a": "Monthly plans start at $24.50 with 200 credits. The credit cost of each video or photo is shown before it is made."
+      "a": "Monthly plans start at $24.50 with 200 credits. The credit cost of each video or photo is shown before it starts, and failed jobs return their credits."
     },
     {
       "q": "Does AIVideosUGC add spoken narration or music?",
-      "a": "AIVideosUGC does not add voiceover, music, or captions. Add music, a voiceover, or captions in your editor after download."
+      "a": "Product clips come without voiceover, music or captions, so add those in your editor after download. AI actor clips are different: the actor speaks the one line you write, with mouth movement that follows the words."
     },
     {
       "q": "What video settings can I choose?",
-      "a": "Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, or 16:9. The workspace currently offers 6, 10, and 15 seconds; 30 seconds is the planned public option."
+      "a": "Choose 6, 10, 15 or 30 seconds and 9:16, 1:1 or 16:9, so the same product photo can produce a vertical ad, a square listing video or a wide banner."
+    },
+    {
+      "q": "How many credits does a video or photo use?",
+      "a": "A photo uses 24 credits. Videos use 24 for 6 seconds, 40 for 10 seconds, 60 for 15 seconds and 120 for 30 seconds. The exact cost is always on screen before the job starts."
+    },
+    {
+      "q": "Can I use the results in ads and on my store?",
+      "a": "Yes. Downloaded photos and videos are cleared for commercial use and have no watermark, so you can run them on marketplaces, social platforms and your own store, subject to each platform's rules."
     }
   ]
 }

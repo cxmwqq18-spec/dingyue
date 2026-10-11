@@ -1,10 +1,10 @@
 {
   "id": "about",
-  "title": "About Us: Visuals for Small Online Shops | AIVideosUGC",
-  "description": "Learn about AIVideosUGC, the online tool that helps small shops turn one product photo into short video ads and store images, with private uploads. Read on.",
+  "title": "About AIVideosUGC: AI Product Photos and Video Ads",
+  "description": "AIVideosUGC turns one product photo into store images and AI video ads in minutes, with no studio, no casting and private uploads. See how it works.",
   "h1": "About AIVideosUGC: Product Visuals Made Simple",
   "eyebrow": "About us",
-  "lead": "Learn about AIVideosUGC: our tools help online sellers make product photos and short video ads from a product photo.",
+  "lead": "AIVideosUGC helps small online shops make product photos and short AI video ads from a single product photo, so a new ad takes minutes instead of a shoot.",
   "secondary_keywords": [
     "AI visuals for Shopify sellers",
     "product content tool for Etsy shops",
@@ -14,48 +14,52 @@
     {
       "h2": "What we make",
       "paras": [
-        "AIVideosUGC is an online tool for turning a product photo into new store images and short video ads. You upload a picture of what you sell, pick a template or write what you'd like to see, and get back a square image or a short video of 6, 10, 15 or 30 seconds.",
-        "We keep the tools focused on things sellers use every week: white background shots, lifestyle scenes, on-model photos, feed ad images and short vertical videos for TikTok, Instagram Reels and YouTube Shorts."
+        "Upload a picture of what you sell, pick a template or write the scene you want, and get back a square store image or a short AI video ad of 6, 10, 15 or 30 seconds.",
+        "Every tool does a job sellers do every week: white background shots, lifestyle scenes, on-model photos, feed ad images and vertical videos for TikTok, Instagram Reels and YouTube Shorts. No design software, no ad agency and no studio day."
       ]
     },
     {
       "h2": "Who it's for",
       "paras": [
-        "We build for small and growing online stores on Shopify, Amazon and Etsy, and for the marketers who run their ads. If you pack orders, write listings and set up campaigns yourself, you're exactly who we have in mind.",
-        "You don't need design software or ad expertise. A clear photo of your product and a sentence about the scene you picture are enough to get started."
+        "It is built for small and growing stores on Shopify, Amazon and Etsy, and for the marketers who run their ads. If you pack orders, write listings and set up campaigns yourself, this is for you.",
+        "You don't need editing skills. A clear photo of your product and a sentence about the scene you picture are enough to start, and you can make a fresh version of an ad whenever a hook or an offer needs testing."
       ]
     },
     {
       "h2": "Your photos stay yours",
       "paras": [
-        "Everything you upload and everything you make stays in your own account. We don't make your product photos or results public.",
-        "Some requests are turned down, such as ones involving celebrities, other public figures, or logos and trademarks that belong to someone else. That keeps the focus on your own products."
+        "Everything you upload and everything you make stays in your own account. Your product photos and results are never shown to other customers or made public.",
+        "Some requests are turned down, such as ones involving celebrities or other public figures, or logos and trademarks that belong to someone else. That keeps every ad focused on your own products."
       ]
     },
     {
       "h2": "Credit costs you can see",
       "paras": [
-        "Every photo and video shows its price in credits up front. Credits are reserved when a job begins, charged only when the result arrives, and returned automatically if something goes wrong.",
-        "Delivered results are generally not refunded, so we put the cost on screen before you commit rather than after."
+        "Every photo and video shows its price in credits before the job starts, so nothing spends without your say-so. Plans run from $24.50 a month with 200 credits.",
+        "Credits are held while a job runs and used only when the result arrives. Delivered results are generally not refunded, which is why the cost is always on screen before you commit; if a job fails, the credits go back to your balance automatically."
       ]
     }
   ],
   "faq": [
     {
       "q": "Can I make product ads without hiring an agency?",
-      "a": "Yes. AIVideosUGC is a self-serve tool: upload your product photo or describe the scene, review the result, and download the asset from your account."
+      "a": "Yes. AIVideosUGC is self-serve: upload your product photo or describe the scene, review the result, and download the asset from your account. There is no booking, no shoot day and no waiting on an editor."
     },
     {
       "q": "How do I get in touch with the AIVideosUGC team?",
-      "a": "Write to support@aivideosugc.com with your question. We try to respond within two business days."
+      "a": "Write to support@aivideosugc.com with your question. The team aims to reply within two business days."
     },
     {
       "q": "What can I upload to make a product asset?",
-      "a": "Upload a product photo for an image. For a video, you can upload a photo or describe the product and scene. Review the result against the real item before downloading or publishing it."
+      "a": "Upload a product photo for an image. For a video, you can upload a photo or describe the product and scene. Compare the result with the real item before you download or publish it."
     },
     {
       "q": "Who is AIVideosUGC for?",
-      "a": "It is a self-serve tool for online sellers who need product photos and short ad videos from their own product images or descriptions."
+      "a": "For online sellers and marketers who need product photos and short ad videos from their own product images or descriptions, without hiring a studio or an agency."
+    },
+    {
+      "q": "How much does AIVideosUGC cost?",
+      "a": "Monthly plans start at $24.50 with 200 credits, and each photo or video shows its credit cost before the job starts. If a job fails, its credits come back automatically."
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
   "id": "contact",
-  "title": "Support: Email Us About Credits or Results | AIVideosUGC",
-  "description": "Need AIVideosUGC support? Email support@aivideosugc.com about credits, billing, failed jobs or your account. We aim to reply within two business days.",
+  "title": "Contact AIVideosUGC Support: Credits, Billing, Results",
+  "description": "Questions about credits, a failed job, billing or your account? Email support@aivideosugc.com for a written answer, usually in two business days.",
   "h1": "Contact AIVideosUGC Support",
   "eyebrow": "Customer support",
-  "lead": "AIVideosUGC support is here for questions about a photo, a video, your credits or your account. Send us an email and we'll help you sort it out.",
+  "lead": "Stuck on a photo, a video, your credits or your account? Email us and we'll help you get back to making ads.",
   "secondary_keywords": [
     "AIVideosUGC customer service",
     "AIVideosUGC billing help",
@@ -12,8 +12,8 @@
     "contact AIVideosUGC by email"
   ],
   "intro": [
-    "You can reach our support team by email at support@aivideosugc.com. Our goal is to answer every message within two business days.",
-    "To help us solve things in one reply, include the email address on your account, a short description of the problem and, if it's about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
+    "Email support@aivideosugc.com and the team aims to answer within two business days. Email also leaves you a written record of the question and the fix.",
+    "To sort it in one reply, include the email address on your account, a short description of the problem and, if it is about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
   ],
   "topics": [
     {
@@ -22,11 +22,11 @@
     },
     {
       "t": "Credits and failed jobs",
-      "d": "If a job failed and you don't see your credits back, or a cost wasn't what you expected, tell us what happened."
+      "d": "If a job failed and the credits did not come back, or a cost was not what you expected, tell us what happened and we will check the job."
     },
     {
       "t": "Results that missed the mark",
-      "d": "If a photo or video came out very different from your description, send us the details and we'll take a look."
+      "d": "If a photo or video came out very different from your description, send us the details and we will take a look."
     },
     {
       "t": "Account and privacy",
@@ -34,7 +34,7 @@
     },
     {
       "t": "Partnerships",
-      "d": "If you run a store, an agency or a creator channel and want to work with us, email us with a short note about your audience or business and what you have in mind."
+      "d": "If you run a store, an agency or a creator channel and want to work with us, email a short note about your audience or business and what you have in mind."
     }
   ],
   "faq": [
@@ -44,15 +44,19 @@
     },
     {
       "q": "Can you help me before I choose a plan?",
-      "a": "Yes. If you're not sure the tools suit your products, email us a short note about what you sell and where you advertise, and we'll point you to the right place to start."
+      "a": "Yes. If you are not sure the tools suit your products, email a short note about what you sell and where you advertise, and we will point you to the right place to start."
     },
     {
       "q": "How long does support take to reply?",
-      "a": "Email support@aivideosugc.com with the account and job details. The contact page says the team aims to reply within two business days."
+      "a": "The team aims to reply within two business days. Send the account and job details in your first email so the answer does not need a second round."
     },
     {
       "q": "What details help support find my job?",
       "a": "Include the email on your account, a brief description of the issue, roughly when it happened, and a screenshot of any error message."
+    },
+    {
+      "q": "What happens to my credits if a job fails?",
+      "a": "Failed jobs return their credits to your balance automatically. If you do not see them back, email support with the time of the job and we will check it for you."
     }
   ]
 }
