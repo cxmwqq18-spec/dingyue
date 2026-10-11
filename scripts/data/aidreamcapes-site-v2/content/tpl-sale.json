@@ -130,7 +130,7 @@
       "n:q10-sale-strip-2",
       "n:q10-sale-strip-3",
       "n:q10-sale-strip-4",
-      "n:q10-sale-strip-5",
+      "n:im06-tpl-sale-strip-5-r1",
       "n:q10-sale-strip-6"
     ],
     "steps": {
@@ -413,7 +413,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame.",
           "kind": "video"
         },
         {

@@ -92,11 +92,11 @@
   "visual": {
     "overview": "An on-model jewelry image answers scale and fit while keeping the piece recognizable. Use a worn view or hand demonstration, then pair it with the standalone product photo and stated measurements.",
     "strip": [
-      "n:guide:rc3-jewel-strip-gold-hoop-r1",
-      "n:guide:tpl-jewel-m1-hoop",
-      "n:guide:q9-jewel-alt-brooch",
+      "n:guide:im06-tpl-jewel-strip-0-r1",
+      "n:guide:im06-tpl-jewel-strip-1-r1",
+      "n:guide:im06-tpl-jewel-strip-2-r1",
       "n:guide:q9-jewel-alt-silver-pendant",
-      "n:guide:tpl-jewel-round4-hoop-earrings",
+      "n:guide:im06-tpl-jewel-strip-4-r1",
       "n:guide:rc3-jewel-strip-stud-r1"
     ],
     "steps": {
@@ -378,7 +378,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame.",
           "kind": "video"
         },
         {
