@@ -25,11 +25,11 @@
     },
     {
       "t": "Rules you can check in minutes",
-      "d": "Amazon's white background rules and each platform's video shape are written as plain steps with checklists, so your file is right the first time you upload."
+      "d": "Amazon's white background rules and each platform's video shape are written as plain steps with checklists, so your file is easier to check before upload."
     },
     {
       "t": "Ads that improve with every round",
-      "d": "The testing guide shows how to make a few cheap versions, change one thing at a time, and keep whatever brings sales instead of guessing."
+      "d": "The testing guide shows how to make a few low-cost versions, change one thing at a time, and keep whatever brings sales instead of guessing."
     }
   ],
   "steps_h2": "How to Make AI Product Photos and Videos in 3 Simple Steps",
@@ -64,6 +64,66 @@
     {
       "q": "How much do the images and videos in the guides cost?",
       "a": "You pay in credits and see the exact cost before each job starts. A product photo is 24 credits; videos are 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds. If a job fails, its credits go back to your balance."
+    },
+    {
+      "q": "Can one source photo work across every guide?",
+      "a": "Yes. A clear, evenly lit product photo can start each guide; follow the platform-specific checks before posting."
+    },
+    {
+      "q": "Can I add captions and music after download?",
+      "a": "Yes. Add captions, prices and licensed music in your ad editor after you download the image or video."
+    }
+  ],
+  "relatedLinks": [
+    {
+      "id": "plat-amazon",
+      "label": "Amazon product photos",
+      "href": "/platforms/amazon-product-photos"
+    },
+    {
+      "id": "white-background",
+      "label": "Ecommerce main image",
+      "href": "/ai-image-generation/ecommerce-main-image"
+    },
+    {
+      "id": "guide-product-photo-tips",
+      "label": "Product photo tips",
+      "href": "/guides/product-photo-tips"
+    },
+    {
+      "id": "guide-white-background-amazon",
+      "label": "White background for Amazon",
+      "href": "/guides/white-background-amazon"
+    },
+    {
+      "id": "guide-first-tiktok-video-ad",
+      "label": "First TikTok video ad",
+      "href": "/guides/first-tiktok-video-ad"
+    },
+    {
+      "id": "guide-ad-sizes-by-platform",
+      "label": "Ad sizes by platform",
+      "href": "/guides/ad-sizes-by-platform"
+    },
+    {
+      "id": "guide-testing-ad-versions",
+      "label": "Testing ad versions",
+      "href": "/guides/testing-ad-versions"
+    },
+    {
+      "id": "templates",
+      "label": "Templates",
+      "href": "/templates"
+    },
+    {
+      "id": "pricing",
+      "label": "Pricing",
+      "href": "/pricing"
+    },
+    {
+      "id": "blog",
+      "label": "Blog",
+      "href": "/blog"
     }
   ]
 }

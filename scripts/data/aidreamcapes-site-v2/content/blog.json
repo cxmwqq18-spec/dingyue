@@ -34,6 +34,66 @@
     {
       "q": "Where can I find platform-specific answers?",
       "a": "Start with the platform guides for TikTok, Meta, Amazon, Shopify, and YouTube Shorts. Each guide points to the official specification page used for the numbers."
+    },
+    {
+      "q": "Which article covers launch clips?",
+      "a": "Read Unboxing Videos for Product Launches for launch clip planning before, during and after release."
+    },
+    {
+      "q": "Can I use the same product check before every post?",
+      "a": "Yes. Check the product shape, color, parts, text and claims against the item you ship before each post."
+    }
+  ],
+  "relatedLinks": [
+    {
+      "id": "blog-ai-product-photography-guide",
+      "label": "AI product photography",
+      "href": "/blog/ai-product-photography-guide"
+    },
+    {
+      "id": "blog-ai-ugc-video-ads-guide",
+      "label": "AI UGC video ads",
+      "href": "/blog/ai-ugc-video-ads-guide"
+    },
+    {
+      "id": "blog-ai-video-review-checklist",
+      "label": "AI content review checklist",
+      "href": "/blog/ai-video-review-checklist"
+    },
+    {
+      "id": "blog-unboxing-videos-for-launches",
+      "label": "Unboxing videos for launches",
+      "href": "/blog/unboxing-videos-for-launches"
+    },
+    {
+      "id": "blog-model-photos-without-a-photoshoot",
+      "label": "Model photos without a photoshoot",
+      "href": "/blog/model-photos-without-a-photoshoot"
+    },
+    {
+      "id": "guides",
+      "label": "How-to guides",
+      "href": "/guides"
+    },
+    {
+      "id": "templates",
+      "label": "Templates",
+      "href": "/templates"
+    },
+    {
+      "id": "pricing",
+      "label": "Pricing",
+      "href": "/pricing"
+    },
+    {
+      "id": "video-ads",
+      "label": "UGC ad video",
+      "href": "/ai-video-generation/ugc-ad-video"
+    },
+    {
+      "id": "social-ad-photos",
+      "label": "Social ad photos",
+      "href": "/ai-image-generation/feed-ad-still"
     }
   ]
 }
