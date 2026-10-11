@@ -1,10 +1,10 @@
 {
   "id": "occ-holidays",
   "title": "Holiday Ad Creatives for Gift Season | AIVideosUGC",
-  "description": "Create holiday ad creatives from one product photo, with gift scenes for winter, Valentine's Day, Mother's Day and Father's Day. Add dates after download.",
-  "h1": "Create Holiday Ad Creatives From One Product Photo",
+  "description": "Build holiday ad creatives from one product photo. Add confirmed shipping dates, prices or offers after download, then reuse the scene as campaigns change.",
+  "h1": "Make Holiday Ad Creatives From One Product Photo",
   "eyebrow": "Holiday ad creatives",
-  "lead": "Make gift-ready product scenes from one photo for each holiday, then add shipping dates and offers when they are confirmed.",
+  "lead": "Get a gift-ready holiday scene from one product photo. Add the shipping cutoff, price or offer after download, then reuse the scene for another seasonal push.",
   "secondary_keywords": [
     "Christmas product photos",
     "holiday video ads",
@@ -16,19 +16,19 @@
   "faq": [
     {
       "q": "Can I turn my everyday product photos into holiday versions?",
-      "a": "Yes. Upload the photo you already use and choose a seasonal setting such as a wrapped box on a snowy windowsill. Your original stays as it is."
+      "a": "Yes. Upload the clear product photo you already use, choose a seasonal setting and keep the product itself recognizable."
     },
     {
       "q": "How do I add \"order by\" dates to my holiday ads?",
-      "a": "Type them in Canva, CapCut or Ads Manager after download. Keeping dates off the generated image means you can change them quickly as cutoffs approach."
+      "a": "Type them in Canva, CapCut or Ads Manager after download. Keeping dates off the generated image lets you change them quickly as cutoffs approach."
     },
     {
       "q": "Can my holiday ad include a famous character or celebrity?",
-      "a": "Requests involving celebrities, public figures, or characters and logos owned by other brands may be declined. Generic seasonal touches like ornaments, snow and wrapping paper are supported."
+      "a": "Requests involving celebrities, public figures, characters or logos owned by other brands may be declined. Generic seasonal touches such as ornaments, snow and wrapping paper are supported."
     },
     {
       "q": "How should I prepare holiday product photos?",
-      "a": "Start with a clear product photo and a seasonal setting. Add dates and shipping cutoffs after download."
+      "a": "Start with a clear product photo and describe the seasonal setting. Add dates and shipping cutoffs after download."
     },
     {
       "q": "Do I need to decorate a set or book a creator?",
@@ -36,27 +36,27 @@
     },
     {
       "q": "Can I use the holiday clips and images as paid ads?",
-      "a": "Yes. Downloaded files are yours to use in seasonal ads and carry no AIVideosUGC watermark, as long as they meet the platform's current review rules."
+      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in seasonal ads, subject to each platform’s current review rules."
     }
   ],
   "examples": {
-    "h2": "More holiday examples",
-    "lead": "Seasonal tables, gift moments and spring scenes for year-round holidays.",
+    "h2": "More Holiday Ad Creative Examples",
+    "lead": "Show gift moments and seasonal product scenes, then add current dates or offers after download.",
     "groups": [
       {
         "label": "Through the year",
         "items": [
           {
-            "ref": "n:guide:q20-occ-holiday-example-01",
-            "title": "Skincare gift set lifted from tissue",
+            "ref": "n:guide:f13-occ-holidays-rework-card-15",
+            "title": "Plain skincare gift set lifted from tissue",
             "kind": "photo",
             "product": "skincare gift set"
           },
           {
             "ref": "n:gen2:occ-holidays-g2",
-            "title": "Gift unwrapped to a bottle held in both hands",
+            "title": "Gift unwrapped to a plain bottle held in both hands",
             "kind": "photo",
-            "product": "gift-wrapped bottle"
+            "product": "gift bottle"
           },
           {
             "ref": "n:guide:q20-occ-holiday-example-03",
@@ -68,19 +68,19 @@
       }
     ]
   },
-  "cta_lead": "Create the holiday product scene first, then add shipping dates and offers after download.",
+  "cta_lead": "Build the holiday ad creative first, then add confirmed shipping dates and offers after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
       "d": "Start with one clear photo of the product shoppers may give as a gift."
     },
     {
-      "t": "Choose a Holiday Scene",
-      "d": "Share the holiday moment you want in one sentence, such as a gift reveal or winter setting."
+      "t": "Pick a Holiday Scene",
+      "d": "Choose a gift reveal or seasonal setting that keeps the product easy to recognize."
     },
     {
-      "t": "Download and Add Current Details",
-      "d": "Add the confirmed shipping cutoff, price or offer in your editor."
+      "t": "Download and Post",
+      "d": "Add the confirmed shipping cutoff, price or offer in your editor, then post the finished file."
     }
   ],
   "visual": {
@@ -90,14 +90,14 @@
       "n:guide:q20-occ-holiday-strip-02",
       "n:guide:q20-occ-holiday-strip-03",
       "n:guide:q20-occ-holiday-strip-04",
-      "n:guide:q20-occ-holiday-strip-05",
+      "n:guide:f13-r10-occ-holidays-packaging",
       "n:guide:q20-occ-holiday-strip-06"
     ],
     "steps": {
-      "source": "n:guide:f13-r10-occ-holidays-headphones-source",
-      "result": "n:guide:f13-r10-occ-holidays-headphones-result",
+      "source": "n:guide:occ-holidays-c3-m2-source",
+      "result": "n:guide:occ-holidays-c3-m2-result",
       "mode": "photo",
-      "prompt": "Share the holiday moment in one sentence.",
+      "prompt": "Describe the holiday product scene in one sentence.",
       "options": [
         [
           "Template",
@@ -114,7 +114,7 @@
       ]
     },
     "picker": {
-      "title": "Choose a holiday scene",
+      "title": "Choose a holiday ad creative scene",
       "lead": "Show the product in a seasonal gift moment, then add current details after download.",
       "chips": [],
       "cards": [],
@@ -126,35 +126,35 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make holiday product photos in three steps"
+        "h2": "How to Create Holiday Ad Creatives in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a holiday product photo scene"
+        "h2": "Choose a Holiday Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions about holiday product photos"
+        "h2": "Questions About Holiday Ad Creatives"
       }
     }
   },
-  "benefits_h2": "Why sellers choose holiday ad creatives",
+  "benefits_h2": "Why Sellers Use Holiday Ad Creatives",
   "benefits": [
     {
-      "t": "Seasonal scenes from one photo",
-      "d": "Use the same product shot for winter and gift-giving campaigns throughout the year."
+      "t": "Build gift scenes from one photo",
+      "d": "Use the same product shot for winter and gift campaigns as the season changes."
     },
     {
-      "t": "Gift moments buyers understand",
-      "d": "Show the item in a wrapped, unboxed or seasonal setting that makes the gift clear."
+      "t": "Make the gift easy to picture",
+      "d": "Show the item in a wrapped, unboxed or seasonal setting that explains the gift."
     },
     {
-      "t": "Dates stay editable",
+      "t": "Keep dates and offers editable",
       "d": "Add shipping cutoffs, prices and codes after download when the details are confirmed."
     },
     {
-      "t": "Ready for seasonal campaigns",
-      "d": "Use downloaded holiday images and clips in your own posts and paid ads."
+      "t": "Launch without decorating a set",
+      "d": "Use the downloaded holiday scene in your own posts and paid campaigns."
     }
   ],
-  "steps_h2": "Create holiday ad creatives in three steps",
-  "steps_lead": "Turn one product photo into a seasonal gift scene, then add the current offer after download."
+  "steps_h2": "How to Create Holiday Ad Creatives in 3 Simple Steps",
+  "steps_lead": "Upload one product photo, choose a seasonal gift scene and add current details after download."
 }

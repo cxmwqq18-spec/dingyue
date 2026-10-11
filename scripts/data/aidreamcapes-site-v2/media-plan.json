@@ -641,11 +641,11 @@
     "occ-holidays": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:q20-occ-holiday-media-hero"
+        "image": "n:guide:f13-r10-occ-holidays-order-reminder"
       },
       "gallery": [
         "n:guide:q20-occ-holiday-gallery-01",
-        "n:guide:q20-occ-holiday-gallery-02",
+        "n:guide:f13-r10-occ-holidays-unboxing-candle",
         "n:guide:q20-occ-holiday-gallery-03"
       ],
       "og": "n:t33-occ-holidays-og-r2"
