@@ -4,7 +4,7 @@
   "description": "Turn one food or drink photo into a pour, a first bite, or a shelf shot. Download watermark-free clips for listings, social feeds, and paid ads.",
   "h1": "AI Food and Drink Product Videos for the Pour and the Plate",
   "eyebrow": "Food and drinks",
-  "lead": "Hungry shoppers decide quickly. A package photo or a product link can become a pour, a first bite, or a shelf moment, with a voiceover and captions.",
+  "lead": "Hungry shoppers decide quickly. A package photo or a product link can become a pour, a first bite, or a shelf moment, with a spoken voice and captions.",
   "card": "Pours, plates, and package scenes from one food photo.",
   "secondary_keywords": [
     "drink pour video",
@@ -24,7 +24,7 @@
     },
     {
       "q": "How long should a food clip be?",
-      "a": "6 or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. Credits are 24, 40, 60, and 120. A failed job returns its credits."
+      "a": "6 or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A failed job returns its credits."
     },
     {
       "q": "Should I spray the can for a cold look?",
@@ -32,15 +32,15 @@
     },
     {
       "q": "Can I run the clips as paid food and drink ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Keep nutrition, allergen, and ingredient claims on the real package."
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. Leave nutrition, allergen, and ingredient text on the real package."
     },
     {
       "q": "Do I need a creator or a filming kitchen?",
       "a": "Not for these clips. Pick a generated presenter, or let the hands come from your package photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
     },
     {
-      "q": "Which frames can I use?",
-      "a": "Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. A vertical 9:16 fits a phone feed. A square still fits many listings."
+      "q": "Which video shapes can I use?",
+      "a": "Video shapes are a tall phone video (9:16), a square (1:1), a wide video (16:9), 4:3, or 3:4. 4:3 is a bit wider than a square. 3:4 is a bit taller than a square. A tall 9:16 fits a phone feed. A square photo fits many listings."
     },
     {
       "q": "What should the scene keep visible?",
@@ -48,25 +48,25 @@
     },
     {
       "q": "Can a drink clip include a voice, captions, and another language?",
-      "a": "Yes. The clip can include a spoken line and captions, and the same pour can be rendered in another language. Allergens stay on the real package. A failed job returns its credits."
+      "a": "Yes. The clip can include a spoken line and captions, and the same pour can be made again in another language. Allergens stay on the real package. A failed job returns its credits."
     }
   ],
   "templates_lead": "Choose a food ad format that puts one product and one serving moment in focus.",
   "cta_lead": "Paste a product link or upload one package photo, pick a presenter, and check the pack before you post.",
   "steps_h2": "Food and Drink Video Ads From Pack to Pour",
-  "steps_lead": "Nutrition facts stay on the real package. Three steps: a link or a photo, a presenter, then voice and captions.",
+  "steps_lead": "Nutrition facts stay on the real package. Three steps: a link or a photo, a made-up person, then a spoken voice and captions.",
   "steps": [
     {
-      "t": "Upload the Product Photo",
+      "t": "Add the Package Photo or Link",
       "d": "Paste a product link, or use a clean photo of the can, bottle, or pouch, label toward you."
     },
     {
-      "t": "Pick a Creator Avatar",
-      "d": "Choose a generated presenter from the actor library for the pour or the bite. Those hands are not a customer."
+      "t": "Pick a Made-Up Person",
+      "d": "The actor library is a list of made-up people. Pick one for the pour or the bite. Those hands are not a customer."
     },
     {
-      "t": "Generate and Then Post",
-      "d": "A voiceover and captions come with the frame you picked. Post the file to TikTok or Meta once the pack color matches."
+      "t": "Add a Spoken Voice, Then Post",
+      "d": "A spoken voice and captions come in the video shape you picked. Post to TikTok or Meta (Facebook and Instagram) once the pack color matches."
     }
   ],
   "visual": {
@@ -113,11 +113,11 @@
     },
     {
       "id": "tpl-pack",
-      "label": "packaging mockup generator"
+      "label": "packaging photo maker"
     },
     {
       "id": "tpl-spark-ads-style-video",
-      "label": "Spark Ads style video"
+      "label": "in-feed style product video"
     },
     {
       "id": "product-videos",
@@ -154,7 +154,7 @@
       },
       {
         "t": "More Servings, One Photo",
-        "d": "Run one photo through a pour, a bite, and a plated scene, as a batch if the line needs it. Each length shows its credit cost before it runs.",
+        "d": "Run one photo as a pour, a bite, and a plated scene. A batch is several jobs from one photo. Credits are what your plan spends on each job, and each length shows its cost before it runs.",
         "img": "n:guide:fx32-food-benefit-serve-r2",
         "alt": "Adult hands place three plain oat cookies on a ceramic plate beside berries."
       }
@@ -162,21 +162,21 @@
   },
   "platforms": {
     "h2": "AI Food Product Photos and Clips for Every Channel",
-    "lead": "A short pour fits a phone feed. A still of the pack fits a listing. Publish the clip to TikTok or Meta after the pack color checks out.",
+    "lead": "A short pour fits a phone feed. A photo of the pack fits a listing. Publish the clip to TikTok or Meta (Facebook and Instagram) after the pack color checks out.",
     "items": [
       {
         "t": "AI TikTok ads generator",
-        "d": "A 9:16 pour or first bite for a snack post in the For You feed.",
+        "d": "A tall 9:16 pour or first bite for a snack post on the TikTok home feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram ads",
-        "d": "A square pack still or a vertical serving clip for the grid and Stories.",
+        "d": "A square photo of the pack, or a tall serving video, for the profile grid and for Instagram Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook ad generator",
-        "d": "A feed still with room to add the offer after download.",
+        "d": "A photo for the feed, with space to add the offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
@@ -210,13 +210,13 @@
         "example": true,
         "who": "Snack pouch",
         "t": "Two lengths, one pouch",
-        "d": "A pouch photo becomes a 6-second open (24 credits) and a 15-second plated bite (60 credits)."
+        "d": "A pouch photo becomes a 6-second clip of opening it (24 credits) and a 15-second clip of a bite on a plate (60 credits)."
       },
       {
         "example": true,
         "who": "New flavor",
         "t": "A link before any kitchen day",
-        "d": "They paste the product page for a first pour and still proof the flavor name on the pouch."
+        "d": "They paste the product page for a first pour and still check the flavor name on the pouch."
       },
       {
         "example": true,
@@ -234,19 +234,19 @@
         "example": true,
         "who": "Careful label",
         "t": "Captions, not the ingredient panel",
-        "d": "Voice and captions are edited in place. Allergens stay on the real pack."
+        "d": "Voice and captions are edited on this page. Allergens stay on the real pack."
       },
       {
         "example": true,
         "who": "Region desk",
         "t": "The pour in another language",
-        "d": "The same pour is rendered for another market. Pack color is checked both times."
+        "d": "The same pour is made again for another market. Pack color is checked both times."
       },
       {
         "example": true,
         "who": "Photo set",
         "t": "A few packs, no light kit",
-        "d": "Several package photos stand in for a lighting day. The hands on screen stay generated."
+        "d": "Several package photos replace a lighting day. The hands on screen stay made up."
       },
       {
         "example": true,
@@ -258,12 +258,12 @@
         "example": true,
         "who": "Chat desk",
         "t": "Describe the glass, get the clip",
-        "d": "They describe the glass in a short back-and-forth and get a script with the pour."
+        "d": "They describe the glass in a few short notes and get a script with the pour."
       }
     ]
   },
   "cta_title": "Turn a Package Photo Into a Serving",
-  "related_h2": "Pours, packs, and listing stills",
+  "related_h2": "Pours, packs, and listing photos",
   "blockOrder": [
     "hero",
     "strip",
@@ -284,11 +284,11 @@
       "items": [
         {
           "t": "A link becomes the pour",
-          "d": "Paste the product page. The job reads the pack and starts a pour, a bite, or a shelf moment from that link."
+          "d": "Paste the product page. The job uses the pack on that page and starts a pour, a bite, or a shelf moment."
         },
         {
           "t": "A presenter from the library",
-          "d": "Choose a generated presenter for the serving. The hands are not a customer."
+          "d": "Choose a made-up presenter for the serving. The hands are not a customer."
         },
         {
           "t": "Voice and captions included",
@@ -300,11 +300,11 @@
         },
         {
           "t": "Edit on the same page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a watermark-free file."
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark (no logo stamped on it)."
         },
         {
           "t": "Another language, then publish",
-          "d": "Render the same pour in another language, then publish the file to TikTok or Meta."
+          "d": "Make the same pour again in another language, then publish the file to TikTok or Meta."
         }
       ]
     }

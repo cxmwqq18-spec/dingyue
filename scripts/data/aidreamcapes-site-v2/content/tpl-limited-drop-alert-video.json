@@ -1,10 +1,10 @@
 {
   "id": "tpl-limited-drop-alert-video",
   "title": "Limited Drop Alert Video Template | AIVideosUGC",
-  "description": "Drive urgency for a small release or restock with a drop alert video from one product photo. Add your date, quantity and notify link after download.",
+  "description": "Make a short alert video for a small release or restock from one product photo. After you download it, add the date, the quantity, and your link.",
   "h1": "Limited Drop Alert Video for a Restock or Small Release",
-  "eyebrow": "Limited drop video template",
-  "lead": "Place the release product in a scene, add a voiceover and captions, and put the date on only after download.",
+  "eyebrow": "Small release video template",
+  "lead": "A limited drop alert video is a short clip for a small release or restock. Put the product in a scene. Add a voiceover, a spoken voice, and captions, words on the screen. Add the date only after you download. Credits, what each job spends, are shown before you start.",
   "secondary_keywords": [
     "restock alert video",
     "limited release ad",
@@ -16,22 +16,22 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo of the item in the drop, or paste its product page link."
+      "d": "Upload one clear photo of the item in this release, or paste its product page link."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the reveal and a short spoken line, then pick a size and a length from 6 to 30 seconds."
+      "d": "Name how the product appears and a short spoken line, then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the alert, add the date and quantity, and publish it to TikTok or Meta. Pause it when stock runs out."
+      "d": "Download the alert, add the date and quantity, and post to TikTok, Facebook, or Instagram. Pause it when you sell out."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 tall · TikTok & Reels"
       ],
       [
         "Length",
@@ -39,7 +39,7 @@
       ],
       [
         "Also try",
-        "1:1 · Feed"
+        "1:1 square · main feed"
       ]
     ],
     "cta": "Make my drop video"
@@ -47,43 +47,43 @@
   "faq": [
     {
       "q": "What is a limited drop alert video?",
-      "a": "A ready scene for a short release. You add your product photo, a hook, a script, and a voiceover, and an AI actor can hold the item. You type the date and the quantity after download."
+      "a": "A ready scene for a short release. You add your product photo, a hook (the opening line), a script (the words), and a voiceover (a spoken voice). An AI actor, a generated person, can hold the item. You type the date and the quantity after download."
     },
     {
       "q": "How do I build the alert?",
-      "a": "Upload the photo or paste a product page link, take the script, pick an AI actor and a voiceover, choose a size and a length, then download. You can make several openings from that same photo."
+      "a": "Upload the photo or paste a product page link. Take the script, pick an AI actor and a spoken voice, choose a size and a length, then download. You can make several versions from that same photo."
     },
     {
       "q": "Why start from a product photo instead of filming the drop?",
-      "a": "The scene comes from the photo or the product link, so you can prepare the alert before the release without booking a creator for every colorway."
+      "a": "The scene comes from the photo or the product link. You can prepare the alert before the release, and you do not need a creator for every color."
     },
     {
-      "q": "Who is a shoe drop video for?",
-      "a": "Shops with a short release window, including shoe drops, apparel, a beauty shade, or a home restock, on TikTok, Reels, or a product page."
+      "q": "Who is this release alert for?",
+      "a": "Shops with a short time to sell, including shoes, clothes, a beauty color, or a home restock. They post on TikTok, Instagram Reels, or a product page."
     },
     {
       "q": "Can a first-time seller use it?",
-      "a": "Yes. One clear photo and a short line are enough. Captions, music, and the spoken line can be set before you download."
+      "a": "Yes. One clear photo and a short line are enough. You can set words on screen, music, and the spoken line before you download."
     },
     {
       "q": "Can the clip show a live countdown or the stock count?",
-      "a": "Add the countdown, date, and quantity as text after download. The tool does not keep a clock or a stock number in sync with your store."
+      "a": "Add the countdown, the date, and the quantity as text after download. This tool does not read a clock or a stock number from your store."
     },
     {
       "q": "Which size and length fit a drop post?",
-      "a": "9:16 for TikTok and Reels, 1:1 for a feed, plus 16:9, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds. You can publish the file to TikTok or Meta."
+      "a": "Use 9:16, a tall phone shape, for TikTok and Instagram Reels. 1:1 is a square for the main feed. You can also pick 16:9 (wide), 4:3, or 3:4 (tall). Lengths are 6, 10, 15, or 30 seconds. You can post to TikTok or Meta (Facebook and Instagram)."
     },
     {
       "q": "Does it include music, captions, or a voiceover?",
-      "a": "Yes. Set a voiceover, captions, and a track from the music library in the built-in editor. You can speak the line again in another language."
+      "a": "Yes. In the editor, set a spoken voice, words on screen, and a track from the music library. You can speak the line again in another language."
     },
     {
       "q": "What does the alert cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first, and a failed job returns its credits. Plans start at $24.50 a month. There is no free plan. The download has no watermark."
+      "a": "A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Credits are what the job spends. You see the cost first, and a failed job returns those credits. Plans start at $24.50 a month. There is no free plan. The download has no watermark, nothing stamped on the file."
     },
     {
       "q": "What should I do when the drop sells out?",
-      "a": "Pause or replace the ad and change the quantity line. A catalog API can start the next alert from your store. Any person on screen is an AI actor, not a buyer."
+      "a": "Pause or replace the ad and change the quantity line. The API lets your product list start the next alert. Any person on screen is an AI actor, a generated person, not a buyer."
     }
   ],
   "visual": {
@@ -102,11 +102,11 @@
       "sourceHint": "Show the full shoe shape and color in a clear view.",
       "result": "n:guide:q13-limited-steps-result-r3",
       "mode": "video",
-      "prompt": "An adult hiker ties the coral trail shoes on a rocky trail, then stands so the tread and both shoes stay in frame. Leave room above the shoes for a date you add after download.",
+      "prompt": "An adult hiker ties the coral trail shoes on a rocky trail, then stands so the sole and both shoes stay visible. Leave room above the shoes for a date you add after download.",
       "options": [
         [
           "Size",
-          "9:16 · TikTok & Reels"
+          "9:16 tall · TikTok & Reels"
         ],
         [
           "Length",
@@ -114,13 +114,13 @@
         ],
         [
           "Also try",
-          "1:1 · Feed"
+          "1:1 square · main feed"
         ]
       ]
     },
     "picker": {
       "title": "Choose a Scene for a Restock Alert Video",
-      "lead": "Open a product scene and place the item that is actually in the drop. Add the date, quantity and notify link after download.",
+      "lead": "Open a scene and use the product in this release. After download, add the date, how many you have, and your link.",
       "chips": [
         {
           "id": "accessories",
@@ -152,7 +152,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -192,7 +192,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -202,7 +202,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-up unboxing: Makeup tools",
           "chips": [
             "accessories"
           ],
@@ -274,7 +274,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-ready unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -292,7 +292,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full turn: Linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -328,7 +328,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-person view: Court gear",
           "chips": [
             "explainer"
           ],
@@ -337,7 +337,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: Home app walkthrough",
           "chips": [
             "explainer"
           ],
@@ -346,7 +346,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Money tip: Phone demo",
           "chips": [
             "financial-services"
           ],
@@ -364,7 +364,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip: Citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -427,7 +427,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Close-up: Silver signet ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -517,7 +517,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Opening reaction: Mint face mist",
           "chips": [
             "viral"
           ],
@@ -541,14 +541,14 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Limited Drop Alert Video Questions"
+        "h2": "Questions About a Small Release Alert"
       },
       "m3": {
         "h2": "Choose a Scene for a Restock Alert Video"
       }
     }
   },
-  "cta_lead": "Upload the release product, add the spoken line, and see the credit cost before you start.",
+  "cta_lead": "Upload the product and add the spoken line. You see the credit cost, what the job spends, before you start.",
   "blockOrder": [
     "hero",
     "picker",
@@ -560,77 +560,77 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Are Switching to Shoe Drop Videos",
-    "lead": "Example ways a shop makes a limited drop alert video. The date and the stock note still go on after download.",
+    "h2": "How Shops Make a Release Alert",
+    "lead": "Examples of how a shop makes a short release alert. You still add the date and the quantity after download.",
     "items": [
       {
         "example": true,
         "who": "Watch shop",
         "t": "A finished alert from one product photo",
-        "d": "Example: a watch shop uploads the caseback and gets a short limited drop alert video it can post. The release date is typed on later."
+        "d": "Example: a watch shop uploads a photo of the watch and gets a short alert it can post. The release date is typed on later."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "The still and the clip in one project",
-        "d": "Example: an apparel shop builds the jacket photo and the restock alert together, on a first try, without opening a second app."
+        "d": "Example: an apparel shop builds the jacket photo and the restock alert together, in one project, without a second app."
       },
       {
         "example": true,
         "who": "Shoe shop",
         "t": "Hold the pair, or start from the link",
-        "d": "Example: a shoe shop pastes the product page link, or uploads the pair, and the clip shows those shoes held up for the drop."
+        "d": "Example: a shoe shop pastes the product page link, or uploads the pair, and the clip shows those shoes held up for the release."
       },
       {
         "example": true,
         "who": "Outerwear shop",
         "t": "An AI actor, then captions in the editor",
-        "d": "Example: the shop picks an AI actor from the actor library to hold the jacket, trims the clip in the editor, and sets captions."
+        "d": "Example: the shop picks an AI actor, a generated person, to hold the jacket. It trims the clip in the editor and adds words on screen."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "The same drop in another language",
-        "d": "Example: a beauty shop keeps one shade reveal and speaks the line again in a second language for the other market."
+        "d": "Example: a beauty shop keeps one color reveal and speaks the line again in a second language for the other market."
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "A track and a spoken line before download",
-        "d": "Example: a home shop adds a voiceover and a track from the music library, then edits both before the candle restock goes out."
+        "d": "Example: a home shop adds a spoken voice and a music track, then edits both before the candle restock goes out."
       },
       {
         "example": true,
         "who": "Bag shop",
-        "t": "An AI actor instead of a booked creator",
-        "d": "Example: a bag shop uses an AI actor for the first turn of a small run. Someone new to video can start from one photo."
+        "t": "An AI actor for a small release",
+        "d": "Example: a bag shop uses an AI actor, a generated person, to show a small release. Someone new to video can start from one photo."
       },
       {
         "example": true,
         "who": "Drink shop",
-        "t": "A digital twin skips another light setup",
-        "d": "Example: a drink shop uses a digital twin for the flavor hold, so the team does not rebuild the set for every new can."
+        "t": "Same generated person, no new lights",
+        "d": "Example: a drink shop uses a digital twin, the same generated person, for each new can. The team does not set up lights again."
       },
       {
         "example": true,
         "who": "Jewelry shop",
-        "t": "A script, a voice, and a second opening",
-        "d": "Example: a jewelry shop pastes the product link, takes the script and the voiceover, then makes a second opening from the same photo."
+        "t": "A script, a voice, and a second version",
+        "d": "Example: a jewelry shop pastes the product link, takes the words and the spoken voice, then makes a second version from the same photo."
       },
       {
         "example": true,
         "who": "Fitness shop",
-        "t": "Publish to TikTok or Meta, or use the API",
-        "d": "Example: a fitness shop publishes the gear alert to TikTok or Meta from the project. A catalog API can start the next one."
+        "t": "Post to TikTok or Meta, or use the API",
+        "d": "Example: a fitness shop posts the gear alert to TikTok or Meta (Facebook and Instagram). The API lets the store's product list start the next alert."
       }
     ]
   },
-  "related_h2": "Pages for a Product Restock Reel",
+  "related_h2": "Pages for the Next Restock Video",
   "related_lead": "Video ads, fashion scenes, and TikTok placements for the next restock.",
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "AI creator-style video ads"
     },
     {
       "id": "tpl-outfit",
@@ -638,7 +638,7 @@
     },
     {
       "id": "tpl-carousel-video-ad",
-      "label": "carousel video ad"
+      "label": "Swipeable carousel video ad"
     },
     {
       "id": "tpl-sale",
@@ -653,42 +653,42 @@
       "label": "AI TikTok ads generator"
     }
   ],
-  "cta_title": "Every Drop Has a Window. Put It on the Feed.",
+  "cta_title": "A Small Release Is Short. Show It in the Video.",
   "more_sections": [
     {
       "eyebrow": "On this alert",
-      "h2": "Features for a Limited Drop Alert",
-      "lead": "Use these on the limited drop alert video. The live date, quantity, and notify link stay editable after download.",
+      "h2": "Features for a Small Release Alert",
+      "lead": "Use these on the release alert. You can still edit the date, the quantity, and your link after download.",
       "items": [
         {
           "icon": "play",
-          "t": "Voiceover, captions, and music",
-          "d": "Add a spoken line, on-screen captions, and a track from the music library before you download."
+          "t": "Spoken voice, words on screen, and music",
+          "d": "Add a spoken voice, words on screen, and a track from the music library before you download."
         },
         {
           "icon": "users",
           "t": "AI actors and a digital twin",
-          "d": "Pick an AI actor to hold the item, or a digital twin when the same person should return. They are generated, not buyers."
+          "d": "Pick an AI actor, a generated person, to hold the item. Or pick a digital twin, that same person saved to use again. They are not buyers."
         },
         {
           "icon": "sparkle",
           "t": "A script from a line or a link",
-          "d": "Ask for a short script, or paste a product page link and start the alert from that page."
+          "d": "Ask for a short script, the words to say. Or paste a product page link and start the alert from that page."
         },
         {
           "icon": "layers",
-          "t": "A batch of openings from one photo",
-          "d": "Make another cut from the same photo when you want a second hook. Each job shows its credit cost first."
+          "t": "A batch of versions from one photo",
+          "d": "Make another version from the same photo for a second opening line. Each job shows its credit cost first. Credits are what the job spends."
         },
         {
           "icon": "check",
           "t": "Edit here, then publish",
-          "d": "Trim in the built-in editor, then publish the file to TikTok or Meta. The download has no watermark."
+          "d": "Trim in the editor, then post to TikTok or Meta (Facebook and Instagram). The file has no watermark, nothing stamped on it."
         },
         {
           "icon": "globe",
-          "t": "Another language, or the catalog API",
-          "d": "Speak the line in another language, or start the same alert from your catalog through the API."
+          "t": "Another language, or the API",
+          "d": "Speak the line in another language. Or use the API so your product list can start this alert."
         }
       ]
     }

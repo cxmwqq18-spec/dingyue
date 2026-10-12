@@ -1,10 +1,10 @@
 {
   "id": "pricing",
   "title": "Pricing: Starter, Pro and Premium Plans | AIVideosUGC",
-  "description": "AIVideosUGC pricing: Starter at $24.50, Pro at $35 or Premium at $63 a month, with 200 to 600 credits for product photos and videos. Compare plans today.",
+  "description": "AIVideosUGC pricing: Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits are what you spend on a photo or video.",
   "h1": "AIVideosUGC Pricing for Product Photos and Videos",
   "eyebrow": "Plans and credits",
-  "lead": "AIVideosUGC pricing is three monthly plans for product photos and spoken video ads. Credits cover the script, the voice, captions, a generated presenter, and a music track. You see the credit cost before each job starts.",
+  "lead": "AIVideosUGC pricing is three monthly plans for product photos and spoken video ads. Credits are what you spend to make each photo or video. You see the cost before you start. No watermark means no logo is stamped on the file. A size such as 9:16 is the shape of the video.",
   "card": "Starter, Pro, and Premium, with a set credit balance each month.",
   "secondary_keywords": [
     "AI product photo pricing",
@@ -14,62 +14,62 @@
   ],
   "intro": "Choose a monthly plan by how many photos and videos you need. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A listing photo and a vertical ad draw from the same balance.",
   "credits_explained": [
-    "Credits pay for the jobs you run. A product photo is 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm. A video job includes a script, a spoken voice, captions, a generated presenter, and a track from the music library.",
-    "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance on their own. The same balance covers a product link turned into a video, a batch of versions, and an API job. Downloads have no watermark, and you can send the finished file to TikTok or Meta."
+    "Credits are what you spend to make a photo or a video. A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see that number before you start. A job on this page means one photo or one video. The size names are the shape of the video. 9:16 is a tall phone video. 1:1 is a square. 16:9 is wide. 4:3 is a little wider than it is tall. 3:4 is a tall shape. Product photos are square. Each video includes a script, a spoken voice, and captions on the screen. It also includes a presenter made by the tool, not a real customer, and a song from the music library.",
+    "We set the credits aside when you start, and we take them when the file is ready. If the work fails, the credits come back by themselves. The same credits pay for a video made from a product link. They also pay for a batch, which means several versions at once. They also pay for the API. The API is a connection that lets your own shop system start the work. Downloads have no watermark, so there is no logo on the file. You can send the finished file to TikTok or to Meta. Meta is Facebook and Instagram."
   ],
   "teams": "Need more credits than Premium includes? Email support@aivideosugc.com with how many photos and videos you make in a month.",
   "faq": [
     {
       "q": "Which plan should a small shop start with?",
-      "a": "Start on Starter at $24.50 for 200 credits when you refresh a few listings. Move to Pro at $35 for 300 credits, or Premium at $63 for 600, when weekly ad tests need more jobs."
+      "a": "Start on Starter at $24.50 for 200 credits when you update a few product pages. Move to Pro at $35 for 300 credits, or Premium at $63 for 600, when you make more ads each week."
     },
     {
       "q": "Can the same credits pay for photos and videos?",
-      "a": "Yes. Photos and videos come out of one credit balance, and each job shows its credit cost before you confirm."
+      "a": "Yes. Photos and videos use the same credits. Each one shows its cost before you start."
     },
     {
       "q": "Can I get a refund for a result I do not like?",
-      "a": "A failed job returns its reserved credits automatically. If a delivered file does not match what you asked for, use the [Refund Policy](/refunds) to request a review, then email support."
+      "a": "If the work fails, the credits we set aside come back on their own. If a delivered file does not match what you asked for, use the [Refund Policy](/refunds) to ask for a review, then email support."
     },
     {
       "q": "Are uploads private on every plan?",
-      "a": "Yes. On Starter, Pro, and Premium, your uploads and finished files stay in your account and are not published. The [AI content trust and safety](page:trust) page spells out what that covers."
+      "a": "Yes. On Starter, Pro, and Premium, your uploads and finished files stay in your account. We do not publish them. The [trust and safety page](page:trust) says what that covers."
     },
     {
-      "q": "What happens to credits when a job fails?",
-      "a": "The reserved credits go back to your balance automatically. If the balance does not update, check the job status and your credit history, then email support with the time of the job."
+      "q": "What happens to my credits if the work fails?",
+      "a": "The credits we set aside go back to your balance on their own. If the balance does not update, check the status of that work and your credit history. Then email support with the time you started it."
     },
     {
       "q": "How many credits does a photo or video use?",
-      "a": "A product photo is 24 credits. Video is 24 for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see that number before the job starts. Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Product photos are square."
+      "a": "A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see the number before you start. 9:16 is a tall phone video, 1:1 is a square, and 16:9 is wide. 4:3 is a little wider than it is tall, and 3:4 is a tall shape. Product photos are square."
     },
     {
       "q": "Can I use the photos and videos in ads?",
-      "a": "Yes. You can use downloaded photos and videos in your own ads, on product pages, and in social posts. Follow each platform's rules when you publish."
+      "a": "Yes. You can use downloaded photos and videos in your own ads, on product pages, and in social posts. Follow the rules of the place you post."
     },
     {
       "q": "Do downloads include a watermark?",
-      "a": "No. Downloaded photos and videos do not include an AIVideosUGC watermark."
+      "a": "No. Downloaded photos and videos do not include an AIVideosUGC watermark. A watermark is a logo stamped on the file."
     },
     {
-      "q": "What does a video job include?",
-      "a": "A script written from your product, a spoken voice, on-screen captions, a generated presenter, and a music track. You still see the credit cost before the job starts. A photo is 24 credits. Video is 24, 40, 60, or 120 credits by length."
+      "q": "What does a video include?",
+      "a": "You get a script written from your product, a spoken voice, and captions on the screen. You also get a presenter made by the tool, not a real customer, and a music track. You see the credit cost before you start. A photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40, a 15-second video costs 60, and a 30-second video costs 120."
     },
     {
       "q": "Can I paste a product link?",
-      "a": "Yes. Paste a link to a product you sell and the tool drafts the script, the voice, and the video from that page. You need the rights to that page and to the photos on it."
+      "a": "Yes. Paste a link to a product you sell. The tool writes the script, the voice, and the video from that page. You need permission to use that page and the photos on it."
     },
     {
-      "q": "Can I publish to TikTok or Meta from here?",
-      "a": "Yes. When the file looks right, send it to TikTok or Meta, or download it with no watermark and post it yourself. Follow each platform's rules, including any label for AI-generated content."
+      "q": "Can I send a file to TikTok, Facebook, or Instagram from here?",
+      "a": "Yes. When the file looks right, send it to TikTok or Meta, or download it and post it yourself. Meta is Facebook and Instagram. A watermark is a logo on the file, and the download has none. Follow the rules where you post, including a note that the video was made with AI."
     },
     {
-      "q": "Do you offer batch runs and an API?",
-      "a": "Yes. You can run a batch of versions from one product, and you can call the API when a shop wants ads made from its own system. Both draw from the same credit balance, and a failed job returns its credits."
+      "q": "Can I make several versions at once, or connect my own shop system?",
+      "a": "Yes. You can make several versions of one product at once. That is a batch. You can also use the API, a connection that lets your shop system start the work. Both use the same credits. If the work fails, the credits come back."
     }
   ],
   "cta_title": "Pick the plan that covers this month",
-  "cta_lead": "Check the credit cost of the next photo or video, then start on the monthly plan that fits the work.",
+  "cta_lead": "Check how many credits the next photo or video will use, then pick the monthly plan that covers it.",
   "relatedLinks": [
     "faq",
     "glossary",

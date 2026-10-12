@@ -1,10 +1,10 @@
 {
   "id": "tpl-pack",
   "title": "Packaging Mockup Generator for Product Scenes | AIVideosUGC",
-  "description": "Place your pouch, box or bottle artwork on a shelf, counter or cafe table before you order printed stock. Square packaging mockups from one photo.",
+  "description": "Make a square shelf, counter, or cafe preview from one photo of the pouch, box, or bottle you will ship. This picture is not the printed pack.",
   "h1": "Packaging Mockup Generator for a Shelf or Cafe Scene",
   "eyebrow": "Product photo template",
-  "lead": "Build a packaging mockup for a shelf, counter, or cafe from one photo of the pouch, box, or bottle. Add a voiceover and captions when that photo also becomes a clip.",
+  "lead": "A packaging mockup generator makes a preview picture, not the printed pack. Make it for a shelf, counter, or cafe from one photo of the pouch, box, or bottle. If that photo also becomes a video, add a spoken voice and words on screen. Credits, what each job spends, are shown before you start.",
   "secondary_keywords": [
     "box mockup from design photo",
     "pouch packaging mockup",
@@ -35,31 +35,31 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name a shelf, counter or cafe setting. The credit cost is shown before the square preview is made."
+      "d": "Name a shelf, counter, or cafe. You see the credit cost, what the job spends, before the square preview is made."
     },
     {
       "t": "Download and Compare",
-      "d": "Download the square file. It has no watermark. Compare it with your artwork and a printer proof before you approve production."
+      "d": "Download the square file. It has no watermark, nothing stamped on it. Compare it with your design and a sample print before you approve."
     }
   ],
-  "steps_h2": "Make a Box Mockup from One Package Photo in 3 Steps",
-  "steps_lead": "One photo of the real package, one scene, then a square file you compare with the printer proof.",
+  "steps_h2": "Make a Shelf Preview from One Package Photo in 3 Steps",
+  "steps_lead": "One photo of the real package, one scene, then a square file you compare with a sample print.",
   "faq": [
     {
       "q": "What is a packaging mockup generator?",
-      "a": "A square shelf, counter, or cafe preview from one photo of the pouch, box, or bottle you will ship. It shows presentation, not ink or legal text. That photo can also start a clip with an AI actor, a script, and a voiceover."
+      "a": "A square shelf, counter, or cafe preview from one photo of the pouch, box, or bottle you will ship. It shows how the pack sits in the scene, not print color or legal words. That photo can also start a video with an AI actor, a script (the words), and a voiceover (a spoken voice)."
     },
     {
       "q": "How does the preview get made?",
-      "a": "Upload the package photo or paste a product page link, name the shelf scene, and download the square file. For a clip, add the script, voiceover, and captions in the built-in editor."
+      "a": "Upload the package photo or paste a product page link, name the shelf scene, and download the square file. For a video, add the script, the spoken voice, and words on screen in the editor."
     },
     {
       "q": "Why use this instead of filming a creator?",
-      "a": "You can judge the shelf composition before a print order, and make a product clip without booking a creator. A printer proof still checks color and small legal text."
+      "a": "You can judge how the shelf looks before a print order, and make a product video without booking a creator. A sample print still checks color and small legal words."
     },
     {
       "q": "Who is it for?",
-      "a": "Food, drink, beauty, and home shops, plus agencies, that need a packaging mockup for a retailer deck, a listing concept, or a product clip."
+      "a": "Food, drink, beauty, and home shops, plus agencies. Use it for slides for a store buyer, a listing idea, or a product video."
     },
     {
       "q": "Can a beginner use it?",
@@ -75,19 +75,19 @@
     },
     {
       "q": "Where can I use the file?",
-      "a": "The square preview fits a listing concept, a deck, or a post. A clip from the same photo can go to TikTok, Instagram, Facebook, YouTube, or Shopify. Video frames include 9:16, 1:1, 16:9, 4:3, and 3:4."
+      "a": "The square preview fits a listing idea, slides, or a post. A video from the same photo can go to TikTok, Instagram, Facebook, YouTube, or Shopify. Shapes are 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, and 3:4 (tall)."
     },
     {
       "q": "Do I need a paid plan?",
-      "a": "Yes. There is no free plan. Plans start at $24.50 a month. The square preview is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost first, and a failed job returns its credits. The download has no watermark."
+      "a": "Yes. There is no free plan. Plans start at $24.50 a month. The square preview is 24 credits. Credits are what the job spends. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost first, and a failed job returns its credits. The download has no watermark, nothing stamped on the file."
     },
     {
       "q": "Can I use the preview in a pitch or an ad?",
-      "a": "Yes. Use it in your store, a retailer deck, or an ad. It is not a substitute for a printer proof when color or fine print must be exact. Any person in a clip is an AI actor, not a buyer."
+      "a": "Yes. Use it in your store, in slides for a store buyer, or in an ad. It does not replace a sample print when color or tiny print must be exact. Any person in a video is an AI actor, not a buyer."
     },
     {
       "q": "Why start from a shelf scene instead of a blank frame?",
-      "a": "The shelf, counter, or cafe scene is already framed, so you compare variants faster. You can still make a second opening, speak another language, or call the catalog API for the next pack."
+      "a": "The shelf, counter, or cafe scene is already set, so you can compare versions faster. You can still make a second opening line, speak another language, or use the API so your product list starts the next pack."
     }
   ],
   "visual": {
@@ -100,8 +100,8 @@
       "n:guide:tpl-pack-c3-m3-shelf-boxes"
     ],
     "picker": {
-      "title": "Short Video Ads, Separate from the Mockup",
-      "lead": "Each card is a video ad for another product. Your packaging preview is the square image made from one photo of the pouch, box or bottle you will ship.",
+      "title": "Short Video Ads, Separate from the Preview",
+      "lead": "Each card is a video ad for another product. Your preview is the square image from one photo of the pouch, box, or bottle you will ship.",
       "chips": [
         {
           "id": "accessories",
@@ -133,7 +133,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -173,7 +173,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -183,7 +183,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-up unboxing: Makeup tools",
           "chips": [
             "accessories"
           ],
@@ -255,7 +255,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-ready unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -273,7 +273,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full turn: Linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -309,7 +309,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-person view: Court gear",
           "chips": [
             "explainer"
           ],
@@ -318,7 +318,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: Home app walkthrough",
           "chips": [
             "explainer"
           ],
@@ -327,7 +327,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Money tip: Phone demo",
           "chips": [
             "financial-services"
           ],
@@ -345,7 +345,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip: Citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -408,7 +408,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Close-up: Silver signet ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -498,7 +498,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Opening reaction: Mint face mist",
           "chips": [
             "viral"
           ],
@@ -521,7 +521,7 @@
       "source": "n:guide:tpl-pack-c3-m2-source",
       "result": "n:f15-r10-tpl-pack-steps-open-r1",
       "mode": "photo",
-      "prompt": "A plain kraft coffee pouch sits on a cafe counter with the front panel facing forward.",
+      "prompt": "A plain paper coffee pouch sits on a cafe counter with the front panel facing forward.",
       "sourceTitle": "Your product"
     },
     "input": [],
@@ -529,11 +529,11 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Short Video Ads, Separate from the Mockup",
-        "lead": "Each card is a video ad for another product. Your packaging preview is the square image made from one photo of the pouch, box or bottle you will ship."
+        "h2": "Short Video Ads, Separate from the Preview",
+        "lead": "Each card is a video ad for another product. Your preview is the square image from one photo of the pouch, box, or bottle you will ship."
       },
       "faq": {
-        "h2": "Questions About a Packaging Mockup Generator"
+        "h2": "Questions About a Packaging Preview"
       }
     }
   },
@@ -548,8 +548,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Are Switching to Shelf Mockups",
-    "lead": "Example shelf scenes, from a coffee packaging mockup to a pouch packaging mockup. Not a check of ink or legal text.",
+    "h2": "How Shops Preview a Pack on a Shelf",
+    "lead": "Example shelf scenes, from a coffee pack to a pouch. This is not a check of print color or the small legal words.",
     "items": [
       {
         "example": true,
@@ -561,7 +561,7 @@
         "example": true,
         "who": "Tea shop",
         "t": "The mockup and a clip in one project",
-        "d": "Example: a tea shop makes the tin still and a short product clip together, on a first try, without a second app."
+        "d": "Example: a tea shop makes the tin picture and a short product clip together, in one project, without a second app."
       },
       {
         "example": true,
@@ -573,7 +573,7 @@
         "example": true,
         "who": "Snack shop",
         "t": "An AI actor and captions on the clip",
-        "d": "Example: the pouch stays the shelf still. On the clip, the shop picks an AI actor, trims in the editor, and sets captions."
+        "d": "Example: the pouch stays the shelf picture. On the video, the shop picks an AI actor, a generated person, then adds words on screen."
       },
       {
         "example": true,
@@ -585,36 +585,36 @@
         "example": true,
         "who": "Soap shop",
         "t": "A voiceover and a track on the clip",
-        "d": "Example: the carton mockup is for the retailer deck. On the clip, the editor adds a voiceover and a track from the music library."
+        "d": "Example: the carton preview is for slides you show a store buyer. On the video, the editor adds a spoken voice and a track from the music library."
       },
       {
         "example": true,
         "who": "Supplement shop",
         "t": "An AI actor instead of a filmed spot",
-        "d": "Example: a supplement shop uses an AI actor for a short hold. Dense ingredient text can blur, so the real label photo stays the source of the wording."
+        "d": "Example: a supplement shop uses an AI actor, a generated person, to hold the pack. Small ingredient text can blur, so the real label photo keeps the wording."
       },
       {
         "example": true,
         "who": "Pet food shop",
         "t": "A digital twin for the next bag",
-        "d": "Example: a pet-food shop uses a digital twin so the next bag clip matches the first, without another light setup."
+        "d": "Example: a pet-food shop uses a digital twin, the same generated person, so the next bag clip matches the first. No new light setup."
       },
       {
         "example": true,
         "who": "Juice shop",
-        "t": "A script, then a second variant",
-        "d": "Example: a juice shop pastes the product link, takes a short script, and compares two bottle variants in the same scene."
+        "t": "A script, then a second version",
+        "d": "Example: a juice shop pastes the product link, takes a short script, and compares two bottle versions in the same scene."
       },
       {
         "example": true,
         "who": "Bakery shop",
         "t": "Publish the clip, or start from the API",
-        "d": "Example: after a look at the printer proof, the shop publishes the clip to TikTok or Meta. A catalog API can start the next box."
+        "d": "Example: after a look at the sample print, the shop posts the clip to TikTok or Meta (Facebook and Instagram). The API lets the product list start the next box."
       }
     ]
   },
-  "related_h2": "Product Label Scene Preview for Food Listings",
-  "related_lead": "Food pages to use with the mockup: drink videos, a Spark Ads style video, bundle photos for kits, and Shopify.",
+  "related_h2": "Package Preview Pages for Food Listings",
+  "related_lead": "Food pages to pair with this preview: drink videos, bundle photos, Shopify, and a TikTok post ad (Spark Ads style).",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -626,7 +626,7 @@
     },
     {
       "id": "tpl-spark-ads-style-video",
-      "label": "Spark Ads style video"
+      "label": "TikTok post ad (Spark Ads style)"
     },
     {
       "id": "tpl-box",
@@ -642,42 +642,42 @@
     }
   ],
   "cta_title": "Ready to Preview the Pack on a Shelf?",
-  "cta_lead": "Upload one photo of the package and see the credit cost before you start.",
+  "cta_lead": "Upload one photo of the package. You see the credit cost, what the job spends, before you start.",
   "more_sections": [
     {
       "eyebrow": "On this preview",
       "h2": "Features for a Packaging Mockup",
-      "lead": "The square file is a presentation preview. Spoken line, captions, and publish apply when that package photo also becomes a clip.",
+      "lead": "The square file is a preview picture. A spoken line, words on screen, and posting apply when that photo also becomes a video.",
       "items": [
         {
           "icon": "play",
-          "t": "Voiceover, captions, and music",
-          "d": "On the clip, add a spoken line, on-screen captions, and a track from the music library. The mockup itself is a still."
+          "t": "Spoken voice, words on screen, and music",
+          "d": "On the video, add a spoken voice, words on screen, and a track from the music library. The preview itself is a still."
         },
         {
           "icon": "users",
           "t": "AI actors and a digital twin",
-          "d": "An AI actor can hold the pack in the clip. A digital twin can return for the next variant. They are generated, not buyers."
+          "d": "An AI actor, a generated person, can hold the pack in the video. A digital twin, that same person, can return for the next version. They are not buyers."
         },
         {
           "icon": "sparkle",
           "t": "A script from a line or a link",
-          "d": "Ask for a short script, or paste a product page link and start from that page's package photo."
+          "d": "Ask for a short script, the words to say. Or paste a product page link and start from that page's package photo."
         },
         {
           "icon": "layers",
-          "t": "A batch of variants from one scene",
-          "d": "Make a second pack in the same shelf scene when you want to compare the front panel. Each photo is 24 credits, shown first."
+          "t": "A batch of versions from one scene",
+          "d": "Make a second pack in the same shelf scene when you want to compare the front. Each photo is 24 credits, shown first. Credits are what the job spends."
         },
         {
           "icon": "check",
           "t": "Edit the clip, then publish",
-          "d": "Trim the clip in the built-in editor, then publish it to TikTok or Meta. The download has no watermark."
+          "d": "Trim the clip in the editor, then post it to TikTok or Meta (Facebook and Instagram). The file has no watermark, nothing stamped on it."
         },
         {
           "icon": "globe",
           "t": "Another language, or the catalog API",
-          "d": "Speak the line in another language, or start the next preview from your catalog through the API."
+          "d": "Speak the line in another language. Or use the API so your product list can start the next preview."
         }
       ]
     }

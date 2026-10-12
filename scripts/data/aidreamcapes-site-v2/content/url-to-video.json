@@ -4,7 +4,7 @@
   "description": "Turn a public product URL into a short video with a script, an AI actor and a voice. Make demos, paid ads and social posts without a studio shoot.",
   "h1": "URL to Video: A Finished Ad From a Product Page",
   "eyebrow": "URL to video",
-  "lead": "Paste a public product link and get a short URL to video ad: a script, an AI actor, a voice and captions. No shoot, and no folder of photos to gather first. Pick a size, choose 6, 10, 15 or 30 seconds, then download or publish to TikTok or Meta.",
+  "lead": "Paste a public product page address (the URL) and get a short ad. It includes a script, an AI actor, a voice and captions, the words on screen. You do not need a shoot or a folder of photos. Pick a video size and a length of 6, 10, 15 or 30 seconds. Then download it, or post it on TikTok, Facebook or Instagram. Credits are what your plan spends on each video, and you see the number before you start.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -24,7 +24,7 @@
     },
     {
       "t": "An Actor and a Voice",
-      "d": "Pick an AI actor and a voice from the library, or make an actor for your brand. The person on screen is not a customer."
+      "d": "Pick an AI actor and a voice from the list, or make an actor for your brand. The person on screen is not a real customer."
     },
     {
       "t": "A Clip for Each Product",
@@ -32,23 +32,23 @@
     },
     {
       "t": "Edit, Then Publish",
-      "d": "Change the script, the voice, the captions and the track, then send the ad to TikTok or Meta."
+      "d": "Change the script, the voice, the captions and the music. Then send the ad to TikTok, Facebook or Instagram."
     }
   ],
-  "steps_h2": "How to Make a Video from a Product URL in 3 Simple Steps",
+  "steps_h2": "How to Make a Video from a Product Page in 3 Simple Steps",
   "steps_lead": "Paste a public product page, pick an actor and a voice, then check the script.",
   "steps": [
     {
-      "t": "Paste Your Product URL",
+      "t": "Paste Your Product Page",
       "d": "Paste a public product page. Its image, name and reviews come in with the link."
     },
     {
       "t": "Select an AI Actor",
-      "d": "Choose an AI actor and a voice. Anyone on screen is generated, not a shopper."
+      "d": "Choose an AI actor and a voice. The person on screen is made by AI, not a real shopper."
     },
     {
-      "t": "Generate the Script",
-      "d": "A script is written from the page. Edit it, then download or publish to TikTok or Meta."
+      "t": "Write the Script",
+      "d": "A script is written from the page. Edit it, then download it or post it on TikTok, Facebook or Instagram."
     }
   ],
   "maker": {
@@ -59,7 +59,7 @@
       ],
       [
         "Size",
-        "9:16 · TikTok, Reels & Shorts"
+        "9:16 tall phone · TikTok, Instagram Reels and YouTube Shorts"
       ],
       [
         "Length",
@@ -70,8 +70,8 @@
   },
   "faq": [
     {
-      "q": "What does a product URL provide?",
-      "a": "A public page that loads without a login supplies its main image, product name and any reviews on that page."
+      "q": "What does a product URL (the page address) give you?",
+      "a": "If the page opens with no login, you get its main image, the product name and any reviews on that page."
     },
     {
       "q": "Does the product link write the script?",
@@ -79,15 +79,15 @@
     },
     {
       "q": "Is URL to video free?",
-      "a": "No. Plans start at $24.50 a month. A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15 or 120 for 30, and you see that cost before the job starts."
+      "a": "No. Plans start at $24.50 a month. Credits are what that plan spends on each video. A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see that number before you start."
     },
     {
       "q": "How do I make a video from a product link?",
-      "a": "Paste the URL, pick an actor and a voice, check the script, choose a size and a length, then download or publish to TikTok or Meta."
+      "a": "Paste the page address. Pick an actor and a voice, then check the script. Choose a size and a length. Then download it, or post it on TikTok, Facebook or Instagram."
     },
     {
       "q": "Can I use a public Shopify or Amazon page?",
-      "a": "Yes, when the page opens without a login and shows the variant you sell."
+      "a": "Yes, if the page opens with no login and shows the item you sell, such as that color or size."
     },
     {
       "q": "What if the page requires a login?",
@@ -103,11 +103,11 @@
     },
     {
       "q": "How many credits does a URL to video clip use?",
-      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15 or 120 for 30. If the job fails, those credits return to your balance."
+      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Credits are what your plan spends. If the video fails, those credits come back."
     },
     {
-      "q": "Which frames can I pick?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4."
+      "q": "Which sizes can I pick?",
+      "a": "A tall phone video is 9:16. A square is 1:1. A wide video is 16:9. 4:3 is a little wider than square. 3:4 is tall, but 9:16 is taller."
     },
     {
       "q": "Can I make clips for several product links at once?",
@@ -115,22 +115,22 @@
     },
     {
       "q": "Can I edit the script, the voice and the captions?",
-      "a": "Yes. Change the script, swap the voice, fix a caption and pick a track in the editor before you download or publish."
+      "a": "Yes. Change the script, swap the voice, fix a caption and pick a song in the editor before you download or post."
     },
     {
       "q": "How long do I wait for a clip from a product page?",
-      "a": "You confirm the actor, the script and the credit cost, and the clip is prepared for download. If the job fails, those credits come back. The file itself is 6, 10, 15 or 30 seconds long."
+      "a": "You confirm the actor, the script and how many credits it uses. The clip is then ready to download. The 6, 10, 15 or 30 seconds is how long the video is, not how long you wait. If it fails, those credits come back."
     },
     {
-      "q": "Can I publish to TikTok or Meta?",
-      "a": "Yes. Send the finished clip to TikTok or Meta from the same screen, or download it. Finished files can be used commercially, with no watermark. Check each platform's rules before you scale spend."
+      "q": "Can I publish to TikTok, Facebook or Instagram?",
+      "a": "Yes. Send the finished clip to TikTok, Facebook or Instagram from the same screen, or download it. You can use it in paid ads and in posts you publish yourself. No logo is stamped on the file. Check each app's rules before you spend more on ads."
     },
     {
       "q": "Is a person in the clip a real customer?",
-      "a": "No. Any person on screen is AI-generated, not a customer endorsement."
+      "a": "No. Any person on screen is made by AI. They are not a real customer who bought the product."
     }
   ],
-  "cta_lead": "Paste a public product URL, check the script and see the credit cost before you start.",
+  "cta_lead": "Paste a public product page address, check the script, and see how many credits it uses before you start.",
   "uses": [
     {
       "t": "Listing Videos",
@@ -142,11 +142,11 @@
     },
     {
       "t": "Paid Ad Videos",
-      "d": "Build the ad from the link, with captions on the clip. Publish it to TikTok or Meta, or download it for another placement."
+      "d": "Build the ad from the link, with captions on the clip. Post it on TikTok, Facebook or Instagram, or download it to use somewhere else."
     },
     {
       "t": "Social Feed Videos",
-      "d": "Make a 9:16 clip for TikTok, Instagram or YouTube Shorts. A voice and captions are already in the file."
+      "d": "Make a tall 9:16 clip for TikTok, Instagram or YouTube Shorts. A voice and captions are already in the file."
     }
   ],
   "visual": {
@@ -164,7 +164,7 @@
       "result": "n:guide:fx51-url-steps-result-r1",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the captured product image as the product and keep its shape, color and clasp exactly. The same sage-green divided lunch container sits open on a bright kitchen counter, lid standing behind it, silver metal front clasp and side latches visible, compartments filled with food, and no hands in frame. Front-left medium framing with one slow push-in. Sound: quiet room tone; no music, text or logos.",
+      "prompt": "Keep this sage-green divided lunch box the same shape, color and silver clasp. It sits open on a bright kitchen counter, lid behind it, side latches showing, food in the sections, and no hands. Move closer slowly. Quiet room sound only. No music, words or logos.",
       "sourceTitle": "Paste your product page link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
@@ -193,13 +193,13 @@
         "frame": "reels",
         "ref": "n:guide:b2f11-url-to-video-uses-2-r1",
         "h": "Paid Ad Videos",
-        "d": "Build the ad from the link, with captions on the clip. Publish it to TikTok or Meta, or download it for another placement."
+        "d": "Build the ad from the link, with captions on the clip. Post it on TikTok, Facebook or Instagram, or download it to use somewhere else."
       },
       {
         "frame": "post",
         "ref": "n:guide:b2f11-url-to-video-uses-3-r1",
         "h": "Social Feed Videos",
-        "d": "Make a 9:16 clip for TikTok, Instagram or YouTube Shorts. A voice and captions are already in the file."
+        "d": "Make a tall 9:16 clip for TikTok, Instagram or YouTube Shorts. A voice and captions are already in the file."
       }
     ],
     "input": [],
@@ -210,7 +210,7 @@
         "h2": "Questions About URL to Video"
       },
       "m4": {
-        "h2": "Endless Ways to Use URL to Video"
+        "h2": "Ways to Use a Product-Page Video"
       }
     },
     "overview": ""
@@ -232,8 +232,8 @@
   "definition": {
     "title": "What Is URL to Video?",
     "paras": [
-      "URL to video turns a public product page into a short ad. The page supplies the image, the name and any reviews, then a script, an actor and a voice are added and the clip is cut.",
-      "You can edit the script, the captions and the track before you download or publish. Choose 6, 10, 15 or 30 seconds, and a frame of 9:16, 1:1, 16:9, 4:3 or 3:4. Anyone on screen is AI, not a customer."
+      "URL to video means a public product page address becomes a short ad. The page gives the image, the name and any reviews. A script, an actor and a voice are added, and you get a short clip.",
+      "You can edit the script, the captions and the music before you download or post. Choose 6, 10, 15 or 30 seconds. Sizes are a tall phone (9:16), a square (1:1) and a wide shape (16:9). 4:3 is a little wider than square. 3:4 is tall, but 9:16 is taller. Anyone on screen is AI, not a customer."
     ]
   },
   "reasons": {
@@ -245,8 +245,8 @@
         "d": "Paste the link and the product is already there, so you skip gathering photos into a folder first."
       },
       {
-        "t": "Script, Voice and Cut Included",
-        "d": "The script, the voice and the cut are made for you. You edit only the parts you want to change."
+        "t": "Script, Voice and Edit Included",
+        "d": "The script, the voice and the edit are made for you. You change only what you want."
       },
       {
         "t": "A Clip for Every Link",
@@ -281,7 +281,7 @@
       [
         "Start",
         "Paste one or many product links",
-        "Download files and write a brief"
+        "Download files and write the instructions"
       ],
       [
         "Script",
@@ -295,17 +295,17 @@
       ],
       [
         "Actor and voice",
-        "Pick from the library",
-        "Book a person and a read"
+        "Pick from the list",
+        "Book a person to say the lines"
       ],
       [
-        "Frames",
-        "9:16, 1:1, 16:9, 4:3 and 3:4",
-        "A separate export for each crop"
+        "Video size",
+        "Tall 9:16, square 1:1, wide 16:9, 4:3 and 3:4",
+        "A separate file for each size"
       ],
       [
-        "A failed job",
-        "Credits return to your balance",
+        "If it fails",
+        "Spent credits come back",
         "The time is already spent"
       ]
     ]
@@ -318,25 +318,25 @@
         "example": true,
         "who": "Store seller",
         "t": "Listing moment",
-        "d": "A store seller pastes a public listing, checks the photo and the script, and puts one action on the product page."
+        "d": "A store seller pastes a public listing, checks the photo and the script, and shows one action of the product."
       },
       {
         "example": true,
         "who": "Gadget seller",
         "t": "Phone stand",
-        "d": "A gadget seller uses the stand's public page, picks an actor, and asks for one unfolding action so the mechanism is easy to see."
+        "d": "A gadget seller uses the stand's public page, picks an actor, and asks for one unfolding action so shoppers can see how it opens."
       },
       {
         "example": true,
         "who": "Store running ads",
         "t": "One selling point",
-        "d": "A store running ads takes the same listing, makes one paid post about a single point, and publishes it to Meta."
+        "d": "A store running ads takes the same listing, makes one paid post about a single point, and publishes it on Facebook or Instagram."
       },
       {
         "example": true,
         "who": "Social seller",
         "t": "Vertical post",
-        "d": "A social seller pastes the listing again, picks 9:16, and posts it to TikTok, Instagram or YouTube Shorts."
+        "d": "A social seller pastes the listing again, picks a tall 9:16 size, and posts it to TikTok, Instagram or YouTube Shorts."
       },
       {
         "example": true,
@@ -366,13 +366,13 @@
         "example": true,
         "who": "Small team",
         "t": "In the editor",
-        "d": "A small team trims the clip, fixes a caption and swaps the track in the editor, then downloads a file with no watermark."
+        "d": "A small team trims the clip, fixes a caption and swaps the music in the editor. Then they download a file with no logo stamped on it."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Publish",
-        "d": "A drink seller sends the finished clip to TikTok from the same screen after checking the credit cost."
+        "d": "A drink seller sends the finished clip to TikTok from the same screen after checking how many credits it will use."
       }
     ]
   },
@@ -387,11 +387,11 @@
       },
       {
         "t": "Templates and Voices",
-        "d": "Start from an ad template and let a chosen voice read the script, instead of booking a separate read."
+        "d": "Start from an ad template and let a chosen voice say the script, instead of booking someone to record it."
       },
       {
         "t": "Another Language",
-        "d": "Keep the product and switch the language when the next market does not speak the first one."
+        "d": "Keep the product and switch the language for a market that uses a different language."
       }
     ]
   }

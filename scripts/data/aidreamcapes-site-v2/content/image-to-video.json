@@ -1,10 +1,10 @@
 {
   "id": "image-to-video",
   "title": "Image to Video AI for Product Ads | AIVideosUGC",
-  "description": "Turn a product photo into a UGC-style video with a script, an avatar, a voiceover and captions. Publish to TikTok or Meta, or download with no watermark.",
+  "description": "Turn a product photo into a phone-style video with a script, an AI person, a spoken voice and captions. Post to TikTok or Meta, or download with no watermark.",
   "h1": "AI Image to Video Generator: From a Still to an Ad",
   "eyebrow": "Image to video",
-  "lead": "AIVideosUGC turns a product photo into a UGC-style ad: one clear motion, a script, an avatar, a voiceover and captions. No camera crew. Pick 9:16, 1:1, 16:9, 4:3 or 3:4, and 6, 10, 15 or 30 seconds, then publish to TikTok or Meta or download the file with no watermark.",
+  "lead": "AIVideosUGC turns a product photo into a short ad with a casual phone-video look (called UGC). You get one motion, a script, an AI person on screen (an avatar, not a real customer), a spoken voice and captions. No camera crew. Pick a video shape: tall 9:16, square 1:1 or wide 16:9. 4:3 is a little wide, and 3:4 is a little tall. Pick 6, 10, 15 or 30 seconds. Then post to TikTok or Meta (Facebook and Instagram), or download the file with no watermark.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
@@ -30,31 +30,31 @@
       "d": "Reuse that photo in 9:16, 1:1, 16:9, 4:3 or 3:4 for a feed, a listing or a product page."
     }
   ],
-  "steps_h2": "How to Generate a Video from an Image in 3 Simple Steps",
-  "steps_lead": "Share the idea, talk with the video agent, and download a UGC-style clip.",
+  "steps_h2": "How to Make a Video from a Photo in 3 Simple Steps",
+  "steps_lead": "Share the idea, answer a few questions, and download a phone-style clip.",
   "steps": [
     {
       "t": "Share the Video Idea",
       "d": "Name the product, the goal and who it is for, or paste a product link."
     },
     {
-      "t": "Talk With the Video Agent",
-      "d": "Answer questions about the brand, the line you want said and the look of the clip."
+      "t": "Answer a Few Questions",
+      "d": "Answer questions about your brand, the words you want spoken and how the clip should look."
     },
     {
-      "t": "Get a UGC-Style Video",
-      "d": "You get a script, an avatar, a voiceover, captions, scenes and extra shots, ready for an ad."
+      "t": "Get a Phone-Style Video",
+      "d": "You get a script, an AI person, a spoken voice, captions, scenes and extra shots, ready for an ad."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · Reels & Stories"
+        "9:16 tall · Reels & Stories"
       ],
       [
         "Length",
-        "6, 10, 15 or 30"
+        "6, 10, 15 or 30 seconds"
       ],
       [
         "Start from",
@@ -66,54 +66,54 @@
   "faq": [
     {
       "q": "What is an AI image to video tool?",
-      "a": "It turns a still product photo into a moving UGC-style video. You can add a script, an avatar, a voiceover, captions and a music-library track, then publish or download with no watermark."
+      "a": "It turns a product photo into a moving video with a casual phone-video look (called UGC). You can add a script, an AI person, a spoken voice, captions and a song from the music library. Then post it, or download it with no watermark."
     },
     {
       "q": "How does a photo become a video?",
-      "a": "Upload the image or paste a product link. Motion is added from what you describe, and you can set captions, a script and a voiceover before you download."
+      "a": "Upload the image or paste a product link. Motion comes from what you describe. You can set captions, a script and a spoken voice before you download."
     },
     {
       "q": "What do you gain by making video from a photo?",
-      "a": "You can make several versions from a photo you already sell. A 6-second clip is 24 credits, and Starter is $24.50 a month for 200 credits, so you are not booking a shoot. That photo can also run in 9:16, 1:1, 16:9, 4:3 or 3:4."
+      "a": "You can make several versions from a photo you already sell. Credits are the points a video spends. A 6-second clip is 24 credits. Starter is $24.50 a month for 200 credits. You are not booking a filming day. The same photo can run as tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4."
     },
     {
       "q": "Can I post these clips on social?",
-      "a": "Yes. Make them for TikTok, Reels, Shorts and feed posts, then publish to TikTok or Meta in one click or download the file. Check each channel's current rules."
+      "a": "Yes. Make them for TikTok, Instagram Reels, YouTube Shorts and ordinary posts. Then post to TikTok or Meta in one click, or download the file. Check each app's current rules."
     },
     {
       "q": "How can a store use this for product marketing?",
-      "a": "Make a product showcase, a before-and-after, a social ad or a listing video for Amazon and other marketplaces that allow video. A batch of versions lets you see which opening to keep."
+      "a": "Make a product showcase, a before-and-after, a social ad or a listing video for Amazon and other marketplaces that allow video. Make several versions at once, then keep the first line that works."
     },
     {
       "q": "Can I make explainers and tutorials?",
-      "a": "Yes. Use the same avatar and script to explain a feature or walk through a short how-to, so each lesson looks consistent."
+      "a": "Yes. Use the same AI person and script to explain a feature or a short how-to. Each lesson then looks the same."
     },
     {
-      "q": "Can I add a voiceover or an avatar?",
-      "a": "Yes. A script writer, a voiceover, captions and the actor library are included. You can voice the script in another language, swap a track from the music library, and edit in the built-in editor. An API can start the same job from your own tools."
+      "q": "Can I add a spoken voice or a person on screen?",
+      "a": "Yes. A script writer, a spoken voice, captions and the actor library are included. The actor library is a set of ready-made AI people. You can speak the script in another language. You can swap a song from the music library. You can trim the clip in the built-in editor. An API is a connection that lets your own tools start the same job."
     },
     {
-      "q": "Which frames and lengths can I pick?",
-      "a": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, at 24, 40, 60 or 120 credits. A failed job returns those credits."
+      "q": "Which shapes and lengths can I pick?",
+      "a": "Pick a video shape: tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4. 4:3 is a little wide, and 3:4 is a little tall. Lengths are 6, 10, 15 or 30 seconds. Those cost 24, 40, 60 or 120 credits, in that order. Credits are the points a video spends. If a video fails, those credits come back."
     }
   ],
   "cta_lead": "Upload a product photo or paste a link, and see the credit cost before you start.",
   "uses": [
     {
       "t": "Test Paid Ads Side by Side",
-      "d": "Make several versions from one photo and run them on TikTok, Instagram, Facebook or Shorts. Publish the keeper to TikTok or Meta in one click, or download it with no watermark."
+      "d": "Make several versions from one photo and run them on TikTok, Instagram, Facebook or YouTube Shorts. Post the one you keep to TikTok or Meta in one click, or download it with no watermark."
     },
     {
-      "t": "Marketplace Listings That Move",
-      "d": "Add a video on Amazon, Etsy and other listings that allow one, so the product is not only a still. Check that marketplace's video rules first."
+      "t": "Videos on Marketplace Listings",
+      "d": "Add a video on Amazon, Etsy and other listings that allow video, so shoppers see more than a photo. Check that marketplace's video rules first."
     },
     {
-      "t": "Social Feeds From One Photo",
-      "d": "Turn one product photo into teasers and short visual stories for the feeds you sell on. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for each placement."
+      "t": "Social Posts From One Photo",
+      "d": "Turn one product photo into short clips for the apps you sell on. Pick a shape for each spot: tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4."
     },
     {
       "t": "Explainers and How-To Clips",
-      "d": "Show a feature or a short how-to with the same avatar and script each time, so the lesson stays clear."
+      "d": "Show a feature or a short how-to with the same AI person and script each time, so the lesson stays clear."
     }
   ],
   "visual": {
@@ -124,7 +124,7 @@
       "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. One gentle push-in. An avatar adds a one-line voiceover, and captions name the mug. Keep the mug's shape, color and label as in the photo."
+      "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. The camera moves in a little. An AI person adds a one-line spoken voice, and captions name the mug. Keep the mug's shape, color and label as in the photo."
     },
     "picker": {
       "title": "Product Photo to Video Examples",
@@ -139,25 +139,25 @@
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-uses-00",
         "h": "Test Paid Ads Side by Side",
-        "d": "Make several versions from one photo and run them on TikTok, Instagram, Facebook or Shorts. Publish the keeper to TikTok or Meta in one click, or download it with no watermark."
+        "d": "Make several versions from one photo and run them on TikTok, Instagram, Facebook or YouTube Shorts. Post the one you keep to TikTok or Meta in one click, or download it with no watermark."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q2-image-to-video-example-01",
-        "h": "Marketplace Listings That Move",
-        "d": "Add a video on Amazon, Etsy and other listings that allow one, so the product is not only a still. Check that marketplace's video rules first."
+        "h": "Videos on Marketplace Listings",
+        "d": "Add a video on Amazon, Etsy and other listings that allow video, so shoppers see more than a photo. Check that marketplace's video rules first."
       },
       {
         "frame": "reels",
         "ref": "n:guide:q2-image-to-video-example-02",
-        "h": "Social Feeds From One Photo",
-        "d": "Turn one product photo into teasers and short visual stories for the feeds you sell on. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for each placement."
+        "h": "Social Posts From One Photo",
+        "d": "Turn one product photo into short clips for the apps you sell on. Pick a shape for each spot: tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4."
       },
       {
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-example-03",
         "h": "Explainers and How-To Clips",
-        "d": "Show a feature or a short how-to with the same avatar and script each time, so the lesson stays clear."
+        "d": "Show a feature or a short how-to with the same AI person and script each time, so the lesson stays clear."
       }
     ],
     "input": [],
@@ -194,22 +194,22 @@
     "h2": "Why Choose AIVideosUGC for Image to Video?",
     "items": [
       {
-        "t": "UGC That Builds Trust",
-        "d": "The clip is built like a UGC ad: the product you sell, a person on screen, and a line that sounds like a recommendation."
+        "t": "Looks Like a Phone Video",
+        "d": "The clip shows your product and an AI person, with a line that sounds like a tip from a friend. That person is not a real customer."
       },
       {
-        "t": "The Next Test Without a Shoot",
-        "d": "Change the motion, the avatar or the spoken line and keep the same photo. The next test does not wait on a camera day."
+        "t": "The Next Test Without Filming",
+        "d": "Change the motion, the AI person or the spoken line, and keep the same photo. The next test does not need a filming day."
       },
       {
-        "t": "Credits, Not a Creator Invoice",
-        "d": "A 6-second clip is 24 credits and a 15-second clip is 60. Starter is $24.50 a month with 200 credits. You see that cost before the job starts."
+        "t": "Credits, Not a Filming Bill",
+        "d": "Credits are the points each video spends. A 6-second clip is 24 credits, and a 15-second clip is 60. Starter is $24.50 a month with 200 credits. You see that cost before you start."
       }
     ]
   },
   "benefits_lead": "More versions from a photo you already sell, at a credit price you can see first.",
   "related_h2": "Related Tools",
-  "related_lead": "Avatar, a product link, UGC ads and the feeds you publish to.",
+  "related_lead": "An AI person, a product link, phone-style ads, and the apps you post on.",
   "relatedLinks": [
     "spokesperson-videos",
     "url-to-video",
@@ -261,13 +261,13 @@
   },
   "reviews": {
     "h2": "How Shops Use AI Image to Video",
-    "lead": "How a shop uses one product photo when it needs a moving ad, an avatar or a second language.",
+    "lead": "How a shop uses one product photo when it needs a moving ad, an AI person or a second language.",
     "items": [
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Balm in motion",
-        "d": "A beauty shop turns a still balm photo into a UGC-style clip, with an avatar and a short voiceover, for a paid feed test."
+        "d": "A beauty shop turns a balm photo into a phone-style clip, with an AI person and a short spoken voice, for a paid ad test."
       },
       {
         "example": true,
@@ -279,51 +279,51 @@
         "example": true,
         "who": "Apparel shop",
         "t": "Shirt in hand",
-        "d": "An apparel shop has an avatar hold the shirt so shoppers can see the drape, then posts the clip."
+        "d": "An apparel shop has an AI person hold the shirt so shoppers can see how the fabric hangs, then posts the clip."
       },
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Pump and a line",
-        "d": "A skincare shop picks an avatar from the actor library to press the pump and read a short script."
+        "d": "A skincare shop picks an AI person from the actor library, a set of ready-made faces, to press the pump and read a short script."
       },
       {
         "example": true,
         "who": "Multi-country shop",
         "t": "Another language",
-        "d": "A shop that sells in more than one country voices the same script in each language it needs."
+        "d": "A shop that sells in more than one country speaks the same script in each language it needs."
       },
       {
         "example": true,
         "who": "Small team",
         "t": "Edit in one place",
-        "d": "A small team trims the clip, swaps a music-library track and adds the logo in the built-in editor."
+        "d": "A small team trims the clip in the built-in editor. They swap in a song and add the logo."
       },
       {
         "example": true,
         "who": "Agency",
-        "t": "A client avatar",
-        "d": "An agency builds a custom avatar for a client and reuses that face on the next product video."
+        "t": "A Custom Face for a Client",
+        "d": "An agency builds a custom AI person for a client and reuses that face on the next product video."
       },
       {
         "example": true,
         "who": "Home brand",
-        "t": "No set to light",
-        "d": "A home brand uploads a few product photos and gets ad-ready clips without lights or a camera day."
+        "t": "No Lights to Set Up",
+        "d": "A home brand uploads a few product photos and gets clips ready to post, without lights or a filming day."
       },
       {
         "example": true,
         "who": "New seller",
         "t": "Link, then a clip",
-        "d": "A new seller pastes a product link and gets a script, an avatar and a clip without filming."
+        "d": "A new seller pastes a product link and gets a script, an AI person and a clip without filming."
       },
       {
         "example": true,
         "who": "Ad tester",
-        "t": "A batch of openings",
-        "d": "A store runs a batch of openings from one photo, then publishes the keeper to TikTok or Meta."
+        "t": "Several First Lines",
+        "d": "A store makes several versions from one photo, then posts the one it keeps to TikTok or Meta."
       }
     ]
   },
-  "cta_title": "Ready to Scale Your Next Ad?"
+  "cta_title": "Ready to Make Your Next Ad?"
 }

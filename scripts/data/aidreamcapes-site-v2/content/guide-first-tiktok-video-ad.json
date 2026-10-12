@@ -1,10 +1,10 @@
 {
   "id": "guide-first-tiktok-video-ad",
   "title": "How to Make a TikTok Ad for Your Store | AIVideosUGC",
-  "description": "How to make a TikTok ad from a product link or one photo, with a script, a presenter, a voice, captions, and a file you can publish to TikTok or Meta.",
+  "description": "How to make a TikTok ad from a product link or one photo. You get a script, a spoken voice, words on screen, and a file you can post on TikTok.",
   "h1": "How to Make a TikTok Ad When You've Never Made One",
   "eyebrow": "TikTok guide",
-  "lead": "Here is how to make a TikTok ad: paste the product link or start from one photo, pick one reason to buy, and post a vertical clip with a script, a voice, and captions. Spend only what you can pause.",
+  "lead": "Here is how to make a TikTok ad. Paste the product link, or start from one photo. Pick one reason to buy. Post a tall phone video with a script, a spoken voice, and words on screen. Spend only an ad budget you can stop.",
   "secondary_keywords": [
     "TikTok ads for small business",
     "TikTok video ad tips",
@@ -17,10 +17,10 @@
     {
       "h2": "What you get for a first TikTok ad",
       "paras": [
-        "A first ad needs one product and one reason someone would buy it. The rest is there so you are not waiting on a creator.",
-        "Catch the sound while it is still moving. Jump on a challenge with the product in the action, and come back with a file you can post. \"A phone stand that folds flat enough for a jacket pocket\" can be shown. \"High quality and stylish\" cannot.",
-        "A voice that carries the line. Generate a voiceover in the language you sell in, or in a second one, including a voice made from a short sample you record. The line should sound like the brand, and you can edit it before the job runs.",
-        "A file that is ready to post. Captions, the frame, and a track from the ad music library come with the clip. Publish to TikTok or Meta in one step, or download it and post it yourself. Downloads have no watermark."
+        "A first ad needs one product and one reason someone would buy it. The rest is there so you are not waiting on a person you hire to film.",
+        "Use a song while people still know it. Join a challenge with the product in the action, and you get a file you can post. \"A phone stand that folds flat enough for a jacket pocket\" can be shown. \"High quality and stylish\" cannot.",
+        "A voice that says the words. Add a spoken voice in the language you sell in, or in a second language. You can also make a voice from a short recording of yourself. The words should sound like the brand. You can edit them before the job starts. A job is one time the tool makes a file.",
+        "A file that is ready to post. Words on screen, the tall shape, and a song from the ad music library come with the video. Publish to TikTok or Meta in one step. Meta means Facebook and Instagram. Or download it and post it yourself. The download has no watermark stamped on it."
       ],
       "img": "n:guide:fx06-guide-first-tiktok-video-ad-sec01",
       "alt": "Adult woman applies cream from a plain light-peach tube to her cheek at the seaside."
@@ -28,26 +28,26 @@
     {
       "h2": "How to go from a product page to a TikTok ad in 3 steps",
       "paras": [
-        "Three steps. No studio day, and no blank timeline.",
-        "Add the product URL. The title, the photos, and the reason to buy come in with the page.",
-        "Or upload one photo and one sentence about the action. Leave the price out of that sentence.",
-        "A hand unfolds a slim phone stand on a cafe table, in soft daylight. That sentence is enough.",
-        "[URL to video](page:url-to-video) is the link path. [AI image to video](page:image-to-video) is the photo path.",
-        "Pick a presenter from the [actor library](page:ai-actors), make one for the brand, or leave people out.",
+        "Three steps. No studio day, and no empty editing screen.",
+        "Step 1. Add the product link. The title, the photos, and the reason to buy come in with the page.",
+        "Or upload one photo and one sentence about the action. Leave the price out of that sentence. You add the price later, in the editor.",
+        "Here is a sample for a phone stand, not a script you must copy. Use a sentence like this for your own item. \"A hand unfolds a slim phone stand on a cafe table, in soft daylight.\"",
+        "Use [URL to video](page:url-to-video) when you start from a product link. Use [AI image to video](page:image-to-video) when you start from a photo.",
+        "Step 2. Pick a presenter from the [actor library](page:ai-actors), a list of generated people. Or make one for the brand. Or leave people out.",
         "Anyone on screen is generated. Do not name them as a buyer or a reviewer.",
-        "Download the vertical file, or publish it to TikTok. Put the price in the editor and match checkout.",
-        "A developer can start the same job through the API from your own shop system."
+        "Step 3. Download the tall file, or publish it to TikTok. Put the price in the editor. It must match the price the shopper pays.",
+        "A developer can start the same job through the API, a connection from your own shop system. This is not one of the three steps."
       ],
       "img": "n:guide:fx06-guide-first-tiktok-video-ad-sec03-r2",
       "alt": "Adult hands hold a plain peach sunscreen tube over a blank notebook on a bright cafe table."
     },
     {
-      "h2": "Reasons to skip the creator wait",
+      "h2": "Reasons to skip waiting on someone to film",
       "paras": [
-        "The first two seconds have to show the product doing something. A logo card will not hold anyone.",
-        "Skip the creator invoice. You do not book an influencer or a crew to get a first opening. A hand snapping a stand open, a drink poured over ice, or a shoe turning to show the sole is a complete scene.",
-        "Make another one without waiting. A second hook is another job, not another shoot. Run a batch from the same photo when you want several openings. Each one shows its credit cost first.",
-        "Speak to more than one market. The same scene can be captioned and voiced in another language, so a second country does not mean a second production. There is no extra shoot. The credits are the cost of the new file."
+        "The first two seconds have to show the product doing something. A screen with only your logo will not keep people watching.",
+        "Skip the bill from a person you hire to film. You do not book an influencer or a film crew for the first version. A hand snapping a stand open, a drink poured over ice, or a shoe turning to show the sole is a complete scene.",
+        "Make another one without waiting. A second opening line is another job, not another day of filming. You can make several opening lines from the same photo. Credits are the points your plan uses up for each file. They are not a cash price. Each opening line shows its credit cost first.",
+        "Speak to more than one country. The same scene can have words on screen and a spoken voice in another language. A second country does not mean filming again. There is no extra filming day. The new file costs credits."
       ],
       "img": "n:guide:b2f9-guide-first-tiktok-video-ad-sec02-r1",
       "alt": "Two adult hands spread white cream from a plain peach tube across the back of a hand."
@@ -55,24 +55,24 @@
     {
       "h2": "How the TikTok ad gets made",
       "paras": [
-        "Show the product immediately. If it is still off screen when someone scrolls past, they are gone.",
-        "More openings from the same photo. Change the hook, the voice, or the first frame and render again. You are not paying a creator for every revision.",
-        "Post while the sound is still moving. A native tall clip can go out for a trend this week. Six seconds fits one motion. Ten fits a short demo. Fifteen fits a simple sequence. Thirty fits a longer one.",
-        "No reshoot queue. Test scripts, hooks, voices, and shapes from the photo you already have. The editor is in the product, so you are not hopping to another app for captions and the track."
+        "Show the product immediately. If it is still off screen when someone scrolls past, that person keeps scrolling.",
+        "More opening lines from the same photo. Change the opening line, the voice, or the first picture, then make the video again. You are not paying someone to film every change.",
+        "Post while the song is still popular. A tall video made to sit in TikTok can go out while a trend is popular this week. Six seconds fits one motion. Ten fits a short demo. Fifteen fits a simple sequence. Thirty fits a longer one.",
+        "You do not wait in line to film again. Test scripts, opening lines, voices, and shapes from the photo you already have. The editor is inside this tool. You do not open another app for the words on screen and the song."
       ],
       "img": "n:guide:fx06-guide-first-tiktok-video-ad-sec05-r3",
       "alt": "Adult hands turn one plain peach sunscreen tube for a pre-launch check."
     },
     {
-      "h2": "The same product, posted on every placement",
+      "h2": "The same product, posted in every ad spot",
       "paras": [
-        "Build the tall file first, then the shape each placement actually uses. Do not stretch one download and hope.",
+        "Build the tall file first. Then make the shape each ad spot actually uses. Do not stretch one download and hope it fits.",
         "TikTok. 9:16, product on screen in the first two seconds. The [TikTok ads](page:plat-tiktok) guide is the size detail.",
-        "Instagram Reels. The same tall frame. Do not drop a square file into Reels. [Instagram](page:plat-instagram) covers the feed beside it.",
-        "Facebook. Reels stays tall. The feed wants 1:1, and every carousel card should match. See [Facebook](page:plat-facebook).",
-        "YouTube Shorts. 9:16 again, with words clear of the bottom and the right edge. [YouTube Shorts](page:plat-youtube-shorts) is the placement.",
-        "Shopify. The clip can sit on the product page people land on. The offer in the ad and the price at checkout have to match.",
-        "Amazon and other listings. Use the same product truth. A video ad and a listing still are different jobs. Sizes for every placement are in [ad sizes by platform](page:guide-ad-sizes-by-platform)."
+        "Instagram Reels. Use the same tall shape. Do not put a square file into Reels. [Instagram](page:plat-instagram) covers the scrolling feed next to Reels.",
+        "Facebook. Reels stays tall. The scrolling feed wants a square, 1:1. Every card in a swipeable carousel should match. See [Facebook](page:plat-facebook).",
+        "YouTube Shorts. Use 9:16 again. Keep the words off the bottom and the right edge. [YouTube Shorts](page:plat-youtube-shorts) is where this shape is used.",
+        "Shopify. The video can sit on the product page shoppers open next. The offer in the ad and the price the shopper pays have to match.",
+        "Amazon and other listings. Keep the same facts about the product. A video ad and a still photo for the listing are two separate jobs. Sizes for every ad spot are in [ad sizes by platform](page:guide-ad-sizes-by-platform)."
       ],
       "img": "n:guide:fx06-guide-first-tiktok-video-ad-sec06-r2",
       "alt": "Adult hands hold a plain peach sunscreen tube beside a notebook on a bright desk."
@@ -81,23 +81,23 @@
       "h2": "How shops use a first TikTok ad",
       "paras": [
         "These are examples of how a shop would use it, not quotes from a customer.",
-        "Example. A candle shop pastes the product URL and gets a tall clip of the lid coming off, then reads it on a phone before spending.",
+        "Example. A candle shop pastes the product link and gets a tall video of the lid coming off. They read it on a phone before they pay to run the ad.",
         "Example. A phone-stand shop picks a presenter from the actor library and never calls that person a buyer.",
-        "Example. A drink shop writes the price and the line in the editor, and picks a track from the ad music library.",
-        "Example. A pet shop renders the same demo again in a second language for a second market.",
-        "Example. A fashion shop publishes the file to TikTok and downloads a copy for Meta.",
-        "Example. A supplement shop runs two hooks as two jobs, with the same audience and the same budget, and waits a few days before calling a winner.",
-        "Example. A home shop keeps captions in the middle so the buttons on the right do not cover the offer.",
-        "Example. A beauty shop starts from a still and one sentence, then checks the shade against the real bottle.",
-        "Example. A jewelry shop adds a voiceover in a second language and reads every word before it launches.",
-        "Example. A gadget shop asks a developer to start the clip from their listing system through the API when a new product goes up."
+        "Example. A drink shop writes the price and the line in the editor, and picks a song from the ad music library.",
+        "Example. A pet shop makes the same demo again in a second language for a second country.",
+        "Example. A fashion shop publishes the file to TikTok and downloads a copy for Meta, which means Facebook and Instagram.",
+        "Example. A supplement shop runs two opening lines as two jobs. The same people see both. The ad budget is the same. The shop waits a few days before deciding which one did better.",
+        "Example. A home shop keeps the words on screen in the middle so the buttons on the right do not cover the offer.",
+        "Example. A beauty shop starts from a still photo and one sentence, then checks the shade against the real bottle.",
+        "Example. A jewelry shop adds a spoken voice in a second language and reads every word before it launches.",
+        "Example. A gadget shop asks a developer to start the video from their listing system through the API, a connection, when a new product goes up."
       ]
     },
     {
       "h2": "The short version",
       "paras": [
-        "One product, one reason, a 9:16 clip that starts with the action, plus a script, a voice, captions, and a licensed track.",
-        "Credits are 24, 40, 60, or 120 for 6, 10, 15, or 30 seconds. The cost shows first, a failed job returns the credits, and the download has no watermark. Start with a budget you can pause."
+        "One product and one reason to buy. Use a 9:16 video that starts with the action. Add a script, a spoken voice, words on screen, and a song you are allowed to use in an ad.",
+        "A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Credits are points your plan uses up, not a cash price. The cost shows first. If a job fails, the credits come back. The download has no watermark. Start with an ad budget you can stop."
       ],
       "img": "n:guide:b2f9-guide-first-tiktok-video-ad-sec04-r1",
       "alt": "One adult hand smooths white cream along a forearm beside a plain peach tube."
@@ -114,39 +114,39 @@
   "faq": [
     {
       "q": "Where do I make a TikTok ad if I have never made one?",
-      "a": "Start here from a product link or one photo. You get a 9:16 clip with a script, a presenter if you want one, a voice, and captions. You still choose the audience and the budget in TikTok."
+      "a": "Start here from a product link or one photo. You get a tall 9:16 video, the phone shape. It includes a script, a person on camera if you want one, a spoken voice, and words on screen. You still choose who sees it, and the ad budget, in TikTok."
     },
     {
       "q": "Can the pictures match my brand?",
-      "a": "Yes. The product photo, your colors, and your line drive the clip. Check the label, the color, and the price against the page you will send people to before you launch."
+      "a": "Yes. The product photo, your colors, and your words shape the video. Check the label, the color, and the price against the page you will send people to before you launch."
     },
     {
       "q": "How long does a first TikTok ad take to make?",
-      "a": "It is one job, not a shoot. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. The cost shows before the job starts. A failed job returns the credits."
+      "a": "This guide does not promise a number of minutes. It is one job, not a filming day. A 6-second video is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. The cost shows before the job starts. If a job fails, the credits come back."
     },
     {
       "q": "How does a product page become the video?",
-      "a": "Paste the URL. The title, photos, and the reason to buy come in. You pick a script and, if you want, a presenter. Captions, a track, and the tall frame are part of the file. You can edit the line before it runs."
+      "a": "Paste the link. The title, photos, and the reason to buy come in. You pick a script and, if you want, a presenter. Words on screen, a song, and the tall shape are part of the file. You can edit the line before it runs."
     },
     {
       "q": "What is a TikTok ad maker in this guide?",
-      "a": "It turns a product URL or a photo into a TikTok-style clip: UGC-style if you want a presenter, or just the product in action. You do not need a shoot to get the first file."
+      "a": "It turns a product link or a photo into a TikTok-style video. You can add a generated person on camera. That look is called UGC. It feels like a shopper filmed it, but the person is not a real buyer. Or show only the product in action. You do not need to film to get the first file."
     },
     {
-      "q": "Will this beat an ad I filmed myself?",
-      "a": "That is not a promise. What you gain is more openings to test. Run them together, with the same audience and the same budget, and read the first few days before you spend more."
+      "q": "Will this do better than an ad I filmed myself?",
+      "a": "That is not a promise. What you gain is more versions to test. Run them together, for the same people, with the same ad budget. Read the first few days before you spend more on the ad."
     },
     {
       "q": "What do I actually get from doing it this way?",
-      "a": "A file without a studio day, another version without a reshoot, a look that sits in the TikTok feed, captions and a voice, and a way to try a second language. Downloads have no watermark."
+      "a": "You get a file without a studio day. You can make another version without filming again. It can look like a normal video in TikTok's scrolling list. You get words on screen and a spoken voice, and a way to try a second language. Downloads have no watermark."
     },
     {
       "q": "Can I aim different versions at different people?",
-      "a": "You can make several scripts, presenters, and tones, then test them. The ad account is still where you pick the audience. Give each test a few days."
+      "a": "You can make several scripts, presenters, and tones, then test them. You still pick who sees the ad inside your TikTok ad account. Give each test a few days."
     },
     {
       "q": "Can I make the ad look like my brand?",
-      "a": "Yes. Set the line, the colors, the voice, and the caption style in the editor. The product on screen should still match the product you ship."
+      "a": "Yes. Set the words you say, the colors, the voice, and how the on-screen words look. Do that in the editor. The product on screen should still match the product you ship."
     }
   ],
   "cta_title": "Make the TikTok ad from a link",

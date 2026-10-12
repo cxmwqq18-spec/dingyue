@@ -4,8 +4,8 @@
   "description": "Find product photos and videos matched to your industry, from skincare to sneakers and snacks. Make them from one photo, ready to download and post.",
   "h1": "AI Product Content by Industry, Picked for What You Sell",
   "eyebrow": "Browse by industry",
-  "lead": "AI product content by industry starts with the category you sell in. One photo can become a still or a clip with a script, an actor, a voice, captions, and music.",
-  "card": "Picture and clip ideas matched to what you sell.",
+  "lead": "Start with what you sell. One photo can become a picture or a short video, with a spoken line, an actor, a voice, captions, and music.",
+  "card": "Photo and video ideas matched to what you sell.",
   "secondary_keywords": [
     "AI product photos by category",
     "ecommerce content ideas by industry",
@@ -13,8 +13,8 @@
     "AI images for small online shops"
   ],
   "intro": [
-    "Open the category of the item in your hand. The page shows the moment shoppers expect, then you make a still or a clip from one photo.",
-    "A clip can include an AI script, an AI actor, a voice, captions, and a track from the music library. Publish it to TikTok or Meta, or download the file."
+    "Open the category of the item you have. The page shows what shoppers look for, then you make a photo or a video from one photo.",
+    "A video can include a spoken line, an AI actor, a voice, captions, and a song from the music library. Send it to TikTok or Meta (Facebook and Instagram), or download the file."
   ],
   "faq": [
     {
@@ -27,43 +27,43 @@
     },
     {
       "q": "How is this different from the template library?",
-      "a": "These pages group ideas by what you sell. The template library groups them by layout, such as a try-on or a white background. Open a category to see the moments, then a template to make that layout."
+      "a": "These pages group ideas by what you sell. The template library groups them by layout, such as someone wearing the item, or a white background. Open a category to see the ideas. Then open a template to make that layout."
     },
     {
-      "q": "Can one photo become both a still and a clip?",
-      "a": "Yes. Upload the same photo on the category page and choose a picture template or a clip template. Each job shows its credit cost before it starts."
+      "q": "Can one photo become both a picture and a video?",
+      "a": "Yes. Upload the same photo on the category page. Choose a picture template or a video template. Each one shows its credit cost before it starts."
     },
     {
-      "q": "Do these pages tell me the ad size for each channel?",
-      "a": "Channel sizes live on the platform pages. Category pages focus on the selling moment. A clip can be 9:16, 1:1, 16:9, 4:3, or 3:4."
+      "q": "Do these pages tell me the ad size for each app?",
+      "a": "Sizes for each app are on the platform pages. These pages focus on the moment that helps someone buy. A video can be 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4."
     },
     {
       "q": "Will the file keep my product's color and shape?",
-      "a": "The file is built from the photo you upload, so start with a picture that already shows the real color and the full shape. Check the result before you post it."
+      "a": "The file is built from the photo you upload. Start with a picture that already shows the real color and the full shape. Check the result before you post it."
     },
     {
       "q": "What should a new product show first?",
-      "a": "Show the moment a shopper uses to decide: texture for a jar, fit for a garment, a pour for a drink, or the item turned on for a gadget."
+      "a": "Show the moment a shopper uses to decide. For a jar, show the texture. For clothes, show the fit. For a drink, show a pour. For a gadget, show it turned on."
     },
     {
       "q": "Can I run these files as paid ads?",
-      "a": "Yes. Downloads can be used commercially and have no watermark. The clip can include an AI voice, captions, and music from the library. Type the price yourself. Do not state a claim the product cannot support."
+      "a": "Yes. You can use the downloads for your shop, and they have no watermark. The video can include an AI voice, captions, and music from the library. Type the price yourself. Do not say anything the real product cannot do."
     },
     {
-      "q": "Can the clip include a voice and captions?",
-      "a": "Yes. Ask for an AI actor, a spoken line, and captions. Edit them in the built-in editor. The actor is not a customer."
+      "q": "Can the video include a voice and captions?",
+      "a": "Yes. Ask for an AI actor, a spoken line, and captions. Edit them in the editor on this site. The actor is not a real customer."
     },
     {
       "q": "Can I publish from the category page?",
-      "a": "You make the file from the category, then publish it to TikTok or Meta in one click, or download it. Budget and audience stay in the ad account."
+      "a": "You make the file from the category page. Then send it to TikTok or Meta (Facebook and Instagram) in one click, or download it. You still set the budget and who sees the ad in the ad account."
     },
     {
       "q": "Can I start this category from a product link?",
-      "a": "Yes. Paste a public product page. The main image and the name start the job. You still pick the template for the moment shoppers expect."
+      "a": "Yes. Paste a public product page. The main image and the name start the file. You still pick the template for the moment that helps someone buy."
     },
     {
       "q": "Can I make several versions of one item?",
-      "a": "Yes. Run a batch from the same photo when you want another scene or another actor. Each job shows its credit cost first."
+      "a": "Yes. A batch means several versions from the same photo. Use one for another scene or another actor. Each one shows its credit cost first."
     }
   ],
   "visual": {
@@ -89,12 +89,12 @@
           "Food & drink"
         ],
         [
-          "Output",
-          "Vertical social video"
+          "File",
+          "Tall phone video"
         ],
         [
-          "Format",
-          "9:16"
+          "Shape",
+          "9:16 tall"
         ]
       ]
     },
@@ -104,11 +104,11 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "How to make AI product photos by category in 3 steps"
+        "h2": "How to make a product photo or video in 3 steps"
       },
       "m3": {
-        "h2": "Ecommerce content ideas by industry",
-        "lead": "Open a category, then make a still or a clip from one photo of the item."
+        "h2": "Ideas for what you sell",
+        "lead": "Open a category, then make a photo or a video from one photo of the item."
       }
     },
     "directoryFilters": {
@@ -149,10 +149,10 @@
         "/industries/home-living": "n:guide:q14-industry-home-clean"
       }
     },
-    "overview": "Pick the category, then make a product still or a clip from one photo, with a script, an actor, and captions when you want them."
+    "overview": "Pick the category. Then make a photo or a video from one photo, with a spoken line, an actor, and captions if you want them."
   },
-  "steps_h2": "How to make AI product photos by category in 3 steps",
-  "steps_lead": "Open your category, add a photo or a link, and leave with a file you can publish.",
+  "steps_h2": "How to make a product photo or video in 3 steps",
+  "steps_lead": "Open your category, add a photo or a link, and download a file you can post.",
   "steps": [
     {
       "t": "Share the Product",
@@ -160,11 +160,11 @@
     },
     {
       "t": "Let the AI Write the Ad",
-      "d": "Ask for a script, an AI actor, and the language of the spoken line."
+      "d": "Ask for the spoken line, an AI actor, and the language to use."
     },
     {
       "t": "Download or Publish",
-      "d": "Get voice, captions, and music on the clip. Send it to TikTok or Meta, or save it."
+      "d": "The video can include a voice, captions, and music. Send it to TikTok or Meta (Facebook and Instagram), or save it."
     }
   ],
   "steps_cta": {
@@ -187,36 +187,36 @@
   ],
   "trust": {
     "h2": "Built for Shops That Need the Next File",
-    "lead": "Six kinds of sellers. Open the category of the product in your hand. The credit cost is on screen before the job starts.",
+    "lead": "Six kinds of sellers. Open the category for the product you have. You see the credit cost before it starts. Credits are the points each file spends.",
     "items": [
       {
         "t": "An online store",
-        "d": "Show one product with a square still or a short clip. Add an AI actor and a spoken line when motion helps the shopper decide."
+        "d": "Show one product with a square photo or a short video. Add an AI actor and a spoken line when motion helps the shopper decide."
       },
       {
         "t": "A seller testing new items",
-        "d": "Make a listing clip before you decide that product stays. Run the same photo again with another scene."
+        "d": "Make a short video for the listing before you decide to keep that product. Run the same photo again with another scene."
       },
       {
         "t": "A small shop",
-        "d": "Explain the item with a presenter when you have the photo and no studio. You download the file or publish it yourself."
+        "d": "Explain the item with a person on screen when you have the photo and no studio. You download the file or publish it yourself."
       },
       {
         "t": "Marketers and agencies",
-        "d": "Make several versions of one product for the channels a client already uses. Each job is priced on its own."
+        "d": "Make several versions of one product for the apps a client already uses. Each one shows its own credit cost."
       },
       {
         "t": "People who post often",
-        "d": "Pick an AI actor and keep a similar presenter across posts in this category. The person is generated, not a customer."
+        "d": "Pick an AI actor and keep a similar person across posts in this category. The person is made by AI, not a real customer."
       },
       {
         "t": "Apps and software",
-        "d": "Show one action of the product, with a spoken line and captions. The clip does not replace the real screen of your app."
+        "d": "Show one action of the product, with a spoken line and captions. The video does not replace the real screen of your app."
       }
     ]
   },
   "related_h2": "Make the file, or browse another way",
-  "related_lead": "Start from a link, an actor, or a template, or open the channel pages.",
+  "related_lead": "Start from a link, an actor, or a template, or open the pages for each app.",
   "relatedLinks": [
     "url-to-video",
     "spokesperson-videos",
@@ -229,31 +229,31 @@
   "cta_lead": "Open your category, upload one photo, and see the credit cost before you start.",
   "reasons": {
     "h2": "What One Product Ad Can Include",
-    "lead": "The same category page can start a still or a full clip.",
+    "lead": "The same category page can start a photo or a full video.",
     "items": [
       {
         "t": "An AI actor",
-        "d": "Pick a presenter for the product. The person is generated, not a customer, and the picture does not replace a size chart."
+        "d": "Pick a person to show the product. That person is made by AI, not a real customer. The picture does not replace a size chart."
       },
       {
-        "t": "A clip from the photo",
-        "d": "Turn the product photo into a short video. Choose 9:16, 1:1, 16:9, 4:3, or 3:4, and 6, 10, 15, or 30 seconds."
+        "t": "A video from the photo",
+        "d": "Turn the product photo into a short video. Shapes: 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4. Lengths: 6, 10, 15, or 30 seconds."
       },
       {
         "t": "The language you write",
-        "d": "The actor speaks the language of the line you type. You do not buy a separate language pack."
+        "d": "The actor speaks the language of the line you type. You do not pay extra for another language."
       },
       {
         "t": "Tone in the line",
-        "d": "Note the feeling you want, and the actor delivers that line. Edit the sentence before you publish."
+        "d": "Type the mood you want. The actor says your line in that mood. Edit the sentence before you publish."
       },
       {
         "t": "A built-in editor",
-        "d": "Change the line, the captions, the voice, or the presenter without a second app."
+        "d": "Change the words, the captions, the voice, or the person on screen, without another app."
       },
       {
         "t": "Captions on the file",
-        "d": "Captions arrive with the clip. Change the wording so any price matches the live offer."
+        "d": "Captions come with the video. Change the words so any price matches the price in your store now."
       }
     ]
   },
@@ -261,23 +261,23 @@
   "benefits": [
     {
       "t": "An actor library",
-      "d": "Browse presenters for this category and pick one. The face is generated."
+      "d": "Browse actors for this category and pick one. The face is made by AI."
     },
     {
       "t": "A line in your language",
       "d": "Write the spoken line in the language you want heard."
     },
     {
-      "t": "Help on a job",
-      "d": "Email support about a job and we can look that job up."
+      "t": "Help with one file",
+      "d": "Email support about one file and we can look that file up."
     },
     {
-      "t": "A frame for the channel",
-      "d": "Photos are square. A clip can be 9:16, 1:1, 16:9, 4:3, or 3:4."
+      "t": "A shape for the app",
+      "d": "Photos are square. A video can be 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4."
     },
     {
       "t": "Publish or download",
-      "d": "Send the file to TikTok or Meta in one click, or save it and upload it yourself."
+      "d": "Send the file to TikTok or Meta (Facebook and Instagram) in one click, or save it and upload it yourself."
     },
     {
       "t": "Your brand on the file",
@@ -292,42 +292,42 @@
       "items": [
         {
           "t": "A photo or a short note",
-          "d": "A product photo, or a short description of it, becomes a still or a clip."
+          "d": "A photo of your product, or a short note about it, becomes a picture or a video."
         },
         {
-          "t": "A script from a chat",
-          "d": "Describe the product and the buyer. The AI drafts the spoken line, and you can edit every sentence."
+          "t": "Words written for you",
+          "d": "Describe the product and the buyer. The tool writes the spoken line, and you can edit every sentence."
         },
         {
           "t": "A style you can use",
-          "d": "Describe a look you have the right to use, then place your product in it."
+          "d": "Describe a look you are allowed to use, then put your product in that look."
         },
         {
           "t": "A product link",
-          "d": "Paste a public product page. The main image and the name start the clip. Open [URL to video](page:url-to-video)."
+          "d": "Paste a public product page. The main image and the name start the video. Open [URL to video](page:url-to-video)."
         },
         {
           "t": "An actor library",
-          "d": "Browse presenters and pick one for this item. Open [AI actors](page:ai-actors)."
+          "d": "Browse actors and pick one for this item. Open [AI actors](page:ai-actors)."
         },
         {
-          "t": "A presenter you repeat",
-          "d": "Describe the presenter you want to keep using across this category."
+          "t": "A person you keep using",
+          "d": "Describe the person you want to keep using for this category."
         }
       ]
     },
     {
       "eyebrow": "Compared with a shoot",
       "h2": "AIVideosUGC vs Booking a Shoot",
-      "lead": "The credits are the cost you see. A shoot is a separate booking.",
+      "lead": "Credits are the points you see before you start. Booking a camera shoot is separate from those credits.",
       "items": [
         {
           "t": "How you start",
-          "d": "Upload a photo or paste a link, instead of booking a creator and a location."
+          "d": "Upload a photo or paste a link, instead of booking a person and a place to film."
         },
         {
           "t": "What you confirm first",
-          "d": "The credit cost is on screen before the job starts. A failed job returns those credits."
+          "d": "You see the credit cost before it starts. If it fails, those credits come back."
         },
         {
           "t": "What a file costs",
@@ -335,14 +335,14 @@
         },
         {
           "t": "Another version",
-          "d": "Run the same photo again when you want a new scene, actor, or opening line."
+          "d": "Run the same photo again for a new scene, a new actor, or a new first line."
         },
         {
           "t": "Who says the line",
           "d": "You write it. An AI actor is not a quote from a customer."
         },
         {
-          "t": "Two openings",
+          "t": "Two first lines",
           "d": "Make a second version and compare the files in your ad account."
         }
       ]
@@ -350,7 +350,7 @@
   ],
   "reviews": {
     "h2": "How Shops in a Category Use It",
-    "lead": "Examples of the job, not quotes from named customers.",
+    "lead": "Examples of how a shop would use it, not quotes from named customers.",
     "items": [
       {
         "example": true,
@@ -360,9 +360,9 @@
       },
       {
         "example": true,
-        "who": "Apparel shop",
+        "who": "Clothing shop",
         "t": "Worn, not fitted",
-        "d": "An apparel shop puts the garment on a generated person. The picture does not replace the size chart."
+        "d": "A clothing shop puts the garment on a person the tool makes. The picture does not replace the size chart."
       },
       {
         "example": true,
@@ -374,7 +374,7 @@
         "example": true,
         "who": "Food shop",
         "t": "A pour or a sip",
-        "d": "A food shop shows the pour or the first sip, with music under the clip and the price typed to match the listing."
+        "d": "A food shop shows the pour or the first sip, with music under the video and the price typed to match the listing."
       },
       {
         "example": true,
@@ -386,7 +386,7 @@
         "example": true,
         "who": "Agency",
         "t": "Several versions",
-        "d": "An agency runs a batch from one client photo: another actor, another opening, another frame."
+        "d": "An agency makes several versions from one client photo. One version can change the actor, the first line, or the shape."
       }
     ]
   },

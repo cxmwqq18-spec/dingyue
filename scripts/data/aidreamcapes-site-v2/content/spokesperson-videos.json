@@ -4,7 +4,7 @@
   "description": "Make an AI spokesperson video from a product photo or a product link. Choose a presenter and a voice, then download a talking ad for TikTok or Meta.",
   "h1": "AI Spokesperson Video: Explain One Product Point on Camera",
   "eyebrow": "AI spokesperson video",
-  "lead": "AIVideosUGC turns one product photo or a product link into an AI spokesperson video. Pick a presenter from the actor library, use your line or a script written for you, and choose an AI voice. Captions, a music track, and the edit stay in one editor. Choose a frame, pick 6 to 30 seconds, then download with no watermark or publish to TikTok or Meta.",
+  "lead": "AIVideosUGC turns one product photo or a product link into an AI spokesperson video. Pick a presenter from the actor library, use your line or a script written for you, and choose an AI voice. Captions, a music track, and the edit stay in one editor. Choose a size and a length from 6 to 30 seconds. Then download with no watermark, or publish to TikTok or Meta.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
@@ -15,7 +15,7 @@
   "benefits": [
     {
       "t": "Paid Ads",
-      "d": "Skip the creator day rate. Pick a face, a voice, and a setting that fit the buyer, then publish to TikTok or Meta. A second language is another clip, not another shoot.",
+      "d": "Skip paying a creator for a full filming day. Pick a face, a voice, and a setting that fit the buyer. Then publish to TikTok or Meta. A second language is another clip, not another shoot.",
       "icon": "bolt"
     },
     {
@@ -25,7 +25,7 @@
     },
     {
       "t": "Social Feeds",
-      "d": "Keep a fresh clip in the feed. Swap the hook, the presenter, or the language when the last one has been up too long.",
+      "d": "Keep a fresh clip in the feed. Swap the opening line, the presenter, or the language when the last one has been up too long.",
       "icon": "refresh"
     },
     {
@@ -43,18 +43,18 @@
     },
     {
       "t": "Pick a Presenter and a Voice",
-      "d": "Choose someone from the actor library, a voice, and the line. Set the frame and the length."
+      "d": "Choose someone from the actor library, a voice, and the line. Then set the size and the length."
     },
     {
       "t": "Download or Publish",
-      "d": "Review the take, edit captions or music, then download or send it to TikTok or Meta."
+      "d": "Review the clip, edit captions or music, then download or send it to TikTok or Meta."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16, 1:1, 16:9, 4:3, or 3:4"
+        "9:16 tall, 1:1 square, 16:9 wide, 4:3 a bit wide, or 3:4 a bit tall"
       ],
       [
         "Length",
@@ -62,7 +62,7 @@
       ],
       [
         "Credits",
-        "Shown before you start"
+        "What each clip spends, shown first"
       ]
     ],
     "cta": "Create my spokesperson ad"
@@ -74,7 +74,7 @@
     },
     {
       "q": "How does a spokesperson video get made?",
-      "a": "Paste your line, or let a script be written from the product page. Pick a presenter and a voice. Captions and a track from the music library can be added in the built-in editor. Your own tools can also request a clip through the API."
+      "a": "Paste your line, or let a script be written from the product page. Pick a presenter and a voice. Captions and a song from the music library can be added in the built-in editor. Your own shop software can also ask for a clip through an API, a connection made for other tools."
     },
     {
       "q": "Where can I use an AI spokesperson?",
@@ -82,27 +82,27 @@
     },
     {
       "q": "Can a spokesperson explain the product?",
-      "a": "Yes. The presenter can repeat the same point on every render, so the feature you care about stays the one that gets said."
+      "a": "Yes. Each new clip can say the same point, so the feature you care about is the one shoppers hear."
     },
     {
       "q": "Can a spokesperson walk through setup?",
-      "a": "Yes. Use it for setup, sizing, or daily use. When the product changes, update the line and render again, including in another language."
+      "a": "Yes. Use it for setup, sizing, or daily use. When the product changes, update the line and make the clip again, including in another language."
     },
     {
       "q": "How do shops use a spokesperson on social?",
-      "a": "They make several hooks from one photo, try a new opening, and keep one presenter as the face of the product. A group of clips can cover more than one item."
+      "a": "They write several opening lines from one photo, and keep one presenter as the face of the product. A group of clips can cover more than one item."
     },
     {
       "q": "Can I choose the look, the voice, or the language?",
-      "a": "Yes. The actor library has presenters for different settings. Pick an AI voice and a language that matches the buyer. Review the take before you post."
+      "a": "Yes. The actor library has presenters for different settings. Pick an AI voice and a language that matches the buyer. Review the clip before you post."
     },
     {
       "q": "Can I run the clip as an ad?",
-      "a": "Yes. Finished clips can be used commercially and have no watermark. Plans start at $24.50 a month. A 10-second clip uses 40 credits, and a failed job returns them. Add any AI label the platform asks for before you spend."
+      "a": "Yes. You can use finished clips for your shop, and they have no watermark. Plans start at $24.50 a month. A 10-second clip uses 40 credits. Credits are what each video spends. If the video fails, those credits come back. Add any AI label the platform asks for before you pay to run the ad."
     },
     {
       "q": "What should I not claim?",
-      "a": "Do not present the spokesperson as a real customer or a real review. Check TikTok and Meta rules before you spend more. The line should be one you can stand behind."
+      "a": "Do not present the spokesperson as a real customer or a real review. Check TikTok and Meta rules before you spend more on ads. Say only what you can prove."
     }
   ],
   "visual": {
@@ -330,7 +330,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-studio-2-r1",
-          "label": "Studio: studio talking head",
+          "label": "Studio: speaking to camera",
           "chips": [
             "studio"
           ],
@@ -725,7 +725,7 @@
           "kind": "video"
         }
       ],
-      "button": "Use this scene"
+      "button": "Use this presenter"
     },
     "titles": {
       "m4": {
@@ -746,7 +746,7 @@
     }
   },
   "cta_title": "Ready to Make Your Next Spokesperson Video?",
-  "cta_lead": "Upload a product photo and see the credit cost before you start.",
+  "cta_lead": "Upload a product photo and see how many credits it uses before you start.",
   "blockOrder": [
     "hero",
     "picker",
@@ -764,8 +764,8 @@
   "definition": {
     "title": "What Is an AI Spokesperson Video?",
     "paras": [
-      "An AI spokesperson video is a short ad where a generated presenter holds your product and speaks a line you wrote, or a script written from your product page. You pick the person from the actor library and an AI voice. There is no filming and no casting.",
-      "Use it for AI actor product ads on TikTok, Reels, Shorts, or a product page. The presenter is generated, not a customer. Clips come in 9:16, 1:1, 16:9, 4:3, and 3:4, and you can say the same point in another language."
+      "An AI spokesperson video is a short ad. A generated presenter holds your product and says a line you wrote, or a script from your product page. You pick the person from the actor library and an AI voice. You do not film, and you do not hire an actor.",
+      "Use it for product ads on TikTok, Reels, Shorts, or a product page. The presenter is generated, not a customer. Sizes are 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), and 3:4 (a bit tall). You can say the same point in another language."
     ]
   },
   "reasons": {
@@ -774,19 +774,19 @@
     "items": [
       {
         "t": "A Fast First Ad",
-        "d": "Upload a photo or paste a product link, pick a presenter and a voice, and review the clip. No casting call and no studio day.",
+        "d": "Upload a photo or paste a product link. Then pick a presenter and a voice, and review the clip. You do not audition anyone, and you do not book a studio.",
         "img": "n:guide:q4-spokesperson-strip-04",
         "alt": "Adult East Asian man holds a plain dark wireless earbud case while speaking to camera in a living room."
       },
       {
         "t": "Enough Versions to Test",
-        "d": "Change the actor, the hook, the voice, or the language and make another ad from the same product. Test them side by side.",
+        "d": "Change the presenter, the opening line, the voice, or the language. Make another ad from the same product, and test them side by side.",
         "img": "n:guide:im02-spokesperson-videos-use-product-pages-r1",
         "alt": "Adult East Asian woman with a straight chin-length black bob holds plain charcoal over-ear headphones while speaking in a simple studio corner."
       },
       {
         "t": "The Line You Wrote",
-        "d": "The presenter says the sentence you enter, or a script written from your page. You do not trade notes with a creator first.",
+        "d": "The presenter says the sentence you enter, or a script written from your page. You do not need a creator to rewrite the line first.",
         "img": "n:gen2:spokesperson-videos-c1",
         "alt": "Adult holds a plain toner bottle at eye level while speaking in a bright bathroom."
       }
@@ -795,7 +795,7 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "AI UGC (shopper-style) video ads"
     },
     {
       "id": "product-videos",
@@ -815,12 +815,12 @@
     },
     {
       "id": "url-to-video",
-      "label": "URL to video"
+      "label": "Product link to video"
     }
   ],
   "compare_table": {
     "title": "AIVideosUGC vs. Hiring a Creator",
-    "lead": "A generated presenter follows your line. A creator films the real item and may improvise.",
+    "lead": "A generated presenter follows your line. A creator films the real item and may add lines of their own.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -830,32 +830,32 @@
       [
         "How the first ad happens",
         "From your photo, your line, or a product link",
-        "Brief someone, ship a sample, film, then edit"
+        "Tell someone the plan, ship a sample, film, then edit"
       ],
       [
         "What you need",
         "One photo, a presenter from the actor library, and a voice",
-        "A brief, a sample, a creator, and a location"
+        "A plan, a sample, a creator, and a place"
       ],
       [
         "What gets said",
         "Your line, or a script written from the product page",
-        "Your brief, plus whatever they improvise"
+        "Your plan, plus any extra lines they add"
       ],
       [
         "Cost of another version",
-        "Credits for one clip (40 for 10 seconds)",
+        "40 credits for a 10-second clip. Credits are what a clip spends.",
         "Another fee and more editing time"
       ],
       [
-        "Languages and frames",
-        "Another language on 9:16, 1:1, 16:9, 4:3, or 3:4",
-        "A new shoot, or a recut, for every market"
+        "Languages and sizes",
+        "Another language. Tall 9:16, square 1:1, wide 16:9, 4:3 a bit wide, or 3:4 a bit tall.",
+        "A new shoot, or a new edit, for every market"
       ],
       [
         "Publish",
         "Send it to TikTok or Meta from the editor, with no watermark",
-        "Export, then upload it yourself"
+        "Save the file, then upload it yourself"
       ]
     ]
   },
@@ -873,13 +873,13 @@
         "example": true,
         "who": "Electronics shop",
         "t": "One feature in a paid ad",
-        "d": "A 10-second clip names a single feature. The offer is added in the editor before it runs."
+        "d": "A 10-second clip names a single feature. The offer is added in the editor before the ad runs."
       },
       {
         "example": true,
         "who": "Fitness brand",
         "t": "Same shaker, new line",
-        "d": "The product photo stays. The opening line changes when the first hook has been up too long."
+        "d": "The product photo stays. The opening line changes when the first one has been up too long."
       },
       {
         "example": true,
@@ -903,7 +903,7 @@
         "example": true,
         "who": "Home shop",
         "t": "A guide after delivery",
-        "d": "The presenter walks through setup. When the steps change, they update the line and render again."
+        "d": "The presenter walks through setup. When the steps change, the shop updates the line and makes the clip again."
       },
       {
         "example": true,
@@ -921,19 +921,19 @@
         "example": true,
         "who": "Small agency",
         "t": "Several clients, one editor",
-        "d": "Captions, music, and a trim happen in the built-in editor, so the file is not bounced to another app."
+        "d": "Captions, music, and a trim happen in the built-in editor. You do not send the file to another app."
       },
       {
         "example": true,
         "who": "Tool brand",
         "t": "Clips from their own system",
-        "d": "Product photos go through the API, and the talking clips come back ready to review."
+        "d": "Product photos go through an API, a connection for your own software. The talking clips come back ready to review."
       }
     ]
   },
   "related_h2": "Explore Other Tools",
   "relatedH2": "Explore Other Tools",
-  "benefits_lead": "Put one product point on camera for an ad, a product page, a feed, or a short guide.",
+  "benefits_lead": "Put one product point on camera for an ad, a product page, a social feed, or a short guide.",
   "related_lead": "More ways to turn a product into a clip.",
   "more_sections": [
     {
@@ -943,23 +943,23 @@
       "items": [
         {
           "t": "A Script You Can Edit",
-          "d": "Paste the line yourself, or let one be written from the product page. Change any word before you render."
+          "d": "Paste the line yourself, or let one be written from the product page. Change any word before the clip is made."
         },
         {
           "t": "A Voice You Pick",
-          "d": "Choose an AI voice and the presenter speaks that line. Review the take before it runs."
+          "d": "Choose an AI voice and the presenter speaks that line. Review the clip before you post it."
         },
         {
           "t": "Captions and a Music Library",
           "d": "Captions are written onto the clip. Add a track from the music library and trim it in the built-in editor."
         },
         {
-          "t": "An Actor Library, Not a Casting Call",
+          "t": "A Library of Presenters, Not an Audition",
           "d": "Pick a presenter and a setting. Keep that person as the face of the product across later ads."
         },
         {
-          "t": "Links, a Group of Products, and an API",
-          "d": "Start from a product link or a photo. Make a clip per item. A store can also request clips through the API."
+          "t": "Links, a Group of Products, and Your Own Tools",
+          "d": "Start from a product link or a photo. Make one clip per item. An API is a connection that lets your own shop software ask for clips."
         },
         {
           "t": "More Languages, Then Publish",

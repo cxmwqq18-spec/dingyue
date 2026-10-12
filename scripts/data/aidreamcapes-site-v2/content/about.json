@@ -1,10 +1,10 @@
 {
   "id": "about",
   "title": "About Us: AI Product Photos and Video Ads | AIVideosUGC",
-  "description": "AIVideosUGC turns one product photo into store images and short video ads for a small shop, with no studio, no casting, and private uploads. See how it works.",
+  "description": "AIVideosUGC turns one product photo into store images and short video ads for a small shop. No studio, no actor booking, and uploads stay private.",
   "h1": "About AIVideosUGC: Product Visuals Made Simple",
   "eyebrow": "About us",
-  "lead": "AIVideosUGC helps a small shop make product photos and short video ads from one product photo or a product page link. You can add an actor, a script, a spoken line, and captions, then review the file in your account instead of booking a shoot.",
+  "lead": "AIVideosUGC helps a small shop make product photos and short video ads from one product photo or a product page link. You can add an actor, a script (the words they say), a spoken line, and captions. Then you check the file in your account. You do not need to book a photo or video shoot.",
   "secondary_keywords": [
     "AI visuals for Shopify sellers",
     "product content tool for Etsy shops",
@@ -14,8 +14,8 @@
     {
       "h2": "What Is AIVideosUGC?",
       "paras": [
-        "Upload a picture of what you sell, or paste a product page link. Pick a template or describe the scene, and download a square store image or a short video of 6, 10, 15, or 30 seconds.",
-        "In a typical week that means a clean listing shot, a lifestyle photo, a model photo for clothing, a feed image, and a vertical clip. The clip can carry an actor, a script, a spoken line, and captions. No design software, no agency booking, and no studio day."
+        "Upload a picture of what you sell, or paste a product page link. Pick a template, a ready-made look, or describe the scene in your own words. Then download a square photo for your store, or a short video of 6, 10, 15, or 30 seconds.",
+        "In a typical week you might make a clean photo for a listing, and a photo of the product in a real setting. You might also make a model photo for clothing, a photo for a social post, and a tall video for a phone. The video can include an actor, a script, a spoken line, and captions. No separate design app, no agency booking, and no studio day."
       ],
       "img": "n:guide:b2f9-about-what-we-make-r1",
       "alt": "Adult seller with a blonde chin-length bob sets a plain ceramic mug on paper beside a closed laptop."
@@ -24,23 +24,23 @@
       "h2": "How to Make a Product Ad in 3 Simple Steps",
       "paras": [
         "Upload a photo or paste the product page link, and add one line about the buyer.",
-        "The tool writes the script, adds an actor, a voice, and captions, and can make a batch of versions.",
+        "The tool writes the script, adds an actor, a voice, and captions. It can also make a batch, which means several versions at once.",
         "Check the product, then download the file or send it to TikTok, Instagram, or Facebook."
       ]
     },
     {
       "h2": "Features You Can Use on an Ad",
       "paras": [
-        "Pick an actor from the library, or build a presenter from photos you have the rights to, and reuse that presenter on the next video. The actor can say the line in more than one language.",
-        "Captions come with the clip and you can edit the words. A music library sits in the tool, and the editor lets you trim the clip, swap the actor, and change the line without another app.",
-        "Paste a product page link to start a video, make a batch of versions from one photo, or send a job from your own software through the API. Each job shows its credit cost before it starts."
+        "Pick an actor from the library. Or build a presenter, a person you save from photos you are allowed to use, and reuse that person on the next video. The actor can say the line in more than one language.",
+        "Captions come with the clip, and you can edit the words. A music library is in the tool. In the editor you can shorten the clip, change the actor, or change the line, without another app.",
+        "Paste a product page link to start a video. Or make a batch of versions from one photo. Your own software can start the work through the API, a connection for other software. Each one shows how many credits it will use before it starts. A credit is one unit from your monthly plan."
       ]
     },
     {
-      "h2": "AI visuals for Shopify sellers and small shops",
+      "h2": "For Shopify sellers and small shops",
       "paras": [
-        "It is built for small shops on Shopify, Amazon, and Etsy, and for the people who run their ads. Sellers who ship goods they do not keep in stock, small businesses, marketers, creators, and app teams use the same tools when they need a file this week.",
-        "You do not need editing skills. A clear product photo and one sentence about the scene are enough to start. It is a product content tool for Etsy shops when a listing changes and you need a new image or clip."
+        "It is built for small shops on Shopify, Amazon, and Etsy, and for the people who run their ads. Sellers who ship goods they do not keep in stock use it too. So do small businesses, marketers, creators, and teams that build apps, when they need a photo or video this week.",
+        "You do not need editing skills. A clear product photo and one sentence about the scene are enough to start. When an Etsy listing changes, you can make a new photo or video here."
       ],
       "img": "n:guide:fx08-about-who-its-for-r1",
       "alt": "Adult small-shop owner prepares a plain product for a listing at a packing table."
@@ -49,7 +49,7 @@
       "h2": "A private AI product photo tool",
       "paras": [
         "Everything you upload and everything you make stays in your own account. Your product photos and results are not shown to other customers or published.",
-        "Some requests are turned down, including celebrities or other public figures, and logos or trademarks that belong to someone else. Keep the image or clip on a product you sell."
+        "Some requests are turned down. That includes a celebrity or another public figure, and a logo or brand name you do not own. Make the photo or video for a product you sell."
       ],
       "img": "n:guide:b2f9-about-photos-stay-yours-r1",
       "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock."
@@ -57,8 +57,8 @@
     {
       "h2": "Credit costs on screen before you start",
       "paras": [
-        "Every photo and video shows its credit cost before the job starts, so you see the price before anything is spent. Plans start at $24.50 a month with 200 credits. Pro is $35 with 300 credits, and Premium is $63 with 600.",
-        "Credits are held while a job runs and used when the file arrives. A delivered file is not refunded, which is why the cost is on screen first. If a job fails, the credits return to your balance on their own. A batch charges each version."
+        "A credit is one unit from your plan. Every photo and video shows how many credits it will use before it starts, so you see the number before anything is spent. Plans start at $24.50 a month with 200 credits. Pro is $35 a month with 300 credits. Premium is $63 a month with 600 credits.",
+        "Credits are set aside while the work runs, and used when the file arrives. Each run is called a job. A finished file is not refunded, which is why the number is on screen first. If a job fails, the credits come back to your balance on their own. A batch uses credits for each version."
       ],
       "img": "n:guide:b2f9-about-credit-costs-r1",
       "alt": "Adult seller with a short silver crop reviews plain wooden tokens beside a closed laptop."
@@ -67,7 +67,7 @@
   "faq": [
     {
       "q": "Can I make product ads without hiring an agency?",
-      "a": "Yes. Upload your product photo or paste a product page link, add an actor and a script if you want them, and download the file or send it to TikTok, Instagram, or Facebook. There is no booking and no shoot day."
+      "a": "Yes. Upload your product photo, or paste a product page link. Add an actor and a script if you want them. Then download the file, or send it to TikTok, Instagram, or Facebook. There is no booking and no studio day."
     },
     {
       "q": "How do I reach the team?",
@@ -83,29 +83,29 @@
     },
     {
       "q": "How much does it cost?",
-      "a": "Monthly plans start at $24.50 with 200 credits. Pro is $35 with 300 credits, and Premium is $63 with 600. Each photo or video shows its credit cost before the job starts. If a job fails, its credits come back on their own."
+      "a": "Monthly plans start at $24.50 with 200 credits. Pro is $35 with 300 credits. Premium is $63 with 600 credits. Each photo or video shows how many credits it will use before it starts. If one fails, those credits come back on their own."
     },
     {
-      "q": "Can I reuse a presenter on the next video?",
-      "a": "Yes. Pick an actor from the library, or build a presenter from photos you have the rights to, and use that same presenter on the next video. See [AI spokesperson video](page:spokesperson-videos)."
+      "q": "Can I use the same person on the next video?",
+      "a": "Yes. Pick an actor from the library. Or build a presenter from photos you are allowed to use, and use that same person on the next video. A presenter is a person you save for later videos. See [AI spokesperson video](page:spokesperson-videos)."
     },
     {
       "q": "Does the video include a voice and captions?",
-      "a": "Yes. A short ad can include a spoken line, captions you can edit, and a track from the music library. You can change them in the editor before you download."
+      "a": "Yes. A short ad can include a spoken line, captions you can edit, and a song from the music library. You can change them in the editor before you download."
     },
     {
       "q": "Can I publish to TikTok or Facebook?",
-      "a": "Yes. Send the finished file to TikTok, Instagram, or Facebook from the tool, or download it and post it yourself. There is no watermark."
+      "a": "Yes. Send the finished file to TikTok, Instagram, or Facebook from the tool, or download it and post it yourself. There is no watermark, so no logo is stamped on the file."
     },
     {
-      "q": "Is there an API, and is there a free plan?",
-      "a": "Your own software can send a job through the API. Email support@aivideosugc.com if you need access. There is no free plan. Plans start at $24.50 a month with 200 credits."
+      "q": "Can my own software connect, and is there a free plan?",
+      "a": "Your own software can start a photo or video through the API. An API is a connection that lets other software talk to this tool. Email support@aivideosugc.com if you need access. There is no free plan. Plans start at $24.50 a month with 200 credits."
     }
   ],
   "ctaTitle": "Start with one product photo",
-  "ctaLead": "Pick a photo or a short ad, see the cost before you start, and make an image or clip you can publish.",
+  "ctaLead": "Pick a photo or a short ad, see how many credits it uses before you start, and make a file you can publish.",
   "cta_title": "Start with one product photo",
-  "cta_lead": "Pick a photo or a short ad, see the cost before you start, and make an image or clip you can publish.",
+  "cta_lead": "Pick a photo or a short ad, see how many credits it uses before you start, and make a file you can publish.",
   "relatedLinks": [
     "pricing",
     "faq",

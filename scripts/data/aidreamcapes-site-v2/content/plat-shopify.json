@@ -1,11 +1,11 @@
 {
   "id": "plat-shopify",
   "title": "AI Shopify Product Photos and Videos | AIVideosUGC",
-  "description": "Make Shopify product photos in a new scene or as a batch, plus a short video clip for your store. See the credit cost first, then download with no watermark.",
+  "description": "Make Shopify product photos in a new background, or many at once, plus a short video for your store. See the cost first, then download with no logo on the file.",
   "h1": "Shopify Product Photos for Pages, Grids and Clips",
   "eyebrow": "Shopify stores",
-  "lead": "Make Shopify product photos for the page and the grid. Try a new scene or a batch from pictures you already have, then add each file yourself in Shopify admin.",
-  "card": "Shopify product photos, new scenes, and short clips, including a batch from photos you already have.",
+  "lead": "Make Shopify product photos for the product page and the collection. Try a new background, or make many from pictures you already have. Then add each file yourself in Shopify.",
+  "card": "Shopify product photos, new backgrounds, and short videos, made one by one or many at a time.",
   "secondary_keywords": [
     "Shopify product images",
     "Shopify collection page photos",
@@ -15,39 +15,39 @@
   "faq": [
     {
       "q": "What is a Shopify product photo made here?",
-      "a": "A square page image, a matching collection tile, or a short clip. You start from a photo you upload or a scene you describe."
+      "a": "A square photo for the product page, a matching small photo for the collection, or a short video. You start from a photo you upload or a scene you describe."
     },
     {
       "q": "How does a Shopify product photo get made?",
-      "a": "You upload a picture or describe the scene, pick a style, and download the file. You add it in Shopify admin yourself. We do not publish into the store."
+      "a": "You upload a picture or describe the scene, pick a style, and download the file. You add it in Shopify yourself. We do not put it on the store for you."
     },
     {
       "q": "Is there a free plan for these Shopify photos?",
-      "a": "No. There is no free plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A still is 24 credits. Downloads have no watermark."
+      "a": "No. There is no free plan. Starter is $24.50 a month for 200 credits. Credits are what your monthly plan gives you to spend. Pro is $35 a month for 300 credits, and Premium is $63 a month for 600. A photo costs 24 credits. Downloads have no watermark, so no logo is stamped on the file."
     },
     {
       "q": "Can I put these photos on my store?",
-      "a": "Yes. Downloads have no watermark and are yours to put on the product page. You still write the name, the price, and the claims. We do not publish into Shopify."
+      "a": "Yes. Downloads have no watermark and are yours to put on the product page. You still write the name, the price, and what you say about the product. We do not put the files into Shopify for you."
     },
     {
       "q": "What image size works on a product page?",
-      "a": "Use a square file so the product page and the collection grid match. Check the image size your store is set to use before you upload."
+      "a": "Use a square file, the same width and height, so the product page and the collection match. Check the photo size your store uses before you upload."
     },
     {
       "q": "Can I refresh a whole collection at once?",
-      "a": "Yes. Run a batch from the photos you already have, with the same crop and a related backdrop, so older products can sit next to new ones."
+      "a": "Yes. Make many photos from the pictures you already have. Use the same shape and a similar background, so older products can sit next to new ones."
     },
     {
-      "q": "Can I add a clip on the product page?",
-      "a": "Yes. Make a clip of 6, 10, 15 or 30 seconds and add it in product media yourself. A clip is 24, 40, 60 or 120 credits by length. If a file fails, those credits return on their own."
+      "q": "Can I add a video on the product page?",
+      "a": "Yes. Make a video of 6, 10, 15, or 30 seconds and add it on the product page yourself. A video costs 24, 40, 60, or 120 credits, based on how long it is. If a file fails, those credits come back on their own."
     },
     {
       "q": "What should the upload look like?",
-      "a": "Start with a clear, well-lit shot of the whole item. [how to take product photos for AI](/guides/product-photo-tips) walks through a source picture that gives the tool enough to work with."
+      "a": "Start with a clear, well-lit photo of the whole item. [how to take product photos for AI](/guides/product-photo-tips) shows what kind of photo works."
     }
   ],
-  "templates_lead": "Pick matching looks for your product grid, detail page, and short product video.",
-  "cta_lead": "Start with one product, or refresh a batch of collection tiles from photos you already have.",
+  "templates_lead": "Pick matching looks for the collection, the product page, and a short product video.",
+  "cta_lead": "Start with one product, or update many collection photos from pictures you already have.",
   "steps": [
     {
       "t": "Upload your product or describe it",
@@ -55,11 +55,11 @@
     },
     {
       "t": "Choose your image style",
-      "d": "Pick a square page image, a collection tile, or a clip of 6, 10, 15 or 30 seconds."
+      "d": "Pick a square photo for the page, a small photo for the collection, or a video of 6, 10, 15, or 30 seconds."
     },
     {
-      "t": "Generate, refine, and use",
-      "d": "Refine it, download with no watermark, and add the still or a clip in Shopify admin."
+      "t": "Download and add it",
+      "d": "Tweak it, then download with no watermark, meaning no logo on the file. Add the photo or video in Shopify yourself."
     }
   ],
   "visual": {
@@ -83,7 +83,7 @@
         ],
         [
           "Size",
-          "Square 1:1"
+          "Square 1:1, same width and height"
         ],
         [
           "Use",
@@ -97,11 +97,11 @@
         },
         {
           "t": "Choose your image style",
-          "d": "Pick a square page image, a collection tile, or a clip of 6, 10, 15 or 30 seconds."
+          "d": "Pick a square photo for the page, a small photo for the collection, or a video of 6, 10, 15, or 30 seconds."
         },
         {
-          "t": "Generate, refine, and use",
-          "d": "Refine it, download with no watermark, and add the still or a clip in Shopify admin."
+          "t": "Download and add it",
+          "d": "Tweak it, then download with no watermark, meaning no logo on the file. Add the photo or video in Shopify yourself."
         }
       ]
     },
@@ -114,8 +114,8 @@
   "benefits_h2": "Give your Shopify product a fresh look",
   "benefits": [
     {
-      "t": "One look across the grid",
-      "d": "Use the same square crop so collection tiles line up. The grid should look like one shop.",
+      "t": "One look across the collection",
+      "d": "Use the same square shape so the collection photos line up. The collection should look like one shop.",
       "img": "n:guide:fx42-shopify-benefit-collection",
       "alt": "Three plain ceramic home goods arranged as a consistent ecommerce collection grid."
     },
@@ -127,12 +127,12 @@
     },
     {
       "t": "A coast, a desert, or a room",
-      "d": "Keep the product and move it to a coastal set, a desert set, a minimal backdrop, or an indoor room.",
+      "d": "Keep the product, and place it by the sea, in a desert, on a plain background, or in a room.",
       "img": "n:guide:fx42-shopify-benefit-scene",
       "alt": "Adult hands place a plain linen storage basket on a bright shelf."
     }
   ],
-  "steps_h2": "Steps to generate a Shopify product image",
+  "steps_h2": "Steps to make a Shopify photo or video",
   "steps_lead": "Describe a scene or upload a photo, pick a style, then download.",
   "more_sections": [
     {
@@ -141,16 +141,16 @@
       "lead": "A product page usually needs more than one file. Make each one as its own download.",
       "items": [
         {
-          "t": "Plain square tile",
-          "d": "A clean image of the whole item for the collection. Keep the crop the same as the tiles beside it."
+          "t": "Plain square photo",
+          "d": "A clean photo of the whole item for the collection. Keep the same shape as the photos beside it."
         },
         {
-          "t": "In-use scene",
-          "d": "The same product in a room, on a coast, or against a minimal set, saved as its own file."
+          "t": "Product in use",
+          "d": "The same product in a room, by the sea, or on a plain background, saved as its own file."
         },
         {
-          "t": "Short clip",
-          "d": "A clip of 6, 10, 15 or 30 seconds that you add in product media. You can also start that clip from the still you just made."
+          "t": "Short video",
+          "d": "A video of 6, 10, 15, or 30 seconds that you add on the product page. You can also start that video from the photo you just made."
         }
       ]
     }
@@ -165,63 +165,63 @@
     "reviews",
     "faq"
   ],
-  "benefits_lead": "Place the same product on a coast, in a desert, on a minimal set, or in another room.",
+  "benefits_lead": "Put the same product by the sea, in a desert, on a plain background, or in a room.",
   "reasons": {
     "h2": "Benefits of Shopify product photos",
-    "lead": "Here is what you can do from the photos already sitting on the product.",
+    "lead": "Here is what you can do with the photos you already have.",
     "items": [
       {
         "t": "See the cost first",
-        "d": "A still is 24 credits. A clip is 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds. The price shows before you start, and a failed file returns those credits."
+        "d": "A photo costs 24 credits. Credits are what your monthly plan gives you to spend. A video costs 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start. If a file fails, those credits come back."
       },
       {
-        "t": "Skip a shoot day",
-        "d": "Older products can use the picture they already have. You do not book another shoot to refresh the grid."
+        "t": "Skip another film day",
+        "d": "Older products can use the picture they already have. You do not book another film day to refresh the collection."
       },
       {
-        "t": "A batch from the catalog",
-        "d": "Make shots for many products in one sitting. Each item still starts from its own photo."
+        "t": "Many products at once",
+        "d": "Make photos for many products at one time. Each item still starts from its own photo."
       },
       {
         "t": "No model and no props",
-        "d": "You do not hire a model or rent a prop kit to try a new backdrop. The scene starts from the photo you upload."
+        "d": "You do not hire a model, or rent extra items, just to try a new background. The scene starts from the photo you upload."
       },
       {
         "t": "Start when the photo is ready",
         "d": "There is no studio appointment. Make the file in the evening, on a weekend, or between orders."
       },
       {
-        "t": "Test another backdrop",
-        "d": "Generate a second crop, style, or composition and compare it with the first. You pick which file goes on the product page."
+        "t": "Test another background",
+        "d": "Make a second photo with a wider or tighter view, a new look, or a new layout. Compare it with the first. You pick which file goes on the product page."
       }
     ]
   },
   "platforms": {
-    "h2": "Cut files for the other channels you also use",
-    "lead": "The store is one destination. The same upload can start a file for the other channels.",
+    "h2": "Make files for the other channels you also use",
+    "lead": "The store is one place to post. The same photo can start a file for the other channels.",
     "items": [
       {
         "t": "AI TikTok ads generator",
         "label": "AI TikTok ads generator",
-        "d": "A tall ad for a short-video feed, started from the same upload.",
+        "d": "A tall ad for TikTok, started from the same photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram ads",
         "label": "AI Instagram ads",
-        "d": "A square still or a tall clip for the feed.",
+        "d": "A square photo or a tall video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook ad generator",
         "label": "AI Facebook ad generator",
-        "d": "A square feed still, or a tall clip for full-screen placements.",
+        "d": "A square photo for Facebook, or a tall video that fills the screen.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts ads",
         "label": "YouTube Shorts ads",
-        "d": "A tall short-form clip. A wide in-stream ad is a separate download.",
+        "d": "A tall short video. A wide ad that plays in the YouTube player is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
@@ -245,66 +245,66 @@
       {
         "example": true,
         "who": "Home shop",
-        "t": "Three ceramics, one crop",
-        "d": "A home shop uses a bowl photo for a square tile that matches the other colors in the collection."
+        "t": "Three ceramics, one square",
+        "d": "A home shop uses a bowl photo to make a square product photo that matches the other colors in the collection."
       },
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "Serum on the page, clip for the ad",
-        "d": "A beauty shop uses a bottle photo for a square page image, and a separate clip of it being applied."
+        "t": "Serum on the page, video for the ad",
+        "d": "A beauty shop uses a bottle photo for a square page photo, and a separate video of it being applied."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Folded, then a worn scene",
-        "d": "A clothing shop uses a linen shirt photo for a flat tile, then a worn scene as a second file."
+        "d": "A clothing shop uses a linen shirt photo for a flat product photo, then a worn scene as a second file."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Bag on white, then the cup",
-        "d": "A drink seller uses a coffee bag photo for a plain tile, then a brew scene as a second file."
+        "d": "A drink seller uses a coffee bag photo for a plain product photo, then a brew scene as a second file."
       },
       {
         "example": true,
         "who": "Pet shop",
-        "t": "Brush in the grid",
-        "d": "A pet shop uses a grooming glove photo for a square tile with the whole glove visible."
+        "t": "Brush in the collection",
+        "d": "A pet shop uses a grooming glove photo for a square product photo with the whole glove visible."
       },
       {
         "example": true,
         "who": "Kitchen shop",
         "t": "Set of four, same light",
-        "d": "A kitchen shop makes one square tile for each bowl color, with the same crop and backdrop."
+        "d": "A kitchen shop makes one square product photo for each bowl color, with the same shape and background."
       },
       {
         "example": true,
         "who": "Jewelry shop",
         "t": "Ring, then a hand",
-        "d": "A jewelry shop uses a ring photo for a square tile, then a hand scene as a second file."
+        "d": "A jewelry shop uses a ring photo for a square product photo, then a hand scene as a second file."
       },
       {
         "example": true,
         "who": "Electronics shop",
-        "t": "Cable fully in frame",
-        "d": "An electronics shop uses a charger photo for a square tile with the cable fully visible."
+        "t": "Cable fully visible",
+        "d": "An electronics shop uses a charger photo for a square product photo with the cable fully visible."
       },
       {
         "example": true,
         "who": "Fitness shop",
         "t": "Bottle, then the gym",
-        "d": "A fitness shop uses a bottle photo for a square tile, then a gym scene as a second file."
+        "d": "A fitness shop uses a bottle photo for a square product photo, then a gym scene as a second file."
       },
       {
         "example": true,
         "who": "Furniture shop",
         "t": "Lamp beside the other lights",
-        "d": "A furniture shop uses a lamp photo for a square tile that lines up with the other lights."
+        "d": "A furniture shop uses a lamp photo for a square product photo that lines up with the other lights."
       }
     ]
   },
-  "related_h2": "Related tools for the page and the clip",
+  "related_h2": "Related tools for the page and the video",
   "related_lead": "Open the tool for the next file.",
   "relatedLinks": [
     "product-videos",

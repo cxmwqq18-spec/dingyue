@@ -1,11 +1,11 @@
 {
   "id": "examples",
   "title": "AI Product Photo and Video Examples | AIVideosUGC",
-  "description": "Recreate AI product photo and video examples from your own photo, from a desk still to a short ad with an actor, voice, and captions. See the credit cost first.",
+  "description": "Redo AI product photo and video examples from your own photo: a desk photo, or a short ad with an actor, voice, and captions. Credits (plan units) show first.",
   "h1": "See It. Recreate It. AI Product Photo and Video Examples",
   "eyebrow": "From photo to finished file",
-  "lead": "Pick a look you like, add your own product, and make a photo or a short ad. A template starts you off, so you are not stuck writing a long prompt.",
-  "card": "Six product photo stills you can recreate, from a travel mug to a sunscreen tube, plus a path into a short ad.",
+  "lead": "Pick a look you like, add your own product, and make a photo or a short ad. A template is a ready-made look, so you do not have to write a long prompt. A prompt is the text you type to describe the scene.",
+  "card": "Six product photos you can recreate, from a travel mug to a sunscreen tube, plus a way to start a short ad.",
   "secondary_keywords": [
     "AI product video ad examples",
     "AI lifestyle photo examples",
@@ -32,7 +32,7 @@
   "cases": [
     {
       "id": "travel-mug",
-      "t": "Desk still: Matte travel mug",
+      "t": "Desk photo: Matte travel mug",
       "d": "A matte white mug on a clean desk, so the listing shows a place a shopper recognizes.",
       "imageRefs": [
         "g:ecommerce-main-image/source-input",
@@ -49,8 +49,8 @@
     },
     {
       "id": "linen-tote",
-      "t": "Lifestyle still: Linen tote beside an outfit",
-      "d": "The tote sits next to everyday clothes, so the size is easy to judge in a feed.",
+      "t": "Lifestyle photo: Linen tote beside an outfit",
+      "d": "The tote sits next to everyday clothes, so the size is easy to judge in a social post.",
       "imageRefs": [
         "g:lifestyle-scene/source-input",
         "g:lifestyle-scene/example-01",
@@ -58,15 +58,15 @@
       ],
       "imageLabels": [
         "Uploaded linen tote photo",
-        "Linen tote in a lifestyle scene",
+        "Linen tote in an everyday scene",
         "Finished linen tote image"
       ],
-      "ctaLabel": "Try the linen tote lifestyle scene",
+      "ctaLabel": "Try the linen tote everyday scene",
       "ctaPrompt": "Recreate a linen tote lifestyle scene from my uploaded product photo beside an everyday outfit in bright natural light, keeping the tote shape and color consistent."
     },
     {
       "id": "fluted-vase",
-      "t": "Room still: Fluted vase with flowers",
+      "t": "Room photo: Fluted vase with flowers",
       "d": "A white fluted vase with flowers in a bright room, for a home listing that needs a setting.",
       "imageRefs": [
         "g:background-remove-replace/source-input",
@@ -83,7 +83,7 @@
     },
     {
       "id": "leather-wallet",
-      "t": "Detail still: Brown leather wallet",
+      "t": "Close-up photo: Brown leather wallet",
       "d": "A close view of the leather, the stitching, and the finish.",
       "imageRefs": [
         "g:macro-details/source-input",
@@ -95,12 +95,12 @@
         "Leather wallet detail",
         "Finished wallet image"
       ],
-      "ctaLabel": "Try the wallet detail scene",
+      "ctaLabel": "Try the wallet close-up",
       "ctaPrompt": "Recreate a brown leather wallet detail scene from my uploaded product photo, keeping the wallet shape, stitching and color consistent."
     },
     {
       "id": "running-shoe",
-      "t": "Feed still: Gray running shoe",
+      "t": "Social photo: Gray running shoe",
       "d": "A simple social ad image of a gray knit shoe. Check the sole and the shape before you post it.",
       "imageRefs": [
         "g:feed-ad-still/example-02",
@@ -109,16 +109,16 @@
       ],
       "imageLabels": [
         "Running shoe starting photo",
-        "Running shoe in a feed scene",
+        "Running shoe in a social scene",
         "Finished running shoe image"
       ],
-      "ctaLabel": "Try the running shoe feed scene",
+      "ctaLabel": "Try the running shoe social scene",
       "ctaPrompt": "Recreate a gray knit running shoe feed scene from my uploaded product photo, keeping the shoe shape, sole and color consistent."
     },
     {
       "id": "sunscreen",
-      "t": "Tall still: Sunscreen tube in daylight",
-      "d": "A tall frame of a plain sunscreen tube in daylight. This card is a photo, not a video.",
+      "t": "Tall photo: Sunscreen tube in daylight",
+      "d": "A tall photo of a plain sunscreen tube in daylight. This card is a photo, not a video.",
       "imageRefs": [
         "g:story-ad-vertical/source-input",
         "g:story-ad-vertical/example-01",
@@ -126,25 +126,25 @@
       ],
       "imageLabels": [
         "Uploaded sunscreen tube photo",
-        "Sunscreen tube in a vertical scene",
+        "Sunscreen tube in a tall scene",
         "Finished sunscreen image"
       ],
-      "ctaLabel": "Try the sunscreen vertical scene",
+      "ctaLabel": "Try the sunscreen tall photo",
       "ctaPrompt": "Recreate a plain sunscreen tube vertical scene from my uploaded product photo in clear daylight, keeping the tube shape and cap color consistent."
     }
   ],
   "faq": [
     {
       "q": "What are these AI product photo and video examples?",
-      "a": "They are finished looks you can redo with your own item. The six cards on this page are photos. A product photo to video ad, with an actor, a spoken line, and captions, starts from the same kind of photo."
+      "a": "They are finished looks you can redo with your own item. The six cards on this page are photos. A short video ad, with an actor, a spoken line, and captions, starts from the same kind of photo."
     },
     {
       "q": "How do I recreate an example with my own product?",
-      "a": "Upload a photo of your item and open the example you liked. Your file is built from that photo, in the same kind of scene. You can then add a script, an actor, and captions if you want a short ad."
+      "a": "Upload a photo of your item and open the example you liked. Your file is built from that photo, in the same kind of scene. You can then add a script (the words to say), an actor, and captions if you want a short ad."
     },
     {
       "q": "Why start from an example instead of filming a creator?",
-      "a": "An example shows a finished direction before you book a shoot or a creator. Upload one product photo, make a still or a short ad, and check the product before you publish it."
+      "a": "An example shows a finished look before you book a studio day or a creator. Upload one product photo, make a photo or a short ad, and check the product before you publish it."
     },
     {
       "q": "Who are these examples for?",
@@ -152,7 +152,7 @@
     },
     {
       "q": "Can a beginner use an example?",
-      "a": "Yes. You do not need editing experience. Upload a product photo, open a look, and the tool can add the script, the actor, and the captions."
+      "a": "Yes. You do not need editing experience. Upload a product photo, open a look, and the tool can add the script (the words to say), the actor, and the captions."
     },
     {
       "q": "Which products do these examples fit?",
@@ -164,19 +164,19 @@
     },
     {
       "q": "Which platforms can I publish to?",
-      "a": "TikTok, Instagram, Facebook, and YouTube. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. You can send the file from the tool or download it and post it yourself."
+      "a": "You can post on TikTok, Instagram, Facebook, and YouTube. Shapes are 9:16 (tall phone), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), and 3:4 (a bit tall). You can send the file from the tool, or download it and post it yourself."
     },
     {
       "q": "Is there a free plan for these examples?",
-      "a": "No. The pictures on this page are demonstrations, not files to repost. A file you generate uses credits. Plans start at $24.50 a month with 200 credits, and the download has no watermark."
+      "a": "No. The pictures on this page are only here to show the look. They are not files to download and repost. A file you make spends credits, the units on a paid plan. Plans start at $24.50 a month with 200 credits. The download has no watermark, so no logo is stamped on it."
     },
     {
       "q": "Can I use a file I make in a paid ad?",
-      "a": "Yes. A file you generate can be used commercially and has no watermark. You can run it as an ad or post it on your store."
+      "a": "Yes. A file you make can be used in ads and on your store. It has no watermark, so no logo is stamped on it."
     },
     {
       "q": "Why use an example instead of starting from nothing?",
-      "a": "An example already has a scene, a crop, and a mood. You spend your time on the product and the line, not on building the shot from a blank page."
+      "a": "An example already has a scene, how tight the photo is, and a mood (the feeling of the scene). You spend your time on the product and the spoken line, not on building the picture from a blank page."
     }
   ],
   "visual": {
@@ -190,7 +190,7 @@
     ],
     "picker": {
       "title": "AI lifestyle photo examples",
-      "lead": "Browse AI lifestyle photo examples and AI social ad image examples. Filter by fashion, fitness, or accessories, then try that direction with your item.",
+      "lead": "Browse photos of products in everyday settings, and photos made for social ads. Filter by fashion, fitness, or accessories. Skincare, beauty, food and drink, technology, and home goods start the same way.",
       "chips": [
         {
           "id": "fashion",
@@ -214,7 +214,7 @@
     "titles": {
       "m3": {
         "h2": "Recreate These Product Photo Examples",
-        "lead": "Browse AI lifestyle photo examples and AI social ad image examples. Fashion, fitness, and accessories have filters. Skincare, beauty, food and drink, technology, and home goods start the same way."
+        "lead": "Browse photos of products in everyday settings, and photos made for social ads. Filter by fashion, fitness, or accessories. Skincare, beauty, food and drink, technology, and home goods start the same way."
       },
       "m2": {
         "h2": "How to Recreate an Example in 3 Simple Steps",
@@ -241,7 +241,7 @@
         ]
       }
     },
-    "overview": "Each card is a finished photo you can recreate from your own product photo. Filter by fashion, fitness, or accessories, or browse all six. Skincare, beauty, food and drink, technology, and home pieces use that same path. When you want a clip, that photo also starts a short ad with an actor, a spoken line, captions, and music, and you can send it to TikTok, Instagram, or Facebook."
+    "overview": "Each card is a finished photo you can recreate from your own product photo. Filter by fashion, fitness, or accessories, or browse all six. Skincare, beauty, food and drink, technology, and home goods use that same path. When you want a video, that photo can also start a short ad with an actor, a spoken line, captions, and music. You can send it to TikTok, Instagram, or Facebook."
   },
   "related_h2": "Tools that make these directions",
   "related_lead": "Open a tool, or browse the template library.",
@@ -256,32 +256,32 @@
   "cta_title": "Ready to Recreate This with Your Product",
   "cta_lead": "Upload one product photo, open the look you liked, and see the credit cost before you start.",
   "reviews": {
-    "h2": "Why Shops Switch to AI Video Ads",
-    "lead": "Examples of how a shop uses these looks. Not a quote from a named customer.",
+    "h2": "How a shop uses these looks",
+    "lead": "These cards show how a shop of this kind uses the looks. They are not quotes from a real customer.",
     "items": [
       {
         "example": true,
         "who": "Skincare shop",
-        "t": "Finished clip",
-        "d": "A skincare shop sends one product photo and a short note, then checks the finished clip before it goes on the ad account."
+        "t": "Finished video",
+        "d": "A skincare shop sends one product photo and a short note, then checks the finished video before they put it in an ad."
       },
       {
         "example": true,
         "who": "Home shop",
-        "t": "Photo and clip",
-        "d": "A home shop makes a listing photo and a short clip in the same place, then keeps the one that shows the product clearly."
+        "t": "Photo and video",
+        "d": "A home shop makes a listing photo and a short video in the same place, then keeps the one that shows the product clearly."
       },
       {
         "example": true,
         "who": "Gadget shop",
         "t": "Product in hand",
-        "d": "A gadget shop turns a product photo into a clip of an actor holding the item, so the size is easy to see."
+        "d": "A gadget shop turns a product photo into a video of an actor holding the item, so the size is easy to see."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Actor and editor",
-        "d": "A beauty shop picks an actor, then trims the clip and fixes the captions in the built-in editor."
+        "d": "A beauty shop picks an actor, then shortens the video and fixes the captions in the built-in editor."
       },
       {
         "example": true,
@@ -293,31 +293,31 @@
         "example": true,
         "who": "Solo seller",
         "t": "One monthly plan",
-        "d": "A solo seller stays on the Starter plan at $24.50 a month and edits the clip here instead of opening another app."
+        "d": "A solo seller stays on the Starter plan at $24.50 a month and edits the video here instead of opening another app."
       },
       {
         "example": true,
         "who": "Small agency",
         "t": "Presenter for a client",
-        "d": "An agency builds a presenter for a client from the actor library and reuses that look on the next ad."
+        "d": "An agency builds a presenter (a saved on-screen person) for a client from the actor library and reuses that person on the next ad."
       },
       {
         "example": true,
         "who": "Home brand",
         "t": "No light setup",
-        "d": "A home brand makes a clean product clip from a few photos, without booking lights, a camera, or a creator."
+        "d": "A home brand makes a clean product video from a few photos, without booking lights, a camera, or a creator."
       },
       {
         "example": true,
         "who": "Store owner",
         "t": "Link to a video",
-        "d": "A store owner pastes a product page link and gets a script, an actor, and a short video to review."
+        "d": "A store owner pastes a product page link and gets a script (the words to say), an actor, and a short video to review."
       },
       {
         "example": true,
         "who": "Marketer",
         "t": "Idea to a video",
-        "d": "A marketer types a short idea and gets a script, pictures, and a video to review before publishing."
+        "d": "A marketer types a short idea and gets the words, the pictures, and a video to review before publishing."
       }
     ]
   }

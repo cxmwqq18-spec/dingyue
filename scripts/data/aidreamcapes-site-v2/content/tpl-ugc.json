@@ -1,10 +1,10 @@
 {
   "id": "tpl-ugc",
   "title": "UGC Style Product Photos for Ads and Listings | AIVideosUGC",
-  "description": "Turn one product photo into UGC style product photos: a review, unboxing, or demo still for ads and listings. Write the caption after you download.",
+  "description": "Turn one product photo into UGC style product photos: a review, unboxing, or demo photo for ads and listings. Write the caption after you download.",
   "h1": "UGC Style Product Photos for Ads and Listings",
   "eyebrow": "Ad photo template",
-  "lead": "Booking a creator for every product slows the next post. Upload one product photo and get UGC style product photos for the feed.",
+  "lead": "Booking a creator for every product slows the next post. UGC here means a creator-style photo. Upload one product photo and the person in it is generated, not hired.",
   "secondary_keywords": [
     "creator style product photos",
     "user-generated content style images",
@@ -12,11 +12,11 @@
     "fitness product lifestyle photos"
   ],
   "steps_h2": "How to Make UGC Style Product Photos in 3 Simple Steps",
-  "steps_lead": "Upload the product, pick a creator-style scene, then download a still for the feed.",
+  "steps_lead": "Upload the product, pick a creator-style scene, then download a photo for the feed.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one product photo with the package or product complete and easy to see. That file is the source for every scene you generate."
+      "d": "Upload one product photo with the package or product complete and easy to see. That file is the source for every scene you make."
     },
     {
       "t": "Pick a Creator Style",
@@ -42,24 +42,24 @@
         "An everyday moment you pick"
       ]
     ],
-    "cta": "Make my UGC photo"
+    "cta": "Make my creator-style photo"
   },
   "faq": [
     {
       "q": "What is a UGC style product photo?",
-      "a": "Upload one product photo and get a creator-style review, unboxing or demo still, without filming a creator. The person in the frame is generated."
+      "a": "UGC means a creator-style photo. Upload one product photo and get a review, unboxing, or demo photo, without filming a creator. The person in the frame is generated."
     },
     {
       "q": "Do I have to describe the whole scene?",
       "a": "No. Upload the product photo and pick a routine, unboxing or demo. One short line about the room or the light is optional."
     },
     {
-      "q": "Who are these stills for?",
+      "q": "Who are these photos for?",
       "a": "Ecommerce sellers, marketers and agencies that need social photos for ads, carousels and product pages without booking a shoot."
     },
     {
       "q": "Where do the square photos fit?",
-      "a": "They fit Instagram and TikTok posts, carousels and product galleries. For a full-screen Story, place the square on a tall canvas in your editor."
+      "a": "They fit Instagram and TikTok posts, carousels, and product galleries. For a Story that fills the phone, place the square on a tall frame in your editor."
     },
     {
       "q": "Can a beginner do this?",
@@ -71,11 +71,11 @@
     },
     {
       "q": "What does a creator-style photo cost, and can it run as an ad?",
-      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts. You are still responsible for the claims and disclosures in the ad."
+      "a": "Each photo costs 24 credits. Credits are the points that pay for the photo. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts. You are still responsible for the claims in the ad and for any note the ad must show."
     },
     {
       "q": "When should I make a video instead?",
-      "a": "This template starts as a still. Add a spoken line, captions, and music here, and open [AI UGC video ads](page:video-ads) when the ad needs motion."
+      "a": "This template starts as a photo. Add a spoken line, captions, and music here, and open [creator-style video ads](page:video-ads) when the ad needs motion."
     },
     {
       "q": "Can the line use another language?",
@@ -83,15 +83,15 @@
     },
     {
       "q": "Can I edit what comes back?",
-      "a": "Yes. Trim a clip in the built-in editor, or change the caption after download. The square photo does not bake a price into the file."
+      "a": "Yes. Trim a clip in the built-in editor, or change the caption after download. The square photo does not print a price into the file."
     },
     {
       "q": "Can I start from a product link?",
-      "a": "Yes. Paste a product page and the script writer drafts the line. The still on this page still starts from your product photo."
+      "a": "Yes. Paste a product page and the script writer drafts the line. The photo on this page still starts from your product photo."
     },
     {
       "q": "Is there an API?",
-      "a": "Yes. The API can connect your catalog so a finished file comes back into your own setup."
+      "a": "Yes. API means a connection from your own shop. It can send a product from your catalog and bring the finished file back."
     }
   ],
   "visual": {
@@ -121,7 +121,7 @@
     },
     "picker": {
       "title": "Video previews, not the creator-style photo",
-      "lead": "Each card is a 9:16 video ad, not a square creator-style photo. Use the upload above for the still, and write the caption after you download.",
+      "lead": "Each card is a tall 9:16 video ad, not a square creator-style photo. Use the upload above for the photo, and write the caption after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -193,7 +193,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -203,7 +203,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-up unboxing: makeup tools",
           "chips": [
             "accessories"
           ],
@@ -275,7 +275,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Getting-ready unboxing: knitwear",
           "chips": [
             "clothing"
           ],
@@ -293,7 +293,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full spin: linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -320,7 +320,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to camera: skin lesson",
           "chips": [
             "education"
           ],
@@ -329,7 +329,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-person find: court gear",
           "chips": [
             "explainer"
           ],
@@ -338,7 +338,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: home app walkthrough",
           "chips": [
             "explainer"
           ],
@@ -347,7 +347,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance opening: phone demo",
           "chips": [
             "financial-services"
           ],
@@ -365,7 +365,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip: citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -401,7 +401,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry bowl first bite",
           "chips": [
             "health-fitness"
           ],
@@ -428,7 +428,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver signet close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -473,7 +473,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell powder reveal",
           "chips": [
             "sports-gym"
           ],
@@ -482,7 +482,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Evening kitchen appliance demo",
           "chips": [
             "tech-electronics"
           ],
@@ -500,7 +500,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump moisturizer routine",
           "chips": [
             "ugc"
           ],
@@ -518,7 +518,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint face mist opening",
           "chips": [
             "viral"
           ],
@@ -543,7 +543,7 @@
       },
       "m3": {
         "h2": "Video previews, not the creator-style photo",
-        "lead": "Each card is a 9:16 video ad, not a square creator-style photo. Use the upload above for the still, and write the caption after you download."
+        "lead": "Each card is a tall 9:16 video ad, not a square creator-style photo. Use the upload above for the photo, and write the caption after you download."
       },
       "faq": {
         "h2": "Questions about UGC style product photos"
@@ -561,7 +561,7 @@
     },
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "Creator-style video ads"
     },
     {
       "id": "product-videos",
@@ -583,7 +583,7 @@
       {
         "example": true,
         "who": "Skincare shop",
-        "t": "A routine still",
+        "t": "A routine photo",
         "d": "The shop places the bottle in a morning-routine scene for the feed. The caption, including any claim, is written after download."
       },
       {
@@ -596,7 +596,7 @@
         "example": true,
         "who": "Fitness seller",
         "t": "Demo on a simple background",
-        "d": "A demo still shows the product in use for a fitness post. The same source can be run again if they want a different angle."
+        "d": "A demo photo shows the product in use for a fitness post. The same source can be run again if they want a different angle."
       },
       {
         "example": true,
@@ -608,13 +608,13 @@
         "example": true,
         "who": "Agency",
         "t": "Several scenes, one product photo",
-        "d": "The agency tests a routine, an unboxing and a demo from the same upload. Each run shows its credit cost first."
+        "d": "The agency tests a routine, an unboxing, and a demo from the same upload. Each run shows its credit cost first. Credits are the points that pay for that run."
       },
       {
         "example": true,
         "who": "Small brand",
         "t": "No sample shipment",
-        "d": "They skip sending a sample to a creator for this still. The person in frame is generated, not a customer and not an influencer they hired."
+        "d": "They skip sending a sample to a creator for this photo. The person in frame is generated, not a customer and not an influencer they hired."
       },
       {
         "example": true,
@@ -631,7 +631,7 @@
     ]
   },
   "related_h2": "Explore More Tools",
-  "related_lead": "A product link, an AI presenter, UGC video ads, a product video, TikTok ads, and the ad image tool.",
+  "related_lead": "A product link, an AI presenter, creator-style video ads, a product video, TikTok ads, and the ad image tool.",
   "cta_title": "Ready to Create Your First UGC Style Photo?",
   "cta_lead": "Upload one product photo and pick a scene. The credit cost is on screen before the job starts.",
   "blockOrder": [
@@ -648,11 +648,11 @@
   "more_sections": [
     {
       "eyebrow": "Full control",
-      "h2": "Full Creative Control",
-      "lead": "The still on this page is the creator-style photo. Voice, captions, music, and a publish step sit with it.",
+      "h2": "What you can add",
+      "lead": "The photo on this page is the creator-style photo. Voice, captions, music, and a publish step sit with it.",
       "items": [
         {
-          "t": "AI Actors",
+          "t": "A generated presenter",
           "d": "Pick a generated presenter that fits the product. The person is not a hired creator and not a customer."
         },
         {
@@ -661,7 +661,7 @@
         },
         {
           "t": "Music Library",
-          "d": "Add a music bed from the library, or generate a short track that sits under this ad."
+          "d": "Add background music from the library, or make a short track that plays under this ad."
         },
         {
           "t": "Built-in Editor",
@@ -673,7 +673,7 @@
         },
         {
           "t": "Ready for Each Platform",
-          "d": "Save a cut for TikTok, Reels, Facebook, or Shorts, and publish to TikTok or Meta in one click."
+          "d": "Save a version for TikTok, Instagram Reels, Facebook, or YouTube Shorts. Then publish to TikTok, Facebook, or Instagram in one click."
         }
       ]
     }
@@ -682,7 +682,7 @@
     "title": "AI Ethics and Safety Standards",
     "paras": [
       "Anyone on screen is generated for the ad. They are not a creator you hired, and they are not a customer.",
-      "You still choose the claim and the disclosure. Uploads stay in your account. The details are on [AI content trust and safety](page:trust)."
+      "You still choose the claim, and any note the ad must show. Uploads stay in your account. The details are on [AI content trust and safety](page:trust)."
     ]
   }
 }

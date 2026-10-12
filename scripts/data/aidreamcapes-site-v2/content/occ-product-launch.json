@@ -1,10 +1,10 @@
 {
   "id": "occ-product-launch",
   "title": "New Product Launch Video and Photos | AIVideosUGC",
-  "description": "Create product launch videos and photos from one product image: make a teaser, reveal, and listing asset before launch day, without a studio booking or reshoot.",
+  "description": "Create launch videos and photos from one product image. Make a short preview, a reveal, and a listing photo before launch day. No studio booking or reshoot.",
   "h1": "Create Your Product Launch Video and Photos Fast",
   "eyebrow": "New product launch",
-  "lead": "Paste a product link and get a product launch video and photos: a script, an actor, and a voice that tightens the wait, before the date is public.",
+  "lead": "Paste a product link and get a script, an actor, and a voice for a short teaser. A teaser is a preview you post before the date is public.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
@@ -14,19 +14,19 @@
   "faq": [
     {
       "q": "How many credits does a launch photo or video use?",
-      "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the cost before the job starts, and a failed job returns those credits."
+      "a": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the cost before you start. If it fails, those credits come back."
     },
     {
       "q": "Can I change the timer on the launch video?",
-      "a": "Yes. Set the end time in the built-in editor and move it if the day slips. You decide when the countdown stops."
+      "a": "Yes. Set the end time in the editor and move it if the day changes. You decide when the countdown stops."
     },
     {
       "q": "Will anyone else see my unreleased product?",
       "a": "No. The upload and the result stay in your account, and they are not published until you share them."
     },
     {
-      "q": "What frame should a launch visual use?",
-      "a": "A product photo is square. For video, use 9:16 for Stories, Reels, and TikTok, 1:1 for a feed, 16:9 for a wide page, or 4:3 and 3:4 when the placement needs them. Each video is its own job."
+      "q": "What shape should the launch video use?",
+      "a": "A product photo is square. For a phone video on Stories, Reels, or TikTok, use tall 9:16. Use square 1:1 for a square post, wide 16:9 for a wide page, or 4:3 and 3:4 when the spot needs them. Each video is a separate run."
     },
     {
       "q": "How long can the launch clip be?",
@@ -34,27 +34,27 @@
     },
     {
       "q": "Can the countdown use an actor from the library?",
-      "a": "Yes. Pick one, describe the look and the outfit, or build one from a short clip of you. That presenter is generated, not a real customer or a celebrity."
+      "a": "Yes. Pick one, describe the look and the outfit, or build one from a short clip of you. That person is generated, not a real customer or a celebrity."
     },
     {
       "q": "Can I bring my own product clip into the countdown?",
-      "a": "Yes. Upload the footage or the photo you already have. It can sit in the countdown next to the actor, the script, and the timer."
+      "a": "Yes. Upload the clip or the photo you already have. It can sit next to the actor, the script, and the timer."
     },
     {
       "q": "Can I make launch videos for many products at once?",
-      "a": "Yes. Batch mode runs a set of product links and returns one countdown each. Review every file before it is published."
+      "a": "Yes. You can run many product links at once, and each one comes back as its own countdown. Check every file before it is published."
     },
     {
-      "q": "Can my store request launch videos through an API?",
-      "a": "Yes. The API lets your store ask for a countdown from a product link. The file stays in your account until you share it."
+      "q": "Can my own tools request launch videos?",
+      "a": "Yes. An API is a connection that lets your own tools ask for a countdown from a product link. The file stays in your account until you share it."
     },
     {
-      "q": "Can I add a voiceover, music, and captions?",
-      "a": "Yes. Choose an AI voice, set the pace, pick a track from the music library, and turn on automatic captions. The same script can be spoken in another language."
+      "q": "Can I add a spoken voice, music, and captions?",
+      "a": "Yes. Choose an AI voice, set the pace, pick a track from the music library, and turn on captions (the words on screen). The same script can be spoken in another language."
     },
     {
-      "q": "Can I publish the teaser to TikTok or Meta?",
-      "a": "Yes. Publish in one click to TikTok, Instagram, YouTube, or Meta, or download the file. The download has no AIVideosUGC watermark. Platform ad rules still apply."
+      "q": "Can I publish the short preview to TikTok or Meta?",
+      "a": "Yes. Publish in one click to TikTok, Instagram, YouTube, or Meta, or download the file. Meta here means Facebook and Instagram. The download has no AIVideosUGC watermark. Each app still has its own ad rules."
     },
     {
       "q": "Can I change the launch date after the video is made?",
@@ -130,15 +130,15 @@
   "steps": [
     {
       "t": "Add Your Product Link",
-      "d": "Start from the product page. Photos and the launch details come in and form a storyboard for the timer."
+      "d": "Start from the product page. The photos and launch details come in, ready for the timer."
     },
     {
       "t": "Create Your Actor",
-      "d": "Choose a preset actor or describe a custom one. The mouth follows whichever voice you pick."
+      "d": "Choose a ready-made actor, or describe a new one. The mouth moves with the voice you pick."
     },
     {
       "t": "Set Script, Timer, and Publish",
-      "d": "Edit the script, pick a voice and a music-library track, set the timer, then publish to TikTok, Instagram, or YouTube."
+      "d": "Edit the script, pick a voice and a track from the music library, set the timer, then publish to TikTok, Instagram, or YouTube."
     }
   ],
   "visual": {
@@ -167,7 +167,7 @@
         ],
         [
           "Use",
-          "Teaser · reveal · listing"
+          "Preview · reveal · product page"
         ]
       ]
     },
@@ -289,35 +289,35 @@
   "benefits": [
     {
       "t": "An actor for the countdown",
-      "d": "Pick an actor to introduce the drop, or describe the look, the age, and the outfit. A short clip of you can become that presenter, with its own face and voice.",
+      "d": "Pick an actor to introduce the launch, or describe the look, the age, and the outfit. A short clip of you can become that person, with a face and a voice of their own.",
       "img": "n:guide:fx01-occ-product-launch-benefit-teaser",
       "alt": "Adult hand lifts a fabric cover from a plain desk lamp in warm window light.",
       "frame": "none"
     },
     {
       "t": "A script that builds the wait",
-      "d": "Paste the product page or describe the item. AIVideosUGC writes a hook and the reasons to care, and you can edit every line of the countdown.",
+      "d": "Paste the product page or describe the item. AIVideosUGC writes an opening line and the reasons to care. You can edit every line of the countdown.",
       "img": "n:guide:fx01-occ-product-launch-benefit-packaging",
       "alt": "Adult hands reveal a plain kraft product pouch from an opened shipping box.",
       "frame": "none"
     },
     {
-      "t": "A voice that sounds closer",
-      "d": "Choose an AI voice, then set the pace and the feeling so the launch sounds tighter as the day approaches.",
+      "t": "A voice that builds the wait",
+      "d": "Choose an AI voice, then set the pace and the mood so the launch feels more urgent as the day gets closer.",
       "img": "n:guide:fx01-occ-product-launch-benefit-details",
       "alt": "Adult hands arrange a natural canvas tote beside a blank planning card on a sunny desk.",
       "frame": "none"
     },
     {
-      "t": "Several cuts before you commit",
-      "d": "Export more than one countdown and compare the hook and the script. Look at how other shops create a deadline, then keep the opening you want.",
+      "t": "Several versions before you choose",
+      "d": "Make more than one countdown and compare the opening line and the script. Look at how other shops set a deadline, then keep the opening you want.",
       "img": "n:guide:fx01-occ-product-launch-benefit-publish",
       "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
       "frame": "none"
     }
   ],
   "steps_h2": "How to create a launch teaser video in 3 simple steps",
-  "steps_lead": "Paste the product link, choose an actor, then set the script, the timer, and where it publishes.",
+  "steps_lead": "Paste the product link, choose an actor, then set the script, the timer, and where it goes live. Credits are what each launch photo or video uses, and the cost shows before you start.",
   "relatedLinks": [
     {
       "id": "occ-holidays",
@@ -333,7 +333,7 @@
     },
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "Casual-style AI video ads"
     },
     {
       "id": "unboxing-videos",
@@ -358,13 +358,13 @@
         "example": true,
         "who": "A beauty brand",
         "t": "Give the jar a spoken first look",
-        "d": "They pick an actor and a voice to introduce the jar before the full lot ships. No date is printed into the image."
+        "d": "They pick an actor and a voice to introduce the jar before those jars go out. No date is printed on the picture."
       },
       {
         "example": true,
         "who": "An accessories shop",
         "t": "Set the sunglasses in daylight",
-        "d": "They keep the frame's shape and color in an outdoor teaser. If a person is in frame, that actor is generated, not a real customer."
+        "d": "They keep the sunglasses' shape and color in an outdoor preview. If a person is in the picture, that actor is generated, not a real customer."
       }
     ]
   },
@@ -378,23 +378,23 @@
       },
       {
         "t": "A timer you can move",
-        "d": "Set the end time on the countdown and change it in the built-in editor if launch day moves. The clock is not stuck on the product."
+        "d": "Set the end time on the countdown and change it in the editor if launch day moves. The clock is not printed on the product."
       },
       {
-        "t": "A commercial file with no watermark",
-        "d": "The download has no AIVideosUGC watermark. You can use it in launch posts and paid ads, subject to platform rules."
+        "t": "A file for paid ads, with no watermark",
+        "d": "The download has no AIVideosUGC watermark. You can use it in launch posts and paid ads. Each app still has its own ad rules."
       },
       {
         "t": "The credit cost before you start",
-        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+        "d": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
       },
       {
-        "t": "Credits back if the job fails",
-        "d": "A failed job returns its credits automatically. A result you simply dislike is not refunded."
+        "t": "Credits come back if it fails",
+        "d": "If it fails, those credits come back on their own. A finished file is not refunded just because you dislike it."
       },
       {
         "t": "An actor only if you want one",
-        "d": "Pick someone from the actor library, or leave the scene on the product. If a person appears, that presenter is generated, not a real customer or a celebrity."
+        "d": "Pick someone from the actor library, or leave the scene on the product. If a person appears, that person is generated, not a real customer or a celebrity."
       }
     ]
   },

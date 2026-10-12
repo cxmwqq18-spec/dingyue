@@ -1,11 +1,11 @@
 {
   "id": "ind-beauty-skincare",
   "title": "AI Beauty UGC Ads From a Product Photo | AIVideosUGC",
-  "description": "Turn one beauty photo into a routine, a swatch, or a review-style clip. Download watermark-free clips for a listing, feed, or paid ad, and check the shade.",
+  "description": "Turn one beauty photo into a routine, a shade test, or a review-style clip. Download watermark-free clips for a listing, feed, or paid ad, and check the shade.",
   "h1": "AI Product Videos and Photos for Beauty Brands, From One Photo",
   "eyebrow": "Beauty and skincare",
-  "lead": "Shoppers trust a shade they can see in use. A product link or one daylight photo becomes a routine, with a spoken line and captions, and no studio day.",
-  "card": "Routines, swatches, unboxings, and review-style clips from one beauty photo.",
+  "lead": "Shoppers trust a shade they can see in use. Paste a product link, or use one daylight photo. You get a casual creator-style ad, called UGC, with a spoken line and captions. You skip a studio booking.",
+  "card": "Routines, color samples, unboxings, and review-style clips from one beauty photo.",
   "secondary_keywords": [
     "skincare product video ideas",
     "AI cosmetics product photos",
@@ -14,33 +14,33 @@
     "makeup product photos"
   ],
   "steps_h2": "Your Next Beauty Video Ad for TikTok",
-  "steps_lead": "Check the shade before you post. Three steps: a link or a photo, a presenter, then voice and captions.",
+  "steps_lead": "Check the shade before you post. Three steps: a link or a photo, a made-up person, then a spoken voice and captions.",
   "steps": [
     {
       "t": "Upload a Beauty Product",
-      "d": "Paste a product link, or upload a daylight photo of the whole package. A short product note can start the same job."
+      "d": "Paste a product link, or upload a daylight photo of the whole package. A short note about the product can start the same job."
     },
     {
-      "t": "Choose a Creator Avatar",
-      "d": "Pick a generated presenter from the actor library. You set skin tone, age, and look. That person is not your customer."
+      "t": "Pick a Made-Up Person",
+      "d": "The actor library is a list of made-up people. Pick one and set skin tone, age, and look. This is not a real customer."
     },
     {
-      "t": "Generate Voice and Captions",
-      "d": "A voiceover and captions come with the frame you picked. Post the file to TikTok or Meta after the shade matches."
+      "t": "Add a Spoken Voice and Captions",
+      "d": "A spoken voice and captions come in the video shape you picked. Post to TikTok or Meta (Facebook and Instagram) after the shade matches."
     }
   ],
   "faq": [
     {
       "q": "Can I make beauty ads from one product photo?",
-      "a": "Yes. Upload a clear, straight-on photo or paste a product link, then describe a routine, swatch, unboxing, or review-style clip. Compare the shade and the package with the real item before you post."
+      "a": "Yes. Upload a clear, straight-on photo or paste a product link, then describe a routine, color sample, unboxing, or review-style clip. Compare the shade and the package with the real item before you post."
     },
     {
       "q": "Can I make a before-and-after of skin results?",
-      "a": "No. A generated face is not evidence of what a product does to skin. Show application, texture, and packaging, and keep result claims out of the ad."
+      "a": "No. A generated face is not evidence of what a product does to skin. Show how it is applied, the texture, and the package. Do not claim what it does to skin."
     },
     {
       "q": "Will the clip match my foundation or lipstick shade?",
-      "a": "Color follows your photo and your wording. Shoot in daylight and name the shade in plain words, such as warm beige liquid. If the tone drifts, make another version. Credits for a failed job come back."
+      "a": "Color follows your photo and your wording. Shoot in daylight and name the shade in plain words, such as warm beige liquid. If the color looks wrong, make another version. Credits for a failed job come back."
     },
     {
       "q": "Can I put a price or a promo code on the image?",
@@ -48,26 +48,26 @@
     },
     {
       "q": "What photo should I upload for skincare?",
-      "a": "Use a straight-on shot, label toward the camera, on a plain surface, with no hands in frame. Glossy tubes and glass pick up glare, so use window light instead of flash."
+      "a": "Use a straight-on shot, label toward the camera, on a plain surface, with no hands in the photo. Glossy tubes and glass pick up glare, so use window light instead of flash."
     },
     {
       "q": "How long should a beauty ad be, and what does it cost?",
-      "a": "Choose 6, 10, 15, or 30 seconds. A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. Use a short length for one pump or swatch."
+      "a": "Choose 6, 10, 15, or 30 seconds. A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. Use a short length for one pump or one color sample."
     },
     {
       "q": "Can I run the clips as paid beauty ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Keep ingredient and result claims accurate, and add text in your editor so you can check it."
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. Keep the ingredient text accurate, and do not invent a skin result. Add that text in your editor so you can check it."
     },
     {
       "q": "How is this different from hiring a creator?",
-      "a": "You upload one photo or paste a link, pick a generated presenter, and pay the credits shown before the job, instead of a creator fee and revision rounds. Present the clip as an ad, not as a customer's review."
+      "a": "You upload one photo or paste a link, then pick a made-up presenter. You pay the credits shown before the job, not a creator fee or extra edit rounds. Post the clip as an ad, not as a customer's review."
     },
     {
       "q": "Does the beauty clip include a voice and captions?",
       "a": "Yes. The job can include a spoken line and captions, and you can fix both in the editor before you download. A failed job returns its credits."
     }
   ],
-  "templates_lead": "Choose a beauty UGC ad format for a routine, a texture demo, a review-style clip, or an unboxing.",
+  "templates_lead": "Choose a beauty ad format for a routine, a texture demo, a review-style clip, or an unboxing.",
   "cta_lead": "Paste a product link or upload one photo, pick a presenter, and review the credit cost before the job starts.",
   "visual": {
     "overview": "",
@@ -83,7 +83,7 @@
       "source": "n:guide:q15-beauty-steps-source",
       "result": "n:guide:q15-beauty-steps-result-center-r1",
       "mode": "video",
-      "prompt": "Show a coral lipstick swept once across the back of a hand at a bright vanity, then hold the lipstick and swatch together.",
+      "prompt": "Show a coral lipstick swept once across the back of a hand at a bright vanity, then hold the lipstick and the color sample together.",
       "options": [
         [
           "Size",
@@ -109,24 +109,24 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Why Skincare Product Video Ideas Skip the Wait",
-    "lead": "A missed reply or a surprise invoice does not have to hold the next shade launch. Start from the photo or the product link you already have.",
+    "h2": "Make the Next Skincare Video Without Waiting",
+    "lead": "A missed reply or a surprise bill does not have to delay the next shade. Start from the photo or the product link you already have.",
     "items": [
       {
         "t": "Faster Than Booking a Shoot",
-        "d": "Skip the creator search and the booking. A routine, a swatch, or a review-style scene is ready when the job finishes. You pay the credits shown before it runs.",
+        "d": "Skip the search for a creator and the booking. A routine, a color sample, or a review-style scene is ready when the job finishes. You pay with credits. Credits are what your plan spends on each job, and the number shows before it runs.",
         "img": "n:guide:fx29-beauty-benefit-routine",
         "alt": "Plain pump-bottle moisturizers arranged beside a bathroom mirror with a hand reaching for one."
       },
       {
-        "t": "More Cuts for Every Channel",
-        "d": "The same bottle can feed a routine, a texture close-up, and an unboxing, as a batch when the shade range drops together. Frames are 9:16, 1:1, 16:9, 4:3, or 3:4.",
+        "t": "More Versions for Every Channel",
+        "d": "The same bottle can become a routine, a close-up of the texture, and an unboxing. A batch is several jobs from one photo, useful when a few shades launch together. Shapes are a tall phone video (9:16), a square (1:1), a wide video (16:9), 4:3, or 3:4. 4:3 is a bit wider than a square. 3:4 is a bit taller than a square.",
         "img": "n:guide:fx29-beauty-benefit-versions",
         "alt": "Adult seller holds a plain sage pump-bottle moisturizer beside a matching bottle."
       },
       {
         "t": "The Shade, Shown in Use",
-        "d": "Put the product on a hand or in a short routine so the color is easy to judge. Keep result claims out of the clip, and type the shade name yourself.",
+        "d": "Put the product on a hand, or in a short routine, so the color is easy to judge. Do not claim what it does to skin. Type the shade name yourself.",
         "img": "n:guide:fx29-beauty-benefit-swatch",
         "alt": "Cream texture swatch on a hand beside a plain moisturizer tube."
       }
@@ -134,21 +134,21 @@
   },
   "platforms": {
     "h2": "AI Cosmetics Product Photos on Every Channel",
-    "lead": "Pick the frame that channel already runs, then publish the clip to TikTok or Meta. The same product photo can still feed a listing still.",
+    "lead": "Pick the video shape that channel already uses, then publish the clip to TikTok or Meta (Facebook and Instagram). The same photo can also make a still image for the listing.",
     "items": [
       {
         "t": "AI TikTok ads generator",
-        "d": "A 9:16 routine or swatch for a beauty video ad in the For You feed.",
+        "d": "A tall 9:16 routine or color sample for a beauty video ad on the TikTok home feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram ads",
-        "d": "A square still or a vertical application clip for the grid and Stories.",
+        "d": "A square photo, or a tall clip of the product being applied, for the profile grid and for Instagram Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook ad generator",
-        "d": "A feed still with room to add the offer in your editor after download.",
+        "d": "A photo for the feed, with space to type the offer in your editor after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
@@ -175,20 +175,20 @@
       {
         "example": true,
         "who": "Shade shop",
-        "t": "Swatch next to the tube",
-        "d": "They upload one foundation photo, ask for a short swatch on the back of a hand, and compare the color with the bottle before the ad runs."
+        "t": "Color sample next to the tube",
+        "d": "They upload one foundation photo and ask for a short color sample on the back of a hand. They compare that color with the bottle before the ad runs."
       },
       {
         "example": true,
         "who": "Routine brand",
-        "t": "Holding clip after the still",
-        "d": "A pack photo becomes a still, then a hand holding that same bottle. The shade is compared both times."
+        "t": "Hand holds the bottle after the photo",
+        "d": "A pack photo becomes a still photo, then a clip of a hand holding that same bottle. The shade is compared both times."
       },
       {
         "example": true,
         "who": "Color line",
-        "t": "One presenter for the range",
-        "d": "They pick one generated face from the actor library and keep that look on every shade cut."
+        "t": "One face for every shade",
+        "d": "They pick one made-up face from the actor library and keep that look on every shade video."
       },
       {
         "example": true,
@@ -200,7 +200,7 @@
         "example": true,
         "who": "Catalog manager",
         "t": "A second language for the routine",
-        "d": "The same morning routine is rendered again for another market. The bottle stays recognizable in both."
+        "d": "The same morning routine is made again for another market. The bottle stays recognizable in both."
       },
       {
         "example": true,
@@ -212,25 +212,25 @@
         "example": true,
         "who": "Counter brand",
         "t": "A link instead of a reshoot",
-        "d": "They paste the product page, get a first cut, and still compare the package with the bottle on the counter."
+        "d": "They paste the product page, get a first version, and still compare the package with the bottle on the counter."
       },
       {
         "example": true,
         "who": "Regional desk",
-        "t": "Three cuts from one photo",
-        "d": "One daylight photo becomes a swatch, a routine, and an unboxing. A 6-second cut is 24 credits and a 15-second cut is 60."
+        "t": "Three videos from one photo",
+        "d": "One daylight photo becomes a color sample, a routine, and an unboxing. A 6-second video is 24 credits and a 15-second video is 60."
       },
       {
         "example": true,
         "who": "Studio-free set",
-        "t": "Clean frames from a few photos",
+        "t": "Clean shots from a few photos",
         "d": "A few product photos stand in for a lighting day. The person on screen stays generated."
       },
       {
         "example": true,
         "who": "Chat-first team",
         "t": "Type the scene, get the clip",
-        "d": "They describe the routine in a short back-and-forth, and the script plus the clip come back together."
+        "d": "They describe the routine in a few short notes. The script and the clip come back together."
       }
     ]
   },
@@ -250,7 +250,7 @@
     },
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "AI creator-style video ads"
     },
     {
       "id": "lifestyle-photos",
@@ -261,7 +261,7 @@
       "label": "white background product photos"
     }
   ],
-  "related_h2": "Routines, swatches, and listing stills",
+  "related_h2": "Routines, color samples, and listing photos",
   "blockOrder": [
     "hero",
     "strip",
@@ -282,11 +282,11 @@
       "items": [
         {
           "t": "A link becomes the clip",
-          "d": "Paste the product page. The job reads the item and starts a routine, a swatch, or an unboxing from that link."
+          "d": "Paste the product page. The job uses the item on that page and starts a routine, a color sample, or an unboxing."
         },
         {
           "t": "A presenter from the library",
-          "d": "Choose a generated presenter for the line. The face is not a real customer, and you are not picking from a posted headcount."
+          "d": "Choose a made-up person to appear with the product. The face is not a real customer, and not someone from a public list."
         },
         {
           "t": "Voice and captions included",
@@ -294,15 +294,15 @@
         },
         {
           "t": "A script for one action",
-          "d": "Ask for a short script about a pump or a swatch. Change a word in the editor before the file is posted."
+          "d": "Ask for a short script about a pump or a color sample. Change a word in the editor before the file is posted."
         },
         {
           "t": "Edit on the same page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a watermark-free file."
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark (no logo stamped on it)."
         },
         {
           "t": "Another language, then publish",
-          "d": "Render the same routine in another language, then publish the file to TikTok or Meta."
+          "d": "Make the same routine again in another language, then publish the file to TikTok or Meta."
         }
       ]
     }

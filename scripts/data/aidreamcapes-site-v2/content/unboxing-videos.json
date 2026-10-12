@@ -1,10 +1,10 @@
 {
   "id": "unboxing-videos",
   "title": "AI Unboxing Video Maker | AIVideosUGC",
-  "description": "Create unboxing videos from one product photo. Show the box, tissue, product and included pieces for TikTok, Shorts, store pages and paid ads.",
+  "description": "Create unboxing videos from one product photo. Show the box, tissue, product and included pieces for TikTok, YouTube Shorts, store pages and paid ads.",
   "h1": "AI Unboxing Video Maker: Open the Parcel from One Photo",
   "eyebrow": "AI unboxing video maker",
-  "lead": "AIVideosUGC makes an AI unboxing video from a product photo or a product link: a script, a presenter, a voice, and the edit. No sample to mail and no camera crew. Pick 6 to 30 seconds, then download the clip or publish it to TikTok or Meta.",
+  "lead": "AIVideosUGC makes an unboxing video from a product photo or a product link. You get a script, an AI person on camera, a voice, and a finished clip. No sample to mail and no camera crew. Pick 6 to 30 seconds, then download it or send it to TikTok or Meta (Facebook and Instagram).",
   "secondary_keywords": [
     "unboxing video maker",
     "product unboxing video for TikTok",
@@ -12,60 +12,60 @@
     "AI unboxing ad"
   ],
   "benefits_h2": "Benefits of Using an AI Unboxing Video",
-  "benefits_lead": "A finished open, with a spoken line and a cut, instead of a filming day.",
+  "benefits_lead": "A finished unboxing, with a spoken line and an edited clip, instead of a filming day.",
   "benefits": [
     {
-      "t": "Script, Voice, and the Cut",
-      "d": "The open comes back with a script, a presenter, an AI voice, and a cut you can post. You do not write a creator brief or book a filming day.",
+      "t": "Script, Voice, and the Clip",
+      "d": "The unboxing comes back with a script, an AI person on camera, an AI voice, and a clip you can post. You do not write instructions for a creator or book a filming day.",
       "icon": "bolt"
     },
     {
       "t": "Pay for the Clip, Not a Shoot",
-      "d": "A 15-second open uses 60 credits. Plans start at $24.50 a month for 200 credits. If the job fails, those credits come back.",
+      "d": "A 15-second unboxing uses 60 credits. Credits are the units in your monthly plan. Plans start at $24.50 a month for 200 credits. If making the clip fails, those credits come back.",
       "icon": "coins"
     },
     {
       "t": "More Versions From One Photo",
-      "d": "Change the hook, the presenter, the voice, or the language and make another clip from the same photo.",
+      "d": "Change the opening line, the on-camera person, the voice, or the language, and make another clip from the same photo.",
       "icon": "layers"
     },
     {
-      "t": "Refresh a Tired Ad",
-      "d": "When an ad has been seen too often, swap the opening, the presenter, or the frame. You do not book another unboxing to find out.",
+      "t": "Refresh an Ad Seen Too Often",
+      "d": "When shoppers have seen an ad too often, change the opening, the on-camera person, or the video shape. You do not book another filmed unboxing.",
       "icon": "refresh"
     },
     {
       "t": "You Set the Tone",
-      "d": "You choose the script, the tone, the presenter, and the language. The editor follows that brief.",
+      "d": "You can change the words, the tone, the on-camera person, and the language. The editor on this page follows those choices.",
       "icon": "check"
     },
     {
-      "t": "Yours to Run, No Watermark",
-      "d": "Finished clips can be used in paid and organic ads. They carry no watermark.",
+      "t": "Use the Clips, No Watermark",
+      "d": "You can use finished clips in ads you pay for and in posts you do not pay to boost. They have no watermark, so no logo is stamped on the file.",
       "icon": "shield"
     }
   ],
   "steps_h2": "How to Create an Unboxing Video in 3 Simple Steps",
-  "steps_lead": "Go from a photo or a product link to an open you can post.",
+  "steps_lead": "Go from a photo or a product link to an unboxing you can post.",
   "steps": [
     {
       "t": "Add the Product",
-      "d": "Upload one photo or paste a product link. The item in the open comes from that."
+      "d": "Upload one photo or paste a product link. The item in the unboxing comes from that."
     },
     {
-      "t": "Let AI Build the Open",
-      "d": "The tool writes a script, picks a presenter and a voice, and opens the parcel."
+      "t": "Let AI Build the Unboxing",
+      "d": "The tool writes a script, picks an AI person and a voice, and opens the parcel."
     },
     {
       "t": "Download or Publish",
-      "d": "Download the clip, or send it to TikTok or Meta. Captions and music are in the editor."
+      "d": "Download the clip, or send it to TikTok or Meta. On-screen captions and music are in the editor on this page."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16, 1:1, 16:9, 4:3, or 3:4"
+        "9:16 tall, 1:1 square, 16:9 wide, 4:3, or 3:4"
       ],
       [
         "Length",
@@ -78,46 +78,46 @@
   "faq": [
     {
       "q": "What is an AI unboxing video?",
-      "a": "A short ad of a parcel opening onto your product. AIVideosUGC writes the script, matches a presenter and a voice, and cuts it from a photo or a product link. Name the main item first, then the pieces that come with it. You do not film it."
+      "a": "A short ad of a parcel opening onto your product. AIVideosUGC writes the script, picks an AI person and a voice, and makes the clip from a photo or a product link. Show the main item first, then the pieces that come with it. You do not film it."
     },
     {
       "q": "How do I make an unboxing video with AI?",
-      "a": "Upload a photo or paste a product link. You do not need a photo of the box: describe the mailer and the tissue. The tool writes the script and matches a presenter and a voice. Then download, or publish to TikTok or Meta."
+      "a": "Upload a photo or paste a product link. You do not need a photo of the box. Describe the shipping package and the tissue. The tool writes the script and picks an AI person and a voice. Then download the clip, or send it to TikTok or Meta."
     },
     {
       "q": "Which page should I use for an unboxing ad?",
-      "a": "Use this page when the clip should show the parcel opening onto the item you sell. For a general product ad, start from [AI UGC video ads](page:video-ads)."
+      "a": "Use this page when the clip should show the parcel opening onto the item you sell. For a general product ad, start from [creator-style (UGC) video ads](page:video-ads)."
     },
     {
       "q": "Is there a free unboxing video?",
-      "a": "No. There is no free plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 15-second open uses 60 credits. The download has no watermark, and a failed job returns its credits."
+      "a": "No. There is no free plan. Credits are the units in a plan. Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits. Premium is $63 for 600 credits. A 15-second unboxing uses 60 credits. The download has no watermark. If making the clip fails, those credits come back."
     },
     {
       "q": "Can I use the clip in a paid ad?",
-      "a": "Yes. Commercial use is included and the file has no watermark. The presenter is generated, not a buyer, so do not post the clip as a customer review."
+      "a": "Yes. You can use the file in ads, and it has no watermark. The on-camera person is made by AI, not a buyer, so do not post the clip as a customer review."
     },
     {
-      "q": "Which frames can I export?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3, or 3:4, and 6, 10, 15, or 30 seconds. Use 9:16 for TikTok and Reels. Check words printed on the box, and fix a letter in the editor if it looks wrong. You can publish to TikTok or Meta from that same editor."
+      "q": "Which sizes and lengths can I download?",
+      "a": "Choose a tall phone shape (9:16), a square (1:1), a wide shape (16:9), 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds. Use the tall 9:16 size for TikTok and Instagram Reels. Check words printed on the box, and fix a wrong letter in the editor. You can send the clip to TikTok or Meta from that same editor."
     },
     {
       "q": "Can I make opens for a whole catalog?",
-      "a": "Yes. Run a batch from the product photos or links in the catalog, instead of one clip at a time. Each clip shows its credit cost before it starts. A developer can send that batch through the API."
+      "a": "Yes. Run a batch, many clips at once, from the product photos or links you list, instead of one clip at a time. Each clip shows its credit cost before it starts. A developer can send that batch through the API, so your own software can start the same jobs."
     },
     {
       "q": "Will an AI open replace a filmed one?",
-      "a": "Use the AI open to try more versions, with a new presenter, voice, or language. Keep a filmed open when you want a real customer on camera. The generated person is not a buyer."
+      "a": "Use the AI unboxing to try more versions, with a new on-camera person, voice, or language. Keep a filmed unboxing when you want a real customer on camera. The AI person is not a buyer."
     },
     {
       "q": "Will TikTok or Meta reject an AI unboxing ad?",
-      "a": "Do not present the clip as a customer review. Before you spend, read the current TikTok or Meta rule and add any label it asks for."
+      "a": "Do not post the clip as a customer review. Before you pay to run the ad, read the current TikTok or Meta rule and add any label it asks for."
     }
   ],
-  "cta_lead": "Upload a product photo and see the credit cost before you start.",
+  "cta_lead": "Upload a product photo. You will see how many plan credits it uses before you start.",
   "actor_scene_picker": {
-    "title": "Pick an AI Presenter",
-    "lead": "Choose a presenter from the actor library and a scene. This person is generated, not a customer, and the line is not a review.",
-    "button": "Use this presenter"
+    "title": "Pick the Person on Camera",
+    "lead": "Choose an AI person from the actor library (a list of faces) and a background. This person is made by AI, not a customer, and the spoken line is not a review.",
+    "button": "Use this person"
   },
   "visual": {
     "strip": [],
@@ -131,7 +131,7 @@
       "options": [
         [
           "Size",
-          "9:16, 1:1, 16:9, 4:3, or 3:4"
+          "9:16 tall, 1:1 square, 16:9 wide, 4:3, or 3:4"
         ],
         [
           "Length",
@@ -171,7 +171,7 @@
     },
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "Creator-style (UGC) video ads"
     },
     {
       "id": "plat-instagram",
@@ -183,7 +183,7 @@
     },
     {
       "id": "url-to-video",
-      "label": "URL to video"
+      "label": "Product link (URL) to video"
     },
     {
       "id": "spokesperson-videos",
@@ -207,15 +207,15 @@
   "definition": {
     "title": "What Is an AI Unboxing Video?",
     "paras": [
-      "An AI unboxing video is a short ad of a parcel opening onto your product. AIVideosUGC writes the script, matches a presenter and an AI voice, and cuts the clip from a photo or a product link. Nothing is filmed.",
-      "Captions and a track from the music library go on in the editor. You can switch language, run a batch for the catalog, or send a job through the API. Each clip can be 9:16, 1:1, 16:9, 4:3, or 3:4, with commercial use and no watermark."
+      "An AI unboxing video is a short ad of a parcel opening onto your product. AIVideosUGC writes the script, picks an AI person on camera and an AI voice, and makes the clip from a photo or a product link. Nothing is filmed.",
+      "On-screen captions and a song from the music library are added in the editor. Credits are the units in your monthly plan, and you see that cost before a clip starts. You can switch language. You can run a batch, many clips at once, for the products you list. A developer can start that work through the API, so your own software can start the same jobs. Each clip can be a tall phone shape (9:16), a square (1:1), or a wide shape (16:9). 4:3 is a little wide, and 3:4 is a little tall. You can use the clip in ads, and it has no watermark."
     ]
   },
   "more_sections": [
     {
       "eyebrow": "Finished opens",
       "h2": "See What AIVideosUGC Generates",
-      "lead": "Seven kinds of open. None of these cards is a customer review.",
+      "lead": "Seven kinds of unboxing. None of these cards is a customer review.",
       "items": [
         {
           "t": "Skincare parcel open",
@@ -227,7 +227,7 @@
         },
         {
           "t": "Fashion item lift",
-          "d": "An apparel shop lifts the garment out of the mailer so the shape is clear in the first second."
+          "d": "An apparel shop lifts the clothing out of the shipping package so the shape is clear in the first second."
         },
         {
           "t": "Food and drink unbox",
@@ -235,15 +235,15 @@
         },
         {
           "t": "Gadget box open",
-          "d": "An electronics shop lays the device and the cable in one frame as the box opens."
+          "d": "An electronics shop lays the device and the cable in one view as the box opens."
         },
         {
           "t": "Fitness gear reveal",
-          "d": "A fitness shop opens the parcel onto the band or the bottle, with a presenter from the actor library."
+          "d": "A fitness shop opens the parcel onto the band or the bottle, with an AI person from the actor library."
         },
         {
           "t": "Home product unbox",
-          "d": "A home shop shows the box, the tissue, and the item on a table, then publishes the cut to TikTok or Meta."
+          "d": "A home shop shows the box, the tissue, and the item on a table, then sends the finished clip to TikTok or Meta."
         }
       ]
     }
@@ -260,13 +260,13 @@
       },
       {
         "t": "Ready for TikTok and Meta",
-        "d": "Make it in 9:16, 1:1, 16:9, 4:3, or 3:4. Publish the cut to TikTok or Meta, or download it and post it yourself.",
+        "d": "Make it tall (9:16), square (1:1), wide (16:9), 4:3, or 3:4. Send the finished clip to TikTok or Meta, or download it and post it yourself.",
         "img": "n:guide:fx13-unboxing-stage-vertical-frame",
         "alt": "Adult hands reveal a plain matte travel mug from tissue in an open box."
       },
       {
         "t": "Several Looks From One Open",
-        "d": "Change the presenter, the hook, or the language and make another clip from the same photo.",
+        "d": "Change the on-camera person, the opening line, or the language and make another clip from the same photo.",
         "img": "n:guide:fx13-unboxing-benefit-sweater-lift",
         "alt": "Adult hands lift a folded plain oatmeal sweater from an open parcel."
       }
@@ -288,27 +288,27 @@
       ],
       [
         "Cost of a clip",
-        "60 credits for 15 seconds. Plans from $24.50",
+        "60 plan credits for 15 seconds. Plans from $24.50",
         "A creator fee and a filming day"
       ],
       [
         "Another version",
-        "New script, voice, or presenter from the same photo",
+        "New words, voice, or on-camera person from the same photo",
         "Another shoot"
       ],
       [
         "Brand control",
-        "You set the script, tone, presenter, and language",
+        "You set the words, tone, on-camera person, and language",
         "Depends on who films it"
       ],
       [
         "Rights",
-        "Commercial use, no watermark",
+        "OK to use in ads. No watermark.",
         "Agreed with the person who filmed it"
       ],
       [
         "Catalog",
-        "A batch across the products you list",
+        "A batch, many clips at once, across the products you list",
         "One parcel at a time"
       ]
     ]
@@ -320,66 +320,66 @@
       {
         "example": true,
         "who": "Gift shop",
-        "t": "A finished open",
-        "d": "A gift shop runs the open with a script, a presenter, and a voice, so the parcel and the product both show before checkout."
+        "t": "A finished unboxing",
+        "d": "A gift shop uses the unboxing, with a script, an AI person on camera, and a voice. The parcel and the product both show before checkout."
       },
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "Photo, then the open",
+        "t": "Photo, then the unboxing",
         "d": "A beauty shop starts from one jar photo, or from the product link, and gets the unboxing back without booking a creator."
       },
       {
         "example": true,
         "who": "Home shop",
-        "t": "Still, then motion",
-        "d": "A home shop uploads the product photo, then makes the open from that same picture."
+        "t": "Photo, then a moving clip",
+        "d": "A home shop uploads the product photo, then makes the unboxing from that same picture."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Presenter and editor",
-        "d": "An apparel shop picks a presenter from the actor library and trims the open in the editor on the same screen."
+        "t": "On-camera person and editor",
+        "d": "An apparel shop picks an AI person from the actor library (a list of faces). They trim the unboxing in the editor on the same screen."
       },
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Another language",
-        "d": "A skincare shop makes the same open in a second language when the buyers are not all local."
+        "d": "A skincare shop makes the same unboxing in a second language when the buyers are not all local."
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Edit on this page",
-        "d": "A pet shop adds captions and a track from the music library in the editor, then downloads."
+        "d": "A pet shop adds on-screen captions and a song from the music library in the editor, then downloads."
       },
       {
         "example": true,
         "who": "Small agency",
-        "t": "A presenter per client",
-        "d": "An agency picks a different presenter for each client's open, still from one product photo."
+        "t": "An AI person per client",
+        "d": "An agency picks a different AI person for each client's unboxing, still from one product photo."
       },
       {
         "example": true,
         "who": "Electronics brand",
         "t": "A face from your photos",
-        "d": "An electronics brand builds a presenter from a few photos of someone on the team, then uses that face for the open."
+        "d": "An electronics brand builds an AI person from a few photos of someone on the team, then uses that face for the unboxing."
       },
       {
         "example": true,
         "who": "Supplement shop",
         "t": "Link, script, and voice",
-        "d": "A supplement shop pastes the product link. The tool drafts the script, the presenter, and the voice, including another language."
+        "d": "A supplement shop pastes the product link. The tool drafts the script, the on-camera person, and the voice, including another language."
       },
       {
         "example": true,
         "who": "Marketplace seller",
         "t": "Describe it in chat",
-        "d": "A marketplace seller tells the agent how the box should open. The agent drafts the script and the clip."
+        "d": "A marketplace seller tells the video agent, a chat helper, how the box should open. The helper drafts the script and the clip."
       }
     ]
   },
   "cta_title": "Ready to Create Your Next Unboxing Video?",
   "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "The generator, product-link ads, presenters, and the channels where an open can run."
+  "related_lead": "The video tool, ads from a product link, on-camera people, and the places an unboxing can run."
 }

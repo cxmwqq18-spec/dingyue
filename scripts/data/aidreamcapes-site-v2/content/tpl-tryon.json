@@ -16,11 +16,11 @@
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "Upload a clear garment photo showing collar, closures, sleeves, pockets, and hem. Flat lay or hanger both work if the shape is easy to see."
+      "d": "Upload a clear garment photo. Show the collar, how it fastens, the sleeves, pockets, and hem. Flat lay or hanger is fine."
     },
     {
       "t": "Pick a Fashion Style",
-      "d": "Pick an on-model scene. Ask for another pose, base layer, or back view only if needed. Generate when the scene matches the garment you sell."
+      "d": "Pick an on-model scene that matches the garment. Ask for another pose, a shirt underneath, or a back view only if needed."
     },
     {
       "t": "Download and Post",
@@ -59,7 +59,7 @@
     },
     {
       "q": "Can I make more than one scene from the same garment?",
-      "a": "Yes. Run the same photo again for a mirror, walk or lookbook scene. A back view needs a back-facing source or a clear description of the back, and it is a separate job."
+      "a": "Yes. Run the same photo again for a mirror scene, a walking scene, or a styled catalog scene. A back view needs a photo of the back, or a clear note about the back, and it is a separate run."
     },
     {
       "q": "Who is this for?",
@@ -71,15 +71,15 @@
     },
     {
       "q": "What does a try-on photo cost, and can I use it in ads?",
-      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts."
+      "a": "Each photo costs 24 credits. Credits are the points that pay for the photo. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts."
     },
     {
       "q": "Can I use the square photo in an Instagram feed?",
-      "a": "Yes. The same square file can sit in a feed post and on the product page. Placement notes for that channel are on [AI Instagram ads](page:plat-instagram)."
+      "a": "Yes. The same square file can sit in a feed post and on the product page. Notes on where it fits are on [AI Instagram ads](page:plat-instagram)."
     },
     {
-      "q": "How soon can I use the on-model photo?",
-      "a": "The credit cost is on screen before the job starts, and a failed job returns those credits. You are not booking a model or a studio on this path."
+      "q": "Do I pay before it starts, and do I book a model?",
+      "a": "The credit cost is on screen before the run starts, and a failed run puts those credits back. You are not booking a model or a studio on this path."
     },
     {
       "q": "Can I add a spoken line and publish the ad?",
@@ -87,7 +87,7 @@
     },
     {
       "q": "Is there an API?",
-      "a": "Yes. The API can send a garment from your catalog and bring the finished photo back into your own setup."
+      "a": "Yes. API means a connection from your own shop. It can send a garment and bring the finished photo back."
     }
   ],
   "visual": {
@@ -122,7 +122,7 @@
     },
     "picker": {
       "title": "Video previews, not the on-model photo",
-      "lead": "Each card is a 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem and color against the piece.",
+      "lead": "Each card is a tall 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem, and color against the piece.",
       "chips": [
         {
           "id": "accessories",
@@ -194,7 +194,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -204,7 +204,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-up unboxing: makeup tools",
           "chips": [
             "accessories"
           ],
@@ -276,7 +276,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Getting-ready unboxing: knitwear",
           "chips": [
             "clothing"
           ],
@@ -294,7 +294,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full spin: linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -321,7 +321,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to camera: skin lesson",
           "chips": [
             "education"
           ],
@@ -330,7 +330,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-person find: court gear",
           "chips": [
             "explainer"
           ],
@@ -339,7 +339,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: home app walkthrough",
           "chips": [
             "explainer"
           ],
@@ -348,7 +348,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance opening: phone demo",
           "chips": [
             "financial-services"
           ],
@@ -366,7 +366,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip: citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -402,7 +402,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry bowl first bite",
           "chips": [
             "health-fitness"
           ],
@@ -429,7 +429,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver signet close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -474,7 +474,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell powder reveal",
           "chips": [
             "sports-gym"
           ],
@@ -483,7 +483,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Evening kitchen appliance demo",
           "chips": [
             "tech-electronics"
           ],
@@ -501,7 +501,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump moisturizer routine",
           "chips": [
             "ugc"
           ],
@@ -519,7 +519,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint face mist opening",
           "chips": [
             "viral"
           ],
@@ -548,7 +548,7 @@
       },
       "m3": {
         "h2": "Video previews, not the on-model photo",
-        "lead": "Each card is a 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem and color against the piece."
+        "lead": "Each card is a tall 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem, and color against the piece."
       },
       "faq": {
         "h2": "Questions about AI virtual try-on for clothing"
@@ -568,14 +568,14 @@
       {
         "example": true,
         "who": "Dress boutique",
-        "t": "One standing scene for the drop",
-        "d": "The boutique picks a single standing scene for the hero image of a new dress. Neckline, color and closures are compared with the garment on the rail before anyone posts it."
+        "t": "One standing scene for the launch",
+        "d": "The boutique picks a single standing scene for the main photo of a new dress. Neckline, color, and how it fastens are compared with the garment on the rail before anyone posts it."
       },
       {
         "example": true,
         "who": "Knitwear label",
         "t": "A back view from a second source",
-        "d": "The label uses a back-facing source so the collar and rear seams can show. That second file is its own job, and the cost is shown before it starts."
+        "d": "The label uses a photo of the back so the collar and rear seams can show. That second file is its own run, and the cost is shown before it starts."
       },
       {
         "example": true,
@@ -593,7 +593,7 @@
         "example": true,
         "who": "Outerwear brand",
         "t": "Coat that needs a body",
-        "d": "A puffer or coat is shown on a person instead of another hanger crop. Cuffs, pockets and hem stay inside the source frame so the result can be compared fairly."
+        "d": "A puffer or coat is shown on a person instead of another hanger crop. Cuffs, pockets, and hem stay inside the uploaded photo so the result can be compared fairly."
       },
       {
         "example": true,
@@ -609,9 +609,9 @@
       },
       {
         "example": true,
-        "who": "Weekly drop",
+        "who": "Weekly launch",
         "t": "Several poses",
-        "d": "They run the hanger photo again for another pose and another collection. Each run shows its credit cost first."
+        "d": "They run the hanger photo again for another pose and another collection. Each run shows its credit cost first. Credits are the points that pay for that run."
       },
       {
         "example": true,
@@ -630,7 +630,7 @@
     },
     {
       "id": "tpl-look",
-      "label": "AI lookbook photos"
+      "label": "AI styled outfit photos"
     },
     {
       "id": "tpl-outfit",
@@ -669,7 +669,7 @@
       "items": [
         {
           "t": "A product link starts the look",
-          "d": "Paste the product page so the job knows which garment this is. The on-model photo still starts from your hanger or flat-lay shot."
+          "d": "Paste the product page so this uses the right garment. The on-model photo still starts from your hanger or flat-lay shot."
         },
         {
           "t": "A generated person wears it",
@@ -677,10 +677,10 @@
         },
         {
           "t": "A spoken line for the ad",
-          "d": "Add a spoken line in the language that market uses when you turn the photo into the ad."
+          "d": "Add a spoken line in the language your buyers use when you turn the photo into the ad."
         },
         {
-          "t": "A script for the drop",
+          "t": "A script for the launch",
           "d": "Describe the piece in a sentence. The script writer drafts the line, and you can change it before you post."
         },
         {

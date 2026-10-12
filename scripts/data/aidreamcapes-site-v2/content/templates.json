@@ -1,10 +1,10 @@
 {
   "id": "templates",
   "title": "AI Product Ad Templates for Photos and Videos | AIVideosUGC",
-  "description": "Find AI product ad templates for photos and short videos. Choose a style, add one product photo, and get a new asset for your store or social feed.",
+  "description": "Find product ad templates for a photo or a short video. Pick a style, add one product photo, and get a new file for your store or a social post.",
   "h1": "Product Ad Templates: Pick a Look, Rebuild It, Post It",
   "eyebrow": "Product ad templates",
-  "lead": "Find a layout you like, drop in the item you sell, and get a spoken ad. The script, the voice, the captions, and a generated presenter come with the template. You do not have to write a prompt.",
+  "lead": "Find a product ad template you like, add the item you sell, and get a spoken ad. The words, the voice, the captions, and a presenter made by the tool come with it. The presenter is not a real customer. You do not type instructions.",
   "card": "Ready-made layouts for product pictures and short clips. Add your photo and download the next file.",
   "secondary_keywords": [
     "product photo templates",
@@ -15,47 +15,47 @@
   "faq": [
     {
       "q": "What is a product ad template?",
-      "a": "It is a ready layout for a product picture or a short spoken clip. You add your item and get a script, a spoken voice, captions, and a generated presenter. You are not booking a human creator."
+      "a": "It is a ready layout for a product picture or a short spoken clip. You add your item and get a script, a spoken voice, captions, and a presenter made by the tool. You are not hiring a real person to film it."
     },
     {
       "q": "How does a product ad template work?",
-      "a": "Open a template, upload a photo or paste a product link, and check the preview. The script, the voice, and the presenter are filled in. Download or post when the item and the words look right."
+      "a": "Open a template, upload a photo or paste a product link, and check the preview. The script, the voice, and the presenter are filled in. The presenter is made by the tool, not a real customer. Download or post when the item and the words look right."
     },
     {
       "q": "Why use a template instead of filming a creator?",
-      "a": "You skip booking a creator and a studio. You can make another version, switch the language, and see the credit cost before the job starts."
+      "a": "You skip hiring a person and renting a studio. You can make another version, or switch the language. Credits are what you spend. You see the cost before you start."
     },
     {
       "q": "Who are these templates for?",
-      "a": "Online shops, marketers, and agencies that need a listing photo, a feed still, or a short spoken clip and already have a product photo or a product link."
+      "a": "Online shops, marketers, and agencies. You may need a store photo, a photo for social, or a short spoken clip. You already have a product photo or a product link."
     },
     {
       "q": "Can a beginner use these templates?",
-      "a": "Yes. You do not need editing experience. Pick a template, add a photo, and use the built-in editor for the trim, the captions, and a track from the music library."
+      "a": "Yes. You do not need editing experience. Pick a template and add a photo. In the editor on this page, you can shorten the clip, fix the captions, or add a song."
     },
     {
       "q": "Which industries have templates here?",
-      "a": "Use the chips on the scene wall. Skincare is under Beauty and Personal Care. Clothing, Apparel, Food and Beverage, Footwear, Jewelry and Accessories, Tech and Electronics, and Health and Fitness each have a chip, along with accessories, pets, sports, and apps. Home layouts, such as a tidy-room clip, are in the template gallery on this page."
+      "a": "Use the category buttons on the examples. Skincare sits under Beauty & Personal Care. Clothing, Apparel, Food & Beverage, and Footwear each have a button. So do Jewelry & Accessories, Tech & Electronics, and Health & Fitness. Accessories, Pet, Sports & Gym, and Apps have buttons too. Home layouts, such as a tidy-room clip, are in the template gallery on this page."
     },
     {
       "q": "Can I upload my own photos and clips?",
-      "a": "Yes. Upload a product photo or a clip you have rights to, or paste a product link. The item in the file should be yours. A clear, full view is easier to check."
+      "a": "Yes. Upload a product photo or a clip you are allowed to use, or paste a product link. The item in the file should be yours. A clear, full view is easier to check."
     },
     {
       "q": "Which platforms are these templates made for?",
-      "a": "Clip templates fit TikTok, Instagram, Facebook, and YouTube at 9:16, 1:1, 16:9, 4:3, or 3:4, in 6, 10, 15, or 30 seconds. Picture templates are square. Send a finished file to TikTok or Meta, or download it and post it yourself."
+      "a": "Clip templates fit TikTok, Instagram, Facebook, and YouTube. Lengths are 6, 10, 15, or 30 seconds. Shapes are a tall phone video (9:16), a square (1:1), a wide video (16:9), a slightly wide 4:3, or a tall 3:4. Picture templates are square. Send a finished file to TikTok or Meta, or download it and post it yourself. Meta is Facebook and Instagram."
     },
     {
       "q": "Are the templates free?",
-      "a": "No. Making a file spends credits, and you see that cost before you start. A failed job returns its credits. Prices are on the [pricing page](page:pricing)."
+      "a": "No. Making a file spends credits. Credits are what your plan uses for each photo or video. You see the cost before you start. If the work fails, the credits come back. Prices are on the [pricing page](page:pricing)."
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. Finished photos and clips can be used in paid ads and have no watermark. You still own the claims, the prices, and the offer."
+      "a": "Yes. Finished photos and clips can be used in paid ads. They have no watermark, which means no logo on the file. You are still responsible for what the ad says, the price, and the offer."
     },
     {
       "q": "Why use a template instead of a blank page?",
-      "a": "A template already has a scene, a script shape, a voice, and a presenter, so you spend your time on the product and the offer."
+      "a": "A template already has a scene, a script, a voice, and a presenter made by the tool. You spend your time on the product and the offer."
     }
   ],
   "visual": {
@@ -65,7 +65,8 @@
       "sourceAlt": "Brown leather duffel bag on a dark studio background.",
       "result": "n:guide:q13-templates-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded product photo as the exact product. Place it in a clean product ad template with the product fully visible and no text or logos.",
+      "prompt": "Your photo stays the product. It shows fully in a clean ad layout, with no extra words or logos.",
+      "sourceHint": "Any clear photo works.",
       "options": [
         [
           "Template",
@@ -79,7 +80,7 @@
     },
     "picker": {
       "title": "Browse product photo and video templates",
-      "lead": "Filter by category, open a layout, and add your product. A prompt is optional.",
+      "lead": "Filter by category, open a scene, and start from your own photo.",
       "chips": [
         {
           "id": "accessories",
@@ -103,7 +104,7 @@
         },
         {
           "id": "e-commerce",
-          "label": "E-Commerce"
+          "label": "Online store"
         },
         {
           "id": "education",
@@ -111,7 +112,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -151,7 +152,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Phone-style"
         },
         {
           "id": "viral",
@@ -161,7 +162,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Soft-sound unboxing: Makeup tools",
           "chips": [
             "accessories"
           ],
@@ -170,7 +171,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Movie-style watch close-up",
           "chips": [
             "accessories"
           ],
@@ -206,7 +207,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-stream reaction: App",
           "chips": [
             "apps"
           ],
@@ -233,7 +234,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-ready unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -251,7 +252,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Spin view: Linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -278,7 +279,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face-to-camera skin lesson",
           "chips": [
             "education"
           ],
@@ -287,7 +288,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-person look: Court gear",
           "chips": [
             "explainer"
           ],
@@ -296,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home app walk-through",
           "chips": [
             "explainer"
           ],
@@ -305,7 +306,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance app phone demo",
           "chips": [
             "financial-services"
           ],
@@ -323,7 +324,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip: Citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -341,7 +342,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-footwear-1",
-          "label": "Running Shoe Creator Showcase",
+          "label": "Runner holds the shoe",
           "chips": [
             "footwear"
           ],
@@ -359,7 +360,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry bowl first bite",
           "chips": [
             "health-fitness"
           ],
@@ -377,7 +378,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-1",
-          "label": "Pendant Creator Try-On",
+          "label": "Pendant try-on close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -386,7 +387,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver signet close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -431,7 +432,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell powder reveal",
           "chips": [
             "sports-gym"
           ],
@@ -440,7 +441,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Evening kitchen appliance demo",
           "chips": [
             "tech-electronics"
           ],
@@ -449,7 +450,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Thin keyboard review",
           "chips": [
             "tech-electronics"
           ],
@@ -458,7 +459,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump moisturizer routine",
           "chips": [
             "ugc"
           ],
@@ -476,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint face mist opening",
           "chips": [
             "viral"
           ],
@@ -501,7 +502,7 @@
       },
       "m3": {
         "h2": "Browse Product Photo and Video Templates",
-        "lead": "Filter by category, open a scene, and start that direction from your own photo."
+        "lead": "Filter by category, open a scene, and start from your own photo."
       }
     },
     "directoryFilters": {
@@ -557,41 +558,41 @@
     },
     {
       "t": "Choose a Template",
-      "d": "Pick the layout. A script, a voice, captions, and a presenter come with it."
+      "d": "Pick the layout. You also get a script, a voice, captions, and a presenter made by the tool."
     },
     {
       "t": "Download or Post",
-      "d": "Check the item and the words, then download with no watermark or send it to TikTok or Meta."
+      "d": "Check the item and the words, then download it with no logo, or send it to TikTok, Facebook, or Instagram."
     }
   ],
   "steps_h2": "How to make a product ad from a template in 3 steps",
-  "steps_lead": "Add a photo or a product link, pick a layout, and download or post the ad.",
-  "benefits_h2": "Features These Product Ad Templates Include",
-  "benefits_lead": "A template is a full ad, not only a frame. The words, the voice, and the presenter come with the layout.",
+  "steps_lead": "Add a photo or a product link, pick a layout, and download or post the ad. Credits are what a plan spends on each file. You see the cost before you start.",
+  "benefits_h2": "What these product ad templates include",
+  "benefits_lead": "A template is a full ad, not only an empty layout. The words, the voice, and a presenter come with it. The presenter is not a real customer.",
   "benefits": [
     {
       "t": "An AI Script",
-      "d": "The template drafts the words from your product, so you start from a spoken ad instead of a blank page."
+      "d": "The template writes the words from your product. You start from a spoken ad, not a blank page."
     },
     {
       "t": "A Spoken Voice",
-      "d": "The clip comes with a generated voice that reads the script. That voice is not a real customer."
+      "d": "The clip comes with a voice made by the tool. It reads the script. It is not a real customer."
     },
     {
       "t": "Captions on the Video",
-      "d": "Captions are written on the clip, so the offer stays readable while the voice plays."
+      "d": "Captions are written on the clip, so shoppers can read the words while the voice plays."
     },
     {
-      "t": "A Presenter from the Actor Library",
-      "d": "Pick a generated presenter to hold the product or speak the line. The person is not a real buyer."
+      "t": "A presenter from the actor library",
+      "d": "Pick a presenter made by the tool to hold the product or say the line. The person is not a real buyer."
     },
     {
       "t": "Editor and Music Library",
-      "d": "Trim the clip and add a track from the music library without leaving the page."
+      "d": "Shorten the clip and add a song from the music library, without leaving the page."
     },
     {
-      "t": "Link, Languages, Batch, and API",
-      "d": "Paste a product link, make the ad in another language, run a batch of versions, and send the file to TikTok or Meta. An API is there when a shop starts jobs from its own system."
+      "t": "Link, languages, batch, and API",
+      "d": "Paste a product link, or make the ad in another language. A batch is several versions at once. You can send the file to TikTok or Meta. Meta is Facebook and Instagram. The API is a connection that lets your own shop system start the work."
     }
   ],
   "blockOrder": [
@@ -606,8 +607,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Are Moving Their Ads to AI Video",
-    "lead": "Ten ways a shop uses a template, from a holding clip to a spoken ad in another language.",
+    "h2": "How a shop uses a template",
+    "lead": "Ten ways a shop uses a template, from a clip of someone holding the product to a spoken ad in another language.",
     "items": [
       {
         "example": true,
@@ -618,71 +619,89 @@
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "On-person presenter",
-        "d": "An apparel shop turns a garment photo into a clip with a generated presenter so a shopper can judge the fit."
+        "t": "Presenter shows the fit",
+        "d": "A clothing shop turns a photo of the clothes into a clip. A presenter made by the tool wears it, so a shopper can see the fit."
       },
       {
         "example": true,
         "who": "Drink seller",
-        "t": "Product-holding clip",
-        "d": "A drink seller starts from a bottle photo and gets a clip of a presenter holding the bottle."
+        "t": "Presenter holds the bottle",
+        "d": "A drink seller starts from a bottle photo and gets a clip of a presenter, made by the tool, holding the bottle."
       },
       {
         "example": true,
         "who": "Home shop",
-        "t": "Room scene, then a trim",
-        "d": "A home shop builds a room scene, then trims it in the built-in editor before it goes on the product page."
+        "t": "Room scene, then shorten",
+        "d": "A home shop builds a room scene, then shortens it in the editor on this site before it goes on the product page."
       },
       {
         "example": true,
         "who": "Beauty brand",
         "t": "Same ad, another language",
-        "d": "A beauty brand keeps one presenter and makes the same ad again in another language for a second market."
+        "d": "A beauty brand keeps one presenter made by the tool and makes the same ad again in another language. That version is for another country."
       },
       {
         "example": true,
         "who": "Small team",
         "t": "Edit in one place",
-        "d": "A small team cuts the clip, adds a music track, and checks the captions in the editor on this site."
+        "d": "A small team shortens the clip, adds a song, and checks the captions in the editor on this site."
       },
       {
         "example": true,
         "who": "Agency",
-        "t": "Virtual presenter for clients",
-        "d": "An agency casts a generated presenter and reuses that face across client ads without booking a shoot."
+        "t": "Same face on client ads",
+        "d": "An agency picks a presenter made by the tool and uses that face on client ads, with no camera crew."
       },
       {
         "example": true,
-        "who": "Catalog brand",
-        "t": "Photos instead of a set",
-        "d": "A catalog brand uploads a few product photos and gets ad-ready visuals without lights or a camera crew."
+        "who": "Shop with many products",
+        "t": "Photos without a studio",
+        "d": "A shop with many products uploads a few photos and gets files it can post, with no lights and no camera crew."
       },
       {
         "example": true,
-        "who": "Marketing lead",
+        "who": "Marketing manager",
         "t": "Link to a full ad",
-        "d": "A marketing lead pastes a product link and gets a script, a voice, a presenter, and a few versions to test."
+        "d": "A marketing manager pastes a product link and gets a script, a voice, a presenter made by the tool, and a few versions to try."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "Chat to a finished ad",
-        "d": "A founder describes the offer in chat and gets a script, pictures, and a video back from the assistant."
+        "t": "Type an offer, get an ad",
+        "d": "A founder types the offer in the chat and gets a script, pictures, and a video back."
       }
     ]
   },
-  "related_h2": "Tools and directories for these templates",
-  "related_lead": "Open a photo or video tool, or browse by category and channel.",
+  "related_h2": "Tools and pages for these templates",
+  "related_lead": "Open a photo tool or a video tool, or browse by category and by where you post.",
   "relatedLinks": [
-    {"id": "video-ads", "label": "AI UGC video ads"},
-    {"id": "lifestyle-photos", "label": "AI lifestyle product photos"},
-    {"id": "white-background", "label": "White background product photos"},
-    {"id": "model-photos", "label": "AI model photos for clothing"},
-    {"id": "industries", "label": "Browse by industry"},
-    {"id": "platforms", "label": "Browse by platform"}
+    {
+      "id": "video-ads",
+      "label": "Phone-style video ads"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
+    },
+    {
+      "id": "white-background",
+      "label": "White background product photos"
+    },
+    {
+      "id": "model-photos",
+      "label": "AI model photos for clothing"
+    },
+    {
+      "id": "industries",
+      "label": "Browse by industry"
+    },
+    {
+      "id": "platforms",
+      "label": "Browse by platform"
+    }
   ],
   "cta_title": "Pick a template and add your product",
   "cta_lead": "Upload one product photo, choose a layout, and see the credit cost before you start.",
-  "gallery_h2": "All ecommerce ad templates by type",
+  "gallery_h2": "All product ad templates by type",
   "gallery_lead": "Each card opens a template page with an example and the steps to use it."
 }

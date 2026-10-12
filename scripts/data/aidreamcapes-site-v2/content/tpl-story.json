@@ -1,7 +1,7 @@
 {
   "id": "tpl-story",
   "title": "Instagram Story Ad Images with Square Photos | AIVideosUGC",
-  "description": "Turn one product photo into a square Instagram story ad image with room for your headline and price. You place that square on a 9:16 canvas after download.",
+  "description": "Turn one product photo into a square Instagram Story ad image with room for a headline and price. Place that square on a tall 9:16 phone frame after download.",
   "h1": "Instagram Story Ad Images from a Square Product Photo",
   "eyebrow": "Ad photo template",
   "lead": "A feed crop often cuts the product and leaves no room for the offer. Upload one photo and get Instagram story ad images composed for a Story layout.",
@@ -20,11 +20,11 @@
     },
     {
       "t": "Describe the Setting",
-      "d": "Name a surface, a light direction, and one prop in one sentence. Keep the product as the subject so the layout has room for text."
+      "d": "Name the surface, where the light comes from, and one extra object. Keep the product as the subject so there is room for text."
     },
     {
       "t": "Download and Post",
-      "d": "Place the square download on a 9:16 canvas and add the price, date and button there. Check the phone view before you post."
+      "d": "Place the square download on a tall 9:16 frame and add the price, date, and button there. Check the phone view before you post."
     }
   ],
   "maker": {
@@ -51,7 +51,7 @@
     },
     {
       "q": "Does the template output a 9:16 file?",
-      "a": "No. It outputs a square photo composed for a Story layout. Place that square on a 9:16 canvas in your editor, then add the text."
+      "a": "No. You get a square photo, laid out for a Story. 9:16 is the tall phone shape. Place the square on that frame in your editor, then add the text."
     },
     {
       "q": "Why not crop a feed photo into a Story?",
@@ -62,16 +62,16 @@
       "a": "Yes. The square file can go in an Instagram Story layout, a Facebook Story layout, a feed post, a carousel or a listing."
     },
     {
-      "q": "When should I use a vertical video instead?",
-      "a": "Use video when you need motion to show the product in use. This template is the still. Vertical ads start at [AI UGC video ads](page:video-ads)."
+      "q": "When should I use a tall video instead?",
+      "a": "Use video when the product needs to move. This template is the photo. Tall video ads start at [creator-style video ads](page:video-ads)."
     },
     {
       "q": "What does a Story photo cost?",
-      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts."
+      "a": "Each photo costs 24 credits. Credits are the points that pay for the photo. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts."
     },
     {
       "q": "Will the full product stay visible?",
-      "a": "Check the edges against your source before you post. The layout leaves space around the product, but the generator does not keep every edge intact."
+      "a": "Check the edges against your source photo before you post. The layout leaves space around the product, but it does not keep every edge exactly as shot."
     },
     {
       "q": "Can I ask for a hand or a person in the scene?",
@@ -91,11 +91,11 @@
     },
     {
       "q": "Can I publish the Story to Instagram or TikTok?",
-      "a": "Yes. Place the square on a tall canvas, add a spoken line if you want one, and publish to Instagram, Facebook, or TikTok."
+      "a": "Yes. Place the square on a tall 9:16 frame, add a spoken line if you want one, and publish to Instagram, Facebook, or TikTok."
     },
     {
       "q": "Is there an API?",
-      "a": "Yes. The API can send a product from your catalog and bring the finished Story file back into your own setup."
+      "a": "Yes. API means a connection from your own shop. It can send a product and bring the finished Story file back."
     }
   ],
   "output": "Square product photo · Story layout",
@@ -133,7 +133,7 @@
     },
     "picker": {
       "title": "Video previews, not the square Story photo",
-      "lead": "Each card is a 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a 9:16 canvas and add the price there.",
+      "lead": "Each card is a tall 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a tall 9:16 frame and add the price there.",
       "chips": [
         {
           "id": "accessories",
@@ -205,7 +205,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -215,7 +215,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-up unboxing: makeup tools",
           "chips": [
             "accessories"
           ],
@@ -287,7 +287,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Getting-ready unboxing: knitwear",
           "chips": [
             "clothing"
           ],
@@ -305,7 +305,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full spin: linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -332,7 +332,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to camera: skin lesson",
           "chips": [
             "education"
           ],
@@ -341,7 +341,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-person find: court gear",
           "chips": [
             "explainer"
           ],
@@ -350,7 +350,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: home app walkthrough",
           "chips": [
             "explainer"
           ],
@@ -359,7 +359,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance opening: phone demo",
           "chips": [
             "financial-services"
           ],
@@ -377,7 +377,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip: citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -413,7 +413,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry bowl first bite",
           "chips": [
             "health-fitness"
           ],
@@ -440,7 +440,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver signet close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -485,7 +485,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell powder reveal",
           "chips": [
             "sports-gym"
           ],
@@ -494,7 +494,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Evening kitchen appliance demo",
           "chips": [
             "tech-electronics"
           ],
@@ -512,7 +512,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump moisturizer routine",
           "chips": [
             "ugc"
           ],
@@ -530,7 +530,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint face mist opening",
           "chips": [
             "viral"
           ],
@@ -555,16 +555,16 @@
       },
       "m3": {
         "h2": "Video previews, not the square Story photo",
-        "lead": "Each card is a 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a 9:16 canvas and add the price there."
+        "lead": "Each card is a tall 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a tall 9:16 frame and add the price there."
       },
       "m4": {
-        "h2": "Use Story ad photos in vertical social ads"
+        "h2": "Use Story ad photos in tall phone ads"
       },
       "m5": {
         "h2": "Start a Story ad with a clear product photo"
       },
       "m6": {
-        "h2": "Prepare a square product photo for a 9:16 Story"
+        "h2": "Prepare a square product photo for a tall 9:16 Story"
       },
       "m7": {
         "h2": "Add the Story date and offer after download"
@@ -615,19 +615,19 @@
         "example": true,
         "who": "Beauty brand",
         "t": "Offer above the product",
-        "d": "The product stays centered with calm space above it, and the headline is added on the 9:16 canvas after download. The generated file itself has no price in it."
+        "d": "The product stays centered with calm space above it, and the headline is added on the tall 9:16 frame after download. The generated file itself has no price in it."
       },
       {
         "example": true,
         "who": "Skincare shop",
-        "t": "Same still, two Story apps",
+        "t": "Same photo, two Story apps",
         "d": "One square download is placed in an Instagram Story layout and a Facebook Story layout. The product is kept clear of the header and the lower button area."
       },
       {
         "example": true,
         "who": "Seasonal campaign",
         "t": "A summer scene around the bottle",
-        "d": "The team describes a light surface and one prop, then checks that the full bottle is still visible. The end date of the offer is typed later, so it can be removed when the campaign ends."
+        "d": "The team describes a light surface and one extra object, then checks that the full bottle is still visible. The end date of the offer is typed later, so it can be removed when the campaign ends."
       },
       {
         "example": true,
@@ -637,15 +637,15 @@
       },
       {
         "example": true,
-        "who": "Media buyer",
-        "t": "Still now, motion later",
-        "d": "A simple offer uses this square photo. When the product needs to be shown in motion, they switch to a vertical video instead of stretching this still."
+        "who": "Ad buyer",
+        "t": "Photo now, motion later",
+        "d": "A simple offer uses this square photo. When the product needs to be shown in motion, they switch to a tall video instead of stretching this photo."
       },
       {
         "example": true,
         "who": "Small team",
         "t": "Text stays editable",
-        "d": "Price, code and button are added in their design tool. Nothing is baked into the image, so a typo is a text fix."
+        "d": "Price, code and button are added in their design tool. Nothing is written into the image, so a typo is a text fix."
       },
       {
         "example": true,
@@ -695,7 +695,7 @@
       "items": [
         {
           "t": "A product link starts it",
-          "d": "Paste the product page. The job reads the item and keeps this square as the frame for the Story."
+          "d": "Paste the product page. It picks up the item and keeps this square as the frame for the Story."
         },
         {
           "t": "A presenter from the library",

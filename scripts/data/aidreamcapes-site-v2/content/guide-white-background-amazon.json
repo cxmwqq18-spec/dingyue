@@ -1,10 +1,10 @@
 {
   "id": "guide-white-background-amazon",
   "title": "Amazon White Background Photo Guide | AIVideosUGC",
-  "description": "Make an Amazon white background main image from a phone photo: pure white RGB 255, product filling 85% or more of the frame, nothing extra added on top.",
+  "description": "Make an Amazon white-background main image from a phone photo. Use pure white (RGB 255), fill 85% or more of the square, and add nothing extra.",
   "h1": "How to Make an Amazon White Background Photo for Your Main Image",
   "eyebrow": "Amazon guide",
-  "lead": "An Amazon white background photo is a square main image on pure white, with the real product filling at least 85% of the frame and nothing extra drawn on top.",
+  "lead": "An Amazon white background photo is a square main image on pure white. The real product fills at least 85% of the square, and nothing extra is drawn on top.",
   "secondary_keywords": [
     "Amazon main image requirements",
     "pure white background product photo",
@@ -12,13 +12,13 @@
     "white background for product listings"
   ],
   "read_minutes": 5,
-  "summary": "Make the main image pure white, keep only what you ship, fill most of the square, and check the result against the item in your hand.",
+  "summary": "Make the main image pure white, and keep only what you ship. Fill most of the square, and check the result against the item in your hand.",
   "sections": [
     {
       "h2": "What are the Amazon main image requirements?",
       "paras": [
-        "The main image needs a pure white background, the product you actually sell, and no text, badges, or props that do not come in the box.",
-        "Amazon's product image guidance asks for pure white, RGB 255, 255, 255, and for the product to fill 85% or more of the frame. Only the item being sold should appear. The same guidance asks for a longest side of 500 pixels or more, 1,000 or more when you want zoom, and no side longer than 10,000 pixels. Clothing and jewelry listings can add further rules, so read the current Seller Central guide for your category before you upload."
+        "The main image needs a pure white background and the product you actually sell. Do not add text, badges (such as a sale sticker), or extra objects that do not come in the box.",
+        "Amazon's product image rules ask for pure white. That color is RGB 255, 255, 255, which means full white. The product should fill 85% or more of the square. Only the item being sold should appear. The same rules ask for a longest side of 500 pixels or more. A pixel is one tiny dot in the picture. Use 1,000 pixels or more if you want shoppers to zoom in. No side should be longer than 10,000 pixels. Clothing and jewelry listings can add more rules. Read the current Seller Central guide, Amazon's seller site, for your category before you upload."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec01",
       "alt": "Olive canvas backpack centered on a pure white background."
@@ -26,17 +26,17 @@
     {
       "h2": "Built for a whole catalog",
       "paras": [
-        "Many listings. The same white treatment can run across the catalog instead of one photo at a time.",
-        "More than one place to sell. A clean main image can also lead the product page on your own store.",
-        "One setup. You set pure white, the crop, and what ships in the box, then reuse that setup on the next SKU.",
-        "True to the item. Compare shape, color, parts, and label with the product in your hand before anything goes live."
+        "Many listings. The same white background can run across the catalog, instead of one photo at a time.",
+        "More than one place to sell. A clean main image can also be the first image on your own store.",
+        "One setup. You set pure white, the crop (how much of the square the product fills), and what ships in the box. Then reuse that setup on the next product.",
+        "True to the item. Compare shape, color, parts, and label with the product in your hand before you publish."
       ]
     },
     {
       "h2": "Does my phone photo already need a white background?",
       "paras": [
-        "No. It needs the whole product, in focus, with even light and a little space around every edge.",
-        "Shoot near a window on a plain surface and hold the phone at the product's height. Show what the buyer finds in the box. If two lids ship with the bottle, both lids belong in the photo. If a strap is sold separately, leave it out."
+        "No. It needs the whole product, in focus (sharp, not blurry), with even light and a little space around every edge.",
+        "Take the photo near a window, on a plain surface, and hold the phone at the product's height. Show what the buyer finds in the box. If two lids ship with the bottle, both lids belong in the photo. If a strap is sold separately, leave it out."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec02",
       "alt": "Adult hand holds an olive canvas backpack upright beside a bright window."
@@ -44,8 +44,8 @@
     {
       "h2": "How do I make a pure white background product photo?",
       "paras": [
-        "Upload a clear photo of the whole product and ask for that same item on pure white, including every piece that ships with it.",
-        "Open the [AI product background changer](page:change-background) or the [AI product photo generator](page:photo-hub), then write one plain line such as \"the bottle and both lids on pure white.\" The old backdrop comes off, and the field behind the product is set to pure white. The result is square, which suits a main image. One image uses 24 credits, shown before you confirm. A failed job returns those credits. The finished file is yours to use commercially and has no watermark."
+        "Upload a clear photo of the whole product. Ask for that same item on pure white, including every piece that ships with it.",
+        "Open the [AI product background changer](page:change-background) or the [AI product photo generator](page:photo-hub). Then write one plain line, such as \"the bottle and both lids on pure white.\" The old background comes off. The area behind the product is set to pure white. The result is square, which fits a main image. One image uses 24 credits. Credits are what you spend, and the cost is shown before you confirm. If the image does not finish, those credits come back. You can use the finished file in ads and on your store. No logo is stamped on the file."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec03",
       "alt": "Olive canvas backpack on a pure white background."
@@ -53,52 +53,52 @@
     {
       "h2": "The same white setup across the catalog",
       "paras": [
-        "A main image that breaks the white rule can come off the listing until you replace it, and the listing can drop out of search.",
-        "Batch applies the same white backdrop, crop, and size to many products in one run. The API can start that from the catalog you already keep, so a new SKU follows the same main-image setup. Each image is still 24 credits, shown before you confirm."
+        "A main image that breaks the white rule can be removed from the listing until you replace it. The listing can also stop showing in search.",
+        "Batch, many products at once, uses the same white background, the same crop, and the same size. The crop is how tight the product sits in the square. The API lets your own shop system start that work from the catalog you already keep. A new product then follows the same main-image setup. Each image is still 24 credits, shown before you confirm."
       ]
     },
     {
       "h2": "One look across later images",
       "paras": [
-        "A brand kit keeps your colors, logo, and type in one place. Use it on later images and on new photos, not as lettering on the main image.",
-        "The main image stays pure white with only what you ship. [Lifestyle photos](page:lifestyle-photos) and [model photos](page:model-photos) fill the later slots, and the brand kit can sit on those."
+        "A brand kit keeps your colors, logo, and fonts in one place. Use it on later images and on new photos. Do not put lettering on the main image.",
+        "The main image stays pure white with only what you ship. [Photos of daily use](page:lifestyle-photos) and [photos with a person](page:model-photos) fill the later image spots. The brand kit can be used on those."
       ]
     },
     {
       "h2": "How to make Amazon listing photos in 3 steps",
       "paras": [
-        "Upload the phone photo, take off the old backdrop, and set pure white for the main image.",
-        "For later images, make a lifestyle or on-model shot, apply the brand kit, and match the listing size.",
-        "Run that setup in a batch, download the files, and upload them in Seller Central."
+        "Upload the phone photo, remove the old background, and set pure white for the main image.",
+        "For later photos, show daily use or a generated person, apply the brand kit, and match the listing size.",
+        "Run that batch on many products, download the files, and upload them in Seller Central."
       ]
     },
     {
       "h2": "AIVideosUGC or building it yourself",
       "paras": [
-        "The white main image, the later shots, and the batch run are already in the product, so you are not standing up an image stack first.",
-        "You do not hire a team to keep a private model running before the first file ships.",
-        "Improvements to the image tools arrive with the product you already use.",
-        "Batch and the API are there when a catalog push, including a busy season, needs the same setup on many SKUs.",
-        "The brand kit applies the same colors and logo to later images on Amazon and on your own store."
+        "The white main image, the later photos, and making many photos at once are already in AIVideosUGC. You do not have to set up your own photo tools first.",
+        "You do not hire a team to keep a private system running before the first file is ready.",
+        "Updates to the photo tools come with AIVideosUGC, the tool you already use.",
+        "Batch and the API are ready when you need the same setup on many products, including in a busy season. The API is how your own shop system starts that work.",
+        "The brand kit applies the same colors, logo, and fonts to later images on Amazon and on your own store."
       ]
     },
     {
       "h2": "How a catalog seller uses the main image",
       "paras": [
-        "Catalog seller. Example: every new SKU gets the same pure-white main image, and lifestyle shots stay in the later slots."
+        "Catalog seller. Example: every new product gets the same pure-white main image. Photos of the product in daily use stay in the later image spots."
       ]
     },
     {
       "h2": "More photo tools for the listing",
       "paras": [
-        "[Background changer](page:change-background) takes off the old backdrop. [White background](page:white-background) is the main-image job. [Product photos](page:photo-hub) is the wider set. [Lifestyle photos](page:lifestyle-photos) fill the later slots."
+        "[Background changer](page:change-background) takes off the old background. [White background](page:white-background) is the tool for the main image. [Product photos](page:photo-hub) is the wider set of photo tools. [Photos of daily use](page:lifestyle-photos) fill the later image spots."
       ]
     },
     {
       "h2": "What Amazon product photo rules should I verify before upload?",
       "paras": [
-        "Sample the corners with a color picker, then set the real product next to the screen and compare shape, color, parts, and label.",
-        "Each sampled spot should read pure white, with no gray haze. Zoom in on labels, because small lettering is where a new image tends to drift. If the words are wrong, try again from a sharper source photo. Also check the size in the square. A tiny product in a wide white field looks small beside listings that fill the frame."
+        "Check the corners with a color picker, a tool that reads the color of one spot. Then set the real product next to the screen and compare shape, color, parts, and label.",
+        "Each spot you check should be pure white, with no gray haze. Zoom in on labels, because small lettering is where a new image often goes wrong. If the words are wrong, try again from a sharper photo. Also check the size in the square. A tiny product in a wide white area looks small next to listings that fill the square."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec04-r2",
       "alt": "Adult hands compare an olive canvas backpack with a blank white square card."
@@ -106,8 +106,8 @@
     {
       "h2": "What if the product is white, clear, or a set?",
       "paras": [
-        "Shape the item first, light the edges, and show exactly the number of pieces the listing sells.",
-        "A white product can disappear on white. Shoot the source with light from one side so the outline has soft shading, and mention gentle side light in the line you type. Clear glass picks up the room behind it, so photograph it against a plain light wall. A three-pack should show three units, not two and not five. Fluff bags and soft goods before the source shot, because the new image follows the shape it sees."
+        "Set the item's shape first, light the edges, and show exactly how many pieces the listing sells.",
+        "A white product can disappear on white. Take the starting photo with light from one side, so the outline has soft shading. Mention gentle side light in the line you type. Clear glass shows the room behind it, so photograph it against a plain light wall. A three-pack should show three units, not two and not five. Puff up bags and soft items before the photo you start from, because the new image follows the shape it sees."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec05",
       "alt": "Adult hand shapes an olive canvas backpack upright on a white sweep."
@@ -115,8 +115,8 @@
     {
       "h2": "Should a white background for product listings cover every image?",
       "paras": [
-        "No. Keep the white rules on the main image only, and use the later slots for use, scale, and detail.",
-        "A useful set might show the bottle in a gym bag, a hand for scale, and a close view of the lid seal. Make the pictures first, then add any words in your own editor. A soft shadow, if you want one, belongs on a later image, not on the pure-white main image. The same white main image can also lead the product page on your own store, so shoppers see one look in both places. For scenes that are not the main image, [AI lifestyle product photos](page:lifestyle-photos) are the separate job."
+        "No. Keep the white rules on the main image only. Use the later image spots to show the product in use, how big it is, and a close detail.",
+        "A useful set might show the bottle in a gym bag, a hand for size, and a close view of the lid seal. Make the pictures first, then add any words in your own editor. A soft shadow, if you want one, belongs on a later image, not on the pure-white main image. The same white main image can also be the first image on your own store, so shoppers see the same photo in both places. For scenes that are not the main image, [Photos of daily use](page:lifestyle-photos) are a separate file."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec06",
       "alt": "Adult holds an olive canvas backpack in a simple product gallery setup."
@@ -125,7 +125,7 @@
       "h2": "The short version",
       "paras": [
         "Pure white, only what you ship, and the product large in the square. Check the corners, the label, and the part count against the real item.",
-        "The phone photo does not have to start on white. One delivered image is 24 credits, and a failed job returns them. Batch and the API can repeat that white setup across the catalog."
+        "The phone photo does not have to start on white. One finished image is 24 credits. If it does not finish, those credits come back. Batch and the API can repeat that white setup across the catalog."
       ]
     }
   ],
@@ -140,43 +140,43 @@
   "faq": [
     {
       "q": "Why does my white background look gray on Amazon?",
-      "a": "Part of the backdrop is probably not fully white, often near a corner or under the product. Sample a few spots. If they read off-white, make another version or brighten the backdrop in an editor before you upload."
+      "a": "Part of the background is probably not fully white, often near a corner or under the product. Check a few spots. If they are off-white, make another version, or brighten the background in an editor before you upload."
     },
     {
       "q": "Can an AI-made photo be my Amazon main image?",
-      "a": "Yes, when it shows the product a buyer will receive. Match shape, color, parts, and label before it goes live. The file is yours to use commercially and has no watermark. Category rules can change, so read the current Seller Central guide for your category before you upload."
+      "a": "Yes, when it shows the product a buyer will receive. Match shape, color, parts, and label before you publish it. You can use the file in ads and on your store. No logo is stamped on the file. Category rules can change, so read the current Seller Central guide for your category before you upload."
     },
     {
       "q": "How do I verify the white before I upload?",
-      "a": "Confirm pure white at RGB 255, 255, 255, no extra props, and the product filling at least 85% of the frame."
+      "a": "Confirm pure white at RGB 255, 255, 255 (full white), no extra objects, and the product filling at least 85% of the square."
     },
     {
       "q": "How many credits does one white image use?",
-      "a": "One image uses 24 credits. The cost appears before you start, and a failed job returns the credits."
+      "a": "One image uses 24 credits. Credits are what you spend. The cost appears before you start. If it does not finish, the credits come back."
     },
     {
       "q": "Will the product shape change?",
-      "a": "Compare the result with the real item. If the shape, color, or part count drifted, do not upload that file. Run it again from a sharper photo."
+      "a": "Compare the result with the real item. If the shape, color, or part count changed, do not upload that file. Run it again from a sharper photo."
     },
     {
       "q": "Which Amazon product photo rules sit outside the main image?",
-      "a": "Later images can show use, scale, and detail. Keep prices and badges out of the picture and add those words yourself. Category rules for clothing and jewelry can be stricter, so check the current guide for your category."
+      "a": "Later images can show the product in use, how big it is, and a close detail. Keep prices and badges out of the picture and add those words yourself. Category rules for clothing and jewelry can be stricter, so check the current guide for your category."
     },
     {
       "q": "What if my Amazon main image breaks the rules?",
-      "a": "Replace it. A main image that breaks the white, size, or product rules can come off the listing, and the listing can drop out of search until the image is fixed. Later photos can show the product in use. Read the current Seller Central guide for your category before you upload again."
+      "a": "Replace it. A main image that breaks the white rule, the size rule, or the product rule can be removed from the listing. The listing can stop showing in search until the image is fixed. Later photos can show the product in use. Read the current Seller Central guide for your category before you upload again."
     },
     {
       "q": "What size should the Amazon file be?",
-      "a": "Amazon's published guidance asks for a longest side of 500 pixels or more, 1,000 or more when you want zoom, and no side longer than 10,000 pixels. The picture should still show the real product."
+      "a": "Amazon's published rules ask for a longest side of 500 pixels or more. A pixel is one tiny dot in the picture. Use 1,000 pixels or more if you want shoppers to zoom in. No side should be longer than 10,000 pixels. The picture should still show the real product."
     },
     {
-      "q": "Can I run the white backdrop across many SKUs?",
-      "a": "Yes. Batch applies the same backdrop, crop, and size in one run. The API can start that from your catalog. One image is 24 credits, shown before you confirm."
+      "q": "Can I use the same white background on many products?",
+      "a": "Yes. A batch applies the same background, the same crop (how tight the product sits), and the same size in one go. The API, your shop system, can start that from your catalog. One image is 24 credits, shown before you confirm."
     },
     {
       "q": "Can the API make the main image?",
-      "a": "Yes. Point it at the same pure-white setup you use by hand, including only what ships in the box."
+      "a": "Yes. The API, your own shop system, can use the same pure-white setup you use by hand. Include only what ships in the box."
     }
   ],
   "cta_title": "Make a clean main image for your listing",

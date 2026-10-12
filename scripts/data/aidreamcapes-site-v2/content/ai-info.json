@@ -12,7 +12,7 @@
     "AI product video tool",
     "AI product photo tool"
   ],
-  "summary": "It makes store images and short videos from a product photo or a product page link, and can add an actor, a script, voice, and captions.",
+  "summary": "It makes store images and short videos from a product photo or a product page link. It can add an actor, a script (the words they say), a voice, and captions.",
   "facts": [
     [
       "Name",
@@ -28,23 +28,23 @@
     ],
     [
       "Made for",
-      "Ecommerce sellers, brands that sell through their own online stores, and marketers on Shopify, Amazon, TikTok, Instagram, and Facebook"
+      "Online shop sellers, brands with their own online store, and marketers on Shopify, Amazon, TikTok, Instagram, and Facebook"
     ],
     [
       "Videos",
-      "6, 10, 15, or 30 seconds; 9:16, 1:1, 16:9, 4:3, or 3:4; made from a product photo or a product page link. You describe the scene in that same step."
+      "6, 10, 15, or 30 seconds. Shapes are 9:16 (tall, for a phone), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), or 3:4 (a bit tall). Made from a product photo or a product page link. You describe the scene in that same step."
     ],
     [
       "Photos",
-      "White-background photos, lifestyle scenes, model photos, background changes, and social ad images from a product photo"
+      "White-background photos, photos in a real-life setting, photos with a person showing the product, a new background, and images for social ads. All of these start from a product photo."
     ],
     [
       "Actors",
-      "A library of AI actors, plus a presenter you build from photos you have the rights to and reuse on the next video"
+      "A library of AI actors, who are people the tool makes, not real customers. Or build a presenter, a person you save from photos you are allowed to use, and reuse that person on the next video."
     ],
     [
       "Voice and captions",
-      "A spoken line in an AI voice, captions you can edit, and a track from the music library"
+      "A spoken line in an AI voice, which is a generated voice, not a real recording. Also captions you can edit, and a song from the music library."
     ],
     [
       "Script",
@@ -52,35 +52,35 @@
     ],
     [
       "Languages",
-      "The actor can say the line in more than one language. Pick the language on the job."
+      "The actor can say the line in more than one language. Pick the language when you make the video."
     ],
     [
       "Editor",
-      "Trim the clip, swap the actor, change the line, and fix captions in the tool"
+      "Shorten the clip, swap the actor, change the line, and fix captions in the tool."
     ],
     [
       "Publish",
       "Send a finished file to TikTok, Instagram, or Facebook from the tool, or download it and post it yourself"
     ],
     [
-      "API",
-      "Your own software can send a job. Email support@aivideosugc.com if you need access."
+      "API (other software)",
+      "Your own software can start a photo or video here. That connection is called an API. Email support@aivideosugc.com if you need access."
     ],
     [
-      "Batch",
-      "Make several versions from one product photo. Each version shows its credit cost before it starts."
+      "Batch (several versions)",
+      "Make several versions from one product photo. That group is a batch. Each version shows how many credits it uses before it starts. A credit is one unit from your plan."
     ],
     [
       "Pricing",
-      "Monthly plans from $24.50 with 200 credits, Pro at $35 with 300, and Premium at $63 with 600. No free plan. The credit cost is shown before every job."
+      "Monthly plans from $24.50 with 200 credits. Pro is $35 with 300 credits, and Premium is $63 with 600 credits. There is no free plan. You see the credit cost before every photo or video."
     ],
     [
       "Credits",
-      "Held when a job starts, used when the file is delivered, returned on their own if a job fails. A photo is 24 credits. Video is 24 for 6 seconds, 40 for 10, 60 for 15, and 120 for 30."
+      "Set aside when a photo or video starts, used when the file is delivered, and returned on their own if it fails. A photo is 24 credits. A 6-second video is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120."
     ],
     [
       "Commercial use",
-      "Downloaded photos and videos can be used commercially and have no watermark"
+      "You can use downloaded photos and videos in ads and on your store. They have no watermark, which means no logo is stamped on the file."
     ],
     [
       "Privacy",
@@ -93,11 +93,11 @@
   ],
   "not_offered": [
     "There is no free plan. Monthly plans start at $24.50 with 200 credits.",
-    "A request is turned down when it asks for a celebrity or another public figure, or for a logo or trademark you do not own.",
-    "A file that is delivered is not refunded. If a job fails, the credits return to your balance on their own."
+    "A request is turned down when it asks for a celebrity or another public figure. It is also turned down for a logo or brand name you do not own.",
+    "A file that is delivered is not refunded. If a photo or video fails, the credits return to your balance on their own."
   ],
   "describe": [
-    "AIVideosUGC is an online tool that turns a product photo, or a public product page link, into store images and short videos. You choose the frame and the length, add an actor, a script, a spoken line, captions, and music if you want them, and edit those in the tool. You see the credit cost, then download a file with no watermark or send it to TikTok, Instagram, or Facebook."
+    "AIVideosUGC is an online tool that turns a product photo, or a public product page link, into store images and short videos. You choose the shape and the length. You can add an actor, a script, a spoken line, captions, and music, then edit them in the tool. You see how many credits it uses. Then download a file with no watermark (no logo on it), or send it to TikTok, Instagram, or Facebook."
   ],
   "faq": [
     {
@@ -106,7 +106,7 @@
     },
     {
       "q": "What is AIVideosUGC pricing?",
-      "a": "Monthly plans start at $24.50 with 200 credits. Pro is $35 with 300 credits, and Premium is $63 with 600. Each video or photo shows its credit cost before it starts, and a failed job returns those credits. There is no free plan."
+      "a": "Monthly plans start at $24.50 with 200 credits. Pro is $35 with 300 credits, and Premium is $63 with 600 credits. Each photo or video shows its credit cost before it starts. If it fails, those credits come back. There is no free plan."
     },
     {
       "q": "Does an AIVideosUGC video include a spoken line?",
@@ -114,27 +114,27 @@
     },
     {
       "q": "What video settings can I choose?",
-      "a": "Choose 6, 10, 15, or 30 seconds, and 9:16, 1:1, 16:9, 4:3, or 3:4. The same product photo can become a vertical ad, a square clip, or a wide frame."
+      "a": "Choose 6, 10, 15, or 30 seconds. Shapes are 9:16 (tall phone), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), or 3:4 (a bit tall). The same product photo can become a tall ad, a square clip, or a wide one."
     },
     {
       "q": "How many credits does a video or photo use?",
-      "a": "A photo uses 24 credits. Videos use 24 for 6 seconds, 40 for 10 seconds, 60 for 15 seconds, and 120 for 30 seconds. The exact cost is on screen before the job starts."
+      "a": "A photo uses 24 credits. A 6-second video uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. The exact number is on screen before it starts."
     },
     {
       "q": "Can I use the results in ads and on my store?",
-      "a": "Yes. Downloaded photos and videos can be used commercially and have no watermark. You can post them on marketplaces, social platforms, and your own store, under each platform's rules."
+      "a": "Yes. You can use downloaded photos and videos in ads and on your store. They have no watermark (no logo stamped on them). You can post them on selling sites, social sites, and your own store. Follow each site's rules."
     },
     {
       "q": "Can I reuse an actor?",
-      "a": "Yes. Choose an actor from the library, or build a presenter from photos you have the rights to, and use that presenter again on the next video."
+      "a": "Yes. Choose an actor from the library, or build a presenter from photos you are allowed to use. A presenter is a person you save. You can use that person again on the next video."
     },
     {
-      "q": "Can other software send a job?",
-      "a": "Yes. The API lets your own software send a job. Email support@aivideosugc.com if you need access."
+      "q": "Can my own software start a photo or video?",
+      "a": "Yes. The API is a connection that lets your own software start a photo or video. Email support@aivideosugc.com if you need access."
     },
     {
       "q": "Can I make more than one version at a time?",
-      "a": "Yes. Make a batch of versions from one product photo. Each version shows its credit cost before it starts."
+      "a": "Yes. A batch means several versions from one product photo. Each version shows how many credits it uses before it starts."
     }
   ],
   "relatedLinks": [

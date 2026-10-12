@@ -1,15 +1,15 @@
 {
   "id": "ai-actors",
   "title": "AI Actors for UGC Ads | AIVideosUGC",
-  "description": "Create UGC ads from one product photo. Choose an AI actor, write the line, and make a fresh cut for paid ads, product pages, or social posts.",
+  "description": "Pick an AI actor and a voice, then make a shop video from one product photo. Write the words or let AI write them for paid ads, product pages, or social posts.",
   "h1": "AI Actors for UGC Ads You Can Cast From One Photo",
   "eyebrow": "AI actors",
-  "lead": "Pick a presenter and a voice, write the line or let AI draft it, and make another cut from one product photo.",
+  "lead": "Pick an actor and a voice. Write the words, or let AI write them. One product photo makes the video.",
   "actor_visual": {
     "titles": {
       "m2": {
         "h2": "How to Make an AI Actor Ad in 3 Simple Steps",
-        "lead": "Upload a product photo, pick a voice, and publish a vertical clip."
+        "lead": "Upload a product photo, pick a voice, and post a tall phone video."
       }
     },
     "steps": {
@@ -22,8 +22,8 @@
       "resultPosition": "center 20%",
       "options": [
         [
-          "Frame",
-          "9:16 vertical"
+          "Size",
+          "Tall phone (9:16)"
         ],
         [
           "Length",
@@ -31,7 +31,7 @@
         ],
         [
           "Template",
-          "Actor-led product ad"
+          "Actor talks about the product"
         ]
       ],
       "length": 10,
@@ -39,15 +39,15 @@
       "items": [
         {
           "t": "Upload Your Product Photo",
-          "d": "Use one clear photo, or paste a product page link. Keep the item fully in frame."
+          "d": "Use one clear photo, or paste a product page link. Keep the whole product in the photo."
         },
         {
           "t": "Pick Actor and Voice",
-          "d": "Choose a presenter and a voice, then type the line or let AI draft the script."
+          "d": "Choose an actor and a voice. Type the words, or let AI write them."
         },
         {
           "t": "Edit and Publish",
-          "d": "Add captions and library music in the editor, then publish to TikTok or Meta."
+          "d": "Add words on screen and a song from the song list, then post to TikTok, Facebook, or Instagram."
         }
       ],
       "actor_cards": [
@@ -116,11 +116,11 @@
     {
       "id": "indoor-1",
       "name": "Ari",
-      "style": "Indoor doorway take",
+      "style": "Indoor doorway video",
       "scene": "Indoor",
       "age": "20s",
       "gender": "Women",
-      "use": "Presents a product by the entryway",
+      "use": "Shows a product by the front door",
       "category": "Actor-led testimonial",
       "talent": "an adult East Asian woman in her twenties",
       "line": "I keep this ready by the door when I’m heading out.",
@@ -135,7 +135,7 @@
       "scene": "Indoor",
       "age": "30s",
       "gender": "Women",
-      "use": "Presents a product by the entryway",
+      "use": "Shows a product by the front door",
       "category": "Actor-led testimonial",
       "talent": "an adult white woman in her thirties",
       "line": "This earns a place in my quiet at-home routine.",
@@ -146,7 +146,7 @@
     {
       "id": "home-1",
       "name": "Dev",
-      "style": "Home living-room take",
+      "style": "Home living-room video",
       "scene": "Home",
       "age": "30s",
       "gender": "Men",
@@ -161,7 +161,7 @@
     {
       "id": "home-2",
       "name": "Elena",
-      "style": "Home living-room take",
+      "style": "Home living-room video",
       "scene": "Home",
       "age": "40s",
       "gender": "Women",
@@ -176,7 +176,7 @@
     {
       "id": "outdoor-1",
       "name": "Priyanka",
-      "style": "Outdoor city take",
+      "style": "Outdoor city video",
       "scene": "Outdoor",
       "age": "30s",
       "gender": "Women",
@@ -191,7 +191,7 @@
     {
       "id": "outdoor-2",
       "name": "Jon",
-      "style": "Outdoor city take",
+      "style": "Outdoor city video",
       "scene": "Outdoor",
       "age": "30s",
       "gender": "Men",
@@ -206,7 +206,7 @@
     {
       "id": "living-room-1",
       "name": "Celine",
-      "style": "Living-room take",
+      "style": "Living-room video",
       "scene": "Living Room",
       "age": "30s",
       "gender": "Women",
@@ -221,7 +221,7 @@
     {
       "id": "living-room-2",
       "name": "Gordon",
-      "style": "Living-room take",
+      "style": "Living-room video",
       "scene": "Living Room",
       "age": "60s+",
       "gender": "Men",
@@ -236,11 +236,11 @@
     {
       "id": "studio-1",
       "name": "Ravi",
-      "style": "Studio take",
+      "style": "Studio video",
       "scene": "Studio",
       "age": "30s",
       "gender": "Men",
-      "use": "Delivers a clean product talking point",
+      "use": "Says one clear thing about the product",
       "category": "Actor-led testimonial",
       "talent": "an adult South Asian man in his thirties",
       "line": "My studio desk is where I reach for this before recording.",
@@ -251,11 +251,11 @@
     {
       "id": "studio-2",
       "name": "Evan",
-      "style": "Studio take",
+      "style": "Studio video",
       "scene": "Studio",
       "age": "20s",
       "gender": "Men",
-      "use": "Delivers a clean product talking point",
+      "use": "Says one clear thing about the product",
       "category": "Actor-led testimonial",
       "talent": "an adult Black man in his twenties",
       "line": "Between studio takes, I keep this in my rotation.",
@@ -266,7 +266,7 @@
     {
       "id": "office-1",
       "name": "Omar",
-      "style": "Office take",
+      "style": "Office video",
       "scene": "Office",
       "age": "40s",
       "gender": "Men",
@@ -296,7 +296,7 @@
     {
       "id": "garden-1",
       "name": "Claire",
-      "style": "Garden take",
+      "style": "Garden video",
       "scene": "Garden",
       "age": "30s",
       "gender": "Women",
@@ -311,7 +311,7 @@
     {
       "id": "garden-2",
       "name": "Amara",
-      "style": "Garden take",
+      "style": "Garden video",
       "scene": "Garden",
       "age": "30s",
       "gender": "Women",
@@ -326,7 +326,7 @@
     {
       "id": "gym-1",
       "name": "Sofia",
-      "style": "Gym take",
+      "style": "Gym video",
       "scene": "Gym",
       "age": "30s",
       "gender": "Women",
@@ -341,7 +341,7 @@
     {
       "id": "gym-2",
       "name": "Lana",
-      "style": "Gym take",
+      "style": "Gym video",
       "scene": "Gym",
       "age": "30s",
       "gender": "Women",
@@ -356,7 +356,7 @@
     {
       "id": "cafe-1",
       "name": "Tess",
-      "style": "Cafe take",
+      "style": "Cafe video",
       "scene": "Cafe",
       "age": "20s",
       "gender": "Women",
@@ -371,7 +371,7 @@
     {
       "id": "cafe-2",
       "name": "Yara",
-      "style": "Cafe window take",
+      "style": "Cafe window video",
       "scene": "Cafe",
       "age": "30s",
       "gender": "Women",
@@ -386,7 +386,7 @@
     {
       "id": "kitchen-1",
       "name": "Asha",
-      "style": "Kitchen take",
+      "style": "Kitchen video",
       "scene": "Kitchen",
       "age": "30s",
       "gender": "Women",
@@ -401,7 +401,7 @@
     {
       "id": "kitchen-2",
       "name": "Mara",
-      "style": "Kitchen take",
+      "style": "Kitchen video",
       "scene": "Kitchen",
       "age": "30s",
       "gender": "Women",
@@ -416,11 +416,11 @@
     {
       "id": "podcast-1",
       "name": "Leonie",
-      "style": "Podcast take",
+      "style": "Podcast video",
       "scene": "Podcast",
       "age": "30s",
       "gender": "Women",
-      "use": "Builds a product talking point for a podcast",
+      "use": "Says one thing about the product in a podcast",
       "category": "Actor-led testimonial",
       "talent": "an adult South Asian woman in her thirties",
       "line": "At the mic, I bring this when I have a point to share.",
@@ -431,11 +431,11 @@
     {
       "id": "podcast-2",
       "name": "Bria",
-      "style": "Podcast take",
+      "style": "Podcast video",
       "scene": "Podcast",
       "age": "20s",
       "gender": "Women",
-      "use": "Builds a product talking point for a podcast",
+      "use": "Says one thing about the product in a podcast",
       "category": "Actor-led testimonial",
       "talent": "an adult Black woman in her twenties",
       "line": "On mic, I like having this ready for my next take.",
@@ -446,7 +446,7 @@
     {
       "id": "fitness-1",
       "name": "Caleb",
-      "style": "Fitness take",
+      "style": "Fitness video",
       "scene": "Fitness",
       "age": "30s",
       "gender": "Men",
@@ -461,7 +461,7 @@
     {
       "id": "fitness-2",
       "name": "Rina",
-      "style": "Fitness take",
+      "style": "Fitness video",
       "scene": "Fitness",
       "age": "30s",
       "gender": "Women",
@@ -476,7 +476,7 @@
     {
       "id": "beach-1",
       "name": "Nia",
-      "style": "Beach take",
+      "style": "Beach video",
       "scene": "Beach",
       "age": "30s",
       "gender": "Women",
@@ -491,7 +491,7 @@
     {
       "id": "beach-2",
       "name": "Lola",
-      "style": "Beachfront take",
+      "style": "Beachfront video",
       "scene": "Beach",
       "age": "30s",
       "gender": "Women",
@@ -506,7 +506,7 @@
     {
       "id": "car-1",
       "name": "Mateo",
-      "style": "Car take",
+      "style": "Car video",
       "scene": "Car",
       "age": "30s",
       "gender": "Men",
@@ -521,7 +521,7 @@
     {
       "id": "car-2",
       "name": "Jade",
-      "style": "Car take",
+      "style": "Car video",
       "scene": "Car",
       "age": "30s",
       "gender": "Women",
@@ -536,11 +536,11 @@
     {
       "id": "hospital-1",
       "name": "Adrian",
-      "style": "Hospital take",
+      "style": "Hospital video",
       "scene": "Hospital",
       "age": "30s",
       "gender": "Men",
-      "use": "Introduces a product in a bright care setting",
+      "use": "Introduces a product in a hospital",
       "category": "Actor-led testimonial",
       "talent": "an adult white man in his thirties",
       "line": "Hallway pauses give me a moment to reach for this.",
@@ -551,11 +551,11 @@
     {
       "id": "hospital-2",
       "name": "Sana",
-      "style": "Hospital take",
+      "style": "Hospital video",
       "scene": "Hospital",
       "age": "30s",
       "gender": "Women",
-      "use": "Introduces a product in a bright care setting",
+      "use": "Introduces a product in a hospital",
       "category": "Actor-led testimonial",
       "talent": "an adult South Asian woman in her thirties",
       "line": "For everyday care, I like keeping this close.",
@@ -566,7 +566,7 @@
     {
       "id": "balcony-1",
       "name": "Tessa",
-      "style": "Balcony take",
+      "style": "Balcony video",
       "scene": "Balcony",
       "age": "30s",
       "gender": "Women",
@@ -581,7 +581,7 @@
     {
       "id": "balcony-2",
       "name": "Iris",
-      "style": "Balcony take",
+      "style": "Balcony video",
       "scene": "Balcony",
       "age": "40s",
       "gender": "Women",
@@ -596,7 +596,7 @@
     {
       "id": "pet-1",
       "name": "Rhea",
-      "style": "Pet take",
+      "style": "Pet video",
       "scene": "Pet",
       "age": "30s",
       "gender": "Women",
@@ -611,7 +611,7 @@
     {
       "id": "pet-2",
       "name": "Anika",
-      "style": "Pet take",
+      "style": "Pet video",
       "scene": "Pet",
       "age": "30s",
       "gender": "Women",
@@ -626,7 +626,7 @@
     {
       "id": "shopping-1",
       "name": "Lena",
-      "style": "Shopping take",
+      "style": "Shopping video",
       "scene": "Shopping",
       "age": "30s",
       "gender": "Women",
@@ -641,7 +641,7 @@
     {
       "id": "shopping-2",
       "name": "Casey",
-      "style": "Shopping take",
+      "style": "Shopping video",
       "scene": "Shopping",
       "age": "20s",
       "gender": "Women",
@@ -656,7 +656,7 @@
     {
       "id": "sports-1",
       "name": "Damon",
-      "style": "Sports take",
+      "style": "Sports video",
       "scene": "Sports",
       "age": "30s",
       "gender": "Men",
@@ -671,7 +671,7 @@
     {
       "id": "sports-2",
       "name": "Mireya",
-      "style": "Sports take",
+      "style": "Sports video",
       "scene": "Sports",
       "age": "20s",
       "gender": "Women",
@@ -686,7 +686,7 @@
     {
       "id": "study-room-1",
       "name": "Maxwell",
-      "style": "Study-room take",
+      "style": "Study-room video",
       "scene": "Study Room",
       "age": "30s",
       "gender": "Men",
@@ -701,7 +701,7 @@
     {
       "id": "study-room-2",
       "name": "Sora",
-      "style": "Study-room take",
+      "style": "Study-room video",
       "scene": "Study Room",
       "age": "30s",
       "gender": "Women",
@@ -716,7 +716,7 @@
     {
       "id": "classroom-1",
       "name": "Noah",
-      "style": "Classroom take",
+      "style": "Classroom video",
       "scene": "Classroom",
       "age": "20s",
       "gender": "Men",
@@ -731,11 +731,11 @@
     {
       "id": "terrace-1",
       "name": "Elise",
-      "style": "Terrace take",
+      "style": "Terrace video",
       "scene": "Terrace",
       "age": "30s",
       "gender": "Women",
-      "use": "Shares a product thought from an outdoor terrace",
+      "use": "Shares one thought about the product on a terrace",
       "category": "Actor-led testimonial",
       "talent": "an adult Latina woman in her thirties with a straight chin-length copper-red bob",
       "line": "I use rooftop breaks to recommend this.",
@@ -746,11 +746,11 @@
     {
       "id": "terrace-2",
       "name": "Ken",
-      "style": "Terrace take",
+      "style": "Terrace video",
       "scene": "Terrace",
       "age": "30s",
       "gender": "Women",
-      "use": "Shares a product thought from an outdoor terrace",
+      "use": "Shares one thought about the product on a terrace",
       "category": "Actor-led testimonial",
       "talent": "an adult Black woman in her thirties",
       "line": "On this sunny terrace, I keep this ready to recommend.",
@@ -761,7 +761,7 @@
     {
       "id": "bathroom-1",
       "name": "Lila",
-      "style": "Bathroom take",
+      "style": "Bathroom video",
       "scene": "Bathroom",
       "age": "30s",
       "gender": "Women",
@@ -776,11 +776,11 @@
     {
       "id": "exercise-1",
       "name": "Vera",
-      "style": "Exercise take",
+      "style": "Exercise video",
       "scene": "Exercise",
       "age": "40s",
       "gender": "Women",
-      "use": "Demonstrates a workout accessory between sets",
+      "use": "Shows a workout item between exercises",
       "category": "Actor-led testimonial",
       "talent": "an adult Black woman in her forties with short tightly coiled natural hair under a white sun visor",
       "line": "After a waterside workout, I’m glad I brought this along.",
@@ -791,11 +791,11 @@
     {
       "id": "exercise-2",
       "name": "Akio",
-      "style": "Exercise take",
+      "style": "Exercise video",
       "scene": "Exercise",
       "age": "20s",
       "gender": "Women",
-      "use": "Demonstrates a workout accessory between sets",
+      "use": "Shows a workout item between exercises",
       "category": "Actor-led testimonial",
       "talent": "an adult East Asian woman in her twenties",
       "line": "Park stretches give me time to tell you why I chose this.",
@@ -806,7 +806,7 @@
     {
       "id": "bedroom-1",
       "name": "Nora",
-      "style": "Bedroom take",
+      "style": "Bedroom video",
       "scene": "Bedroom",
       "age": "30s",
       "gender": "Women",
@@ -821,7 +821,7 @@
     {
       "id": "garage-1",
       "name": "Luis",
-      "style": "Garage take",
+      "style": "Garage video",
       "scene": "Garage",
       "age": "50s",
       "gender": "Men",
@@ -836,7 +836,7 @@
     {
       "id": "interview-1",
       "name": "Gianna",
-      "style": "Interview take",
+      "style": "Interview video",
       "scene": "Interview",
       "age": "30s",
       "gender": "Women",
@@ -851,7 +851,7 @@
     {
       "id": "pool-1",
       "name": "Tara",
-      "style": "Pool take",
+      "style": "Pool video",
       "scene": "Pool",
       "age": "20s",
       "gender": "Women",
@@ -866,11 +866,11 @@
     {
       "id": "reporting-1",
       "name": "Dalia",
-      "style": "Reporting take",
+      "style": "Reporting video",
       "scene": "Reporting",
       "age": "30s",
       "gender": "Women",
-      "use": "Delivers a concise product update on location",
+      "use": "Gives a short product update, like a news report",
       "category": "Actor-led testimonial",
       "talent": "an adult Latina woman in her thirties",
       "line": "On today’s update, I’m bringing this point straight to camera.",
@@ -881,7 +881,7 @@
     {
       "id": "travel-1",
       "name": "Avery",
-      "style": "Travel take",
+      "style": "Travel video",
       "scene": "Travel",
       "age": "20s",
       "gender": "Men",
@@ -896,7 +896,7 @@
     {
       "id": "yoga-1",
       "name": "Anjali",
-      "style": "Yoga take",
+      "style": "Yoga video",
       "scene": "Yoga",
       "age": "30s",
       "gender": "Women",
@@ -913,32 +913,32 @@
     {
       "eyebrow": "Where it runs",
       "h2": "Different Uses for an AI Actor",
-      "lead": "Four places to put the clip after you pick the face, the voice, and the line.",
+      "lead": "Four places to put the video after you pick the face, the voice, and the words.",
       "items": [
         {
           "t": "Paid ads",
-          "d": "Match the face, voice, and background to the shopper you want. Run the same photo again in another language, then publish to TikTok or Meta.",
+          "d": "Match the face, voice, and background to the shopper you want. Use the same photo in another language, then post to TikTok, Facebook, or Instagram.",
           "img": "n:guide:cwa-uses-paid-01-r1",
           "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway for a paid social ad.",
           "frame": "phone"
         },
         {
           "t": "Product pages",
-          "d": "Put the presenter on the product page to walk through one feature, with captions a shopper can read.",
+          "d": "Put the actor on the product page to explain one feature. Shoppers can read the words on screen.",
           "img": "n:guide:cwa-uses-product-page-02-r1",
           "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk for a product page video.",
           "frame": "browser"
         },
         {
           "t": "Social posts",
-          "d": "Keep one face across posts. Swap the hook or the language when a post starts to feel familiar.",
+          "d": "Use the same face on each post. Change the opening line or the language when people have seen that post a lot.",
           "img": "n:guide:cwa-uses-social-03-r1",
           "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote for a vertical social clip.",
           "frame": "phone"
         },
         {
           "t": "Product guides",
-          "d": "Use the actor for one setup step, with a voice and captions a buyer can follow.",
+          "d": "Use the actor for one setup step. A buyer can follow the voice and the words on screen.",
           "img": "n:guide:cwa-uses-guide-04-r1",
           "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp for a product guide.",
           "frame": "none"
@@ -946,44 +946,44 @@
       ]
     }
   ],
-  "cta_title": "Cast a presenter and make the first cut",
-  "cta_lead": "Pick an actor and a voice, then see the credit cost before you start.",
+  "cta_title": "Pick an actor and make your first video",
+  "cta_lead": "Pick an actor and a voice. You see the credit cost before you start. Credits are what you spend on each video.",
   "faq": [
     {
       "q": "What is an AI actor?",
-      "a": "A generated adult presenter, not a customer and not someone you hired. You pick the face and a voice, write a line or let AI draft it, and the spokesperson tool makes a product clip."
+      "a": "A person made by AI who speaks on camera. Not a real customer, and not someone you hired. You pick the face and a voice. You write the words, or AI writes them. This page makes the product video."
     },
     {
-      "q": "How does a line become a clip?",
-      "a": "Upload one product photo, choose a presenter and a voice, and approve the script. The clip you start on this page is 10 seconds in a 9:16 frame, with captions you can edit. A failed job returns its credits."
+      "q": "How do the words become a video?",
+      "a": "Upload one product photo, or paste a product page link. Pick an actor and a voice, then approve what they will say. The video on this page is 10 seconds and tall for a phone (9:16). You can edit the words on screen. It costs 40 credits. Credits are the balance you spend. If the video fails, those credits come back."
     },
     {
-      "q": "Where can I use the clip?",
-      "a": "Use it as a paid placement, on a product page, in an organic post, or as a short setup guide. Finished files can be used commercially, have no watermark, and can be published to TikTok or Meta."
+      "q": "Where can I use the video?",
+      "a": "Use it as a paid ad, on a product page, in a normal social post, or as a short setup guide. You can use the finished video to sell. It has no watermark, so no logo is stamped on the video. You can post it to TikTok, Facebook, or Instagram."
     },
     {
       "q": "Can an actor explain one feature of the product?",
-      "a": "Yes. Write one feature in the line and keep that part of the product visible. This is a product clip, not a long lesson."
+      "a": "Yes. Name one feature in what they say, and keep that part of the product visible. This is a short product video, not a long lesson."
     },
     {
       "q": "Can I use an actor for staff training?",
-      "a": "No. This tool makes product clips for selling. It does not build training or onboarding films. The closest use is a short setup guide for a buyer."
+      "a": "No. This tool makes product videos for selling. It does not make training videos for your staff. The closest use is a short setup guide for a buyer."
     },
     {
       "q": "How do shops use an actor in a social post?",
-      "a": "They pick a presenter and a voice, edit captions and music on the page, and publish a 9:16 clip. To test another hook, they keep the photo and run again."
+      "a": "They pick an actor and a voice, edit the words on screen and the music on the page, and post a tall phone video (9:16). To try a new opening line, they keep the photo and make the video again."
     },
     {
       "q": "Can I pick the face, a separate voice, and a language?",
-      "a": "Yes. This page lists 53 adult presenters. You choose a voice, write the line in the language you sell in, and you can use a voice you have rights to clone. There is no separate language count to memorize."
+      "a": "Yes. This page lists 53 adult actors. You pick a voice. You write the words in the language you sell in. You can also use a voice you are allowed to copy. There is no fixed language list."
     },
     {
-      "q": "Can I use the clip commercially?",
-      "a": "Yes. Finished files can be used commercially and have no watermark. The presenter is generated. Do not label the clip as a review from a real customer."
+      "q": "Can I use the video to sell?",
+      "a": "Yes. You can use the finished video to sell. It has no watermark, so no logo is stamped on it. The person is made by AI. Do not call it a review from a real customer."
     },
     {
       "q": "What should I avoid when I publish?",
-      "a": "Do not present a generated person as a real buyer. Follow the disclosure rules of the channel you publish on, and add any price yourself after download."
+      "a": "Do not show an AI-made person as a real buyer. Follow each app's rules for saying the video is AI-made. Add any price yourself after you download."
     }
   ],
   "blockOrder": [
@@ -998,40 +998,40 @@
     "cta"
   ],
   "steps_h2": "How to Make an AI Actor Ad in 3 Simple Steps",
-  "steps_lead": "Upload a product photo, pick a voice, and publish a vertical clip.",
+  "steps_lead": "Upload a product photo, pick a voice, and post a tall phone video.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use one clear photo, or paste a product page link. Keep the item fully in frame."
+      "d": "Use one clear photo, or paste a product page link. Keep the whole product in the photo."
     },
     {
       "t": "Pick Actor and Voice",
-      "d": "Choose a presenter and a voice, then type the line or let AI draft the script."
+      "d": "Choose an actor and a voice. Type the words, or let AI write them."
     },
     {
       "t": "Edit and Publish",
-      "d": "Add captions and library music in the editor, then publish to TikTok or Meta."
+      "d": "Add words on screen and a song from the song list, then post to TikTok, Facebook, or Instagram."
     }
   ],
   "reasons": {
     "h2": "Reasons to Use an AI Actor",
-    "lead": "Cast here when you want another cut without booking a camera day.",
+    "lead": "Use this when you want a new video without booking a camera day.",
     "items": [
       {
         "t": "Speed",
-        "d": "Pick a face and a voice, then make a 10-second vertical ad before a camera day is on the calendar.",
+        "d": "Pick a face and a voice, then make a 10-second tall phone ad without booking a camera day.",
         "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
         "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
       },
       {
-        "t": "Batch",
-        "d": "Keep the same product photo. Swap the actor, the opening, or the language when you want another cut to test.",
+        "t": "More versions",
+        "d": "Keep the same product photo. Change the actor, the first line, or the language when you want another video to test.",
         "img": "n:guide:fx50-ai-actors-benefit-2",
         "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
       },
       {
-        "t": "Your script",
-        "d": "The presenter says the line you approved, with captions and a music track you can edit on the page.",
+        "t": "Your words",
+        "d": "The actor says the words you approved. You can edit the words on screen and the music on this page.",
         "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
         "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
       }
@@ -1039,72 +1039,72 @@
   },
   "reviews": {
     "h2": "How Shops Put an Actor in the Ad",
-    "lead": "Example uses, not quotes from customers. Each card is a kind of clip you can make.",
+    "lead": "Example uses, not quotes from customers. Each card is one kind of video you can make.",
     "items": [
       {
         "example": true,
         "who": "Skincare shop",
-        "t": "Jar, voice, and captions",
-        "d": "A skincare shop has a presenter hold the jar, say the one benefit in the script, and show auto captions on a 10-second feed test."
+        "t": "Jar, voice, and words on screen",
+        "d": "A skincare shop shows the jar and has the actor say one benefit. Words on screen show on a 10-second ad test."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Bottle and an offer in the editor",
-        "d": "A drink seller has a presenter name the flavor and show the bottle, then adds the offer in the editor."
+        "d": "A drink seller has the actor say the flavor and show the bottle. Then they type the offer in the editor on this page."
       },
       {
         "example": true,
         "who": "Gadget shop",
-        "t": "One control, up close",
-        "d": "A gadget shop has a presenter point to one control on the device in a short vertical clip."
+        "t": "One part, up close",
+        "d": "A gadget shop has the actor point to one part of the device in a short phone video."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Fit in one sentence",
-        "d": "An apparel shop has a presenter name the fit while the garment stays visible, for an organic post."
+        "d": "An apparel shop has the actor say how it fits, with the clothes still visible. The post is a normal social post, not a paid ad."
       },
       {
         "example": true,
         "who": "Multi-country shop",
         "t": "The same face, another language",
-        "d": "A shop keeps the actor and the product photo, writes the line in a second language, and picks a voice for it."
+        "d": "A shop keeps the same actor and product photo. They write the words in a second language and pick a voice."
       },
       {
         "example": true,
         "who": "Small team",
         "t": "Edits on this page",
-        "d": "A small team changes captions and a music track in the editor, without opening a second app."
+        "d": "A small team changes the words on screen and the music in the editor, without opening a second app."
       },
       {
         "example": true,
         "who": "Agency",
         "t": "A few actors for one product",
-        "d": "An agency runs the same client photo with a different presenter and opening, then sends the downloads."
+        "d": "An agency uses the same client photo with a different actor and opening line, then sends the video files."
       },
       {
         "example": true,
         "who": "Home brand",
         "t": "No lighting setup",
-        "d": "A home brand makes a presenter clip from one product photo, instead of setting lights for every post."
+        "d": "A home brand makes an actor video from one product photo, instead of setting lights for every post."
       },
       {
         "example": true,
         "who": "Catalog seller",
-        "t": "A link, then a script",
-        "d": "A catalog seller pastes a product page link, edits the draft script, and downloads a presenter clip."
+        "t": "A link, then the words",
+        "d": "A catalog seller pastes a product page link, edits the words, and downloads an actor video."
       },
       {
         "example": true,
         "who": "Founder-led shop",
-        "t": "A brief, then a presenter",
-        "d": "A founder describes the product in a short brief, reviews the script, and lets the actor read it."
+        "t": "A short note, then an actor",
+        "d": "A founder writes a short note about the product, checks the words, and lets the actor read them."
       }
     ]
   },
   "related_h2": "Explore Other Tools",
-  "related_lead": "Start from a link, an image, or a script, then put an actor on camera.",
+  "related_lead": "Start from a link, a photo, or the words you want said, then add an actor who speaks on screen.",
   "relatedLinks": [
     "spokesperson-videos",
     "url-to-video",
@@ -1114,23 +1114,23 @@
     "product-videos"
   ],
   "benefits_h2": "Reasons to Use an AI Actor",
-  "benefits_lead": "Cast here when you want another cut without booking a camera day.",
+  "benefits_lead": "Use this when you want a new video without booking a camera day.",
   "benefits": [
     {
       "t": "Speed",
-      "d": "Pick a face and a voice, then make a 10-second vertical ad before a camera day is on the calendar.",
+      "d": "Pick a face and a voice, then make a 10-second tall phone ad without booking a camera day.",
       "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
       "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
     },
     {
-      "t": "Batch",
-      "d": "Keep the same product photo. Swap the actor, the opening, or the language when you want another cut to test.",
+      "t": "More versions",
+      "d": "Keep the same product photo. Change the actor, the first line, or the language when you want another video to test.",
       "img": "n:guide:fx50-ai-actors-benefit-2",
       "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
     },
     {
-      "t": "Your script",
-      "d": "The presenter says the line you approved, with captions and a music track you can edit on the page.",
+      "t": "Your words",
+      "d": "The actor says the words you approved. You can edit the words on screen and the music on this page.",
       "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
       "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
     }

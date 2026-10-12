@@ -1,10 +1,10 @@
 {
   "id": "tpl-film",
   "title": "AI Cinematic Product Video From One Photo | AIVideosUGC",
-  "description": "AI cinematic product video from one photo with moody light and a slow camera move. Use 16:9 for web or 9:16 for Shorts/Reels, with 6, 10, 15 or 30 seconds.",
+  "description": "AI cinematic product video from one photo: moody light and a slow camera move. Use wide 16:9 on the web or tall 9:16 on a phone, in 6, 10, 15 or 30 seconds.",
   "h1": "Cinematic Product Video From One Still Photo",
-  "eyebrow": "Cinematic video template",
-  "lead": "Pick a moody reveal and add one photo, so the product gets a slow camera move, a voice, and a music bed without a film crew.",
+  "eyebrow": "Film-style video template",
+  "lead": "Pick a moody opening and add one photo. The product gets a slow camera move, a voice, and background music, with no film crew.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -15,22 +15,22 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a sharp photo with the full silhouette in frame. A clear edge gives the move something to follow."
+      "d": "Use a sharp photo that shows the full product outline. A clear edge gives the camera move something to follow."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the surface, one light, and one slow move. Then pick one size and a length from 6 to 30 seconds."
+      "d": "Name the surface, one light, and one slow move. Then pick a size and 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Add a voice, captions, and a music bed, then download. A logo on the photo stays. No new logo is added."
+      "d": "Add a voice, captions, and background music, then download. A logo on the photo stays. No new logo is added."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "16:9 · YouTube & web"
+        "16:9 · wide, YouTube & web"
       ],
       [
         "Length",
@@ -38,7 +38,7 @@
       ],
       [
         "Also try",
-        "9:16 · Shorts & Reels"
+        "9:16 · tall, Shorts & Reels"
       ]
     ],
     "cta": "Make my cinematic clip"
@@ -46,35 +46,35 @@
   "faq": [
     {
       "q": "What is a cinematic product video template?",
-      "a": "A ready scene that gives one product photo a controlled light and a slow reveal. You bring the still, and you can add a voice, captions, and a music bed so the clip opens like a short brand film."
+      "a": "A ready scene for one product photo, with a light you choose and a slow camera move. You add the photo, a voice, captions, and background music. The clip opens like a short film."
     },
     {
       "q": "How do I make the film?",
-      "a": "Upload a sharp photo or paste a product link, name the surface, one light, and one camera move, pick a size and a length, then add sound in the editor and download."
+      "a": "Upload a sharp photo, or paste a product link. Name the surface, one light, and one camera move. Pick a size and a length. Then add sound in the editor and download."
     },
     {
       "q": "Why start from a photo instead of a film crew?",
-      "a": "The set, the light, and the move are generated from the photo you already have. You skip the crew, the rental, and the reshoot."
+      "a": "The set, the light, and the camera move are made from the photo you already have. You skip the crew, the rental, and a new shoot."
     },
     {
       "q": "Who is this scene for?",
-      "a": "Shops with a clear product shape or finish, such as speakers, bottles, lamps, watches, and sunglasses, that want a polished open for a page or an ad."
+      "a": "Shops that sell a product with a clear shape or finish, such as speakers, bottles, lamps, watches, or sunglasses. Use it when you want a polished opening for a page or an ad."
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Start with a sharp full-silhouette photo and name one move, such as a slow push-in or a short side glide. Check the edge before you post."
+      "a": "Start with a sharp photo that shows the whole product. Name one move, such as moving closer or sliding along the side. Check the edge before you post."
     },
     {
       "q": "What photo should I upload?",
-      "a": "A sharp photo with the full product in frame, clear edges, and enough contrast against the background. A public product link works when that page already shows the still."
+      "a": "A sharp photo with the full product in the frame and clear edges, so it stands out from the background. A public product link works when that page already shows the photo."
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "Pick one of 9:16, 1:1, 16:9, 4:3, or 3:4 for each job. Make 16:9 for a page and 9:16 for a feed as two files from the same photo. Lengths are 6, 10, 15, or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Each video uses one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. 4:3 is a shorter wide size, and 3:4 is a little taller than a square. Make a wide 16:9 file for a page, and a tall 9:16 file for a phone post. Those are two files from the same photo. Lengths are 6, 10, 15, or 30 seconds. You see the credit cost before it starts."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
+      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Credits are the balance on your monthly plan. If the clip fails, those credits come back. Plans start at $24.50 a month."
     },
     {
       "q": "Does the clip include a voice, music, or my logo?",
@@ -82,11 +82,11 @@
     },
     {
       "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no AIVideosUGC watermark and can run on your site and in paid ads. You can also send it to TikTok or Meta from the workspace. Review reflective frames for glare before you post. The clip is your ad, not a customer quote."
+      "a": "Yes. The download has no AIVideosUGC watermark, so our name is not stamped on the file. It can run on your site and in paid ads. You can also send it to TikTok, or to Meta (Facebook and Instagram), from your account. Check shiny shots for glare before you post. The clip is your ad, not a customer quote."
     },
     {
-      "q": "Can I batch products or use the API?",
-      "a": "Yes. Reuse the same light across a set of stills, switch the spoken line to another language, or send photos through the API. Each job shows its credit cost first."
+      "q": "Can I make several products, or use the API?",
+      "a": "Yes. Reuse the same light for a set of photos. That is a batch. You can switch the spoken line to another language. The API lets your own software send the photos. Each one shows its credit cost first."
     }
   ],
   "visual": {
@@ -102,12 +102,12 @@
       "source": "n:guide:c1-tpl-film-m2-source",
       "sourceAlt": "Compact black speaker photographed alone on a dark display stand.",
       "sourceTitle": "Product photo",
-      "sourceHint": "Keep the product silhouette crisp against its background.",
+      "sourceHint": "Keep the full product outline sharp against the background.",
       "result": "n:guide:f14-film-steps-result-r2",
       "options": [
         [
           "Size",
-          "16:9 · YouTube & web"
+          "16:9 · wide, YouTube & web"
         ],
         [
           "Length",
@@ -115,11 +115,11 @@
         ],
         [
           "Also try",
-          "9:16 · Shorts & Reels"
+          "9:16 · tall, Shorts & Reels"
         ]
       ],
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a dark sideboard beside a tall window, a compact black speaker catches one cool highlight as the camera makes a slow push-in. Keep the woven grille and rounded silhouette centered. End with the speaker still in the pool of light. Sound: quiet room tone, and a music bed if you add one.",
+      "prompt": "A compact black speaker sits on a dark stand by a tall window. One cool highlight hits it as the camera moves closer. The woven front and the rounded outline stay in the center. The last shot still shows the speaker in that light. You hear a quiet room. Add background music if you want it. Keep the speaker's shape, color, and label as in your photo.",
       "mode": "video",
       "resultAlt": "Rounded pebble-shaped black speaker catches a cool cinematic highlight on a dark sideboard."
     },
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -207,7 +207,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -216,7 +216,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Warm Light Watch Detail",
           "chips": [
             "accessories"
           ],
@@ -279,7 +279,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Morning Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Spin View: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -324,7 +324,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Straight to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -333,7 +333,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -342,7 +342,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -351,7 +351,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -369,7 +369,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -405,7 +405,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -432,7 +432,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Close-up Silver Signet Ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -477,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -486,7 +486,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -504,7 +504,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -522,7 +522,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -563,7 +563,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "product packshot photos"
+      "label": "clean product photos"
     },
     {
       "id": "tpl-bf",
@@ -571,7 +571,7 @@
     },
     {
       "id": "tpl-product-feature-callout-video",
-      "label": "product feature callout video"
+      "label": "feature highlight video"
     },
     {
       "id": "plat-facebook",
@@ -595,26 +595,26 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Use a Brand Film for Products",
-    "lead": "Example scenes. Each one shows how a shop could open a launch from one still.",
+    "h2": "How Shops Use a Film-Style Product Video",
+    "lead": "Example scenes. Each one shows how a shop could open a launch from one photo.",
     "items": [
       {
         "example": true,
         "who": "Bottle brand",
-        "t": "Rim light",
+        "t": "Thin edge light",
         "d": "Example: a matte bottle catches one narrow highlight on a dark surface."
       },
       {
         "example": true,
         "who": "Watch shop",
-        "t": "Slow pass",
-        "d": "Example: a watch on a dark strap takes a short side glide so the finish is easy to see."
+        "t": "Slow side move",
+        "d": "Example: a watch on a dark strap gets a short move along the side, so the finish is easy to see."
       },
       {
         "example": true,
         "who": "Audio brand",
-        "t": "Still, then a push-in",
-        "d": "Example: headphones on a dark stand get one push-in, instead of a rented set."
+        "t": "Photo, then move closer",
+        "d": "Example: headphones on a dark stand get one slow move closer, instead of a rented set."
       },
       {
         "example": true,
@@ -625,14 +625,14 @@
       {
         "example": true,
         "who": "Product page owner",
-        "t": "Wide, then a feed cut",
-        "d": "Example: the same photo is made once at 16:9 for the product page, and again at 9:16 for a short feed."
+        "t": "Wide, then a phone cut",
+        "d": "Example: the same photo is made once at wide 16:9 for the product page, and again at tall 9:16 for a phone post."
       },
       {
         "example": true,
         "who": "Small shop",
-        "t": "Voice and a music bed",
-        "d": "Example: a calm voice and a music bed are added in the built-in editor before the file is posted."
+        "t": "Voice and background music",
+        "d": "Example: a calm voice and background music are added in the editor before the file is posted."
       },
       {
         "example": true,
@@ -644,60 +644,60 @@
         "example": true,
         "who": "Glass brand",
         "t": "Glare check",
-        "d": "Example: a glass brand checks the reflective edge before posting, so a dark scene does not wash it out."
+        "d": "Example: a glass brand checks the shiny edge before posting, so a dark scene does not hide it."
       },
       {
         "example": true,
         "who": "Founder",
         "t": "A presenter, not a quote",
-        "d": "Example: if a person appears, they come from the actor library. The film is the brand's ad, not a customer quote."
+        "d": "Example: if a person appears, they come from the actor library, a list of AI presenters. The film is the brand's ad, not a customer quote."
       },
       {
         "example": true,
         "who": "Catalog lead",
         "t": "One light, several products",
-        "d": "Example: the same dark light is reused across a batch, and each clip can go to Meta."
+        "d": "Example: the same dark light is reused for several products, and each clip can go to Meta (Facebook and Instagram)."
       }
     ]
   },
   "related_h2": "Pages for a Cinematic Product Ad",
-  "related_lead": "Image-to-video, electronics scenes, and a Facebook page for the same kind of reveal.",
+  "related_lead": "Image to video, electronics scenes, and a Facebook page for the same kind of opening.",
   "cta_title": "Ready for a Slow Reveal?",
-  "cta_lead": "Upload one product photo, add a voice or a music bed if you want them, and see the credit cost before you start.",
+  "cta_lead": "Upload one product photo. Add a voice or background music if you want them. You see the credit cost before you start.",
   "definition": {
     "title": "What Is a Cinematic Product Video?",
     "paras": [
-      "A cinematic product video gives one still a controlled light and a slow camera move, so the product opens like a short brand film.",
-      "You can add a calm voice, captions, and a music bed in the built-in editor. The clip is your ad, not a customer quote."
+      "A cinematic product video gives one photo a light you choose and a slow camera move, so the product opens like a short film.",
+      "You can add a calm voice, captions, and background music in the editor. The clip is your ad, not a customer quote."
     ]
   },
   "reasons": {
     "h2": "Reasons to Use a Moody Product Video",
-    "lead": "One sharp photo stands in for the crew, the rental, and the reshoot.",
+    "lead": "One sharp photo replaces the crew, the rental, and a new shoot.",
     "items": [
       {
         "t": "No crew for the first look",
-        "d": "The set, the light, and the move come from the photo you already have."
+        "d": "The set, the light, and the camera move come from the photo you already have."
       },
       {
         "t": "The edge stays readable",
-        "d": "A clear silhouette gives the slow move something to follow, so the finish stays easy to see."
+        "d": "A clear outline gives the slow move something to follow, so the finish stays easy to see."
       },
       {
-        "t": "Sound without a separate bay",
-        "d": "Add a voice, captions, and a music bed in the same editor, then download."
+        "t": "Sound without another app",
+        "d": "Add a voice, captions, and background music in the same editor, then download."
       },
       {
-        "t": "One photo, another frame",
-        "d": "Make the wide cut for the product page, then make a 9:16 cut from the same photo for a short feed."
+        "t": "Wide page, then a phone size",
+        "d": "Make the wide cut for the product page, then make a tall 9:16 cut from the same photo for a phone post."
       },
       {
         "t": "A dark scene you can check",
-        "d": "Look at reflective frames before you post, so a highlight does not wash out the edge."
+        "d": "Look at shiny shots before you post, so a bright spot does not hide the edge."
       },
       {
-        "t": "Credits instead of a rental day",
-        "d": "A 15-second clip is 60 credits. A failed job returns them. Plans start at $24.50 a month."
+        "t": "Credits, not a rental day",
+        "d": "A 15-second clip uses 60 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month."
       }
     ]
   },
@@ -705,35 +705,35 @@
     {
       "eyebrow": "Features",
       "h2": "Features for a Moody Product Video",
-      "lead": "Light, movement, a voice, and a track can all come from the one still you upload.",
+      "lead": "Light, movement, a voice, and a music track can all come from the one photo you upload.",
       "items": [
         {
           "t": "A calm voice on the reveal",
-          "d": "Add an AI voice that names the product while the camera moves. It is narration, not a buyer quote."
+          "d": "Add an AI voice that names the product while the camera moves. It is a spoken line, not a buyer quote."
         },
         {
           "t": "Captions on the slow move",
           "d": "Put a short line on screen in the built-in editor, then download the file."
         },
         {
-          "t": "A batch under the same light",
-          "d": "Reuse one dark setup across the products you sell. Each clip shows its credit cost before it runs."
+          "t": "Several products, one light",
+          "d": "Reuse one dark setup for the products you sell. Each clip shows its credit cost before it starts."
         },
         {
           "t": "Start from the product link",
-          "d": "Paste a public product page when the still is already online. The move uses the product shown there."
+          "d": "Paste a public product page when the photo is already online. The camera move uses the product shown there."
         },
         {
-          "t": "A script for the open",
+          "t": "A script for the opening",
           "d": "Ask for a short line about the finish, then edit the words before the voice reads them."
         },
         {
           "t": "A presenter from the actor library",
-          "d": "If a person should appear, pick an AI actor. That person is not a customer and not a testimonial."
+          "d": "If a person should appear, pick an AI actor from the actor library. That person is not a customer and not a review."
         },
         {
           "t": "A track from the music library",
-          "d": "Lay a music bed under the room tone, or leave the reveal quiet."
+          "d": "Add background music under the quiet room sound, or keep only that room sound."
         },
         {
           "t": "Finish it in the built-in editor",
@@ -745,11 +745,11 @@
         },
         {
           "t": "Post to TikTok or Meta",
-          "d": "Send the finished file to TikTok or Meta from the workspace, or download it for the product page."
+          "d": "Send the finished file to TikTok, or to Meta (Facebook and Instagram), from your account. Or download it for the product page."
         },
         {
           "t": "An API for a product line",
-          "d": "Send stills through the API when a line needs the same reveal. Each job still shows its credit cost."
+          "d": "The API lets your own software send photos when a product line needs the same opening. Each one still shows its credit cost."
         }
       ]
     }

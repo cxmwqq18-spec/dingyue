@@ -1,10 +1,10 @@
 {
   "id": "tpl-beauty",
   "title": "Beauty Product Video Ads for Skincare Brands | AIVideosUGC",
-  "description": "Beauty product video ads from one skincare photo: show a routine, texture or review moment in 9:16 for TikTok and Reels, with 6, 10, 15 or 30 seconds.",
+  "description": "Beauty product video ads from one skincare photo. Show a routine, a texture, or a review in a tall 9:16 size for TikTok and Reels, at 6, 10, 15, or 30 seconds.",
   "h1": "Beauty Product Video Ads for Skincare Routines",
   "eyebrow": "Beauty video template",
-  "lead": "Pick a routine scene, add one skincare photo, and download a clip with a script, an AI voice, and captions you can edit.",
+  "lead": "Pick a routine template and add one skincare photo. Download a clip with a script, a spoken AI voice, and captions you can edit.",
   "secondary_keywords": [
     "skincare video ads",
     "serum video ad",
@@ -13,7 +13,7 @@
     "cosmetics product video"
   ],
   "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
-  "steps_lead": "One skincare photo, an AI voice, then a file you can caption and post.",
+  "steps_lead": "One skincare photo and a spoken AI voice, then a file you can caption and post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -25,14 +25,14 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download the file, add captions or the shade line, and check the cap before you post."
+      "d": "Download the file, add captions or the color name, and check the cap before you post."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 tall · TikTok & Reels"
       ],
       [
         "Length",
@@ -44,15 +44,15 @@
   "faq": [
     {
       "q": "What is a beauty product video template?",
-      "a": "A ready beauty scene with an AI actor, a voiceover, and a script. Add your bottle, jar, or tube and get a routine, texture, or review clip without filming a creator."
+      "a": "A ready beauty template with an AI actor, a spoken voice, and a script. Add your bottle, jar, or tube and get a routine, texture, or review clip without filming someone."
     },
     {
       "q": "How does the routine clip come together?",
-      "a": "The scene brings a hook, a script, visuals, and a voiceover. Upload your photo, adjust the line, pick 6, 10, 15, or 30 seconds, and download."
+      "a": "You get an opening line, a script, the pictures, and a spoken voice. Upload your photo, adjust the words, pick 6, 10, 15, or 30 seconds, and download."
     },
     {
       "q": "Why start here instead of booking a creator?",
-      "a": "You can post sooner, try another script, and change the line without a shoot. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
+      "a": "Credits are what each video spends. You can post sooner, try another script, and change the words without a shoot. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
     },
     {
       "q": "Who is this scene for?",
@@ -60,31 +60,31 @@
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Yes. Upload one clear photo and follow the three steps. Captions, a track from the music library, and the AI voice can be adjusted in the built-in editor."
+      "a": "Yes. Upload one clear photo and follow the three steps. Captions, a song from the music library, and the AI voice can be set in the editor on this site."
     },
     {
       "q": "Can the routine skip the face?",
-      "a": "Yes. Choose hands, a close-up, or a product-only beat when the package should stay the focus."
+      "a": "Yes. Choose hands, a close-up, or only the product when the package should stay the focus."
     },
     {
       "q": "Can I upload my own photos and clips?",
-      "a": "Yes. Use a JPG, PNG, or WebP of the full bottle, jar, or tube, or a short clip you have rights to. Keep the cap and label easy to see."
+      "a": "Yes. Use a photo file (JPG, PNG, or WebP) of the full bottle, jar, or tube, or a short clip you have the rights to. Keep the cap and label easy to see."
     },
     {
       "q": "Where can I publish the clip?",
-      "a": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4. Publish the file to TikTok or Meta, or to YouTube, in one step from the same project."
+      "a": "Pick a tall phone size (9:16), a square (1:1), or a wide screen (16:9). The 4:3 size is a bit wider than tall, and 3:4 is a bit taller than wide. Publish the file to TikTok, Facebook, Instagram, or YouTube in one step from the same project."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number first. A failed job returns those credits. Starter is $24.50 a month with 200 credits."
+      "a": "Credits are what each video spends. A clip is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number first. If it fails, those credits come back. Starter is $24.50 a month with 200 credits."
     },
     {
       "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no watermark and can run in ads, pages, and posts. Match the shade and usage line to the approved listing."
+      "a": "Yes. The download has no watermark, which means no logo is stamped on the file. It can run in ads, pages, and posts. Match the color name and the how-to line to the listing you already approved."
     },
     {
-      "q": "Can I start from a product link or a batch?",
-      "a": "Yes. Paste the product page link and AIVideosUGC drafts the script, or send several products through the API when a catalog needs the same routine in another language."
+      "q": "Can I start from a product link, many at once, or my own software?",
+      "a": "Yes. Paste the product page link and AIVideosUGC writes the script. You can run many products at once (a batch), or start them from your own software (the API). The same photo can carry the routine in another language."
     }
   ],
   "visual": {
@@ -110,7 +110,7 @@
       "options": [
         [
           "Size",
-          "9:16 · TikTok & Reels"
+          "9:16 tall · TikTok & Reels"
         ],
         [
           "Length",
@@ -120,7 +120,7 @@
     },
     "picker": {
       "title": "Choose a Skincare Routine Video",
-      "lead": "Open a skincare card, add your bottle, jar, or tube, and make a routine, texture, or review clip.",
+      "lead": "Open a skincare card and add your bottle, jar, or tube. Then make a routine, texture, or review clip.",
       "chips": [
         {
           "id": "accessories",
@@ -152,7 +152,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -192,7 +192,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -202,7 +202,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -211,7 +211,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Movie-style Watch Close-up",
           "chips": [
             "accessories"
           ],
@@ -247,7 +247,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-style Reaction: App",
           "chips": [
             "apps"
           ],
@@ -274,7 +274,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -292,7 +292,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -319,7 +319,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -328,7 +328,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -337,7 +337,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home App Opening Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -346,7 +346,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -364,7 +364,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "Close-up Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -400,7 +400,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -427,7 +427,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Signet Close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -472,7 +472,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -481,7 +481,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -490,7 +490,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Slim Keyboard Desk Review",
           "chips": [
             "tech-electronics"
           ],
@@ -499,7 +499,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -517,7 +517,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -551,7 +551,7 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "AI creator-style video ads"
     },
     {
       "id": "tpl-box",
@@ -584,7 +584,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Are Moving to AI Video Ads",
+    "h2": "How Beauty Shops Use a Routine Video",
     "lead": "Each card is one way a beauty shop turns one product photo into a routine ad. People on screen are AI performers.",
     "items": [
       {
@@ -596,8 +596,8 @@
       {
         "example": true,
         "who": "Moisturizer shop",
-        "t": "A video and a still together",
-        "d": "A moisturizer shop makes the texture clip and a matching still in one place, without a complicated setup."
+        "t": "A video and a photo together",
+        "d": "A moisturizer shop makes the texture clip and a matching photo in one place, without a big setup."
       },
       {
         "example": true,
@@ -632,25 +632,25 @@
       {
         "example": true,
         "who": "Founder",
-        "t": "A digital double from photos",
+        "t": "Skip the lights and camera",
         "d": "A founder uploads a few product photos and skips lights, a camera, and a set for the routine."
       },
       {
         "example": true,
         "who": "Marketing lead",
         "t": "Link, script, and voice",
-        "d": "A marketing lead pastes the product page link. AIVideosUGC drafts the script, picks an AI actor, and adds a cloned voice."
+        "d": "A marketing lead pastes the product page link. AIVideosUGC writes the script, picks an AI actor, and adds a voice copied from one the shop may use."
       },
       {
         "example": true,
         "who": "First-time seller",
         "t": "Chat for the routine",
-        "d": "A first-time seller describes the routine in chat. The AI agent returns a script, visuals, and a video to review."
+        "d": "A first-time seller describes the routine in chat. The chat helper sends back a script, pictures, and a video to review."
       }
     ]
   },
   "related_h2": "Pages for a Cosmetics Product Video",
-  "related_lead": "Video ads, beauty stills, and a TikTok page that pair with a routine clip.",
+  "related_lead": "Video ads, beauty photos, and a TikTok page that pair with a routine clip.",
   "cta_title": "Ready to Create Your First Video?",
   "cta_lead": "Upload one skincare photo, pick an AI voice, and see the credit cost before you start."
 }

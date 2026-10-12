@@ -1,7 +1,7 @@
 {
   "id": "social-ad-photos",
   "title": "Social Ad Image Generator | AIVideosUGC",
-  "description": "Create square social ad images from one product photo. Keep the product clear, add exact copy in your editor, and test fresh scenes without a photoshoot.",
+  "description": "Create square social ad images from one product photo. Keep the product clear, add your price and offer after download, and try new scenes without a photoshoot.",
   "h1": "AI ad image generator for a square feed ad",
   "eyebrow": "AI ad image generator",
   "lead": "Turn one product photo into a square ad image with open space for your headline. Add the exact price and offer in your ad editor after download.",
@@ -12,14 +12,14 @@
     "square ad images for social media",
     "AI images for paid social ads"
   ],
-  "benefits_h2": "Reasons to use a Facebook ad image maker",
+  "benefits_h2": "Reasons to make a square photo for a social ad",
   "benefits": [
     {
       "img": "n:guide:fx18-social-benefit-offer",
       "alt": "A plain charcoal hiking shoe on a clean city curb with open space for a headline.",
       "icon": "check",
       "t": "A lower editing bill",
-      "d": "Skip the studio and the retoucher. A square photo is 24 credits, and that cost is on screen before it starts. If it fails, the credits come back."
+      "d": "Skip the studio and a photo editor. A square photo costs 24 credits, the units your plan spends. You see that cost before it starts. If it fails, those credits come back."
     },
     {
       "img": "n:guide:fx18-social-benefit-editor",
@@ -33,30 +33,30 @@
       "alt": "A plain charcoal hiking shoe on a warm oak entryway floor beside a neutral mat.",
       "icon": "layers",
       "t": "Another scene, no new shoot",
-      "d": "Move the same product from a curb to a studio surface or an entryway. Each version is a separate photo."
+      "d": "Move the same product from a street curb to a studio table or a front hall. Each version is a separate photo."
     },
     {
-      "t": "A square file for the feed",
-      "d": "Download a square image for a common feed placement. Check the crop in your ad tool before the campaign goes live.",
+      "t": "A square file for social posts",
+      "d": "Download a square image for the scrolling posts in a social app. In your ad tool, check that the product is not cut off before the ad starts.",
       "icon": "target",
       "img": "n:guide:fx18-social-output-final",
       "alt": "A plain charcoal hiking shoe on a pale stone walkway beside low greenery, framed for a square social ad."
     }
   ],
   "steps_h2": "How to make a square social post in 3 steps",
-  "steps_lead": "Three actions take one product photo to a square image you can finish.",
+  "steps_lead": "Three steps turn one product photo into a square image you can finish.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with a clear photo. Keep the whole item in frame so the shape still reads at thumbnail size."
+      "d": "Start with a clear photo. Show the whole item, so people still know what it is when the picture is small."
     },
     {
       "t": "Pick a Scene",
-      "d": "Choose a backdrop that matches how people use the product. Leave an open area for the headline you will add later."
+      "d": "Choose a background that matches how people use the product. Leave an open area for the headline you will add later."
     },
     {
-      "t": "Enhance and Download",
-      "d": "Resize the square, add a short text line, and download. Check the price before the ad goes live."
+      "t": "Finish and Download",
+      "d": "Set the photo to a square, add a short line of text, and download. Check the price before the ad starts."
     }
   ],
   "maker": {
@@ -67,7 +67,7 @@
       ],
       [
         "Scene",
-        "Warm entryway"
+        "Front hall"
       ],
       [
         "Size",
@@ -81,23 +81,23 @@
   "faq": [
     {
       "q": "What is an AI ad image generator?",
-      "a": "It turns one product photo into a square image for a feed ad. You add the headline and the price afterward in your ad editor."
+      "a": "It turns one product photo into a square image for a social post. You add the headline and the price afterward in your ad editor."
     },
     {
       "q": "How do I create an image ad from a photo?",
-      "a": "Upload the product photo, pick a scene with room for type, and download the square file. Then build the ad in the platform's editor."
+      "a": "Upload the product photo, pick a scene with room for your words, and download the square file. Then build the ad in that app's editor."
     },
     {
-      "q": "Which placements is the file for?",
-      "a": "The download is square, which fits many feed placements. Check the crop and safe area in each ad tool. It is not auto-sized for every story or banner."
+      "q": "Where can I use this square file?",
+      "a": "The download is square, so it fits many social posts. In each ad tool, check that words are not cut off. It does not change size on its own for a tall ad or a wide banner."
     },
     {
       "q": "Can the image include my headline?",
-      "a": "Yes. Add a short text line on the image, then read it. If a price or a brand mark looks off, type that line in your ad editor before the ad goes live."
+      "a": "Yes. Add a short text line on the image, then read it. If a price or a logo looks wrong, type that line in your ad editor before the ad starts."
     },
     {
       "q": "Can I make several versions from one photo?",
-      "a": "Yes. Generate different scenes from the same product photo and compare them before you choose the ad. Each one costs 24 credits."
+      "a": "Yes. Make different scenes from the same product photo and compare them before you pick the ad. Each one costs 24 credits, the units your plan spends."
     },
     {
       "q": "Who is this for?",
@@ -105,15 +105,15 @@
     },
     {
       "q": "Can I run the image in a live ad?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Confirm the crop in your ad tool before launch."
+      "a": "Yes. The file has no watermark, meaning no extra logo on it, and you can use it in your ads. In your ad tool, check that the product is not cut off before the ad starts."
     },
     {
       "q": "Do I have to label the image as AI?",
-      "a": "Rules differ by platform and region. Follow the disclosure your ad account shows for that campaign. For a more casual still, see [UGC style product photos](page:tpl-ugc)."
+      "a": "Rules differ by app and country. Follow the label your ad account asks you to show. For a more casual photo, see [casual phone-style product photos](page:tpl-ugc)."
     },
     {
       "q": "Can a teammate edit the same design?",
-      "a": "Yes. Share the project, keep logos and colors in the brand library, and leave notes on the design from a computer or a phone."
+      "a": "Yes. Share the work, keep logos and colors in one shared place, and leave notes on the design from a computer or a phone."
     }
   ],
   "visual": {
@@ -121,15 +121,15 @@
       "source": "n:guide:im13-social-steps-source-r1",
       "result": "n:guide:im13-social-steps-result-r1",
       "mode": "photo",
-      "prompt": "Place this matte sage-green insulated bottle on a warm wood entryway bench. Keep the shape, color, and cap."
+      "prompt": "Put this matte sage-green insulated bottle on a warm wood bench by the door. Keep its shape, color, and cap."
     },
     "picker": {
-      "title": "Browse square scenes for the feed",
+      "title": "Browse square scenes for a social post",
       "lead": "Pick a setting that keeps the product clear and leaves room for the line you will add later.",
       "chips": [
         {
           "id": "feed-ready",
-          "label": "Feed ready"
+          "label": "Ready to post"
         },
         {
           "id": "product-focus",
@@ -149,7 +149,7 @@
         },
         {
           "ref": "n:guide:fx18-social-picker-entryway",
-          "label": "Charcoal hiking shoe entryway",
+          "label": "Charcoal hiking shoe front hall",
           "chips": [
             "feed-ready",
             "product-focus"
@@ -169,7 +169,7 @@
         },
         {
           "ref": "n:guide:fx18-social-picker-bottle",
-          "label": "Sage bottle entryway",
+          "label": "Sage bottle front hall",
           "chips": [
             "feed-ready",
             "product-focus"
@@ -302,11 +302,11 @@
     },
     "titles": {
       "m3": {
-        "h2": "Browse square scenes for the feed",
+        "h2": "Browse square scenes for a social post",
         "lead": "Pick a setting that keeps the product clear and leaves room for the line you will add later."
       },
       "m4": {
-        "h2": "Instagram feed ad photos and other placements"
+        "h2": "Instagram photos and other ad spots"
       },
       "m5": {
         "h2": "Upload a product photo that stays easy to inspect"
@@ -322,19 +322,19 @@
       {
         "img": "n:guide:fx18-social-use-tote",
         "h": "Show a morning routine",
-        "d": "Place a plain bottle in a work bag so the ad shows a commute, not a floating product.",
+        "d": "Place a plain bottle in a work bag so the ad shows a commute, not the product alone.",
         "alt": "Adult hand placing a plain sage insulated bottle into an unbranded canvas tote on an entryway bench."
       },
       {
         "img": "n:guide:b2f1-social-ad-photos-use-carry-r1",
         "h": "Make the carry obvious",
-        "d": "A sidewalk moment gives a bag a clear use. Keep the product large enough to recognize at thumbnail size.",
+        "d": "A sidewalk moment shows how the bag is used. Keep the product large enough to recognize when the photo is small.",
         "alt": "Adult carrying a plain cream canvas tote along a quiet city sidewalk."
       },
       {
         "img": "n:guide:fx18-social-use-mug",
         "h": "Leave a calm area for the offer",
-        "d": "A desk scene can keep the product and the promise easy to scan. Add the price after download.",
+        "d": "A desk scene keeps the product easy to see and leaves a calm spot for your offer. Add the price after download.",
         "alt": "Adult hand lifting a plain cream ceramic mug beside a closed laptop on an oak desk."
       },
       {
@@ -375,11 +375,11 @@
     {
       "eyebrow": "One place",
       "h2": "Make the next post in one place",
-      "lead": "Brighten the photo, add a sticker or a line, and finish the square without a second editor for the picture.",
+      "lead": "Brighten the photo, add a sticker or a line of text, and finish the square here. You do not need another photo app.",
       "items": [
         {
           "t": "Brighten the photo",
-          "d": "Lift a dark product photo and sharpen the detail before you place it in the feed."
+          "d": "Make a dark product photo brighter, and sharpen the detail, before you place it in the post."
         },
         {
           "t": "Stickers and a text line",
@@ -394,7 +394,7 @@
     {
       "eyebrow": "No design job required",
       "h2": "Polished designs without a design job",
-      "lead": "The editing is handled for you: the old setting, the light, a text line, or a layout you start from.",
+      "lead": "The tool does the edit for you. It can clear the old background, fix the light, add a text line, or start you from a layout.",
       "items": [
         {
           "t": "Remove the background",
@@ -405,31 +405,31 @@
           "d": "Adjust the light and add a soft shadow so the product does not look pasted on."
         },
         {
-          "t": "Text and layers",
-          "d": "Stack a text line and a simple shape on the image when the post needs them."
+          "t": "Text and shapes",
+          "d": "Put a short text line and a simple shape on the image when the post needs them."
         },
         {
           "t": "A ready layout",
-          "d": "Start from a layout for the feed, a holiday post, or a profile image, then swap in your product."
+          "d": "Start from a layout for a social post, a holiday post, or a profile photo. Then put your product in it."
         }
       ]
     },
     {
-      "eyebrow": "From a prompt",
-      "h2": "Set the scene from a short prompt",
-      "lead": "Describe the setting, keep the product you uploaded, and add an AI model only when the item should be worn.",
+      "eyebrow": "From a short note",
+      "h2": "Set the scene from a short note",
+      "lead": "Type the setting in a short note. That note is called a prompt. Keep the product you uploaded. Add a generated person only when the item should be worn.",
       "items": [
         {
-          "t": "A background from a prompt",
-          "d": "Describe the setting in a short prompt and generate a background that fits the product."
+          "t": "A background from that note",
+          "d": "Describe the setting in a short note and make a background that fits the product."
         },
         {
           "t": "The product in that scene",
           "d": "Keep the uploaded item and place it in the setting you described."
         },
         {
-          "t": "An AI model in the frame",
-          "d": "When the product should be worn, put it on an AI model. The person in the frame is not a customer."
+          "t": "A generated person in the photo",
+          "d": "When the product should be worn, put it on a generated person. That person is not a real customer."
         }
       ]
     }
@@ -460,8 +460,8 @@
       {
         "example": true,
         "who": "Apparel seller",
-        "t": "Use a worn view only when the garment matches",
-        "d": "If the piece should be worn, use an AI-generated adult and set that view next to the flat photo. The person in the frame is not a customer."
+        "t": "Show it on a person only when it matches your item",
+        "d": "If the item should be worn, use a generated adult and put that photo next to the one with the item laid flat. The person in the photo is not a customer."
       },
       {
         "example": true,
@@ -472,8 +472,8 @@
       {
         "example": true,
         "who": "Marketplace brand",
-        "t": "Pair a plain listing image with a feed image",
-        "d": "Use a white main image where the channel wants one, and this square scene for the paid placement."
+        "t": "Pair a plain listing photo with a social ad photo",
+        "d": "Use a white main image where the store asks for one, and this square photo for the paid ad."
       }
     ]
   },
@@ -489,19 +489,19 @@
     "title": "What a square social ad image is for",
     "paras": [
       "A square social ad image puts your product in a setting people recognize, with a consistent look from one post to the next.",
-      "Holiday and event layouts are there when the calendar changes. You still add the headline, the price, and the offer after you check the file."
+      "When a holiday comes up, you can start from a holiday or event layout. You still add the headline, the price, and the offer after you check the file."
     ]
   },
   "reasons": {
     "h2": "Work on the same design together",
-    "lead": "Share the post, keep the brand marks in one place, and leave notes before you download.",
+    "lead": "Share the post, keep the logos in one place, and leave notes before you download.",
     "items": [
       {
         "t": "Share and edit together",
         "d": "Invite a teammate to the same design and edit it from a computer or a phone."
       },
       {
-        "t": "Shared brand marks",
+        "t": "Shared logos and colors",
         "d": "Keep logos, colors, and shared layouts in one library so the next post matches."
       },
       {

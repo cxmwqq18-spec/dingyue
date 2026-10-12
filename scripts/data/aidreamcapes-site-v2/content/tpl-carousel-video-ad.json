@@ -1,10 +1,10 @@
 {
   "id": "tpl-carousel-video-ad",
   "title": "Carousel Video Ads for Product Stories | AIVideosUGC",
-  "description": "Turn one product photo into a sequenced carousel video ad, then add your headline and price after download. Choose a format for feeds and product pages.",
+  "description": "Turn one product photo into a short video of that one item, shot by shot. Add your headline and price after download. Pick a shape for the post or product page.",
   "h1": "Carousel Video Ad That Walks Through One Product",
   "eyebrow": "Carousel video ad template",
-  "lead": "Place one product photo in a scene, add an AI voice or a script, and keep the whole clip on that one product.",
+  "lead": "Place one product photo in a scene, add an AI voice or a script, and keep every shot on that one product. This is one video, not a stack of still cards.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -12,7 +12,7 @@
     "sequenced product ad"
   ],
   "steps_h2": "How to Make a Carousel Video Ad in 3 Simple Steps",
-  "steps_lead": "The shots stay in the order you describe. Set the voice and the price in the editor.",
+  "steps_lead": "The shots stay in the order you write. Set the voice in the editor. Add the headline and price after you download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -20,18 +20,18 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the shots in order, add a short script, and pick 6, 10, 15 or 30 seconds. Keep every shot on that one item."
+      "d": "Name the shots in order, all of this one item. Add a short script and pick 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file with no watermark, set the voice in the editor, and post it."
+      "d": "Set the voice in the editor, download the file with no watermark, and post it."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "1:1 · Feed"
+        "1:1 square for a post"
       ],
       [
         "Length",
@@ -39,7 +39,7 @@
       ],
       [
         "Also try",
-        "9:16 · Reels"
+        "9:16 tall phone video"
       ]
     ],
     "cta": "Make my carousel video"
@@ -47,11 +47,11 @@
   "faq": [
     {
       "q": "What is a carousel video ad?",
-      "a": "One ordered clip about a single product, from an opening look to an in-use shot and a clear finish. It is a video, not a stack of still cards. An AI voice and a presenter can be added, and the person on screen is not a customer."
+      "a": "One video of a single product, from a first look, to the item in use, then a clear ending. It is a video, not a stack of still cards. You can add an AI voice and an on-screen person. That person is not a customer."
     },
     {
       "q": "How do I make a carousel video ad?",
-      "a": "Upload one product photo, describe the shots in order, add or edit a script, pick a size and a length, then download. You can also paste the product page link to draft the script and the presenter."
+      "a": "Upload one product photo and list the shots in order. Add or edit a script, pick a shape and a length, then download. You can also paste the product page link to write a first script and pick the on-screen person."
     },
     {
       "q": "What products can a carousel video ad show?",
@@ -59,11 +59,11 @@
     },
     {
       "q": "Can I make more than one version?",
-      "a": "Yes. Keep the same photo and make another cut for a second audience, opening or language. Each file shows its credit cost before it runs."
+      "a": "Yes. Keep the same photo and make another version for a second audience, a different first line, or another language. Each file shows its cost in credits before it runs. A credit is a unit your plan spends."
     },
     {
       "q": "Who is a carousel video ad for?",
-      "a": "Fashion and electronics shops, and other stores that want an Instagram, Facebook, TikTok or product-page clip to walk through one item. You do not have to book a shoot."
+      "a": "Fashion and electronics shops, and other stores that want a clip on Instagram, Facebook, TikTok, or the product page to walk through one item. You do not have to hire a photographer."
     },
     {
       "q": "Can a beginner make one?",
@@ -71,11 +71,11 @@
     },
     {
       "q": "Where can I post the file?",
-      "a": "On TikTok, Instagram, Facebook, YouTube and your product page. Sizes include 9:16, 1:1, 16:9, 4:3 and 3:4. The download has no watermark."
+      "a": "On TikTok, Instagram, Facebook, YouTube, and your product page. Shapes are a tall phone video (9:16), a square (1:1), a wide screen (16:9), a classic photo (4:3), or a tall photo (3:4). The download has no watermark."
     },
     {
-      "q": "What does the sequence cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
+      "q": "What does the clip cost?",
+      "a": "A credit is a unit your plan spends. A clip costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the number before it starts. If the clip fails, those credits come back. Plans start at $24.50 a month."
     },
     {
       "q": "Is there a free plan?",
@@ -83,11 +83,11 @@
     },
     {
       "q": "Can I start from a product link or an API?",
-      "a": "Yes. Paste the product page link to draft the scene, the script and the presenter, or send the photo through the API. Review the product in the file before you post."
+      "a": "Yes. Paste the product page link to write a first scene, a script, and the on-screen person. You can also send the photo through the API. The API is how your own shop software starts the clip. Check the product in the file before you post."
     },
     {
       "q": "Can the voice be in another language?",
-      "a": "Yes. Make the same sequence with a voice in another language, and approve the words before you post."
+      "a": "Yes. Make the same clip with a voice in another language, and approve the words before you post."
     }
   ],
   "visual": {
@@ -110,7 +110,7 @@
       "options": [
         [
           "Size",
-          "1:1 · Feed"
+          "1:1 square for a post"
         ],
         [
           "Length",
@@ -118,13 +118,13 @@
         ],
         [
           "Also try",
-          "9:16 · Reels"
+          "9:16 tall phone video"
         ]
       ]
     },
     "picker": {
       "title": "Browse Video Ad Templates by Category",
-      "lead": "Open a category and rebuild a scene from your own product photo. Add the headline and price after you download.",
+      "lead": "Open a category and make a scene from your own product photo. Add the headline and price after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -156,7 +156,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -196,7 +196,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -206,7 +206,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Quiet unboxing of makeup tools",
           "chips": [
             "accessories"
           ],
@@ -215,7 +215,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Close watch shot in warm light",
           "chips": [
             "accessories"
           ],
@@ -251,7 +251,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-style reaction to an app",
           "chips": [
             "apps"
           ],
@@ -278,7 +278,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-ready unboxing of a sweater",
           "chips": [
             "clothing"
           ],
@@ -296,7 +296,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full turn of a linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -323,7 +323,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Spoken lesson about skin care",
           "chips": [
             "education"
           ],
@@ -332,7 +332,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "Court gear from the player's view",
           "chips": [
             "explainer"
           ],
@@ -341,7 +341,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home app walkthrough opener",
           "chips": [
             "explainer"
           ],
@@ -350,7 +350,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Phone demo of a finance app",
           "chips": [
             "financial-services"
           ],
@@ -368,7 +368,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip of a citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -404,7 +404,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "First bite of a berry bowl",
           "chips": [
             "health-fitness"
           ],
@@ -431,7 +431,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Close shot of a silver ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -476,7 +476,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Powder burst around a kettlebell",
           "chips": [
             "sports-gym"
           ],
@@ -485,7 +485,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Evening demo of a kitchen appliance",
           "chips": [
             "tech-electronics"
           ],
@@ -494,7 +494,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Desk review of a thin keyboard",
           "chips": [
             "tech-electronics"
           ],
@@ -503,7 +503,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Bathroom routine with moisturizer",
           "chips": [
             "ugc"
           ],
@@ -521,7 +521,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Playful opener with face mist",
           "chips": [
             "viral"
           ],
@@ -552,8 +552,8 @@
       }
     }
   },
-  "cta_title": "Put the Product Sequence in the Feed",
-  "cta_lead": "Upload one product photo, add a voice if you want one, and see the credit cost before you start.",
+  "cta_title": "Post the clip where people scroll",
+  "cta_lead": "Upload one product photo, add a voice if you want one, and see the credit cost before you start. A credit is a unit your plan spends.",
   "blockOrder": [
     "hero",
     "picker",
@@ -565,8 +565,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Switching to a Carousel Video Ad",
-    "lead": "One product per clip. A voice, a script or a presenter can sit on that same item.",
+    "h2": "How shops use a carousel video ad",
+    "lead": "One product per clip. A voice, a script, or an on-screen person can stay with that same item.",
     "items": [
       {
         "example": true,
@@ -592,14 +592,14 @@
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "Tabletop turn",
-        "d": "A beauty shop turns a coral cream jar and trims the line in the built-in editor.",
+        "t": "Turns the jar on the table",
+        "d": "A beauty shop turns a coral cream jar and shortens the spoken line in the built-in editor.",
         "img": "n:guide:fx19-carousel-benefit-editable-04"
       },
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "Sink open",
+        "t": "Opens the pouch at the sink",
         "d": "A beauty shop opens a canvas toiletry pouch and repeats the scene with a voice in another language.",
         "img": "n:guide:fx19-carousel-example-open-01"
       },
@@ -620,28 +620,28 @@
       {
         "example": true,
         "who": "Home shop",
-        "t": "Same bins, one sequence",
+        "t": "Same bins in every shot",
         "d": "A home shop keeps the same bins in every shot, then publishes the file on TikTok or Instagram.",
         "img": "n:guide:fx19-carousel-example-compare-04"
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Cap hold",
-        "d": "An apparel shop picks a presenter from the actor library and ends with the cap held up.",
+        "t": "Ends holding the cap",
+        "d": "An apparel shop picks an on-screen person from the presenter list and ends with the cap held up.",
         "img": "n:guide:fx19-carousel-example-finish-05"
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Park setup",
-        "d": "A pet shop describes the harness scene in chat and reviews the clip before posting.",
+        "d": "A pet shop types the harness scene in the box on this page and checks the clip before posting.",
         "img": "n:guide:fx19-carousel-example-feature-06"
       }
     ]
   },
-  "related_h2": "Pages for a Multi-Panel Product Ad",
-  "related_lead": "Video ads, fashion scenes, and Instagram placements for a sequenced product.",
+  "related_h2": "Pages for a one-product video",
+  "related_lead": "Video ads, fashion scenes, and Instagram posts for one product shown in order.",
   "relatedLinks": [
     "video-ads",
     "tpl-outfit",
@@ -654,31 +654,31 @@
     {
       "eyebrow": "Included with the template",
       "h2": "Features of a Carousel Video Ad",
-      "lead": "The sequence still follows one product. These are the pieces you can add before you download.",
+      "lead": "The clip still follows one product. These are the pieces you can add before you download.",
       "items": [
         {
           "t": "AI voiceover",
-          "d": "Add a spoken line about the one product in the sequence. You approve the words, and the voice is not a customer recording."
+          "d": "Add a spoken line about the one product in the clip. You approve the words, and the voice is not a customer recording."
         },
         {
           "t": "A script you can edit",
           "d": "A script can be drafted from your note or from the product page link. Change any line in the built-in editor before you download."
         },
         {
-          "t": "Presenters from the actor library",
-          "d": "Pick an AI presenter to hold or show the product. The person on screen is a generated performer, not a buyer."
+          "t": "On-screen people you can pick",
+          "d": "Pick a generated person from the presenter list, called the actor library, to hold or show the product. That person is not a real buyer."
         },
         {
           "t": "A product link or the API",
-          "d": "Paste a product page link, or send the photo through the API, to draft the scene and the script. You still review the file."
+          "d": "Paste a product page link to write a first scene and script. Or send the photo through the API, which is how your own shop software starts it. You still check the file."
         },
         {
           "t": "Built-in editor and another language",
-          "d": "Change the script, the voice and the on-screen line in one editor, including a voice in another language. The download has no watermark."
+          "d": "Change the script, the voice, and the words on screen in one editor. You can also use a voice in another language. The download has no watermark."
         },
         {
           "t": "More versions, then publish",
-          "d": "Make another cut for a second audience from the same photo. Publish the file on TikTok, Instagram, Facebook or YouTube. There is no free plan."
+          "d": "Make another version for a second audience from the same photo. Publish the file on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
         }
       ]
     }

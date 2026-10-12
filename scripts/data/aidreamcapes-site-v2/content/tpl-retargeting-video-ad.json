@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "What is a retargeting video ad?",
-      "a": "A new product clip for people who already saw an item. It can run as a cart reminder, but the file has no viewer list. You choose the audience, exclusions, and frequency in your ad platform."
+      "a": "A new product clip for people who already saw an item. It can run as a cart reminder, but the file has no viewer list. You choose who sees it, who to leave out, and how often, in your ad platform."
     },
     {
       "q": "Does AIVideosUGC know who viewed a product or left a cart?",
@@ -59,7 +59,7 @@
     },
     {
       "q": "Which shops use a retargeting video ad?",
-      "a": "Electronics, fashion, and other shops running remarketing on Facebook or Instagram, and anyone who needs a fresh creative rather than a repeat of the first ad."
+      "a": "Electronics, fashion, and other shops that show ads again to people who already visited on Facebook or Instagram. Use it when you need a new video, not a repeat of the first ad."
     },
     {
       "q": "What should the scene show?",
@@ -67,27 +67,27 @@
     },
     {
       "q": "Which size and length should I pick?",
-      "a": "1:1 for a feed and 9:16 for Reels are the usual pair, plus 16:9, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds."
+      "a": "Square 1:1 for a feed and tall 9:16 for Reels are the usual pair, plus a wide 16:9. 4:3 and 3:4 are there too. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
       "q": "Can I put the current offer on the video?",
-      "a": "Type the confirmed price, date, or code yourself. A spoken line can describe the product, and you keep the figures under your control if the offer changes."
+      "a": "Type the confirmed price, date, or code yourself. A spoken line can describe the product, and you keep the numbers under your control if the offer changes."
     },
     {
       "q": "Can the clip include a voice, captions, and an actor?",
-      "a": "Yes. Add a script, a voice, captions, music, and an AI actor in the same project. The person on camera is generated, not a past buyer."
+      "a": "Yes. Add a script, a voice, captions, music, and an AI actor while you make this clip. The person on camera is generated, not a past buyer."
     },
     {
       "q": "Can I make several versions or use the API?",
-      "a": "Yes. Render more than one closer look from the same photo, in more than one language, or send the job through the API. Each version spends credits."
+      "a": "Yes. Make more than one closer look from the same photo, in more than one language, or start the job from your own software (API). Each version spends credits (points on your plan)."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. A failed job returns its credits. Starter is $24.50 a month."
     },
     {
       "q": "Where do I publish it?",
-      "a": "Publish to TikTok, Instagram, or Facebook from the project, or download it for a remarketing ad. The file has no watermark."
+      "a": "Publish to TikTok, Instagram, or Facebook from here, or download it for an ad aimed at people who already looked. The file has no watermark."
     }
   ],
   "visual": {
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -207,7 +207,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -279,7 +279,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Turn: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -324,7 +324,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -333,7 +333,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -342,7 +342,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -351,7 +351,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -369,7 +369,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -405,7 +405,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -432,7 +432,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Signet Close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -477,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -486,7 +486,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo Clip",
           "chips": [
             "tech-electronics"
           ],
@@ -504,7 +504,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -522,7 +522,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -643,8 +643,8 @@
       }
     ]
   },
-  "related_h2": "Pages for Retargeting Creative",
-  "related_lead": "Video ads, electronics scenes, and Facebook placements for a second look.",
+  "related_h2": "Pages for a Second-Look Video",
+  "related_lead": "Video ads, electronics scenes, and Facebook ad spots for a second look.",
   "definition": {
     "title": "What Is a Retargeting Video Ad?",
     "paras": [
@@ -654,7 +654,7 @@
   },
   "reasons": {
     "h2": "Reasons to Use a Retargeting Video Ad",
-    "lead": "A new creative for people who already looked, without pretending the file knows who they are.",
+    "lead": "A new video for people who already looked. The file does not know who they are.",
     "items": [
       {
         "t": "A Closer Look at a Known Product",
@@ -673,20 +673,20 @@
         "d": "An AI performer can hold the product for the closer shot. That person is generated, not a past buyer."
       },
       {
-        "t": "Several Cuts From One Photo",
-        "d": "Change the angle, the language, or the opening and render another version without a new shoot."
+        "t": "Several Versions From One Photo",
+        "d": "Change the angle, the language, or the opening and make another version without a new shoot."
       }
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "In the same project",
+      "eyebrow": "While you make the clip",
       "h2": "Features for a Retargeting Video Ad",
-      "lead": "The creative can speak and carry captions. The audience list still lives in your ad platform.",
+      "lead": "The video can include a voice and captions. You still choose who sees it in your ad platform.",
       "items": [
         {
           "t": "AI Voice",
-          "d": "Pick a voice for the line, or clone a voice you are allowed to use. The spoken line can name the product while the picture shows it."
+          "d": "Pick a voice for the spoken line, or copy a voice you are allowed to use. The line can say the product name while the picture shows it."
         },
         {
           "t": "Auto Captions",
@@ -694,19 +694,19 @@
         },
         {
           "t": "AI Script",
-          "d": "Describe the shot in a sentence. A script draft turns that into the line an actor says, and you can rewrite it before the render."
+          "d": "Describe the shot in a sentence. A draft turns that into the line an actor says, and you can rewrite it before the video is made."
         },
         {
           "t": "Actor Library",
-          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can keep a branded persona for the next clip. The person is generated, not a customer."
+          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can use that same person in the next clip. The person is generated, not a customer."
         },
         {
           "t": "Editor, Music, and Languages",
-          "d": "Trim in the built-in editor, drop in a track from the music library, and cut the same spot again in another language."
+          "d": "Trim in the built-in editor, add a track from the music library, and make the same clip again in another language."
         },
         {
           "t": "Batch, Publish, and API",
-          "d": "Render several versions from one photo, publish to TikTok, Instagram, or Facebook from the project, or send the job through the API. Each job spends [credits](page:pricing)."
+          "d": "Make several versions from one photo, publish to TikTok, Instagram, or Facebook from here, or start the job from your own software (API). Each job spends [credits](page:pricing) (points on your plan)."
         }
       ]
     }
@@ -717,7 +717,7 @@
     "items": [
       {
         "t": "Credit Cost First",
-        "d": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm."
+        "d": "Credits are the points on your plan. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number before you confirm."
       },
       {
         "t": "No Watermark",
@@ -725,7 +725,7 @@
       },
       {
         "t": "Failed Jobs Return Credits",
-        "d": "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance."
+        "d": "Credits are set aside when you start and used when the file arrives. If it fails, those credits return to your balance."
       },
       {
         "t": "Paid Plans",

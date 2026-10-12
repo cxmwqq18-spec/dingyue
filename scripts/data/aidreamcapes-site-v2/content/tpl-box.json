@@ -1,10 +1,10 @@
 {
   "id": "tpl-box",
   "title": "Product Bundle Photos for Clearer Listings | AIVideosUGC",
-  "description": "Show every item in your kit in one square bundle photo. Use it on Amazon, Shopify, gift pages, social ads and posts without another styled shoot.",
+  "description": "Show every item in your kit in one square bundle photo. Use it on Amazon, Shopify, gift pages, social ads, and posts without booking another photo shoot.",
   "h1": "Product Bundle Photos That Show Every Shipped Piece",
   "eyebrow": "Product photo template",
-  "lead": "Open a bundle scene, add one photo of the complete kit, and download a square image you can also turn into a spoken kit video.",
+  "lead": "Open this kit template and add one photo of the complete kit. Download a square image, or turn it into a short kit video with a spoken voice.",
   "secondary_keywords": [
     "what's in the box photo",
     "skincare set product photo",
@@ -12,15 +12,15 @@
     "kit and bundle listing images"
   ],
   "steps_h2": "How to Make a Bundle Photo in 3 Simple Steps",
-  "steps_lead": "Every piece in one photo, then a square file you can price, or a kit video with a script.",
+  "steps_lead": "Every piece in one photo, then one square file. That photo spends 24 credits. Credits are what your plan spends. Add the price after download, or make a kit video with a script.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo of the full kit, box and insert included. Keep every shipped piece in frame so it matches the order."
+      "d": "Upload a clear photo of the full kit, with the box and paper insert. Every piece you ship should be visible."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name an arrangement that keeps each piece visible. Add a script and an AI voice if you make a kit video."
+      "d": "Name how the pieces sit so each one stays visible. Add a script and a spoken AI voice if you make a kit video."
     },
     {
       "t": "Download and Post",
@@ -47,15 +47,15 @@
   "faq": [
     {
       "q": "What is a product bundle photo template?",
-      "a": "A ready scene for the kit you ship. Add one photo of every piece and download a square image. You can also add an AI actor, a voiceover, and a script for a kit video."
+      "a": "A ready setup for the kit you ship. Add one photo of every piece and download a square image. You can also add an AI actor, a spoken voice, and a script for a kit video."
     },
     {
       "q": "How do I make the bundle photo?",
-      "a": "Upload one photo of the full kit, name an arrangement that keeps each piece visible, and download the square image. A long description is optional."
+      "a": "Upload one photo of the full kit, name how the pieces sit so each one stays visible, and download the square image. You do not need a long note."
     },
     {
-      "q": "Why use this instead of a styled shoot?",
-      "a": "The scene comes from the kit photo you already have, so you skip lights, a camera, and a new set for every gift drop."
+      "q": "Why use this instead of a new photo shoot?",
+      "a": "It starts from the kit photo you already have. You skip lights, a camera, and a new photo setup for every new gift."
     },
     {
       "q": "Who is this scene for?",
@@ -63,7 +63,7 @@
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Yes. If every piece is already in the photo, follow the three steps. Captions, a track from the music library, and an AI voice can be set in the built-in editor when you also make a video."
+      "a": "Yes. If every piece is already in the photo, follow the three steps. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
     },
     {
       "q": "Can one photo show every item?",
@@ -71,23 +71,23 @@
     },
     {
       "q": "Can I upload my own photos and clips?",
-      "a": "Yes. Use a JPG, PNG, or WebP of the complete kit, or a short clip you have rights to. Keep the box and insert in frame when they ship."
+      "a": "Yes. Use a photo file (JPG, PNG, or WebP) of the complete kit, or a short clip you have the rights to. Keep the box and the paper insert in the photo when they ship."
     },
     {
       "q": "Where can I publish the file?",
-      "a": "The photo is square for a gallery. A video of the same kit can be 9:16, 1:1, 16:9, 4:3, or 3:4. Publish it to TikTok or Meta, or to YouTube, in one step."
+      "a": "The photo is square, for a product gallery. A video of the same kit can be tall (9:16), square (1:1), or wide (16:9). The 4:3 size is a bit wider than tall, and 3:4 is a bit taller than wide. Publish it to TikTok, Facebook, Instagram, or YouTube in one step."
     },
     {
       "q": "What does a bundle photo cost?",
-      "a": "Each product photo costs 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month with 200 credits. A failed job returns its credits."
+      "a": "Credits are what each photo or video spends. Each product photo costs 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month with 200 credits. If it fails, those credits come back."
     },
     {
       "q": "Can I use the image in paid ads?",
-      "a": "Yes. Downloads have no watermark and can run in your own ads, pages, and posts. You remain responsible for the contents and any claims."
+      "a": "Yes. Downloads have no watermark, which means no logo is stamped on the file. They can run in your own ads, pages, and posts. You remain responsible for the contents and any claims."
     },
     {
-      "q": "Can I start from a product link or a batch?",
-      "a": "Yes. Paste the kit's product link for a script and a cloned voice, or send several kits through the AIVideosUGC API. Add the current price in your editor after download. Another language can reuse the same photo."
+      "q": "Can I start from a product link, many kits at once, or my own software?",
+      "a": "Yes. Paste the kit product link for a script and a voice copied from one you may use. Or run many kits at once (a batch), or send them from your own software (the API). Add the current price in your editor after download. The same photo can be used for another language."
     }
   ],
   "visual": {
@@ -156,7 +156,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -196,7 +196,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -206,7 +206,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -215,7 +215,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Movie-style Watch Close-up",
           "chips": [
             "accessories"
           ],
@@ -251,7 +251,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-style Reaction: App",
           "chips": [
             "apps"
           ],
@@ -278,7 +278,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -296,7 +296,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -323,7 +323,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -332,7 +332,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -341,7 +341,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home App Opening Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -350,7 +350,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -368,7 +368,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "Close-up Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -404,7 +404,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -431,7 +431,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Signet Close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -476,7 +476,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -485,7 +485,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -494,7 +494,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Slim Keyboard Desk Review",
           "chips": [
             "tech-electronics"
           ],
@@ -503,7 +503,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -521,7 +521,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -563,19 +563,19 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Are Moving to AI Video Ads",
+    "h2": "How Shops Show the Kit They Pack",
     "lead": "Each card is one way a shop shows the kit it already packs, then makes an ad around that photo. People on screen are AI performers.",
     "items": [
       {
         "example": true,
         "who": "Skincare shop",
-        "t": "Every piece stays in frame",
+        "t": "Every piece stays visible",
         "d": "A skincare shop lays out cleanser, serum, and cream, then counts them against the contents list."
       },
       {
         "example": true,
         "who": "Gift shop",
-        "t": "A still and a video together",
+        "t": "A photo and a video together",
         "d": "A gift shop makes the square kit photo and a short unboxing video in one place, then adds the price after download."
       },
       {
@@ -594,7 +594,7 @@
         "example": true,
         "who": "Baby shop",
         "t": "More than one language",
-        "d": "A baby shop shows the same three care items with an AI voice in the languages its shoppers use, and does not add an extra piece."
+        "d": "A baby shop shows the same three care items with an AI voice in the languages its shoppers use. The photo does not add an extra piece."
       },
       {
         "example": true,
@@ -611,20 +611,20 @@
       {
         "example": true,
         "who": "Stationery shop",
-        "t": "A digital double from photos",
+        "t": "Skip the lights and camera",
         "d": "A stationery shop uploads the notebook, pen, and clips and skips lights, a camera, and a styled set."
       },
       {
         "example": true,
         "who": "Spice shop",
         "t": "Link, script, and voice",
-        "d": "A spice shop pastes its product link. AIVideosUGC drafts a script, chooses an AI actor, and adds a cloned voice while the jars stay the ones in the photo."
+        "d": "A spice shop pastes its product link. AIVideosUGC writes a script, picks an AI actor, and adds a voice copied from one the shop may use. The jars stay the ones in the photo."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Chat for the gift clip",
-        "d": "A beauty shop describes the mini pouch in chat. The AI agent returns a script, visuals, and a video to check before the gift page goes up."
+        "d": "A beauty shop describes the mini pouch in chat. The chat helper sends back a script, pictures, and a video to check before the gift page goes up."
       }
     ]
   },
@@ -657,5 +657,5 @@
     }
   ],
   "cta_title": "Ready to Create Your First Kit Photo?",
-  "cta_lead": "Upload one photo of every piece you ship. Add a script or an AI voice for the kit video, and see the credit cost first."
+  "cta_lead": "Upload one photo of every piece you ship. Add a script or a spoken AI voice for the kit video, and see the credit cost first."
 }

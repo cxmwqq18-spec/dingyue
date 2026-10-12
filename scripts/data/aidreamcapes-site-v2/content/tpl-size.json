@@ -4,7 +4,7 @@
   "description": "Put your product next to a familiar object so shoppers can judge its size at a glance. AI scale photos for listings and ads, from one photo.",
   "h1": "Product Size Reference Photo Beside One Familiar Object",
   "eyebrow": "Product photo template",
-  "lead": "Open a scale scene, add one photo of the whole item, and name one familiar object so shoppers can judge size at a glance.",
+  "lead": "Start a size photo, add one photo of the whole item, and name one familiar object so shoppers can judge the size at a glance.",
   "secondary_keywords": [
     "size comparison product photo",
     "scale photo for Amazon listing",
@@ -14,11 +14,11 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one photo with the whole item in frame. A clipped handle, sole or corner removes the size cue."
+      "d": "Upload one photo that shows the whole item. A cut-off handle, sole, or corner hides how big it is."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name a familiar object, such as a palm, notebook or carry-on. The proportion is a visual cue, so keep real measurements in the listing."
+      "d": "Name a familiar object: a palm, notebook, or carry-on. This is only a hint. Keep real measurements in the listing."
     },
     {
       "t": "Download and Post",
@@ -45,15 +45,15 @@
   "faq": [
     {
       "q": "Is the size in the photo exact?",
-      "a": "No. Treat it as a visual guide. Generated scale can be slightly off, so put the real length, width, height, or capacity in the listing text."
+      "a": "No. Treat it as a visual guide. The size in the picture can be slightly off, so put the real length, width, height, or capacity in the listing text."
     },
     {
-      "q": "Which object makes a useful cue?",
+      "q": "Which object makes a useful size hint?",
       "a": "Name one familiar, unbranded object shoppers recognize for that product, such as a hand, a notebook, a carry-on, or a common mug."
     },
     {
       "q": "Should each image use one reference object?",
-      "a": "Yes. One object keeps the comparison easy to read. Make a second image when you need a different cue."
+      "a": "Yes. One object keeps the comparison easy to read. Make a second image when you need a different hint."
     },
     {
       "q": "Where do exact measurements go?",
@@ -61,27 +61,27 @@
     },
     {
       "q": "Can I use this as an Amazon listing image?",
-      "a": "Yes. A scale comparison can be one extra image in an Amazon gallery when it shows the real item. It does not replace the written dimensions."
+      "a": "Yes. A size comparison can be one extra image in an Amazon gallery when it shows the real item. It does not replace the written dimensions."
     },
     {
       "q": "Where else can the square image go?",
       "a": "Use it on a product page, in a Shopify gallery, or in a feed post, always next to the exact measurements."
     },
     {
-      "q": "Can I make several cues or use the API?",
-      "a": "Yes. Reuse one product photo and name another object, or send listing photos through the API. Each photo is 24 credits. A failed job returns those credits."
+      "q": "Can I make several size hints or use the API?",
+      "a": "Yes. Reuse one product photo and name another object, or send listing photos from your own software (API). Each photo is 24 credits. A failed job returns those credits."
     },
     {
       "q": "Do I need props or a studio?",
-      "a": "No. The reference object and the setting are generated from your product photo. A hand in the frame is a generated cue, not a customer. Downloads have no watermark."
+      "a": "No. The reference object and the setting are generated from your product photo. A hand in the photo is a generated size hint, not a customer. Downloads have no watermark."
     },
     {
       "q": "Can shoppers judge fit from the image alone?",
-      "a": "They can orient themselves. A purchase decision still needs the exact measurements in the listing, and a size chart where fit depends on it."
+      "a": "They can get a rough idea of the size. A purchase still needs the exact measurements in the listing, and a size chart where fit depends on it."
     },
     {
       "q": "What does a size reference photo cost?",
-      "a": "Each product photo costs 24 credits. The cost is shown before the job starts. Plans start at $24.50 a month for 200 credits."
+      "a": "Each product photo costs 24 credits. The cost is shown before the job starts. Starter is $24.50 a month for 200 credits."
     },
     {
       "q": "Can I also make a spoken clip from this photo?",
@@ -101,7 +101,7 @@
       "source": "n:guide:tpl-size-c3-m2-source",
       "result": "n:guide:tpl-size-c3-m7-tote-reference",
       "mode": "photo",
-      "prompt": "Show the uploaded tote beside a notebook on a bench so its scale is easy to judge.",
+      "prompt": "Show the uploaded tote beside a notebook on a bench so its size is easy to judge.",
       "options": [
         [
           "Template",
@@ -552,7 +552,7 @@
     }
   },
   "steps_h2": "How to Make a Product Size Reference Photo in 3 Simple Steps",
-  "steps_lead": "The whole item in frame, one familiar object, then a square image beside your real measurements.",
+  "steps_lead": "The whole item in the photo, one familiar object, then a square image beside your real measurements.",
   "blockOrder": [
     "hero",
     "features",
@@ -566,73 +566,73 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Showing Scale With One Object",
+    "h2": "Shops Showing Size With One Object",
     "lead": "Each card uses one reference object. None of them replace measured dimensions. These are examples, not customer quotes.",
     "items": [
       {
         "example": true,
         "who": "Bag shop",
-        "t": "Carry-on cue",
-        "d": "A bag shop places a daypack beside a carry-on outline as a scale cue, and writes the liters in the listing. The picture does not prove it fits the bin."
+        "t": "Carry-on hint",
+        "d": "A bag shop places a daypack beside a carry-on outline as a size hint, and writes the liters in the listing. The picture does not prove it fits the bin."
       },
       {
         "example": true,
         "who": "Bottle shop",
-        "t": "Hand cue",
-        "d": "A bottle shop places a bottle next to an open palm. The hand is a generated scale cue, not a photo of a customer."
+        "t": "Hand hint",
+        "d": "A bottle shop places a bottle next to an open palm. The hand is a generated size hint, not a photo of a customer."
       },
       {
         "example": true,
         "who": "Notebook shop",
-        "t": "Desk cue",
+        "t": "Desk hint",
         "d": "A notebook shop places a planner beside a closed notebook so the page size is easier to picture."
       },
       {
         "example": true,
         "who": "Jewelry shop",
-        "t": "Coin cue",
+        "t": "Coin hint",
         "d": "A jewelry shop places a pendant beside a common coin so the face size is easier to see."
       },
       {
         "example": true,
         "who": "Case shop",
-        "t": "Phone cue",
+        "t": "Phone hint",
         "d": "A case shop places a small case next to a phone outline and leaves the millimeters in the text."
       },
       {
         "example": true,
         "who": "Shoe shop",
-        "t": "Insole cue",
+        "t": "Insole hint",
         "d": "A shoe shop places a shoe beside a familiar insole length. Fit still depends on the size chart, not the picture."
       },
       {
         "example": true,
         "who": "Kitchen shop",
-        "t": "Jar cue",
+        "t": "Jar hint",
         "d": "A kitchen shop places a canister beside a common jar so capacity is easier to picture."
       },
       {
         "example": true,
         "who": "Pet shop",
-        "t": "Bowl cue",
+        "t": "Bowl hint",
         "d": "A pet shop places a bowl beside a familiar mug and writes the real capacity next to the image."
       },
       {
         "example": true,
         "who": "Tool shop",
-        "t": "Palm cue",
-        "d": "A tool shop places a compact driver in a palm so shoppers can see that it is small enough for a pocket."
+        "t": "Palm hint",
+        "d": "A tool shop places a small driver in a palm so shoppers can see that it is small enough for a pocket."
       },
       {
         "example": true,
         "who": "Lamp shop",
-        "t": "Table cue",
-        "d": "A lamp shop places a lamp beside a side table for a quick height cue, and keeps the measured height in the listing."
+        "t": "Table hint",
+        "d": "A lamp shop places a lamp beside a side table for a quick height hint, and keeps the measured height in the listing."
       }
     ]
   },
-  "related_h2": "Jewelry and Listing Photos Beside the Scale Shot",
-  "related_lead": "Pair the scale photo with a close-up, an on-model jewelry shot, studio lighting, and Amazon.",
+  "related_h2": "Jewelry and Listing Photos Beside the Size Photo",
+  "related_lead": "Pair the size photo with a close-up, a jewelry photo on a person, studio lighting, and Amazon.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -659,29 +659,29 @@
       "label": "Amazon product photos"
     }
   ],
-  "cta_title": "Start a Scale Photo from One Full Product Shot",
+  "cta_title": "Start a Size Photo from One Full Product Shot",
   "cta_lead": "Upload one photo of the whole item, name one familiar object, and see the credit cost before you start.",
   "definition": {
     "title": "What Is a Product Size Reference Photo?",
     "paras": [
-      "A product size reference photo places your item beside one familiar object so shoppers can judge scale at a glance. It is a visual cue, not a measured drawing.",
+      "A product size reference photo places your item beside one familiar object so shoppers can judge the size at a glance. It is a size hint, not a measured drawing.",
       "Put the real length, width, height, or capacity in the listing text. Check the picture against those numbers before you post it on Amazon or your product page."
     ]
   },
   "reasons": {
     "h2": "Reasons to Use a Size Reference Photo",
-    "lead": "Shoppers get a quick cue. The listing still carries the real measurements.",
+    "lead": "Shoppers get a quick size hint. The listing still carries the real measurements.",
     "items": [
       {
-        "t": "Scale at a Glance",
-        "d": "A familiar object next to the product is easier to read than a product floating on a plain ground with no cue at all."
+        "t": "Size at a Glance",
+        "d": "A familiar object next to the product is easier to read than a product floating on a plain ground with no size hint at all."
       },
       {
         "t": "No Props to Collect",
         "d": "The reference object and the setting are generated from your product photo. You do not need a studio or a borrowed suitcase."
       },
       {
-        "t": "One Photo, Another Cue",
+        "t": "One Photo, Another Hint",
         "d": "Reuse a clear product photo and name a different object. Compare each result with your measured dimensions before posting."
       },
       {
@@ -692,9 +692,9 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Pick a cue",
+      "eyebrow": "Pick a size hint",
       "h2": "Browse Size Scenes by Familiar Object",
-      "lead": "Start from one object. The picture is a cue, and the measured dimensions stay in the listing.",
+      "lead": "Start from one object. The picture is only a size hint. The real measurements stay in the listing.",
       "items": [
         {
           "t": "Palm or Hand",
@@ -710,7 +710,7 @@
         },
         {
           "t": "Common Coin",
-          "d": "A pendant or a compact sits beside a common coin so the face size is easier to see."
+          "d": "A pendant or a powder case sits beside a common coin so the face size is easier to see."
         },
         {
           "t": "Phone Outline",
@@ -725,19 +725,19 @@
     {
       "eyebrow": "Also in the project",
       "h2": "Features for a Size Reference Photo",
-      "lead": "Ways to make the scale photo, and a clip from the same picture when you need motion.",
+      "lead": "Ways to make the size photo, and a clip from the same picture when you need motion.",
       "items": [
         {
-          "t": "One Object in the Frame",
-          "d": "Name a single familiar object so the comparison stays easy to read. Use a second image when you need a different cue."
+          "t": "One Object in the Photo",
+          "d": "Name a single familiar object so the comparison stays easy to read. Use a second image when you need a different hint."
         },
         {
-          "t": "Batch Another Cue",
-          "d": "Reuse the same product photo for a palm version and a notebook version. Each photo is 24 credits, shown before you start."
+          "t": "Batch Another Hint",
+          "d": "Reuse the same product photo for a palm version and a notebook version. Each photo spends 24 credits (points on your plan), shown before you start."
         },
         {
           "t": "Generated Hand or Model",
-          "d": "The scale hand, or an [on-model shot](page:model-photos), is generated. It is not a customer, and it does not replace a size chart."
+          "d": "The hand in the size hint, or a [photo of someone wearing the item](page:model-photos), is generated. It is not a customer, and it does not replace a size chart."
         },
         {
           "t": "Start From a Product Link",
@@ -745,7 +745,7 @@
         },
         {
           "t": "API for Catalog Photos",
-          "d": "Send listing photos through the API and get scale scenes back. Each job spends credits from your plan, starting at $24.50 a month."
+          "d": "Send listing photos from your own software (API) and get size photos back. Each one spends credits from your plan. Starter is $24.50 a month."
         },
         {
           "t": "A Clip When You Need Motion",
@@ -756,11 +756,11 @@
   ],
   "trust": {
     "h2": "What You Can Count On",
-    "lead": "A cue in the picture, the real measurements in the listing, and the credit cost up front.",
+    "lead": "A size hint in the picture, the real measurements in the listing, and the credit cost up front.",
     "items": [
       {
         "t": "24 Credits a Photo",
-        "d": "Each product photo is 24 credits. The cost is shown before the job starts."
+        "d": "Each product photo is 24 credits (points on your plan). The cost is shown before you start."
       },
       {
         "t": "No Watermark",
@@ -768,11 +768,11 @@
       },
       {
         "t": "Not a Measured Drawing",
-        "d": "Generated scale can be slightly off. Put the real length, width, height, or capacity in the listing text."
+        "d": "The size in the picture can be slightly off. Put the real length, width, height, or capacity in the listing text."
       },
       {
         "t": "Failed Jobs Return Credits",
-        "d": "If a job fails, the reserved credits return to your balance."
+        "d": "If it fails, the credits set aside for it return to your balance."
       },
       {
         "t": "Paid Plans",

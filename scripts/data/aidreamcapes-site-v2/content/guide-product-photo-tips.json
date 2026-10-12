@@ -1,10 +1,10 @@
 {
   "id": "guide-product-photo-tips",
   "title": "How to Take Product Photos for AI | AIVideosUGC",
-  "description": "How to take product photos for AI with a phone, then try new settings, a batch of looks, and a listing image you can compare with the real item.",
+  "description": "How to take product photos for AI with your phone. Then try a new place for the same item and compare the picture with the real product you ship.",
   "h1": "How to Take Product Photos for AI With Just Your Phone",
   "eyebrow": "Photo guide",
-  "lead": "To take product photos for AI, shoot the real item on your phone in window light, then place it in a new setting without a studio. Leave filters off so the later image still matches what you ship.",
+  "lead": "To take product photos for AI, photograph the real item on your phone in window light. Then place it in a new spot, without a studio. Leave filters off so the later image still matches what you ship.",
   "secondary_keywords": [
     "product photography with a phone",
     "product photo lighting at home",
@@ -15,11 +15,11 @@
   "summary": "Shoot at product height in window light, with filters off and the label readable, then try a new setting from that same photo.",
   "sections": [
     {
-      "h2": "New settings from one phone photo",
+      "h2": "New places from one phone photo",
       "paras": [
         "Once the source photo is sharp, you can place the same item somewhere new. The product should still be the one you ship.",
-        "A coast or a bright outdoor table. Use it when the product is about sun, travel, or summer. Check that the color did not shift warm.",
-        "A dry, open setting. Sand, stone, or a pale wall. Good for a rugged item. Watch the shadows so the label stays readable.",
+        "A coast or a bright outdoor table. Use it when the product is about sun, travel, or summer. Check that the color did not turn more orange.",
+        "A dry, open place. Sand, stone, or a pale wall. Good for a rugged item. Watch the shadows so the label stays readable.",
         "A minimal table. A plain board, gray card, or bare wood. This is the safest listing look, and it is the right start if you are unsure.",
         "An indoor room. A kitchen counter, a gym bench, a desk. Name the surface and the light in one sentence, such as \"A matte black bottle on a gym bench in early light.\""
       ],
@@ -29,13 +29,13 @@
     {
       "h2": "Reasons to make the photo here",
       "paras": [
-        "You already did the hard part with your phone. The rest replaces the studio day, not the truth of the product.",
-        "A smaller bill than a shoot. You are not hiring a set, a stylist, or a model for every color. One image is 24 credits, and that cost shows before the job starts. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
-        "No waiting on a booking. A usable listing image comes back from a photo you took today. You still compare it with the real item before you publish.",
-        "A batch when the catalog is long. Make several shots from one photo. Each image is its own 24-credit job. A failed job returns the credits. A developer can start those jobs through the API from your shop system.",
-        "No model hire, unless you want a person. Skip props you do not own. If you do want someone holding the item, pick a generated presenter and do not call them a customer. There is an [actor library](page:ai-actors) when the picture needs a person.",
+        "You already did the hard part with your phone. The rest replaces the studio day. It does not change the real product.",
+        "A smaller bill than a photo studio day. You are not hiring a studio set, a stylist, or a model for every color. A job is one time the tool makes a file. Credits are the points your monthly plan uses up for that file. They are not a cash price. One image is 24 credits, and that cost shows before the job starts. Starter is $24.50 a month for 200 credits. Pro is $35 a month for 300. Premium is $63 a month for 600.",
+        "No waiting on a studio booking. You get a usable listing image from a photo you took today. You still compare it with the real item before you publish.",
+        "Use this when your product list is long. Make several pictures from one photo. Each image is its own job and costs 24 credits. If a job fails, the credits come back. A developer can start those jobs through the API, a connection from your shop system.",
+        "No model hire, unless you want a person. Skip props you do not own. If you do want someone holding the item, pick a generated presenter and do not call them a customer. The [actor library](page:ai-actors) is a list of generated people, for when the picture needs a person.",
         "Start when the shop is quiet. A Sunday night is fine. Each job still costs 24 credits. There is no free plan.",
-        "Try two backgrounds before you pick a listing. A plain table and a room, or two crops, then run the winners as separate ads. That is a test, not a promise about the return."
+        "Try two backgrounds before you pick a listing photo. Use a plain table and a room, or two cropped versions. Then run the ones you prefer as separate ads. That is a test. It is not a promise that sales will rise."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec03",
       "alt": "Plain gray running shoe centered with its full shape and edges in focus."
@@ -43,35 +43,35 @@
     {
       "h2": "How to make the product photo in 3 steps",
       "paras": [
-        "Get the phone photo right, choose the look, then check the result against the real item.",
-        "Describe it, or upload it. Use the regular camera and keep the whole product sharp.",
+        "The three steps are: get the phone photo right, choose the look, then check the result against the real item.",
+        "Step 1. Describe the picture you want, or upload the photo you took. Use the regular camera and keep the whole product sharp.",
         "Rest the phone on books or a small tripod. Use the volume button or a two-second timer.",
-        "Fill most of the frame and leave a slim margin. Step closer instead of pinching to zoom.",
+        "Fill most of the picture and leave a slim margin. Step closer. Do not pinch the screen to zoom.",
         "Set the product beside a window in bright, indirect daylight. Turn the ceiling lights off.",
         "If sun hits the table, tape baking paper or a thin white sheet over the glass.",
-        "Warm bulbs mixed with daylight shift the color, and that shift follows into later images.",
+        "Warm bulbs mixed with daylight change the color. That change shows up in later images too.",
         "A plain board, gray card, or bare wood top is enough background.",
         "Wipe dust, peel stickers, and smooth anything soft before you shoot.",
-        "Hold the phone level with the product, and keep every edge inside the frame.",
-        "Switch portrait mode, filters, and beauty settings off. They change the edges and the color.",
-        "Shooting down on a bottle or a box makes it look as if it is tipping backward.",
-        "Tap the label to lock focus. If whites blow out, lower the brightness until texture returns.",
+        "Hold the phone level with the product, and keep every edge inside the picture.",
+        "Turn off portrait mode. It blurs the background. Also turn off filters and beauty settings. They change the edges and the color.",
+        "Pointing the camera down on a bottle or a box makes it look as if it is tipping backward.",
+        "Tap the label to lock focus. If white areas lose all detail, lower the brightness until you can see the texture.",
         "Take a straight front, then two or three more sides while the setup is still out.",
         "A mug wants the handle, a look inside, and the mark on the base.",
         "A shoe wants the profile, a three-quarter front, and the sole.",
-        "Lay clothing flat or hang it on a plain door, then add one close frame of the cloth.",
+        "Lay clothing flat or hang it on a plain door, then add one close-up of the cloth.",
         "Upload each side you care about. Do not ask the tool to invent a side it never saw.",
         "Zoom until you can read the label. Compare the color with the real item in daylight.",
         "Upload the original file, not a screenshot or a picture that passed through a chat app.",
-        "JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF, and TIFF files all work, up to 32 MB.",
-        "Name the product, the surface, and the light in one plain sentence. Leave prices out.",
+        "JPG, JPEG, PNG, WebP, BMP, TIF, and TIFF all work. HEIC and HEIF, the photo types many phones save, work too. The limit is 32 MB.",
+        "Step 2. Name the product, the surface, and the light in one plain sentence. Leave prices out.",
         "Pick the look before it runs: outdoor table, dry background, minimal surface, or a room.",
-        "A beach scene and a plain table are two choices. You are aiming the picture, not hoping.",
-        "When the image comes back, hold the real item beside the screen.",
+        "A beach scene and a plain table are two choices. You are choosing the picture, not guessing.",
+        "Step 3. When the image comes back, hold the real item beside the screen.",
         "Check the color, the label, and the shape. Fix it with a follow-up sentence if needed.",
-        "Add the price later in your own editor, where the spelling stays yours.",
+        "Add the price later in your own editor, so you control the spelling.",
         "Open [lifestyle photos](page:lifestyle-photos), [change the background](page:change-background), or a [white background](page:white-background).",
-        "The same still can start [AI image to video](page:image-to-video) when the listing also needs a clip."
+        "The same still photo can start [AI image to video](page:image-to-video) when the listing also needs a short video."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec01",
       "alt": "Adult cleans a plain gray running shoe beside an indirect daylight window."
@@ -79,15 +79,15 @@
     {
       "h2": "Examples of the photos you can make",
       "paras": [
-        "Same item, different rooms. None of these should invent a detail the source photo did not contain.",
+        "Same item, different rooms. None of these should add a detail that was not in your photo.",
         "A sunscreen tube on a bright outdoor table, label forward, with the shade left alone.",
         "A bottle on a gym bench in early light, cap and label both readable.",
         "A shoe in profile, from a photo that actually showed that side.",
         "The same shoe from a three-quarter front, then the sole, each from its own source photo.",
         "A mug with the handle visible, on a bare wood top, room kept simple behind it.",
-        "A candle on wood, wick and label both inside the frame.",
+        "A candle on wood, with the wick and the label both inside the picture.",
         "A necklace on a dark top, clasp visible, no invented chain length.",
-        "A snack bag standing up, every edge inside the frame.",
+        "A snack bag standing up, with every edge inside the picture.",
         "Headphones on a desk, both cups visible if the source photo had them.",
         "A serum bottle with the dropper on, shade checked against the real bottle.",
         "A tote laid flat, handles spread, filters left off.",
@@ -104,19 +104,19 @@
         "Example. A home shop starts from a phone photo and gets a clean tabletop without renting a studio.",
         "Example. A jewelry shop shows the piece worn, from a photo of the piece alone, and does not invent a side the photo never showed.",
         "Example. A food shop makes a morning scene and a dinner scene from the same pack shot.",
-        "Example. A clothing shop lays the garment flat, then asks for a door and a street setting.",
+        "Example. A clothing shop lays the garment flat, then asks for it on a door and on a street.",
         "Example. A supplement shop keeps the label readable and adds the price later in its own editor.",
         "Example. A furniture shop tries a living room and a patio before it picks a listing image.",
         "Example. A beauty shop makes two backgrounds and runs them as two ads, same offer, same budget.",
         "Example. A shoe shop shoots the sole and the profile first, so later images do not invent the tread.",
-        "Example. A small team makes the listing photo and, from that still, a short [product video](page:product-videos) with a voice and captions for TikTok or Meta."
+        "Example. A small team makes the listing photo. From that still photo, they make a short [product video](page:product-videos). It has a spoken voice and words on screen, for TikTok or Meta. Meta means Facebook and Instagram."
       ]
     },
     {
       "h2": "The short version",
       "paras": [
-        "Shoot at product height, in window light, with filters off and the label readable. Then pick a setting and compare the new image with the real item.",
-        "Each image is 24 credits, shown before the job starts. A failed job returns the credits. Downloads have no watermark. There is no free plan."
+        "Photograph at product height, in window light, with filters off and the label readable. Then pick a place and compare the new image with the real item.",
+        "Each image is 24 credits, shown before the job starts. If a job fails, the credits come back. Downloads have no watermark stamped on the file. There is no free plan."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec05-r2",
       "alt": "Adult hands compare a plain gray running shoe with a blank silhouette card."
@@ -133,7 +133,7 @@
   "faq": [
     {
       "q": "What does this product photo tool do?",
-      "a": "It makes a new product image from a photo you already took and a plain sentence about the setting. You still shoot the real item so the label, the color, and the shape stay honest."
+      "a": "It makes a new product image from a photo you already took and a plain sentence about the place. You still photograph the real item so the label, the color, and the shape match what you ship."
     },
     {
       "q": "How does it work?",
@@ -141,11 +141,11 @@
     },
     {
       "q": "What should I look for in the result?",
-      "a": "The product should match the item you ship, the cost should show before the job starts, and a failed job should return the credits. One image is 24 credits. If the label is wrong, do not publish that file."
+      "a": "The product should match the item you ship. The cost should show before the job starts. If a job fails, the credits come back. One image is 24 credits. If the label is wrong, do not publish that file."
     },
     {
       "q": "Is there a free plan?",
-      "a": "No. There is no free plan. One image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Downloads have no watermark. See [pricing](page:pricing)."
+      "a": "No. There is no free plan. One image is 24 credits. Starter is $24.50 a month for 200 credits. Pro is $35 a month for 300. Premium is $63 a month for 600. Downloads have no watermark. See [pricing](page:pricing)."
     },
     {
       "q": "Are these photos useful for a shop?",
@@ -153,15 +153,15 @@
     },
     {
       "q": "What do I gain by doing it this way?",
-      "a": "A listing image without a studio booking, more than one setting from the same photo, and a file you can use in the shop. You can also send the still into a short video. Each job shows its credit cost first."
+      "a": "You get a listing image without a studio booking. You can put the product in more than one place, from the same photo. You get a file you can use in the shop. You can also send the still photo into a short video. Each job shows its credit cost first."
     },
     {
       "q": "Can I use the photos in my shop and in ads?",
-      "a": "Yes. Downloaded photos are yours to use in listings and ads, and they do not include a watermark. You still need the right to the product photo you uploaded. Leave other brands' logos and famous people out of the frame."
+      "a": "Yes. Downloaded photos are yours to use in listings and ads. They have no watermark stamped on them. You still need permission to use the product photo you uploaded. Leave other brands' logos and famous people out of the photo."
     }
   ],
   "cta_title": "One product, more than one photo",
-  "cta_lead": "Start with a clear phone photo, try a new setting, and compare the result with the real item before you list it.",
+  "cta_lead": "Start with a clear phone photo, try a new place, and compare the result with the real item before you list it.",
   "relatedLinks": [
     "product-videos",
     "ai-actors",

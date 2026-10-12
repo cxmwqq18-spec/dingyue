@@ -1,10 +1,10 @@
 {
   "id": "tpl-head",
   "title": "AI Team Headshots for Your About Page | AIVideosUGC",
-  "description": "Make matching team headshots in one shared light, crop and backdrop, each from a teammate's own photo. AI portraits for About and team pages.",
+  "description": "Make matching team headshots from each teammate's own photo, with one shared light, face framing, and background. AI portraits for About and team pages.",
   "h1": "AI Team Headshots That Match Across the Page",
   "eyebrow": "Team photo template",
-  "lead": "A team page looks unfinished when every portrait has a different crop and light. Upload the approved photos in a batch and get matching AI team headshots.",
+  "lead": "A team page looks unfinished when portraits are framed and lit differently. Upload the approved photos together and get matching AI team headshots.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Each Team Photo",
-      "d": "Upload an approved face-and-shoulders photo with even light and nothing covering the face. Confirm the person agreed to this business use before you upload."
+      "d": "Upload a clear photo of the face and shoulders, in even light, with nothing on the face. The person must agree before you upload."
     },
     {
-      "t": "Pick One Backdrop",
-      "d": "Describe one backdrop, crop, light, and clothing note, then reuse those same notes for every teammate. Each portrait should still keep that person's own features."
+      "t": "Pick One Background",
+      "d": "Set one background, one crop (how tight the face is), one light, and one clothes note. Reuse it. Keep each person's own face."
     },
     {
       "t": "Download and Post",
-      "d": "Download the set for the page or a deck. Keep names in text beside each portrait."
+      "d": "Download the set for the page or a slide deck. Keep names in text beside each portrait."
     }
   ],
   "maker": {
@@ -33,7 +33,7 @@
       ],
       [
         "Size",
-        "Square by default"
+        "Square photo (1:1)"
       ],
       [
         "Upload",
@@ -46,27 +46,27 @@
   "faq": [
     {
       "q": "What is an AI team headshot?",
-      "a": "A square portrait from an approved photo, with a backdrop, crop, and light you can reuse for every teammate. Each person keeps their own features. It is not an official identity document."
+      "a": "A square portrait from an approved photo, with a background, framing, and light you can reuse for every teammate. Framing means how the face is cut. Each person keeps their own features. It is not an ID card or a passport photo."
     },
     {
       "q": "What should each teammate upload?",
-      "a": "A recent face-and-shoulders photo with even light, and no hat, sunglasses, or hand covering the face. Use a photo that person has approved for the company to upload."
+      "a": "A recent photo of the face and shoulders, in even light, with no hat, sunglasses, or hand covering the face. Use a photo that person has approved for the company to upload."
     },
     {
       "q": "How can the team page feel consistent?",
-      "a": "Share one backdrop, one crop, and one light across every portrait, while each person keeps their own features. Write that setup once and reuse it, including as a batch."
+      "a": "Share one background, one framing, and one light across every portrait, while each person keeps their own features. Write that setup once and reuse it, including for the whole set at once."
     },
     {
       "q": "Can I put names inside the headshot?",
-      "a": "Add names and job titles as text beside each image. Keeping them out of the portrait makes a role change a text edit, not a new generation. A caption belongs on a short intro clip, not inside the still."
+      "a": "Add names and job titles as text beside each image. Keeping them out of the portrait makes a role change a text edit, not a new photo. A caption belongs on a short intro clip, not inside the photo."
     },
     {
       "q": "Will this match a specific person exactly?",
-      "a": "No. It follows the features visible in the uploaded photo, and it is still a generated portrait, not an official identity document. Have that person review it before you publish."
+      "a": "No. It follows the features visible in the uploaded photo. It is still a made portrait, not a camera photo, and not an ID card. Have that person review it before you publish."
     },
     {
       "q": "What does a team headshot cost?",
-      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages, and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
+      "a": "Each photo costs 24 credits. Credits are the balance on your monthly plan. The cost is shown before you start, and a failed photo returns those credits. The download has no watermark, so our name is not stamped on the file. You can use it in your own ads, pages, and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
     },
     {
       "q": "Do I need permission from each teammate?",
@@ -74,7 +74,7 @@
     },
     {
       "q": "Can a new hire match an existing set?",
-      "a": "Yes. Reuse the same backdrop, crop, and light on the new hire's approved photo. You do not reshoot the rest of the team."
+      "a": "Yes. Reuse the same background, framing, and light on the new hire's approved photo. You do not reshoot the rest of the team."
     },
     {
       "q": "Can I use the portraits in a pitch deck?",
@@ -82,14 +82,14 @@
     },
     {
       "q": "Can a short intro have a voice, captions, and music?",
-      "a": "Yes. Keep the portraits as stills, and add an AI voice, captions, and a music bed on a short intro clip beside them. You can post that clip to TikTok or Meta, or download it. The portrait is not a customer quote."
+      "a": "Yes. Keep the portraits as photos, and add an AI voice, captions, and background music on a short intro clip beside them. You can post that clip to TikTok, or to Meta (Facebook and Instagram), or download it. The portrait is not a customer quote."
     },
     {
-      "q": "Can I run the team through the API?",
-      "a": "Yes. Send approved photos through the API when a directory needs the same crop. Each photo still needs that person's permission, and each job shows its credit cost first."
+      "q": "Can my own software send the team photos?",
+      "a": "Yes. The API lets your own software send approved photos when a staff page needs the same framing. Each photo still needs that person's permission, and each one shows its credit cost first."
     }
   ],
-  "cta_lead": "Upload an approved photo for each person. You see the credit cost before the job starts.",
+  "cta_lead": "Upload an approved photo for each person. You see the credit cost, from your monthly plan, before it starts.",
   "visual": {
     "strip": [
       "n:guide:tpl-head-round4-02",
@@ -103,7 +103,7 @@
       "source": "n:guide:rc3-head-source-r1",
       "result": "n:guide:rc3-head-step-result-r1",
       "mode": "photo",
-      "prompt": "Make a square portrait from the uploaded person with a soft gray backdrop and even light.",
+      "prompt": "Make a square portrait of the uploaded person, on a soft gray background, with even light.",
       "options": [
         [
           "Template",
@@ -111,7 +111,7 @@
         ],
         [
           "Size",
-          "Square 1:1"
+          "Square photo (1:1)"
         ],
         [
           "Upload",
@@ -193,7 +193,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -203,7 +203,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -212,7 +212,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Warm Light Watch Detail",
           "chips": [
             "accessories"
           ],
@@ -275,7 +275,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Morning Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -293,7 +293,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Spin View: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -320,7 +320,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Straight to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -329,7 +329,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -338,7 +338,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -347,7 +347,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -365,7 +365,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -401,7 +401,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -428,7 +428,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Close-up Silver Signet Ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -473,7 +473,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -482,7 +482,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -500,7 +500,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -518,7 +518,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -555,7 +555,7 @@
     }
   },
   "steps_h2": "How to Make Team Headshots in 3 Simple Steps",
-  "steps_lead": "Upload each approved photo, reuse one backdrop, then download a matching set.",
+  "steps_lead": "Upload each approved photo, reuse one background, then download a matching set.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -589,14 +589,14 @@
       {
         "example": true,
         "who": "Founding team",
-        "t": "One crop on the About page",
-        "d": "Example: the founders share one backdrop, crop, and light. Each portrait still follows that person's own photo. Names sit in text beside the image."
+        "t": "One framing on the About page",
+        "d": "Example: the founders share one background, framing, and light. Each portrait still follows that person's own photo. Names sit in text beside the image."
       },
       {
         "example": true,
         "who": "Hiring manager",
         "t": "A new hire joins the row",
-        "d": "Example: a new teammate's approved photo uses the same backdrop and crop. The rest of the team is not reshot."
+        "d": "Example: a new teammate's approved photo uses the same background and framing. The rest of the team is not reshot."
       },
       {
         "example": true,
@@ -613,20 +613,20 @@
       {
         "example": true,
         "who": "Pitch author",
-        "t": "Deck and speaker bio",
-        "d": "Example: the same square portrait goes in a deck and a speaker bio. The job title stays as text, not lettering inside the image."
+        "t": "Slide deck and speaker bio",
+        "d": "Example: the same square portrait goes in a slide deck and a speaker bio. The job title stays as text, not lettering inside the image."
       },
       {
         "example": true,
         "who": "Small office",
         "t": "The set in one batch",
-        "d": "Example: the office uploads the approved photos together and gets one shared crop back for the team page."
+        "d": "Example: the office uploads the approved photos together and gets one shared framing back for the team page."
       },
       {
         "example": true,
         "who": "Remote team",
         "t": "Same light, different cities",
-        "d": "Example: teammates in different cities upload their own approved photos and come back with one shared backdrop."
+        "d": "Example: teammates in different cities upload their own approved photos and come back with one shared background."
       },
       {
         "example": true,
@@ -644,12 +644,12 @@
         "example": true,
         "who": "Founder",
         "t": "Not an ID photo",
-        "d": "Example: the portrait follows the uploaded photo, and the person reviews it before it is published. It is not an official identity document."
+        "d": "Example: the portrait follows the uploaded photo, and the person reviews it before it is published. It is not an ID card or a passport photo."
       }
     ]
   },
-  "related_h2": "Photo tools for a backdrop and a person",
-  "related_lead": "Product photo tools for a clean backdrop, a model photo, and a white background.",
+  "related_h2": "Photo tools for a background and a person",
+  "related_lead": "Product photo tools for a clean background, a model photo, and a white background.",
   "cta_title": "Ready for Matching Team Headshots?",
   "blockOrder": [
     "hero",
@@ -666,25 +666,25 @@
   "definition": {
     "title": "What Is an AI Team Headshot?",
     "paras": [
-      "An AI team headshot is a square portrait that follows an approved photo of that person, with one shared backdrop, crop, and light.",
-      "Names and roles stay as text beside the image. A short intro clip next to the row can carry a voice, captions, and a music bed. The portrait is not an official identity document."
+      "An AI team headshot is a square portrait made from an approved photo of that person. Everyone uses one background, one framing (how the face is cut), and one light.",
+      "Names and roles stay as text beside the image. A short intro clip beside the row can have a voice, captions, and background music. The portrait is not an ID card or a passport photo."
     ]
   },
   "reasons": {
     "h2": "Reasons to Use Matching Team Headshots",
-    "lead": "One backdrop and one crop, so the About page looks like one team.",
+    "lead": "One background and one framing, so the About page looks like one team.",
     "items": [
       {
         "t": "One look across the row",
-        "d": "Share a backdrop, a crop, and a light, while each person keeps the features in their own photo."
+        "d": "Share one background, one framing, and one light. Each person keeps the features in their own photo."
       },
       {
         "t": "A new hire joins without a reshoot",
-        "d": "Reuse those same notes on the new photo. The rest of the team stays as it is."
+        "d": "Reuse the same background and framing on the new photo. The rest of the team stays as it is."
       },
       {
         "t": "The whole set in one batch",
-        "d": "Upload the approved photos together and get the same crop back, instead of booking a studio for each person."
+        "d": "Upload the approved photos together and get the same framing back, instead of booking a studio for each person."
       },
       {
         "t": "Names stay easy to change",
@@ -696,7 +696,7 @@
       },
       {
         "t": "The cost shows before you start",
-        "d": "Each photo is 24 credits. A failed job returns those credits. Plans start at $24.50 a month."
+        "d": "Each photo uses 24 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month."
       }
     ]
   },
@@ -704,19 +704,19 @@
     {
       "eyebrow": "Features",
       "h2": "Features for Team Headshots",
-      "lead": "The portraits stay stills of your teammates. A short intro beside them can carry a voice, captions, and a track.",
+      "lead": "The portraits stay photos of your teammates. A short intro beside them can have a voice, captions, and a music track.",
       "items": [
         {
           "t": "A voice for a short intro",
-          "d": "Add an AI voice on a team intro clip that sits beside the portraits. The still itself stays a photo."
+          "d": "Add an AI voice on a short team intro that sits beside the portraits. The portrait itself stays a photo."
         },
         {
           "t": "Captions on that intro",
           "d": "Put a name line or a one-sentence intro on the clip in the built-in editor. Keep job titles out of the portrait."
         },
         {
-          "t": "A batch for the whole team",
-          "d": "Run every approved photo through the same backdrop and crop. Each photo shows its credit cost first."
+          "t": "The whole team at once",
+          "d": "Run every approved photo with the same background and framing. Each photo shows its credit cost first."
         },
         {
           "t": "Start from a public page link",
@@ -728,15 +728,15 @@
         },
         {
           "t": "A presenter, not a replacement",
-          "d": "The portrait follows the uploaded person. A separate AI actor can introduce the team and is not that teammate."
+          "d": "The portrait follows the uploaded person. A separate AI actor can introduce the team. That actor is not the teammate."
         },
         {
           "t": "A track under the intro",
-          "d": "Add a music bed from the library under the intro clip. The square portraits stay photos on the page."
+          "d": "Add background music from the music library under the intro clip. The square portraits stay photos on the page."
         },
         {
-          "t": "Crop and backdrop in the editor",
-          "d": "Set the crop, the light, and the backdrop in one place, then reuse those notes for the next person."
+          "t": "Framing and background in the editor",
+          "d": "Set the framing, the light, and the background in one place, then reuse those notes for the next person."
         },
         {
           "t": "An intro in another language",
@@ -744,11 +744,11 @@
         },
         {
           "t": "Post the intro to TikTok or Meta",
-          "d": "Send the intro clip to TikTok or Meta from the workspace. The square portraits stay for the site, the deck, and the profile."
+          "d": "Send the intro clip to TikTok, or to Meta (Facebook and Instagram), from your account. The square portraits stay for the site, the slide deck, and the profile."
         },
         {
           "t": "An API for approved photos",
-          "d": "Send photos through the API when a directory needs the same crop. Upload only photos the person agreed to, and each job shows its credit cost."
+          "d": "The API lets your own software send photos when a staff page needs the same framing. Send only photos the person agreed to. Each one shows its credit cost."
         }
       ]
     }

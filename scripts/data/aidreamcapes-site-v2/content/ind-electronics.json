@@ -4,8 +4,8 @@
   "description": "Turn one electronics photo into an unboxing, a setup, or a desk scene. Download watermark-free clips for listings, social feeds, and paid ads.",
   "h1": "AI Product Videos for Electronics, From the Box to Daily Use",
   "eyebrow": "Electronics",
-  "lead": "Show the gadget in a hand. A product link or one clear photo can become an unboxing, a setup, or a desk scene, with a voiceover and captions.",
-  "card": "Unboxings, setups, and everyday-carry scenes from one gadget photo.",
+  "lead": "Show the gadget in a hand. A product link or one clear photo can become an unboxing, a setup, or a desk scene, with a spoken voice and captions.",
+  "card": "Unboxings, setups, and daily-use scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
     "tech product video ads",
@@ -16,15 +16,15 @@
   "faq": [
     {
       "q": "Do I need a shoot before I can make an electronics clip?",
-      "a": "No. Upload one photo or paste a product link, name the action, and download a 6, 10, 15, or 30 second clip. Credits are 24, 40, 60, and 120. A failed job returns its credits."
+      "a": "No. Upload one photo or paste a product link, name the action, and download the clip. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A failed job returns its credits."
     },
     {
       "q": "Do I need video editing experience?",
-      "a": "No. Voice and captions come with the clip, and you can fix them in the editor on the same page. Prices, specs, and any licensed music you add stay where you can check them."
+      "a": "No. Voice and captions come with the clip, and you can fix them in the editor on the same page. Prices, specs, and music you add stay where you can check them."
     },
     {
-      "q": "Can I make several cuts of the same gadget?",
-      "a": "Yes. One photo can become an unboxing, a setup, and a travel scene. Check shape and ports on every cut before you test them in an ad account."
+      "q": "Can I make several versions of the same gadget?",
+      "a": "Yes. One photo can become an unboxing, a setup, and a travel scene. Check the shape and the ports on every version before you try them as ads."
     },
     {
       "q": "Which electronics can I show from one photo?",
@@ -32,41 +32,41 @@
     },
     {
       "q": "Can I make an electronics clip without hiring a creator?",
-      "a": "Yes. Upload one product photo or paste a link, pick a generated presenter, and pay the credits shown before the job. Post the clip as an ad, not as a customer's review."
+      "a": "Yes. Upload one product photo or paste a link, pick a made-up presenter, and pay the credits shown before the job. Post the clip as an ad, not as a customer's review."
     },
     {
       "q": "Will the clip state my battery life or wattage?",
-      "a": "Do not rely on the picture for specs. Add battery, wattage, and compatibility yourself in the listing or your editor, where you can check the numbers."
+      "a": "Do not trust the picture for the numbers. Add battery life, watts, and which devices it fits in the listing or your editor, where you can check them."
     },
     {
       "q": "Can I run the clips as paid gadget ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Keep performance claims accurate."
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. Do not overstate how well the gadget works."
     },
     {
-      "q": "What frame should I pick?",
-      "a": "Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. A vertical 9:16 fits a phone feed. A 16:9 fits a wider product page."
+      "q": "What video shape should I pick?",
+      "a": "Video shapes are a tall phone video (9:16), a square (1:1), a wide video (16:9), 4:3, or 3:4. 4:3 is a bit wider than a square. 3:4 is a bit taller than a square. A tall 9:16 fits a phone feed. A wide 16:9 fits a product page."
     },
     {
       "q": "Can the gadget clip include a voice and captions?",
-      "a": "Yes. Pick a generated presenter and the clip can include a spoken line and captions. Specs still belong in your listing, where you can check the numbers."
+      "a": "Yes. Pick a made-up presenter and the clip can include a spoken line and captions. The numbers still belong in your listing, where you can check them."
     }
   ],
   "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
   "cta_lead": "Paste a product link or upload a clear photo, pick a presenter, and review the credit cost before the job starts.",
-  "steps_h2": "An Electronics Product Demo Video in Three Moves",
-  "steps_lead": "Add the real specs after you download. Three steps: a link or a photo, a presenter, then voice and captions.",
+  "steps_h2": "An Electronics Product Demo Video in Three Steps",
+  "steps_lead": "Add the real specs after you download. Three steps: a link or a photo, a made-up person, then a spoken voice and captions.",
   "steps": [
     {
-      "t": "Upload the Gadget Details",
+      "t": "Add the Gadget Photo or Link",
       "d": "Paste a product link, or use a daylight photo of the whole unit. Keep ports visible when they matter."
     },
     {
-      "t": "Pick a Creator Avatar",
-      "d": "Choose a generated presenter from the actor library for the demo. The hand or the face is not a customer."
+      "t": "Pick a Made-Up Person",
+      "d": "The actor library is a list of made-up people. Pick one for the demo. The hand or the face is not a customer."
     },
     {
-      "t": "Generate and Then Launch",
-      "d": "A voiceover and captions come with the frame you picked. Post the file to TikTok or Meta after the ports match."
+      "t": "Add a Spoken Voice, Then Post",
+      "d": "A spoken voice and captions come in the video shape you picked. Post to TikTok or Meta (Facebook and Instagram) after the ports match."
     }
   ],
   "visual": {
@@ -109,11 +109,11 @@
   "relatedLinks": [
     {
       "id": "tpl-product-feature-callout-video",
-      "label": "product feature callout video"
+      "label": "product feature video"
     },
     {
       "id": "tpl-angle",
-      "label": "product packshot photos"
+      "label": "plain product photos"
     },
     {
       "id": "tpl-film",
@@ -129,7 +129,7 @@
     },
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "AI creator-style video ads"
     }
   ],
   "reasons": {
@@ -143,14 +143,14 @@
         "alt": "Adult hand setting up a compact matte-graphite rectangular speaker on a wooden desk."
       },
       {
-        "t": "Credits, Not a Crew",
-        "d": "Run one gadget through an unboxing, a setup, and a travel scene, including a batch of cuts. You pay the credits shown before each length.",
+        "t": "Pay With Credits, Not a Crew",
+        "d": "Run one gadget through an unboxing, a setup, and a travel scene. A batch is several jobs from one photo. You pay with credits. Credits are what your plan spends on each job, and the number shows before each length.",
         "img": "n:guide:fx31-ind-electronics-benefit-cable",
         "alt": "Adult hand connecting a plain braided cable to a compact matte-black charging hub."
       },
       {
-        "t": "You Hold the Script",
-        "d": "Pick the presenter, the desk, the tone, and a short script. Battery, wattage, and compatibility stay in your listing, not in the picture.",
+        "t": "You Choose the Words",
+        "d": "Pick the person, the desk, the tone, and a short script. Battery life, watts, and which devices it fits stay in your listing, not in the picture.",
         "img": "n:guide:fx31-ind-electronics-benefit-ports",
         "alt": "Adult fingers holding a compact matte-graphite gadget to show its ports and controls."
       }
@@ -158,21 +158,21 @@
   },
   "platforms": {
     "h2": "Tech Product Video Ads on Every Channel",
-    "lead": "Pick the frame that channel already runs, then publish the clip to TikTok or Meta. A vertical clip fits a phone feed, and a wider frame fits a product page.",
+    "lead": "Pick the video shape that channel already uses, then publish the clip to TikTok or Meta (Facebook and Instagram). A tall clip fits a phone feed, and a wide shape fits a product page.",
     "items": [
       {
         "t": "AI TikTok ads generator",
-        "d": "A 9:16 unboxing or button press for a gadget ad in the For You feed.",
+        "d": "A tall 9:16 unboxing or button press for a gadget ad on the TikTok home feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram ads",
-        "d": "A square still or a vertical setup for the grid and Stories.",
+        "d": "A square photo, or a tall setup video, for the profile grid and for Instagram Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook ad generator",
-        "d": "A feed still with room to add the spec line after download.",
+        "d": "A photo for the feed, with space to add the spec line after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
@@ -200,7 +200,7 @@
         "example": true,
         "who": "Speaker brand",
         "t": "One press on a desk",
-        "d": "They upload a three-quarter photo and ask for a hand pressing the single control, ending on the full speaker."
+        "d": "They upload a photo taken from a front corner and ask for a hand pressing the single control. The clip ends on the full speaker."
       },
       {
         "example": true,
@@ -212,7 +212,7 @@
         "example": true,
         "who": "Case maker",
         "t": "Two lengths, one case",
-        "d": "The same case photo feeds a 6-second pocket pull (24 credits) and a 10-second desk set-down (40 credits)."
+        "d": "The same case photo becomes a 6-second clip of taking it from a pocket (24 credits). It also becomes a 10-second clip of setting it on a desk (40 credits)."
       },
       {
         "example": true,
@@ -230,35 +230,35 @@
         "example": true,
         "who": "Small catalog",
         "t": "A link, then a port check",
-        "d": "They paste the product page for a first cut, then reject any clip whose ports do not match the unit."
+        "d": "They paste the product page for a first version, then reject any clip whose ports do not match the unit."
       },
       {
         "example": true,
         "who": "Specs desk",
         "t": "Captions edited in place",
-        "d": "Voice and captions are fixed in the editor. Battery and wattage stay in the listing."
+        "d": "Voice and captions are fixed in the editor. Battery life and watts stay in the listing."
       },
       {
         "example": true,
         "who": "Multi-market",
         "t": "The setup in another language",
-        "d": "The same button-press demo is rendered for a second market. The device shape is checked again."
+        "d": "The same button-press demo is made again for a second market. The device shape is checked again."
       },
       {
         "example": true,
         "who": "Photo set",
         "t": "A few angles, no light kit",
-        "d": "Several product photos stand in for a lighting setup. The hand on screen is generated."
+        "d": "Several product photos replace a day of lighting. The hand on screen is made up."
       },
       {
         "example": true,
         "who": "Chat desk",
-        "t": "Describe the demo, get the cut",
-        "d": "They type the action in a short back-and-forth and get a script with the clip."
+        "t": "Describe the demo, get the video",
+        "d": "They type the action in a few short notes and get a script with the clip."
       }
     ]
   },
-  "related_h2": "Feature clips, packshots, and product videos",
+  "related_h2": "Feature clips, plain product photos, and product videos",
   "blockOrder": [
     "hero",
     "strip",
@@ -279,11 +279,11 @@
       "items": [
         {
           "t": "A link becomes the demo",
-          "d": "Paste the product page. The job reads the gadget and starts an unboxing, a setup, or a desk scene from that link."
+          "d": "Paste the product page. The job uses the gadget on that page and starts an unboxing, a setup, or a desk scene."
         },
         {
           "t": "A presenter from the library",
-          "d": "Choose a generated presenter for the demo. The hand or the face is not a customer."
+          "d": "Choose a made-up presenter for the demo. The hand or the face is not a customer."
         },
         {
           "t": "Voice and captions included",
@@ -295,11 +295,11 @@
         },
         {
           "t": "Edit on the same page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a watermark-free file."
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark (no logo stamped on it)."
         },
         {
           "t": "Another language, then publish",
-          "d": "Render the same demo in another language, then publish the file to TikTok or Meta."
+          "d": "Make the same demo again in another language, then publish the file to TikTok or Meta."
         }
       ]
     }

@@ -1,10 +1,10 @@
 {
   "id": "ind-home-living",
   "title": "AI Product Videos for Home Brands | AIVideosUGC",
-  "description": "Turn one home product photo into a room scene, a cleaning demo, or an organizing clip. Download watermark-free files for listings, social feeds, and paid ads.",
+  "description": "Turn one home product photo into a room scene, a cleaning demo, or an organizing clip. Download files with no watermark for listings, feeds, and paid ads.",
   "h1": "AI Product Videos for Home Brands, Shown in the Room They Fit",
   "eyebrow": "Home and living",
-  "lead": "Home shoppers need the product in a room, doing one job. Paste a product link or one clear photo and get that scene without building a set.",
+  "lead": "Home shoppers need the product in a room, doing one job. Paste a product link or one clear photo and get that scene. You do not need to build a styled room. Credits are what each job spends.",
   "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
     "home decor product videos",
@@ -20,19 +20,19 @@
     },
     {
       "q": "Will furniture look the right size?",
-      "a": "Put the real dimensions on the listing. You can name a size in the scene, such as a 24-inch round side table next to an armchair, because the room scale can be off."
+      "a": "Put the real dimensions on the listing. You can name a size in the scene, such as a 24-inch round side table beside an armchair. The pictured size can still be off."
     },
     {
       "q": "Does this work for sofas and beds?",
-      "a": "It can, when the photo shows the whole piece, including legs. Name a room large enough to hold it. Parts that are cut out of the photo will not be invented reliably."
+      "a": "It can, when the photo shows the whole piece, including the legs. Name a room large enough to hold it. If a part is missing from the photo, such as a leg or a handle, the result cannot add it."
     },
     {
       "q": "Can I start from a white-background photo?",
-      "a": "Yes. Keep the whole product in frame, including legs, handles, and cords. The scene can only use what the upload shows."
+      "a": "Yes. Keep the whole product in the picture, including legs, handles, and cords. The scene can only use what the photo shows."
     },
     {
       "q": "Can I make a short cleaning demo?",
-      "a": "Yes. Use one visible mess, keep the angle steady, and show the product doing a single pass. A 10-second clip is 40 credits."
+      "a": "Yes. Show one mess you can see, keep the camera steady, and show the product making a single pass. A 10-second clip spends 40 credits."
     },
     {
       "q": "What should I name in the scene?",
@@ -40,33 +40,33 @@
     },
     {
       "q": "Can I run the clips as paid ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Keep dimensions and capacity claims true to the item."
+      "a": "Yes. Downloads have no watermark, so no logo is stamped on the file. You can use them in paid ads. Keep the size, and how much it holds, true to the item."
     },
     {
       "q": "Do I need a studio or a model?",
-      "a": "No studio and no hire. Pick a generated presenter for the room, with a spoken line and captions if you want them. A 6-second clip is 24 credits, 15 seconds is 60, and 30 seconds is 120. A failed job returns its credits."
+      "a": "You do not need a studio, and you do not hire anyone. Pick a person the tool creates. A clip can include a spoken line and captions. A 6-second clip spends 24 credits, 15 seconds spends 60, and 30 seconds spends 120. If it fails, those credits come back."
     },
     {
-      "q": "Can I start from a product link and make more than one cut?",
-      "a": "Yes. Paste the product page, or send that link through the API. Ask for a short script, pick a presenter, and make a few room cuts, including one in another language. Trim the clip, choose a voice and a backing track, and check captions in the editor on the page, then send it to TikTok or Meta. Put real dimensions in the listing, because scale can drift."
+      "q": "Can I start from a product link and make more than one version?",
+      "a": "Yes. Paste the product page, or send that link from your own shop software (the API). Ask for a short script and pick a person the tool creates. Make a few versions, including one in another language. Trim the clip in the editor on this page. Choose a voice and a music track, and check the captions. Then send it to TikTok, Facebook, or Instagram. Put the real size in the listing, because the pictured size can be off."
     }
   ],
   "templates_lead": "Choose a room or organizing step that fits the home product.",
-  "cta_lead": "Paste a product link or upload one photo, pick a presenter, and publish a room clip with a voice and captions. Check the product shape before you post.",
+  "cta_lead": "Paste a product link or upload one photo. Pick a person the tool creates, and publish a room clip with a spoken line and captions. Check the product shape before you post.",
   "steps_h2": "How to Make a Home Product Video in 3 Simple Steps",
   "steps_lead": "Three things you do on screen. The clip can include a spoken line and captions. Dimensions stay in the listing.",
   "steps": [
     {
       "t": "Upload Your Product",
-      "d": "Paste the product page, or upload a photo with legs, handles, and cords in frame. A short note about the item works too."
+      "d": "Paste the product page, or upload a photo with legs, handles, and cords visible. A short note about the item works too."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick a generated adult for the room. Hands can set the product down. You do not book a model."
+      "d": "Pick a person the tool creates for the room. Hands can set the product down. You do not hire a model."
     },
     {
       "t": "Generate and Publish",
-      "d": "You get a spoken line and on-screen captions. Send the room clip to TikTok or Meta, and keep the size notes in the listing."
+      "d": "You get a spoken line and on-screen captions. Send the clip to TikTok, Facebook, or Instagram. Keep sizes in the listing."
     }
   ],
   "visual": {
@@ -83,11 +83,11 @@
       "result": "f:q17-ind-home-living-r2-steps-pillow",
       "mode": "video",
       "length": 10,
-      "prompt": "In a bright living room, a hand places the ivory and sage pillow pair on a cream chair, and both pillows stay fully in frame.",
+      "prompt": "In a bright living room, a hand places the ivory and sage pillow pair on a cream chair. Both pillows stay fully visible.",
       "options": [
         [
           "Size",
-          "9:16 · 1:1 · 16:9 · 4:3 · 3:4"
+          "Tall 9:16, square 1:1, wide 16:9, 4:3, 3:4"
         ],
         [
           "Length",
@@ -97,15 +97,15 @@
       "items": [
         {
           "t": "Upload Your Product",
-          "d": "Paste the product page, or upload a photo with legs, handles, and cords in frame. A short note about the item works too."
+          "d": "Paste the product page, or upload a photo with legs, handles, and cords visible. A short note about the item works too."
         },
         {
           "t": "Choose a Presenter",
-          "d": "Pick a generated adult for the room. Hands can set the product down. You do not book a model."
+          "d": "Pick a person the tool creates for the room. Hands can set the product down. You do not hire a model."
         },
         {
           "t": "Generate and Publish",
-          "d": "You get a spoken line and on-screen captions. Send the room clip to TikTok or Meta, and keep the size notes in the listing."
+          "d": "You get a spoken line and on-screen captions. Send the clip to TikTok, Facebook, or Instagram. Keep sizes in the listing."
         }
       ]
     },
@@ -145,56 +145,56 @@
     }
   ],
   "reasons": {
-    "h2": "Why Home Brands Skip the Set",
-    "lead": "You do not need a styled location for every product. Start from a product link or a clear photo and name the room.",
+    "h2": "Why Home Brands Skip a Styled Room",
+    "lead": "You do not need a decorated room for every product. Start from a product link or a clear photo and name the room.",
     "items": [
       {
         "t": "No set to book",
-        "d": "A cleaning pass, like a vacuum over crumbs on a sofa, comes back from one photo. You skip the location and the crew.",
+        "d": "You get one cleaning sweep, like a vacuum over crumbs on a sofa, from one photo. You skip the location and the crew.",
         "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
         "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
       },
       {
         "t": "A product page and a clip",
-        "d": "The same organizer can sit in a product-page scene, a vertical clip, and a second cut. Use the frame that placement already takes.",
+        "d": "The same organizer can be a product-page photo, a tall phone clip, and a second version. Use the shape of the place you will post.",
         "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
         "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
       },
       {
         "t": "Show the job, then the size",
-        "d": "A lamp on a chair-side table, or a rack in a closet, helps shoppers judge use. Put real dimensions in the listing, because scale can drift.",
+        "d": "A lamp beside a chair, or a rack in a closet, shows how it is used. Put the real size in the listing. The pictured size can be off.",
         "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
         "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair."
       }
     ]
   },
   "platforms": {
-    "h2": "Create Home Ads for Every Platform",
-    "lead": "A vertical clip shows the action and a listing still shows the product. Send the clip to TikTok or Meta from this page, and keep dimensions in the listing.",
+    "h2": "Create Home Ads for the Places You Sell",
+    "lead": "A tall clip shows the action, and a listing photo shows the product. Send the clip to TikTok, Facebook, or Instagram from this page. Keep sizes in the listing.",
     "items": [
       {
         "t": "AI TikTok ads generator",
-        "d": "A 9:16 organizing or cleaning moment for a home post in the For You feed.",
+        "d": "A tall phone clip (9:16) of organizing or cleaning, for TikTok's main feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram ads",
-        "d": "A square room still or a vertical demo for the grid and Stories.",
+        "d": "A square room photo or a tall demo for the feed and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook ad generator",
-        "d": "A feed still with room to add dimensions after download.",
+        "d": "A feed photo with room to add sizes after you download it.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts ads",
-        "d": "A short vertical demo, one action from the first second.",
+        "d": "A short phone-screen demo, one action from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon product photos",
-        "d": "A clean product image for the listing, measurements kept in the copy.",
+        "d": "A clean product image for the listing. Keep measurements in the written text.",
         "href": "/platforms/amazon-product-photos"
       },
       {
@@ -217,14 +217,14 @@
       {
         "example": true,
         "who": "Lamp shop",
-        "t": "Chair-side, size in the copy",
-        "d": "A lamp photo becomes a hand setting it beside a chair. They write the height in the listing because the room scale can be off."
+        "t": "Chair-side, size in the listing",
+        "d": "A lamp photo becomes a hand setting it beside a chair. They write the height in the listing, because the pictured size can be off."
       },
       {
         "example": true,
         "who": "Vacuum brand",
         "t": "One pass over crumbs",
-        "d": "A short clip shows a hand guiding the vacuum over a visible mess. A 10-second cut costs 40 credits."
+        "d": "A short clip shows a hand guiding the vacuum over a mess you can see. A 10-second version spends 40 credits."
       },
       {
         "example": true,
@@ -236,43 +236,43 @@
         "example": true,
         "who": "Large furniture",
         "t": "Whole piece, large room",
-        "d": "A sofa photo shows the entire piece, and the scene names a room big enough to hold it. Legs are in the upload, so they are not invented."
+        "d": "A sofa photo shows the whole piece, and the scene names a room big enough to hold it. The upload includes the legs, so the scene keeps them."
       },
       {
         "example": true,
-        "who": "Listing desk",
-        "t": "White still, then a room",
-        "d": "One cutout photo guides a clean listing image and a room clip. Materials and capacity stay in the product description."
+        "who": "Listing shop",
+        "t": "White photo, then a room",
+        "d": "One white-background photo guides a clean listing image and a room clip. Materials and how much it holds stay in the product description."
       },
       {
         "example": true,
-        "who": "Script desk",
+        "who": "Page-link seller",
         "t": "A link, then the room script",
-        "d": "They paste the product page, or send that link through the API, and ask for a short script about one room action. Dimensions stay in the listing."
+        "d": "They paste the product page. Or they send that link from their own shop software (the API). They ask for a short script about one room action. Sizes stay in the listing."
       },
       {
         "example": true,
-        "who": "Presenter desk",
+        "who": "Two-scene seller",
         "t": "Hands, then the same person again",
-        "d": "They pick a presenter from the actor library to set the product down, then a second look of that person in the same room."
+        "d": "They pick a person the tool creates to set the product down. Then they make a second version of that person in the same room."
       },
       {
         "example": true,
-        "who": "Edit desk",
+        "who": "Small ads shop",
         "t": "Voice, captions, and a track",
-        "d": "They choose a voice or a short sample of their own, check the captions, pick a backing track, and trim the room clip in the editor on the page."
+        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the room clip in the editor on this page."
       },
       {
         "example": true,
-        "who": "Second market",
+        "who": "Second-language shop",
         "t": "The same room, another language",
-        "d": "They make the organizing clip again in a second language from the same photo. The after state still has to be something the product does."
+        "d": "They make the organizing clip again in a second language from the same photo. The after photo still has to show something the product really does."
       },
       {
         "example": true,
-        "who": "Test desk",
-        "t": "A few cuts, then publish",
-        "d": "They describe the room in chat, keep a few cuts, and send the one they want to TikTok or Meta. A 10-second clip is 40 credits."
+        "who": "Version tester",
+        "t": "A few versions, then publish",
+        "d": "They type the room scene in the text box and keep a few versions. They send the one they want to TikTok, Facebook, or Instagram. A 10-second clip spends 40 credits."
       }
     ]
   },
@@ -282,7 +282,7 @@
     "options": [
       [
         "Size",
-        "9:16"
+        "Tall phone (9:16)"
       ],
       [
         "Length",

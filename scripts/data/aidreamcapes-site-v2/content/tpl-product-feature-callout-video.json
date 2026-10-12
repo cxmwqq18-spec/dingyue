@@ -3,8 +3,8 @@
   "title": "Product Feature Callout Videos | AIVideosUGC",
   "description": "Show one product detail in a focused callout video from a single photo. Choose 6, 10, 15 or 30 seconds for feeds, listings and product pages.",
   "h1": "Product Feature Callout Video for One Clear Detail",
-  "eyebrow": "Feature callout video template",
-  "lead": "Keep one function in frame, add a voice and captions if you want them, and post a clip shoppers can follow.",
+  "eyebrow": "One-part video template",
+  "lead": "Show one part up close, such as a pump or a lid. Add a voice and captions if you want, then post a clip shoppers can follow.",
   "secondary_keywords": [
     "feature callout ad",
     "product feature video",
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "What is a product feature callout video?",
-      "a": "A short clip about one moving part, such as a pump, a lid, a hinge, or a clasp. An AI actor can demonstrate it, with a script, a voice, and captions. You can still edit the feature name."
+      "a": "A short clip about one moving part, such as a pump, a lid, a hinge, or a clasp. An AI actor can demonstrate it, with a script, a voice, and captions. You can still edit the words."
     },
     {
       "q": "How do I make a product feature callout video?",
@@ -55,7 +55,7 @@
     },
     {
       "q": "Why use this instead of filming a creator?",
-      "a": "You can ship another version without booking a shoot or waiting on a creator's calendar. Review the file against the real product before you post."
+      "a": "You can make another version without booking a shoot or waiting on a creator's calendar. Review the file against the real product before you post."
     },
     {
       "q": "Which shops use a product feature callout video?",
@@ -67,7 +67,7 @@
     },
     {
       "q": "Which industries does this template fit?",
-      "a": "Ecommerce shops in beauty, home, food, fitness, and other consumer goods. The same photo can be cut again when the audience changes."
+      "a": "Ecommerce shops in beauty, home, food, fitness, and other consumer goods. You can make a new clip from the same photo when the audience changes."
     },
     {
       "q": "Can I upload my own photo or start from a link?",
@@ -75,7 +75,7 @@
     },
     {
       "q": "Where can I publish it?",
-      "a": "Publish to TikTok, Instagram, or Facebook from the project, or download and post it yourself. Frames include 9:16, 1:1, 16:9, 4:3, and 3:4."
+      "a": "Publish to TikTok, Instagram, or Facebook from here, or download and post it yourself. You can pick tall 9:16, square 1:1, or wide 16:9. 4:3 and 3:4 are there too."
     },
     {
       "q": "Do I need a paid plan?",
@@ -198,7 +198,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -208,7 +208,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -280,7 +280,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -298,7 +298,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Turn: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -325,7 +325,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -334,7 +334,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -343,7 +343,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -352,7 +352,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -370,7 +370,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -406,7 +406,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -433,7 +433,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Signet Close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -478,7 +478,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -487,7 +487,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo Clip",
           "chips": [
             "tech-electronics"
           ],
@@ -505,7 +505,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -523,7 +523,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -559,13 +559,13 @@
   "cta_lead": "Upload a product photo, pick a scene, and see the credit cost before you start.",
   "more_sections": [
     {
-      "eyebrow": "In the same project",
+      "eyebrow": "While you make the clip",
       "h2": "Features for a Feature Callout Video",
       "lead": "Use these while you build the clip around one moving part.",
       "items": [
         {
           "t": "AI Voice",
-          "d": "Pick a voice for the line, or clone a voice you are allowed to use. The spoken line can name the product while the picture shows it."
+          "d": "Pick a voice for the spoken line, or copy a voice you are allowed to use. The line can say the product name while the picture shows it."
         },
         {
           "t": "Auto Captions",
@@ -573,19 +573,19 @@
         },
         {
           "t": "AI Script",
-          "d": "Describe the shot in a sentence. A script draft turns that into the line an actor says, and you can rewrite it before the render."
+          "d": "Describe the shot in a sentence. A draft turns that into the line an actor says, and you can rewrite it before the video is made."
         },
         {
           "t": "Actor Library",
-          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can keep a branded persona for the next clip. The person is generated, not a customer."
+          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can use that same person in the next clip. The person is generated, not a customer."
         },
         {
           "t": "Editor, Music, and Languages",
-          "d": "Trim in the built-in editor, drop in a track from the music library, and cut the same spot again in another language."
+          "d": "Trim in the built-in editor, add a track from the music library, and make the same clip again in another language."
         },
         {
           "t": "Batch, Publish, and API",
-          "d": "Render several versions from one photo, publish to TikTok, Instagram, or Facebook from the project, or send the job through the API. Each job spends [credits](page:pricing)."
+          "d": "Make several versions from one photo, publish to TikTok, Instagram, or Facebook from here, or start the job from your own software (API). Each job spends [credits](page:pricing) (points on your plan)."
         }
       ]
     }
@@ -604,7 +604,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Switching to One-Feature Videos",
+    "h2": "How Shops Show One Moving Part",
     "lead": "Each card is how one type of shop shows a single moving part. These are examples, not customer quotes.",
     "items": [
       {
@@ -623,7 +623,7 @@
         "example": true,
         "who": "Home shop",
         "t": "Hinge open",
-        "d": "A home shop opens a hinged storage lid once so the mechanism stays in frame."
+        "d": "A home shop opens a hinged storage lid once so the hinge stays on screen."
       },
       {
         "example": true,
@@ -647,13 +647,13 @@
         "example": true,
         "who": "Apparel shop",
         "t": "Strap adjust",
-        "d": "An apparel shop shortens a strap once so the fit hardware is easy to see."
+        "d": "An apparel shop shortens a strap once so the strap adjuster is easy to see."
       },
       {
         "example": true,
         "who": "Kitchen shop",
         "t": "Lid lock",
-        "d": "A kitchen shop locks a lid shut in one motion for a product-page loop."
+        "d": "A kitchen shop locks a lid shut in one motion, so the product page can replay that move."
       },
       {
         "example": true,
@@ -665,7 +665,7 @@
         "example": true,
         "who": "Tool shop",
         "t": "Button press",
-        "d": "A tool shop presses one button so the control is easy to see, with no second feature in frame."
+        "d": "A tool shop presses one button so the control is easy to see, with no second feature on screen."
       }
     ]
   },
@@ -683,7 +683,7 @@
     "title": "What Is a Product Feature Callout Video?",
     "paras": [
       "A product feature callout video is a short clip built around one moving part, such as a pump, a lid, a hinge, or a clasp. An AI actor can demonstrate it, with a script, a voice, and captions.",
-      "Start from your product photo or a public product page link. Pick the frame and the length, then download a file you can post on a listing or in a paid ad."
+      "Start from your product photo or a public product page link. Pick a tall, square, or wide shape and a length, then download a file you can post on a listing or in a paid ad."
     ]
   },
   "reasons": {
@@ -704,7 +704,7 @@
       },
       {
         "t": "Voice, Script, and Captions",
-        "d": "A draft script, a spoken line, and on-screen captions can ship with the clip. You can still edit the line."
+        "d": "A draft script, a spoken line, and on-screen captions can come with the clip. You can still edit the line."
       },
       {
         "t": "Another Version, Same Photo",
@@ -718,7 +718,7 @@
     "items": [
       {
         "t": "Credit Cost First",
-        "d": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm."
+        "d": "Credits are the points on your plan. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number before you confirm."
       },
       {
         "t": "No Watermark",
@@ -726,7 +726,7 @@
       },
       {
         "t": "Failed Jobs Return Credits",
-        "d": "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance."
+        "d": "Credits are set aside when you start and used when the file arrives. If it fails, those credits return to your balance."
       },
       {
         "t": "Paid Plans",

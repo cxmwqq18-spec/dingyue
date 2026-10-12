@@ -4,7 +4,7 @@
   "description": "Create AI lifestyle product photos from one plain image. Place the item in a room, table or cafe scene so shoppers picture using it without a shoot.",
   "h1": "AI lifestyle product photos that bring a catalog to life",
   "eyebrow": "Lifestyle photo maker",
-  "lead": "Place one plain product photo in a room, in a hand, or on a table. Shoppers can picture using it, and you do not book a location.",
+  "lead": "Place one plain product photo in a room, in a hand, or on a table. Shoppers can picture using it, and you do not need to book a shoot. Credits are what you spend on each scene, and you see that cost before you start.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,7 +12,7 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Realistic visuals shoppers can picture",
+  "benefits_h2": "Photos shoppers can picture",
   "benefits": [
     {
       "img": "n:guide:fx15-lifestyle-benefit-context-r1",
@@ -23,26 +23,26 @@
     {
       "img": "n:guide:fx15-lifestyle-benefit-pop-r1",
       "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup.",
-      "t": "A moment that looks lived in",
+      "t": "A moment from daily use",
       "d": "A hand sets the bag next to a cup. The shape and color stay easy to check."
     },
     {
       "img": "n:guide:fx15-lifestyle-benefit-listing-r1",
       "alt": "Plain brushed steel insulated bottle on an entryway console with a folded cloth.",
       "t": "A normal spot in the house",
-      "d": "The bottle stands on an entryway console with a folded cloth. Shoppers can see a real hallway, then check small print on the plain photo."
+      "d": "The bottle stands on an entryway table with a folded cloth. Shoppers can see a real hallway, then check small print on the plain photo."
     }
   ],
-  "steps_h2": "How to use the AI product scene generator",
+  "steps_h2": "How to put your product in a scene",
   "steps_lead": "Upload the product, name the place, and download a square scene.",
   "steps": [
     {
       "t": "Upload your photo",
-      "d": "Use one photo with the whole item in frame. Shape and small details should be easy to see."
+      "d": "Use one photo that shows the whole item. Shape and small details should be easy to see."
     },
     {
       "t": "Try different scenes",
-      "d": "Try a room, a table, or a market. Name the surface and one prop so the scene supports the product."
+      "d": "Try a room, a table, or a market. Name the surface and one object, so the scene shows how the product is used."
     },
     {
       "t": "Download your image",
@@ -53,7 +53,7 @@
     "options": [
       [
         "Photo",
-        "Your product shot"
+        "Your product photo"
       ],
       [
         "Scene",
@@ -69,15 +69,15 @@
   "faq": [
     {
       "q": "What are AI lifestyle product photos?",
-      "a": "They place your real product photo in a room, on a table, or in another everyday setting. You still review the result before you publish."
+      "a": "They place your real product photo in a room, on a table, or in another everyday setting. You check the result before you publish."
     },
     {
       "q": "How do I make a lifestyle product photo?",
-      "a": "Upload one product photo, choose or describe the setting, and download a square image. The credit cost appears before the job starts."
+      "a": "Upload one product photo, choose or describe the setting, and download a square image. The credit cost appears before you start."
     },
     {
       "q": "Can I use the scene on a product page?",
-      "a": "Yes. Pair it with a plain product photo when shoppers also need an exact view of the item. Downloads have no watermark and are licensed for commercial use."
+      "a": "Yes. Pair it with a plain product photo when shoppers also need an exact view of the item. Downloads have no watermark, so no logo is stamped on the file. You can use them for your business."
     },
     {
       "q": "Can I choose the setting?",
@@ -85,7 +85,7 @@
     },
     {
       "q": "Can I change the scene after the first result?",
-      "a": "Yes. Start again with a different surface or prop. Each photo costs 24 credits."
+      "a": "Yes. Start again with a different surface or object. Each photo costs 24 credits."
     },
     {
       "q": "Does the scene replace my plain product image?",
@@ -97,7 +97,7 @@
     },
     {
       "q": "How is this different from a photoshoot?",
-      "a": "A shoot needs a place, props, and time on a calendar. Here you start from a photo you already have. Read [how to take product photos for AI](page:guide-product-photo-tips) if the source image is hard to read."
+      "a": "A shoot needs a place, a few extra objects, and a day on the calendar. Here you start from a photo you already have. Read [how to take product photos for AI](page:guide-product-photo-tips) if the photo you upload is hard to read."
     },
     {
       "q": "Can I use the scene on a Shopify store?",
@@ -109,7 +109,7 @@
     },
     {
       "q": "Can I add text, a logo, or run many photos?",
-      "a": "Yes. Add a short line of text or your logo on the scene, or edit a set of photos together. You can also connect an API so the store requests new scenes. Each photo is 24 credits, shown before it starts. There is no free plan."
+      "a": "Yes. Add a short line of text or your logo on the scene, or edit a set of photos together. You can also link your store software, called an API, so the store can request new scenes. Each photo is 24 credits, shown before you start. There is no free plan."
     }
   ],
   "visual": {
@@ -117,13 +117,13 @@
       "source": "n:guide:q5-life-tote-source-r2",
       "result": "n:guide:q5-life-tote-hero-r2",
       "mode": "photo",
-      "prompt": "Place this cream canvas tote on a wooden stall table at a farmers market, with produce crates behind it. Keep the bag's shape and color.",
+      "prompt": "Place this cream canvas tote on a wooden table at a farmers market, with fruit crates behind it. Keep the bag's shape and color.",
       "sourceTitle": "Your product photo",
       "sourceHint": "Keep the complete bag and both handles visible.",
       "options": [
         [
           "Photo",
-          "Your product shot"
+          "Your product photo"
         ],
         [
           "Scene",
@@ -136,8 +136,8 @@
       ]
     },
     "picker": {
-      "title": "Put your product in the right context",
-      "lead": "A room shelf, a cafe table, or a market stall. The product photo stays the reference.",
+      "title": "Put your product in an everyday scene",
+      "lead": "A room shelf, a cafe table, or a market stall. The product in your photo stays the same.",
       "chips": [
         {
           "id": "room-shelf",
@@ -210,8 +210,8 @@
       },
       {
         "img": "n:guide:k5-lifestyle-photos-uses-1-image",
-        "h": "Add the one prop that explains use",
-        "d": "A cup, a cloth, or a tool can show the job the product does. Keep the product larger than the prop.",
+        "h": "Add one object that shows use",
+        "d": "A cup, a cloth, or a tool can show what the product is for. Keep the product larger than that object.",
         "alt": "Matcha whisk, bowl and plain tin arranged on a linen tablecloth."
       },
       {
@@ -223,8 +223,8 @@
     ],
     "titles": {
       "m3": {
-        "h2": "Put your product in the right context",
-        "lead": "A room shelf, a cafe table, or a market stall. The product photo stays the reference."
+        "h2": "Put your product in an everyday scene",
+        "lead": "A room shelf, a cafe table, or a market stall. The product in your photo stays the same."
       },
       "m4": {
         "h2": "Picture the product in everyday use"
@@ -271,7 +271,7 @@
   },
   "more_sections": [
     {
-      "eyebrow": "No location day",
+      "eyebrow": "No rented room",
       "h2": "Lifestyle product photography with AI from one photo",
       "lead": "You do not rent a room or hire a stylist. The scene starts from the product photo you already have.",
       "items": [
@@ -279,7 +279,7 @@
           "img": "n:guide:k5-lifestyle-gallery-01",
           "alt": "Linen tote bag beside a coffee cup at a sunny cafe.",
           "t": "Cafe table, no rental",
-          "d": "The bag stays beside one cup. Each image is 24 credits, shown before you start."
+          "d": "The bag stays beside one cup. Credits are what you spend. Each image is 24 credits, shown before you start."
         }
       ]
     },
@@ -298,7 +298,7 @@
     },
     {
       "eyebrow": "Same product",
-      "h2": "Three consistent scenes from one product photo",
+      "h2": "Three scenes from the same product photo",
       "lead": "Keep the bag the same and change only the place: a park, a picnic, or an entryway.",
       "items": [
         {
@@ -343,16 +343,16 @@
   ],
   "platforms": {
     "h2": "Your full set of product image tools",
-    "lead": "Create, edit, and prepare product photos for the store, a marketplace, and ads, from one picture or a whole catalog.",
+    "lead": "Create and edit product photos for the store, a marketplace, and ads. Start from one picture or your whole product list.",
     "items": [
       {
         "t": "Remove photo backgrounds",
-        "d": "Take the old backdrop off and put a clean studio setting behind the item.",
+        "d": "Take the old background off and put a clean studio setting behind the item.",
         "href": "page:change-background"
       },
       {
         "t": "Generate new backgrounds",
-        "d": "Describe a color or a surface while the product stays recognizable from the photo you uploaded.",
+        "d": "Describe a color or a surface. The product should still look like the photo you uploaded.",
         "href": "page:white-background"
       },
       {
@@ -361,49 +361,49 @@
       },
       {
         "t": "Enhance and resize",
-        "d": "Lift the light, clear a stray object, and size the photo for a store page or an ad.",
+        "d": "Brighten the photo, remove an extra object, and size it for a store page or an ad.",
         "href": "page:social-ad-photos"
       },
       {
         "t": "Show products on models",
-        "d": "Place clothing or an accessory on an AI model so shoppers can judge the fit.",
+        "d": "Place clothing or an accessory on a generated person so shoppers can judge the fit.",
         "href": "page:model-photos"
       },
       {
         "t": "Export and share",
-        "d": "Download a square photo with no watermark and use it on the site, a marketplace, or an ad. You add the price yourself."
+        "d": "Download a square photo with no watermark, so no logo is stamped on it. Use it on the site, a marketplace, or an ad. You add the price yourself."
       },
       {
-        "t": "Refine product shots",
-        "d": "Even out light, detail, and color on the photo you already have before the scene goes up."
+        "t": "Even out the photo",
+        "d": "Make the light, detail, and color more even on the photo you already have, before the scene goes up."
       },
       {
-        "t": "Change the frame",
-        "d": "Reframe a tall shot into a wider one, or the other way, when a channel wants a different shape."
+        "t": "Change the photo shape",
+        "d": "Turn a tall photo into a wide one, or the other way, when a store or app wants a different shape."
       },
       {
-        "t": "Connect an API",
-        "d": "Connect an API to the store or marketplace so a new scene can be requested from the catalog. Each photo is still 24 credits, shown first."
+        "t": "Connect your store software",
+        "d": "Link your store software, called an API, so it can ask for a new scene from your product list. Each photo still costs 24 credits, shown before you start."
       },
       {
         "t": "Add text to a photo",
         "d": "Place a short offer or the product name on the finished scene. The price still comes from you, not from the photo."
       },
       {
-        "t": "Edit photos in batches",
-        "d": "Apply one backdrop or one size to a set of photos together, instead of opening them one by one."
+        "t": "Edit a set of photos",
+        "d": "Apply one background or one size to a set of photos together, instead of opening them one by one."
       },
       {
         "t": "Share with your team",
         "d": "Hand a scene to a teammate for a look before it goes on the product page."
       },
       {
-        "t": "Keep a brand kit",
-        "d": "Save the logo, the type, and the colors you reuse so the next scene stays recognizably yours."
+        "t": "Save your brand look",
+        "d": "Save the logo, the fonts, and the colors you reuse, so the next scene still looks like your shop."
       },
       {
         "t": "Make a logo",
-        "d": "Draft a simple logo when the shop does not have one yet, then place it on later photos."
+        "d": "Make a simple logo when the shop does not have one yet, then place it on later photos."
       },
       {
         "t": "Use phone or desktop",
@@ -412,5 +412,5 @@
     ]
   },
   "related_h2": "More tools for your product photos",
-  "related_lead": "Backgrounds, models, ad stills, and the stores where the scene can go."
+  "related_lead": "Backgrounds, models, ad photos, and the stores where the scene can go."
 }

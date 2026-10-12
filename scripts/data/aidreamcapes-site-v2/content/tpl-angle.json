@@ -1,10 +1,10 @@
 {
   "id": "tpl-angle",
   "title": "Product Packshot Photos for Multiple Views | AIVideosUGC",
-  "description": "Turn one photo per side into clean packshots of the front, back, top and base. AI multi-angle product photos for galleries and paid social ads.",
+  "description": "A packshot is a clean product photo on a plain background. Turn one photo of each side into front, back, top, and base views for your gallery or ads.",
   "h1": "Product Packshot Photos for Every Side You Photographed",
   "eyebrow": "Product photo template",
-  "lead": "Open a packshot scene, add one photo of each real side, and download square views you can also turn into a spoken product video.",
+  "lead": "A packshot is a clean product photo on a plain background. Add one photo of one side and download that square view, then repeat. You can also make a short video with a spoken voice.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Side Photos",
-      "d": "Upload one photo for each side, with the whole item in frame. A real photo of that side keeps ports, handles and corners accurate."
+      "d": "Upload one photo of one side, with the whole item visible. A real photo of that side keeps ports, handles, and corners accurate."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the view and one backdrop, then reuse that wording. Add a script and an AI voice if you make an ad."
+      "d": "Name the view and one background, then reuse those words. Add a script and a spoken AI voice if you make an ad."
     },
     {
       "t": "Download and Post",
-      "d": "Download each view and check ports against your photos. Add captions if you turn a view into a video."
+      "d": "Download the view, check the ports, and repeat for the next side. Add captions if you make a video."
     }
   ],
   "maker": {
@@ -38,7 +38,7 @@
       ],
       [
         "Views",
-        "One per run"
+        "One view each time"
       ]
     ],
     "cta": "Make my first view"
@@ -46,15 +46,15 @@
   "faq": [
     {
       "q": "What is a multi-angle packshot template?",
-      "a": "A ready scene for the sides you photographed. It can also add an AI actor, a voiceover, and a script when that still should become a short ad."
+      "a": "A packshot is a clean product photo on a plain background. This is a ready setup for the sides you photographed. It can also add an AI actor, a spoken voice, and a script if that photo becomes a short ad. The person on screen is generated, not a real customer."
     },
     {
       "q": "How do I make product packshot photos of every side?",
-      "a": "Upload one photo of each side, name one shared backdrop, and download the square set. Put the front first, then the sides that show ports, buttons, or the base."
+      "a": "Upload one photo of one side, name one shared background, and download that square view. Repeat for the front, then the sides that show ports, buttons, or the base."
     },
     {
       "q": "Can one photo show a port that was hidden?",
-      "a": "No. Photograph that side and upload it. A generated view is not a reliable way to reveal a connector, latch, or control that was never in frame."
+      "a": "No. Photograph that side and upload it. A made-up view cannot be trusted to show a connector, latch, or button that was not in the photo."
     },
     {
       "q": "Who is this scene for?",
@@ -62,31 +62,31 @@
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Yes. Upload a clear photo of each side. You do not need a turntable. Captions, a track from the music library, and an AI voice can be set in the built-in editor if you make a video too."
+      "a": "Yes. Upload a clear photo of each side. You do not need a spinning photo stand. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
     },
     {
       "q": "Which shops can use these views?",
-      "a": "Any product with sides shoppers ask about, including chargers, audio, and cameras. Open another scene when the product is not electronics."
+      "a": "Any product with sides shoppers ask about, including chargers, audio, and cameras. Open another template when the product is not electronics."
     },
     {
       "q": "Which files can I upload?",
-      "a": "Use a JPG, PNG, or WebP that shows the whole product. You can also upload a short clip you have rights to when the ad needs motion you already filmed."
+      "a": "Use a photo file (JPG, PNG, or WebP) that shows the whole product. You can also upload a short clip you have the rights to, when the ad needs motion you already filmed."
     },
     {
       "q": "Where can I publish the file?",
-      "a": "Each photo download is square. A video from the same photos can be 9:16, 1:1, 16:9, 4:3, or 3:4. Publish it to TikTok or Meta, or to YouTube, in one step."
+      "a": "Each photo you download is square. A video from the same photos can be tall (9:16), square (1:1), or wide (16:9). The 4:3 size is a bit wider than tall, and 3:4 is a bit taller than wide. Publish it to TikTok, Facebook, Instagram, or YouTube in one step."
     },
     {
       "q": "What does each angle photo cost?",
-      "a": "Each product photo costs 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Starter is $24.50 a month with 200 credits. A failed job returns its credits."
+      "a": "Credits are what each photo or video spends. Each product photo costs 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Starter is $24.50 a month with 200 credits. If it fails, those credits come back."
     },
     {
       "q": "Can I run these files in ads?",
-      "a": "Yes. Downloads have no watermark and can be used in your listings and your own paid ads. Compare the controls with the source before you launch."
+      "a": "Yes. Downloads have no watermark, which means no logo is stamped on the file. You can use them in your listings and your own paid ads. Compare the buttons and ports with your photo before you post."
     },
     {
-      "q": "Can I start from a product link or a batch?",
-      "a": "Yes. Paste the product page link for a script, an AI actor, and a cloned voice, or send several products through the AIVideosUGC API. The photos still have to show the sides you claim."
+      "q": "Can I start from a product link, many at once, or my own software?",
+      "a": "Yes. Paste your product page link for a script, an AI actor, and a voice copied from one you may use. You can also run many products at once (a batch), or send them from your own software (the API). The photos still have to show the sides you claim."
     }
   ],
   "visual": {
@@ -102,7 +102,7 @@
       "source": "n:guide:tpl-angle-round4-speaker-controls",
       "result": "n:guide:b2f11-tpl-angle-steps-result-r1",
       "mode": "photo",
-      "prompt": "Front and back of the speaker on one plain backdrop, with the port left as it was photographed.",
+      "prompt": "Front and back of the speaker on one plain background, with the port left as it was photographed.",
       "options": [
         [
           "Template",
@@ -114,13 +114,13 @@
         ],
         [
           "Views",
-          "One per run"
+          "One view each time"
         ]
       ]
     },
     "picker": {
       "title": "Browse Scenes by Category",
-      "lead": "Open a card for a short video of your product. Square side views start in the upload box: one photo for each side you shot.",
+      "lead": "Open a card if you want a short video. For a square side photo, use the upload box and add one photo of that side.",
       "chips": [
         {
           "id": "accessories",
@@ -152,7 +152,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -192,7 +192,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -202,7 +202,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -211,7 +211,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Movie-style Watch Close-up",
           "chips": [
             "accessories"
           ],
@@ -247,7 +247,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-style Reaction: App",
           "chips": [
             "apps"
           ],
@@ -274,7 +274,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -292,7 +292,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -319,7 +319,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -328,7 +328,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -337,7 +337,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home App Opening Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -346,7 +346,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -364,7 +364,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "Close-up Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -400,7 +400,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -427,7 +427,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Signet Close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -472,7 +472,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -481,7 +481,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -490,7 +490,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Slim Keyboard Desk Review",
           "chips": [
             "tech-electronics"
           ],
@@ -499,7 +499,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -517,7 +517,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -545,12 +545,12 @@
       },
       "m3": {
         "h2": "Browse Scenes by Category",
-        "lead": "Open a card for a short video of your product. Square side views start in the upload box: one photo for each side you shot."
+        "lead": "Open a card if you want a short video. For a square side photo, use the upload box and add one photo of that side."
       }
     }
   },
-  "steps_h2": "How to Make Angle Photos in 3 Simple Steps",
-  "steps_lead": "One photo per side, one shared backdrop, then a square set you can also turn into a spoken ad.",
+  "steps_h2": "How to Make Side Photos in 3 Simple Steps",
+  "steps_lead": "Each time you get one square photo, and it spends 24 credits. Credits are what your plan spends. Keep the same background on every side.",
   "blockOrder": [
     "hero",
     "picker",
@@ -561,20 +561,20 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Are Moving to AI Video Ads",
+    "h2": "How Shops Use These Side Photos",
     "lead": "Each card is one way a shop uses the side views it photographed, then keeps going into an ad. People on screen are AI performers.",
     "items": [
       {
         "example": true,
         "who": "Charger shop",
-        "t": "Frames that stay on the product",
-        "d": "A charger shop builds the front and the rear from photos it shot, so the port is a side that was really in frame."
+        "t": "The port stays a real side",
+        "d": "A charger shop builds the front and the back from photos it shot, so the port is a side it really photographed."
       },
       {
         "example": true,
         "who": "Speaker shop",
-        "t": "A still and a video together",
-        "d": "A speaker shop makes the square side views and a short product video in one place, without a complicated setup."
+        "t": "A photo and a video together",
+        "d": "A speaker shop makes each square side view and a short product video in one place, without a big setup."
       },
       {
         "example": true,
@@ -585,14 +585,14 @@
       {
         "example": true,
         "who": "Headphone shop",
-        "t": "AI actors and the editor",
-        "d": "A headphone shop picks an AI actor to hold the earcup, then trims that clip in the built-in editor."
+        "t": "An AI actor, then a trim",
+        "d": "A headphone shop picks an AI actor to hold the earcup, then trims that clip in the editor on this site."
       },
       {
         "example": true,
         "who": "Keyboard shop",
         "t": "More than one language",
-        "d": "A keyboard shop keeps the same side views and tells the ad with an AI voice in the languages its buyers use."
+        "d": "A keyboard shop keeps the same side views and tells the ad with a spoken AI voice in the languages its buyers use."
       },
       {
         "example": true,
@@ -609,25 +609,25 @@
       {
         "example": true,
         "who": "Power bank shop",
-        "t": "A digital double from photos",
-        "d": "A power-bank shop uploads the end-cap photos and skips lights, a camera, and a fresh set."
+        "t": "Skip the lights and camera",
+        "d": "A power-bank shop uploads photos of each end and skips lights, a camera, and a new photo setup."
       },
       {
         "example": true,
         "who": "Monitor shop",
         "t": "Link, script, and voice",
-        "d": "A monitor shop pastes its product link. AIVideosUGC drafts a script, chooses an AI actor, and adds a cloned voice."
+        "d": "A monitor shop pastes its product link. AIVideosUGC drafts a script, picks an AI actor, and adds a voice copied from one the shop may use."
       },
       {
         "example": true,
         "who": "Drive shop",
-        "t": "Chat for the next clip",
-        "d": "A drive shop describes the port side in chat. The AI agent returns a script, visuals, and a video to check before posting."
+        "t": "Ask in chat for the clip",
+        "d": "A drive shop describes the port side in chat. The chat helper sends back a script, pictures, and a video to check before you post."
       }
     ]
   },
   "related_h2": "Amazon Gallery Images and Electronics Videos",
-  "related_lead": "Use these with the packshot set: product photos, electronics videos, and Amazon listing images.",
+  "related_lead": "Use these with the side-view photos: product photos, electronics videos, and Amazon listing images.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -654,6 +654,6 @@
       "label": "Amazon product photos"
     }
   ],
-  "cta_title": "Ready to Create Your First Set?",
-  "cta_lead": "Upload one photo per side. Add a voiceover or captions if the ad needs them, and see the credit cost before you start."
+  "cta_title": "Ready to Make Your First Side Photo?",
+  "cta_lead": "Upload one photo of one side. Add a spoken voice or captions if the ad needs them, and check the credit cost before you start."
 }

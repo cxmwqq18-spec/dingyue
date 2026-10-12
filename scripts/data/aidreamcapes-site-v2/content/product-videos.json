@@ -1,10 +1,10 @@
 {
   "id": "product-videos",
   "title": "AI Product Demo Video Generator | AIVideosUGC",
-  "description": "Make a product video from a link or a photo. Add an avatar, a script and a voiceover, then publish to TikTok or Meta or download with no watermark.",
+  "description": "Make a product video from a link or a photo. Add an AI person, a script and a spoken voice, then post to TikTok or Meta, or download it with no watermark.",
   "h1": "AI Product Video Generator: Link, Avatar and Script",
   "eyebrow": "AI product video generator",
-  "lead": "AIVideosUGC builds a product video from a product link or one photo. An avatar can hold the item or show it in use, a script and a human-sounding voiceover explain it, and you can publish to TikTok or Meta or download with no watermark. Choose 6, 10, 15 or 30 seconds.",
+  "lead": "AIVideosUGC builds a product video from a product link or one photo. An avatar (an AI person, not a real customer) can hold the item or show it in use. A script and a spoken voice explain the product. You can post to TikTok or Meta (Facebook and Instagram), or download the file with no watermark. Choose 6, 10, 15 or 30 seconds.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
@@ -17,45 +17,45 @@
       "d": "A few choices are enough to get a product video. You do not need an editing background."
     },
     {
-      "t": "Change the Mix",
-      "d": "Adjust the script, the voice, the visuals and the brand marks until the clip fits the audience."
+      "t": "Change the Parts",
+      "d": "Change the script, the voice, the pictures and your logo until the clip fits your shop."
     },
     {
       "t": "Voices That Sound Human",
-      "d": "Pick a natural AI voice from the library and let it read the script."
+      "d": "Pick a natural AI voice from the voice library and let it read the script."
     },
     {
       "t": "A Price You Can Check",
-      "d": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second video is 24 credits, shown before you start."
+      "d": "Credits are the points each video spends. Starter is $24.50 a month for 200 credits. Pro is $35 a month for 300, and Premium is $63 a month for 600. A 6-second video is 24 credits, shown before you start."
     },
     {
-      "t": "An Avatar You Can Shape",
-      "d": "Use the actor library or build a custom avatar so the face fits this product."
+      "t": "An AI Person You Can Shape",
+      "d": "Use the actor library, a set of ready-made faces, or build a custom AI person for this product."
     },
     {
       "t": "You Direct the Script",
-      "d": "Bring your own sales lines. The writer tightens them, and the avatar delivers the version you approve."
+      "d": "Bring your own sales lines. The writer makes them shorter and clearer, and the AI person says the version you approve."
     }
   ],
   "steps": [
     {
-      "t": "Paste a Product Link",
-      "d": "The page is read for the name, the photos and the selling points."
+      "t": "Add a Link or a Photo",
+      "d": "Paste a product link or upload a photo. From a link, we read the name, the photos and the selling points."
     },
     {
-      "t": "Choose an AI Avatar",
-      "d": "Pick one from the actor library, or make a custom avatar for this brand."
+      "t": "Choose an AI Person",
+      "d": "Pick a ready-made AI person from the actor library, or make a custom one for this brand."
     },
     {
-      "t": "Generate a Script",
-      "d": "Read the script, edit a line, or ask for another version before the avatar says it."
+      "t": "Check the Script",
+      "d": "Read the script, edit a line, or ask for another version before the AI person says it."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "16:9 · Product pages"
+        "16:9 wide · Product pages"
       ],
       [
         "Length",
@@ -66,42 +66,42 @@
   },
   "faq": [
     {
-      "q": "How do I make a video that sells a product?",
-      "a": "Paste the product link. The page is read, a script is written, you pick visuals and an avatar, and you get a clip you can publish to TikTok or Meta or download with no watermark."
+      "q": "How do I make a video for a product I sell?",
+      "a": "Paste the product link. We read the page and write a script. You pick the pictures and an AI person. You can post the clip to TikTok or Meta, or download it with no watermark."
     },
     {
       "q": "How do I create product videos with AI?",
-      "a": "Give a product link, pick a style and an avatar, then approve or edit the script. Scenes, a human-sounding voiceover and captions are added, and you can run a batch of versions for a test."
+      "a": "Give a product link, pick a style and an AI person, then approve or edit the script. Scenes, a spoken voice that sounds human, and captions are added. You can also make several versions at once for a test."
     },
     {
       "q": "How long should a product video be?",
-      "a": "Choose 6, 10, 15 or 30 seconds. A shorter clip fits a feed. Use 15 or 30 seconds when the action needs more of the motion on screen. Credits are 24, 40, 60 or 120."
+      "a": "Choose 6, 10, 15 or 30 seconds. A short clip fits TikTok or a social post. Use 15 or 30 seconds when the action needs more time. Credits are the points a video spends: 24, 40, 60 or 120, in that order."
     },
     {
-      "q": "Can AI make a solid product demo?",
-      "a": "Yes. Combine an avatar who explains the feature, shots of the product in use, and extra footage, without booking a live shoot."
+      "q": "Can AI make a clear product demo?",
+      "a": "Yes. An AI person can explain the feature. You also get shots of the product in use, plus extra shots. You do not book a live filming day."
     },
     {
       "q": "How does a product link become a video?",
-      "a": "The product page is read for images, the title, the description and the features. A script is written from those selling points and paired with the visuals and an avatar."
+      "a": "We read the product page for the images, the title, the description and the features. A script is written from those selling points and paired with the pictures and an AI person."
     },
     {
       "q": "Can I customize the product video?",
-      "a": "Yes. Edit the script, swap avatars, change scenes or backgrounds, pick a track from the music library, set brand colors and add your logo in the built-in editor. You can also voice the script in another language."
+      "a": "Yes. Edit the script, swap the AI person, or change the scene. Pick a song from the music library. Set your colors and add your logo in the built-in editor. You can also speak the script in another language."
     },
     {
       "q": "How is an AI product video different from a filmed one?",
-      "a": "You skip the shoot, you pay in credits you see first, and you can make another version from the same link. Starter is $24.50 a month for 200 credits. A failed job returns its credits."
+      "a": "You skip the filming. You pay in credits (the points each video spends), and you see the cost first. You can make another version from the same link. Starter is $24.50 a month for 200 credits. If a video fails, those credits come back."
     },
     {
-      "q": "How do I keep the video on brand?",
-      "a": "Add your logo and colors, pick a voice that fits, and edit the script until the line sounds like your shop. An API can start the same job from your own tools."
+      "q": "How do I make the video match my shop?",
+      "a": "Add your logo and colors. Pick a voice that fits. Edit the script until the line sounds like your shop. An API is a connection that lets your own tools start the same job."
     }
   ],
   "actor_scene_picker": {
-    "title": "Choose an AI Presenter",
-    "lead": "Pick a generated presenter and a setting. The person on screen is an AI avatar, not a customer. The clip can include a script, a voiceover and captions.",
-    "button": "Use this avatar and scene",
+    "title": "Choose an AI Person",
+    "lead": "Pick a generated person and a scene. That person is an AI avatar, not a real customer. The clip can include a script, a spoken voice and captions.",
+    "button": "Use this AI person and scene",
     "actor_picker": {
       "cta": {
         "prompt": "Show the uploaded product in use with the chosen avatar. Write a short script, add a human-sounding voiceover and captions, and keep the product's shape, color and label as in the photo."
@@ -123,11 +123,11 @@
       "result": "n:guide:k1-product-videos-step-mug-lift",
       "mode": "video",
       "length": 10,
-      "prompt": "Show one clear action in a bright room, with an avatar and a short script about that action. Keep the shape, color and label as in the photo. Add a voiceover and captions.",
+      "prompt": "Show one clear action in a bright room, with an AI person and a short script about that action. Keep the shape, color and label as in the photo. Add a spoken voice and captions.",
       "options": [
         [
           "Size",
-          "16:9 · Product pages"
+          "16:9 wide · Product pages"
         ],
         [
           "Length",
@@ -137,7 +137,7 @@
     },
     "picker": {
       "title": "Sample Product Videos",
-      "lead": "Open one if you want a similar action, avatar and script.",
+      "lead": "Open one if you want a similar action, AI person and script.",
       "chips": [
         {
           "id": "hands-on",
@@ -145,7 +145,7 @@
         },
         {
           "id": "everyday",
-          "label": "Everyday operations"
+          "label": "Everyday use"
         }
       ],
       "cards": [
@@ -226,25 +226,25 @@
   },
   "benefits_h2": "Features of the AI Product Video Generator",
   "steps_h2": "How to Make a Product Video in 3 Simple Steps",
-  "steps_lead": "Paste a link, pick an avatar, then review the script.",
+  "steps_lead": "Paste a link or add a photo, pick an AI person, then check the script.",
   "compare_table": {
     "title": "The Old Way vs. the AIVideosUGC Way",
-    "lead": "Start from a photo or a product link, with an avatar and a script, instead of booking a studio.",
+    "lead": "Start from a photo or a product link, with an AI person and a script, instead of booking a studio.",
     "columns": [
       "",
       "AIVideosUGC",
-      "A traditional shoot"
+      "A traditional filming day"
     ],
     "rows": [
       [
         "Cost",
-        "Credits you see first. Starter is $24.50 a month for 200 credits.",
+        "You pay with credits, the points each video uses. Starter is $24.50 a month for 200 credits.",
         "A studio invoice before you have a clip"
       ],
       [
         "Timing",
-        "No shoot to schedule. You start from a photo or a link.",
-        "A filming window you have to book"
+        "No filming to schedule. You start from a photo or a link.",
+        "A time you have to book for filming."
       ],
       [
         "More versions",
@@ -253,13 +253,13 @@
       ],
       [
         "Who does the work",
-        "One person can run the avatar, the script and the edit",
+        "One person can handle the on-screen person, the script and the edit.",
         "Editors, actors and a studio"
       ],
       [
         "Testing",
-        "A batch of versions, then publish the one you keep",
-        "Each test waits on a new shoot"
+        "Several versions at once, then publish the one you keep",
+        "Each test waits on a new filming day"
       ]
     ]
   },
@@ -267,10 +267,10 @@
     "hero",
     "picker",
     "reasons",
+    "compare",
     "steps",
     "benefits",
     "related",
-    "compare",
     "reviews",
     "faq",
     "cta"
@@ -286,22 +286,22 @@
     "h2": "Reasons to Use an AI Product Video Generator",
     "items": [
       {
-        "t": "The Product in an Avatar's Hands",
-        "d": "Put the item in a lifelike avatar's hands, on a beach, in a studio or in a garden, so shoppers can judge size and shape without a photoshoot."
+        "t": "The Product in an AI Person's Hands",
+        "d": "Put the item in an AI person's hands, on a beach, in a studio or in a garden. Shoppers can then judge size and shape without a photo shoot."
       },
       {
         "t": "The Product in Use",
-        "d": "Show an avatar applying skincare, opening a gadget or wearing an accessory, so the action is obvious."
+        "d": "Show an AI person applying skincare, opening a gadget or wearing an accessory, so the action is obvious."
       },
       {
         "t": "A Voice for the Product",
-        "d": "Turn the product description into a script and a human-sounding voiceover that covers the benefits and the doubts a shopper has."
+        "d": "Turn the product description into a script and a spoken voice that sounds human. It covers the benefits and the doubts a shopper has."
       }
     ]
   },
-  "benefits_lead": "Script, voice, avatar and the edit, in one place.",
+  "benefits_lead": "Script, voice, an AI person and the edit, in one place.",
   "related_h2": "Related Tools",
-  "related_lead": "Start from a link, an avatar, a still photo or a UGC ad.",
+  "related_lead": "Start from a link, an AI person, a photo or a phone-style ad.",
   "relatedLinks": [
     "url-to-video",
     "spokesperson-videos",
@@ -312,13 +312,13 @@
   ],
   "reviews": {
     "h2": "How Shops Use an AI Product Video",
-    "lead": "How a store uses an avatar, a script and one product action on a page or in an ad.",
+    "lead": "How a store uses an AI person, a script and one product action on a page or in an ad.",
     "items": [
       {
         "example": true,
         "who": "Independent store",
         "t": "Lip balm routine",
-        "d": "An independent store shows an avatar applying the balm, with a short voiceover, on the product page.",
+        "d": "An independent store shows an AI person applying the balm, with a short spoken voice, on the product page.",
         "img": "n:guide:q3-product-videos-board-03-lip-balm-routine"
       },
       {
@@ -332,7 +332,7 @@
         "example": true,
         "who": "Drink seller",
         "t": "First sip",
-        "d": "A drink seller pairs a first-sip shot with a script and a voice that sounds like a person, and skips another shoot.",
+        "d": "A drink seller pairs a first-sip shot with a script and a spoken voice that sounds human, and skips another filming day.",
         "img": "n:guide:q3-product-videos-board-08-citrus-taste-review"
       },
       {

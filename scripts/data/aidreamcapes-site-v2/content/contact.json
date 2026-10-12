@@ -1,10 +1,10 @@
 {
   "id": "contact",
   "title": "Contact Support: Credits, Billing and Results | AIVideosUGC",
-  "description": "Questions about credits, a failed job, billing or your account? Email support@aivideosugc.com for a written answer and help with your next ad.",
+  "description": "Questions about credits (the units on your plan), a failed photo or video, billing, or your account? Email support@aivideosugc.com for a written answer.",
   "h1": "Contact AIVideosUGC Support",
   "eyebrow": "Customer support",
-  "lead": "Need help with a photo, a video, an actor, captions, publishing, your credits, or your account? Email support@aivideosugc.com and we will help you sort it out.",
+  "lead": "Need help with a photo, a video, an actor, captions, publishing, your credits, or your account? A credit is one unit your plan spends on a file. Email support@aivideosugc.com and we will help you sort it out.",
   "secondary_keywords": [
     "AIVideosUGC customer service",
     "AIVideosUGC billing help",
@@ -12,13 +12,13 @@
     "contact AIVideosUGC by email"
   ],
   "intro": [
-    "Contact AIVideosUGC by email at support@aivideosugc.com. Write if a photo, a video, an actor, captions, a publish to TikTok or Instagram, the API, your credits, or your account needs a look. Include the details below so we can answer without asking you to write again. You also keep a written record of the question and the answer.",
-    "Include the email address on your account, a short description of what happened and, if it is about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
+    "Contact AIVideosUGC by email at support@aivideosugc.com. Write if you need help with a photo, a video, an actor, or captions. You can also write about a post to TikTok or Instagram, the API, your credits, or your account. The API is how your own software connects to this tool. Include the details below so we can answer without asking you to write again. You also keep a written record of the question and the answer.",
+    "Include the email address on your account, and a short note about what happened. If it is about one photo or video, add about when you made it. A screenshot of any error message helps too."
   ],
   "topics": [
     {
       "t": "Billing and plans",
-      "d": "Billing help for your plan, a charge on your statement, or which monthly plan fits how many photos and videos you make.",
+      "d": "Help with your plan, a charge on your bill, or which monthly plan fits how many photos and videos you make.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-billing-r1.webp",
         "alt": "Black man with a close-cropped haircut reviewing a plan panel beside a product parcel.",
@@ -27,8 +27,8 @@
       }
     },
     {
-      "t": "Credits and failed jobs",
-      "d": "Email a credits question if credits from a failed job did not return, or if a cost looked wrong. Include the job time and we will check that job.",
+      "t": "Credits and failed photos or videos",
+      "d": "Email a credits question if credits from a failed photo or video did not come back, or if the credit cost looked wrong. Include when you made it, and we will check that one.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-credits-r1.webp",
         "alt": "Seller with a short dark buzz cut checking a product parcel beside a laptop.",
@@ -37,8 +37,8 @@
       }
     },
     {
-      "t": "Results that missed the mark",
-      "d": "A photo or video came out very different from what you described, or the actor, the spoken line, or the captions missed. Send the details and we will look.",
+      "t": "Photos or videos that came out wrong",
+      "d": "A photo or video came out very different from what you described. Or the actor, the spoken line, or the captions were wrong. Send the details and we will look.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/b2f5-contact-results-r1.webp",
         "alt": "Seller compares a ceramic cup beside a closed laptop",
@@ -58,7 +58,7 @@
     },
     {
       "t": "Partnerships",
-      "d": "You run a store, an agency, or a creator channel and want to work with us, or you have a question about the API. Email a short note about the business and what you have in mind.",
+      "d": "You run a store, an agency, or a creator's channel and want to work with us. Or you have a question about the API, which is how your own software connects. Email a short note about the business and what you have in mind.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-partnerships-r1.webp",
         "alt": "Two shop partners exchanging a plain parcel across an ecommerce desk.",
@@ -78,15 +78,15 @@
     },
     {
       "q": "How long does a reply take?",
-      "a": "There is no posted reply time. Email support@aivideosugc.com with the account email, what happened, and when the job ran, so the first answer can cover it."
+      "a": "We do not post a reply time. Email support@aivideosugc.com with the account email, what happened, and when you made the photo or video. Then the first reply can cover it."
     },
     {
-      "q": "What details help support find my job?",
+      "q": "What details help support find my photo or video?",
       "a": "The email on your account, what happened, about when it happened, and a screenshot of any error."
     },
     {
-      "q": "What if a failed job did not return credits?",
-      "a": "Failed jobs return their credits on their own. If you do not see them, email support with the time of the job and we will check it."
+      "q": "What if a failed photo or video did not return credits?",
+      "a": "A failed photo or video returns its credits on its own. If you do not see them, email support with the time you made it and we will check."
     },
     {
       "q": "Do I contact AIVideosUGC by email only?",
@@ -97,8 +97,8 @@
       "a": "Yes. If a send to TikTok, Instagram, or Facebook did not go through, email the account address, what you tried, and about when it happened."
     },
     {
-      "q": "Who do I email about an actor, captions, or the API?",
-      "a": "Email support@aivideosugc.com. Include the account email and what you were trying to do, such as reusing a presenter, editing captions, or sending a job from your own software."
+      "q": "Who do I email about an actor, captions, or my own software?",
+      "a": "Email support@aivideosugc.com. Include the account email and what you were trying to do. For example, reusing a presenter (a saved on-screen person), editing captions, or starting work from your own software."
     }
   ],
   "relatedLinks": [

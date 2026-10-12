@@ -1,10 +1,10 @@
 {
   "id": "tpl-light",
   "title": "Product Photo Lighting Without a Studio | AIVideosUGC",
-  "description": "Product photo lighting for glass, metal, and gloss. Fix a harsh snapshot with soft, directional light and clean highlights, from one uploaded photo.",
+  "description": "Lighting for glass, metal, and shine, made from one uploaded photo. Soften a hard snapshot, say where the light comes from, and keep bright spots clean.",
   "h1": "Product Photo Lighting for Glass, Metal and Gloss",
   "eyebrow": "Product photo template",
-  "lead": "Product photo lighting starts from one clear photo. Describe the light so glass, metal, and gloss stay easy to see, then start a clip with a voice, captions, or an AI actor.",
+  "lead": "Product photo lighting starts from one clear photo. Say where the light comes from so glass, metal, and shine stay easy to see. Then you can start a clip with a voice, on-screen words (captions), or a generated person (an AI actor).",
   "secondary_keywords": [
     "studio lighting for product photos",
     "perfume bottle photography",
@@ -14,22 +14,22 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a sharp photo of the whole product, with the edges that catch light in focus. A plain snapshot is enough."
+      "d": "Upload a sharp photo of the whole product, including the edges that catch the light. A plain snapshot is enough."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the light direction, how soft the shadow should be, and how glass or metal should look. The result is a square photo."
+      "d": "Name where the light comes from, how soft the shadow is, and how the surface should look. You get a square photo."
     },
     {
       "t": "Download and Post",
-      "d": "Download the image and compare its silhouette, color and finish with the real item. Add any offer text in your editor after export."
+      "d": "Download the image and compare its outline, color, and surface with the real item. Add offer text in your own editor after download."
     }
   ],
   "maker": {
     "options": [
       [
         "Template",
-        "Studio Lighting"
+        "Soft studio look"
       ],
       [
         "Size",
@@ -45,7 +45,7 @@
   "faq": [
     {
       "q": "Which products show a useful lighting change?",
-      "a": "Glass, metal, and gloss. Perfume bottles, jars, watches, steel cups, and chains are typical. Compare every download with the real item."
+      "a": "Glass, metal, and shine. Perfume bottles, jars, watches, steel cups, and chains are typical. Compare every download with the real item."
     },
     {
       "q": "What is product photo lighting here?",
@@ -53,19 +53,19 @@
     },
     {
       "q": "Do I need a studio setup?",
-      "a": "No. A plain snapshot is enough. Name the light you want instead of setting up stands and softboxes."
+      "a": "No. A plain snapshot is enough. Name the light you want. You do not need stands or soft light boxes."
     },
     {
       "q": "Can I reduce glare on glass or metal?",
-      "a": "Yes. Ask for softer light or a narrower highlight. Reject a frame that changes the shape or the color."
+      "a": "Yes. Ask for softer light or a smaller bright spot. Do not use a photo that changes the shape or the color."
     },
     {
       "q": "Will the new lighting change the shape or color?",
-      "a": "It can. Compare the silhouette, the color, and the finish with the real item at full size, and keep only a frame that still matches."
+      "a": "It can. Compare the outline, the color, and the surface with the real item at full size. Keep only a photo that still matches."
     },
     {
       "q": "Which light suits an Amazon listing?",
-      "a": "Even light from the front keeps a label area easier to see. A stronger side light is better kept for an ad, not the main listing face."
+      "a": "Even light from the front keeps a label easier to read. Keep stronger side light for an ad, not for the main Amazon photo."
     },
     {
       "q": "Can the lit photo start a video?",
@@ -73,15 +73,15 @@
     },
     {
       "q": "What does a lighting photo cost?",
-      "a": "Each photo is 24 credits. You see that cost before the job starts, and a failed job returns those credits. Starter is $24.50 a month with 200 credits. The download has no watermark."
+      "a": "Credits are the points your plan spends. Each photo is 24 credits. You see that cost before you start. If it fails, those credits come back. Starter is $24.50 a month with 200 credits. The download has no watermark (no logo stamped on the file)."
     },
     {
       "q": "Can I light several photos at once?",
-      "a": "Yes. Run the same light note across a batch, or send the catalog through the API. A clip from a lit photo is priced as a video: 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+      "a": "Yes. Run the same lighting words on many photos at once, or start them from your own software (the API). A clip made from a lit photo is a video: 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
     },
     {
       "q": "Can I add offer text on the photo?",
-      "a": "Type the offer in your editor after download. Captions on a clip can name the product, and you can still add a price yourself."
+      "a": "Type the offer in your own editor after download. Captions on a clip can name the product, and you can still add a price yourself."
     },
     {
       "q": "Can I use the file in ads?",
@@ -101,11 +101,11 @@
       "source": "f:q8-tpl-light-input-good-01",
       "result": "n:guide:f15-r2-tpl-light-output-white-mug-r2",
       "mode": "photo",
-      "prompt": "Give this white mug warm window light from the side, a soft shadow, and a clear highlight on the glaze. Keep the rim, handle, and color as they are.",
+      "prompt": "Give this white mug warm window light from the side and a soft shadow, with one clear bright spot on the shiny surface. Keep the rim, handle, and color as they are.",
       "options": [
         [
           "Template",
-          "Studio Lighting"
+          "Soft studio look"
         ],
         [
           "Size",
@@ -193,7 +193,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Shopper-style"
         },
         {
           "id": "viral",
@@ -203,7 +203,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Quiet Close-Up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -212,7 +212,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Film-Style Watch Detail",
           "chips": [
             "accessories"
           ],
@@ -248,7 +248,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-Stream Reaction: App",
           "chips": [
             "apps"
           ],
@@ -275,7 +275,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -293,7 +293,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -320,7 +320,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -329,7 +329,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person View: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -338,7 +338,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening Line: Home App Tour",
           "chips": [
             "explainer"
           ],
@@ -347,7 +347,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -365,7 +365,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First-Sip Reaction: Citrus",
           "chips": [
             "food-beverage"
           ],
@@ -401,7 +401,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite",
           "chips": [
             "health-fitness"
           ],
@@ -428,7 +428,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Ring Extreme Close-Up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -473,7 +473,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal",
           "chips": [
             "sports-gym"
           ],
@@ -482,7 +482,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -491,7 +491,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Thin Keyboard Review",
           "chips": [
             "tech-electronics"
           ],
@@ -500,7 +500,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine",
           "chips": [
             "ugc"
           ],
@@ -518,7 +518,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -551,7 +551,7 @@
     }
   },
   "steps_h2": "How to Set Product Photo Lighting in 3 Simple Steps",
-  "steps_lead": "Glass product photo lighting starts with one clear snapshot, a short light note, and a square file you compare with the real item.",
+  "steps_lead": "Start with one clear snapshot, a short note about the light, and a square file you compare with the real item. Credits are the points a paid plan spends.",
   "blockOrder": [
     "hero",
     "picker",
@@ -565,8 +565,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Light Setups for Glass, Metal and Gloss",
-    "lead": "Perfume bottle photography is one of these setups, next to metal, gloss, and glass.",
+    "h2": "Light Setups for Glass, Metal, and Shine",
+    "lead": "Perfume bottle photos sit here, next to metal, shine, and glass.",
     "items": [
       {
         "example": true,
@@ -584,13 +584,13 @@
         "example": true,
         "who": "Watch shop",
         "t": "Metal rim",
-        "d": "A watch shop puts a narrow highlight on the case rim, then an AI actor wears the watch in a clip."
+        "d": "A watch shop puts a small bright line on the case edge, then an AI actor wears the watch in a clip."
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "Steel cup",
-        "d": "A drinkware shop keeps the reflection on a steel cup controlled, then trims the clip in the built-in editor."
+        "d": "A drinkware shop keeps the bright reflection on a steel cup small, then trims the clip in the built-in editor."
       },
       {
         "example": true,
@@ -614,7 +614,7 @@
         "example": true,
         "who": "Candle shop",
         "t": "Glass jar",
-        "d": "A candle shop uses a gentle rim light on a glass jar and skips a studio kit."
+        "d": "A candle shop lights the edge of a glass jar and does not set up a studio."
       },
       {
         "example": true,
@@ -626,7 +626,7 @@
         "example": true,
         "who": "Bottle shop",
         "t": "Clear glass",
-        "d": "A bottle shop describes the light in chat, gets a scene back, and compares the glass with the real bottle."
+        "d": "A bottle shop describes the light on this page, gets a scene back, and compares the glass with the real bottle."
       }
     ]
   },
@@ -663,7 +663,7 @@
   "definition": {
     "title": "What Is Product Photo Lighting?",
     "paras": [
-      "Studio lighting for product photos is a square file made from one snapshot. You describe the direction, the shadow, and how glass, metal, or gloss should look.",
+      "Studio lighting for product photos is a square file made from one snapshot. You say where the light comes from, how soft the shadow is, and how glass, metal, or shine should look.",
       "Compare the download with the real item before you post it. The same photo can also start a clip with an AI voice, captions, an actor, and a track from the music library."
     ]
   },
@@ -675,34 +675,34 @@
       "items": [
         {
           "t": "AI voice",
-          "d": "The square photo stays the lighting file. A clip from that photo can use an AI voice."
+          "d": "The square photo is only the new lighting. A clip made from that photo can use an AI voice."
         },
         {
           "t": "Auto captions",
-          "d": "Captions on the clip can name the finish, the material, or the scent."
+          "d": "Captions on the clip can name the surface, the material, or the scent."
         },
         {
           "t": "AI script",
-          "d": "Ask for a short script about the lit product, then edit it before you generate."
+          "d": "Ask for a short script about the lit product, then edit it before the clip is made."
         },
         {
           "t": "Actor library",
           "d": "An AI actor can hold the lit product in the clip. Present that clip as your ad."
         },
         {
-          "t": "Link, batch, and API",
-          "d": "Paste a product link, light a batch of photos, or send the catalog through the API."
+          "t": "Link, many photos, and API",
+          "d": "Paste a product link, light many photos at once, or start them from your own software (the API)."
         },
         {
           "t": "Editor, music, and languages",
-          "d": "Trim the clip in the editor, add a track from the music library, and make another language."
+          "d": "Trim the clip in the built-in editor, add a track from the music library, and make it in another language."
         }
       ]
     }
   ],
   "platforms": {
     "h2": "Publish a Clip of the Lit Product",
-    "lead": "The square photo is for the listing. A clip from the same photo can go to TikTok, Meta, or YouTube in one step.",
+    "lead": "The square photo is for the listing. Send a clip to TikTok, Instagram, or Facebook in one step, or download it for YouTube.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -713,7 +713,7 @@
       {
         "t": "AI Instagram ads",
         "label": "AI Instagram ads",
-        "d": "Send a square still or a tall clip to Instagram.",
+        "d": "Send a square photo or a tall clip to Instagram.",
         "href": "page:plat-instagram"
       },
       {

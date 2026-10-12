@@ -1,10 +1,10 @@
 {
   "id": "tpl-bf",
   "title": "Black Friday Video Ads From One Photo | AIVideosUGC",
-  "description": "Build a Black Friday video ad from one product photo, then add the confirmed offer after download. Choose a scene for social feeds and product pages.",
+  "description": "Build a Black Friday video ad from one product photo, then add the confirmed offer after download. Choose a setup for social posts and product pages.",
   "h1": "Black Friday Video Ads You Can Post Before the Rush",
   "eyebrow": "Black Friday template",
-  "lead": "Place your product photo in a scene, add an AI voice if you want one, then put the price, code, and end date on after download.",
+  "lead": "Place your product photo in a setup, and add a spoken AI voice if you want one. Put the price, code, and end date on after you download.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -19,7 +19,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the setting, pick an AI voice, and choose 6 to 30 seconds. Leave the exact price out."
+      "d": "Describe the setting, pick a spoken AI voice, and choose 6 to 30 seconds. Leave the exact price out of the video."
     },
     {
       "t": "Download and Post",
@@ -30,7 +30,7 @@
     "options": [
       [
         "Size",
-        "9:16 · Stories & Reels"
+        "9:16 tall · Stories & Reels"
       ],
       [
         "Length",
@@ -38,7 +38,7 @@
       ],
       [
         "Also try",
-        "1:1 · Feed"
+        "1:1 square · feed post"
       ]
     ],
     "cta": "Make my Black Friday video"
@@ -46,15 +46,15 @@
   "faq": [
     {
       "q": "What does this Black Friday template make?",
-      "a": "A deal clip from your product photo, with an AI actor, a script, and a voiceover if you want them. You still type the confirmed price, code, and end date after download."
+      "a": "A deal clip from your product photo, with an AI actor, a script, and a spoken voice if you want them. You still type the confirmed price, code, and end date after download."
     },
     {
       "q": "How does the scene come together?",
-      "a": "Upload one product photo, describe the setting, pick a size and a length, then add captions or the offer in the built-in editor."
+      "a": "Upload one product photo, describe the setting, pick a size and a length, then add captions or the offer in the editor on this site."
     },
     {
       "q": "Why not book a shoot for the sale?",
-      "a": "AI backgrounds build the scene from the photo you have, so you can skip a studio camera and a large set before sale week."
+      "a": "The background is built from the photo you have, so you can skip a studio camera and a big setup before sale week."
     },
     {
       "q": "Who should use it?",
@@ -62,7 +62,7 @@
     },
     {
       "q": "Can I do this without editing experience?",
-      "a": "Yes. The scene is built for you. Add stickers, captions, a track from the music library, or an AI voice in the editor, and put the offer on only after you confirm it."
+      "a": "Yes. The setup is built for you. Add stickers, captions, a song from the music library, or an AI voice in the editor on this site. Put the offer on only after you confirm it."
     },
     {
       "q": "What photo should I upload?",
@@ -70,7 +70,7 @@
     },
     {
       "q": "Which size and length fit a deal post?",
-      "a": "9:16 for Stories and Reels, 1:1 for a square feed, or 16:9, 4:3, or 3:4 when the placement needs them. Lengths are 6, 10, 15, or 30 seconds. Publish to TikTok or Meta from the same project."
+      "a": "Use a tall 9:16 for Stories and Reels, or a square 1:1 for the feed. A wide 16:9, a slightly wide 4:3, and a slightly tall 3:4 are there when the post needs that shape. Lengths are 6, 10, 15, or 30 seconds. Publish to TikTok, Facebook, or Instagram from the same project."
     },
     {
       "q": "Does the generator write the discount?",
@@ -78,15 +78,15 @@
     },
     {
       "q": "What does a clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. A failed job returns its credits. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
+      "a": "Credits are what each video spends. 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. If it fails, those credits come back. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. It has no watermark. If a person appears, that person is an AI performer, not a shopper who bought the deal."
+      "a": "Yes. It has no watermark, which means no logo is stamped on the file. If a person appears, that person is an AI performer, not a shopper who bought the deal."
     },
     {
-      "q": "Can I start from a link, a batch, or the API?",
-      "a": "Yes. Paste a product page link for a script and a cloned voice, run a batch when many products share the sale scene, or send the catalog through the AIVideosUGC API. Another language can reuse the same photo. The offer text is still yours to confirm."
+      "q": "Can I start from a product link, many products at once, or my own software?",
+      "a": "Yes. Paste a product page link for a script and a voice copied from one you may use. When many products share the sale setup, run them at once (a batch), or start jobs from your own software (the API). Another language can reuse the same photo. You still confirm the offer text."
     }
   ],
   "visual": {
@@ -108,7 +108,7 @@
       "options": [
         [
           "Size",
-          "9:16 · Stories & Reels"
+          "9:16 tall · Stories & Reels"
         ],
         [
           "Length",
@@ -116,13 +116,13 @@
         ],
         [
           "Also try",
-          "1:1 · Feed"
+          "1:1 square · feed post"
         ]
       ]
     },
     "picker": {
       "title": "Choose a Scene for a Black Friday Sale Video",
-      "lead": "Open a product scene and place the item that is in your offer. The price, code and end date go on after download.",
+      "lead": "Open a product setup and place the item that is in your offer. The price, code, and end date go on after download.",
       "chips": [
         {
           "id": "accessories",
@@ -154,7 +154,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -194,7 +194,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator-style"
         },
         {
           "id": "viral",
@@ -204,7 +204,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -213,7 +213,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Movie-style Watch Close-up",
           "chips": [
             "accessories"
           ],
@@ -249,7 +249,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-style Reaction: App",
           "chips": [
             "apps"
           ],
@@ -276,7 +276,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -294,7 +294,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -321,7 +321,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -330,7 +330,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -339,7 +339,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home App Opening Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -348,7 +348,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -366,7 +366,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "Close-up Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -402,7 +402,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite Clip",
           "chips": [
             "health-fitness"
           ],
@@ -429,7 +429,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Signet Close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -474,7 +474,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal Clip",
           "chips": [
             "sports-gym"
           ],
@@ -483,7 +483,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -492,7 +492,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Slim Keyboard Desk Review",
           "chips": [
             "tech-electronics"
           ],
@@ -501,7 +501,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine Clip",
           "chips": [
             "ugc"
           ],
@@ -519,7 +519,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -552,8 +552,8 @@
   },
   "steps_h2": "How to Make a Black Friday Ad in 3 Simple Steps",
   "steps_lead": "The product stays in the scene. The price, code, and end date wait until you confirm them.",
-  "cta_lead": "Upload the product in your offer, add a voiceover if you want one, and see the credit cost before you start.",
-  "cta_title": "Ready to Sell from the First Look?",
+  "cta_lead": "Upload the product in your offer and add a spoken voice if you want one. Credits are what the video spends, and you see that cost before you start.",
+  "cta_title": "Ready to Make Your Sale Video?",
   "blockOrder": [
     "hero",
     "picker",
@@ -566,9 +566,9 @@
     "cta"
   ],
   "definition": {
-    "title": "Get a Sale-Ready Look Instantly",
+    "title": "A Sale Scene From the Photo You Have",
     "paras": [
-      "AI backgrounds turn the photo you upload into a sale-ready scene, so you can skip a studio camera and a large budget. The download has no watermark. Add the confirmed price, code, and end date afterward."
+      "The background is built from the photo you upload, so you can skip a studio camera and a big spend. The download has no watermark, which means no logo is stamped on the file. Add the confirmed price, code, and end date after download."
     ]
   },
   "reviews": {
@@ -614,7 +614,7 @@
         "example": true,
         "who": "Electronics shop",
         "t": "Fold demo",
-        "d": "An electronics shop folds the headphones once so the shape stays in frame, then adds the deal after download.",
+        "d": "An electronics shop folds the headphones once so the shape stays visible, then adds the deal after download.",
         "img": "n:guide:f16-r10-bf-example-headphones-r1"
       },
       {
@@ -652,7 +652,7 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "AI creator-style video ads"
     },
     {
       "id": "tpl-film",
@@ -676,20 +676,20 @@
     }
   ],
   "reasons": {
-    "h2": "Add Your Brand in Three Easy Moves",
-    "lead": "Start from the photo you have. Add your line, your voice, and the offer only after you confirm the numbers.",
+    "h2": "Three Things You Can Add",
+    "lead": "Start from the photo you have. Add your words and a spoken voice. Add the offer only after you confirm the numbers.",
     "items": [
       {
-        "t": "Master the sale post",
-        "d": "Open a ready scene, keep your product, and add your line, stickers, and captions. A track from the music library can sit under the clip. The layout is already there, so the sale post does not start from a blank file."
+        "t": "Start from a ready setup",
+        "d": "Open a ready setup, keep your product, and add your words, stickers, and captions. A song from the music library can play under the clip. The layout is already there, so you do not start from a blank file."
       },
       {
-        "t": "Sell from the first glance",
-        "d": "Turn the photo into a listing-ready clip with an AI actor, a script, and a voiceover. Publish it to TikTok or Meta in one step, and type the real price only after download."
+        "t": "Show the product right away",
+        "d": "Turn the photo into a clip with an AI actor, a script, and a spoken voice. Publish it to TikTok, Facebook, or Instagram in one step. Type the real price only after download."
       },
       {
-        "t": "Apps, batch, and API",
-        "d": "Make the same deal scene on the web, run a batch when the catalog is large, or send products through the AIVideosUGC API. Edit, resize, swap the background, and try another language in the built-in editor. Plans start at $24.50 a month."
+        "t": "Website, many products, or your software",
+        "d": "Make the same deal setup on the website. When you have many products, run them at once (a batch), or start jobs from your own software (the API). In the editor on this site you can edit, resize, change the background, and try another language. Plans start at $24.50 a month."
       }
     ]
   }

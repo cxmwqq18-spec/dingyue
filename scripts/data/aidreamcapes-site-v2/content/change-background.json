@@ -4,7 +4,7 @@
   "description": "Change a product photo background from one clear image. Keep the item recognizable, create a new setting for listings or ads, and avoid another studio shoot.",
   "h1": "AI product background changer for a new setting",
   "eyebrow": "Photo tool",
-  "lead": "Remove the old backdrop and put a studio surface, a counter, or a seasonal scene behind the same product photo.",
+  "lead": "Remove the old background and put a studio surface, a counter, or a seasonal scene behind the same product photo. Credits are what you spend on a photo, and you see that cost before you start.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -17,11 +17,11 @@
   "steps": [
     {
       "t": "Upload your image",
-      "d": "Add one photo with the whole item visible. A tidy outline gives the new setting a cleaner edge."
+      "d": "Add one photo that shows the whole item. A clear shape around the item helps the new background meet it cleanly."
     },
     {
-      "t": "Give your prompt",
-      "d": "Name one surface, room, or outdoor place. Keep the note short so the product stays the subject."
+      "t": "Describe the new setting",
+      "d": "Name one surface, room, or outdoor place. Keep the note short so the product stays easy to see."
     },
     {
       "t": "Download your photo",
@@ -33,27 +33,27 @@
     {
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
       "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall.",
-      "t": "Save hours and credits",
-      "d": "One photo is 24 credits, shown before you start, and a failed job returns them. You can also make several settings from that same photo."
+      "t": "24 credits a photo",
+      "d": "One photo costs 24 credits, shown before you start. If the photo fails, those credits come back. You can also make several backgrounds from that same photo."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-seasonal-r1",
       "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage.",
-      "t": "Clean edges on the item",
-      "d": "The outline should still match the photo you uploaded. Small printed details can shift, so compare them before you publish."
+      "t": "Check the item's shape",
+      "d": "The shape should still match the photo you uploaded. Small printed words can change, so compare them before you publish."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
       "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
       "t": "A sharp finished photo",
-      "d": "You download a square photo with the new setting in place and no watermark. It is not a transparent cut-out."
+      "d": "You download a square photo with the new setting filled in, and no watermark (no logo stamped on the file). It is not a see-through file with an empty background."
     }
   ],
   "maker": {
     "options": [
       [
         "Photo",
-        "Your product shot"
+        "Your product photo"
       ],
       [
         "Background",
@@ -61,7 +61,7 @@
       ],
       [
         "Size",
-        "Square by default"
+        "Square"
       ]
     ],
     "cta": "Change the background"
@@ -73,15 +73,15 @@
     },
     {
       "q": "Can I make a new background for an Etsy photo?",
-      "a": "Yes. Upload one product photo, name the surface or the room, and download the square image. The cost shows before the job starts."
+      "a": "Yes. Upload one product photo, name the surface or the room, and download the square image. The cost shows before you start."
     },
     {
       "q": "Will the product change?",
-      "a": "The item should keep its angle and outline. Compare it with the real product, because small print can shift."
+      "a": "The item should keep its angle and shape. Compare it with the real product, because small printed words can change."
     },
     {
-      "q": "Do I get a transparent cut-out?",
-      "a": "No. You download a finished photo with the new setting already in place. For a plain main photo, make a separate white image."
+      "q": "Do I get a see-through background?",
+      "a": "No. You download a finished photo with the new setting already filled in. For a plain main photo, make a separate white image."
     },
     {
       "q": "Which backgrounds suit product photos?",
@@ -89,27 +89,27 @@
     },
     {
       "q": "Can I use the new photo in a paid ad?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor."
+      "a": "Yes. The download has no watermark, so no logo is stamped on the file. You can use it for your business. Add any price or offer in your ad editor."
     },
     {
       "q": "Can I choose a seasonal or outdoor setting?",
       "a": "Yes. Name one room, surface, or outdoor scene, such as a holiday shelf or a shaded table."
     },
     {
-      "q": "How is this different from a reshoot?",
-      "a": "A reshoot needs space and lights. Here the new setting comes from a photo you already own. If that photo is blurry, start with [how to take product photos for AI](page:guide-product-photo-tips)."
+      "q": "How is this different from a new photo shoot?",
+      "a": "A new photo shoot needs space and lights. Here the new setting comes from a photo you already own. If that photo is blurry, start with [how to take product photos for AI](page:guide-product-photo-tips)."
     },
     {
       "q": "Do you include a free background library?",
-      "a": "No. There is no free plan and no free background pack. Pick a studio, wood, or garden scene on this page, or describe your own surface. Each photo is 24 credits, and a failed job returns those credits."
+      "a": "No. There is no free plan and no free set of backgrounds. Pick a studio, wood, or garden scene on this page, or describe your own surface. Each photo is 24 credits. If the photo fails, those credits come back."
     },
     {
       "q": "Can the new photo become a video?",
-      "a": "Yes. Open [URL to video](page:url-to-video) from a product link, or [image to video](page:image-to-video) from the still. Add a script, an AI voice, captions, and music, then publish to TikTok or Meta."
+      "a": "Yes. Open [URL to video](page:url-to-video) from a product link, or [image to video](page:image-to-video) from the photo. Add a written script, a spoken AI voice, on-screen captions, and music. Then publish to TikTok or Meta (Facebook and Instagram)."
     },
     {
       "q": "Can I edit the photo without another app?",
-      "a": "Yes. The built-in editor can add a short line of text, a crop, or another language pass. You do not have to leave for a separate editor."
+      "a": "Yes. The editor here can add a short line of text, crop the photo, or write the line in another language. You do not have to open a separate editor."
     }
   ],
   "visual": {
@@ -117,11 +117,11 @@
       "source": "n:guide:ra3-change-background-steps-1-r1",
       "result": "n:guide:ra3-change-background-steps-2-r2",
       "mode": "photo",
-      "prompt": "Place this blue ceramic vase on a shaded garden table with an oatmeal linen cloth and soft green foliage beyond.",
+      "prompt": "Place this blue ceramic vase on a shaded garden table with a light cloth and soft green plants behind it.",
       "options": [
         [
           "Photo",
-          "Your product shot"
+          "Your product photo"
         ],
         [
           "Background",
@@ -129,7 +129,7 @@
         ],
         [
           "Size",
-          "Square by default"
+          "Square"
         ]
       ]
     },
@@ -223,32 +223,32 @@
     "faq"
   ],
   "reasons": {
-    "h2": "Why you need these product photo backdrop ideas",
-    "lead": "Start with a quiet surface, a campaign shelf, or one outdoor table when the product itself is already fine.",
+    "h2": "When a new background helps the photo",
+    "lead": "Start with a quiet surface, a shelf for an ad, or one outdoor table. Use it when the product photo is already fine.",
     "items": [
       {
-        "t": "Keep it professional",
-        "d": "Swap a cluttered counter for a quiet surface so the listing opens on the product.",
+        "t": "Show the product first",
+        "d": "Swap a cluttered counter for a quiet surface, so the listing starts on the product.",
         "img": "n:guide:k5-background-case-1",
         "alt": "Blue ceramic vase on a sunny windowsill."
       },
       {
-        "t": "Match those ads",
-        "d": "Use a warmer surface or a holiday shelf for the next ad, and keep the product as the subject.",
+        "t": "Match the next ad",
+        "d": "Use a warmer surface or a holiday shelf for the next ad, and keep the product easy to see.",
         "img": "n:guide:k5-background-case-2",
         "alt": "Plain face cream jar on wet stone."
       },
       {
         "t": "Spend less on the shoot",
-        "d": "Use the photo you already have. A new backdrop does not mean unpacking stock or booking lights.",
+        "d": "Use the photo you already have. A new background does not mean unpacking the product or booking lights.",
         "img": "n:guide:k5-background-case-3",
         "alt": "Brown leather wallet on a cafe table."
       }
     ]
   },
   "reviews": {
-    "h2": "Why sellers use AIVideosUGC with the new backdrop",
-    "lead": "Example ways a shop uses the new still, then a video, a voice, or another language.",
+    "h2": "How shops use the new background",
+    "lead": "Example ways a shop uses the new photo, then a video, a voice, or another language.",
     "items": [
       {
         "example": true,
@@ -259,56 +259,56 @@
       {
         "example": true,
         "who": "Seasonal shop",
-        "t": "Try a holiday shelf without restyling the room",
+        "t": "Try a holiday shelf without setting the room up again",
         "d": "Name one seasonal surface. If the result adds objects you did not ask for, run it again with a shorter note."
       },
       {
         "example": true,
         "who": "Ad editor",
-        "t": "Build a feed scene from the catalog photo",
+        "t": "Build a social post from your product photo",
         "d": "Put the item on a cafe table or a garden surface, then add the offer in the ad editor after download."
       },
       {
         "example": true,
         "who": "Listing manager",
         "t": "Keep a white version and a scene version",
-        "d": "Use a white listing image when the channel wants a plain main photo, and a new setting when the page needs context."
+        "d": "Use a white listing image when the store wants a plain main photo. Use a new setting when the page should show where the item sits."
       },
       {
         "example": true,
-        "who": "UGC seller",
-        "t": "Make a product video from the same still",
-        "d": "Send the photo to [image to video](page:image-to-video) when the ad needs motion. The still stays the product reference."
+        "who": "Short-video seller",
+        "t": "Make a product video from the same photo",
+        "d": "Send the photo to [image to video](page:image-to-video) when the ad needs motion. The uploaded photo is the product in the ad."
       },
       {
         "example": true,
         "who": "Store owner",
         "t": "Start from the product link",
-        "d": "Paste the listing into [URL to video](page:url-to-video). A script, a presenter, and the clip come back for you to check before anything goes live."
+        "d": "Paste the listing into [URL to video](page:url-to-video). You get a written script, a person on screen, and a video to check before you publish."
       },
       {
         "example": true,
-        "who": "Multi-market seller",
+        "who": "Multi-country seller",
         "t": "Say the same offer in another language",
-        "d": "Add an AI voice and captions for a second market. The product photo stays put when the language changes."
+        "d": "Add an AI voice and on-screen captions for another country. The product photo stays the same when the language changes."
       },
       {
         "example": true,
         "who": "Small brand",
         "t": "Add captions and music in one editor",
-        "d": "Add captions, music, or a short line of text in the built-in editor, then publish to TikTok or Meta."
+        "d": "Add on-screen captions, music, or a short line of text in the editor here. Then publish to TikTok or Meta (Facebook and Instagram)."
       },
       {
         "example": true,
         "who": "Agency editor",
         "t": "Put an actor next to the product",
-        "d": "Pick a presenter from the [AI actors](page:ai-actors) set and a [spokesperson clip](page:spokesperson-videos). The product photo is still what the ad is selling."
+        "d": "Pick a person from the [AI actors](page:ai-actors) page and a [spokesperson video](page:spokesperson-videos). The product photo is what the ad is selling."
       },
       {
         "example": true,
-        "who": "Catalog lead",
-        "t": "Run several backdrops from one upload",
-        "d": "Ask for a studio surface, a wood counter, and a garden table from the same photo. Each photo is 24 credits, shown before it starts."
+        "who": "Catalog manager",
+        "t": "Run several backgrounds from one photo",
+        "d": "Ask for a studio surface, a wood counter, and a garden table from the same photo. Each photo is 24 credits, shown before you start."
       }
     ]
   },
@@ -322,5 +322,5 @@
   ],
   "benefits_lead": "See the credit cost, check the item against the original, and download a sharp square photo.",
   "related_h2": "Related tools",
-  "related_lead": "Turn the new still into a video, an ad, or a presenter clip."
+  "related_lead": "Turn the new photo into an ad or a video, including one with a person presenting the product."
 }

@@ -1,11 +1,11 @@
 {
   "id": "plat-facebook",
   "title": "AI Facebook Ad Generator for Online Stores | AIVideosUGC",
-  "description": "Make a Facebook ad from one product photo. Choose a square Feed image or 9:16 Reel, see the credit cost first, and download without a watermark.",
+  "description": "Make a Facebook ad from one product photo. Choose a square image or a tall phone Reel. You pay in credits, and you see the cost first. No watermark.",
   "h1": "AI Facebook Ad Generator from One Product Photo",
   "eyebrow": "Facebook ads",
-  "lead": "Paste a product link or start from one photo. Pick an actor, a script and a voice, see the credit cost first, and publish the Facebook ad or download it with no watermark.",
-  "card": "Facebook ads from one product photo, as a square still or a tall clip.",
+  "lead": "Paste a product link or start from one photo. Pick a presenter made by AI (an actor), a script, and a voice. A credit is what your plan spends on each file, and you see that cost first. Then publish the Facebook ad, or download it with no watermark.",
+  "card": "Facebook ads from one product photo, as a square photo or a tall clip.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
     "Facebook feed ad images",
@@ -15,31 +15,31 @@
   "faq": [
     {
       "q": "What is an AI Facebook ad from a product photo?",
-      "a": "A square still or a tall clip made from a product link or a photo you upload. A generated actor can hold the item and speak a script. That person is not a real customer."
+      "a": "A square photo or a tall clip made from a product link or a photo you upload. A presenter made by AI can hold the item and speak a script. That person is not a real customer."
     },
     {
       "q": "Can this lower my Facebook ad costs?",
-      "a": "We do not promise a lower cost-per-result. You can make another version, with another actor or line, without paying for another shoot. Credits are charged per file, and the amount shows first."
+      "a": "We do not promise cheaper ad results. You can make another version, with another actor or line, without paying for a new photo shoot. Each file spends credits, and you see the amount first."
     },
     {
       "q": "Are these files allowed in Facebook ads?",
-      "a": "Follow the current ad rules for the country where the ad will run. If Ads Manager asks you to label AI content, do that there. We do not guarantee approval."
+      "a": "Follow the current ad rules for the country where the ad will run. If Ads Manager (Facebook's ad tool) asks you to mark the ad as AI, do that there. We do not guarantee approval."
     },
     {
       "q": "Do people know the ad is AI-made?",
-      "a": "The file does not hide that a person in it is generated. If the placement asks you to label AI content, do that in Ads Manager when you publish."
+      "a": "The file does not pretend a person in it is a real customer. If Facebook asks you to mark the ad as AI, do that in Ads Manager when you publish."
     },
     {
       "q": "What does a Facebook clip cost?",
-      "a": "A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and that price shows before you start. A still is 24 credits. If a job fails, those credits return on their own."
+      "a": "A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the price before you start. A photo is 24 credits. If a job fails, those credits come back on their own."
     },
     {
       "q": "Where do the headline and the price go?",
-      "a": "Add the headline, the price and the button when you publish to Meta, or in Ads Manager after download. The clip can already carry a spoken script and on-screen captions."
+      "a": "Add the headline, the price, and the button when you publish to Meta (Facebook and Instagram's ad system). Or add them in Ads Manager after you download. The clip can already include a spoken script and on-screen captions."
     },
     {
       "q": "Does the file include sound, captions or music?",
-      "a": "Yes. A clip can include a voiceover, captions and a music track. Change them in the editor, then publish to Meta or download. The file has no watermark."
+      "a": "Yes. A clip can include a spoken voice, captions, and a music track. Change them in the editor, then publish to Meta or download. The file has no watermark."
     },
     {
       "q": "How do I turn a product link into a Facebook ad?",
@@ -47,12 +47,12 @@
     },
     {
       "q": "How should I compare two versions?",
-      "a": "Change one thing at a time, such as the actor or the opening, then use [how to test ad creatives](/guides/testing-ad-versions) before you scale the winner. A batch can make those versions from the same link."
+      "a": "Change one thing at a time, such as the actor or the first line. Then use [how to test ad versions](/guides/testing-ad-versions) before you spend more on the winner. You can make those versions together from the same link."
     }
   ],
   "examples": null,
   "templates_lead": "Pick a scene that keeps your product clear in the Facebook format you choose.",
-  "cta_lead": "Choose the Facebook format, then prepare product media for Ads Manager.",
+  "cta_lead": "Choose the Facebook shape, then get the file ready for Ads Manager (Facebook's ad tool).",
   "steps": [
     {
       "t": "Add a product link",
@@ -60,11 +60,11 @@
     },
     {
       "t": "Choose an actor",
-      "d": "Pick a presenter from the actor library, or make one for your audience. They are generated, not a hired creator."
+      "d": "Pick a presenter from the actor library, or make one for your buyers. They are made by AI, not a creator you hired."
     },
     {
-      "t": "Render and publish",
-      "d": "Add a script, voice, captions and music, then publish to Meta or download with no watermark."
+      "t": "Finish and publish",
+      "d": "Add a script, a spoken voice, captions, and music, then publish to Meta (Facebook's ads) or download with no watermark."
     }
   ],
   "visual": {
@@ -80,7 +80,7 @@
       "source": "f:q18-facebook-after-bottle-offer",
       "result": "f:q18-facebook-steps-bottle-pour",
       "mode": "photo",
-      "prompt": "Show pale-blue insulated bottle pouring water into a clear glass on a bright desk for a Facebook Feed ad.",
+      "prompt": "Show a pale-blue insulated bottle pouring water into a clear glass on a bright desk for a Facebook ad.",
       "options": [
         [
           "Template",
@@ -88,7 +88,7 @@
         ],
         [
           "Size",
-          "Square still or 9:16 clip"
+          "Square photo or tall phone clip (9:16)"
         ]
       ],
       "items": [
@@ -98,11 +98,11 @@
         },
         {
           "t": "Choose an actor",
-          "d": "Pick a presenter from the actor library, or make one for your audience. They are generated, not a hired creator."
+          "d": "Pick a presenter from the actor library, or make one for your buyers. They are made by AI, not a creator you hired."
         },
         {
-          "t": "Render and publish",
-          "d": "Add a script, voice, captions and music, then publish to Meta or download with no watermark."
+          "t": "Finish and publish",
+          "d": "Add a script, a spoken voice, captions, and music, then publish to Meta (Facebook's ads) or download with no watermark."
         }
       ]
     },
@@ -112,40 +112,40 @@
       }
     }
   },
-  "benefits_h2": "Reasons to use AI UGC clips for Facebook ads",
+  "benefits_h2": "Reasons to use clips that look customer-made",
   "benefits": [
     {
       "t": "Another ad without a new shoot",
-      "d": "Make the next version from the same link or photo. You see the credit cost before it runs, and a failed job returns those credits."
+      "d": "Make the next version from the same link or photo. You see the credit cost before it starts, and a failed job gives those credits back."
     },
     {
-      "t": "A file whenever the feed needs one",
+      "t": "A file whenever the home screen needs one",
       "d": "There is no creator to book. Paste a link or upload a photo when you want a new opening."
     },
     {
-      "t": "A new opening before the old one fades",
+      "t": "A new opening before shoppers tire of the old ad",
       "d": "Swap the actor, the line or the scene so the ad does not repeat the same first second."
     }
   ],
-  "steps_h2": "Steps to make UGC ads for Facebook",
+  "steps_h2": "Steps to make Facebook ads that look customer-made",
   "steps_lead": "Start from a link or a photo, pick an actor, then publish or download.",
   "more_sections": [
     {
-      "eyebrow": "The business case",
-      "h2": "The business case for Facebook video ads",
+      "eyebrow": "Why video",
+      "h2": "Why a Facebook video ad can help",
       "lead": "A clip can show the product in use. It is not a promise of cheaper clicks.",
       "items": [
         {
-          "t": "Show one action a still cannot",
-          "d": "A short clip can show a pour, an open or a fit, with an actor holding the item. We do not promise a higher click rate."
+          "t": "Show one action a photo cannot",
+          "d": "A short clip can show a pour, an open, or a fit, with an actor holding the item. We do not promise more clicks."
         },
         {
           "t": "Many versions from one link",
-          "d": "Turn the product link into a batch of clips. Each file shows its credit cost first, and a failed file returns those credits."
+          "d": "Turn one product link into many clips at once. Each file shows its credit cost first. If a file fails, those credits come back."
         },
         {
-          "t": "Edit, then publish to Meta",
-          "d": "Change the script, voice, captions, music or actor in the editor, then publish to Meta or download the file yourself."
+          "t": "Edit, then publish to Facebook",
+          "d": "Change the script, voice, captions, music, or actor in the editor. Then publish to Meta (Facebook's ads) or download the file yourself."
         }
       ]
     }
@@ -161,45 +161,45 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "Skip the shoot. The next file can start from a link or a picture you already have.",
+  "benefits_lead": "UGC means the ad looks like a customer filmed it. Skip the photo shoot. The next file can start from a link or a picture you already have.",
   "reasons": {
-    "h2": "Why use AIVideosUGC for Facebook UGC ads",
-    "lead": "Templates, languages and a generated actor, without waiting on a creator.",
+    "h2": "Why use AIVideosUGC for Facebook ads that look customer-made",
+    "lead": "Templates, languages, and a presenter made by AI, with no creator to wait on.",
     "items": [
       {
-        "t": "No hold for a creator",
+        "t": "No wait for a creator",
         "d": "Nothing to mail and no date to book. The next file starts from a link or a photo you already have."
       },
       {
         "t": "Facebook ad templates",
-        "d": "Start from a template made for the feed, then change the actor, the line and the crop. A batch covers more than one version."
+        "d": "Start from a template made for the home screen, then change the actor, the line, and how the photo is trimmed. One run can make more than one version."
       },
       {
         "t": "The language your buyers use",
-        "d": "Write the script and the voiceover for that market. You do not book a separate shoot for each language."
+        "d": "Write the script and the spoken voice in the language your buyers use. You do not book a new filming day for each language."
       }
     ]
   },
   "platforms": {
-    "h2": "Create UGC video ads for your other channels",
-    "lead": "Facebook is one placement. The same link can start a file you publish to the other channels too.",
+    "h2": "Create customer-style video ads for your other sites",
+    "lead": "Facebook is one place an ad can run. The same link can start a file for the other ad sites too.",
     "items": [
       {
         "t": "AI TikTok ads generator",
         "label": "AI TikTok ads generator",
-        "d": "A tall ad for a short-video feed, started from the same upload.",
+        "d": "A tall phone-shaped ad for short video, started from the same upload.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram ads",
         "label": "AI Instagram ads",
-        "d": "A square still or a tall clip for the feed.",
+        "d": "A square photo or a tall clip for the post screen.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "YouTube Shorts ads",
         "label": "YouTube Shorts ads",
-        "d": "A tall short-form clip. A wide in-stream file is a separate job.",
+        "d": "A tall clip for a short video. A wide video that plays inside a YouTube video is a separate job.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
@@ -211,13 +211,13 @@
       {
         "t": "Shopify product photos",
         "label": "Shopify product photos",
-        "d": "Square page images, collection tiles, and a clip you add in the admin.",
+        "d": "Square product photos, collection photos, and a clip you add in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "AI ads and product photos by platform",
         "label": "AI ads and product photos by platform",
-        "d": "Open the full channel list and choose where the next file will run.",
+        "d": "Open the full list and pick where the next file goes.",
         "href": "/platforms"
       }
     ]
@@ -230,7 +230,7 @@
         "example": true,
         "who": "Home shop",
         "t": "Problem, then the item",
-        "d": "Example: a storage basket upload becomes a shelf placement so the size is obvious."
+        "d": "Example: a storage basket upload becomes a photo on a shelf so the size is obvious."
       },
       {
         "example": true,
@@ -242,7 +242,7 @@
         "example": true,
         "who": "Food shop",
         "t": "Open the jar",
-        "d": "Example: a sauce upload becomes an open-jar still for the feed."
+        "d": "Example: a sauce upload becomes an open-jar photo for the home screen."
       },
       {
         "example": true,
@@ -254,7 +254,7 @@
         "example": true,
         "who": "Apparel shop",
         "t": "Flat, then worn",
-        "d": "Example: a shirt upload becomes a flat square and a separate worn still."
+        "d": "Example: a shirt upload becomes a flat square and a separate photo of it worn."
       },
       {
         "example": true,
@@ -272,13 +272,13 @@
         "example": true,
         "who": "Agency",
         "t": "One link, several openings",
-        "d": "Example: one product link becomes a batch so each audience hears a different first line."
+        "d": "Example: one product link becomes many versions, so each group of buyers hears a different first line."
       },
       {
         "example": true,
         "who": "Outdoor shop",
-        "t": "A square still and a tall clip",
-        "d": "Example: a pack photo becomes both shapes, then both can go out to Meta."
+        "t": "A square photo and a tall clip",
+        "d": "Example: a pack photo becomes both shapes, then both can go to Facebook and Instagram."
       },
       {
         "example": true,
@@ -289,7 +289,7 @@
     ]
   },
   "related_h2": "Related tools for a Facebook ad",
-  "related_lead": "Pick the tool or template that matches the placement.",
+  "related_lead": "Pick the tool or template that matches where the ad will show.",
   "relatedLinks": [
     "video-ads",
     "social-ad-photos",

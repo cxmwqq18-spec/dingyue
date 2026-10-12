@@ -1,10 +1,10 @@
 {
   "id": "tpl-launch",
   "title": "AI Promo Video Maker for New Products | AIVideosUGC",
-  "description": "Turn one product photo into a launch video. Pick 9:16 or 1:1, at 6, 10, 15, or 30 seconds. Add the release date and offer in your editor after download.",
+  "description": "Turn one product photo into a launch video. Pick a tall 9:16 or a square 1:1, at 6, 10, 15, or 30 seconds. Add the real date and offer after download.",
   "h1": "AI Promo Video Maker for the Day You Release",
   "eyebrow": "Launch video template",
-  "lead": "Pick a reveal scene and add one photo of the finished item, so the promo video is ready when the date is set. A script, a voice, or an AI actor can go in the same file.",
+  "lead": "Pick a reveal scene and add one photo of the finished item, so the video is ready when your date is real. A script (the words), a voice, or a generated person (an AI actor) can go in the same file.",
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -13,7 +13,7 @@
     "home decor promo video"
   ],
   "steps_h2": "How to Make a Product Launch Video in 3 Simple Steps",
-  "steps_lead": "A Facebook promo video starts with one photo of the finished item, a short reveal line, and a file you can post.",
+  "steps_lead": "A launch video starts with one photo of the finished item, a short reveal line, and a file you can post. Credits are the points a paid plan spends.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -21,18 +21,18 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name a reveal, an unboxing, or a short demo. Then pick 9:16 or 1:1 and a length from 6 to 30 seconds."
+      "d": "Name a reveal, an unboxing, or a short demo. Then pick tall 9:16 or square 1:1, and 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add the release date and offer in your editor. Do not promise a date you have not set."
+      "d": "Download the file and add the release date and offer in your own editor. Do not promise a date you have not set."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · Stories & Reels"
+        "Tall 9:16 · Phone video"
       ],
       [
         "Length",
@@ -40,7 +40,7 @@
       ],
       [
         "Also try",
-        "1:1 · Feed"
+        "Square 1:1 · Feed post"
       ]
     ],
     "cta": "Make my launch video"
@@ -56,39 +56,39 @@
     },
     {
       "q": "Why start from a photo instead of a launch shoot?",
-      "a": "You can cut the reveal before release day without booking a creator. Check that the item on screen matches the finished product."
+      "a": "You can make the reveal before release day without booking a creator. Check that the item on screen matches the finished product."
     },
     {
       "q": "Who is this scene for?",
-      "a": "Shops and agencies announcing a finished item on Facebook, Instagram, TikTok, or YouTube. A first file does not require an editing background."
+      "a": "Shops and agencies announcing a finished item on Facebook, Instagram, TikTok, or YouTube. You can make a first file without video editing experience."
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Yes. Use one clear photo, describe a reveal or an unboxing, and download the file. Add the confirmed date in your editor if captions should not carry it."
+      "a": "Yes. Use one clear photo, describe a reveal or an unboxing, and download the file. Type the confirmed date yourself after download."
     },
     {
       "q": "What photo should I upload?",
-      "a": "One clear photo of the finished item, with the whole product in frame. A product page link works when you want a first draft from the listing."
+      "a": "One clear photo of the finished item, with the whole product inside the photo. A product page link works when you want a first draft from the listing."
     },
     {
-      "q": "How is a teaser different from release day?",
-      "a": "A teaser can say the item is coming. On release day, add only a date and an offer you have confirmed. Do not let the script invent either one."
+      "q": "How is a coming-soon clip different from release day?",
+      "a": "A coming-soon clip can say the item is on the way. On release day, add only a date and an offer you have confirmed. Do not let the written lines make up either one."
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "Use 9:16 or 1:1 for this launch clip. Other sizes are 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds."
+      "a": "Use a tall 9:16 or a square 1:1 for this launch clip. Other shapes are wide 16:9, slightly wide 4:3, and slightly tall 3:4. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
       "q": "What does the clip cost?",
-      "a": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before the job starts, and a failed job returns those credits. The download has no watermark."
+      "a": "Credits are the points your plan spends. A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark (no logo stamped on the file)."
     },
     {
-      "q": "Can I publish it to TikTok or Meta?",
-      "a": "Yes. Publish to TikTok, Instagram, or Facebook in one step, or download a file for YouTube. You can use it in ads. People on screen are AI actors."
+      "q": "Can I publish it to TikTok, Instagram, or Facebook?",
+      "a": "Yes. Publish to TikTok, Instagram, or Facebook in one step, or download a file for YouTube. You can use it in ads. People on screen are generated presenters (AI actors), not real buyers."
     },
     {
       "q": "Can I announce several items at once?",
-      "a": "Yes. Run the same reveal across a batch of photos, or send the catalog through the API. Each job shows its credit cost first."
+      "a": "Yes. Run the same reveal on many photos at once, or start them from your own software (the API). Each one shows its credit cost first."
     }
   ],
   "visual": {
@@ -104,14 +104,14 @@
     "steps": {
       "source": "n:guide:rc4-tpl-launch-source-bag-r1",
       "sourceTitle": "Product photo",
-      "sourceHint": "Show the sage-green canvas bag clearly, with the whole bag in frame.",
+      "sourceHint": "Show the sage-green canvas bag clearly, with the whole bag inside the photo.",
       "result": "n:guide:rc4-tpl-launch-result-bag-r1",
       "mode": "video",
       "prompt": "An adult lifts the sage-green canvas bag from a table and holds it toward the camera once. Bright entryway, with the bag kept in focus.",
       "options": [
         [
           "Size",
-          "9:16 · Stories & Reels"
+          "Tall 9:16 · Phone video"
         ],
         [
           "Length",
@@ -119,7 +119,7 @@
         ],
         [
           "Also try",
-          "1:1 · Feed"
+          "Square 1:1 · Feed post"
         ]
       ]
     },
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Shopper-style"
         },
         {
           "id": "viral",
@@ -207,7 +207,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Quiet Close-Up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -216,7 +216,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Film-Style Watch Detail",
           "chips": [
             "accessories"
           ],
@@ -252,7 +252,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-Stream Reaction: App",
           "chips": [
             "apps"
           ],
@@ -279,7 +279,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -324,7 +324,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -333,7 +333,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person View: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -342,7 +342,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening Line: Home App Tour",
           "chips": [
             "explainer"
           ],
@@ -351,7 +351,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -369,7 +369,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First-Sip Reaction: Citrus",
           "chips": [
             "food-beverage"
           ],
@@ -405,7 +405,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite",
           "chips": [
             "health-fitness"
           ],
@@ -432,7 +432,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Ring Extreme Close-Up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -477,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal",
           "chips": [
             "sports-gym"
           ],
@@ -486,7 +486,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -495,7 +495,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Thin Keyboard Review",
           "chips": [
             "tech-electronics"
           ],
@@ -504,7 +504,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine",
           "chips": [
             "ugc"
           ],
@@ -522,7 +522,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -580,7 +580,7 @@
         "example": true,
         "who": "Mug shop",
         "t": "First use",
-        "d": "A mug shop opens on the first sip as the release-day beat, then trims it in the built-in editor."
+        "d": "A mug shop opens on the first sip for release day, then trims it in the built-in editor."
       },
       {
         "example": true,
@@ -590,33 +590,33 @@
       },
       {
         "example": true,
-        "who": "Teaser editor",
+        "who": "Pre-launch shop",
         "t": "Coming soon",
-        "d": "A teaser editor can say the item is coming. The planned date is typed in after download, not invented by the script."
+        "d": "A pre-launch shop can say the item is coming. Type the planned date after download. The written lines should not make it up."
       },
       {
         "example": true,
-        "who": "Release editor",
+        "who": "Launch-day shop",
         "t": "Date and offer",
-        "d": "On release day the editor adds the confirmed date and offer. A teaser does not invent them."
+        "d": "On release day the shop adds the confirmed date and offer. A coming-soon clip does not make them up."
       },
       {
         "example": true,
-        "who": "Feed buyer",
+        "who": "Social ads shop",
         "t": "Tall and square",
-        "d": "A feed buyer uses a tall frame for a story placement and a square frame in the feed. Each size is its own job."
+        "d": "A shop uses a tall shape for a story post and a square shape for the scrolling feed. Each shape is its own video."
       },
       {
         "example": true,
-        "who": "Export brand",
+        "who": "Overseas shop",
         "t": "Another language",
-        "d": "An export brand cuts the same reveal in a second language for another market."
+        "d": "A shop that sells abroad makes the same reveal in a second language for another market."
       },
       {
         "example": true,
         "who": "Catalog seller",
         "t": "Start from the link",
-        "d": "A catalog seller pastes the product link, checks the script and the voice, and keeps the finished-item photo as the source."
+        "d": "A catalog seller pastes the product link, checks the words and the voice, and keeps the finished-item photo as the starting picture."
       },
       {
         "example": true,
@@ -637,7 +637,7 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "AI shopper-style video ads"
     },
     {
       "id": "tpl-howto",
@@ -665,7 +665,7 @@
     "title": "What Is a Product Launch Video?",
     "paras": [
       "A new product promo video is the reveal you post when the item is finished and the date is real.",
-      "Start from a photo or a product link. Add a script, an AI voice, captions, and an AI actor for the first look. Put the confirmed date and the offer in after you download, or let captions carry the name. The file has no watermark."
+      "Start from a photo or a product link. Add a script (the words), an AI voice, captions, and an AI actor for the first look. Put the confirmed date and the offer in after you download. Captions can show the product name. The file has no watermark (no logo stamped on it)."
     ]
   },
   "more_sections": [
@@ -684,31 +684,31 @@
         },
         {
           "t": "AI script",
-          "d": "Ask for a launch script, then fix the date and the offer before you generate."
+          "d": "Ask for a launch script, then fix the date and the offer before the clip is made."
         },
         {
           "t": "Actor library",
           "d": "Choose an AI actor to reveal the item. The clip is your shop's ad, not a buyer review."
         },
         {
-          "t": "Link, batch, and API",
-          "d": "Paste the product link, make a batch of reveals, or send launches through the API."
+          "t": "Link, many at once, and API",
+          "d": "Paste the product link, make many reveals at once, or send launches from your own software (the API)."
         },
         {
           "t": "Editor, music, and languages",
-          "d": "Trim in the built-in editor, add a track from the music library, and cut a second language."
+          "d": "Trim in the built-in editor, add a track from the music library, and make the clip in a second language."
         }
       ]
     }
   ],
   "platforms": {
-    "h2": "Publish the Launch Clip to TikTok, Meta, and YouTube",
-    "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before the job starts.",
+    "h2": "Publish the Launch Clip on TikTok, Instagram, Facebook, and YouTube",
+    "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before you start.",
     "items": [
       {
         "t": "AI TikTok ads generator",
         "label": "AI TikTok ads generator",
-        "d": "Publish the launch clip to TikTok in one step, in a tall frame.",
+        "d": "Publish the launch clip to TikTok in one step, in a tall phone shape.",
         "href": "page:plat-tiktok"
       },
       {

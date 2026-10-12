@@ -4,7 +4,7 @@
   "description": "AIVideosUGC FAQ: what you can make, photo upload tips, video lengths and sizes, credits, refunds, privacy and adding prices to ads. Find your answer here.",
   "h1": "AIVideosUGC FAQ: Answers Before You Start",
   "eyebrow": "Help center",
-  "lead": "Read how AI product videos work, then the answers on AI product photo questions, credits and refunds for AI content, and using AI images in ads.",
+  "lead": "Short answers on videos, photos, credits (the points each file spends), refunds, and prices in ads.",
   "card": "Lengths, credits, actors, voice, captions, music, and publishing.",
   "secondary_keywords": [
     "how AI product videos work",
@@ -15,103 +15,103 @@
   "faq": [
     {
       "q": "How do AI product videos work?",
-      "a": "Upload one photo of the real item, or paste a public product page. Ask for a script, pick an AI actor, then choose a length and a frame. The file can include a voice, captions, and music. Download it, or publish it to TikTok or Meta."
+      "a": "Upload one photo of the real item, or paste a public product page. Ask for the words the actor will say. Pick an AI actor, a length, and a shape: tall, square, or wide. The file can include a voice, captions, and music. Download it, or send it to TikTok or Meta (Facebook and Instagram)."
     },
     {
       "q": "What is an AI UGC ad?",
-      "a": "An AI UGC ad is a short product clip with a casual, creator-style look. An AI actor speaks a line you write. It is not a review from a real customer. Disclose a generated person when the platform asks you to."
+      "a": "UGC means a video that looks like a shopper filmed it on a phone. An AI actor speaks a line you write. It is not a review from a real customer. Say the person is made by AI when the app asks you to."
     },
     {
-      "q": "Why does this style suit a product post?",
-      "a": "It looks like someone showing an item, which is how shoppers already watch short video. Open on the product, use a vertical frame for a full-screen feed, and let the line name one real benefit."
+      "q": "Why does an AI UGC ad suit a product post?",
+      "a": "It looks like a person showing the item. That is how shoppers already watch short video. Start on the product. Use a tall shape so it fills the phone screen. Let the spoken line name one real benefit."
     },
     {
       "q": "Is there a free plan?",
-      "a": "No. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Downloads have no watermark. See [Pricing](page:pricing)."
+      "a": "No. Starter is $24.50 a month with 200 credits. Pro is $35 with 300. Premium is $63 with 600. A credit is a point a photo or video spends. Downloads have no watermark. See [Pricing](page:pricing)."
     },
     {
-      "q": "How long does a job take?",
-      "a": "You confirm the credit cost, then the job runs. When the file is ready, download it or publish it to TikTok or Meta. A failed job returns its credits."
+      "q": "What happens after I start?",
+      "a": "You confirm the credit cost, then the tool makes the file. When it is ready, download it or send it to TikTok or Meta (Facebook and Instagram). If making it fails, the credits come back."
     },
     {
       "q": "How do I make an ad with an AI actor?",
-      "a": "Pick a presenter from the actor library, or describe the look you want for the brand. Type the line and the language. The actor speaks that line. The person is generated, not a customer. Start from [AI actors](page:ai-actors)."
+      "a": "Pick a person from the actor list, or describe the look you want for your brand. Type the words and the language. The actor speaks that line. The person is made by AI, not a real customer. Start from [AI actors](page:ai-actors)."
     },
     {
       "q": "Can I start from a product link?",
-      "a": "Yes. Paste a public product page. The main image and the product name start the clip. Prices and reviews on that page are not copied in. The tool is [URL to video](page:url-to-video)."
+      "a": "Yes. Paste a public product page. The main image and the product name start the video. Prices and reviews on that page are not copied. The tool is [URL to video](page:url-to-video)."
     },
     {
-      "q": "What video lengths and frame sizes can I choose?",
-      "a": "Pick 6, 10, 15, or 30 seconds, then pick a frame: 9:16, 1:1, 16:9, 4:3, or 3:4. Product photos are square. The cost is shown before you start."
+      "q": "What video lengths and shapes can I choose?",
+      "a": "Pick 6, 10, 15, or 30 seconds. Then pick a shape: 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), or 3:4 (a bit tall). Product photos are square. You see the cost before you start."
     },
     {
       "q": "What photo should I upload?",
-      "a": "Use one clear, in-focus photo of the real item, with the whole product visible. A plain surface and daylight make the color and shape easier to check. The photo you download is square."
+      "a": "Use one clear photo of the real item, with the whole product visible. A plain surface and daylight make the color and shape easier to check. The photo you download is square."
     },
     {
       "q": "How do credits work?",
-      "a": "You see the credit cost before you start. Credits are held when the job starts and used when the file is delivered. If the job fails, the credits come back."
+      "a": "Credits are the points each photo or video spends. You see how many before you start. They are set aside when the tool starts, and used when the file is ready. If it fails, the credits come back."
     },
     {
       "q": "How many credits does a product photo or a video use?",
-      "a": "A product photo costs 24 credits. Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The exact cost appears before you start, and a failed job returns its credits."
+      "a": "A product photo costs 24 credits. A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the exact cost before you start. If it fails, those credits come back."
     },
     {
       "q": "Can I get a refund if I have not used the credits I bought?",
-      "a": "You can request a refund for purchased credits within 30 days if none of those credits have been used. See the [Refund Policy](/refunds). A failed job is separate: its credits return automatically. A file that was delivered is not refunded just because you dislike it."
+      "a": "You can request a refund for purchased credits within 30 days if none of those credits have been used. See the [Refund Policy](/refunds). If making the file fails, that is separate: its credits come back on their own. A file that was delivered is not refunded just because you dislike it."
     },
     {
       "q": "Who can see my uploads and results?",
-      "a": "Other customers cannot see them. The photos you upload and the files you make are not published. If you email support about a job, we can look up that job."
+      "a": "Other customers cannot see them. We do not post the photos you upload or the files you make. If you email support about one file, we can look that file up."
     },
     {
       "q": "How do I add a price when using AI images in ads?",
-      "a": "Type the price yourself so it matches the live offer. The [AI ad image generator](page:social-ad-photos) makes the picture. On a clip, captions and music can already be included. Change them in the built-in editor if the offer moves."
+      "a": "Type the price yourself so it matches the price in your store now. The [AI ad image generator](page:social-ad-photos) makes the picture. On a video, captions and music can already be on the file. Change them in the editor on this site if the price changes."
     },
     {
-      "q": "Can I use the images and videos commercially?",
-      "a": "Yes. You can use the images and videos you make in your own ads, product pages, and social posts. You do not need a creator release for an AI actor. Do not present that actor as a real customer."
+      "q": "Can I use the images and videos for my shop?",
+      "a": "Yes. You can use the images and videos you make in your own ads, product pages, and social posts. You do not need signed permission from a real person, because the actor is made by AI. Do not present that actor as a real customer."
     },
     {
       "q": "Do downloaded images and videos have a watermark?",
       "a": "No. Downloaded images and videos do not include an AIVideosUGC watermark."
     },
     {
-      "q": "Can I edit the file after it is generated?",
-      "a": "Yes. The built-in editor can change the line, the captions, the voice, and the presenter. Run another job when you want a different scene."
+      "q": "Can I edit the file after it is made?",
+      "a": "Yes. The editor on this site can change the words, the captions, the voice, and the person on screen. Start a new file when you want a different scene."
     },
     {
-      "q": "How is an AI UGC ad different from a clip a person filmed?",
-      "a": "UGC usually means a real person filmed the product. An AI UGC ad uses a generated presenter, a script, and a voice to get a similar casual look, without a filming day."
+      "q": "How is an AI UGC ad different from a video a person filmed?",
+      "a": "UGC usually means a real person filmed the product. An AI UGC ad uses a person the tool makes, words you write, and a voice. The look stays casual. You do not book a filming day."
     },
     {
       "q": "Can an AI actor replace a human creator?",
-      "a": "An AI actor can present the product when you need another version. It is not a customer, and it does not replace a size chart or a claim the real product cannot support."
+      "a": "An AI actor can show the product when you need another video. It is not a customer. It does not replace your size chart. Do not say anything the real product cannot do."
     },
     {
       "q": "Which languages can the actor speak?",
-      "a": "The actor speaks the language of the line you write. You do not buy a separate language pack."
+      "a": "The actor speaks the language of the words you type. You do not pay extra for another language."
     },
     {
-      "q": "Can I run a batch of versions?",
-      "a": "Yes. Start several versions from one photo when you want another scene, frame, or opening line. Each job shows its own credit cost before it starts."
+      "q": "Can I make several versions at once?",
+      "a": "Yes. That is called a batch. Start several versions from one photo when you want another scene, another shape, or a new first line. Each one shows its credit cost before it starts."
     },
     {
       "q": "Is there an API?",
-      "a": "Yes. Your own tools can start a photo or video job through the API. The credit cost is the same as in the project, and a failed job returns its credits."
+      "a": "Yes. An API lets your other software start a photo or video here. The credit cost is the same as on this site. If it fails, the credits come back."
     },
     {
       "q": "Where does the music come from?",
-      "a": "A clip can use a track from the music library. Swap the track in the editor. You are responsible for the words in the spoken line."
+      "a": "A video can use a song from the music library, our list of tracks. Swap the song in the editor. You are responsible for the spoken words."
     },
     {
-      "q": "Can I publish to TikTok or Meta?",
-      "a": "Yes. Publish the finished file to TikTok or Meta in one click, or download it. Audience, budget, and schedule still live in the ad account."
+      "q": "Can I publish to TikTok, Facebook, or Instagram?",
+      "a": "Yes. Send the finished file to TikTok or Meta (Facebook and Instagram) in one click, or download it. You still set who sees it, how much you spend, and when it runs, in the ad account."
     }
   ],
   "cta_title": "Check the cost, then make one file",
-  "cta_lead": "Find the answer you need, compare the credit cost, and start with a plan that fits the next ad.",
+  "cta_lead": "Compare the credit cost, then start on the plan that covers your next ad.",
   "relatedLinks": [
     "pricing",
     "glossary",

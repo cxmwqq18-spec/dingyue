@@ -1,10 +1,10 @@
 {
   "id": "tpl-detail",
   "title": "Product Detail Photos: Close-Ups of Texture | AIVideosUGC",
-  "description": "Turn one sharp photo into a close-up of stitching, grain, hardware or finish. AI product detail photos for listing galleries and paid social ads.",
+  "description": "Turn one sharp photo into a close-up of stitching, grain, hardware, or finish. Use these product detail photos in a listing gallery and in paid ads.",
   "h1": "Product Detail Photos of Stitching, Grain and Finish",
   "eyebrow": "Product photo template",
-  "lead": "Open a close-up scene, add one sharp photo of the feature, and download a square image. The same photo can start a voiced clip of that feature.",
+  "lead": "Open a close-up scene, add one sharp photo of the feature, and download a square image. The same photo can also start a clip with a voice about that feature.",
   "secondary_keywords": [
     "close-up product photos",
     "macro product photography",
@@ -18,7 +18,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name one feature to enlarge and one simple setting. The result is a square image where that detail fills the frame."
+      "d": "Name one feature to enlarge and one simple setting. The result is a square image where that detail fills the picture."
     },
     {
       "t": "Download and Post",
@@ -49,11 +49,11 @@
     },
     {
       "q": "How do I make product detail photos?",
-      "a": "Upload a steady photo where the feature is already visible, name that feature, and download a square where it fills the frame. Check it against the source before you post."
+      "a": "Upload a steady photo where the feature is already visible, name that feature, and download a square where it fills the picture. Check it against your photo before you post."
     },
     {
-      "q": "Why use this instead of a macro shoot?",
-      "a": "A sharp phone photo can be the source, so you skip a separate macro session. You still compare color and construction before posting. The close-up should not invent texture that was not photographed."
+      "q": "Why use this instead of a close-up photo shoot?",
+      "a": "A sharp phone photo can be the source, so you skip a separate close-up session. You still compare the color and how it is built before posting. The close-up should only show texture that was in your photo."
     },
     {
       "q": "Who is a detail photo for?",
@@ -69,15 +69,15 @@
     },
     {
       "q": "Can I upload my own photo?",
-      "a": "Yes. Upload your own sharp photo. If the stitch or clasp is blurry or out of frame, take another photo. The result should not invent texture."
+      "a": "Yes. Upload your own sharp photo. If the stitch or clasp is blurry or out of the picture, take another photo. The result should only use texture from your photo."
     },
     {
       "q": "Where can I use the close-up?",
-      "a": "After the full product photo in a listing gallery, and in paid social. A clip from the same photo can be posted on TikTok, Instagram, Facebook or YouTube. The download has no watermark."
+      "a": "Use it after the full product photo in the listing gallery, and in paid ads. A clip from the same photo can go on TikTok, Instagram, Facebook, or YouTube. The download has no watermark."
     },
     {
       "q": "Is there a free plan?",
-      "a": "No. There is no free plan. Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits. Plans start at $24.50 a month."
+      "a": "No. There is no free plan. Each product photo costs 24 credits. A credit is a unit your plan spends. You see the cost before it starts, and if it fails those credits come back. Plans start at $24.50 a month."
     },
     {
       "q": "Can I use it commercially?",
@@ -85,11 +85,11 @@
     },
     {
       "q": "Why start from a template close-up?",
-      "a": "The frame is already filled by one feature, so you do not build the crop from nothing. You still place the full product photo first."
+      "a": "The picture is already filled by one feature, so you do not have to build that close view from nothing. You still place the full product photo first."
     },
     {
       "q": "Can I add a voice, a presenter or another language?",
-      "a": "Yes. The same photo can start a clip with an AI presenter, a script and a voice in another language. Paste the product link or use the API to draft it, then review the feature against the source."
+      "a": "Yes. The same photo can start a clip with an on-screen person, a script, and a voice in another language. Paste the product link, or use the API, which is how your own shop software starts it. Then check the feature against your photo."
     }
   ],
   "visual": {
@@ -123,7 +123,7 @@
     },
     "picker": {
       "title": "Browse Video Ad Templates by Category",
-      "lead": "Open a category and rebuild a scene from a product photo you already have.",
+      "lead": "Open a category and make a scene from a product photo you already have.",
       "chips": [
         {
           "id": "accessories",
@@ -155,7 +155,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -195,7 +195,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -205,7 +205,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Quiet unboxing of makeup tools",
           "chips": [
             "accessories"
           ],
@@ -214,7 +214,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Close watch shot in warm light",
           "chips": [
             "accessories"
           ],
@@ -250,7 +250,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-style reaction to an app",
           "chips": [
             "apps"
           ],
@@ -277,7 +277,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-ready unboxing of a sweater",
           "chips": [
             "clothing"
           ],
@@ -295,7 +295,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full turn of a linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -322,7 +322,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Spoken lesson about skin care",
           "chips": [
             "education"
           ],
@@ -331,7 +331,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "Court gear from the player's view",
           "chips": [
             "explainer"
           ],
@@ -340,7 +340,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home app walkthrough opener",
           "chips": [
             "explainer"
           ],
@@ -349,7 +349,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Phone demo of a finance app",
           "chips": [
             "financial-services"
           ],
@@ -367,7 +367,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip of a citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -403,7 +403,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "First bite of a berry bowl",
           "chips": [
             "health-fitness"
           ],
@@ -430,7 +430,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Close shot of a silver ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -475,7 +475,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Powder burst around a kettlebell",
           "chips": [
             "sports-gym"
           ],
@@ -484,7 +484,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Evening demo of a kitchen appliance",
           "chips": [
             "tech-electronics"
           ],
@@ -493,7 +493,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Desk review of a thin keyboard",
           "chips": [
             "tech-electronics"
           ],
@@ -502,7 +502,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Bathroom routine with moisturizer",
           "chips": [
             "ugc"
           ],
@@ -520,7 +520,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Playful opener with face mist",
           "chips": [
             "viral"
           ],
@@ -548,12 +548,12 @@
       },
       "m3": {
         "h2": "Browse Video Ad Templates by Category",
-        "lead": "Open a category and rebuild a scene from a product photo you already have."
+        "lead": "Open a category and make a scene from a product photo you already have."
       }
     }
   },
   "steps_h2": "How to Make Product Detail Photos in 3 Simple Steps",
-  "steps_lead": "One sharp source, one named feature, then a square file that sits after the full product photo.",
+  "steps_lead": "One sharp photo, one named feature, then a square file that sits after the full product photo.",
   "blockOrder": [
     "hero",
     "picker",
@@ -565,8 +565,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Switching to a Detail Close-Up",
-    "lead": "One feature fills the frame, taken from a sharp photo. A voice or a presenter can point at that same feature.",
+    "h2": "How shops use a detail close-up",
+    "lead": "One feature fills the picture, taken from a sharp photo. A voice or a presenter can point at that same feature.",
     "items": [
       {
         "example": true,
@@ -584,31 +584,31 @@
         "example": true,
         "who": "Wallet shop",
         "t": "Presenter points",
-        "d": "A wallet shop has an AI presenter point at a painted edge that already fills the frame."
+        "d": "A wallet shop has an AI presenter point at a painted edge that already fills the picture."
       },
       {
         "example": true,
         "who": "Jewelry shop",
-        "t": "Line trimmed in the editor",
-        "d": "A jewelry shop enlarges a lobster clasp and trims the spoken line in the built-in editor."
+        "t": "Spoken line shortened",
+        "d": "A jewelry shop enlarges the clasp and shortens the spoken line in the built-in editor."
       },
       {
         "example": true,
         "who": "Shoe shop",
         "t": "A second language",
-        "d": "A shoe shop shows the welt and stitching, then a voice in another language for a second market."
+        "d": "A shoe shop shows the sole seam and the stitching, then a voice in another language for a second market."
       },
       {
         "example": true,
         "who": "Watch shop",
         "t": "Script on this page",
-        "d": "A watch shop enlarges the crown and edits the script without leaving the page."
+        "d": "A watch shop enlarges the side knob and edits the script without leaving the page."
       },
       {
         "example": true,
         "who": "Jacket shop",
         "t": "Presenter, not a shoot",
-        "d": "A jacket shop uses an AI presenter beside zipper teeth that fill the frame."
+        "d": "A jacket shop uses an AI presenter beside zipper teeth that fill the picture."
       },
       {
         "example": true,
@@ -619,14 +619,14 @@
       {
         "example": true,
         "who": "Hardware shop",
-        "t": "Link and a second cut",
+        "t": "Link, then a second version",
         "d": "A hardware shop pastes the product link, enlarges a metal knob, and makes a second version."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Described in chat",
-        "d": "An apparel shop describes the hem seam in chat, keeps the full garment photo first, and reviews the close-up."
+        "t": "Typed on this page",
+        "d": "An apparel shop types the bottom seam on this page, keeps the full garment photo first, and checks the close-up."
       }
     ]
   },
@@ -659,7 +659,7 @@
     }
   ],
   "cta_title": "Create Your First Detail Photo",
-  "cta_lead": "Upload one photo where the feature is already visible, and see the credit cost before you start.",
+  "cta_lead": "Upload one photo where the feature is already visible, and see the credit cost before you start. A credit is a unit your plan spends.",
   "more_sections": [
     {
       "eyebrow": "Included with the template",
@@ -675,12 +675,12 @@
           "d": "A script can be drafted from your note or from the product page link. Change any line before you download."
         },
         {
-          "t": "Presenters from the actor library",
-          "d": "Pick an AI presenter to point at the feature. The person on screen is a generated performer, not a buyer."
+          "t": "On-screen people you can pick",
+          "d": "Pick a generated person from the presenter list, called the actor library, to point at the feature. That person is not a real buyer."
         },
         {
           "t": "A product link or the API",
-          "d": "Paste a product page link, or send the photo through the API, to draft the script. The close-up still needs a sharp source."
+          "d": "Paste a product page link to write a first script. Or send the photo through the API, which is how your own shop software starts it. The close-up still needs a sharp photo."
         },
         {
           "t": "Built-in editor and another language",
@@ -688,7 +688,7 @@
         },
         {
           "t": "More versions, then publish",
-          "d": "Make another cut for a second feature or a second market. Publish on TikTok, Instagram, Facebook or YouTube. There is no free plan."
+          "d": "Make another version for a second feature or a second market. Publish on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
         }
       ]
     }

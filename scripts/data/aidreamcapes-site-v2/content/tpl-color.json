@@ -1,10 +1,10 @@
 {
   "id": "tpl-color",
   "title": "Product Color Variations in a Coordinated Set | AIVideosUGC",
-  "description": "Create one coordinated photo for every product color from your own shade photos, so shoppers can compare options in the same scene. Square AI images.",
+  "description": "Make one matching square photo for every color you sell, from your own photo of that color. Shoppers can then compare the options in the same scene.",
   "h1": "Product Color Variations in One Shared Square Scene",
   "eyebrow": "Product photo template",
-  "lead": "Open one scene, add a photo of each shade you actually sell, and download a square set shoppers can compare. The same photos can start a voiced clip.",
+  "lead": "Open one scene, add a photo of each color you actually sell, and download a square set shoppers can compare. The same photos can also start a clip with a voice.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -14,22 +14,22 @@
   "steps": [
     {
       "t": "Upload Your Shade Photos",
-      "d": "Upload one clear photo of each shade you sell, with the whole item and its texture in frame. Real sources keep the finish honest."
+      "d": "Upload a clear photo of each real color you sell, with the whole item and its texture in the picture."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the setting once, then use that same description on every source photo. Compare each square with the physical shade before you publish it."
+      "d": "Describe the setting once and reuse that description on every photo. Compare each photo with the real color before you publish."
     },
     {
       "t": "Download and Post",
-      "d": "Download each image and compare the hue with the physical item or swatch. Link the file to the matching option in the gallery."
+      "d": "Download each image and match the color to the real item or a sample. Then link that file to the matching option in your gallery."
     }
   ],
   "maker": {
     "options": [
       [
         "Template",
-        "Color Variants"
+        "Color variants (each color)"
       ],
       [
         "Size",
@@ -53,7 +53,7 @@
     },
     {
       "q": "Why use this instead of a new shoot for every color?",
-      "a": "The scene is applied to photos you already have, so you skip a styled reshoot. A generated color cannot stand in for a shade you never photographed."
+      "a": "The scene is placed on photos you already have, so you skip a new styled shoot. The tool will not invent a color you never photographed."
     },
     {
       "q": "Who is a color set for?",
@@ -61,15 +61,15 @@
     },
     {
       "q": "Can a beginner make the set?",
-      "a": "Yes. Upload the shade photos and use the same description on each. No editing background is required. Compare every file with the physical swatch before you publish."
+      "a": "Yes. Upload the color photos and use the same description on each. You do not need editing experience. Compare every file with the real color sample before you publish."
     },
     {
       "q": "Which products fit a color set?",
-      "a": "Any product whose dye, glaze, fabric or finish changes, as long as you photograph the real shade. One scene can cover several products when each source photo is real."
+      "a": "Any product whose dye, glaze, fabric, or finish changes, as long as you photograph the real color. One scene can cover several products if each photo shows the real item."
     },
     {
       "q": "Can I upload my own photos?",
-      "a": "Yes. Upload your own shade photos. A file is not a guaranteed color match, so keep the real swatch nearby and compare before you publish."
+      "a": "Yes. Upload your own color photos. The file may not match the real color exactly. Keep the real item or a color sample nearby, and compare before you publish."
     },
     {
       "q": "Which platforms can I use the files on?",
@@ -77,7 +77,7 @@
     },
     {
       "q": "Is there a free plan?",
-      "a": "No. There is no free plan. Each product photo costs 24 credits, the total is shown first, and a failed job returns those credits. Plans start at $24.50 a month."
+      "a": "No. There is no free plan. Each product photo costs 24 credits. A credit is a unit your plan spends. You see the total before it starts, and if it fails those credits come back. Plans start at $24.50 a month."
     },
     {
       "q": "Can I use the set commercially?",
@@ -85,11 +85,11 @@
     },
     {
       "q": "Why start from a shared scene?",
-      "a": "The shared scene keeps the view, light and background steady, so shoppers compare color instead of a changing setup. You still check every hue against the item."
+      "a": "The shared scene keeps the view, the light, and the background the same, so shoppers compare color instead of a changing setup. You still check every color against the item."
     },
     {
       "q": "Can a voice, a presenter or a product link be part of this?",
-      "a": "Yes. Paste the product page link, or send a photo through the API, to draft a script, a presenter and a voice in another language. The shade squares still come from real photos."
+      "a": "Yes. Paste the product page link to write a first script, an on-screen person, and a voice in another language. You can also send a photo through the API, which is how your own shop software starts it. The color photos still come from real photos."
     }
   ],
   "visual": {
@@ -109,7 +109,7 @@
       "options": [
         [
           "Template",
-          "Color Variants"
+          "Color variants (each color)"
         ],
         [
           "Size",
@@ -123,7 +123,7 @@
     },
     "picker": {
       "title": "Browse Video Ad Templates by Category",
-      "lead": "Open a category and rebuild a scene from a product photo you already have.",
+      "lead": "Open a category and make a scene from a product photo you already have.",
       "chips": [
         {
           "id": "accessories",
@@ -155,7 +155,7 @@
         },
         {
           "id": "explainer",
-          "label": "Explainer"
+          "label": "How-to"
         },
         {
           "id": "financial-services",
@@ -195,7 +195,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -205,7 +205,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Quiet unboxing of makeup tools",
           "chips": [
             "accessories"
           ],
@@ -214,7 +214,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Close watch shot in warm light",
           "chips": [
             "accessories"
           ],
@@ -250,7 +250,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-style reaction to an app",
           "chips": [
             "apps"
           ],
@@ -277,7 +277,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-ready unboxing of a sweater",
           "chips": [
             "clothing"
           ],
@@ -295,7 +295,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full turn of a linen shirt",
           "chips": [
             "e-commerce"
           ],
@@ -322,7 +322,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Spoken lesson about skin care",
           "chips": [
             "education"
           ],
@@ -331,7 +331,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "Court gear from the player's view",
           "chips": [
             "explainer"
           ],
@@ -340,7 +340,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home app walkthrough opener",
           "chips": [
             "explainer"
           ],
@@ -349,7 +349,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Phone demo of a finance app",
           "chips": [
             "financial-services"
           ],
@@ -367,7 +367,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First sip of a citrus drink",
           "chips": [
             "food-beverage"
           ],
@@ -403,7 +403,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "First bite of a berry bowl",
           "chips": [
             "health-fitness"
           ],
@@ -430,7 +430,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Close shot of a silver ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -475,7 +475,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Powder burst around a kettlebell",
           "chips": [
             "sports-gym"
           ],
@@ -484,7 +484,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Evening demo of a kitchen appliance",
           "chips": [
             "tech-electronics"
           ],
@@ -493,7 +493,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Desk review of a thin keyboard",
           "chips": [
             "tech-electronics"
           ],
@@ -502,7 +502,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Bathroom routine with moisturizer",
           "chips": [
             "ugc"
           ],
@@ -520,7 +520,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Playful opener with face mist",
           "chips": [
             "viral"
           ],
@@ -548,12 +548,12 @@
       },
       "m3": {
         "h2": "Browse Video Ad Templates by Category",
-        "lead": "Open a category and rebuild a scene from a product photo you already have."
+        "lead": "Open a category and make a scene from a product photo you already have."
       }
     }
   },
   "steps_h2": "How to Make Product Color Variations in 3 Simple Steps",
-  "steps_lead": "One photo per real shade, one shared description, then square product variant images for Shopify or Amazon.",
+  "steps_lead": "One photo per real color, one shared description, then square photos of each color for Shopify or Amazon.",
   "blockOrder": [
     "hero",
     "picker",
@@ -565,32 +565,32 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Shops Switching Shade Photos into Ads",
-    "lead": "Each shade still starts from a photo the shop sells. A voice, a presenter or a second language can use that same photo.",
+    "h2": "How shops turn color photos into ads",
+    "lead": "Each color still starts from a photo of a color the shop sells. A voice, an on-screen person, or a second language can use that same photo.",
     "items": [
       {
         "example": true,
         "who": "Sneaker shop",
-        "t": "Checked squares",
-        "d": "A sneaker shop places white, black and navy in one scene, each from its own shoe photo, and checks the squares before posting."
+        "t": "Checks each color photo",
+        "d": "A sneaker shop places white, black, and navy in one scene, each from its own shoe photo, and checks each color photo before posting."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Photo, then a clip",
-        "d": "An apparel shop makes the tee-dye squares first, then a clip from those same photos."
+        "d": "An apparel shop makes the dyed-tee photos first, then a clip from those same photos."
       },
       {
         "example": true,
         "who": "Mug shop",
         "t": "Presenter holds one mug",
-        "d": "A mug shop uploads each glaze photo, then has an AI presenter hold one mug in a follow-up clip."
+        "d": "A mug shop uploads a photo of each color, then has an on-screen person hold one mug in a follow-up clip."
       },
       {
         "example": true,
         "who": "Lip color shop",
-        "t": "Library and editor",
-        "d": "A lip-color shop shows real bullet shades, picks a presenter from the actor library, and edits the line in place."
+        "t": "Presenter and spoken line",
+        "d": "A lip-color shop shows the real lipstick colors, picks a person from the presenter list, and edits the spoken line on this page."
       },
       {
         "example": true,
@@ -619,19 +619,19 @@
       {
         "example": true,
         "who": "Helmet shop",
-        "t": "Link and a second cut",
+        "t": "Link, then a second version",
         "d": "A helmet shop pastes the product link, reviews the script and voice, and makes a second version of the shell colors."
       },
       {
         "example": true,
         "who": "Bottle shop",
-        "t": "Described in chat",
-        "d": "A bottle shop describes the powder-coat pair in chat, then compares both files with the physical bottles."
+        "t": "Typed on this page",
+        "d": "A bottle shop types the two coated colors on this page, then compares both files with the real bottles."
       }
     ]
   },
   "related_h2": "Amazon, Shopify and Shoe Pages for the Color Set",
-  "related_lead": "Shoe and listing pages to use with the color set: a drop video, clothing try-on, shoe photos, Shopify, and Amazon.",
+  "related_lead": "Shoe and listing pages to use with the color set: a launch alert, clothing try-on, shoe photos, Shopify, and Amazon.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -659,7 +659,7 @@
     }
   ],
   "cta_title": "Create Your First Shade Set",
-  "cta_lead": "Upload one photo per shade you sell and see the credit cost before you start.",
+  "cta_lead": "Upload one photo per color you sell and see the credit cost before you start. A credit is a unit your plan spends.",
   "more_sections": [
     {
       "eyebrow": "Included with the template",
@@ -675,12 +675,12 @@
           "d": "A script can be drafted from your note or from the product page link. Change any line before you download the clip."
         },
         {
-          "t": "Presenters from the actor library",
-          "d": "Pick an AI presenter to hold one shade. The person on screen is a generated performer, not a buyer."
+          "t": "On-screen people you can pick",
+          "d": "Pick a generated person from the presenter list, called the actor library, to hold one color. That person is not a real buyer."
         },
         {
           "t": "A product link or the API",
-          "d": "Paste a product page link, or send a shade photo through the API, to draft the script. The color squares still need a real source photo."
+          "d": "Paste a product page link to write a first script. Or send a color photo through the API, which is how your own shop software starts it. The color photos still need a real photo of that color."
         },
         {
           "t": "Built-in editor and another language",
@@ -688,7 +688,7 @@
         },
         {
           "t": "More versions, then publish",
-          "d": "Make another cut for a second market from the same photos. Publish on TikTok, Instagram, Facebook or YouTube. There is no free plan."
+          "d": "Make another version for a second market from the same photos. Publish on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
         }
       ]
     }

@@ -1,10 +1,10 @@
 {
   "id": "tpl-howto",
   "title": "AI How-To Video Maker for Product Demos | AIVideosUGC",
-  "description": "AI how-to video maker: turn one product photo into a clear demo for Shorts and ads without filming a presenter. Choose 9:16 or 16:9 for 6, 10, 15 or 30 seconds.",
+  "description": "Turn one product photo into a how-to demo for Shorts and ads, with no presenter to film. Pick a tall 9:16 or a wide 16:9, at 6, 10, 15, or 30 seconds.",
   "h1": "AI How-To Video Maker for a Task You Can Follow",
   "eyebrow": "How-to video template",
-  "lead": "Pick a product how-to video scene and add one photo, so the clip shows the task from setup to the result. A voice, captions, or an AI actor can join the same file.",
+  "lead": "Pick a how-to scene and add one photo, so the clip shows the task from the first step to the result. A voice, on-screen words (captions), or a generated person (an AI actor) can join the same file.",
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -13,7 +13,7 @@
     "instructional product video"
   ],
   "steps_h2": "How to Make a Product How-To Video in 3 Simple Steps",
-  "steps_lead": "A product demo video from a photo needs one picture, a short task line, and a file you can post.",
+  "steps_lead": "You need one photo, one short task line, and a file you can post. Credits are the points a paid plan spends, and the step shows how many.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -21,18 +21,18 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the task and one change a shopper should see. Then pick a size and a length from 6 to 30 seconds."
+      "d": "Name the task and one change a shopper should see. Then pick a shape and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add step labels in your editor. Post it once the action matches the real product."
+      "d": "Download the file and add step labels in your own editor. Post it when the action matches the real product."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · YouTube Shorts"
+        "Tall 9:16 · YouTube Shorts"
       ],
       [
         "Length",
@@ -40,7 +40,7 @@
       ],
       [
         "Also try",
-        "16:9 · Product page"
+        "Wide 16:9 · Product page"
       ]
     ],
     "cta": "Make my how-to video"
@@ -52,19 +52,19 @@
     },
     {
       "q": "How do I make the how-to clip?",
-      "a": "Upload the photo, name the task, and pick a size and a length. Lengths are 6, 10, 15, or 30 seconds. Sizes are 9:16, 1:1, 16:9, 4:3, or 3:4."
+      "a": "Upload the photo, name the task, and pick a shape and a length. Lengths are 6, 10, 15, or 30 seconds. Shapes are tall phone 9:16, square 1:1, wide 16:9, slightly wide 4:3, and slightly tall 3:4."
     },
     {
       "q": "Why start here instead of filming a presenter?",
-      "a": "Try a version before you book a creator. Change the line, the actor, or the language and make another file. Check the action against the real product before you post."
+      "a": "Try one version before you book a creator. Change the spoken line, the actor, or the language, and make another file. Check the action against the real product before you post."
     },
     {
       "q": "Who is this scene for?",
-      "a": "Shops, agencies, and founders who need to show how a product works. A first file does not require an editing background."
+      "a": "Shops, agencies, and founders who need to show how a product works. You can make a first file without video editing experience."
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Yes. Upload one clear photo, describe the single task, and download the file. Type a price in your editor if the listing needs one."
+      "a": "Yes. Upload one clear photo, describe the single task, and download the file. Type a price in your own editor after download, if the listing needs one."
     },
     {
       "q": "What can I upload?",
@@ -72,11 +72,11 @@
     },
     {
       "q": "Where can I publish it?",
-      "a": "Publish to TikTok, Instagram, or Facebook in one step, or download a file for YouTube. Pick the frame before the job starts."
+      "a": "Publish to TikTok, Instagram, or Facebook in one step, or download a file for YouTube. Pick the video shape before you start."
     },
     {
       "q": "What does the clip cost?",
-      "a": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before the job starts, and a failed job returns those credits. The download has no watermark."
+      "a": "Credits are the points your plan spends. A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark (no logo stamped on the file)."
     },
     {
       "q": "Can I run the file in ads?",
@@ -84,11 +84,11 @@
     },
     {
       "q": "Can I make several products at once?",
-      "a": "Yes. Run the same task across a batch of photos, or send the catalog through the API. Each job shows its credit cost first."
+      "a": "Yes. Run the same task on many photos at once, or start them from your own software (the API). Each one shows its credit cost first."
     },
     {
       "q": "Will the file speak the steps?",
-      "a": "Yes. Turn on an AI voice and captions so the steps are heard and read. You can still type a price in your editor after download."
+      "a": "Yes. Turn on an AI voice and captions so the steps are heard and read. You can still type a price in your own editor after download."
     }
   ],
   "visual": {
@@ -107,11 +107,11 @@
       "sourceHint": "Show the full tool and the surface it works on.",
       "result": "n:guide:c1-tpl-howto-m2-result-video-916",
       "mode": "video",
-      "prompt": "Turn on the white handheld steamer beside a blue shirt and press the fabric in one steady pass. Soft window light, with the steamer and the smoothed cloth both in frame.",
+      "prompt": "Turn on the white handheld steamer beside a blue shirt and press the fabric in one steady pass. Soft window light, with the steamer and the smoothed cloth both visible.",
       "options": [
         [
           "Size",
-          "9:16 · YouTube Shorts"
+          "Tall 9:16 · YouTube Shorts"
         ],
         [
           "Length",
@@ -119,7 +119,7 @@
         ],
         [
           "Also try",
-          "16:9 · Product page"
+          "Wide 16:9 · Product page"
         ]
       ]
     },
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Shopper-style"
         },
         {
           "id": "viral",
@@ -207,7 +207,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Quiet Close-Up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -216,7 +216,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Cinematic Watch Detail",
+          "label": "Film-Style Watch Detail",
           "chips": [
             "accessories"
           ],
@@ -252,7 +252,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "Live-Stream Reaction: App",
           "chips": [
             "apps"
           ],
@@ -279,7 +279,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -324,7 +324,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -333,7 +333,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person View: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -342,7 +342,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening Line: Home App Tour",
           "chips": [
             "explainer"
           ],
@@ -351,7 +351,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -369,7 +369,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "First-Sip Reaction: Citrus",
           "chips": [
             "food-beverage"
           ],
@@ -405,7 +405,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry Bowl First Bite Reel",
+          "label": "Berry Bowl First Bite",
           "chips": [
             "health-fitness"
           ],
@@ -432,7 +432,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Ring Extreme Close-Up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -477,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal Reel",
+          "label": "Kettlebell Powder Reveal",
           "chips": [
             "sports-gym"
           ],
@@ -486,7 +486,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Kitchen Appliance Evening Demo Reel",
+          "label": "Kitchen Appliance Evening Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -495,7 +495,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Low Profile Keyboard Review",
+          "label": "Thin Keyboard Review",
           "chips": [
             "tech-electronics"
           ],
@@ -504,7 +504,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump Moisturizer Routine Reel",
+          "label": "Pump Moisturizer Routine",
           "chips": [
             "ugc"
           ],
@@ -522,7 +522,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -593,37 +593,37 @@
   ],
   "reviews": {
     "h2": "How Shops Teach One Product Task",
-    "lead": "These instructional product video setups show one task, from the first move to the result.",
+    "lead": "Each card is an example of how a shop teaches one task, from the first move to the result.",
     "items": [
       {
         "example": true,
         "who": "Home shop",
         "t": "One move, then the result",
-        "d": "A home shop shows one pass across the fabric, and holds on the smoother patch so the task is easy to follow."
+        "d": "A home shop shows one pass across the fabric, then stays on the smoother spot so the task is easy to follow."
       },
       {
         "example": true,
         "who": "First-time seller",
         "t": "A photo and a clip",
-        "d": "A first-time seller uploads the product photo and gets a still plus a how-to clip, with no filming background."
+        "d": "A first-time seller uploads the product photo and gets a photo plus a how-to clip, with no filming experience needed."
       },
       {
         "example": true,
         "who": "Tool brand",
-        "t": "From still to in hand",
+        "t": "From photo to in hand",
         "d": "A tool brand starts from the product photo, then an AI actor holds the item while the task runs."
       },
       {
         "example": true,
         "who": "Desk brand",
-        "t": "Actor and editor",
+        "t": "Pick an actor, then trim",
         "d": "A desk brand picks an AI actor from the library and trims the how-to in the built-in editor."
       },
       {
         "example": true,
-        "who": "Export brand",
+        "who": "Overseas shop",
         "t": "Another language",
-        "d": "An export brand repeats the same task in a second language for another market."
+        "d": "A shop that sells in two countries repeats the same task in a second language."
       },
       {
         "example": true,
@@ -647,13 +647,13 @@
         "example": true,
         "who": "Catalog seller",
         "t": "Start from the link",
-        "d": "A catalog seller pastes the product link, checks the script and the voice, then exports a second version."
+        "d": "A catalog seller pastes the product link, checks the words and the voice, then makes a second version."
       },
       {
         "example": true,
         "who": "Solo seller",
-        "t": "Describe it in chat",
-        "d": "A solo seller types the task in chat and gets a script, a scene, and a clip to check before posting."
+        "t": "Type the task here",
+        "d": "A solo seller types the task on this page and gets words, a scene, and a clip to check before posting."
       }
     ]
   },
@@ -665,7 +665,7 @@
     "title": "What Is an AI How-To Video?",
     "paras": [
       "An AI how-to video shows one product task a shopper can follow, from the setup to the result.",
-      "Start with a photo or a product link. Add a script, an AI voice, captions, and an AI actor when the task needs a person. The download has no watermark, and you can use it in ads and on your pages."
+      "Start with a photo or a product link. Add a short script (the words), an AI voice, captions, and an AI actor if the task needs a person. The download has no watermark (no logo stamped on the file), and you can use it in ads and on your pages."
     ]
   },
   "more_sections": [
@@ -680,7 +680,7 @@
         },
         {
           "t": "Auto captions",
-          "d": "Captions can name the step on the clip while it plays."
+          "d": "Words on the screen can name the step while the clip plays."
         },
         {
           "t": "AI script",
@@ -691,8 +691,8 @@
           "d": "Choose an AI actor to show the task. Post the clip as your shop's ad."
         },
         {
-          "t": "Link, batch, and API",
-          "d": "Paste a product link, run one task across a batch of photos, or send the catalog through the API."
+          "t": "Link, many photos, and API",
+          "d": "Paste a product link, run one task on many photos at once, or start them from your own software (the API)."
         },
         {
           "t": "Editor, music, and languages",
@@ -702,13 +702,13 @@
     }
   ],
   "platforms": {
-    "h2": "Publish the How-To to TikTok, Meta, and YouTube",
-    "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before the job starts.",
+    "h2": "Publish the How-To on TikTok, Instagram, Facebook, and YouTube",
+    "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before you start.",
     "items": [
       {
         "t": "AI TikTok ads generator",
         "label": "AI TikTok ads generator",
-        "d": "Publish the how-to to TikTok in one step, in a tall frame.",
+        "d": "Publish the how-to to TikTok in one step, in a tall phone shape.",
         "href": "page:plat-tiktok"
       },
       {

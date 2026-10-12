@@ -1,10 +1,10 @@
 {
   "id": "occ-black-friday",
   "title": "Black Friday Ad Creatives for Your Sale | AIVideosUGC",
-  "description": "Build a Black Friday sale scene from one product photo. Add the confirmed discount, code and end date after download, then publish the version you approve.",
+  "description": "Build a Black Friday sale scene from one product photo. Type the confirmed discount, code, and end date in the editor, then publish the version you approve.",
   "h1": "Create Black Friday Ad Creatives Fast",
   "eyebrow": "Black Friday ad creatives",
-  "lead": "Paste a product link and get the sale scene moving: an AI script, an actor, and a voiceover, while the discount is still being set.",
+  "lead": "Black Friday ad creatives are the pictures and videos for your sale. Paste a product link and get an AI script, an actor, and a spoken voice, while you are still setting the discount.",
   "secondary_keywords": [
     "Black Friday video ads",
     "Black Friday banner ideas",
@@ -15,47 +15,47 @@
   "faq": [
     {
       "q": "How early should I make Black Friday ad creatives?",
-      "a": "Start before the offer is final. Paste the product link, get the actor and the script ready, and type the discount, the code, and the end date when they are set."
+      "a": "Start before the offer is final. Paste the product link and get the actor and the script ready. Type the discount, the code, and the end date in the editor when they are set."
     },
     {
       "q": "How many credits does a Black Friday photo or video use?",
-      "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. A failed job returns those credits."
+      "a": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the cost before you start. If it fails, those credits come back."
     },
     {
       "q": "Can the ad start from a product link?",
-      "a": "Yes. Paste the sale page and the photos and the main details come in as a storyboard. You can also upload one product photo."
+      "a": "Yes. Paste the sale page. The photos and the main details come in, ready for the ad. You can also upload one product photo."
     },
     {
       "q": "Can the sale ad use an actor from the library?",
       "a": "Yes. Pick one from the actor library, describe a look, or build one from a short clip of you. People in the scene are generated. They are not real customers or celebrities."
     },
     {
-      "q": "Can I add a voiceover, music, and captions?",
-      "a": "Yes. Choose an AI voice, a track from the music library, and automatic captions in the built-in editor. The same script can be spoken in another language."
+      "q": "Can I add a spoken voice, music, and captions?",
+      "a": "Yes. Choose an AI voice, a track from the music library, and captions (the words on screen) in the editor. The same script can be spoken in another language."
     },
     {
       "q": "Can I make Black Friday ads for many products at once?",
-      "a": "Yes. Batch mode runs a set of product links and returns one ad each. You still review every file before it is published."
+      "a": "Yes. You can run many product links at once, and each one comes back as its own ad. You still check every file before it is published."
     },
     {
-      "q": "Can my store request these ads through an API?",
-      "a": "Yes. The API lets your store ask for a sale ad from a product link. You approve the file before anyone else sees it."
+      "q": "Can my own tools request these ads?",
+      "a": "Yes. An API is a connection that lets your own tools ask for a sale ad from a product link. You approve the file before anyone else sees it."
     },
     {
-      "q": "Can I publish to TikTok or Meta from here?",
-      "a": "Yes. When the file looks right, publish it in one click to TikTok, Instagram, or Meta, or download it. It stays in your account until you share it. The download has no AIVideosUGC watermark."
+      "q": "Can I publish to TikTok, Instagram, or Meta from here?",
+      "a": "Yes. When the file looks right, publish it in one click to TikTok, Instagram, or Meta, or download it. Meta here means Facebook and Instagram. It stays in your account until you share it. The download has no AIVideosUGC watermark."
     },
     {
-      "q": "Do I need a separate file for each placement?",
-      "a": "A product photo is square. For video, use the frame that placement needs: 9:16, 1:1, 16:9, 4:3, or 3:4. Each video is its own job, and the credit cost shows before you start."
+      "q": "Do I need a separate file for each ad spot?",
+      "a": "A product photo is square. For video, pick the shape of that spot: tall 9:16 for a phone, square 1:1, wide 16:9, or 4:3 and 3:4. Each video is a separate run, and the credit cost shows before you start."
     },
     {
       "q": "Can I put an end time on the sale ad?",
-      "a": "Yes. Set the end time in the built-in editor, where you can move it later. It is not stuck on the product picture, so a new deadline does not force a new scene."
+      "a": "Yes. Set the end time in the editor, and move it later if you need to. It stays off the product picture, so a new deadline can keep the same scene."
     },
     {
       "q": "Can I reuse the scene for Cyber Monday ad creatives?",
-      "a": "Yes. Keep the product scene and change the offer line, the voiceover, or the caption for Monday."
+      "a": "Yes. Keep the product scene and change the offer line, the spoken voice, or the caption for Monday."
     }
   ],
   "examples": {
@@ -95,19 +95,19 @@
       }
     ]
   },
-  "cta_lead": "Finish the actor, the script, and the voiceover. Type the discount, the code, and the end date when they are confirmed.",
+  "cta_lead": "Finish the actor, the script, and the spoken voice. Type the discount, the code, and the end date in the editor when they are confirmed.",
   "steps": [
     {
       "t": "Paste Your Product Link",
-      "d": "Start from the sale page. The photos and the main details come in and form a storyboard for the ad."
+      "d": "Start from the sale page. The photos and the main details come in, ready for the ad."
     },
     {
       "t": "Create Your Actor",
-      "d": "Choose a library actor or describe a new look. The mouth follows the voiceover you pick."
+      "d": "Choose an actor from the library, or describe a new look. The mouth moves with the voice you pick."
     },
     {
       "t": "Set the Script and Publish",
-      "d": "Edit the script, choose a voice and a music-library track, add captions, then publish to TikTok, Instagram, or Meta."
+      "d": "Edit the script, add a voice, music, and captions, then publish to TikTok, Instagram, or Meta (Facebook)."
     }
   ],
   "visual": {
@@ -136,7 +136,7 @@
         ],
         [
           "Use",
-          "Feed post or product page"
+          "Social post or product page"
         ]
       ]
     },
@@ -229,31 +229,31 @@
   "benefits": [
     {
       "t": "An actor for the sale ad",
-      "d": "Choose an actor from the library, or describe the age and a deal-day outfit. A short clip of you can become the presenter who speaks the script.",
+      "d": "Choose an actor from the library, or describe the age and a deal-day outfit. A short clip of you can become the person who speaks the script.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for a Black Friday ad."
     },
     {
       "t": "A script from the sale page",
-      "d": "Paste the product link or describe the deal in a sentence. AIVideosUGC drafts a hook, the product points, and a short story, and you can rewrite any line.",
+      "d": "Paste the product link or describe the deal in a sentence. AIVideosUGC drafts an opening line, the product points, and a short story. You can rewrite any line.",
       "img": "n:guide:fx02-occ-bf-benefit-shoe",
       "alt": "Adult creator holds a plain knit slip-on shoe toward camera in a deal-day demo."
     },
     {
-      "t": "A voiceover shoppers can understand",
+      "t": "A spoken voice shoppers can understand",
       "d": "Pick an AI voice for the Black Friday message. The same script can be spoken again for shoppers who use another language.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
       "alt": "Adult hands place an insulated lunch bag into a kraft shipping box."
     },
     {
-      "t": "Several cuts, then you pick",
-      "d": "Make more than one opening and compare the hook, the actor, and the script. Glance at what other shops are posting for the sale, then keep the cut you want to run.",
+      "t": "Several versions, then you pick",
+      "d": "Make more than one opening and compare the first line, the actor, and the script. Look at what other shops post for the sale, then keep the version you want to run.",
       "img": "n:guide:b2f8-occ-black-friday-benefit-pet-r1",
       "alt": "Adult hand rests on a calm dog lying on a dark sofa."
     }
   ],
   "steps_h2": "How to create Black Friday banner ideas in 3 simple steps",
-  "steps_lead": "Paste the sale link, choose an actor, then set the voice, the track, and where it goes live.",
+  "steps_lead": "Paste the sale link, choose an actor, then set the voice, the track, and where it goes live. Credits are what each photo or video uses, and the cost shows before you start.",
   "relatedLinks": [
     {
       "id": "occ-sale-discount",
@@ -269,7 +269,7 @@
     },
     {
       "id": "video-ads",
-      "label": "AI UGC video ads"
+      "label": "Casual-style AI video ads"
     },
     {
       "id": "tpl-bf",
@@ -300,29 +300,29 @@
         "example": true,
         "who": "A kitchen shop",
         "t": "Swap the voice for Monday",
-        "d": "They keep the lunch-bag scene, change the voiceover language, and only replace the offer line for Cyber Monday."
+        "d": "They keep the lunch-bag scene, change the language of the voice, and only replace the offer line for Cyber Monday."
       }
     ]
   },
   "trust": {
     "h2": "What you check before the deal goes live",
-    "lead": "Confirm the file and the credits before the deal goes public.",
+    "lead": "Confirm the file and the credit cost before the deal goes public.",
     "items": [
       {
         "t": "You type the offer yourself",
-        "d": "The file does not print the discount. You add the price, the code, and the end date, then proofread every character."
+        "d": "The picture does not include the discount. You type the price, the code, and the end date in the editor, then check every character."
       },
       {
-        "t": "A commercial file with no watermark",
-        "d": "The download has no AIVideosUGC watermark. You can use it in paid campaigns, subject to each platform's ad rules."
+        "t": "A file for paid ads, with no watermark",
+        "d": "The download has no AIVideosUGC watermark. You can use it in paid ads. Each app still has its own ad rules."
       },
       {
         "t": "The credit cost before you start",
-        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+        "d": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
       },
       {
-        "t": "Credits back if the job fails",
-        "d": "A failed job returns its credits automatically."
+        "t": "Credits come back if it fails",
+        "d": "If it fails, those credits come back on their own."
       },
       {
         "t": "The upload stays in your account",
@@ -330,7 +330,7 @@
       },
       {
         "t": "Voice, captions, and a track",
-        "d": "A voiceover, automatic captions, and a track from the music library can go out with the clip. You can still change them in the built-in editor before you publish."
+        "d": "A spoken voice, automatic captions, and a track from the music library can go out with the clip. You can still change them in the editor before you publish."
       }
     ]
   },
