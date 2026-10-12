@@ -2549,7 +2549,7 @@ function buildNavigation(model) {
   const tool = (id) => link(id, { description: TOOL_DESC[id], image: toolPicture(model, id).src });
   const popular = (keys) => keys.map((key) => ({ label: model.cardByKey[key].name, href: model.byId[model.cardByKey[key].pageId].url, image: img(model.cardByKey[key].img) }));
   // Per the tagshop standard, menu popular lists feature only real templates, never tool pages.
-  const group = (label, ids) => ({ label, items: ids.map((id) => link(id)) });
+  const group = (label, ids) => ({ label, items: ids.map((id) => (typeof id === "string" ? link(id) : id)) });
   const tplFirst = model.cards.filter((card) => card.pageId.startsWith("tpl-") && model.byId[card.pageId]?.type === "template").slice(0, 10).map((card) => card.pageId);
   return {
     version: 2,
@@ -2566,8 +2566,9 @@ function buildNavigation(model) {
       groups: [
         group("Video", ["video-hub", "ai-actors", ...VIDEO_TOOLS]),
         group("Photo", PHOTO_TOOLS),
-        group("Templates", [...tplFirst, "templates"]),
-        group("Industries", [...Object.keys(model.ind).map((slug) => `ind-${slug}`), "industries"]),
+        // Like the competitor's footer ("All Industries", "All Features"): the directory link closes its column under a name that differs from the heading.
+        group("Templates", [...tplFirst, link("templates", { label: "All Templates" })]),
+        group("Industries", [...Object.keys(model.ind).map((slug) => `ind-${slug}`), link("industries", { label: "All Industries" })]),
         group("Platforms & help", [...Object.keys(model.plat).map((slug) => `plat-${slug}`), "pricing", "faq", "glossary", "contact", "about", "trust", "ai-info", "blog", "guides"])
       ],
       legal: [{ label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }, { label: "Refunds", href: "/refunds" }, { label: "Cookies", href: "/cookies" }],
