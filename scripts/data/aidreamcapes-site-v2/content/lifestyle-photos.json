@@ -218,15 +218,15 @@
     "input": [
       {
         "good": "n:guide:q5-life-tote-example-r2",
-        "bad": "n:guide:fx15-lifestyle-tote-input-bad-1-r2",
+        "bad": "n:guide:b2f10-lifestyle-photos-input0-bad-r1",
         "good_label": "Tote held fully in frame",
         "bad_label": "Handle cropped at the frame edge",
         "bad_alt": "Cream canvas tote with one handle cropped at the left frame edge.",
         "good_alt": "Cream canvas tote held fully in frame at a farm stand."
       },
       {
-        "good": "n:guide:q5-life-tote-market",
-        "bad": "n:guide:fx15-lifestyle-tote-input-bad-2-r2",
+        "good": "n:guide:b2f10-lifestyle-photos-input1-good-r1",
+        "bad": "n:guide:b2f10-lifestyle-photos-input1-bad-r1",
         "good_label": "Product shown cleanly in its scene",
         "bad_label": "Bag handle cut off at the top",
         "bad_alt": "Cream canvas tote in a market scene with one handle cropped at the upper edge."
@@ -234,7 +234,7 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:q5-life-case-tote-market",
+        "ref": "n:guide:b2f10-lifestyle-photos-output0-r1",
         "frame": "1:1",
         "label": "Market carry scene"
       },
@@ -267,7 +267,7 @@
         {
           "t": "Neighborhood carry",
           "d": "A familiar street setting helps shoppers picture when they would carry the product.",
-          "img": "n:guide:k5-lifestyle-gallery-06",
+          "img": "n:guide:b2f10-lifestyle-photos-gallery06-r1",
           "alt": "Hand holding a linen tote bag on a neighborhood street."
         }
       ]
@@ -278,7 +278,7 @@
       "lead": "Keep the product consistent while you test the room, surface or market moment around it.",
       "items": [
         {
-          "t": "Park carry",
+          "t": "City bike carry",
           "d": "Use a simple outdoor setting to show how the bag fits into a weekend routine.",
           "img": "n:guide:k5-lifestyle-gallery-03",
           "alt": "Linen tote bag carried beside a city bike."
