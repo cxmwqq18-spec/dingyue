@@ -2496,6 +2496,32 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const item of payload.more_sections?.flatMap((section) => section.items ?? []) ?? []) pushMedia(item?.img);
     if (["article", "about", "trust"].includes(layoutFor(page))) for (const section of payload.sections ?? []) pushMedia(section?.img);
     for (const image of visualPayloadImages(payload.visual)) pushMedia({ src: image.src, alt: image.alt, width: image.w, height: image.h });
+    // With a block order the page renders only the listed blocks, so a picture that lives only in
+    // unlisted blocks is not on the page and must stay out of the sitemap.
+    if (Array.isArray(payload.blockOrder) && payload.blockOrder.length) {
+      const listed = new Set(["hero", ...payload.blockOrder]);
+      const v = payload.visual ?? {};
+      const groupItems = (examples) => (examples?.groups ?? []).flatMap((group) => (group.items ?? []).map((item) => item?.image));
+      const cardImages = (block) => (block?.items ?? []).map((item) => item?.img);
+      const parts = {
+        hero: [heroMedia ? heroImageOf(heroMedia) : undefined, heroMedia?.before, ...(payload.heroCards ?? []).map((card) => card?.image)],
+        strip: v.strip ?? [],
+        picker: (v.picker?.cards ?? []).map((card) => card?.image),
+        uses: (v.uses ?? []).flatMap((item) => [item?.image, item?.imageB]),
+        input: (v.input ?? []).flatMap((item) => [item?.good, item?.bad]),
+        outputs: (v.outputs ?? []).map((item) => item?.image),
+        after: [v.after?.image],
+        sizes: (v.sizes ?? []).map((item) => item?.image),
+        steps: [v.steps?.source, v.steps?.result, ...(v.steps?.actorCards ?? []).map((card) => card?.image)],
+        templates: [...(payload.cards ?? []), ...(payload.templates?.cards ?? [])].map((card) => card?.image),
+        examples: [...(gallery?.images ?? []), ...(pairs ?? []).flatMap((pair) => [pair?.after, pair?.before]), ...groupItems(payload.examples), ...groupItems(payload.exampleGallery)],
+        features: (payload.more_sections ?? []).flatMap((section) => (section.items ?? []).map((item) => item?.img)),
+        reasons: cardImages(payload.reasons), trust: cardImages(payload.trust), reviews: cardImages(payload.reviews)
+      };
+      const srcs = (keep) => new Set(Object.entries(parts).filter(([id]) => listed.has(id) === keep).flatMap(([, images]) => images.map((image) => image?.src)).filter(Boolean));
+      const shownSrc = srcs(true); const hiddenSrc = srcs(false);
+      media.splice(0, media.length, ...media.filter((item) => !hiddenSrc.has(item.src) || shownSrc.has(item.src)));
+    }
     if (guideReplacesHero(page, payload)) {
       const shown = new Set([...renderedImages(layoutFor(page), payload), ...visualPayloadImages(payload.visual).map((image) => image.src)]);
       media.splice(0, media.length, ...media.filter((item) => shown.has(item.src)));
