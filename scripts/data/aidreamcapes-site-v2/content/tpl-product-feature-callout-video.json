@@ -86,7 +86,7 @@
       "a": "Yes. Place it in a paid campaign, on the product page beside the listing photo, or in a file you send a client. The person on camera is an AI avatar."
     },
     {
-      "q": "Why start from a callout layout?",
+      "q": "Why use a product feature callout template?",
       "a": "Your time goes into the part that matters. A new lipstick keeps the demo's shape, and you only rewrite the line that explains the click."
     }
   ],
@@ -734,7 +734,7 @@
       },
       {
         "t": "Paid Plans",
-        "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos and videos share one balance."
+        "d": "Paid plans share one credit balance. Photos and videos draw from it."
       },
       {
         "t": "Yours to Run",

@@ -51,7 +51,7 @@
     },
     {
       "q": "How does a clothing template become an ad?",
-      "a": "Put up a photo of a cardigan and name the shopper, for example someone buying a softer layer. The draft comes back as a clip you can post from this page."
+      "a": "Put up a photo of a cardigan and name the shopper, for example someone buying a softer layer. The draft comes back as a clip you can post."
     },
     {
       "q": "Which kinds of clothing can I start with?",
@@ -71,7 +71,7 @@
     },
     {
       "q": "After I upload a garment, when is the ad ready to post?",
-      "a": "The clip is ready to download once generation finishes. Take the file from this page and post the cut the shop already uses."
+      "a": "The clip is ready to download once generation finishes. Take the file and post the cut the shop already uses."
     },
     {
       "q": "What does a clothing ad cost, and can I post the square crop?",
@@ -675,8 +675,8 @@
           "d": "One sentence about the piece gets you a drafted opening line, and you can rewrite any word."
         },
         {
-          "t": "Edit It on This Page",
-          "d": "Finish the trim on this page, and the download has no watermark."
+          "t": "Edit Before You Post",
+          "d": "Finish the trim before you export, and the download has no watermark."
         },
         {
           "t": "Several Cuts, Then Publish",

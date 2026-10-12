@@ -51,7 +51,7 @@
       "a": "Add the cream photo, name the jar in the line you would actually say, and pick 6, 10, 15, or 30 seconds. A product link can supply the first draft. Your own software can start that job through the API."
     },
     {
-      "q": "Why start here instead of booking a creator?",
+      "q": "Why use this beauty template instead of booking a creator?",
       "a": "Your usual creator is booked past the launch week. You can still change the shade name and cut a second mascara version while that booking stays out."
     },
     {
@@ -60,11 +60,11 @@
     },
     {
       "q": "Can I do this with no editing practice?",
-      "a": "Yes. One clear lip-balm photo is the start. Shorten a long caption in the editor on this site, and a song from the music library can sit under the voice."
+      "a": "Yes. One clear lip-balm photo is the start. Shorten a long caption in the editor, and a song from the music library can sit under the voice."
     },
     {
       "q": "Is this only for skincare?",
-      "a": "This page is for beauty and personal care: a routine, a texture, or a short review. The wider library also has clothing, food, fitness, pets, and home. Open another template when the product is not a beauty item."
+      "a": "This template is for beauty and personal care: a routine, a texture, or a short review. The wider library also has clothing, food, fitness, pets, and home. Open another template when the product is not a beauty item."
     },
     {
       "q": "Can I bring photos and clips I already own?",
@@ -83,7 +83,7 @@
       "a": "Yes. A blush clip can run as a paid ad or go to a client as a delivery. The file is clean of any overlaid mark."
     },
     {
-      "q": "Why is a layout faster than building the sink scene myself?",
+      "q": "Why use a beauty template instead of building a scene?",
       "a": "The sink, the pace, and the place the compact sits are already decided. You spend the time on the shade name, then post."
     }
   ],
@@ -620,7 +620,7 @@
         "example": true,
         "who": "Beauty team",
         "t": "Quick, on a paid plan",
-        "d": "A small beauty team makes the clip in AIVideosUGC. Starter is $24.50 a month, and a 10-second video is 40 credits."
+        "d": "A small beauty team makes the clip in AIVideosUGC, on a paid plan with a 10-second video at 40 credits."
       },
       {
         "example": true,

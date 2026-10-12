@@ -125,7 +125,7 @@
       "h2": "The Short Version",
       "paras": [
         "A large product, white corners, the right parts, and a readable label are the file you upload. Check the item in your hand against that file.",
-        "The phone photo can start on any plain surface. One finished image is 24 credits, shown before it starts. If it does not finish, those credits come back. The same white setup can repeat across the catalog, including through an API."
+        "The phone photo can start on any plain surface. One finished image is 24 credits, shown before it starts. A failed job returns those credits. The same white setup can repeat across the catalog, including through an API."
       ]
     }
   ],

@@ -54,7 +54,7 @@
       "a": "One photo of the full set is the input. Keep the hammer on the left and the case on the right so neither one hides, then download the square. Several kits can start from your own software through the API."
     },
     {
-      "q": "Why this instead of another photo shoot?",
+      "q": "Why use a bundle template instead of a photo shoot?",
       "a": "The picnic-basket photo you took on the table is the one to use. A second video of the set does not mean renting lights again."
     },
     {
@@ -63,7 +63,7 @@
     },
     {
       "q": "Can I do this on a first try?",
-      "a": "Yes, when every piece is already in the photo. Follow the three steps. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
+      "a": "Yes, when every piece is already in the photo. Follow the three steps. If you also make a video, set captions, a song, and an AI voice in the editor."
     },
     {
       "q": "Which shops is this layout for?",
@@ -603,7 +603,7 @@
         "example": true,
         "who": "Tool shop",
         "t": "Quick, on a paid plan",
-        "d": "A tool shop opens the case so every bit is visible. Starter is $24.50 a month, and each photo is 24 credits."
+        "d": "A tool shop opens the case so every bit is visible, on a paid plan with each photo at 24 credits."
       },
       {
         "example": true,

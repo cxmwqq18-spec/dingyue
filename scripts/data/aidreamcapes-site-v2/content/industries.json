@@ -23,7 +23,7 @@
     },
     {
       "q": "What does AI UGC mean for a shop ad?",
-      "a": "AI UGC, on this page, means a product clip that looks like a creator made it. An AI avatar says a line you wrote, and you did not book a film crew to get that clip."
+      "a": "AI UGC means a product clip that looks like a creator made it. An AI avatar says a line you wrote, and you did not book a film crew to get that clip."
     },
     {
       "q": "Do I have to film something before I choose a plan?",
@@ -31,10 +31,10 @@
     },
     {
       "q": "How long does a UGC ad take to make?",
-      "a": "You review the file in your account after you submit the job. Nothing on this page asks you to reserve a shoot date first."
+      "a": "You review the file in your account after you submit the job. Nothing asks you to reserve a shoot date first."
     },
     {
-      "q": "What is the path from an AI avatar to a UGC ad?",
+      "q": "How do I make a UGC ad with an AI avatar?",
       "a": "Open the category that matches the product, put an AI avatar on screen, and use a sentence you would print on the label. Export that file and load it in the ad account yourself."
     },
     {
@@ -67,10 +67,10 @@
     },
     {
       "q": "Which languages can I write the line in?",
-      "a": "Whichever language is already on the listing. This page does not hand you a fixed menu of language names."
+      "a": "Whichever language is already on the listing. Just type the line in that language, and the actor speaks it."
     },
     {
-      "q": "Who can turn a product around into an ad quickly?",
+      "q": "How quickly can I create a product ad?",
       "a": "Anyone who has the listing or the sentence. Paste it, then review the file in your account, and support can look at that file with you if you ask."
     },
     {
@@ -82,12 +82,12 @@
       "a": "Yes. If you already filmed the product yourself, use that clip and add a generated voice. If you only have a photo, an AI avatar can hold the item and speak."
     },
     {
-      "q": "How does an AI UGC ad actually get made?",
+      "q": "How is an AI UGC ad made?",
       "a": "You supply the product photo and the sentence. The spoken line comes from that sentence, and an AI avatar delivers it in the language you typed."
     },
     {
-      "q": "Can a clip work as a recommendation, a how-to, an unboxing, or a review?",
-      "a": "Yes. A how-to can stop once the shirt is buttoned. You start from the photo you already have."
+      "q": "What kinds of product clips can I make?",
+      "a": "A recommendation, a how-to, an unboxing, or a review. A how-to can stop once the shirt is buttoned. You start from the photo you already have."
     },
     {
       "q": "What should I look for in a tool for this job?",
@@ -329,8 +329,8 @@
       "d": "Note that the mug line should feel quiet, like a late kitchen. The AI avatar's delivery follows that note."
     },
     {
-      "t": "Trim It on This Page",
-      "d": "Cut the last second off a phone-case clip in the editor on this page. The trim stays here."
+      "t": "Trim Before You Post",
+      "d": "Cut the last second off a phone-case clip in the editor. The trim stays with the file."
     },
     {
       "t": "Restyle the Captions",
@@ -462,7 +462,7 @@
   "closing": {
     "h2": "Plans for the Next Product",
     "paras": [
-      "Starter is $24.50 a month with 200 credits. Pro is $35 with 300. Premium is $63 with 600.",
+      "Pick the monthly plan that fits how many products you are launching this month.",
       "If a job fails, those credits return. You keep a finished file."
     ]
   }

@@ -99,7 +99,7 @@
     },
     {
       "q": "After the clip is ready, can I still change it?",
-      "a": "Yes. Trim the clip and fix captions in the editor on this page. When the ad needs a longer motion cut, open [creator-style video ads](page:video-ads)."
+      "a": "Yes. Trim the clip and fix captions in the editor. When the ad needs a longer motion cut, open [creator-style video ads](page:video-ads)."
     },
     {
       "q": "Which files can I add at the start?",
@@ -676,7 +676,7 @@
         },
         {
           "t": "Fix It Here",
-          "d": "Pull a long pause out of the blender line on this page. The caption can be fixed in the same place, and the download has no watermark."
+          "d": "Pull a long pause out of the blender line in the editor. The caption can be fixed in the same place, and the download has no watermark."
         },
         {
           "t": "Captions on the Ad",

@@ -955,10 +955,10 @@
     },
     {
       "q": "What do I do to get a clip from a line of text?",
-      "a": "Bring the product and the sentence you want said, then choose the face and voice. On this page the result is a 10-second vertical clip, 9:16, at 40 credits, and that cost shows before you start."
+      "a": "Bring the product and the sentence you want said, then choose the face and voice. The result is a 10-second vertical clip, 9:16, at 40 credits, and that cost shows before you start."
     },
     {
-      "q": "Where does a shop actually put this clip?",
+      "q": "Where can I use an AI actor video?",
       "a": "Wherever the product already appears. A shoe brand might run it as the ad, then keep a shorter cut on the product page. The file has no watermark."
     },
     {
@@ -1013,31 +1013,31 @@
     }
   ],
   "reasons": {
-    "h2": "Why Brands Choose AI Actors for Product Ads",
-    "lead": "A brand can move a spoken ad without waiting on a crew.",
+    "h2": "AI Actor Ad Ideas for Your Products",
+    "lead": "Try a face, a line, and a product scene that fit the next placement.",
     "items": [
       {
-        "t": "Launch a Product Ad",
-        "d": "A serum launch can put a person beside the jar without waiting on a crew's next open day.",
+        "t": "Add a Presenter to the Launch",
+        "d": "Put a person beside the serum jar for the next product ad.",
         "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
         "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
       },
       {
-        "t": "Test Different AI Actors",
-        "d": "Keep the serum photo. Put a different adult actor on it, or change the first sentence, and keep the cut that belongs on the account. Each render shows its credit cost first.",
+        "t": "Compare Faces Before Posting",
+        "d": "Keep the serum photo and try another adult actor or opening line, then keep the cut that belongs on the account. Each render shows its credit cost first.",
         "img": "n:guide:fx50-ai-actors-benefit-2",
         "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
       },
       {
-        "t": "Keep the Approved Script",
-        "d": "The actor says the serum line you accepted, on every render. You do not chase a creator to fix a word.",
+        "t": "Use One Approved Script",
+        "d": "Keep the accepted serum line on every render, so you do not chase a creator to fix a word.",
         "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
         "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
       }
     ]
   },
   "related_h2": "More Ways to Start Ads With AI Actors",
-  "related_lead": "The actor can also start from another tool on this site.",
+  "related_lead": "The actor can also start from another tool in the library.",
   "relatedLinks": [
     "spokesperson-videos",
     "url-to-video",
@@ -1046,24 +1046,24 @@
     "image-to-video",
     "product-videos"
   ],
-  "benefits_h2": "Why Brands Choose AI Actors for Product Ads",
-  "benefits_lead": "A brand can move a spoken ad without waiting on a crew.",
+  "benefits_h2": "More Ways to Cast an AI Actor",
+  "benefits_lead": "Use a face and voice that fit the next placement.",
   "benefits": [
     {
-      "t": "Launch a Product Ad",
-      "d": "A serum launch can put a person beside the jar without waiting on a crew's next open day.",
+      "t": "Put a Presenter in the Launch Ad",
+      "d": "Show the serum jar with a presenter in the next ad.",
       "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
       "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
     },
     {
-      "t": "Test Different AI Actors",
-      "d": "Keep the serum photo. Put a different adult actor on it, or change the first sentence, and keep the cut that belongs on the account. Each render shows its credit cost first.",
+      "t": "Try Another Presenter",
+      "d": "Try a different adult actor or opening line with the serum photo. The charge appears before each render.",
       "img": "n:guide:fx50-ai-actors-benefit-2",
       "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
     },
     {
-      "t": "Keep the Approved Script",
-      "d": "The actor says the serum line you accepted, on every render. You do not chase a creator to fix a word.",
+      "t": "Reuse the Approved Script",
+      "d": "Reuse the accepted serum line on each render when the product wording stays the same.",
       "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
       "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
     }

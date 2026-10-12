@@ -46,7 +46,7 @@
   },
   "faq": [
     {
-      "q": "What do I get from a lookbook template?",
+      "q": "What does a lookbook template include?",
       "a": "A frame that holds a cardigan, a tank, and a skirt together as one worn set. Add that photo. An AI avatar wears the three pieces. You do not have to book a model."
     },
     {
@@ -117,7 +117,7 @@
     },
     "picker": {
       "title": "Browse Video Templates by Category",
-      "lead": "Each card is a tall 9:16 video, separate from the outfit photo on this page. Start from your outfit photo, then check each piece against what you can ship.",
+      "lead": "Each card is a tall 9:16 video, separate from the outfit photo. Start from your outfit photo, then check each piece against what you can ship.",
       "chips": [
         {
           "id": "accessories",
@@ -539,7 +539,7 @@
       },
       "m3": {
         "h2": "Browse Video Templates by Category",
-        "lead": "Each card is a tall 9:16 video, separate from the outfit photo on this page. Start from your outfit photo, then check each piece against what you can ship."
+        "lead": "Each card is a tall 9:16 video, separate from the outfit photo. Start from your outfit photo, then check each piece against what you can ship."
       },
       "m4": {
         "h2": "Use lookbook photos on posts and collection pages"
@@ -692,7 +692,7 @@
         {
           "icon": "check",
           "t": "Edit the Clip, Then Post",
-          "d": "You can trim in the editor, then send it to TikTok, Instagram, or Facebook. The file has no watermark."
+          "d": "You can trim in the editor, then send the cut to TikTok, Instagram, or Facebook."
         },
         {
           "icon": "globe",

@@ -21,7 +21,7 @@
     },
     {
       "t": "A Plan Instead of a Shoot Fee",
-      "d": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 15-second open is 60 credits, shown before it runs. If a clip fails, those credits come back.",
+      "d": "A 15-second open uses 60 credits, and a failed clip returns those credits. The charge appears before each render.",
       "icon": "coins"
     },
     {
@@ -86,11 +86,11 @@
     },
     {
       "q": "Which page should I use for an unboxing ad?",
-      "a": "Use this page when the product should come out of a mailer on camera. A general spoken ad, with no parcel, starts on [UGC video ads](page:video-ads)."
+      "a": "Use this flow when the product should come out of a mailer on camera. A general spoken ad, with no parcel, starts on [UGC video ads](page:video-ads)."
     },
     {
       "q": "Do I have to pay to make an unboxing?",
-      "a": "Yes. Every clip spends credits on a monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 15-second open is 60 credits, shown before it runs. If a clip fails, those credits come back."
+      "a": "Yes. Every clip spends credits on a monthly plan. Each render shows its credit charge before it runs. A 15-second open uses 60 credits, and failed clips return those credits."
     },
     {
       "q": "Can I use the clip in a paid ad?",
@@ -105,7 +105,7 @@
       "a": "Yes. Each product can get an open from its own photo. Your shop software can request those jobs through an API."
     },
     {
-      "q": "Will an AI open do the job of a filmed one?",
+      "q": "Can an AI unboxing replace a filmed unboxing?",
       "a": "A filmed open is the one to keep when someone who received the order can show it. Use the generated open when you still need to see which first line is worth buying."
     },
     {
@@ -349,7 +349,7 @@
       {
         "example": true,
         "who": "Pet shop",
-        "t": "Edit on this page",
+        "t": "Edit Before You Post",
         "d": "A pet shop adds on-screen captions and a song from the music library in the editor, then downloads."
       },
       {

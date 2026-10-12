@@ -560,7 +560,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How shops turn color photos into ads",
+    "h2": "How Shops Turn Color Photos Into Ads",
     "lead": "Each color still starts from a photo of a color the shop sells. A voice, an on-screen person, or a second language can use that same photo.",
     "items": [
       {
@@ -585,7 +585,7 @@
         "example": true,
         "who": "Lip color shop",
         "t": "Presenter and spoken line",
-        "d": "A lip-color shop shows the real lipstick colors, picks a person from the presenter list, and edits the spoken line on this page."
+        "d": "A lip-color shop shows the real lipstick colors, picks a person from the presenter list, and edits the spoken line in the editor."
       },
       {
         "example": true,
@@ -596,7 +596,7 @@
       {
         "example": true,
         "who": "Bag shop",
-        "t": "Script on this page",
+        "t": "Write the Script",
         "d": "A bag shop frames olive and sand totes the same way and changes the script without opening another tool."
       },
       {
@@ -620,8 +620,8 @@
       {
         "example": true,
         "who": "Bottle shop",
-        "t": "Typed on this page",
-        "d": "A bottle shop types the two coated colors on this page, then compares both files with the real bottles."
+        "t": "Type the Two Colors",
+        "d": "A bottle shop types the two coated colors, then compares both files with the real bottles."
       }
     ]
   },

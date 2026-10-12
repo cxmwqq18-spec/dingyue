@@ -39,11 +39,11 @@
       "a": "Yes. Open the product page and use that photo as the gift in the scene. If the page photo is too tight, upload the clear shot you already sell with."
     },
     {
-      "q": "Can I publish to TikTok, Instagram, or Facebook from here?",
+      "q": "Can I publish my holiday video to TikTok, Instagram, or Facebook?",
       "a": "Yes. Download the file, or send it to the feed you already sell on."
     },
     {
-      "q": "Can my own tools request holiday ads?",
+      "q": "Can I create holiday ads through an API?",
       "a": "Yes. Your tools can ask for a holiday ad from a product link through the API. You approve the file before anyone else sees it."
     },
     {
@@ -287,7 +287,7 @@
     }
   ],
   "reviews": {
-    "h2": "How shops build gift guide product images",
+    "h2": "How Shops Build Gift Guide Product Images",
     "lead": "Three ways a shop gets the gift scene up before the cutoff is confirmed.",
     "items": [
       {
@@ -320,7 +320,7 @@
       },
       {
         "t": "Know the Spend Before the Job",
-        "d": "You know the spend before you commit, so a holiday push stays on budget. A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+        "d": "You know the spend before you commit, with photo and video charges shown on screen, so a holiday push stays on budget."
       },
       {
         "t": "Failed Jobs Return Credits",

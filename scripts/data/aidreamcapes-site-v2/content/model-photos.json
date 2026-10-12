@@ -124,7 +124,7 @@
       "a": "Yes. Save the model with your brand looks and start the next collection from that face."
     },
     {
-      "q": "Can I dress a whole drop, or connect my store?",
+      "q": "Can I create model photos for an entire collection?",
       "a": "Yes. Run several garment photos in one batch, or send them from your shop software through an API. Each image is 24 credits on a plan such as Starter at $24.50 a month for 200 credits."
     },
     {
@@ -337,7 +337,7 @@
       },
       {
         "t": "A Smaller Photography Bill",
-        "d": "You skip model day rates, studio rental, and a round of retouching. Starter is $24.50 a month for 200 credits, and each worn photo is 24 credits, shown before it runs."
+        "d": "You skip model day rates, studio rental, and a round of retouching. Each worn photo is 24 credits, shown before it runs, with no studio invoice on top."
       },
       {
         "t": "Fewer Styles Left as Flats Only",

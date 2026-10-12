@@ -67,7 +67,7 @@
     }
   ],
   "ugc": {
-    "eyebrow": "What the term means on this page",
+    "eyebrow": "What the term means for your ad",
     "title": "What Are AI UGC Ads?",
     "paras": [
       "AI UGC is a recommendation that sounds like someone who uses the product. An AI actor carries the line, so a DTC brand can talk about a new serum without booking an influencer for that week.",
@@ -113,7 +113,7 @@
       },
       {
         "t": "Put a Small Catalog on Camera",
-        "d": "A two-person bakery can show the loaf to people who already walk in, without an agency invoice. Starter is $24.50 a month for 200 credits.",
+        "d": "A two-person bakery can show the loaf to people who already walk in, without an agency invoice. The monthly plan includes a credit balance.",
         "img": "n:gen2:ind-food-drinks-g3",
         "alt": "Pasta sauce jar beside a finished plate of pasta.",
         "frame": "browser"
@@ -155,7 +155,7 @@
     [
       "What the Ad Costs",
       "A day rate, plus a location and an editor",
-      "Starter is $24.50 a month for 200 credits. You are not paying a person to appear"
+      "A monthly plan covers 200 credits. You are not paying a person to appear"
     ],
     [
       "How Many You Can Make",
@@ -194,7 +194,7 @@
     ]
   ],
   "pricingSummary": {
-    "h2": "Simple credit plans for your next ad",
+    "h2": "Simple Credit Plans for Your Next Ad",
     "plans": [
       {
         "name": "Starter",
@@ -299,30 +299,30 @@
     }
   ],
   "limitations": {
-    "h2": "Check these details before you publish",
+    "h2": "Check These Details Before You Publish",
     "items": [
       {
-        "t": "Exact measurements",
+        "t": "Exact Measurements",
         "d": "Add your own dimensions and fit notes to the listing.",
         "supported": false
       },
       {
-        "t": "Hidden sides and parts",
+        "t": "Hidden Sides and Parts",
         "d": "Photograph ports, seams, backs or contents the upload does not show.",
         "supported": false
       },
       {
-        "t": "Performance claims",
+        "t": "Performance Claims",
         "d": "Confirm that any result or demonstration matches a real test.",
         "supported": false
       },
       {
-        "t": "Words, prices and offers",
+        "t": "Words, Prices and Offers",
         "d": "Proofread captions, prices, and offers in the built-in editor before you post.",
         "supported": false
       },
       {
-        "t": "Color and package contents",
+        "t": "Color and Package Contents",
         "d": "Compare the file with the real product before you post.",
         "supported": false
       }
@@ -352,7 +352,7 @@
         },
         {
           "t": "Edit the Script Before Export",
-          "d": "A price that changed this morning can be corrected on the frame. You stay on this page to do it."
+          "d": "A price that changed this morning can be corrected on the frame before you export it."
         },
         {
           "t": "Restyle Captions for Mobile",
@@ -931,7 +931,7 @@
       },
       {
         "t": "Export the Right Ad Format",
-        "d": "A Reel wants 9:16 and a feed post may want 1:1. 16:9, 4:3, and 3:4 are on the same account, and the download has no watermark. Publish to [TikTok](/platforms/tiktok-ads) or [Meta](/platforms/facebook-ads) from here."
+        "d": "A Reel wants 9:16 and a feed post may want 1:1. 16:9, 4:3, and 3:4 are on the same account, and the download has no watermark. Post it straight to [TikTok](/platforms/tiktok-ads) or [Meta](/platforms/facebook-ads)."
       },
       {
         "t": "Download the Finished Render",

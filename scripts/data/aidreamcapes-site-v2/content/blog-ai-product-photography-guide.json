@@ -26,7 +26,7 @@
     {
       "h2": "Why Shops Switch to AI Product Photos",
       "paras": [
-        "Lower spend. A product photo is 24 credits, and [plans start at $24.50 a month](page:pricing). You pay credits per image instead of booking a studio for every new scene.",
+        "Lower spend. A product photo is 24 credits, and [plans start on the pricing page](page:pricing). You pay credits per image instead of booking a studio for every new scene.",
         "Less waiting. You skip the back-and-forth of hiring a photographer. The next scene does not wait on their calendar.",
         "Several shots from one file. Make the product-page image, a social scene, and a close view from the same upload. Each of those is its own image.",
         "No model to book. Stage the product with a single extra object. When someone should wear it, use [model photos](page:model-photos) instead of hiring a model.",
@@ -124,7 +124,7 @@
   ],
   "faq": [
     {
-      "q": "What does this photo tool actually make?",
+      "q": "What can an AI product photo tool create?",
       "a": "It makes a store photo from a picture you already have: a new setting, a white field, or the item on a person. Product photos come out square. You still compare the photo with the item you ship."
     },
     {

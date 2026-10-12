@@ -36,7 +36,7 @@
       "h2": "See What to Review on a Finished Ad",
       "paras": [
         "Watch the file the way a shopper will, on a phone, with sound and captions on. Start from the first frame. The pictures below are the photos and hand shots to hold next to the real item.",
-        "Check it for the placement where it will run. A [TikTok ad](page:plat-tiktok) and a [Meta ad](page:plat-facebook) both need the product to match. Meta here means Facebook and Instagram. The shape can still differ. For more finished examples, start from [UGC video ads](page:video-ads). Then run the checks on this page."
+        "Check it for the placement where it will run. A [TikTok ad](page:plat-tiktok) and a [Meta ad](page:plat-facebook) both need the product to match. Meta here means Facebook and Instagram. The shape can still differ. For more finished examples, start from [UGC video ads](page:video-ads). Then run the checks on the finished file."
       ]
     },
     {
@@ -52,7 +52,7 @@
       "h2": "What Is on an AI Video Review Checklist?",
       "paras": [
         "Play the clip on your phone. Listen to the voice, and read the captions. Then go through it slowly. Watch the hands and the first frame.",
-        "The script should name the product you ship. Do not mention a feature that is not for sale. Clips often go wrong while the product moves. A label can blur as it turns. Fingers can blend into a strap. A zipper can change shape halfway through. Count the fingers, and watch how they hold the item. The first frame often becomes the thumbnail shoppers see first. If one short moment looks wrong, trim it in the editor on this site. If the problem runs through the whole clip, make a new version. Run this same check on a [product video](page:product-videos) before you post it."
+        "The script should name the product you ship. Do not mention a feature that is not for sale. Clips often go wrong while the product moves. A label can blur as it turns. Fingers can blend into a strap. A zipper can change shape halfway through. Count the fingers, and watch how they hold the item. The first frame often becomes the thumbnail shoppers see first. If one short moment looks wrong, trim it in the editor. If the problem runs through the whole clip, make a new version. Run this same check on a [product video](page:product-videos) before you post it."
       ],
       "img": "n:guide:fx04-blog-review-motion-r1",
       "alt": "Hands open the zipper and flap of plain black travel backpack."
@@ -61,7 +61,7 @@
       "h2": "Which Checks Come Before I Publish the Price?",
       "paras": [
         "Make the picture or the clip first. Then add the price, the date, the code, and the headline yourself.",
-        "Do not ask the tool to paint those words into the image or the clip. Letters it draws are often wrong or messy. Captions can follow what is spoken. You still type the price, the date, and the code yourself. Every character should match the product page. Before you post, match the price and the code to the store. Check that any end date is still ahead. If stray letters show on a package or a sign, remove that part of the picture or try again."
+        "Do not ask the tool to paint those words into the image or the clip. Letters it draws are often wrong or messy. Captions can match the spoken line. You still type the price, the date, and the code yourself. Every character should match the product page. Before you post, match the price and the code to the store. Check that any end date is still ahead. If stray letters show on a package or a sign, remove that part of the picture or try again."
       ],
       "img": "n:guide:fx04-blog-review-copy-r1",
       "alt": "Plain black travel backpack centered on a white background."
@@ -70,7 +70,7 @@
       "h2": "What Do I Need to Own Before an AI Ad Goes Live?",
       "paras": [
         "Upload only photos you took, or photos you have permission to use. Use only logos that belong to you.",
-        "If the photo comes from a supplier, your agreement with them must cover ads. A request built around another company's logo, or a celebrity, may be refused. The [Content Policy](/content) says what you can upload. For music, pick a track from the music library on this site, or use one you already licensed for ads. The avatar and the voice you pick are for the ads you make here."
+        "If the photo comes from a supplier, your agreement with them must cover ads. A request built around another company's logo, or a celebrity, may be refused. The [Content Policy](/content) says what you can upload. For music, pick a track from the music library, or use one you already licensed for ads. The avatar and the voice you pick are for the ads you make."
       ],
       "img": "n:guide:fx04-blog-review-rights-r1",
       "alt": "Hands hold plain black travel backpack beside a plain camera and blank phone."
@@ -102,7 +102,7 @@
       "h2": "What You Gain From an AI Video Ad",
       "paras": [
         "You can trim the clip yourself, and you do not book a camera day to test the ad.",
-        "You pay with credits on a monthly plan. A photo costs 24 credits. A 6-second clip costs 24, a 10-second clip costs 40, a 15-second clip costs 60, and a 30-second clip costs 120. Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600.",
+        "You pay with credits on a monthly plan. A photo costs 24 credits, and each video charge appears before it starts.",
         "When the first ad only shows the box, make another file that shows a clasp. Check that new file again before you post it.",
         "When a live ad starts to feel familiar, change the room and keep the product. Review the new file before it replaces the old one.",
         "You pick the tone, the avatar, and the colors. You can edit the script before the voice is set.",
@@ -165,12 +165,12 @@
   ],
   "faq": [
     {
-      "q": "What does the ad tool hand you?",
+      "q": "What does an AI ad tool create?",
       "a": "A short ad from a listing address, or from lines you type. You still check the product, the words, and the rights before it goes live."
     },
     {
       "q": "How do I put an ad together?",
-      "a": "Describe the one detail that must show, or paste the listing. Read the draft out loud. Save the file only after the checks on this page."
+      "a": "Describe the one detail that must show, or paste the listing. Read the draft out loud. Save the file only after the checks are complete."
     },
     {
       "q": "When is this the right tool?",
@@ -189,7 +189,7 @@
       "a": "YouTube and a wide placement can take 16:9. A phone story wants 9:16. A square post wants 1:1. 4:3 and 3:4 are there too. TikTok and Meta are common places to run them, and you still confirm the placement before you spend."
     },
     {
-      "q": "Can a whole catalog go through at once?",
+      "q": "Can I create ads for multiple products at once?",
       "a": "Yes. Send many products through a batch or the API. Each file shows its credit cost before it starts, and each one still needs this checklist."
     },
     {

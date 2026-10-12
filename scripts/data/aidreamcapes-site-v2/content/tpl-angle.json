@@ -62,14 +62,14 @@
     },
     {
       "q": "Can I do this with no studio practice?",
-      "a": "Yes. Upload a clear photo of each side. You do not need a turntable. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
+      "a": "Yes. Upload a clear photo of each side. You do not need a turntable. If you also make a video, set captions, a song, and an AI voice in the editor."
     },
     {
-      "q": "Which products belong on this page?",
+      "q": "Which products work with this template?",
       "a": "Audio gear and other hard goods with sides to show. Clothing, food, and beauty live in the wider library. Open another template when the product is not a hard good with sides to show."
     },
     {
-      "q": "Which files can I bring?",
+      "q": "Can I upload my own photos and videos?",
       "a": "Bring a JPG, PNG, or WebP that shows the whole product. A short clip you have the rights to can come in when the ad needs motion you already filmed."
     },
     {
@@ -85,7 +85,7 @@
       "a": "Yes. Downloads have nothing stamped on them, so you can use them in listings, paid ads, and work you deliver for a client."
     },
     {
-      "q": "Why a template instead of a blank frame?",
+      "q": "Why use a template instead of starting from scratch?",
       "a": "The square crop and the shared backdrop are already chosen. Your job is the side you photographed, not building a frame from a blank file."
     },
     {
@@ -589,7 +589,7 @@
         "example": true,
         "who": "Headphone shop",
         "t": "An AI actor, then a trim",
-        "d": "A headphone shop picks an AI actor to hold the earcup, then trims that clip in the editor on this site."
+        "d": "A headphone shop picks an AI actor to hold the earcup, then trims that clip in the editor."
       },
       {
         "example": true,
@@ -601,7 +601,7 @@
         "example": true,
         "who": "Camera shop",
         "t": "Quick, on a paid plan",
-        "d": "A camera shop makes the dial view in AIVideosUGC. Starter is $24.50 a month, and each photo is 24 credits."
+        "d": "A camera shop makes the dial view in AIVideosUGC, on a paid plan with each photo at 24 credits."
       },
       {
         "example": true,

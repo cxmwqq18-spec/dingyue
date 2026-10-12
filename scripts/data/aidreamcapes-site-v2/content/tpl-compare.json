@@ -66,7 +66,7 @@
       "a": "Yes. Someone who has never cut a timeline can still make it. They pick the side-by-side layout. The photo of both items does the arranging."
     },
     {
-      "q": "Which catalogs fit a comparison?",
+      "q": "Which products can I compare with this template?",
       "a": "Any pair a shopper has to weigh can use it, such as a 12-ounce tumbler beside a 20-ounce one. Both sizes have to be in that one photo. A hero shot of a single tumbler is the wrong start."
     },
     {
@@ -564,7 +564,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How shops use a comparison video",
+    "h2": "How Shops Use a Comparison Video",
     "lead": "Both options stay in one picture. A voice, a script, or an on-screen person can name the difference.",
     "items": [
       {
@@ -624,8 +624,8 @@
       {
         "example": true,
         "who": "Pet shop",
-        "t": "Typed on this page",
-        "d": "A pet shop types the two bowl sizes on this page and checks the clip before it goes on the listing."
+        "t": "Type the Two Sizes",
+        "d": "A pet shop types the two bowl sizes and checks the clip before it goes on the listing."
       }
     ]
   },
@@ -641,7 +641,7 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "On this page",
+      "eyebrow": "What You Can Do",
       "h2": "Tools Around a Comparison Ad",
       "lead": "Voice, a script, and publishing stay beside the layout, so the comparison is finished in one place.",
       "items": [

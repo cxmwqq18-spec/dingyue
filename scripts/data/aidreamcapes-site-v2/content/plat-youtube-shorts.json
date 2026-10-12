@@ -18,7 +18,7 @@
       "a": "A hand setting the product down and saying who it is for, with an [AI actor](/ai-video-generation/ai-actors) you can revoice. It is a tall Short."
     },
     {
-      "q": "Can a Short earn more of the watch?",
+      "q": "Can AI create a YouTube Shorts ad?",
       "a": "A product opening is easier to stay with than a logo opening. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
     },
     {
@@ -147,7 +147,7 @@
       "items": [
         {
           "t": "A URL Becomes the Ad",
-          "d": "Paste the product page and get a Short. A 15-second file spends 60 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+          "d": "Paste the product page and get a Short. A 15-second file spends 60 credits, and the charge appears before you start."
         },
         {
           "t": "Avatar in the Ad",
@@ -235,7 +235,7 @@
     ]
   },
   "reviews": {
-    "h2": "How shops use YouTube Shorts ads",
+    "h2": "How Shops Use YouTube Shorts Ads",
     "lead": "A few ways shops open a Short from one product.",
     "items": [
       {

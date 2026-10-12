@@ -26,12 +26,12 @@
       "a": "The creator you wanted is booked through next Thursday, and a second opening line can still be made while you wait. A lipstick ad can get that new line without a new booking."
     },
     {
-      "q": "Which shops and teams is this library for?",
+      "q": "Who are these product ad templates for?",
       "a": "A founder with one yoga-mat photo, a marketer refreshing this month's ads, and an agency making a client file all land here. The shared step is that you already have a picture of the item."
     },
     {
       "q": "I have never edited a video. Can I still use a template?",
-      "a": "Yes. Add a photo of the watch and follow the three steps on this page. If a caption is too long, shorten it in the editor here, or drop a song under the voice."
+      "a": "Yes. Add a photo of the watch and follow the three steps. If a caption is too long, shorten it in the editor, or drop a song under the voice."
     },
     {
       "q": "Which kinds of shops have templates here?",
@@ -588,7 +588,7 @@
     },
     {
       "t": "Editor and a Music Library",
-      "d": "You can trim the blender clip to the sentence about the glass jar, and lay a track under it, in the editor on this site."
+      "d": "You can trim the blender clip to the sentence about the glass jar, and lay a track under it in the editor."
     },
     {
       "t": "From a Product Link to a Post",
@@ -606,7 +606,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How a shop uses a template",
+    "h2": "How a Shop Uses a Template",
     "lead": "Ten ways a shop uses a template, from a clip of someone holding the product to a spoken ad in another language.",
     "items": [
       {
@@ -631,7 +631,7 @@
         "example": true,
         "who": "Home shop",
         "t": "Room scene, then shorten",
-        "d": "A home shop builds a room scene, then shortens it in the editor on this site before it goes on the product page."
+        "d": "A home shop builds a room scene, then shortens it in the editor before it goes on the product page."
       },
       {
         "example": true,
@@ -643,7 +643,7 @@
         "example": true,
         "who": "Small team",
         "t": "Edit in one place",
-        "d": "A small team shortens the clip, adds a song, and checks the captions in the editor on this site."
+        "d": "A small team shortens the clip, adds a song, and checks the captions in the editor."
       },
       {
         "example": true,

@@ -50,14 +50,14 @@
     },
     {
       "q": "How does the sale scene come together?",
-      "a": "Upload one headphone photo, describe the setting, pick a size and a length, then add captions or the offer in the editor on this site."
+      "a": "Upload one headphone photo, describe the setting, pick a size and a length, then add captions or the offer in the editor."
     },
     {
       "q": "Why skip a shoot during sale week?",
       "a": "The blanket photo from the product page is enough to build the sale scene. You can spend the week on the offer, not on a new shoot."
     },
     {
-      "q": "Who should use it?",
+      "q": "Who is this Black Friday template for?",
       "a": "Shops that need a product clip for Black Friday, Cyber Monday, or a later holiday offer, on Facebook, Instagram, TikTok, or a product page."
     },
     {
@@ -692,7 +692,7 @@
       {
         "t": "One Sale Look for the Whole Shop",
         "icon": "Palette",
-        "d": "Sale posts can match across the shop when they reuse one setup. On this site you can edit, resize, and try another language. Many products can run in one go, or your software can start them through the API."
+        "d": "Sale posts can match across the shop when they reuse one setup. You can edit, resize, and try another language. Many products can run in one go, or your software can start them through the API."
       }
     ]
   }

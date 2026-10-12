@@ -24,7 +24,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Set the voice in the editor and save a file with nothing stamped on it. Add your headline and price after download."
+      "d": "Set the voice in the editor and save a file with nothing stamped on it. Then add your headline and price after download."
     }
   ],
   "maker": {
@@ -54,7 +54,7 @@
       "a": "Upload the backpack photo and write the shot order yourself: zipped, open, strap. You can change the words and pick 9:16 or another shape, then download."
     },
     {
-      "q": "Which clothing categories fit, and what else can it show?",
+      "q": "What products work in a carousel video ad?",
       "a": "If you have a photo of the garment, it can be the one product in the clip, whether it is a work jacket or a running short. A brush, a pan, or a planter can take the same treatment. Each file stays on one product."
     },
     {
@@ -67,7 +67,7 @@
     },
     {
       "q": "Can a beginner make one?",
-      "a": "Yes. Bring the candle photo. Fix the line about the scent in the editor on this site, set the voice, and download."
+      "a": "Yes. Bring the candle photo. Fix the line about the scent in the editor, set the voice, and download."
     },
     {
       "q": "How soon can I have a file to post?",
@@ -568,7 +568,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How shops use a carousel video ad",
+    "h2": "How Shops Use a Carousel Video Ad",
     "lead": "One product per clip. A voice, a script, or an on-screen person can stay with that same item.",
     "items": [
       {
@@ -638,7 +638,7 @@
         "example": true,
         "who": "Pet shop",
         "t": "Park setup",
-        "d": "A pet shop types the harness scene in the box on this page and checks the clip before posting.",
+        "d": "A pet shop types the harness scene in the box and checks the clip before posting.",
         "img": "n:guide:fx19-carousel-example-feature-06"
       }
     ]
@@ -677,7 +677,7 @@
         },
         {
           "t": "Editor, Music, and Another Language",
-          "d": "Change the script, the voice, and the words on screen in one editor. Add a song, or retell the clip in another language, without leaving this site."
+          "d": "Change the script, the voice, and the words on screen in one editor. Add a song, or retell the clip in another language, without switching tools."
         },
         {
           "t": "A Second Cut for Repeat Buyers",

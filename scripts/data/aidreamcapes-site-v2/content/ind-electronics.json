@@ -20,7 +20,7 @@
     },
     {
       "q": "Do I need video editing experience?",
-      "a": "No. A spoken voice and captions come with the clip, and you can fix them in the editor on this page."
+      "a": "No. A spoken voice and captions come with the clip, and you can fix them in the editor before you export."
     },
     {
       "q": "Can I make several versions of the same gadget?",
@@ -290,7 +290,7 @@
           "d": "You get a short script about a button press or an unboxing, and you can change a word in the editor."
         },
         {
-          "t": "Edit on This Page",
+          "t": "Edit Before You Export",
           "d": "You can trim the clip and fix a caption here, then download a file with no watermark."
         },
         {

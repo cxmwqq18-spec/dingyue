@@ -80,7 +80,7 @@
       "a": "Check whether the soap bottle still looks like the one on your shelf. The credit cost is on screen before the photo is made."
     },
     {
-      "q": "I have the photo. What do I type?",
+      "q": "What prompt should I use to change a product photo background?",
       "a": "Name one surface, such as pale wood under a candle. You get a square with that wood filled in behind the candle."
     },
     {
@@ -96,7 +96,7 @@
       "a": "The product should keep its angle and shape. Small printed words can shift, so compare the label with the photo you uploaded."
     },
     {
-      "q": "Do I get a see-through file?",
+      "q": "Can I download a transparent product image?",
       "a": "No. You download a finished photo with the new setting already filled in. For a plain main photo, make a separate white image."
     },
     {
@@ -251,14 +251,14 @@
       },
       {
         "t": "Save on Background Production",
-        "d": "One photo is 24 credits, shown before you start. That is the cost of a new setting, not a designer's afternoon.",
+        "d": "A new setting is a short job, not a designer's afternoon. The charge appears before the photo is made.",
         "img": "n:guide:k5-background-case-3",
         "alt": "Brown leather wallet on a cafe table."
       }
     ]
   },
   "reviews": {
-    "h2": "How shops use the new background",
+    "h2": "How Shops Use the New Background",
     "lead": "Example ways a shop uses the new photo, then a video, a voice, or another language.",
     "items": [
       {

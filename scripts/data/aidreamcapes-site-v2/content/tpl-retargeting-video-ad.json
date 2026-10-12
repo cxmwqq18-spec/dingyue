@@ -86,7 +86,7 @@
       "a": "Yes. Send it back to people who visited, put it on the fan's product page, or pass the file to a client who sells that fan."
     },
     {
-      "q": "Why a template for the second ad?",
+      "q": "Why use a retargeting video template?",
       "a": "You spend the effort on the reminder, not on inventing a structure. The wool throw they already viewed keeps this layout, and only the line about the weave is new."
     }
   ],
@@ -733,7 +733,7 @@
       },
       {
         "t": "Paid Plans",
-        "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos and videos draw from one balance."
+        "d": "Photos and videos draw from one credit balance on a paid plan."
       },
       {
         "t": "Ready for a Paid Placement",
