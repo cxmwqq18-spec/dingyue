@@ -12,19 +12,19 @@
     "worn jewelry product photos"
   ],
   "steps_h2": "How to Make AI Jewelry Model Photos in 3 Simple Steps",
-  "steps_lead": "Leave with a jewelry photo that still shows every link: start from the chain photo, choose the one edit, and download.",
+  "steps_lead": "Leave with a jewelry photo that still shows every link. Start from the silver pendant, choose the one edit, and download.",
   "steps": [
     {
       "t": "Upload Your Jewelry Photo",
-      "d": "Photograph the trace chain so the clasp sits inside the frame, even when the links disappear into the cloth."
+      "d": "Upload the silver teardrop pendant with the clasp in frame. You get a photo that still matches that chain."
     },
     {
       "t": "Pick a Wear Scene",
-      "d": "Pick the edit this listing needs. A pendant whose length matters wants a neck; a hoop matching its sisters wants the shared crop."
+      "d": "Describe the pendant at the collarbone. You get the same silver teardrop worn, and that edit keeps the chain and clasp."
     },
     {
       "t": "Download and Post",
-      "d": "You get a file whose links and clasp still match the shot you took."
+      "d": "Download the square and compare the clasp with your shot. Post it when the links and stones still match."
     }
   ],
   "maker": {
@@ -616,9 +616,9 @@
     "cta"
   ],
   "definition": {
-    "title": "What This Jewelry Template Is For",
+    "title": "Jewelry Photos Need a Careful Edit",
     "paras": [
-      "A clasp, a link, or a stone stays recognizable, starting from the shot you already have.",
+      "A clasp, a link, or a stone has to stay recognizable, and the shot you already have is the start. Clearing the cloth still takes care on a fine chain.",
       "A neck view shows how far a pendant drops. A plain desk works when the listing does not need a person for scale. The API can run the next photo in that same look."
     ]
   },
@@ -644,16 +644,16 @@
     }
   ],
   "trust": {
-    "h2": "What Changes for a Jewelry Catalog",
+    "h2": "What a Jewelry Catalog Gains",
     "lead": "Retouch bills drop, the email matches the site, and the piece on both still looks like your photo.",
     "items": [
       {
-        "t": "Retouch Bills Get Smaller",
-        "d": "A full tray of studs can start from photos you already shot. You are not mailing each stud out for a hand cutout."
+        "t": "Cut the Retouch Bill",
+        "d": "A full tray of studs can start from photos you already shot. You spend 24 credits a photo instead of mailing each stud out for a hand cutout."
       },
       {
         "t": "The Email Matches the Site",
-        "d": "The bangle on the product page and the bangle in the newsletter can share a background you chose, so the gold does not go warm in one place and cold in the other."
+        "d": "The bangle on the product page and the bangle in the newsletter can share one background. The gold does not go warm in one place and cold in the other."
       },
       {
         "t": "You Approve the File",
@@ -672,7 +672,7 @@
       },
       {
         "t": "Keep the Metal You Shot",
-        "d": "The gold stays the color you shot, on an AI model or on a styled table.",
+        "d": "The gold stays the color you shot, on an AI actor or on a styled table, and the shimmer stays with the piece.",
         "icon": "Sparkles"
       },
       {
@@ -689,7 +689,7 @@
     },
     {
       "t": "A Shadow Under the Metal",
-      "d": "A diamond table or a platinum edge stays readable, and the gold keeps the color from your photo."
+      "d": "A soft shadow sits under the metal so a diamond table or a platinum edge stays readable. The gold keeps the color from your photo."
     },
     {
       "t": "The Heirloom Stays as Shot",
@@ -701,17 +701,17 @@
     },
     {
       "t": "On a Neck, for Scale",
-      "d": "A pendant's length is easy to judge at the collarbone on an AI model, and you do not book a model for that shot. A ring can use a hand for scale."
+      "d": "A pendant's length is easy to judge at the collarbone on an AI actor, and you do not book a model for that shot. A ring can use a hand for scale."
     },
     {
       "t": "Batch the Whole Tray",
       "d": "When one brooch looks right, that crop can run across the whole tray. The API can start the next piece from your catalog."
     }
   ],
-  "benefits_h2": "The Jewelry Edits, Side by Side",
+  "benefits_h2": "Jewelry Edits for the Whole Tray",
   "benefits_lead": "Clear the cloth, light the metal, and keep the piece looking like the photo you took.",
   "closing": {
-    "h2": "Share One Look Across the Upload",
+    "h2": "Hold a Quality Bar on Every Photo",
     "paras": [
       "If a link fused or a prong shifted, do not put that file on the site.",
       "A large upload can take the same look through the API, so the rest of the catalog matches the photo you liked."

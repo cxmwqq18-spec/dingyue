@@ -4,7 +4,7 @@
   "description": "Make Shopify product photos in a new background, or many at once, plus a short video for your store. See the cost first, then download with no logo on the file.",
   "h1": "Shopify Product Photos for Pages, Grids and Clips",
   "eyebrow": "Shopify stores",
-  "lead": "You can show the product in a room you never rented, then download the Shopify product photo and place it on the page.",
+  "lead": "Make a Shopify product photo in a room you never rented, then place that file on the product page.",
   "card": "Shopify product photos, new backgrounds, and short videos, made one by one or many at a time.",
   "secondary_keywords": [
     "Shopify product images",
@@ -14,36 +14,36 @@
   ],
   "faq": [
     {
-      "q": "What does this photo tool make for a store?",
+      "q": "What is a Shopify product photo tool?",
       "a": "It builds a Shopify product photo from a picture you already shot, so the product page can go up without a location day."
     },
     {
-      "q": "How does a Shopify picture get made?",
-      "a": "Upload the product and say where you want it, such as on a bench. You get a file back, and you can ask for more light before you download."
+      "q": "How does a Shopify product photo get made?",
+      "a": "Upload the product and say where you want it, such as the bowls on a light table. You get a file back, and you can ask for more light before you download."
     },
     {
       "q": "Which photo tool should a Shopify store use?",
-      "a": "Use one that can restage your real product, hold a consistent look, and hand you a file you upload yourself. The finished file is ready for your store. We do not rank ourselves against other tools."
+      "a": "Use one that restages your real product, holds a consistent look across the grid, and hands you a file you upload yourself. AIVideosUGC shows the cost before the photo runs. The finished file is ready for your store."
     },
     {
-      "q": "Can I make these photos without paying?",
+      "q": "Can I make Shopify product photos without paying?",
       "a": "No. Every photo spends credits on a paid monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. There is no zero-cost way to run a photo."
     },
     {
-      "q": "Do these photos belong on a store?",
+      "q": "Are these photos a fit for a Shopify store?",
       "a": "Yes. The same product photo can sit on the Shopify page and in a paid post. You spend credits, not a location fee."
     },
     {
-      "q": "What does a Shopify product photo tool create?",
+      "q": "What does a Shopify product photo tool give you?",
       "a": "You get another scene when the collection needs one, and you can take the old background off a phone photo before that scene is made."
     },
     {
-      "q": "Can I use the photos in public?",
-      "a": "Yes. The download can go on the product page and in your ads. If a form asks who owns the file, the answer is in the terms you accepted with the plan."
+      "q": "Can I use the photos on my store and in ads?",
+      "a": "Yes. The download can go on the product page and in your ads, with no watermark. You still need the right to use the photo you uploaded. The terms you accepted with the plan cover the file."
     },
     {
       "q": "What should the upload look like?",
-      "a": "Start with a clear, well-lit photo of the whole item. [how to take product photos for AI](/guides/product-photo-tips) shows what kind of photo works."
+      "a": "Start with a clear, well-lit photo of the whole item, like the ceramic bowls with every bowl in frame. [how to take product photos for AI](/guides/product-photo-tips) shows what kind of photo works."
     },
     {
       "q": "Can I refresh a whole collection together?",
@@ -51,19 +51,19 @@
     }
   ],
   "templates_lead": "Pick a matching look for the collection, the product page, and a short video.",
-  "cta_lead": "Turn one product photo into the collection tile, the scene, and the clip you add in Shopify.",
+  "cta_lead": "Turn one product photo into the collection tile, the table scene, and the clip you add in Shopify.",
   "steps": [
     {
       "t": "Upload Your Product or Describe It",
-      "d": "Upload the folded throw. If you only have a sentence, describe a window seat and generate from that instead."
+      "d": "Upload one clear photo of the ceramic bowls. If you only have a sentence, describe them on a light table."
     },
     {
       "t": "Choose Your Image Style",
-      "d": "Ask for the throw on a wooden bench with soft afternoon light. You are not picking a named image engine."
+      "d": "Ask for the four bowls on a dining table with a little fruit. You are not picking a named image engine."
     },
     {
       "t": "Download and Add It",
-      "d": "If the fringe is hidden, describe it back into view, then download and add the file in Shopify admin."
+      "d": "If a bowl color shifts, describe that color back, then download and add the file in Shopify."
     }
   ],
   "visual": {
@@ -115,7 +115,7 @@
       }
     }
   },
-  "benefits_h2": "Shopify Product Photos Can Change Rooms",
+  "benefits_h2": "Give Your Shopify Products a Fresh Look",
   "benefits": [
     {
       "t": "A Fresh Collection Grid",
@@ -131,26 +131,26 @@
     },
     {
       "t": "Photo in a Real Room",
-      "d": "You get a lifestyle frame of the linen basket on a bright shelf, and the plain product shot stays a separate download.",
+      "d": "You get a lifestyle frame of the linen basket on a bright shelf. The plain product shot stays a separate download.",
       "img": "n:guide:fx42-shopify-benefit-scene",
       "alt": "Adult hands place a plain linen storage basket on a bright shelf."
     }
   ],
   "steps_h2": "Steps to Make a Shopify Photo or Video",
-  "steps_lead": "The Shopify product photo is ready to drop into the product admin.",
+  "steps_lead": "The Shopify product photo of the bowls is ready to drop into the product admin.",
   "more_sections": [
     {
       "eyebrow": "Shopify files",
-      "h2": "Shopify Product Photos a Page Can Use",
-      "lead": "A collection tile, a scene, and a Shopify product video are separate downloads.",
+      "h2": "Examples of Shopify Product Photos",
+      "lead": "A collection tile, a table scene, and a Shopify product video are separate downloads.",
       "items": [
         {
           "t": "The Tile Shoppers See",
-          "d": "You get the whole product, square, with nothing fighting it. Use this as the image in the collection."
+          "d": "You get the whole set of ceramic bowls, square, with nothing fighting them. Use this as the image in the collection."
         },
         {
           "t": "Lifestyle Photo Beside the Grid",
-          "d": "The gallery frame shows the product in a real seat, not on the white sweep used in the grid. Shoppers see the size against something familiar."
+          "d": "The gallery frame shows the bowls on a dining table with a little fruit, not on the white sweep used in the grid. Shoppers see the size against something familiar."
         },
         {
           "t": "Product Video on the Page",
@@ -170,37 +170,37 @@
   ],
   "benefits_lead": "One photo is enough for the next tile on the Shopify collection grid.",
   "reasons": {
-    "h2": "Why Stores Make Product Photos Without a Shoot",
-    "lead": "The next product photo does not need a location scout.",
+    "h2": "Why Stores Skip the Photo Shoot",
+    "lead": "The next Shopify product photo does not need a location, a model, or a prop rental.",
     "items": [
       {
-        "t": "Photos Without the Shoot Bill",
-        "d": "A product photo is 24 credits. The charge appears before you start, so you can budget the images you were going to reshoot.",
+        "t": "Photos at Plan Prices",
+        "d": "A product photo is 24 credits. Starter is $24.50 a month for 200 credits. The charge shows before you start, so you can budget the reshoot.",
         "icon": "Coins"
       },
       {
-        "t": "Photos Before the Photographer",
-        "d": "You can upload tonight and put a file on the product page, even when the photographer's next open morning is weeks out.",
+        "t": "Photos Before the Shoot Date",
+        "d": "Upload tonight and put a file on the product page, even when the photographer's next open morning is weeks away.",
         "icon": "Images"
       },
       {
-        "t": "The Collection in One Run",
+        "t": "A Whole Grid in One Run",
         "d": "Generate Shopify product photos for many products together when the grid needs a refresh. It is closer to restocking the page than booking another location.",
         "icon": "Layers"
       },
       {
-        "t": "No Chair Rental Required",
-        "d": "The new Shopify photo can show the product over a wooden chair you never bought, and nobody has to be booked to sit in it.",
+        "t": "No Model and No Props",
+        "d": "The new Shopify photo can show the product on a wooden chair you never bought, and nobody has to be booked to sit in it.",
         "icon": "Sparkles"
       },
       {
-        "t": "Product Photos After Hours",
-        "d": "You can export a new Shopify product photo late at night, after the orders are packed, when the studio you used to rent is closed.",
+        "t": "Photos After the Shop Closes",
+        "d": "Export a new Shopify product photo late at night, after the orders are packed, when the studio you used to rent is closed.",
         "icon": "Clock"
       },
       {
-        "t": "Two Photos, Then Choose",
-        "d": "You can keep the Shopify photo that matches the collection. Make one frame in a dim room and one in a bright hallway, then pick.",
+        "t": "Two Scenes, Then Choose",
+        "d": "Make one frame in a dim room and one in a bright hallway, then keep the Shopify photo that matches the collection.",
         "icon": "RefreshCw"
       }
     ]
@@ -313,7 +313,7 @@
       }
     ]
   },
-  "related_h2": "Tools for Shopify Product Photos and Videos",
+  "related_h2": "Tools for Shopify Product Photos",
   "related_lead": "Open the next tool for another photo, a clip, or a template.",
   "relatedLinks": [
     "product-videos",

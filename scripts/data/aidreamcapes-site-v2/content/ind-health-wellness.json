@@ -4,7 +4,7 @@
   "description": "Turn one wellness product photo into routine photos and creator-style ads for product pages and social feeds. Files have no watermark and are ready to post.",
   "h1": "AI Lifestyle Photos for Wellness Brands, Set in a Real Routine",
   "eyebrow": "Health & Fitness",
-  "lead": "A buyer recognizes the bottle when it sits next to a breakfast bowl she already owns. Upload that bottle and an AI avatar can set it on the table.",
+  "lead": "A wellness buyer should recognize the product in a routine they already know. Upload one photo and an AI avatar can set it on the table, with no creator to book.",
   "card": "Routine photos and short clips for supplements, tea, and gear.",
   "secondary_keywords": [
     "supplement lifestyle photos",
@@ -28,7 +28,7 @@
     },
     {
       "q": "Do I need a model or a creator?",
-      "a": "No. Pick an AI avatar. The clip can include a spoken line and captions. Hire a real person only when you need a true customer story."
+      "a": "No. Pick an AI avatar from 53 actors. The clip can include a spoken line and captions. Hire a real person only when you need a true customer story."
     },
     {
       "q": "Can I make a Story from this?",
@@ -36,7 +36,7 @@
     },
     {
       "q": "What do the lengths cost?",
-      "a": "A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still image spends 24 credits. You see the number before you start. If the clip fails, those credits come back."
+      "a": "A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still spends 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the number before you start. If the clip fails, those credits come back."
     },
     {
       "q": "Which shapes can a clip use?",
@@ -48,23 +48,23 @@
     },
     {
       "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send that link from your own shop through the API. Ask for a short script and pick an AI avatar. Make a few versions, including one in another language, and trim the clip in the editor before you export."
+      "a": "Yes. Paste the product page, or send that link from your own shop through the API. Ask for a short script and pick an AI avatar. Make a few versions, including one in another language, then trim the clip in the editor. Add a voice, captions, and a music track before you post it."
     }
   ],
   "steps_h2": "How to Make Wellness Product Photos in 3 Simple Steps",
-  "steps_lead": "You download a routine ad you can post. Add the product, then choose who is in it.",
+  "steps_lead": "You download a routine photo of the teal yoga mat that you can post, without booking a creator.",
   "steps": [
     {
       "t": "Upload Your Product",
-      "d": "Stand the supplement bottle so the front label is centered. That photo is the product in the routine."
+      "d": "Unroll the teal yoga mat so the full mat is visible. That photo is the product in the morning routine."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick an AI avatar who looks like the person starting that routine."
+      "d": "Pick an AI avatar who looks like someone about to stretch beside that mat."
     },
     {
       "t": "Generate and Publish",
-      "d": "The file is ready to download for the feed you already use."
+      "d": "Download the file for the feed you already use. A clip can add a spoken voice and captions."
     }
   ],
   "visual": {
@@ -106,7 +106,7 @@
       }
     }
   },
-  "templates_lead": "Pick a routine scene for the product. Leave health results out of the frame.",
+  "templates_lead": "Pick a routine scene for the mat, the tea, or the bands. Leave health results out of the frame.",
   "cta_lead": "A routine ad can start from a product link or one photo, with a spoken line and captions.",
   "relatedLinks": [
     {
@@ -139,58 +139,58 @@
     "href": "/app/create?industry=health-wellness"
   },
   "reasons": {
-    "h2": "When a Routine Ad Cannot Wait on a Reply",
-    "lead": "The next bottle can still appear in a morning scene if last week's creator never delivered.",
+    "h2": "Create Health and Fitness Ads Without the Wait",
+    "lead": "A yoga mat, a breakfast table, and a set of bands can each start from one photo. You are not chasing a creator.",
     "items": [
       {
-        "t": "A Routine, Made Faster",
-        "d": "A rolled mat on a wood floor can be the whole ad. The credit cost is on screen first.",
+        "t": "Skip the Creator Chase",
+        "d": "A rolled teal yoga mat on a wood floor can be the ad this afternoon. You are not waiting on someone else to film that routine.",
         "img": "n:guide:fx32-health-benefit-yoga"
       },
       {
-        "t": "Photos and Clips for Every Channel",
-        "d": "One photo can also become the square still for the product page. The second file does not wait on a separate crew.",
+        "t": "Spend Credits, Not a Crew",
+        "d": "The breakfast-table scene is a photo you can budget. A still is 24 credits, the price shows before you start, and there is no creator invoice.",
         "img": "n:guide:b2f3-ind-health-breakfast-r1"
       },
       {
-        "t": "Show the Gear in a Morning",
-        "d": "The bands in a morning corner give the shopper a scene she can picture, and the ad points to the product page.",
+        "t": "You Set the Morning Scene",
+        "d": "Put the bands in the corner you want and point the ad at the product page. The scene stays a routine, not a claim about a body.",
         "img": "n:guide:fx32-health-benefit-bands"
       }
     ]
   },
   "platforms": {
-    "h2": "Where a Routine Ad Can Run",
-    "lead": "One product photo can feed a phone feed and a listing. Match the shape to the place.",
+    "h2": "Where a Fitness Ad Can Run",
+    "lead": "One product photo can feed a phone feed and a listing. Match the shape to the place you post.",
     "items": [
       {
-        "t": "TikTok Routines",
-        "d": "A tall phone routine for a wellness post in the TikTok feed.",
+        "t": "Post a TikTok Routine",
+        "d": "A tall TikTok routine of the yoga mat, ready for the phone feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "Instagram Routine Stories",
-        "d": "A square photo or a tall story of the product in a routine.",
+        "t": "Share an Instagram Story",
+        "d": "A square photo or a tall story of the product in a morning routine.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "Facebook Feed Ads",
-        "d": "A feed photo with room for your offer after you download.",
+        "t": "Run a Facebook Feed Ad",
+        "d": "A feed photo with room for your offer after you download the file.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Routines",
-        "d": "A short phone-screen routine that opens on one action.",
+        "t": "Cut a Shorts Routine",
+        "d": "A short phone-screen routine that opens on one action, such as the unroll.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Listing Photos",
-        "d": "A clean product image for the listing, plus extra views in the gallery.",
+        "t": "Fill the Amazon Gallery",
+        "d": "A clean product image for the listing, plus extra views of the routine in the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Routine Photos",
-        "d": "Matching routine images for the product page and the collection.",
+        "t": "Match the Shopify Grid",
+        "d": "Matching routine images for the product page and the collection grid.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -268,7 +268,7 @@
     ]
   },
   "cta_title": "Place the Product in a Routine",
-  "related_h2": "Wellness Routines and Listing Photos",
+  "related_h2": "Wellness Photos, Clips, and Listings",
   "maker": {
     "options": [
       [

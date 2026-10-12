@@ -4,7 +4,7 @@
   "description": "From one product photo, make ads and photos for TikTok, Instagram, Facebook, YouTube Shorts, Amazon, and Shopify. See the sizes and download with no watermark.",
   "h1": "AI Ads and Product Photos by Platform, Sized for Where You Post",
   "eyebrow": "Choose where you post",
-  "lead": "Start with a still of what you sell, or the address of the listing, and leave with a UGC ad sized for the app that already brings orders. An AI avatar, a voice, and captions come in the same file.",
+  "lead": "AI ads and product photos by platform start from a still of what you sell, or the address of the listing. You leave with a UGC ad sized for the app that already brings orders. An AI avatar, a voice, and captions come in the same file.",
   "card": "Frames and ideas for the six channels this directory covers.",
   "secondary_keywords": [
     "social media ad sizes for products",
@@ -13,7 +13,7 @@
     "ecommerce ads by channel"
   ],
   "intro": [
-    "AI UGC is a creator-style ad made without booking a crew. An avatar delivers a short review, a demo, or a first look at the package, in the frame that channel expects. You brief the idea once, then export a separate shape when the next app wants a different ratio."
+    "AI UGC is a creator-style ad made without booking a crew. An avatar delivers a short review, a demo, or a first look at the package, in the frame that app already uses. You still supply the product photo and the claim you can stand behind."
   ],
   "faq": [
     {
@@ -195,7 +195,7 @@
   "steps": [
     {
       "t": "Add the Product",
-      "d": "Open a project and say who the product is for, like a buyer who hates sticky sunscreen. One bottle photo is all you need."
+      "d": "Open a project and say who the bottle is for, like a buyer who hates sticky sunscreen. One bottle photo is all you need."
     },
     {
       "t": "Pick the Shape",
@@ -203,7 +203,7 @@
     },
     {
       "t": "Publish or Download",
-      "d": "Download the moisturizer clip and drop it into the ad account you already use for that product."
+      "d": "Download the moisturizer clip and drop it into the ad account you already use. You can also send it from the project."
     }
   ],
   "directory_specs": {
@@ -439,8 +439,51 @@
   "closing": {
     "h2": "Know the Cost Before You Render",
     "paras": [
-      "Play the cut with the sound off and read the captions before you put money behind it. The monthly plans and their credit balances are on the [pricing page](page:pricing).",
-      "A still is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The cost is on screen before the job starts."
+      "Play the cut with the sound off and read the captions before you put money behind it. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The balances are on the [pricing page](page:pricing).",
+      "A still is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The cost is on screen before the job starts. A failed job returns the credits."
+    ]
+  },
+  "definition": {
+    "title": "What Is AI UGC",
+    "paras": [
+      "AI UGC is a creator-style ad made from your product photo. An AI avatar says a line you approve, with captions and a voice, and you did not book a crew.",
+      "You can start from a listing link or from one still. The file can be a review, a short demo, or a first look at the package, in the frame the app already uses."
+    ]
+  },
+  "compare_table": {
+    "title": "AIVideosUGC vs Filming It Yourself",
+    "lead": "The same channel ad, two ways to get the file.",
+    "columns": [
+      "",
+      "AIVideosUGC",
+      "Filming it yourself"
+    ],
+    "rows": [
+      [
+        "Where you start",
+        "One product photo or a listing link",
+        "A person, a place, and a time"
+      ],
+      [
+        "Who is on camera",
+        "One of 53 AI actors, or a face you save",
+        "Someone you book"
+      ],
+      [
+        "What you pay",
+        "Starter $24.50 a month for 200 credits, Pro $35 for 300, Premium $63 for 600",
+        "A day rate you agree before the shoot"
+      ],
+      [
+        "How long the file is",
+        "6, 10, 15, or 30 seconds",
+        "As long as the take you keep"
+      ],
+      [
+        "Where it can go",
+        "TikTok, Meta, or a download with no watermark",
+        "You export the file and upload it yourself"
+      ]
     ]
   }
 }

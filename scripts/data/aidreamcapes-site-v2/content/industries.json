@@ -4,7 +4,7 @@
   "description": "Find product photos and videos matched to your industry, from skincare to sneakers and snacks. Make them from one photo, ready to download and post.",
   "h1": "AI Product Content by Industry, Picked for What You Sell",
   "eyebrow": "Browse by industry",
-  "lead": "One photo of the item on your desk is enough to start a creator-style ad. Open the row that matches it.",
+  "lead": "AI product content by industry starts from the item on your desk. Open the row that matches it and make a creator-style ad from one photo.",
   "card": "Photo and video ideas matched to what you sell.",
   "secondary_keywords": [
     "AI product photos by category",
@@ -13,8 +13,8 @@
     "AI images for small online shops"
   ],
   "intro": [
-    "Open the category of the item you have. That page shows the moment shoppers use to decide, then you make a photo or a video from one picture.",
-    "A video can include a script, an AI avatar, a voiceover, captions, and a track from the music library. Send it to TikTok, Facebook, or Instagram, or download the file."
+    "Open the category of the item you have. That page shows the moment shoppers use to decide, then you make a photo or a video from one picture. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
+    "A video can include a script, an AI avatar, a voiceover or captions, and a track from the music library. Send it to TikTok, Facebook, or Instagram, or download the file."
   ],
   "faq": [
     {
@@ -43,7 +43,7 @@
     },
     {
       "q": "Can a listing URL become the whole video ad?",
-      "a": "Yes. A public face-oil page can supply the photo and the product name. Your shop software can send that link through the API."
+      "a": "Yes. A public face-oil page can supply the photo and the product name. The API is not required for a single file, and your shop software can still send that link."
     },
     {
       "q": "Do I need a creator's permission to run the ad?",
@@ -59,7 +59,7 @@
     },
     {
       "q": "Can an AI avatar stand in for a human creator?",
-      "a": "Yes, for the extra openings. If buyers already follow a specific founder, film that founder for the main spot, and use an AI avatar for the openings you would not hire out."
+      "a": "Yes, for the extra openings. If buyers already follow a specific founder, film that founder for the main spot. Use an AI avatar for the openings you would not hire out."
     },
     {
       "q": "How many languages can the avatar speak?",
@@ -75,7 +75,7 @@
     },
     {
       "q": "Can the avatar speak in a cloned voice?",
-      "a": "Yes. Give it a short sample from a speaker you are allowed to use, and an AI avatar can say a new script in that voice on the next product."
+      "a": "Yes. Give it a short sample from a speaker you are allowed to use. An AI avatar can say a new script in that voice on the next product."
     },
     {
       "q": "Can I make these ads without hiring a creator?",
@@ -272,8 +272,8 @@
     "templates",
     "platforms"
   ],
-  "cta_title": "Make the Next Ad in Your Category",
-  "cta_lead": "Make the next ad from the photo already on the listing. Open the category for the item on your desk.",
+  "cta_title": "Open the Row for Your Item",
+  "cta_lead": "Make the next ad from the photo already on the listing. Open the category for the item on your desk and see the credit cost first.",
   "reasons": {
     "h2": "Included With Every Export",
     "lead": "An avatar, a language, the frames, and your logo can ride along with every category you open.",

@@ -4,7 +4,7 @@
   "description": "Build a Black Friday sale scene from one product photo. Type the confirmed discount, code, and end date in the editor, then publish the version you approve.",
   "h1": "Create Black Friday Ad Creatives Fast",
   "eyebrow": "Black Friday ad creatives",
-  "lead": "Build the sale scene from the product photo you already use. You type the code when the number is final.",
+  "lead": "Build Black Friday ad creatives from the product photo you already use. You type the code when the number is final.",
   "secondary_keywords": [
     "Black Friday Video Ads",
     "Black Friday banner ideas",
@@ -54,8 +54,8 @@
       "a": "Yes. Set it in the editor and move it later if you need to. It stays off the product picture, so a new deadline can keep the same scene."
     },
     {
-      "q": "Can I create Black Friday ads through an API?",
-      "a": "Yes. Your tools can ask for a sale ad from a product link through the API. You approve the file before anyone else sees it."
+      "q": "Can shop tools request an ad if the API is not a separate product?",
+      "a": "The API is not a second login. Your tools can ask for a sale ad from a product link. You approve the file before anyone else sees it."
     }
   ],
   "examples": {
@@ -95,7 +95,7 @@
       }
     ]
   },
-  "cta_lead": "The sale scene can be finished with space left for the offer. Type the code, the price, and the end date when those numbers are real.",
+  "cta_lead": "Finish the sale scene with space left for the offer. Type the code, the price, and the end date when those numbers are real. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
   "steps": [
     {
       "t": "Paste Your Product Link",
@@ -103,11 +103,11 @@
     },
     {
       "t": "Create Your Actor",
-      "d": "Choose an AI avatar who stands to the side so the product stays fully visible."
+      "d": "Choose an AI avatar who stands to the side so the product stays fully visible. The offer stays yours to type."
     },
     {
       "t": "Set the Script and Publish",
-      "d": "Type the code in the editor and send the file to the feed you use. You can also download it."
+      "d": "Type the code and the end date in the editor, then send the file to the feed you use."
     }
   ],
   "visual": {
@@ -225,11 +225,11 @@
       }
     }
   },
-  "benefits_h2": "What Goes Into a Black Friday Ad",
+  "benefits_h2": "What a Black Friday Ad Includes",
   "benefits": [
     {
       "t": "An Avatar Beside the Deal",
-      "d": "An AI avatar beside the pump bottle keeps the bottle large in the frame, with clear space in the kraft box for the code you will type.",
+      "d": "An AI avatar can stand beside the pump bottle while the bottle stays large in the frame. Leave clear space in the kraft box for the code you will type.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for a Black Friday ad."
     },
@@ -241,7 +241,7 @@
     },
     {
       "t": "The Sale Line in Two Languages",
-      "d": "The lunch-bag line can play in the listing language first, then again in another language, while the bag in the box stays the same.",
+      "d": "The lunch-bag line can play as a voiceover or captions in the listing language. Then play it in another language, while the bag in the box stays the same.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
       "alt": "Adult hands place an insulated lunch bag into a kraft shipping box."
     },
@@ -253,7 +253,7 @@
     }
   ],
   "steps_h2": "How to Create Black Friday Banners in 3 Simple Steps",
-  "steps_lead": "You leave room in the scene for the code, and the product photo comes from the sale page.",
+  "steps_lead": "You leave room in the scene for the code. The product photo comes from the sale page, and you type the offer when it is final.",
   "relatedLinks": [
     {
       "id": "occ-sale-discount",
@@ -318,7 +318,7 @@
       },
       {
         "t": "Know the Spend Before You Run",
-        "d": "You know the spend before you commit, with photo and video charges shown on screen, so the sale push stays on budget."
+        "d": "You know the spend before you commit. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
       },
       {
         "t": "A Failed Job Returns the Credits",

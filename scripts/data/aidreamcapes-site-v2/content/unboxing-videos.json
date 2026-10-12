@@ -4,39 +4,39 @@
   "description": "Create unboxing videos from one product photo. Show the box, tissue, product and included pieces for TikTok, YouTube Shorts, store pages and paid ads.",
   "h1": "AI Unboxing Video Maker: Open the Parcel from One Photo",
   "eyebrow": "AI unboxing video maker",
-  "lead": "A product photo can still become an opening shot for the ad. AIVideosUGC builds that unboxing from the photo or the product page.",
+  "lead": "A headphones photo can still become the opening shot. AIVideosUGC builds that unboxing from the photo or the product page, box and pair both in frame.",
   "secondary_keywords": [
     "unboxing video maker",
     "product unboxing video for TikTok",
     "packaging reveal video",
     "AI unboxing ad"
   ],
-  "benefits_h2": "What You Gain From an AI Unboxing",
-  "benefits_lead": "You get the next open without clearing a table for a camera and a free afternoon.",
+  "benefits_h2": "Benefits of an AI Unboxing Video",
+  "benefits_lead": "You get the next headphones open without clearing a table for a camera and a free afternoon.",
   "benefits": [
     {
-      "t": "A Full Open, Quickly",
-      "d": "You get the tea tin's lid lift with the sentence already in it, ready to try once that tin is the one you plan to announce.",
+      "t": "A Full Open Without a Shoot",
+      "d": "You get the headphones coming out of the box, with the sentence already in it. Try it once that pair is the one you plan to announce.",
       "icon": "bolt"
     },
     {
-      "t": "A Plan Instead of a Shoot Fee",
+      "t": "Credits Instead of a Shoot",
       "d": "A 15-second open uses 60 credits, and a failed clip returns those credits. The charge appears before each render.",
       "icon": "coins"
     },
     {
-      "t": "As Many Opens as the Test Needs",
-      "d": "Two opens can share one photo of a face oil. One talks about a gift, one talks about the scent. Buy the audience that answers.",
+      "t": "Another Open From One Photo",
+      "d": "Two opens can share one photo of the navy headphones. One talks about the fit, one talks about the case. Buy the audience that answers.",
       "icon": "layers"
     },
     {
       "t": "Refresh Before the Ad Tires",
-      "d": "By the third week a sneaker open can feel familiar. Change the first sentence, keep the shoe in frame, and replace the tired cut.",
+      "d": "When a headphones open starts to feel familiar, change the first sentence, keep the pair in frame, and replace the tired cut.",
       "icon": "refresh"
     },
     {
-      "t": "Your Tone, Followed",
-      "d": "A chocolate-bar line can use the name you sell under. You set the words, and the actor does not upgrade them to a fancier label.",
+      "t": "Your Words Stay on Camera",
+      "d": "A headphones line can use the name you sell under. You set the words, and the actor does not upgrade them to a fancier label.",
       "icon": "check"
     },
     {
@@ -46,15 +46,15 @@
     }
   ],
   "steps_h2": "How to Create an Unboxing Video in 3 Simple Steps",
-  "steps_lead": "A product photo goes in. The file you download is the open.",
+  "steps_lead": "A white candle photo goes in. The file you download is that jar coming out of the box.",
   "steps": [
     {
       "t": "Add the Product",
-      "d": "Upload the beeswax candle photo. Add a note if you want tissue in the shot. The mailer photo itself is optional."
+      "d": "Upload the white candle jar photo. Add a note if you want tissue in the shot. The mailer photo itself is optional."
     },
     {
       "t": "Let AI Build the Unboxing",
-      "d": "The actor lifts the lid and the beeswax candle is the thing in frame, with a sentence you can edit before you keep the take."
+      "d": "The actor lifts the lid and the white candle jar fills the frame. You can edit the sentence before you keep the take."
     },
     {
       "t": "Download or Publish",
@@ -78,22 +78,22 @@
   "faq": [
     {
       "q": "What is an AI unboxing video?",
-      "a": "It shows a mailer opening onto the product you sell, with an actor who can name what is inside. You do not film the table."
+      "a": "It shows a mailer opening onto the headphones you sell, with an actor who can name what is inside. You do not film the table."
     },
     {
       "q": "How do I make an unboxing with AI?",
-      "a": "Start with a product photo, and say if you want tissue in the shot. Download the open after you approve the sentence the actor will speak."
+      "a": "Start with the headphones photo, and say if you want tissue in the shot. Download the open after you approve the sentence the actor will speak."
     },
     {
-      "q": "Which page should I use for an unboxing ad?",
+      "q": "Which AI unboxing flow should I use?",
       "a": "Use this flow when the product should come out of a mailer on camera. A general spoken ad, with no parcel, starts on [UGC video ads](page:video-ads)."
     },
     {
       "q": "Do I have to pay to make an unboxing?",
-      "a": "Yes. Every clip spends credits on a monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 15-second open uses 60 credits, and failed clips return those credits."
+      "a": "No free run. Every clip spends credits on a monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 15-second open uses 60 credits, and failed clips return those credits."
     },
     {
-      "q": "Can I use the clip in a paid ad?",
+      "q": "Can I run the unboxing as a paid ad?",
       "a": "Yes. The clip on a paid plan can be the ad you pay to run, and the file has no watermark. Do not present it as a buyer filming a package they received."
     },
     {
@@ -105,18 +105,18 @@
       "a": "Yes. Each product can get an open from its own photo. Your shop software can request those jobs through an API."
     },
     {
-      "q": "Can an AI unboxing replace a filmed unboxing?",
-      "a": "A filmed open is the one to keep when someone who received the order can show it. Use the generated open when you still need to see which first line is worth buying."
+      "q": "Do AI unboxing videos perform as well as filmed ones?",
+      "a": "We do not promise a result. A filmed open is the one to keep when someone who received the order can show it. Use the generated open when you still need to see which first line is worth buying."
     },
     {
       "q": "Will TikTok or Meta reject an AI unboxing?",
       "a": "Read the ad account's current rule before you fund the open. If a viewer could think a buyer filmed their own package, add the label that account asks for."
     }
   ],
-  "cta_lead": "Upload a product photo, or paste the product page.",
+  "cta_lead": "Upload the headphones photo, or paste the product page, and download the open.",
   "actor_scene_picker": {
     "title": "Pick the AI Actor",
-    "lead": "Choose an actor from the library and a setting for the open.",
+    "lead": "Choose an actor from the library and a desk setting for the headphones open.",
     "button": "Use this actor"
   },
   "visual": {
@@ -206,43 +206,43 @@
   "definition": {
     "title": "What Is an AI Unboxing Video?",
     "paras": [
-      "An AI unboxing video shows a product coming out of its mailer, with an AI actor and a spoken line. You start from a photo you already use, or from the product page, and you skip booking a camera for the table.",
+      "An AI unboxing video shows the navy headphones coming out of the mailer, with an AI actor and a spoken line. You start from a photo you already use, or from the product page, and you skip booking a camera for the table.",
       "A 9:16 cut fits a phone placement, and 1:1 fits a square feed. 16:9, 4:3, and 3:4 are there when the buy asks for them."
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "By category",
-      "h2": "Opens You Can Make",
-      "lead": "The same unboxing setup, pointed at the kind of product you sell.",
+      "eyebrow": "Also here",
+      "h2": "More Tools for the Next Open",
+      "lead": "The same headphones open can pick up a voice, a script, or a post, without a second shoot.",
       "items": [
         {
-          "t": "Skincare Parcel",
-          "d": "A jar comes up out of tissue, with a short spoken line about what is in the mailer."
+          "t": "A Video From the Photo",
+          "d": "The open starts from the headphones photo, with a spoken line about what leaves the box."
         },
         {
-          "t": "Beauty Set",
-          "d": "The hero piece appears first, then the extras, with captions on the clip."
+          "t": "From the Product Page",
+          "d": "Paste the product page and the open comes back with captions on the clip."
         },
         {
-          "t": "Fashion Lift",
-          "d": "The garment comes out of the shipping pack so the shape reads in the first second."
+          "t": "Ready for a Phone Feed",
+          "d": "A tall cut of the headphones leaving the box is ready for an Instagram placement."
         },
         {
-          "t": "Food and Drink",
-          "d": "The carton opens and the clip ends on the bottle or the bag you actually sell."
+          "t": "An API for the Catalog",
+          "d": "Shop software can ask for an open on each headphones photo through an API when the catalog is long."
         },
         {
-          "t": "Gadget Box",
-          "d": "The device and the cable land in one view as the lid comes off."
+          "t": "A Creator-Style Open",
+          "d": "The same headphones open can run as a creator-style ad, with the box and the pair both in frame."
         },
         {
-          "t": "Fitness Gear",
-          "d": "The parcel opens onto the band or the mat, with an actor from the library on camera."
+          "t": "An Actor on the Open",
+          "d": "Tell the helper how the headphones box should open. An actor from the library stays on camera."
         },
         {
-          "t": "Home Item",
-          "d": "Box, tissue, and the product share the table, then the file goes to TikTok or Meta."
+          "t": "A Second Cut to Post",
+          "d": "Make a second open from the same headphones photo, then send the file to TikTok or Meta."
         }
       ]
     }
@@ -252,7 +252,7 @@
     "lead": "The first second can be the product coming out, with a line taken from that item, in the frame the placement wants.",
     "items": [
       {
-        "t": "A Script From the Real Item",
+        "t": "A Script From the Real Jar",
         "d": "The spoken line can name the serum in the jar, because that is what the photo shows. The open is about the product you sell.",
         "img": "n:guide:fx13-unboxing-benefit-box-product",
         "alt": "Adult hands peel tissue back around a plain matte skincare jar in a package."
@@ -287,7 +287,7 @@
       ],
       [
         "What a clip costs",
-        "Credits on a monthly plan.",
+        "Credits on a paid plan. Starter is $24.50 a month with 200 credits.",
         "A creator fee plus the filming day"
       ],
       [
@@ -307,7 +307,7 @@
       ],
       [
         "A whole catalog",
-        "Many opens at once, across the products you list",
+        "Many opens from the photos you list, each one spending credits",
         "One parcel filmed at a time"
       ]
     ]

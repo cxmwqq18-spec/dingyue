@@ -4,7 +4,7 @@
   "description": "AIVideosUGC turns one product photo into store images and short video ads for a small shop. No studio, no actor booking, and uploads stay private.",
   "h1": "About AIVideosUGC: Product Visuals Made Simple",
   "eyebrow": "About us",
-  "lead": "AIVideosUGC turns a product photo or product page link into store images and short video ads. Add a generated presenter, voice, captions, or music, then review the file in your account before publishing.",
+  "lead": "Creators and shoot days slow a small shop down. AIVideosUGC turns a product photo or a product page link into store images and short video ads. Add a presenter, voice, captions, or music, then review the file before you publish.",
   "secondary_keywords": [
     "AI visuals for Shopify sellers",
     "product content tool for Etsy shops",
@@ -12,66 +12,73 @@
   ],
   "sections": [
     {
-      "h2": "Store Images and Short Video Ads",
+      "h2": "A Mug Photo Becomes the Ad",
       "paras": [
-        "Start with a photo of what you sell or a product page link. Choose a ready-made look or describe the scene, then make a square store image or a 6, 10, 15, or 30-second video.",
-        "A clothing listing can use a model photo, a coffee grinder can use a clean product scene, and a new collection can use a vertical clip for social. The video may include a presenter, a script, a spoken voice, captions, and music."
+        "Start with the ceramic mug photo, or with the product page link. Pick a ready-made look or describe the desk, then make a square store image or a 6, 10, 15, or 30-second video.",
+        "The same mug can stay a clean listing photo, or it can become a vertical clip for social. The video may include a presenter, a script, a spoken voice, captions, and music. You read it before anyone else sees the file."
       ],
       "img": "n:guide:b2f9-about-what-we-make-r1",
       "alt": "Adult seller with a blonde chin-length bob sets a plain ceramic mug on paper beside a closed laptop."
     },
     {
-      "h2": "For Shopify Sellers and Small Shops",
+      "h2": "For Shop Owners at the Packing Table",
       "paras": [
-        "A clear product photo and one sentence about the scene give a shop owner a practical starting point for a listing image or an ad. Use the same process for a Shopify, Amazon, or Etsy catalog.",
-        "Paste a product page when a listing changes, or make several versions from one reference when a campaign needs a new angle. The editor lets you adjust the words, presenter, voice, and captions before download."
+        "A clear product photo and one sentence about the scene give you a listing image or an ad. Use the same path for a Shopify, Amazon, or Etsy catalog when the next order is already on the table.",
+        "Paste a product page when a listing changes, or make several versions from one photo when the campaign needs a new angle. The editor lets you adjust the words, presenter, voice, and captions before download."
       ],
       "img": "n:guide:fx08-about-who-its-for-r1",
       "alt": "Adult small-shop owner prepares a plain product for a listing at a packing table."
     },
     {
-      "h2": "Private Product Content in Your Account",
+      "h2": "Your Uploads Stay in Your Account",
       "paras": [
-        "Your uploads and generated files stay in your account and are not shown to other customers. That keeps the product references and drafts you are working on in one place.",
+        "Your uploads and generated files stay in your account and are not shown to other customers. The product photos and drafts you are working on stay in one place, next to the closed laptop.",
         "Use photos you own or have permission to use. Requests involving a celebrity, public figure, or a brand mark you do not own can be declined."
       ],
       "img": "n:guide:b2f9-about-photos-stay-yours-r1",
       "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock."
     },
     {
-      "h2": "Credit Costs Before You Start",
+      "h2": "See the Credit Cost Before You Start",
       "paras": [
-        "Every photo and video shows its credit charge before the job starts. Choose the monthly plan that fits your volume.",
-        "A product photo uses 24 credits. Video uses 24 credits at 6 seconds, 40 at 10, 60 at 15, or 120 at 30. A failed job returns its reserved credits automatically, and downloads have no watermark."
+        "Every photo and video shows its credit charge before the job starts. Pick the monthly plan that fits how many files you make.",
+        "A product photo uses 24 credits. Video uses 24 credits at 6 seconds, 40 at 10, 60 at 15, or 120 at 30. A failed job returns its reserved credits, and downloads have no watermark. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
       ],
       "img": "n:guide:b2f9-about-credit-costs-r1",
       "alt": "Adult seller with a short silver crop reviews plain wooden tokens beside a closed laptop."
+    },
+    {
+      "h2": "What You Can Put on an Ad Today",
+      "paras": [
+        "Pick from 53 AI actors, or make an AI twin from a photo you have rights to use. A voice you may use can be cloned. The same ad can be made again in another language.",
+        "Email support@aivideosugc.com if a job or a file needs a person. Plans stay on the pricing page, and each job still shows its credit charge before it starts."
+      ]
     }
   ],
   "faq": [
     {
-      "q": "Can I make product ads without a studio booking?",
-      "a": "Yes. Start with a product photo or page link, choose the scene, and review the generated file in your account before download."
+      "q": "What is AIVideosUGC?",
+      "a": "AIVideosUGC makes store images and short video ads from a product photo or a product page link. You use AI actors, a script, and a voice, and you review the file before you download it."
     },
     {
-      "q": "How do I contact AIVideosUGC?",
-      "a": "Email support@aivideosugc.com for help with an account, job, or file."
+      "q": "Can I make creator-style clips here?",
+      "a": "Yes. A generated presenter can talk about the product in a creator-style clip. For help with an account, a job, or a file, email support@aivideosugc.com."
     },
     {
-      "q": "What can I upload to start?",
-      "a": "Use a product photo or a product page link that you are allowed to use. Add a scene description when you make the asset."
+      "q": "What are the best uses for AIVideosUGC?",
+      "a": "Shops use it for video ads, product photos, and social clips. Start with a product photo or a product page link you are allowed to use, then add a short scene description."
     },
     {
-      "q": "Who is AIVideosUGC for?",
-      "a": "It is for online sellers and marketers who need product images and short ads from their own catalog references."
+      "q": "Can I use AIVideosUGC for marketing?",
+      "a": "Yes. It is for online sellers and marketers who need product images and short ads from their own catalog. You do not book a studio or a creator for every item."
     },
     {
-      "q": "How much do the plans cost?",
-      "a": "Starter is $24.50 per month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Each job shows its credit charge before it starts."
+      "q": "Is AIVideosUGC free to use?",
+      "a": "No. Starter is $24.50 per month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Each job shows its credit charge before it starts."
     },
     {
-      "q": "Can I reuse a generated presenter?",
-      "a": "You can select an AI actor for a video and change the presenter in the editor. The files and references you create remain in your account."
+      "q": "Can I reuse an AI actor?",
+      "a": "Yes. You can select an AI actor for a video and change the presenter in the editor. The files and references you create remain in your account."
     },
     {
       "q": "Can a video include a voice and captions?",
@@ -86,10 +93,10 @@
       "a": "Yes. The API lets your own software start a photo or video job. Email support@aivideosugc.com if you need access."
     }
   ],
-  "ctaTitle": "Start With One Product Photo",
-  "ctaLead": "Choose a photo or a video, review the charge before you start, and make an asset for your next listing or ad.",
-  "cta_title": "Start With One Product Photo",
-  "cta_lead": "Choose a photo or a video, review the charge before you start, and make an asset for your next listing or ad.",
+  "ctaTitle": "Start Creating With One Product Photo",
+  "ctaLead": "Choose a photo or a video, see the charge before you start, and make the next listing image or short ad.",
+  "cta_title": "Start Creating With One Product Photo",
+  "cta_lead": "Choose a photo or a video, see the charge before you start, and make the next listing image or short ad.",
   "relatedLinks": [
     "pricing",
     "faq",

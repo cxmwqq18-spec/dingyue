@@ -13,19 +13,19 @@
     "beverage product video"
   ],
   "steps_h2": "How to Make a Beverage Video in 3 Simple Steps",
-  "steps_lead": "The can and the glass stay in one shot, so shoppers see the drink they take home.",
+  "steps_lead": "The silver can and the lemon glass stay in one shot, so shoppers see the drink they take home.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use the photo showing the full can, cap included, and pale soda color. Your chosen pour scene surrounds that can."
+      "d": "Upload the full silver can, cap included, from your listing photo. The pour scene wraps that same can."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Yuzu, lightly sweet, over ice. That plain line is the script a voice can read."
+      "d": "Lemon, over ice. That short line is the script a voice can read while the silver can pours."
     },
     {
       "t": "Download and Post",
-      "d": "A 9:16 pour fills a Story. A 1:1 of the can beside the glass fits the product page."
+      "d": "Download a 9:16 pour for a Story. A square of the silver can beside the lemon glass fits the product page."
     }
   ],
   "maker": {
@@ -44,47 +44,47 @@
   "faq": [
     {
       "q": "What is a food and drink ad template?",
-      "a": "A food and drink ad template is a ready-made pour, glass, or sip built from your package photo. Shoppers recognize the package they will receive, and it stays readable when the sip happens."
+      "a": "A food and drink template is a ready pour or sip built from your package photo. An AI actor can hold the glass, and a voice can read the script you write. An agent can draft that script if you would rather not write it."
     },
     {
       "q": "How does a drink template become a video?",
-      "a": "Use the listing photo, set the flavor line, and export a tall file for a Story. The package stays recognizable at the end of the pour."
+      "a": "Use the listing photo, set the flavor line, and export a tall file for a Story. The package stays recognizable when the pour ends. A voice clone, captions, and the editor sit on that same pour."
     },
     {
       "q": "Why use this instead of filming a pour with a creator?",
-      "a": "You skip the search for a kitchen and a free afternoon that matches yours. The package photo is already on the listing, so the flavor can be advertised when it is ready to ship."
+      "a": "You skip the hunt for a kitchen and a free afternoon. An AI actor can do the sip, and you can change the flavor line without calling a creator back."
     },
     {
       "q": "Who is a drink template for?",
-      "a": "It is for drink brands that have to show the liquid, not only the label. A small founder can make the ad between production runs."
+      "a": "It is for drink brands that have to show the liquid, not only the label. A small founder or an agency can make the ad between production runs."
     },
     {
       "q": "Can a first-timer make a pour ad?",
-      "a": "Yes. A first pour does not require years in an editing job. Pick the glass scene. The package photo you already have is what the pour is built on."
+      "a": "Yes. A first pour does not require years in an editing job. Pick the glass scene, upload the can, and the pour is built on the photo you already have."
     },
     {
       "q": "Which drinks and categories fit?",
-      "a": "Soda cans, cold brew bottles, and juice cartons fit when the package photo is clear. A loose splash with no package is a poor start."
+      "a": "Soda cans, cold brew bottles, juice cartons, and tea glasses fit when the package photo is clear. A loose splash with no package is a poor start. The shared gallery also has other categories."
     },
     {
       "q": "Can I use my can photo, a clip, and a logo?",
-      "a": "Yes. The package photo on your listing is the right file, logo and all. A clip of the tab opening can be the motion if you filmed one."
+      "a": "Yes. The package photo on your listing is the right start, logo and all. You can add up to 7 reference photos, and a clip of the tab opening can supply the motion. A batch of flavors can go through the API."
     },
     {
       "q": "Which placements and sizes fit a pour ad?",
-      "a": "A Story, the product page, YouTube, and a banner each have a size. A Story wants 9:16, usually at 6 or 10 seconds, so the pour stays full screen. The product page can use 1:1. YouTube can take 16:9, and 4:3 or 3:4 covers a banner. 15 and 30 seconds are there for a slower sip."
+      "a": "A Story, the product page, YouTube, and a feed post each have a size. TikTok and Reels want 9:16, usually at 6 or 10 seconds, so the pour stays full screen. The product page can use 1:1. YouTube can take 16:9, and 4:3 or 3:4 covers a banner. 15 and 30 seconds are there for a slower sip. You can also publish the file to Facebook and Instagram."
     },
     {
-      "q": "Do I need a paid plan to use a template?",
-      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
+      "q": "Are drink templates free to use?",
+      "a": "No. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. You see the total before the run, and a failed run gives those credits back."
     },
     {
       "q": "Can I use the pour in ads and client work?",
       "a": "Yes. Run the pour as an ad, and a client brand can put the same file on their product page. The download has no watermark."
     },
     {
-      "q": "What does the pour template already include?",
-      "a": "The glass, the timing of the fizz, and where the package sits are already chosen. You write the flavor line. Label words can still be edited in a caption."
+      "q": "Why use a template instead of building the ad from scratch?",
+      "a": "The glass, the timing of the pour, and where the can sits are already chosen. You write the flavor line. Label words can still be edited in a caption before you export."
     }
   ],
   "visual": {
@@ -645,9 +645,9 @@
     ]
   },
   "related_h2": "Pages Around a Drink Ad",
-  "related_lead": "Product videos, packaging stills, a TikTok-style in-feed ad, the food and drink industry page, TikTok ads, and an unboxing video.",
+  "related_lead": "Open product videos, packaging stills, a TikTok-style in-feed ad, the food and drink page, TikTok ads, or an unboxing video.",
   "cta_title": "Ready to Pour It in an Ad",
-  "cta_lead": "Put the pour in an ad shoppers can trust. Add the bottle or can you sell. The credit cost shows before the run.",
+  "cta_lead": "Add the bottle or can you sell. The credit cost shows before the pour runs, and a failed run returns those credits.",
   "definition": {
     "title": "What Is a Food and Drink Ad Template?",
     "paras": [

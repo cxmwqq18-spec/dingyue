@@ -4,7 +4,7 @@
   "description": "Move stock with a sale image that leaves clean space for your offer. One product photo becomes a square banner; add the discount and dates yourself.",
   "h1": "Sale Banner Maker with Room for the Offer",
   "eyebrow": "Ad photo template",
-  "lead": "A candle shop can lead the feed with this weekend's price. Set the jar in a sale square and put Saturday's end date where the eye lands first.",
+  "lead": "This sale banner maker leaves a clean spot for the offer. Set the blue suitcase in the square, then add the end date after you download.",
   "secondary_keywords": [
     "Black Friday banner image",
     "seasonal sale ad image",
@@ -12,19 +12,19 @@
     "winter clearance banner"
   ],
   "steps_h2": "How to Make a Sale Banner in 3 Simple Steps",
-  "steps_lead": "Open a layout, set the product and the offer, then post the square.",
+  "steps_lead": "Open a layout, place the suitcase, leave room for the offer, then post the square.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo of the product on offer. The template supplies a square composition made for a feed."
+      "d": "Upload one clear photo of the blue suitcase. The template gives you a square made for the feed."
     },
     {
       "t": "Pick a Sale Scene",
-      "d": "Place the discount, code, and event dates so the promotion leads. The price reaches scrollers first."
+      "d": "Leave an open area beside the suitcase for the code and the dates. The offer should be what shoppers read first."
     },
     {
       "t": "Download and Post",
-      "d": "Download the square and publish it on Instagram. The offer is large enough to read in the feed."
+      "d": "Download the suitcase square and publish it on Instagram once the offer is easy to read."
     }
   ],
   "maker": {
@@ -47,15 +47,15 @@
   "faq": [
     {
       "q": "What is an Instagram sale post template?",
-      "a": "A square that keeps the product recognizable while the promotion is easy to read. A mug can fill the frame, with the member price large enough to read on a phone."
+      "a": "A square that keeps the suitcase recognizable while the promotion is easy to read. The case can fill the frame, with the weekend price large enough to read on a phone."
     },
     {
       "q": "How do I make a sale post?",
-      "a": "Upload a product photo, choose a sale scene, place the offer you approved, and download the square. Check it on a phone, then post."
+      "a": "Upload a product photo, choose a sale scene, leave room for the offer you approved, and download the square. Check it on a phone, then post."
     },
     {
       "q": "Can the post show my discount and the event date?",
-      "a": "Yes. The layout is there so the promotion leads. You enter the percent, the code, and the dates that match the sale you approved, then read them back before publishing."
+      "a": "Yes. The layout is there so the promotion leads. You type the offer, the code, and the dates that match the sale you approved, then read them back before the post goes up."
     },
     {
       "q": "What size is the sale image?",
@@ -63,7 +63,7 @@
     },
     {
       "q": "Can I reuse one scene for a later promotion?",
-      "a": "Yes. Keep the product scene and change the headline. One week can be a percent off, and the next can be a different approved line."
+      "a": "Yes. Keep the product scene and change the headline. One week can be a price cut, and the next can be a different approved line."
     },
     {
       "q": "Can I make a tall Story from the sale square?",
@@ -75,7 +75,7 @@
     },
     {
       "q": "How many credits does a sale photo use?",
-      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed job returns those credits. The download has no watermark. You can use it in your ads, pages, and posts. You are responsible for the offer terms."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed job returns those credits. The download has no watermark. You can use it in your ads, pages, and posts."
     },
     {
       "q": "What should I do when the sale ends?",
@@ -83,15 +83,15 @@
     },
     {
       "q": "Can I start from a holiday scene and change it later?",
-      "a": "Yes. Keep the product scene and swap the headline when the holiday passes. Seasonal notes live on [Black Friday ad creatives](page:occ-black-friday)."
+      "a": "Yes. Keep the suitcase scene and swap the headline when the holiday passes. The product photo underneath can be used again."
     },
     {
       "q": "Do I need a paid subscription for a sale post?",
-      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos, batches, and API jobs all draw from that balance."
+      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Photos, batches, and API jobs all draw from that balance."
     }
   ],
   "examples": {
-    "h2": "More Sale Key Visuals",
+    "h2": "Sale Scenes With Room for the Offer",
     "lead": "Each scene keeps a clear area for your offer, placed where it suits the product.",
     "groups": [
       {
@@ -99,43 +99,43 @@
         "items": [
           {
             "ref": "n:rc4-tpl-sale-examples-01-r1",
-            "title": "Pack With Me: Blue Suitcase through the Airport",
+            "title": "Suitcase With Room for the Offer",
             "kind": "photo",
             "product": "hard-shell suitcase"
           },
           {
             "ref": "n:q10-sale-example-02",
-            "title": "Summer sandals tried on for a market walk",
+            "title": "Sandals Tried On at the Market",
             "kind": "photo",
             "product": "summer sandals"
           },
           {
             "ref": "n:q10-sale-example-03",
-            "title": "Running shoes tried on before a jog",
+            "title": "Running Shoes Before the Jog",
             "kind": "photo",
             "product": "running shoes"
           },
           {
             "ref": "n:guide:fx26-tpl-sale-example-black-friday-r1",
-            "title": "Black Friday: Tote with offer space",
+            "title": "Tote With Space for the Offer",
             "kind": "photo",
             "product": "canvas tote"
           },
           {
             "ref": "n:guide:fx26-tpl-sale-example-season-end-r1",
-            "title": "Season End: Knit cardigan on model",
+            "title": "Cardigan Ready for Season End",
             "kind": "photo",
             "product": "knit cardigan"
           },
           {
             "ref": "n:guide:fx26-tpl-sale-example-free-shipping-r1",
-            "title": "Free Shipping: Wallet unboxing",
+            "title": "Wallet Unboxing With Offer Space",
             "kind": "photo",
             "product": "leather wallet"
           },
           {
             "ref": "n:guide:fx26-tpl-sale-example-last-day-r1",
-            "title": "Last Day: Ceramic lunch container",
+            "title": "Lunch Box on the Last Day",
             "kind": "photo",
             "product": "lunch container"
           }
@@ -608,7 +608,7 @@
       }
     }
   },
-  "cta_lead": "Open a sale template, set your product and the promotion in the frame, and download a square for Instagram.",
+  "cta_lead": "Open a sale template, set the suitcase and leave room for the promotion, then download a square for Instagram.",
   "relatedLinks": [
     {
       "id": "social-ad-photos",
@@ -678,7 +678,7 @@
     ]
   },
   "related_h2": "Picture Tools Beside This Sale Post",
-  "related_lead": "Staging, backgrounds, and fashion looks sit with this template, along with the fashion pages and the sale occasion page.",
+  "related_lead": "Staging, backgrounds, and fashion looks sit beside this template, along with the fashion pages and the sale occasion page.",
   "cta_title": "Post the Offer Where Shoppers See It",
   "blockOrder": [
     "hero",
@@ -692,29 +692,29 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is an Instagram Sale Post?",
+    "title": "What a Sale Post Does in the Feed",
     "paras": [
-      "It is the square a shop uses when a tote bag's price changes for a long weekend. The bag stays fully visible, and the last day sits where a thumb stops.",
-      "You are filling in a feed square, not drawing one. Next month, the same tote can carry a new headline for a different event."
+      "It is the square you post when the suitcase price changes for a long weekend. The case stays fully visible, and the last day sits where a thumb stops.",
+      "You are filling a feed square, not drawing one from scratch. Next month the same suitcase can carry a new headline for a different event."
     ]
   },
   "reasons": {
-    "h2": "Why Sellers Start From a Sale Template",
-    "lead": "The square should make the promotion obvious to someone scrolling the shop's feed.",
+    "h2": "Why a Sale Template Leads the Feed",
+    "lead": "The square should make the promotion obvious to someone scrolling past the shop.",
     "items": [
       {
-        "t": "The Offer Is in Front",
-        "d": "A thumb on the feed should meet the mug's Saturday price before it meets the handle. The mug stays in the frame so the shopper still knows what is on offer.",
+        "t": "The Offer Lands First",
+        "d": "A thumb on the feed should meet the suitcase offer before it studies the handle. The case stays in the frame so the shopper still knows what is on sale.",
         "icon": "Tag"
       },
       {
-        "t": "Start From a Square",
-        "d": "The feed frame is already composed. You set the scarf in it, and the price is already sitting where the eye lands.",
+        "t": "Start From a Ready Square",
+        "d": "The feed frame is already composed. You set the suitcase in it, and the open area is already sitting where the eye lands.",
         "icon": "Image"
       },
       {
         "t": "One Look, Several Places",
-        "d": "Use the scarf square on the feed and again on the product page. When the next event starts, only the headline changes, so the shop still looks like the same shop.",
+        "d": "Use the suitcase square on the feed and again on the product page. When the next event starts, only the headline changes, so the shop still looks like the same shop.",
         "icon": "Share2"
       }
     ]
@@ -727,7 +727,7 @@
       "items": [
         {
           "t": "Holiday Storefront",
-          "d": "A seasonal shop front, with the holiday offer beside the product."
+          "d": "A seasonal shop front, with the holiday offer sitting beside the suitcase."
         },
         {
           "t": "Clearance Table",
@@ -735,19 +735,19 @@
         },
         {
           "t": "Weekend Market",
-          "d": "An outdoor stall for a short event, with the dates large in the headline."
+          "d": "An outdoor stall for a short event, with the dates large enough to read in the headline."
         },
         {
           "t": "Gift Table",
-          "d": "A gift-ready setting for an event, with the price large enough to read as someone scrolls."
+          "d": "A gift-ready table for an event, with the price large enough to read as someone scrolls."
         },
         {
           "t": "End of Season",
-          "d": "A late-season setting. Swap the headline when that event changes."
+          "d": "A late-season setting. Swap the headline when that event changes and keep the product."
         },
         {
           "t": "New Color Drop",
-          "d": "The color comes from the product you uploaded, and the offer line sits with it."
+          "d": "The color comes from the product you uploaded, and the offer line sits beside it."
         },
         {
           "t": "Bundle Stack",
@@ -771,7 +771,7 @@
         },
         {
           "t": "Laid-Flat Offer",
-          "d": "The item lies flat, with space along one edge for the offer line."
+          "d": "The item lies flat, with space along one edge for the offer line you add later."
         },
         {
           "t": "Person With the Product",
@@ -783,18 +783,18 @@
         },
         {
           "t": "Launch Window",
-          "d": "A launch setting for a new item, with the code and the end date in the headline."
+          "d": "A launch setting for a new item, with the code and the end date left for your headline."
         }
       ]
     },
     {
       "eyebrow": "Around the square",
-      "h2": "Picture Tools for a Sale Post",
+      "h2": "Picture Tools Around the Sale Post",
       "lead": "Scene tools around the square, so the promotion still leads once the product is in place.",
       "items": [
         {
           "t": "Backgrounds and Setting",
-          "d": "Place the product on white, on a see-through ground, in a new setting, or against a softer background. The product shape stays the one you uploaded."
+          "d": "Place the product on white, on a clear ground, in a new setting, or against a softer background. The product shape stays the one you uploaded."
         },
         {
           "t": "Models, Flat Lays, and Cleanup",
@@ -802,7 +802,7 @@
         },
         {
           "t": "Retouch, Resize, and Color",
-          "d": "Resize the square, change a garment color, or remove a stray object. The offer stays as text, so the next headline is a quick edit."
+          "d": "Resize the square, change a garment color, or remove a stray object. The offer stays as text you can edit, so the next headline is a quick change."
         },
         {
           "t": "A Product Video Next",
@@ -810,7 +810,7 @@
         },
         {
           "t": "A Batch for the Catalog",
-          "d": "Run the same sale scene across many products, so a weekend catalog can go out in one pass."
+          "d": "Run the same sale scene across many products, so a weekend catalog can go out in one batch."
         },
         {
           "t": "API for Your Store",
@@ -821,7 +821,7 @@
   ],
   "trust": {
     "h2": "What You Can Count On",
-    "lead": "The square goes out with your price on it, ready for the feed.",
+    "lead": "The square goes out ready for the feed, with your offer added by you.",
     "items": [
       {
         "t": "24 Credits a Photo",
@@ -833,11 +833,11 @@
       },
       {
         "t": "The Price Shoppers Read",
-        "d": "The discount, the code, and the end date you type are the words on the square, big enough to read while scrolling."
+        "d": "The discount, the code, and the end date you type are the words on the square, big enough to read while someone scrolls."
       },
       {
         "t": "Failed Jobs Return Credits",
-        "d": "If it fails, the credits set aside for it return to your balance."
+        "d": "If the job fails, the credits set aside for it return to your balance."
       },
       {
         "t": "Paid Plans",

@@ -4,7 +4,7 @@
   "description": "Turn one beauty photo into a routine, a shade test, or a review-style clip. Download watermark-free clips for a listing, feed, or paid ad, and check the shade.",
   "h1": "AI Product Videos and Photos for Beauty Brands, From One Photo",
   "eyebrow": "Beauty & Personal Care",
-  "lead": "A tinted moisturizer sells when the swatch on a wrist matches the bottle on the desk. Upload that bottle and an AI avatar can apply it in the ad.",
+  "lead": "A tinted moisturizer sells when the swatch on a wrist matches the bottle on the desk. Upload that bottle and an AI avatar can apply it, speak the shade name, and hand you a clip for the feed.",
   "card": "Routines, color samples, unboxings, and review-style clips from one beauty photo.",
   "secondary_keywords": [
     "skincare product video ideas",
@@ -14,11 +14,11 @@
     "makeup product photos"
   ],
   "steps_h2": "Your Next Beauty Video Ad for TikTok",
-  "steps_lead": "A clip of the bottle in use comes back from one photo.",
+  "steps_lead": "A clip of the bottle in use comes back from one photo. The credit cost shows before it runs.",
   "steps": [
     {
       "t": "Upload a Beauty Product",
-      "d": "Photograph the cleanser upright, label forward. Paste the page address if that is what you have."
+      "d": "Photograph the cleanser upright with the label forward. Paste the product page link if that is what you have."
     },
     {
       "t": "Pick a Made-Up Person",
@@ -26,7 +26,7 @@
     },
     {
       "t": "Add a Spoken Voice and Captions",
-      "d": "The file includes a spoken line, and the vertical cut is ready for the feed your buyers already watch."
+      "d": "The file includes a spoken line and captions. Download the vertical cut for the feed your buyers already watch."
     }
   ],
   "faq": [
@@ -48,27 +48,27 @@
     },
     {
       "q": "What photo should I upload for skincare?",
-      "a": "Use a straight-on shot, label toward the camera, on a plain surface, with no hands in the frame. Glossy tubes and glass pick up glare, so use window light instead of flash."
+      "a": "Use a straight-on shot, label toward the camera, on a plain surface, with no hands in the frame. Glossy tubes and glass pick up glare, so use window light instead of a flash."
     },
     {
       "q": "How long should a beauty ad be, and what does it cost?",
-      "a": "Choose 6, 10, 15, or 30 seconds. A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. A still image is 24 credits. The screen shows that cost before you start. If the job fails, those credits come back."
+      "a": "Choose 6, 10, 15, or 30 seconds. A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. A still image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. If the job fails, those credits come back."
     },
     {
       "q": "Can I run the clips as paid beauty ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. Keep ingredient text accurate, and do not invent a skin result. Add that text where you can check it."
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. Keep ingredient text accurate, and do not invent a skin result. Add offer text where you can check it."
     },
     {
       "q": "How is this different from hiring a creator?",
-      "a": "You pay credits on your plan, not a creator fee or extra edit rounds. Upload one photo or paste a link, pick an AI avatar, and post the clip as an ad."
+      "a": "You spend credits on your plan, not a creator fee or extra edit rounds. Upload one photo or paste a link, pick an AI avatar, and post the clip as an ad."
     },
     {
       "q": "Does the beauty clip include a voice and captions?",
       "a": "Yes. The job can include a spoken line and captions, and you can fix both in the editor before you download."
     }
   ],
-  "templates_lead": "Pick a routine, a texture close-up, a review-style clip, or an unboxing.",
-  "cta_lead": "The next shade can go out from one photo and an AI avatar.",
+  "templates_lead": "Pick a routine, a texture close-up, a review-style clip, or an unboxing for the next shade.",
+  "cta_lead": "The next shade can go out from one photo and an AI avatar. You see the credit cost before you start.",
   "visual": {
     "overview": "",
     "strip": [
@@ -105,62 +105,62 @@
     }
   },
   "steps_cta": {
-    "label": "Make a beauty ad",
+    "label": "Make a Beauty Ad",
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "When the Next Shade Cannot Wait on a Reply",
-    "lead": "The next concealer can go out even if last week's creator never sent the file.",
+    "h2": "Skip the Wait for a Beauty Creator",
+    "lead": "The next concealer can go out even when last week's creator never sent the file.",
     "items": [
       {
-        "t": "Credits Instead of a Shoot Day",
-        "d": "A glass dropper bottle can be the whole source. You name one motion, a pump onto the back of a hand, and the credit cost sits on screen before the job runs.",
+        "t": "Spend Credits, Not a Shoot Day",
+        "d": "A glass dropper bottle can be the whole source. Name one motion, a pump onto the back of a hand, and the credit cost sits on screen before the job runs.",
         "img": "n:guide:fx29-beauty-benefit-routine"
       },
       {
-        "t": "Enough Ads for Every Channel",
+        "t": "Fill Every Channel From One Photo",
         "d": "The same serum photo can become the clip for a phone feed and a separate still for the product page. You are not waiting on a crew to finish the second one.",
         "img": "n:guide:fx29-beauty-benefit-versions"
       },
       {
-        "t": "Show It, Then Ask for the Sale",
+        "t": "Show the Use, Then Sell",
         "d": "Show the balm going onto a knuckle, then point the viewer to the product page. The buyer sees it in use and has a next step to purchase.",
         "img": "n:guide:fx29-beauty-benefit-swatch"
       }
     ]
   },
   "platforms": {
-    "h2": "Where a Beauty Clip Can Run",
-    "lead": "One bottle can feed the phone feeds and the listing. Pick the shape that place already uses.",
+    "h2": "Post the Beauty Ad on Every Channel",
+    "lead": "One serum bottle can feed the phone feeds and the listing. Pick the shape that place already uses.",
     "items": [
       {
-        "t": "TikTok Routines",
-        "d": "A tall phone video of a routine or a shade swipe for a beauty ad in the TikTok feed.",
+        "t": "Post Routines on TikTok",
+        "d": "A tall phone video of a serum routine, or a shade swipe, ready for a beauty ad in the TikTok feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "Instagram Shade Stories",
+        "t": "Share a Shade on Instagram",
         "d": "A square still, or a tall clip of the product going on, for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "Facebook Feed Ads",
-        "d": "A feed image with room to type the offer after you download.",
+        "t": "Run a Facebook Feed Ad",
+        "d": "A feed image of the compact, with room to type the offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Demos",
-        "d": "A short vertical demo that starts on one action.",
+        "t": "Demo One Step on Shorts",
+        "d": "A short vertical demo that starts on one action, such as a single pump.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Listing Photos",
-        "d": "A clean photo of the package, plus extra views in the gallery.",
+        "t": "Make the Amazon Main Image",
+        "d": "A clean photo of the package on white, plus extra views of the shade in the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Collection Photos",
-        "d": "Product and collection images that match, from the same source photo.",
+        "t": "Match the Shopify Collection",
+        "d": "Product and collection images that match, made from the same source photo of the bottle.",
         "href": "/platforms/shopify-product-photos"
       }
     ]

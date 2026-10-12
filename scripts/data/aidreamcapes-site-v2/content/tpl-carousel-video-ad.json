@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a short video of that one item, shot by shot. Add your headline and price after download. Pick a shape for the post or product page.",
   "h1": "Carousel Video Ad That Walks Through One Product",
   "eyebrow": "Carousel video ad template",
-  "lead": "A water bottle can get the whole clip: closed, opened on a table, then the lid in frame at the end. Bring one photo of that bottle. You do not have to hire a model for this file.",
+  "lead": "A carousel video ad can walk through one black commuter backpack: closed, open on a cafe table, then the pocket. Bring that photo. You do not hire a model for this file.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -12,19 +12,19 @@
     "sequenced product ad"
   ],
   "steps_h2": "How to Make a Carousel Video Ad in 3 Simple Steps",
-  "steps_lead": "You leave with one clip of the lunch bag, in the shot order you write.",
+  "steps_lead": "You leave with one clip of the black commuter backpack, in the shot order you write.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use one product-page photo of the lunch bag, keeping the full bag visible. The file stays focused on that product."
+      "d": "Use one photo of the black commuter backpack, front pocket open. The clip stays on that same bag."
     },
     {
       "t": "Describe Your Scene",
-      "d": "List the shots of this lunch bag: closed, open, strap. Add a short script and pick 6, 10, 15, or 30 seconds."
+      "d": "List the shots: closed, open on a cafe table, pocket last. Add a short script and pick 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Set the voice in the editor and save a file with nothing stamped on it. Then add your headline and price after download."
+      "d": "Set the voice in the editor, then download a file with nothing stamped on it. Add your headline and price after that."
     }
   ],
   "maker": {
@@ -47,51 +47,35 @@
   "faq": [
     {
       "q": "What is a carousel video ad?",
-      "a": "One video that stays on a single product the whole way: closed, in use, then a last clear view. It is a video, not a row of still cards."
+      "a": "One video that stays on a single product the whole way: the backpack closed, open, then a last clear view. It is a video, not a row of still cards."
     },
     {
       "q": "How does a carousel video ad get built?",
-      "a": "Upload the backpack photo and write the shot order yourself: zipped, open, strap. You can change the words and pick 9:16 or another shape, then download."
+      "a": "Upload the black backpack photo and write the shot order: closed, open, pocket. A script and a voice can ride on that order before you download. Your shop software can start that job through the API."
     },
     {
       "q": "What products work in a carousel video ad?",
-      "a": "If you have a photo of the garment, it can be the one product in the clip, whether it is a work jacket or a running short. A brush, a pan, or a planter can take the same treatment. Each file stays on one product."
+      "a": "The clip stays on one product you photographed, such as the black backpack, a lunch tote, or a sports bottle. A cream jar, a pet brush, or a running cap can take the same path. Each file stays on that one item."
     },
     {
       "q": "Can I make more than one version?",
-      "a": "Yes. The scarf photo stays. Write a second opening for shoppers who bought the navy one last year. Another language can be its own file."
+      "a": "Yes. The backpack photo stays. Write a second opening for shoppers who bought the black one last year. Another language can be its own file."
     },
     {
       "q": "Who is a carousel video ad for?",
-      "a": "A shop that wants one clip to stay on a single product, on the product page or in a paid placement. Clothing labels use the same path for a single garment."
+      "a": "A shop that wants one clip to stay on a single product, on the product page or in a paid placement. The same path fits a backpack, a bottle, or a jar."
     },
     {
       "q": "Can a beginner make one?",
-      "a": "Yes. Bring the candle photo. Fix the line about the scent in the editor, set the voice, and download."
+      "a": "Yes. Bring the backpack photo. Fix the line about the pocket in the editor, set the voice, and download."
     },
     {
       "q": "How soon can I have a file to post?",
-      "a": "Once the frying pan photo is uploaded, the next screen is the editor, not a hold for a studio. Lengths are 6, 10, 15, or 30 seconds."
+      "a": "Once the backpack photo is uploaded, the next screen is the editor, not a hold for a studio. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
       "q": "Where can I post the file?",
-      "a": "On TikTok, Instagram, Facebook, YouTube, LinkedIn, and your product page. Shapes are a tall phone video at 9:16, a square at 1:1, a wide screen at 16:9, plus 4:3 and 3:4. The download has nothing stamped on it."
-    },
-    {
-      "q": "What does the clip cost?",
-      "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the number before it starts. If the clip fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "Do I pay to make a carousel video ad?",
-      "a": "Yes. Making the clip spends credits."
-    },
-    {
-      "q": "Can I start from a product link or my own software?",
-      "a": "Yes. A product page can steer the first draft. Your shop software can send the photo through the API. Put the headline and the price on after download."
-    },
-    {
-      "q": "Can the voice be in another language?",
-      "a": "Yes. Make the same clip with a voice in another language, then post that version."
+      "a": "On TikTok, Instagram, Facebook, YouTube, and your product page. Shapes are 9:16, 1:1, 16:9, 4:3, and 3:4, and the download has nothing stamped on it. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     }
   ],
   "visual": {
@@ -556,8 +540,8 @@
       }
     }
   },
-  "cta_title": "Post the One-Product Clip Next",
-  "cta_lead": "Upload one photo of a ceramic mug and get the clip. The credit cost is on screen first.",
+  "cta_title": "Post the Backpack Clip Next",
+  "cta_lead": "Upload one photo of the black commuter backpack and get the clip. The credit cost is on screen first.",
   "blockOrder": [
     "hero",
     "picker",
@@ -644,7 +628,7 @@
     ]
   },
   "related_h2": "Pages for a One-Product Video",
-  "related_lead": "One product shown in order can continue into video ads, fashion scenes, and Instagram posts.",
+  "related_lead": "One product shown in order can continue into video ads, other templates, and Instagram posts.",
   "relatedLinks": [
     "video-ads",
     "tpl-outfit",
@@ -657,31 +641,31 @@
     {
       "eyebrow": "Included with the template",
       "h2": "What a Carousel Video Ad Includes",
-      "lead": "You can add a voice, a script, and music, and the shots still follow one product in the order you set.",
+      "lead": "You can add a voice, a script, and music, and the shots still follow the backpack in the order you set.",
       "items": [
         {
           "t": "A Spoken Voice",
-          "d": "A spoken line about the one product can ride on the clip, so shoppers hear what the item is for."
+          "d": "A spoken line about the charcoal backpack can ride on the clip, so shoppers hear what the bag is for."
         },
         {
           "t": "A Script You Can Edit",
-          "d": "The draft can open on the desk lamp's cord. Write a note about that cord, or paste the product page, and change any line in the editor."
+          "d": "The draft can open on the backpack's front pocket. Write a note about that pocket, or paste the product page, and change any line in the editor."
         },
         {
           "t": "An AI Avatar Shows the Item",
-          "d": "An AI avatar can show a canvas tote on a shoulder. The photo you uploaded still decides the tote's color and hardware."
+          "d": "An AI avatar can hold the charcoal backpack on a shoulder. The photo you uploaded still decides the bag's color and hardware."
         },
         {
           "t": "A Product Link or the API",
-          "d": "The blender's product page can be the note the draft follows. If your shop software should start the job, use the API and the clip can start from the system you already run."
+          "d": "The backpack's product page can be the note the draft follows. If your shop software should start the job, use the API and the clip can start from the system you already run."
         },
         {
           "t": "Editor, Music, and Another Language",
-          "d": "Change the script, the voice, and the words on screen in one editor. Add a song, or retell the clip in another language, without switching tools."
+          "d": "Change the script, the voice, and the words on screen in one editor. Add a song, or retell the backpack clip in another language, without switching tools."
         },
         {
           "t": "A Second Cut for Repeat Buyers",
-          "d": "Keep the sneaker photo and write a new opening for people who already own last year's color. That second file is another ad from the picture you already have."
+          "d": "Keep the backpack photo and write a new opening for people who already bought the black one. That second file is another ad from the picture you already have."
         }
       ]
     }

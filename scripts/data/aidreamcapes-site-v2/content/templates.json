@@ -4,7 +4,7 @@
   "description": "Find product ad templates for a photo or a short video. Pick a style, add one product photo, and get a new file for your store or a social post.",
   "h1": "Product Ad Templates: Pick a Look, Rebuild It, Post It",
   "eyebrow": "Product ad templates",
-  "lead": "Put the photo of your sneaker on the ad you wish you had made, and get a speaking clip back. You do not have to write a long prompt.",
+  "lead": "Product ad templates turn a photo you already have into a speaking clip. Add your leather duffel and skip the blank prompt.",
   "card": "Ready-made layouts for product pictures and short clips. Add your photo and download the next file.",
   "secondary_keywords": [
     "product photo templates",
@@ -15,47 +15,47 @@
   "faq": [
     {
       "q": "What is a product ad template?",
-      "a": "It is a finished ad shape waiting for your product. For a ceramic vase, you add the photo and the glaze name, and the clip comes back speaking. You are not starting from a bare timeline."
+      "a": "A product ad template is a finished layout for your product, with the scene and the speaking pace already set. Add the leather duffel photo, and an AI actor can deliver the line. You are not building the ad from an empty timeline."
     },
     {
       "q": "How does a product ad template work?",
-      "a": "You add the product photo or the product link, then fix the one line a buyer would actually say. When the frame shows your protein powder, save the clip or post it from this project."
+      "a": "You add the product photo or the product link, then set the one line a buyer would actually say. When the frame shows your serum, an AI actor speaks it. Save the clip, or post it from this project."
     },
     {
       "q": "Why use a template instead of hiring a creator?",
-      "a": "The creator you wanted is booked through next Thursday, and a second opening line can still be made while you wait. A lipstick ad can get that new line without a new booking."
+      "a": "The creator you wanted is booked, and a second opening line can still be made while you wait. A serum ad can get that new line, plus a fresh script, without a new booking."
     },
     {
       "q": "Who are these product ad templates for?",
-      "a": "A founder with one yoga-mat photo, a marketer refreshing this month's ads, and an agency making a client file all land here. The shared step is that you already have a picture of the item."
+      "a": "A founder with one necklace photo, a marketer refreshing this month's ads, and an agency making a client file all start here. The shared step is a picture of the item you already sell."
     },
     {
       "q": "I have never edited a video. Can I still use a template?",
-      "a": "Yes. Add a photo of the watch and follow the three steps. If a caption is too long, shorten it in the editor, or drop a song under the voice."
+      "a": "Yes. Start with a watch photo and the three steps above. If a caption runs long, shorten it in the editor, or drop a song under the voice."
     },
     {
       "q": "Which kinds of shops have templates here?",
-      "a": "Use the category buttons on the wall. Beauty and personal care covers skincare. Clothing, food and drink, footwear, jewelry, electronics, and fitness each have a button. Pets, sports, apps, and home scenes are in the library too."
+      "a": "Use the category buttons on the wall. You will find accessories, apparel, apps, beauty and personal care, and clothing. E-commerce, education, explainers, financial services, food and beverage, and footwear are there too. So are health and fitness, jewelry, kids and toys, pets, sports, tech, UGC creator-style ads, and viral layouts."
     },
     {
       "q": "Am I allowed to bring my own pictures and clips?",
-      "a": "Yes, if you have the right to use them. A front-on photo of the frying pan and your shop wordmark are the usual pair. A clip you filmed yourself can come in too."
+      "a": "Yes, if you have the right to use them. A front-on photo of the frying pan and your shop wordmark are a usual pair. A clip you filmed yourself can come in too, with up to 7 reference images on one job."
     },
     {
       "q": "Where can I publish a file from these layouts?",
-      "a": "Pick the length first: 6, 10, 15, or 30 seconds. A tall 9:16 file is what a TikTok placement usually wants. Use a square 1:1 for a Facebook feed, 16:9 when the placement is wide, and 4:3 or 3:4 when the slot asks for those. Instagram, YouTube, and LinkedIn can take the download, or you can post the file yourself. Picture templates stay square."
+      "a": "Pick the length first: 6, 10, 15, or 30 seconds, at 24, 40, 60, or 120 credits. A tall 9:16 file is what a TikTok placement usually wants. Use a square 1:1 for a feed post, 16:9 when the placement is wide, and 4:3 or 3:4 when the slot asks for those. YouTube, Facebook, Instagram, and LinkedIn can take the download, or you can publish from a connected account."
     },
     {
       "q": "Do these templates cost anything?",
-      "a": "Yes. Making a file spends credits. You see the cost before you start, and if the work fails the credits come back. Prices are on the [pricing page](page:pricing). Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. A photo spends 24 credits, and a clip spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start, and a failed job returns the credits. Prices are on the [pricing page](page:pricing). Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. A dog-treat clip can run as a paid ad, and the same file can go to a client as a delivery. The file is clean of any overlaid mark."
+      "a": "Yes. A necklace clip can run as a paid ad, and the same file can go to a client. The download has no watermark, and you still need rights to the product photo. An AI twin can keep one face across versions. The API can start the next file from your catalog."
     },
     {
       "q": "Why not start from an empty timeline?",
-      "a": "The layout already knows the scene, so you decide the offer and post. A tea tin ad does not start by building the kitchen from nothing."
+      "a": "The layout already sets the scene, the hook, and the pace, so you decide the offer and post. A tea tin ad does not start by building the kitchen from nothing."
     }
   ],
   "visual": {
@@ -554,19 +554,19 @@
   "steps": [
     {
       "t": "Add Your Product",
-      "d": "Open the travel mug ad card with its scene and speaking pace. Your starting layout is ready."
+      "d": "Upload a clear photo of the leather duffel, or paste its product page link. The duffel in the frame is the one you ship."
     },
     {
       "t": "Choose a Template",
-      "d": "The frame fills with the travel mug you sell. Upload a clear photo, or paste the product page link."
+      "d": "Open a layout whose scene and pace already fit a product ad. Your duffel drops into that frame."
     },
     {
       "t": "Download or Post",
-      "d": "The travel mug clip comes back with nothing stamped on it. Post the tall version where your shop already runs ads."
+      "d": "Download the duffel clip with no watermark, or post the 9:16 cut. The credit cost is on screen before you start."
     }
   ],
   "steps_h2": "How to Make a Product Ad From a Template in 3 Steps",
-  "steps_lead": "You get a speaking ad from a layout you already like. A travel mug is the example below, and the credit line is on screen first.",
+  "steps_lead": "You get a speaking ad from a layout you already like. The leather duffel below is the product, and the credit line shows first.",
   "benefits_h2": "Pieces Already Inside the Layout",
   "benefits_lead": "Open one card and the ad is already a speaking clip. You bring the product photo.",
   "benefits": [
@@ -671,8 +671,8 @@
       }
     ]
   },
-  "related_h2": "Tools and Pages Next to These Templates",
-  "related_lead": "A photo tool, a video tool, or a page for your category is ready when the template is not the whole job.",
+  "related_h2": "Tools Beside the Template Wall",
+  "related_lead": "A photo tool, a video ad tool, or your category page is ready when one layout is not the whole job.",
   "relatedLinks": [
     {
       "id": "video-ads",
@@ -699,8 +699,8 @@
       "label": "Browse by Platform"
     }
   ],
-  "cta_title": "Start From the Layout You Like",
-  "cta_lead": "Upload the scarf photo and get the clip from the layout you like.",
-  "gallery_h2": "Every Product Ad Template in the Library",
-  "gallery_lead": "You get an ad built around the item you sell. Open a card, watch the example, and fill the fields."
+  "cta_title": "Start From a Layout You Like",
+  "cta_lead": "Add the leather duffel photo and get the speaking clip from the layout you like.",
+  "gallery_h2": "Every Product Ad Template on the Wall",
+  "gallery_lead": "Open a card, watch the example, and fill it with the product you sell. The category buttons are the same wall every shop uses."
 }

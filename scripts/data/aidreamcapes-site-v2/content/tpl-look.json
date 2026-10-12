@@ -4,7 +4,7 @@
   "description": "Turn one outfit photo into photos of the full outfit worn together. Use them on a collection page or a launch ad, and check each piece you can ship.",
   "h1": "AI Lookbook Photos for One Complete Outfit",
   "eyebrow": "Outfit photo template",
-  "lead": "Get a clothing ad from a coat and scarf worn as one set. You bring the picture where both pieces show. You do not start from a blank page.",
+  "lead": "Show the light beige blazer and matching trousers as one worn set. You bring the flat-lay photo where both pieces show. You do not start from a blank page.",
   "secondary_keywords": [
     "fashion editorial photos",
     "collection launch lookbook",
@@ -12,19 +12,19 @@
     "Instagram lookbook images"
   ],
   "steps_h2": "Make Outfit Photos for the Collection in 3 Steps",
-  "steps_lead": "Leave with a still and a clip of the set: open the frame, add the jacket, the tee, and the trouser, and download.",
+  "steps_lead": "Leave with a still and a clip of the ivory suit: open the frame, add the blazer and the trousers, and download.",
   "steps": [
     {
       "t": "Upload Your Outfit Photo",
-      "d": "Pick the frame keeping the jacket with the trouser as one worn set. The set is ready without booking a model."
+      "d": "Upload the photo that keeps the ivory blazer with the trousers as one worn set. The set is ready without booking a model."
     },
     {
       "t": "Pick a Lookbook Scene",
-      "d": "Upload one photo where every piece in the set is visible, or paste the collection link. Change the spoken line so it names the set."
+      "d": "Upload one photo where the ivory blazer and trousers both show, or paste the collection link. Change the spoken line so it names the suit."
     },
     {
       "t": "Download and Post",
-      "d": "Take a still for the collection page and a captioned clip worn by an AI avatar. Check the jacket hem against the shippable piece."
+      "d": "Save a still of the ivory suit for the collection page and a clip worn by an AI avatar. Check the hem you can ship."
     }
   ],
   "maker": {
@@ -46,44 +46,36 @@
   },
   "faq": [
     {
-      "q": "What does a lookbook template include?",
-      "a": "A frame that holds a cardigan, a tank, and a skirt together as one worn set. Add that photo. An AI avatar wears the three pieces. You do not have to book a model."
+      "q": "What is an AI lookbook photo template for clothing?",
+      "a": "A frame that shows the light beige blazer and matching trousers as one worn set. Add that flat-lay photo. An AI avatar wears the two pieces. You do not have to book a model."
     },
     {
-      "q": "How do I go from the template to a look video?",
-      "a": "Put in the photo that shows every piece you actually ship in the set. Write a line that names the set."
+      "q": "How do these clothing lookbook templates work?",
+      "a": "Put in the photo that shows the ivory blazer and the trousers you actually ship. Write a line that names the suit."
     },
     {
-      "q": "Which clothes belong in a look?",
-      "a": "Pieces you sell as a combination a person can put on, whether that is a rain set or a dinner set. If one piece in the photo is not for sale, leave it out of the frame."
+      "q": "Which clothes fit a lookbook template?",
+      "a": "Streetwear, casualwear, activewear, occasionwear, and luxury fashion can use the same setup. The photo on this template is a light beige tailored blazer and matching trousers."
     },
     {
-      "q": "Can one collection become more than one look?",
-      "a": "Yes. Keep the blazer and swap the shirt color for the next render. A long rail of sizes can share the blazer photo."
+      "q": "Can I make more than one look from one outfit photo?",
+      "a": "Yes. Keep the blazer and render the trousers again for the next crop. A long rail of sizes can share that same suit photo."
     },
     {
-      "q": "Who should build looks this way?",
-      "a": "A clothing shop that posts sets rather than single tees, and does not keep a model on a retainer. The person who writes the caption can build the look."
+      "q": "Who should build lookbook photos this way?",
+      "a": "A clothing shop that posts the beige suit as a set, and does not keep a model on a retainer. The person who writes the caption can build the look."
     },
     {
-      "q": "What if I have never made a clothing video?",
-      "a": "You can still make the look. Start from the outfit photo and one sentence, even if you have never edited a video."
+      "q": "Can a beginner make a lookbook photo with no studio experience?",
+      "a": "Yes. Start from the suit photo and one sentence, even if you have never edited a video. You do not book a fitting day."
     },
     {
       "q": "When do I have a look file I can post?",
-      "a": "After the render. You can post in that same sitting, and you do not need to book a studio."
+      "a": "After the render you can post in that same sitting, and you do not need to book a studio. A launch that also needs video sits on [product launch video and photos](page:occ-product-launch)."
     },
     {
       "q": "What does a look photo or a clip cost?",
       "a": "A still spends 24 credits. A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns its credits. The file has no watermark."
-    },
-    {
-      "q": "Where can I use the look, including a launch?",
-      "a": "On a collection page, in a swipeable set, or in a launch email after you add prices yourself. A launch that also needs video is covered by [product launch video and photos](page:occ-product-launch)."
-    },
-    {
-      "q": "What should I compare before I post?",
-      "a": "Check each piece you can actually ship: color, outline, and what is included. The person on screen is an AI avatar."
     }
   ],
   "visual": {
@@ -625,7 +617,7 @@
     ]
   },
   "related_h2": "Pages Around an Outfit Look",
-  "related_lead": "Model photos, try-on, fashion clips, sale frames, the fashion page, and Instagram.",
+  "related_lead": "Model photos, try-on, fashion clips, sale frames, the fashion page, and Instagram for the suit.",
   "relatedLinks": [
     {
       "id": "model-photos",
@@ -652,8 +644,8 @@
       "label": "AI Instagram Ads"
     }
   ],
-  "cta_title": "Show Buyers the Whole Set",
-  "cta_lead": "Shoppers see every piece in the set. Add the photo of the dress and belt, and open the ad.",
+  "cta_title": "Show Buyers the Whole Suit",
+  "cta_lead": "Shoppers see the blazer and the trousers as one set. Add the flat-lay photo of the light beige suit, and open the look.",
   "blockOrder": [
     "hero",
     "picker",
@@ -667,27 +659,27 @@
     {
       "eyebrow": "On this look",
       "h2": "What a Lookbook Template Can Carry",
-      "lead": "The clip can carry a voice, captions, and music, and the still can sit on the collection page.",
+      "lead": "The clip can carry a voice, captions, and music, and the still of the suit can sit on the collection page.",
       "items": [
         {
           "icon": "play",
           "t": "Voice, Captions, and Music",
-          "d": "A voice can read the line, captions can name the set, and a track can come from the music library. The lookbook frame can stay a still."
+          "d": "A voice can read the line, captions can name the suit, and a track can come from the music library. The lookbook frame can stay a still."
         },
         {
           "icon": "users",
           "t": "AI Avatars and an AI Twin",
-          "d": "An AI avatar wears the outfit. An AI twin can repeat that same presenter across the collection."
+          "d": "An AI avatar wears the ivory suit. An AI twin can repeat that same presenter across the collection."
         },
         {
           "icon": "sparkle",
-          "t": "A Script From a Line or a Link",
-          "d": "A short script, or a product link, can start from that page's outfit photo."
+          "t": "Script From One Line",
+          "d": "A short script, or a product link, can start from the suit photo on the listing."
         },
         {
           "icon": "layers",
-          "t": "More Frames From One Outfit",
-          "d": "One outfit photo can make another crop for the next slide. Each photo is 24 credits, shown first."
+          "t": "More Frames From One Suit",
+          "d": "One suit photo can make another crop for the next slide. Each photo is 24 credits, shown first."
         },
         {
           "icon": "check",
@@ -697,7 +689,7 @@
         {
           "icon": "globe",
           "t": "Another Language, or the API",
-          "d": "The line can go out in another language, or the API can start the next outfit from your catalog."
+          "d": "The line can go out in another language, or the API can start the next suit from your catalog."
         }
       ]
     }

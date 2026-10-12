@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a square Instagram Story ad image with room for a headline and price. Place that square on a tall 9:16 phone frame after download.",
   "h1": "Instagram Story Ad Images from a Square Product Photo",
   "eyebrow": "Ad photo template",
-  "lead": "A bar of soap can fill an Instagram Story without a blank prompt in front of you. Pick a frame that already leaves room for the bar and for the price.",
+  "lead": "Instagram Story ad images can start from one hot sauce bottle photo, with room for a headline and a price. You place that square on a tall frame after download.",
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
@@ -12,15 +12,15 @@
     "summer product story ads"
   ],
   "steps_h2": "How to Make a Square Story Image in 3 Simple Steps",
-  "steps_lead": "The bottle goes into a square, and that square is what you drop onto the tall Story.",
+  "steps_lead": "The hot sauce goes into a square, and that square is what you drop onto the tall Story.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use the photo where the whole linen-spray bottle is visible, label included. That photo is what the Story frame is waiting for."
+      "d": "Use the photo where the whole hot sauce bottle is visible, label included. That photo is what the Story frame is waiting for."
     },
     {
       "t": "Describe the Setting",
-      "d": "If someone should hold the bottle, pick a shop-fitting face and have them say the scent. Rewrite that sentence to match the Story price."
+      "d": "If someone should hold the hot sauce, pick a face and have them say the heat. Rewrite that sentence to match the Story price."
     },
     {
       "t": "Download and Post",
@@ -47,31 +47,31 @@
   "faq": [
     {
       "q": "What is a Story ad template?",
-      "a": "A Story frame with room for the tin and for a price. The tea tin stays fully visible, and you skip filming a new clip to fill that frame. When you need a taller motion ad, start from [creator-style video ads](page:video-ads)."
+      "a": "A Story ad template is a square frame with room for the hot sauce and for a price you add later. The product stays fully visible, and you skip filming a new clip just to fill that frame. When you need a taller motion ad, start from [creator-style video ads](page:video-ads)."
     },
     {
       "q": "How does a Story template become something I can post?",
-      "a": "You leave with a square you can place on the Story. Put the tea-tin photo in the frame, set the weekend price as the line you will read, and download."
+      "a": "You leave with a square you can place on the Story. Put the hot sauce photo in the frame, set the weekend price as the line you will read, and download."
     },
     {
       "q": "Why a template instead of filming a creator for Stories?",
-      "a": "Stories go stale when the offer changes and the creator is booked. Rewrite the price on this frame and post the new Story while that booking is still next week."
+      "a": "Stories go stale when the offer changes and the creator is booked. Rewrite the price on this frame and post the new Story while that booking is still ahead."
     },
     {
       "q": "Who should build a Story from this frame?",
-      "a": "A shop that posts Stories every week, and the person who writes those posts. A candle brand and the helper who handles its Instagram both need the jar fully in frame."
+      "a": "A shop that posts Stories every week, and the person who writes those posts. A hot sauce brand and the helper who handles its Instagram both need the product fully in frame."
     },
     {
       "q": "Can a beginner assemble a Story this way?",
-      "a": "Yes. The three steps turn one sharp photo into a Story square in a few minutes. Type the price on the Story after the square downloads."
+      "a": "Yes. Someone who has never opened a timeline can still do it. The three steps turn one sharp photo into a Story square, and you type the price on the Story after the square downloads."
     },
     {
       "q": "Which shops post this kind of Story?",
-      "a": "Shops that sell something a viewer should see in full. A honey jar, a small pouch, and a folded scarf can each take this frame, with the price typed on the Story."
+      "a": "Shops that sell something a viewer should see in full. Hot sauce, a small pouch, and a folded scarf can each take this frame, with the price typed on the Story."
     },
     {
       "q": "Can the Story use the photo I already shoot for the shop?",
-      "a": "Yes. The candle in the frame should be the candle you ship. Your logo can sit in a corner the layout leaves open."
+      "a": "Yes. The hot sauce in the frame should be the hot sauce you ship, label and all. Your logo can sit in a corner the layout leaves open, and you do not need a new shoot for that."
     },
     {
       "q": "Which apps is the Story frame meant for?",
@@ -83,11 +83,11 @@
     },
     {
       "q": "Can the Story run as a paid ad or as client work?",
-      "a": "Yes. Run it as a paid Story, leave it as an organic post, or send the square to a client who sells the same honey."
+      "a": "Yes. Run it as a paid Story, leave it as an organic post, or send the square to a client who sells the same hot sauce."
     },
     {
       "q": "Why use a Story template instead of starting from scratch?",
-      "a": "Your time goes into the price and the scent, which are the words shoppers read. The soap already has a place in the frame, so you can spend the edit on those words."
+      "a": "Your time goes into the price and the heat, which are the words shoppers read. The hot sauce already has a place in the frame, so you can spend the edit on those words."
     }
   ],
   "output": "Square product photo · Story layout",
@@ -667,8 +667,8 @@
   },
   "related_h2": "Templates to Use With a Story Ad",
   "related_lead": "The ad-image tool, bundle and lighting templates, beauty video, the beauty page, and Instagram ads sit beside this Story template.",
-  "cta_title": "Turn a Story Template Into Your Ad",
-  "cta_lead": "Place your product in a Story layout you like, then download the square and add the headline.",
+  "cta_title": "Create Your First Story Square",
+  "cta_lead": "Place the hot sauce in a Story layout you like, then download the square and add the headline and price. The file has no watermark.",
   "blockOrder": [
     "hero",
     "picker",

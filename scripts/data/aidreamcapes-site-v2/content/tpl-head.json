@@ -4,7 +4,7 @@
   "description": "Make matching team headshots from each teammate's own photo, with one shared light, face framing, and background. AI portraits for About and team pages.",
   "h1": "AI Team Headshots That Match Across the Page",
   "eyebrow": "Team photo template",
-  "lead": "A small team can look like one staff on the about page when the backdrop and the crop match. Use a portrait treatment from the wall on photos each person has already approved.",
+  "lead": "Team headshots give a small staff one backdrop, one crop, and one light. The example starts from the teammate in the dark green shirt.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Each Team Photo",
-      "d": "Each person at the bike shop sends an agreed face-and-shoulders photo. Shared backdrop and crop keep the intro consistent."
+      "d": "Upload an approved face-and-shoulders photo, like the teammate in the dark green shirt. The same crop will fit the rest of the row."
     },
     {
       "t": "Pick One Background",
-      "d": "Say who wrenches and who fits bikes, in a single sentence. That line is the intro a voice can read."
+      "d": "Say the role in one sentence on a pale gray backdrop. A voice can read that line over the portrait."
     },
     {
       "t": "Download and Post",
-      "d": "Save the squares for the about page. The spoken intro is separate: 1:1 if it lives on LinkedIn, 9:16 if it is a Story."
+      "d": "Save the square portraits for the about page. Post a spoken intro at 1:1, 9:16, 16:9, 4:3, or 3:4."
     }
   ],
   "maker": {
@@ -46,50 +46,50 @@
   "faq": [
     {
       "q": "What is a team portrait template?",
-      "a": "A team portrait template is one portrait treatment for a whole staff page, plus a short intro if you want a voice. Every face starts from a photo that person approved."
+      "a": "A team portrait template is one portrait treatment for a whole staff page, plus a short intro if you want a voice. Every face starts from a photo that person approved. The sample is the teammate in the dark green shirt, set on a pale gray backdrop in a charcoal blazer."
     },
     {
       "q": "How does a team template become portraits and a video?",
-      "a": "Add each approved photo, set the intro sentence, and save squares for the about page. The row looks like one room when those photos share the treatment."
+      "a": "Add each approved photo, set one backdrop, and save squares for the about page. A script can draft the intro, and an AI actor can speak it beside the row. The portraits stay photos of your teammates. A track can sit under that intro."
     },
     {
       "q": "Why use this instead of hiring a photographer or a creator?",
-      "a": "You skip the search for one date the whole staff can attend. A new hire can join the row when they send an approved photo."
+      "a": "You skip the search for one date the whole staff can attend. A new hire can join the row when they send an approved photo. The same crop and light apply without a new booking."
     },
     {
       "q": "Who is a team template for?",
-      "a": "Small teams that should look like one staff on the site. A four-person cafe with no office manager is a usual case."
+      "a": "Small teams that should look like one staff on the site. A shop owner, a founder, and a hiring lead can all run the row from photos people already approved."
     },
     {
       "q": "Can a beginner make the set?",
-      "a": "Yes. The person who updates the about page can do this on a first try. They choose the treatment. Each approved photo supplies that face."
+      "a": "Yes. The person who updates the about page can do this on a first try. They choose the treatment. Each approved photo supplies that face, and captions on the intro can be shortened in the editor."
     },
     {
       "q": "Which teams and industries fit?",
-      "a": "A clinic front desk and a software shop both fit when the page should read as one team."
+      "a": "A shop, a clinic front desk, and a software team all fit when the page should read as one staff. The treatment is the match. The trade they sell does not change the crop."
     },
     {
       "q": "Do I need permission to use a person's face in a team portrait?",
-      "a": "Each person agrees first. The result is not a passport or any other identity document. Put the shop logo on the intro if you want it there. A clip filmed at work can run under that intro. Faces still come only from approved photos."
+      "a": "Yes. Each person agrees first. The result is not a passport or any other identity document. You may put the shop mark on the intro. Faces still come only from approved photos, and a clip filmed at work can sit under that intro."
     },
     {
       "q": "Which placements and sizes fit the intro?",
-      "a": "Square portraits stay on the site, and the intro fits LinkedIn, a Story, or an embed. LinkedIn is comfortable at 1:1, a Story wants 9:16, and an embed can be 16:9. 4:3 and 3:4 cover a banner. Lengths are 6, 10, 15, or 30 seconds."
+      "a": "Square portraits stay on the site, and the intro can go to LinkedIn, a Story, YouTube, or an embed. LinkedIn is comfortable at 1:1, a Story wants 9:16, and an embed can be 16:9. Use 4:3 or 3:4 for a banner. Lengths are 6, 10, 15, or 30 seconds. You can publish from a connected account."
     },
     {
       "q": "Do I need a paid plan to use a template?",
-      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
+      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run returns the credits."
     },
     {
       "q": "Can I use the portraits and intro in ads and client work?",
-      "a": "Yes, if each person agreed to that use. The squares can go on the site and in a deck, and the intro can run as an ad for the shop. The download has no watermark."
+      "a": "Yes, if each person agreed to that use. The squares can go on the site and in a deck, and the intro can run as an ad for the shop. The download has no watermark. Another language can reuse the same portraits."
     },
     {
       "q": "Why start from a template instead of matching photos by hand?",
-      "a": "The treatment locks one backdrop and one crop, so a new hire can sit beside the owner without a layout you build by hand."
+      "a": "The treatment locks one backdrop and one crop, so a new hire can sit beside the owner without a layout you build by hand. Your own software can send approved photos through the API when the staff page needs that same crop. You can run every approved photo in one batch."
     }
   ],
-  "cta_lead": "Match the next hire to the rest of the team. Add an approved photo for each person. The credit cost shows before the run.",
+  "cta_lead": "Add an approved photo for each person, starting with the teammate in the dark green shirt. The credit cost shows before you run it.",
   "visual": {
     "strip": [
       "n:guide:tpl-head-round4-02",
@@ -555,7 +555,7 @@
     }
   },
   "steps_h2": "How to Make Team Headshots in 3 Simple Steps",
-  "steps_lead": "One backdrop holds the whole row, so the about page reads as one team instead of photos from different rooms.",
+  "steps_lead": "One pale gray backdrop holds the row, so the about page reads as one team. The sample portrait puts that teammate in a charcoal blazer.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -649,8 +649,8 @@
     ]
   },
   "related_h2": "Photo Tools Beside the Team Row",
-  "related_lead": "A product photo tool, a background change, model photos, ad images, lifestyle photos, and a white background.",
-  "cta_title": "Ready to Match the Next Hire",
+  "related_lead": "A product photo tool, a background change, and model photos sit next to this row. Ad images and lifestyle photos are there when the about page is not the whole job.",
+  "cta_title": "Match the Next Teammate",
   "blockOrder": [
     "hero",
     "picker",

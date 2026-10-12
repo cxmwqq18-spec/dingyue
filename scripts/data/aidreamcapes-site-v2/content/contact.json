@@ -4,7 +4,7 @@
   "description": "Questions about credits (the units on your plan), a failed photo or video, billing, or your account? Email support@aivideosugc.com for a written answer.",
   "h1": "Contact AIVideosUGC Support",
   "eyebrow": "Customer support",
-  "lead": "Questions about a product photo, video, actor, captions, credits, or your account? Email support@aivideosugc.com and get help with the next step.",
+  "lead": "Questions about a product photo, a video, an actor, captions, credits, or your account? Email support@aivideosugc.com and get a written next step.",
   "secondary_keywords": [
     "AIVideosUGC customer service",
     "AIVideosUGC billing help",
@@ -12,13 +12,13 @@
     "contact AIVideosUGC by email"
   ],
   "intro": [
-    "Email support@aivideosugc.com when a file, plan, credit balance, account, or publishing step needs attention. Tell us what you were making and where it stopped; one clear note gives support the context to investigate.",
+    "Email support@aivideosugc.com when a file, a plan, a credit balance, an account, or a publishing step needs a person. Tell us what you were making and where it stopped. One clear note gives support enough to look it up.",
     "Use the account email, name the photo or video, and say roughly when you made it. Add the error text or a screenshot when you have one."
   ],
   "topics": [
     {
-      "t": "Billing and Plans",
-      "d": "Get help understanding a monthly plan or a charge so your next set of photos and videos uses the right account.",
+      "t": "Review a Plan or a Charge",
+      "d": "Get help reading a monthly plan or a charge, so the next set of photos and videos runs on the right account.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-billing-r1.webp",
         "alt": "Black man with a close-cropped haircut reviewing a plan panel beside a product parcel.",
@@ -27,8 +27,8 @@
       }
     },
     {
-      "t": "Credits and Failed Photos or Videos",
-      "d": "Get a failed job's credits checked and your balance put right.",
+      "t": "Fix Credits After a Failure",
+      "d": "Get a failed job's credits checked, and your balance put right, before you run the photo again.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-credits-r1.webp",
         "alt": "Seller with a short dark buzz cut checking a product parcel beside a laptop.",
@@ -37,8 +37,8 @@
       }
     },
     {
-      "t": "Photos or Videos That Came Out Wrong",
-      "d": "Get a useful review when the generated image, video, actor, spoken line, or captions miss your brief. Send the details and we will look at the result.",
+      "t": "Review a Result That Missed",
+      "d": "Get a useful review when the generated image, video, actor, spoken line, or captions miss the brief. Send the cup photo and the result, and we will look.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/b2f5-contact-results-r1.webp",
         "alt": "Seller compares a ceramic cup beside a closed laptop",
@@ -47,7 +47,7 @@
       }
     },
     {
-      "t": "Account and Privacy",
+      "t": "Sort Out Account Access",
       "d": "Get help with signing in, your uploads, or who can see your files.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-privacy-r1.webp",
@@ -57,8 +57,8 @@
       }
     },
     {
-      "t": "Partnerships",
-      "d": "Start a conversation about using AIVideosUGC for a store, agency, creator channel, or software connection. Email a short description of the work you have in mind.",
+      "t": "Start a Partnership Note",
+      "d": "Start a conversation about using AIVideosUGC for a store, an agency, a creator channel, or a software connection. Email a short description of the work you have in mind.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-partnerships-r1.webp",
         "alt": "Two shop partners exchanging a plain parcel across an ecommerce desk.",
@@ -74,7 +74,7 @@
     },
     {
       "q": "Can you help before I choose a plan?",
-      "a": "Yes. Tell us what you sell and where you advertise, and we can point you to a starting place such as [AI image to video](page:image-to-video)."
+      "a": "Yes. Tell us what you sell and where you advertise, and we can point you to a starting place such as [AI image to video](page:image-to-video). Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "When will I hear back?",
@@ -98,7 +98,7 @@
     },
     {
       "q": "Who do I email about an actor, captions, or my own software?",
-      "a": "Write to support@aivideosugc.com from the account email, and say what you were trying to do, such as changing a saved presenter, editing captions, or connecting your own software."
+      "a": "Write to support@aivideosugc.com from the account email, and say what you were trying to do. That might be changing a saved presenter, fixing captions, or connecting your own software."
     }
   ],
   "relatedLinks": [

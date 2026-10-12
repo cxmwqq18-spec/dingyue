@@ -4,7 +4,7 @@
   "description": "Turn one product photo into UGC style product photos: a review, unboxing, or demo photo for ads and listings. Write the caption after you download.",
   "h1": "UGC Style Product Photos for Ads and Listings",
   "eyebrow": "Ad photo template",
-  "lead": "A face cream that needs a new opening line can get a UGC ad from the bottle photo. Pick an AI avatar and send that cut into the test.",
+  "lead": "A workout bottle that needs a new opening line can become UGC style product photos from that one shot. Pick an AI avatar and send that cut into the test.",
   "secondary_keywords": [
     "creator style product photos",
     "user-generated content style images",
@@ -12,19 +12,19 @@
     "fitness product lifestyle photos"
   ],
   "steps_h2": "How to Make UGC Style Product Photos in 3 Simple Steps",
-  "steps_lead": "You download an ad sized for the feed. Add the product, then choose who presents it.",
+  "steps_lead": "You download an ad sized for the feed. Add the bottle, then choose who presents it.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one product photo, or paste the product page. That is the source for the ad."
+      "d": "Upload one photo of the workout bottle, or paste the product page. That photo is the source for the ad."
     },
     {
       "t": "Pick a Creator Style",
-      "d": "Tell the AI video agent what the candle ad should say. Then pick the AI avatar who holds the jar, and change any line."
+      "d": "Tell the AI video agent what the bottle ad should say. Then pick the AI avatar who holds the bottle, and change any line."
     },
     {
       "t": "Download and Post",
-      "d": "You get a cut with a voiceover and captions, sized for the feed you sell on. The credit cost is on screen before you start."
+      "d": "You get a bottle cut with a voiceover and captions, sized for your feed. The credit cost is on screen before you start."
     }
   ],
   "maker": {
@@ -47,23 +47,23 @@
   "faq": [
     {
       "q": "What is included when I start a plan?",
-      "a": "Credits, and every tool they pay for. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Each plan opens the same AI avatars, voices, captions, editor, and stock clips; the plan only changes how many ads the credits cover."
+      "a": "You get a paid credit balance and every tool those credits open. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Each plan opens the same AI avatars, voices, captions, music, editor, batch runs, and an API. The plan only changes how many ads the credits cover."
     },
     {
       "q": "What does a monthly plan add?",
-      "a": "The same credits pay for AI avatars, a spoken voice, captions, music, and the editor."
+      "a": "The same credits pay for AI avatars, a spoken voice, captions, music, and the editor. You do not buy those tools one by one."
     },
     {
       "q": "Where do the credits go on each ad?",
-      "a": "A 6-second ad spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still image spends 24 credits."
+      "a": "A still spends 24 credits. A 6-second ad spends 24, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120."
     },
     {
-      "q": "Can I see the cost before I generate?",
-      "a": "Yes. The screen shows the credit cost before the job starts. You can stop there if the number is more than you want to spend."
+      "q": "Do unused credits carry into the next month?",
+      "a": "Your plan lists one monthly credit amount, and that amount is the balance for the plan period. A failed job returns its credits on its own. The screen shows the cost before a job starts."
     },
     {
       "q": "Which languages can the spoken line use?",
-      "a": "Generate the line in the language you sell in. A shop that talks to buyers in more than one country can reuse the same product photo for each language."
+      "a": "Yes. Generate the line in the language you sell in. A shop that sells in more than one country can reuse the same product photo for each language."
     },
     {
       "q": "When is a change a revision, and when is it a new ad?",
@@ -71,27 +71,27 @@
     },
     {
       "q": "Does the credit balance refresh with the plan?",
-      "a": "Starter, Pro, and Premium each list a monthly credit amount. That amount is the balance for the plan period."
+      "a": "Yes. Starter, Pro, and Premium each list a monthly credit amount, and that amount is the balance for the plan period."
     },
     {
       "q": "Where do I switch between Starter, Pro, and Premium?",
       "a": "Move between Starter, Pro, and Premium from your account when you need a different monthly balance."
     },
     {
-      "q": "Can one credit balance pay for both a video and a still?",
-      "a": "Yes. The same monthly balance covers a video ad and a still image."
+      "q": "Does switching plans add a second credit balance?",
+      "a": "No. Starter, Pro, and Premium each have their own monthly credits. Switching plans changes that monthly amount, and it does not add a second balance beside it."
     },
     {
       "q": "How do I stop a plan before the next bill?",
-      "a": "Cancel the plan, or switch to Starter, Pro, or Premium, from your account. Both happen there, on the plan you already have."
+      "a": "Cancel from your account, or switch to Starter, Pro, or Premium there. Both happen on the plan you already have, before the next bill."
     },
     {
       "q": "Can I run these ads on my shop and in paid posts?",
-      "a": "You can use downloaded ads in your own campaigns, on product pages, and in social posts. Follow the rules of the place you post, and you are responsible for the claims in the ad."
+      "a": "Yes. You can use downloaded ads in your own campaigns, on product pages, and in social posts. Follow the rules of the place you post, and you are responsible for the claims in the ad."
     },
     {
       "q": "How do refunds work?",
-      "a": "If a job fails, its credits come back on their own. For anything else, the [Refund Policy](/refunds) explains what we review."
+      "a": "If a job fails, its credits come back on their own. You do not file a ticket for a failed render. For anything else, the [Refund Policy](/refunds) explains what we review."
     },
     {
       "q": "Which product page links can start an ad?",
@@ -103,7 +103,7 @@
     },
     {
       "q": "Which files can I add at the start?",
-      "a": "A product photo is the usual start, and a product link works too. The person on screen is an AI avatar."
+      "a": "A product photo is the usual start, and a product link works too. The person on screen is an AI avatar, and you can add up to 7 reference images."
     }
   ],
   "visual": {
@@ -642,10 +642,10 @@
       }
     ]
   },
-  "related_h2": "Tools Beside This Template",
-  "related_lead": "You can keep going from a product link to an AI actor, creator-style video ads, a product video, TikTok ads, or the ad image tool.",
-  "cta_title": "Your First Cut Starts Here",
-  "cta_lead": "The next test can start from a product photo or a link.",
+  "related_h2": "Explore More Ad Tools",
+  "related_lead": "Move on from a product link to an AI actor, a creator-style video, a product video, TikTok ads, or the ad image tool.",
+  "cta_title": "Start Your First UGC Ad",
+  "cta_lead": "Start from a bottle photo or a product link, and download a cut you can test.",
   "blockOrder": [
     "hero",
     "picker",
@@ -659,41 +659,41 @@
   "more_sections": [
     {
       "eyebrow": "On this ad",
-      "h2": "The Controls on Every UGC Ad",
-      "lead": "You set the face, the sound, and the file on one ad, then download it.",
+      "h2": "Full Control on Every UGC Ad",
+      "lead": "You set the face, the sound, the words, and the file on one ad, then download it.",
       "items": [
         {
           "t": "The Face You Pick",
-          "d": "The face can match the buyer before you write a word. A shop advertising a water bottle might want someone at a gym bench, and you can switch it if the buyer is someone else."
+          "d": "The face can match the buyer before you write a word. A shop advertising a water bottle might want someone at a gym bench, and you can switch that face if the buyer is someone else."
         },
         {
           "t": "The Buyer's Language",
-          "d": "A shop that sells the same mug in Mexico can speak the line in Spanish from the photo it already uses."
+          "d": "A shop that sells the same mug in Mexico can speak the line in Spanish. It starts from the photo the shop already uses, with no new shoot."
         },
         {
           "t": "A Track Underneath",
           "d": "This drill ad uses one short piece of music made for it. The library is there if you would rather drop in a track you already like."
         },
         {
-          "t": "Fix It Here",
+          "t": "Fix It in the Editor",
           "d": "Pull a long pause out of the blender line in the editor. The caption can be fixed in the same place, and the download has no watermark."
         },
         {
-          "t": "Captions on the Ad",
-          "d": "Shoppers can read the flavor name on a snack ad even with the sound off."
+          "t": "Read the Words on the Ad",
+          "d": "Shoppers can read the flavor name on a snack ad while the voice keeps playing. The words sit on the picture, not in a separate file."
         },
         {
           "t": "Sized for the Feed",
-          "d": "The shoe ad can go out as a tall 9:16, or as a square 1:1 when it sits in a grid."
+          "d": "The shoe ad can go out tall at 9:16 for TikTok, or square at 1:1 for a grid on Instagram, Facebook, or YouTube."
         }
       ]
     }
   ],
   "definition": {
-    "title": "People Stay in Charge",
+    "title": "Sellers Stay in Charge",
     "paras": [
-      "The face in the ad is generated so a shop can publish. It is there to help the seller, not to stand in for a creator who filmed the product.",
-      "You decide what the ad says, and uploads stay in your account. The details are on [AI content trust and safety](page:trust)."
+      "The face in the ad is generated so a shop can publish a test without hiring a creator each time. It helps the seller. It does not stand in for a buyer who filmed the product.",
+      "You decide what the ad says, and every upload stays in your account. The details are on [AI content trust and safety](page:trust)."
     ]
   }
 }

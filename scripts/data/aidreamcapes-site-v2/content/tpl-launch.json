@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a launch video. Pick a tall 9:16 or a square 1:1, at 6, 10, 15, or 30 seconds. Add the real date and offer after download.",
   "h1": "AI Promo Video Maker for the Day You Release",
   "eyebrow": "Launch video template",
-  "lead": "Have the announcement ready when a small speaker ships. Put the finished speaker in the frame, say the name the way the box does, and download. You do not start from a blank page.",
+  "lead": "Have the announcement ready when the sage-green canvas bag ships. Put the finished bag in the frame, say the name the way the label does, and download. You do not start from a blank page.",
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -13,19 +13,19 @@
     "home decor promo video"
   ],
   "steps_h2": "How to Make a Product Launch Video in 3 Simple Steps",
-  "steps_lead": "Leave with an announcement clip: open the frame, set the jar and the sentence, and download.",
+  "steps_lead": "Leave with an announcement clip of the sage-green bag. Open the frame, set the bag and the sentence, and download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "The frame is already an announcement, with a gap where the jar sits. You fill that gap instead of building the ad from nothing."
+      "d": "The frame is already an announcement, with a gap where the sage-green bag sits. You fill that gap instead of building the ad from nothing."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Use one photo of the sealed jar or paste the product page link. The copy reflects the lid color and ship date."
+      "d": "Use one photo of the whole canvas bag, or paste the product page. The copy can name the color and the ship date."
     },
     {
       "t": "Download and Post",
-      "d": "Place the jar with an AI avatar, then show its name in captions. A long pause before the name can be cut in the editor."
+      "d": "Place the canvas bag with an AI avatar, then show its name in captions. Cut a long pause before the name in the editor."
     }
   ],
   "maker": {
@@ -48,11 +48,11 @@
   "faq": [
     {
       "q": "What does a launch ad template include?",
-      "a": "A reveal frame for one finished item, like a sneaker whose box opens on camera. An AI avatar can do that reveal. You write the sentence that goes with it."
+      "a": "It is a ready reveal for one finished item, like a sneaker whose box opens on camera. An AI avatar can present that reveal with a voiceover, and you write the script that goes with it."
     },
     {
       "q": "How does a launch template become a clip?",
-      "a": "Give it the lamp photo and the sentence you want said. The clip comes back sized for a post. Shorten it if the reveal takes too long."
+      "a": "Give it the lamp photo and the sentence you want said. The clip comes back sized for a post, and you can shorten a long reveal."
     },
     {
       "q": "Why use a launch template instead of filming a creator?",
@@ -60,23 +60,23 @@
     },
     {
       "q": "Who should use a launch template?",
-      "a": "A shop shipping its fourth snack tin, or a founder whose first watch goes out next week. You need a finished item and a sentence. You do not need to book a studio."
+      "a": "A shop shipping its fourth snack tin, or a founder whose first watch goes out next week. You need a finished item and a sentence, not a studio booking."
     },
     {
       "q": "Can a first-timer run a launch template?",
-      "a": "Yes. A phone picture of the sealed box is enough to start, even if you have never edited a video."
+      "a": "Yes. A phone picture of the sealed box is enough to start, even if you have never edited a video. You do not need a crew."
     },
     {
       "q": "Which kinds of releases fit this template?",
-      "a": "Beauty drops, home goods, gadgets, food, fitness gear, and other shop products. Change the item and the line when the buyer changes."
+      "a": "Beauty drops, home goods, gadgets, food, fitness gear, and other shop products all fit. Change the item and the line when the buyer changes."
     },
     {
       "q": "Can older shop files go into the launch?",
-      "a": "Yes. Last year's unboxing clip and the mark from your label can sit beside the new kettle. Use a photo of the item you will actually ship."
+      "a": "Yes. You can add up to 7 reference images, such as last year's unboxing still and the mark on your label, beside the new kettle. Use a photo of the kettle you will actually ship."
     },
     {
       "q": "Which channels can the launch clip fit?",
-      "a": "A 16:9 file fits a wide placement, and a 9:16 file fits a phone story. Square 1:1 is there for a feed tile, with 4:3 and 3:4 beside them. YouTube can take the wide file. Facebook can take the square."
+      "a": "A 16:9 file fits a wide placement, and a 9:16 file fits a phone story. Square 1:1 is there for a feed tile, with 4:3 and 3:4 beside them. YouTube can take the wide file, and TikTok, Instagram, or Facebook can take the tall or square file."
     },
     {
       "q": "Does using a template require payment?",
@@ -84,7 +84,7 @@
     },
     {
       "q": "Can the launch clip run in ads and for clients?",
-      "a": "Yes. Hand the file to a client, or run it as a paid post. No watermark is printed on the download. The license is the one on your plan."
+      "a": "Yes. Hand the file to a client, or run it as a paid post. No watermark is printed on the download, and the license is the one on your plan."
     },
     {
       "q": "Why start from a template instead of an empty edit?",
@@ -553,7 +553,7 @@
       }
     }
   },
-  "cta_lead": "Leave with a launch clip you can post, with a voice and an AI avatar, from one photo of the finished item.",
+  "cta_lead": "Leave with a launch clip you can post, with a voice and an AI avatar, from one photo of the finished bag.",
   "blockOrder": [
     "hero",
     "picker",

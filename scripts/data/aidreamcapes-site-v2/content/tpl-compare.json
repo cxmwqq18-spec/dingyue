@@ -4,7 +4,7 @@
   "description": "Show shoppers the difference between your colors, sizes, or sets. One photo of both options becomes a comparison clip for listings, YouTube Shorts and paid ads.",
   "h1": "Make a Product Comparison Video Shoppers Can Judge",
   "eyebrow": "Comparison video template",
-  "lead": "Shoppers can judge two options in one look, when both sit in a single photo at a close scale. Choose a side-by-side layout from the wall and use a picture that already holds the pair.",
+  "lead": "A product comparison video lets shoppers judge two options in one look, when both sit in a single photo. Choose a side-by-side layout from the wall and use a picture that already holds the pair.",
   "secondary_keywords": [
     "side by side product video",
     "product variant comparison video",
@@ -12,19 +12,19 @@
     "product size comparison video"
   ],
   "steps_h2": "How to Make a Product Comparison Video in 3 Simple Steps",
-  "steps_lead": "One shared frame lets shoppers judge the pair. Two photos shot on different days make a weak comparison.",
+  "steps_lead": "One shared frame lets shoppers judge the small and large canisters. Two photos shot on different days make a weak comparison.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the maple board and walnut board together in one listing photo. Your chosen layout supplies the frame."
+      "d": "Show the small and large gray canisters together in one photo. Your chosen layout supplies the frame."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Maple shows knife marks sooner. Walnut hides them. Say that difference in plain words so a shopper can choose."
+      "d": "The small canister suits a shelf. The large one holds more, so say that in plain words."
     },
     {
       "t": "Download and Post",
-      "d": "A tall clip can linger on the walnut grain. A 1:1 still can sit under the two options on the product page."
+      "d": "A tall clip can linger on the larger canister. A square still can sit on the product page."
     }
   ],
   "maker": {
@@ -47,11 +47,11 @@
   "faq": [
     {
       "q": "What is a product comparison template?",
-      "a": "A product comparison template is a ready-made layout that holds two choices in one view. A skincare shop can keep the day cream and the night cream side by side, at a scale a shopper can judge."
+      "a": "A product comparison template is a ready-made layout that holds two choices in one view. A home shop can keep the small canister and the large canister side by side, at a scale a shopper can judge."
     },
     {
       "q": "How does a comparison template become a video?",
-      "a": "Place the pair photo in the layout, write how the two differ, and export a square for the listing. A shopper can point at one option without guessing."
+      "a": "Place the pair photo in the layout, write how the two canisters differ, and export a square for the listing. A shopper can point at one option without guessing."
     },
     {
       "q": "Why use this instead of hiring someone to film both options?",
@@ -67,7 +67,7 @@
     },
     {
       "q": "Which products can I compare with this template?",
-      "a": "Any pair a shopper has to weigh can use it, such as a 12-ounce tumbler beside a 20-ounce one. Both sizes have to be in that one photo. A hero shot of a single tumbler is the wrong start."
+      "a": "Any pair a shopper has to weigh can use it, such as a small canister beside a large one. Both sizes have to be in that one photo. A hero shot of a single item is the wrong start."
     },
     {
       "q": "Can I use my own pair photo, a clip, and a logo?",
@@ -87,7 +87,7 @@
     },
     {
       "q": "What does a side-by-side template already include?",
-      "a": "The layout already chooses which option sits on the left and when the difference is spoken. You write how the two products differ. You do not invent the shot list."
+      "a": "The layout already chooses which option sits on the left and when the difference is spoken. You write how the two canisters differ. You do not invent the shot list."
     }
   ],
   "visual": {
@@ -553,7 +553,7 @@
     }
   },
   "cta_title": "Ready to Show the Difference",
-  "cta_lead": "Show the difference in one ad a shopper can judge. Add one photo that holds both options. The credit cost appears before the run.",
+  "cta_lead": "Show the difference in one ad a shopper can judge. Add one photo that holds both canisters. The credit cost appears before the run.",
   "blockOrder": [
     "hero",
     "picker",
@@ -663,7 +663,7 @@
         },
         {
           "t": "Another Language in This Editor",
-          "d": "Buyers in France can hear the two jacket weights named in French. The picture of the pair stays. The captions can move with that voice."
+          "d": "Buyers in France can hear the small and large canisters named in French. The picture of the pair stays. The captions can move with that voice."
         },
         {
           "t": "A Second Cut, Then Publish",

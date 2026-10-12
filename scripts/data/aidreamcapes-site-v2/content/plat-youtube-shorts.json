@@ -4,7 +4,7 @@
   "description": "Make YouTube Shorts ads from a product photo or a product link. Pick an AI actor, a voice, and 6, 10, 15 or 30 seconds, then see the cost first.",
   "h1": "YouTube Shorts Ads from a Photo or a Link",
   "eyebrow": "YouTube Shorts",
-  "lead": "Open a YouTube Shorts ad on the product, not on a logo, so the first second earns the watch. Name the product after that move.",
+  "lead": "Open a YouTube Shorts ad on the white steamer and the blue shirt, not on a logo, so the first second earns the watch.",
   "card": "YouTube Shorts ads from a photo or a product link, in the tall shape Shorts uses.",
   "secondary_keywords": [
     "YouTube Shorts video ads",
@@ -14,53 +14,53 @@
   ],
   "faq": [
     {
-      "q": "What should a YouTube Shorts ad feel like?",
-      "a": "A hand setting the product down and saying who it is for, with an [AI actor](/ai-video-generation/ai-actors) you can revoice. It is a tall Short."
+      "q": "What is an AI YouTube Shorts ad?",
+      "a": "It is a tall creator-style Short. A hand can set the steamer on the shirt or give one reason to try it, with an [AI actor](/ai-video-generation/ai-actors) you can revoice. You pick the language, and you do not wait on a creator."
     },
     {
-      "q": "Can AI create a YouTube Shorts ad?",
-      "a": "A product opening is easier to stay with than a logo opening. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
+      "q": "Can a YouTube Shorts ad earn a longer watch?",
+      "a": "A steamer on a blue shirt is easier to stay with than a logo opening. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
     },
     {
-      "q": "Is this a cheaper way to produce Shorts?",
-      "a": "Yes. You pay credits for each Short. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "What does a YouTube Shorts ad cost?",
+      "a": "You pay credits for each Short. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Will the person on camera look like a drawing?",
-      "a": "The mouth meets the words, and the eyes stay on the product. The voice can sit in an accent you pick. If YouTube asks you to say the person is AI, say it."
+      "q": "How real do the face and the voice look?",
+      "a": "The mouth meets the words, and the eyes stay on the steamer. The voice can sit in an accent you pick. If YouTube asks you to say the person is AI, say it."
     },
     {
-      "q": "Can I fix the words after I see the person?",
-      "a": "Yes. Rewrite the line after you see the avatar, then download."
+      "q": "Can I change the script, the avatar, and the picture?",
+      "a": "Yes. Rewrite the line after you see the avatar, swap the hand on the steamer, and download the new Short."
     },
     {
       "q": "Will YouTube accept an AI Short as an ad?",
-      "a": "It can, if the product in the video is the product you ship and you say so when YouTube asks. We do not send the ad in. Read the disclosure rules on the day you publish."
+      "a": "It can, if the steamer in the video is the steamer you ship and you say so when YouTube asks. We do not publish the ad for you. Read the disclosure rules on the day you post."
     },
     {
       "q": "Does a Short start from a product link?",
-      "a": "Yes. The product page can start the YouTube Shorts ad. If you also need the wide player ad, render that shape on its own. Do not crop the Short and call it a player ad."
+      "a": "Yes. The product page can start the YouTube Shorts ad, and the steamer photo can start it too. If you also need the wide player ad, render that shape on its own. Do not crop the Short and call it a player ad."
     },
     {
-      "q": "Which sizes should I compare?",
-      "a": "Use [social media ad sizes](/guides/ad-sizes-by-platform) before you download, and keep the product away from the buttons on the player."
+      "q": "Which frame should a Shorts ad use?",
+      "a": "Use 9:16 for Shorts. A 16:9 file is a separate wide job. Check [social media ad sizes](/guides/ad-sizes-by-platform) before you download, and keep the steamer clear of the player buttons."
     }
   ],
   "examples": null,
   "templates_lead": "Choose a template that shows one useful product action in the opening seconds.",
-  "cta_lead": "Paste a product link or upload a photo, pick an avatar, and download a tall Shorts file.",
+  "cta_lead": "Paste a product link or upload the steamer photo, pick an avatar, and download a tall Shorts file.",
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "The listing already says the roller is firm and a foot long. Those two facts are the spoken line."
+      "d": "The listing already says the steamer is handheld and white. Those two facts are the spoken line for the blue shirt."
     },
     {
       "t": "Select an Actor",
-      "d": "Use the AI avatar in a grey tank for this Short."
+      "d": "Use the AI avatar in a plain tee to hold the steamer for this Short."
     },
     {
       "t": "Save and Download",
-      "d": "The file comes down as a tall Short with captions under the product."
+      "d": "The file comes down as a tall Short with captions under the steamer and the shirt."
     }
   ],
   "maker": {
@@ -122,36 +122,36 @@
       }
     }
   },
-  "benefits_h2": "Why YouTube Shorts Ads Skip the Booking",
+  "benefits_h2": "Why Shorts Ads Can Skip the Booking",
   "benefits": [
     {
       "t": "Three Versions, Then Pick",
-      "d": "You can run a hand on the product, a close-up, and a voice naming one fact, then spend the afternoon in the ad account instead of booking a studio."
+      "d": "You can show a hand on the steamer, a close pass on the shirt, and a voice naming one fact. Then spend the afternoon in the ad account."
     },
     {
       "t": "New Version When One Fades",
-      "d": "When an angle goes quiet, you can make a new YouTube Shorts ad that starts with the product in use, without booking another shoot."
+      "d": "When an angle goes quiet, you can make a new Short that starts with the steamer on the shirt, without booking another shoot."
     },
     {
       "t": "Use the Photo You Have",
-      "d": "The next YouTube Shorts ad uses a photo that is already on the product page. You do not wait for a rented studio to open."
+      "d": "The next Short uses the steamer photo that is already on the product page. You do not wait for a rented studio to open."
     }
   ],
   "steps_h2": "Generate YouTube Shorts Ads in 3 Steps",
-  "steps_lead": "You download a tall YouTube Shorts ad. A wide ad for the YouTube player is its own file.",
+  "steps_lead": "You download a tall Short of the steamer on the shirt. A wide player ad is its own file.",
   "more_sections": [
     {
       "eyebrow": "YouTube Shorts controls",
-      "h2": "Set the Product, Hands, and Line for YouTube Shorts",
-      "lead": "You settle the product, the hand, and the line before the file leaves.",
+      "h2": "Set the Product, the Hands, and the Line",
+      "lead": "You settle the steamer, the hand, and the line before the file leaves.",
       "items": [
         {
           "t": "A URL Becomes the Ad",
-          "d": "Paste the product page and get a Short. A 15-second file spends 60 credits, and the charge appears before you start."
+          "d": "Paste the product page and get a Short of the steamer on the shirt. A 15-second file spends 60 credits, and the charge appears before you start."
         },
         {
           "t": "Avatar in the Ad",
-          "d": "Upload a photo of the product. An AI avatar sets it down and says one real fact about it."
+          "d": "Upload a photo of the steamer. An AI avatar sets it on the shirt and says one real fact about it."
         },
         {
           "t": "Edit the Ad Line Here",
@@ -170,66 +170,66 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "A YouTube Shorts ad can start from the picture on the product page, or from the product link.",
+  "benefits_lead": "A YouTube Shorts ad can start from the steamer photo on the product page, or from the product link.",
   "reasons": {
-    "h2": "What You Can Change on a YouTube Shorts Ad",
-    "lead": "A second face on your YouTube Shorts ad does not require a second booking.",
+    "h2": "Why the Next Short Is Easy to Swap",
+    "lead": "A second face on your Short does not require a second booking.",
     "items": [
       {
         "t": "A Different Face Next",
-        "d": "You can put a different face on the next YouTube Shorts ad, a navy hoodie after a grey tank, so the channel is not one face on repeat. You do not send a casting call.",
+        "d": "You can put a different face on the next Short, chosen from 53 AI actors, so the channel is not one face on repeat. You do not send a casting call.",
         "icon": "UserRound"
       },
       {
         "t": "A Local Voice",
-        "d": "Buyers can hear the line in a Texas accent, not a neutral read. That is the voice you pick for this account.",
+        "d": "Buyers can hear the line in a Texas accent, not a flat read. That is the voice you pick for this steamer ad.",
         "icon": "Mic"
       },
       {
-        "t": "Keep the Version That Wins",
-        "d": "You keep the opening people stay with and retire the one they skip. The choice is yours after both have run.",
+        "t": "Test the Next Opening",
+        "d": "You can render another Short with a new hook, script, avatar, or voiceover, then keep the opening people stay with. Nothing here picks a winner for you.",
         "icon": "Timer"
       }
     ]
   },
   "platforms": {
-    "h2": "Other Screens for Your YouTube Shorts Ad",
-    "lead": "The same photo can also start a file for TikTok, Instagram, Facebook, Amazon, or Shopify.",
+    "h2": "Run the Same Photo on Other Channels",
+    "lead": "The same steamer photo can also start a file for TikTok, Instagram, Facebook, Amazon, or Shopify.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "A tall TikTok ad from the same photo.",
+        "d": "A tall TikTok ad from the same steamer photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
         "label": "AI Instagram Ads",
-        "d": "A square still or a tall video for Instagram.",
+        "d": "A square still or a tall steamer video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
         "label": "AI Facebook Ad Generator",
-        "d": "A square Facebook photo, or a tall video that fills the screen.",
+        "d": "A square Facebook photo, or a tall steamer video that fills the screen.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "Amazon Product Photos",
         "label": "Amazon Product Photos",
-        "d": "A white main image, a close-up, and an in-use view for the gallery.",
+        "d": "A white main image, a steamer close-up, and an in-use view for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
         "label": "Shopify Product Photos",
-        "d": "Square photos for the page and the collection, and a video you add in Shopify yourself.",
+        "d": "Square steamer photos for the page and the collection, and a video you add in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
-        "t": "AI Ads and Product Photos by Platform",
-        "label": "AI Ads and Product Photos by Platform",
-        "d": "Open the full channel list and choose where the next file runs.",
+        "t": "All Channel Pages",
+        "label": "All Channel Pages",
+        "d": "Open the full channel list and choose where the next steamer file runs.",
         "href": "/platforms"
       }
     ]
@@ -300,8 +300,8 @@
       }
     ]
   },
-  "related_h2": "Tools That Pair With a YouTube Shorts Ad",
-  "related_lead": "Open the link tool, the actor tool, or a how-to template once you know the action.",
+  "related_h2": "Tools to Open Next to This Short",
+  "related_lead": "Open the link tool, the actor library, or a how-to template once you know the steamer move.",
   "relatedLinks": [
     "video-ads",
     "url-to-video",
@@ -309,5 +309,6 @@
     "product-videos",
     "tpl-howto",
     "image-to-video"
-  ]
+  ],
+  "cta_title": "Download a Tall Short From Your Photo"
 }

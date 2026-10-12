@@ -4,7 +4,7 @@
   "description": "Beauty product video ads from one skincare photo. Show a routine, a texture, or a review in a tall 9:16 size for TikTok and Reels, at 6, 10, 15, or 30 seconds.",
   "h1": "Beauty Product Video Ads for Skincare Routines",
   "eyebrow": "Beauty video template",
-  "lead": "The moisturizer on your bathroom shelf is enough for a sink-side ad. The words come back readable, and you do not have to write a long prompt.",
+  "lead": "Beauty product video ads can start from the cleanser already on your sink. Upload that pump photo and an AI actor can walk through the routine.",
   "secondary_keywords": [
     "skincare video ads",
     "serum video ad",
@@ -13,19 +13,19 @@
     "cosmetics product video"
   ],
   "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
-  "steps_lead": "You get a routine clip from one bottle photo. The example is a vitamin C serum.",
+  "steps_lead": "One cleanser photo becomes a sink-side clip you can post. The pump and the label stay in frame.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Open the sink routine for the vitamin C serum you apply in the morning. The speaking pace is already set."
+      "d": "Add a clear photo of the ivory cleanser pump, with the cap and label included. You get a file that still shows that same bottle."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Use a clear full-bottle photo of the serum, including the dropper and label. Hands can frame the clear bottle when you want no face."
+      "d": "Ask for one pump at a bright sink, with foam on the fingertips. You get a 9:16 clip in 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Choose 6, 10, 15, or 30 seconds and set the voice. Add the shade name in captions, then save or post the serum clip."
+      "d": "Set the voice, then add the shade name in captions and download. You get a cleanser clip with nothing stamped on it."
     }
   ],
   "maker": {
@@ -44,11 +44,11 @@
   "faq": [
     {
       "q": "What does a beauty video template include?",
-      "a": "It is a sink-side ad shape for a bottle you already photographed. Add the sunscreen tube and the clip comes back ready to trim. You are not filming a morning routine from a bare timeline."
+      "a": "It is a sink-side ad shape for a cleanser you already photographed. An AI actor, a voice, and a script come with that shape. You are not building a morning routine from an empty timeline."
     },
     {
-      "q": "How does the routine clip get built?",
-      "a": "Add the cream photo, name the jar in the line you would actually say, and pick 6, 10, 15, or 30 seconds. A product link can supply the first draft. Your own software can start that job through the API."
+      "q": "How does a beauty video template work?",
+      "a": "Add the cream photo, name the jar in the line you would say, and pick 6, 10, 15, or 30 seconds. A product link can supply the first draft. Your own software can start that job through the API."
     },
     {
       "q": "Why use this beauty template instead of booking a creator?",
@@ -56,7 +56,7 @@
     },
     {
       "q": "Who should use a beauty template?",
-      "a": "Someone selling a shampoo who already has the bottle photo. A small beauty team and an agency making a client file fit the same way. Anyone on screen is an AI avatar. A launch week and a quiet Tuesday both work."
+      "a": "Someone selling a shampoo who already has the bottle photo. A small beauty team and an agency making a client file fit the same way. Anyone on screen is an AI avatar. You can pick from 53 AI actors."
     },
     {
       "q": "Can I do this with no editing practice?",
@@ -72,7 +72,7 @@
     },
     {
       "q": "Where do these beauty clips get posted?",
-      "a": "Choose the shape for the placement you already use. A tall 9:16 suits a TikTok story, a square 1:1 suits a Facebook feed, and 16:9, 4:3, or 3:4 cover the other slots. Instagram, YouTube, and LinkedIn can take the file you download, or you can publish from this project."
+      "a": "Choose the shape for the placement you already buy. A tall 9:16 suits TikTok, a square 1:1 suits a Facebook feed, and 16:9, 4:3, or 3:4 cover the other slots. Instagram, YouTube, and LinkedIn can take the file you download, or you can publish from this project."
     },
     {
       "q": "What does a beauty clip cost?",
@@ -84,7 +84,7 @@
     },
     {
       "q": "Why use a beauty template instead of building a scene?",
-      "a": "The sink, the pace, and the place the compact sits are already decided. You spend the time on the shade name, then post."
+      "a": "The sink, the pace, and the place the cleanser sits are already decided. You spend the time on the shade name, then post."
     }
   ],
   "visual": {
@@ -648,8 +648,8 @@
       }
     ]
   },
-  "related_h2": "Pages That Pair With a Routine Clip",
-  "related_lead": "A routine clip can lead into video ads, beauty photos, and TikTok layouts on these pages.",
-  "cta_title": "Make the Routine Clip You Delayed",
-  "cta_lead": "A cleanser photo is enough to make the routine clip you postponed. The credit cost is on screen first."
+  "related_h2": "More Beauty Ads and Photos",
+  "related_lead": "Open video ads, beauty photos, and TikTok sizes when the routine clip is not the only file you need.",
+  "cta_title": "Make a Beauty Clip From One Photo",
+  "cta_lead": "Upload the cleanser pump and get a routine clip. The credit cost is on screen before it runs."
 }

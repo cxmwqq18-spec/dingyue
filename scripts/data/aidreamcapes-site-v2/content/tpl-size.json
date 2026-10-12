@@ -4,7 +4,7 @@
   "description": "Put your product next to a familiar object so shoppers can judge its size at a glance. AI scale photos for listings and ads, from one photo.",
   "h1": "Product Size Reference Photo Beside One Familiar Object",
   "eyebrow": "Product photo template",
-  "lead": "A folded blanket's size is easier to trust when a familiar object sits beside it. Open a size layout, use one photo of the whole blanket, and skip the blank prompt.",
+  "lead": "A tote's size is easier to trust when a familiar object sits beside it. Open a size layout, use one photo of the whole tote, and place a closed notebook next to it.",
   "secondary_keywords": [
     "size comparison product photo",
     "scale photo for Amazon listing",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a photo that shows the whole travel pillow, edge to edge. The listing photo is enough, and you skip a second shoot."
+      "d": "Use a photo that shows the whole tote, edge to edge. The listing photo is enough, and you skip a second shoot."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Pick an object shoppers understand, such as a closed notebook beside the pillow. An avatar can say how it packs in words you edit."
+      "d": "Pick an object shoppers understand, such as a closed notebook beside the tote. An avatar can say how it packs, in words you edit."
     },
     {
       "t": "Download and Post",
-      "d": "Save a square for the listing or a 9:16 clip that says the size aloud. Shoppers can judge size before reading details."
+      "d": "Save a square for the listing, or a 9:16 clip that says the size aloud. Shoppers can judge the tote before they read the details."
     }
   ],
   "maker": {
@@ -45,11 +45,11 @@
   "faq": [
     {
       "q": "What is a size video ad template?",
-      "a": "It shows the whole item next to something shoppers already understand. A daypack beside a carry-on outline makes the pack size obvious, and you skip building that comparison on a studio table."
+      "a": "It shows the whole item next to one object shoppers already understand. A daypack beside a carry-on outline makes the pack size obvious, and you skip building that comparison yourself on a studio table."
     },
     {
       "q": "How does a size template become a finished file?",
-      "a": "You leave with a file that shows the scale. Put the full thermos in the layout, choose a phone as the reference, and download the square for the listing."
+      "a": "You leave with a file that shows the scale. Put the full thermos in the layout, choose a phone as the reference, and download the square. An avatar can say the size from a script you edit."
     },
     {
       "q": "Why a template instead of filming a scale setup?",
@@ -61,7 +61,7 @@
     },
     {
       "q": "Can I show scale if I have never edited?",
-      "a": "Yes. One full photo and the three steps are enough to show scale in a few minutes. You name the familiar object, and the layout places it."
+      "a": "Yes. One full photo and the three steps are enough to show scale. You name the familiar object, and the layout places it."
     },
     {
       "q": "Which products are hard to size from a photo alone?",
@@ -69,11 +69,11 @@
     },
     {
       "q": "Can I start from photos and clips I shot?",
-      "a": "Yes. Your logo can mark the corner, and the ring should be the one from your bench photo. A clip of the band is optional."
+      "a": "Yes. Your logo can mark the corner, and the ring should be the one from your bench photo. A clip of the band is optional, and you can add up to 7 reference images."
     },
     {
       "q": "Which platforms can the file go to?",
-      "a": "The square still belongs on the product page. A tall 9:16 cut can run on TikTok, 1:1 can sit in the shop grid, and 16:9, 4:3, or 3:4 cover a YouTube or LinkedIn placement."
+      "a": "The square still belongs on the product page. A tall 9:16 cut can run on TikTok, and 1:1 can sit in the shop grid. Wide 16:9, 4:3, or 3:4 can cover a YouTube or LinkedIn placement."
     },
     {
       "q": "Do size templates sit on a paid subscription?",
@@ -552,7 +552,7 @@
     }
   },
   "steps_h2": "How to Make a Product Size Reference Photo in 3 Simple Steps",
-  "steps_lead": "Add the full item, name one familiar object, and download a file you can post.",
+  "steps_lead": "Add the full tote, name one familiar object, and download a file you can post.",
   "blockOrder": [
     "hero",
     "features",
@@ -659,7 +659,7 @@
     }
   ],
   "cta_title": "Build a Size Ad From a Template",
-  "cta_lead": "Add one full product photo, name a familiar object, and download a creator-style file you can post.",
+  "cta_lead": "Add one full tote photo, name a familiar object such as a notebook, and download a file you can post.",
   "definition": {
     "title": "What Is a Product Size Template?",
     "paras": [

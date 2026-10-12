@@ -4,7 +4,7 @@
   "description": "Create launch videos and photos from one product image. Make a short preview, a reveal, and a listing photo before launch day. No studio booking or reshoot.",
   "h1": "Create Your Product Launch Video and Photos Fast",
   "eyebrow": "New product launch",
-  "lead": "Turn the sample photo into a preview you can share. Add the launch date when that date is real.",
+  "lead": "Hold the turquoise bottle up for a sip, then turn that photo into a launch preview. Add a script, an AI avatar, and a voice. Put the date on only when the date is real.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
@@ -14,7 +14,7 @@
   "faq": [
     {
       "q": "How do credits work for a launch photo or video?",
-      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that cost before you confirm the job. If it fails, those credits return."
+      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that cost before you confirm the job. If it fails, those credits return. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Can I create launch videos through an API?",
@@ -22,7 +22,7 @@
     },
     {
       "q": "Can an AI avatar appear in the preview?",
-      "a": "Yes. An AI avatar can stand beside the product in the preview. Leave the avatar out if you want the product alone."
+      "a": "Yes. An AI avatar can stand beside the blue bottle or the desk lamp. Leave the avatar out if you want the product alone."
     },
     {
       "q": "How do I change the end time?",
@@ -54,7 +54,7 @@
     },
     {
       "q": "Can I publish the preview to TikTok, Instagram, or YouTube?",
-      "a": "Yes. Post the saved preview on the channel that is launching the product."
+      "a": "Yes. Post the saved preview on TikTok, Instagram, or YouTube, on the channel that is launching the product."
     },
     {
       "q": "Can I change the launch date after the video is made?",
@@ -126,19 +126,19 @@
       }
     ]
   },
-  "cta_lead": "Build the preview around the sample photo. Type the launch date when it is real, and move the end time if the day changes.",
+  "cta_lead": "Build the preview around the blue bottle photo. Type the launch date when it is real, and move the end time if the day changes.",
   "steps": [
     {
       "t": "Add Your Product Link",
-      "d": "Open the product page so the sample photo drives the preview. You add the date in the editor when it is real."
+      "d": "Open the bottle page so that photo drives the preview. You add the date in the editor when it is real."
     },
     {
       "t": "Create Your Actor",
-      "d": "Pick an AI avatar who can stand beside the product. Leave the product fully visible."
+      "d": "Pick an AI avatar who can stand beside the blue bottle. Leave the bottle fully visible before the clip is made."
     },
     {
       "t": "Set Script, Timer, and Publish",
-      "d": "Set the end time in the editor and publish to your launch channel. Move that time if the day changes."
+      "d": "Set the end time in the editor and publish to your launch channel. Move that time if the bottle's ship day changes."
     }
   ],
   "visual": {
@@ -285,11 +285,11 @@
       }
     }
   },
-  "benefits_h2": "What a Launch Preview Includes",
+  "benefits_h2": "Build Anticipation Before the Reveal",
   "benefits": [
     {
       "t": "An Avatar for the Reveal",
-      "d": "An AI avatar can stand as the cover comes off the desk lamp, with the shade fully visible.",
+      "d": "An AI avatar can stand as the cover comes off the desk lamp, with the shade fully visible. Swap that face before the reveal is made.",
       "img": "n:guide:fx01-occ-product-launch-benefit-teaser",
       "alt": "Adult hand lifts a fabric cover from a plain desk lamp in warm window light.",
       "frame": "none"
@@ -310,14 +310,14 @@
     },
     {
       "t": "Two Openings, Then You Choose",
-      "d": "Steam the blue shirt in both openings, and keep the first line that matches the real ship week.",
+      "d": "Steam the blue shirt in both openings, and keep the first line that matches the real ship week. You pick which opening goes out.",
       "img": "n:guide:fx01-occ-product-launch-benefit-publish",
       "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
       "frame": "none"
     }
   ],
   "steps_h2": "How to Create a Launch Teaser Video in 3 Simple Steps",
-  "steps_lead": "The sample photo drives the preview. You set the end time, and you can move it.",
+  "steps_lead": "The blue bottle photo drives the preview. You set the end time, and you can move it.",
   "relatedLinks": [
     {
       "id": "occ-holidays",
@@ -386,7 +386,7 @@
       },
       {
         "t": "Know the Spend Before Launch",
-        "d": "You know the spend before you commit, with photo and video charges shown before you confirm, so the preview stays on budget."
+        "d": "You know the spend before you commit. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Photo and video charges show before you confirm."
       },
       {
         "t": "A Failed Job Returns the Credits",

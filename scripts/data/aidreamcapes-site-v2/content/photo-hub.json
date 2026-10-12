@@ -4,60 +4,60 @@
   "description": "Turn one product photo into a listing image, a room scene, and an ad for your store. Skip the studio booking and see the cost before you start.",
   "h1": "Make listing, lifestyle, and ad images with an AI product photo generator",
   "eyebrow": "AI product photo generator",
-  "lead": "A scene that felt like too much rigging can still be the photo. Describe the room you wanted for the candle, and the product you already shot goes there.",
+  "lead": "Describe the vanity you wanted for the lip balm. The product you already shot can still become that photo, even when the setup felt like too much rigging.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
     "ecommerce product photo AI",
     "AI product photo templates"
   ],
-  "benefits_h2": "AI Product Photo Generator",
+  "benefits_h2": "What an AI Product Photo Generator Gives You",
   "benefits": [
     {
       "icon": "coins",
-      "t": "Lower-Cost Product Photos",
-      "d": "A studio day is the expensive part. Here each photo is 24 credits, so what you used to pay the photographer can go toward reaching buyers instead."
+      "t": "Skip the Studio Invoice",
+      "d": "A studio day is the expensive part. Here each photo is 24 credits, so the balm scene does not wait on a photographer's calendar."
     },
     {
       "icon": "clock",
-      "t": "Create Photos Without a Studio Booking",
-      "d": "The spring candle can go live from the photo you took on the packing table. A rental day does not have to be on the books first."
+      "t": "Ship Without a Studio Booking",
+      "d": "The lip balm can go on the page from the photo you took on the packing table. A rental day does not have to be booked first."
     },
     {
       "icon": "layers",
-      "t": "Create Several Scenes From One Upload",
-      "d": "The same mug can be a white-background listing, a kitchen counter, and a square for an ad. A store can also send files through the API."
+      "t": "Make Several Scenes From One Photo",
+      "d": "The same balm can be a white-background listing, a vanity scene, and a square for an ad. A store can also send files through the API."
     },
     {
       "icon": "users",
-      "t": "Skip the Model and Prop Rental",
-      "d": "A ceramic vase does not need a hired model or a rented plant. Describe the shelf it sits on. If a hand should hold it, pick an AI actor."
+      "t": "Skip the Model and the Props",
+      "d": "The lip balm does not need a hired model or a rented set. Describe the vanity shelf. If a hand should hold it, pick an AI actor."
     },
     {
       "icon": "refresh",
-      "t": "Create Product Photos on Your Schedule",
-      "d": "A holiday offer can be pictured on a Sunday night from the laptop. The tool does not keep studio hours."
+      "t": "Make the Photo on Any Day",
+      "d": "A holiday offer can be pictured on a Sunday night from the laptop. You do not have to wait for a studio to open."
     },
     {
       "icon": "target",
-      "t": "Test a Second Product Scene",
-      "d": "Run the lotion on marble, then again on a bathroom shelf, and keep the one that matches the page."
+      "t": "Test a Second Scene",
+      "d": "Run the balm on marble, then again on a vanity shelf, and keep the file that matches the page."
     }
   ],
   "steps_h2": "Steps to Make an AI Product Image",
-  "steps_lead": "Most stores finish a scene without opening another tool.",
+  "steps_lead": "You get a square of the lip balm in the scene you named.",
   "steps": [
     {
       "t": "Describe or Upload Your Product",
-      "d": "A top-down photo of a skillet is a strong start. If you have no photo yet, describe the black enamel and the long handle."
+      "d": "Upload a full photo of the lip balm, cap beside it. No photo yet? Describe the tube and the cap."
     },
     {
       "t": "Choose a Photo Style",
-      "d": "Ask for the skillet on a weeknight stove, with the handle in warm light. You do not pick a model name."
+      "d": "Ask for the balm on a bright vanity, cap beside it, in warm light. Describe the look you want for that scene."
     },
     {
       "t": "Check the Photo, Then Use It",
-      "d": "Put the file on the product page. The same still can later open a video ad."
+      "d": "Put the file on the product page after you check the cap. The same still can later open a video ad."
     }
   ],
   "maker": {
@@ -79,28 +79,28 @@
   },
   "faq": [
     {
-      "q": "What can this product photo tool create?",
-      "a": "This tool creates a file you can put on a product page. Bring the photo you already have, and it builds a scene around the item."
+      "q": "What does this product photo tool make?",
+      "a": "It builds a product photo from the picture you already have, so you can put a scene on the product page. The lip balm stays the item you uploaded."
     },
     {
-      "q": "What do I upload to make a product photo?",
-      "a": "The clearest picture you have of the product, plus a sentence about where it should sit. A skillet reads better from a top-down photo than from a dark crop. Ask for a warmer light if the first file looks cold."
+      "q": "How does the photo tool build a scene?",
+      "a": "Use the clearest picture you have of the lip balm, plus a sentence about where it should sit. A full tube reads better than a dark crop. You can add up to 7 reference photos. Ask for warmer light if the first file looks cold. Name the vanity, and keep the cap in the frame."
     },
     {
-      "q": "What should a shop check before trusting a photo tool?",
-      "a": "Check that the product still matches what you sell. The file should keep the shape and color buyers recognize."
+      "q": "What should I check before I trust the photo?",
+      "a": "Check that the lip balm still matches what you sell. The file should keep the shape and the color buyers recognize."
     },
     {
-      "q": "What do I pay to start making photos?",
-      "a": "Starter is $24.50 a month for 200 credits. Each photo is 24 credits. Pro is $35 for 300 credits, and Premium is $63 for 600. You see the number before the photo is made."
+      "q": "Can I make these product photos for free?",
+      "a": "No. Starter is $24.50 a month for 200 credits. Each photo is 24 credits. Pro is $35 for 300 credits, and Premium is $63 for 600. You see the number before the photo is made."
     },
     {
       "q": "Can a shop put these photos on a product page?",
-      "a": "Yes. A three-candle set can use one file on the product page and another in an email. Check the glass color against the set you pack before either file goes out."
+      "a": "Yes. A lip balm can use one file on the product page and another in an email. Check the tube color against the one you pack before either file goes out."
     },
     {
-      "q": "Why make the photo here instead of reusing the supplier shot?",
-      "a": "It adds a scene to the supplier shot, such as a mug on a desk, while keeping the product recognizable."
+      "q": "What do I gain if I already have a supplier photo?",
+      "a": "It adds a scene to the supplier shot, such as the balm on a vanity, while keeping the product recognizable."
     },
     {
       "q": "Am I allowed to post these photos on the store and in ads?",
@@ -116,7 +116,7 @@
     },
     {
       "q": "Can I make a stack of photos or connect my store?",
-      "a": "Yes. Upload several photos or send them from store software through the API, then make a scene for each."
+      "a": "Yes. Upload several photos, or send them from store software through the API, then make a scene for each one."
     },
     {
       "q": "Can the photo become a video with a spoken line?",
@@ -124,21 +124,21 @@
     }
   ],
   "examples": {
-    "h2": "AI Product Photo Generator Scenes for Any Catalog",
-    "lead": "Upload the product and name the setting you want. The groups below are looks a catalog can publish.",
+    "h2": "Examples of Product Photos You Can Post",
+    "lead": "Upload your product and name the setting you want. The groups below are looks a catalog can publish.",
     "groups": [
       {
         "label": "Coastal",
         "items": [
           {
             "ref": "n:im07-photo-hub-tote-r1",
-            "title": "Coastal: Linen Tote on a Beach Blanket",
+            "title": "Place a Tote on the Beach",
             "kind": "photo",
             "product": "linen tote bag"
           },
           {
             "ref": "n:guide:k3-social-picker-sandals",
-            "title": "Coastal: Summer Sandals on Sand",
+            "title": "Set Sandals Down on Sand",
             "kind": "photo",
             "product": "summer sandals"
           }
@@ -149,13 +149,13 @@
         "items": [
           {
             "ref": "n:guide:img1-photo-hub-desert-r1",
-            "title": "Desert: Ceramic Kettle on Stone",
+            "title": "Set the Kettle on Stone",
             "kind": "photo",
             "product": "sea-glass ceramic kettle"
           },
           {
             "ref": "n:guide:mx1w-photo-hub-desert-2-r1",
-            "title": "Desert: Hat and Sandals on a Dune",
+            "title": "Lay the Hat on a Dune",
             "kind": "photo",
             "product": "woven hat and leather sandals"
           }
@@ -166,13 +166,13 @@
         "items": [
           {
             "ref": "n:guide:k2-white-picker-tea-kettle",
-            "title": "Plain Studio: Stovetop Kettle on White",
+            "title": "Show the Kettle on White",
             "kind": "photo",
             "product": "stovetop kettle"
           },
           {
             "ref": "n:guide:plat-facebook-size-square-backpack",
-            "title": "Plain Studio: Commuter Backpack",
+            "title": "Show a Backpack in Studio",
             "kind": "photo",
             "product": "commuter backpack"
           }
@@ -183,13 +183,13 @@
         "items": [
           {
             "ref": "n:guide:ind-home-living-m3-lit-lamp",
-            "title": "Indoor: Table Lamp in a Living Room",
+            "title": "Light the Lamp in a Room",
             "kind": "photo",
             "product": "table lamp"
           },
           {
             "ref": "n:guide:mx1w-photo-hub-indoor-1-r1",
-            "title": "Indoor: Diffuser on Side Table",
+            "title": "Set a Diffuser on a Table",
             "kind": "photo",
             "product": "ceramic diffuser"
           }
@@ -201,13 +201,13 @@
     {
       "ref": "n:guide:img2-photo-hub-hero-source-r1",
       "name": "The Photo You Start With",
-      "line": "One clear shot of the item is enough to begin.",
+      "line": "One clear shot of the lip balm is enough to begin.",
       "href": "/ai-image-generation/ecommerce-main-image"
     },
     {
       "ref": "n:guide:img2-photo-hub-hero-result-r1",
       "name": "A Scene You Can Post",
-      "line": "The same balm, now in a vanity setting you can check before it goes on the page.",
+      "line": "The same balm, now on a vanity you can check before it goes on the page.",
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
@@ -251,8 +251,8 @@
       }
     }
   },
-  "cta_title": "Create an AI Product Photo Scene",
-  "cta_lead": "Take the photo you already have and ask for the room the listing has been missing.",
+  "cta_title": "Turn One Photo Into More Scenes",
+  "cta_lead": "Take the lip balm photo you already have and ask for the vanity the listing has been missing.",
   "blockOrder": [
     "hero",
     "picker",
@@ -337,7 +337,7 @@
     "image-to-video",
     "video-hub"
   ],
-  "benefits_lead": "Here is what changes when the next scene starts from a photo you already own.",
-  "related_h2": "What to Do With the Photo Next",
-  "related_lead": "Once the photo is approved, it can keep working on another page."
+  "benefits_lead": "Here is what changes when the next scene starts from a lip balm photo you already own.",
+  "related_h2": "Turn the Photo Into a Video",
+  "related_lead": "Once the photo is approved, the same still can open a video on the next page."
 }

@@ -4,7 +4,7 @@
   "description": "Make a short fashion video from one clothing photo for TikTok, Instagram, and a product page. Pick a length of 6, 10, 15, or 30 seconds before you post.",
   "h1": "AI Fashion Reels That Show the Full Outfit",
   "eyebrow": "Fashion video template",
-  "lead": "Get a reel of a dress in motion from one photo. Name the move, such as a half turn toward the zipper. You do not start from a blank page.",
+  "lead": "Get a fashion reel of your beige zip jacket in motion from one flat photo. Name the turn instead of starting from a blank timeline.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -13,19 +13,19 @@
     "menswear video ad"
   ],
   "steps_h2": "Make a Clothing Video Ad in 3 Steps",
-  "steps_lead": "Leave with a reel of the coat turning: open the frame, add the coat and the move, and download.",
+  "steps_lead": "Leave with a reel of the beige zip jacket turning. Open the frame, add the jacket and the move, and download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Choose the frame for someone shopping for clothes, with room for one garment to move. The half turn is the point of this shot."
+      "d": "Upload the beige zip jacket flat, with the collar, cuffs, and hem in frame. That outline is what the turn has to keep."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Use the coat flat, on a hanger, on a form, or paste the product link. The requested move shows the lining."
+      "d": "Name one full turn in soft daylight, or paste the jacket's product link. The move should keep the collar, cuffs, and hem."
     },
     {
       "t": "Download and Post",
-      "d": "Get captions on the move and an AI avatar wearing the coat. Check the color against the shippable coat before posting."
+      "d": "Get captions on the turn and an AI avatar in the beige zip jacket. Match the color to the flat photo before you post."
     }
   ],
   "maker": {
@@ -44,31 +44,31 @@
   "faq": [
     {
       "q": "What does an outfit reel template give me?",
-      "a": "A clothing frame where one outfit moves, such as a jumpsuit turning toward its buttons. Your photo goes in. An AI avatar wears the jumpsuit in the file. You do not call someone in to get that turn."
+      "a": "A clothing frame where one outfit moves, such as the beige zip jacket turning so the side fit shows. Your flat photo goes in. An AI avatar wears the jacket in the file. You do not book a fitting to get that turn."
     },
     {
       "q": "What happens after I pick the outfit template?",
-      "a": "Add the skirt photo and name the move. The file comes back as a reel for people who are out shopping for clothes."
+      "a": "Add the jacket photo and name the move. A script and a voiceover can ride on that turn. The file comes back as a reel for people shopping for clothes. A track from the music library can sit under the voice."
     },
     {
       "q": "What clothing can go in the reel?",
-      "a": "A raincoat, a pair of shorts, or a knit vest, plus anything else a person wears that you can photograph whole. If the hem is cut off in the photo, the turn can lose it too."
+      "a": "Streetwear, everyday fashion, and luxury apparel all fit, including the beige zip jacket, a denim overshirt, or a tailored blazer. If the hem is cut off in the photo, the turn can lose it too."
     },
     {
       "q": "Can I make several reels for one collection?",
-      "a": "Yes. Keep the blazer photo and ask for another move, or aim the next reel at shoppers who care about the lining."
+      "a": "Yes. Keep the jacket photo and ask for another move, or aim the next reel at shoppers who care about the lining. A second color can start from the same flat photo."
     },
     {
       "q": "Who should use an outfit reel template?",
-      "a": "A clothing seller who wants the garment in motion and does not have a fitting booked. One person can pick the move and post the file."
+      "a": "A clothing seller who wants the garment in motion and does not have a fitting booked. One person can name the move and post the file. Direct-to-consumer labels and fashion shops both fit."
     },
     {
-      "q": "Can I make a reel with no video background?",
-      "a": "Yes. A photo and one sentence are enough to begin, even if you have never edited a video."
+      "q": "Can I make a reel if I have never edited a video?",
+      "a": "Yes. A photo and one sentence are enough to begin, even if you have never edited a video. You can still trim the turn in the editor before you post."
     },
     {
       "q": "When can I download the outfit reel?",
-      "a": "After the render. You can download it in that same sitting, without a fitting on the calendar."
+      "a": "After the render, in that same sitting. You do not wait on a fitting. The credit cost shows before the run, and a failed job returns the credits."
     },
     {
       "q": "Which frame and length can I pick?",
@@ -80,7 +80,7 @@
     },
     {
       "q": "Can I run it in ads, in another language, or from my catalog?",
-      "a": "Yes. Post it to TikTok, Instagram, or Facebook, speak the line in another language, and make another move from the same photo. The API can start the next color from your product list. The person on screen is an AI avatar."
+      "a": "Yes. Post it to TikTok, Instagram, or Facebook, speak the line in another language, and make another move from the same photo. The API can start the next color from your product list. The person on screen is an AI avatar. An AI twin can keep that avatar on the next color."
     }
   ],
   "visual": {
@@ -527,8 +527,8 @@
       }
     }
   },
-  "cta_title": "Play the Full Outfit as a Reel",
-  "cta_lead": "Shoppers see the full outfit move. Add the jeans photo, name the turn, and open the reel.",
+  "cta_title": "Play the Jacket as a Reel",
+  "cta_lead": "Shoppers see the beige zip jacket move. Add the flat photo, name the turn, and open the reel.",
   "blockOrder": [
     "hero",
     "picker",
@@ -605,7 +605,7 @@
     ]
   },
   "related_h2": "Pages Beside an Outfit Reel",
-  "related_lead": "Video ads, try-on, outfit photos, a sale frame, TikTok, and the fashion page.",
+  "related_lead": "Video ads, try-on, outfit photos, a sale frame, TikTok, and the fashion page sit next to this reel.",
   "relatedLinks": [
     {
       "id": "video-ads",

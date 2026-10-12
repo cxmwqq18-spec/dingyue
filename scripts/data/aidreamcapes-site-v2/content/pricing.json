@@ -4,7 +4,7 @@
   "description": "AIVideosUGC pricing: Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits are what you spend on a photo or video.",
   "h1": "AIVideosUGC Pricing for Product Photos and Videos",
   "eyebrow": "Plans and credits",
-  "lead": "Choose a credit plan for product photos and short video ads. AIVideosUGC shows the charge for each job before you approve it.",
+  "lead": "Compare pricing for product photos and short video ads. AIVideosUGC shows the credit cost of each job before you approve it.",
   "card": "Starter, Pro, and Premium, with a set credit balance each month.",
   "secondary_keywords": [
     "AI product photo pricing",
@@ -12,48 +12,48 @@
     "credit-based plans for product content",
     "monthly plans for ecommerce visuals"
   ],
-  "intro": "Starter gives you 200 credits for $24.50 per month. Pro gives you 300 for $35, and Premium gives you 600 for $63. Use the same balance for listing photos and video ads.",
+  "intro": "Starter gives you 200 credits for $24.50 per month. Pro gives you 300 for $35, and Premium gives you 600 for $63. Use the same balance for listing photos and video ads. The charge for each job shows before you confirm.",
   "credits_explained": [
-    "One product photo uses 24 credits. A 6-second video uses 24, a 10-second video uses 40, a 15-second video uses 60, and a 30-second video uses 120. The amount appears before you confirm the job.",
-    "A job reserves its credits while it runs and charges them when the file is ready. When a job fails, the reserved credits return to your balance automatically."
+    "One product photo uses 24 credits. A 6-second video uses 24, a 10-second video uses 40, a 15-second video uses 60, and a 30-second video uses 120. You can add up to 7 reference photos. The amount appears before you confirm the job.",
+    "A job reserves its credits while it runs and charges them when the file is ready. When a job fails, the reserved credits return to your balance on their own. You do not send a ticket for that return."
   ],
-  "teams": "If your shop or agency needs more than Premium, email support@aivideosugc.com with the number of photos and videos you plan to make each month.",
+  "teams": "Need more than Premium for a shop or an agency? Email support@aivideosugc.com with how many photos and videos you make in a month, and we will suggest a setup.",
   "faq": [
     {
-      "q": "Which plan fits a small shop?",
-      "a": "Starter is $24.50 per month for 200 credits. Choose Pro at $35 for 300 or Premium at $63 for 600 when your product content schedule needs a larger balance."
+      "q": "How long should I wait for a finished video?",
+      "a": "You see the credit cost before the job starts, and a failed job returns those credits on its own. If a file stays stuck, email support@aivideosugc.com with the time of the job. We do not promise a clock time."
     },
     {
-      "q": "Can photos and videos use one credit balance?",
-      "a": "Yes. Both formats draw from the same monthly credits, and the charge for each job is shown before you approve it."
+      "q": "Can an AI actor hold the item I sell?",
+      "a": "Yes. An AI actor can hold the product, point to it, or wear it when your photo shows that item. The product in the file is the product you uploaded."
     },
     {
-      "q": "How much does a product photo or video cost?",
-      "a": "A product photo uses 24 credits. Videos use 24 credits at 6 seconds, 40 at 10, 60 at 15, or 120 at 30."
+      "q": "How do I move to a larger plan?",
+      "a": "Move from Starter to Pro or Premium when the month needs more credits. If you do not see the switch in your account, email support@aivideosugc.com and we will help."
     },
     {
-      "q": "What happens if a job fails?",
-      "a": "The credits reserved for that job are returned to your balance automatically. Check the job record if the balance has not updated, then contact support."
+      "q": "How do I cancel a plan?",
+      "a": "Email support@aivideosugc.com to cancel. Read the [Refund Policy](/refunds) if you need a charge review. The month you already paid stays active until it ends, and new credits stop after that."
     },
     {
-      "q": "Can I use the files in paid ads?",
-      "a": "Yes. You may use downloaded photos and videos for your store, marketplaces, and social advertising. Follow the publishing rules of each platform."
+      "q": "Are there limits on ads I make here?",
+      "a": "You can place the download in paid ads, on your store, and in client work. Files have no AIVideosUGC watermark. Follow each platform's rules on the day you publish. [AI content trust and safety](page:trust) covers what stays in your account."
     },
     {
-      "q": "Are downloads free of a watermark?",
-      "a": "Yes. Downloaded photos and videos do not carry an AIVideosUGC watermark."
+      "q": "How do I make the first video?",
+      "a": "Upload one product photo or paste a product link, pick an AI actor and a length, and download. The credit cost is on screen before you start."
     },
     {
-      "q": "Are my uploads private on each plan?",
-      "a": "Yes. Uploads and finished files remain in your account on Starter, Pro, and Premium. They are not published to other customers. Read the [AI content trust and safety](page:trust) page for the full scope."
+      "q": "Can I make more than one version of a video?",
+      "a": "Yes. Run another job with a new actor, a new voice, or a new opening line. Each job spends its own credits: 24 for a photo or a 6-second video, 40 for 10 seconds, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Can I request a review of a charge?",
-      "a": "A delivered file is not refunded because you dislike the result. A failed job returns its credits automatically; for a charge review, use the [Refund Policy](/refunds) and email support."
+      "q": "Do downloads include a watermark?",
+      "a": "No. Downloaded photos and videos do not carry an AIVideosUGC watermark. Use them on your store, in social ads, and in files you send a client. Anyone on camera is an AI actor, and you can say so when a platform asks."
     }
   ],
-  "cta_title": "Choose a Credit Plan for Your Next Asset",
-  "cta_lead": "Pick the monthly balance that fits how many photos and videos you make, and start with your next listing or ad.",
+  "cta_title": "Pick a Plan for This Month",
+  "cta_lead": "Check the credit cost of the next photo or video, then start on the monthly plan that fits the work.",
   "relatedLinks": [
     "faq",
     "glossary",

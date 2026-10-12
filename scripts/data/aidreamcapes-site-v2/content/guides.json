@@ -4,7 +4,7 @@
   "description": "Product photo and video guides for online sellers. Take a clear phone photo, meet Amazon's main-image rules, pick the ad size, and test versions.",
   "h1": "Product Photo and Video Guides for Sellers Doing It Themselves",
   "eyebrow": "How-to guides",
-  "lead": "You get one finished job at a time: a usable phone photo, a plain main image, a first paid video, the frame each app wants, or a fair test.",
+  "lead": "You finish one job at a time. Pick a usable phone photo, a plain main image, a first paid video, the frame each app wants, or a fair test.",
   "card": "Short how-to guides, from the first photo to the first paid ad.",
   "secondary_keywords": [
     "product photography tips for online sellers",
@@ -17,29 +17,29 @@
     "You land on the tool that makes the file: a [template](page:templates), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). For a video, an AI actor from the [actor library](page:ai-actors) is there when that guide calls for a person in the frame."
   ],
   "benefits_h2": "Reasons to Read a Guide First",
-  "benefits_lead": "You open the one guide that matches today's job, whether that is the phone photo, the Amazon main image, or the test.",
+  "benefits_lead": "Open the one guide that matches today's job, whether that is the phone photo, the main image, or the test.",
   "benefits": [
     {
-      "t": "Fewer Retries",
-      "d": "A sharp, well-lit starting photo makes the first file easier to accept, so you spend fewer credits making it again.",
+      "t": "Fewer Retries on the Tote",
+      "d": "A sharp photo of the sage canvas tote makes the first file easier to accept, so you spend fewer credits making that tote again.",
       "img": "n:guide:fx03-guides-benefit-source",
       "alt": "Adult seller with a short auburn bob checks a sharp source photo of a plain sage canvas tote before upload."
     },
     {
       "t": "No Studio to Book",
-      "d": "You shoot on a phone, by a window, on a table you already have.",
+      "d": "You shoot the bamboo lunch container on the kitchen table, with a phone, by the window you already have.",
       "img": "n:guide:fx03-guides-benefit-studio",
       "alt": "Adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on a kitchen table."
     },
     {
-      "t": "Checks You Can Do",
-      "d": "Main-image rules and ad frames are already written out, so the file can match them on the way to going live.",
+      "t": "Fit the Plate in Frame",
+      "d": "The main-image rules are already written out, so the ceramic plate can sit fully inside the bright white backdrop before it goes live.",
       "img": "n:guide:fx03-guides-benefit-rules",
       "alt": "Adult seller with a short silver-gray pixie positions a plain ceramic plate fully inside a bright white backdrop."
     },
     {
       "t": "One Change at a Time",
-      "d": "The testing guide changes a single thing, then keeps the version that brings the orders.",
+      "d": "The testing guide changes one thing on the two fabric pouches, then keeps the version you want to run.",
       "img": "n:guide:fx03-guides-benefit-testing",
       "alt": "Two adult sellers compare two plain fabric pouches side by side while choosing an ad version to test."
     }
@@ -49,7 +49,7 @@
   "steps": [
     {
       "t": "Take Your Product Photo",
-      "d": "Pick the phone photo, the white main image, the first TikTok ad, the ad size, or the test. One job."
+      "d": "Pick today's job: the phone photo, the white main image, the first TikTok ad, the size, or the test."
     },
     {
       "t": "Make the File",
@@ -106,7 +106,7 @@
       "a": "The first-ad guide does, when you want a person on screen. You can also keep the frame on the product and still have a spoken line. The photo guides stop at a still."
     },
     {
-      "q": "Can I create a video without a template?",
+      "q": "Why follow a guide instead of a blank start?",
       "a": "The guide names the one task, the file you should end with, and the checks to make before you spend credits on a second try."
     }
   ],

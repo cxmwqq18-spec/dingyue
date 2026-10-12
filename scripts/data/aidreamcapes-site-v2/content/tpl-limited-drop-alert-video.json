@@ -4,7 +4,7 @@
   "description": "Make a short alert video for a small release or restock from one product photo. After you download it, add the date, the quantity, and your link.",
   "h1": "Limited Drop Alert Video for a Restock or Small Release",
   "eyebrow": "Small release video template",
-  "lead": "Tell shoppers a small restock is back, without filming a new season. Put the navy cap in a frame that already behaves like an alert. An AI avatar wears the color you photograph.",
+  "lead": "Tell shoppers the coral trail shoes are back, without a new fitting. Put the pair in an alert frame. An AI avatar wears the color you photographed.",
   "secondary_keywords": [
     "restock alert video",
     "limited release ad",
@@ -12,19 +12,19 @@
     "product restock reel"
   ],
   "steps_h2": "Make a Limited Release Ad in 3 Steps",
-  "steps_lead": "Leave with an alert you can post: open the frame, add the hoodie and the sentence, and download the clip.",
+  "steps_lead": "Leave with an alert you can post: open the frame, add the coral shoes and the sentence, and download the clip.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "The frame is already a short alert, with room for one garment. You can say the hoodie is back without holding a fitting."
+      "d": "The frame is already a short alert for one pair. You can say the coral shoes are back without holding a fitting."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Use a photo of the color that returned, or the product page link. Returned sizes, date, count, and buy link appear after download."
+      "d": "Use a photo of the pair that returned, or the product page link. Add the date, the count, and the buy link after download."
     },
     {
       "t": "Download and Post",
-      "d": "Captions can carry the sentence while the hoodie is on screen, and you do not wait on a crew to get the file."
+      "d": "Captions can carry the restock sentence while the coral shoes stay on screen, and you do not wait on a crew."
     }
   ],
   "maker": {
@@ -46,32 +46,32 @@
   },
   "faq": [
     {
-      "q": "What does a clothing drop alert template include?",
-      "a": "A short alert frame for a restock, such as a wool coat that just returned. The photographed color is the one that appears worn. You do not need to book a person to say it is back."
+      "q": "What does a drop alert template include?",
+      "a": "A short alert frame for a restock, such as coral trail shoes that just returned. The photographed color is the one that appears. You can say the pair is back without booking a person to wear them."
     },
     {
       "q": "What do I do to turn the template into an alert?",
-      "a": "Start from whichever color actually came back in the mail. The clip speaks to someone shopping for a restock."
+      "a": "Start from the color that actually came back. An AI actor speaks the alert while the coral shoes stay in frame, and you post that clip to people shopping the restock."
     },
     {
-      "q": "What kinds of clothes can a drop alert show?",
-      "a": "A restocked trainer, a wedding-guest dress, or a work jacket. If a shopper wears it and you can photograph it, the alert can carry it. Leave out a color you cannot ship."
+      "q": "What kinds of products can a drop alert show?",
+      "a": "A restocked pair of trail shoes, or another item you can photograph and ship. The shoes in the photo are the pair that returned. Leave out a color you cannot ship."
     },
     {
       "q": "Can I cut several alerts for one drop?",
-      "a": "Yes. The same tee can get a tall alert for a phone and a second sentence for shoppers who only want the grey. You keep the photo and change the sentence."
+      "a": "Yes. The same coral shoes can get a tall alert for a phone and a second sentence for shoppers who only want that color. You keep the photo and change the sentence."
     },
     {
       "q": "Who is a drop alert like this for?",
-      "a": "A label that brings pieces back in small piles and cannot stop for a fitting. The person who writes the caption can also make the clip."
+      "a": "A label that brings pairs back in small piles and cannot stop for a fitting. The person who writes the caption can also make the clip."
     },
     {
       "q": "Can I send a drop alert if I have never cut a video?",
-      "a": "Yes. Photograph the scarf flat and type the line, even if you have never edited a video."
+      "a": "Yes. Photograph the coral shoes and type the line, even if you have never edited a video."
     },
     {
       "q": "When is the alert file in my hands?",
-      "a": "When the render finishes. You can post it in that same work session, with no fitting on the calendar."
+      "a": "When the render finishes. You can post the shoe alert in that same work session, with no fitting on the calendar."
     },
     {
       "q": "What does the alert cost?",
@@ -79,11 +79,11 @@
     },
     {
       "q": "When do I add the date, the count, and the link?",
-      "a": "After download, in the editor. The template does not invent a date or a quantity for you."
+      "a": "After download, in the editor. The template does not invent a date or a quantity for the shoes."
     },
     {
       "q": "Where can I post the alert?",
-      "a": "On TikTok, Instagram, or Facebook, in a tall, square, or wide frame, plus 4:3 and 3:4. Use it in ads and on the product page, inside your plan's license."
+      "a": "On TikTok, Instagram, or Facebook, in a tall, square, or wide frame, plus 4:3 and 3:4. Use the shoe alert in ads and on the product page, inside your plan's license."
     }
   ],
   "visual": {
@@ -548,7 +548,7 @@
       }
     }
   },
-  "cta_lead": "Get the restock in front of people who are already scrolling. Add the beanie that came back and open the alert.",
+  "cta_lead": "Get the coral shoes in front of people who are already scrolling. Add the pair that came back and download the alert.",
   "blockOrder": [
     "hero",
     "picker",
@@ -625,7 +625,7 @@
     ]
   },
   "related_h2": "Pages for the Next Restock",
-  "related_lead": "Video ads, fashion scenes, and TikTok placements that can carry the next alert.",
+  "related_lead": "Video ads, fashion scenes, and a TikTok placement that can carry the next shoe alert.",
   "relatedLinks": [
     {
       "id": "video-ads",
@@ -656,38 +656,38 @@
   "more_sections": [
     {
       "eyebrow": "On this alert",
-      "h2": "What a Drop Alert Can Carry",
-      "lead": "One garment photo is enough to post an alert with a voice and an avatar.",
+      "h2": "Features on the Restock Alert",
+      "lead": "The spoken line, the avatar, and a voice can sit on the same shoe photo.",
       "items": [
         {
           "icon": "play",
           "t": "Voice, Captions, and a Track",
-          "d": "The alert can carry a voice, captions, and a track from the music library."
+          "d": "Add a voice, words on screen, and a track from the music library when the shoe photo becomes a clip."
         },
         {
           "icon": "users",
           "t": "AI Avatars and an AI Twin",
-          "d": "An AI avatar wears the release piece. An AI twin can be that same presenter on the next restock."
+          "d": "An AI avatar can hold the coral shoes. An AI twin can return for the next drop so the face stays the one your shop already used."
         },
         {
           "icon": "sparkle",
           "t": "A Script or a Product Link",
-          "d": "A short script, or a product link, can start the alert from the garment page."
+          "d": "Ask for a short script, or paste the product page and start from the shoes shown there."
         },
         {
           "icon": "layers",
           "t": "Several Alerts From One Photo",
-          "d": "One garment photo can make another opening. Each job shows its credit cost first."
+          "d": "Make another shoe color in the same alert frame when you want a second hook to test."
         },
         {
           "icon": "check",
           "t": "Edit, Then Publish",
-          "d": "You can trim in the editor, then post to TikTok, Instagram, or Facebook. Nothing is stamped on the file."
+          "d": "Trim in the editor, then send the clip to TikTok, Facebook, or Instagram. The file has no watermark."
         },
         {
           "icon": "globe",
           "t": "Another Language or the API",
-          "d": "The line can go out in another language, or the API can start the next restock from your catalog."
+          "d": "Speak the line in another language, or use the API so your product list can start the next shoe alert."
         }
       ]
     }

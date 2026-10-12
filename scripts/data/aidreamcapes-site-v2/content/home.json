@@ -4,7 +4,7 @@
   "description": "Turn one product photo into AI UGC video ads and store-ready product photos. Pick a scene, see the credit cost first, and download files for every channel.",
   "h1": "AI Product Videos and Photos for DTC Brands, SaaS & Agencies",
   "eyebrow": "Launch more product ads from one clear photo",
-  "lead": "DTC labels, SaaS teams, and agencies can put a person on camera for a product they already sell. You read the line before anyone posts it.",
+  "lead": "DTC labels, SaaS teams, and agencies can put an AI actor on camera for a product they already sell. You read the line before anyone posts it.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -13,11 +13,11 @@
     "AI ads for ecommerce"
   ],
   "make_title": "Turn one product photo into your next ad",
-  "make_lead": "Pick a video or photo tool for the job, then create a version for TikTok, Reels, Amazon, Shopify or your product page.",
+  "make_lead": "Pick a video or photo tool for the job, then create a version for TikTok, Reels, Amazon, Shopify, or your product page. The credit cost shows before you generate.",
   "templates_title": null,
   "templates_lead": null,
   "platforms_title": null,
-  "benefits_h2": "AI Product Videos and Photos for the Whole Ad",
+  "benefits_h2": "Everything for the Next Product Ad",
   "benefits": [
     {
       "t": "Create Product Photos and Videos",
@@ -25,37 +25,37 @@
       "icon": "sparkle"
     },
     {
-      "t": "Brief the Agent",
+      "t": "Brief the Video Agent",
       "d": "Say the candle is for a gift guide, not a restock reminder. You get a cut you can watch before anyone on the team picks up a camera.",
       "icon": "play"
     },
     {
-      "t": "Recreate a Proven Ad Layout",
+      "t": "Rebuild a Proven Ad Layout",
       "d": "A hand on a lid is a shape you can rebuild around your own tin. The product in the frame is yours, and so is the line.",
       "icon": "refresh"
     },
     {
-      "t": "Turn a Product URL Into an Ad",
+      "t": "Turn a URL Into an Ad",
       "d": "A public page for a standing desk carries the photo and the name. That is enough to open the [page-to-ad tool](/ai-video-generation/url-to-video).",
       "icon": "layers"
     },
     {
       "t": "Choose an AI Actor",
-      "d": "The founder of a SaaS tool can stay out of the recording. An AI actor from the [AI actor library](/ai-video-generation/ai-actors) says the line about the trial week.",
+      "d": "The founder of a SaaS tool can stay off camera. An AI actor from the [AI actor library](/ai-video-generation/ai-actors) says the line about the signup week.",
       "icon": "users"
     },
     {
-      "t": "Reuse Your Approved Likeness",
+      "t": "Reuse an Approved AI Twin",
       "d": "An agency lead who filmed one hello can reuse that face on a later client spot. Start from [spokesperson videos](/ai-video-generation/ai-actor-product-ads).",
       "icon": "shield"
     }
   ],
   "steps_h2": "How to Make AI Product Videos and Photos in 3 Simple Steps",
-  "steps_lead": "A DTC team can finish this between two meetings.",
+  "steps_lead": "A DTC team can finish this between two meetings and leave with a file.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Paste the page for the serum you sell. If it is thin, add its audience, such as buyers who restock every six weeks."
+      "d": "Paste the page for the serum you sell, or upload a clear photo of it. Add who it is for if the page is thin."
     },
     {
       "t": "Brief the Ad",
@@ -68,73 +68,73 @@
   ],
   "ugc": {
     "eyebrow": "What the term means for your ad",
-    "title": "What Are AI UGC Ads?",
+    "title": "What Is AI UGC?",
     "paras": [
       "AI UGC is a recommendation that sounds like someone who uses the product. An AI actor carries the line, so a DTC brand can talk about a new serum without booking an influencer for that week.",
       "A jar that already has a listing can become a clip shaped like a phone video. You tell the video agent who the ad is for, and a template keeps that shape familiar to people scrolling the feed.",
-      "Hold a night cream the way a friend would. The ad then sits beside ordinary posts, and a glossy studio spot is a different job."
+      "Hold a night cream the way a friend would. The ad then sits beside ordinary posts. A glossy studio spot is a different job, and you do not need one to start."
     ],
     "formats": [
       {
-        "t": "First-Person Product Pitch",
-        "d": "Someone holds a vitamin bottle and explains what it is for, speaking as themselves."
+        "t": "Give a First-Person Product Pitch",
+        "d": "Someone holds a vitamin bottle and explains what it is for, speaking as themselves. The buyer hears a recommendation, not a slogan."
       },
       {
-        "t": "Problem-to-Product Demo",
-        "d": "A parent brings up the leaky lid in a diaper bag, then shows the cap that stays shut."
+        "t": "Show the Problem, Then the Product",
+        "d": "A parent brings up the leaky lid in a diaper bag, then shows the cap that stays shut. The product is the fix, on camera."
       },
       {
-        "t": "Product Walkthrough",
+        "t": "Walk Through the Product",
         "d": "Beans go into a grinder and a cup lands on the counter, so the buyer sees the motion rather than a slogan."
       },
       {
-        "t": "AI Unboxing Reveal",
+        "t": "Open the Box on Camera",
         "d": "A candle set comes out of the box, and the person on camera reacts to the scent before naming the set."
       }
     ]
   },
   "audience": {
     "title": "AI UGC Ads for DTC Brands, SaaS Teams, and Agencies",
-    "lead": "DTC brands, SaaS companies, and agencies are who this is for, and each group shows up with a different job.",
+    "lead": "DTC brands, dropshippers, small shops, agencies, creators, and app teams each show up with a different job.",
     "items": [
       {
-        "t": "DTC Brands on Their Own Site",
-        "d": "A candle brand can put the next scent on camera the week the wax is poured. The shop stays open while you compare two openings.",
+        "t": "Put the Gift Set on Camera",
+        "d": "A DTC brand can show the cream tube, the cream jar, and the soap bar coming out of the gift box the week they are packed. The shop stays open while you compare two openings.",
         "img": "n:img3-gen2-unboxing-videos-g2-r3",
         "alt": "Plain white cream tube, round white cream jar and white soap bar revealed in an open gift box.",
         "frame": "browser"
       },
       {
-        "t": "Test Ads Before a New SKU Arrives",
-        "d": "A dropshipping desk can show a phone stand before the first carton arrives. Retire the cuts nobody taps. Keep the one they do.",
+        "t": "Test the Snack Ad Early",
+        "d": "A dropshipping desk can show the snack pouch beside a lunch container before the first carton arrives. Retire the cuts nobody watches. Keep the one they do.",
         "img": "n:gen2:video-ads-g3",
         "alt": "Snack pouch set down beside a lunch container on an office desk.",
         "frame": "phone"
       },
       {
-        "t": "Put a Small Catalog on Camera",
-        "d": "A two-person bakery can show the loaf to people who already walk in, without an agency invoice. The monthly plan includes a credit balance.",
+        "t": "Film the Pasta Sauce Yourself",
+        "d": "A two-person food shop can show the pasta sauce jar beside a finished plate, without an agency invoice. The monthly plan includes a credit balance you can see before you start.",
         "img": "n:gen2:ind-food-drinks-g3",
         "alt": "Pasta sauce jar beside a finished plate of pasta.",
         "frame": "browser"
       },
       {
-        "t": "Agencies With a Full Queue",
-        "d": "Monday's client sells cookware. Tuesday's sells a scheduling app. Both get a new cut here, and the strategist stays on the media plan.",
+        "t": "Clear a Queue of Client Ads",
+        "d": "Monday's client sells a snack pouch. Tuesday's sells a scheduling app. Both get a new cut here, and the strategist stays on the media plan.",
         "img": "n:img3-gen2-spokesperson-videos-g3-r2",
         "alt": "Adult presenter with short curls holds a plain blank snack pouch at chest height in a bright kitchen.",
         "frame": "phone"
       },
       {
-        "t": "Keep Publishing Between Shoots",
-        "d": "Someone who posts product rounds can record a face once and let that likeness carry Thursday. The channel does not go quiet during a travel week.",
+        "t": "Keep Packing the Tote on Camera",
+        "d": "Someone who posts product rounds can pack the canvas tote on the hallway bench from one photo. The channel does not go quiet during a travel week.",
         "img": "n:gen2:video-ads-g2",
         "alt": "Canvas tote bag packed item by item on a hallway bench.",
         "frame": "phone"
       },
       {
-        "t": "Show One SaaS Feature at a Time",
-        "d": "A scheduling app can show a calendar filling up while a person explains the reminder. The clip is there to win a signup, and no studio was booked for it.",
+        "t": "Explain the Tablet Stand",
+        "d": "An app team can show the tablet stand on a tidy desk while a person explains one feature. The clip is there to win a signup, and no studio was booked for it.",
         "img": "n:gen2:ind-electronics-g2",
         "alt": "Tablet stand holds a dark-screen tablet on a tidy desk.",
         "frame": "browser"
@@ -150,12 +150,12 @@
     [
       "When the File Arrives",
       "The edit often lands after the shoot day",
-      "Download after the render completes"
+      "Download the file after the render finishes"
     ],
     [
       "What the Ad Costs",
       "A day rate, plus a location and an editor",
-      "A monthly plan covers 200 credits. You are not paying a person to appear"
+      "Starter is $24.50 a month for 200 credits. You are not paying a person to appear"
     ],
     [
       "How Many You Can Make",
@@ -212,90 +212,82 @@
         "credits": 600
       }
     ],
-    "lead": "Credits work across photos and videos.",
+    "lead": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits cover photos and videos.",
     "href": "/pricing",
-    "cta": "See all plans"
+    "cta": "See All Plans"
   },
   "faq": [
     {
-      "q": "Why does a creator-style ad hold attention?",
-      "a": "People stop for a recommendation, and this format is a recommendation. A DTC brand can open on one annoyance the buyer already has, like a lid that leaks in a bag, and let the product answer it. A second opening can come from that same note, with no one new to hire."
+      "q": "Why do AI UGC videos get attention?",
+      "a": "They open like a recommendation, so the problem and the product show up before a polished brand spot would. A DTC team can start on the jar in a gym bag and let the next scene answer it."
     },
     {
-      "q": "What are people referring to when they say AI UGC?",
-      "a": "A product ad that sounds like a person who uses the item, delivered by an AI actor. A SaaS team can show one screen while someone talks through it, and that week does not need a film crew."
+      "q": "What is AI UGC?",
+      "a": "AI UGC is a creator-style product ad read by an AI actor, not a review from a buyer. Begin with your product photo, or open from the product page, then read the words before you download."
     },
     {
       "q": "What does Starter include for making ads?",
-      "a": "Starter is $24.50 a month and includes 200 credits. A photo is 24 credits. A 6-second clip is 24, a 10-second clip is 40, 15 seconds is 60, and 30 seconds is 120. You see that cost before you generate."
+      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits. Videos of 6, 10, 15, and 30 seconds cost 24, 40, 60, and 120 credits. You see the charge before you start."
     },
     {
-      "q": "When is the file ready for me to download?",
-      "a": "After the render completes. Download the file from the editor and review the line before posting."
+      "q": "How long will an AI UGC ad take?",
+      "a": "The page shows progress while you adjust the line in the editor. Download the file when the render finishes. A failed job returns the credits."
     },
     {
-      "q": "What do I actually do to put an AI actor in an ad?",
-      "a": "Start with the product page or photo, choose an AI actor, approve the script, and export the clip. Change the line in the editor if it does not fit the product."
+      "q": "How do I make a UGC ad with an AI actor?",
+      "a": "Upload a product photo or paste a page link, pick an AI actor, and read the script in the editor. Change the line if it does not fit, then generate."
     },
     {
-      "q": "Where do the AI actors for these ads come from?",
-      "a": "From the library on this account. Pick an adult face that fits the brand. A payroll app and a snack label should not use the same person."
+      "q": "Which tools offer AI actors for UGC video ads?",
+      "a": "They come from the AIVideosUGC library of 53 adult AI actors. Pick a face that fits the buyer, then pair it with a voice from the same library."
     },
     {
-      "q": "I only have the address of the product page. Can I start there?",
-      "a": "Yes. A public page for a standing desk already holds the photo and the product name, and that can open the ad. Add a note if the buyer works from a home office rather than a warehouse."
+      "q": "Can I turn a product link into a UGC ad?",
+      "a": "Yes. Paste a public product page so the tool can start from the product image and name. Add who the ad is for before you review it."
     },
     {
-      "q": "Do I need a signed release before I run an AI actor ad?",
-      "a": "No. The AI actor and stock voice are cleared for commercial ads, so no signed release is needed for them. You still need rights to the bottle photo and any voice sample you upload."
+      "q": "Do AI-generated UGC ads need usage rights?",
+      "a": "No signed release is needed for an AIVideosUGC AI actor, and the file is cleared for commercial use with no watermark. You still need rights to the product photo and to any voice sample you upload."
     },
     {
-      "q": "What can I still change after the clip exists?",
-      "a": "You can edit the price or presenter, then render a new version. Each new render spends credits, shown before you confirm."
+      "q": "Can I edit an AI UGC ad after it is generated?",
+      "a": "Yes. You can edit the script, swap the face, change captions, and render another version. The credit charge shows before you confirm that next job."
     },
     {
-      "q": "How does an AI actor ad differ from a customer video?",
-      "a": "An AI actor ad uses a generated presenter instead of a customer filming on a phone. It gives the brand another way to test a product line when nobody is free to record."
+      "q": "How is UGC different from AI UGC?",
+      "a": "A customer video is filmed by a person who bought the product. An AI actor ad uses a generated face and a line you approved. Do not present it as a review from a buyer."
     },
     {
       "q": "Should I use an AI actor or hire a person?",
-      "a": "Use an AI actor for fast tests, and hire a person when the ad depends on a specific founder or performer. A skincare label can use an AI actor for a draft and save the founder for a launch film."
+      "a": "Use an AI actor when you need the ad without a shoot, or several versions to test. Hire a person when a real founder or a known performer is the point of the ad."
     },
     {
       "q": "Can I create AI UGC ads in another language?",
-      "a": "Yes. A brand selling the same charger in Spain and in Korea writes two lines and picks a voice for each. A cloned voice is only an option when you have rights to the sample."
+      "a": "Yes. Write the product sentence in the language you sell in, then pick a voice that matches it. You can render the same offer again for the next market."
     },
     {
-      "q": "How do I get an AI UGC ad into a campaign?",
-      "a": "Download the finished file and upload it to TikTok Ads Manager, Meta Ads Manager, or Google Ads like any video your team made."
+      "q": "Which languages can I use for AI UGC ads?",
+      "a": "Write the sentence in the language your buyers already read, and pick a matching voice. The same offer can be cut for TikTok and for Meta."
     },
     {
-      "q": "Our promotion starts soon. Where do we take the ad?",
-      "a": "Bring the product page, or a script you already trust, and download the file when the render completes. If you want someone here to carry the job, email support@aivideosugc.com about done-for-you work. You still approve the line before it posts."
+      "q": "Where can I get help with an AI UGC ad before a promotion?",
+      "a": "Email support@aivideosugc.com with the product page and the line you want spoken. We help you get the script right before the promotion date, including the opening and the product name on screen."
     },
     {
       "q": "Can an AI actor use a voice we already recorded?",
-      "a": "Yes, if you own that recording. A founder who taped a short hello can have an AI actor use it on the next product clip. Do not upload anyone else's voice."
+      "a": "Yes. An AI actor can use a cloned voice when you have rights to the sample. Upload only audio you own or are allowed to use."
     },
     {
-      "q": "Can we publish UGC-style ads with no creator on contract?",
-      "a": "Yes. A DTC brand can post from the listing photo and an AI actor, and that cut does not need a creator on contract."
+      "q": "Can I publish UGC-style ads without hiring creators?",
+      "a": "Yes. Start from your product photo and an AI actor, then publish the download in your ad account like any other video."
     },
     {
-      "q": "Can the ad be a testimonial that belongs on TikTok?",
-      "a": "Yes. An AI actor can deliver a testimonial-style product line in a vertical format. Start from the photo already on the product page and download the clip with the line on screen."
+      "q": "Can I create a testimonial-style UGC ad for TikTok?",
+      "a": "Yes. Make a testimonial-style vertical ad with an AI actor, approve the line, and download it for TikTok. Check that platform's label rules before you post."
     },
     {
       "q": "What should a DTC brand look for in an AI UGC tool?",
-      "a": "Look for a tool that finishes the ad in one place instead of a stack of separate apps. AIVideosUGC is built for DTC brands, SaaS teams, and agencies. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "What photo should I upload?",
-      "a": "Use a clear photo of the product you sell, with the whole item in frame. A phone photo on a plain background is enough. Upload only photos you own or have permission to use."
-    },
-    {
-      "q": "Are the people in these clips buyers?",
-      "a": "No. They are AI actors. Run the clip as your ad, and follow each platform's rules for labeling AI. Do not present the clip as a review written by someone who bought the product."
+      "a": "Look for a tool that shows the credit cost first, lets you approve the script, and exports 9:16, 1:1, 16:9, 4:3, and 3:4 with no watermark. Failed jobs return credits. You can send up to 7 reference images with a job."
     }
   ],
   "limitations": {
@@ -331,20 +323,20 @@
   "more_sections": [
     {
       "eyebrow": "Inside the file",
-      "h2": "AI Product Videos and Photos You Can Post",
-      "lead": "The ad still has to look like the brand and sound like a person.",
+      "h2": "What the Finished AI UGC Ad Includes",
+      "lead": "The ad still has to look like the brand and sound like a person who would recommend the product.",
       "items": [
         {
-          "t": "Choose an AI Actor for the Product",
-          "d": "A hardware brand and a soft skincare line should not share a presenter. Pick the actor who looks at home next to that product."
+          "t": "Pick the Right AI Actor",
+          "d": "A hardware brand and a soft skincare line should not share a presenter. Pick the actor who looks at home next to that product, and match the line to it."
         },
         {
           "t": "Turn Product Photos Into Video",
-          "d": "A white sneaker on a gray sweep can turn in a clip. Match the color to the photo you uploaded before anyone posts it."
+          "d": "A white sneaker on a gray sweep can move in a clip. Match the color to the photo you uploaded before anyone posts it."
         },
         {
-          "t": "Create Ads in the Buyer's Language",
-          "d": "A signup ad aimed at Mexico can use the Spanish sentence your team already sends in email. Pick a voice that matches it."
+          "t": "Write the Ad in Their Language",
+          "d": "A signup ad aimed at Mexico can use the Spanish sentence your team already sends. Pick a voice that matches that language."
         },
         {
           "t": "Direct the Actor's Delivery",
@@ -352,10 +344,10 @@
         },
         {
           "t": "Edit the Script Before Export",
-          "d": "A price that changed this morning can be corrected on the frame before you export it."
+          "d": "A price that changed this morning can be corrected on the frame before you export the file."
         },
         {
-          "t": "Restyle Captions for Mobile",
+          "t": "Restyle Captions for a Phone",
           "d": "A kitchen gadget is often watched in a noisy kitchen. Restyle the on-screen line so the claim is easy to read on a phone."
         }
       ]
@@ -903,42 +895,42 @@
       }
     }
   },
-  "cta_lead": "DTC brands, SaaS teams, and agencies can start from a product they already sell and leave with a creator-style ad.",
+  "cta_lead": "DTC brands, SaaS teams, and agencies can start from a product they already sell and leave with a creator-style ad. The credit cost shows before you generate.",
   "cta_title": "Build Your Next Product Ad",
   "benefits_lead": "A SaaS marketer can brief the next signup ad here and leave with a file, instead of emailing a freelancer for every cut.",
   "closing": {
-    "h2": "AI UGC Ads From One Desk",
+    "h2": "Plans for Your Next AI UGC Ad",
     "paras": [
-      "DTC brands, SaaS companies, and agencies can test the next creator-style ad without opening a new vendor relationship.",
-      "The actor, the spoken line, and the listing photo live on this account."
+      "DTC brands, SaaS companies, and agencies can test the next creator-style ad on the plan they already pay for, without opening a new vendor relationship.",
+      "The actor, the spoken line, and the listing photo stay on this account. Pick a plan, then spend credits on the photos and clips you actually post."
     ]
   },
   "trust": {
-    "h2": "What to Expect Before You Make an Ad",
-    "lead": "Details a team that posts every week will ask about.",
+    "h2": "What You Can Count on Before You Post",
+    "lead": "Details a team that posts every week will ask about before they upload a file.",
     "items": [
       {
-        "t": "A Presenter for This Buyer",
+        "t": "Pick From 53 AI Actors",
         "d": "A pet-supplement brand and a payroll tool should not share a face. Choose an adult actor who fits the people you already sell to."
       },
       {
-        "t": "The Language of the Product Page",
+        "t": "Match the Product Page Language",
         "d": "A German product page can carry a German voice on the ad. You supply the sentence, so the edit does not wait on a translation vendor."
       },
       {
-        "t": "Support for Billing and Exports",
-        "d": "A billing question or a stuck export can go to support@aivideosugc.com. That inbox is watched through the night."
+        "t": "Email Support for Billing",
+        "d": "A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name so the reply can start from the job."
       },
       {
-        "t": "Export the Right Ad Format",
+        "t": "Export the Frame You Need",
         "d": "A Reel wants 9:16 and a feed post may want 1:1. 16:9, 4:3, and 3:4 are on the same account, and the download has no watermark. Post it straight to [TikTok](/platforms/tiktok-ads) or [Meta](/platforms/facebook-ads)."
       },
       {
-        "t": "Download the Finished Render",
-        "d": "When the render is done, download the file. It does not sit in a freelancer's queue."
+        "t": "Download When the Render Ends",
+        "d": "When the render is done, download the file. It does not sit in a freelancer's queue while the promotion date gets closer."
       },
       {
-        "t": "Add Your Logo and Brand Type",
+        "t": "Add Your Logo and Type",
         "d": "Put your mark on the end card and keep the type you use on the site. The final frame carries your brand into the ad."
       }
     ]

@@ -4,7 +4,7 @@
   "description": "Turn one shoe photo into on-foot demos, unboxings, fit checks, and listing photos. Download clips and photos with no watermark for posts and product pages.",
   "h1": "AI Product Photos for Shoe Brands, On Foot and in Motion",
   "eyebrow": "Footwear",
-  "lead": "One measured step from the side photo of a boot shows the stride, so shoppers see more than the color on white.",
+  "lead": "One measured step from the side photo of a brown boot shows the stride, so shoppers see more than the color on white.",
   "card": "On-foot steps, unboxings, fit checks, and listing photos from one shoe photo.",
   "secondary_keywords": [
     "sneaker product photos",
@@ -20,53 +20,53 @@
     },
     {
       "q": "Can a side shot produce a sole or heel view?",
-      "a": "No. Start from a separate photo of the sole or the heel. A side photo cannot reveal a sole pattern that was never in the file."
+      "a": "No. Start from a separate photo of the sole or the heel. A side photo cannot show a sole pattern that was never in the file."
     },
     {
       "q": "Can I make an Amazon main image this way?",
-      "a": "Yes. For a main image, show the shoe alone on pure white, filling most of the frame, with no extra objects and no text on the picture. Put size and width notes in the gallery or the listing text."
+      "a": "Yes. For a main image, show the shoe alone on pure white. It should fill most of the frame. Leave out extra objects and any text on the picture. Put size and width notes in the gallery or the listing text."
     },
     {
       "q": "Can I show a sneaker logo I do not own?",
-      "a": "If you ask for a logo or a brand mark you do not own, the request can be refused. Resellers of branded pairs should use their own straight product photos for those listings."
+      "a": "No. If you ask for a logo or a brand mark you do not own, the request can be refused. Resellers of branded pairs should use their own straight product photos for those listings."
     },
     {
       "q": "Which angles should I photograph?",
-      "a": "Start with one full side view, then a top view and a sole or heel shot. Those three cover the shape and the sole pattern."
+      "a": "Start with one full side view, then a top view and a sole or heel shot. Those three cover the shape and the sole pattern a shopper checks."
     },
     {
       "q": "How do I keep an unbranded pair from looking branded?",
-      "a": "Start from a plain pair and check the result for stripes, sole shapes, or stitching that resemble a known logo. Keep logos out of the source photo and the finished scene."
+      "a": "Start from a plain pair and check the result for stripes, sole shapes, or stitching that resemble a known logo. Keep marks you do not own out of the source photo and the finished scene."
     },
     {
       "q": "Can the clips run as paid shoe ads?",
-      "a": "Yes. Downloads come back without a watermark, so paid ads are fine."
+      "a": "Yes. Downloads come back without a watermark, so a paid ad is fine. You can publish the clip to TikTok or Meta, or download it and post it yourself."
     },
     {
       "q": "How long can a shoe clip be, and what does it cost?",
-      "a": "Choose 6, 10, 15, or 30 seconds. Frames include a tall phone at 9:16, a square at 1:1, a wide 16:9, 4:3, or a tall 3:4. Those lengths spend 24, 40, 60, and 120 credits. If the clip fails, the credits return."
+      "a": "Choose 6, 10, 15, or 30 seconds. Frames include 9:16, 1:1, 16:9, 4:3, and 3:4. Those lengths spend 24, 40, 60, and 120 credits. If the clip fails, the credits return. Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits, and Premium is $63 for 600."
     },
     {
       "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send the link from your shop software through the API. Ask for a single step in one version and a white-background side view in the other."
+      "a": "Yes. Paste the product page, or send the link from your shop software through the API. Ask for one step in one version and a white-background side view in the other."
     }
   ],
-  "templates_lead": "Choose an on-foot demo, an unboxing, or a fit check that matches the pair.",
-  "cta_lead": "Download a single step you can run as an ad. You start from the side photo, and the credit cost is on screen before you confirm.",
+  "templates_lead": "Choose an on-foot demo, an unboxing, or a fit check that matches the pair you sell.",
+  "cta_lead": "Download one step you can run as an ad. You start from the side photo of the boot, and the credit cost is on screen before you confirm.",
   "steps_h2": "How to Make On-Foot Shoe Photos in 3 Simple Steps",
-  "steps_lead": "You download one step, sized for the channel you picked, from the side view of the runner.",
+  "steps_lead": "You download one step of the brown boots, sized for the channel you picked, from the side view.",
   "steps": [
     {
       "t": "Upload Your Shoe",
-      "d": "Upload a full side view of the runner with the toe and the heel in frame."
+      "d": "Upload a full side view of the brown lace-up boots. Keep the toe and the heel inside the frame."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Choose an AI avatar already mid-stride in this runner, and keep that face when you render another color."
+      "d": "Choose an AI avatar already mid-stride in these brown boots. Keep that face when you make another color."
     },
     {
       "t": "Generate and Publish",
-      "d": "The download brings a spoken line and captions, sized for the channel, so you can post the step and try the opening."
+      "d": "Download a spoken line and captions for this trail step. Post the size that fits the channel you picked."
     }
   ],
   "visual": {
@@ -104,65 +104,65 @@
     }
   },
   "steps_cta": {
-    "label": "Make a shoe ad",
+    "label": "Download a Shoe Ad",
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "A Step From the Side Photo You Shot",
-    "lead": "The walking clip starts from the side photo you already shot, so you can make the ad before you book a model.",
+    "h2": "Show the Pair From the Photo You Shot",
+    "lead": "The walking clip starts from the side photo you already shot. Add an AI actor when someone should wear the pair, and make the ad before you book a model.",
     "items": [
       {
         "t": "Both Shoes in One Frame",
-        "d": "An adult hand holds both shoes so the toe shape and the sole edge of this canvas pair show together. The photo you already took of this color is the source.",
+        "d": "An adult hand holds both gray walking shoes so the toe shape and the sole edge show together. The photo you already took of this color is the source. Shoppers can compare the pair before they read sizes.",
         "img": "n:guide:fx30-shoes-benefit-fit-r1",
         "alt": "Adult man holds a pair of plain gray walking shoes for a fit check."
       },
       {
-        "t": "A Grain Still Plus a Walking Clip",
-        "d": "The leather grain stays as the gallery still, and a separate tall file carries the step.",
+        "t": "Show the Grain, Then a Step",
+        "d": "The leather grain stays in the gallery still, and a separate tall file carries the step. Use the still on the product page and the clip where the ad runs.",
         "img": "n:guide:fx30-shoes-benefit-material-r1",
         "alt": "Macro view of a plain taupe shoe showing leather grain, flat laces, stitching and sole edge."
       },
       {
         "t": "One Step a Shopper Can Read",
-        "d": "A single step on a clean sidewalk shows the ankle opening and the side profile of a loafer, which is the view a shopper uses to judge the pair.",
+        "d": "A single step on a clean sidewalk shows the ankle opening and the side profile of the shoe. That is the view a shopper uses to judge the pair before they buy.",
         "img": "n:guide:fx30-shoes-benefit-step-r1",
         "alt": "Adult wearing a plain walking shoe takes one measured step on a clean sidewalk."
       }
     ]
   },
   "platforms": {
-    "h2": "A Walking Clip for Each Placement",
-    "lead": "The walking clip and the clean product image can each be shaped for the feed, the listing, or the product page.",
+    "h2": "A Walking Clip for Every Placement",
+    "lead": "Shape the walking clip and the clean product image for the feed, the listing, or the product page. Publish the file you want, or download it and post it yourself.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
-        "d": "A tall walking clip for TikTok, with the pair in motion from the opening second.",
+        "t": "Make a TikTok Walking Clip",
+        "d": "A tall walking clip for TikTok, with the pair in motion from the first second and room for your offer.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram Ads",
-        "d": "A side-view still or a short step for the grid and Stories.",
+        "t": "Post the Pair on Instagram",
+        "d": "A side-view still or a short step for the grid and for Stories. Make the square and the tall file as two jobs.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook Ad Generator",
-        "d": "A feed image of the pair, with space to add your offer once you download it.",
+        "t": "Make a Facebook Feed Image",
+        "d": "A feed image of the pair, with open space so you can add your offer after you download it.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Ads",
-        "d": "A Short built around a single pace, so the shoe is clear immediately.",
+        "t": "Make a YouTube Short",
+        "d": "A Short built around one pace, so the shoe is clear in the opening second of the clip.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Product Photos",
-        "d": "The shoe alone on white, ready to use as a main image.",
+        "t": "Put the Shoe on Amazon",
+        "d": "The shoe alone on white, ready for you to check against the main-image rules before upload.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
-        "d": "Matching pair imagery for the product page and the collection.",
+        "t": "Match the Pair on Shopify",
+        "d": "Matching pair photos for the product page and for the collection grid on your store.",
         "href": "/platforms/shopify-product-photos"
       }
     ]

@@ -4,50 +4,50 @@
   "description": "Make an AI spokesperson video from a product photo or a product link. Choose a presenter and a voice, then download a talking ad for TikTok or Meta.",
   "h1": "AI Spokesperson Video: Explain One Product Point on Camera",
   "eyebrow": "AI spokesperson video",
-  "lead": "One product photo can still become two spoken ads you can test. AIVideosUGC puts an AI actor on camera with your line.",
+  "lead": "Make an AI spokesperson video from the bottle photo. An AI actor holds it and says your line, so you can test a spoken ad without a studio booking.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
     "AI actor product ads",
     "on-camera product showcase"
   ],
-  "benefits_h2": "Where an AI Spokesperson Fits",
+  "benefits_h2": "Where an AI Spokesperson Video Runs",
   "benefits": [
     {
       "t": "Ads Without Another Hire",
-      "d": "A running-shoe ad can run on TikTok with the actor saying the cushion line. A second export in another language you sell does not mean hiring again.",
-      "icon": "bolt"
+      "icon": "bolt",
+      "d": "A running-shoe ad can run on TikTok with the actor saying the cushion line. A second cut in another language you sell does not mean hiring a new crew."
     },
     {
       "t": "A Voice on the Product Page",
-      "d": "Next to the coffee-maker photo, the actor can answer the question buyers ask in chat. That answer stays on the page.",
-      "icon": "target"
+      "icon": "target",
+      "d": "Next to the coffee-maker photo, the actor can answer the question buyers ask in chat. That spoken answer stays on the product page."
     },
     {
       "t": "The Same Face in the Feed",
-      "d": "Monday's lipstick clip can show the bullet. Friday can show the same actor with a new sentence about the shade. The face stays so the feed still looks like your shop.",
-      "icon": "refresh"
+      "icon": "refresh",
+      "d": "Monday's lipstick clip can show the bullet. Friday can show the same actor with a new sentence about the shade. The face stays, so the feed still looks like your shop."
     },
     {
       "t": "A Guide You Can Update",
-      "d": "The actor can show an air fryer's basket, then the dial, then the start button, in that order. When a step changes, replace that sentence and publish the guide again.",
-      "icon": "check"
+      "icon": "check",
+      "d": "The actor can show an air fryer's basket, then the dial, then the start button, in that order. When a step changes, replace that sentence and publish the guide again."
     }
   ],
   "steps_h2": "How to Make an AI Spokesperson Video in 3 Simple Steps",
-  "steps_lead": "A product photo and one sentence are enough to leave with a clip.",
+  "steps_lead": "Leave with a spoken clip of the forest-green bottle. One clear photo and one sentence are enough.",
   "steps": [
     {
       "t": "Add a Photo or a Link",
-      "d": "Upload the photo that shows the lamp clamp. Type the sentence about the shelf, the one you already use in email."
+      "d": "Upload the photo that shows the whole forest-green bottle. Type the sentence you already use about how to use it."
     },
     {
       "t": "Pick a Presenter and a Voice",
-      "d": "Choose the actor in a sweater, and a quieter voice, for the lamp. Set the length that gives the clamp time to show."
+      "d": "Choose the actor and a quieter voice for the bottle. Set 6, 10, 15, or 30 seconds so the bottle has time to show."
     },
     {
       "t": "Download or Publish",
-      "d": "Download the lamp clip, or send the 9:16 cut toward TikTok. Captions can ride with the file."
+      "d": "Download the bottle clip, or send the 9:16 cut toward TikTok. Captions can ride along on the file you post."
     }
   ],
   "maker": {
@@ -70,19 +70,19 @@
   "faq": [
     {
       "q": "What is an AI spokesperson video?",
-      "a": "It is a short clip of an AI actor saying your product sentence on camera. You start from a photo or the product page, and you approve the line before it posts."
+      "a": "It is a short clip of an AI actor saying your product sentence on camera. You start from a photo or the product page, pick from 53 AI actors, and approve the line before it posts."
     },
     {
       "q": "How does the clip get built from a script?",
-      "a": "Type the line, pick who says it, and you get a clip you can download. Captions can ride along for viewers watching with the sound off."
+      "a": "Type the line, pick who says it, and you get a clip you can download. Captions and a music track can ride with that file."
     },
     {
       "q": "Which placements can use an AI actor?",
-      "a": "Paid ads, product pages, social feeds, short guides, training clips, and lessons. The same presenter can explain a feature, a setup step, or an offer."
+      "a": "Paid ads, product pages, social feeds, short guides, training clips, and lessons. The same presenter can explain a feature on TikTok or Meta, and you can run a batch from a link or the API."
     },
     {
       "q": "Is an AI actor a good fit for an explainer?",
-      "a": "Yes. The actor can explain the same feature the same way on every render, which matters when the page and the ad must agree."
+      "a": "Yes. The actor can explain the same feature the same way every time, which matters when the product page and the ad must agree."
     },
     {
       "q": "Can I use one for training or onboarding?",
@@ -90,15 +90,15 @@
     },
     {
       "q": "How do brands keep a social feed going?",
-      "a": "They keep one actor as the face and change the line from post to post. The next clip does not mean booking the product again."
+      "a": "They keep one actor as the face and change the line from post to post. The next clip does not mean booking the product or a new shoot."
     },
     {
       "q": "Can I change the face, the voice, or the language?",
-      "a": "Yes. Pick a different age, outfit, or voice, including a voice for another language you sell in."
+      "a": "Yes. Pick from 53 AI actors, a different age, outfit, or voice, including a voice for another language you sell in. You can also clone a voice you have rights to use."
     },
     {
       "q": "Can I run the clip commercially?",
-      "a": "Yes. Finished clips on a paid plan are yours to use in ads, with no watermark. If a render fails, those credits come back."
+      "a": "Yes. Finished clips on a paid plan are yours to use in ads, with no watermark. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. If a render fails, those credits come back."
     },
     {
       "q": "What should a shop be careful about?",
@@ -746,7 +746,7 @@
     }
   },
   "cta_title": "Put an AI Actor on the Next Ad",
-  "cta_lead": "Upload a product photo or paste the product page.",
+  "cta_lead": "Upload a product photo or paste the product page, then download a clip you can post.",
   "blockOrder": [
     "hero",
     "picker",
@@ -768,24 +768,24 @@
     ]
   },
   "reasons": {
-    "h2": "Why Shops Use an AI Spokesperson",
-    "lead": "A product page that is only a photo can get a spoken line without a studio day.",
+    "h2": "Why Shops Choose an AI Spokesperson",
+    "lead": "A photo-only product page can get a spoken line on camera without booking a studio day.",
     "items": [
       {
         "t": "A First Ad Without the Wait",
-        "d": "Start from the earbud photo, choose a presenter and a voice, and you have a first ad to review. No audition and no studio hold.",
+        "d": "Start from the earbud case photo, pick a presenter and a voice, and review a first ad. You skip the audition and the studio hold.",
         "img": "n:guide:q4-spokesperson-strip-04",
         "alt": "Adult East Asian man holds a plain dark wireless earbud case while speaking to camera in a living room."
       },
       {
         "t": "Enough Cuts to Test",
-        "d": "Keep the actor on the headphones. Change only the first sentence, one about the commute and one about a quiet office, and spend on the opening that gets the replies.",
+        "d": "Keep the actor on the headphones and change only the opening, one for the commute and one for a quiet office. You test both cuts from the same photo instead of booking another shoot.",
         "img": "n:guide:im02-spokesperson-videos-use-product-pages-r1",
         "alt": "Adult East Asian woman with a straight chin-length black bob holds plain charcoal over-ear headphones while speaking in a simple studio corner."
       },
       {
         "t": "The Line, Said as Written",
-        "d": "The alcohol-free line you already use for the toner is the sentence on camera. A creator's rewrite is not in the middle of it.",
+        "d": "The alcohol-free line you already use for the toner is the sentence on camera. You keep that sentence, and a creator's rewrite is not added before the take.",
         "img": "n:gen2:spokesperson-videos-c1",
         "alt": "Adult holds a plain toner bottle at eye level while speaking in a bright bathroom."
       }
@@ -930,10 +930,10 @@
       }
     ]
   },
-  "related_h2": "More Video Tools",
+  "related_h2": "Explore Other Video Tools",
   "relatedH2": "More Video Tools",
-  "benefits_lead": "One spoken product point can live on an ad, a product page, a feed, and a short guide.",
-  "related_lead": "Other ways to turn a product into a clip.",
+  "benefits_lead": "One spoken product point can run as a paid ad, on the product page, in the feed, and as a short guide.",
+  "related_lead": "Other ways to turn one product photo into a clip you can post.",
   "more_sections": [
     {
       "eyebrow": "In the editor",

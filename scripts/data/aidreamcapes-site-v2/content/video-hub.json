@@ -4,7 +4,7 @@
   "description": "AI video generator for ads from one product photo. Choose 6, 10, 15, or 30 seconds, see the cost in plan credits first, and download for social or your store.",
   "h1": "AI Video Generator for Ecommerce: Ads from One Product Photo",
   "eyebrow": "AI video tools for online sellers",
-  "lead": "A brand, an agency, or a creator can put this week's product on video and keep the production budget for the media buy. You approve the file before it runs.",
+  "lead": "An AI video generator lets a brand, an agency, or a creator put this week's product on video. You keep the shoot budget for the media buy, and you approve the file before it runs.",
   "maker": {
     "options": [
       [
@@ -26,149 +26,149 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "An AI video generator builds a clip from a short note, a product page link, or a photo you upload, and you never book a crew. AIVideosUGC is aimed at stores, agencies, and people who buy ads: pick an AI actor, clone a voice you have rights to in the languages you sell in, and publish to Meta or TikTok.",
-    "You can edit the clip before you download it. Downloads have no watermark and can run as ads, and commercial use is included on paid plans."
+    "A shop takes the listing photo and gets a clip a buyer can watch. Nobody on the team has to stand in for that product. Pick an AI actor, clone a voice you have rights to in the languages you sell in, and publish the file to Meta or TikTok.",
+    "You can edit the clip before you download it. Choose an AI actor, keep the approved line, and use the language they sell in. Downloads have no watermark, and commercial use is on paid plans."
   ],
   "steps_h2": "How to Create AI Videos in 3 Simple Steps",
-  "steps_lead": "You stay in the editor until the file is downloaded.",
+  "steps_lead": "You stay in the editor until the bottle file is downloaded.",
   "steps": [
     {
       "t": "Share Your Product Idea",
-      "d": "Use the page for the insulated bottle, or name the bottle if the page is not public yet."
+      "d": "Start from the insulated bottle page, or name the bottle when that page is not public yet."
     },
     {
       "t": "Chat With the Video Agent",
-      "d": "The agent may ask who carries the bottle, a commuter or a gym regular. Your answer is the brief."
+      "d": "The video agent may ask who carries the bottle, a commuter or a gym regular. Your answer sets the brief."
     },
     {
       "t": "Download a Finished Video",
-      "d": "A 10-second clip is 40 credits, shown before you generate. A failed run returns the credits. The download has no watermark."
+      "d": "A 10-second bottle clip is 40 credits, shown before you generate. A failed run returns those credits, with no watermark."
     }
   ],
   "faq": [
     {
       "q": "How do I start an AI product video?",
-      "a": "Start with a product page or photo, tell the agent who it is for, approve the draft, and download the AI video. A bento box can be the example."
+      "a": "Share the product, paste a public page, or upload a photo. The video agent asks who the clip is for, then returns a script, an actor, and a voice for you to approve."
     },
     {
       "q": "How much detail should I give?",
-      "a": "Name the product and the one thing a buyer should notice, such as a lid that does not leak in a bag. A vague request for something nice gives you a vague clip. A clear photo of the whole item still helps."
+      "a": "Treat it like a short brief to a teammate. Name the product, who it is for, and the one fact the clip must say. More detail makes the first draft closer to the ad you wanted."
     },
     {
       "q": "Can the clip look like a short news item?",
-      "a": "Yes. A supplement brand can have someone deliver one product fact in a steady voice, the way a desk update would. Lengths are 6, 10, 15, or 30 seconds. You write the line so it stays a fact you can stand behind."
+      "a": "Yes. Pick a news-style setting, a voice, and the line you want spoken. Set the frame, the language, and the length, then approve the script before it renders."
     },
     {
       "q": "How does the tool use my video brief?",
-      "a": "It turns your note into a clip you can watch. For a kettle, that can mean the handle in frame and a person naming why the whistle matters. You can still change the line in the editor."
+      "a": "Your brief sets the tone, the product, and the platform. The editor writes a script and builds pictures around that line, and you can change either before download."
     },
     {
       "q": "What should a store expect before it picks a video tool?",
-      "a": "You get a file you can judge and a price you can see before it starts. You still decide whether the bottle looks like the one you ship."
+      "a": "A clear credit price, a file you can use in ads, and a way to change the actor and the script. AIVideosUGC shows the credit cost before the clip starts."
     },
     {
       "q": "What do the voices sound like?",
-      "a": "Pick a brighter read or a steadier one. Play two against the same kettle line and keep the voice that fits the buyer. A cloned voice is only there if you have rights to the sample."
+      "a": "You can try a bright voice, a low voice, or a calm one, and hear the line before you commit. Match the voice to the buyer you had in mind for that product."
     },
     {
       "q": "Do I have to install an app first?",
-      "a": "No. You work in the browser. Captions and the music library are on the same page, and the file downloads with no watermark."
+      "a": "No. You work in the browser. No extra software is required. Music and captions are available in the same place as the render."
     },
     {
       "q": "Can the clip show a person speaking the line?",
-      "a": "Yes. Pick an AI actor who fits the buyer for that skincare jar, and a delivery that is calm rather than loud. It is still your ad. Do not present that actor as a customer who bought the jar."
+      "a": "Yes. Pick an AI actor, choose the language and the voice, and the mouth follows the line you approved. You can adjust the delivery before you download."
     },
     {
       "q": "What does my team get from making videos here?",
-      "a": "The shoot comes off that week. A two-person shop can still put a new color of the lunch box on video without booking a crew."
+      "a": "A clip without a shoot on the calendar, captions if you want them, and another version when you want to test a second opening. Paid plans include commercial use and no watermark."
     },
     {
       "q": "Are these clips useful in a paid campaign?",
-      "a": "Yes, as ads you label honestly. A brand can run the same serum with two openings and keep the one shoppers finish. When you need a real customer on camera, film that person for that one spot."
+      "a": "Yes. Shops run them as the creative in a paid campaign on the networks they already buy. You still approve the claim before the file leaves the account."
     },
     {
       "q": "Can the product's web address start the clip?",
-      "a": "Yes. A public page for a standing desk already has the photo and the name, and that page can open the ad. The same job also lives on the [product link to video](page:url-to-video) page."
+      "a": "Yes. Paste a public product page and the photo on it becomes the product in the clip. You still approve the script and the actor before the render."
     },
     {
       "q": "Can I test two openings of the same product?",
-      "a": "Yes. Keep the photo of the sneaker and change the first line. Post the version that matches the shoe you ship."
+      "a": "Yes. Keep the same product photo and make a second opening, a second line, or a second frame. Post the one that fits the buyer."
     },
     {
       "q": "Can the file run as a Facebook or Instagram ad?",
-      "a": "Yes. A 1:1 or 4:3 cut can go to those placements, and 9:16 can go to a Reel or to TikTok. Add any AI label the platform asks for. Do not present the AI actor as someone who bought the product."
+      "a": "Yes. Use a square or a tall frame, with an AI actor if the ad needs a face. A Reel or a TikTok cut can use 9:16. The download has no watermark."
     },
     {
       "q": "What should an ecommerce ad include?",
-      "a": "The product a shopper can buy, shown clearly, with a line you approve. AIVideosUGC starts that from your photo. Paid plans include commercial use, and the finished file has no watermark."
+      "a": "One product, one claim, and a frame that fits the placement. The spoken line should match the listing, and the actor should look like the buyer you are paying to reach."
     },
     {
-      "q": "Can I choose a video model?",
-      "a": "No. Describe the look, length, and frame, then judge the finished file. Open the tool that fits: motion from a still, a spoken ad, a demo, an unboxing, or an AI actor."
+      "q": "Can I choose how the video is rendered?",
+      "a": "Yes. You choose the AI actor, the voice, the frame, and the length. The credit cost is shown before the render."
     },
     {
       "q": "When can I download the clip?",
-      "a": "After generation finishes. Captions and a voice come with the clip, and you can still change them in the editor. For a longer story, make a second clip and join the two there."
+      "a": "After you approve the script and the voice, the file is ready to download from the editor. A failed render returns the credits for that job."
     },
     {
       "q": "What does a video cost?",
-      "a": "Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits. Premium is $63 for 600 credits. A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. If a clip fails, the credits come back."
+      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. One photo spends 24 credits. You see the number first, and a failed job returns those credits."
     }
   ],
   "examples": {
-    "h2": "One Sample Clip of Each Format",
+    "h2": "Video Formats You Can Make",
     "lead": "One clip of each kind. Start the same kind from your own product photo.",
     "groups": [
       {
-        "label": "A Person Holds the Product",
+        "label": "Ads With a Person On Camera",
         "items": [
           {
             "ref": "n:gen2:video-hub-g1",
-            "title": "Gym Bag Bottle Creator Ad",
+            "title": "Bottle Ad With a Person",
             "kind": "scene",
             "product": "insulated bottle"
           }
         ]
       },
       {
-        "label": "The Same Walkthrough Again",
+        "label": "The Same Walkthrough Each Time",
         "items": [
           {
             "ref": "n:guide:im01-video-hub-bento-r1",
-            "title": "Bento Lunchbox Explainer",
+            "title": "Bento Box Walkthrough",
             "kind": "scene",
             "product": "bento lunchbox"
           }
         ]
       },
       {
-        "label": "Put It on a Dresser",
+        "label": "The Product in a Real Room",
         "items": [
           {
             "ref": "n:gen2:video-hub-g7",
-            "title": "Perfume Bottle Product Showcase",
+            "title": "Perfume Bottle in a Room",
             "kind": "scene",
             "product": "perfume bottle"
           }
         ]
       },
       {
-        "label": "Cast for the Buyer",
+        "label": "An Actor Chosen for the Buyer",
         "items": [
           {
             "ref": "n:gen2:spokesperson-videos-c3",
-            "title": "Gym Shaker Avatar Demo",
+            "title": "An Avatar Holds the Shaker",
             "kind": "scene",
             "product": "protein shaker"
           }
         ]
       },
       {
-        "label": "Sized for Where It Will Run",
+        "label": "A Frame for Where It Posts",
         "items": [
           {
             "ref": "n:gen2:video-hub-g3",
-            "title": "Sneaker Social Product Demo",
+            "title": "Sneaker Clip for the Feed",
             "kind": "scene",
             "product": "running sneaker"
           }
@@ -725,25 +725,25 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is This AI Video Generator for Products?",
+    "title": "What an AI Video Generator Does",
     "paras": [
-      "A store takes the photo already on the listing and gets a clip a buyer can watch. Nobody on staff has to stand in, and you do not book a crew for that one product.",
-      "An agency can do the same for a client who needs a spoken ad. Choose an AI actor who fits that client, write the line in the language they sell in, and download the file."
+      "A shop takes the listing photo and gets a clip a buyer can watch. Nobody on the team has to stand in for that product. Pick an AI actor, clone a voice you have rights to in the languages you sell in, and publish the file to Meta or TikTok.",
+      "You can edit the clip before you download it. Choose an AI actor, keep the approved line, and use the language they sell in. Downloads have no watermark, and commercial use is on paid plans."
     ]
   },
   "reasons": {
-    "h2": "Why Shops Use an AI Video Generator for Products",
+    "h2": "Why Shops Use an AI Video Generator",
     "lead": "Spoken product clips, without putting a shoot on the week.",
     "items": [
       {
         "t": "Match the Voice to the Script",
         "icon": "Mic",
-        "d": "A shopper can tell when the words and the mouth disagree. The line you approved is the line the face is saying, so the ad does not look dubbed."
+        "d": "A shopper can tell when the words and the mouth disagree. The line you approved is the line the face is saying, so the bottle ad does not look dubbed."
       },
       {
-        "t": "Create Multiple Product Video Cuts",
+        "t": "Make Several Cuts From One Photo",
         "icon": "Link",
-        "d": "The listing for a water bottle can open two different clips. Watch both and post the one that sounds like the brand."
+        "d": "The listing for the insulated bottle can open two different clips. Watch both and post the one that sounds like the brand."
       },
       {
         "t": "Choose a Familiar AI Actor",
@@ -845,6 +845,6 @@
     ]
   },
   "related_h2": "More AI Video Tools for Products",
-  "related_lead": "A still turned into motion, a product link, a spoken ad, a demo, an unboxing, or an AI actor.",
+  "related_lead": "Turn a still into motion, start from a product link, or make a spoken ad, a demo, or an unboxing with an AI actor.",
   "relatedH2": "More AI Video Tools for Products"
 }

@@ -4,7 +4,7 @@
   "description": "Turn one home product photo into a room scene, a cleaning demo, or an organizing clip. Download files with no watermark for listings, feeds, and paid ads.",
   "h1": "AI Product Videos for Home Brands, Shown in the Room They Fit",
   "eyebrow": "Home and living",
-  "lead": "A wool throw can leave the white sweep and sit on a sofa a shopper can picture. Name the sofa and the afternoon light, and that photo becomes a room.",
+  "lead": "A wool throw can leave the white sweep and sit on the bed a shopper can picture. Name the afternoon light, and that photo becomes the room.",
   "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
     "home decor product videos",
@@ -20,7 +20,7 @@
     },
     {
       "q": "Will furniture show up at the right size?",
-      "a": "The scale in the picture can drift. Put the true dimensions in the listing, and you can still mention a size in the scene, such as a 24-inch side table next to an armchair."
+      "a": "The scale in the picture can drift. Put the true dimensions in the listing. You can still mention a size in the scene, such as a 24-inch side table next to an armchair."
     },
     {
       "q": "Does this work for sofas and beds?",
@@ -44,11 +44,11 @@
     },
     {
       "q": "Do I need a studio or a hired model?",
-      "a": "No. Choose an AI avatar instead of booking a model or a set. A clip can include a voiceover and captions, and if that clip fails, the credits for the job return."
+      "a": "No. Choose an AI avatar instead of booking a model or a set. A clip can include a voice, a voiceover, captions, a music track, and a script. If that clip fails, the credits return."
     },
     {
       "q": "Can a product link lead to more than one version?",
-      "a": "Yes. Paste the listing, or let your shop software send it through the API. Ask for the lamp switched off in one version and switched on in the next, then trim both in the editor before you export."
+      "a": "Yes. Paste the listing, or let your shop software send it through the API. Ask for the lamp off in one version and on in the next, then trim both in the editor before you export."
     }
   ],
   "templates_lead": "Choose a room scene, an organizing how-to, or a comparison that fits the product.",
@@ -58,15 +58,15 @@
   "steps": [
     {
       "t": "Upload Your Product",
-      "d": "Upload the pillow photo with both pillows fully in frame. Say whether they sit on a cream chair or a bed."
+      "d": "Upload the pillow photo with both pillows fully in frame. Say whether they sit on the cream chair or the bed."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Choose an AI avatar seated beside the chair, and keep that face if you make a second pillow color."
+      "d": "Choose an AI avatar from the 53 AI actors, and keep that face for a second pillow color."
     },
     {
       "t": "Generate and Publish",
-      "d": "You leave with a voiced clip and on-screen captions, already framed for the feed you picked."
+      "d": "You leave with a voiceover and captions on the pillow clip, framed for the feed you picked."
     }
   ],
   "visual": {
@@ -145,12 +145,12 @@
     }
   ],
   "reasons": {
-    "h2": "Start the Room Ad From a Photo You Own",
-    "lead": "Make the room scene from the photo already on the listing, and the ad can start without a booked set.",
+    "h2": "Why Home Brands Start From a Photo They Own",
+    "lead": "Make the room scene from the photo already on the listing, and skip the booked set.",
     "items": [
       {
         "t": "Know the Spend Before You Run",
-        "d": "You know what the clip will spend before you commit, so the test stays inside the budget. A 10-second clip of the vacuum crossing the sofa is 40 credits, and that number shows before you confirm the job.",
+        "d": "You see the credit cost before you commit, so the test stays inside the plan. A 10-second clip of the vacuum crossing the sofa is 40 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
         "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
         "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
       },
@@ -173,33 +173,33 @@
     "lead": "One room scene can cover the feeds, the listings, and the product pages already on your calendar.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
-        "d": "A tall cleaning or organizing clip for TikTok, with the product moving in the first second.",
+        "t": "Post the Tall Clip on TikTok",
+        "d": "A tall clip of the cordless vacuum for TikTok, with the vacuum moving across the cushion in the first second.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram Ads",
-        "d": "A square room photo or a tall demo for the grid and for Stories.",
+        "t": "Use the Room Still on Instagram",
+        "d": "A square photo of the room, or a tall demo, for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook Ad Generator",
-        "d": "A feed ad that places the product in a room, leaving space to add your offer after you download.",
+        "t": "Place the Product on Facebook",
+        "d": "A feed placement that puts the product in a room, with space to add your offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Ads",
-        "d": "One clear action, framed as a Short, so the job of the product is obvious right away.",
+        "t": "Show One Action in a Short",
+        "d": "One clear action, framed as a YouTube Short, so the job of the product is obvious right away.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Product Photos",
-        "d": "A clean product image for the listing, ready to sit beside your written specs.",
+        "t": "Pair a Clean Photo With Amazon Specs",
+        "d": "A clean product image for the Amazon listing, ready to sit beside the dimensions you write yourself.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
-        "d": "Matching room imagery for the product page and the collection it belongs to.",
+        "t": "Match the Room on Shopify",
+        "d": "Matching room imagery for the Shopify product page and the collection it belongs to.",
         "href": "/platforms/shopify-product-photos"
       }
     ]

@@ -4,7 +4,7 @@
   "description": "Make holiday ad photos and videos from one product photo. Type dates, prices, or offers in the editor, then reuse the scene when those details change.",
   "h1": "Create Holiday Ad Photos and Videos Fast",
   "eyebrow": "Holiday ad photos and videos",
-  "lead": "Build the gift scene from the product photo. Type the ship-by date when the carrier confirms it.",
+  "lead": "Holiday ad photos and videos can go up before the ship-by date is set. An avatar can hold the gift, and you type the date when the carrier confirms it.",
   "secondary_keywords": [
     "Christmas product photos",
     "holiday video ads",
@@ -16,19 +16,19 @@
   "faq": [
     {
       "q": "How do credits work for a holiday photo or video?",
-      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. The cost is on screen before the job runs. If it fails, those credits return."
+      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before the job runs, and a failed job returns those credits."
     },
     {
       "q": "Can I add holiday music and seasonal visuals?",
-      "a": "Yes. Choose a track from the music library, add pictures that fit the season, and put captions on in the editor. Use a track you are allowed to play."
+      "a": "Yes. Choose a track from the music library, add seasonal pictures, and put captions on in the editor. Use a track you are allowed to play."
     },
     {
       "q": "Can I make holiday scenes for many products at once?",
-      "a": "Yes. Run several product links and each one comes back as its own gift scene. You still check every file before it is published."
+      "a": "Yes. Run several product links in a batch, and each one comes back as its own gift scene. You still check every file before it is published."
     },
     {
       "q": "Can an AI avatar deliver the gift message?",
-      "a": "Yes. An AI avatar can read a short gift note beside the product. Keep the product easy to recognize."
+      "a": "Yes. An AI avatar from the library of 53 can read a short gift note beside the product. Keep the product easy to recognize."
     },
     {
       "q": "What happens to the ad after the holiday ends?",
@@ -36,31 +36,15 @@
     },
     {
       "q": "Can I start from a product link?",
-      "a": "Yes. Open the product page and use that photo as the gift in the scene. If the page photo is too tight, upload the clear shot you already sell with."
+      "a": "Yes. Open the product page and use that photo as the gift in the scene. If the page photo is too tight, upload a clear shot you already sell with."
     },
     {
       "q": "Can I publish my holiday video to TikTok, Instagram, or Facebook?",
-      "a": "Yes. Download the file, or send it to the feed you already sell on."
+      "a": "Yes. Download the file, or send it to TikTok, Instagram, or Facebook yourself. You still choose the budget in that ad account."
     },
     {
       "q": "Can I create holiday ads through an API?",
       "a": "Yes. Your tools can ask for a holiday ad from a product link through the API. You approve the file before anyone else sees it."
-    },
-    {
-      "q": "What frame should the holiday video use?",
-      "a": "A product photo is square. A clip can run 6, 10, 15, or 30 seconds. Pick a frame: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. Each video is its own run."
-    },
-    {
-      "q": "How do I put an order-by date on the ad?",
-      "a": "Type the order-by date in the editor. As that date gets closer, you can change it and keep the same gift scene."
-    },
-    {
-      "q": "Can the same script be spoken in another language?",
-      "a": "Yes. Pick another language for the voice, so shoppers somewhere else hear the gift message in their language."
-    },
-    {
-      "q": "Can I make Mother's Day ads the same way?",
-      "a": "Yes. Describe a Mother's Day table or a gift scene instead of a winter one, and add that occasion's date after you confirm it."
     }
   ],
   "examples": {
@@ -95,15 +79,15 @@
       }
     ]
   },
-  "cta_lead": "The gift scene can go up from the product photo. Type the ship-by date yourself when the carrier confirms it.",
+  "cta_lead": "Build the gift scene from the product photo, with an avatar if you want a face. Type the ship-by date when the carrier confirms it.",
   "steps": [
     {
       "t": "Paste Your Product Link",
-      "d": "Open the product page so that photo is the source. You add the ship-by date when you know it."
+      "d": "Open the candle jar page so that photo is the gift. You add the ship-by date when you know it."
     },
     {
       "t": "Create Your Actor",
-      "d": "Pick an AI avatar whose hands leave the product label visible."
+      "d": "Pick an AI avatar whose hands leave the label clear. You get a presenter for the gift scene."
     },
     {
       "t": "Set the Script and Publish",
@@ -231,29 +215,29 @@
       }
     }
   },
-  "benefits_h2": "What a Holiday Gift Ad Includes",
+  "benefits_h2": "Make Holiday Ad Photos Feel Festive",
   "benefits": [
     {
-      "t": "An AI Avatar for the Gift",
-      "d": "An AI avatar can sit beside the lipstick so the tube stays in the cream box. Pick a face that could belong to the person giving the gift.",
+      "t": "An AI Avatar Holds the Gift",
+      "d": "You get a face for the gift without hiring a model. An AI avatar sits beside the lipstick so the tube stays easy to see in the cream box.",
       "img": "n:guide:fx02-occ-holidays-benefit-lipstick",
       "alt": "Adult hands lift a lipstick tube from a cream gift box."
     },
     {
-      "t": "A Gift Line in Your Words",
-      "d": "Shoppers hear why this wool jacket works as a gift, in words you would print on a card. The product page can supply the jacket photo.",
+      "t": "A Gift Line for the Jacket",
+      "d": "Shoppers hear a gift line for this wool jacket, in words you would write on a card. You can change any word before the ad goes up.",
       "img": "n:guide:fx02-occ-holidays-benefit-jacket",
       "alt": "Adult creator holds a wool winter jacket beside a gift box."
     },
     {
-      "t": "A Note in the Reader's Language",
-      "d": "The parcel note can be written in the language the recipient reads, and the candle beside the parcel stays the same.",
+      "t": "A Note in Their Language",
+      "d": "The note can be spoken in the language they read, and the jar by the ribbon stays the same. You pick the voice before you export.",
       "img": "n:guide:fx02-occ-holidays-benefit-shipping",
       "alt": "Adult hands tie ribbon around a plain parcel beside a jar."
     },
     {
       "t": "Two Lines on One Gift Set",
-      "d": "The mug, the scarf, and the socks can share one scene. A second first line gives you a choice, and you publish the one you like.",
+      "d": "The jar, the tube, and the scarf share one gift scene. A second opening line gives you a choice, and you publish the one you like.",
       "img": "n:guide:fx02-occ-holidays-benefit-guide",
       "alt": "Adult hands arrange a jar, tube and scarf gift guide set."
     }
@@ -312,35 +296,35 @@
   },
   "trust": {
     "h2": "Yours Until the Ad Goes Live",
-    "lead": "Six facts about the file before a seasonal ad goes out.",
+    "lead": "Six facts you can count on before a seasonal ad goes out.",
     "items": [
       {
         "t": "Cleared for Paid Ads",
-        "d": "The download carries no AIVideosUGC watermark, so seasonal ads are fine. Each app still has its own rules."
+        "d": "The download has no AIVideosUGC watermark, so a holiday ad can run as a paid placement. Each app still has its own rules."
       },
       {
-        "t": "Know the Spend Before the Job",
-        "d": "You know the spend before you commit, with photo and video charges shown on screen, so a holiday push stays on budget."
+        "t": "Know the Spend First",
+        "d": "You see photo and video credits on screen before you commit, so a holiday push stays on budget. A failed job returns those credits."
       },
       {
         "t": "Failed Jobs Return Credits",
-        "d": "If a job fails, those credits return to the balance on their own."
+        "d": "If a job fails, those credits return to the balance on their own. You can run the gift scene again."
       },
       {
         "t": "Yours Until You Publish",
-        "d": "The product photo and the result stay in your account. Nothing goes public until you share it."
+        "d": "The product photo and the finished gift scene stay in your account. Nothing goes public until you choose to share it."
       },
       {
-        "t": "An AI Avatar, or a Clip of You",
-        "d": "Use an AI avatar from the library, or build the presenter from a short clip of yourself."
+        "t": "An AI Avatar or Your Clip",
+        "d": "Use an AI avatar from the library of 53. Or build one from a short clip of yourself."
       },
       {
         "t": "Voice, Captions, and a Track",
-        "d": "A voice, captions, and a track from the music library can sit on the clip. Edit them before the ad goes live."
+        "d": "A voice, captions, and a track from the music library can sit on the clip. Edit them in place before the ad goes live."
       }
     ]
   },
-  "cta_title": "Put the Gift Scene Up First",
+  "cta_title": "Make the Holiday Ad Today",
   "blockOrder": [
     "hero",
     "benefits",
