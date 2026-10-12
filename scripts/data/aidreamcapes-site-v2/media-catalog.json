@@ -53949,6 +53949,94 @@
           1280
         ],
         "source": "gpt-image-2"
+      },
+      "b2f4-occ-product-launch-blender-r1": {
+        "file": "b2f4-occ-product-launch-blender-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob blends a smoothie with a sage handheld blender in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f4-occ-product-launch-liptint-r1": {
+        "file": "b2f4-occ-product-launch-liptint-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands draw a berry lip tint swatch at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f4-occ-product-launch-tote-r1": {
+        "file": "b2f4-occ-product-launch-tote-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands reveal a natural canvas tote from an opened parcel at a sunny entryway.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f4-occ-product-launch-cream-r1": {
+        "file": "b2f4-occ-product-launch-cream-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with a silver-gray bun holds a plain white face cream jar beside her cheek.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f4-occ-product-launch-lipdemo-r1": {
+        "file": "b2f4-occ-product-launch-lipdemo-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with a short auburn pixie applies berry lip tint at a bright morning vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f4-occ-product-launch-petbrush-r1": {
+        "file": "b2f4-occ-product-launch-petbrush-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with a short crop brushes a calm golden retriever with a plain pet brush.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f4-home-strip-r1": {
+        "file": "b2f4-home-strip-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with a short black crop pours coffee from a plain charcoal carafe into a ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f4-home-picker-r1": {
+        "file": "b2f4-home-picker-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Three plain ceramic mugs in charcoal, teal, and rust sit lined up beside an open door.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
       }
     }
   }

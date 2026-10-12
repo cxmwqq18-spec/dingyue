@@ -1137,12 +1137,12 @@
     ],
     "occ-product-launch": [
       {
-        "ref": "n:guide:f13-r10-occ-product-launch-arrival-tote",
+        "ref": "n:guide:b2f4-occ-product-launch-tote-r1",
         "product": "canvas tote",
         "title": "Teaser arrival: canvas tote"
       },
       {
-        "ref": "n:guide:f13-occ-product-launch-card-09-r2",
+        "ref": "n:guide:b2f4-occ-product-launch-blender-r1",
         "product": "handheld blender",
         "title": "Teaser launch: handheld blender"
       },
@@ -1152,7 +1152,7 @@
         "title": "Ceramic travel mug revealed from a launch package"
       },
       {
-        "ref": "n:guide:q20-occ-product-launch-card-03",
+        "ref": "n:guide:b2f4-occ-product-launch-lipdemo-r1",
         "product": "lip tint",
         "title": "Demo launch: lip tint swatch"
       }
