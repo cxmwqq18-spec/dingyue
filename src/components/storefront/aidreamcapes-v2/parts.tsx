@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock } from "./types";
+import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ClosingBlock, V2LinkCardBlock } from "./types";
 import type { V2Company } from "./company";
 
 export function normalizeStepLabel(label: string): string {
@@ -903,5 +903,124 @@ export function Plans({ plans, r }: { plans: V2Plan[]; r: V2Resolvers }) {
         </div>
       ))}
     </div>
+  );
+}
+
+// Card blocks a page can add through `blockOrder`. Cards show their picture when they
+// have one; without it they use a text card with a drawn marker instead of an image.
+const cardBlockCss = `
+.adc2 .v1-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:v1card}
+.adc2 .v1-card{position:relative;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--card);display:flex;flex-direction:column;counter-increment:v1card}
+.adc2 .v1-card figure{margin:0;aspect-ratio:4/3;overflow:hidden;background:#0d0d10}
+.adc2 .v1-card figure img{width:100%;height:100%;object-fit:cover;display:block}
+.adc2 .v1-card-copy{display:flex;flex:1;flex-direction:column;gap:9px;padding:20px 22px 22px}
+.adc2 .v1-card h3{margin:0;font-size:18px;line-height:1.3;color:var(--ink)}
+.adc2 .v1-card p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.6}
+.adc2 .v1-card p a{text-decoration:underline;text-underline-offset:3px}
+.adc2 .v1-mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),#8b5cf6);color:#fff;font-size:14px;font-weight:700;margin-bottom:4px}
+.adc2 .v1-mark::before{content:counter(v1card,decimal-leading-zero)}
+.adc2 .v1-trust .v1-mark{background:rgba(196,181,253,.14);border:1px solid rgba(196,181,253,.35)}
+.adc2 .v1-trust .v1-mark::before{content:"";width:13px;height:7px;border-left:2px solid #c4b5fd;border-bottom:2px solid #c4b5fd;transform:translateY(-2px) rotate(-45deg)}
+.adc2 .v1-who{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#c4b5fd}
+.adc2 .v1-badge{position:absolute;top:12px;right:12px;z-index:1;padding:3px 9px;border-radius:999px;background:rgba(13,13,16,.78);border:1px solid var(--line-2);color:var(--ink-2);font-size:11px;font-weight:600;letter-spacing:.03em}
+.adc2 .v1-source{font-size:13px;color:var(--ink-3)}
+.adc2 .v1-card-link{margin-top:auto;padding-top:6px;font-size:14px;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.adc2 .v1-closing .wrap{max-width:780px;text-align:center}
+.adc2 .v1-closing h2{margin:0 0 16px}
+.adc2 .v1-closing p{margin:0 auto 12px;color:var(--ink-2);font-size:17px;line-height:1.7}
+@media(max-width:900px){.adc2 .v1-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.adc2 .v1-cards{grid-template-columns:minmax(0,1fr)}}
+`;
+
+function CardBlockCss() {
+  return <style dangerouslySetInnerHTML={{ __html: cardBlockCss }} />;
+}
+
+function BlockCard({ item, r, children, before }: { item: V2CardBlockItem; r: V2Resolvers; children?: ReactNode; before?: ReactNode }) {
+  return (
+    <article className="v1-card">
+      {before}
+      {item.img?.src ? <figure><Img image={item.img} r={r} /></figure> : null}
+      <div className="v1-card-copy">
+        {item.img?.src ? null : <span aria-hidden="true" className="v1-mark" />}
+        <h3>{item.t}</h3>
+        <p><RichText r={r} text={item.d} /></p>
+        {children}
+      </div>
+    </article>
+  );
+}
+
+export function ReasonsSection({ block, r }: { block?: V2CardBlock; r: V2Resolvers }) {
+  const items = block?.items ?? [];
+  if (!block || !items.length) return null;
+  return (
+    <Section eyebrow="Why sellers use it" lead={block.lead} title={block.h2}>
+      <CardBlockCss />
+      <div className="v1-cards v1-reasons">{items.map((item) => <BlockCard item={item} key={item.t} r={r} />)}</div>
+    </Section>
+  );
+}
+
+export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }) {
+  const items = block?.items ?? [];
+  if (!block || !items.length) return null;
+  return (
+    <Section eyebrow="What you can count on" lead={block.lead} title={block.h2}>
+      <CardBlockCss />
+      <div className="v1-cards v1-trust">{items.map((item) => <BlockCard item={item} key={item.t} r={r} />)}</div>
+    </Section>
+  );
+}
+
+// Example cards always carry an "Example" label. A card presented as a real review
+// must name its source; without one it is left out.
+export function ReviewWall({ block, r }: { block?: V2ReviewBlock; r: V2Resolvers }) {
+  const items = (block?.items ?? []).filter((item) => item.example || Boolean(item.source?.trim()));
+  if (!block || !items.length) return null;
+  return (
+    <Section eyebrow={items.every((item) => item.example) ? "Seller examples" : "Reviews"} lead={block.lead} title={block.h2}>
+      <CardBlockCss />
+      <div className="v1-cards v1-reviews">
+        {items.map((item) => (
+          <BlockCard before={item.example ? <span className="v1-badge">Example</span> : null} item={item} key={`${item.who}-${item.t}`} r={r}>
+            <span className="v1-who">{item.who}</span>
+            {item.example ? null : <span className="v1-source">{item.source}</span>}
+          </BlockCard>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+export function ClosingStatement({ block, r }: { block?: V2ClosingBlock; r: V2Resolvers }) {
+  const paras = block?.paras ?? [];
+  if (!block?.h2 || !paras.length) return null;
+  return (
+    <section className="sec v1-closing">
+      <div className="wrap">
+        <CardBlockCss />
+        <h2>{block.h2}</h2>
+        {paras.map((para) => <p key={para}><RichText r={r} text={para} /></p>)}
+      </div>
+    </section>
+  );
+}
+
+// Cards that each lead to another page, such as the channels a page's content runs on.
+export function LinkCardsSection({ block, eyebrow, r }: { block?: V2LinkCardBlock; eyebrow: string; r: V2Resolvers }) {
+  const items = block?.items ?? [];
+  if (!block || !items.length) return null;
+  return (
+    <Section eyebrow={eyebrow} lead={block.lead} title={block.h2}>
+      <CardBlockCss />
+      <div className="v1-cards v1-links">
+        {items.map((item) => (
+          <BlockCard item={item} key={item.t} r={r}>
+            {item.href ? <a className="v1-card-link" href={r.href(item.href)}>{item.label || item.t} →</a> : null}
+          </BlockCard>
+        ))}
+      </div>
+    </Section>
   );
 }

@@ -1989,6 +1989,54 @@ function resolveSectionHref(model, where, target) {
   return href;
 }
 
+// Blocks a page can list in `blockOrder` (same list as V2_BLOCK_IDS in the v2 component types).
+const BLOCK_IDS = new Set(["hero", "definition", "strip", "picker", "reasons", "steps", "benefits", "features", "audience", "uses", "examples",
+  "seller_scenarios", "compare", "related", "trust", "reviews", "faq", "closing", "pricing", "templates", "platforms", "directory", "cta",
+  "plan", "sizes", "input", "outputs", "after", "limitations", "tools"]);
+// Layouts whose page renderer follows `blockOrder` (only when the page has visual data).
+const BLOCK_ORDER_LAYOUTS = new Set(["home", "video-hub", "tool", "template", "collection", "index"]);
+const isBlock = (value) => Boolean(value && typeof value === "object" && !Array.isArray(value) && typeof value.h2 === "string" && value.h2.trim() && Array.isArray(value.items) && value.items.length);
+
+// A page-owned card block (reasons, trust, reviews, platforms). Card text may carry inline
+// links; a card picture is a media ref resolved like other image items.
+function cardBlockFor(model, page, block, key) {
+  assert.ok(isBlock(block), `${page.id}: ${key} needs an h2 and items`);
+  const items = imageItemsFor(model, page, block.items.map((item) => {
+    assert.ok(item && typeof item.t === "string" && item.t.trim() && typeof item.d === "string" && item.d.trim(), `${page.id}: ${key} item needs t and d`);
+    const out = { ...item, d: inlineLinks(model, item.d, page.id) };
+    if (typeof item.href === "string" && item.href.trim()) {
+      out.href = resolveSectionHref(model, `${page.id} ${key}`, item.href.startsWith("/") || item.href.startsWith("page:") ? item.href : `page:${item.href}`);
+    }
+    return out;
+  }));
+  return { h2: block.h2, ...(typeof block.lead === "string" && block.lead.trim() ? { lead: block.lead } : {}), items };
+}
+
+function pageBlocksFor(model, page, c) {
+  const asked = Array.isArray(c.relatedLinks) ? c.relatedLinks : Array.isArray(c.related_links) ? c.related_links : null;
+  const relatedLinks = asked?.length && page.type !== "tool" && page.type !== "hub-tool" ? relatedLinksFor(model, page) : undefined;
+  const definition = page.type !== "tool" && page.type !== "hub-tool" ? definitionFor(model, page, c) : undefined;
+  const compareTable = page.type !== "tool" && page.type !== "hub-tool" ? compareTableFor(model, page, c) : undefined;
+  const text = (value) => typeof value === "string" && value.trim() ? value : undefined;
+  return {
+    ...(Array.isArray(c.blockOrder) ? { blockOrder: c.blockOrder } : {}),
+    ...(c.reasons !== undefined ? { reasons: cardBlockFor(model, page, c.reasons, "reasons") } : {}),
+    ...(c.trust !== undefined ? { trust: cardBlockFor(model, page, c.trust, "trust") } : {}),
+    ...(c.reviews !== undefined ? { reviews: cardBlockFor(model, page, c.reviews, "reviews") } : {}),
+    ...(isBlock(c.platforms) ? { platformLinks: cardBlockFor(model, page, c.platforms, "platforms") } : {}),
+    ...(c.closing !== undefined ? { closing: { h2: c.closing?.h2, paras: (Array.isArray(c.closing?.paras) ? c.closing.paras : []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
+    ...(text(c.related_h2) ? { relatedH2: c.related_h2 } : {}),
+    ...(text(c.related_lead) ? { relatedLead: c.related_lead } : {}),
+    ...(text(c.benefits_lead) ? { benefitsLead: c.benefits_lead } : {}),
+    ...(text(c.compare_h2) ? { compareH2: c.compare_h2 } : {}),
+    ...(text(c.gallery_h2) ? { galleryH2: c.gallery_h2 } : {}),
+    ...(text(c.gallery_lead) ? { galleryLead: c.gallery_lead } : {}),
+    ...(relatedLinks?.length ? { relatedLinks } : {}),
+    ...(definition ? { definition } : {}),
+    ...(compareTable ? { compareTable } : {})
+  };
+}
+
 function payloadFor(model, page) {
   const c = model.content[page.id];
   const examples = exampleGalleryFor(model, page);
@@ -2008,7 +2056,8 @@ function payloadFor(model, page) {
     ...(Array.isArray(c.more_sections) ? { more_sections: moreSectionsFor(model, page, c.more_sections) } : {}),
     ...(examples ? { examples } : {}),
     ...(sellerScenarios ? { sellerScenarios } : {}),
-    ...enrichmentFor(model, page, c)
+    ...enrichmentFor(model, page, c),
+    ...pageBlocksFor(model, page, c)
   };
   const t = page.type;
   if (t === "home") {
@@ -2371,7 +2420,7 @@ function jsonLdFor(model, page, c, payload, ogImage) {
     graph.push({ "@type": "VideoObject", "@id": videoId, name: videoNode.name, description: videoNode.description, thumbnailUrl: [absolute(videoNode.poster.src)], uploadDate: videoNode.uploadDate,
       duration: `PT${videoNode.duration}S`, contentUrl: absolute(videoNode.src), width: videoNode.width, height: videoNode.height, inLanguage: "en" });
   }
-  if (["tool", "hub-tool", "template", "hub"].includes(page.type) && payload.steps?.length >= 2) {
+  if (["tool", "hub-tool", "template", "hub", "industry", "platform", "occasion"].includes(page.type) && payload.steps?.length >= 2) {
     graph.push({ "@type": "HowTo", "@id": `${canonical(page)}#howto`, name: payload.stepsH2 || `How it works: ${page.label}`,
       step: payload.steps.map((step, index) => ({ "@type": "HowToStep", position: index + 1, name: step.t, text: step.d })) });
   }
@@ -2606,6 +2655,7 @@ export function renderedImages(layout, data) {
   for (const image of visualPayloadImages(data.visual)) add(image);
   addImageItems(data.more_sections?.flatMap((section) => section.items ?? []));
   addImageItems(data.audience?.items);
+  for (const key of ["reasons", "trust", "reviews", "platformLinks"]) addImageItems(data[key]?.items);
   return out;
 }
 
@@ -3130,6 +3180,33 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (!fit || typeof fit.h2 !== "string" || !Array.isArray(fit.good) || !Array.isArray(fit.not_ideal)) errors.push(`${page.id}: invalid fit block shape`);
       else for (const item of [...fit.good, ...fit.not_ideal]) if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid fit item shape`);
     }
+    if (data.blockOrder !== undefined) {
+      const layout = page.contentJson.sections.v2_main.settings.layout;
+      const order = Array.isArray(data.blockOrder) ? data.blockOrder : [];
+      if (!order.length) errors.push(`${page.id}: blockOrder must be a non-empty list`);
+      if (!BLOCK_ORDER_LAYOUTS.has(layout) || !data.visual) errors.push(`${page.id}: blockOrder is only read by visual ${[...BLOCK_ORDER_LAYOUTS].join("/")} pages`);
+      for (const id of order) if (!BLOCK_IDS.has(id)) errors.push(`${page.id}: blockOrder has unknown block ${id}`);
+      if (new Set(order).size !== order.length) errors.push(`${page.id}: blockOrder lists a block twice`);
+      if (order[0] !== "hero") errors.push(`${page.id}: blockOrder must start with hero`);
+      if (!order.includes("faq")) errors.push(`${page.id}: blockOrder must include faq`);
+      const has = { reasons: data.reasons, trust: data.trust, reviews: data.reviews, closing: data.closing, platforms: data.platformLinks, definition: layout === "home" ? data.ugc : layout === "video-hub" ? (data.definition ?? data.intro) : data.definition, compare: layout === "home" ? data.compare : data.compareTable, features: data.more_sections, audience: data.audience, seller_scenarios: data.sellerScenarios, benefits: data.benefits };
+      for (const id of order) if (id in has && (has[id] === undefined || (Array.isArray(has[id]) && !has[id].length))) errors.push(`${page.id}: blockOrder lists ${id} but the page has no ${id} data`);
+      if (["tool", "template", "collection"].includes(layout) && (data.faq?.length ?? 0) < 8) errors.push(`${page.id}: pages with blockOrder need at least 8 FAQs (has ${data.faq?.length ?? 0})`);
+      if (order.includes("related") && data.relatedLinks?.length && data.relatedLinks.length !== 6) errors.push(`${page.id}: related links must list 6 pages (has ${data.relatedLinks.length})`);
+    }
+    for (const key of ["reasons", "trust", "reviews", "platformLinks"]) {
+      const cards = data[key]?.items ?? [];
+      const pictured = cards.filter((item) => item?.img?.src).length;
+      if (pictured && pictured !== cards.length) errors.push(`${page.id}: ${key} cards must all have a picture or none (${pictured}/${cards.length})`);
+    }
+    for (const [key, size] of [["reasons", 3], ["trust", 6]]) {
+      if (data[key] !== undefined && data[key]?.items?.length !== size) errors.push(`${page.id}: ${key} must have ${size} cards (has ${data[key]?.items?.length ?? 0})`);
+    }
+    for (const item of data.reviews?.items ?? []) {
+      if (typeof item.example !== "boolean" || typeof item.who !== "string" || !item.who.trim()) errors.push(`${page.id}: review card needs example true/false and who`);
+      else if (!item.example && !(typeof item.source === "string" && item.source.trim())) errors.push(`${page.id}: a real review needs its source`);
+    }
+    if (data.closing !== undefined && (typeof data.closing?.h2 !== "string" || !data.closing.h2.trim() || !data.closing.paras?.length)) errors.push(`${page.id}: closing needs h2 and paras`);
     if (data.more_sections !== undefined) {
       const sections = data.more_sections;
       if (!Array.isArray(sections)) errors.push(`${page.id}: more_sections must be an array`);

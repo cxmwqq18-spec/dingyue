@@ -106,6 +106,22 @@ export type V2TextSectionCard = { t: string; d: string; href?: string; label?: s
 export type V2TextSection = { eyebrow: string; title: string; lead?: string; cards: V2TextSectionCard[] };
 export type V2Article = { title: string; href: string; text: string; minutes: number; section: string };
 
+// Page blocks a page can list in `blockOrder` to set which blocks show and in what order.
+// Without `blockOrder` each layout keeps its own default order.
+export const V2_BLOCK_IDS = [
+  "hero", "definition", "strip", "picker", "reasons", "steps", "benefits", "features", "audience", "uses", "examples",
+  "seller_scenarios", "compare", "related", "trust", "reviews", "faq", "closing", "pricing", "templates", "platforms", "directory", "cta",
+  // Layout blocks that have no counterpart in the shared list above.
+  "plan", "sizes", "input", "outputs", "after", "limitations", "tools"
+] as const;
+export type V2BlockId = (typeof V2_BLOCK_IDS)[number];
+export type V2CardBlockItem = { t: string; d: string; img?: V2Image; alt?: string };
+export type V2CardBlock = { h2: string; lead?: string; items: V2CardBlockItem[] };
+export type V2ReviewItem = V2CardBlockItem & { example: boolean; who: string; source?: string };
+export type V2ReviewBlock = { h2: string; lead?: string; items: V2ReviewItem[] };
+export type V2ClosingBlock = { h2: string; paras: string[] };
+export type V2LinkCardBlock = { h2: string; lead?: string; items: (V2CardBlockItem & { href?: string; label?: string })[] };
+
 export type V2Base = {
   id: string;
   label: string;

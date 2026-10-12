@@ -1,11 +1,11 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection,
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection,
 } from "./parts";
 import type { V2Company } from "./company";
-import { Fragment, type CSSProperties } from "react";
-import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock } from "./types";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
+import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual } from "./types";
 
@@ -29,7 +29,7 @@ function ctaLead(data: V2Data, fallback: string): string {
 export function BenefitsSection({ data, r, fallbackTitle, eyebrow }: { data: V2Data; r: V2Resolvers; fallbackTitle: string; eyebrow?: string }) {
   const items = list<V2Item>(data.benefits);
   if (!items.length) return null;
-  return <Section eyebrow={eyebrow ?? "Why use it"} title={text(data.benefitsH2) || fallbackTitle}><Boxes items={items} r={r} /></Section>;
+  return <Section eyebrow={eyebrow ?? "Why use it"} lead={text(data.benefitsLead) || undefined} title={text(data.benefitsH2) || fallbackTitle}><Boxes items={items} r={r} /></Section>;
 }
 
 // The three-step heading falls back through the visual title to the same default as before.
@@ -51,13 +51,41 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
   </Section>;
 }
 
-function RelatedLinksSection({ links, r }: { links: { label: string; href: string }[]; r: V2Resolvers }) {
+function RelatedLinksSection({ links, r, title = "Related pages", lead }: { links: { label: string; href: string }[]; r: V2Resolvers; title?: string; lead?: string }) {
   if (!links.length) return null;
-  return <Section eyebrow="Related pages" title="Related pages">
+  return <Section eyebrow="Related pages" lead={lead} title={title}>
     <div className="related">
       {links.map((link) => <a className="card-title" href={r.href(link.href)} key={link.href}>{link.label}</a>)}
     </div>
   </Section>;
+}
+
+// One block of a page: the id a page's `blockOrder` uses for it, and what it renders.
+// "always" marks behavior scripts that stay on the page whatever the order.
+type PageBlock = [V2BlockId | "always", ReactNode];
+
+// The blocks a page adds through its own data. They render only when the page has them.
+function pageOwnBlocks(data: V2Data, r: V2Resolvers): PageBlock[] {
+  return [
+    ["reasons", <ReasonsSection block={data.reasons as V2CardBlock | undefined} r={r} />],
+    ["platforms", <LinkCardsSection block={data.platformLinks as V2LinkCardBlock | undefined} eyebrow="Where it runs" r={r} />],
+    ["trust", <TrustCards block={data.trust as V2CardBlock | undefined} r={r} />],
+    ["reviews", <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />],
+    ["closing", <ClosingStatement block={data.closing as V2ClosingBlock | undefined} r={r} />]
+  ];
+}
+
+// Without `blockOrder` a layout shows its blocks in its own order. With it, only the listed
+// blocks show, in the listed order. When the page lists its own related links, the
+// "related" block shows those links instead of the layout's related tools.
+function orderedBlocks(data: V2Data, r: V2Resolvers, blocks: PageBlock[]): ReactNode {
+  const order = list<V2BlockId>(data.blockOrder);
+  if (!order.length) return blocks.map(([, node], index) => <Fragment key={index}>{node}</Fragment>);
+  const relatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
+  const render = (id: V2BlockId | "always") => id === "related" && relatedLinks.length
+    ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related pages"} />
+    : blocks.filter(([blockId]) => blockId === id).map(([, node], index) => <Fragment key={index}>{node}</Fragment>);
+  return [...order, "always" as const].map((id) => <Fragment key={id}>{render(id)}</Fragment>);
 }
 
 function splitPhotoHubExamples(examples: V2Examples | undefined) {
@@ -102,8 +130,8 @@ function HomePage({ data, r }: Props) {
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
-  return (
-    <>
+  return <>{orderedBlocks(data, r, [
+    ["hero",
       <section className="hero">
         <div className="wrap">
           <div className="hero-grid">
@@ -161,22 +189,23 @@ function HomePage({ data, r }: Props) {
             )}
           </div>
           <div className="trust">
-            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10, 15 or 30 second videos</span>
+            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1, 16:9, 4:3 or 3:4</span><span>6, 10, 15 or 30 second videos</span>
           </div>
         </div>
-      </section>
-      {visual ? <VisualStrip includeOverview visual={visual} r={r} /> : null}
-      {visual && ugc?.title ? (
+      </section>],
+    ["strip", visual ? <VisualStrip includeOverview visual={visual} r={r} /> : null],
+    ["definition", visual && ugc?.title ? (
         <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
           <Intro paras={list<string>(ugc.paras)} r={r} />
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} /></div> : null}
         </Section>
-      ) : null}
-      {visual ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null}
-      {visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null}
-      <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />
-      <MoreSections r={r} sections={data.more_sections as never} />
-      {audience?.title ? <Section eyebrow="For growing teams" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null}
+      ) : null],
+    ["picker", visual ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null],
+    ["steps", visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
+    ["benefits", <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
+    ["features", <MoreSections r={r} sections={data.more_sections as never} />],
+    ["audience", audience?.title ? <Section eyebrow="For growing teams" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null],
+    ["tools",
       <section className="sec">
         <div className="wrap">
           <SecHead eyebrow="One workflow" lead={make.lead} title={make.title} />
@@ -185,23 +214,23 @@ function HomePage({ data, r }: Props) {
             <MakeToolGroup allHref="/ai-image-generation" allLabel="All photo tools" r={r} subtitle="For Amazon, Shopify and social ads" title="Photo" tools={make.photo} />
           </div>
         </div>
-      </section>
-      <RelatedGroupsSection groups={relatedGroups} r={r} />
-      <Section eyebrow="Why stores switch" title="A faster way to keep testing new ads">
+      </section>],
+    ["related", <RelatedGroupsSection groups={relatedGroups} r={r} />],
+    ["compare",
+      <Section eyebrow="Why stores switch" title={text(data.compareH2) || "A faster way to keep testing new ads"}>
         <div className="cmp-wrap">
           <table className="cmp">
             <thead><tr><th scope="col"><span className="sr-only">Topic</span></th><th scope="col">Photoshoot or creator</th><th scope="col">{BRAND_NAME}</th></tr></thead>
             <tbody>{list<string[]>(data.compare).map((row) => <tr key={row[0]}><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td></tr>)}</tbody>
           </table>
         </div>
-      </Section>
-      {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
-      <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />
-      <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />
-      <AidreamcapesV2HeroTabs />
-      <AidreamcapesV2MotionPreference />
-    </>
-  );
+      </Section>],
+    ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null],
+    ...pageOwnBlocks(data, r),
+    ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
+    ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
+    ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference /></>]
+  ])}</>;
 }
 
 // Each step of a flow shares the row by the shape of its picture, so every step ends up the same height and the row fits its box.
@@ -247,21 +276,26 @@ function VideoHubPage({ data, r }: Props) {
   const maker = data.maker as V2Maker | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
-  if (visual) return <>
-    <Crumbs items={data.breadcrumbs} r={r} />
-    <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
-      <Maker note={text(data.startNote)} maker={maker ?? { options: [], cta: "Make my video", href: text(data.appHref) }} r={r} />
-    </PageHero>
-    <VisualStrip visual={visual} r={r} />
-    <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>
-    <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
-    <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />
-    <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-    <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>
-    {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
-    <Faq items={data.faq} title="Questions about AI video" r={r} />
-    <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />
-  </>;
+  if (visual) return <>{orderedBlocks(data, r, [
+    ["hero", <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
+        <Maker note={text(data.startNote)} maker={maker ?? { options: [], cta: "Make my video", href: text(data.appHref) }} r={r} />
+      </PageHero>
+    </>],
+    ["strip", <VisualStrip visual={visual} r={r} />],
+    ["definition", data.blockOrder && data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>],
+    ["picker", <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />],
+    ["benefits", <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />],
+    ["steps", <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
+    ["features", data.blockOrder ? <MoreSections r={r} sections={data.more_sections as never} /> : null],
+    ["compare", data.blockOrder && data.compareTable ? <CompareTableBlock block={data.compareTable as V2CompareTable} r={r} /> : null],
+    ["examples", <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>],
+    ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null],
+    ...pageOwnBlocks(data, r),
+    ["faq", <Faq items={data.faq} title="Questions about AI video" r={r} />],
+    ["cta", <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />]
+  ])}</>;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -306,39 +340,62 @@ function ToolPage({ data, r }: Props) {
   const actorScenePicker = data.actorScenePicker as V2ActorScenePicker | undefined;
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
   const photoExamples = photoHub ? splitPhotoHubExamples(data.examples as V2Examples | undefined) : undefined;
+  if (visual) {
+    const heroBlock = <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={photoHub ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+        <Maker note={text(data.startNote)} maker={maker} r={r} />
+        {actorScenePicker ? <ActorScenePanel pageId={data.id} picker={actorScenePicker} r={r} /> : null}
+      </PageHero>
+    </>;
+    const definition: PageBlock = ["definition", data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : null];
+    const actorScript: PageBlock = ["always", actorScenePicker ? <AidreamcapesV2ActorScenePicker /> : null];
+    const siblings: PageBlock = ["related", list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null];
+    const scenarios: PageBlock = ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null];
+    const faq: PageBlock = ["faq", <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />];
+    const tail: PageBlock[] = [
+      ["related", <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related pages"} />],
+      ["cta", <CtaBand href={maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />]
+    ];
+    if (photoHub) return <>{orderedBlocks(data, r, [
+      ["hero", heroBlock], definition, actorScript,
+      ["picker", <VisualFreshLook heading={visual.titles?.m3?.h2} lead={visual.titles?.m3?.lead} items={photoExamples?.fresh ?? []} button={visual.picker.button} href={maker.href} r={r} />],
+      ["benefits", <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />],
+      ["steps", <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
+      ["examples", <ExampleGallery examples={photoExamples?.gallery} r={r} />],
+      ["related", <RelatedGroupsSection groups={relatedGroups} r={r} />],
+      scenarios, ...pageOwnBlocks(data, r), faq, siblings, ...tail
+    ])}</>;
+    return <>{orderedBlocks(data, r, [
+      ["hero", heroBlock], definition, actorScript,
+      ["picker", <VisualPicker pageId={data.id} visual={visual} r={r} />],
+      ["strip", <VisualStrip visual={visual} r={r} />],
+      ["examples", gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null],
+      ["examples", pairs.length ? <Section eyebrow="Before and after" title={visual.titles?.beforeAfter?.h2 ?? "Your photo, then the result"}><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null],
+      ["strip", <VisualOverview visual={visual} r={r} />],
+      ["benefits", <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />],
+      ["compare", data.compareTable ? <CompareTableBlock block={data.compareTable as V2CompareTable} r={r} /> : null],
+      ["steps", <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
+      ["features", <MoreSections r={r} sections={data.more_sections as never} />],
+      ["sizes", <VisualSizes visual={visual} r={r} />],
+      ["input", <VisualInput visual={visual} r={r} />],
+      ["outputs", <VisualOutputs visual={visual} r={r} />],
+      ["uses", <VisualUses visual={visual} r={r} />],
+      ["after", <VisualAfter visual={visual} r={r} />],
+      ["limitations", <VisualLimitations visual={visual} />],
+      ["examples", <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />],
+      siblings, scenarios, ...pageOwnBlocks(data, r), faq, ...tail
+    ])}</>;
+  }
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={photoHub && visual ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {actorScenePicker ? <ActorScenePanel pageId={data.id} picker={actorScenePicker} r={r} /> : null}
       </PageHero>
       {data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : null}
       {actorScenePicker ? <AidreamcapesV2ActorScenePicker /> : null}
-      {visual && !photoHub ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : null}
-      {visual && photoHub ? <>
-        <VisualFreshLook heading={visual.titles?.m3?.h2} lead={visual.titles?.m3?.lead} items={photoExamples?.fresh ?? []} button={visual.picker.button} href={maker.href} r={r} />
-        <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
-        <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-        <ExampleGallery examples={photoExamples?.gallery} r={r} />
-        <RelatedGroupsSection groups={relatedGroups} r={r} />
-      </> : visual ? <>
-        <VisualStrip visual={visual} r={r} />
-        {gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
-        {pairs.length ? <Section eyebrow="Before and after" title={visual.titles?.beforeAfter?.h2 ?? "Your photo, then the result"}><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
-        <VisualOverview visual={visual} r={r} />
-        <BenefitsSection data={data} fallbackTitle={`Why stores use ${data.label}`} r={r} />
-        {data.compareTable ? <CompareTableBlock block={data.compareTable as V2CompareTable} r={r} /> : null}
-        <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-        <MoreSections r={r} sections={data.more_sections as never} />
-        <VisualSizes visual={visual} r={r} />
-        <VisualInput visual={visual} r={r} />
-        <VisualOutputs visual={visual} r={r} />
-        <VisualUses visual={visual} r={r} />
-        <VisualAfter visual={visual} r={r} />
-        <VisualLimitations visual={visual} />
-        <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
-      </> : <>
       {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
       {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
       <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} r={r} /></Section>
@@ -363,16 +420,9 @@ function ToolPage({ data, r }: Props) {
       ) : null}
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
-      </>}
-      {visual && !photoHub ? <>
-        {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
-        {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
-        <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
-      </> : <>
       {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
-      <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
+      <Faq items={data.faq} title={`Questions about ${data.label}`} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
-      </>}
       <RelatedLinksSection links={relatedLinks} r={r} />
       <CtaBand href={maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />
     </>
@@ -384,32 +434,35 @@ function TemplatePage({ data, r }: Props) {
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   const gallery = data.gallery as { images: V2Image[] } | undefined;
   const visual = data.visual as V2Visual | undefined;
-  if (visual) return (
-    <>
+  if (visual) return <>{orderedBlocks(data, r, [
+    ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
-      <VisualPicker pageId={data.id} visual={visual} r={r} />
-      <VisualStrip includeOverview visual={visual} r={r} />
-      <BenefitsSection data={data} fallbackTitle="Why sellers start from this template" r={r} />
-      <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-      <MoreSections r={r} sections={data.more_sections as never} />
-      <VisualUses visual={visual} r={r} />
-      <VisualInput visual={visual} r={r} />
-      <VisualOutputs visual={visual} r={r} />
-      <VisualAfter visual={visual} r={r} />
-      {list<V2Card>(data.more).length ? (
-        <Section eyebrow="More templates" lead="Choose another everyday scene, then add your product photo." title={visual.titles?.templates?.h2 ?? "More creator-style photo templates"}>
-          <TemplateGrid cards={list<V2Card>(data.more)} r={r} />
-        </Section>
-      ) : null}
-      <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
-      <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions about this template"} r={r} />
-      <CtaBand href={maker.href} lead={ctaLead(data, "Upload one product photo. See the cost before you start.")} r={r} title={ctaTitle(data, `Try ${data.label} with your product`)} />
-    </>
-  );
+    </>],
+    ["definition", data.blockOrder && data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : null],
+    ["picker", <VisualPicker pageId={data.id} visual={visual} r={r} />],
+    ["strip", <VisualStrip includeOverview visual={visual} r={r} />],
+    ["benefits", <BenefitsSection data={data} fallbackTitle="Why sellers start from this template" r={r} />],
+    ["steps", <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
+    ["features", <MoreSections r={r} sections={data.more_sections as never} />],
+    ["uses", <VisualUses visual={visual} r={r} />],
+    ["input", <VisualInput visual={visual} r={r} />],
+    ["outputs", <VisualOutputs visual={visual} r={r} />],
+    ["after", <VisualAfter visual={visual} r={r} />],
+    ["compare", data.blockOrder && data.compareTable ? <CompareTableBlock block={data.compareTable as V2CompareTable} r={r} /> : null],
+    ["templates", list<V2Card>(data.more).length ? (
+      <Section eyebrow="More templates" lead="Choose another everyday scene, then add your product photo." title={visual.titles?.templates?.h2 ?? "More creator-style photo templates"}>
+        <TemplateGrid cards={list<V2Card>(data.more)} r={r} />
+      </Section>
+    ) : null],
+    ["examples", <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />],
+    ...pageOwnBlocks(data, r),
+    ["faq", <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions about this template"} r={r} />],
+    ["cta", <CtaBand href={maker.href} lead={ctaLead(data, "Upload one product photo. See the cost before you start.")} r={r} title={ctaTitle(data, `Try ${data.label} with your product`)} />]
+  ])}</>;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -448,34 +501,37 @@ function CollectionPage({ data, r }: Props) {
   const gallery = data.gallery as { images: V2Image[] } | undefined;
   const visual = data.visual as V2Visual | undefined;
   const visualMaker = data.maker as V2Maker | undefined;
-  if (visual) return (
-    <>
+  if (visual) return <>{orderedBlocks(data, r, [
+    ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label={visualMaker?.cta ?? "Get started"} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={visualMaker ?? { options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
-      <VisualStrip includeOverview visual={visual} r={r} />
-      {kind === "occasion" && list<V2Item>(data.plan).length && visual.titles?.plan?.h2 ? <Section eyebrow="Plan your campaign" title={visual.titles.plan.h2}><Steps items={list<V2Item>(data.plan)} /></Section> : null}
-      <BenefitsSection data={data} fallbackTitle={`Why ${data.label} sellers use ${BRAND_NAME}`} r={r} />
-      <VisualSteps buttonLabel={visualMaker?.cta ?? "Get started"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-      <MoreSections r={r} sections={data.more_sections as never} />
-      <VisualPicker pageId={data.id} visual={visual} r={r} />
-      <VisualUses visual={visual} r={r} />
-      <VisualSizes visual={visual} r={r} />
-      <VisualInput visual={visual} r={r} />
-      <VisualOutputs visual={visual} r={r} />
-      <VisualAfter visual={visual} r={r} />
-      {cards.length ? (
-        <Section eyebrow="Templates" lead={text(data.templatesLead) || `${cards.filter((card) => card.cardType !== "case").length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
-          <TemplateGrid cards={cards} r={r} />
-        </Section>
-      ) : null}
-      <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
-      {list<V2Tool>(data.tools).length ? <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section> : null}
-      <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions"} r={r} />
-      <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and choose a look for your next campaign.")} r={r} title={ctaTitle(data, `Make ${data.label} content today`)} />
-    </>
-  );
+    </>],
+    ["definition", data.blockOrder && data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : null],
+    ["strip", <VisualStrip includeOverview visual={visual} r={r} />],
+    ["plan", kind === "occasion" && list<V2Item>(data.plan).length && visual.titles?.plan?.h2 ? <Section eyebrow="Plan your campaign" title={visual.titles.plan.h2}><Steps items={list<V2Item>(data.plan)} /></Section> : null],
+    ["benefits", <BenefitsSection data={data} fallbackTitle={`Why ${data.label} sellers use ${BRAND_NAME}`} r={r} />],
+    ["steps", <VisualSteps buttonLabel={visualMaker?.cta ?? "Get started"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
+    ["features", <MoreSections r={r} sections={data.more_sections as never} />],
+    ["picker", <VisualPicker pageId={data.id} visual={visual} r={r} />],
+    ["uses", <VisualUses visual={visual} r={r} />],
+    ["sizes", <VisualSizes visual={visual} r={r} />],
+    ["input", <VisualInput visual={visual} r={r} />],
+    ["outputs", <VisualOutputs visual={visual} r={r} />],
+    ["after", <VisualAfter visual={visual} r={r} />],
+    ["compare", data.blockOrder && data.compareTable ? <CompareTableBlock block={data.compareTable as V2CompareTable} r={r} /> : null],
+    ["templates", cards.length ? (
+      <Section eyebrow="Templates" lead={text(data.templatesLead) || `${cards.filter((card) => card.cardType !== "case").length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
+        <TemplateGrid cards={cards} r={r} />
+      </Section>
+    ) : null],
+    ["examples", <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />],
+    ["tools", list<V2Tool>(data.tools).length ? <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section> : null],
+    ...pageOwnBlocks(data, r),
+    ["faq", <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions"} r={r} />],
+    ["cta", <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and choose a look for your next campaign.")} r={r} title={ctaTitle(data, `Make ${data.label} content today`)} />]
+  ])}</>;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -529,48 +585,57 @@ function IndexPage({ data, r }: Props) {
       {options.map(([value, name]) => <button aria-pressed="false" className="chip" data-k={key} data-v={value} key={value} type="button">{name}</button>)}
     </div>
   );
+  const indexCta: PageBlock = ["cta", cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null];
+  if (visual) {
+    const heroBlock: PageBlock = ["hero", <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} /></>];
+    const stepsBlock: PageBlock = ["steps", <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />];
+    const faqBlock: PageBlock = ["faq", <Faq items={data.faq} title="Questions" r={r} />];
+    if (data.id === "templates") return <>{orderedBlocks(data, r, [
+      heroBlock,
+      ["picker", <VisualPicker pageId={data.id} visual={visual} r={r} />],
+      ["templates", cards.length ? <Section eyebrow="Template gallery" lead={text(data.galleryLead) || visual.titles?.m3?.lead} title={text(data.galleryH2) || (visual.titles?.m3?.h2 ?? "Pick a product ad template for your next campaign")}>
+        <TemplateGrid cards={cards} r={r} />
+      </Section> : null],
+      stepsBlock,
+      ["benefits", data.blockOrder ? <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} /> : null],
+      ["features", data.blockOrder ? <MoreSections r={r} sections={data.more_sections as never} /> : null],
+      ...pageOwnBlocks(data, r),
+      faqBlock, indexCta
+    ])}</>;
+    return <>{orderedBlocks(data, r, [
+      heroBlock,
+      ["strip", <VisualStrip includeOverview visual={visual} r={r} />],
+      ["benefits", <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />],
+      stepsBlock,
+      ["features", <MoreSections r={r} sections={data.more_sections as never} />],
+      ["templates", cards.length ? <VisualDirectoryFilter eyebrow="Browse templates" pageId={data.id} visual={visual}>
+        <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
+      </VisualDirectoryFilter> : null],
+      ["directory", items.length ? <VisualDirectoryFilter eyebrow={data.id === "platforms" ? "Browse platforms" : "Browse industries"} pageId={data.id} visual={visual}>
+        <div className="cardlist v-filter-grid">
+          {items.map((item) => {
+            const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);
+            return <article className="cardlist-card v-filter-card" data-filter-indexes={indexes.join(" ")} key={item.href}>
+              <Img image={item.image} r={r} />
+              <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+            </article>;
+          })}
+        </div>
+      </VisualDirectoryFilter> : null],
+      ["uses", list<V2Item>(data.features).length ? <Section eyebrow="What you can do" title="What the industry pages help you make">
+        <Boxes items={list<V2Item>(data.features)} r={r} />
+      </Section> : null],
+      ["sizes", data.directorySpecs ? <DirectorySpecs specs={data.directorySpecs as never} /> : null],
+      ["examples", list<V2DirectoryScene>(data.directoryScenes).length ? <DirectoryScenes items={list<V2DirectoryScene>(data.directoryScenes)} r={r} /> : null],
+      ["related", <TextSections r={r} sections={list<V2TextSection>(data.textSections)} />],
+      ...pageOwnBlocks(data, r),
+      faqBlock, indexCta
+    ])}</>;
+  }
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
-      {visual ? <>
-        {data.id === "templates" ? <>
-          <VisualPicker pageId={data.id} visual={visual} r={r} />
-          {cards.length ? <Section eyebrow="Template gallery" lead={visual.titles?.m3?.lead} title={visual.titles?.m3?.h2 ?? "Pick a product ad template for your next campaign"}>
-            <TemplateGrid cards={cards} r={r} />
-          </Section> : null}
-          <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-          <Faq items={data.faq} title="Questions" r={r} />
-          {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
-        </> : <>
-          <VisualStrip includeOverview visual={visual} r={r} />
-          <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
-          <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />
-          <MoreSections r={r} sections={data.more_sections as never} />
-          {cards.length ? <VisualDirectoryFilter eyebrow="Browse templates" pageId={data.id} visual={visual}>
-            <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
-          </VisualDirectoryFilter> : null}
-          {items.length ? <VisualDirectoryFilter eyebrow={data.id === "platforms" ? "Browse platforms" : "Browse industries"} pageId={data.id} visual={visual}>
-            <div className="cardlist v-filter-grid">
-              {items.map((item) => {
-                const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);
-                return <article className="cardlist-card v-filter-card" data-filter-indexes={indexes.join(" ")} key={item.href}>
-                  <Img image={item.image} r={r} />
-                  <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
-                </article>;
-              })}
-            </div>
-          </VisualDirectoryFilter> : null}
-          {list<V2Item>(data.features).length ? <Section eyebrow="What you can do" title="What the industry pages help you make">
-            <Boxes items={list<V2Item>(data.features)} r={r} />
-          </Section> : null}
-          {data.directorySpecs ? <DirectorySpecs specs={data.directorySpecs as never} /> : null}
-          {list<V2DirectoryScene>(data.directoryScenes).length ? <DirectoryScenes items={list<V2DirectoryScene>(data.directoryScenes)} r={r} /> : null}
-          <TextSections r={r} sections={list<V2TextSection>(data.textSections)} />
-          <Faq items={data.faq} title="Questions" r={r} />
-          {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
-        </>}
-      </> : <>
       <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
       <BenefitsSection data={data} fallbackTitle="Why sellers make content here" r={r} />
       {list<V2Item>(data.steps).length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={stepsTitle(data, undefined)}><Steps items={list<V2Item>(data.steps)} /></Section> : null}
@@ -618,7 +683,6 @@ function IndexPage({ data, r }: Props) {
       ) : null}
       <Faq items={data.faq} title="Questions" r={r} />
       {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
-      </>}
     </>
   );
 }
