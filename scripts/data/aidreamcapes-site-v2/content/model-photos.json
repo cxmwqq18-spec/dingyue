@@ -17,17 +17,20 @@
     {
       "t": "See it worn, not laid flat",
       "d": "Give shoppers the cut, color and context before they decide.",
-      "icon": "sparkle"
+      "img": "n:guide:fx16-model-photos-benefit-studio-r1",
+      "alt": "Adult woman with short silver hair wearing a plain heather-gray hoodie in a neutral studio."
     },
     {
       "t": "Launch collections faster",
       "d": "Create the next worn look from the flat photo you already have, without booking a model day.",
-      "icon": "bolt"
+      "img": "n:guide:fx16-model-photos-benefit-street-r1",
+      "alt": "Adult man with short auburn hair wearing a plain denim jacket on a city sidewalk."
     },
     {
       "t": "Keep one worn view across every channel",
       "d": "Use the same item view on a product page, feed or ad when a collection changes.",
-      "icon": "layers"
+      "img": "n:guide:fx16-model-photos-benefit-face-r1",
+      "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace."
     }
   ],
   "more_sections": [
@@ -39,15 +42,15 @@
         {
           "t": "Check the garment before you publish",
           "d": "See the flat item beside a worn view so color, shape and visible details are easy to compare.",
-          "img": "n:guide:k5-model-photos-uses-0-image",
-          "alt": "Adult model wearing a linen suit on a sunlit terrace.",
+          "img": "n:guide:fx16-model-photos-scale-tote-pair-r1",
+          "alt": "Split view of an unbranded rust-orange tote laid flat and the same tote carried by an adult model.",
           "frame": "none"
         },
         {
           "t": "Keep the same item across channels",
           "d": "Carry the garment from a product page to a feed or ad while keeping the reference item in view.",
-          "img": "n:guide:ra4-model-photos-outputs-1-image-r1",
-          "alt": "Adult Black woman with short natural hair wearing a heather-gray pullover hoodie in a plain studio.",
+          "img": "n:guide:fx16-model-photos-scale-denim-pair-r1",
+          "alt": "Split view of a plain denim jacket laid flat and the same jacket worn by an adult model.",
           "frame": "none"
         },
         {
@@ -155,8 +158,41 @@
     "picker": {
       "title": "Visualize your products on AI fashion models",
       "lead": "Choose a product-first scene to see how one garment could look in a catalog, on a street or in a seasonal setting.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "scenes",
+          "label": "Catalog and campaign scenes"
+        }
+      ],
+      "cards": [
+        {
+          "kind": "photo",
+          "ref": "n:guide:fx16-model-photos-picker-studio-r1",
+          "label": "Charcoal sweatshirt, studio catalog",
+          "chips": [
+            "scenes"
+          ],
+          "prompt": "Use my uploaded plain charcoal sweatshirt as the exact garment reference. Show it on an adult model with short straight gray hair in a clean neutral studio; preserve the garment shape and color, full face visible, no text or logos."
+        },
+        {
+          "kind": "photo",
+          "ref": "n:guide:fx16-model-photos-picker-street-r1",
+          "label": "Blue denim jacket, streetwear walk",
+          "chips": [
+            "scenes"
+          ],
+          "prompt": "Use my uploaded plain blue denim jacket as the exact garment reference. Show it on an adult model with a short straight bob walking on a quiet city sidewalk; preserve the jacket shape and color, full face visible, no text or logos."
+        },
+        {
+          "kind": "photo",
+          "ref": "n:guide:fx16-model-photos-picker-sunset-r1",
+          "label": "Olive overshirt, sunset terrace",
+          "chips": [
+            "scenes"
+          ],
+          "prompt": "Use my uploaded plain olive overshirt as the exact garment reference. Show it on an adult model with a tight bun on a quiet terrace at sunset; preserve the overshirt shape and color, full face visible, no text or logos."
+        }
+      ],
       "button": "Make an on-model photo"
     },
     "titles": {
@@ -166,7 +202,34 @@
       "faq": {
         "h2": "Frequently asked questions"
       }
-    }
+    },
+    "overview": "See the cut, color and context before you publish. Start from the flat product photo you already have, then use the worn view wherever shoppers need more context.",
+    "input": [
+      {
+        "good": "n:guide:fx16-model-photos-input-hoodie-good-r2",
+        "bad": "n:guide:fx16-model-photos-input-hoodie-bad-r1",
+        "good_label": "Complete hoodie reference",
+        "bad_label": "Hood top cropped"
+      },
+      {
+        "good": "n:guide:fx16-model-photos-input-hoodie-good-r3",
+        "bad": "n:guide:fx16-model-photos-input-hoodie-bad-r2",
+        "good_label": "Hanging hoodie reference",
+        "bad_label": "Right sleeve cropped"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:fx16-model-photos-output-hoodie-street-r1",
+        "frame": "1:1",
+        "label": "Worn hoodie on street"
+      },
+      {
+        "ref": "n:guide:ra4-model-photos-outputs-1-image-r1",
+        "frame": "1:1",
+        "label": "Worn hoodie studio result"
+      }
+    ]
   },
   "relatedLinks": [
     "photo-hub",
