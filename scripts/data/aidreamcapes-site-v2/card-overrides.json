@@ -98,6 +98,14 @@
       "life": {
         "ref": "n:guide:k7-ind-fashion-clothing-card-life-linen-outfit",
         "alt": "Adult wearing a linen overshirt and navy trousers on a city walk."
+      },
+      "tryon": {
+        "ref": "n:im14-ind-fashion-tryon-r1",
+        "alt": "Adult woman with a short blonde bob wears a plain blue denim jacket and turns to show its fit."
+      },
+      "look": {
+        "ref": "n:im14-ind-fashion-look-r1",
+        "alt": "Adult woman with short silver-gray hair wears a plain cream knit top and charcoal trousers in a bright courtyard."
       }
     }
   },
@@ -187,8 +195,8 @@
   "ind-beauty-skincare": {
     "images": {
       "light": {
-        "ref": "n:guide:q15-beauty-template-studio-lighting",
-        "alt": "Amber serum bottle revealed in a warm beam of light."
+        "ref": "n:im14-ind-beauty-light-r1",
+        "alt": "Plain round white cream jar on a pale stone pedestal in a soft diagonal beam of warm window light."
       },
       "beauty": {
         "ref": "n:gen2:tpl-beauty-g1",
@@ -213,6 +221,14 @@
       "feed": {
         "ref": "n:guide:q15-shoes-template-feed-ad",
         "alt": "Running shoe steps down from a city curb."
+      },
+      "detail": {
+        "ref": "n:im14-ind-shoes-detail-r1",
+        "alt": "Close view of a plain charcoal sneaker showing the toe, flat laces, stitching, mesh texture and outsole edge."
+      },
+      "pack": {
+        "ref": "n:im14-ind-shoes-pack-r1",
+        "alt": "Adult hands lift the lid of a plain cream shoe box containing one unbranded charcoal sneaker."
       }
     }
   },
@@ -361,6 +377,10 @@
       "howto": {
         "ref": "n:guide:q16-electronics-charging-pad-demo",
         "alt": "Adult hand setting a plain graphite phone onto a charcoal wireless charging pad."
+      },
+      "angle": {
+        "ref": "n:im14-ind-electronics-angle-r1",
+        "alt": "Four views of one plain compact graphite foldable device stand arranged on a neutral desk."
       }
     }
   },
@@ -597,6 +617,10 @@
       "retargeting-video-ad": {
         "ref": "f:q18-instagram-card-retargeting-serum",
         "alt": "An adult creator speaks to camera while holding an amber serum bottle with a blank label area."
+      },
+      "jewel": {
+        "ref": "n:im14-plat-instagram-jewelry-model-r1",
+        "alt": "Adult woman with a short auburn bob wears one plain silver pendant necklace over a black top."
       }
     }
   },

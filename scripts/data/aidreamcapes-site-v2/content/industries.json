@@ -55,8 +55,8 @@
       "n:guide:q14-industries-strip-hiker",
       "n:gen2:ind-food-drinks-g2",
       "n:guide:q14-industries-strip-headphones-unbox",
-      "n:gen2:ind-beauty-skincare-g4",
-      "n:gen2:rb1-industries-strip-4-r1",
+      "n:im14-industries-beauty-strip-r1",
+      "n:im14-industries-fashion-strip-r1",
       "n:guide:f4-industries-strip-running-shoe-r1"
     ],
     "steps": {
@@ -199,7 +199,7 @@
       "t": "Electronics: desk demo",
       "d": "Show the gadget being set up and used for one task, with the controls visible in the same frame.",
       "href": "/app/create?tool=video-ads&size=9%3A16&length=15&prompt=Use+the+uploaded+photo+as+the+product+and+keep+its+shape%2C+color+and+label+area+exactly.+An+adult+sets+the+gadget+on+a+tidy+desk+and+uses+one+control+for+a+clear+everyday+task.+Eye-level+handheld+medium+close-up%2C+soft+window+light.+Sound%3A+the+control+click+and+room+ambience%3B+no+music%2C+text+or+logos.#step-video",
-      "image": "n:gen2:rb1-industries-scene-electronics-r1"
+      "image": "n:im14-industries-electronics-scene-r1"
     },
     {
       "t": "Wellness: routine moment",
