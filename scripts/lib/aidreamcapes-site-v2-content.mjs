@@ -111,8 +111,8 @@ const PLATFORM_SPREAD_KEYS = new Set(["creator", "demo", "unbox", "ba", "howto",
 const IND_TOOLS = {
   "beauty-skincare": ["video-ads", "lifestyle-photos", "white-background", "photo-hub"], "fashion-clothing": ["model-photos", "lifestyle-photos", "video-ads", "social-ad-photos"],
   shoes: ["white-background", "lifestyle-photos", "photo-hub", "video-ads"], "jewelry-accessories": ["model-photos", "photo-hub", "white-background"],
-  electronics: ["product-videos", "unboxing-videos", "white-background", "video-ads"], "health-wellness": ["lifestyle-photos", "video-ads", "social-ad-photos"],
-  "food-drinks": ["product-videos", "lifestyle-photos", "photo-hub"], "home-living": ["before-after-videos", "product-videos", "change-background", "lifestyle-photos"]
+  electronics: ["product-videos", "unboxing-videos", "white-background", "video-ads"], "health-wellness": ["white-background", "lifestyle-photos", "video-ads", "social-ad-photos"],
+  "food-drinks": ["product-videos", "white-background", "lifestyle-photos", "photo-hub"], "home-living": ["before-after-videos", "product-videos", "change-background", "lifestyle-photos"]
 };
 const PLAT_TOOLS = {
   tiktok: ["video-ads", "url-to-video", "unboxing-videos"], instagram: ["video-ads", "social-ad-photos", "model-photos"], facebook: ["social-ad-photos", "video-ads", "lifestyle-photos"],
