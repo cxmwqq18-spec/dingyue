@@ -254,8 +254,8 @@
       "label": "Sale Ad Creatives"
     },
     {
-      "id": "occ-product-launch",
-      "label": "Product Launch Video and Photos"
+      "id": "image-to-video",
+      "label": "Image to Video"
     },
     {
       "id": "video-ads",
@@ -266,8 +266,8 @@
       "label": "AI Ad Image Generator"
     },
     {
-      "id": "unboxing-videos",
-      "label": "AI Unboxing Video"
+      "id": "url-to-video",
+      "label": "URL to Video"
     }
   ],
   "reviews": {

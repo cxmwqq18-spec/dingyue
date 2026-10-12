@@ -265,7 +265,7 @@
         "t": "Open Every Platform From Here",
         "label": "Open Every Platform From Here",
         "d": "Open the full list and pick where the next file goes.",
-        "href": "/platforms"
+        "href": "/ai-video-generation"
       }
     ]
   },
@@ -318,7 +318,7 @@
     "lifestyle-photos",
     "change-background",
     "tpl-angle",
-    "tpl-detail",
+    "photo-hub",
     "tpl-pack"
   ],
   "trust": {

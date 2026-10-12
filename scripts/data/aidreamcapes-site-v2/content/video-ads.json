@@ -618,9 +618,9 @@
     "image-to-video",
     "url-to-video",
     "product-videos",
-    "unboxing-videos",
     "spokesperson-videos",
-    "before-after-videos"
+    "before-after-videos",
+    "tpl-ugc"
   ],
   "blockOrder": [
     "hero",

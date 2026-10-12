@@ -567,8 +567,8 @@
       "label": "AI Promo Video Maker"
     },
     {
-      "id": "tpl-compare",
-      "label": "Product Comparison Video"
+      "id": "tpl-angle",
+      "label": "Every Angle"
     },
     {
       "id": "plat-youtube-shorts",
@@ -727,7 +727,7 @@
         "t": "AI Ads and Product Photos by Platform",
         "label": "AI Ads and Product Photos by Platform",
         "d": "Open the channel list when the next post is not one of these four.",
-        "href": "page:platforms"
+        "href": "page:video-hub"
       }
     ]
   }

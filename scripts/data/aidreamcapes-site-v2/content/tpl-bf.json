@@ -658,12 +658,12 @@
       "label": "Cinematic Product Video"
     },
     {
-      "id": "tpl-carousel-video-ad",
-      "label": "Carousel Video Ad"
+      "id": "image-to-video",
+      "label": "Image to Video"
     },
     {
-      "id": "tpl-retargeting-video-ad",
-      "label": "Retargeting Video Ad"
+      "id": "url-to-video",
+      "label": "URL to Video"
     },
     {
       "id": "occ-black-friday",

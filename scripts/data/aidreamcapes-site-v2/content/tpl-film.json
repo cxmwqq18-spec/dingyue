@@ -570,8 +570,8 @@
       "label": "Black Friday Video Ads"
     },
     {
-      "id": "tpl-product-feature-callout-video",
-      "label": "Feature Highlight Video"
+      "id": "url-to-video",
+      "label": "URL to Video"
     },
     {
       "id": "plat-facebook",

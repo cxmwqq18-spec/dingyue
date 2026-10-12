@@ -217,7 +217,7 @@
         "t": "AI Ads and Product Photos by Platform",
         "label": "AI Ads and Product Photos by Platform",
         "d": "Open every channel and choose where the next bottle file should run.",
-        "href": "/platforms"
+        "href": "/ai-video-generation"
       }
     ]
   },
@@ -292,10 +292,10 @@
   "relatedLinks": [
     "video-ads",
     "social-ad-photos",
-    "tpl-carousel-video-ad",
-    "tpl-retargeting-video-ad",
     "spokesperson-videos",
-    "image-to-video"
+    "image-to-video",
+    "tpl-story",
+    "photo-hub"
   ],
   "cta_title": "Download the Facebook Ad"
 }

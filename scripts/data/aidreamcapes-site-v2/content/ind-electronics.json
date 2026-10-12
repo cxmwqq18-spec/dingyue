@@ -108,8 +108,8 @@
   "cta_title": "Post a Speaker Ad This Week",
   "relatedLinks": [
     {
-      "id": "tpl-product-feature-callout-video",
-      "label": "Product Feature Video"
+      "id": "image-to-video",
+      "label": "Image to Video"
     },
     {
       "id": "tpl-angle",
@@ -124,8 +124,8 @@
       "label": "AI Product Video Generator"
     },
     {
-      "id": "unboxing-videos",
-      "label": "AI Unboxing Video"
+      "id": "url-to-video",
+      "label": "URL to Video"
     },
     {
       "id": "video-ads",

@@ -74,23 +74,6 @@
         "title": "Yogurt Demo: Spoonful Tasted"
       }
     ],
-    "unboxing-videos": [
-      {
-        "ref": "n:guide:q3-unboxing-videos-case-01-power-bank",
-        "product": "power bank",
-        "title": "Tech Unbox: Power Bank and Cable"
-      },
-      {
-        "ref": "n:guide:q3-unboxing-videos-case-02-leather-tote",
-        "product": "leather tote",
-        "title": "Bag Unboxing: Tote Lifted from Box"
-      },
-      {
-        "ref": "n:guide:q3-unboxing-videos-case-03-protein-bars",
-        "product": "protein bars",
-        "title": "Snack Box Reveal: Bars Lifted Out"
-      }
-    ],
     "before-after-videos": [
       {
         "ref": "n:gen2:before-after-videos-c1",
@@ -246,50 +229,6 @@
         "title": "Headphones Ear Cushion Demo"
       }
     ],
-    "tpl-detail": [
-      {
-        "ref": "n:guide:q7-detail-case-0",
-        "product": "leather wallet",
-        "title": "Wallet Stitching Close-Up"
-      },
-      {
-        "ref": "n:guide:q7-detail-case-1",
-        "product": "pet hair remover",
-        "title": "Pet Roller Sofa Pass"
-      },
-      {
-        "ref": "n:guide:q7-detail-case-2",
-        "product": "gold hoop earrings",
-        "title": "Gold Hoops from Box"
-      },
-      {
-        "ref": "n:guide:q7-detail-case-3",
-        "product": "skincare serum",
-        "title": "Serum Pump Close-Up"
-      }
-    ],
-    "tpl-size": [
-      {
-        "ref": "n:guide:q7-size-case-0",
-        "product": "protein shaker",
-        "title": "Protein Shaker Hand Scale"
-      },
-      {
-        "ref": "n:guide:q7-size-case-1",
-        "product": "phone stand",
-        "title": "Phone Stand Hand Scale"
-      },
-      {
-        "ref": "n:guide:q7-size-case-2",
-        "product": "compact over-ear headphones",
-        "title": "Headphones Travel Case"
-      },
-      {
-        "ref": "n:guide:q7-size-case-3",
-        "product": "pet carrier",
-        "title": "Pet Carrier Body Fit"
-      }
-    ],
     "tpl-color": [
       {
         "ref": "n:guide:q7-color-case-0",
@@ -312,28 +251,6 @@
         "title": "Pet Collar Color Pair"
       }
     ],
-    "tpl-box": [
-      {
-        "ref": "f:q8-tpl-box-case-01",
-        "product": "skincare set",
-        "title": "Skincare Routine: Skincare Set"
-      },
-      {
-        "ref": "f:q8-tpl-box-case-02",
-        "product": "pet grooming kit",
-        "title": "Pet Parent Review: Grooming Kit"
-      },
-      {
-        "ref": "f:q8-tpl-box-case-03",
-        "product": "baby bath kit",
-        "title": "Unboxing: Baby Care Set"
-      },
-      {
-        "ref": "f:q8-tpl-box-case-04",
-        "product": "snack variety box",
-        "title": "First Bite: Snack Variety Box"
-      }
-    ],
     "tpl-pack": [
       {
         "ref": "f:q8-tpl-pack-case-01",
@@ -354,28 +271,6 @@
         "ref": "f:q8-tpl-pack-case-04",
         "product": "protein bar pack",
         "title": "First Bite: Protein Bar Pack"
-      }
-    ],
-    "tpl-light": [
-      {
-        "ref": "f:q8-tpl-light-case-01",
-        "product": "vitamin c serum",
-        "title": "Texture Macro: Vitamin C Serum"
-      },
-      {
-        "ref": "f:q8-tpl-light-case-02",
-        "product": "gold hoop earrings",
-        "title": "Jewelry Detail: Gold Hoop Earrings"
-      },
-      {
-        "ref": "f:q8-tpl-light-case-03",
-        "product": "fitness watch band",
-        "title": "Product Demo: Fitness Watch Band"
-      },
-      {
-        "ref": "f:q8-tpl-light-case-04",
-        "product": "grout cleaning brush",
-        "title": "Problem to Fix: Grout Cleaning Brush"
       }
     ],
     "tpl-tryon": [
@@ -420,28 +315,6 @@
         "ref": "n:guide:tpl-jewel-round4-case-necklace-clasp",
         "product": "necklace clasp",
         "title": "Gold clasp with fine chain"
-      }
-    ],
-    "tpl-look": [
-      {
-        "ref": "n:guide:tpl-look-round4-case-studio-outfit",
-        "product": "tailored suit",
-        "title": "Gray tailored outfit in studio"
-      },
-      {
-        "ref": "n:guide:q9-look-alt-navy-suit",
-        "product": "navy tailored suit and work bag",
-        "title": "Navy suit and bag, city walk"
-      },
-      {
-        "ref": "g:fashion-editorial/example-07",
-        "product": "fashion portrait",
-        "title": "Close editorial fashion portrait"
-      },
-      {
-        "ref": "n:guide:q9-look-alt-office-bag",
-        "product": "messenger bag",
-        "title": "Messenger bag in the office lobby"
       }
     ],
     "tpl-head": [
@@ -686,28 +559,6 @@
         "title": "Silver pendant from a gift box"
       }
     ],
-    "tpl-compare": [
-      {
-        "ref": "n:guide:q12-tpl-compare-case-headphone-finishes-r1",
-        "product": "over-ear headphones",
-        "title": "Black and silver headphone finishes"
-      },
-      {
-        "ref": "n:guide:q12-tpl-compare-case-legging-colors-r1",
-        "product": "athletic leggings",
-        "title": "Two legging colors in try-on"
-      },
-      {
-        "ref": "n:guide:rc6-tpl-compare-case-harness-r1",
-        "product": "dog harnesses",
-        "title": "Two harness sizes by a dog"
-      },
-      {
-        "ref": "n:guide:q12-tpl-compare-case-phone-colors-r1",
-        "product": "phone cases",
-        "title": "Sage blush cases with one opening"
-      }
-    ],
     "tpl-bf": [
       {
         "ref": "n:guide:q12-tpl-bf-case-skincare-set-unboxing-r1",
@@ -730,72 +581,6 @@
         "title": "Trail-Shoe Try-On: Runner Steps into View"
       }
     ],
-    "tpl-limited-drop-alert-video": [
-      {
-        "ref": "n:guide:q13-limited-more-3",
-        "product": "coral trail shoes",
-        "title": "Coral shoes tied before a hike"
-      },
-      {
-        "ref": "n:guide:q13-limited-more-4",
-        "product": "small-batch hot sauce",
-        "title": "Hot sauce poured over noodles"
-      },
-      {
-        "ref": "n:guide:rc6-tpl-limited-case-skincare-r1",
-        "product": "moisturizer",
-        "title": "Moisturizer beside a matching jar"
-      },
-      {
-        "ref": "n:guide:q13-limited-more-6",
-        "product": "coral trail shoe tread",
-        "title": "Coral tread after a rocky hike"
-      }
-    ],
-    "tpl-product-feature-callout-video": [
-      {
-        "ref": "n:guide:q13-feature-more-3",
-        "product": "hand soap pump",
-        "title": "Hand soap foam beside the sink"
-      },
-      {
-        "ref": "n:guide:q13-feature-more-4",
-        "product": "commuter backpack",
-        "title": "Backpack carried through a commute"
-      },
-      {
-        "ref": "n:guide:q13-feature-more-5",
-        "product": "tea",
-        "title": "Tea served beside a morning window"
-      },
-      {
-        "ref": "n:guide:q13-feature-more-6",
-        "product": "gold ring",
-        "title": "Gold ring catches natural daylight"
-      }
-    ],
-    "tpl-carousel-video-ad": [
-      {
-        "ref": "n:guide:q13-carousel-more-3",
-        "product": "face cream",
-        "title": "Face cream applied before sunscreen"
-      },
-      {
-        "ref": "n:guide:q13-carousel-more-4-r2",
-        "product": "commuter backpack",
-        "title": "Backpack arrives at a trailhead"
-      },
-      {
-        "ref": "n:guide:q13-carousel-more-5",
-        "product": "cast-iron skillet",
-        "title": "Eggs cook on a cast-iron skillet"
-      },
-      {
-        "ref": "n:guide:q13-carousel-more-6",
-        "product": "canvas tote",
-        "title": "Canvas tote packed for a market"
-      }
-    ],
     "tpl-spark-ads-style-video": [
       {
         "ref": "n:guide:q14-spark-case-handbag",
@@ -816,28 +601,6 @@
         "ref": "n:guide:q14-spark-case-cat-bed",
         "product": "cat bed",
         "title": "Pet Product Demo: Cat Bed Introduction"
-      }
-    ],
-    "tpl-retargeting-video-ad": [
-      {
-        "ref": "n:guide:q14-retarget-case-boot",
-        "product": "plain brown trail boots",
-        "title": "Trail boots on rocky ground"
-      },
-      {
-        "ref": "n:guide:q14-retarget-case-mug-talk",
-        "product": "speckled ceramic travel mug",
-        "title": "Talking-Head Demo: Travel Mug Rim"
-      },
-      {
-        "ref": "n:guide:q14-retarget-case-drawer",
-        "product": "desk drawer organizer",
-        "title": "Before/After: Desk Drawer Organizer"
-      },
-      {
-        "ref": "n:guide:q14-retarget-case-protein-unbox-r2",
-        "product": "protein bar multipack",
-        "title": "Protein Bar Multipack: ASMR Unboxing"
       }
     ],
     "ind-beauty-skincare": [
@@ -1133,28 +896,6 @@
         "ref": "n:guide:q19-shop-case-glasses",
         "product": "reading glasses",
         "title": "Reading glasses at the mirror"
-      }
-    ],
-    "occ-product-launch": [
-      {
-        "ref": "n:guide:b2f4-occ-product-launch-tote-r1",
-        "product": "canvas tote",
-        "title": "Teaser arrival: canvas tote"
-      },
-      {
-        "ref": "n:guide:b2f4-occ-product-launch-blender-r1",
-        "product": "handheld blender",
-        "title": "Teaser launch: handheld blender"
-      },
-      {
-        "ref": "n:guide:im11-occ-product-launch-case-03-r1",
-        "product": "ceramic travel mug",
-        "title": "Travel mug from a launch package"
-      },
-      {
-        "ref": "n:guide:b2f4-occ-product-launch-lipdemo-r1",
-        "product": "lip tint",
-        "title": "Demo launch: lip tint swatch"
       }
     ],
     "occ-sale-discount": [

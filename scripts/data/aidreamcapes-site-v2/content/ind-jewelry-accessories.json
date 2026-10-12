@@ -114,12 +114,12 @@
       "label": "Jewelry Photos on a Person"
     },
     {
-      "id": "tpl-detail",
-      "label": "Product Detail Photos"
+      "id": "tpl-angle",
+      "label": "Every Angle"
     },
     {
-      "id": "tpl-size",
-      "label": "Product Size Reference Photo"
+      "id": "tpl-color",
+      "label": "Color Variants"
     },
     {
       "id": "photo-hub",

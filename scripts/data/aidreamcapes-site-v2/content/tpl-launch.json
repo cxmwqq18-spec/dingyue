@@ -643,12 +643,12 @@
       "label": "Home Product Videos"
     },
     {
-      "id": "tpl-compare",
-      "label": "Product Comparison Video"
+      "id": "tpl-angle",
+      "label": "Every Angle"
     },
     {
-      "id": "occ-product-launch",
-      "label": "Product Launch Video and Photos"
+      "id": "image-to-video",
+      "label": "Image to Video"
     },
     {
       "id": "plat-instagram",
@@ -728,7 +728,7 @@
         "t": "AI Ads and Product Photos by Platform",
         "label": "AI Ads and Product Photos by Platform",
         "d": "Open the full channel list when the next post is somewhere else.",
-        "href": "page:platforms"
+        "href": "page:video-hub"
       }
     ]
   }

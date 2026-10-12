@@ -79,7 +79,7 @@
       "term": "Retargeting",
       "definition": "Retargeting means showing ads to people who already visited your shop, viewed a product, or left items in the cart. AIVideosUGC can make the picture or the video for that follow-up. It cannot see who visited, and it cannot pick the audience. In your ad account, set who to include, who to skip, the offer, the budget, and how often the ad shows.",
       "related_page_ids": [
-        "tpl-retargeting-video-ad",
+        "video-ads",
         "social-ad-photos"
       ]
     },
@@ -119,7 +119,7 @@
       "term": "Unboxing",
       "definition": "An unboxing video shows a package opening and the product coming out. You describe the box, the paper, the insert, and the order things appear. Your product photo keeps the item looking like yours. Music can come from the library. Add the current price after you download.",
       "related_page_ids": [
-        "unboxing-videos",
+        "product-videos",
         "blog-unboxing-videos-for-launches"
       ]
     },
@@ -151,7 +151,7 @@
       "term": "Flat lay",
       "definition": "A flat lay is a photo from above. The product and a few extra items sit on a surface. Upload a photo of the whole product, then describe the surface and the layout you want. Check that every item in the picture is something you actually sell.",
       "related_page_ids": [
-        "tpl-look",
+        "model-photos",
         "tpl-outfit"
       ]
     },
@@ -175,7 +175,7 @@
       "term": "Carousel",
       "definition": "A carousel is several slides in one social ad. People swipe through products, angles, or options such as colors. AIVideosUGC makes each picture or each video. You set the order, the words, and the link inside your ad account.",
       "related_page_ids": [
-        "tpl-carousel-video-ad",
+        "video-ads",
         "plat-instagram"
       ]
     },
@@ -183,8 +183,8 @@
       "term": "CTA (call to action)",
       "definition": "A CTA, or call to action, is the short line that says what to do next, such as shop or view the product. Put that line in the spoken words or in the captions. Type the date and the price so they match your store now.",
       "related_page_ids": [
-        "tpl-limited-drop-alert-video",
-        "tpl-carousel-video-ad"
+        "occ-sale-discount",
+        "video-ads"
       ]
     },
     {
@@ -296,7 +296,7 @@
       "definition": "The music library is a set of songs you can put under a product video. Swap the song in the editor when the mood should change. You still write the spoken line, and you are responsible for what it says.",
       "related_page_ids": [
         "video-ads",
-        "unboxing-videos"
+        "product-videos"
       ]
     },
     {

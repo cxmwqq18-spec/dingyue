@@ -89,7 +89,7 @@
  ],
  [
   "/ai-image-generation/lookbook-cover",
-  "/ai-image-generation/fashion-editorial"
+  "/ai-image-generation/on-model-generation"
  ],
  [
   "/ai-image-generation/comparison-chart",
@@ -162,5 +162,57 @@
  [
   "/search",
   "/templates"
+ ],
+ [
+  "/occasions/product-launch",
+  "/ai-video-generation/product-video"
+ ],
+ [
+  "/platforms",
+  "/ai-video-generation"
+ ],
+ [
+  "/ai-image-generation/bundle-sets",
+  "/ai-image-generation"
+ ],
+ [
+  "/ai-video-generation/carousel-video-ad",
+  "/ai-video-generation/ugc-ad-video"
+ ],
+ [
+  "/ai-video-generation/product-comparison-video",
+  "/ai-video-generation/product-video"
+ ],
+ [
+  "/ai-image-generation/macro-details",
+  "/ai-image-generation"
+ ],
+ [
+  "/ai-image-generation/commercial-lighting",
+  "/ai-image-generation/ecommerce-main-image"
+ ],
+ [
+  "/ai-video-generation/limited-drop-alert-video",
+  "/occasions/sale-discount"
+ ],
+ [
+  "/ai-image-generation/fashion-editorial",
+  "/ai-image-generation/on-model-generation"
+ ],
+ [
+  "/ai-video-generation/product-feature-callout-video",
+  "/ai-video-generation/product-video"
+ ],
+ [
+  "/ai-video-generation/retargeting-video-ad",
+  "/ai-video-generation/ugc-ad-video"
+ ],
+ [
+  "/ai-image-generation/size-reference",
+  "/ai-image-generation"
+ ],
+ [
+  "/ai-video-generation/unboxing-experience",
+  "/ai-video-generation/product-video"
  ]
 ]

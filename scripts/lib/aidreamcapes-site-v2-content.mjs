@@ -70,7 +70,7 @@ const TEMPLATE_PROMPTS = {
   compare: "Two versions of my product side by side on a clean surface.",
   bf: "The product in a festive setting with space for an offer."
 };
-const VIDEO_TOOLS = ["image-to-video", "url-to-video", "video-ads", "product-videos", "unboxing-videos", "before-after-videos", "spokesperson-videos"];
+const VIDEO_TOOLS = ["image-to-video", "url-to-video", "video-ads", "product-videos", "before-after-videos", "spokesperson-videos"];
 // The competitor actor directory has one card for these nine scenes and two
 // for every other scene. Keep this map aligned with the local assign manifest.
 const PHOTO_TOOLS = ["photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"];
@@ -99,44 +99,44 @@ const TOOL_DESC = {
 const TOOL_REL = {
   // Keep the cards that were made with a tool on that tool first. The remaining cards
   // describe things the tool can make, with at most one overlap between sibling tools.
-  "image-to-video": ["ba", "bf", "compare", "film"], "url-to-video": ["ba", "beauty", "drink", "home"],
+  "image-to-video": ["ba", "bf", "film"], "url-to-video": ["ba", "beauty", "drink", "home"],
   "video-ads": ["bf", "creator", "launch", "outfit"], "product-videos": ["demo", "drink", "howto", "launch"],
-  "unboxing-videos": ["unbox", "creator", "demo", "film"], "before-after-videos": ["ba", "compare", "home", "howto"],
-  "spokesperson-videos": ["beauty", "outfit", "unbox"], "photo-hub": ["white", "size", "life", "model", "head", "angle", "pack"],
-  "white-background": ["white", "color", "angle", "detail"], "lifestyle-photos": ["life", "bg", "pack", "ugc"], "model-photos": ["model", "tryon", "jewel", "look"],
-  "change-background": ["bg", "white", "light", "life"], "social-ad-photos": ["feed", "white", "ugc", "sale"]
+  "unboxing-videos": ["creator", "demo", "film"], "before-after-videos": ["ba", "home", "howto"],
+  "spokesperson-videos": ["beauty", "outfit"], "photo-hub": ["white", "life", "model", "head", "angle", "pack"],
+  "white-background": ["white", "color", "angle"], "lifestyle-photos": ["life", "bg", "pack", "ugc"], "model-photos": ["model", "tryon", "jewel"],
+  "change-background": ["bg", "white", "life"], "social-ad-photos": ["feed", "white", "ugc", "sale"]
 };
 const OCCASION_SPREAD_KEYS = new Set(["sale", "bf", "story", "ugc"]);
 const PLATFORM_SPREAD_KEYS = new Set(["creator", "demo", "unbox", "ba", "howto", "film", "beauty", "drink", "home", "outfit", "launch", "compare", "bf", "white", "life", "bg", "model", "feed", "angle", "detail", "pack", "tryon", "jewel", "look", "story", "sale", "ugc", "color", "light", "box", "size", "head"]);
 const IND_TOOLS = {
   "beauty-skincare": ["video-ads", "lifestyle-photos", "white-background", "photo-hub"], "fashion-clothing": ["model-photos", "lifestyle-photos", "video-ads", "social-ad-photos"],
   shoes: ["white-background", "lifestyle-photos", "photo-hub", "video-ads"], "jewelry-accessories": ["model-photos", "photo-hub", "white-background"],
-  electronics: ["product-videos", "unboxing-videos", "white-background", "video-ads"], "health-wellness": ["lifestyle-photos", "white-background", "video-ads", "social-ad-photos"],
+  electronics: ["product-videos", "white-background", "video-ads"], "health-wellness": ["lifestyle-photos", "white-background", "video-ads", "social-ad-photos"],
   "food-drinks": ["product-videos", "white-background", "lifestyle-photos", "photo-hub"], "home-living": ["before-after-videos", "product-videos", "change-background", "lifestyle-photos"]
 };
 const PLAT_TOOLS = {
-  tiktok: ["video-ads", "url-to-video", "unboxing-videos"], instagram: ["video-ads", "social-ad-photos", "model-photos"], facebook: ["social-ad-photos", "video-ads", "lifestyle-photos"],
-  "youtube-shorts": ["product-videos", "unboxing-videos", "image-to-video"], amazon: ["white-background", "photo-hub", "lifestyle-photos"], shopify: ["photo-hub", "url-to-video", "product-videos"]
+  tiktok: ["video-ads", "url-to-video"], instagram: ["video-ads", "social-ad-photos", "model-photos"], facebook: ["social-ad-photos", "video-ads", "lifestyle-photos"],
+  "youtube-shorts": ["product-videos", "image-to-video"], amazon: ["white-background", "photo-hub", "lifestyle-photos"], shopify: ["photo-hub", "url-to-video", "product-videos"]
 };
-const HOME_FEATURED = ["creator", "white", "ba", "size", "beauty", "model", "unbox", "color"];
+const HOME_FEATURED = ["creator", "white", "ba", "beauty", "model", "color"];
 // Real templates shown on the home case strip (the tool-named cards in HOME_FEATURED
 // are tool pages and stay out of every template grid).
-const HOME_TEMPLATE_KEYS = ["beauty", "launch", "bf", "size", "color", "angle", "tryon", "ugc"];
+const HOME_TEMPLATE_KEYS = ["beauty", "launch", "bf", "color", "angle", "tryon", "ugc"];
 
 // The pages each guide or article is useful for, the page it is mostly about first. Every
 // tool, template, industry, platform and occasion page shows the articles written for its
 // topic (up to three), so each guide and post is reachable from the pages it helps with.
 const ARTICLE_TOPICS = {
-  "guide-product-photo-tips": ["photo-hub", "white-background", "lifestyle-photos", "change-background", "tpl-detail", "tpl-angle", "tpl-light", "tpl-size", "tpl-head", "image-to-video", "ind-shoes", "ind-electronics", "ind-home-living"],
-  "guide-white-background-amazon": ["white-background", "plat-amazon", "change-background", "tpl-angle", "tpl-size", "tpl-color", "tpl-box", "plat-shopify", "ind-shoes", "ind-electronics", "ind-jewelry-accessories"],
+  "guide-product-photo-tips": ["photo-hub", "white-background", "lifestyle-photos", "change-background", "tpl-angle", "tpl-head", "image-to-video", "ind-shoes", "ind-electronics", "ind-home-living"],
+  "guide-white-background-amazon": ["white-background", "plat-amazon", "change-background", "tpl-angle", "tpl-color", "plat-shopify", "ind-shoes", "ind-electronics", "ind-jewelry-accessories"],
   "guide-first-tiktok-video-ad": ["video-ads", "plat-tiktok", "url-to-video", "video-hub", "tpl-beauty", "tpl-drink", "tpl-outfit", "plat-youtube-shorts", "plat-instagram", "ind-health-wellness", "ind-food-drinks"],
   "guide-ad-sizes-by-platform": ["platforms", "social-ad-photos", "plat-tiktok", "plat-instagram", "plat-facebook", "plat-youtube-shorts", "plat-shopify", "plat-amazon", "tpl-story", "tpl-ugc", "video-hub", "occ-black-friday", "occ-sale-discount", "occ-holidays"],
   "guide-testing-ad-versions": ["video-ads", "social-ad-photos", "occ-black-friday", "occ-sale-discount", "plat-facebook", "tpl-bf", "tpl-sale", "tpl-launch", "url-to-video", "spokesperson-videos"],
-  "blog-ai-product-photography-guide": ["photo-hub", "lifestyle-photos", "tpl-light", "tpl-pack", "tpl-color", "tpl-box", "ind-beauty-skincare", "ind-home-living", "ind-jewelry-accessories", "plat-amazon"],
+  "blog-ai-product-photography-guide": ["photo-hub", "lifestyle-photos", "tpl-pack", "tpl-color", "ind-beauty-skincare", "ind-home-living", "ind-jewelry-accessories", "plat-amazon"],
   "blog-ai-ugc-video-ads-guide": ["video-ads", "spokesperson-videos", "tpl-ugc", "tpl-beauty", "tpl-outfit", "tpl-drink", "plat-tiktok", "plat-instagram", "ind-beauty-skincare", "ind-health-wellness", "url-to-video"],
-  "blog-ai-video-review-checklist": ["video-hub", "image-to-video", "product-videos", "model-photos", "tpl-tryon", "tpl-jewel", "tpl-look", "tpl-compare", "tpl-howto", "ind-health-wellness", "plat-facebook"],
-  "blog-unboxing-videos-for-launches": ["unboxing-videos", "occ-product-launch", "occ-holidays", "tpl-launch", "tpl-film", "tpl-pack", "tpl-bf", "ind-electronics", "ind-beauty-skincare", "plat-youtube-shorts"],
-  "blog-model-photos-without-a-photoshoot": ["model-photos", "tpl-tryon", "tpl-jewel", "tpl-look", "tpl-outfit", "tpl-head", "ind-fashion-clothing", "ind-jewelry-accessories", "plat-instagram", "social-ad-photos"]
+  "blog-ai-video-review-checklist": ["video-hub", "image-to-video", "product-videos", "model-photos", "tpl-tryon", "tpl-jewel", "tpl-howto", "ind-health-wellness", "plat-facebook"],
+  "blog-unboxing-videos-for-launches": ["occ-holidays", "tpl-launch", "tpl-film", "tpl-pack", "tpl-bf", "ind-electronics", "ind-beauty-skincare", "plat-youtube-shorts"],
+  "blog-model-photos-without-a-photoshoot": ["model-photos", "tpl-tryon", "tpl-jewel", "tpl-outfit", "tpl-head", "ind-fashion-clothing", "ind-jewelry-accessories", "plat-instagram", "social-ad-photos"]
 };
 // Shown when a page has fewer than three articles written for its topic.
 const FALLBACK_READING = {
@@ -516,7 +516,7 @@ function collectionCardKeys(model, field, slug, tools) {
   const byTool = model.cards.filter((card) => isTemplate(card) && tools.includes(card.tool)).map((card) => card.key);
   // Seasonal pages can also use a general product demo or cinematic clip when
   // their tagged sale cards are already used elsewhere on the site.
-  const occasionFallback = field === "occ" ? ["demo", "film", "howto", "compare"].filter((key) => isTemplate(model.cardByKey[key])) : [];
+  const occasionFallback = field === "occ" ? ["demo", "film", "howto"].filter((key) => isTemplate(model.cardByKey[key])) : [];
   return [...new Set([...direct, ...byTool, ...occasionFallback])];
 }
 
@@ -1007,8 +1007,8 @@ const PLANS_BASE = [
 
 const PLANS = PLANS_BASE.map((plan) => ({ ...plan, features: [planEstimate(plan.credits), ...plan.features] }));
 // The tools every occasion page recommends; those tool pages link back to the occasions.
-const OCCASION_TOOLS = ["video-ads", "social-ad-photos", "unboxing-videos"];
-const OCCASION_IDS = ["occ-product-launch", "occ-sale-discount", "occ-black-friday", "occ-holidays"];
+const OCCASION_TOOLS = ["video-ads", "social-ad-photos"];
+const OCCASION_IDS = ["occ-sale-discount", "occ-black-friday", "occ-holidays"];
 const JOB_COST_ROWS = [
   ["Product photo", `${JOB_CREDITS.photo} credits`],
   ["Video, 6 seconds", `${JOB_CREDITS.video6} credits`],
@@ -1073,10 +1073,10 @@ function visualImage(model, ref, kind) {
 // Pages whose on-page case wall follows the tagshop pattern: the wall's "Explore More"
 // button leads to the site-wide inspiration gallery instead of staying on the page maker.
 const CASE_WALL_PAGES = new Set([
-  "image-to-video", "url-to-video", "video-ads", "product-videos", "unboxing-videos", "before-after-videos",
+  "image-to-video", "url-to-video", "video-ads", "product-videos", "before-after-videos",
   "spokesperson-videos", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"
 ]);
-const ACTOR_SCENE_PAGES = new Set(["product-videos", "unboxing-videos", "before-after-videos"]);
+const ACTOR_SCENE_PAGES = new Set(["product-videos", "before-after-videos"]);
 
 function sellerScenariosFor(model, page, source) {
   if (!source || typeof source !== "object" || !Array.isArray(source.items)) return undefined;
@@ -1513,7 +1513,7 @@ const INDEX_CTA = {
 const ARTICLE_TOOL = {
   "guide-product-photo-tips": "white-background", "guide-white-background-amazon": "white-background", "guide-first-tiktok-video-ad": "video-ads",
   "guide-ad-sizes-by-platform": "social-ad-photos", "guide-testing-ad-versions": "video-ads", "blog-ai-product-photography-guide": "lifestyle-photos",
-  "blog-ai-ugc-video-ads-guide": "video-ads", "blog-ai-video-review-checklist": "image-to-video", "blog-unboxing-videos-for-launches": "unboxing-videos",
+  "blog-ai-ugc-video-ads-guide": "video-ads", "blog-ai-video-review-checklist": "image-to-video", "blog-unboxing-videos-for-launches": "product-videos",
   "blog-model-photos-without-a-photoshoot": "model-photos"
 };
 
@@ -1668,21 +1668,21 @@ const AUTO_LINK_MAX = 5;
 const AUTO_LINK_TARGET_CAP = 8;
 const AUTO_LINK_TARGET_CAPS = { "video-ads": 12, "lifestyle-photos": 12, "model-photos": 12, "white-background": 12 };
 const AUTO_LINKS = [
-  [/\blimited[- ]drop|restock alert\b/i, "tpl-limited-drop-alert-video"],
-  [/\bfeature callout|single feature\b/i, "tpl-product-feature-callout-video"],
-  [/\bcarousel video|carousel-style\b/i, "tpl-carousel-video-ad"],
+  [/\blimited[- ]drop|restock alert\b/i, "occ-sale-discount"],
+  [/\bfeature callout|single feature\b/i, "product-videos"],
+  [/\bcarousel video|carousel-style\b/i, "video-ads"],
   [/\bSpark Ads?|native TikTok ad\b/i, "tpl-spark-ads-style-video"],
-  [/\bretarget(?:ing|ed)|remarketing\b/i, "tpl-retargeting-video-ad"],
+  [/\bretarget(?:ing|ed)|remarketing\b/i, "video-ads"],
   [/\b(?:Black Friday|Cyber Monday)\b/i, "occ-black-friday"],
   [/\bholiday (?:season|ads?|sales?|campaigns?|gifts?|shoppers)\b/i, "occ-holidays"],
-  [/\b(?:product launch(?:es)?|new launch(?:es)?|launch day)\b/i, "occ-product-launch"],
+  [/\b(?:product launch(?:es)?|new launch(?:es)?|launch day)\b/i, "product-videos"],
   [/\b(?:(?:sale|discount|promo) (?:ads?|campaigns?|banners?|images?)|flash sales?|seasonal sales?)\b/i, "occ-sale-discount"],
   [/\b(?:UGC(?:-style)? (?:video )?ads?|creator-style (?:video )?(?:ads?|clips?|videos?)|creator videos?|video ads?)\b/i, "video-ads"],
   [/\bwhite[- ]background (?:photos?|images?|shots?|versions?)\b|\bwhite backgrounds?\b|\bplain white (?:background|backdrop)\b|\bwhite backdrop\b/i, "white-background"],
   [/\blifestyle (?:photos?|scenes?|shots?|images?|settings?)\b|\breal-life (?:scene|setting)\b/i, "lifestyle-photos"],
   [/\b(?:on-model|model) (?:photos?|shots?|images?)\b|\bworn by a model\b/i, "model-photos"],
   [/\b(?:feed ad (?:images?|photos?)|social ad (?:images?|photos?)|feed ads?)\b/i, "social-ad-photos"],
-  [/\b(?:unboxing (?:videos?|clips?)|reveal clips?)\b/i, "unboxing-videos"],
+  [/\b(?:unboxing (?:videos?|clips?)|reveal clips?)\b/i, "product-videos"],
   [/\b(?:product (?:videos?|demos?)|demo(?:-style)? (?:videos?|clips?))\b/i, "product-videos"],
   [/\bbefore[- ]and[- ]after (?:videos?|clips?)\b/i, "before-after-videos"],
   [/\b(?:new backgrounds?|change (?:the|your) background)\b/i, "change-background"],
@@ -1698,13 +1698,13 @@ const AUTO_LINKS = [
   [/\b(?:vitamins?|fitness gear)\b/i, "ind-health-wellness"],
   [/\b(?:food and drinks?|food (?:brands?|products?)|beverages?)\b/i, "ind-food-drinks"],
   [/\b(?:home goods|home decor|furniture)\b/i, "ind-home-living"],
-  [/\bsize comparisons?\b/i, "tpl-size"],
+  [/\bsize comparisons?\b/i, "photo-hub"],
   [/\b(?:colou?r (?:variants?|options)|colorways?)\b/i, "tpl-color"],
-  [/\b(?:close-ups?|macro (?:views?|shots?|details?))\b/i, "tpl-detail"],
+  [/\b(?:close-ups?|macro (?:views?|shots?|details?))\b/i, "photo-hub"],
   [/\bpackaging (?:mockups?|designs?|previews?)\b/i, "tpl-pack"],
-  [/\blookbooks?\b/i, "tpl-look"],
-  [/\bstudio light(?:ing)?\b/i, "tpl-light"],
-  [/\b(?:what's in the box|gift sets?|bundles?)\b/i, "tpl-box"],
+  [/\blookbooks?\b/i, "model-photos"],
+  [/\bstudio light(?:ing)?\b/i, "white-background"],
+  [/\b(?:what's in the box|gift sets?|bundles?)\b/i, "photo-hub"],
   [/\bheadshots?\b/i, "tpl-head"],
   [/\b(?:(?:square |sale )?banners?)\b/i, "tpl-sale"],
   [/\b(?:promo clips?|teasers?)\b/i, "tpl-launch"],
@@ -2317,7 +2317,7 @@ function payloadFor(model, page) {
       }));
       out.relatedGroups = [
         { title: "Formats for an actor-led ad", links: pageLinksFor(model, ["tpl-ugc", "tpl-howto", "tpl-film", "tpl-drink", "tpl-home", "tpl-outfit"]) },
-        { title: "Ad sizes and testing", links: pageLinksFor(model, ["tpl-launch", "tpl-compare", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
+        { title: "Ad sizes and testing", links: pageLinksFor(model, ["tpl-launch", "guide-ad-sizes-by-platform", "guide-first-tiktok-video-ad", "guide-testing-ad-versions", "blog-ai-video-review-checklist"]) }
       ];
       out.cta = { title: c.cta_title || "Create a product ad with an AI actor", lead: c.cta_lead || "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10" }) };
     } else if (page.id === "templates") {
@@ -2555,7 +2555,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
 function buildNavigation(model) {
   const link = (id, extra = {}) => ({ label: model.byId[id].label, href: model.byId[id].url, ...extra });
   const tool = (id) => link(id, { description: TOOL_DESC[id], image: toolPicture(model, id).src });
-  const popular = (keys) => keys.map((key) => ({ label: model.cardByKey[key].name, href: model.byId[model.cardByKey[key].pageId].url, image: img(model.cardByKey[key].img) }));
+  const popular = (keys) => keys.filter((key) => model.cardByKey[key]).map((key) => ({ label: model.cardByKey[key].name, href: model.byId[model.cardByKey[key].pageId].url, image: img(model.cardByKey[key].img) }));
   // Per the tagshop standard, menu popular lists feature only real templates, never tool pages.
   const group = (label, ids) => ({ label, items: ids.map((id) => (typeof id === "string" ? link(id) : id)) });
   const tplFirst = model.cards.filter((card) => card.pageId.startsWith("tpl-") && model.byId[card.pageId]?.type === "template").slice(0, 10).map((card) => card.pageId);
@@ -2563,7 +2563,7 @@ function buildNavigation(model) {
     version: 2,
     menus: [
       { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Pick from 53 AI actors for your ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
-      { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.filter((id) => id !== "photo-hub").map(tool) }], popular: popular(["size", "color", "angle"]), hubLink: link("photo-hub", { label: "All photo tools →" }), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
+      { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.filter((id) => id !== "photo-hub").map(tool) }], popular: popular(["color", "angle", "pack"]), hubLink: link("photo-hub", { label: "All photo tools →" }), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${realTemplateCount(model)} templates →`, href: "/templates" } },
       { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
     ],

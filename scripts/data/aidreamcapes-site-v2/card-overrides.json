@@ -5,10 +5,6 @@
         "ref": "n:guide:q1-video-hero-creator-v2",
         "alt": "An adult male creator in a bright kitchen looks straight into the lens mid-sentence and holds a flat single-serve electrolyte powder sachet beside his face. The sachet is rectangular and soft, not a tube or bottle."
       },
-      "unbox": {
-        "ref": "n:guide:q1-video-hero-unbox",
-        "alt": "Adult hands open a clean box and lift plain charcoal headphones toward the lens."
-      },
       "beauty": {
         "ref": "n:guide:img1-video-hub-hero-beauty-r1",
         "alt": "Adult woman with a short silver-blonde pixie haircut holds a plain coral lip balm beside her face at a bright vanity."
@@ -34,12 +30,8 @@
         "alt": "An adult hand slides a clear organizer into a cluttered closet shelf beside neatly folded clothes."
       },
       "launch": {
-        "ref": "n:guide:q1-video-card-headphones",
-        "alt": "An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera."
-      },
-      "compare": {
-        "ref": "n:guide:q1-video-card-compare",
-        "alt": "Two adult hands hold two unbranded silicone phone cases side by side at equal distance from the lens."
+        "ref": "n:guide:q1-video-hero-unbox",
+        "alt": "Adult hands open a clean box and lift plain charcoal headphones toward the lens."
       },
       "bf": {
         "ref": "n:guide:b2f7-video-hub-bf-r1",
@@ -62,10 +54,6 @@
       "life": {
         "ref": "n:guide:k6-photo-hub-card-lifestyle",
         "alt": "Close view of a plain canvas tote bag weave and stitched handle in natural light."
-      },
-      "size": {
-        "ref": "n:guide:k6-photo-hub-card-size-reference",
-        "alt": "Unbranded commuter backpack beside a familiar carry-on bag and a hand for a clear scale comparison."
       },
       "head": {
         "ref": "n:guide:q1-photo-template-head",
@@ -91,10 +79,6 @@
   },
   "ind-fashion-clothing": {
     "images": {
-      "retargeting-video-ad": {
-        "ref": "n:guide:q15-fashion-template-retargeting-video-ad",
-        "alt": "Adult wearing a jacket in front of a fitting-room mirror."
-      },
       "life": {
         "ref": "n:guide:k7-ind-fashion-clothing-card-life-linen-outfit",
         "alt": "Adult wearing a linen overshirt and navy trousers on a city walk."
@@ -102,10 +86,6 @@
       "tryon": {
         "ref": "n:im14-ind-fashion-tryon-r1",
         "alt": "Adult woman with a short blonde bob wears a plain blue denim jacket and turns to show its fit."
-      },
-      "look": {
-        "ref": "n:im14-ind-fashion-look-r1",
-        "alt": "Adult woman with short silver-gray hair wears a plain cream knit top and charcoal trousers in a bright courtyard."
       }
     },
     "tools": {
@@ -140,14 +120,7 @@
       "drink": {
         "ref": "f:q17-ind-food-drinks-card-drink",
         "alt": "Hand pouring sparkling citrus drink into an ice-filled glass."
-      },
-      "box": {
-        "ref": "n:guide:fx32-food-card-box",
-        "alt": "Adult hands reveal plain snack pouches from an open kraft sampler box."
       }
-    },
-    "swap": {
-      "head": "box"
     },
     "tools": {
       "product-videos": {
@@ -171,7 +144,6 @@
   "ind-health-wellness": {
     "swap": {
       "outfit": "howto",
-      "launch": "ugc",
       "sale": "howto"
     },
     "images": {
@@ -182,10 +154,6 @@
       "ugc": {
         "ref": "n:guide:im10-ind-health-wellness-card-bottle-desk-r1",
         "alt": "Adult Asian man with short black hair drinks from a plain sage-green bottle at a desk."
-      },
-      "carousel-video-ad": {
-        "ref": "n:guide:q16-wellness-cork-block-demo",
-        "alt": "Adult using a natural cork yoga block during a seated stretch."
       },
       "bf": {
         "ref": "n:gen2:ind-health-wellness-c3",
@@ -221,10 +189,6 @@
         "ref": "n:guide:q17-ind-home-living-card-bg",
         "alt": "Adult hand holding a compact cordless vacuum in a lived-in lounge."
       },
-      "compare": {
-        "ref": "f:q17-ind-home-living-r2-card-compare",
-        "alt": "Two plain ceramic table lamps displayed together in a softly styled reading corner."
-      },
       "demo": {
         "ref": "f:k7-ind-home-living-picker-02-planter-water",
         "alt": "Hand pouring water into the reservoir of a self-watering planter."
@@ -253,30 +217,13 @@
     }
   },
   "ind-jewelry-accessories": {
-    "images": {
-      "size": {
-        "ref": "n:gen2:tpl-size-g1",
-        "alt": "Small pendant resting on an open palm."
-      },
-      "detail": {
-        "ref": "n:guide:fx31-ind-jewelry-card-detail",
-        "alt": "Plain silver pendant necklace on linen in a sharp close-up."
-      }
-    }
+    "images": {}
   },
   "ind-beauty-skincare": {
     "images": {
-      "light": {
-        "ref": "n:im14-ind-beauty-light-r1",
-        "alt": "Plain round white cream jar on a pale stone pedestal in a soft diagonal beam of warm window light."
-      },
       "beauty": {
         "ref": "n:gen2:tpl-beauty-g1",
         "alt": "Cream pumped onto the back of a hand beside a mirror and folded towel."
-      },
-      "box": {
-        "ref": "n:guide:q15-beauty-template-what-s-in-the-box",
-        "alt": "Hands lift a skincare set from an open carton."
       }
     },
     "tools": {
@@ -304,17 +251,9 @@
         "ref": "n:gen2:tpl-color-g2",
         "alt": "Black and light-gray running shoes shown side by side."
       },
-      "limited-drop-alert-video": {
-        "ref": "n:guide:q15-shoes-template-limited-drop-alert-video",
-        "alt": "Trail shoe shown in motion on a runner."
-      },
       "feed": {
         "ref": "n:guide:q15-shoes-template-feed-ad",
         "alt": "Running shoe steps down from a city curb."
-      },
-      "detail": {
-        "ref": "n:im14-ind-shoes-detail-r1",
-        "alt": "Close view of a plain charcoal sneaker showing the toe, flat laces, stitching, mesh texture and outsole edge."
       },
       "pack": {
         "ref": "n:im14-ind-shoes-pack-r1",
@@ -349,10 +288,6 @@
       "bg": {
         "ref": "n:guide:q19-amz-override-background-serum",
         "alt": "Plain amber serum bottle and blank carton on a pale blush studio background."
-      },
-      "compare": {
-        "ref": "n:guide:q19-amz-override-compare-lipbalm",
-        "alt": "Hand compares two plain tinted lip balms in muted rose and berry."
       }
     }
   },
@@ -378,10 +313,6 @@
         "ref": "n:guide:q1-home-template-creator",
         "alt": "An adult creator looks into the lens while speaking and holds a plain reusable water bottle at chest height."
       },
-      "size": {
-        "ref": "n:guide:q1-home-template-size",
-        "alt": "An adult model wears a relaxed linen shirt and turns slightly to show the fit from shoulder to hem in bright daylight."
-      },
       "model": {
         "ref": "n:guide:k5-home-card-model",
         "alt": "Model wearing a simple linen shirt outdoors"
@@ -397,10 +328,6 @@
       "ba": {
         "ref": "n:guide:q1-home-template-ba",
         "alt": "A neatly split closet shelf shows scattered clothes before and sorted clothes after, with an adult hand sliding a plain organizer bin into place."
-      },
-      "unbox": {
-        "ref": "n:guide:q1-home-template-unbox",
-        "alt": "Adult hands lift plain charcoal headphones from a fitted kraft box lined with tissue on a clean desk."
       }
     }
   },
@@ -424,26 +351,6 @@
       }
     }
   },
-  "unboxing-videos": {
-    "images": {
-      "creator": {
-        "ref": "n:guide:q3-unboxing-videos-template-creator-serum",
-        "alt": "An adult creator holds a plain serum bottle beside its open box."
-      },
-      "unbox": {
-        "ref": "n:guide:k1-unboxing-template-unbox-bottle",
-        "alt": "Hands lift a plain bottle from an open gift box with tissue."
-      },
-      "demo": {
-        "ref": "n:guide:k1-unboxing-case-watch",
-        "alt": "A plain round watch rests inside an open presentation box."
-      },
-      "film": {
-        "ref": "n:guide:q3-unboxing-videos-template-film-powerbank",
-        "alt": "Adult hands lift a plain black power bank from a dark box insert."
-      }
-    }
-  },
   "tpl-color": {},
   "tpl-jewel": {},
   "occ-black-friday": {
@@ -462,9 +369,6 @@
     }
   },
   "occ-holidays": {
-    "swap": {
-      "story": "unbox"
-    },
     "images": {
       "bf": {
         "ref": "n:guide:im11-occ-holidays-bf-card-r1",
@@ -496,16 +400,11 @@
       }
     }
   },
-  "tpl-carousel-video-ad": {},
   "plat-tiktok": {
     "images": {
       "outfit": {
         "ref": "f:q18-tiktok-card-outfit-reel",
         "alt": "A woman walks through a full-length mirror view in a medium-blue denim jacket and jeans with white sneakers."
-      },
-      "product-feature-callout-video": {
-        "ref": "f:k4-plat-tiktok-01-cards-0-image",
-        "alt": "Hand operates a compact espresso maker"
       },
       "home": {
         "ref": "f:k4-plat-tiktok-02-cards-1-image",
@@ -539,34 +438,14 @@
         "ref": "n:guide:k5-model-template-card",
         "alt": "Canvas backpack worn by an adult in a clean square product image, candid and not facing the camera."
       },
-      "look": {
-        "ref": "n:guide:k5-model-template-look",
-        "alt": "Tan leather shoulder bag carried across the body by an adult in a neutral outfit, candid pose."
-      },
       "tryon": {
         "ref": "n:guide:q5-model-tryon-card-r2",
         "alt": "Adult wearing a forest-green utility jacket with front pockets in a clean studio."
       }
     }
   },
-  "occ-product-launch": {
-    "images": {
-      "pack": {
-        "ref": "n:guide:q20-occ-launch-override-pack",
-        "alt": "Adult hand places a plain tea pouch upright on a grocery shelf."
-      },
-      "look": {
-        "ref": "g:fashion-editorial/hero-output",
-        "alt": "Fashion editorial image of an adult wearing a tailored neutral outfit in a sculptural space."
-      }
-    }
-  },
   "occ-sale-discount": {
     "images": {
-      "limited-drop-alert-video": {
-        "ref": "n:guide:q13-limited-hero",
-        "alt": "Get-ready-with-me try-on: hiker ties trail shoes"
-      },
       "bf": {
         "ref": "n:guide:q20-occ-sale-bf-card",
         "alt": "Adult creator holds a plain running shoe to camera and speaks in a bright studio."
@@ -582,35 +461,13 @@
     }
   },
   "tpl-beauty": {
-    "images": {
-      "limited-drop-alert-video": {
-        "ref": "g:sale-campaign-key-visual/example-07",
-        "alt": "Square seasonal campaign crop with open space for an offer."
-      },
-      "product-feature-callout-video": {
-        "ref": "n:gen2:tpl-beauty-g3",
-        "alt": "Hair oil worked through the ends of long hair."
-      }
-    }
+    "images": {}
   },
   "tpl-bf": {
-    "images": {
-      "product-feature-callout-video": {
-        "ref": "n:guide:q13-feature-hero-r3",
-        "alt": "Adult applies cleanser foam beside a plain white pump bottle."
-      },
-      "carousel-video-ad": {
-        "ref": "n:guide:q13-carousel-hero",
-        "alt": "Day-in-the-life integration: backpack for the commute"
-      }
-    }
+    "images": {}
   },
   "tpl-drink": {
     "images": {
-      "limited-drop-alert-video": {
-        "ref": "n:gen2:examples-g2",
-        "alt": "Green glass bottle filled at a kitchen tap in a vertical frame."
-      },
       "spark-ads-style-video": {
         "ref": "n:gen2:ind-food-drinks-g3",
         "alt": "Pasta sauce jar beside a finished plate of pasta."
@@ -618,7 +475,6 @@
     }
   },
   "tpl-home": {},
-  "tpl-light": {},
   "tpl-head": {},
   "tpl-ugc": {
     "images": {
@@ -641,10 +497,6 @@
       "angle": {
         "ref": "n:guide:k2-white-card-speaker-top",
         "alt": "Top view of a compact rectangular speaker with simple physical controls on white."
-      },
-      "detail": {
-        "ref": "n:guide:k2-white-card-gray-hoodie",
-        "alt": "Plain gray cotton pullover hoodie laid flat on pure white with its seams visible."
       }
     }
   },
@@ -673,10 +525,6 @@
       "ba": {
         "ref": "n:guide:q2-image-to-video-template-ba",
         "alt": "Adult hand clears loose pet hair from a sofa to reveal a clean stripe."
-      },
-      "compare": {
-        "ref": "n:guide:q2-image-to-video-template-compare",
-        "alt": "Adult hands compare a folded phone stand with one holding a generic single-camera phone."
       }
     }
   },
@@ -709,26 +557,14 @@
       "life": {
         "ref": "n:guide:k5-lifestyle-gallery-hero",
         "alt": "The lifestyle photo tool’s own hero image for a product in a room setting."
-      },
-      "light": {
-        "ref": "g:commercial-lighting/hero-output",
-        "alt": "The commercial lighting template’s own hero image."
       }
     }
   },
   "plat-instagram": {
     "images": {
-      "look": {
-        "ref": "n:guide:k4-plat-instagram-75-template-look",
-        "alt": "Model in a light trouser suit carrying a small brown handbag in a bright courtyard."
-      },
       "launch": {
         "ref": "f:q18-instagram-card-launch-lamp-use",
         "alt": "An adult woman reads a paperback beside a lit table lamp on a bedside table."
-      },
-      "retargeting-video-ad": {
-        "ref": "f:q18-instagram-card-retargeting-serum",
-        "alt": "An adult creator speaks to camera while holding an amber serum bottle with a blank label area."
       },
       "jewel": {
         "ref": "n:im14-plat-instagram-jewelry-model-r1",
@@ -737,17 +573,10 @@
     }
   },
   "plat-youtube-shorts": {
-    "swap": {
-      "unbox": "demo"
-    },
     "images": {
       "howto": {
         "ref": "f:k4-plat-youtube-shorts-01-cards-1-image",
         "alt": "Close view of a handheld garment steamer and its glowing button"
-      },
-      "compare": {
-        "ref": "n:guide:q19-yt-override-shoe-compare",
-        "alt": "Hands compare two generic charcoal trail shoes in different muted colors."
       },
       "demo": {
         "ref": "n:guide:q19-yt-override-phone-demo",
@@ -788,10 +617,6 @@
       "home": {
         "ref": "n:gen2:before-after-videos-g3",
         "alt": "A closet shelf shows sweaters arranged into fabric bins."
-      },
-      "compare": {
-        "ref": "n:gen2:before-after-videos-g1",
-        "alt": "A steel pan is shown half scorched and half polished."
       }
     }
   },
@@ -806,10 +631,6 @@
   },
   "tpl-film": {
     "images": {
-      "carousel-video-ad": {
-        "ref": "n:q10-film-more-carousel",
-        "alt": "Adult carries a plain canvas tote along a sunny city street."
-      },
       "spark-ads-style-video": {
         "ref": "n:q10-film-more-creator",
         "alt": "Adult speaks to camera while wearing plain cream over-ear headphones."
@@ -832,56 +653,13 @@
       }
     }
   },
-  "tpl-product-feature-callout-video": {
-    "images": {
-      "retargeting-video-ad": {
-        "ref": "n:guide:k6-industries-card-headphones",
-        "alt": "Generic charcoal over-ear headphones on a wood desk, no logos or charging case."
-      }
-    }
-  },
-  "tpl-limited-drop-alert-video": {
-    "images": {
-      "retargeting-video-ad": {
-        "ref": "n:guide:q13-limited-card-retarget-r1",
-        "alt": "Adult wearing coral trail shoes while stepping onto a rocky path."
-      }
-    }
-  },
   "tpl-pack": {
-    "images": {
-      "look": {
-        "ref": "n:guide:k9-tpl-pack-lookbook-bag",
-        "alt": "Person in a cream coat carrying a tan leather handbag on a sunny street."
-      }
-    }
+    "images": {}
   },
   "tpl-angle": {
-    "images": {
-      "detail": {
-        "ref": "n:guide:k9-tpl-angle-hoodie-details",
-        "alt": "Close-up detail shots of a gray hoodie: the hood, the fabric, the drawstring ends, the front pocket and the ribbed cuff."
-      }
-    }
-  },
-  "tpl-retargeting-video-ad": {
-    "images": {
-      "product-feature-callout-video": {
-        "ref": "n:guide:k9-retargeting-demo-espresso",
-        "alt": "Adult hand presses the button on a compact espresso maker as espresso pours into a glass cup."
-      },
-      "carousel-video-ad": {
-        "ref": "n:guide:k7-ind-shoes-picker-cards-2-ref-n-gen2-video-hub-g3",
-        "alt": "Shoebox lid lifted to show a new pair of sneakers wrapped in tissue paper."
-      }
-    }
+    "images": {}
   },
   "tpl-spark-ads-style-video": {
-    "images": {
-      "retargeting-video-ad": {
-        "ref": "n:guide:k3-video-example-tote",
-        "alt": "Canvas tote bag with a book, wallet and bottle on a hallway bench."
-      }
-    }
+    "images": {}
   }
 }

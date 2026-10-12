@@ -11,17 +11,11 @@
       "ba": [
         "f:before-after-showcases"
       ],
-      "size": [
-        "g:size-reference/hero-output"
-      ],
       "beauty": [
         "f:beauty-routine"
       ],
       "model": [
         "g:on-model-generation/hero-output"
-      ],
-      "unbox": [
-        "f:k1-unboxing-videos-hero"
       ],
       "color": [
         "g:colorway-variations/hero-output"
@@ -30,9 +24,6 @@
     "video-hub": {
       "creator": [
         "n:gen2:product-videos-c2"
-      ],
-      "unbox": [
-        "f:k1-unboxing-videos-hero"
       ],
       "beauty": [
         "f:beauty-routine"
@@ -61,9 +52,6 @@
       "launch": [
         "f:promo-video"
       ],
-      "compare": [
-        "f:competitor-comparison"
-      ],
       "bf": [
         "f:black-friday-countdown"
       ]
@@ -71,9 +59,6 @@
     "photo-hub": {
       "white": [
         "n:guide:k2-white-hero-cream-mug"
-      ],
-      "size": [
-        "g:size-reference/hero-output"
       ],
       "life": [
         "n:guide:k5-lifestyle-gallery-hero"
@@ -94,9 +79,6 @@
     "image-to-video": {
       "film": [
         "f:cinematic-video-t06"
-      ],
-      "compare": [
-        "f:competitor-comparison-t10"
       ],
       "bf": [
         "f:black-friday-countdown-t02"
@@ -133,29 +115,12 @@
         "f:promo-video-t03"
       ]
     },
-    "unboxing-videos": {
-      "unbox": [
-        "f:unboxing-experience-t05"
-      ],
-      "demo": [
-        "f:product-video-t03"
-      ],
-      "film": [
-        "f:cinematic-video-t11"
-      ],
-      "creator": [
-        "n:gen2:product-videos-g5"
-      ]
-    },
     "before-after-videos": {
       "home": [
         "f:home-organization-t07"
       ],
       "howto": [
         "f:how-to-video-t07"
-      ],
-      "compare": [
-        "f:competitor-comparison-t10"
       ],
       "ba": [
         "f:before-after-showcases-t04"
@@ -167,15 +132,9 @@
       ],
       "outfit": [
         "f:fashion-try-on-reel-t01"
-      ],
-      "unbox": [
-        "f:unboxing-experience-t05"
       ]
     },
     "white-background": {
-      "detail": [
-        "n:hoodie-detail"
-      ],
       "color": [
         "g:colorway-variations/example-01"
       ],
@@ -207,17 +166,11 @@
       "jewel": [
         "g:jewelry-positioning/example-01"
       ],
-      "look": [
-        "n:handbag-carry"
-      ],
       "model": [
         "g:on-model-generation/example-01"
       ]
     },
     "change-background": {
-      "light": [
-        "n:candle-flame"
-      ],
       "bg": [
         "n:boots-doorway"
       ],
@@ -248,31 +201,6 @@
       ],
       "color": [
         "g:colorway-variations/example-03"
-      ],
-      "detail": [
-        "n:handbag-detail"
-      ]
-    },
-    "tpl-detail": {
-      "size": [
-        "g:size-reference/example-01"
-      ],
-      "jewel": [
-        "g:jewelry-positioning/example-02"
-      ],
-      "white": [
-        "n:white-sneaker"
-      ]
-    },
-    "tpl-size": {
-      "detail": [
-        "n:boots-detail"
-      ],
-      "jewel": [
-        "f:k7-ind-home-living-card-compare"
-      ],
-      "white": [
-        "f:ugc-ad-video"
       ]
     },
     "tpl-color": {
@@ -286,21 +214,7 @@
         "g:packshot-multi-angle/example-06"
       ]
     },
-    "tpl-box": {
-      "light": [
-        "g:commercial-lighting/example-01"
-      ],
-      "story": [
-        "g:story-ad-vertical/example-03"
-      ],
-      "white": [
-        "f:product-video"
-      ]
-    },
     "tpl-pack": {
-      "look": [
-        "g:fashion-editorial/example-03"
-      ],
       "model": [
         "n:sunglasses-worn"
       ],
@@ -308,48 +222,17 @@
         "n:guide:k2-white-hero-cream-mug"
       ]
     },
-    "tpl-light": {
-      "box": [
-        "g:bundle-sets/example-07"
-      ],
-      "story": [
-        "n:guide:f3-home-ab-bottle-review"
-      ],
-      "white": [
-        "n:guide:q5-white-supplement"
-      ]
-    },
     "tpl-tryon": {
       "model": [
         "g:on-model-generation/example-01"
-      ],
-      "look": [
-        "g:fashion-editorial/example-01"
       ],
       "life": [
         "n:candle-table"
       ]
     },
     "tpl-jewel": {
-      "detail": [
-        "g:macro-details/example-02"
-      ],
       "model": [
         "g:on-model-generation/example-03"
-      ],
-      "size": [
-        "n:phonecase-hand"
-      ]
-    },
-    "tpl-look": {
-      "model": [
-        "g:on-model-generation/example-04"
-      ],
-      "tryon": [
-        "n:guide:k3-social-og"
-      ],
-      "life": [
-        "n:yogamat-room"
       ]
     },
     "tpl-head": {
@@ -358,9 +241,6 @@
       ],
       "white": [
         "g:packshot-multi-angle/og"
-      ],
-      "size": [
-        "g:macro-details/og"
       ]
     },
     "tpl-ugc": {
@@ -375,12 +255,6 @@
       ]
     },
     "tpl-story": {
-      "box": [
-        "g:bundle-sets/og"
-      ],
-      "light": [
-        "g:commercial-lighting/example-03"
-      ],
       "sale": [
         "g:packaging-mockup/og"
       ]
@@ -408,12 +282,6 @@
       ]
     },
     "tpl-film": {
-      "product-feature-callout-video": [
-        "f:fashion-try-on-reel-t15"
-      ],
-      "carousel-video-ad": [
-        "f:promo-video-t05"
-      ],
       "spark-ads-style-video": [
         "f:promo-video-t14"
       ]
@@ -421,23 +289,11 @@
     "tpl-beauty": {
       "creator": [
         "n:gen2:product-videos-c2"
-      ],
-      "product-feature-callout-video": [
-        "g:commercial-lighting/og"
-      ],
-      "limited-drop-alert-video": [
-        "g:virtual-try-on/og"
       ]
     },
     "tpl-drink": {
       "spark-ads-style-video": [
         "g:jewelry-positioning/og"
-      ],
-      "limited-drop-alert-video": [
-        "g:fashion-editorial/og"
-      ],
-      "product-feature-callout-video": [
-        "g:professional-headshot/og"
       ]
     },
     "tpl-home": {
@@ -451,17 +307,7 @@
         "g:ugc-still-ad/og"
       ]
     },
-    "tpl-outfit": {
-      "limited-drop-alert-video": [
-        "g:sale-campaign-key-visual/og"
-      ],
-      "carousel-video-ad": [
-        "f:k3-video-ads-og"
-      ],
-      "retargeting-video-ad": [
-        "g:ecommerce-main-image/og"
-      ]
-    },
+    "tpl-outfit": {},
     "tpl-launch": {
       "ba": [
         "f:k7-ind-home-living-output-candle"
@@ -473,98 +319,15 @@
         "f:tpl-home-r4-m6-after"
       ]
     },
-    "tpl-compare": {
-      "ba": [
-        "f:before-after-showcases-t10"
-      ],
-      "demo": [
-        "f:product-video-t03"
-      ],
-      "howto": [
-        "n:guide:q19-amz-og-trailshoe"
-      ]
-    },
     "tpl-bf": {
-      "product-feature-callout-video": [
-        "g:feed-ad-still/example-01"
-      ],
-      "carousel-video-ad": [
-        "n:guide:q13-limited-og-r1"
-      ],
       "spark-ads-style-video": [
         "n:guide:q13-feature-og-r1"
       ]
     },
-    "tpl-limited-drop-alert-video": {
-      "carousel-video-ad": [
-        "f:tpl-beauty-r4-after"
-      ],
-      "retargeting-video-ad": [
-        "f:tpl-drink-r4-strip"
-      ],
-      "outfit": [
-        "u:try-on"
-      ]
-    },
-    "tpl-product-feature-callout-video": {
-      "carousel-video-ad": [
-        "f:tpl-drink-r4-after"
-      ],
-      "spark-ads-style-video": [
-        "f:k6-video-hub-frame-bottle-pour"
-      ],
-      "retargeting-video-ad": [
-        "f:k6-video-hub-frame-headphone-unbox"
-      ]
-    },
-    "tpl-carousel-video-ad": {
-      "retargeting-video-ad": [
-        "f:k6-video-hub-frame-square-demo"
-      ],
-      "limited-drop-alert-video": [
-        "f:k6-video-hub-frame-wide-compare"
-      ],
-      "product-feature-callout-video": [
-        "f:k6-video-hub-use-rounded-fragrance"
-      ]
-    },
-    "tpl-spark-ads-style-video": {
-      "product-feature-callout-video": [
-        "f:k6-video-hub-frame-bike"
-      ],
-      "carousel-video-ad": [
-        "f:k2-url-picker-picnic-basket"
-      ],
-      "retargeting-video-ad": [
-        "f:k2-url-picker-tote-commute"
-      ]
-    },
-    "tpl-retargeting-video-ad": {
-      "carousel-video-ad": [
-        "f:k2-url-picker-sneaker-doorstep"
-      ],
-      "limited-drop-alert-video": [
-        "f:k2-url-picker-throw-chair"
-      ],
-      "product-feature-callout-video": [
-        "f:k2-url-picker-hot-sauce"
-      ]
-    },
+    "tpl-spark-ads-style-video": {},
     "templates": {
-      "limited-drop-alert-video": [
-        "s:v_launch"
-      ],
-      "product-feature-callout-video": [
-        "s:v_demo"
-      ],
-      "carousel-video-ad": [
-        "s:v_film"
-      ],
       "spark-ads-style-video": [
         "s:v_creator_ad-r2"
-      ],
-      "retargeting-video-ad": [
-        "s:v_compare"
       ],
       "creator": [
         "n:gen2:product-videos-c2"
@@ -575,17 +338,11 @@
       "ba": [
         "f:before-after-showcases"
       ],
-      "size": [
-        "g:size-reference/hero-output"
-      ],
       "beauty": [
         "f:beauty-routine"
       ],
       "model": [
         "g:on-model-generation/hero-output"
-      ],
-      "unbox": [
-        "f:k1-unboxing-videos-hero"
       ],
       "color": [
         "g:colorway-variations/hero-output"
@@ -599,17 +356,8 @@
       "angle": [
         "g:packshot-multi-angle/example-02"
       ],
-      "detail": [
-        "g:macro-details/hero-output"
-      ],
-      "box": [
-        "g:bundle-sets/hero-output"
-      ],
       "pack": [
         "g:packaging-mockup/hero-output"
-      ],
-      "light": [
-        "g:commercial-lighting/hero-output"
       ],
       "bg": [
         "g:background-remove-replace/example-03"
@@ -619,9 +367,6 @@
       ],
       "jewel": [
         "g:jewelry-positioning/hero-output"
-      ],
-      "look": [
-        "g:fashion-editorial/hero-output"
       ],
       "feed": [
         "n:guide:k3-social-hero-trainer-output"
@@ -653,9 +398,6 @@
       "launch": [
         "f:promo-video"
       ],
-      "compare": [
-        "f:competitor-comparison"
-      ],
       "bf": [
         "f:black-friday-countdown"
       ],
@@ -666,18 +408,9 @@
     "ind-beauty-skincare": {
       "beauty": [
         "n:gen2:tpl-beauty-c2"
-      ],
-      "box": [
-        "g:bundle-sets/example-01"
-      ],
-      "light": [
-        "g:commercial-lighting/example-02"
       ]
     },
     "ind-fashion-clothing": {
-      "retargeting-video-ad": [
-        "s:v_compare"
-      ],
       "life": [
         "n:coffee-breakfast"
       ],
@@ -691,18 +424,9 @@
       ],
       "feed": [
         "n:hotsauce-tacos"
-      ],
-      "limited-drop-alert-video": [
-        "s:v_launch"
       ]
     },
     "ind-jewelry-accessories": {
-      "size": [
-        "g:size-reference/example-02"
-      ],
-      "detail": [
-        "n:phonecase-back"
-      ],
       "jewel": [
         "g:jewelry-positioning/example-04"
       ]
@@ -710,9 +434,6 @@
     "ind-electronics": {
       "creator": [
         "n:gen2:product-videos-g5"
-      ],
-      "unbox": [
-        "f:unboxing-experience-t08"
       ],
       "angle": [
         "g:packshot-multi-angle/example-07"
@@ -738,9 +459,6 @@
       "bf": [
         null
       ],
-      "carousel-video-ad": [
-        "s:v_film"
-      ],
       "howto": [
         "f:how-to-video-t07"
       ]
@@ -757,9 +475,6 @@
       ]
     },
     "ind-home-living": {
-      "compare": [
-        "f:competitor-comparison-t10"
-      ],
       "bg": [
         "n:protein-gym"
       ],
@@ -773,15 +488,9 @@
       ],
       "home": [
         "f:home-organization-t07"
-      ],
-      "product-feature-callout-video": [
-        "s:v_demo"
       ]
     },
     "plat-instagram": {
-      "look": [
-        "g:fashion-editorial/example-02"
-      ],
       "sale": [
         null
       ],
@@ -793,9 +502,6 @@
       ],
       "bf": [
         null
-      ],
-      "retargeting-video-ad": [
-        "s:v_compare"
       ]
     },
     "plat-facebook": {
@@ -822,14 +528,8 @@
       ]
     },
     "plat-youtube-shorts": {
-      "compare": [
-        "f:competitor-comparison-t10"
-      ],
       "howto": [
         "f:how-to-video-t07"
-      ],
-      "unbox": [
-        "f:unboxing-experience-t10"
       ],
       "demo": [
         "f:product-video-t06"
@@ -838,9 +538,6 @@
     "plat-amazon": {
       "bg": [
         "n:protein-gym"
-      ],
-      "compare": [
-        "f:competitor-comparison-t10"
       ],
       "white": [
         "n:white-wallet"
@@ -857,26 +554,12 @@
         "g:colorway-variations/example-02"
       ]
     },
-    "occ-product-launch": {
-      "unbox": [
-        "f:unboxing-experience-t10"
-      ],
-      "pack": [
-        "n:hotsauce-peppers"
-      ],
-      "look": [
-        "g:fashion-editorial/example-02"
-      ]
-    },
     "occ-sale-discount": {
       "sale": [
         "g:sale-campaign-key-visual/example-02"
       ],
       "bf": [
         "f:black-friday-countdown-t02"
-      ],
-      "limited-drop-alert-video": [
-        "s:v_launch"
       ]
     },
     "occ-black-friday": {
@@ -918,9 +601,6 @@
       ],
       "ugc": [
         "n:hotsauce-tacos"
-      ],
-      "unbox": [
-        "f:unboxing-experience-t13"
       ]
     },
     "examples": {
@@ -930,20 +610,8 @@
       "story": [
         "g:story-ad-vertical/example-02"
       ],
-      "size": [
-        "g:size-reference/example-02"
-      ],
       "angle": [
         "g:packshot-multi-angle/example-08"
-      ],
-      "detail": [
-        "n:phonecase-back"
-      ],
-      "box": [
-        "g:bundle-sets/example-01"
-      ],
-      "light": [
-        "g:commercial-lighting/example-02"
       ],
       "bg": [
         "n:protein-gym"
