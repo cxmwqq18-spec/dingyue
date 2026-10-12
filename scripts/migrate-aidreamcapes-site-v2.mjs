@@ -16,7 +16,22 @@ import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, ha
 
 const SITE_ID = AIDREAMCAPES_SITE_ID;
 // This route rename keeps the old LivePage as a separate row until it is backed up and retired below.
-const retiredRouteSlugs = Object.freeze(["/ai-video-generation/competitor-comparison"]);
+const retiredRouteSlugs = Object.freeze([
+  "/ai-video-generation/competitor-comparison",
+  "/ai-video-generation/unboxing-experience",
+  "/ai-image-generation/macro-details",
+  "/ai-image-generation/size-reference",
+  "/ai-image-generation/bundle-sets",
+  "/ai-image-generation/commercial-lighting",
+  "/ai-image-generation/fashion-editorial",
+  "/ai-video-generation/product-comparison-video",
+  "/ai-video-generation/limited-drop-alert-video",
+  "/ai-video-generation/product-feature-callout-video",
+  "/ai-video-generation/carousel-video-ad",
+  "/ai-video-generation/retargeting-video-ad",
+  "/platforms",
+  "/occasions/product-launch"
+]);
 const applyLocal = hasArgument("--apply-local");
 const applyProduction = hasArgument("--apply-production");
 assert(!(applyLocal && applyProduction), "Choose one database write target.");
