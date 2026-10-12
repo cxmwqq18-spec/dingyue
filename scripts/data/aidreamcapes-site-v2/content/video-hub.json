@@ -353,12 +353,12 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:im01-video-hub-tripod-r1",
+          "ref": "n:guide:b2f12-video-hub-picker4-r1",
           "label": "Phone Tripod App Setup",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult hand clips a generic unbranded phone with a blank abstract color screen into a plain phone tripod on a tidy bedroom desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands clip a plain flat-top phone with an abstract color screen into a small tripod on a bedroom desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
           "tool": "image-to-video"
         },

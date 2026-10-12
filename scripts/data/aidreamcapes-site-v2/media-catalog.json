@@ -22516,7 +22516,7 @@
         "file": "k5-model-case-2",
         "w": 1024,
         "h": 1024,
-        "alt": "Messenger bag worn across a simple outfit",
+        "alt": "Dark gray fabric messenger bag worn across a light jacket.",
         "variants": [
           640,
           1280
@@ -49131,7 +49131,7 @@
         "file": "fx20-home-benefit-pantry-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "Adult hands place plain clear pantry bins and unmarked jars onto a shelf.",
+        "alt": "Adult hands set a clear bin on a shelf of original grocery packaging, above plain clear bins and unmarked jars.",
         "variants": [
           640,
           1280
@@ -49343,7 +49343,7 @@
         "file": "fx05-unbox-sentence",
         "w": 1024,
         "h": 1024,
-        "alt": "Hands pull one plain cream ceramic travel mug from tissue inside its blank kraft parcel.",
+        "alt": "Hands lift one plain cream ceramic mug with no lid from tissue inside a blank kraft parcel.",
         "variants": [
           640,
           1280
@@ -51977,7 +51977,7 @@
         "file": "fx04-blog-review-copy-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "Adult hands hold plain black travel backpack beside a blank phone.",
+        "alt": "Plain black travel backpack centered on a white background.",
         "variants": [
           640,
           1280
@@ -53740,6 +53740,50 @@
           640,
           1280
         ]
+      },
+      "b2f12-video-hub-picker4-r1": {
+        "file": "b2f12-video-hub-picker4-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Two adult hands clip a flat-top phone with an abstract color screen into a small tripod on a bedroom desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f12-model-photos-case3-r1": {
+        "file": "b2f12-model-photos-case3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with a short blonde bob wears two layered gold necklaces over a black top, full face in frame.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f12-unboxing-videos-acc-r1": {
+        "file": "b2f12-unboxing-videos-acc-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lay a plain compact mirror and pouch beside an open box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f12-blog-review-rules-r1": {
+        "file": "b2f12-blog-review-rules-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold a plain black travel backpack beside a blank laptop and a blank phone.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }
