@@ -206,14 +206,14 @@
     "uses": [],
     "input": [
       {
-        "good": "n:guide:fx01-occ-sale-discount-input-good-alt",
+        "good": "n:guide:b2f1-occ-sale-discount-input-good-r1",
         "bad": "n:guide:fx01-occ-sale-discount-input-bad-blur",
         "good_label": "Sharp product photo shows the full jar",
         "bad_label": "Blurred source hides the jar detail"
       },
       {
-        "good": "n:guide:fx01-occ-sale-discount-input-good-alt2",
-        "bad": "n:guide:fx01-occ-sale-discount-input-bad-crop",
+        "good": "n:guide:b2f1-occ-sale-discount-input-good2-r1",
+        "bad": "n:guide:b2f1-occ-sale-discount-input-bad-r1",
         "good_label": "Full product set stays clear in frame",
         "bad_label": "Product set is cropped at the edge"
       }
@@ -225,7 +225,7 @@
         "label": "Square skincare sale result"
       },
       {
-        "ref": "n:guide:fx01-occ-sale-discount-output-alt",
+        "ref": "n:guide:b2f1-occ-sale-discount-output-r1",
         "frame": "1:1",
         "label": "Square skincare offer-ready result"
       }
