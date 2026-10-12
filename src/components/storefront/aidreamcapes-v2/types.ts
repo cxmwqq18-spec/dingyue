@@ -16,6 +16,7 @@ export type V2ActorScenePicker = {
   length: number;
   actors: V2ActorSceneChoice[];
   scenes: string[];
+  cta?: { label: string; prompt: string };
 };
 export type V2VisualStep = { source: V2VisualImage; sourceTitle?: string; sourceHint?: string; hideSourceCopy?: boolean; result: V2VisualImage; options: [string, string][]; credits: string; prompt?: string; mode?: "photo" | "video"; items: V2Item[]; actorCards?: V2VisualActorCard[] };
 export type V2VisualTitle = { h2: string; lead?: string };
@@ -28,6 +29,8 @@ export type V2VisualUse = {
   imageB?: V2VisualImage;
   img?: V2Image;
   alt?: string;
+  href?: string;
+  prompt?: string;
   h: string;
   d: string;
 };
@@ -70,7 +73,7 @@ export type V2Item = {
   frame?: "phone" | "browser" | "none";
   icon?: V2BenefitIcon;
 };
-export type V2ImageItem = V2Item;
+export type V2ImageItem = V2Item & { href?: string; prompt?: string };
 export type V2Faq = { q: string; a: string };
 export type V2Crumb = { label: string; href: string };
 export type V2Card = { key: string; name: string; line?: string; kind: "video" | "photo"; href: string; image: V2Image; tags: string[]; industries: string[]; platforms: string[]; filterTags?: string[]; cardType?: "template" | "case"; videoExample?: boolean; product?: string; mediaRef?: string; video?: V2Video };
@@ -85,7 +88,7 @@ export type V2Plan = { name: string; price: string; credits: string; who: string
 export type V2MoreSection = { eyebrow: string; h2: string; lead?: string; items: V2ImageItem[] };
 export type V2SellerScenario = { audience: string; tool: string; href: string; task: string; image: V2Image };
 export type V2SellerScenarioBlock = { title: string; lead: string; items: V2SellerScenario[] };
-export type V2Section = { h2: string; paras: string[] };
+export type V2Section = { h2: string; paras: string[]; img?: V2Image; alt?: string };
 export type V2EnrichmentSection = { h2: string; paras: string[]; items?: V2Item[] };
 export type V2EnrichmentBlock = { h2: string; items: V2Item[] };
 export type V2FitBlock = { h2: string; good: V2Item[]; not_ideal: V2Item[] };

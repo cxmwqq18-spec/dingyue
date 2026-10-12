@@ -48236,6 +48236,138 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "fx08-contact-hero-r1": {
+        "file": "gen2guide-fx08-contact-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller reviews a product upload on a laptop at a tidy support desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-about-hero-r1": {
+        "file": "gen2guide-fx08-about-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller presents a plain product beside a laptop with a store image preview.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-about-what-we-make-r1": {
+        "file": "gen2guide-fx08-about-what-we-make-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller works with a plain product photo and laptop preview at a small-shop desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-about-who-its-for-r1": {
+        "file": "gen2guide-fx08-about-who-its-for-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult small-shop owner prepares a plain product for a listing at a packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-about-photos-stay-yours-r1": {
+        "file": "gen2guide-fx08-about-photos-stay-yours-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller checks a private product preview beside a small padlock on a laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-about-credit-costs-r1": {
+        "file": "gen2guide-fx08-about-credit-costs-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller reviews a product job estimate beside plain wooden tokens.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-trust-hero-r1": {
+        "file": "gen2guide-fx08-trust-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller compares a plain product with its laptop image beside a padlock.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-trust-what-it-is-for-r1": {
+        "file": "gen2guide-fx08-trust-what-it-is-for-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller photographs a plain product beside a laptop store preview.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-trust-what-we-decline-r1": {
+        "file": "gen2guide-fx08-trust-what-we-decline-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller reviews a plain product image before publishing it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-trust-uploads-results-r1": {
+        "file": "gen2guide-fx08-trust-uploads-results-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller checks a private product preview beside a closed padlock.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-trust-ai-content-r1": {
+        "file": "gen2guide-fx08-trust-ai-content-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller compares a generated product image with the real item before an ad.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx08-trust-report-problem-r1": {
+        "file": "gen2guide-fx08-trust-report-problem-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller reports a product issue from a laptop beside a blank envelope.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

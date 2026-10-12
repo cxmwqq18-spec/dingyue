@@ -941,7 +941,7 @@ function plannedRefs(model, pageId) {
   refs.push(...(plan.gallery ?? []), ...(plan.pairs ?? []).flatMap((pair) => [pair.before, pair.after]));
   const flows = pageId === "home" ? model.content.home?.example_flows : pageId === "examples" ? model.content.examples?.cases : [];
   for (const item of flows ?? []) {
-    const flow = EXAMPLE_FLOWS[item.id];
+    const flow = EXAMPLE_FLOWS[exampleFlowKey(item.id)];
     if (flow) refs.push(...flow[1].map(([, file]) => (flow[0] ? `g:${flow[0]}/${file}` : file)));
   }
   return refs.filter(Boolean);
@@ -962,6 +962,16 @@ function toolRef(model, id, withImage = true, imageOverride) {
 function appHref(params, video) {
   const query = new URLSearchParams(Object.entries(params).filter(([, value]) => value));
   return `/app/create?${query.toString()}${video ? "#step-video" : ""}`;
+}
+function hrefWithPrompt(href, prompt) {
+  if (typeof href !== "string" || !href.trim() || typeof prompt !== "string" || !prompt.trim()) return href;
+  try {
+    const url = new URL(href, "https://aivideosugc.com");
+    url.searchParams.set("prompt", prompt);
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return href;
+  }
 }
 function toolAppHref(model, page, templateKey, options = {}) {
   if (!page) return "/app/create";
@@ -1102,6 +1112,10 @@ function sellerScenariosFor(model, page, source) {
 function actorScenePickerFor(model, page) {
   const actorSource = model.content["ai-actors"]?.actor_visual ?? {};
   const copy = model.content[page.id]?.actor_scene_picker ?? {};
+  const pageCta = copy.actor_picker?.cta;
+  const cta = pageCta && typeof pageCta === "object" && typeof pageCta.prompt === "string" && pageCta.prompt.trim()
+    ? { label: typeof pageCta.label === "string" && pageCta.label.trim() ? pageCta.label : String(copy.button ?? "Use this avatar and scene"), prompt: pageCta.prompt }
+    : undefined;
   const configured = Array.isArray(actorSource.steps?.actor_cards) ? actorSource.steps.actor_cards : [];
   const byRef = new Map((model.content["ai-actors"]?.actor_cards ?? []).map((actor) => [actor.ref, actor]));
   const actors = configured.map((item, index) => {
@@ -1129,7 +1143,8 @@ function actorScenePickerFor(model, page) {
     size,
     length: 10,
     actors,
-    scenes
+    scenes,
+    ...(cta ? { cta } : {})
   };
 }
 
@@ -1251,13 +1266,20 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       const rowImage = typeof item.img === "string" && item.img.trim()
         ? mediaImage(model, item.img, "gallery")
         : undefined;
+      const prompt = typeof item.prompt === "string" && item.prompt.trim() ? item.prompt : undefined;
+      const configuredHref = typeof item.href === "string" && item.href.trim() ? item.href : undefined;
+      const href = prompt
+        ? hrefWithPrompt(configuredHref ?? toolAppHref(model, page, undefined, { promptOverride: prompt }), prompt)
+        : configuredHref;
       return {
         frame: item.frame,
         image,
         ...(rowImage ? { img: item.alt ? { ...rowImage, alt: String(item.alt) } : rowImage } : {}),
         ...(item.alt ? { alt: String(item.alt) } : {}),
         ...(item.frame === "split" ? { imageB: visualImage(model, item.ref_b, video ? "video" : "photo") } : {}),
-        h: item.h ?? "", d: item.d ?? ""
+        h: item.h ?? "", d: item.d ?? "",
+        ...(href ? { href } : {}),
+        ...(prompt ? { prompt } : {})
       };
     }),
     input: (Array.isArray(source.input) ? source.input : []).map((item) => ({
@@ -1305,7 +1327,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
 // Footer "Related links" block: 8-12 canonical public pages that match the
 // page task. Suggestions are derived from the page type and its industry,
 // platform, tool and template fields; content may provide an explicit list.
-const RELATED_PAGE_TYPES = new Set(["tool", "hub-tool", "hub", "template", "industry", "platform", "occasion"]);
+const RELATED_PAGE_TYPES = new Set(["tool", "hub-tool", "hub", "template", "industry", "platform", "occasion", "article"]);
 const RELATED_INDEX_IDS = new Set(["templates", "industries", "platforms"]);
 
 function isRelatedPage(model, page, id) {
@@ -1501,8 +1523,8 @@ const ARTICLE_TOOL = {
 
 // The tool behind each start-to-finish example, so a visitor can make the same kind of result.
 const FLOW_TOOL = {
-  ebike: "video-ads", bottle: "social-ad-photos", tote: "lifestyle-photos", necklace: "model-photos", jacket: "social-ad-photos", lipstick: "lifestyle-photos",
-  hoodie: "model-photos", handbag: "lifestyle-photos", boots: "model-photos", sunglasses: "lifestyle-photos", coffee: "lifestyle-photos", candle: "lifestyle-photos",
+  ebike: "video-ads", bottle: "social-ad-photos", "travel-mug": "lifestyle-photos", necklace: "model-photos", "linen-tote": "social-ad-photos", "fluted-vase": "lifestyle-photos",
+  "leather-wallet": "model-photos", "running-shoe": "lifestyle-photos", sunscreen: "model-photos", sunglasses: "lifestyle-photos", coffee: "lifestyle-photos", candle: "lifestyle-photos",
   phonecase: "lifestyle-photos", yogamat: "lifestyle-photos", hotsauce: "social-ad-photos"
 };
 
@@ -1757,6 +1779,28 @@ function imageItemsFor(model, page, items) {
   });
 }
 
+// Prose sections may carry one page-owned image after their paragraphs. Keep the
+// source ref out of the public payload while preserving the section copy and links.
+function proseSectionsFor(model, page, sections, label = "section") {
+  assert.ok(Array.isArray(sections), `${page.id}: ${label}s must be an array`);
+  return sections.map((section, index) => {
+    assert.ok(section && typeof section === "object" && !Array.isArray(section), `${page.id}: ${label} ${index + 1} must be an object`);
+    assert.ok(Array.isArray(section.paras), `${page.id}: ${label} ${index + 1} paragraphs must be an array`);
+    const out = { ...section, paras: section.paras.map((para) => inlineLinks(model, para, page.id)) };
+    if (section.img !== undefined) {
+      assert.ok(typeof section.img === "string" && section.img.trim(), `${page.id}: ${label} ${index + 1} img must be a media ref`);
+      const image = mediaImage(model, section.img, "gallery");
+      out.img = typeof section.alt === "string" && section.alt.trim() ? { ...image, alt: section.alt } : image;
+    }
+    if (section.alt !== undefined) assert.ok(typeof section.alt === "string" && section.alt.trim(), `${page.id}: ${label} ${index + 1} alt must be a non-empty string`);
+    return out;
+  });
+}
+
+function articleSectionsFor(model, page, sections) {
+  return proseSectionsFor(model, page, sections, "article section");
+}
+
 // Optional page-owned sections keep their stored shape; only the item descriptions run
 // through the same automatic internal linker as benefit cards.
 function moreSectionsFor(model, page, sections) {
@@ -1791,13 +1835,13 @@ function specLinks(model, ids) {
 // ("n:" references, a plain product photo first and then scenes made from it).
 const EXAMPLE_FLOWS = {
   ebike: [null, [["Your product", "n:guide:plat-youtube-shorts-size-portrait-ebike"], ["Video ad", "f:video-hub-h1-bike"]]],
-  tote: ["lifestyle-scene", [["Your product", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
+  "travel-mug": ["lifestyle-scene", [["Your product", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
   necklace: ["jewelry-positioning", [["Your product", "source-input"], ["Worn on a dark top", "example-01"], ["Pendant detail", "example-05"]]],
-  jacket: ["sale-campaign-key-visual", [["Your product", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
-  lipstick: [null, [["Your product", "n:lipstick-pack"], ["On a vanity", "n:lipstick-vanity"], ["Shade swatch", "n:lipstick-swatch"]]],
-  hoodie: [null, [["Your product", "n:hoodie-pack"], ["Worn outdoors", "n:hoodie-street"], ["Flat lay", "n:hoodie-flatlay"]]],
-  handbag: [null, [["Your product", "n:handbag-pack"], ["Cafe table", "n:handbag-cafe"], ["Carried outdoors", "n:handbag-carry"]]],
-  boots: [null, [["Your product", "n:boots-pack"], ["On cobblestones", "n:boots-street"], ["By the door", "n:boots-doorway"]]],
+  "linen-tote": ["sale-campaign-key-visual", [["Your product", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
+  "fluted-vase": [null, [["Your product", "n:lipstick-pack"], ["On a vanity", "n:lipstick-vanity"], ["Shade swatch", "n:lipstick-swatch"]]],
+  "leather-wallet": [null, [["Your product", "n:hoodie-pack"], ["Worn outdoors", "n:hoodie-street"], ["Flat lay", "n:hoodie-flatlay"]]],
+  "running-shoe": [null, [["Your product", "n:handbag-pack"], ["Cafe table", "n:handbag-cafe"], ["Carried outdoors", "n:handbag-carry"]]],
+  sunscreen: [null, [["Your product", "n:boots-pack"], ["On cobblestones", "n:boots-street"], ["By the door", "n:boots-doorway"]]],
   sunglasses: [null, [["Your product", "n:sunglasses-pack"], ["Cafe table", "n:sunglasses-cafe"], ["Worn outdoors", "n:sunglasses-worn"]]],
   coffee: [null, [["Your product", "n:coffee-pack"], ["Kitchen counter", "n:coffee-counter"], ["Breakfast table", "n:coffee-breakfast"]]],
   candle: [null, [["Your product", "n:candle-pack"], ["Living room", "n:candle-table"], ["Bath edge", "n:candle-bath"]]],
@@ -1806,20 +1850,29 @@ const EXAMPLE_FLOWS = {
   hotsauce: [null, [["Your product", "n:hotsauce-pack"], ["Over tacos", "n:hotsauce-tacos"], ["With fresh chilies", "n:hotsauce-peppers"]]]
 };
 
-function flowCta(model, id) {
-  const tool = model.byId[FLOW_TOOL[id]];
-  return tool ? { cta: { label: "Try this with your product", href: toolAppHref(model, tool) } } : {};
+// These aliases let older home-page data render while the public examples use the descriptive IDs.
+const EXAMPLE_ID_ALIASES = { tote: "travel-mug", jacket: "linen-tote", lipstick: "fluted-vase", hoodie: "leather-wallet", handbag: "running-shoe", boots: "sunscreen" };
+function exampleFlowKey(id) {
+  return EXAMPLE_FLOWS[id] ? id : EXAMPLE_ID_ALIASES[id] ?? id;
+}
+
+function flowCta(model, id, item) {
+  const tool = model.byId[FLOW_TOOL[exampleFlowKey(id)]];
+  if (!tool) return {};
+  const label = typeof item?.ctaLabel === "string" && item.ctaLabel.trim() ? item.ctaLabel : "Try this with your product";
+  const prompt = typeof item?.ctaPrompt === "string" && item.ctaPrompt.trim() ? item.ctaPrompt : undefined;
+  return { cta: { label, href: toolAppHref(model, tool, undefined, prompt ? { promptOverride: prompt } : {}) } };
 }
 
 function exampleFlow(model, item) {
   if (item.id === "bottle") {
-    return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: [
+    return { t: item.t, d: item.d, ...flowCta(model, item.id, item), steps: [
       { label: "Lifestyle photo", image: imageRef(model, "bottle", "Green water bottle in a living room scene") },
       { label: "Feed ad", image: imageRef(model, "feedbottle", "Same water bottle in a sunlit feed ad") }] };
   }
-  const flow = EXAMPLE_FLOWS[item.id];
+  const flow = EXAMPLE_FLOWS[exampleFlowKey(item.id)];
   assert.ok(flow, `unknown example flow ${item.id}`);
-  return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: flow[1].map(([label, file], index) => ({
+  return { t: item.t, d: item.d, ...flowCta(model, item.id, item), steps: flow[1].map(([label, file], index) => ({
     label: normalizeStepLabel(item.imageLabels?.[index] || label),
     image: mediaImage(model, item.imageRefs?.[index] || (flow[0] ? `g:${flow[0]}/${file}` : file), "gallery")
   })) };
@@ -2041,7 +2094,18 @@ function payloadFor(model, page) {
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
     const makerOptions = (c.maker?.options || []).slice(0, 3);
     const makerLength = video ? displayedMakerVideoLength(makerOptions) : undefined;
-    const maker = { options: makerOptions, cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, TOOL_REL[page.id]?.[0], makerLength ? { length: makerLength } : {}), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const makerPrompt = typeof c.maker?.prompt === "string" && c.maker.prompt.trim()
+      ? c.maker.prompt
+      : typeof c.cta_prompt === "string" && c.cta_prompt.trim()
+        ? c.cta_prompt
+        : page.id === "url-to-video" && typeof c.visual?.steps?.prompt === "string" && c.visual.steps.prompt.trim()
+          ? c.visual.steps.prompt
+          : undefined;
+    const makerTemplate = page.id === "url-to-video" ? undefined : TOOL_REL[page.id]?.[0];
+    const makerHref = typeof c.maker?.href === "string" && c.maker.href.trim()
+      ? hrefWithPrompt(c.maker.href, makerPrompt)
+      : toolAppHref(model, page, makerTemplate, { ...(makerLength ? { length: makerLength } : {}), ...(makerPrompt ? { promptOverride: makerPrompt } : {}) });
+    const maker = { options: makerOptions, cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: makerHref, urlInput: page.id === "url-to-video", ...(makerPrompt ? { prompt: makerPrompt } : {}), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
     // Per the tagshop link standard, tool pages have no "Templates for X" grid: the
     // case wall is the visual picker, and the page ends with one related-tools block.
     const wallCases = hub ? [] : caseCardsFor(model, page, [], c.visual?.picker?.cards ?? []);
@@ -2052,6 +2116,7 @@ function payloadFor(model, page) {
       { title: "Browse industries", links: pageLinksFor(model, ["ind-beauty-skincare", "ind-shoes", "ind-food-drinks", "ind-home-living"]) },
       { title: "Browse platforms", links: pageLinksFor(model, ["plat-amazon", "plat-shopify"]) }
     ] : [];
+    const relatedLinks = relatedLinksFor(model, page);
     const heroCards = page.id === "white-background" || page.id === "spokesperson-videos" ? null
       : hasHero ? [] : hub ? toolHeroCardsForHub(model, page, c.hero_cards) : [];
     // Optional page-owned text blocks (competitor parity): a definition block after the hero
@@ -2061,6 +2126,7 @@ function payloadFor(model, page) {
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: imageItemsFor(model, page, linkedCopy.groups[0]), steps: c.steps, uses: linkedCopy.groups[1],
       maker,
       ...(relatedGroups.length ? { relatedGroups } : {}),
+      ...(relatedLinks?.length ? { relatedLinks } : {}),
       ...(visual ? { visual } : {}),
       ...(actorScenePicker ? { actorScenePicker } : {}),
       specs: [
@@ -2137,7 +2203,13 @@ function payloadFor(model, page) {
       assert.ok(!(t === "occasion" && (c.plan || []).length) || String(c.visual.titles?.plan?.h2 || "").trim(), `${page.id}: an occasion page with a plan needs visual.titles.plan.h2`);
     }
     return { ...base, kind: t, intro: linkedCopy.intro, ideas: linkedCopy.groups[0], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
-      cards: [...listed, ...caseCards], heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
+      cards: [...listed, ...caseCards], heroCards: collage,
+      tools: tools.map((id) => {
+        const imageOverride = model.cardOverrides?.[page.id]?.tools?.[id];
+        return t === "industry"
+          ? toolRef(model, id, Boolean(imageOverride?.ref), imageOverride)
+          : toolRef(model, id, false);
+      }),
       appHref: collectionHref,
       ...(visual ? { visual, maker: visualMaker } : {}),
       ...(Array.isArray(c.benefits) ? { benefits: benefitsList(model, page, c.benefits) } : {}),
@@ -2227,14 +2299,14 @@ function payloadFor(model, page) {
   }
   if (t === "article") {
     return { ...base, section: page.section, minutes: c.read_minutes || 5, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, page.label),
-      sections: (c.sections || []).map((section) => ({ ...section, paras: section.paras.map((para) => inlineLinks(model, para, page.id)) })), checklist: c.checklist || [],
+      sections: articleSectionsFor(model, page, c.sections || []), checklist: c.checklist || [],
       related: articleRelatedFor(model, page), ...articleTry(model, page) };
   }
   if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], costs: JOB_COST_ROWS, ...(c.teams ? { teams: c.teams } : {}), plans: PLANS, next: nextLinks(model, t) };
   if (t === "faq") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
   if (t === "contact") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aivideosugc.com", next: nextLinks(model, t) };
-  if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
-  if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
+  if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: proseSectionsFor(model, page, c.sections || [], "about section"), next: nextLinks(model, t) };
+  if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: proseSectionsFor(model, page, c.sections || [], "trust section"), next: nextLinks(model, t) };
   if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
   if (t === "examples") {
     const visual = visualFor(model, page, c.visual, {}, "photo", "/app/create", c);
@@ -2371,6 +2443,8 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const flow of payload.flows ?? []) for (const step of flow.steps ?? []) pushMedia(step.image);
     for (const group of [...(payload.examples?.groups ?? []), ...(payload.exampleGallery?.groups ?? [])]) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
+    for (const item of payload.more_sections?.flatMap((section) => section.items ?? []) ?? []) pushMedia(item?.img);
+    if (["article", "about", "trust"].includes(layoutFor(page))) for (const section of payload.sections ?? []) pushMedia(section?.img);
     for (const image of visualPayloadImages(payload.visual)) pushMedia({ src: image.src, alt: image.alt, width: image.w, height: image.h });
     if (guideReplacesHero(page, payload)) {
       const shown = new Set([...renderedImages(layoutFor(page), payload), ...visualPayloadImages(payload.visual).map((image) => image.src)]);
@@ -2522,7 +2596,10 @@ export function renderedImages(layout, data) {
     (data.articles ?? []).forEach((article) => add(article.image));
     (data.directoryScenes ?? []).forEach((item) => add(item.image));
   }
-  else if (layout === "article") add(data.image);
+  else if (["article", "about", "trust"].includes(layout)) {
+    add(data.image);
+    for (const section of data.sections ?? []) add(section?.img);
+  }
   else if (layout === "examples") { addFlows(data.flows); if (!data.visual) { addPairs(); addCards(data.cards); addExamples(); } }
   else add(data.image);
   for (const item of data.sellerScenarios?.items ?? []) add(item.image);
@@ -2702,6 +2779,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const errors = [];
   const seen = { title: new Map(), description: new Map(), h1: new Map(), slug: new Map() };
   const validationSource = loadSiteV2Source();
+  const validationModel = buildModel(validationSource);
   if (validationSource.cardAssignmentDocument?.version !== 1 || !validationSource.cardAssignmentDocument.pages || typeof validationSource.cardAssignmentDocument.pages !== "object" || Array.isArray(validationSource.cardAssignmentDocument.pages)) errors.push("dynamic card assignments are malformed (expected version 1 and a pages map)");
   const technicalKeys = new Set(["href", "src", "srcset", "sizes", "key", "kind", "industries", "platforms", "id", "section", "tool_id", "mediaref", "ref", "url", "width", "height", "duration", "uploaddate", "w", "h"]);
   const publicText = (value, key = "") => {
@@ -3012,6 +3090,31 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (faq.length && (!ld || ld.mainEntity.length !== faq.length)) errors.push(`${page.id}: FAQ JSON-LD mismatch`);
 
     const sourceContent = validationSource.content[page.id] || {};
+    if (["article", "about", "trust"].includes(pageMeta?.type)) {
+      const sourceSections = sourceContent.sections;
+      const compiledSections = data.sections;
+      const sectionLabel = pageMeta.type === "article" ? "article section" : `${pageMeta.type} section`;
+      if (sourceSections !== undefined && !Array.isArray(sourceSections)) errors.push(`${page.id}: ${sectionLabel}s must be an array`);
+      else if (!Array.isArray(compiledSections)) errors.push(`${page.id}: ${sectionLabel}s were not compiled`);
+      else for (const [index, sourceSection] of (sourceSections ?? []).entries()) {
+        if (!sourceSection || typeof sourceSection !== "object" || Array.isArray(sourceSection)) {
+          errors.push(`${page.id}: ${sectionLabel} ${index + 1} must be an object`);
+          continue;
+        }
+        if (sourceSection.img !== undefined) {
+          if (typeof sourceSection.img !== "string" || !sourceSection.img.trim() || !knownMediaRef(validationModel, sourceSection.img)) {
+            errors.push(`${page.id}: ${sectionLabel} ${index + 1} img reference is missing or unknown`);
+          }
+          const image = compiledSections[index]?.img;
+          if (!image || typeof image !== "object" || typeof image.src !== "string" || typeof image.alt !== "string" || !(Number(image.width) > 0) || !(Number(image.height) > 0)) {
+            errors.push(`${page.id}: ${sectionLabel} ${index + 1} img was not compiled`);
+          }
+        }
+        if (sourceSection.alt !== undefined && (typeof sourceSection.alt !== "string" || !sourceSection.alt.trim())) {
+          errors.push(`${page.id}: ${sectionLabel} ${index + 1} alt must be a non-empty string`);
+        }
+      }
+    }
     if (sourceContent.overview && (!Array.isArray(data.overview) || !data.overview.length)) errors.push(`${page.id}: overview content was dropped from the public payload`);
     for (const [sourceKey, payloadKey] of [["scene_prompt_examples", "scenePromptExamples"], ["troubleshooting", "troubleshooting"], ["tool_chooser", "toolChooser"], ["limitations", "limitations"]]) {
       if (!sourceContent[sourceKey]) continue;
@@ -3380,7 +3483,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     const main = heroImageOf(data.heroMedia);
-    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after]), ...[...(data.examples?.groups ?? []), ...(data.exampleGallery?.groups ?? [])].flatMap((group) => (group.items ?? []).map((item) => item.image))].filter(Boolean)) {
+    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after]), ...(data.sections ?? []).map((section) => section?.img), ...[...(data.examples?.groups ?? []), ...(data.exampleGallery?.groups ?? [])].flatMap((group) => (group.items ?? []).map((item) => item.image))].filter(Boolean)) {
       if (!image.alt || image.alt.length < 12) errors.push(`${page.id}: image without a proper description (${image.src})`);
       if (/\bunbranded\b|\bplaceholder\b|\bprompt\b/i.test(image.alt)) errors.push(`${page.id}: internal wording in an image description (${image.alt})`);
       if (!image.src.startsWith("/assets/sites/site_aidreamcapes/")) errors.push(`${page.id}: image outside the Aidreamcapes asset folder (${image.src})`);

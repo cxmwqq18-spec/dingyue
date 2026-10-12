@@ -77,6 +77,7 @@ export function ActorScenePanel({ picker, r, pageId }: { picker: V2ActorScenePic
   if (!picker.actors.length || !picker.scenes.length) return null;
   const firstActor = picker.actors.find((actor) => actor.selected) ?? picker.actors[0];
   const firstScene = firstActor.scene || picker.scenes[0];
+  const pageCta = picker.cta;
   const formAction = (r.direct ?? r.href)("/app/create");
   return (
     <>
@@ -107,13 +108,13 @@ export function ActorScenePanel({ picker, r, pageId }: { picker: V2ActorScenePic
           <h2 id={`actor-scene-panel-${pageId}`}>{picker.title}</h2>
           <p>{picker.lead}</p>
         </div>
-        <form action={formAction} className="actor-scene-picker-form" method="get">
+        <form action={formAction} className="actor-scene-picker-form" data-page-prompt={pageCta?.prompt} method="get">
           <input name="tool" type="hidden" value={picker.tool} />
           <input name="size" type="hidden" value={picker.size} />
           <input name="length" type="hidden" value={picker.length} />
           <input name="actor" type="hidden" value={firstActor.id} />
           <input name="scene" type="hidden" value={firstScene} />
-          <input name="prompt" type="hidden" value={firstActor.promptTemplate.replaceAll("{{scene}}", firstScene)} />
+          <input name="prompt" type="hidden" value={pageCta?.prompt ?? firstActor.promptTemplate.replaceAll("{{scene}}", firstScene)} />
           <fieldset>
             <legend>Choose an avatar</legend>
             <div className="actor-scene-choices" role="radiogroup" aria-label="Choose an avatar">
@@ -133,7 +134,7 @@ export function ActorScenePanel({ picker, r, pageId }: { picker: V2ActorScenePic
               </label>)}
             </div>
           </fieldset>
-          <button className="btn btn-grad" type="submit">{picker.button} →</button>
+          <button className="btn btn-grad" type="submit">{pageCta?.label ?? picker.button} →</button>
         </form>
       </section>
     </>
@@ -274,7 +275,7 @@ export function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolve
         const image = item.alt ? { ...item.img, alt: item.alt } : item.img;
         const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
         return <article className="v-image-item-row" key={`${item.t}-${index}`}>
-          <div className="v-image-item-copy"><h3>{item.t}</h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
+          <div className="v-image-item-copy"><h3>{item.href ? <a href={r.href(item.href)}>{item.t}</a> : item.t}</h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
           <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
         </article>;
       })}

@@ -51,6 +51,15 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
   </Section>;
 }
 
+function RelatedLinksSection({ links, r }: { links: { label: string; href: string }[]; r: V2Resolvers }) {
+  if (!links.length) return null;
+  return <Section eyebrow="Related pages" title="Related pages">
+    <div className="related">
+      {links.map((link) => <a className="card-title" href={r.href(link.href)} key={link.href}>{link.label}</a>)}
+    </div>
+  </Section>;
+}
+
 function splitPhotoHubExamples(examples: V2Examples | undefined) {
   if (!examples) return { fresh: [], gallery: undefined as V2Examples | undefined };
   const fresh: { label: string; image: V2Image }[] = [];
@@ -291,6 +300,7 @@ function ToolPage({ data, r }: Props) {
   const maker = data.maker as V2Maker;
   const visual = data.visual as V2Visual | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  const relatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
   const video = data.group === "video";
   const photoHub = data.id === "photo-hub";
   const actorScenePicker = data.actorScenePicker as V2ActorScenePicker | undefined;
@@ -299,7 +309,7 @@ function ToolPage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} label={maker.cta} r={r} />} right={photoHub && visual ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={photoHub && visual ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {actorScenePicker ? <ActorScenePanel pageId={data.id} picker={actorScenePicker} r={r} /> : null}
       </PageHero>
@@ -363,7 +373,8 @@ function ToolPage({ data, r }: Props) {
       <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="Explore related tools" title="Explore related tools"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
       </>}
-      <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />
+      <RelatedLinksSection links={relatedLinks} r={r} />
+      <CtaBand href={maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />
     </>
   );
 }
@@ -744,6 +755,7 @@ function ArticlePage({ data, r }: Props) {
             <div key={section.h2}>
               <h2>{section.h2}</h2>
               {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
+              {section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
               {tryBox && sectionIndex === tryAfter ? (
                 <aside className="trybox">
                   <b>{tryBox.title}</b>
@@ -773,13 +785,14 @@ function ArticlePage({ data, r }: Props) {
   );
 }
 
-function ProseSections({ sections }: { sections: V2Section[] }) {
+function ProseSections({ sections, r }: { sections: V2Section[]; r: V2Resolvers }) {
   return (
     <div className="wrap prose" style={{ paddingBottom: 60 }}>
       {sections.map((section) => (
         <div key={section.h2}>
           <h2>{section.h2}</h2>
           {section.paras.map((para, index) => <p key={index}>{para}</p>)}
+          {section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
         </div>
       ))}
     </div>
@@ -841,7 +854,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
     return (
       <>
         {hero}
-        <ProseSections sections={list<V2Section>(data.sections)} />
+        <ProseSections sections={list<V2Section>(data.sections)} r={r} />
         {layout === "about" && company ? <Section eyebrow="Company" lead={`${BRAND_NAME} is operated by ${company.name}.`} title={`Who runs ${BRAND_NAME}`}><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" r={r} />
         <NextLinks data={data} r={r} />

@@ -272,11 +272,13 @@ export function VisualUses({ visual, r }: { visual: V2Visual; r: V2Resolvers }) 
       d: item.d,
       img: item.img!,
       ...(item.alt ? { alt: item.alt } : {}),
+      ...(item.href ? { href: item.href } : {}),
+      ...(item.prompt ? { prompt: item.prompt } : {}),
       frame: item.frame === "phone" || item.frame === "browser" || item.frame === "none" ? item.frame : "none"
     }));
     return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><ImageItemRows items={rows} r={r} /></Section>;
   }
-  return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><div className="v-use-art-inner"><MockFrame item={item} r={r} /></div></div><div className="v-use-copy"><h3>{item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
+  return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><div className="v-use-art-inner"><MockFrame item={item} r={r} /></div></div><div className="v-use-copy"><h3>{item.href ? <a href={r.href(item.href)}>{item.h}</a> : item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
 }
 
 function InputPair({ item, r }: { item: V2VisualInput; r: V2Resolvers }) {
