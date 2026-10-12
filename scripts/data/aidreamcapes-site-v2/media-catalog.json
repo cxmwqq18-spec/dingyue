@@ -53570,6 +53570,176 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "fx32-health-benefit-yoga": {
+        "file": "fx32-health-benefit-yoga",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands unroll a plain teal yoga mat beside a foam roller in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-benefit-breakfast": {
+        "file": "fx32-health-benefit-breakfast",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands place a plain sage wellness bottle beside breakfast fruit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-benefit-bands": {
+        "file": "fx32-health-benefit-bands",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands set up plain resistance bands beside a rolled mat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-card-bottle": {
+        "file": "fx32-health-card-bottle",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult with a short tight bun drinks from a plain sage bottle at a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-strip-stretch": {
+        "file": "fx32-health-strip-stretch",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands straighten a plain teal yoga mat beside a foam roller in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-tool-lifestyle": {
+        "file": "fx32-health-tool-lifestyle",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult places a plain wellness bottle beside a folded towel in a bright home routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-tool-video": {
+        "file": "fx32-health-tool-video",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult holds a plain wellness bottle toward the camera in a sunlit kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-tool-social": {
+        "file": "fx32-health-tool-social",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult with a short pixie haircut holds a plain hydration bottle beside a window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-health-tool-white": {
+        "file": "fx32-health-tool-white",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain sage wellness bottle centered on white with a soft studio shadow.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-benefit-packaging": {
+        "file": "fx32-food-benefit-packaging",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hands arrange plain kraft snack pouches beside a lunch container on a bright counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-benefit-pour": {
+        "file": "fx32-food-benefit-pour",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Clear citrus drink pours into an ice-filled glass beside a plain bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-benefit-serve-r2": {
+        "file": "fx32-food-benefit-serve-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hands place three plain oat cookies on a ceramic plate beside berries.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-card-box": {
+        "file": "fx32-food-card-box",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hands reveal plain snack pouches from an open kraft sampler box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-tool-product-videos": {
+        "file": "fx32-food-tool-product-videos",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hand tilts a plain drink bottle toward an ice-filled glass in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-tool-lifestyle": {
+        "file": "fx32-food-tool-lifestyle",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult sets a plain snack pouch beside fruit on a sunlit breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-tool-product-photos": {
+        "file": "fx32-food-tool-product-photos",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain snack pouches and a serving bowl arranged as a clean product photo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx32-food-tool-white": {
+        "file": "fx32-food-tool-white",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain kraft snack pouch centered on white with a soft studio shadow.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

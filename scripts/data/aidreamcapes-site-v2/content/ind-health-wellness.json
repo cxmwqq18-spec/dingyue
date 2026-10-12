@@ -43,15 +43,21 @@
   "benefits": [
     {
       "t": "Faster, lower-cost production",
-      "d": "Upload one product photo and get the scene back in minutes. No creator fees, studio rental, or waiting on a shoot date."
+      "d": "Upload one product photo and get the scene back in minutes. No creator fees, studio rental, or waiting on a shoot date.",
+      "img": "n:guide:fx32-health-benefit-yoga",
+      "alt": "Hands unroll a plain teal yoga mat beside a foam roller in a bright studio."
     },
     {
       "t": "Use one photo across channels",
-      "d": "Restage the same bottle, tin or piece of gear for social posts, product pages and paid ads without another shoot."
+      "d": "Restage the same bottle, tin or piece of gear for social posts, product pages and paid ads without another shoot.",
+      "img": "n:guide:fx32-health-benefit-breakfast",
+      "alt": "Hands place a plain sage wellness bottle beside breakfast fruit."
     },
     {
       "t": "Trust without the hard sell",
-      "d": "Shoppers see your product in a routine they recognize. The scene answers how it fits the day, without unsupported health claims."
+      "d": "Shoppers see your product in a routine they recognize. The scene answers how it fits the day, without unsupported health claims.",
+      "img": "n:guide:fx32-health-benefit-bands",
+      "alt": "Hands set up plain resistance bands beside a rolled mat."
     }
   ],
   "steps_h2": "How to Make AI Lifestyle Photos for Wellness Brands in 3 Simple Steps",
@@ -131,5 +137,38 @@
     "video-ads",
     "social-ad-photos",
     "white-background"
+  ],
+  "steps_cta": {
+    "label": "Create lifestyle photo",
+    "href": "/app/create?industry=health-wellness"
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Sell where your shoppers already browse",
+      "h2": "Ads for the channels you already sell on",
+      "lead": "Choose a destination, then check its current image and video rules before you publish.",
+      "items": [
+        {
+          "t": "Shopify",
+          "d": "[Product photos for Shopify](/platforms/shopify-product-photos) keep a clean listing view ready for your store."
+        },
+        {
+          "t": "Amazon",
+          "d": "[Product photos for Amazon](/platforms/amazon-product-photos) help you prepare a clear main image for a marketplace listing."
+        },
+        {
+          "t": "TikTok",
+          "d": "[TikTok ads](/platforms/tiktok-ads) give a routine scene a vertical format for a social feed."
+        },
+        {
+          "t": "Meta",
+          "d": "[Facebook ads](/platforms/facebook-ads) give you a square product scene to finish for a paid feed placement."
+        },
+        {
+          "t": "YouTube",
+          "d": "[YouTube Shorts ads](/platforms/youtube-shorts-ads) give you a vertical clip to review before posting."
+        }
+      ]
+    }
   ]
 }
