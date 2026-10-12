@@ -14382,6 +14382,50 @@
         ],
         "source": "gen.sh"
       },
+      "ba1b-before-after-videos-hero-r1": {
+        "file": "ba1b-before-after-videos-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same adult woman with a short honey-blonde bob, full face in frame: dark circles and small spots on the left half, even skin on the right half, with a plain beige concealer stick.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1b-before-after-videos-benefit1-r1": {
+        "file": "ba1b-before-after-videos-benefit1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same adult hand: dry flaky skin on the left half, a soft moisturized look on the right half, with a plain white cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1b-before-after-videos-benefit2-r1": {
+        "file": "ba1b-before-after-videos-benefit2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same camel knit sweater: pills on the left half, a smooth surface on the right half, with a plain sage electric fabric shaver.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1b-before-after-videos-benefit3-r1": {
+        "file": "ba1b-before-after-videos-benefit3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same wood cutting board: whole garlic cloves and skins on the left half, pressed garlic and a plain stainless garlic press on the right half.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
       "b2f2-ai-actors-benefit-1-r1": {
         "file": "b2f2-ai-actors-benefit-1-r1",
         "w": 1024,

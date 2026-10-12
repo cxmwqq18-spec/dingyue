@@ -196,22 +196,22 @@
     "lead": "The shopper should see what the product does.",
     "items": [
       {
-        "t": "Show the Cream's Visible Change",
-        "d": "A cream ad should open on the jar, because that is the product you show. The line has to name that cream.",
-        "img": "n:guide:ba1-before-after-videos-benefit1-r1",
-        "alt": "Adult man with a short buzz cut holds a plain closed white cream jar in a bright bathroom."
+        "t": "Show the Dry Half and the Cream",
+        "d": "A cream ad should show the same hand, dry on one side and moisturized on the other, with the jar in frame. The line has to name that cream.",
+        "img": "n:guide:ba1b-before-after-videos-benefit1-r1",
+        "alt": "The same adult hand: dry flaky skin on the left half, a soft moisturized look on the right half, with a plain white cream jar."
       },
       {
         "t": "Export the Right Ad Format",
         "d": "A Google Ads buy can take the wide file. TikTok can take the tall one. A Meta square is a third choice. You are not recutting a mystery size somewhere else.",
-        "img": "n:guide:ba1-before-after-videos-benefit2-r1",
-        "alt": "Adult hands run a plain sage fabric shaver over pills on a camel knit sweater."
+        "img": "n:guide:ba1b-before-after-videos-benefit2-r1",
+        "alt": "The same camel knit sweater: pills on the left half, a smooth surface on the right half, with a plain sage electric fabric shaver."
       },
       {
         "t": "Test Different Voice Tones",
         "d": "Two versions give the brand a choice of tone for the same mess.",
-        "img": "n:guide:ba1-before-after-videos-benefit3-r1",
-        "alt": "Adult hands press garlic through a plain stainless garlic press onto a wood board."
+        "img": "n:guide:ba1b-before-after-videos-benefit3-r1",
+        "alt": "The same wood cutting board: whole garlic cloves and skins on the left half, pressed garlic and a plain stainless garlic press on the right half."
       }
     ]
   },
