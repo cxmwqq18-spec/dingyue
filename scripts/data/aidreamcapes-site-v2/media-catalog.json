@@ -52749,6 +52749,266 @@
           640,
           1280
         ]
+      },
+      "fx01-occ-product-launch-benefit-details": {
+        "file": "fx01-occ-product-launch-benefit-details",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands arrange a natural canvas tote beside a blank planning card on a sunny desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-benefit-packaging": {
+        "file": "fx01-occ-product-launch-benefit-packaging",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands reveal a plain kraft product pouch from an opened shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-benefit-publish": {
+        "file": "fx01-occ-product-launch-benefit-publish",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-benefit-teaser": {
+        "file": "fx01-occ-product-launch-benefit-teaser",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a fabric cover from a plain desk lamp in warm window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-case-03": {
+        "file": "fx01-occ-product-launch-case-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain insulated travel mug from tissue in a kraft box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-input-bad-blur": {
+        "file": "fx01-occ-product-launch-input-bad-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Intentionally blurred source photo of a matte blue water bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-input-bad-crop": {
+        "file": "fx01-occ-product-launch-input-bad-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Intentionally cropped close-up of a matte blue water bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-input-good-alt": {
+        "file": "fx01-occ-product-launch-input-good-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full matte blue water bottle isolated on a pale neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-output-alt": {
+        "file": "fx01-occ-product-launch-output-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue water bottle on a stone ledge with open space beside it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-picker-first-use": {
+        "file": "fx01-occ-product-launch-picker-first-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand uses a plain immersion blender in a glass of berries in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-picker-packaging": {
+        "file": "fx01-occ-product-launch-picker-packaging",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain insulated travel mug from a kraft shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-picker-teaser": {
+        "file": "fx01-occ-product-launch-picker-teaser",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A canvas tote remains partly covered by tissue inside a kraft shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-benefit-no-shoot": {
+        "file": "fx01-occ-sale-discount-benefit-no-shoot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands prepare a kraft tea pouch beside a plain travel mug in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-benefit-offer": {
+        "file": "fx01-occ-sale-discount-benefit-offer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Denim jacket on a hanger against a pale wall with open space for an offer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-benefit-reshoot": {
+        "file": "fx01-occ-sale-discount-benefit-reshoot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands fold a checked picnic blanket beside a basket at a park table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-benefit-versions": {
+        "file": "fx01-occ-sale-discount-benefit-versions",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand places a wireless charging pad on a dark desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-input-bad-blur": {
+        "file": "fx01-occ-sale-discount-input-bad-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Intentionally blurred source photo of a pastel skincare product set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-input-bad-crop": {
+        "file": "fx01-occ-sale-discount-input-bad-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pastel skincare product set cropped at the edge of the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-input-good-alt": {
+        "file": "fx01-occ-sale-discount-input-good-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full pastel skincare product set on a plain light background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-output-alt": {
+        "file": "fx01-occ-sale-discount-output-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pastel skincare product set on a light set with space for offer text.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-picker-in-use": {
+        "file": "fx01-occ-sale-discount-picker-in-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands apply cream from a plain skincare jar at a bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-picker-offer": {
+        "file": "fx01-occ-sale-discount-picker-offer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream socks on a light background with open space at left.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-picker-short": {
+        "file": "fx01-occ-sale-discount-picker-short",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A brass desk lamp glows over a tidy home office desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-input-good-alt2": {
+        "file": "fx01-occ-product-launch-input-good-alt2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full matte blue water bottle centered on a pale neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-product-launch-output-alt2": {
+        "file": "fx01-occ-product-launch-output-alt2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte blue water bottle on a stone ledge beside a folded towel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx01-occ-sale-discount-input-good-alt2": {
+        "file": "fx01-occ-sale-discount-input-good-alt2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full pastel skincare product set on a pale neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

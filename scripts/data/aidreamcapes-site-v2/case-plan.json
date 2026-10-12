@@ -1133,14 +1133,14 @@
     ],
     "occ-product-launch": [
       {
-        "ref": "n:guide:white-background-desk-lamp",
-        "product": "table lamp",
-        "title": "Portable lamp shown alone on a white background"
+        "ref": "n:guide:f13-r10-occ-product-launch-arrival-tote",
+        "product": "canvas tote",
+        "title": "Teaser arrival: canvas tote"
       },
       {
-        "ref": "n:guide:white-background-leather-sandals",
-        "product": "leather sandals",
-        "title": "Leather sandals introduced as a new product colorway"
+        "ref": "n:guide:f13-occ-product-launch-card-09-r2",
+        "product": "handheld blender",
+        "title": "Teaser launch: handheld blender"
       },
       {
         "ref": "n:guide:im11-occ-product-launch-case-03-r1",
@@ -1148,31 +1148,31 @@
         "title": "Ceramic travel mug revealed from a launch package"
       },
       {
-        "ref": "g:packaging-mockup/example-04",
-        "product": "tea pouch",
-        "title": "Tea pouch held for a product debut"
+        "ref": "n:guide:q20-occ-product-launch-card-03",
+        "product": "lip tint",
+        "title": "Demo launch: lip tint swatch"
       }
     ],
     "occ-sale-discount": [
       {
         "ref": "n:guide:q20-occ-sale-discount-card-04",
         "product": "wireless charger",
-        "title": "Wireless charger lifted from a box"
+        "title": "Unbox reveal: wireless charger"
       },
       {
         "ref": "n:guide:f13-r10-occ-sale-discount-desk-lamp",
         "product": "desk lamp",
-        "title": "Desk lamp switched on at a home office"
+        "title": "Demo scene: desk lamp switched on"
       },
       {
         "ref": "n:guide:q20-occ-sale-discount-card-06-r2",
         "product": "trail shoes",
-        "title": "Trail shoes tied at an entry bench"
+        "title": "Review scene: trail shoes tied at entry"
       },
       {
         "ref": "n:guide:f13-r10-occ-sale-discount-bowl",
         "product": "serving bowl",
-        "title": "Plain serving bowl placed on a dinner table"
+        "title": "Review scene: serving bowl placement"
       }
     ],
     "occ-black-friday": [
