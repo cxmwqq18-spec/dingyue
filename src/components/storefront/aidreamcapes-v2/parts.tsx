@@ -921,6 +921,7 @@ const cardBlockCss = `
 .adc2 .v1-mark::before{content:counter(v1card,decimal-leading-zero)}
 .adc2 .v1-trust .v1-mark{background:rgba(196,181,253,.14);border:1px solid rgba(196,181,253,.35)}
 .adc2 .v1-trust .v1-mark::before{content:"";width:13px;height:7px;border-left:2px solid #c4b5fd;border-bottom:2px solid #c4b5fd;transform:translateY(-2px) rotate(-45deg)}
+.adc2 .v1-reviews .v1-mark::before{content:"“";font-size:30px;line-height:1;transform:translateY(6px)}
 .adc2 .v1-who{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#c4b5fd}
 .adc2 .v1-badge{position:absolute;top:12px;right:12px;z-index:1;padding:3px 9px;border-radius:999px;background:rgba(13,13,16,.78);border:1px solid var(--line-2);color:var(--ink-2);font-size:11px;font-weight:600;letter-spacing:.03em}
 .adc2 .v1-source{font-size:13px;color:var(--ink-3)}
