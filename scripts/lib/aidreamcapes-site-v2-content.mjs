@@ -2504,7 +2504,10 @@ export function buildSiteV2(source = loadSiteV2Source()) {
       const groupItems = (examples) => (examples?.groups ?? []).flatMap((group) => (group.items ?? []).map((item) => item?.image));
       const cardImages = (block) => (block?.items ?? []).map((item) => item?.img);
       const parts = {
-        hero: [heroMedia ? heroImageOf(heroMedia) : undefined, heroMedia?.before, ...(payload.heroCards ?? []).map((card) => card?.image)],
+        // Template heroes show the generator box, not the hero picture, so that picture only counts where another listed block shows it.
+        hero: [...(layoutFor(page) === "template" ? [] : [heroMedia ? heroImageOf(heroMedia) : undefined, heroMedia?.before]), ...(payload.heroCards ?? []).map((card) => card?.image)],
+        // Never listed, so on template pages the hero picture leaves the sitemap unless a listed block shows it.
+        heroPicture: layoutFor(page) === "template" ? [heroMedia ? heroImageOf(heroMedia) : undefined, heroMedia?.before] : [],
         strip: v.strip ?? [],
         picker: (v.picker?.cards ?? []).map((card) => card?.image),
         uses: (v.uses ?? []).flatMap((item) => [item?.image, item?.imageB]),
