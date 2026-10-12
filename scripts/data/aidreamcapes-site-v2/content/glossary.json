@@ -332,8 +332,8 @@
       ]
     },
     {
-      "term": "Ad copy",
-      "definition": "Ad copy is the words in the ad: the spoken line, the caption, and the offer. Write the offer you are actually running, then read it back before you post.",
+      "term": "Ad text",
+      "definition": "Ad text is the words in the ad: the spoken line, the caption, and the offer. Write the offer you are actually running, then read it back before you post.",
       "related_page_ids": [
         "video-ads",
         "guide-testing-ad-versions"
