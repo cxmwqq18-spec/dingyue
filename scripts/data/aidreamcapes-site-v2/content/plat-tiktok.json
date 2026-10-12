@@ -108,17 +108,23 @@
     {
       "t": "Stay On-Trend",
       "d": "Start from one product photo and make a fresh TikTok opening when the next idea is ready.",
-      "icon": "bolt"
+      "icon": "bolt",
+      "img": "n:guide:fx40-plat-tiktok-benefit-trend",
+      "alt": "Hand lifting a coral windbreaker from folded streetwear on a mint tabletop"
     },
     {
       "t": "Make Fresh Clips on Demand",
       "d": "Change the first action or line and compare versions without filming the product again.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:guide:fx40-plat-tiktok-benefit-clips",
+      "alt": "Hand repositioning a cobalt reusable water bottle beside a tabletop light"
     },
     {
       "t": "Ready-to-Post TikTok Ads",
       "d": "Download a clear vertical clip, then add your sound, caption and offer in your own tools.",
-      "icon": "check"
+      "icon": "check",
+      "img": "n:guide:fx40-plat-tiktok-benefit-ready",
+      "alt": "Hand placing a green leaf beside a mint insulated tumbler on a kitchen counter"
     }
   ],
   "steps_h2": "How to Make a TikTok Ad in 3 Simple Steps",
@@ -131,15 +137,21 @@
       "items": [
         {
           "t": "Test a New Opening",
-          "d": "Try another first action from the same product photo without arranging a new shoot."
+          "d": "Try another first action from the same product photo without arranging a new shoot.",
+          "img": "n:guide:fx40-plat-tiktok-more-opening",
+          "alt": "Hand opening a yellow lunch container on a bright picnic table"
         },
         {
           "t": "Use Your Own Product Photo",
-          "d": "Start with the product image you already have and turn it into a TikTok-ready clip."
+          "d": "Start with the product image you already have and turn it into a TikTok-ready clip.",
+          "img": "n:guide:fx40-plat-tiktok-more-photo",
+          "alt": "Hand setting a blank product photo card beside a natural canvas tote bag"
         },
         {
           "t": "Download a Clean TikTok File",
-          "d": "Get a clear vertical file, then add your sound, caption and offer in TikTok."
+          "d": "Get a clear vertical file, then add your sound, caption and offer in TikTok.",
+          "img": "n:guide:fx40-plat-tiktok-more-file",
+          "alt": "Fresh tea poured into an unbranded matte ceramic mug on a bright counter"
         }
       ]
     },
@@ -150,15 +162,21 @@
       "items": [
         {
           "t": "Lead with the Product Action",
-          "d": "Choose the first movement that gives viewers a reason to stop."
+          "d": "Choose the first movement that gives viewers a reason to stop.",
+          "img": "n:guide:fx40-plat-tiktok-more-action",
+          "alt": "Hand snapping shut a coral food container over a pale blue table"
         },
         {
           "t": "Turn the Idea into a File",
-          "d": "Write one product moment, choose 6, 10, 15 or 30 seconds, and download the clip."
+          "d": "Write one product moment, choose 6, 10, 15 or 30 seconds, and download the clip.",
+          "img": "n:guide:fx40-plat-tiktok-more-idea",
+          "alt": "Orange insulated bottle beside a blank sheet and pencil on a clean table"
         },
         {
           "t": "Skip the Shoot Day",
-          "d": "Use your own product photo when a new TikTok angle is needed."
+          "d": "Use your own product photo when a new TikTok angle is needed.",
+          "img": "n:guide:fx40-plat-tiktok-more-shoot",
+          "alt": "Woven tote bag hanging on an entryway hook in warm morning light"
         }
       ]
     }
