@@ -101,8 +101,41 @@
     "picker": {
       "title": "Choose a white background use case",
       "lead": "Pick a marketplace, store page or catalog use case and start from one clear product photo.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "listing-use",
+          "label": "Listing uses"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:fx14-white-card-marketplace-r1",
+          "label": "Canvas tote, marketplace main image",
+          "chips": [
+            "listing-use"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the canvas tote on a pure white background with a soft contact shadow and the complete handles visible, ready for a marketplace main image.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx14-white-card-store-r1",
+          "label": "Ceramic mug, store product page",
+          "chips": [
+            "listing-use"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the ceramic mug on a pure white background with a soft contact shadow and its handle fully visible, ready for a store product page.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx14-white-card-catalog-r1",
+          "label": "Glass jar, catalog consistency",
+          "chips": [
+            "listing-use"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the glass storage jar on a pure white background with a soft contact shadow and consistent centered framing for a catalog.",
+          "kind": "photo"
+        }
+      ],
       "button": "Make a white background photo"
     },
     "uses": [],
@@ -142,34 +175,58 @@
         "h2": "Frequently asked questions"
       }
     },
-    "input": [],
-    "outputs": [],
+    "input": [
+      {
+        "good": "n:guide:fx14-white-input-wallet-good-r1",
+        "bad": "n:guide:fx14-white-input-wallet-bad-r1",
+        "good_label": "Complete wallet photo with every edge visible",
+        "bad_label": "Wallet cropped at the right edge"
+      },
+      {
+        "good": "n:guide:fx14-white-input-tote-good-r1",
+        "bad": "n:guide:fx14-white-input-tote-bad-r1",
+        "good_label": "Complete tote photo with handles visible",
+        "bad_label": "Tote handles cropped at the top edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:fx14-white-output-wallet-r1",
+        "frame": "1:1",
+        "label": "Brown wallet, clean white result"
+      },
+      {
+        "ref": "n:guide:fx14-white-output-tote-r1",
+        "frame": "1:1",
+        "label": "Canvas tote, clean white result"
+      }
+    ],
     "after": null
   },
   "benefits": [
     {
       "t": "Create a clean backdrop for every product photo",
       "d": "A plain background keeps attention on the item's edges and finish, so shoppers can compare it quickly.",
-      "img": "n:guide:k2-white-picker-canvas-tote",
-      "alt": "Natural canvas tote bag with sturdy handles, upright on white."
-    },
-    {
-      "t": "Make your product shots look more professional",
-      "d": "Give every item the same clean framing and a soft contact shadow, even when the source was not shot in a studio.",
-      "img": "n:guide:k2-white-picker-desk-organizer",
-      "alt": "Walnut desk organizer with several empty compartments on white."
-    },
-    {
-      "t": "Keep every listing consistently white, from one photo to your catalog",
-      "d": "Apply one white treatment to product pages and marketplace listings so the first look stays consistent.",
       "img": "n:guide:k2-white-use-mug",
       "alt": "Plain cream ceramic mug with a broad handle on pure white."
     },
     {
-      "t": "Use white as a base for edits and new versions",
-      "d": "Start with the clean shot when you need a new layout or campaign version.",
+      "t": "Make your product shots look more professional",
+      "d": "Give every item the same clean framing and a soft contact shadow, even when the source was not shot in a studio.",
       "img": "n:guide:k2-white-picker-desk-lamp",
       "alt": "Curved brass desk lamp with a simple shade on pure white."
+    },
+    {
+      "t": "Keep every listing consistently white, from one photo to your catalog",
+      "d": "Apply one white treatment to product pages and marketplace listings so the first look stays consistent.",
+      "img": "n:guide:k2-white-picker-serving-bowl",
+      "alt": "Cream stoneware serving bowl with a softly rounded rim on white."
+    },
+    {
+      "t": "Use white as a base for edits and new versions",
+      "d": "Start with the clean shot when you need a new layout or campaign version.",
+      "img": "n:guide:rx2-white-benefit-jewelry-dish",
+      "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white."
     }
   ],
   "benefits_h2": "Why White Background Product Photos Make Listings Easier",
@@ -196,12 +253,14 @@
         {
           "t": "Grow without another shoot",
           "d": "Apply the same white treatment across new product photos as your catalog expands.",
-          "img": "n:guide:k2-white-case-wood-train",
-          "alt": "Natural wooden toy train set arranged together on pure white."
+          "img": "n:guide:k2-white-picker-leather-sandals",
+          "alt": "Pair of cognac leather sandals with both straps visible on seamless white."
         },
         {
           "t": "Reuse a clean base",
-          "d": "Start from the white image when you need a new layout or campaign version."
+          "d": "Start from the white image when you need a new layout or campaign version.",
+          "img": "n:guide:k2-white-picker-soap-dispenser",
+          "alt": "Pale sage ceramic soap dispenser with a brushed metal pump on seamless white."
         }
       ]
     }

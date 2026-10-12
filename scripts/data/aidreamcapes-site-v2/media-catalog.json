@@ -53009,6 +53009,116 @@
           640,
           1280
         ]
+      },
+      "fx14-white-card-marketplace-r1": {
+        "file": "fx14-white-card-marketplace-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag standing upright on pure white with a soft contact shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-card-store-r1": {
+        "file": "fx14-white-card-store-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream ceramic mug centered on pure white with its handle fully visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-card-catalog-r1": {
+        "file": "fx14-white-card-catalog-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale blue glass storage jar with a plain lid centered on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-input-wallet-good-r1": {
+        "file": "fx14-white-input-wallet-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather bifold wallet fully visible on a warm neutral tabletop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-input-wallet-bad-r1": {
+        "file": "fx14-white-input-wallet-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather bifold wallet cropped at the right edge on a warm neutral tabletop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-input-tote-good-r1": {
+        "file": "fx14-white-input-tote-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag fully visible with handles on a warm neutral tabletop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-input-tote-bad-r1": {
+        "file": "fx14-white-input-tote-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag with handles cropped at the top edge.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-output-wallet-r1": {
+        "file": "fx14-white-output-wallet-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather bifold wallet centered on pure white with a soft contact shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-output-tote-r1": {
+        "file": "fx14-white-output-tote-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag centered upright on pure white with a soft contact shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx14-white-strip-storage-box-r1": {
+        "file": "fx14-white-strip-storage-box-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain matte ceramic storage box with a fitted lid on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

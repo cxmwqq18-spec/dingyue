@@ -134,17 +134,20 @@
       {
         "ref": "n:guide:k2-white-case-steel-bottle",
         "product": "steel water bottle",
-        "title": "Listing Hero: steel water bottle on white"
+        "title": "Listing Hero: steel water bottle on white",
+        "prompt": "Use the uploaded steel water bottle as the product reference. Keep its shape, cap, brushed finish and colors accurate. Place it upright on an even white background with a soft contact shadow for a clean listing image."
       },
       {
         "ref": "n:guide:white-background-soap-dispenser",
         "product": "sage ceramic soap dispenser",
-        "title": "Clean Listing: sage ceramic soap dispenser on white"
+        "title": "Clean Listing: sage ceramic soap dispenser on white",
+        "prompt": "Use the uploaded sage ceramic soap dispenser as the product reference. Preserve its pump, shape, glaze and sage color. Place it upright on an even white background with a soft contact shadow for a clean listing image."
       },
       {
         "ref": "n:guide:k2-white-case-wood-train",
         "product": "wooden toy train",
-        "title": "Product Set: wooden toy train on white"
+        "title": "Product Set: wooden toy train on white",
+        "prompt": "Use the uploaded wooden toy train as the product reference. Preserve its wood grain, shape and colors. Place it centered on an even white background with a soft contact shadow for a clear product set image."
       }
     ],
     "lifestyle-photos": [
