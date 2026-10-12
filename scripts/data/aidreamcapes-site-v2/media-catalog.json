@@ -54103,6 +54103,72 @@
           1280
         ],
         "source": "gpt-image-2"
+      },
+      "b2f6-guide-testing-ad-versions-sec01-r1": {
+        "file": "b2f6-guide-testing-ad-versions-sec01-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place the same plain round wall clock beside blank color cards.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f6-guide-testing-ad-versions-sec02-r1": {
+        "file": "b2f6-guide-testing-ad-versions-sec02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short silver pixie holds a plain round wall clock beside simple kitchen setups.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f6-guide-testing-ad-versions-sec03-r1": {
+        "file": "b2f6-guide-testing-ad-versions-sec03-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands hold the same plain round wall clock up as the source photo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f6-guide-testing-ad-versions-sec04-r1": {
+        "file": "b2f6-guide-testing-ad-versions-sec04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold the same plain round wall clock in two matched side-by-side positions.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f6-guide-testing-ad-versions-sec05-r1": {
+        "file": "b2f6-guide-testing-ad-versions-sec05-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands rest beside blank color cards and the same plain round wall clock.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f6-guide-testing-ad-versions-sec06-r1": {
+        "file": "b2f6-guide-testing-ad-versions-sec06-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with short sandy-gray hair holds up the same plain round wall clock at a wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }
