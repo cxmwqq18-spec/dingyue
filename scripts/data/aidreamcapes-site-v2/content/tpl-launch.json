@@ -558,72 +558,41 @@
     "hero",
     "picker",
     "steps",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Announce a Finished Item",
-    "lead": "A few ways a shop announces one finished item, including a home decor promo video.",
+    "h2": "How Sellers Announce a Finished Bag",
+    "lead": "Four sellers announce the sage-green bag from one photo, and add the date when it is real.",
     "items": [
       {
         "example": true,
+        "who": "Bag shop",
+        "t": "Show the Finished Bag",
+        "d": "A bag shop puts the whole sage-green canvas bag in the announcement frame. They post the promo on release day and skip a launch photoshoot.",
+        "img": "n:guide:img2-tpl-launch-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Preorder shop",
+        "t": "Say the Ship Date Later",
+        "d": "A preorder shop shows the finished bag and types the ship date after it is confirmed. They skip reshooting the announcement when the date moves.",
+        "img": "n:guide:img2-tpl-launch-review2-r1"
+      },
+      {
+        "example": true,
         "who": "Home brand",
-        "t": "Hands on the new item",
-        "d": "A home brand shows the first look at a finished jar, with captions naming the product."
-      },
-      {
-        "example": true,
-        "who": "Mug shop",
-        "t": "First use",
-        "d": "A mug shop opens on the first sip for release day, then trims it in the built-in editor."
-      },
-      {
-        "example": true,
-        "who": "Decor shop",
-        "t": "A home decor promo",
-        "d": "A decor shop shows one finished home item in a room, and types the real date on after download."
-      },
-      {
-        "example": true,
-        "who": "Pre-launch shop",
-        "t": "Coming soon",
-        "d": "A pre-launch shop can say the item is coming. Type the planned date after download. The written lines should not make it up."
-      },
-      {
-        "example": true,
-        "who": "Launch-day shop",
-        "t": "Date and offer",
-        "d": "On release day the shop adds the confirmed date and offer. A coming-soon clip does not make them up."
-      },
-      {
-        "example": true,
-        "who": "Social ads shop",
-        "t": "Tall and square",
-        "d": "A shop uses a tall shape for a story post and a square shape for the scrolling feed. Each shape is its own video."
-      },
-      {
-        "example": true,
-        "who": "Overseas shop",
-        "t": "Another language",
-        "d": "A shop that sells abroad makes the same reveal in a second language for another market."
+        "t": "Keep the Bag in Frame",
+        "d": "A home brand uses one photo of the sage-green bag for the promo video. An AI avatar names the bag, and they skip sending it out to a creator.",
+        "img": "n:guide:img2-tpl-launch-review3-r1"
       },
       {
         "example": true,
         "who": "Catalog seller",
-        "t": "Start from the link",
-        "d": "A catalog seller pastes the product link, checks the words and the voice, and keeps the finished-item photo as the starting picture."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "No shoot before launch",
-        "d": "A small team makes the reveal from the finished-item photo, with an AI actor and no creator booking."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Presented as your ad",
-        "d": "A founder treats the person on screen as an AI actor and presents the clip as the shop's ad, not as a buyer review."
+        "t": "Start From the Product Link",
+        "d": "A catalog seller pastes the bag's product page, checks the words and the voice, and downloads the promo. They skip building the announcement from a blank page.",
+        "img": "n:guide:img2-tpl-launch-review4-r1"
       }
     ]
   },

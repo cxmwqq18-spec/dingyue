@@ -754,6 +754,7 @@
     "benefits",
     "steps",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -856,74 +857,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Put a Presenter on Their Ads",
-    "lead": "Sample setups for a type of shop. The presenter is generated, and these are not quotes from buyers.",
+    "h2": "How Shops Put an AI Actor to Work",
+    "lead": "Each shop picks one actor, gives them one product point, and posts the clip themselves.",
     "items": [
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "One texture point on camera",
-        "d": "A presenter holds the bottle and says the line the team approved, for a Reels test."
+        "who": "Beauty bottle seller",
+        "t": "Say the Shade Name",
+        "d": "They pick an AI actor to hold the bottle and say the shade name. The clip runs as the paid ad, and they never book a creator for that line.",
+        "img": "n:guide:img2-spokesperson-videos-review1-r1"
       },
       {
         "example": true,
-        "who": "Electronics shop",
-        "t": "One feature in a paid ad",
-        "d": "A 10-second clip names a single feature. The offer is added in the editor before the ad runs."
+        "who": "Small electronics seller",
+        "t": "Explain One Button",
+        "d": "They have the actor point at one button and say what it does. That clip sits next to the product photo on the page.",
+        "img": "n:guide:img2-spokesperson-videos-review2-r1"
       },
       {
         "example": true,
-        "who": "Fitness brand",
-        "t": "Same shaker, new line",
-        "d": "The product photo stays. The opening line changes when the first one has been up too long."
+        "who": "Pantry jar seller",
+        "t": "Hold the Jar, Then Speak",
+        "d": "They hold a plain pantry jar in frame and let the actor say what is inside. The same face can repeat the line in the feed.",
+        "img": "n:guide:img2-spokesperson-videos-review3-r1"
       },
       {
         "example": true,
-        "who": "Pet shop",
-        "t": "The material, said once",
-        "d": "A 10-second clip names the material and the size, then stops. The presenter is generated."
-      },
-      {
-        "example": true,
-        "who": "Drink seller",
-        "t": "A link, then a talking clip",
-        "d": "They paste the product page. A script, a presenter, and a voice come back as one ad."
-      },
-      {
-        "example": true,
-        "who": "Apparel shop",
-        "t": "Another language for a second market",
-        "d": "The same person says the sizing line in another language, with captions to match."
-      },
-      {
-        "example": true,
-        "who": "Home shop",
-        "t": "A guide after delivery",
-        "d": "The presenter walks through setup. When the steps change, the shop updates the line and makes the clip again."
-      },
-      {
-        "example": true,
-        "who": "Jewelry shop",
-        "t": "A voice that fits the buyer",
-        "d": "They pick a presenter and a voice from the library, then publish the clip to Meta."
-      },
-      {
-        "example": true,
-        "who": "Snack brand",
-        "t": "A group of flavors",
-        "d": "Each flavor gets its own clip from the same setup. Every clip spends its own credits."
-      },
-      {
-        "example": true,
-        "who": "Small agency",
-        "t": "Several clients, one editor",
-        "d": "Captions, music, and a trim happen in the built-in editor. You do not send the file to another app."
-      },
-      {
-        "example": true,
-        "who": "Tool brand",
-        "t": "Clips from their own system",
-        "d": "Product photos go through an API, a connection for your own software. The talking clips come back ready to review."
+        "who": "Pet-supply seller",
+        "t": "Show the Bowl, Then the Line",
+        "d": "They put the pet bowl in frame and have the actor say what it is made of. The clip replaces a filmed how-to.",
+        "img": "n:guide:img2-spokesperson-videos-review4-r1"
       }
     ]
   },

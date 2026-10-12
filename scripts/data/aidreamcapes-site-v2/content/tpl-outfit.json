@@ -183,7 +183,7 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:tw1-wall-accessories-1",
+          "ref": "n:guide:img2-tpl-outfit-picker-front-1-r1",
           "label": "Close-up unboxing: Makeup tools",
           "chips": [
             "accessories"
@@ -192,7 +192,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:tw1-wall-accessories-2",
+          "ref": "n:guide:img2-tpl-outfit-picker-front-2-r1",
           "label": "Cinematic Watch Detail",
           "chips": [
             "accessories"
@@ -219,7 +219,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:tw1-wall-apps-1",
+          "ref": "n:guide:img2-tpl-outfit-picker-front-3-r1",
           "label": "Daily-Life App Recommendation",
           "chips": [
             "apps"
@@ -533,72 +533,41 @@
     "hero",
     "picker",
     "steps",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Make a Fashion Video",
-    "lead": "Example ways a shop makes AI fashion reels, including an AI clothing model video and a menswear video ad.",
+    "h2": "How Clothing Sellers Make the Reel",
+    "lead": "Four sellers start from a flat clothing photo and post a reel of the garment on a person.",
     "items": [
       {
         "example": true,
-        "who": "Shirt shop",
-        "t": "A finished reel from one garment photo",
-        "d": "Example: a shirt shop uploads the overshirt and gets a short fashion video that shows the whole outfit."
+        "who": "Jacket seller",
+        "t": "Zip Jacket on a Person",
+        "d": "They turn one flat photo of the beige zip jacket into a reel of a person wearing it. They post that reel and skip a fitting day.",
+        "img": "n:guide:img2-tpl-outfit-review1-r1"
       },
       {
         "example": true,
-        "who": "Knit brand",
-        "t": "The still and the reel in one project",
-        "d": "Example: a knit brand makes the product still and the worn clip together, in one project, without a second app."
-      },
-      {
-        "example": true,
-        "who": "Denim shop",
-        "t": "Hold the garment, or start from the link",
-        "d": "Example: a denim shop pastes the product page link, or uploads the trousers, and the reel shows them in motion."
+        "who": "Denim seller",
+        "t": "Overshirt in Motion",
+        "d": "They make a clothing video of the denim overshirt on a person, from the flat photo they already have. They use it on the product page and skip a street shoot.",
+        "img": "n:guide:img2-tpl-outfit-review2-r1"
       },
       {
         "example": true,
         "who": "Tailoring shop",
-        "t": "An AI clothing model video, then captions",
-        "d": "Example: the shop picks an AI actor, a generated person, and trims the turn in the editor. It adds captions, words on screen, on the blazer."
+        "t": "Blazer Turn in Daylight",
+        "d": "They ask for one turn of the tailored blazer so the hem stays in frame. They download the reel and skip booking a fitting.",
+        "img": "n:guide:img2-tpl-outfit-review3-r1"
       },
       {
         "example": true,
-        "who": "Export label",
-        "t": "The same turn in another language",
-        "d": "Example: one jacket turn stays the picture, and the spoken line is recorded again for a second market."
-      },
-      {
-        "example": true,
-        "who": "Social editor",
-        "t": "A voiceover and a track on the reel",
-        "d": "Example: the editor adds a spoken voice and a track from the music library before the fashion video is posted."
-      },
-      {
-        "example": true,
-        "who": "Dress shop",
-        "t": "An AI actor instead of a fitting day",
-        "d": "Example: a dress shop uses an AI actor for one short walk so the hem stays in frame. A new seller can start from the hanger photo."
-      },
-      {
-        "example": true,
-        "who": "Menswear shop",
-        "t": "A digital twin for the menswear video ad",
-        "d": "Example: a menswear shop uses a digital twin, the same generated person, for the jacket turn, then checks the color against the source photo."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "A script, then a second action",
-        "d": "Example: the agency pastes the product link, takes the script and the voiceover, and makes a second action from the same photo."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Post to TikTok or Meta, or use the API",
-        "d": "Example: the founder posts the video to TikTok or Meta (Facebook and Instagram). The API lets the product list start the next color."
+        "who": "Streetwear seller",
+        "t": "Same Reel, Next Piece",
+        "d": "They use the same kind of reel for an everyday piece after the beige jacket. Streetwear and a blazer can share that path, and they skip a new crew.",
+        "img": "n:guide:img2-tpl-outfit-review4-r1"
       }
     ]
   },

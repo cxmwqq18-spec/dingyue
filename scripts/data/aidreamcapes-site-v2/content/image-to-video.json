@@ -179,6 +179,7 @@
     "steps",
     "uses",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -263,68 +264,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Use AI Image to Video",
-    "lead": "How a shop uses one product photo when it needs a moving ad, an AI actor or a second language.",
+    "h2": "How Shops Turn a Still Into an Ad",
+    "lead": "Each seller starts from the matte teal bottle and gets a clip without a shoot.",
     "items": [
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "Balm in motion",
-        "d": "A beauty shop turns a balm photo into a phone-style clip, with an AI actor and a short spoken voice, for a paid ad test."
-      },
-      {
-        "example": true,
-        "who": "Drink seller",
-        "t": "Pour on a listing",
-        "d": "A drink seller starts from the bottle photo, pastes the listing link, and shows the pour with captions."
-      },
-      {
-        "example": true,
-        "who": "Apparel shop",
-        "t": "Shirt in hand",
-        "d": "An apparel shop has an AI actor hold the shirt so shoppers can see how the fabric hangs, then posts the clip."
-      },
-      {
-        "example": true,
-        "who": "Skincare shop",
-        "t": "Pump and a line",
-        "d": "A skincare shop picks an AI actor from the actor library, a set of ready-made faces, to press the pump and read a short script."
-      },
-      {
-        "example": true,
-        "who": "Multi-country shop",
-        "t": "Another language",
-        "d": "A shop that sells in more than one country speaks the same script in each language it needs."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "Edit in one place",
-        "d": "A small team trims the clip in the built-in editor. They swap in a song and add the logo."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "A Custom Face for a Client",
-        "d": "An agency builds a custom AI actor for a client and reuses that face on the next product video."
-      },
-      {
-        "example": true,
-        "who": "Home brand",
-        "t": "No Lights to Set Up",
-        "d": "A home brand uploads a few product photos and gets clips ready to post, without lights or a filming day."
-      },
-      {
-        "example": true,
-        "who": "New seller",
-        "t": "Link, then a clip",
-        "d": "A new seller pastes a product link and gets a script, an AI actor and a clip without filming."
+        "who": "Beauty seller",
+        "t": "Bottle Turned Toward Camera",
+        "d": "They upload the matte teal bottle photo and get a clip of it turning toward the camera. They post that clip and skip a shoot for this bottle.",
+        "img": "n:guide:img2-image-to-video-review1-r1"
       },
       {
         "example": true,
         "who": "Ad tester",
-        "t": "Several First Lines",
-        "d": "A store makes several versions from one photo, then posts the one it keeps to TikTok or Meta."
+        "t": "Two Openings, One Bottle",
+        "d": "They make two spoken openings from the same teal bottle photo and keep the one they want to run. The second opening does not need another photo day.",
+        "img": "n:guide:img2-image-to-video-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "One-person shop",
+        "t": "Voice and Captions Added",
+        "d": "They add a voice and captions to the teal bottle clip, then download it with no watermark. They post that file to TikTok after they check the line.",
+        "img": "n:guide:img2-image-to-video-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Catalog owner",
+        "t": "Listing Link, Then a Clip",
+        "d": "They paste the teal bottle listing and get a short ad with a face and a line. They skip writing a shot list for this product.",
+        "img": "n:guide:img2-image-to-video-review4-r1"
       }
     ]
   },

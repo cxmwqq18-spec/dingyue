@@ -141,20 +141,20 @@
       {
         "t": "A Tight View of the Clasp",
         "d": "A tight view of the clasp comes from the linen photo of the pendant you already have. That saves a fresh studio day on the next piece.",
-        "img": "n:guide:fx31-ind-jewelry-benefit-macro",
-        "alt": "Post this close view of the silver pendant on linen, and skip a new studio day."
+        "img": "n:guide:img2-ind-jewelry-accessories-reasons-1-r1",
+        "alt": "Man with a short crop speaks to the camera and shows one plain silver ring on his finger."
       },
       {
         "t": "One Watch, Two Frames",
         "d": "One watch photo becomes a wrist clip for the phone feed and a square of the dial for the gallery.",
-        "img": "n:guide:fx31-ind-jewelry-benefit-watch",
-        "alt": "Show the unbranded silver watch on a wrist in daylight, and post that worn ad."
+        "img": "n:guide:img2-ind-jewelry-accessories-reasons-2-r1",
+        "alt": "Woman with short silver hair speaks to the camera wearing only a plain silver chain at her collarbone."
       },
       {
         "t": "Show the Bag on a Shoulder",
         "d": "A tote on an adult shoulder makes the size obvious in one frame, and the ad can run without a fit-model booking.",
-        "img": "n:guide:fx31-ind-jewelry-benefit-bag",
-        "alt": "Show the brown leather bag on a shoulder outdoors so the size is obvious in the ad."
+        "img": "n:guide:img2-ind-jewelry-accessories-reasons-3-r1",
+        "alt": "Woman with her hair in a bun speaks to the camera and shows a plain silver cuff on her wrist."
       }
     ]
   },
@@ -195,74 +195,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Jewelry Brands Switch to AI Ads",
-    "lead": "Example ways jewelry and accessory sellers use one photo. These are not quotes.",
+    "h2": "How Jewelry Sellers Use a Worn Ad",
+    "lead": "Four shops start from a photo of the piece and leave with an actor wearing it on camera.",
     "items": [
       {
         "example": true,
         "who": "Ring maker",
-        "t": "Close-up, then a coin for size",
-        "d": "They upload a sharp top view and ask for a tight close-up. A second photo places a coin beside the band. The size inside the ring stays in the listing."
+        "t": "The Ring on a Hand",
+        "d": "They upload a ring photo and get an AI actor showing it on a hand, with a spoken line they approve, for a phone ad. They skip booking a hand model.",
+        "img": "n:guide:img2-ind-jewelry-accessories-review1-r1"
       },
       {
         "example": true,
-        "who": "Necklace shop",
-        "t": "Flat chain to a worn close-up",
-        "d": "One flat photo becomes a tight worn photo with a plain neckline. They count the stones and the links before they list it."
+        "who": "Necklace seller",
+        "t": "A Collarbone Frame",
+        "d": "They turn a necklace photo into a spoken ad with the chain at the collarbone, and run that file on the product page. They do not book a fit model for the drop.",
+        "img": "n:guide:img2-ind-jewelry-accessories-review2-r1"
       },
       {
         "example": true,
-        "who": "Earring shop",
-        "t": "Both studs in the photo",
-        "d": "They ask for both studs in a tight photo and reject a result that changes the pin or the metal color."
+        "who": "Earring maker",
+        "t": "Earrings in a Spoken Ad",
+        "d": "They make a spoken ad of the earrings on an ear from the pair they already photographed. The file goes to a phone feed, and they skip a portrait shoot.",
+        "img": "n:guide:img2-ind-jewelry-accessories-review3-r1"
       },
       {
         "example": true,
-        "who": "Bag seller",
-        "t": "Hardware, then on a shoulder",
-        "d": "A close photo shows the clasp, and a shoulder photo shows the size. The person is created by the tool."
-      },
-      {
-        "example": true,
-        "who": "Etsy studio",
-        "t": "Gift scene from the same photo",
-        "d": "The piece sits in a simple gift scene for a social post, while the listing image stays a clean close-up of the real design."
-      },
-      {
-        "example": true,
-        "who": "Sunglasses line",
-        "t": "Pushed up, logo left out",
-        "d": "They show the glasses on a head only from their own photo. They do not ask for a logo they do not own."
-      },
-      {
-        "example": true,
-        "who": "Page-link seller",
-        "t": "A link, then a short line",
-        "d": "They paste the product page. Or they send that link from their own shop software (the API). They ask for a short script about the piece. Size and care stay out of the spoken line."
-      },
-      {
-        "example": true,
-        "who": "Two-scene seller",
-        "t": "A worn close-up, then again",
-        "d": "They pick a person the tool creates for a wrist or collarbone photo. Then they make a second version of that person. They check the stone count first."
-      },
-      {
-        "example": true,
-        "who": "Small ads shop",
-        "t": "Voice, captions, and a track",
-        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the clip in the editor before export."
-      },
-      {
-        "example": true,
-        "who": "Second-language shop",
-        "t": "The same piece, another language",
-        "d": "They make the worn clip again in a second language from the same photo. Metal color and stone count still have to match the real piece."
-      },
-      {
-        "example": true,
-        "who": "Version tester",
-        "t": "A few versions, then publish",
-        "d": "They type a description of the piece in the text box and keep a few versions. They send the one they want to TikTok, Facebook, or Instagram. The listing photo stays a clean close-up."
+        "who": "Bracelet shop",
+        "t": "A Wrist Ad From One Photo",
+        "d": "They upload the bracelet and get a wrist ad with a spoken line, then post the vertical cut. They do not hold a model day for that piece.",
+        "img": "n:guide:img2-ind-jewelry-accessories-review4-r1"
       }
     ]
   },
@@ -290,6 +252,7 @@
     "reasons",
     "steps",
     "platforms",
+    "reviews",
     "faq",
     "cta"
   ],

@@ -544,68 +544,36 @@
     }
   },
   "reviews": {
-    "h2": "Shops Switching to AI On-Model Photos",
-    "lead": "Example ways a clothing shop uses one garment photo. These cards are not customer quotes.",
+    "h2": "How Clothing Shops Post a Video",
+    "lead": "Four ways a clothing shop turns one garment photo into a video it can post, and the model booking each one skips.",
     "items": [
       {
         "example": true,
-        "who": "Apparel shop",
-        "t": "New jacket on the product page",
-        "d": "The shop uploads the hanger photo when the carton arrives and places the on-model frame beside the flat lay. Hem, sleeves and pockets are checked against the physical jacket before the listing goes up."
+        "who": "Outerwear shop",
+        "t": "Post the Bomber Video",
+        "d": "They turn a flat photo of the olive bomber into a clothing video and put it on the product page. No model is booked for that jacket.",
+        "img": "n:guide:img2-tpl-tryon-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Streetwear label",
+        "t": "Show a Daily Layer",
+        "d": "They use the same path for a street layer a buyer would wear on a commute. The video posts without a fitting day.",
+        "img": "n:guide:img2-tpl-tryon-review2-r1"
       },
       {
         "example": true,
         "who": "Dress boutique",
-        "t": "One standing scene for the launch",
-        "d": "The boutique picks a single standing scene for the main photo of a new dress. Neckline, color, and how it fastens are compared with the garment on the rail before anyone posts it."
+        "t": "Post a Dressier Look",
+        "d": "They pick one standing scene for a dressier piece and check the neckline against the garment on the rail. The file goes out as the ad.",
+        "img": "n:guide:img2-tpl-tryon-review3-r1"
       },
       {
         "example": true,
-        "who": "Knitwear label",
-        "t": "A back view from a second source",
-        "d": "The label uses a photo of the back so the collar and rear seams can show. That second file is its own run, and the cost is shown before it starts."
-      },
-      {
-        "example": true,
-        "who": "Fashion agency",
-        "t": "Same path for every client",
-        "d": "The agency repeats upload, scene and download for each clothing client. People in the frames are generated. They are not hired models and not customers."
-      },
-      {
-        "example": true,
-        "who": "Listing editor",
-        "t": "Size chart added after download",
-        "d": "The square file goes on the product page, and the real size chart is added as text beside it. The photo does not invent measurements."
-      },
-      {
-        "example": true,
-        "who": "Outerwear brand",
-        "t": "Coat that needs a body",
-        "d": "A puffer or coat is shown on a person instead of another hanger crop. Cuffs, pockets, and hem stay inside the uploaded photo so the result can be compared fairly."
-      },
-      {
-        "example": true,
-        "who": "Activewear label",
-        "t": "A generated person",
-        "d": "They pick a generated person for the jacket instead of booking a model. Collar, hem, and color are checked against the garment."
-      },
-      {
-        "example": true,
-        "who": "Two-country brand",
-        "t": "A line in another language",
-        "d": "The same on-model photo is paired with a spoken line in the language that country uses, without a second shoot."
-      },
-      {
-        "example": true,
-        "who": "Weekly launch",
-        "t": "Several poses",
-        "d": "They run the hanger photo again for another pose and another collection. Each run shows its credit cost first."
-      },
-      {
-        "example": true,
-        "who": "Shop manager",
-        "t": "Publish after a check",
-        "d": "They check the hem against the real coat, trim the ad in the editor, and publish it to Instagram in one click."
+        "who": "Tailoring shop",
+        "t": "Show the Trouser Video",
+        "d": "They start from a flat photo of a tailored trouser and post a clip that shows the break at the shoe. The booking for that pair stays off the week.",
+        "img": "n:guide:img2-tpl-tryon-review4-r1"
       }
     ]
   },
@@ -642,6 +610,7 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],

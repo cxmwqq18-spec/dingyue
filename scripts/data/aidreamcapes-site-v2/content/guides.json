@@ -22,26 +22,26 @@
     {
       "t": "Fewer Retries on the Tote",
       "d": "A sharp photo of the sage canvas tote makes the first file easier to accept, so you spend fewer credits making that tote again.",
-      "img": "n:guide:fx03-guides-benefit-source",
-      "alt": "An adult seller with a short auburn bob checks a sharp photo of the plain sage canvas tote. You upload that photo instead of booking a shoot."
+      "img": "n:guide:img2-guides-benefits-0-r1",
+      "alt": "Woman with black hair in a low bun holds a plain sage canvas tote and speaks to the camera."
     },
     {
       "t": "No Studio to Book",
       "d": "You shoot the bamboo lunch container on the kitchen table, with a phone, by the window you already have.",
-      "img": "n:guide:fx03-guides-benefit-studio",
-      "alt": "An adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on the kitchen table. You start from that photo and skip the studio."
+      "img": "n:guide:img2-guides-benefits-1-r1",
+      "alt": "Man with a short crop holds a plain bamboo lunch box in a kitchen and speaks to the camera."
     },
     {
       "t": "Fit the Plate in Frame",
       "d": "The main-image rules are already written out, so the ceramic plate can sit fully inside the bright white backdrop before it goes live.",
-      "img": "n:guide:fx03-guides-benefit-rules",
-      "alt": "An adult seller with a short silver-gray pixie sets a plain ceramic plate fully inside a bright white backdrop. You can use that main image on the listing."
+      "img": "n:guide:img2-guides-benefits-2-r1",
+      "alt": "Woman with short white hair holds a plain cream plate and speaks to the camera."
     },
     {
       "t": "One Change at a Time",
       "d": "The testing guide changes one thing on the two fabric pouches, then keeps the version you want to run.",
-      "img": "n:guide:fx03-guides-benefit-testing",
-      "alt": "Two adult sellers compare two plain fabric pouches side by side. You keep the version you want to run, without a second shoot."
+      "img": "n:guide:img2-guides-benefits-3-r1",
+      "alt": "Man with short dark curls holds a plain oatmeal pouch and a plain dusty-blue pouch and speaks to the camera."
     }
   ],
   "steps_h2": "How to Make Product Video Ads or Photos",
@@ -121,5 +121,39 @@
   "related_h2": "Tools These Guides Send You To",
   "related_lead": "The file from the guide is a step away from the tool that makes it, or from layouts and the places you post.",
   "cta_title": "Start the Guide That Matches Today",
-  "cta_lead": "You start today's job from one product photo."
+  "cta_lead": "You start today's job from one product photo.",
+  "reviews": {
+    "h2": "How Sellers Use a Guide, Then Make the File",
+    "lead": "Four sellers match today's job, drop in the product they ship, and post one file.",
+    "items": [
+      {
+        "example": true,
+        "who": "Tote seller",
+        "t": "Check the Tote Photo",
+        "d": "They check a sharp phone photo of the sage canvas tote, then make the file that guide names. They skip shooting that tote a second time before the first file is even posted.",
+        "img": "n:guide:img2-guides-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Lunch-container seller",
+        "t": "Shoot on the Kitchen Table",
+        "d": "They photograph the bamboo lunch container on the kitchen table by the window they already have. They skip booking a studio for that container.",
+        "img": "n:guide:img2-guides-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Tableware seller",
+        "t": "Fit the Plate in Frame",
+        "d": "They set the ceramic plate fully inside a bright white backdrop and use that still as the main image. The guide tells them when the plate is ready to post.",
+        "img": "n:guide:img2-guides-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Small-goods seller",
+        "t": "Test One Pouch Change",
+        "d": "They change one thing between two plain fabric pouches and keep the version they want to run. They skip filming a new pair for every idea.",
+        "img": "n:guide:img2-guides-review4-r1"
+      }
+    ]
+  }
 }

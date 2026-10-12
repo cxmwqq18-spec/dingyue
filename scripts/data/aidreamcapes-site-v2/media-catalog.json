@@ -28117,7 +28117,7 @@
         "file": "cwa-uses-guide-04-r1",
         "w": 1280,
         "h": 1280,
-        "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp at a workbench.",
+        "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp at a work table.",
         "variants": [
           640,
           1280
@@ -54648,6 +54648,3603 @@
         "w": 1024,
         "h": 1024,
         "alt": "Hand holding a linen tote bag on a neighborhood street.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-about-review1-r1": {
+        "file": "img2-about-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short sandy crop sets a plain beige ceramic mug on a wooden desk beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-about-review2-r1": {
+        "file": "img2-about-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short black pixie holds a plain white mug at a packing table with blank cardboard boxes.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-about-review3-r1": {
+        "file": "img2-about-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short silver crop looks at blank papers beside a closed laptop and a plain mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-about-review4-r1": {
+        "file": "img2-about-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short auburn crop looks at four blank wooden discs beside a plain ceramic mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ai-actors-review1-r1": {
+        "file": "img2-ai-actors-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short platinum pixie holds a plain white screw-lid jar, with the same jar on the table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ai-actors-review2-r1": {
+        "file": "img2-ai-actors-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short sandy hair holds up a closed matte blue bottle, and the same bottle stands on the wooden table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ai-actors-review3-r1": {
+        "file": "img2-ai-actors-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short auburn crop holds a coral phone case with one round hole, and the same case lies on the packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ai-actors-review4-r1": {
+        "file": "img2-ai-actors-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short silver hair holds a pair of plain coral running shoes in a home doorway.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-before-after-videos-review1-r1": {
+        "file": "img2-before-after-videos-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short ash-blonde bob wipes grease on a white coil stovetop in a small kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-before-after-videos-review2-r1": {
+        "file": "img2-before-after-videos-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short crop holds a plain white screw-lid cream jar in a bathroom.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-before-after-videos-review3-r1": {
+        "file": "img2-before-after-videos-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short copper pixie runs a sage fabric shaver over a camel knit sweater.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-before-after-videos-review4-r1": {
+        "file": "img2-before-after-videos-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with hair tied in a bun presses garlic on a wood board with a stainless press.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-before-after-videos-hero-r1": {
+        "file": "img2-before-after-videos-hero-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "One gas stovetop, greasy on the left half and wiped clean on the right half.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-product-photography-guide-review1-r1": {
+        "file": "img2-blog-ai-product-photography-guide-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short light-brown pixie cut sets an unlabeled glass bottle of red sauce beside three tomatoes on a wooden table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-product-photography-guide-review2-r1": {
+        "file": "img2-blog-ai-product-photography-guide-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with black hair in a bun holds a plain pink pump bottle over a wet ceramic sink.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-product-photography-guide-review3-r1": {
+        "file": "img2-blog-ai-product-photography-guide-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short blonde bob sits at a linen table beside a plain cobalt bottle and smooths a gray cloth.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-product-photography-guide-review4-r1": {
+        "file": "img2-blog-ai-product-photography-guide-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop stands beside an unlabeled metal canister and a bowl of coffee beans.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-ugc-video-ads-guide-review1-r1": {
+        "file": "img2-blog-ai-ugc-video-ads-guide-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a honey-blonde pixie unscrews a plain gray jar, with a second gray jar on the bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-ugc-video-ads-guide-review2-r1": {
+        "file": "img2-blog-ai-ugc-video-ads-guide-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with a short salt-and-pepper crop checks the lid of a plain gray jar at a packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-ugc-video-ads-guide-review3-r1": {
+        "file": "img2-blog-ai-ugc-video-ads-guide-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with light-brown hair in a low bun sets a plain gray jar on a bathroom windowsill.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-ugc-video-ads-guide-review4-r1": {
+        "file": "img2-blog-ai-ugc-video-ads-guide-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a short silver-streaked bob compares a plain gray jar to a print of the same jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-ugc-video-ads-guide-成片墙-1-r1": {
+        "file": "img2-blog-ai-ugc-video-ads-guide-成片墙-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Two hands unscrew a plain gray jar in front of a bathroom shelf that holds a second gray jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-video-review-checklist-review1-r1": {
+        "file": "img2-blog-ai-video-review-checklist-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with a short sandy crop holds a plain black backpack in a small workshop, with the same backpack on the table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-video-review-checklist-review2-r1": {
+        "file": "img2-blog-ai-video-review-checklist-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with short coils counts unmarked gray gadget parts and a cable beside a blank cardboard box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-video-review-checklist-review3-r1": {
+        "file": "img2-blog-ai-video-review-checklist-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short ash-blonde pixie compares the plain oatmeal shirt she wears with the same shirt laid on the table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-ai-video-review-checklist-review4-r1": {
+        "file": "img2-blog-ai-video-review-checklist-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with gray hair in a small bun stands in a kitchen beside a clear unlabeled jar of orange preserve.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-model-photos-without-a-photoshoot-sections-1-r1": {
+        "file": "img2-blog-model-photos-without-a-photoshoot-sections-1-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Adult woman with a short light-brown bob wears plain green low shoes on a green tennis court.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-model-photos-without-a-photoshoot-sections-5-r1": {
+        "file": "img2-blog-model-photos-without-a-photoshoot-sections-5-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with short blonde hair looks at how a plain dusty-pink wool coat hangs.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-unboxing-videos-for-launches-review1-r1": {
+        "file": "img2-blog-unboxing-videos-for-launches-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short black bob rests one hand on a blank kraft mailer beside a plain cream ceramic mug on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-unboxing-videos-for-launches-review2-r1": {
+        "file": "img2-blog-unboxing-videos-for-launches-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short sandy hair lifts the lid of a kraft box, showing a plain cream ceramic mug nestled in white tissue.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-unboxing-videos-for-launches-review3-r1": {
+        "file": "img2-blog-unboxing-videos-for-launches-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a low bun arranges a kraft box, a stack of white tissue, and a plain cream mug on a packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-blog-unboxing-videos-for-launches-review4-r1": {
+        "file": "img2-blog-unboxing-videos-for-launches-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "An older man with short gray hair holds a plain cream mug beside an open kraft box and loose white tissue.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-review1-r1": {
+        "file": "img2-change-background-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short honey-blonde bob holds a mint cleanser tube at a bathroom counter with houseplants.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-review2-r1": {
+        "file": "img2-change-background-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with a short crop sets a black sneaker and a white sneaker beside a purple handbag on a stock-room table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-review3-r1": {
+        "file": "img2-change-background-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with light brown hair tied back sits at a desk beside a frosted serum bottle and two cream bottles.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-review4-r1": {
+        "file": "img2-change-background-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short gray hair holds a matte blue ceramic vase in a living room with moving boxes.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-reasons-1-r1": {
+        "file": "img2-change-background-reasons-1-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Mint cleanser tube on a pale counter, leafy plant at the left, quiet gray wall behind.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-reasons-2-r1": {
+        "file": "img2-change-background-reasons-2-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Black sneaker and white sneaker beside a purple handbag on a pale floor.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-reasons-3-r1": {
+        "file": "img2-change-background-reasons-3-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Frosted serum bottle among green leaves, and two cream sunscreen bottles standing on sand.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-steps-1-r1": {
+        "file": "img2-change-background-steps-1-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Hand holding a borderless print of a mint cleanser tube over a wood desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-steps-2-r1": {
+        "file": "img2-change-background-steps-2-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Mint cleanser tube standing on a quiet gray backdrop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-change-background-steps-3-r1": {
+        "file": "img2-change-background-steps-3-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Mint cleanser tube, closer to the camera, standing on a quiet gray backdrop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-contact-hero-r1": {
+        "file": "img2-contact-hero-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "East Asian woman with a short ash-blonde bob writes on a blank sheet at a wooden desk, beside a closed notebook and a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-contact-review1-r1": {
+        "file": "img2-contact-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Gray-haired man at a home desk looks at a blank envelope, with a closed laptop and a closed notebook on the table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-contact-review2-r1": {
+        "file": "img2-contact-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with black hair in a low bun sits at a kitchen table with a plain cardboard box and a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-contact-review3-r1": {
+        "file": "img2-contact-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Young man with a short buzz cut holds a plain cream ceramic cup beside a closed notebook on a wooden table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-contact-review4-r1": {
+        "file": "img2-contact-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short honey-blonde crop stands at a white office desk with a closed laptop and a closed notebook.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-review1-r1": {
+        "file": "img2-examples-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short chestnut crop stands by a sage travel mug with its lid on, next to a laptop turned away.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-review2-r1": {
+        "file": "img2-examples-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with his hair in a low bun holds a plain linen tote beside a folded gray sweatshirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-review3-r1": {
+        "file": "img2-examples-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short silver crop sets flowers into a cream fluted ceramic vase.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-review4-r1": {
+        "file": "img2-examples-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short dark bob holds a blank white sunscreen tube by a window.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-cases-0-r1": {
+        "file": "img2-examples-cases-0-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman with a short blonde crop speaks to the camera while holding a matte charcoal travel mug with the lid on.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-cases-1-r1": {
+        "file": "img2-examples-cases-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman with a high bun speaks beside a plain linen tote and a folded gray outfit.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-cases-2-r1": {
+        "file": "img2-examples-cases-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A man with a short gray crop speaks beside a cream fluted vase of flowers.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-cases-3-r1": {
+        "file": "img2-examples-cases-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman with a short black crop speaks while holding a plain tan leather wallet with the stitching visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-cases-4-r1": {
+        "file": "img2-examples-cases-4-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A man with a short brown crop speaks while holding a plain gray knit running shoe, the sole in view.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-examples-cases-5-r1": {
+        "file": "img2-examples-cases-5-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman with a short copper pixie speaks by a window while holding a blank white sunscreen tube with the cap on.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-ad-sizes-by-platform-review1-r1": {
+        "file": "img2-guide-ad-sizes-by-platform-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short ash-brown hair holds a blank white tube beside a featureless black phone standing on a bare desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-ad-sizes-by-platform-review2-r1": {
+        "file": "img2-guide-ad-sizes-by-platform-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with light brown hair in a bun holds a blank white tube at a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-ad-sizes-by-platform-review3-r1": {
+        "file": "img2-guide-ad-sizes-by-platform-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "One bare hand rests beside a blank white tube on a pale wood surface.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-ad-sizes-by-platform-review4-r1": {
+        "file": "img2-guide-ad-sizes-by-platform-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "An older man with short white hair holds a blank white tube toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-first-tiktok-video-ad-review1-r1": {
+        "file": "img2-guide-first-tiktok-video-ad-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short sandy bob holds a blank peach sunscreen tube on a beach.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-first-tiktok-video-ad-review2-r1": {
+        "file": "img2-guide-first-tiktok-video-ad-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with hair in a bun sits at a cafe table, a blank peach tube on a blank notebook.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-first-tiktok-video-ad-review3-r1": {
+        "file": "img2-guide-first-tiktok-video-ad-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short silver crop sits at a desk with a blank peach tube standing in front of her.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-first-tiktok-video-ad-review4-r1": {
+        "file": "img2-guide-first-tiktok-video-ad-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short light-brown crop holds a blank peach tube by a window, laptop closed.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-product-photo-tips-review1-r1": {
+        "file": "img2-guide-product-photo-tips-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short sandy hair holds a plain gray running shoe at a work table, with the matching gray shoe on the bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-product-photo-tips-review2-r1": {
+        "file": "img2-guide-product-photo-tips-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with short silver hair sits by a window beside one plain gray running shoe, a blank white board, and a phone lying face-down.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-product-photo-tips-review3-r1": {
+        "file": "img2-guide-product-photo-tips-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short auburn crop sets a plain gray running shoe on a wooden bench next to the matching shoe.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-product-photo-tips-review4-r1": {
+        "file": "img2-guide-product-photo-tips-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A barefoot man with hair in a low bun compares two plain gray running shoes, one on the concrete and one on a blank white board.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-review1-r1": {
+        "file": "img2-guide-testing-ad-versions-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a short honey bob holds a plain white cream jar at a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-review2-r1": {
+        "file": "img2-guide-testing-ad-versions-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with short auburn hair holds a plain white cream jar in a bathroom.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-review3-r1": {
+        "file": "img2-guide-testing-ad-versions-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with black hair in a bun holds a plain white pump bottle beside a closed notebook.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-review4-r1": {
+        "file": "img2-guide-testing-ad-versions-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with short silver-gray hair holds a small blank carton in a packing room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-sections-2-r1": {
+        "file": "img2-guide-testing-ad-versions-sections-2-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Adult woman with a short silver pixie holds a plain white cream jar beside a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-sections-4-r1": {
+        "file": "img2-guide-testing-ad-versions-sections-4-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Two hands hold a plain white cream jar up over a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-sections-9-r1": {
+        "file": "img2-guide-testing-ad-versions-sections-9-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Two hands set a plain white cream jar beside a blank white card.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-sections-10-r1": {
+        "file": "img2-guide-testing-ad-versions-sections-10-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Two pairs of hands hold the same plain white cream jar in side-by-side poses.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-sections-11-r1": {
+        "file": "img2-guide-testing-ad-versions-sections-11-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "A hand rests beside a plain white cream jar and a blank white card.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-testing-ad-versions-sections-12-r1": {
+        "file": "img2-guide-testing-ad-versions-sections-12-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Adult man with short sandy hair holds a plain white cream jar at a wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-white-background-amazon-review1-r1": {
+        "file": "img2-guide-white-background-amazon-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short chestnut bob stands in a stock room behind an olive canvas backpack on a table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-white-background-amazon-review2-r1": {
+        "file": "img2-guide-white-background-amazon-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with hair in a bun stands behind two olive canvas backpacks on a table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-white-background-amazon-review3-r1": {
+        "file": "img2-guide-white-background-amazon-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with short light-brown hair sits beside an olive canvas backpack and a closed blank laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-white-background-amazon-review4-r1": {
+        "file": "img2-guide-white-background-amazon-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with hair tied back wraps an olive canvas backpack in tissue at a packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-white-background-amazon-hero-r1": {
+        "file": "img2-guide-white-background-amazon-hero-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "Olive canvas backpack with a brown leather base, centered on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guide-white-background-amazon-sections-5-r1": {
+        "file": "img2-guide-white-background-amazon-sections-5-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "The same olive canvas backpack on a wooden table by a window, next to that backpack alone on white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-review1-r1": {
+        "file": "img2-guides-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short auburn bob checks a plain sage canvas tote at a packing table, phone face-down beside it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-review2-r1": {
+        "file": "img2-guides-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with a short dark-blonde crop photographs a plain bamboo lunch box on a kitchen table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-review3-r1": {
+        "file": "img2-guides-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short silver pixie sets a plain cream plate inside a white backdrop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-review4-r1": {
+        "file": "img2-guides-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short black hair compares a plain oatmeal pouch and a plain dusty-blue pouch.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-benefits-0-r1": {
+        "file": "img2-guides-benefits-0-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Woman with black hair in a low bun holds a plain sage canvas tote and speaks to the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-benefits-1-r1": {
+        "file": "img2-guides-benefits-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Man with a short crop holds a plain bamboo lunch box in a kitchen and speaks to the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-benefits-2-r1": {
+        "file": "img2-guides-benefits-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Woman with short white hair holds a plain cream plate and speaks to the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-guides-benefits-3-r1": {
+        "file": "img2-guides-benefits-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Man with short dark curls holds a plain oatmeal pouch and a plain dusty-blue pouch and speaks to the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-home-review1-r1": {
+        "file": "img2-home-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with short sandy-brown hair caps a plain ivory cream jar at a wooden packing bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-home-review2-r1": {
+        "file": "img2-home-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with her hair in a low bun fits a wood lid onto a frosted white jar candle at a wax-specked table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-home-review3-r1": {
+        "file": "img2-home-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop checks the cap of a plain white plastic bottle in a stock room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-home-review4-r1": {
+        "file": "img2-home-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with short brown hair kneels and sets a plain white sneaker in a patch of light by a low shelf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-image-to-video-review1-r1": {
+        "file": "img2-image-to-video-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short light-brown bob holds a matte teal bottle toward the camera in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-image-to-video-review2-r1": {
+        "file": "img2-image-to-video-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short sandy hair compares two matte teal bottles at a work table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-image-to-video-review3-r1": {
+        "file": "img2-image-to-video-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with his hair in a bun holds a matte teal bottle and speaks toward a phone seen edge-on on a tripod.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-image-to-video-review4-r1": {
+        "file": "img2-image-to-video-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short gray crop holds a matte teal bottle and a print of the same bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-beauty-skincare-review1-r1": {
+        "file": "img2-ind-beauty-skincare-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short black hair swatches beige foundation on the back of his hand beside a blank cylindrical bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-beauty-skincare-review2-r1": {
+        "file": "img2-ind-beauty-skincare-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with strawberry-blonde hair in a bun presses a frosted pump bottle so a dab of cream sits on her palm at a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-beauty-skincare-review3-r1": {
+        "file": "img2-ind-beauty-skincare-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short cropped hairstyle points at two blank foundation bottles, one light beige and one deep brown.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-beauty-skincare-review4-r1": {
+        "file": "img2-ind-beauty-skincare-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Older man with short silver hair lifts a frosted pump bottle out of an open kraft box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-electronics-review1-r1": {
+        "file": "img2-ind-electronics-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short brown crop presses the single top button of a matte charcoal rectangular speaker beside a cup.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-electronics-review2-r1": {
+        "file": "img2-ind-electronics-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short light-brown crop fits a plain black cable into a silver rectangular dock.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-electronics-review3-r1": {
+        "file": "img2-ind-electronics-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short gray crop opens a plain carton that holds a charcoal speaker and a coiled cable.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-electronics-review4-r1": {
+        "file": "img2-ind-electronics-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop speaks at a desk with a matte charcoal rectangular speaker in front of him.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-fashion-clothing-review1-r1": {
+        "file": "img2-ind-fashion-clothing-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short blonde bob turns in a plain oatmeal hoodie, with the same hoodie laid flat on the bed.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-fashion-clothing-review2-r1": {
+        "file": "img2-ind-fashion-clothing-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short black hair holds a plain blue denim jacket up by the shoulders.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-fashion-clothing-review3-r1": {
+        "file": "img2-ind-fashion-clothing-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with gray hair in a bun walks a hallway in a plain camel wool coat, the hem swinging.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-fashion-clothing-review4-r1": {
+        "file": "img2-ind-fashion-clothing-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A young man in a navy-and-cream striped sweater folds the same striped sweater on a table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-food-drinks-review1-r1": {
+        "file": "img2-ind-food-drinks-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short honey bob pours yellow citrus drink from a blank bottle into a glass of ice.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-food-drinks-review2-r1": {
+        "file": "img2-ind-food-drinks-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with hair in a bun opens a blank kraft snack pouch beside a closed lunch box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-food-drinks-review3-r1": {
+        "file": "img2-ind-food-drinks-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short platinum pixie sits beside a blank silver can and a glass of iced tea.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-food-drinks-review4-r1": {
+        "file": "img2-ind-food-drinks-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short gray crop holds an oat cookie over a plate of oat cookies and raspberries.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-health-wellness-review1-r1": {
+        "file": "img2-ind-health-wellness-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A barefoot woman with short ash-blonde hair unrolls a solid teal yoga mat on a wood floor.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-health-wellness-review2-r1": {
+        "file": "img2-ind-health-wellness-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with gray hair tied back sits at a kitchen table with a plain white screw-cap bottle, an apple, and an orange.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-health-wellness-review3-r1": {
+        "file": "img2-ind-health-wellness-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short black crop holds a plain black resistance band in a living room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-health-wellness-review4-r1": {
+        "file": "img2-ind-health-wellness-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with her hair in a bun stands in a bathroom beside a sheet mask lying on a tray.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-review1-r1": {
+        "file": "img2-ind-home-living-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a sandy-blonde bob runs a plain white cordless vacuum across a gray sofa cushion.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-review2-r1": {
+        "file": "img2-ind-home-living-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with black hair in a bun places a folded shirt into a plain fabric closet organizer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-review3-r1": {
+        "file": "img2-ind-home-living-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a cropped silver pixie adjusts a lit cream ceramic lamp beside a chair.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-review4-r1": {
+        "file": "img2-ind-home-living-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a braided bun sets an ivory pillow and a sage pillow on a cream chair.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-visual-strip-0-r1": {
+        "file": "img2-ind-home-living-visual-strip-0-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with a gray buzz cut speaks beside a plain white vacuum lying on a sofa cushion.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-visual-strip-1-r1": {
+        "file": "img2-ind-home-living-visual-strip-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with hair in a bun holds folded shirts in front of a fabric closet organizer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-visual-strip-2-r1": {
+        "file": "img2-ind-home-living-visual-strip-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with an auburn pixie speaks beside a lit cream ceramic lamp.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-visual-strip-3-r1": {
+        "file": "img2-ind-home-living-visual-strip-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with a short fade sets an ivory pillow and a sage pillow on a cream chair.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-visual-strip-4-r1": {
+        "file": "img2-ind-home-living-visual-strip-4-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with a short salt-and-pepper bob speaks beside a white vacuum on a sofa.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-visual-strip-5-r1": {
+        "file": "img2-ind-home-living-visual-strip-5-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with light-brown hair in a low bun speaks beside a lit cream lamp.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-reasons-items-0-r1": {
+        "file": "img2-ind-home-living-reasons-items-0-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with short strawberry-blond hair speaks beside a white vacuum on a sofa cushion.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-reasons-items-1-r1": {
+        "file": "img2-ind-home-living-reasons-items-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with hair in a high bun holds folded shirts in front of a fabric closet organizer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-home-living-reasons-items-2-r1": {
+        "file": "img2-ind-home-living-reasons-items-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult man with short black hair speaks beside a lit cream ceramic lamp.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-jewelry-accessories-review1-r1": {
+        "file": "img2-ind-jewelry-accessories-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with short auburn hair sets a plain silver ring on a wooden display peg.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-jewelry-accessories-review2-r1": {
+        "file": "img2-ind-jewelry-accessories-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short black bob coils a plain silver chain on a linen cloth.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-jewelry-accessories-review3-r1": {
+        "file": "img2-ind-jewelry-accessories-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with her hair in a bun sets two small silver studs on a white dish.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-jewelry-accessories-review4-r1": {
+        "file": "img2-ind-jewelry-accessories-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short gray-brown hair fastens a plain silver cuff on a fabric display hand.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-jewelry-accessories-reasons-1-r1": {
+        "file": "img2-ind-jewelry-accessories-reasons-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Man with a short crop speaks to the camera and shows one plain silver ring on his finger.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-jewelry-accessories-reasons-2-r1": {
+        "file": "img2-ind-jewelry-accessories-reasons-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman with short silver hair speaks to the camera wearing only a plain silver chain at her collarbone.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-jewelry-accessories-reasons-3-r1": {
+        "file": "img2-ind-jewelry-accessories-reasons-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman with her hair in a bun speaks to the camera and shows a plain silver cuff on her wrist.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-shoes-review1-r1": {
+        "file": "img2-ind-shoes-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short honey-blonde bob holds a pair of plain gray walking shoes at a shop bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-shoes-review2-r1": {
+        "file": "img2-ind-shoes-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short gray hair inspects the grain of a plain taupe leather shoe beside a side photo of that shoe.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-shoes-review3-r1": {
+        "file": "img2-ind-shoes-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short black pixie takes one step in plain light-gray walking shoes on a sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-ind-shoes-review4-r1": {
+        "file": "img2-ind-shoes-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short sandy hair sets a plain beige shoe on a white table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-industries-review1-r1": {
+        "file": "img2-industries-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short black hair holds a plain white cream jar toward the camera at a desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-industries-review2-r1": {
+        "file": "img2-industries-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short auburn pixie wears a plain rust T-shirt, with a matching rust shirt on a hanger behind her.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-industries-review3-r1": {
+        "file": "img2-industries-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short gray hair points at the round button on a small unmarked white box fan.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-industries-review4-r1": {
+        "file": "img2-industries-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with her hair in a bun pours oats from a plain white ceramic jar into a bowl.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-lifestyle-photos-benefits-0-r1": {
+        "file": "img2-lifestyle-photos-benefits-0-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Rust-red lounge chair with a wood frame in a bright living room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-lifestyle-photos-benefits-2-r1": {
+        "file": "img2-lifestyle-photos-benefits-2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Orange metal dining chair in a bright living room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-lifestyle-photos-visual-uses-1-r1": {
+        "file": "img2-lifestyle-photos-visual-uses-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Beige hair-mask jar with a lid on a dark slate tile beside a folded towel.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-lifestyle-photos-visual-uses-2-r1": {
+        "file": "img2-lifestyle-photos-visual-uses-2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Plain cognac leather handbag on a wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-black-friday-review1-r1": {
+        "file": "img2-occ-black-friday-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with light brown hair in a bun places a matte sage pump bottle into an open kraft gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-black-friday-review2-r1": {
+        "file": "img2-occ-black-friday-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short sandy hair holds a plain beige knit slip-on shoe in a stock room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-black-friday-review3-r1": {
+        "file": "img2-occ-black-friday-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with dark hair in a bun lowers a plain navy lunch bag into an open kraft box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-black-friday-review4-r1": {
+        "file": "img2-occ-black-friday-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Older man with short gray hair rests a hand on a calm brown dog on a dark sofa.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-holidays-review1-r1": {
+        "file": "img2-occ-holidays-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short brown crop lifts a plain lipstick from a cream gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-holidays-review2-r1": {
+        "file": "img2-occ-holidays-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with his hair in a bun stands in a hallway beside a charcoal wool jacket and an open gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-holidays-review3-r1": {
+        "file": "img2-occ-holidays-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short blonde crop sits by a white ceramic candle jar and a cream ribbon.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-holidays-review4-r1": {
+        "file": "img2-occ-holidays-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with her hair in a low bun arranges a white jar, a plain tube, and a folded scarf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-benefits-0-r1": {
+        "file": "img2-occ-sale-discount-benefits-0-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An older man with short gray hair speaks to the camera beside a plain blue denim jacket on a wooden hanger.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-benefits-1-r1": {
+        "file": "img2-occ-sale-discount-benefits-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A man with short blonde hair speaks to the camera while folding a checked picnic blanket at a park table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-benefits-2-r1": {
+        "file": "img2-occ-sale-discount-benefits-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman with auburn hair in a bun speaks to the camera, a plain round charging puck on the desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-benefits-3-r1": {
+        "file": "img2-occ-sale-discount-benefits-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A young man with a short buzz cut speaks to the camera beside a blank kraft pouch and a steel travel mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-review1-r1": {
+        "file": "img2-occ-sale-discount-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short chestnut bob stands beside a plain denim jacket on a hanger, a phone face-down on a side table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-review2-r1": {
+        "file": "img2-occ-sale-discount-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with her hair in a bun folds a red-and-white checked picnic blanket on a park table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-review3-r1": {
+        "file": "img2-occ-sale-discount-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop sets a plain round charcoal charging puck on a dark desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-review4-r1": {
+        "file": "img2-occ-sale-discount-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short salt-and-pepper crop stands by a blank kraft pouch and a plain steel travel mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-visual-steps-result-r1": {
+        "file": "img2-occ-sale-discount-visual-steps-result-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "A woman with a short silver bob sits at a counter with a blank white jar and a matte pink pump bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-occ-sale-discount-visual-steps-source-r1": {
+        "file": "img2-occ-sale-discount-visual-steps-source-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "A face-down phone, a blank white cream jar, and a matte pink pump bottle sit on a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-review1-r1": {
+        "file": "img2-photo-hub-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short fade sits at a dark table beside a plain gray electric foil shaver.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-review2-r1": {
+        "file": "img2-photo-hub-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with short curly honey hair holds a blank red chip bag above bowls of chips.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-review3-r1": {
+        "file": "img2-photo-hub-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with hair tied back sets a blank bottle of red sauce among tomatoes.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-review4-r1": {
+        "file": "img2-photo-hub-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short silver crop centers a blank white pump bottle on a white table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-1-scene-r1": {
+        "file": "img2-photo-hub-examples-1-scene-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A blank glass bottle of red sauce with a black cap among tomatoes on a dark wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-1-white-r1": {
+        "file": "img2-photo-hub-examples-1-white-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same blank hot-sauce bottle centered on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-2-scene-r1": {
+        "file": "img2-photo-hub-examples-2-scene-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A blank blush-pink pump bottle with a splash of water around its base.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-2-white-r1": {
+        "file": "img2-photo-hub-examples-2-white-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same blank pink pump bottle centered on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-3-scene-r1": {
+        "file": "img2-photo-hub-examples-3-scene-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A round cobalt-blue glass bottle with a silver cap, underwater, no label.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-3-white-r1": {
+        "file": "img2-photo-hub-examples-3-white-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same round cobalt-blue bottle standing on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-4-scene-r1": {
+        "file": "img2-photo-hub-examples-4-scene-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A cream ceramic canister with a wood lid ajar and steam rising, on a wood counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-photo-hub-examples-4-white-r1": {
+        "file": "img2-photo-hub-examples-4-white-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same cream canister with the wood lid closed, on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-amazon-review1-r1": {
+        "file": "img2-plat-amazon-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short ash-blonde bob straightens a kraft coffee bag with a blank label on a white table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-amazon-review2-r1": {
+        "file": "img2-plat-amazon-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A young man with short platinum hair lifts a plain oatmeal stoneware mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-amazon-review3-r1": {
+        "file": "img2-plat-amazon-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short strawberry-blonde crop opens a plain beige lunch box beside a plain mug on a white table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-amazon-review4-r1": {
+        "file": "img2-plat-amazon-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A barefoot man with short gray hair kneels beside an open empty wicker basket, with an apple and a piece of bread on the blanket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-facebook-review1-r1": {
+        "file": "img2-plat-facebook-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a short blonde bob pours water from a plain pale-blue bottle into a clear glass.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-facebook-review2-r1": {
+        "file": "img2-plat-facebook-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with a buzz cut slides a plain pale-blue bottle into a gray backpack at a doorway.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-facebook-review3-r1": {
+        "file": "img2-plat-facebook-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with black hair in a low bun sits beside a plain pale-blue bottle on a wood desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-facebook-review4-r1": {
+        "file": "img2-plat-facebook-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with short dark hair holds a plain pale-blue bottle next to an open blank box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-instagram-review1-r1": {
+        "file": "img2-plat-instagram-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short blonde bob pumps blank white hand cream onto her hand beside a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-instagram-review2-r1": {
+        "file": "img2-plat-instagram-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with a buzz cut sets a plain cream ceramic mug on linen beside one green leaf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-instagram-review3-r1": {
+        "file": "img2-plat-instagram-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with dark hair clipped back holds one blank peach lip balm, with two more on the counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-instagram-review4-r1": {
+        "file": "img2-plat-instagram-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short black bob sits at a desk with a blank white pump bottle and no screen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-shopify-review1-r1": {
+        "file": "img2-plat-shopify-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short chestnut bob arranges four plain cream bowls on a wooden sideboard.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-shopify-review2-r1": {
+        "file": "img2-plat-shopify-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short brown hair holds a plain sage bottle beside an identical bottle on the table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-shopify-review3-r1": {
+        "file": "img2-plat-shopify-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with ash-blonde hair in a bun places a plain linen basket on a bright shelf.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-shopify-review4-r1": {
+        "file": "img2-plat-shopify-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short gray hair stands behind five plain bowls in different shades.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-tiktok-review1-r1": {
+        "file": "img2-plat-tiktok-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short hair holds up a plain olive windbreaker in a small stock room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-tiktok-review2-r1": {
+        "file": "img2-plat-tiktok-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short honey-blonde bob holds a plain stainless water bottle at a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-tiktok-review3-r1": {
+        "file": "img2-plat-tiktok-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with his hair tied back holds a plain matte sage tumbler toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-tiktok-review4-r1": {
+        "file": "img2-plat-tiktok-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short dark pixie lifts plain charcoal over-ear headphones out of an open cardboard box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-youtube-shorts-review1-r1": {
+        "file": "img2-plat-youtube-shorts-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short auburn crop holds a white garment steamer and a blue shirt on a hanger.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-youtube-shorts-review2-r1": {
+        "file": "img2-plat-youtube-shorts-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with her hair tied back steams a blue shirt with a white handheld steamer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-youtube-shorts-review3-r1": {
+        "file": "img2-plat-youtube-shorts-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short brown hair holds a white steamer, a blue shirt hanging behind him.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-plat-youtube-shorts-review4-r1": {
+        "file": "img2-plat-youtube-shorts-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with her hair in a low bun looks at a folded blue shirt beside a white steamer and a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-pricing-review1-r1": {
+        "file": "img2-pricing-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short auburn pixie holds a plain white mug over packing paper at a packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-pricing-review2-r1": {
+        "file": "img2-pricing-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with black hair in a bun looks at a plain frosted cream jar with a blank lid at a bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-pricing-review3-r1": {
+        "file": "img2-pricing-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Young man with short black hair holds a plain gray rectangular wall charger and a white cable.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-pricing-review4-r1": {
+        "file": "img2-pricing-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a very short crop sits with a plain white mug, a frosted cream jar, and a gray charger on the table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-product-videos-review1-r1": {
+        "file": "img2-product-videos-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with short brown hair turns a plain stoneware mug in both hands at a pottery bench.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-product-videos-review2-r1": {
+        "file": "img2-product-videos-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop holds a plain cream mug beside a shelf of matching mugs.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-product-videos-review3-r1": {
+        "file": "img2-product-videos-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with light brown hair in a clip stands at a cafe counter beside a plain mug and a kettle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-product-videos-review4-r1": {
+        "file": "img2-product-videos-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short gray hair lifts a plain ceramic mug from an open blank carton.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-social-ad-photos-review1-r1": {
+        "file": "img2-social-ad-photos-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short honey-blonde bob sets a plain charcoal hiking shoe on a packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-social-ad-photos-review2-r1": {
+        "file": "img2-social-ad-photos-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short gray-blonde hair places a plain sage-green thermos on a wooden table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-social-ad-photos-review3-r1": {
+        "file": "img2-social-ad-photos-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with strawberry-blonde hair in a bun compares two charcoal hiking shoes, one on the oak floor and one on the outside step.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-social-ad-photos-review4-r1": {
+        "file": "img2-social-ad-photos-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "An older man with short white hair holds a square print of a sage thermos with a blank margin, a capped pen on the desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-spokesperson-videos-review1-r1": {
+        "file": "img2-spokesperson-videos-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short blonde bob holds a blank frosted lilac bottle at a vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-spokesperson-videos-review2-r1": {
+        "file": "img2-spokesperson-videos-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short dark crop points at the button on a plain gray desk fan.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-spokesperson-videos-review3-r1": {
+        "file": "img2-spokesperson-videos-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with hair in a low bun holds a blank glass jar of rolled oats.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-spokesperson-videos-review4-r1": {
+        "file": "img2-spokesperson-videos-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short sandy crop crouches by a blank pet bowl, a tan dog beside him.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-templates-review1-r1": {
+        "file": "img2-templates-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short brown crop holds a plain frosted pump bottle at a bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-templates-review2-r1": {
+        "file": "img2-templates-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short light-brown hair holds the hem of an unmarked linen shirt on a wooden hanger.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-templates-review3-r1": {
+        "file": "img2-templates-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with black hair in a bun holds an unlabeled glass bottle of red sauce in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-templates-review4-r1": {
+        "file": "img2-templates-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "An older man with short white hair sets a plain cream vase on a wooden coffee table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-angle-review1-r1": {
+        "file": "img2-tpl-angle-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with black hair in a bun sets a plain frosted pump bottle on a vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-angle-review2-r1": {
+        "file": "img2-tpl-angle-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with short honey-tipped coils holds a plain dusty-rose lipstick near the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-angle-review3-r1": {
+        "file": "img2-tpl-angle-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with short brown hair holds a plain cream pump bottle while smoothing his hair.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-angle-review4-r1": {
+        "file": "img2-tpl-angle-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with silver-streaked hair in a bun opens a plain beige powder compact.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-angle-首屏-1-r1": {
+        "file": "img2-tpl-angle-首屏-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman with a platinum bob holds a plain dusty-rose lipstick at a vanity.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-beauty-review1-r1": {
+        "file": "img2-tpl-beauty-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short light-brown hair stands at a bright sink beside an ivory pump bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-beauty-review2-r1": {
+        "file": "img2-tpl-beauty-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short crop holds a plain frosted cream jar near a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-beauty-review3-r1": {
+        "file": "img2-tpl-beauty-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with his hair tied back holds a blank beige tube up beside a window.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-beauty-review4-r1": {
+        "file": "img2-tpl-beauty-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short dark pixie looks at a plain black mascara tube at a desk with no screen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-bf-steps-2-r1": {
+        "file": "img2-tpl-bf-steps-2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short copper bob turns a plain sage-green pump bottle in a warm living room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-color-review1-r1": {
+        "file": "img2-tpl-color-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short black bob stands behind three plain pump bottles: white, gray, and sand.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-color-review2-r1": {
+        "file": "img2-tpl-color-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with his hair tied up presses the pump of a sand dispenser, with white and gray bottles beside it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-color-review3-r1": {
+        "file": "img2-tpl-color-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short brown bob holds a plain gray pump bottle, with white and sand bottles on the counter behind her.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-color-review4-r1": {
+        "file": "img2-tpl-color-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "An older man with short silver hair looks at white, gray, and sand pump bottles, a blank phone lying face-down beside them.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-drink-review1-r1": {
+        "file": "img2-tpl-drink-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short blond hair tips a plain silver can toward a glass of ice in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-drink-review2-r1": {
+        "file": "img2-tpl-drink-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short black crop holds a plain silver can and a glass of iced coffee.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-drink-review3-r1": {
+        "file": "img2-tpl-drink-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with light brown hair tied back stands beside an unlabeled juice bottle and citrus on a board.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-drink-review4-r1": {
+        "file": "img2-tpl-drink-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Older man with a short gray crop sits at a wood counter with a plain tin and a glass of tea.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-film-review1-r1": {
+        "file": "img2-tpl-film-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with a short platinum crop looks at a plain black speaker under a narrow beam of light in a dark room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-film-review2-r1": {
+        "file": "img2-tpl-film-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short silver-blonde bob sets a plain frosted perfume bottle on a dark nightstand.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-film-review3-r1": {
+        "file": "img2-tpl-film-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short ash-brown crop looks at a plain analog watch with a blank dial on a dark table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-film-review4-r1": {
+        "file": "img2-tpl-film-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short light-brown hair looks at a charcoal travel mug and two prints of that same mug, one wide and one tall.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-head-review1-r1": {
+        "file": "img2-tpl-head-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short brown crop lines up four face photos on a shop counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-head-review2-r1": {
+        "file": "img2-tpl-head-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop holds up a printed photo of his own face in a stock room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-head-review3-r1": {
+        "file": "img2-tpl-head-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short auburn crop sorts printed face photos on a desk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-head-review4-r1": {
+        "file": "img2-tpl-head-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Three adults with short gray, blonde, and black hair stand side by side in even light.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-home-review1-r1": {
+        "file": "img2-tpl-home-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short black bob slides a plain dark-gray divider into a messy kitchen drawer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-home-review2-r1": {
+        "file": "img2-tpl-home-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short brown hair points at the lanes of a dark-gray divider seated in an open drawer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-home-review3-r1": {
+        "file": "img2-tpl-home-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with blonde hair in a bun slides a dark-gray divider into a drawer that holds a few spoons.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-home-review4-r1": {
+        "file": "img2-tpl-home-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short gray hair checks the outer edge of a dark-gray divider in an open drawer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-howto-review1-r1": {
+        "file": "img2-tpl-howto-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short ash-brown bob presses a white steamer across a blue shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-howto-review2-r1": {
+        "file": "img2-tpl-howto-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A young man with a short fade holds a white steamer beside a folded blue shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-howto-review3-r1": {
+        "file": "img2-tpl-howto-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with hair in a bun presses a white steamer against a blue shirt on a hanger.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-howto-review4-r1": {
+        "file": "img2-tpl-howto-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "An older man with a short gray crop folds a blue shirt beside a white steamer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-howto-首屏-1-r1": {
+        "file": "img2-tpl-howto-首屏-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman with a short copper bob presses a white steamer across a blue shirt on an ironing board.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-jewel-review1-r1": {
+        "file": "img2-tpl-jewel-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short chestnut crop looks at a clear-stone tennis bracelet lying flat on a beige cloth.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-jewel-review2-r1": {
+        "file": "img2-tpl-jewel-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with brown hair tied back looks at a pair of small silver stud earrings on a beige cloth.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-jewel-review3-r1": {
+        "file": "img2-tpl-jewel-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short gray bob lines up four plain silver rings on a beige cloth.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-jewel-review4-r1": {
+        "file": "img2-tpl-jewel-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop holds an oval silver locket whose face is a scroll pattern, with no readable letters.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-jewel-hero-1-r1": {
+        "file": "img2-tpl-jewel-hero-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A pink-stone ring, a pair of silver teardrop studs, and a gold chain bracelet lie flat on beige linen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-launch-review1-r1": {
+        "file": "img2-tpl-launch-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a short chestnut bob holds a plain sage-green canvas tote in a stock room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-launch-review2-r1": {
+        "file": "img2-tpl-launch-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with hair in a low bun holds a plain sage-green canvas tote at a packing table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-launch-review3-r1": {
+        "file": "img2-tpl-launch-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with short gray hair holds a plain sage-green canvas tote in a plain room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-launch-review4-r1": {
+        "file": "img2-tpl-launch-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with dark hair in a bun sits beside a sage-green tote and a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-outfit-review1-r1": {
+        "file": "img2-tpl-outfit-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short brown bob holds a plain beige zip jacket on a hanger in a stock room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-outfit-review2-r1": {
+        "file": "img2-tpl-outfit-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short twists stands behind a plain denim overshirt folded on a table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-outfit-review3-r1": {
+        "file": "img2-tpl-outfit-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short crop holds a plain charcoal blazer on a hanger by a window.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-outfit-review4-r1": {
+        "file": "img2-tpl-outfit-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short black hair stands behind a plain olive chore jacket and a plain beige zip jacket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-outfit-picker-front-1-r1": {
+        "file": "img2-tpl-outfit-picker-front-1-r1",
+        "w": 1024,
+        "h": 1820,
+        "alt": "Man with short black hair, shown from the waist up, speaks to the camera in a plain beige zip jacket.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-outfit-picker-front-2-r1": {
+        "file": "img2-tpl-outfit-picker-front-2-r1",
+        "w": 1024,
+        "h": 1820,
+        "alt": "Woman with her hair in a bun, shown from the waist up, speaks to the camera in a plain denim overshirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-outfit-picker-front-3-r1": {
+        "file": "img2-tpl-outfit-picker-front-3-r1",
+        "w": 1024,
+        "h": 1820,
+        "alt": "Woman with a short crop, shown from the waist up, speaks to the camera in a plain charcoal blazer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-1-r1": {
+        "file": "img2-tpl-sale-wall-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white low shoe on a blue-gray background, with empty space beside it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-2-r1": {
+        "file": "img2-tpl-sale-wall-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white low shoe on a muted green background, with empty space beside it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-3-r1": {
+        "file": "img2-tpl-sale-wall-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain navy baseball cap on a light gray background, with empty space beside it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-4-r1": {
+        "file": "img2-tpl-sale-wall-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman with a short ash-blonde bob wears a plain beige knit top, with empty space beside her.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-5-r1": {
+        "file": "img2-tpl-sale-wall-5-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman with a short light-brown bob wears a plain white wool coat, with empty space beside her.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-6-r1": {
+        "file": "img2-tpl-sale-wall-6-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white low shoes on a person's feet mid-step, with open floor around them.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-7-r1": {
+        "file": "img2-tpl-sale-wall-7-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain navy baseball cap on a light wood table, with empty space beside it.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-sale-wall-8-r1": {
+        "file": "img2-tpl-sale-wall-8-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Woman with a short copper bob wears a plain olive shirt, with empty space beside her.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-story-review1-r1": {
+        "file": "img2-tpl-story-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short black crop holds a plain glass bottle of red sauce and speaks in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-story-review2-r1": {
+        "file": "img2-tpl-story-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with short blonde hair holds the same plain glass bottle of red sauce, black cap on, at a pale counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-story-review3-r1": {
+        "file": "img2-tpl-story-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short dark hair pours red sauce from a plain glass bottle onto a taco, with red chilies beside the plate.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-story-review4-r1": {
+        "file": "img2-tpl-story-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with short dark hair speaks at a plain wood stall counter, a capped bottle of red sauce in front of her.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-tryon-review1-r1": {
+        "file": "img2-tpl-tryon-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short hair wears an olive bomber while the same jacket lies flat on the table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-tryon-review2-r1": {
+        "file": "img2-tpl-tryon-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short blonde bob adjusts a plain taupe jacket on a sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-tryon-review3-r1": {
+        "file": "img2-tpl-tryon-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short brown bob holds a plain navy dress on a hanger in a small shop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-tryon-review4-r1": {
+        "file": "img2-tpl-tryon-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with short hair wears plain taupe trousers, barefoot, while the same trousers lie flat on a wood table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-ugc-review1-r1": {
+        "file": "img2-tpl-ugc-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short blonde pixie holds a plain frosted pump bottle at a bathroom sink, mouth open as if speaking.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-ugc-review2-r1": {
+        "file": "img2-tpl-ugc-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Man with dark hair in a bun opens a plain terracotta snack pouch on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-ugc-review3-r1": {
+        "file": "img2-tpl-ugc-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Woman with a short copper crop sits on a gym bench holding a plain olive screw-cap bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-tpl-ugc-review4-r1": {
+        "file": "img2-tpl-ugc-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Older man with short gray hair holds a plain stoneware mug at a kitchen table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-trust-hero-r1": {
+        "file": "img2-trust-hero-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with ash-blonde hair in a low bun checks a closed notebook beside a plain cup and a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-review1-r1": {
+        "file": "img2-url-to-video-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short brown hair stands barefoot by a rolled charcoal yoga mat, a plain dark phone face-down on the wood floor.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-review2-r1": {
+        "file": "img2-url-to-video-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with dark hair in a bun stands at a kitchen counter with a sage-green lunch box and a silver clasp.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-review3-r1": {
+        "file": "img2-url-to-video-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short honey-blonde bob holds a plain white screw-lid cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-review4-r1": {
+        "file": "img2-url-to-video-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with short gray hair stands beside a plain glass of dark cold coffee.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-steps-result-r1": {
+        "file": "img2-url-to-video-visual-steps-result-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "A woman with a short copper crop sits at a kitchen counter with a sage-green lunch box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-steps-source-r1": {
+        "file": "img2-url-to-video-visual-steps-source-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "A face-down phone sits beside a closed sage-green lunch box with a silver clasp.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-strip-0-r1": {
+        "file": "img2-url-to-video-visual-strip-0-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A young woman with a platinum pixie speaks to the camera and holds a sage-green lunch box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-strip-1-r1": {
+        "file": "img2-url-to-video-visual-strip-1-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An older man with a gray buzz cut speaks to the camera and holds a plain white cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-strip-2-r1": {
+        "file": "img2-url-to-video-visual-strip-2-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman with light brown hair in a bun speaks to the camera beside a rolled charcoal yoga mat.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-strip-3-r1": {
+        "file": "img2-url-to-video-visual-strip-3-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A man with short sandy hair speaks to the camera and holds a glass of dark cold coffee.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-strip-4-r1": {
+        "file": "img2-url-to-video-visual-strip-4-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An older woman with short white hair speaks to the camera while opening the clasp of a sage-green lunch box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-url-to-video-visual-strip-5-r1": {
+        "file": "img2-url-to-video-visual-strip-5-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A man with short black hair sits on the floor speaking to the camera, one hand raised, beside a partly unrolled charcoal yoga mat.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-ads-review1-r1": {
+        "file": "img2-video-ads-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short brown bob trims the wick of a plain pale ceramic candle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-ads-review2-r1": {
+        "file": "img2-video-ads-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with hair in a bun lays a plain silver chain on a linen cloth.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-ads-review3-r1": {
+        "file": "img2-video-ads-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short black crop holds a plain cast-iron skillet by the handle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-ads-review4-r1": {
+        "file": "img2-video-ads-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short auburn crop sets a plain tan backpack on a table in a stock room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-hub-review1-r1": {
+        "file": "img2-video-hub-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short honey-blonde bob holds a plain sage insulated bottle with her mouth open as if speaking.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-hub-review2-r1": {
+        "file": "img2-video-hub-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A man with a short black crop points at the empty compartments of an open beige bento box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-hub-review3-r1": {
+        "file": "img2-video-hub-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A woman with a short auburn bob sets a plain frosted bottle on a bedroom dresser beside a small dish and a hairbrush.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-video-hub-review4-r1": {
+        "file": "img2-video-hub-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A young man in a gray t-shirt holds a plain jump rope in a home gym.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-review1-r1": {
+        "file": "img2-white-background-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with short gray-brown hair sets a plain brown wallet on a desk next to metal keys.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-review2-r1": {
+        "file": "img2-white-background-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with a short black bob looks at a cup, a bowl, and a mug on a white table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-review3-r1": {
+        "file": "img2-white-background-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult woman with hair in a bun lifts a cream stoneware bowl off a wood kitchen table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-review4-r1": {
+        "file": "img2-white-background-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Adult man with short black hair stands by a desk that holds a brass lamp and a cream mug.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-benefits-1-r1": {
+        "file": "img2-white-background-benefits-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same woven straw tote sits on a linen table and, beside that, on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-benefits-2-r1": {
+        "file": "img2-white-background-benefits-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An olive bomber and a yellow polo lie on a wooden chair and, beside that, on pure white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-benefits-3-r1": {
+        "file": "img2-white-background-benefits-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "One beige block-heel pump sits on a wood floor beside six plain block-heel pumps on white.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "img2-white-background-benefits-4-r1": {
+        "file": "img2-white-background-benefits-4-r1",
+        "w": 1536,
+        "h": 864,
+        "alt": "The same coral three-seat sofa appears in a living room, on pure white, and in a second room.",
         "variants": [
           640,
           1280

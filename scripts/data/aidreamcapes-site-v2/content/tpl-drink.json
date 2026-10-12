@@ -571,72 +571,41 @@
     "hero",
     "picker",
     "steps",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Drink Sellers Use a Pour Video",
-    "lead": "Example setups. Each one shows how a drink shop could stage one pour, then add a voice or a post.",
+    "h2": "How Drink Brands Use a Pour Template",
+    "lead": "Four drink shops pick a pour template and drop in the package they already sell.",
     "items": [
       {
         "example": true,
         "who": "Soda brand",
-        "t": "Pour over ice",
-        "d": "Example: a can tips into an iced glass, and the package stays beside the pour."
+        "t": "Pour the Can Over Ice",
+        "d": "They drop a can photo into a pour template and get the can tipping into an iced glass, with no prompt to write. They skip booking a kitchen for that one pour and post the tall file.",
+        "img": "n:guide:img2-tpl-drink-review1-r1"
       },
       {
         "example": true,
-        "who": "Coffee brand",
-        "t": "Can, then glass",
-        "d": "Example: a cold-brew can is lifted next to an iced glass, and the can stays easy to recognize."
+        "who": "Cold-brew brand",
+        "t": "The Can Beside the Glass",
+        "d": "They pick a template where the can stays next to a filled glass, using the listing photo they already have. One photo covers the ad, and they do not film a new pour.",
+        "img": "n:guide:img2-tpl-drink-review2-r1"
       },
       {
         "example": true,
         "who": "Juice seller",
-        "t": "A spoken flavor line",
-        "d": "Example: a short voice names the flavor while the pour finishes, and the bottle stays in frame."
+        "t": "An Actor Holds the Bottle",
+        "d": "They use a pour template where an AI actor holds the bottle and a voice names the flavor. They do not hire a creator for the sip, and the bottle stays the one on the listing.",
+        "img": "n:guide:img2-tpl-drink-review3-r1"
       },
       {
         "example": true,
         "who": "Tea brand",
-        "t": "Words on the sip",
-        "d": "Example: a caption names the citrus note while the glass sits in daylight."
-      },
-      {
-        "example": true,
-        "who": "Wellness drink",
-        "t": "Another language, same sip",
-        "d": "Example: the same sip is voiced again in the language the shop sells in. Health wording stays off the clip."
-      },
-      {
-        "example": true,
-        "who": "Listing manager",
-        "t": "Start from the listing",
-        "d": "Example: the shop pastes the product link, and the pour uses the bottle photo from that page."
-      },
-      {
-        "example": true,
-        "who": "Short-form shop",
-        "t": "A track under the fizz",
-        "d": "Example: background music sits under the pour, and the shop posts the tall 9:16 version."
-      },
-      {
-        "example": true,
-        "who": "Catalog seller",
-        "t": "One glass, several flavors",
-        "d": "Example: the same glass scene is reused for each flavor, without a new kitchen setup."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "A presenter, not a taster",
-        "d": "The person who sips is an AI actor from the actor library."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Out to TikTok or Meta",
-        "d": "Example: the finished pour is sent to TikTok or Meta from the same account."
+        "t": "Post the Sip From a Template",
+        "d": "They pick the sip template, add the tin photo, and post the tall file with a caption. The same sip can be voiced in another language, with no second shoot.",
+        "img": "n:guide:img2-tpl-drink-review4-r1"
       }
     ]
   },

@@ -101,7 +101,7 @@
     ],
     "steps": {
       "source": "n:guide:rc4-tpl-bf-source-pump-r1",
-      "result": "n:guide:rc4-tpl-bf-result-pump-r1",
+      "result": "n:guide:img2-tpl-bf-steps-2-r1",
       "mode": "video",
       "length": 15,
       "prompt": "Hold the bottle in a warm holiday room and turn it once. Leave the price off.",

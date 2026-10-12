@@ -194,68 +194,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Use Snack Brand TikTok Videos",
-    "lead": "How food and drink sellers use one package photo or a product link.",
+    "h2": "How Food Sellers Use One Pack Photo",
+    "lead": "Four sellers turn a package photo or a product link into a pour or a plate.",
     "items": [
       {
         "example": true,
-        "who": "Canned drink",
-        "t": "One pour into ice",
-        "d": "They upload the can and describe an amber pour into a tall glass. Condensation is described, not sprayed onto the real can."
+        "who": "Drink seller",
+        "t": "Pour the Citrus Over Ice",
+        "d": "They upload the citrus bottle and describe one pour into a glass of ice. They post the clip where that drink already sells, and they do not book a kitchen.",
+        "img": "n:guide:img2-ind-food-drinks-review1-r1"
       },
       {
         "example": true,
-        "who": "Snack pouch",
-        "t": "Two lengths, one pouch",
-        "d": "A pouch photo becomes a 6-second clip of opening it (24 credits) and a 15-second clip of a bite on a plate (60 credits)."
+        "who": "Snack seller",
+        "t": "Open One Pouch on Camera",
+        "d": "They use one pouch photo for a short open-the-pack clip and a longer bite on a plate. They check the flavor name on the pouch before the file goes up.",
+        "img": "n:guide:img2-ind-food-drinks-review2-r1"
       },
       {
         "example": true,
-        "who": "New flavor",
-        "t": "A link before any kitchen day",
-        "d": "They paste the product page for a first pour and still check the flavor name on the pouch."
+        "who": "Tea seller",
+        "t": "Start From the Product Link",
+        "d": "They paste the product page for a first look at the iced tea can. They still check the flavor name on the can before anyone posts it.",
+        "img": "n:guide:img2-ind-food-drinks-review3-r1"
       },
       {
         "example": true,
-        "who": "Cookie brand",
-        "t": "Plate beside fruit",
-        "d": "Hands set cookies on a plate. The count on the plate is checked so it does not overstate the pack."
-      },
-      {
-        "example": true,
-        "who": "Listing desk",
-        "t": "Presenter for the pour",
-        "d": "They pick a generated presenter and keep that look when the next flavor ships."
-      },
-      {
-        "example": true,
-        "who": "Careful label",
-        "t": "Captions, not the ingredient panel",
-        "d": "Voice and captions are edited before export. Allergens stay on the real pack."
-      },
-      {
-        "example": true,
-        "who": "Region desk",
-        "t": "The pour in another language",
-        "d": "The same pour is made again for another market. Pack color is checked both times."
-      },
-      {
-        "example": true,
-        "who": "Photo set",
-        "t": "A few packs, no light kit",
-        "d": "Several package photos replace a lighting day. The hands on screen stay made up."
-      },
-      {
-        "example": true,
-        "who": "Script desk",
-        "t": "A short script about the bite",
-        "d": "They ask for a few lines about one bite, change a word, and run the job at the credit cost shown."
-      },
-      {
-        "example": true,
-        "who": "Chat desk",
-        "t": "Describe the glass, get the clip",
-        "d": "They describe the glass in a few short notes and get a script with the pour."
+        "who": "Cookie seller",
+        "t": "Plate the Cookies",
+        "d": "Hands set oat cookies on a plate beside berries, and the count on the plate does not overstate the pack. The still goes on the listing without a styling day.",
+        "img": "n:guide:img2-ind-food-drinks-review4-r1"
       }
     ]
   },
@@ -267,6 +235,7 @@
     "reasons",
     "steps",
     "platforms",
+    "reviews",
     "faq",
     "cta"
   ],

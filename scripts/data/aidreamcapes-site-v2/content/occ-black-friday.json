@@ -281,26 +281,36 @@
     }
   ],
   "reviews": {
-    "h2": "How Stores Get Cyber Monday Ad Creatives Ready",
-    "lead": "Three ways a shop uses one scene from Friday into Monday.",
+    "h2": "How Sellers Make a Holiday Video",
+    "lead": "Four sellers start from a product link, put an avatar beside the item, and add the offer when it is final.",
     "items": [
       {
         "example": true,
-        "who": "A bag shop",
-        "t": "Let an actor pack the duffel",
-        "d": "They paste the bag's page, pick an actor, and leave empty space for the code. Friday and Monday each get their own line later."
+        "who": "Gift seller",
+        "t": "Let an Avatar Pack the Box",
+        "d": "They paste the gift-box page and pick an avatar who stands beside the pump bottle. They export a tall holiday file and type the code only when the number is final.",
+        "img": "n:guide:img2-occ-black-friday-review1-r1"
       },
       {
         "example": true,
-        "who": "A desk shop",
-        "t": "Try two openings for the monitor",
-        "d": "They keep the monitor on a tidy desk and test two actors with the same script. The end time is not printed on the picture."
+        "who": "Shoe seller",
+        "t": "Try Two Holiday Openings",
+        "d": "They keep the knit slip-on on a tidy floor and test two opening lines with the same avatar. They keep the line they would actually run.",
+        "img": "n:guide:img2-occ-black-friday-review2-r1"
       },
       {
         "example": true,
-        "who": "A kitchen shop",
-        "t": "Swap the voice for Monday",
-        "d": "They keep the lunch-bag scene, change the language of the voice, and only replace the offer line for Cyber Monday."
+        "who": "Lunch seller",
+        "t": "Swap the Voice for Monday",
+        "d": "They keep the lunch-bag scene and change the language of the voice for the next sale day. The bag in the box stays the same.",
+        "img": "n:guide:img2-occ-black-friday-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Pet seller",
+        "t": "Keep the Dog, Change the Line",
+        "d": "They keep the calm dog on the sofa and try two openings of the holiday line. They export the one they would post.",
+        "img": "n:guide:img2-occ-black-friday-review4-r1"
       }
     ]
   },
@@ -340,6 +350,7 @@
     "benefits",
     "steps",
     "related",
+    "reviews",
     "faq",
     "cta"
   ]

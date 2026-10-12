@@ -120,8 +120,8 @@
       "n:guide:q20-occ-sale-strip-06"
     ],
     "steps": {
-      "source": "n:guide:occ-sale-discount-c3-m2-source",
-      "result": "n:guide:q20-occ-sale-discount-steps-result-r2",
+      "source": "n:guide:img2-occ-sale-discount-visual-steps-source-r1",
+      "result": "n:guide:img2-occ-sale-discount-visual-steps-result-r1",
       "mode": "photo",
       "prompt": "Pastel skincare bottles on a pale counter, with open space beside them for the offer.",
       "options": [
@@ -260,29 +260,29 @@
     {
       "t": "One AI Avatar for the Sale",
       "d": "One AI avatar carries the denim jacket through this sale, so the hanger clip looks like the same shop as your other videos. Leave open wall space beside the jacket, and that face opens by naming the last day.",
-      "img": "n:guide:fx01-occ-sale-discount-benefit-offer",
-      "alt": "A denim jacket hangs on a hanger against a pale wall, with open space for the offer. You add the last day without a new shoot.",
+      "img": "n:guide:img2-occ-sale-discount-benefits-0-r1",
+      "alt": "An older man with short gray hair speaks to the camera beside a plain blue denim jacket on a wooden hanger.",
       "frame": "none"
     },
     {
       "t": "A Spoken Pitch With the Deadline",
       "d": "You get a spoken pitch from the picnic blanket page, and the last day lands as the final line. A buyer hears the offer while the hands keep folding the blanket.",
-      "img": "n:guide:fx01-occ-sale-discount-benefit-reshoot",
-      "alt": "Adult hands fold a checked picnic blanket beside a basket at a park table. You show the blanket in use while you name the sale.",
+      "img": "n:guide:img2-occ-sale-discount-benefits-1-r1",
+      "alt": "A man with short blonde hair speaks to the camera while folding a checked picnic blanket at a park table.",
       "frame": "none"
     },
     {
       "t": "Slow the Voice on the End Date",
       "d": "A buyer can catch the end date when the voice eases on Thursday night. Pick a warm voice, keep the rest of the line quick, and leave the charging pad in the shot.",
-      "img": "n:guide:fx01-occ-sale-discount-benefit-versions",
-      "alt": "Two adult hands set a round black charging pad on a dark cloth. The pad stays in the sale shot you post.",
+      "img": "n:guide:img2-occ-sale-discount-benefits-2-r1",
+      "alt": "A woman with auburn hair in a bun speaks to the camera, a plain round charging puck on the desk.",
       "frame": "none"
     },
     {
       "t": "Run Two Openings, Keep One",
       "d": "Make two cuts of the tea pouch. One opens on the pack beside the mug, and the other opens by naming the last day. Keep the file you want to run.",
-      "img": "n:guide:fx01-occ-sale-discount-benefit-no-shoot",
-      "alt": "Adult hands prepare a kraft tea pouch beside a plain travel mug in a bright kitchen. You open the sale on that pack, with no film day.",
+      "img": "n:guide:img2-occ-sale-discount-benefits-3-r1",
+      "alt": "A young man with a short buzz cut speaks to the camera beside a blank kraft pouch and a steel travel mug.",
       "frame": "none"
     }
   ],
@@ -315,26 +315,36 @@
     }
   ],
   "reviews": {
-    "h2": "How Shops Make a Sale Banner for an Online Store",
-    "lead": "Three ways a shop leaves room for an offer that is not final yet.",
+    "h2": "How Sellers Put an End Date on a Sale",
+    "lead": "Four sellers use this page to say the last day out loud and post the clip.",
     "items": [
       {
         "example": true,
-        "who": "A beauty shop",
-        "t": "Leave open space beside the jar",
-        "d": "They paste the product link and ask for a clean counter with empty room on one side. The percent off is typed later, so a changed number does not need a new scene."
+        "who": "Denim seller",
+        "t": "Say the Last Day",
+        "d": "They paste the jacket page and let an avatar say the last day while the denim jacket stays in frame. They post that clip and skip filming the deadline.",
+        "img": "n:guide:img2-occ-sale-discount-review1-r1"
       },
       {
         "example": true,
-        "who": "An apparel shop",
-        "t": "Run the jacket scene again next week",
-        "d": "They keep the same jacket scene and swap the actor's line for the next code. Only the offer text in the editor changes."
+        "who": "Picnic seller",
+        "t": "Name the End Date",
+        "d": "They keep the hands folding the checked picnic blanket and put the end date in the spoken line. They use the file in a social post and skip a new shoot when only the date changes.",
+        "img": "n:guide:img2-occ-sale-discount-review2-r1"
       },
       {
         "example": true,
-        "who": "A home shop",
-        "t": "Fold the blanket, then set the timer",
-        "d": "They show the blanket in use and set the end time in the editor once the sale window is real."
+        "who": "Desk-goods seller",
+        "t": "Ease the Voice on the Date",
+        "d": "They leave the wireless charging pad in the shot and ease the voice on the end date. They run that cut as a paid ad and skip a reshoot for the date.",
+        "img": "n:guide:img2-occ-sale-discount-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Tea seller",
+        "t": "Keep One Opening",
+        "d": "They make two cuts of the kraft tea pouch beside the mug. One opens on the last day, and they keep the file they want to run. They skip a reshoot when the offer line changes.",
+        "img": "n:guide:img2-occ-sale-discount-review4-r1"
       }
     ]
   },
@@ -375,6 +385,7 @@
     "steps",
     "trust",
     "related",
+    "reviews",
     "faq",
     "cta"
   ]

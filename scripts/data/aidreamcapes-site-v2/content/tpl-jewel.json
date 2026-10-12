@@ -97,7 +97,7 @@
     ],
     "steps": {
       "source": "n:guide:tpl-jewel-m2-source",
-      "result": "n:guide:rc3-jewel-step-result-r1",
+      "result": "n:guide:img2-tpl-jewel-hero-1-r1",
       "mode": "photo",
       "prompt": "Show an adult wearing the silver necklace at the collarbone, with a light touch on the chain so the size is easy to judge. Keep the pendant and chain visible, in soft window light.",
       "options": [
@@ -561,14 +561,36 @@
     }
   },
   "reviews": {
-    "h2": "Why Shops Show the Piece on a Generated Person",
-    "lead": "Worn jewelry photos, including earrings on a person, start from one piece. This card is an example, not a quote.",
+    "h2": "How Jewelry Sellers Edit the Tray",
+    "lead": "Four sellers start from one piece photo, clear the cloth, and keep the metal they shot.",
     "items": [
       {
         "example": true,
-        "who": "Jewelry team",
-        "t": "Background off, shadow, then worn",
-        "d": "A jewelry team removes the background, adds a soft shadow, and checks the worn photo against the original before the listing goes up."
+        "who": "Necklace seller",
+        "t": "Keep the Stones and the Crop",
+        "d": "They clear the cloth under a tennis bracelet and run that same crop on the next chain. They check every stone against the photo they took.",
+        "img": "n:guide:img2-tpl-jewel-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Earring seller",
+        "t": "Add One Shadow",
+        "d": "They take pins and the grey cloth off a stud photo, then add a soft shadow under the metal. The color stays the one they shot.",
+        "img": "n:guide:img2-tpl-jewel-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Ring seller",
+        "t": "Line Up the Size Run",
+        "d": "They center a size run on the same point of the square. The next size uses that crop instead of a new table setup.",
+        "img": "n:guide:img2-tpl-jewel-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Locket seller",
+        "t": "Read the Engraving First",
+        "d": "They change only the area around an old locket and read the engraving against the source. The file stays off the site if a prong moved.",
+        "img": "n:guide:img2-tpl-jewel-review4-r1"
       }
     ]
   },
@@ -612,6 +634,7 @@
     "features",
     "steps",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],

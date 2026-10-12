@@ -71,12 +71,12 @@
   ],
   "visual": {
     "strip": [
-      "n:guide:q17-ind-home-living-strip-0",
-      "f:q17-ind-home-living-strip-1",
-      "n:guide:q17-ind-home-living-r2-strip-2",
-      "n:guide:q17-ind-home-living-strip-3",
-      "n:guide:q17-ind-home-living-r2-strip-4",
-      "n:guide:q17-ind-home-living-strip-5"
+      "n:guide:img2-ind-home-living-visual-strip-0-r1",
+      "n:guide:img2-ind-home-living-visual-strip-1-r1",
+      "n:guide:img2-ind-home-living-visual-strip-2-r1",
+      "n:guide:img2-ind-home-living-visual-strip-3-r1",
+      "n:guide:img2-ind-home-living-visual-strip-4-r1",
+      "n:guide:img2-ind-home-living-visual-strip-5-r1"
     ],
     "steps": {
       "source": "n:guide:q17-ind-home-living-r2-source-pillow",
@@ -151,20 +151,20 @@
       {
         "t": "Cover the Whole Listing",
         "d": "One photo of the vacuum can feed a clip for every room on the listing, so you are not booking a creator for each cushion. A 10-second clip of the vacuum crossing the sofa is 40 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
-        "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
-        "alt": "An adult hand guides a plain cordless vacuum over crumbs on a sofa cushion. You show that cleaning pass without booking a studio."
+        "img": "n:guide:img2-ind-home-living-reasons-items-0-r1",
+        "alt": "Adult man with short strawberry-blond hair speaks beside a white vacuum on a sofa cushion."
       },
       {
         "t": "Skip the Studio Booking",
         "d": "You do not book a studio for the closet organizer. One organizer photo covers a square still for the product page and a tall clip of hands dropping shirts into the bins.",
-        "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
-        "alt": "Adult hands place folded shirts into a plain fabric closet organizer. You show the bins in use without a shoot."
+        "img": "n:guide:img2-ind-home-living-reasons-items-1-r1",
+        "alt": "Adult woman with hair in a high bun holds folded shirts in front of a fabric closet organizer."
       },
       {
         "t": "Keep One Presenter",
         "d": "The same AI actor can present the lamp switched on beside the reading chair, then the next piece in that room. Shoppers see the lamp on, which is the moment that sells the piece.",
-        "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
-        "alt": "An adult hand adjusts a plain ceramic table lamp beside a reading chair. You put the lamp in the room shoppers can picture."
+        "img": "n:guide:img2-ind-home-living-reasons-items-2-r1",
+        "alt": "Adult man with short black hair speaks beside a lit cream ceramic lamp."
       }
     ]
   },
@@ -205,74 +205,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Home Brands Switch to AI Ads",
-    "lead": "Example ways home sellers use one product photo. These are not quotes. The after state has to match what the product really does.",
+    "h2": "How Home Sellers Use One Photo",
+    "lead": "Four home sellers start from a photo they already own and post the room clip.",
     "items": [
       {
         "example": true,
-        "who": "Organizer brand",
-        "t": "Closet, then the rack",
-        "d": "They describe a cluttered floor, then shoes on a three-tier rack, and they only show a result the rack can actually produce."
+        "who": "Vacuum seller",
+        "t": "One Photo, Every Room",
+        "d": "They use one photo of the cordless vacuum for a clip of it crossing the sofa, and post that clip on the listing. They skip booking a creator for each room.",
+        "img": "n:guide:img2-ind-home-living-review1-r1"
       },
       {
         "example": true,
-        "who": "Lamp shop",
-        "t": "Chair-side, size in the listing",
-        "d": "A lamp photo becomes a hand setting it beside a chair. They write the height in the listing, because the pictured size can be off."
+        "who": "Closet seller",
+        "t": "Shirts Into the Bins",
+        "d": "They make a square still and a tall clip of hands dropping shirts into the fabric organizer. They skip a closet set and a hired model.",
+        "img": "n:guide:img2-ind-home-living-review2-r1"
       },
       {
         "example": true,
-        "who": "Vacuum brand",
-        "t": "One pass over crumbs",
-        "d": "A short clip shows a hand guiding the vacuum over a mess you can see. A 10-second version spends 40 credits."
+        "who": "Lamp seller",
+        "t": "Same Presenter, Lamp On",
+        "d": "They keep one AI actor and show the ceramic lamp switched on beside the reading chair. The next piece in that room can use the same presenter, so they skip a new shoot.",
+        "img": "n:guide:img2-ind-home-living-review3-r1"
       },
       {
         "example": true,
-        "who": "Pillow line",
-        "t": "Both pillows on the chair",
-        "d": "They ask the scene to end with both pillows fully visible, and they reject a result that changes the seam or the color."
-      },
-      {
-        "example": true,
-        "who": "Large furniture",
-        "t": "Whole piece, large room",
-        "d": "A sofa photo shows the whole piece, and the scene names a room big enough to hold it. The upload includes the legs, so the scene keeps them."
-      },
-      {
-        "example": true,
-        "who": "Listing shop",
-        "t": "White photo, then a room",
-        "d": "One white-background photo guides a clean listing image and a room clip. Materials and how much it holds stay in the product description."
-      },
-      {
-        "example": true,
-        "who": "Page-link seller",
-        "t": "A link, then the room script",
-        "d": "They paste the product page. Or they send that link from their own shop software (the API). They ask for a short script about one room action. Sizes stay in the listing."
-      },
-      {
-        "example": true,
-        "who": "Two-scene seller",
-        "t": "Hands, then the same person again",
-        "d": "They pick a person the tool creates to set the product down. Then they make a second version of that person in the same room."
-      },
-      {
-        "example": true,
-        "who": "Small ads shop",
-        "t": "Voice, captions, and a track",
-        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the room clip in the editor before export."
-      },
-      {
-        "example": true,
-        "who": "Second-language shop",
-        "t": "The same room, another language",
-        "d": "They make the organizing clip again in a second language from the same photo. The after photo still has to show something the product really does."
-      },
-      {
-        "example": true,
-        "who": "Version tester",
-        "t": "A few versions, then publish",
-        "d": "They type the room scene in the text box and keep a few versions. They send the one they want to TikTok, Facebook, or Instagram. A 10-second clip spends 40 credits."
+        "who": "Pillow seller",
+        "t": "Both Pillows on the Chair",
+        "d": "They place the ivory and sage pillows fully on the cream chair and use the clip on the product page. They skip a model day for that pair.",
+        "img": "n:guide:img2-ind-home-living-review4-r1"
       }
     ]
   },
@@ -302,6 +264,7 @@
     "steps",
     "platforms",
     "related",
+    "reviews",
     "faq",
     "cta"
   ]

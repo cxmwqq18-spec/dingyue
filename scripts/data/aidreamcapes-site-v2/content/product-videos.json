@@ -270,6 +270,7 @@
     "steps",
     "benefits",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -313,36 +314,36 @@
     "before-after-videos"
   ],
   "reviews": {
-    "h2": "How Shops Use an AI Product Video",
-    "lead": "How a store uses an AI actor, a script and one product action on a page or in an ad.",
+    "h2": "How Shops Use a Product Video",
+    "lead": "Four shops start from a ceramic mug and leave with a clip an actor can present.",
     "items": [
       {
         "example": true,
-        "who": "Independent store",
-        "t": "Lip balm routine",
-        "d": "An independent store shows an AI actor applying the balm, with a short spoken voice, on the product page.",
-        "img": "n:guide:q3-product-videos-board-03-lip-balm-routine"
+        "who": "Ceramic mug maker",
+        "t": "A Hand Holding the Mug",
+        "d": "They have an AI actor hold the ceramic mug on a counter and say the line they use at the till, then put that clip on the product page. They skip a crew for the size demo.",
+        "img": "n:guide:img2-product-videos-review1-r1"
       },
       {
         "example": true,
-        "who": "Marketplace seller",
-        "t": "Shoe fit",
-        "d": "A marketplace seller uses a shoe-fit clip, with captions, on the listing.",
-        "img": "n:guide:q3-product-videos-board-06-running-shoe-try-on"
+        "who": "Gift shop buyer",
+        "t": "Show the Mug Size",
+        "d": "They turn one mug photo into a clip where a hand wraps the cup, so shoppers can judge the size on the listing. They do not book a hand model.",
+        "img": "n:guide:img2-product-videos-review2-r1"
       },
       {
         "example": true,
-        "who": "Drink seller",
-        "t": "First sip",
-        "d": "A drink seller pairs a first-sip shot with a script and a spoken voice that sounds human, and skips another filming day.",
-        "img": "n:guide:q3-product-videos-board-08-citrus-taste-review"
+        "who": "Cafe merch seller",
+        "t": "A Morning Mug Clip",
+        "d": "They make a short morning clip of the mug from the photo already on the menu page, with a spoken line, for a phone ad. They skip filming in the cafe before open.",
+        "img": "n:guide:img2-product-videos-review3-r1"
       },
       {
         "example": true,
-        "who": "Home shop",
-        "t": "Fabric shaver",
-        "d": "A home shop shows the shaver clearing fabric, checks the clip against the real tool, then publishes it.",
-        "img": "n:guide:f11-r10-product-videos-fabric-shaver-demo"
+        "who": "Home goods seller",
+        "t": "An Unboxing of the Mug",
+        "d": "They upload the mug and get an unboxing clip with a spoken line for a paid ad. They check the cup against the one in the box before they post, and they skip a second shoot.",
+        "img": "n:guide:img2-product-videos-review4-r1"
       }
     ]
   },

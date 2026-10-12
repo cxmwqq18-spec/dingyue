@@ -546,72 +546,41 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
     "h2": "How Home Sellers Use a Storage Video",
-    "lead": "Example setups. Each one shows how a home shop could stage one tidy-up.",
+    "lead": "Four ways a shop shows the gray divider in a listing clip.",
     "items": [
       {
         "example": true,
-        "who": "Drawer brand",
-        "t": "One crowded drawer",
-        "d": "Example: a divider tray slides into a kitchen drawer, and the clip ends on the neater row."
+        "who": "Drawer organizer seller",
+        "t": "One Crowded Drawer",
+        "d": "They slide the gray divider into a kitchen drawer and end on the neater row. The clip goes on the product page, and they skip filming the whole kitchen.",
+        "img": "n:guide:img2-tpl-home-review1-r1"
       },
       {
         "example": true,
-        "who": "Pantry brand",
-        "t": "Shelf tidy-up",
-        "d": "Example: a clear bin is set on a shelf beside plain containers, as the only change."
+        "who": "Home storage seller",
+        "t": "Second Cut, Same Photo",
+        "d": "An AI actor points at the lanes, and they still use the same divider photo. That second cut is a test, not a new shoot.",
+        "img": "n:guide:img2-tpl-home-review2-r1"
       },
       {
         "example": true,
-        "who": "Closet brand",
-        "t": "One cubby",
-        "d": "Example: a woven shelf organizer goes into a closet cubby beside folded clothes."
+        "who": "Small-shop organizer seller",
+        "t": "A Voice Over the Lanes",
+        "d": "A voice reads which lane holds the spoons while the divider slides in. They post the tall clip and skip a studio day.",
+        "img": "n:guide:img2-tpl-home-review3-r1"
       },
       {
         "example": true,
-        "who": "Desk brand",
-        "t": "Cables gathered",
-        "d": "Example: loose cables are guided into a cable organizer under a monitor."
-      },
-      {
-        "example": true,
-        "who": "Storage brand",
-        "t": "A spoken size line",
-        "d": "Example: a short voice names the width while a caption carries the capacity, and both stay easy to edit."
-      },
-      {
-        "example": true,
-        "who": "Listing manager",
-        "t": "Feed and gallery",
-        "d": "Example: a tall 9:16 tidy-up goes to a short phone post, and a square version can sit in a gallery."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "No Rented Room",
-        "d": "Example: the tidy-up is made from the organizer photo, with no film crew and no borrowed room."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Same photo, second room",
-        "d": "Example: the same organizer photo is reused for a drawer and then a closet, instead of a second shoot."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "A presenter, not a tour",
-        "d": "Example: a person on screen is an AI actor from the actor library. The clip is the brand's ad, not a client story."
-      },
-      {
-        "example": true,
-        "who": "First-time seller",
-        "t": "Posted to TikTok",
-        "d": "Example: the seller names one cluttered spot, checks the edges, and sends the file to TikTok."
+        "who": "Organizer seller",
+        "t": "Posted Where Shoppers Scroll",
+        "d": "They post the divider clip on TikTok and on the product page. The tray edges stay visible, and they check them against the listing photo.",
+        "img": "n:guide:img2-tpl-home-review4-r1"
       }
     ]
   },

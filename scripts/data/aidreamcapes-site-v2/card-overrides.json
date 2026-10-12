@@ -143,8 +143,7 @@
   },
   "ind-health-wellness": {
     "swap": {
-      "outfit": "howto",
-      "sale": "howto"
+      "outfit": "howto"
     },
     "images": {
       "howto": {

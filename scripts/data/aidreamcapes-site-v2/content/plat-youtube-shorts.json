@@ -168,6 +168,7 @@
     "features",
     "platforms",
     "related",
+    "reviews",
     "faq"
   ],
   "benefits_lead": "A YouTube Shorts ad can start from the steamer photo on the product page, or from the product link.",
@@ -235,68 +236,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Use YouTube Shorts Ads",
-    "lead": "A few ways shops open a Short from one product.",
+    "h2": "How Sellers Open a YouTube Ad",
+    "lead": "Four sellers open a YouTube ad on the steamer and the blue shirt, and skip a studio day.",
     "items": [
       {
         "example": true,
-        "who": "Kitchen shop",
-        "t": "One use, start to finish",
-        "d": "A kitchen shop uses a pan photo for one cook motion, with the handle kept visible."
-      },
-      {
-        "example": true,
-        "who": "Beauty shop",
-        "t": "A color swipe, then the tube",
-        "d": "A beauty shop uses a gloss photo for a swipe of color, with the tube still visible."
-      },
-      {
-        "example": true,
-        "who": "Electronics shop",
-        "t": "Unclip, then show the fit",
-        "d": "An electronics shop uses an earbud case photo and shows the open case in a hand."
-      },
-      {
-        "example": true,
-        "who": "Drink seller",
-        "t": "Open, pour, stop",
-        "d": "A drink seller uses a can photo for a short pour, with the label facing the camera."
-      },
-      {
-        "example": true,
-        "who": "Home shop",
-        "t": "Click the lamp on",
-        "d": "A home shop uses a lamp photo for a switch-on, so the shade shape is easy to see."
-      },
-      {
-        "example": true,
-        "who": "Fitness shop",
-        "t": "Unfold, then hold",
-        "d": "A fitness shop uses a mat photo for an unroll, so the length is easy to see."
-      },
-      {
-        "example": true,
         "who": "Apparel shop",
-        "t": "One zip, collar visible",
-        "d": "An apparel shop uses a jacket photo for one zip, with the collar kept visible."
+        "t": "Steam the Blue Shirt",
+        "d": "An apparel shop runs the white steamer down a blue shirt and posts the tall file as a YouTube ad. They skip a studio booking for that Short.",
+        "img": "n:guide:img2-plat-youtube-shorts-review1-r1"
       },
       {
         "example": true,
-        "who": "Pet shop",
-        "t": "One grooming pass",
-        "d": "A pet shop uses a brush photo for a short grooming pass so the size is easy to see."
+        "who": "Uniform seller",
+        "t": "Show One Pass on the Shirt",
+        "d": "A uniform seller uses a close pass of the steamer on the blue shirt as the opening. They put that Short in the ad account and skip a creator day.",
+        "img": "n:guide:img2-plat-youtube-shorts-review2-r1"
       },
       {
         "example": true,
-        "who": "Jewelry shop",
-        "t": "Clasp, chain visible",
-        "d": "A jewelry shop uses a necklace photo for a clasp close-up, with the chain fully visible."
+        "who": "Travel gear shop",
+        "t": "Hold the Steamer Up",
+        "d": "A travel gear shop has an AI avatar hold the white steamer and name one fact. They download the tall file and skip a desk shoot.",
+        "img": "n:guide:img2-plat-youtube-shorts-review3-r1"
       },
       {
         "example": true,
-        "who": "Outdoor shop",
-        "t": "One sip on a trail",
-        "d": "An outdoor shop uses a bottle photo for a sip, so the logo stays easy to read."
+        "who": "Listing seller",
+        "t": "Start From the Product Page",
+        "d": "A listing seller pastes the steamer page and gets a Short of the steamer on the shirt. They skip waiting for a rented studio to open.",
+        "img": "n:guide:img2-plat-youtube-shorts-review4-r1"
       }
     ]
   },

@@ -15,8 +15,8 @@
   "benefits_h2": "Stage the Product Where People Use It",
   "benefits": [
     {
-      "img": "n:guide:fx15-lifestyle-benefit-context-r1",
-      "alt": "Matte ceramic planter with a fern on a warm wood shelf in a bright living room.",
+      "img": "n:guide:img2-lifestyle-photos-benefits-0-r1",
+      "alt": "Rust-red lounge chair with a wood frame in a bright living room.",
       "t": "Show the Planter in a Room",
       "d": "The planter sits on a wood shelf in a living room. The room is clear before anyone reads the description."
     },
@@ -27,8 +27,8 @@
       "d": "A hand sets the bag beside a cup. The straps and the color stay easy to check against your catalog photo."
     },
     {
-      "img": "n:guide:fx15-lifestyle-benefit-listing-r1",
-      "alt": "Plain brushed steel insulated bottle on an entryway console with a folded cloth.",
+      "img": "n:guide:img2-lifestyle-photos-benefits-2-r1",
+      "alt": "Orange metal dining chair in a bright living room.",
       "t": "Give the Bottle a Home Spot",
       "d": "The bottle stands on an entryway table with a folded cloth, so shoppers see where it would sit at home."
     }
@@ -209,16 +209,16 @@
         "alt": "Ceramic planter with a fern on a styled living-room shelf."
       },
       {
-        "img": "n:guide:k5-lifestyle-photos-uses-1-image",
+        "img": "n:guide:img2-lifestyle-photos-visual-uses-1-r1",
         "h": "Add One Object That Shows Use",
         "d": "A cup, a cloth, or a tool can show what the product is for. Keep the product larger than that object.",
-        "alt": "Matcha whisk, bowl and plain tin arranged on a linen tablecloth."
+        "alt": "Beige hair-mask jar with a lid on a dark slate tile beside a folded towel."
       },
       {
-        "img": "n:guide:k5-lifestyle-photos-strip-3",
+        "img": "n:guide:img2-lifestyle-photos-visual-uses-2-r1",
         "h": "Show the Product in Use",
         "d": "An open drink on a balcony shows someone using it, not just the can on a plain background.",
-        "alt": "Plain iced tea can opened on a sunny balcony."
+        "alt": "Plain cognac leather handbag on a wood table."
       }
     ],
     "titles": {

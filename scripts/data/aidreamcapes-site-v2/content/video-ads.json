@@ -631,6 +631,7 @@
     "benefits",
     "related",
     "compare",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -659,68 +660,36 @@
   "related_h2": "More Ways to Make the Ad",
   "related_lead": "Clips from a photo or a product page, plus an API your shop software can use to request ads.",
   "reviews": {
-    "h2": "How Shops Use AI UGC Video Ads",
-    "lead": "How shops start from one product photo or a product page. These are examples, not quotes.",
+    "h2": "How Sellers Run AI Video Ads",
+    "lead": "Four shops start from a product photo and swap the opening when the ad feels familiar.",
     "items": [
       {
         "example": true,
-        "who": "Electronics shop",
-        "t": "Desk showcase",
-        "d": "An electronics shop uploads a speaker photo and tests a desk scene in the social feed."
+        "who": "Candle maker",
+        "t": "A New Opening for the Candle",
+        "d": "When the candle ad starts to feel familiar, they change the first line and keep the same candle in frame. They post the new cut without booking another shoot.",
+        "img": "n:guide:img2-video-ads-review1-r1"
       },
       {
         "example": true,
-        "who": "Bag shop",
-        "t": "Mirror fit check",
-        "d": "A bag shop uploads a crossbody photo and tests a mirror fit check in Instagram Reels."
+        "who": "Necklace brand",
+        "t": "Two Hooks, One Necklace",
+        "d": "They make two ads from the same necklace photo, one opening on the clasp and one on the length. They test both in a phone feed and skip a second model day.",
+        "img": "n:guide:img2-video-ads-review2-r1"
       },
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "Pocket showcase",
-        "d": "A beauty shop uploads a lip balm photo, picks a voice, and tests a close shot in YouTube Shorts."
+        "who": "Skillet brand",
+        "t": "The Word the Shop Already Uses",
+        "d": "They keep the word they already use for the cast-iron skillet, and the actor does not swap in a prettier one. The ad runs from the photo they had, with no studio day.",
+        "img": "n:guide:img2-video-ads-review3-r1"
       },
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "Morning routine",
-        "d": "A skincare shop uploads a jar photo and tests a 15-second texture demo in Instagram Reels."
-      },
-      {
-        "example": true,
-        "who": "Drink seller",
-        "t": "First sip",
-        "d": "A drink seller pastes the bottle's product page and tests a pour-and-sip opening on TikTok."
-      },
-      {
-        "example": true,
-        "who": "Shoe seller",
-        "t": "Creator showcase",
-        "d": "A shoe seller uploads a running-shoe photo, picks an actor, and tests a showcase in a paid social post."
-      },
-      {
-        "example": true,
-        "who": "Agency shop",
-        "t": "Client set",
-        "d": "An agency shop makes a set of actor-led ads for several client products from photos it already has."
-      },
-      {
-        "example": true,
-        "who": "Small brand",
-        "t": "Next product",
-        "d": "A small brand skips a new shoot and makes the next product ad from a fresh photo plus a script."
-      },
-      {
-        "example": true,
-        "who": "Catalog seller",
-        "t": "One ad per item",
-        "d": "A catalog seller pastes product links and makes one ad per item so each opening can be tested."
-      },
-      {
-        "example": true,
-        "who": "Home brand",
-        "t": "Script and voice",
-        "d": "A home brand asks for a script, an actor and a voice together, then edits one caption before publishing."
+        "who": "Backpack brand",
+        "t": "A Finished Ad From One Photo",
+        "d": "They upload the backpack photo and get a script, an actor, a voice, and an edit in one file for a phone ad. They do not wait on a creator invoice for that test.",
+        "img": "n:guide:img2-video-ads-review4-r1"
       }
     ]
   },

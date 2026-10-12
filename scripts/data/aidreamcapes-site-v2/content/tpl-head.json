@@ -584,67 +584,35 @@
   ],
   "reviews": {
     "h2": "How Small Teams Use Matching Headshots",
-    "lead": "Example setups for a small team that wants one portrait style.",
+    "lead": "Each team starts from photos people already approved and puts one matching row on the page.",
     "items": [
       {
         "example": true,
-        "who": "Founding team",
-        "t": "One framing on the About page",
-        "d": "Example: the founders share one background, framing, and light. Each portrait still follows that person's own photo. Names sit in text beside the image."
+        "who": "Shop owner",
+        "t": "Match the About-Page Row",
+        "d": "They pick one backdrop and run it on the photos the staff already approved. The about page gets one crop and one light, without a portrait day.",
+        "img": "n:guide:img2-tpl-head-review1-r1"
       },
       {
         "example": true,
-        "who": "Hiring manager",
-        "t": "A new hire joins the row",
-        "d": "Example: a new teammate's approved photo uses the same background and framing. The rest of the team is not reshot."
+        "who": "New hire",
+        "t": "Send One Approved Photo",
+        "d": "They send a face-and-shoulders photo they already approved. The same backdrop and crop put them on the row before the next busy weekend.",
+        "img": "n:guide:img2-tpl-head-review2-r1"
       },
       {
         "example": true,
-        "who": "Operations lead",
-        "t": "Every role, one look",
-        "d": "Example: design and operations use the same portrait style, and each person keeps their own features."
+        "who": "Independent consultant",
+        "t": "Place Faces on the Proposal",
+        "d": "They place the matching portraits beside the roles in a proposal. A title change is a new line of text, not a new photo booking.",
+        "img": "n:guide:img2-tpl-head-review3-r1"
       },
       {
         "example": true,
-        "who": "People team",
-        "t": "Permission before upload",
-        "d": "Example: only a photo the teammate approved for business use is uploaded, and that person checks the result before it goes live."
-      },
-      {
-        "example": true,
-        "who": "Pitch author",
-        "t": "Slide deck and speaker bio",
-        "d": "Example: the same square portrait goes in a slide deck and a speaker bio. The job title stays as text, not lettering inside the image."
-      },
-      {
-        "example": true,
-        "who": "Small office",
-        "t": "The set in one batch",
-        "d": "Example: the office uploads the approved photos together and gets one shared framing back for the team page."
-      },
-      {
-        "example": true,
-        "who": "Remote team",
-        "t": "Same light, different cities",
-        "d": "Example: teammates in different cities upload their own approved photos and come back with one shared background."
-      },
-      {
-        "example": true,
-        "who": "Recruiter",
-        "t": "A short intro beside the row",
-        "d": "Example: the jobs page keeps the portraits, and a short clip with a voice and captions introduces the team."
-      },
-      {
-        "example": true,
-        "who": "Press contact",
-        "t": "Name stays outside the photo",
-        "d": "Example: a press note uses the portrait and types the person's name and title underneath."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Not an ID photo",
-        "d": "Example: the portrait follows the uploaded photo, and the person reviews it before it is published. It is not an ID card or a passport photo."
+        "who": "Client-team lead",
+        "t": "Give the Client One Row",
+        "d": "They run the same treatment on the client team so the row looks like one group. The file is what they hand over for the client page.",
+        "img": "n:guide:img2-tpl-head-review4-r1"
       }
     ]
   },
@@ -655,6 +623,7 @@
     "hero",
     "picker",
     "steps",
+    "reviews",
     "faq",
     "cta"
   ],

@@ -600,72 +600,41 @@
     "picker",
     "templates",
     "steps",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
     "h2": "How a Shop Uses a Template",
-    "lead": "Ten ways a shop uses a template, from a clip of someone holding the product to a spoken ad in another language.",
+    "lead": "Four ways a shop fills a template from one photo.",
     "items": [
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "Spoken routine clip",
-        "d": "A skincare shop picks a template, and the tool writes a short script and a voice for the serum."
+        "who": "Small-batch skincare maker",
+        "t": "Spoken Routine Clip",
+        "d": "A skincare maker picks a template, and the tool writes a short script and a voice for the serum. They post that clip and skip booking a creator for the routine.",
+        "img": "n:guide:img2-templates-review1-r1"
       },
       {
         "example": true,
-        "who": "Apparel shop",
-        "t": "Presenter shows the fit",
-        "d": "A clothing shop turns a photo of the clothes into a clip. A presenter made by the tool wears it, so a shopper can see the fit."
+        "who": "Apparel seller",
+        "t": "Presenter Shows the Fit",
+        "d": "A clothing seller turns a photo of the linen shirt into a clip. A presenter wears it, so a shopper can see the hem.",
+        "img": "n:guide:img2-templates-review2-r1"
       },
       {
         "example": true,
         "who": "Drink seller",
-        "t": "Presenter holds the bottle",
-        "d": "A drink seller starts from a bottle photo and gets a clip of a presenter, made by the tool, holding the bottle."
+        "t": "Presenter Holds the Bottle",
+        "d": "A drink seller starts from a bottle photo and gets a clip of a presenter holding the bottle. The bottle matches the one they ship.",
+        "img": "n:guide:img2-templates-review3-r1"
       },
       {
         "example": true,
-        "who": "Home shop",
-        "t": "Room scene, then shorten",
-        "d": "A home shop builds a room scene, then shortens it in the editor before it goes on the product page."
-      },
-      {
-        "example": true,
-        "who": "Beauty brand",
-        "t": "Same ad, another language",
-        "d": "A beauty brand keeps one presenter made by the tool and makes the same ad again in another language. That version is for another country."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "Edit in one place",
-        "d": "A small team shortens the clip, adds a song, and checks the captions in the editor."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Same face on client ads",
-        "d": "An agency picks a presenter made by the tool and uses that face on client ads, with no camera crew."
-      },
-      {
-        "example": true,
-        "who": "Shop with many products",
-        "t": "Photos without a studio",
-        "d": "A shop with many products uploads a few photos and gets files it can post, with no lights and no camera crew."
-      },
-      {
-        "example": true,
-        "who": "Marketing manager",
-        "t": "Link to a full ad",
-        "d": "A marketing manager pastes a product link and gets a script, a voice, a presenter made by the tool, and a few versions to try."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Type an offer, get an ad",
-        "d": "A founder types the offer in the chat and gets a script, pictures, and a video back."
+        "who": "Home seller",
+        "t": "Room Scene, Then Shorten",
+        "d": "A home seller builds a room scene, then shortens it in the editor before it goes on the product page. The product stays the one in the photo.",
+        "img": "n:guide:img2-templates-review4-r1"
       }
     ]
   },

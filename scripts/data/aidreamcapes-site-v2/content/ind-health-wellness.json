@@ -196,74 +196,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Wellness Brands Switch to AI Ads",
-    "lead": "Example ways wellness sellers use one product photo. These are not quotes, and they are not health claims.",
+    "h2": "How Wellness Sellers Use One Photo",
+    "lead": "Four sellers place one product in a routine and post it. They skip booking a creator.",
     "items": [
       {
         "example": true,
-        "who": "Supplement shop",
-        "t": "Bottle beside breakfast",
-        "d": "They upload a front-label photo and ask for the bottle next to fruit on a table. Dosage stays in the approved listing text."
+        "who": "Yoga shop",
+        "t": "Unroll the Teal Mat",
+        "d": "A yoga shop uploads the teal mat and sets it unrolled on a bright floor with an AI avatar. They post that routine on the product page and skip booking a creator.",
+        "img": "n:guide:img2-ind-health-wellness-review1-r1"
       },
       {
         "example": true,
-        "who": "Mat brand",
-        "t": "Unroll, no outcome",
-        "d": "A mat photo becomes hands unrolling it in a bright room. The scene stops there. It does not show a fitness result."
+        "who": "Tea seller",
+        "t": "Set the Bottle at Breakfast",
+        "d": "A tea seller places the breakfast bottle beside fruit on a morning table. They use the photo in the feed and skip a breakfast photoshoot.",
+        "img": "n:guide:img2-ind-health-wellness-review2-r1"
       },
       {
         "example": true,
-        "who": "Tea label",
-        "t": "Two versions from one tin",
-        "d": "The same tin photo makes a square photo and a 10-second pour, then the tin is set down. That clip spends 40 credits."
+        "who": "Gear shop",
+        "t": "Place the Bands in a Corner",
+        "d": "A gear shop puts the bands in a morning corner and points the ad at the product page. They skip a gym rental for that one photo.",
+        "img": "n:guide:img2-ind-health-wellness-review3-r1"
       },
       {
         "example": true,
-        "who": "Gym-bag brand",
-        "t": "Bottle in the bag",
-        "d": "They ask for the bottle in an open gym bag, and they leave out any line about what the drink does."
-      },
-      {
-        "example": true,
-        "who": "Listing shop",
-        "t": "Match the label, then post",
-        "d": "They compare the words on the bottle in the result with the real label. Dose and offers stay out of the picture."
-      },
-      {
-        "example": true,
-        "who": "Careful brand",
-        "t": "Reject a result scene",
-        "d": "If a preview implies a body change or a medical effect, they discard it and describe only the routine."
-      },
-      {
-        "example": true,
-        "who": "Page-link seller",
-        "t": "A link, then a short script",
-        "d": "They paste the product page. Or they send that link from their own shop software (the API). They ask for a short routine script. The spoken line leaves out the dose."
-      },
-      {
-        "example": true,
-        "who": "Two-scene seller",
-        "t": "One person, then again",
-        "d": "They pick a person the tool creates for the breakfast scene. Then they make a second version of that same person. Neither clip shows a body change."
-      },
-      {
-        "example": true,
-        "who": "Small ads shop",
-        "t": "Voice, captions, and a track",
-        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the clip in the editor before export."
-      },
-      {
-        "example": true,
-        "who": "Second-language shop",
-        "t": "The same bottle, another language",
-        "d": "They make the breakfast clip again in a second language from the same photo. Approved claims stay in the listing, not in the picture."
-      },
-      {
-        "example": true,
-        "who": "Version tester",
-        "t": "A few versions, then publish",
-        "d": "They type the routine in the text box and keep a few versions. They send the one they want to TikTok, Facebook, or Instagram. A 10-second clip spends 40 credits."
+        "who": "Mask shop",
+        "t": "Set the Mask on a Tray",
+        "d": "A mask shop shows the sheet mask on a bathroom tray as an evening routine. They post the still and skip hiring someone to film the sink.",
+        "img": "n:guide:img2-ind-health-wellness-review4-r1"
       }
     ]
   },
@@ -292,6 +254,7 @@
     "reasons",
     "steps",
     "platforms",
+    "reviews",
     "faq",
     "cta"
   ]

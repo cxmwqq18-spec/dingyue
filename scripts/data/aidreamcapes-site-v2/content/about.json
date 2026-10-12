@@ -100,5 +100,39 @@
     "trust",
     "ai-info",
     "glossary"
-  ]
+  ],
+  "reviews": {
+    "h2": "How Shops Use AIVideosUGC",
+    "lead": "Four ways a small shop uses one product photo. These cards describe the work, not a named seller.",
+    "items": [
+      {
+        "example": true,
+        "who": "Mug seller",
+        "t": "Mug Photo Becomes the Ad",
+        "d": "They set a plain ceramic mug on the desk and make a listing image plus a short ad. The shoot day stays off the calendar.",
+        "img": "n:guide:img2-about-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Packing-table seller",
+        "t": "Ad From the Packing Table",
+        "d": "They start from a product photo while the next order sits on the packing table. The same path makes the listing image and a short clip.",
+        "img": "n:guide:img2-about-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Shop owner",
+        "t": "Files Stay in the Account",
+        "d": "They keep the product photos and drafts in their own account, next to a closed laptop. Nothing from that pile is shown as someone else's sample.",
+        "img": "n:guide:img2-about-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Small-shop owner",
+        "t": "See the Charge First",
+        "d": "They look at the credit charge before the mug job starts, then download the file. The monthly plan stays a choice they already understand.",
+        "img": "n:guide:img2-about-review4-r1"
+      }
+    ]
+  }
 }

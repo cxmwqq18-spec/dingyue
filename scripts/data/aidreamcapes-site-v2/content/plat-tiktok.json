@@ -165,6 +165,7 @@
     "features",
     "platforms",
     "related",
+    "reviews",
     "faq"
   ],
   "benefits_lead": "You film nothing. The product still gets an AI TikTok ad when a new test is due.",
@@ -232,68 +233,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Use an AI TikTok Ads Generator",
-    "lead": "A few ways shops turn one product into a tall ad.",
+    "h2": "How Sellers Make an AI TikTok Ad",
+    "lead": "Four sellers turn one product photo into a tall ad they can place in the TikTok ad account.",
     "items": [
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "Texture in the first second",
-        "d": "A beauty shop uses a pump-bottle photo so a hand applies the product in the first seconds of a tall ad."
+        "who": "Apparel seller",
+        "t": "Drop the Jacket on a Sound",
+        "d": "They put the windbreaker into a tall TikTok ad while that sound is still in use. They skip booking a creator for the test.",
+        "img": "n:guide:img2-plat-tiktok-review1-r1"
       },
       {
         "example": true,
         "who": "Drink seller",
-        "t": "Pour, then the label",
-        "d": "A drink seller uses a bottle photo for a pour onto a table, with the label kept readable."
+        "t": "Say the Line on the Bottle",
+        "d": "They use the water bottle photo so a voice says the line in the first seconds. They do not book a studio for that take.",
+        "img": "n:guide:img2-plat-tiktok-review2-r1"
       },
       {
         "example": true,
-        "who": "Home shop",
-        "t": "Lid snap in the first second",
-        "d": "A home shop uses a lunch-container photo for a closing snap so the seal is easy to see."
+        "who": "Drinkware seller",
+        "t": "Open on the Tumbler",
+        "d": "They use the tumbler so the first second is the product in a hand. They post the tall file without a second crop.",
+        "img": "n:guide:img2-plat-tiktok-review3-r1"
       },
       {
         "example": true,
-        "who": "Apparel shop",
-        "t": "One garment, one motion",
-        "d": "An apparel shop uses a jacket photo for a lift-and-show so the color is clear right away."
-      },
-      {
-        "example": true,
-        "who": "Gadget shop",
-        "t": "Feature, then the whole item",
-        "d": "A gadget shop uses a headphone photo to show them lifted from the case, then held still."
-      },
-      {
-        "example": true,
-        "who": "Pet shop",
-        "t": "Use, not a slogan",
-        "d": "A pet shop uses a brush photo for a short grooming motion so the size is easy to see."
-      },
-      {
-        "example": true,
-        "who": "Jewelry shop",
-        "t": "Clasp in the first second",
-        "d": "A jewelry shop uses a necklace photo for a clasp close-up on a tall ad."
-      },
-      {
-        "example": true,
-        "who": "Kitchen shop",
-        "t": "Oil across the surface",
-        "d": "A kitchen shop uses a pan photo for a short pour so the finish is easy to see."
-      },
-      {
-        "example": true,
-        "who": "Fitness shop",
-        "t": "Lid twist, then a hold",
-        "d": "A fitness shop uses a shaker photo for a lid twist, then holds it steady."
-      },
-      {
-        "example": true,
-        "who": "Outdoor shop",
-        "t": "One sip, logo readable",
-        "d": "An outdoor shop uses a flask photo for a sip, with the logo kept easy to read."
+        "who": "Gadget seller",
+        "t": "Lift the Headphones Out",
+        "d": "They use the headphone photo so an avatar lifts them from the box. They get a tall opening without a filming day.",
+        "img": "n:guide:img2-plat-tiktok-review4-r1"
       }
     ]
   },

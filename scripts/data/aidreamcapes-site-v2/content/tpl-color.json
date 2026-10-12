@@ -553,72 +553,41 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Turn Color Photos Into Ads",
-    "lead": "Each color still starts from a photo of a color the shop sells. A voice, an on-screen person, or a second language can use that same photo.",
+    "h2": "How Sellers Compare Dispenser Shades",
+    "lead": "Four sellers put the white, gray, and sand dispensers they already sell into one scene.",
     "items": [
       {
         "example": true,
-        "who": "Sneaker shop",
-        "t": "Checks each color photo",
-        "d": "A sneaker shop places white, black, and navy in one scene, each from its own shoe photo, and checks each color photo before posting."
+        "who": "Bath goods seller",
+        "t": "Three Shades, One Counter",
+        "d": "They put the white, gray, and sand dispensers they sell on the same square counter and use that set in the product gallery. Shoppers can compare the shades, and they skip a shoot for each color.",
+        "img": "n:guide:img2-tpl-color-review1-r1"
       },
       {
         "example": true,
-        "who": "Apparel shop",
-        "t": "Photo, then a clip",
-        "d": "An apparel shop makes the dyed-tee photos first, then a clip from those same photos."
+        "who": "Home shop owner",
+        "t": "Name the New Shade",
+        "d": "They make a tall clip that names the new sand dispenser while the white and gray ones stay on the counter. They skip writing a prompt from a blank page.",
+        "img": "n:guide:img2-tpl-color-review2-r1"
       },
       {
         "example": true,
-        "who": "Mug shop",
-        "t": "Presenter holds one mug",
-        "d": "A mug shop uploads a photo of each color, then has an on-screen person hold one mug in a follow-up clip."
+        "who": "Dispenser seller",
+        "t": "Actor Holds One Shade",
+        "d": "They pick an AI actor to hold the gray dispenser in a follow-up clip, using the photo they already took. They skip booking a model for that shade.",
+        "img": "n:guide:img2-tpl-color-review3-r1"
       },
       {
         "example": true,
-        "who": "Lip color shop",
-        "t": "Presenter and spoken line",
-        "d": "A lip-color shop shows the real lipstick colors, picks a person from the presenter list, and edits the spoken line in the editor."
-      },
-      {
-        "example": true,
-        "who": "Case shop",
-        "t": "A second language",
-        "d": "A case shop shows clear, black and sand from real photos, then a voice in another language for a second market."
-      },
-      {
-        "example": true,
-        "who": "Bag shop",
-        "t": "Write the Script",
-        "d": "A bag shop frames olive and sand totes the same way and changes the script without opening another tool."
-      },
-      {
-        "example": true,
-        "who": "Frame shop",
-        "t": "Presenter, not a shoot",
-        "d": "A frame shop shows brass, black and silver from photos of those finishes, with an AI actor instead of a booked shoot."
-      },
-      {
-        "example": true,
-        "who": "Yarn shop",
-        "t": "No new light setup",
-        "d": "A yarn shop uploads each skein photo and skips a new light setup for the shade row."
-      },
-      {
-        "example": true,
-        "who": "Helmet shop",
-        "t": "Link, then a second version",
-        "d": "A helmet shop pastes the product link, reviews the script and voice, and makes a second version of the shell colors."
-      },
-      {
-        "example": true,
-        "who": "Bottle shop",
-        "t": "Type the Two Colors",
-        "d": "A bottle shop types the two coated colors, then compares both files with the real bottles."
+        "who": "Small home brand",
+        "t": "Post the Shade Row",
+        "d": "They run the square row of the three dispensers as a paid ad and also place it on the product page. They skip a creator for each finish.",
+        "img": "n:guide:img2-tpl-color-review4-r1"
       }
     ]
   },

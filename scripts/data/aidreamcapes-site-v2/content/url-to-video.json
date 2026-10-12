@@ -143,17 +143,17 @@
   ],
   "visual": {
     "strip": [
-      "n:guide:fx51-url-skincare-strip-r1",
-      "n:guide:b2f11-url-to-video-strip-1-r1",
-      "n:guide:q2-url-to-video-strip-05",
-      "n:guide:fx51-url-strip-phone-stand-r1",
-      "n:guide:q2-url-to-video-strip-03",
-      "n:guide:fx51-url-strip-tote-r1"
+      "n:guide:img2-url-to-video-visual-strip-0-r1",
+      "n:guide:img2-url-to-video-visual-strip-1-r1",
+      "n:guide:img2-url-to-video-visual-strip-2-r1",
+      "n:guide:img2-url-to-video-visual-strip-3-r1",
+      "n:guide:img2-url-to-video-visual-strip-4-r1",
+      "n:guide:img2-url-to-video-visual-strip-5-r1"
     ],
     "steps": {
-      "source": "n:guide:k2-url-step-lunchbox-source",
+      "source": "n:guide:img2-url-to-video-visual-steps-source-r1",
       "sourceAlt": "Your product: closed sage-green lunch container with its silver clasp visible on a pale counter.",
-      "result": "n:guide:fx51-url-steps-result-r1",
+      "result": "n:guide:img2-url-to-video-visual-steps-result-r1",
       "mode": "video",
       "length": 15,
       "prompt": "Keep this sage-green divided lunch box the same shape, color and silver clasp. It sits open on a bright kitchen counter, lid behind it, side latches showing, food in the sections, and no hands. Move closer slowly. Quiet room sound only. No music, words or logos.",
@@ -214,6 +214,7 @@
     "benefits",
     "uses",
     "trust",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -302,68 +303,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Turn a Product Link Into an Ad",
-    "lead": "How ten kinds of sellers start from one public listing. These are examples, not quotes.",
+    "h2": "How Sellers Start From a Product Link",
+    "lead": "Four sellers paste a public product page and post the clip that comes back.",
     "items": [
       {
         "example": true,
-        "who": "Store seller",
-        "t": "Listing moment",
-        "d": "A store seller pastes a public listing, checks the photo and the script, and shows one action of the product."
+        "who": "Fitness seller",
+        "t": "Yoga Mat From the Page",
+        "d": "They paste the public yoga-mat page and get a listing clip that uses that page's photo of the rolled mat. They skip gathering files into a folder first.",
+        "img": "n:guide:img2-url-to-video-review1-r1"
       },
       {
         "example": true,
-        "who": "Gadget seller",
-        "t": "Phone stand",
-        "d": "A gadget seller uses the stand's public page, picks an actor, and asks for one unfolding action so shoppers can see how it opens."
+        "who": "Lunch-box seller",
+        "t": "Show the Latch Once",
+        "d": "They paste the sage-green lunch box page and have an actor open the latch once so a buyer sees the seal. They put that demo on the product page and skip filming a kitchen.",
+        "img": "n:guide:img2-url-to-video-review2-r1"
       },
       {
         "example": true,
-        "who": "Store running ads",
-        "t": "One selling point",
-        "d": "A store running ads takes the same listing, makes one paid post about a single point, and publishes it on Facebook or Instagram."
-      },
-      {
-        "example": true,
-        "who": "Social seller",
-        "t": "Vertical post",
-        "d": "A social seller pastes the listing again, picks a tall 9:16 size, and posts it to TikTok, Instagram or YouTube Shorts."
-      },
-      {
-        "example": true,
-        "who": "Beauty shop",
-        "t": "Reviews in the ad",
-        "d": "A beauty shop lets the page's reviews into the script so the clip mentions what buyers already noticed."
-      },
-      {
-        "example": true,
-        "who": "Catalog seller",
-        "t": "Several links",
-        "d": "A catalog seller pastes a handful of product links and makes one clip for each item in that sitting."
-      },
-      {
-        "example": true,
-        "who": "Wellness seller",
-        "t": "Second language",
-        "d": "A wellness seller keeps the same product page and makes a second clip in another language for a new market."
-      },
-      {
-        "example": true,
-        "who": "Home shop",
-        "t": "Voice and actor",
-        "d": "A home shop picks an actor and a voice, then edits one line of the script before downloading."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "In the editor",
-        "d": "A small team trims the clip, fixes a caption and swaps the music in the editor. Then they download a file with no logo stamped on it."
+        "who": "Skincare seller",
+        "t": "Face Cream From the Link",
+        "d": "They paste the face-cream page, approve the spoken line, and run the file as a paid ad. Captions sit in the clip, and they skip a studio for that jar.",
+        "img": "n:guide:img2-url-to-video-review3-r1"
       },
       {
         "example": true,
         "who": "Drink seller",
-        "t": "Publish",
-        "d": "A drink seller sends the finished clip to TikTok from the same screen after checking how many credits it will use."
+        "t": "Cold Brew for the Phone",
+        "d": "They paste the cold-brew page and make a tall clip of a pour for a phone feed. They approve the script first and skip a cafe shoot.",
+        "img": "n:guide:img2-url-to-video-review4-r1"
       }
     ]
   },

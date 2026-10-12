@@ -938,68 +938,36 @@
   },
   "compare_h2": "AI UGC Ads Compared With a Usual Shoot",
   "reviews": {
-    "h2": "How Sellers Use AIVideosUGC",
-    "lead": "Example ways shops start from one product photo. These are examples, not customer quotes.",
+    "h2": "How Sellers Use One Product Photo",
+    "lead": "Four shops turn one product photo into an AI UGC ad they can post.",
     "items": [
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "A clean shot and a social ad from one jar",
-        "d": "A skincare shop uploads one jar photo, makes a clean product shot, then makes a separate social ad from that same photo."
+        "who": "Skincare founder",
+        "t": "A Serum Ad From One Jar",
+        "d": "They upload one serum jar and get an AI actor holding it with a spoken line for a phone ad. They skip booking a creator for that week’s post.",
+        "img": "n:guide:img2-home-review1-r1"
       },
       {
         "example": true,
-        "who": "Home goods seller",
-        "t": "A tidy drawer without staging a room",
-        "d": "A home goods shop turns one organizer photo into a short video of that organizer in a tidy drawer."
-      },
-      {
-        "example": true,
-        "who": "Accessories seller",
-        "t": "A launch clip without booking a model",
-        "d": "An accessories shop turns one bag photo into a launch clip with an AI actor, without booking a model."
-      },
-      {
-        "example": true,
-        "who": "Snack brand",
-        "t": "An unboxing with captions on the page",
-        "d": "A snack brand turns one pouch photo into an unboxing clip, then adjusts auto captions in the editor before posting."
+        "who": "Candle maker",
+        "t": "A Gift-Guide Clip",
+        "d": "They turn one candle photo into a short unboxing ad and post the vertical file. They do not set up lights for that gift-guide cut.",
+        "img": "n:guide:img2-home-review2-r1"
       },
       {
         "example": true,
         "who": "Supplement shop",
-        "t": "The same jar in another language",
-        "d": "A supplement shop keeps the jar photo, writes the line in a second language, and picks a voice for that line."
+        "t": "A Bottle Pitch on Camera",
+        "d": "They have an AI actor hold the vitamin bottle and explain what it is for, then put that clip on the product page. They skip a talking-head shoot.",
+        "img": "n:guide:img2-home-review3-r1"
       },
       {
         "example": true,
-        "who": "Beauty brand",
-        "t": "Edits without a second app",
-        "d": "A beauty brand changes caption color, a price, and a music track in the editor, then publishes the file."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Several actor cuts for one client",
-        "d": "An agency runs the same product photo with a different presenter and opening, and sends the client the downloads."
-      },
-      {
-        "example": true,
-        "who": "Kitchen brand",
-        "t": "A product clip without a light kit",
-        "d": "A kitchen brand makes a presenter clip from one appliance photo, instead of setting up lights for every post."
-      },
-      {
-        "example": true,
-        "who": "Catalog seller",
-        "t": "A link, a script, and a clip",
-        "d": "A catalog seller pastes a product page link, edits the draft script, and downloads a presenter clip."
-      },
-      {
-        "example": true,
-        "who": "Apparel brand",
-        "t": "A brief instead of a shot list",
-        "d": "An apparel brand describes the fit and the scene in a short brief, then reviews the script before the presenter reads it."
+        "who": "Footwear brand",
+        "t": "A Sneaker Ad Without a Crew",
+        "d": "They start from a white sneaker photo and get a creator-style ad with an actor and a line they approve. They do not hire a crew for that first test.",
+        "img": "n:guide:img2-home-review4-r1"
       }
     ]
   },
@@ -1015,6 +983,7 @@
     "related",
     "trust",
     "compare",
+    "reviews",
     "faq",
     "cta"
   ],

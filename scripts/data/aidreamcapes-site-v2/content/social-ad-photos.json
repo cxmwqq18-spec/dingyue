@@ -438,36 +438,41 @@
     "features",
     "steps",
     "reasons",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Stores Test AI Images for Paid Social Ads",
-    "lead": "Ways a store tries a square scene before it spends on the ad.",
+    "h2": "How Stores Make a Square Post",
+    "lead": "Each seller turns one product photo into a square and skips the studio booking.",
     "items": [
       {
         "example": true,
+        "who": "Shoe seller",
+        "t": "Hiking Shoe Square for the Feed",
+        "d": "They turn a packing-table photo of the charcoal hiking shoe into a square post. They publish it while the offer is still the one they planned, with no studio booking.",
+        "img": "n:guide:img2-social-ad-photos-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Bottle brand",
+        "t": "Sage Bottle in a Square",
+        "d": "They place the sage green thermos in a square with room for a line they type later. The product stays the thermos they uploaded.",
+        "img": "n:guide:img2-social-ad-photos-review2-r1"
+      },
+      {
+        "example": true,
         "who": "One-product shop",
-        "t": "Make two scenes before spending on the ad",
-        "d": "Upload the catalog photo, try a desk and a sidewalk, and keep the version that still shows the product clearly."
+        "t": "Two Scenes Before the Spend",
+        "d": "They try the charcoal hiking shoe on a curb and on an oak floor, then keep the square that shows the shoe clearly. They do not hire a photographer the night before.",
+        "img": "n:guide:img2-social-ad-photos-review3-r1"
       },
       {
         "example": true,
-        "who": "Apparel seller",
-        "t": "Show it on a person only when it matches your item",
-        "d": "If the item should be worn, use a generated adult and put that photo next to the one with the item laid flat."
-      },
-      {
-        "example": true,
-        "who": "Promo manager",
-        "t": "Change the offer without a new shoot",
-        "d": "Keep the scene and change the price in the ad editor. The photo does not keep the old discount."
-      },
-      {
-        "example": true,
-        "who": "Marketplace brand",
-        "t": "Pair a plain listing photo with a social ad photo",
-        "d": "Use a white main image where the store asks for one, and this square photo for the paid ad."
+        "who": "Outdoor seller",
+        "t": "Offer Added After Download",
+        "d": "They download the sage thermos square and add the offer themselves. The photo does not lock in an old discount.",
+        "img": "n:guide:img2-social-ad-photos-review4-r1"
       }
     ]
   },

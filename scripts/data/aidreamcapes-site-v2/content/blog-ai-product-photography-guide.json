@@ -165,5 +165,39 @@
     "blog-ai-video-review-checklist",
     "guide-ad-sizes-by-platform",
     "blog-ai-ugc-video-ads-guide"
-  ]
+  ],
+  "reviews": {
+    "h2": "How Sellers Use Product Photos",
+    "lead": "Four shops start from one product photo and leave with a scene plus a white listing image.",
+    "items": [
+      {
+        "example": true,
+        "who": "Small-batch hot sauce maker",
+        "t": "Scene, Then a White Listing",
+        "d": "They set the hot-sauce bottle with tomatoes for a social scene, then make the same bottle on plain white for the listing. They skip a studio booking for both files.",
+        "img": "n:guide:img2-blog-ai-product-photography-guide-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Body-wash maker",
+        "t": "Splash Scene, Then White",
+        "d": "They place the pump bottle in a wet splash scene, then make the same bottle on plain white for the store. One photo covers both, with no prop house to call.",
+        "img": "n:guide:img2-blog-ai-product-photography-guide-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Independent perfume seller",
+        "t": "Moody Scene, Then White",
+        "d": "They ask for the blue perfume bottle in a dim scene, then a plain white cutout for the marketplace. The bottle shape stays the one they ship, and they skip a set build.",
+        "img": "n:guide:img2-blog-ai-product-photography-guide-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Small coffee roaster",
+        "t": "Steam Scene for the Post",
+        "d": "They put the coffee canister in a warm steam scene for a post, and keep a white version for the product page. They do not book a photographer for the pair.",
+        "img": "n:guide:img2-blog-ai-product-photography-guide-review4-r1"
+      }
+    ]
+  }
 }

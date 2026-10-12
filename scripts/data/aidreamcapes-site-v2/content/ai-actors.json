@@ -993,6 +993,7 @@
     "features",
     "steps",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -1067,5 +1068,39 @@
       "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
       "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
     }
-  ]
+  ],
+  "reviews": {
+    "h2": "How Shops Cast an AI Actor",
+    "lead": "Four ways a shop uses one AI actor on a product it already sells, and the booking each one skips.",
+    "items": [
+      {
+        "example": true,
+        "who": "Small-batch serum maker",
+        "t": "Ship the Serum Ad",
+        "d": "They put one AI actor beside the serum jar and post the next ad from a single photo. The shoot day for that launch stays off the calendar.",
+        "img": "n:guide:img2-ai-actors-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Drinkware seller",
+        "t": "Test a Second Face",
+        "d": "They keep the blue bottle photo and try another AI actor for the product page. A second filming day is the part they skip.",
+        "img": "n:guide:img2-ai-actors-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Phone case seller",
+        "t": "Keep the Approved Script",
+        "d": "They reuse the accepted script about the coral phone case on every render. Nobody has to chase a creator to fix one word.",
+        "img": "n:guide:img2-ai-actors-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Running shoe shop",
+        "t": "Post the Shoe Clip",
+        "d": "They have one AI actor hold the coral running shoe for a paid ad and a shorter cut on the product page. The crew call for that pair does not go out.",
+        "img": "n:guide:img2-ai-actors-review4-r1"
+      }
+    ]
+  }
 }

@@ -585,72 +585,41 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Use a Film-Style Product Video",
-    "lead": "Example scenes. Each one shows how a shop could open a launch from one photo.",
+    "h2": "How Shops Make a Cinematic Open",
+    "lead": "Each seller starts from one product photo and gets a slow dark move without booking a set.",
     "items": [
       {
         "example": true,
-        "who": "Bottle brand",
-        "t": "Thin edge light",
-        "d": "Example: a matte bottle catches one narrow highlight on a dark surface."
+        "who": "Audio shop",
+        "t": "Slow Push on the Speaker",
+        "d": "They start from the black speaker photo and get a slow dark move with studio-style light. They post it without booking a set.",
+        "img": "n:guide:img2-tpl-film-review1-r1"
       },
       {
         "example": true,
-        "who": "Watch shop",
-        "t": "Slow side move",
-        "d": "Example: a watch on a dark strap gets a short move along the side, so the finish is easy to see."
+        "who": "Perfume brand",
+        "t": "Night-Table Open",
+        "d": "They set the perfume bottle in a low-light open from the photo they already sell. The clip goes on the product page, and no crew is on the calendar.",
+        "img": "n:guide:img2-tpl-film-review2-r1"
       },
       {
         "example": true,
-        "who": "Audio brand",
-        "t": "Photo, then move closer",
-        "d": "Example: headphones on a dark stand get one slow move closer, instead of a rented set."
+        "who": "Watch seller",
+        "t": "Side Move on the Watch",
+        "d": "They use a short side move so the watch finish is easy to see in the dark. They try a second line without calling the crew back.",
+        "img": "n:guide:img2-tpl-film-review3-r1"
       },
       {
         "example": true,
-        "who": "Lighting shop",
-        "t": "The product is the light",
-        "d": "Example: a desk lamp glows on a side table, and the camera move stays slow."
-      },
-      {
-        "example": true,
-        "who": "Product page owner",
-        "t": "Wide, then a phone cut",
-        "d": "Example: the same photo is made once at wide 16:9 for the product page, and again at tall 9:16 for a phone post."
-      },
-      {
-        "example": true,
-        "who": "Small shop",
-        "t": "Voice and background music",
-        "d": "Example: a calm voice and background music are added in the editor before the file is posted."
-      },
-      {
-        "example": true,
-        "who": "Product owner",
-        "t": "Marks stay on the product",
-        "d": "Example: a mark already printed on the uploaded product stays in the photo. The clip does not add a new logo."
-      },
-      {
-        "example": true,
-        "who": "Glass brand",
-        "t": "Glare check",
-        "d": "Example: a glass brand checks the shiny edge before posting, so a dark scene does not hide it."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "A presenter, not a quote",
-        "d": "Example: if a person appears, they come from the actor library, a list of AI actors."
-      },
-      {
-        "example": true,
-        "who": "Catalog lead",
-        "t": "One light, several products",
-        "d": "Example: the same dark light is reused for several products, and each clip can go to Meta (Facebook and Instagram)."
+        "who": "Drinkware shop",
+        "t": "Wide Cut and a Tall Cut",
+        "d": "They export the travel mug once wide and once tall from the same photo. Both cuts keep the slow light, and they skip a second shoot.",
+        "img": "n:guide:img2-tpl-film-review4-r1"
       }
     ]
   },

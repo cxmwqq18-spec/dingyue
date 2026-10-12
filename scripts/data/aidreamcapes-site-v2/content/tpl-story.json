@@ -600,68 +600,36 @@
     }
   ],
   "reviews": {
-    "h2": "Shops Switching to AI Story Ad Images",
-    "lead": "Example ways a shop uses one square Story image. These cards are not customer quotes.",
+    "h2": "How Shops Use a Story Video",
+    "lead": "Four ways a shop makes a Story video from the hot sauce photo. These cards describe the work, not a named seller.",
     "items": [
       {
         "example": true,
-        "who": "Beauty brand",
-        "t": "Offer above the product",
-        "d": "The product stays centered with calm space above it, and the headline is added on the tall 9:16 frame after download. The generated file itself has no price in it."
+        "who": "Hot sauce maker",
+        "t": "Avatar Holds the Bottle",
+        "d": "They pick an avatar to hold the hot sauce and say the heat. The Story video goes on Instagram, and they skip a filming morning.",
+        "img": "n:guide:img2-tpl-story-review1-r1"
       },
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "Same photo, two Story apps",
-        "d": "One square download is placed in an Instagram Story layout and a Facebook Story layout. The product is kept clear of the header and the lower button area."
+        "who": "Sauce shop seller",
+        "t": "Same Bottle, Second Line",
+        "d": "They keep the bottle and change the spoken line for a second Story. Both files come from the one photo on the product page.",
+        "img": "n:guide:img2-tpl-story-review2-r1"
       },
       {
         "example": true,
-        "who": "Seasonal campaign",
-        "t": "A summer scene around the bottle",
-        "d": "The team describes a light surface and one extra object, then checks that the full bottle is still visible. The end date of the offer is typed later, so it can be removed when the campaign ends."
+        "who": "Food seller",
+        "t": "Drizzle, Then the Cap",
+        "d": "They show the pour over a taco, then the full bottle with the cap on. Shoppers see the product, and nobody books a crew.",
+        "img": "n:guide:img2-tpl-story-review3-r1"
       },
       {
         "example": true,
-        "who": "Retail marketer",
-        "t": "Feed crop was cutting the cap",
-        "d": "They stop cropping a square feed photo into a tall frame. The scene leaves space around the product for stickers, and they check the edges against the source before posting."
-      },
-      {
-        "example": true,
-        "who": "Ad buyer",
-        "t": "Photo now, motion later",
-        "d": "A simple offer uses this square photo. When the product needs to be shown in motion, they switch to a tall video instead of stretching this photo."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "Text stays editable",
-        "d": "Price, code and button are added in their design tool. Nothing is written into the image, so a typo is a text fix."
-      },
-      {
-        "example": true,
-        "who": "Global beauty shop",
-        "t": "A second language",
-        "d": "The shop keeps the same square and pairs it with a spoken line in the language that market uses."
-      },
-      {
-        "example": true,
-        "who": "Indie brand",
-        "t": "A generated presenter",
-        "d": "They choose a generated person to hold the bottle."
-      },
-      {
-        "example": true,
-        "who": "Catalog team",
-        "t": "Link, then a script",
-        "d": "They paste the product page, edit the drafted line, and keep the square photo as the Story frame."
-      },
-      {
-        "example": true,
-        "who": "Social manager",
-        "t": "Publish after a trim",
-        "d": "They trim the Story in the editor and publish it to Instagram or Facebook in one click."
+        "who": "Small-batch sauce maker",
+        "t": "Voice in the Buyer's Language",
+        "d": "They keep the same Story and pair it with a spoken line in the language that market uses. The bottle does not change.",
+        "img": "n:guide:img2-tpl-story-review4-r1"
       }
     ]
   },
@@ -672,6 +640,7 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],

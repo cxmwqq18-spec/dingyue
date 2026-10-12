@@ -222,6 +222,7 @@
   "blockOrder": [
     "hero",
     "directory",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -411,44 +412,36 @@
     }
   ],
   "reviews": {
-    "h2": "How Shops in a Category Use It",
-    "lead": "Examples of how a shop would use it, not quotes from named customers.",
+    "h2": "How a Shop Uses Its Industry Page",
+    "lead": "Each seller opens the row that matches the item, then makes one clip from a photo they already have.",
     "items": [
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "Texture, then a line",
-        "d": "A skincare shop starts from the jar photo, shows the texture, and adds a spoken line about one real use."
+        "who": "Skincare shop owner",
+        "t": "Start From the Jar Photo",
+        "d": "They open the beauty row and turn one jar photo into a creator-style clip. The file goes on the product page after they check the color.",
+        "img": "n:guide:img2-industries-review1-r1"
       },
       {
         "example": true,
-        "who": "Clothing shop",
-        "t": "Worn, not fitted",
-        "d": "A clothing shop puts the garment on a person the tool makes. The picture does not replace the size chart."
+        "who": "Clothing seller",
+        "t": "Show the Garment in Use",
+        "d": "They open the clothing row and make a clip of the piece being worn. They post that file instead of booking a fitting day.",
+        "img": "n:guide:img2-industries-review2-r1"
       },
       {
         "example": true,
-        "who": "Gadget shop",
-        "t": "One action",
-        "d": "A gadget shop asks for one motion, such as a lid opening, and puts the feature name in the captions."
+        "who": "Gadget shop owner",
+        "t": "Point at One Feature",
+        "d": "They open the tech row and have an AI actor point at one feature of the device. The clip replaces a studio afternoon.",
+        "img": "n:guide:img2-industries-review3-r1"
       },
       {
         "example": true,
-        "who": "Food shop",
-        "t": "A pour or a sip",
-        "d": "A food shop shows the pour or the first sip, with music under the video and the price typed to match the listing."
-      },
-      {
-        "example": true,
-        "who": "Home shop",
-        "t": "The item in a room",
-        "d": "A home shop places the product in a room from the photo it already has, then checks the color against the real item."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Several versions",
-        "d": "An agency makes several versions from one client photo. One version can change the actor, the first line, or the shape."
+        "who": "Small-batch food maker",
+        "t": "Pour It Where People Eat",
+        "d": "They open the food row and make a pour from the jar they already shot. That clip is the one they run in the feed.",
+        "img": "n:guide:img2-industries-review4-r1"
       }
     ]
   },

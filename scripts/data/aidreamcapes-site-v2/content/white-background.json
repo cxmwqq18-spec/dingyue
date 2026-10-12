@@ -256,26 +256,26 @@
   },
   "benefits": [
     {
-      "img": "n:guide:k2-white-use-mug",
-      "alt": "Plain cream ceramic mug with a broad handle on pure white.",
+      "img": "n:guide:img2-white-background-benefits-1-r1",
+      "alt": "The same woven straw tote sits on a linen table and, beside that, on pure white.",
       "t": "The Label Stays Easy to Read",
       "d": "Shoppers can read the size line on the cream mug in the search result. The busy counter is gone, so that line is what the card shows."
     },
     {
-      "img": "n:guide:k2-white-picker-desk-lamp",
-      "alt": "Curved brass desk lamp with a simple shade on pure white.",
+      "img": "n:guide:img2-white-background-benefits-2-r1",
+      "alt": "An olive bomber and a yellow polo lie on a wooden chair and, beside that, on pure white.",
       "t": "A Catalog Look From a Phone",
       "d": "A brass desk lamp shot on a cluttered desk can belong in the catalog. The shade stays centered, the whole lamp stays in frame, and a short shadow under the base keeps it from looking pasted on."
     },
     {
-      "img": "n:guide:k2-white-picker-serving-bowl",
-      "alt": "Cream stoneware serving bowl with a softly rounded rim on white.",
+      "img": "n:guide:img2-white-background-benefits-3-r1",
+      "alt": "One beige block-heel pump sits on a wood floor beside six plain block-heel pumps on white.",
       "t": "The Same White on Every SKU",
       "d": "Buyers paging the shop see one white, even when the second bowl was shot under a warmer bulb. That file matches the first bowl instead of sitting cream beside it."
     },
     {
-      "img": "n:guide:rx2-white-benefit-jewelry-dish",
-      "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white.",
+      "img": "n:guide:img2-white-background-benefits-4-r1",
+      "alt": "The same coral three-seat sofa appears in a living room, on pure white, and in a second room.",
       "t": "Two Crops From One Saved File",
       "d": "One saved white dish covers both placements. The store grid gets a square crop, and the email gets the rim closer to the left."
     }
@@ -366,6 +366,7 @@
     "benefits",
     "steps",
     "features",
+    "reviews",
     "faq",
     "related",
     "cta"
@@ -378,26 +379,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Use a White Main Image",
-    "lead": "Ways sellers prepare a plain main image before the listing goes up.",
+    "h2": "How Shops Use a White Main Image",
+    "lead": "Each shop takes a photo they already shot and downloads a file with the room gone.",
     "items": [
       {
         "example": true,
-        "who": "Marketplace seller",
-        "t": "Replace a busy tabletop before the listing goes up",
-        "d": "Start with the photo you already took. Put the item on white, check the outline, and upload it as the main image if that category's photo rules allow it."
+        "who": "Leather-goods seller",
+        "t": "Clear the Desk off the Wallet",
+        "d": "They shot the wallet beside the keys and download a file with the table gone. That file is the main image on the listing.",
+        "img": "n:guide:img2-white-background-review1-r1"
       },
       {
         "example": true,
-        "who": "Shopify store",
-        "t": "Make the catalog feel like one set",
-        "d": "Run the same white background on each new product photo. If a photo fails, those credits come back, and the cost is shown first."
+        "who": "Catalog seller",
+        "t": "Give the Folder One White",
+        "d": "They run a folder of product photos onto the same white field. The grid matches, and nobody opens each file by hand.",
+        "img": "n:guide:img2-white-background-review2-r1"
       },
       {
         "example": true,
-        "who": "Etsy seller",
-        "t": "Prepare a plain first image, then a scene",
-        "d": "Use the white file as the clear view. Build a lifestyle scene separately when the listing also needs context."
+        "who": "Tableware seller",
+        "t": "Set the Bowl on White",
+        "d": "They take the stoneware bowl off the wood table and onto white. The listing main image is that file.",
+        "img": "n:guide:img2-white-background-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Home-office seller",
+        "t": "Separate the Lamp and the Mug",
+        "d": "They shot the lamp and the mug on a cluttered desk and download each one alone on white. Both files can go on their own listings.",
+        "img": "n:guide:img2-white-background-review4-r1"
       }
     ]
   },

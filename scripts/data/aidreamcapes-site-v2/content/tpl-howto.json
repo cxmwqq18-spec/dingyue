@@ -582,72 +582,41 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Teach One Product Task",
-    "lead": "Each card is an example of how a shop teaches one task, from the first move to the result.",
+    "h2": "How Shops Teach One Press",
+    "lead": "Four ways a shop teaches one press of the steamer on a blue shirt, and the filming day each one skips.",
     "items": [
       {
         "example": true,
         "who": "Home shop",
-        "t": "One move, then the result",
-        "d": "A home shop shows one pass across the fabric, then stays on the smoother spot so the task is easy to follow."
+        "t": "Show One Press",
+        "d": "They show one pass of the white steamer across the blue shirt, then hold on the smoother cloth. A buyer can copy that move.",
+        "img": "n:guide:img2-tpl-howto-review1-r1"
       },
       {
         "example": true,
         "who": "First-time seller",
-        "t": "A photo and a clip",
-        "d": "A first-time seller uploads the product photo and gets a photo plus a how-to clip, with no filming experience needed."
+        "t": "Start From the Photo",
+        "d": "They upload the steamer photo and get a how-to clip of the press. No filming day goes on the calendar.",
+        "img": "n:guide:img2-tpl-howto-review2-r1"
       },
       {
         "example": true,
-        "who": "Tool brand",
-        "t": "From photo to in hand",
-        "d": "A tool brand starts from the product photo, then an AI actor holds the item while the task runs."
+        "who": "Apparel shop",
+        "t": "Let an Avatar Press",
+        "d": "An AI avatar holds the steamer and presses the blue shirt, so the shop does not hire someone to stand there. The clip is the shop's own ad.",
+        "img": "n:guide:img2-tpl-howto-review3-r1"
       },
       {
         "example": true,
-        "who": "Desk brand",
-        "t": "Pick an actor, then trim",
-        "d": "A desk brand picks an AI actor from the library and trims the how-to in the built-in editor."
-      },
-      {
-        "example": true,
-        "who": "Overseas shop",
-        "t": "Another language",
-        "d": "A shop that sells in two countries repeats the same task in a second language."
-      },
-      {
-        "example": true,
-        "who": "Support team",
-        "t": "Edit Before You Post",
-        "d": "A support team adjusts the clip in the built-in editor instead of moving the file to another app."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Presented as your ad",
-        "d": "A founder lets an AI actor present the task and posts the clip as the shop's own ad."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "No studio day",
-        "d": "A small team skips a camera day and starts the how-to from the photo already on the listing."
-      },
-      {
-        "example": true,
-        "who": "Catalog seller",
-        "t": "Start from the link",
-        "d": "A catalog seller pastes the product link, checks the words and the voice, then makes a second version."
-      },
-      {
-        "example": true,
-        "who": "Solo seller",
-        "t": "Type the task here",
-        "d": "A solo seller types the task and gets words, a scene, and a clip to check before posting."
+        "who": "Desk seller",
+        "t": "Trim the Demo",
+        "d": "They pick an AI avatar for the steamer demo and trim the press in the editor before the how-to goes up. The lesson stays one move.",
+        "img": "n:guide:img2-tpl-howto-review4-r1"
       }
     ]
   },

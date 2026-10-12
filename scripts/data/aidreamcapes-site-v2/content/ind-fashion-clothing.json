@@ -166,68 +166,36 @@
     ]
   },
   "reviews": {
-    "h2": "Where Outfit Photos Help a Clothing Shop",
-    "lead": "How clothing sellers use one garment photo or a product link.",
+    "h2": "How Clothing Shops Use One Photo",
+    "lead": "Four ways a clothing shop shows a garment from one photo, and the casting day each one skips.",
     "items": [
       {
         "example": true,
-        "who": "Basics label",
-        "t": "A turn from clothes laid flat",
-        "d": "They photograph the hoodie flat, ask for one turn in a bright room, and check the cuffs and the hem before the clip is posted."
+        "who": "Basics shop",
+        "t": "Turn the Hoodie Once",
+        "d": "They photograph the pale hoodie flat and ask for one turn in a bright room. The casting call for that color stays off the week.",
+        "img": "n:guide:img2-ind-fashion-clothing-review1-r1"
       },
       {
         "example": true,
         "who": "Denim shop",
-        "t": "Fit check in the hands",
-        "d": "A jacket photo becomes an adult holding it by the shoulders, so the length is easier to judge than on a hanger."
+        "t": "Show the Jacket Length",
+        "d": "A jacket photo becomes an adult holding it by the shoulders, so the length is easier to judge than on a hanger. They post that still on the product page.",
+        "img": "n:guide:img2-ind-fashion-clothing-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Coat seller",
+        "t": "Walk the Wool Coat",
+        "d": "They have an AI avatar walk the wool coat down a hallway from the flat photo. The buyer sees the hem move and where to buy it.",
+        "img": "n:guide:img2-ind-fashion-clothing-review3-r1"
       },
       {
         "example": true,
         "who": "Small line",
-        "t": "Two lengths, one shirt",
-        "d": "The same shirt photo becomes a 10-second turn for 40 credits and a 15-second walk for 60 credits. Credits are what your plan spends on each video."
-      },
-      {
-        "example": true,
-        "who": "Size run",
-        "t": "Build named in the script",
-        "d": "They ask for a short script that names height and build, then compare the outline with the sample."
-      },
-      {
-        "example": true,
-        "who": "Marketplace desk",
-        "t": "Presenter kept for the line",
-        "d": "One generated model from the library wears the new color and the next piece."
-      },
-      {
-        "example": true,
-        "who": "Print-heavy brand",
-        "t": "Captions, then a print check",
-        "d": "They fix captions in the editor and reject the file if the printed pattern has moved."
-      },
-      {
-        "example": true,
-        "who": "Outfit desk",
-        "t": "A link for the new color",
-        "d": "They paste the product page instead of rebooking a fitting, and still check the hems."
-      },
-      {
-        "example": true,
-        "who": "Region desk",
-        "t": "The turn in another language",
-        "d": "The same turn is made again for another market. The garment color is checked both times."
-      },
-      {
-        "example": true,
-        "who": "Photo set",
-        "t": "A few flats, no casting",
-        "d": "Several garment photos stand in for a casting day. The model stays generated."
-      },
-      {
-        "example": true,
-        "who": "Chat desk",
-        "t": "Describe the hallway, get the video",
-        "d": "They describe the room in a few short notes and get a script with the try-on."
+        "t": "Skip the Casting Day",
+        "d": "They put the next color on an AI avatar from the garment photo alone. The model invoice for that test does not get sent.",
+        "img": "n:guide:img2-ind-fashion-clothing-review4-r1"
       }
     ]
   },
@@ -265,6 +233,7 @@
     "reasons",
     "steps",
     "platforms",
+    "reviews",
     "faq",
     "cta"
   ],

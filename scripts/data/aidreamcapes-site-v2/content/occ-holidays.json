@@ -271,26 +271,36 @@
     }
   ],
   "reviews": {
-    "h2": "How Shops Build Gift Guide Product Images",
-    "lead": "Three ways a shop gets the gift scene up before the cutoff is confirmed.",
+    "h2": "How Sellers Make a Holiday Gift Video",
+    "lead": "Four sellers build a gift scene from a product photo before the ship-by date is final.",
     "items": [
       {
         "example": true,
-        "who": "A skincare shop",
-        "t": "Have an actor lift the set",
-        "d": "They paste the gift-set page and ask an actor to lift it from the box. The order-by date is typed later, so a new date can keep the same scene."
+        "who": "Skincare shop",
+        "t": "Lift the Lipstick Set",
+        "d": "A skincare shop has an AI avatar lift the lipstick from the cream box. They post the gift scene and skip hiring a model for the holiday cut.",
+        "img": "n:guide:img2-occ-holidays-review1-r1"
       },
       {
         "example": true,
-        "who": "An apparel shop",
-        "t": "Stand a generated actor by the coat",
-        "d": "They keep the coat's color and shape, with an actor next to an open gift. That actor is generated, not a hired customer."
+        "who": "Apparel shop",
+        "t": "Stand Beside the Wool Jacket",
+        "d": "An apparel shop places an AI avatar next to the wool jacket and an open gift. They use the clip in the feed and skip a holiday photoshoot.",
+        "img": "n:guide:img2-occ-holidays-review2-r1"
       },
       {
         "example": true,
-        "who": "A home shop",
-        "t": "Keep the candle, change the voice",
-        "d": "They download the candle-and-ribbon scene once. Next weekend they only change the language of the voice and the offer line."
+        "who": "Home shop",
+        "t": "Keep the Candle, Change the Voice",
+        "d": "A home shop downloads the candle-and-ribbon scene once, then changes the voice language for the next post. They skip filming the jar again.",
+        "img": "n:guide:img2-occ-holidays-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Gift shop",
+        "t": "Reuse One Scarf Scene",
+        "d": "A gift shop arranges the jar, the tube, and the scarf in one scene and tries a second opening line. They publish the one they like and skip a new shoot when the offer changes.",
+        "img": "n:guide:img2-occ-holidays-review4-r1"
       }
     ]
   },
@@ -330,6 +340,7 @@
     "benefits",
     "steps",
     "trust",
+    "reviews",
     "faq",
     "cta"
   ]

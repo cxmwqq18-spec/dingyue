@@ -193,6 +193,7 @@
     "steps",
     "reasons",
     "related",
+    "reviews",
     "faq"
   ],
   "benefits_lead": "The listing can go up without a studio day, starting from a photo you already shot.",
@@ -270,44 +271,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Fill a Gallery Before a Studio Booking",
-    "lead": "A few ways shops use one upload.",
+    "h2": "How Sellers Fill an Amazon Gallery",
+    "lead": "Each seller starts from a photo they already have and fills the listing without a studio day.",
     "items": [
       {
         "example": true,
-        "who": "Grocery shop",
-        "t": "Plain pouch, then a pour",
-        "d": "Example: a pouch upload becomes a plain-background main and a breakfast pour later in the gallery."
+        "who": "Coffee seller",
+        "t": "Coffee Bag on Pure White",
+        "d": "They turn a counter photo of the coffee bag into a white main image. They add it in Seller Central and skip a studio shot for this bag.",
+        "img": "n:guide:img2-plat-amazon-review1-r1"
       },
       {
         "example": true,
-        "who": "Kitchen shop",
-        "t": "Mug in the hand",
-        "d": "Example: a mug upload becomes a plain main, then a hand-held view for scale."
+        "who": "Mug maker",
+        "t": "Mug in a Hand for Scale",
+        "d": "They make a later gallery image of a hand lifting the ceramic mug, after the white main image. Shoppers see the size without a second photoshoot.",
+        "img": "n:guide:img2-plat-amazon-review2-r1"
       },
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "Pump, then a texture",
-        "d": "Example: a bottle upload becomes a plain main and a close texture photo with no sales claim on it."
+        "who": "Lunch-container brand",
+        "t": "One White Setup for the Line",
+        "d": "They run the lunch container through the same white field as the rest of the catalog. A batch keeps the line looking like one shop.",
+        "img": "n:guide:img2-plat-amazon-review3-r1"
       },
       {
         "example": true,
-        "who": "Outdoor shop",
-        "t": "Pack, then the strap",
-        "d": "Example: a daypack upload becomes an upright main and a hardware detail."
-      },
-      {
-        "example": true,
-        "who": "Pet shop",
-        "t": "Item, then the animal",
-        "d": "Example: a brush upload becomes a plain main and a grooming photo so the size is obvious."
-      },
-      {
-        "example": true,
-        "who": "Electronics shop",
-        "t": "Whole unit, then the port",
-        "d": "Example: a headphone upload becomes a plain main and a port detail."
+        "who": "Picnic brand",
+        "t": "Basket Matched Across Images",
+        "d": "They keep the picnic basket the same size and margin on the listing images. A shopper who saw it in search still recognizes it in the next frame.",
+        "img": "n:guide:img2-plat-amazon-review4-r1"
       }
     ]
   },

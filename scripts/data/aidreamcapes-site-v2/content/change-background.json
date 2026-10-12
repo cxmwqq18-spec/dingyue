@@ -110,8 +110,8 @@
   ],
   "visual": {
     "steps": {
-      "source": "n:guide:ra3-change-background-steps-1-r1",
-      "result": "n:guide:ra3-change-background-steps-2-r2",
+      "source": "n:guide:img2-change-background-steps-1-r1",
+      "result": "n:guide:img2-change-background-steps-2-r1",
       "mode": "photo",
       "prompt": "Place this blue ceramic vase on a shaded garden table with a light cloth and soft green plants behind it.",
       "options": [
@@ -215,6 +215,7 @@
     "reasons",
     "benefits",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -225,86 +226,54 @@
       {
         "t": "Clear the Counter Behind the Cleanser",
         "d": "A mint cleanser tube on a plant-filled counter comes back on a quiet gray backdrop. The listing shows the tube, not the leaves.",
-        "img": "n:guide:k5-background-case-1",
-        "alt": "Mint cleanser tube on a plant-filled counter, ready for the listing."
+        "img": "n:guide:img2-change-background-reasons-1-r1",
+        "alt": "Mint cleanser tube on a pale counter, leafy plant at the left, quiet gray wall behind."
       },
       {
         "t": "Pair the Sneakers With the Bag",
         "d": "Set the black and white sneakers beside the purple handbag on one pale backdrop. Both stay the products you sell, and only the floor behind them changes.",
-        "img": "n:guide:k5-background-case-2",
-        "alt": "Black and white sneakers beside a purple handbag, ready to list."
+        "img": "n:guide:img2-change-background-reasons-2-r1",
+        "alt": "Black sneaker and white sneaker beside a purple handbag on a pale floor."
       },
       {
         "t": "Move Serum and Sunscreen",
         "d": "Place the serum among green leaves, then the two sunscreen bottles on the beach. Each new setting is a short credit job, and the charge appears before the photo is made.",
-        "img": "n:guide:k5-background-case-3",
-        "alt": "Serum bottle among green leaves and two sunscreen bottles on sand, ready to post."
+        "img": "n:guide:img2-change-background-reasons-3-r1",
+        "alt": "Frosted serum bottle among green leaves, and two cream sunscreen bottles standing on sand."
       }
     ]
   },
   "reviews": {
-    "h2": "How Shops Use the New Background",
-    "lead": "Example ways a shop uses the new photo, then a video, a voice, or another language.",
+    "h2": "How Sellers Use a New Background",
+    "lead": "Four sellers change only the setting behind a product they already photographed.",
     "items": [
       {
         "example": true,
-        "who": "Home goods seller",
-        "t": "Move a vase from a cluttered table to a quiet surface",
-        "d": "Keep the product photo. Describe a pale wood table or a plain wall, then check the rim before you publish."
+        "who": "Skincare seller",
+        "t": "Clear the Counter",
+        "d": "They set a mint cleanser tube on a plant-filled counter and ask for a quiet gray sweep. They publish the listing without styling that counter again.",
+        "img": "n:guide:img2-change-background-review1-r1"
       },
       {
         "example": true,
-        "who": "Seasonal shop",
-        "t": "Try a holiday shelf without setting the room up again",
-        "d": "Name one seasonal surface. If the result adds objects you did not ask for, run it again with a shorter note."
+        "who": "Shoe seller",
+        "t": "Set the Pair Together",
+        "d": "They place black and white sneakers beside a purple handbag and ask for one pale floor. They use that photo in the next ad without booking a studio.",
+        "img": "n:guide:img2-change-background-review2-r1"
       },
       {
         "example": true,
-        "who": "Ad editor",
-        "t": "Build a social post from your product photo",
-        "d": "Put the item on a cafe table or a garden surface, then add the offer in the ad editor after download."
+        "who": "Sunscreen seller",
+        "t": "Move the Bottles Outside",
+        "d": "They take the serum and two sunscreen bottles and ask for sand behind the sunscreen. They keep the caps the same and skip a beach shoot.",
+        "img": "n:guide:img2-change-background-review3-r1"
       },
       {
         "example": true,
-        "who": "Listing manager",
-        "t": "Keep a white version and a scene version",
-        "d": "Use a white listing image when the store wants a plain main photo. Use a new setting when the page should show where the item sits."
-      },
-      {
-        "example": true,
-        "who": "Short-video seller",
-        "t": "Make a product video from the same photo",
-        "d": "Send the photo to [image to video](page:image-to-video) when the ad needs motion. The uploaded photo is the product in the ad."
-      },
-      {
-        "example": true,
-        "who": "Store owner",
-        "t": "Start from the product link",
-        "d": "Paste the listing into [URL to video](page:url-to-video). You get a written script, a person on screen, and a video to check before you publish."
-      },
-      {
-        "example": true,
-        "who": "Multi-country seller",
-        "t": "Say the same offer in another language",
-        "d": "Add an AI voice and on-screen captions for another country. The product photo stays the same when the language changes."
-      },
-      {
-        "example": true,
-        "who": "Small brand",
-        "t": "Add captions and music in one editor",
-        "d": "Add on-screen captions, music, or a short line of text in the editor here. Then publish to TikTok or Meta (Facebook and Instagram)."
-      },
-      {
-        "example": true,
-        "who": "Agency editor",
-        "t": "Put an actor next to the product",
-        "d": "Pick a person from the [AI actors](page:ai-actors) page and a [spokesperson video](page:spokesperson-videos). The product photo is what the ad is selling."
-      },
-      {
-        "example": true,
-        "who": "Catalog manager",
-        "t": "Run several backgrounds from one photo",
-        "d": "Ask for a studio surface, a wood counter, and a garden table from the same photo. Each photo is 24 credits, shown before you start."
+        "who": "Home seller",
+        "t": "Keep the Vase, Drop the Room",
+        "d": "They keep the blue vase photo and ask for pale wood behind it. They check the rim, then put the square on the listing.",
+        "img": "n:guide:img2-change-background-review4-r1"
       }
     ]
   },

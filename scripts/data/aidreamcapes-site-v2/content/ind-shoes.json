@@ -168,74 +168,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shoe Brands Switch to AI Ads",
-    "lead": "Example ways footwear sellers use one pair photo. These are not quotes.",
+    "h2": "How Shoe Sellers Use One Pair Photo",
+    "lead": "Each seller starts from a shoe photo they already have and skips a model day.",
     "items": [
       {
         "example": true,
-        "who": "Walking-shoe brand",
-        "t": "One step on a sidewalk",
-        "d": "They upload a side view and ask for one measured step. The sole pattern is left out unless they also upload a photo of the bottom."
+        "who": "Walking-shoe seller",
+        "t": "Gray Pair in Two Hands",
+        "d": "They upload the side photo and get a fit check with both gray walking shoes in two hands. They use it on the product page and skip a model call for this color.",
+        "img": "n:guide:img2-ind-shoes-review1-r1"
       },
       {
         "example": true,
-        "who": "Color shop",
-        "t": "Each color from its own photo",
-        "d": "A new color gets its own photo, so the top of the shoe is not recolored from a different pair."
+        "who": "Leather-shoe maker",
+        "t": "Grain Still, Then a Step",
+        "d": "They keep the taupe shoe's grain in a gallery still and make a separate step clip from the same pair. One photo covers the page and the ad.",
+        "img": "n:guide:img2-ind-shoes-review2-r1"
       },
       {
         "example": true,
-        "who": "Listing team",
-        "t": "White main image, then a clip",
-        "d": "The same side photo guides a white-background main image and a 10-second step. That clip spends 40 credits."
+        "who": "Small footwear shop",
+        "t": "One Sidewalk Step",
+        "d": "They turn a side photo into one measured step on a clean sidewalk. They post the tall clip and skip a sidewalk shoot.",
+        "img": "n:guide:img2-ind-shoes-review3-r1"
       },
       {
         "example": true,
-        "who": "Unbranded maker",
-        "t": "Keep logos out",
-        "d": "They start from a plain pair and reject stripes or stitching that look like a logo they do not own."
-      },
-      {
-        "example": true,
-        "who": "Reseller",
-        "t": "Their own product photo",
-        "d": "If the listing depends on a logo they do not own, they use their own straight photo. They do not ask the tool to draw that logo."
-      },
-      {
-        "example": true,
-        "who": "Fit page",
-        "t": "Hands plus a step",
-        "d": "One photo becomes a fit check in the hands and a 15-second step. That clip spends 60 credits."
-      },
-      {
-        "example": true,
-        "who": "Page-link seller",
-        "t": "A link, then a step script",
-        "d": "They paste the product page. Or they send that link from their own shop software (the API). They ask for a short script about one step. Comfort claims stay in the listing."
-      },
-      {
-        "example": true,
-        "who": "Two-scene seller",
-        "t": "One step, then the same person",
-        "d": "They pick a person the tool creates for a single step. Then they make a second version of that person. That person is not a reviewer."
-      },
-      {
-        "example": true,
-        "who": "Small ads shop",
-        "t": "Voice, captions, and a track",
-        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the step in the editor before export."
-      },
-      {
-        "example": true,
-        "who": "Second-language shop",
-        "t": "The same pair, another language",
-        "d": "They make the step again in a second language from the same side photo. The clip does not add sole pattern you did not photograph."
-      },
-      {
-        "example": true,
-        "who": "Version tester",
-        "t": "A few versions, then publish",
-        "d": "They type the step in the text box and keep a few versions. They send the one they want to TikTok, Facebook, or Instagram. A 15-second clip spends 60 credits."
+        "who": "Listing seller",
+        "t": "White Main Image of the Shoe",
+        "d": "They make a white-background main image of the shoe from the side photo they already have. They check it against the listing rules before upload, with no studio day.",
+        "img": "n:guide:img2-ind-shoes-review4-r1"
       }
     ]
   },
@@ -290,6 +252,7 @@
     "reasons",
     "steps",
     "platforms",
+    "reviews",
     "faq",
     "cta"
   ]

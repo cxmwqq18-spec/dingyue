@@ -577,72 +577,41 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Beauty Shops Use a Routine Video",
-    "lead": "Each card is one way a beauty shop turns one product photo into a routine ad. People on screen are AI actors.",
+    "h2": "How Beauty Sellers Use a Routine Ad",
+    "lead": "Four sellers swap their own bottle into a routine that is already set.",
     "items": [
       {
         "example": true,
-        "who": "Cleanser shop",
-        "t": "Frames that stay on the bottle",
-        "d": "A cleanser shop gets a finished pump clip from one bottle photo, with the bottle still easy to see beside the sink."
+        "who": "Cleanser seller",
+        "t": "Post a Sink Routine",
+        "d": "They upload the pump photo and post a sink routine on TikTok. They skip a creator booking and a lit bathroom set.",
+        "img": "n:guide:img2-tpl-beauty-review1-r1"
       },
       {
         "example": true,
-        "who": "Moisturizer shop",
-        "t": "A video and a photo together",
-        "d": "A moisturizer shop makes the texture clip and a matching photo in one place, without a big setup."
+        "who": "Moisturizer seller",
+        "t": "Match the Clip and the Still",
+        "d": "They make the texture clip and a still from the same jar. They skip a second shoot for the product page.",
+        "img": "n:guide:img2-tpl-beauty-review2-r1"
       },
       {
         "example": true,
-        "who": "Sunscreen shop",
-        "t": "The tube held up",
-        "d": "A sunscreen shop uploads the tube, then makes a clip of that tube held up so the package stays recognizable."
+        "who": "Sunscreen seller",
+        "t": "Hold the Tube Up",
+        "d": "They upload the tube and make a clip of it held toward the camera. The package stays recognizable in the tall file.",
+        "img": "n:guide:img2-tpl-beauty-review3-r1"
       },
       {
         "example": true,
-        "who": "Cosmetics brand",
-        "t": "AI actors and the editor",
-        "d": "A cosmetics brand picks an AI actor for the routine, then trims the clip in the built-in editor before download."
-      },
-      {
-        "example": true,
-        "who": "Global beauty brand",
-        "t": "More than one language",
-        "d": "A serum brand tells the same routine with an AI voice in the languages its shoppers use."
-      },
-      {
-        "example": true,
-        "who": "Beauty team",
-        "t": "Quick, on a paid plan",
-        "d": "A small beauty team makes the clip in AIVideosUGC, on a paid plan with a 10-second video at 40 credits."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "An AI actor",
-        "d": "An agency builds an AI actor for a client's serum and keeps that person as the brand's ad, not a customer."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Skip the lights and camera",
-        "d": "A founder uploads a few product photos and skips lights, a camera, and a set for the routine."
-      },
-      {
-        "example": true,
-        "who": "Marketing lead",
-        "t": "Link, script, and voice",
-        "d": "A marketing lead pastes the product page link. AIVideosUGC writes the script, picks an AI actor, and adds a voice copied from one the shop may use."
-      },
-      {
-        "example": true,
-        "who": "First-time seller",
-        "t": "Chat for the routine",
-        "d": "A first-time seller describes the routine in chat. The video agent sends back a script, pictures, and a video to review."
+        "who": "Cosmetics seller",
+        "t": "Trim the Routine",
+        "d": "They pick an AI actor for the routine, then trim the clip in the editor. They skip a studio day for that mascara.",
+        "img": "n:guide:img2-tpl-beauty-review4-r1"
       }
     ]
   },

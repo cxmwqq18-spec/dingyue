@@ -720,6 +720,7 @@
     "steps",
     "examples",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -779,67 +780,35 @@
   ],
   "reviews": {
     "h2": "How Shops Use an AI Video Generator",
-    "lead": "How a type of shop might use one product photo or a product link. These are examples, not customer quotes.",
+    "lead": "Each seller starts from one product photo and posts a clip without a shoot that week.",
     "items": [
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "A cleanser clip with a voice",
-        "d": "A beauty shop turns one cleanser photo into a spoken creator-style ad."
+        "who": "Bottle brand",
+        "t": "Spoken Ad for the Bottle",
+        "d": "They have an adult hold the insulated bottle and say the line they approved. They post that clip and skip a shoot for this week's color.",
+        "img": "n:guide:img2-video-hub-review1-r1"
       },
       {
         "example": true,
-        "who": "Housewares seller",
-        "t": "Photo, then a clip",
-        "d": "A housewares seller uploads one photo and also makes a short clip of the same item."
+        "who": "Lunch brand",
+        "t": "Same Bento Walkthrough",
+        "d": "They show the bento box the same way for a new color: open the lid, name the compartments, stop. They do not rebrief a creator for the repeat.",
+        "img": "n:guide:img2-video-hub-review2-r1"
       },
       {
         "example": true,
-        "who": "Apparel shop",
-        "t": "On-camera person and editor",
-        "d": "An apparel shop picks an AI actor and trims the clip in the editor, without opening another app."
+        "who": "Fragrance shop",
+        "t": "Perfume in a Real Room",
+        "d": "They place the perfume bottle on a bedroom dresser so the size reads next to ordinary objects. The clip replaces a white-sweep shoot for this bottle.",
+        "img": "n:guide:img2-video-hub-review3-r1"
       },
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "A second language",
-        "d": "A skincare shop makes the same ad in another language for buyers outside its home market."
-      },
-      {
-        "example": true,
-        "who": "Pet shop",
-        "t": "Captions in the editor",
-        "d": "A pet shop adds on-screen captions and a song from the music library, then downloads."
-      },
-      {
-        "example": true,
-        "who": "Small agency",
-        "t": "An AI actor per client",
-        "d": "An agency assigns a different AI actor to each client's product ad."
-      },
-      {
-        "example": true,
-        "who": "Electronics brand",
-        "t": "A face from team photos",
-        "d": "An electronics brand builds an AI actor from a few photos of someone on the team."
-      },
-      {
-        "example": true,
-        "who": "Supplement shop",
-        "t": "Link, script, and voice",
-        "d": "A supplement shop pastes the product link and gets a script, an AI actor, and an AI voice."
-      },
-      {
-        "example": true,
-        "who": "Marketplace seller",
-        "t": "Chat, then a draft",
-        "d": "A marketplace seller describes the product in chat. The video agent drafts the script and the clip."
-      },
-      {
-        "example": true,
-        "who": "Outdoor shop",
-        "t": "Several openings to test",
-        "d": "An outdoor shop keeps the jacket photo and makes another opening, another voice, and another video shape."
+        "who": "Fitness seller",
+        "t": "Actor Matched to the Rope",
+        "d": "They pick an actor who fits an early gym buyer and have them hold the jump rope. The same face can carry the next cut without a new casting call.",
+        "img": "n:guide:img2-video-hub-review4-r1"
       }
     ]
   },

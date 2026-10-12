@@ -95,7 +95,7 @@
   ],
   "visual": {
     "strip": [
-      "n:guide:tpl-angle-round4-speaker-controls",
+      "n:guide:img2-tpl-angle-首屏-1-r1",
       "n:gen2:tpl-angle-c3",
       "n:guide:q7-angle-strip-2",
       "n:gen2:tpl-angle-c2",
@@ -558,72 +558,41 @@
   "blockOrder": [
     "hero",
     "picker",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Use These Side Photos",
-    "lead": "Each card is one way a shop uses the side views it photographed, then keeps going into an ad. People on screen are AI actors.",
+    "h2": "How Shops Fill a Beauty Template",
+    "lead": "Four ways a shop drops a beauty product into a template that already has the frame and the voice, and the shoot each one skips.",
     "items": [
       {
         "example": true,
-        "who": "Charger shop",
-        "t": "The port stays a real side",
-        "d": "A charger shop builds the front and the back from photos it shot, so the port is a side it really photographed."
+        "who": "Serum shop",
+        "t": "Drop In the Bottle",
+        "d": "They drop a serum photo into a beauty template and download a clip with the frame already set. Nobody writes a timeline from a blank file.",
+        "img": "n:guide:img2-tpl-angle-review1-r1"
       },
       {
         "example": true,
-        "who": "Speaker shop",
-        "t": "A photo and a video together",
-        "d": "A speaker shop makes each square side view and a short product video in one place, without a big setup."
+        "who": "Makeup seller",
+        "t": "Fill a Lipstick Clip",
+        "d": "They swap their lipstick into a template that already shows one close look. The voice is already on the clip when they download it.",
+        "img": "n:guide:img2-tpl-angle-review2-r1"
       },
       {
         "example": true,
-        "who": "Laptop stand shop",
-        "t": "Photo, then the product held up",
-        "d": "A laptop-stand shop uploads the base photo, then makes a clip of the stand held up so the feet stay visible."
+        "who": "Hair care shop",
+        "t": "Use the Ready Frame",
+        "d": "They put a hair oil bottle into a template that already has the move and the voice. A creator afternoon does not get booked for that clip.",
+        "img": "n:guide:img2-tpl-angle-review3-r1"
       },
       {
         "example": true,
-        "who": "Headphone shop",
-        "t": "An AI actor, then a trim",
-        "d": "A headphone shop picks an AI actor to hold the earcup, then trims that clip in the editor."
-      },
-      {
-        "example": true,
-        "who": "Keyboard shop",
-        "t": "More than one language",
-        "d": "A keyboard shop keeps the same side views and tells the ad with a spoken AI voice in the languages its buyers use."
-      },
-      {
-        "example": true,
-        "who": "Camera shop",
-        "t": "Quick, on a paid plan",
-        "d": "A camera shop makes the dial view in AIVideosUGC, on a paid plan with each photo at 24 credits."
-      },
-      {
-        "example": true,
-        "who": "Router shop",
-        "t": "An AI actor",
-        "d": "A router shop pairs the jack panel with an AI actor."
-      },
-      {
-        "example": true,
-        "who": "Power bank shop",
-        "t": "Skip the lights and camera",
-        "d": "A power-bank shop uploads photos of each end and skips lights, a camera, and a new photo setup."
-      },
-      {
-        "example": true,
-        "who": "Monitor shop",
-        "t": "Link, script, and voice",
-        "d": "A monitor shop pastes its product link. AIVideosUGC drafts a script, picks an AI actor, and adds a voice copied from one the shop may use."
-      },
-      {
-        "example": true,
-        "who": "Drive shop",
-        "t": "Ask in chat for the clip",
-        "d": "A drive shop describes the port side in chat. The video agent sends back a script, pictures, and a video to check before you post."
+        "who": "Compact seller",
+        "t": "Skip the Blank Timeline",
+        "d": "They drop a compact photo into the template and check the words before posting. The shape of the ad was already there.",
+        "img": "n:guide:img2-tpl-angle-review4-r1"
       }
     ]
   },

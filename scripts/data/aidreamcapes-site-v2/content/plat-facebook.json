@@ -154,6 +154,7 @@
     "features",
     "platforms",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -222,68 +223,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Put a Facebook Ad Together",
-    "lead": "A few ways shops use a link or a photo. These are examples, not quotes from a named customer.",
+    "h2": "How Shops Make a Facebook Ad",
+    "lead": "Each shop turns one pale-blue bottle photo into a Facebook file they can place themselves.",
     "items": [
       {
         "example": true,
-        "who": "Home shop",
-        "t": "Problem, then the item",
-        "d": "Example: a storage basket upload becomes a photo on a shelf so the size is obvious."
+        "who": "Small-batch bottle maker",
+        "t": "Pour It in the Feed",
+        "d": "They upload the pale-blue bottle and make a clip of a hand pouring. That file is the one they put in the Facebook feed.",
+        "img": "n:guide:img2-plat-facebook-review1-r1"
       },
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "Pack, then a dab",
-        "d": "Example: a jar upload becomes a bathroom dab with the label still readable."
+        "who": "Outdoor shop owner",
+        "t": "Pack the Bottle for the Day",
+        "d": "They show the same bottle going into a daypack. The Facebook ad uses that clip instead of a studio day.",
+        "img": "n:guide:img2-plat-facebook-review2-r1"
       },
       {
         "example": true,
-        "who": "Food shop",
-        "t": "Open the jar",
-        "d": "Example: a sauce upload becomes an open-jar photo for the home screen."
+        "who": "Office-gift seller",
+        "t": "Set the Bottle on a Desk",
+        "d": "They make a desk shot of the pale-blue bottle for people buying a gift. The file is a square they drop into the feed.",
+        "img": "n:guide:img2-plat-facebook-review3-r1"
       },
       {
         "example": true,
-        "who": "Electronics shop",
-        "t": "Show the port",
-        "d": "Example: a cable upload becomes a connection close view, then the whole coil."
-      },
-      {
-        "example": true,
-        "who": "Apparel shop",
-        "t": "Flat, then worn",
-        "d": "Example: a shirt upload becomes a flat square and a separate photo of it worn."
-      },
-      {
-        "example": true,
-        "who": "Pet shop",
-        "t": "In the hand, with the pet",
-        "d": "Example: a toy upload becomes a play moment so scale is easy to judge."
-      },
-      {
-        "example": true,
-        "who": "Supplement shop",
-        "t": "A bottle, then a spoken line",
-        "d": "Example: a bottle link becomes an actor holding it, with captions in the language that shop sells."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "One link, several openings",
-        "d": "Example: one product link becomes many versions, so each group of buyers hears a different first line."
-      },
-      {
-        "example": true,
-        "who": "Outdoor shop",
-        "t": "A square photo and a tall clip",
-        "d": "Example: a pack photo becomes both shapes, then both can go to Facebook and Instagram."
-      },
-      {
-        "example": true,
-        "who": "Gift shop",
-        "t": "Music under a short script",
-        "d": "Example: a candle link becomes a short script with music under the voice."
+        "who": "Family gift shop",
+        "t": "Unbox the Bottle on Camera",
+        "d": "They open the bottle on camera and stop once it is out of the box. That opening is the Facebook ad they test first.",
+        "img": "n:guide:img2-plat-facebook-review4-r1"
       }
     ]
   },

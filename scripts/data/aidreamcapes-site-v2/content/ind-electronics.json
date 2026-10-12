@@ -190,68 +190,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Use a Gadget Lifestyle Video",
-    "lead": "How electronics sellers use one product photo or a product link.",
+    "h2": "How Sellers Use a Gadget Video",
+    "lead": "Four ways an electronics shop shows one gadget. These cards describe the work, not a named seller.",
     "items": [
       {
         "example": true,
-        "who": "Speaker brand",
-        "t": "One press on a desk",
-        "d": "They upload a photo taken from a front corner and ask for a hand pressing the single control. The clip ends on the full speaker."
+        "who": "Speaker seller",
+        "t": "One Press on the Desk",
+        "d": "They upload a front-corner photo and ask for a hand pressing the single control. The clip ends on the full speaker beside a cup.",
+        "img": "n:guide:img2-ind-electronics-review1-r1"
       },
       {
         "example": true,
-        "who": "Charger shop",
-        "t": "Cable click-in",
-        "d": "A hub photo becomes a hand connecting a plain cable. Port count is checked against the unit before the clip is posted."
+        "who": "Cable seller",
+        "t": "Plug Into the Dock",
+        "d": "They show a hand fitting the cable into a plain dock, with the port easy to see. The listing uses that clip instead of a booked demo.",
+        "img": "n:guide:img2-ind-electronics-review2-r1"
       },
       {
         "example": true,
-        "who": "Case maker",
-        "t": "Two lengths, one case",
-        "d": "The same case photo becomes a 6-second clip of taking it from a pocket (24 credits). It also becomes a 10-second clip of setting it on a desk (40 credits)."
+        "who": "Gadget seller",
+        "t": "Unbox, Then the Ports",
+        "d": "They open the box on the desk and end on the ports, so a shopper sees what arrived. The unboxing does not need a creator on the calendar.",
+        "img": "n:guide:img2-ind-electronics-review3-r1"
       },
       {
         "example": true,
-        "who": "Launch week",
-        "t": "A script for the unboxing",
-        "d": "They ask for a short script about the lid opening, edit the line, and run the job."
-      },
-      {
-        "example": true,
-        "who": "Accessory desk",
-        "t": "Presenter from the library",
-        "d": "They pick a generated presenter for the desk demo and keep that look on the next color."
-      },
-      {
-        "example": true,
-        "who": "Small catalog",
-        "t": "A link, then a port check",
-        "d": "They paste the product page for a first version, then reject any clip whose ports do not match the unit."
-      },
-      {
-        "example": true,
-        "who": "Specs desk",
-        "t": "Captions edited in place",
-        "d": "Voice and captions are fixed in the editor. Battery life and watts stay in the listing."
-      },
-      {
-        "example": true,
-        "who": "Multi-market",
-        "t": "The setup in another language",
-        "d": "The same button-press demo is made again for a second market. The device shape is checked again."
-      },
-      {
-        "example": true,
-        "who": "Photo set",
-        "t": "A few angles, no light kit",
-        "d": "Several product photos replace a day of lighting. The hand on screen is made up."
-      },
-      {
-        "example": true,
-        "who": "Chat desk",
-        "t": "Describe the demo, get the video",
-        "d": "They type the action in a few short notes and get a script with the clip."
+        "who": "Small electronics seller",
+        "t": "Spoken Line, Then Post",
+        "d": "They set the spoken line and the captions, then post the speaker clip. The script stays the one they wrote for this product.",
+        "img": "n:guide:img2-ind-electronics-review4-r1"
       }
     ]
   },
@@ -263,6 +231,7 @@
     "steps",
     "platforms",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],

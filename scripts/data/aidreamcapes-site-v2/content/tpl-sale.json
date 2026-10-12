@@ -98,43 +98,43 @@
         "label": "Space for the offer",
         "items": [
           {
-            "ref": "n:rc4-tpl-sale-examples-01-r1",
+            "ref": "n:guide:img2-tpl-sale-wall-1-r1",
             "title": "Suitcase With Room for the Offer",
             "kind": "photo",
             "product": "hard-shell suitcase"
           },
           {
-            "ref": "n:q10-sale-example-02",
+            "ref": "n:guide:img2-tpl-sale-wall-2-r1",
             "title": "Sandals Tried On at the Market",
             "kind": "photo",
             "product": "summer sandals"
           },
           {
-            "ref": "n:q10-sale-example-03",
+            "ref": "n:guide:img2-tpl-sale-wall-3-r1",
             "title": "Running Shoes Before the Jog",
             "kind": "photo",
             "product": "running shoes"
           },
           {
-            "ref": "n:guide:fx26-tpl-sale-example-black-friday-r1",
+            "ref": "n:guide:img2-tpl-sale-wall-4-r1",
             "title": "Tote With Space for the Offer",
             "kind": "photo",
             "product": "canvas tote"
           },
           {
-            "ref": "n:guide:fx26-tpl-sale-example-season-end-r1",
+            "ref": "n:guide:img2-tpl-sale-wall-5-r1",
             "title": "Cardigan Ready for Season End",
             "kind": "photo",
             "product": "knit cardigan"
           },
           {
-            "ref": "n:guide:fx26-tpl-sale-example-free-shipping-r1",
+            "ref": "n:guide:img2-tpl-sale-wall-6-r1",
             "title": "Wallet Unboxing With Offer Space",
             "kind": "photo",
             "product": "leather wallet"
           },
           {
-            "ref": "n:guide:fx26-tpl-sale-example-last-day-r1",
+            "ref": "n:guide:img2-tpl-sale-wall-7-r1",
             "title": "Lunch Box on the Last Day",
             "kind": "photo",
             "product": "lunch container"

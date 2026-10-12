@@ -223,5 +223,39 @@
     "ai-actors",
     "plat-instagram",
     "image-to-video"
-  ]
+  ],
+  "reviews": {
+    "h2": "How Shops Use a Checked Video Ad",
+    "lead": "Four shops make the ad here, then match it to the item they actually ship.",
+    "items": [
+      {
+        "example": true,
+        "who": "Small-batch backpack maker",
+        "t": "Check the Front Pocket",
+        "d": "They upload one backpack photo and have an AI actor name the front pocket. They hold the real bag next to the clip before anyone posts it.",
+        "img": "n:guide:img2-blog-ai-video-review-checklist-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Small gadget shop owner",
+        "t": "Match the Kit on the Desk",
+        "d": "They open the box on the desk and confirm every part in the kit is the part that ships. The same slow pass they use on a zipper is the pass they use here.",
+        "img": "n:guide:img2-blog-ai-video-review-checklist-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Independent clothing seller",
+        "t": "Match the Neckline First",
+        "d": "They show the piece on an adult, then match the neckline and the print to the sample. The file is saved only after that match.",
+        "img": "n:guide:img2-blog-ai-video-review-checklist-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Small-batch food maker",
+        "t": "Name the Flavor on the Lid",
+        "d": "They set the jar on the counter and let the voice name the flavor. No extra claim is added after they check the lid.",
+        "img": "n:guide:img2-blog-ai-video-review-checklist-review4-r1"
+      }
+    ]
+  }
 }

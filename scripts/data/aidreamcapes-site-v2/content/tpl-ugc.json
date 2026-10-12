@@ -589,56 +589,36 @@
     }
   ],
   "reviews": {
-    "h2": "How AIVideosUGC Helps Real Shops",
-    "lead": "Example ways a shop uses one product photo. These cards are not customer quotes and not performance scores.",
+    "h2": "How Sellers Make an AI UGC Ad",
+    "lead": "Four sellers pick a face, a language, and a line, then download a cut they can test.",
     "items": [
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "A routine photo",
-        "d": "The shop places the bottle in a morning-routine scene for the feed. The caption, including any claim, is written after download."
+        "who": "Skincare seller",
+        "t": "Speak a Routine Line",
+        "d": "They place the bottle in a morning routine and pick the face and the line. They write any claim after download, and they skip hiring a creator for that scene.",
+        "img": "n:guide:img2-tpl-ugc-review1-r1"
       },
       {
         "example": true,
-        "who": "Supplement brand",
-        "t": "Unboxing without a creator",
-        "d": "An unboxing scene is generated from the pouch photo, with hands that are generated rather than a hired creator. The label is checked against the source before the ad runs."
+        "who": "Snack seller",
+        "t": "Unbox Without a Creator",
+        "d": "An unboxing is generated from the pouch photo, with hands that are generated. They check the label against the source before the ad runs.",
+        "img": "n:guide:img2-tpl-ugc-review2-r1"
       },
       {
         "example": true,
         "who": "Fitness seller",
-        "t": "Demo on a simple background",
-        "d": "A demo photo shows the product in use for a fitness post. The same source can be run again if they want a different angle."
+        "t": "Demo the Bottle",
+        "d": "They show the workout bottle in use at a gym bench and can switch the face. They do not ship a sample to a creator for this test.",
+        "img": "n:guide:img2-tpl-ugc-review3-r1"
       },
       {
         "example": true,
-        "who": "Marketplace seller",
-        "t": "Listing and a social crop",
-        "d": "One square file can go in a carousel and another run can serve the product gallery. Prices stay in the caption, not in the image."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Several scenes, one product photo",
-        "d": "The agency tests a routine, an unboxing, and a demo from the same upload. Each run shows its credit cost first."
-      },
-      {
-        "example": true,
-        "who": "Small brand",
-        "t": "No sample shipment",
-        "d": "They skip sending a sample to a creator for this photo."
-      },
-      {
-        "example": true,
-        "who": "Beauty seller",
-        "t": "Voice and captions",
-        "d": "They add a spoken line and captions, then post the scene from the shop account."
-      },
-      {
-        "example": true,
-        "who": "Wellness shop",
-        "t": "One person publishes",
-        "d": "One person trims the clip in the editor and publishes it to TikTok and Instagram."
+        "who": "Home seller",
+        "t": "Post the Mug in Two Sizes",
+        "d": "They download a tall cut for TikTok and a square for the grid from the same mug photo. The line stays the one they approved.",
+        "img": "n:guide:img2-tpl-ugc-review4-r1"
       }
     ]
   },
@@ -653,6 +633,7 @@
     "definition",
     "steps",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],

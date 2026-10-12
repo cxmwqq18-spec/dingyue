@@ -166,6 +166,7 @@
     "steps",
     "features",
     "related",
+    "reviews",
     "faq"
   ],
   "benefits_lead": "One photo is enough for the next tile on the Shopify collection grid.",
@@ -248,68 +249,36 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Put the Photos to Work",
-    "lead": "A few ways a shop turns one upload into page files.",
+    "h2": "How Shops Use the Product Photos",
+    "lead": "Four ways a shop turns one upload into files for the product page, and the location day each one skips.",
     "items": [
       {
         "example": true,
+        "who": "Tableware shop",
+        "t": "Square the Four Bowls",
+        "d": "They use a bowl photo to make a square product photo that matches the other colors in the collection. The grid goes up without a location day.",
+        "img": "n:guide:img2-plat-shopify-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Bottle shop",
+        "t": "Page Shot and a Hand",
+        "d": "They use one photo for a clean page shot, then a second frame of the water bottle in a hand for the ad. Both come from the same upload.",
+        "img": "n:guide:img2-plat-shopify-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Storage shop",
+        "t": "Basket on the Shelf",
+        "d": "They place the linen basket on a bright shelf for the lifestyle frame, and keep the plain shot as a second file. No prop house gets booked.",
+        "img": "n:guide:img2-plat-shopify-review3-r1"
+      },
+      {
+        "example": true,
         "who": "Home shop",
-        "t": "Three ceramics, one square",
-        "d": "A home shop uses a bowl photo to make a square product photo that matches the other colors in the collection."
-      },
-      {
-        "example": true,
-        "who": "Beauty shop",
-        "t": "Serum on the page, video for the ad",
-        "d": "A beauty shop uses a bottle photo for a square page photo, and a separate video of it being applied."
-      },
-      {
-        "example": true,
-        "who": "Apparel shop",
-        "t": "Folded, then a worn scene",
-        "d": "A clothing shop uses a linen shirt photo for a flat product photo, then a worn scene as a second file."
-      },
-      {
-        "example": true,
-        "who": "Drink seller",
-        "t": "Bag on white, then the cup",
-        "d": "A drink seller uses a coffee bag photo for a plain product photo, then a brew scene as a second file."
-      },
-      {
-        "example": true,
-        "who": "Pet shop",
-        "t": "Brush in the collection",
-        "d": "A pet shop uses a grooming glove photo for a square product photo with the whole glove visible."
-      },
-      {
-        "example": true,
-        "who": "Kitchen shop",
-        "t": "Set of four, same light",
-        "d": "A kitchen shop makes one square product photo for each bowl color, with the same shape and background."
-      },
-      {
-        "example": true,
-        "who": "Jewelry shop",
-        "t": "Ring, then a hand",
-        "d": "A jewelry shop uses a ring photo for a square product photo, then a hand scene as a second file."
-      },
-      {
-        "example": true,
-        "who": "Electronics shop",
-        "t": "Cable fully visible",
-        "d": "An electronics shop uses a charger photo for a square product photo with the cable fully visible."
-      },
-      {
-        "example": true,
-        "who": "Fitness shop",
-        "t": "Bottle, then the gym",
-        "d": "A fitness shop uses a bottle photo for a square product photo, then a gym scene as a second file."
-      },
-      {
-        "example": true,
-        "who": "Furniture shop",
-        "t": "Lamp beside the other lights",
-        "d": "A furniture shop uses a lamp photo for a square product photo that lines up with the other lights."
+        "t": "Match the Collection Grid",
+        "d": "They make one square photo for each bowl color, with the same shape and the same light, then add them in the store. The collection looks planned.",
+        "img": "n:guide:img2-plat-shopify-review4-r1"
       }
     ]
   },

@@ -37,7 +37,7 @@
       "imageRefs": [
         "g:ecommerce-main-image/source-input",
         "g:ecommerce-main-image/example-03",
-        "g:ecommerce-main-image/hero-output"
+        "n:guide:img2-examples-cases-0-r1"
       ],
       "imageLabels": [
         "Uploaded travel mug photo",
@@ -54,7 +54,7 @@
       "imageRefs": [
         "g:lifestyle-scene/source-input",
         "g:lifestyle-scene/example-01",
-        "g:lifestyle-scene/example-03"
+        "n:guide:img2-examples-cases-1-r1"
       ],
       "imageLabels": [
         "Uploaded linen tote photo",
@@ -71,7 +71,7 @@
       "imageRefs": [
         "g:background-remove-replace/source-input",
         "g:background-remove-replace/example-01",
-        "g:background-remove-replace/example-03"
+        "n:guide:img2-examples-cases-2-r1"
       ],
       "imageLabels": [
         "Uploaded fluted vase photo",
@@ -88,7 +88,7 @@
       "imageRefs": [
         "g:macro-details/source-input",
         "g:macro-details/hero-output",
-        "g:macro-details/example-02"
+        "n:guide:img2-examples-cases-3-r1"
       ],
       "imageLabels": [
         "Uploaded leather wallet photo",
@@ -105,7 +105,7 @@
       "imageRefs": [
         "g:feed-ad-still/example-02",
         "g:feed-ad-still/example-01",
-        "g:feed-ad-still/hero-output"
+        "n:guide:img2-examples-cases-4-r1"
       ],
       "imageLabels": [
         "Running shoe starting photo",
@@ -122,7 +122,7 @@
       "imageRefs": [
         "g:story-ad-vertical/source-input",
         "g:story-ad-vertical/example-01",
-        "g:story-ad-vertical/hero-output"
+        "n:guide:img2-examples-cases-5-r1"
       ],
       "imageLabels": [
         "Uploaded sunscreen tube photo",
@@ -254,5 +254,39 @@
     "templates"
   ],
   "cta_title": "Recreate a Scene With Your Product",
-  "cta_lead": "You leave with your own product in a scene you would already post. Upload one photo, open that scene, and read the credit cost before it starts."
+  "cta_lead": "You leave with your own product in a scene you would already post. Upload one photo, open that scene, and read the credit cost before it starts.",
+  "reviews": {
+    "h2": "How Sellers Recreate a Scene",
+    "lead": "Four sellers drop a product they already ship into a scene on this gallery and post the file.",
+    "items": [
+      {
+        "example": true,
+        "who": "Home goods seller",
+        "t": "Desk Scene for the Mug",
+        "d": "They drop the travel mug they ship into the desk scene and use that still on the product page. The room and the crop are already chosen, so they skip building the shot from a blank file.",
+        "img": "n:guide:img2-examples-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Bag seller",
+        "t": "Tote Next to Clothes",
+        "d": "They place the linen tote they sell beside an everyday outfit and post the file where shoppers can judge the size. They skip booking a model day for that comparison.",
+        "img": "n:guide:img2-examples-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Home shop owner",
+        "t": "Vase in a Bright Room",
+        "d": "They put the fluted vase they ship into a daylight room with a few flowers and use the file on the listing. They skip a styled-room shoot for that one vase.",
+        "img": "n:guide:img2-examples-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Skincare seller",
+        "t": "Tall Frame for Sunscreen",
+        "d": "They drop the sunscreen tube they sell into a tall daylight frame and post it where a phone fills the screen. The cap stays in view, and they skip a studio booking.",
+        "img": "n:guide:img2-examples-review4-r1"
+      }
+    ]
+  }
 }

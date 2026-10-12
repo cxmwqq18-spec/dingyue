@@ -27,8 +27,8 @@
         "You can compare openings because the photo, the length, and the shape stay the same. Change only how the clip starts.",
         "For this cream jar, one version can open on the jar in her hand, another on the cream on her cheek, and a third on the lid coming off. Keep the photo and the line the same."
       ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec02-r1",
-      "alt": "Adult woman with short silver hair holds the plain cream jar beside a bright sink for the ad test."
+      "img": "n:guide:img2-guide-testing-ad-versions-sections-2-r1",
+      "alt": "Adult woman with a short silver pixie holds a plain white cream jar beside a bathroom sink."
     },
     {
       "h2": "Why Test Cream Ad Versions",
@@ -47,8 +47,8 @@
         "Download the shape this test is using. A square for a feed and a tall file for a phone are two separate tests.",
         "Each cream clip is its own file. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the cost before you start. If a file does not finish, the credits come back. Keep the captions, the extra on-screen line, and the music the same on every file. When one version gets a different headline above the ad, you are testing the headline too. [AI image to video](page:image-to-video) makes another clip from that jar photo. [URL to video](page:url-to-video) makes one from the product page. Pick the AI actor from [the actor library](page:ai-actors)."
       ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec03-r1",
-      "alt": "Hands hold up the same plain cream jar, and both test files start from that photo."
+      "img": "n:guide:img2-guide-testing-ad-versions-sections-4-r1",
+      "alt": "Two hands hold a plain white cream jar up over a pale counter."
     },
     {
       "h2": "Benefits of AI Video Ads for Ad Tests",
@@ -94,8 +94,8 @@
         "Change only one thing between cream versions, so the result points at that one thing.",
         "Worth testing, one at a time: the opening moment, the setting, the shape, the length, and the line you add afterward. Start with the opening. It decides whether anyone sees the rest of the jar."
       ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec01-r1",
-      "alt": "Adult hands place the same plain cream jar beside blank color cards for a matched test."
+      "img": "n:guide:img2-guide-testing-ad-versions-sections-9-r1",
+      "alt": "Two hands set a plain white cream jar beside a blank white card."
     },
     {
       "h2": "How the Versions Should Run Together",
@@ -103,8 +103,8 @@
         "One campaign gives every cream version the same audience, the same budget, and the same product page.",
         "Many ad accounts let several ads share one group. Some also offer a built-in test that shows each version to part of the audience. The account may spend more on one version early. A version that barely ran has not been tested. Leave the ads as they are while the test is live, so the account keeps counting the same cream test."
       ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec04-r1",
-      "alt": "Adult hands hold the same plain cream jar in two side-by-side spots, so the test stays fair."
+      "img": "n:guide:img2-guide-testing-ad-versions-sections-10-r1",
+      "alt": "Two pairs of hands hold the same plain white cream jar in side-by-side poses."
     },
     {
       "h2": "How to Tell Which Version Works",
@@ -112,8 +112,8 @@
         "Wait several days, until each cream version has actually played, before you name a winner.",
         "Read three numbers in order. First, how many people stay past the opening. That tells you if the start works. Second, how often people click. That tells you if they wanted to visit. Third, the cost each time someone buys, or adds the jar to the cart. That matters most for the shop. A version can get more views and still lose on sales. If the numbers are close, that change did not matter much. Keep the one you prefer and test a bigger difference next."
       ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec05-r1",
-      "alt": "Hands rest beside blank color cards and the same plain cream jar you are testing."
+      "img": "n:guide:img2-guide-testing-ad-versions-sections-11-r1",
+      "alt": "A hand rests beside a plain white cream jar and a blank white card."
     },
     {
       "h2": "What the Next Test Should Change",
@@ -121,8 +121,8 @@
         "You keep the cream version that brings sales at a cost you can accept, turn off the clear losers, and change one new thing.",
         "Write down the date, what changed, and the result. After a few rounds you will see what your buyers respond to. When a winner starts costing more per sale, make fresh versions of the jar. Work through the opening, the setting, the shape, the length, then the offer. Each round starts from what already worked."
       ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec06-r1",
-      "alt": "Adult man with short sandy-gray hair holds the same plain cream jar at a wood table for the test."
+      "img": "n:guide:img2-guide-testing-ad-versions-sections-12-r1",
+      "alt": "Adult man with short sandy hair holds a plain white cream jar at a wood table."
     }
   ],
   "related": [
@@ -204,5 +204,39 @@
     "url-to-video",
     "image-to-video",
     "guide-first-tiktok-video-ad"
-  ]
+  ],
+  "reviews": {
+    "h2": "How Sellers Test One Opening",
+    "lead": "Four sellers change one thing on a cream ad and keep the jar the same.",
+    "items": [
+      {
+        "example": true,
+        "who": "Cleanser seller",
+        "t": "Test the Jar in Hand",
+        "d": "They make one file that opens on the jar in her hand and another that opens on the cream on her cheek. They run both from the same photo and skip a second shoot.",
+        "img": "n:guide:img2-guide-testing-ad-versions-review1-r1"
+      },
+      {
+        "example": true,
+        "who": "Moisturizer seller",
+        "t": "Keep the Length the Same",
+        "d": "They export two lengths only after the opening test is done, and the jar stays in frame. They post the winner where that cream already sells.",
+        "img": "n:guide:img2-guide-testing-ad-versions-review2-r1"
+      },
+      {
+        "example": true,
+        "who": "Serum seller",
+        "t": "Change Only the Face",
+        "d": "They keep the serum line and the first second, and switch the AI avatar. They do not book a new person for that test.",
+        "img": "n:guide:img2-guide-testing-ad-versions-review3-r1"
+      },
+      {
+        "example": true,
+        "who": "Mask seller",
+        "t": "Retire a Tired Opening",
+        "d": "They stop the mask ad people scroll past and change only the first second. The box stays the one in the photo.",
+        "img": "n:guide:img2-guide-testing-ad-versions-review4-r1"
+      }
+    ]
+  }
 }

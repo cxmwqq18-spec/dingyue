@@ -166,68 +166,36 @@
     ]
   },
   "reviews": {
-    "h2": "How a Skincare Texture Video Gets Used",
-    "lead": "How beauty sellers put one photo or a product link to work. Anyone in the clip is generated, not a customer.",
+    "h2": "How Beauty Shops Use One Product Photo",
+    "lead": "Each shop starts from one beauty photo and posts the clip where buyers already watch.",
     "items": [
       {
         "example": true,
-        "who": "Shade shop",
-        "t": "Color sample next to the tube",
-        "d": "They upload one foundation photo and ask for a short color sample on the back of a hand. They compare that color with the bottle before the ad runs."
+        "who": "Foundation seller",
+        "t": "Swatch the Shade on a Wrist",
+        "d": "They upload one foundation photo and ask for a short color sample on the back of a hand. They compare that color with the bottle before the ad runs on the feed.",
+        "img": "n:guide:img2-ind-beauty-skincare-review1-r1"
       },
       {
         "example": true,
-        "who": "Routine brand",
-        "t": "Hand holds the bottle after the photo",
-        "d": "A pack photo becomes a still photo, then a clip of a hand holding that same bottle. The shade is compared both times."
+        "who": "Serum maker",
+        "t": "Show One Pump in a Routine",
+        "d": "They turn one serum photo into a routine that starts with a single pump. The tall clip is what they post in the phone feed.",
+        "img": "n:guide:img2-ind-beauty-skincare-review2-r1"
       },
       {
         "example": true,
-        "who": "Color line",
-        "t": "One face for every shade",
-        "d": "They pick one made-up face from the actor library and keep that look on every shade video."
+        "who": "Shade-range shop",
+        "t": "Compare Two Shade Bottles",
+        "d": "They put two shades in one clip so a buyer can see the difference. The spoken line names the shades they already sell.",
+        "img": "n:guide:img2-ind-beauty-skincare-review3-r1"
       },
       {
         "example": true,
-        "who": "Launch desk",
-        "t": "Captions fixed before download",
-        "d": "The spoken line and the captions are adjusted in the editor on the same page, then the file is downloaded."
-      },
-      {
-        "example": true,
-        "who": "Catalog manager",
-        "t": "A second language for the routine",
-        "d": "The same morning routine is made again for another market. The bottle stays recognizable in both."
-      },
-      {
-        "example": true,
-        "who": "Small range",
-        "t": "A script about the pump",
-        "d": "They ask for a short script about one pump, change a word, and run the job at the credit cost shown."
-      },
-      {
-        "example": true,
-        "who": "Counter brand",
-        "t": "A link instead of a reshoot",
-        "d": "They paste the product page, get a first version, and still compare the package with the bottle on the counter."
-      },
-      {
-        "example": true,
-        "who": "Regional desk",
-        "t": "Three videos from one photo",
-        "d": "One daylight photo becomes a color sample, a routine, and an unboxing. A 6-second video is 24 credits and a 15-second video is 60."
-      },
-      {
-        "example": true,
-        "who": "Studio-free set",
-        "t": "Clean shots from a few photos",
-        "d": "A few product photos stand in for a lighting day. The person on screen stays generated."
-      },
-      {
-        "example": true,
-        "who": "Chat-first team",
-        "t": "Type the scene, get the clip",
-        "d": "They describe the routine in a few short notes. The script and the clip come back together."
+        "who": "Essence shop owner",
+        "t": "Unbox the Serum on Camera",
+        "d": "They open the serum on camera and stop once the bottle is out. That clip is the one they attach to the product page.",
+        "img": "n:guide:img2-ind-beauty-skincare-review4-r1"
       }
     ]
   },
@@ -265,6 +233,7 @@
     "reasons",
     "steps",
     "platforms",
+    "reviews",
     "faq",
     "cta"
   ],

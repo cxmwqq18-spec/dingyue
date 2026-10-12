@@ -164,6 +164,7 @@
     "features",
     "platforms",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
@@ -233,67 +234,35 @@
   },
   "reviews": {
     "h2": "How Shops Put an Instagram Ad Together",
-    "lead": "A few ways shops use a link or a photo. These are examples, not quotes from a named customer.",
+    "lead": "Four ways a shop uses one product photo. These cards describe the work, not a named seller.",
     "items": [
       {
         "example": true,
-        "who": "Skincare shop",
-        "t": "Routine, then the pack",
-        "d": "Example: a tube upload becomes a bathroom apply so the pack stays in the picture."
+        "who": "Small-batch hand-cream maker",
+        "t": "Bathroom Apply Reel",
+        "d": "They paste the hand-cream page and post a Reel of the jar being applied by the bathroom mirror. The creator day stays off the calendar.",
+        "img": "n:guide:img2-plat-instagram-review1-r1"
       },
       {
         "example": true,
-        "who": "Beauty shop",
-        "t": "Three shades, side by side",
-        "d": "Example: a balm upload becomes a square color row for the profile posts."
+        "who": "Travel mug seller",
+        "t": "Desk Reel From One Mug",
+        "d": "They upload the mug photo and get a Reel of it on a linen desk. The same photo covers the feed test, so they skip a second shoot.",
+        "img": "n:guide:img2-plat-instagram-review2-r1"
       },
       {
         "example": true,
-        "who": "Cafe brand",
-        "t": "Pour into a cup",
-        "d": "Example: a tin upload becomes a pour so the drink is clear at a glance."
+        "who": "Lip balm maker",
+        "t": "Three Tubes, One Test",
+        "d": "They open on the three balm tubes, then on a hand using one of them. Both cuts come from the photos they already had.",
+        "img": "n:guide:img2-plat-instagram-review3-r1"
       },
       {
         "example": true,
-        "who": "Home shop",
-        "t": "Set on a table",
-        "d": "Example: a candle upload becomes a lit table scene for a square photo."
-      },
-      {
-        "example": true,
-        "who": "Apparel shop",
-        "t": "Carry it with the hem showing",
-        "d": "Example: a tote upload becomes a carry so the full shape stays visible."
-      },
-      {
-        "example": true,
-        "who": "Jewelry shop",
-        "t": "One piece, tight and bright",
-        "d": "Example: a necklace upload becomes a worn detail with the chain still complete."
-      },
-      {
-        "example": true,
-        "who": "Supplement shop",
-        "t": "Hold the bottle and explain it",
-        "d": "Example: a bottle link becomes an actor holding it for a Reel."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "The same item, another language",
-        "d": "Example: one link becomes two spoken voices, so each market hears its own language."
-      },
-      {
-        "example": true,
-        "who": "Outdoor shop",
-        "t": "A Story from a template",
-        "d": "Example: a pack photo starts from a Story template, with the full shape still in the picture."
-      },
-      {
-        "example": true,
-        "who": "Grocery shop",
-        "t": "A pour with a voice",
-        "d": "Example: a tin link becomes a pour, with a short spoken voice and captions."
+        "who": "Skincare seller",
+        "t": "Next Test, Same Jar",
+        "d": "They keep the hand-cream jar and change only the spoken line for the next Reel. The look stays one product, and they do not book anyone new.",
+        "img": "n:guide:img2-plat-instagram-review4-r1"
       }
     ]
   },

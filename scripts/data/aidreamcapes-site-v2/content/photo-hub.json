@@ -131,13 +131,13 @@
         "label": "Coastal",
         "items": [
           {
-            "ref": "n:im07-photo-hub-tote-r1",
+            "ref": "n:guide:img2-photo-hub-examples-1-scene-r1",
             "title": "Place a Tote on the Beach",
             "kind": "photo",
             "product": "linen tote bag"
           },
           {
-            "ref": "n:guide:k3-social-picker-sandals",
+            "ref": "n:guide:img2-photo-hub-examples-1-white-r1",
             "title": "Set Sandals Down on Sand",
             "kind": "photo",
             "product": "summer sandals"
@@ -148,13 +148,13 @@
         "label": "Desert",
         "items": [
           {
-            "ref": "n:guide:img1-photo-hub-desert-r1",
+            "ref": "n:guide:img2-photo-hub-examples-2-scene-r1",
             "title": "Set the Kettle on Stone",
             "kind": "photo",
             "product": "sea-glass ceramic kettle"
           },
           {
-            "ref": "n:guide:mx1w-photo-hub-desert-2-r1",
+            "ref": "n:guide:img2-photo-hub-examples-2-white-r1",
             "title": "Lay the Hat on a Dune",
             "kind": "photo",
             "product": "woven hat and leather sandals"
@@ -165,13 +165,13 @@
         "label": "Plain Studio",
         "items": [
           {
-            "ref": "n:guide:k2-white-picker-tea-kettle",
+            "ref": "n:guide:img2-photo-hub-examples-3-scene-r1",
             "title": "Show the Kettle on White",
             "kind": "photo",
             "product": "stovetop kettle"
           },
           {
-            "ref": "n:guide:plat-facebook-size-square-backpack",
+            "ref": "n:guide:img2-photo-hub-examples-3-white-r1",
             "title": "Show a Backpack in Studio",
             "kind": "photo",
             "product": "commuter backpack"
@@ -182,13 +182,13 @@
         "label": "Indoor",
         "items": [
           {
-            "ref": "n:guide:ind-home-living-m3-lit-lamp",
+            "ref": "n:guide:img2-photo-hub-examples-4-scene-r1",
             "title": "Light the Lamp in a Room",
             "kind": "photo",
             "product": "table lamp"
           },
           {
-            "ref": "n:guide:mx1w-photo-hub-indoor-1-r1",
+            "ref": "n:guide:img2-photo-hub-examples-4-white-r1",
             "title": "Set a Diffuser on a Table",
             "kind": "photo",
             "product": "ceramic diffuser"
@@ -260,72 +260,41 @@
     "steps",
     "examples",
     "related",
+    "reviews",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "Example Ways Shops Use the Photos",
-    "lead": "These are example uses, not quotes from a named customer. Each card is one way a shop can continue from a product photo.",
+    "h2": "How Sellers Build Listing Photos",
+    "lead": "Four shops make a styled scene and a white listing image from the same product photo.",
     "items": [
       {
         "example": true,
-        "who": "Beauty seller",
-        "t": "Turn the photo into a short product video",
-        "d": "Start with the bottle photo. Turn it into a [product video](page:product-videos). Then add a spoken voice, on-screen captions, or a song from the music library."
+        "who": "Shaver brand",
+        "t": "Dark Light, Then White",
+        "d": "They set the electric shaver in a dark, glossy light for the ad, then make the same shaver on plain white for the listing. They skip a studio day for both.",
+        "img": "n:guide:img2-photo-hub-review1-r1"
       },
       {
         "example": true,
-        "who": "Small marketing team",
-        "t": "Make the photo and the clip in one place",
-        "d": "Upload the product photo and make the scene. Then trim the short video in the built-in editor, so you do not need another app."
+        "who": "Snack maker",
+        "t": "Holiday Table, Then White",
+        "d": "They put the chip bag on a holiday table for a social post, then export the same bag on white for the store. One photo does both jobs.",
+        "img": "n:guide:img2-photo-hub-review2-r1"
       },
       {
         "example": true,
-        "who": "Gadget shop",
-        "t": "Show a generated person holding the product",
-        "d": "Use the photo so the product stays the same. A generated adult can hold it in a short video from [image to video](page:image-to-video)."
+        "who": "Sauce shop",
+        "t": "Tomatoes, Then a Clean Cutout",
+        "d": "They place the hot-sauce bottle with tomatoes, then make that same bottle on white for the first listing image. They do not rent a set or a photographer.",
+        "img": "n:guide:img2-photo-hub-review3-r1"
       },
       {
         "example": true,
-        "who": "Supplement seller",
-        "t": "Pick a generated actor for the clip",
-        "d": "Choose a look from the [actor library](page:ai-actors), a set of generated people. Then keep the same person on the next version of the ad."
-      },
-      {
-        "example": true,
-        "who": "Shop selling in three countries",
-        "t": "Make the same ad in more than one language",
-        "d": "Write the script, then make the spoken version in the languages your shoppers use. Check the words before you publish."
-      },
-      {
-        "example": true,
-        "who": "Solo seller",
-        "t": "See the credit cost before you start",
-        "d": "Each photo runs on a paid plan, and the 24-credit charge shows before the job starts."
-      },
-      {
-        "example": true,
-        "who": "Agency editor",
-        "t": "Use a generated presenter instead of a filming day",
-        "d": "The actor is generated. Do not present the clip as a real customer or a celebrity."
-      },
-      {
-        "example": true,
-        "who": "Home brand",
-        "t": "Reuse one generated person from photos you have",
-        "d": "Upload a few clear photos and reuse that generated person on the next scene. A presenter for the ad starts on [spokesperson videos](page:spokesperson-videos)."
-      },
-      {
-        "example": true,
-        "who": "Marketplace seller",
-        "t": "Start from a product link, then publish the ad",
-        "d": "Paste a [product link](page:url-to-video) and the tool drafts a script. Then pick an actor and make a video. Publish that file to [TikTok](page:plat-tiktok) or [Facebook](page:plat-facebook) from the editor."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Ask for a script, a scene, and a clip",
-        "d": "Describe the ad in chat. The tool drafts a script, a scene, and a short video you can trim in the editor."
+        "who": "Pump-bottle brand",
+        "t": "White Listing From One Photo",
+        "d": "They make a plain white image of the pump bottle for the marketplace, and a second scene from the same upload. They compare both with the bottle they ship.",
+        "img": "n:guide:img2-photo-hub-review4-r1"
       }
     ]
   },

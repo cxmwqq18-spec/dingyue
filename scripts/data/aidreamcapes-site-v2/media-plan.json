@@ -300,7 +300,7 @@
     "tpl-howto": {
       "hero": {
         "kind": "image",
-        "image": "f:how-to-video"
+        "image": "n:guide:img2-tpl-howto-首屏-1-r1"
       },
       "og": "n:t33-tpl-howto-og-r2",
       "gallery": [
@@ -635,7 +635,7 @@
     "guide-white-background-amazon": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-guide-amazon-white-white-backpack"
+        "image": "n:guide:img2-guide-white-background-amazon-hero-r1"
       },
       "og": "n:guide:k8-guide-amazon-white-white-backpack"
     },
@@ -705,7 +705,7 @@
     "contact": {
       "hero": {
         "kind": "image",
-        "image": "g:lifestyle-scene/example-06"
+        "image": "n:guide:img2-contact-hero-r1"
       },
       "og": "g:lifestyle-scene/example-06"
     },
@@ -719,9 +719,9 @@
     "trust": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k8-trust-commercial-lighting-example-05"
+        "image": "n:guide:img2-trust-hero-r1"
       },
-      "og": "n:guide:k8-trust-commercial-lighting-example-05"
+      "og": "n:guide:img2-trust-hero-r1"
     },
     "pricing": {
       "og": "g:ecommerce-main-image/og"
