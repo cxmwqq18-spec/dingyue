@@ -121,7 +121,7 @@
       "sourceTitle": "Your product"
     },
     "picker": {
-      "title": "Video previews, not the on-model photo",
+      "title": "Browse Video Templates by Category",
       "lead": "Each card is a tall 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem, and color against the piece.",
       "chips": [
         {
@@ -547,7 +547,7 @@
         "h2": "How to Make a Garment on Model Photo in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Video previews, not the on-model photo",
+        "h2": "Browse Video Templates by Category",
         "lead": "Each card is a tall 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem, and color against the piece."
       },
       "faq": {

@@ -100,7 +100,7 @@
       "n:guide:tpl-pack-c3-m3-shelf-boxes"
     ],
     "picker": {
-      "title": "Short Video Ads, Separate from the Preview",
+      "title": "Browse Video Templates by Category",
       "lead": "Each card is a video ad for another product. Your preview is the square image from one photo of the pouch, box, or bottle you will ship.",
       "chips": [
         {
@@ -529,7 +529,7 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Short Video Ads, Separate from the Preview",
+        "h2": "Browse Video Templates by Category",
         "lead": "Each card is a video ad for another product. Your preview is the square image from one photo of the pouch, box, or bottle you will ship."
       },
       "faq": {

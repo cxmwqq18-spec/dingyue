@@ -147,7 +147,7 @@
       }
     }
   },
-  "benefits_h2": "What the File for That App Can Include",
+  "benefits_h2": "What Each App's Ad Can Include",
   "benefits": [
     {
       "t": "Words for the post",
@@ -253,7 +253,7 @@
     "closing",
     "cta"
   ],
-  "related_h2": "Tools for the file, and other places to browse",
+  "related_h2": "More tools and pages to browse",
   "related_lead": "Start from a link or an actor, or browse by layout and category.",
   "relatedLinks": [
     "url-to-video",
@@ -266,7 +266,7 @@
   "cta_title": "Make the file for the app you sell on",
   "cta_lead": "Upload one product photo, pick the shape, and see the credit cost before you start.",
   "reasons": {
-    "h2": "Reasons to Make the File for That App Here",
+    "h2": "Reasons to Make Each App's Ad Here",
     "lead": "Start from the product you sell, then match the shape the app expects.",
     "items": [
       {
@@ -424,7 +424,7 @@
     ]
   },
   "closing": {
-    "h2": "Check the File Before You Pay for Traffic",
+    "h2": "Check the Ad Before You Pay for Traffic",
     "paras": [
       "Play the video on a phone and read the captions before you spend on ads. Plans start at $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600.",
       "A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see that cost before it starts."

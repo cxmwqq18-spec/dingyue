@@ -116,7 +116,7 @@
       ]
     },
     "picker": {
-      "title": "Short Videos Next to the Outfit Photo",
+      "title": "Browse Video Templates by Category",
       "lead": "Each card is a tall 9:16 video, separate from the outfit photo on this page. Start from your outfit photo, then check each piece against what you can ship.",
       "chips": [
         {
@@ -538,7 +538,7 @@
         "h2": "Make Outfit Photos for the Collection in 3 Steps"
       },
       "m3": {
-        "h2": "Short Videos Next to the Outfit Photo",
+        "h2": "Browse Video Templates by Category",
         "lead": "Each card is a tall 9:16 video, separate from the outfit photo on this page. Start from your outfit photo, then check each piece against what you can ship."
       },
       "m4": {
@@ -652,7 +652,7 @@
       "label": "AI Instagram ads"
     }
   ],
-  "cta_title": "Show the Full Outfit on the Collection Page.",
+  "cta_title": "Show the Full Outfit on the Collection Page",
   "cta_lead": "Upload one complete outfit. You see the credit cost, what the job spends, before the job starts.",
   "blockOrder": [
     "hero",
