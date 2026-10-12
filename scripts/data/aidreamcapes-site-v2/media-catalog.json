@@ -14366,7 +14366,7 @@
         "file": "gen2guide-b1-image-to-video-result",
         "w": 1280,
         "h": 1280,
-        "alt": "The same speckled ceramic mug with a curl of steam in morning light.",
+        "alt": "Cream ceramic mug with blue flecks and a curl of steam on a wooden counter.",
         "variants": [
           640,
           1280
@@ -49320,6 +49320,76 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult hands place the same plain gray trail shoe pair beside blank color cards.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx10-image-to-video-source-r1": {
+        "file": "fx10-image-to-video-source-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cream ceramic mug with blue flecks on an empty wooden counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx10-image-to-video-benefit-motion-r1": {
+        "file": "fx10-image-to-video-benefit-motion-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hand presses a plain coral cleanser bottle pump into an open palm beside a bright sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx10-image-to-video-benefit-opening-r1": {
+        "file": "fx10-image-to-video-benefit-opening-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hands twist open a plain teal reusable bottle on a sunlit kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx10-image-to-video-benefit-detail-r1": {
+        "file": "fx10-image-to-video-benefit-detail-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hands stretch a plain linen shirt sleeve across a neutral table to show its drape.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx10-image-to-video-benefit-frame-r1": {
+        "file": "fx10-image-to-video-benefit-frame-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hand flips open the latch of a plain sage-green lunch container on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx10-image-to-video-benefit-length-r1": {
+        "file": "fx10-image-to-video-benefit-length-r1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hands stretch a plain charcoal resistance band over a yoga mat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx10-image-to-video-source-r2": {
+        "file": "fx10-image-to-video-source-r2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cream ceramic mug with blue flecks filled with coffee on a wooden counter.",
         "variants": [
           640,
           1280
