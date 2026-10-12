@@ -73,7 +73,11 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
                       </div>
                     </div>
                   ) : null}
-                  {menu.footerLink ? <a className="pfoot" href={r.href(menu.footerLink.href)}>{menu.footerLink.label}</a> : null}
+                  {menu.hubLink || menu.footerLink ? (
+                    <div className="pfoot">
+                      {[menu.hubLink, menu.footerLink].map((link) => (link ? <a href={r.href(link.href)} key={link.href}>{link.label}</a> : null))}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             );
