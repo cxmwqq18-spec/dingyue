@@ -121,27 +121,31 @@
     "lead": "Choose a product action that answers a shopper question, then open the matching tool with a clear scene to edit.",
     "items": [
       {
-        "audience": "Skincare shop",
+        "audience": "Face cream, texture routine",
         "tool": "video-ads",
         "task": "Run a routine ad with a texture close-up of your face cream, no studio day.",
+        "prompt": "Use the uploaded face-cream photo as the exact product. Show an adult applying a small amount at a bright bathroom sink, with one texture close-up and a clear product hold; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-1-r1"
       },
       {
-        "audience": "Home organizer",
+        "audience": "Shelf organizer, tidy fix",
         "tool": "product-videos",
         "task": "Show the mess and the tidy fix with your shelf organizer in one short ad.",
+        "prompt": "Use the uploaded shelf-organizer photo as the exact product. Show an adult placing it on a shelf, then placing two items inside so the tidy fix is clear; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-2-r1"
       },
       {
-        "audience": "Drink seller",
+        "audience": "Iced tea, pour and sip",
         "tool": "video-ads",
         "task": "Open your ad with a pour and a first sip of your iced tea, ready in minutes.",
+        "prompt": "Use the uploaded iced-tea photo as the exact product. Open with a close pour over ice, then show an adult taking one sip at a kitchen table; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-3-r1"
       },
       {
-        "audience": "Apparel shop",
+        "audience": "Blazer, quick try-on",
         "tool": "video-ads",
         "task": "Show how your blazer fits in a quick try-on ad, no new shoot to arrange.",
+        "prompt": "Use the uploaded blazer photo as the exact product. Show an adult putting it on in a bright bedroom mirror shot, turning once to show the fit; no logos, text or music.",
         "ref": "n:rx3-video-ads-scenario-4-r1"
       }
     ]
@@ -604,17 +608,23 @@
     {
       "t": "Ship a first ad in minutes",
       "d": "Start with one product photo and one scene idea. Get a creator-style draft without casting, booking or a studio day.",
-      "icon": "clock"
+      "icon": "clock",
+      "img": "n:fx11-video-ads-benefit-opening",
+      "alt": "Adult Black man with short coiled hair holds an unbranded sage insulated bottle toward the camera at a bright kitchen counter."
     },
     {
       "t": "Test hooks from one upload",
       "d": "Swap the opening or scene to compare angles. Keep testing moving without arranging another product shoot.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:fx11-video-ads-benefit-scene",
+      "alt": "Adult Asian woman with a short straight bob places a plain charcoal desktop speaker beside a laptop on a tidy work desk."
     },
     {
       "t": "Keep the product in the story",
       "d": "Show one product action or detail in a short vertical ad. Add your price or offer after download in your editor.",
-      "icon": "target"
+      "icon": "target",
+      "img": "n:fx11-video-ads-benefit-presenter",
+      "alt": "Adult woman with a short copper-red bob holds a plain coral face-cream tube beside her face in a bright home office."
     }
   ],
   "steps_h2": "How to Make AI UGC Video Ads in 3 Simple Steps",
