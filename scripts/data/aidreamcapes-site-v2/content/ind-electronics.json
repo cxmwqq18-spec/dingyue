@@ -4,7 +4,7 @@
   "description": "Make UGC ads for app installs and signups from a tech brand. Upload an app link or a screenshot, pick an avatar, and post a product walkthrough.",
   "h1": "UGC Ads That Drive App Installs",
   "eyebrow": "Tech & Electronics",
-  "lead": "A speaker can get its own demo before anyone replies to a casting email. Upload a clear photo and let an AI avatar press the one control.",
+  "lead": "A speaker can get a demo before anyone answers a casting email. Upload one clear photo and let an AI avatar press its button.",
   "card": "Unboxings, setups, and daily-use scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
@@ -16,7 +16,7 @@
   "faq": [
     {
       "q": "Do I need a shoot before I can make an electronics ad?",
-      "a": "No. Upload one photo of the speaker or paste a product link, name the press, and download the ad. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns its credits."
+      "a": "No. Upload one photo of the speaker or paste a product link, name the button the avatar presses, and download the ad. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns its credits."
     },
     {
       "q": "Do I need video editing experience?",
@@ -66,7 +66,7 @@
     },
     {
       "t": "Add a Spoken Voice, Then Post",
-      "d": "You add a spoken voice and captions, then download the speaker clip. You get a file to post on TikTok or Meta."
+      "d": "You add a spoken voice and captions, then download the speaker clip. You get a file to post on TikTok, Instagram, or Facebook."
     }
   ],
   "visual": {
@@ -129,7 +129,7 @@
     },
     {
       "id": "video-ads",
-      "label": "AI Creator-Style Video Ads"
+      "label": "Creator-Style Video Ads"
     }
   ],
   "reasons": {
@@ -268,7 +268,7 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "With the clip",
+      "eyebrow": "On the finished clip",
       "h2": "What a Gadget Ad Can Include",
       "lead": "A spoken line can ride with the clip, so the demo is ready to post.",
       "items": [
@@ -278,7 +278,7 @@
         },
         {
           "t": "An Avatar From the Library",
-          "d": "An AI avatar can sit at the desk and hold the webcam. Choose a face that fits who buys this kind of camera."
+          "d": "An AI avatar can sit at the desk and hold the speaker. Choose a face that fits who buys this kind of gadget."
         },
         {
           "t": "Voice and Captions Included",

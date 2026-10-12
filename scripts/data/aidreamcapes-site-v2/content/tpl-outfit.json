@@ -60,7 +60,7 @@
     },
     {
       "q": "Who should use an outfit reel template?",
-      "a": "A clothing seller who wants the garment in motion and does not have a fitting booked. One person can name the move and post the file. Direct-to-consumer labels and fashion shops both fit."
+      "a": "A clothing seller who wants the garment in motion and does not have a fitting booked. One person can name the move and post the file. Online clothing shops and fashion labels both fit."
     },
     {
       "q": "Can I make a reel if I have never edited a video?",
@@ -68,7 +68,7 @@
     },
     {
       "q": "When can I download the outfit reel?",
-      "a": "After the render, in that same sitting. You do not wait on a fitting. The credit cost shows before the run, and a failed job returns the credits."
+      "a": "In that same sitting, once the file is ready. You do not wait on a fitting. The credit cost shows before the run, and a failed job returns the credits."
     },
     {
       "q": "Which frame and length can I pick?",
@@ -79,7 +79,7 @@
       "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns those credits. The download has no watermark."
     },
     {
-      "q": "Can I run it in ads, in another language, or from my catalog?",
+      "q": "Can I run the reel as an ad or in another language?",
       "a": "Yes. Post it to TikTok, Instagram, or Facebook, speak the line in another language, and make another move from the same photo. The API can start the next color from your product list. The person on screen is an AI avatar. An AI twin can keep that avatar on the next color."
     }
   ],
@@ -101,7 +101,7 @@
       "prompt": "An adult turns once in the beige zip jacket so the side fit shows. The collar, cuffs, hem, and shoes stay visible, in soft studio daylight."
     },
     "picker": {
-      "title": "Choose From Outfit Video Ideas",
+      "title": "Clothing reels you can start from",
       "lead": "Open a clothing card, then add a photo of the piece you sell. The other groups are there when the next ad is not clothing.",
       "chips": [
         {
@@ -220,7 +220,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-1",
-          "label": "Lifestyle App Recommendation",
+          "label": "Daily-Life App Recommendation",
           "chips": [
             "apps"
           ],
@@ -301,7 +301,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -516,7 +516,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "Show the other templates"
     },
     "titles": {
       "m3": {
@@ -615,7 +615,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Product Photos From Every Angle"
     },
     {
       "id": "tpl-sale",
@@ -663,7 +663,7 @@
         },
         {
           "icon": "globe",
-          "t": "Another Language or the API",
+          "t": "Another Language, or Start It From Your Catalog",
           "d": "The line can go out in another language, or the API can start the next reel from your product list."
         }
       ]

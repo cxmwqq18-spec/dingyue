@@ -4,7 +4,7 @@
   "description": "Use this AI video ads generator to turn a product photo or a link into an ad with an actor and a voice. Download it for TikTok or Reels, with no watermark.",
   "h1": "AI Video Ads Generator for Scroll-Stopping Ads",
   "eyebrow": "Phone-style video ads",
-  "lead": "AI UGC video ads can start from a product photo or a product page. AIVideosUGC builds each one with a script, an AI actor, a voice, and captions.",
+  "lead": "This AI video ads generator starts from a product photo or a product page, with a script, an actor, a voice, and captions.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
@@ -12,10 +12,10 @@
     "UGC video ad maker"
   ],
   "definition": {
-    "title": "What Is an AI UGC Video Ad?",
+    "title": "AI Video Ads Generator: What You Get",
     "paras": [
       "It is a short spoken ad built from a bottle photo, a short note, or a product page. You get a script, an AI actor, a voice, and the edit in one file, and you skip a separate editor and a crew.",
-      "Export 9:16 when the buy is a phone placement, or 1:1 for a square feed. 16:9, 4:3, and 3:4 are available too."
+      "Export 9:16 when the ad runs on a phone, or 1:1 for a square feed. 16:9, 4:3, and 3:4 are available too."
     ]
   },
   "steps": [
@@ -29,7 +29,7 @@
     },
     {
       "t": "Download and Publish",
-      "d": "Download the 9:16 bottle ad, or send it when that ad account will spend. You get a file with nothing stamped on it."
+      "d": "Download the 9:16 bottle ad, or send it to the ad account that will run it. The file has no watermark."
     }
   ],
   "maker": {
@@ -60,7 +60,7 @@
     },
     {
       "q": "Do I pay before I can make the first ad?",
-      "a": "No. A paid plan is required before you generate. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. A paid plan is required before you generate. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Are commercial rights included on a paid plan?",
@@ -68,11 +68,11 @@
     },
     {
       "q": "Which frame sizes and placements can the file use?",
-      "a": "Phone buys want 9:16, and a square feed wants 1:1. 16:9, 4:3, and 3:4 are there when the placement asks. You can download the file or send it toward TikTok, Meta, or Google Ads."
+      "a": "A phone ad wants 9:16, and a square feed wants 1:1. 16:9, 4:3, and 3:4 are there when the placement asks. You can download the file or send it toward TikTok, Meta, or Google Ads."
     },
     {
       "q": "Can every product in the catalog get its own ad?",
-      "a": "Yes. Each product can get an ad from its own photo or page. Your shop software can request that list through the API. Every clip still spends credits, and a failed job returns them."
+      "a": "Yes. Each product can get an ad from its own photo or page. Shop software you already use can send that list. Every clip still spends credits, and a failed job returns them."
     },
     {
       "q": "How do these compare with ads filmed by creators?",
@@ -111,7 +111,7 @@
       ]
     },
     "picker": {
-      "title": "See What AIVideosUGC Makes",
+      "title": "Open a Finished Ad Example",
       "lead": "Filter by ad type to see finished examples. Open one to edit that scene.",
       "chips": [
         {
@@ -194,7 +194,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Quiet Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -266,7 +266,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -320,7 +320,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Discovery: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -546,7 +546,7 @@
       "icon": "bolt"
     },
     {
-      "t": "A Plan Instead of a Creator Invoice",
+      "t": "Skip the Creator Invoice",
       "d": "The monthly plan replaces a per-video creator invoice. A 15-second ad is 60 credits, and a failed render returns those credits.",
       "icon": "coins"
     },
@@ -556,7 +556,7 @@
       "icon": "layers"
     },
     {
-      "t": "A Fresh Cut Before the Ad Tires",
+      "t": "Refresh a Tired Ad",
       "d": "When a candle ad starts to feel familiar, change the first line and keep the same candle in frame. Swap that opening before the cut goes stale, and leave the product where shoppers already know it.",
       "icon": "refresh"
     },
@@ -635,7 +635,7 @@
     "cta"
   ],
   "reasons": {
-    "h2": "What Makes This AI Video Ads Generator Ready",
+    "h2": "Why Sellers Pick This AI Video Ads Generator",
     "lead": "The script comes from the product you sell, the file matches the placement, and one photo can yield more than one style.",
     "items": [
       {
@@ -645,7 +645,7 @@
       },
       {
         "t": "Sized for Every Placement",
-        "d": "Ask for 9:16 if a sneaker buy runs on a phone. A square 1:1 is there when the feed wants it, with 16:9, 4:3, and 3:4 too.",
+        "d": "Ask for 9:16 if a sneaker ad runs on a phone. A square 1:1 is there when the feed wants it, with 16:9, 4:3, and 3:4 too.",
         "icon": "Ratio"
       },
       {

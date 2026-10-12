@@ -3,8 +3,8 @@
   "title": "Instagram Story Video Maker | AIVideosUGC",
   "description": "Turn a product link into an Instagram Story video with an avatar, a script, and a voice. Export the tall file and post it on Instagram Stories.",
   "h1": "Turn a Product Link Into an Instagram Story Video",
-  "eyebrow": "Ad photo template",
-  "lead": "Turn a hot sauce link or one bottle photo into an Instagram Story video with an avatar and a voice. The bottle in the file is the one you ship.",
+  "eyebrow": "Story video template",
+  "lead": "Start with a hot sauce link or one bottle photo. You get an avatar and a voice in a tall Instagram Story video. The bottle in the file is the one you ship.",
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
@@ -42,7 +42,7 @@
         "Added by you afterward"
       ]
     ],
-    "cta": "Make my story image"
+    "cta": "Make my Story video"
   },
   "faq": [
     {
@@ -51,7 +51,7 @@
     },
     {
       "q": "How does a Story template become something I can post?",
-      "a": "You leave with a tall Story video you can post. Put the hot sauce photo in, set the price as the line you will read, and download."
+      "a": "You leave with a tall Story video you can post. Add the hot sauce photo, say the price in the script, and download."
     },
     {
       "q": "Why a template instead of filming a creator for Stories?",
@@ -63,14 +63,14 @@
     },
     {
       "q": "Can a beginner assemble a Story this way?",
-      "a": "Yes. Someone who has never opened a timeline can still do it. The three steps turn one sharp photo into a Story video, and you add the price after you download."
+      "a": "Yes. Someone who has never edited a video can still do it. The three steps turn one sharp photo into a Story video, and you add the price after you download."
     },
     {
       "q": "Which shops post this kind of Story?",
       "a": "Shops that sell something a viewer should see in full. Hot sauce, a small pouch, and a folded scarf can each become a Story video, with the price added after download."
     },
     {
-      "q": "Can the Story use the photo I already shoot for the shop?",
+      "q": "Can the Story use the photo I already shot for the shop?",
       "a": "Yes. The hot sauce in the video should be the hot sauce you ship, label and all. Your logo can be added after download, and you do not need a new shoot for that."
     },
     {
@@ -125,7 +125,7 @@
     },
     "picker": {
       "title": "Browse Video Templates by Category",
-      "lead": "Each card is a tall 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a tall 9:16 frame and add the price there.",
+      "lead": "Each card is a tall 9:16 Story video. Upload the hot sauce photo, then add the price before you post.",
       "chips": [
         {
           "id": "accessories",
@@ -207,7 +207,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "Close-up unboxing: makeup tools",
+          "label": "Close-Up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -225,7 +225,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apparel-1",
-          "label": "Bedroom Try-On: Knitwear",
+          "label": "Bedroom Try-on: Knitwear",
           "chips": [
             "apparel"
           ],
@@ -279,7 +279,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "Getting-ready unboxing: knitwear",
+          "label": "Getting-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "Full spin: linen shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -324,7 +324,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Face to camera: skin lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -333,7 +333,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "First-person find: court gear",
+          "label": "First-Person Court Gear Shot",
           "chips": [
             "explainer"
           ],
@@ -342,7 +342,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Opening: home app walkthrough",
+          "label": "Opening: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -351,7 +351,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance opening: phone demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -369,7 +369,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "First sip: citrus drink",
+          "label": "First Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -405,7 +405,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry bowl first bite",
+          "label": "Berry Bowl First Bite",
           "chips": [
             "health-fitness"
           ],
@@ -432,7 +432,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver signet close-up",
+          "label": "Silver Signet Close-Up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -477,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell powder reveal",
+          "label": "Kettlebell Powder Reveal",
           "chips": [
             "sports-gym"
           ],
@@ -486,7 +486,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Evening kitchen appliance demo",
+          "label": "Evening Kitchen Appliance Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -504,7 +504,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump moisturizer routine",
+          "label": "Pump Moisturizer Routine",
           "chips": [
             "ugc"
           ],
@@ -522,7 +522,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint face mist opening",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -539,15 +539,15 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more video templates"
     },
     "titles": {
       "m2": {
-        "h2": "How to Make a Square Story Image in 3 Simple Steps"
+        "h2": "How to Make an Instagram Story Video in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Browse Video Templates by Category",
-        "lead": "Each card is a tall 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a tall 9:16 frame and add the price there."
+        "h2": "Pick a Template Category",
+        "lead": "Use a card as the tall Story, with your bottle photo and the price added before you post."
       },
       "m4": {
         "h2": "Use Story ad photos in tall phone ads"
@@ -556,20 +556,20 @@
         "h2": "Start a Story ad with a clear product photo"
       },
       "m6": {
-        "h2": "Prepare a square product photo for a tall 9:16 Story"
+        "h2": "Start the Tall 9:16 Story From a Clear Product Photo"
       },
       "m7": {
         "h2": "Add the Story date and offer after download"
       },
       "faq": {
-        "h2": "Questions About Instagram Story Ad Images"
+        "h2": "Questions About Instagram Story Videos"
       },
       "examples": {
-        "h2": "Instagram Story ad image examples"
+        "h2": "Instagram Story Video Examples"
       },
       "templates": {
         "h2": "More Instagram Story ad templates",
-        "lead": "Choose another square ad layout for your Instagram Story campaign."
+        "lead": "Choose another tall Story layout for the same hot sauce campaign."
       }
     }
   },
@@ -677,7 +677,7 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "With the frame",
+      "eyebrow": "On the Story video",
       "h2": "Features on a Story Video",
       "lead": "The Story video carries a script, an avatar, and a spoken line you can publish with it.",
       "items": [
@@ -703,7 +703,7 @@
         },
         {
           "t": "Versions, Languages, Publish",
-          "d": "Run the same photo for another setting or another language, in a batch if you have several offers, then publish to Instagram, Facebook, or TikTok. The API can start the next one from your catalog."
+          "d": "Run the same photo for another setting or another language, then post it to Instagram, Facebook, or TikTok. Your catalog can start the next one."
         }
       ]
     }

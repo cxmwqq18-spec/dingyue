@@ -4,7 +4,7 @@
   "description": "Make a before and after video from one product photo. Show one change, such as grease leaving the same stovetop, then download the clip and post it.",
   "h1": "Before and After Video Maker: One Photo, One Clear Change",
   "eyebrow": "Before & after video",
-  "lead": "Show one change on the product you upload, like grease wiped off the same stovetop. Then download the clip with that stove still in frame.",
+  "lead": "Show one before and after on the product you upload, like grease wiped off the same stovetop. Then download the clip with that stove still in frame.",
   "secondary_keywords": [
     "AI before and after video",
     "before and after product video",
@@ -75,15 +75,15 @@
   },
   "faq": [
     {
-      "q": "What does a before and after video maker create?",
+      "q": "What does a before and after product video show?",
       "a": "It makes a short ad where one thing changes and the product stays. Grease can leave a stovetop while the camera stays in the same place."
     },
     {
-      "q": "How do I get from a photo to that clip?",
+      "q": "How do I make the clip from one photo?",
       "a": "Upload the before photo and describe the after in a sentence. Read the line when the file comes back, then change the music before you export."
     },
     {
-      "q": "Which shop is this built for?",
+      "q": "Which products fit a before and after video?",
       "a": "It is for catalogs with many small changes to show, rather than one film for a whole month. TikTok can take a tall file, and Meta can take a square."
     },
     {
@@ -95,7 +95,7 @@
       "a": "Yes. Commercial use is part of a paid plan, and the download has no watermark. You still need rights to the photo you uploaded."
     },
     {
-      "q": "Which frames can I leave with?",
+      "q": "Which video shapes can I download?",
       "a": "You can download 9:16, 1:1, 16:9, 4:3, or 3:4. Use the tall file for TikTok, the square for Meta, or the wide file for a landscape placement. Reels can use the tall file too."
     },
     {
@@ -108,7 +108,7 @@
     },
     {
       "q": "Could TikTok or Meta turn the ad down?",
-      "a": "Read their current rules before you spend. Some categories want a label when a viewer might think a real buyer is reviewing the product. The person on screen is one of 53 AI actors."
+      "a": "Maybe. Read TikTok and Meta rules before you spend. Add a label if a viewer might think a real buyer is reviewing the product. The person on screen is one of 53 AI actors."
     }
   ],
   "actor_scene_picker": {
@@ -151,11 +151,11 @@
       "prompt": "Grease across the stovetop, then the same stove wiped clean. The camera stays put."
     },
     "picker": {
-      "title": "See What AIVideosUGC Generates",
+      "title": "See a finished before and after, then make one from your photo.",
       "lead": "Look through finished changes, then make one from your own photo or link.",
       "chips": [],
       "cards": [],
-      "button": "Try this video idea"
+      "button": "Try this before and after"
     },
     "uses": [],
     "titles": {
@@ -163,10 +163,10 @@
         "h2": "How to Make a Before and After Video in 3 Simple Steps"
       },
       "m4": {
-        "h2": "Where a Visible Change Helps the Sale"
+        "h2": "Where One Visible Change Helps the Sale"
       },
       "faq": {
-        "h2": "Before and After Video Maker - Frequently Asked Questions"
+        "h2": "Before and After Product Video Questions"
       }
     }
   },
@@ -184,14 +184,14 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is a Before and After Video Maker?",
+    "title": "What Is a Before and After Product Video?",
     "paras": [
       "The product stays in frame. What changes is one visible thing: grease across a stovetop, then that same stove wiped clean. You approve the change before the file goes out.",
       "A wide file can sit where a landscape placement asks for one. A tall file can go to TikTok, and a square can go to Meta. You approve the line before any file leaves."
     ]
   },
   "reasons": {
-    "h2": "Why Use a Before and After Video Maker",
+    "h2": "Why Make a Before and After Product Video",
     "lead": "The shopper should see the change the product makes, in the same shot.",
     "items": [
       {
@@ -210,12 +210,12 @@
         "t": "Test Different Voice Tones",
         "d": "Two voice tones give you a choice for the same cutting board, the garlic cloves, and the press.",
         "img": "n:guide:ba1b-before-after-videos-benefit3-r1",
-        "alt": "The same wood cutting board: whole garlic cloves and skins on the left half, pressed garlic and a plain stainless garlic press on the right half."
+        "alt": "The same wood board: whole garlic on the left, pressed garlic and a plain stainless press on the right."
       }
     ]
   },
   "compare_table": {
-    "title": "Before and After Video Maker vs. Filming Twice",
+    "title": "Filming Twice or a Before and After Video",
     "lead": "What changes when the before and the after both come from the photo you already have.",
     "columns": [
       "",
@@ -342,16 +342,16 @@
   "more_sections": [
     {
       "eyebrow": "In the clip",
-      "h2": "What a Before and After Video Includes",
+      "h2": "What Comes With the Change Clip",
       "lead": "One file carries the change a second setup used to require.",
       "items": [
         {
           "t": "Name the Product in the Script",
-          "d": "If the product is a cord wrap, the first sentence names the cord wrap so the ad stays on that item."
+          "d": "If the product is the stovetop cleaner, the first sentence names that cleaner so the ad stays on it."
         },
         {
           "t": "Add a Voiceover for the Change",
-          "d": "A voice can say the ring is gone, so the picture is not the only way the shopper understands the wipe."
+          "d": "A voice can say the grease is gone, so the picture is not the only way the shopper understands the wipe."
         },
         {
           "t": "Edit Captions, Music, and Length",
@@ -359,14 +359,14 @@
         },
         {
           "t": "Test Another Presenter",
-          "d": "The coaster stays put. The person beside it can change when you render the next version."
+          "d": "The stovetop stays put. The person beside it can change when you render the next version."
         },
         {
           "t": "Create Clips in Bulk or by API",
-          "d": "A shop with a dozen cleaners can send a photo for each and get a clip for each. Your software can request those clips through the API. Each clip spends its own credits."
+          "d": "A shop with a dozen cleaners can send a photo for each and get a clip for each. Your software can request those clips through the API."
         },
         {
-          "t": "Create Multilingual Change Videos",
+          "t": "Create the Same Wipe in Another Language",
           "d": "The same wipe can be explained in another language with a matching voice, then posted where that buyer watches."
         }
       ]

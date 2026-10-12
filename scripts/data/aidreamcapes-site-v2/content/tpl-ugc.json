@@ -3,7 +3,7 @@
   "title": "AI UGC Generator for Video Ads | AIVideosUGC",
   "description": "Create AI UGC video ads from one product photo with the AI UGC generator. Pick the face, the language, and the line, then download a cut you can test.",
   "h1": "Create AI UGC Video Ads on Demand",
-  "eyebrow": "Ad photo template",
+  "eyebrow": "UGC video template",
   "lead": "Create an AI UGC ad from one product photo. Pick the AI avatar, the language, and the line. Download a cut you can test on TikTok, or a square for the grid.",
   "secondary_keywords": [
     "creator style product photos",
@@ -20,7 +20,7 @@
     },
     {
       "t": "Pick a Creator Style",
-      "d": "Tell the AI video agent what the bottle ad should say. Then pick the AI avatar who holds the bottle, and change any line."
+      "d": "Say what the bottle ad should claim, then pick the AI avatar who holds the bottle, and change any line."
     },
     {
       "t": "Download and Post",
@@ -42,7 +42,7 @@
         "An everyday moment you pick"
       ]
     ],
-    "cta": "Make my creator-style photo"
+    "cta": "Make my UGC ad"
   },
   "faq": [
     {
@@ -59,11 +59,11 @@
     },
     {
       "q": "Do unused credits carry into the next month?",
-      "a": "Your plan lists one monthly credit amount, and that amount is the balance for the plan period. A failed job returns its credits on its own. The screen shows the cost before a job starts."
+      "a": "The plan shows one monthly credit amount, and that amount is the balance for the plan period. A failed job returns its credits, and the screen shows the cost before you start."
     },
     {
       "q": "Which languages can the spoken line use?",
-      "a": "Yes. Generate the line in the language you sell in. A shop that sells in more than one country can reuse the same product photo for each language."
+      "a": "You can generate the spoken line in the language you sell in, and reuse the same product photo for each country."
     },
     {
       "q": "When is a change a revision, and when is it a new ad?",
@@ -133,7 +133,7 @@
     },
     "picker": {
       "title": "Browse Video Templates by Category",
-      "lead": "Each card is a tall 9:16 video ad, not a square creator-style photo. Use the upload above for the photo, and write the caption after you download.",
+      "lead": "Each card is a tall 9:16 UGC video ad. Upload your product photo above, then write the caption after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -547,18 +547,18 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See all UGC templates"
     },
     "titles": {
       "m2": {
-        "h2": "How to Make UGC Style Product Photos in 3 Simple Steps"
+        "h2": "How to Make AI UGC Video Ads in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Browse Video Templates by Category",
-        "lead": "Each card is a tall 9:16 video ad, not a square creator-style photo. Use the upload above for the photo, and write the caption after you download."
+        "h2": "Browse UGC Video Templates by Category",
+        "lead": "Each card is a tall 9:16 UGC video ad. Upload your product photo above, then write the caption after you download."
       },
       "faq": {
-        "h2": "Questions About UGC Style Product Photos"
+        "h2": "Questions About AI UGC Video Ads"
       }
     }
   },

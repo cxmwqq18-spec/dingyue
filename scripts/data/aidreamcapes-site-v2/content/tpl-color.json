@@ -4,7 +4,7 @@
   "description": "Make one matching square photo for every color you sell, from your own photo of that color. Shoppers can then compare the options in the same scene.",
   "h1": "Product Color Variations in One Shared Square Scene",
   "eyebrow": "Product photo template",
-  "lead": "Put every dispenser color on the same square counter. Drop in the photo of each shade you already sell, and shoppers can compare them in one scene. You pick that scene and skip a long prompt.",
+  "lead": "Line up your product color variations on one square counter. Drop in a photo of each dispenser shade you sell, so shoppers can compare them.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -61,7 +61,7 @@
     },
     {
       "q": "Can a beginner make the set?",
-      "a": "Yes. A shop that has never opened a timeline can still make the row. They choose the scene, and the photos they already took decide what is in frame."
+      "a": "Yes. A shop that has never edited a video can still make the row. They choose the scene, and the photos they already took decide what is in frame."
     },
     {
       "q": "Which products fit a color template?",
@@ -201,7 +201,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "Quiet unboxing of makeup tools",
+          "label": "Quiet Unboxing of Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -210,7 +210,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Close watch shot in warm light",
+          "label": "Close Watch Shot in Warm Light",
           "chips": [
             "accessories"
           ],
@@ -219,7 +219,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apparel-1",
-          "label": "Bedroom Try-On: Knitwear",
+          "label": "Bedroom Try-on: Knitwear",
           "chips": [
             "apparel"
           ],
@@ -246,7 +246,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Live-style reaction to an app",
+          "label": "Live-Style Reaction to an App",
           "chips": [
             "apps"
           ],
@@ -273,7 +273,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "Get-ready unboxing of a sweater",
+          "label": "Get-Ready Unboxing of a Sweater",
           "chips": [
             "clothing"
           ],
@@ -291,7 +291,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "Full turn of a linen shirt",
+          "label": "Full Turn of a Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -318,7 +318,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Spoken lesson about skin care",
+          "label": "Spoken Lesson About Skin Care",
           "chips": [
             "education"
           ],
@@ -327,7 +327,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "Court gear from the player's view",
+          "label": "Court Gear from the Player's View",
           "chips": [
             "explainer"
           ],
@@ -336,7 +336,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Home app walkthrough opener",
+          "label": "Home App Walkthrough Opener",
           "chips": [
             "explainer"
           ],
@@ -345,7 +345,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Phone demo of a finance app",
+          "label": "Phone Demo of a Finance App",
           "chips": [
             "financial-services"
           ],
@@ -363,7 +363,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "First sip of a citrus drink",
+          "label": "First Sip of a Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -399,7 +399,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "First bite of a berry bowl",
+          "label": "First Bite of a Berry Bowl",
           "chips": [
             "health-fitness"
           ],
@@ -426,7 +426,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Close shot of a silver ring",
+          "label": "Close Shot of a Silver Ring",
           "chips": [
             "jewelry-accessories"
           ],
@@ -471,7 +471,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Powder burst around a kettlebell",
+          "label": "Powder Burst Around a Kettlebell",
           "chips": [
             "sports-gym"
           ],
@@ -480,7 +480,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Evening demo of a kitchen appliance",
+          "label": "Evening Demo of a Kitchen Appliance",
           "chips": [
             "tech-electronics"
           ],
@@ -489,7 +489,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Desk review of a thin keyboard",
+          "label": "Desk Review of a Thin Keyboard",
           "chips": [
             "tech-electronics"
           ],
@@ -498,7 +498,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Bathroom routine with moisturizer",
+          "label": "Bathroom Routine with Moisturizer",
           "chips": [
             "ugc"
           ],
@@ -516,7 +516,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Playful opener with face mist",
+          "label": "Playful Opener with Face Mist",
           "chips": [
             "viral"
           ],
@@ -533,7 +533,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more video templates"
     },
     "input": [],
     "outputs": [],
@@ -543,8 +543,8 @@
         "h2": "Frequently Asked Questions"
       },
       "m3": {
-        "h2": "Browse Video Ad Templates by Category",
-        "lead": "Open a category and make a scene from a product photo you already have."
+        "h2": "Pick a Template Category",
+        "lead": "Pick the category that matches the product, then make the scene from a photo you already have."
       }
     }
   },
@@ -668,10 +668,10 @@
         },
         {
           "t": "An AI Avatar on Camera",
-          "d": "An AI avatar can hold one color on camera, so you skip booking a model for the shade row. Add B-roll of the product alone when you want the item to fill the frame between lines."
+          "d": "An AI avatar can hold one color on camera, so you skip booking a model. Add a clip of the product alone when you want it to fill the frame."
         },
         {
-          "t": "A Listing Link or the API",
+          "t": "A Product Page or Your Shop Software",
           "d": "Paste the product page to draft the first script. Or let your shop software send each shade photo through the API."
         },
         {
@@ -679,8 +679,8 @@
           "d": "A Spanish storefront can hear the color names in Spanish while the English cut keeps the same three dispensers. The captions can follow that voice, and you can move them in the editor."
         },
         {
-          "t": "More Cuts, Then Post",
-          "d": "Render a second cut for another country from the same photos. Publish to Instagram, YouTube, TikTok, or Facebook from the account you connect, or download and post it yourself."
+          "t": "More Versions, Then Post",
+          "d": "Make a second version for another country from the same photos. Post it to Instagram, YouTube, TikTok, or Facebook, or download it and post it yourself."
         }
       ]
     }

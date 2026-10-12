@@ -25,7 +25,7 @@
       "icon": "sparkle"
     },
     {
-      "t": "Brief the Video Agent",
+      "t": "Say What the Ad Is For",
       "d": "Say the candle is for a gift guide, not a restock reminder. You get a cut you can watch before anyone on the team picks up a camera.",
       "icon": "play"
     },
@@ -68,7 +68,7 @@
   ],
   "ugc": {
     "eyebrow": "What the term means for your ad",
-    "title": "What Is AI UGC?",
+    "title": "What AI UGC Means for a Product Ad",
     "paras": [
       "AI UGC is a recommendation that sounds like someone who uses the product. An AI actor carries the line, so a DTC brand can talk about a new serum without booking an influencer for that week.",
       "A jar that already has a listing can become a clip shaped like a phone video. You tell the video agent who the ad is for, and a template keeps that shape familiar to people scrolling the feed.",
@@ -94,12 +94,12 @@
     ]
   },
   "audience": {
-    "title": "AI UGC Ads for DTC Brands, SaaS Teams, and Agencies",
-    "lead": "DTC brands, dropshippers, small shops, agencies, creators, and app teams each show up with a different job.",
+    "title": "AI UGC Ads for Shops, Apps, and Agencies",
+    "lead": "Online shops, dropshippers, small shops, agencies, creators, and app teams each show up with a different job.",
     "items": [
       {
         "t": "Put the Gift Set on Camera",
-        "d": "A DTC brand can show the cream tube, the cream jar, and the soap bar coming out of the gift box the week they are packed. The shop stays open while you compare two openings.",
+        "d": "Show the cream tube, the cream jar, and the soap bar coming out of the gift box the week they are packed. The shop stays open while you compare two openings.",
         "img": "n:img3-gen2-unboxing-videos-g2-r3",
         "alt": "Plain white cream tube, round white cream jar and white soap bar revealed in an open gift box.",
         "frame": "browser"
@@ -222,7 +222,7 @@
       "a": "They open like a recommendation, so the problem and the product show up before a polished brand spot would. A DTC team can start on the jar in a gym bag and let the next scene answer it."
     },
     {
-      "q": "What is AI UGC?",
+      "q": "What does AI UGC mean for a product ad?",
       "a": "It is a creator-style product ad read by an AI actor, not a review from a buyer. Begin with your product photo, or open from the product page, then read the words before you download."
     },
     {
@@ -231,7 +231,7 @@
     },
     {
       "q": "How long will an AI UGC ad take?",
-      "a": "The page shows progress while you adjust the line in the editor. Download the file when the render finishes. A failed job returns the credits."
+      "a": "You stay on the page and can edit the line while the file renders, then download it when it finishes. A failed job returns the credits."
     },
     {
       "q": "How do I make a UGC ad with an AI actor?",
@@ -267,7 +267,7 @@
     },
     {
       "q": "Which languages can I use for AI UGC ads?",
-      "a": "Write the sentence in the language your buyers already read, and pick a matching voice. The same offer can be cut for TikTok and for Meta."
+      "a": "Use any language you can write the product sentence in, then pick a voice that matches it. The same offer can be cut for TikTok and for Meta."
     },
     {
       "q": "Where can I get help with an AI UGC ad before a promotion?",
@@ -286,8 +286,8 @@
       "a": "Yes. Make a testimonial-style vertical ad with an AI actor, approve the line, and download it for TikTok. Check that platform's label rules before you post."
     },
     {
-      "q": "What should a DTC brand look for in an AI UGC tool?",
-      "a": "Look for a tool that shows the credit cost first, lets you approve the script, and exports 9:16, 1:1, 16:9, 4:3, and 3:4 with no watermark. Failed jobs return credits. You can send up to 7 reference images with a job."
+      "q": "What should a small shop look for in an AI UGC tool?",
+      "a": "Look for a tool that shows the credit cost first and lets you approve the script. It should export 9:16, 1:1, 16:9, 4:3, and 3:4 with no watermark. Failed jobs return credits. You can send up to 7 reference images with a job."
     }
   ],
   "limitations": {
@@ -887,8 +887,8 @@
         "h2": "How to Make AI Product Videos and Photos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Pick a Scene and Use Your Own Product",
-        "lead": "Pick a scene you like, upload your product photo, and get that look with your own product in it."
+        "h2": "Pick a Look, Then Swap in Your Product",
+        "lead": "Open a scene, put your product photo in it, and keep the product you actually sell."
       },
       "faq": {
         "h2": "Questions About AI Product Photos and Videos"

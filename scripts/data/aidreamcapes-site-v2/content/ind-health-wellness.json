@@ -4,8 +4,8 @@
   "description": "Make AI UGC video ads for health and fitness products from one photo. Skip the creator booking, then post that morning routine on your shop.",
   "h1": "AI UGC Video Ads for Health and Fitness Brands",
   "eyebrow": "Health & Fitness",
-  "lead": "Put the teal mat, the breakfast bottle, or the bands in a morning routine. An AI avatar stands in, so you skip booking a creator.",
-  "card": "Routine photos and short clips for supplements, tea, and gear.",
+  "lead": "Put the teal mat, the breakfast bottle, or the bands in a morning routine for a health and fitness UGC video. An avatar stands in, so you skip booking a creator.",
+  "card": "Short routine clips for the teal mat, the breakfast bottle, and the bands.",
   "secondary_keywords": [
     "supplement lifestyle photos",
     "wellness product photos",
@@ -64,7 +64,7 @@
     },
     {
       "t": "Generate and Publish",
-      "d": "Download the file for the feed you already use. A clip can add a spoken voice and captions."
+      "d": "Download the routine clip for the feed you already use. It can include a spoken voice and captions."
     }
   ],
   "visual": {
@@ -102,7 +102,7 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions About Routine Photos and Clips"
+        "h2": "Questions About Health and Fitness Video Ads"
       }
     }
   },
@@ -135,7 +135,7 @@
     }
   ],
   "steps_cta": {
-    "label": "Make a wellness ad",
+    "label": "Make a wellness video ad",
     "href": "/app/create?industry=health-wellness"
   },
   "reasons": {
@@ -149,7 +149,7 @@
       },
       {
         "t": "Spend Credits, Not a Crew",
-        "d": "The breakfast-table scene is a photo you can budget. A still is 24 credits, the price shows before you start, and there is no creator invoice.",
+        "d": "The breakfast-table scene has a price you can plan. A still is 24 credits, the price shows before you start, and there is no creator invoice.",
         "img": "n:guide:b2f3-ind-health-breakfast-r1"
       },
       {
@@ -284,7 +284,7 @@
         "Square"
       ]
     ],
-    "cta": "Create a lifestyle photo"
+    "cta": "Create a fitness video"
   },
   "blockOrder": [
     "hero",

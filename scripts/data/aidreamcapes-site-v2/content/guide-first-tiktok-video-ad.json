@@ -12,13 +12,13 @@
     "first TikTok ad campaign"
   ],
   "read_minutes": 8,
-  "summary": "You leave with a UGC TikTok ad: one reason to buy, a vertical clip that opens on the sunscreen, a voice, captions, and a first file you control.",
+  "summary": "You leave with a vertical TikTok ad that opens on the sunscreen, plus a voice, captions, and one reason to buy.",
   "sections": [
     {
       "h2": "What a TikTok Ads Generator Returns",
       "paras": [
         "You need one product and one reason someone would buy it. The first file is ready without a filming appointment on the calendar.",
-        "A peach cream tube at the seaside is a real shot. Pair it with a track shoppers still hear this week, and say how the cream goes on.",
+        "Show the peach sunscreen tube at the seaside and say how the cream goes on. Add a song you are allowed to use.",
         "Record a short clip of your own voice if the shop should sound like you. Otherwise pick a generated voice and rewrite the line until you would say it at the counter.",
         "A file you can publish. Captions, the tall shape, and a track from the ad music library come with the video. Send it to TikTok, Facebook, or Instagram, or download it and post it yourself."
       ],
@@ -26,26 +26,26 @@
       "alt": "Adult woman applies cream from a plain light-peach tube to her cheek at the seaside."
     },
     {
-      "h2": "From a Product Link to a File",
+      "h2": "From a Product Link to a TikTok Ad in 3 Steps",
       "paras": [
         "Three moves, and you have a tall file without a studio day or an empty editing screen.",
         "Paste the page when it shows the sunscreen you ship. A tube page that leads with the cap and the size is enough. You can fix a wrong title before the job starts.",
         "Or upload one photo and one sentence about the action. Save the price for the editor, where you add it later.",
-        "A sample you can echo: a hand holds a peach sunscreen tube over a notebook on a bright cafe table. Write that kind of sentence for your own tube.",
-        "A product link and a photo each have a door. Use [URL to video](page:url-to-video) when you start from the sunscreen page. Use [AI image to video](page:image-to-video) when you start from a photo of the tube.",
+        "Copy this kind of line: a hand holds a peach sunscreen tube over a notebook on a bright cafe table.",
+        "Start from the sunscreen page with URL to video, or start from a photo of the tube with image to video.",
         "You choose the actor before you write the line, so the words fit that person. A product-only frame works too. See the [actor library](page:ai-actors). There are 53 AI actors.",
         "The person on screen uses the look you picked for the shop, and the tube stays the one in your photo.",
         "Play the tall file on your phone, then put the price in the editor. The price has to match what the shopper pays. After that, publish to TikTok or keep the download.",
-        "A shop system can start that same job through an API when a new sunscreen listing goes up."
+        "When a new sunscreen listing goes up, your shop software can start this same video job."
       ],
       "img": "n:guide:fx06-guide-first-tiktok-video-ad-sec03-r2",
       "alt": "Adult hands hold a plain peach sunscreen tube over a blank notebook on a bright cafe table."
     },
     {
-      "h2": "Why Skip the Film Crew for Version One",
+      "h2": "Why Make the First TikTok Ad Without a Film Crew",
       "paras": [
         "The opening shows the cream doing something a shopper can recognize, while the tube is still in the frame.",
-        "A first version can be a hand smoothing cream from the peach tube across the back of a hand. That scene is ready without an influencer on the call sheet.",
+        "A first version can be a hand smoothing cream from the peach tube across the back of a hand, with no influencer booked.",
         "The second opening can be a different first line on the same cream photo. You get that line without booking another morning.",
         "A shop that also sells in Mexico can keep the cream scene and replace the spoken line with Spanish. That is another file, and the scene stays the one you already approved."
       ],
@@ -53,7 +53,7 @@
       "alt": "Two adult hands spread white cream from a plain peach tube across the back of a hand."
     },
     {
-      "h2": "How the TikTok Ad Gets Made",
+      "h2": "How to Create a TikTok Ad From a Product Photo",
       "paras": [
         "The sunscreen tube is on screen in the opening, while the shopper is still watching.",
         "Keep the sunscreen photo. For the next file, change only who speaks. A new first line is a different test, and it belongs in its own file.",
@@ -64,7 +64,7 @@
       "alt": "Adult hands turn one plain peach sunscreen tube for a pre-launch check."
     },
     {
-      "h2": "Where the First File Goes Next",
+      "h2": "Where to Post Your TikTok Ad After the First File",
       "paras": [
         "The tall file is ready for TikTok, and each other placement gets the shape it actually plays, as its own file.",
         "TikTok gets the 9:16 file, with the sunscreen on screen in the opening moments. The [TikTok ads](page:plat-tiktok) page has the size detail.",
@@ -78,7 +78,7 @@
       "alt": "Adult hands hold a plain peach sunscreen tube beside a notebook on a bright desk."
     },
     {
-      "h2": "How a Shop Uses the First Ad",
+      "h2": "How Shops Use a First TikTok Ad",
       "paras": [
         "A cream shop pastes the product link and gets a tall video of the peach tube at the seaside. The shoot for that opening stays off the calendar.",
         "A sunscreen shop opens on the tube over a notebook, large enough to see the cap, and posts that file on TikTok.",
@@ -87,7 +87,7 @@
       ]
     },
     {
-      "h2": "The Short Version",
+      "h2": "Check the TikTok Ad Before You Post",
       "paras": [
         "You post one product and one reason to buy, in a 9:16 video that starts with the action. Add a script, a voiceover, captions, and a song.",
         "The cost shows before the job starts. If a job fails, the credits come back. The download has no watermark. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."

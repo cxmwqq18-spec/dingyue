@@ -3,7 +3,7 @@
   "title": "AI Image Background Changer | AIVideosUGC",
   "description": "Remove and replace the room behind a product with the AI image background changer. Keep the item you sell, then download a sharp photo for the listing.",
   "h1": "AI Image Background Changer to Remove and Replace",
-  "eyebrow": "Photo tool",
+  "eyebrow": "Same product, new setting",
   "lead": "The vase is fine. The room behind it is not. Name pale wood, and the AI image background changer keeps the vase you sell. One photo is 24 credits, shown before you start.",
   "secondary_keywords": [
     "change product photo background",
@@ -73,18 +73,18 @@
     },
     {
       "q": "Where do I get backgrounds for a product photo?",
-      "a": "Yes. Choose a ready setting, such as pale wood or a shaded garden table, or describe a surface in one short line. One photo is 24 credits, shown before you start, and a failed job returns those credits."
+      "a": "Pick a ready setting, such as pale wood or a shaded garden table, or describe a surface in one short line."
     },
     {
-      "q": "How sharp is the cut around the product?",
+      "q": "What should I check before I trust a background changer?",
       "a": "Check the vase rim against the photo you uploaded. The new setting should leave the shape and the color alone, and the credit cost is on screen before the photo is made."
     },
     {
-      "q": "How do I add a background to a photo online?",
+      "q": "How do I put a new setting behind a product photo?",
       "a": "Upload the vase photo and name one surface, such as pale wood. You get a square with that wood filled in behind the vase, ready to put on the listing."
     },
     {
-      "q": "How do I replace a product background online?",
+      "q": "How do I swap the room behind a product photo?",
       "a": "Upload the product photo. The old room comes off, and you can place white, a studio table, or a setting you name behind it. You download a finished photo."
     },
     {
@@ -224,13 +224,13 @@
     "items": [
       {
         "t": "Clear the Counter Behind the Cleanser",
-        "d": "A mint cleanser tube on a plant-filled counter comes back on a quiet gray sweep. The listing shows the tube, not the leaves.",
+        "d": "A mint cleanser tube on a plant-filled counter comes back on a quiet gray backdrop. The listing shows the tube, not the leaves.",
         "img": "n:guide:k5-background-case-1",
         "alt": "Mint cleanser tube on a plant-filled counter."
       },
       {
         "t": "Pair the Sneakers With the Bag",
-        "d": "Set the black and white sneakers beside the purple handbag on one pale sweep. Both stay the products you sell, and only the floor behind them changes.",
+        "d": "Set the black and white sneakers beside the purple handbag on one pale backdrop. Both stay the products you sell, and only the floor behind them changes.",
         "img": "n:guide:k5-background-case-2",
         "alt": "Black and white sneakers beside a purple handbag."
       },

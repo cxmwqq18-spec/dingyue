@@ -15,7 +15,7 @@
   "faq": [
     {
       "q": "How many credits does a sale video cost?",
-      "a": "A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before you start. If a job fails, those credits come back. A finished file is not refunded just because you dislike it."
+      "a": "A sale video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo spends 24 credits. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before you start. If a job fails, those credits come back. A finished file is not refunded just because you dislike it."
     },
     {
       "q": "Can my own software ask for sale videos?",
@@ -30,8 +30,8 @@
       "a": "Set the end in the editor, and move it if the sale window shifts. You decide when it stops."
     },
     {
-      "q": "What if the product was already filmed on my table?",
-      "a": "Yes. Paste a product page so the photos come in, upload a picture, or add a clip you already shot. You still check the offer before it goes out."
+      "q": "Can I add footage I already filmed on my table?",
+      "a": "Paste a product page so the photos come in, upload a picture, or add a clip you already shot. You still check the offer before it goes out."
     },
     {
       "q": "Can I run the same scene on the next offer?",
@@ -106,11 +106,11 @@
     },
     {
       "t": "Set Script, Timer, and Publish",
-      "d": "The download still says Friday. You swap the line and keep the same cream jar."
+      "d": "Set the end date and the offer line, then download. The cream jar stays in the frame when you change the words."
     }
   ],
   "visual": {
-    "overview": "The product stays clear. The offer line is typed after download.",
+    "overview": "The product stays clear. You type the offer line in the editor before you download.",
     "strip": [
       "n:guide:q20-occ-sale-gallery-03",
       "f:retargeting-urgency",
@@ -140,7 +140,7 @@
       ]
     },
     "picker": {
-      "title": "Choose a sale ad creative scene",
+      "title": "Pick the scene, then add your offer",
       "lead": "Show the product clearly, then add the confirmed offer in an editable layer.",
       "chips": [
         {
@@ -245,7 +245,7 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Create Promo Video Ads in 3 Simple Steps"
+        "h2": "How to Make a Countdown Sale Video in 3 Simple Steps"
       },
       "m3": {
         "h2": "Choose a Sale Ad Creative Scene"
@@ -275,7 +275,7 @@
       "t": "Slow the Voice on the End Date",
       "d": "A buyer can catch the end date when the voice eases on Thursday night. Pick a warm voice, keep the rest of the line quick, and leave the charging pad in the shot.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-versions",
-      "alt": "Adult hand places a wireless charging pad on a dark desk.",
+      "alt": "Two adult hands set a round black charging pad on a dark cloth.",
       "frame": "none"
     },
     {

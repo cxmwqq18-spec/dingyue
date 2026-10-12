@@ -138,7 +138,7 @@
       "use": "Shows a product by the front door",
       "category": "Actor-led testimonial",
       "talent": "an adult white woman in her thirties",
-      "line": "This earns a place in my quiet at-home routine.",
+      "line": "I use this at home when the day is done.",
       "action": "close chest-up selfie by a softly lit interior wall, one hand resting below frame",
       "ambient": "their voice and natural indoor room tone",
       "ref": "n:guide:ac1-actor-card-indoor-2-r1"
@@ -183,7 +183,7 @@
       "use": "Introduces a product on a city walk",
       "category": "Actor-led testimonial",
       "talent": "an adult South Asian woman in her thirties",
-      "line": "I bring this up to the rooftop when I want a fresh reset.",
+      "line": "I bring this up to the rooftop when I need a break.",
       "action": "leaning at an evening rooftop railing with city lights behind, shoulders turned toward camera",
       "ambient": "their voice and natural outdoor room tone",
       "ref": "n:guide:ac1-actor-card-outdoor-1-r1"
@@ -213,7 +213,7 @@
       "use": "Explains a product from a relaxed living room",
       "category": "Actor-led testimonial",
       "talent": "an adult East Asian woman in her thirties",
-      "line": "My living-room wind-down starts with this nearby.",
+      "line": "I keep this next to me on the living-room couch.",
       "action": "seated on a bright living-room sofa with a plant behind, one hand gesturing gently",
       "ambient": "their voice and natural living room room tone",
       "ref": "n:guide:ac1-actor-card-living-room-1-r1"
@@ -258,7 +258,7 @@
       "use": "Says one clear thing about the product",
       "category": "Actor-led testimonial",
       "talent": "an adult Black man in his twenties",
-      "line": "Between studio takes, I keep this in my rotation.",
+      "line": "I keep this on the studio desk between recordings.",
       "action": "chest-up portrait in a dim studio with a soft colored rim light, hands below frame",
       "ambient": "their voice and natural studio room tone",
       "ref": "n:guide:ac1-actor-card-studio-2-r1"
@@ -288,7 +288,7 @@
       "use": "Explains a workday product choice in an office",
       "category": "Actor-led testimonial",
       "talent": "an adult South Asian woman in her thirties",
-      "line": "Desk-side, I trust this part of my routine.",
+      "line": "I keep this on my desk during the workday.",
       "action": "close chest-up in a quiet office, hands folded below frame",
       "ambient": "their voice and natural office room tone",
       "ref": "n:guide:ac1-actor-card-office-2-r1"
@@ -408,7 +408,7 @@
       "use": "Shows a product at the kitchen counter",
       "category": "Actor-led testimonial",
       "talent": "an adult Latina woman in her thirties",
-      "line": "While cooking, I reach for this without breaking pace.",
+      "line": "I reach for this while I cook at the counter.",
       "action": "standing in a home kitchen with shoulders turned toward camera and hands relaxed",
       "ambient": "their voice and natural kitchen room tone",
       "ref": "n:guide:ac1-actor-card-kitchen-2-r1"
@@ -438,7 +438,7 @@
       "use": "Says one thing about the product in a podcast",
       "category": "Actor-led testimonial",
       "talent": "an adult Black woman in her twenties",
-      "line": "On mic, I like having this ready for my next take.",
+      "line": "I keep this next to the microphone before I talk.",
       "action": "seated in a moody podcast corner with red studio light, hands below frame",
       "ambient": "their voice and natural podcast room tone",
       "ref": "n:guide:ac1-actor-card-podcast-2-r1"
@@ -483,7 +483,7 @@
       "use": "Recommends a product by the water",
       "category": "Actor-led testimonial",
       "talent": "an adult Black woman in her thirties",
-      "line": "By the shoreline, I reach for this between breezy moments.",
+      "line": "I bring this when I walk by the water.",
       "action": "standing near a calm shoreline with sea behind, hands relaxed and shoulders square",
       "ambient": "their voice and natural beach room tone",
       "ref": "n:guide:ac1-actor-card-beach-1-r1"
@@ -558,7 +558,7 @@
       "use": "Introduces a product in a hospital",
       "category": "Actor-led testimonial",
       "talent": "an adult South Asian woman in her thirties",
-      "line": "For everyday care, I like keeping this close.",
+      "line": "I keep this close when I get ready for the day.",
       "action": "standing in a softly lit clinic corridor with a plain stethoscope around her neck",
       "ambient": "their voice and natural hospital room tone",
       "ref": "n:guide:ac1-actor-card-hospital-2-r1"
@@ -873,7 +873,7 @@
       "use": "Gives a short product update, like a news report",
       "category": "Actor-led testimonial",
       "talent": "an adult Latina woman in her thirties",
-      "line": "On today’s update, I’m bringing this point straight to camera.",
+      "line": "I look at the camera and share one short update about this.",
       "action": "standing on a city sidewalk in a reporter stance, holding a plain black handheld microphone",
       "ambient": "their voice and natural reporting room tone",
       "ref": "n:guide:ac1-actor-card-reporting-1-r1"
@@ -963,7 +963,7 @@
     },
     {
       "q": "Can one AI actor explain a single feature?",
-      "a": "Yes. Point at the lamp's power button and say what it does, and keep that button in frame. The next render can repeat the explanation when you add a color."
+      "a": "Yes. Point at the lamp's power button and say what it does, and keep that button in frame. You can explain it again when you add a color."
     },
     {
       "q": "Can an AI actor front a training clip?",

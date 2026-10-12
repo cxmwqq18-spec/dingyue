@@ -4,7 +4,7 @@
   "description": "Use an AI product video generator to make a clip from a link or a photo. Add an AI actor, a script, and a spoken voice, then download it with no watermark.",
   "h1": "AI Product Video Generator: Link, Avatar and Script",
   "eyebrow": "AI product video generator",
-  "lead": "An AI product video can start from one catalog photo, with an actor holding the mug and a spoken line. You are not booking a crew.",
+  "lead": "Your AI product video generator can start from one catalog photo, with an actor holding the mug and a spoken line.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
@@ -14,14 +14,14 @@
   "benefits": [
     {
       "t": "Easy on the First Try",
-      "d": "You do not need an editing past. A few taps are enough to get a full product video out."
+      "d": "You do not need editing experience. A few taps are enough to get a full product video out."
     },
     {
       "t": "Change Any Part",
       "d": "Change the sentence, the AI actor, or the counter shot on the ceramic mug without rebuilding the whole clip. Drop a word the shop never uses."
     },
     {
-      "t": "A Voice That Sounds Like a Person",
+      "t": "A Voice Like a Person",
       "d": "A steadier voice lets a mug demo sound like advice from someone who uses it. A shouty promo voice fights a simple product."
     },
     {
@@ -95,11 +95,11 @@
     },
     {
       "q": "How do I keep the video in my brand's voice?",
-      "a": "Read the line out loud and rewrite it if it does not sound like the shop. Your logo and colors can sit on the last frame, and store software can request the same job through an API."
+      "a": "Read the line out loud and rewrite it if it does not sound like the shop. Your logo and colors can sit on the last frame, and shop software you already use can request the same job."
     }
   ],
   "actor_scene_picker": {
-    "title": "Choose an AI Actor",
+    "title": "Pick Who Holds the Mug",
     "lead": "Pick an actor and a scene. The clip can include a script, a spoken voice, and captions.",
     "button": "Use this actor and scene",
     "actor_picker": {
@@ -286,7 +286,7 @@
     "items": [
       {
         "t": "Show the Size in a Hand",
-        "d": "A buyer can judge the ceramic mug against a palm when an AI actor holds it on the counter. They are not guessing from a white-field silhouette.",
+        "d": "A buyer can judge the ceramic mug against a palm when an AI actor holds it on the counter. They are not guessing from a plain white photo.",
         "icon": "Hand"
       },
       {

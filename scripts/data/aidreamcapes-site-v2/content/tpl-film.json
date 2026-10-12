@@ -4,7 +4,7 @@
   "description": "Make cinematic ads with studio-style light from one product photo. Set a slow dark move, then download the clip and post it where you already sell.",
   "h1": "Cinematic Ads With Studio Light, From One Photo",
   "eyebrow": "Film-style video template",
-  "lead": "A slow dark move on the black speaker, with studio-style light, from the photo you already sell. No set to book.",
+  "lead": "A slow, dark cinematic move on the black speaker uses studio-style light from the photo you already sell. There is no set to book.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -124,7 +124,7 @@
       "resultAlt": "Rounded pebble-shaped black speaker catches a cool cinematic highlight on a dark sideboard."
     },
     "picker": {
-      "title": "Choose a Scene for a Moody Product Video",
+      "title": "Choose a Cinematic Scene for Your Product",
       "lead": "Open a slow product shot, then add the photo you want in that light.",
       "chips": [
         {
@@ -539,7 +539,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See all cinematic templates"
     },
     "input": [],
     "outputs": [],
@@ -547,10 +547,10 @@
     "overview": "",
     "titles": {
       "m3": {
-        "h2": "Choose a Scene for a Moody Product Video"
+        "h2": "Choose a Cinematic Scene for Your Product"
       },
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Questions About Cinematic Ad Templates"
       }
     }
   },
@@ -704,7 +704,7 @@
   "more_sections": [
     {
       "eyebrow": "Inside the open",
-      "h2": "Tools Around a Reveal Ad",
+      "h2": "What You Can Add to a Cinematic Open",
       "lead": "A calm line and a music bed can ride under the dark open, so the reveal is finished from one photo.",
       "items": [
         {
@@ -725,7 +725,7 @@
         },
         {
           "t": "A Script for the Opening",
-          "d": "The AI video agent can draft a line about the finish, and you can edit it before the voice reads."
+          "d": "A draft line about the finish can be written for you, and you can edit it before the voice reads."
         },
         {
           "t": "An AI Avatar in the Open",
@@ -749,7 +749,7 @@
         },
         {
           "t": "An API for a Product Line",
-          "d": "Shop software can send photos through the API when a line needs the same open."
+          "d": "Your shop software can send each product photo in, so a whole line can use the same open."
         }
       ]
     },

@@ -4,7 +4,7 @@
   "description": "Pick a beauty video template, drop in your own product, and download a clip with the frame and the voice already set. Skip a blank timeline and post it.",
   "h1": "Beauty Video Templates for the Product You Sell",
   "eyebrow": "Product photo template",
-  "lead": "Pick a beauty video template, drop in the serum or lipstick you sell, and download a clip that already has the frame and the voice. The steps below still show the speaker photo, buttons and USB-C port included, until you upload your own item.",
+  "lead": "Upload a side-view photo that shows the buttons and the USB-C port, and download a square for the listing. Repeat with the next side when you want another image.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -19,7 +19,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "A picture where the whole speaker is visible keeps the port you photographed. Buttons and the wrist strap stay where they are in that photo."
+      "d": "Say which side this photo is, such as the front, the buttons, or the USB-C port. The layout keeps that side on one shared backdrop."
     },
     {
       "t": "Download and Post",
@@ -41,12 +41,12 @@
         "One view each time"
       ]
     ],
-    "cta": "Make my first view"
+    "cta": "Make my first side photo"
   },
   "faq": [
     {
       "q": "What does this side-view template include?",
-      "a": "You get a beauty video template with the frame and the crop already set. Add a serum, a lipstick, or a compact you sell, and download that clip. Speech can be added later if the ad also needs a short spoken line."
+      "a": "You get one square photo for each side you upload, with the crop already set. Use the side that shows the buttons or the USB-C port, and download that photo. A spoken line can be added later if you also make a short ad."
     },
     {
       "q": "How do these templates get made?",
@@ -58,7 +58,7 @@
     },
     {
       "q": "Who is this template for?",
-      "a": "Shops, listing managers, and agencies that sell skincare, makeup, or hair care, plus a spoken clip when the ad needs one. A person on screen is an AI avatar. Beginners can start from one clear photo of the product."
+      "a": "Shops and listing managers who need a square photo of each side, starting with this speaker. A person on screen, if you add one, is an AI avatar. Beginners can start from one clear photo."
     },
     {
       "q": "Can beginners use this template?",
@@ -66,7 +66,7 @@
     },
     {
       "q": "Which products work with this template?",
-      "a": "The template fits a serum, a lipstick, a compact, and other beauty goods you already photograph. A daily skincare step, a street-ready makeup look, and a dressier evening look can each use it. Food and fitness scenes sit in the same gallery when you want a different video."
+      "a": "It fits products you already photograph from the side, starting with this speaker. Open another card in the gallery when you want a food or fitness video instead."
     },
     {
       "q": "Can I use photos and clips I already shot?",
@@ -86,7 +86,7 @@
     },
     {
       "q": "Why use a template instead of starting from scratch?",
-      "a": "The frame, the crop, and the voice setup are already chosen. Your job is the beauty product you sell, not building an ad from a blank file. You drop in the photo, check the words, and download."
+      "a": "The size and the crop are already chosen. You add the side photo, check the words, and download. You do not build the ad from a blank file."
     },
     {
       "q": "Can one photo show a port that was hidden?",
@@ -538,7 +538,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more video templates"
     },
     "input": [],
     "outputs": [],

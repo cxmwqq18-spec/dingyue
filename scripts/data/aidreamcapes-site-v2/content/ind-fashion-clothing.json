@@ -5,7 +5,7 @@
   "h1": "Beauty UGC Ad Generator for Cosmetics",
   "eyebrow": "Clothing",
   "lead": "AI model photos and videos for fashion brands start from one flat photo. A buyer trusts a wool coat once the hem moves, and an AI avatar can walk it down a hallway with no casting day.",
-  "card": "Try-ons, fit checks, outfit photos, and review-style clips from one garment photo.",
+  "card": "Try-on clips, outfit photos, and review-style videos from one garment photo.",
   "secondary_keywords": [
     "AI on-model clothing photos",
     "AI lookbook for clothing brands",
@@ -62,7 +62,7 @@
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Pick an AI avatar, and describe a taller frame if the line runs long. You can change the face before the clip is made."
+      "d": "Pick an AI avatar. If the garment is long, ask for a taller person. You can change the face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice and Captions",
@@ -109,7 +109,7 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "When a Drop Cannot Wait on a Fitting",
+    "h2": "Show the Next Color Without a Fitting Day",
     "lead": "The next color can still be shown on a body when the fitting never happened. You skip the casting day and the invoice.",
     "items": [
       {
@@ -123,8 +123,8 @@
         "img": "n:guide:fx30-fashion-benefit-detail-r1"
       },
       {
-        "t": "Send Her to the Product Page",
-        "d": "Let the jacket turn once, then send her to the product page, so she sees the lining and where to buy. The turn is there to make the piece easier to want.",
+        "t": "Show the Lining on the Product Page",
+        "d": "Let the jacket turn once on the product page so the shopper sees the lining and where to buy. That turn makes the piece easier to want.",
         "img": "n:guide:fx30-fashion-benefit-review-r1"
       }
     ]
@@ -139,8 +139,8 @@
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "Instagram Fit Checks",
-        "d": "An outfit still, or a tall fit-check video, for the grid and for Stories.",
+        "t": "Instagram Outfit Photos",
+        "d": "An outfit photo, or a tall video of the clothes, for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
@@ -243,7 +243,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Photos of Every Side"
     },
     {
       "id": "model-photos",
@@ -280,7 +280,7 @@
         },
         {
           "t": "An Avatar From the Library",
-          "d": "Name the build in a few words and an AI avatar wears the hoodie. The library holds 53 AI actors."
+          "d": "Say the height and body shape in a few words, and an AI avatar wears the hoodie. The library holds 53 AI actors."
         },
         {
           "t": "Voice and Captions Included",

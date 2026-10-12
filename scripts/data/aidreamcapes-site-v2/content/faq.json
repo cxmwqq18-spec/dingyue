@@ -4,8 +4,8 @@
   "description": "AIVideosUGC FAQ: what you can make, photo upload tips, video lengths and sizes, credits, refunds, privacy and adding prices to ads. Find your answer here.",
   "h1": "AIVideosUGC FAQ: Answers Before You Start",
   "eyebrow": "Help center",
-  "lead": "AIVideosUGC FAQ answers on product videos, photos, credits, privacy, and using finished files in ads. The first line of each answer is the decision.",
-  "card": "Lengths, credits, actors, voice, captions, music, and publishing.",
+  "lead": "AIVideosUGC FAQ answers on product videos, photos, credits, privacy, and using finished files in ads. The first sentence of each answer is the part to act on.",
+  "card": "Check the length, the credits, the actor, the voice, and where you can post.",
   "secondary_keywords": [
     "how AI product videos work",
     "AI product photo questions",
@@ -15,7 +15,7 @@
   "faq": [
     {
       "q": "What is an AIVideosUGC product video?",
-      "a": "It is a product video made from your photo or a product link, with an AI actor, a spoken voice, music, and on-screen captions. Download it, or send it to TikTok or Meta. You pick the length and the frame before it runs."
+      "a": "It is a product video made from your photo or a product link, with an AI actor, a spoken voice, music, and on-screen captions. Download it, or send it to TikTok or Meta. You pick the length and the shape, such as 9:16, before it runs."
     },
     {
       "q": "Can I make a UGC-style product video?",
@@ -31,7 +31,7 @@
     },
     {
       "q": "What happens after I approve a job?",
-      "a": "The job runs against the credit charge shown on screen, and the file shows up in your account when it is ready. A failed job returns those credits on its own."
+      "a": "After you approve, the tool spends the credits shown on screen and puts the file in your account when it is ready. If the file fails, those credits come back."
     },
     {
       "q": "Can I start from a product page link?",
@@ -82,7 +82,7 @@
   ],
   "reasons": {
     "h2": "What You Can Do From Here",
-    "lead": "The help answers above sit on tools you can use today, from one product photo.",
+    "lead": "You can use these tools today, starting from one product photo.",
     "items": [
       {
         "icon": "Zap",
@@ -96,7 +96,7 @@
       },
       {
         "icon": "Coins",
-        "t": "Pay the Plan You Can Read",
+        "t": "See the Price Before You Start",
         "d": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns its credits."
       },
       {

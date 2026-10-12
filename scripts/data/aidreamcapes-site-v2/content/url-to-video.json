@@ -115,7 +115,7 @@
     },
     {
       "q": "How long does the render take?",
-      "a": "The render runs after you approve the script and the actor. You are not given a stopwatch promise. If it fails, the credits for that job come back."
+      "a": "There is no fixed time. The render starts after you approve the script and the actor. If it fails, the credits for that job come back."
     },
     {
       "q": "How do I turn a product listing into an ad?",
@@ -126,7 +126,7 @@
   "uses": [
     {
       "t": "Listing Videos",
-      "d": "The clip can name the size and the price already on a yoga-mat page, using that page's photo of the rolled mat."
+      "d": "The clip can name the size and the price already on the lunch box page, using that page's photo of the box."
     },
     {
       "t": "Product Demos",
@@ -134,11 +134,11 @@
     },
     {
       "t": "Paid Ad Videos",
-      "d": "A face-cream ad can use the page you already send people to. Captions sit in the file, so the claim can be read with the sound turned down."
+      "d": "A lunch box ad can use the page you already send people to. Captions sit in the file, so the claim can be read with the sound off."
     },
     {
       "t": "Social Feed Videos",
-      "d": "Use 9:16 so a pour of cold brew reads on a phone. The same file can go to a Shorts placement later if that is where it sells."
+      "d": "Use 9:16 so the lunch box is easy to see on a phone. The same file can go to a Shorts placement later if that is where it sells."
     }
   ],
   "visual": {
@@ -218,7 +218,7 @@
     "cta"
   ],
   "definition": {
-    "title": "What URL to Video Does",
+    "title": "What Is a URL to Video",
     "paras": [
       "You paste a public product page. AIVideosUGC reads the photo and the facts on it, then drafts a script, an actor, and a voice for you to approve.",
       "Edit the script, the captions, and the music before you download or publish. The person on screen is an AI actor. Lengths are 6, 10, 15, or 30 seconds, and frames are 9:16, 1:1, 16:9, 4:3, and 3:4."

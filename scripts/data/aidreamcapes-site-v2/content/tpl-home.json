@@ -4,7 +4,7 @@
   "description": "Turn one organizer photo into a before-and-after video of a messy drawer, shelf or closet turning neat. Tall 9:16 clips for TikTok and Reels.",
   "h1": "Home Product Videos That Show the Reset",
   "eyebrow": "Home video template",
-  "lead": "One drawer fix can sell the gray divider, without a walk through the whole kitchen. Pick a sorting scene on the wall and turn the listing photo into a home product video.",
+  "lead": "One drawer fix can sell the gray divider, and you skip filming a walk through the whole kitchen. Pick a sorting scene, then turn the listing photo into a home product video.",
   "secondary_keywords": [
     "organizer before and after video",
     "home organization video ad",
@@ -234,7 +234,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-1",
-          "label": "Lifestyle App Recommendation",
+          "label": "Creator Recommends a Phone App",
           "chips": [
             "apps"
           ],
@@ -315,7 +315,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Straight to Camera: Skin Lesson",
+          "label": "Skin Lesson Spoken to the Camera",
           "chips": [
             "education"
           ],
@@ -333,7 +333,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Opening: Home App Walkthrough",
+          "label": "Home App Opening Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -530,7 +530,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See all video templates"
     },
     "titles": {
       "m3": {
@@ -632,7 +632,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Product Videos From Every Angle"
     },
     {
       "id": "plat-tiktok",
@@ -675,12 +675,12 @@
         "icon": "PenLine"
       },
       {
-        "t": "No Hold on a Creator Calendar",
-        "d": "The drawer scene is ready when the sku is, including a divider you added this week. You are not waiting on a creator.",
+        "t": "No Wait on a Creator Calendar",
+        "d": "The drawer scene is ready when the new divider is, including one you added this week. You are not waiting on a creator.",
         "icon": "Calendar"
       },
       {
-        "t": "Already One Drawer",
+        "t": "Start From One Drawer",
         "d": "You choose the divider and the offer, because the scene is already one drawer going neat.",
         "icon": "LayoutGrid"
       }
@@ -710,7 +710,7 @@
         },
         {
           "t": "A Script for the One Change",
-          "d": "The AI video agent can draft a line about that single drawer, and you can edit the words."
+          "d": "A short line about that one drawer can be drafted for you, and you can edit the words."
         },
         {
           "t": "An AI Avatar Slides It In",

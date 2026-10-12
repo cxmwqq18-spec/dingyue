@@ -44,7 +44,7 @@
   "faq": [
     {
       "q": "What does a beauty video template include?",
-      "a": "It is a sink-side ad shape for a cleanser you already photographed. An AI actor, a voice, and a script come with that shape. You are not building a morning routine from an empty timeline."
+      "a": "It is a sink-side ad shape for a cleanser you already photographed. An AI actor, a voice, and a script come with that shape. You are not building the morning routine from a blank page."
     },
     {
       "q": "How does a beauty video template work?",
@@ -52,7 +52,7 @@
     },
     {
       "q": "Why use this beauty template instead of booking a creator?",
-      "a": "Your usual creator is booked past the launch week. You can still change the shade name and cut a second mascara version while that booking stays out."
+      "a": "You can still publish the launch ad when your usual creator is booked. You can change the shade name and cut a second mascara version while that booking stays out."
     },
     {
       "q": "Who should use a beauty template?",
@@ -72,7 +72,7 @@
     },
     {
       "q": "Where do these beauty clips get posted?",
-      "a": "Choose the shape for the placement you already buy. A tall 9:16 suits TikTok, a square 1:1 suits a Facebook feed, and 16:9, 4:3, or 3:4 cover the other slots. Instagram, YouTube, and LinkedIn can take the file you download, or you can publish from this project."
+      "a": "Choose the shape for the place you already post. A tall 9:16 suits TikTok, a square 1:1 suits a Facebook feed, and 16:9, 4:3, or 3:4 cover the other slots. Instagram, YouTube, and LinkedIn can take the file you download, or you can send it from AIVideosUGC."
     },
     {
       "q": "What does a beauty clip cost?",
@@ -80,7 +80,7 @@
     },
     {
       "q": "Can the file run in paid ads and client work?",
-      "a": "Yes. A blush clip can run as a paid ad or go to a client as a delivery. The file is clean of any overlaid mark."
+      "a": "Yes. A blush clip can run as a paid ad or go to a client as a delivery. The download has no watermark."
     },
     {
       "q": "Why use a beauty template instead of building a scene?",
@@ -211,7 +211,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Movie-style Watch Close-up",
+          "label": "Studio-Style Watch Close-Up",
           "chips": [
             "accessories"
           ],
@@ -247,7 +247,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Live-style Reaction: App",
+          "label": "Live App Reaction",
           "chips": [
             "apps"
           ],
@@ -534,14 +534,14 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See More Templates"
     },
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Choose a Skincare Routine Video"
+        "h2": "Pick a Skincare Card"
       },
       "faq": {
         "h2": "Frequently Asked Questions"

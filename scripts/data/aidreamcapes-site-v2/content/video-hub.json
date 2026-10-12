@@ -26,8 +26,8 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "A shop takes the listing photo and gets a clip a buyer can watch. Nobody on the team has to stand in for that product. Pick an AI actor, clone a voice you have rights to in the languages you sell in, and publish the file to Meta or TikTok.",
-    "You can edit the clip before you download it. Choose an AI actor, keep the approved line, and use the language they sell in. Downloads have no watermark, and commercial use is on paid plans."
+    "The listing photo becomes a clip a buyer can watch, with an AI actor and a voice you are allowed to use.",
+    "Edit the line, then download a file with no watermark. Paid plans include commercial use."
   ],
   "steps_h2": "How to Create AI Videos in 3 Simple Steps",
   "steps_lead": "You stay in the editor until the bottle file is downloaded.",
@@ -75,7 +75,7 @@
       "a": "No. You work in the browser. No extra software is required. Music and captions are available in the same place as the render."
     },
     {
-      "q": "Can the clip show a person speaking the line?",
+      "q": "Can I generate a video with AI from a product photo?",
       "a": "Yes. Pick an AI actor, choose the language and the voice, and the mouth follows the line you approved. You can adjust the delivery before you download."
     },
     {
@@ -87,7 +87,7 @@
       "a": "Yes. Shops run them as the creative in a paid campaign on the networks they already buy. You still approve the claim before the file leaves the account."
     },
     {
-      "q": "Can the product's web address start the clip?",
+      "q": "Can I start a video from a product page URL?",
       "a": "Yes. Paste a public product page and the photo on it becomes the product in the clip. You still approve the script and the actor before the render."
     },
     {
@@ -99,7 +99,7 @@
       "a": "Yes. Use a square or a tall frame, with an AI actor if the ad needs a face. A Reel or a TikTok cut can use 9:16. The download has no watermark."
     },
     {
-      "q": "What should an ecommerce ad include?",
+      "q": "Can I make ecommerce ads with this AI video generator?",
       "a": "One product, one claim, and a frame that fits the placement. The spoken line should match the listing, and the actor should look like the buyer you are paying to reach."
     },
     {
@@ -178,8 +178,8 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Formats",
-      "h2": "Product Video Formats You Can Make",
+      "eyebrow": "Five ways to show the product",
+      "h2": "Five Product Videos From One Photo",
       "lead": "Pick the shape that matches the job, then bring your own photo.",
       "items": [
         {
@@ -192,7 +192,7 @@
         },
         {
           "t": "Place the Product in a Lifestyle Scene",
-          "d": "A perfume bottle can sit on a bedroom dresser instead of a white sweep, so the buyer sees the size next to ordinary objects."
+          "d": "A perfume bottle can sit on a bedroom dresser instead of a plain white background, so the buyer sees the size next to ordinary objects."
         },
         {
           "t": "Choose an Actor for the Buyer",
@@ -698,10 +698,10 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to Create AI Videos in 3 Simple Steps"
+        "h2": "How to Make a Product Video in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Recreate a Product Clip You Like",
+        "h2": "Start From a Clip You Already Like",
         "lead": "Swap in your product, keep the kind of scene, and start a clip from your own photo."
       },
       "faq": {

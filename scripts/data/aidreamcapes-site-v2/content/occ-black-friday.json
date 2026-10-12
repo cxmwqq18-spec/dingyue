@@ -47,15 +47,15 @@
     },
     {
       "q": "Do I need a separate file for each placement?",
-      "a": "Yes. Each video frame is its own run: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. A product photo stays square."
+      "a": "Yes. Make a separate video for each placement: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4."
     },
     {
       "q": "Can I put an end time on the sale ad?",
       "a": "Yes. Set it in the editor and move it later if you need to. It stays off the product picture, so a new deadline can keep the same scene."
     },
     {
-      "q": "Can shop tools request an ad if the API is not a separate product?",
-      "a": "The API is not a second login. Your tools can ask for a sale ad from a product link. You approve the file before anyone else sees it."
+      "q": "Can my store tools start a holiday ad from a product link?",
+      "a": "Yes. A connected store tool can request a sale ad from a product link. You approve the file before anyone else sees it."
     }
   ],
   "examples": {
@@ -183,7 +183,7 @@
           "kind": "photo"
         }
       ],
-      "button": "Make a Black Friday sale photo"
+      "button": "Make the holiday video"
     },
     "uses": [],
     "input": [
@@ -215,7 +215,7 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Create Black Friday Banners in 3 Simple Steps"
+        "h2": "How to Make a Festive Holiday Video in 3 Simple Steps"
       },
       "m3": {
         "h2": "Choose a Black Friday Ad Creative Scene"

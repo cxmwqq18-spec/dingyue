@@ -201,7 +201,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "Close-up unboxing: makeup tools",
+          "label": "Close-Up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -273,7 +273,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "Getting-ready unboxing: knitwear",
+          "label": "Getting-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -291,7 +291,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "Full spin: linen shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -318,7 +318,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Face to camera: skin lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -327,7 +327,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "First-person find: court gear",
+          "label": "First-Person Find: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -336,7 +336,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Opening: home app walkthrough",
+          "label": "Opening: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -345,7 +345,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance opening: phone demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -363,7 +363,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "First sip: citrus drink",
+          "label": "First Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -399,7 +399,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry bowl first bite",
+          "label": "Berry Bowl First Bite",
           "chips": [
             "health-fitness"
           ],
@@ -426,7 +426,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver signet close-up",
+          "label": "Silver Signet Close-Up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -471,7 +471,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell powder reveal",
+          "label": "Kettlebell Powder Reveal",
           "chips": [
             "sports-gym"
           ],
@@ -480,7 +480,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Evening kitchen appliance demo",
+          "label": "Evening Kitchen Appliance Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -498,7 +498,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump moisturizer routine",
+          "label": "Pump Moisturizer Routine",
           "chips": [
             "ugc"
           ],
@@ -516,7 +516,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint face mist opening",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -533,7 +533,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more TikTok scenes"
     },
     "input": [],
     "outputs": [],
@@ -704,7 +704,7 @@
     },
     {
       "t": "Frames for More Than TikTok",
-      "d": "A Facebook placement can take the square, and a YouTube pre-roll can take 16:9. TikTok still wants 9:16, and 4:3 or 3:4 is there when the placement asks. You can publish each size from the connected account."
+      "d": "A Facebook placement can take the square, and a wide YouTube ad can take 16:9. TikTok still wants 9:16, and 4:3 or 3:4 is there when the placement asks. You can publish each size from the connected account."
     }
   ],
   "reasons": {

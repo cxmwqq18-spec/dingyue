@@ -4,7 +4,7 @@
   "description": "Build AI UGC video ads for YouTube from one steamer photo. Open on the blue shirt, skip the studio, then download a tall file you can post now.",
   "h1": "AI UGC Video Ads Built for YouTube",
   "eyebrow": "YouTube Shorts",
-  "lead": "Open a YouTube Shorts ad on the white steamer and the blue shirt, not on a logo, so the first second earns the watch.",
+  "lead": "Open a YouTube Shorts ad on the white steamer and the blue shirt, not on a logo, so people keep watching past the first second.",
   "card": "YouTube Shorts ads from a photo or a product link, in the tall shape Shorts uses.",
   "secondary_keywords": [
     "YouTube Shorts video ads",
@@ -18,7 +18,7 @@
       "a": "It is a tall creator-style Short. A hand can set the steamer on the shirt or give one reason to try it, with an [AI actor](/ai-video-generation/ai-actors) you can revoice. You pick the language, and you do not wait on a creator."
     },
     {
-      "q": "Can a YouTube Shorts ad earn a longer watch?",
+      "q": "Can a YouTube Shorts ad get people to watch longer?",
       "a": "A steamer on a blue shirt is easier to stay with than a logo opening. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "q": "Does a Short start from a product link?",
-      "a": "Yes. The product page can start the YouTube Shorts ad, and the steamer photo can start it too. If you also need the wide player ad, render that shape on its own. Do not crop the Short and call it a player ad."
+      "a": "Yes. The product page can start the YouTube Shorts ad, and the steamer photo can start it too. If you also need the wide video that plays before another YouTube video, make that shape as its own file. Do not crop the Short and call it that wide video."
     },
     {
       "q": "Which frame should a Shorts ad use?",
@@ -130,7 +130,7 @@
     },
     {
       "t": "New Version When One Fades",
-      "d": "When an angle goes quiet, you can make a new Short that starts with the steamer on the shirt, without booking another shoot."
+      "d": "When fewer people watch that opening, you can make a new Short that starts with the steamer on the shirt, without booking another shoot."
     },
     {
       "t": "Use the Photo You Have",
@@ -182,12 +182,12 @@
       },
       {
         "t": "A Local Voice",
-        "d": "Buyers can hear the line in a Texas accent, not a flat read. That is the voice you pick for this steamer ad.",
+        "d": "Buyers can hear the steamer line in a Texas accent, not a voice with no local sound. You pick that voice for this ad.",
         "icon": "Mic"
       },
       {
         "t": "Test the Next Opening",
-        "d": "You can render another Short with a new hook, script, avatar, or voiceover, then keep the opening people stay with. Nothing here picks a winner for you.",
+        "d": "You can make another Short with a new first line, script, face, or voice, then keep the one people watch. Nothing here picks a winner for you.",
         "icon": "Timer"
       }
     ]
@@ -198,37 +198,37 @@
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "label": "AI TikTok Ads Generator",
+        "label": "Make the TikTok version",
         "d": "A tall TikTok ad from the same steamer photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
-        "label": "AI Instagram Ads",
+        "label": "Make the Instagram version",
         "d": "A square still or a tall steamer video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "label": "AI Facebook Ad Generator",
+        "label": "Make the Facebook version",
         "d": "A square Facebook photo, or a tall steamer video that fills the screen.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "Amazon Product Photos",
-        "label": "Amazon Product Photos",
+        "label": "Make the Amazon photos",
         "d": "A white main image, a steamer close-up, and an in-use view for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
-        "label": "Shopify Product Photos",
+        "label": "Make the Shopify photos",
         "d": "Square steamer photos for the page and the collection, and a video you add in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "All Channel Pages",
-        "label": "All Channel Pages",
+        "label": "See every channel",
         "d": "Open the full channel list and choose where the next steamer file runs.",
         "href": "/ai-video-generation"
       }

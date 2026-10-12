@@ -40,7 +40,7 @@
     },
     {
       "q": "Can I use the jewelry ad in paid campaigns?",
-      "a": "Yes. Downloads have no watermark, so you can run them as paid ads and on your listings. Compare the piece in the file with the one you ship before you publish."
+      "a": "Yes. You can place the file in paid campaigns and on your listings. It has no watermark. Compare the piece in the file with the one you ship before you publish."
     },
     {
       "q": "Can the ad show earrings and a bracelet as well?",
@@ -48,7 +48,7 @@
     },
     {
       "q": "Can I start from a product link or my shop software?",
-      "a": "Yes. Paste the product page, or send it from your shop software through the API. Ask for the bracelet on a wrist in one version and the necklace at the collarbone in another."
+      "a": "Yes. Paste the product page, or send it from the shop software you already use. Ask for the bracelet on a wrist in one version and the necklace at the collarbone in another."
     }
   ],
   "templates_lead": "Pick a jewelry UGC template where an actor wears the ring, necklace, earring, or bracelet.",
@@ -103,7 +103,7 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions About Jewelry and Accessory Photos"
+        "h2": "Questions About Jewelry UGC Ads"
       }
     }
   },
@@ -135,7 +135,7 @@
     }
   ],
   "reasons": {
-    "h2": "A Worn Frame Before You Book a Model",
+    "h2": "Why Jewelry Ads Can Skip the Model",
     "lead": "A worn frame comes from the photo already on the listing, so the next piece does not wait on a studio day.",
     "items": [
       {
@@ -282,7 +282,7 @@
         "Square"
       ]
     ],
-    "cta": "Make my jewelry photo"
+    "cta": "Make my jewelry ad"
   },
   "blockOrder": [
     "hero",
@@ -294,7 +294,7 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is AI UGC for Jewelry Brands?",
+    "title": "What Is a Jewelry UGC Ad?",
     "paras": [
       "AI UGC for a jewelry brand is a spoken ad. An AI actor wears the ring, necklace, earring, or bracelet and delivers a line you approve before it posts.",
       "You start from a photo of the piece you ship. The file can go to a phone feed or the product page, in 9:16, 1:1, 16:9, 4:3, or 3:4."

@@ -3,8 +3,8 @@
   "title": "AI Jewelry Product Photography | AIVideosUGC",
   "description": "Create AI jewelry product photography that keeps every stone. Clear the cloth, add one shadow, batch that crop with the API, and download the file you approve.",
   "h1": "AI Jewelry Product Photography With Shadows",
-  "eyebrow": "Model photo template",
-  "lead": "Realistic jewelry photos keep every stone you photographed. Clear the cloth, put one shadow under the metal, and run that crop across the tray. A worn shot is there when you need the length.",
+  "eyebrow": "Your piece, shown worn",
+  "lead": "AI jewelry product photography keeps every stone you photographed. Clear the cloth, put one shadow under the metal, and use that same frame on the whole tray. A worn shot is there when you need the length.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "How can I check a jewelry photo before publishing?",
-      "a": "Put the download next to the shot you took and read the engraving. A prong that moved means that file stays off the site. On a large upload, the API can hold back frames that fail the same look."
+      "a": "Put the download next to the shot you took and read the engraving. A prong that moved means that file stays off the site. On a large upload, photos that fail that look can be held back."
     },
     {
       "q": "Can I try the API on one piece before the whole catalog?",
@@ -118,8 +118,8 @@
       "sourceHint": "Show the full necklace, clasp, and edges."
     },
     "picker": {
-      "title": "Short video ads, not worn jewelry photos",
-      "lead": "Each card is a short video ad. To show your piece worn, upload the jewelry photo above, then compare the clasp, stones, and edges with your source.",
+      "title": "Scenes for Your Jewelry Photo",
+      "lead": "Upload your piece above to see it worn. Use these scenes as the setting, then compare the clasp and stones with your photo.",
       "chips": [
         {
           "id": "accessories",
@@ -533,7 +533,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "Browse all scene types"
     },
     "titles": {
       "m2": {
@@ -541,19 +541,19 @@
       },
       "m3": {
         "h2": "Short video ads, not worn jewelry photos",
-        "lead": "Each card is a short video ad. To show your piece worn, upload the jewelry photo above, then compare the clasp, stones, and edges with your source."
+        "lead": "Upload the jewelry photo first. The scene can change, and you still check the clasp, stones, and edges."
       },
       "m4": {
-        "h2": "Use jewelry photos on listings and social feeds"
+        "h2": "Use Jewelry Photos on Listings and Social Feeds"
       },
       "m5": {
-        "h2": "Start with a clear photo of the jewelry piece"
+        "h2": "Start With a Clear Photo of the Piece"
       },
       "m6": {
-        "h2": "Choose a jewelry model photo format"
+        "h2": "Choose a Jewelry Model Photo Format"
       },
       "m7": {
-        "h2": "Add jewelry details after download"
+        "h2": "Add Jewelry Details After Download"
       },
       "faq": {
         "h2": "Questions About AI Jewelry Model Photos"
@@ -581,11 +581,11 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Photos From Every Angle"
     },
     {
       "id": "tpl-color",
-      "label": "Color Variants"
+      "label": "Color Variant Photos"
     },
     {
       "id": "ind-jewelry-accessories",
@@ -619,13 +619,13 @@
     "title": "Realistic Jewelry Photos Need a Careful Edit",
     "paras": [
       "A clasp, a link, or a stone has to stay recognizable, and the shot you already have is the start. Clear the cloth, keep the metal color, and put one shadow under the piece. A fine chain still needs that care.",
-      "A neck view shows how far a pendant drops. A plain desk works when the listing does not need a person for scale. The API can run the next photo in that same look."
+      "A neck view shows how far a pendant drops. A plain desk works when the listing does not need a person for scale. The next photo can use that same look."
     ]
   },
   "more_sections": [
     {
       "eyebrow": "Try one piece",
-      "h2": "Test the API on a Single Photo",
+      "h2": "Try One Photo Before the Whole Tray",
       "lead": "One piece is enough to see the edit before a larger run.",
       "items": [
         {
@@ -676,8 +676,8 @@
         "icon": "Sparkles"
       },
       {
-        "t": "Every SKU Shares a Crop",
-        "d": "The next photo can use the square you chose, with a shadow sitting under the piece rather than floating beside it. Your catalog can hand the next SKU to the API.",
+        "t": "Every Piece Shares One Frame",
+        "d": "The next photo can use the square you chose, with a shadow under the piece rather than floating beside it. Your catalog can send the next piece in that same frame.",
         "icon": "Layers"
       }
     ]
@@ -689,7 +689,7 @@
     },
     {
       "t": "A Shadow Under the Metal",
-      "d": "A soft shadow sits under the metal so a diamond table or a platinum edge stays readable. The gold keeps the color from your photo."
+      "d": "A soft shadow sits under the metal so the top of a diamond and a platinum edge stay easy to see. The gold keeps the color from your photo."
     },
     {
       "t": "The Heirloom Stays as Shot",
@@ -705,16 +705,16 @@
     },
     {
       "t": "Batch the Whole Tray",
-      "d": "When one brooch looks right, that crop can run across the whole tray. The API can start the next piece from your catalog."
+      "d": "When one brooch looks right, that same frame can run across the whole tray. The next piece can start from your catalog."
     }
   ],
   "benefits_h2": "Jewelry Edits for the Whole Tray",
   "benefits_lead": "Clear the cloth, set one shadow, and run that crop across the tray so the piece still looks like the photo you took.",
   "closing": {
-    "h2": "Hold a Quality Bar on Every Photo",
+    "h2": "Check Every Photo Before It Goes Up",
     "paras": [
       "If a link fused or a prong shifted, do not put that file on the site.",
-      "A large upload can take the same look through the API, so the rest of the catalog matches the photo you liked."
+      "A large upload can take the same look, so the rest of the catalog matches the photo you liked."
     ]
   }
 }

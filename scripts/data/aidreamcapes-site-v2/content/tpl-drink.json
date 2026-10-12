@@ -44,7 +44,7 @@
   "faq": [
     {
       "q": "What is a food and drink ad template?",
-      "a": "A food and drink template is a ready pour or sip built from your package photo. An AI actor can hold the glass, and a voice can read the script you write. An agent can draft that script if you would rather not write it."
+      "a": "A food and drink template is a ready pour or sip built from your package photo. An AI actor can hold the glass, and a voice can read the script you write. You can ask for a draft line if you would rather not write it."
     },
     {
       "q": "How does a drink template become a video?",
@@ -68,7 +68,7 @@
     },
     {
       "q": "Can I use my can photo, a clip, and a logo?",
-      "a": "Yes. The package photo on your listing is the right start, logo and all. You can add up to 7 reference photos, and a clip of the tab opening can supply the motion. A batch of flavors can go through the API."
+      "a": "Yes. The package photo on your listing is the right start, logo and all. You can add up to 7 reference photos, and a clip of the tab opening can supply the motion. Your shop software can send a batch of flavors."
     },
     {
       "q": "Which placements and sizes fit a pour ad?",
@@ -662,12 +662,12 @@
       },
       {
         "t": "Credits Instead of a Shoot Fee",
-        "d": "New cuts spend credits on whichever paid plan fits your volume. What you do not pay a crew can stay on reaching buyers.",
+        "d": "New cuts spend credits on the paid plan that fits your volume. Money you do not spend on a crew can go toward reaching buyers.",
         "icon": "Coins"
       },
       {
         "t": "More Than One Cut to Test",
-        "d": "Render a second hook and a second language from the same bottle photo. Keep the cut you want to spend on, and drop the one you do not.",
+        "d": "Render a second opening and a second language from the same bottle photo. Keep the cut you want to spend on, and drop the one you do not.",
         "icon": "Layers"
       },
       {
@@ -710,12 +710,12 @@
           "d": "The pour can start from the bottle photo already on the product page. Paste that link and the scene uses the package there."
         },
         {
-          "t": "A Script for the Sip",
+          "t": "A Draft Line for the Sip",
           "d": "The AI video agent can draft a line about the pour, and you can change any word in it."
         },
         {
           "t": "An AI Avatar Holds the Glass",
-          "d": "An AI avatar can hold the glass or take the sip, so you do not book a creator for the pour. Add B-roll of the bottle alone when the label should fill the frame."
+          "d": "An AI avatar can hold the glass or take the sip, so you do not book a creator for the pour. Add a shot of the bottle alone when the label should fill the frame."
         },
         {
           "t": "Music Under the Pour",
@@ -735,7 +735,7 @@
         },
         {
           "t": "An API for the Whole Line",
-          "d": "Your shop software can send bottle photos through the API when a flavor line needs many pours."
+          "d": "Your shop software can send bottle photos when a flavor line needs many pours."
         }
       ]
     }

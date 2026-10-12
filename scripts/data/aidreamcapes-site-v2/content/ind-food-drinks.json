@@ -19,16 +19,16 @@
       "a": "Do not rely on the image for small print. Allergens, ingredients, and nutrition facts should always come from the real label."
     },
     {
-      "q": "Can I turn a can photo into a pour video?",
+      "q": "Can I turn a bottle photo into a pour video?",
       "a": "Yes. Upload the citrus bottle or paste a product link, then describe the glass, the ice, and the color of the liquid. Name the texture in plain words so the pour stays close to the real drink."
     },
     {
       "q": "How long should a food clip be, and what does it cost?",
-      "a": "6 or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits. A failed job returns its credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "A 6-second pour is 24 credits, and 6 or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. 10 seconds is 40 credits, 15 is 60, and 30 is 120. A still image is 24 credits. A failed job returns its credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Should I spray the can so it looks cold?",
-      "a": "No. Ask for condensation in the description, then photograph the dry can in side window light with fingerprints wiped off."
+      "q": "Should I spray the bottle so it looks cold?",
+      "a": "No. Ask for condensation in the description, then photograph the dry bottle in side window light with fingerprints wiped off."
     },
     {
       "q": "Can I run the clips as paid food and drink ads?",
@@ -277,7 +277,7 @@
       "lead": "A spoken line can ride with the citrus pour, so the ad is ready to post.",
       "items": [
         {
-          "t": "A Product Link Opens the Pour",
+          "t": "Start the Pour From a Product Link",
           "d": "A product page is enough to start a citrus pour, a cookie bite, or a pouch on the shelf."
         },
         {

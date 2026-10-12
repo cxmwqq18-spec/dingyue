@@ -4,7 +4,7 @@
   "description": "Make AI UGC for home decor from a photo you own. Put the vacuum, the lamp, or the pillows in the room, then download a clip you can post today.",
   "h1": "AI UGC for Home Decor, Shown in the Room",
   "eyebrow": "Home and living",
-  "lead": "Turn one home decor photo into an AI UGC clip in the room it belongs in. A wool throw can leave the white sweep and sit on the bed a shopper can picture.",
+  "lead": "Turn one home decor photo into an AI UGC clip in the room it belongs in. A pillow can leave the plain white backdrop and sit on the bed.",
   "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
     "home decor product videos",
@@ -114,7 +114,7 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions About AI Room Scene Product Photos"
+        "h2": "Questions About Home Decor AI UGC"
       }
     }
   },

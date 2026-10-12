@@ -3,7 +3,7 @@
   "title": "AI Clothing Video Templates for Brands | AIVideosUGC",
   "description": "Clothing brands use these AI video templates to turn a flat garment photo into a clip you can post. Upload the piece, skip the model booking, and download.",
   "h1": "Clothing Video Templates Your Brand Can Post",
-  "eyebrow": "Model photo template",
+  "eyebrow": "Clothing video template",
   "lead": "Turn a flat photo of the olive bomber into a clothing video your shop can post, with no model booking. Choose an AI avatar, and the clip can still carry a spoken line.",
   "secondary_keywords": [
     "clothing on model from flat lay",
@@ -24,7 +24,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download the on-model bomber photo with a voiceover and on-screen captions. You get a shape that fits the channel you sell on."
+      "d": "Download the on-model bomber video with a voiceover and on-screen captions. You get a shape that fits the channel you sell on."
     }
   ],
   "maker": {
@@ -51,7 +51,7 @@
     },
     {
       "q": "How does a clothing template become an ad?",
-      "a": "Upload the bomber photo and name the shopper, such as someone buying a lighter layer. The draft comes back as an on-model file you can post. Your software can send that photo through the API."
+      "a": "Upload the bomber photo and name the shopper, such as someone buying a lighter layer. The draft comes back as an on-model file you can post. Your shop software can send that photo for you."
     },
     {
       "q": "Which kinds of clothing can I start with?",
@@ -110,7 +110,7 @@
     },
     "picker": {
       "title": "Browse Video Templates by Category",
-      "lead": "Each card is a tall 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem, and color against the piece.",
+      "lead": "Each card is a tall 9:16 clothing video. Use the upload above, then check the collar, hem, and color against the piece.",
       "chips": [
         {
           "id": "accessories",
@@ -192,7 +192,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "Close-up unboxing: makeup tools",
+          "label": "Close-Up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -264,7 +264,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "Getting-ready unboxing: knitwear",
+          "label": "Getting-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -282,7 +282,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "Full spin: linen shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -309,7 +309,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Face to camera: skin lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -318,7 +318,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "First-person find: court gear",
+          "label": "First-Person Find: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -327,7 +327,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Opening: home app walkthrough",
+          "label": "Opening: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -336,7 +336,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance opening: phone demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -354,7 +354,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "First sip: citrus drink",
+          "label": "First Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -390,7 +390,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry bowl first bite",
+          "label": "Berry Bowl First Bite",
           "chips": [
             "health-fitness"
           ],
@@ -417,7 +417,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver signet close-up",
+          "label": "Silver Signet Close-Up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -462,7 +462,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell powder reveal",
+          "label": "Kettlebell Powder Reveal",
           "chips": [
             "sports-gym"
           ],
@@ -471,7 +471,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Evening kitchen appliance demo",
+          "label": "Evening Kitchen Appliance Demo",
           "chips": [
             "tech-electronics"
           ],
@@ -489,7 +489,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump moisturizer routine",
+          "label": "Pump Moisturizer Routine",
           "chips": [
             "ugc"
           ],
@@ -507,7 +507,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint face mist opening",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -532,14 +532,14 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Make a Garment on Model Photo in 3 Simple Steps"
+        "h2": "How to Make a Clothing Video in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Browse Video Templates by Category",
-        "lead": "Each card is a tall 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem, and color against the piece."
+        "h2": "Clothing Video Scenes You Can Open",
+        "lead": "Each card is a tall 9:16 clothing video. Upload the garment, then check the collar, hem, and color."
       },
       "faq": {
-        "h2": "Questions About AI Virtual Try-On for Clothing"
+        "h2": "Questions About Clothing Video Templates"
       }
     }
   },
@@ -664,7 +664,7 @@
           "d": "Buyers hear a spoken line in their own language, built from the bomber photo you already have."
         },
         {
-          "t": "A Script for the Hook",
+          "t": "A Script for the Opening Line",
           "d": "One sentence about the bomber gets you a drafted opening line, and you can rewrite any word."
         },
         {

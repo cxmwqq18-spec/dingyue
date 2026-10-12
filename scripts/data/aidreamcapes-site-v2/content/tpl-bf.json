@@ -86,7 +86,7 @@
     },
     {
       "q": "Can I start from a product link or my own software?",
-      "a": "Yes. Paste a product page link for a script and a voice cloned from one you may use. When many products share the sale setup, run them together, or start jobs from your own software through the API. Another language can reuse the same photo."
+      "a": "Yes. Paste a product page for a script and a cloned voice you are allowed to use. When many products share the sale setup, run them together, or start jobs from your shop software. Another language can reuse the same photo."
     }
   ],
   "visual": {
@@ -536,14 +536,14 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more Black Friday scenes"
     },
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Black Friday Template Questions"
       },
       "m3": {
         "h2": "Choose a Scene for a Black Friday Sale Video"
@@ -691,7 +691,7 @@
       {
         "t": "One Sale Look Across the Shop",
         "icon": "Palette",
-        "d": "Sale posts can match across the shop when they reuse one setup. You can edit the wording, try another language, or start the next product. The API is not a second plan. Your shop system starts the next product from this account."
+        "d": "Sale posts can match across the shop when they reuse one setup. You can edit the wording, try another language, or start the next product from this account."
       }
     ]
   }

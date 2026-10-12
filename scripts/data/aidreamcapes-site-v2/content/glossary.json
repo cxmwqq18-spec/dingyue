@@ -4,7 +4,7 @@
   "description": "Plain definitions of AI UGC and digital marketing terms, from video ads to product photos. Open a term, follow the link, and make the photo or video.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
   "eyebrow": "Glossary",
-  "lead": "Plain definitions for the photo, video, and ad words you will meet here. Open a term when an ad account uses it, follow the link, and make the file.",
+  "lead": "Plain AI UGC definitions for the photo, video, and ad words you will meet here. Open a term, follow the link, and make the file.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -21,7 +21,7 @@
     },
     {
       "term": "Aspect ratio",
-      "definition": "Aspect ratio is how wide the frame is next to its height. Pick 9:16 for a tall phone, or 1:1 for a square. Use 16:9 for a wide screen. Use 4:3 when the frame is a bit wide, and 3:4 when it is a bit tall. A product photo uses the square. Choose the placement's shape, then check the edges after you download.",
+      "definition": "Aspect ratio is how wide the frame is next to its height. Pick 9:16 for a tall phone, or 1:1 for a square. Use 16:9 for a wide screen, 4:3 when the frame is a bit wide, and 3:4 when it is a bit tall. Choose the shape of the post, then check the edges after you download.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "video-hub"

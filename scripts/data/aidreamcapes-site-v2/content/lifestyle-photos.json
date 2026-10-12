@@ -233,10 +233,10 @@
         "h2": "Questions About AI Lifestyle Product Photos"
       },
       "m5": {
-        "h2": "Start with a clear product photo"
+        "h2": "Start With a Clear Product Photo"
       },
       "m6": {
-        "h2": "Download a square lifestyle product photo"
+        "h2": "Download a Square Lifestyle Photo"
       }
     },
     "input": [
@@ -260,12 +260,12 @@
       {
         "ref": "n:guide:b2f10-lifestyle-photos-output0-r1",
         "frame": "1:1",
-        "label": "Market carry scene"
+        "label": "Market Carry Scene"
       },
       {
         "ref": "n:guide:rx2-lifestyle-market-man",
         "frame": "1:1",
-        "label": "Farm stand shopping scene"
+        "label": "Farm Stand Shopping Scene"
       }
     ]
   },

@@ -73,7 +73,7 @@
       "a": "Yes. Each person agrees first. The result is not a passport or any other identity document. You may put the shop mark on the intro. Faces still come only from approved photos, and a clip filmed at work can sit under that intro."
     },
     {
-      "q": "Which placements and sizes fit the intro?",
+      "q": "Which sites and sizes fit the intro?",
       "a": "Square portraits stay on the site, and the intro can go to LinkedIn, a Story, YouTube, or an embed. LinkedIn is comfortable at 1:1, a Story wants 9:16, and an embed can be 16:9. Use 4:3 or 3:4 for a banner. Lengths are 6, 10, 15, or 30 seconds. You can publish from a connected account."
     },
     {
@@ -535,7 +535,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more templates"
     },
     "uses": [],
     "input": [],
@@ -546,8 +546,8 @@
         "h2": "Frequently Asked Questions"
       },
       "m3": {
-        "h2": "Browse Templates by Category",
-        "lead": "Open a scene to turn the same photo into a short video ad. For a square team headshot, use the upload above."
+        "h2": "Choose a Video Scene",
+        "lead": "Open a scene when you want a short video. For the staff photo, use the headshot upload above."
       },
       "m2": {
         "h2": "How to Make Team Headshots in 3 Simple Steps"
@@ -661,7 +661,7 @@
   "definition": {
     "title": "What Is a Team Portrait Template?",
     "paras": [
-      "A team portrait template gives a whole staff page one backdrop, one crop, and one light, so everyone looks like they stood in the same room. Each portrait starts from a photo that person approved.",
+      "A team portrait template gives a whole staff page one backdrop, one crop, and one light. Everyone looks like they stood in the same room. Each portrait starts from a photo that person approved.",
       "The portraits are ready for a site or a deck. Names stay in text beside the image, so a new job title does not force a new photo."
     ]
   },
@@ -680,8 +680,8 @@
         "icon": "Coins"
       },
       {
-        "t": "More Than One Cut to Test",
-        "d": "Render the row once, then a second intro line for a different audience. Keep the cut you want to publish.",
+        "t": "More Than One Version to Test",
+        "d": "Make the row once, then a second intro line for a different audience. Keep the version you want to publish.",
         "icon": "Layers"
       },
       {
@@ -725,11 +725,11 @@
         },
         {
           "t": "A Script for the Intro",
-          "d": "The AI video agent can draft one spoken line about the team, and you can edit it."
+          "d": "The tool can draft one spoken line about the team, and you can edit it."
         },
         {
           "t": "An AI Avatar Introduces Them",
-          "d": "A separate AI avatar can introduce the team while each portrait stays the person in the photo. Add B-roll of the shop or the product if the intro needs it."
+          "d": "A separate AI avatar can introduce the team while each portrait stays the person in the photo. Add extra shop or product clips if the intro needs them."
         },
         {
           "t": "Music Under the Intro",

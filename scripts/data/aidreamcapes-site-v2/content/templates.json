@@ -19,7 +19,7 @@
     },
     {
       "q": "How does a product ad template work?",
-      "a": "You add the product photo or the product link, then set the one line a buyer would actually say. When the frame shows your serum, an AI actor speaks it. Save the clip, or post it from this project."
+      "a": "You add the product photo or the product link, then set the one line a buyer would actually say. When the frame shows your serum, an AI actor speaks it. Save the clip, or post it to your shop."
     },
     {
       "q": "Why use a template instead of hiring a creator?",
@@ -34,16 +34,16 @@
       "a": "Yes. Start with a watch photo and the three steps above. If a caption runs long, shorten it in the editor, or drop a song under the voice."
     },
     {
-      "q": "Which kinds of shops have templates here?",
-      "a": "Use the category buttons on the wall. You will find accessories, apparel, apps, beauty and personal care, and clothing. E-commerce, education, explainers, financial services, food and beverage, and footwear are there too. So are health and fitness, jewelry, kids and toys, pets, sports, tech, UGC creator-style ads, and viral layouts."
+      "q": "Which industries are these product ad templates for?",
+      "a": "Accessories, apparel, beauty, clothing, food, and home goods all have layouts here, and so do apps, education, and fitness. Use the category buttons to open one."
     },
     {
       "q": "Am I allowed to bring my own pictures and clips?",
-      "a": "Yes, if you have the right to use them. A front-on photo of the frying pan and your shop wordmark are a usual pair. A clip you filmed yourself can come in too, with up to 7 reference images on one job."
+      "a": "Yes, if you have the right to use them. A front-on photo of the frying pan and your shop logo are a usual pair. A clip you filmed yourself can come in too, with up to 7 reference images on one job."
     },
     {
       "q": "Where can I publish a file from these layouts?",
-      "a": "Pick the length first: 6, 10, 15, or 30 seconds, at 24, 40, 60, or 120 credits. A tall 9:16 file is what a TikTok placement usually wants. Use a square 1:1 for a feed post, 16:9 when the placement is wide, and 4:3 or 3:4 when the slot asks for those. YouTube, Facebook, Instagram, and LinkedIn can take the download, or you can publish from a connected account."
+      "a": "Post the download on TikTok, YouTube, Facebook, Instagram, or LinkedIn, or publish it from a connected account. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. Use 9:16 for TikTok, 1:1 for a square feed, 16:9 when the placement is wide, and 4:3 or 3:4 when the slot asks for those."
     },
     {
       "q": "Do these templates cost anything?",
@@ -54,7 +54,7 @@
       "a": "Yes. A necklace clip can run as a paid ad, and the same file can go to a client. The download has no watermark, and you still need rights to the product photo. An AI twin can keep one face across versions. The API can start the next file from your catalog."
     },
     {
-      "q": "Why not start from an empty timeline?",
+      "q": "Why not build the ad from a blank page?",
       "a": "The layout already sets the scene, the hook, and the pace, so you decide the offer and post. A tea tin ad does not start by building the kitchen from nothing."
     }
   ],
@@ -79,7 +79,7 @@
       ]
     },
     "picker": {
-      "title": "Browse product photo and video templates",
+      "title": "Open a template by category",
       "lead": "Filter by category, open a scene, and start from your own photo.",
       "chips": [
         {
@@ -162,7 +162,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close-Up Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -198,7 +198,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-1",
-          "label": "Lifestyle App Recommendation",
+          "label": "Daily-Life App Recommendation",
           "chips": [
             "apps"
           ],
@@ -234,7 +234,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Morning Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -288,7 +288,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Find: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Opening Line: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -306,7 +306,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Opening Line: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -502,7 +502,7 @@
       },
       "m3": {
         "h2": "Browse Product Photo and Video Templates",
-        "lead": "Filter by category, open a scene, and start from your own photo."
+        "lead": "Open a scene and start from a photo of the item you ship."
       }
     },
     "directoryFilters": {
@@ -674,7 +674,7 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "Phone-Style Video Ads"
+      "label": "Vertical Video Ads for the Phone"
     },
     {
       "id": "lifestyle-photos",
@@ -694,7 +694,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Product Photos From Every Angle"
     }
   ],
   "cta_title": "Start From a Layout You Like",

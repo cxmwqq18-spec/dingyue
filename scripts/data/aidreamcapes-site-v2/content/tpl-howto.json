@@ -21,7 +21,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Use the listing photo or the product link. The spoken line follows the hands and names the press shoppers miss."
+      "d": "Say how the press should look on the blue shirt. The spoken line follows the hands and names the press shoppers miss."
     },
     {
       "t": "Download and Post",
@@ -546,7 +546,7 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Choose a Product How-To Video"
+        "h2": "How-To Scenes You Can Open"
       },
       "faq": {
         "h2": "Questions About How to Use a Product Video"
@@ -568,11 +568,11 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Photos From Every Angle"
     },
     {
       "id": "plat-youtube-shorts",
-      "label": "YouTube Shorts Ads"
+      "label": "Short Ads for YouTube"
     },
     {
       "id": "ind-home-living",
@@ -656,7 +656,7 @@
   "cta_title": "Fill This How-To With Your Steamer",
   "cta_lead": "You leave with a how-to clip you can post. Add the steamer photo and let an AI avatar show the press.",
   "definition": {
-    "title": "A Task Demo With the Frame Done",
+    "title": "A Demo Frame That Is Already a Lesson",
     "paras": [
       "You get a frame for one task, like showing the white steamer go from a lift to one steady press on the blue shirt.",
       "Your photo sits in that frame. You write the line. An AI avatar handles the press."
@@ -669,27 +669,27 @@
       "lead": "Voice, a script, and an avatar can all sit on the same steamer photo.",
       "items": [
         {
-          "t": "AI Voice",
+          "t": "A Voice for the Press",
           "d": "A voice reads the press out loud, or you clone a voice you have the right to keep across demos."
         },
         {
-          "t": "On-Screen Captions",
+          "t": "Captions That Name the Press",
           "d": "Captions can name the press while the steamer moves across the shirt."
         },
         {
-          "t": "AI Script",
+          "t": "A Script You Can Edit",
           "d": "You get a short script you can edit before the steamer clip is made."
         },
         {
-          "t": "AI Avatar",
+          "t": "An Avatar for the Demo",
           "d": "An AI avatar you pick can present the press, and you can post the clip as your shop's ad."
         },
         {
-          "t": "Link, Batch, and API",
-          "d": "A product link, a batch of photos, or your catalog API can start the how-to."
+          "t": "Start From a Link or a Batch",
+          "d": "A product link, a batch of photos, or the shop software you already use can start the how-to."
         },
         {
-          "t": "Editor, Music, and Languages",
+          "t": "Trim, Music, and Languages",
           "d": "You can trim in the built-in editor, add a track from the music library, and repeat the press in another language."
         }
       ]
@@ -701,31 +701,31 @@
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "label": "AI TikTok Ads Generator",
+        "label": "TikTok How-To for This Steamer",
         "d": "Send a tall steamer how-to to TikTok from the editor.",
         "href": "page:plat-tiktok"
       },
       {
         "t": "AI Instagram Ads",
-        "label": "AI Instagram Ads",
+        "label": "Instagram How-To for This Press",
         "d": "Send a tall or square how-to of the press to Instagram.",
         "href": "page:plat-instagram"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "label": "AI Facebook Ad Generator",
+        "label": "Facebook How-To for This Steamer",
         "d": "Send the same steamer how-to to Facebook.",
         "href": "page:plat-facebook"
       },
       {
         "t": "YouTube Shorts Ads",
-        "label": "YouTube Shorts Ads",
+        "label": "YouTube Shorts How-To Clip",
         "d": "Download a tall file of the press for YouTube Shorts, or a wide file when the placement needs it.",
         "href": "page:plat-youtube-shorts"
       },
       {
-        "t": "AI Ads and Product Photos by Platform",
-        "label": "AI Ads and Product Photos by Platform",
+        "t": "Ads and Photos by Platform",
+        "label": "All Platform Sizes for This How-To",
         "d": "Open the channel list when the next post is not one of these four.",
         "href": "page:video-hub"
       }

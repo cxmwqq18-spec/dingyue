@@ -5,7 +5,7 @@
   "h1": "Make UGC Videos for Your Facebook Ads",
   "eyebrow": "Facebook ads",
   "lead": "Turn one photo of the pale-blue bottle into a Facebook UGC video ad. An AI avatar can hold it and pour, so you are not booking a creator or a studio.",
-  "card": "Facebook ads from one product photo, as a square photo or a tall clip.",
+  "card": "A Facebook video of the pale-blue bottle, as a square or a tall clip.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
     "Facebook feed ad images",
@@ -19,7 +19,7 @@
     },
     {
       "q": "Does this kind of ad work on Facebook?",
-      "a": "A clip of a hand pouring the pale-blue bottle sits among posts from friends more naturally than a glossy brand film. Make one opening for gift buyers and another for people replacing a worn bottle, then keep the opening you want to spend on."
+      "a": "Yes. A clip of a hand pouring the pale-blue bottle sits among posts from friends more naturally than a glossy brand film. Make one opening for gift buyers and another for people replacing a worn bottle."
     },
     {
       "q": "Can I stop paying a creator for every Facebook test?",
@@ -60,7 +60,7 @@
     },
     {
       "t": "Finish and Publish",
-      "d": "Download the bottle clip and attach it to the campaign. The render is the file you place."
+      "d": "Download the bottle clip and attach it to the campaign. That file is the one you place in the ad."
     }
   ],
   "visual": {
@@ -98,7 +98,7 @@
         },
         {
           "t": "Finish and Publish",
-          "d": "Add a script, voice, and music, then publish to Meta on Facebook. You get the pale-blue bottle pour, with captions and no watermark."
+          "d": "Add a script, voice, and music, then download the pale-blue bottle pour, with captions and no watermark."
         }
       ]
     },
@@ -185,37 +185,37 @@
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "label": "AI TikTok Ads Generator",
+        "label": "Make the TikTok version",
         "d": "A tall TikTok ad from the same bottle photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
-        "label": "AI Instagram Ads",
+        "label": "Make the Instagram version",
         "d": "A square still or a tall Reel of the same bottle.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "YouTube Shorts Ads",
-        "label": "YouTube Shorts Ads",
+        "label": "Make the Shorts version",
         "d": "A tall Short of the bottle. A wide YouTube ad is a different file.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
-        "label": "Amazon Product Photos",
+        "label": "Make the Amazon photos",
         "d": "A white main image of the bottle, a close-up, and an in-use frame for the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
-        "label": "Shopify Product Photos",
+        "label": "Make the Shopify photos",
         "d": "Square photos of the bottle for the product page and the collection, plus a video you upload in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "AI Ads and Product Photos by Platform",
-        "label": "AI Ads and Product Photos by Platform",
+        "label": "See every platform",
         "d": "Open every channel and choose where the next bottle file should run.",
         "href": "/ai-video-generation"
       }

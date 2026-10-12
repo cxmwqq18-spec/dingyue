@@ -4,7 +4,7 @@
   "description": "This AI video ads generator turns one product photo into a creator-style ad with a voice and a person on screen. Make the clip, then post it where it sells.",
   "h1": "AI Video Ads Generator: Creator-Style Clips for Your Shop",
   "eyebrow": "Video ad guide",
-  "lead": "A UGC ad should feel like a person talking about the jar, not a studio spot. Start from a photo of what you ship, or from the public listing. You still read the line before it goes out.",
+  "lead": "This AI video ads generator starts from a photo of the jar you ship, or from the public listing. You still read the line before it goes out.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator style product videos",
@@ -16,7 +16,7 @@
   "summary": "How a shop turns one jar photo, or the public listing, into a short ad that sounds like a person talking.",
   "sections": [
     {
-      "h2": "What the AI Video Ads Generator Makes",
+      "h2": "What Is an AI Video Ads Generator?",
       "paras": [
         "It writes the script, picks a presenter, and lets you edit a short ad from the gray jar photo or the listing. The file is ready for a paid placement, and nobody has to film in the storeroom.",
         "Publish it on [Instagram](page:plat-instagram), [Facebook](page:plat-facebook), or [TikTok](page:plat-tiktok). A feed post of the jar can be square at 1:1. A full-screen story wants 9:16. 16:9, 4:3, and 3:4 are available when the placement asks for them."
@@ -34,7 +34,7 @@
       "alt": "Hands choose between two views of plain gray skincare jar on a bathroom shelf."
     },
     {
-      "h2": "Reasons to Make the Jar Ad Here",
+      "h2": "Reasons to Make AI Video Ads From the Jar",
       "paras": [
         "Written From the Real Jar. If the jar is one ounce, the line can say one ounce.",
         "Ready for a Paid Placement. A Reels placement wants the jar tall. A feed post can take the same jar as a square. Ask for 9:16 or 1:1, and use 16:9, 4:3, or 3:4 when that placement asks.",
@@ -69,7 +69,7 @@
         "Short product videos and photo tools live in the [video toolkit](page:video-hub).",
         "Ads that sit with a store listing: [Shopify](page:plat-shopify).",
         "Frames for the feed and for Reels: [Instagram ads](page:plat-instagram).",
-        "Another system can request clips for many products. Email [support](page:contact) and ask for API access.",
+        "If your store software should request a clip for each product, email support and ask them to connect it.",
         "Describe the ad and let [AI video ads](page:video-ads) finish the file.",
         "Rebuild a look you already like from the [template gallery](page:templates)."
       ]
@@ -80,16 +80,16 @@
         "Speed. You start from the jar still or a listing address instead of booking a crew.",
         "Cost. Those three jobs draw from the credits on your plan. You are not collecting a new quote for each opening line.",
         "More versions. Another hook is another clip of the same jar, not another day on a set.",
-        "You keep the brief. The line uses the words the brand already says, and you can export again after a change.",
+        "You keep the wording. The line uses the words the brand already says, and you can export again after a change.",
         "Rights. A finished file on a paid plan can run as an ad, with no watermark on the download.",
-        "The next jar. Repeat the same path when the next product photo is ready."
+        "When the next product photo is ready, start the same way and get another clip."
       ]
     },
     {
       "h2": "How Shops Use These Ads",
       "paras": [
         "A skincare shop starts from the jar photo, makes a tall clip of the lid coming off, and posts it where that cream already sells.",
-        "A listing manager keeps the jar in a hand from the first beat to the last. Then they check the lid against the real jar before the file goes out.",
+        "A listing manager keeps the jar in a hand from the first second to the last. Then they check the lid against the real jar before the file goes out.",
         "The person who packs orders makes the spoken ad, as long as they can photograph the jar in daylight on the bathroom shelf.",
         "A shop owner approves a still of the real jar before anyone asks for a clip. The shape on screen stays the shape that ships."
       ]
@@ -97,7 +97,7 @@
     {
       "h2": "What Should the Clip Start With?",
       "paras": [
-        "Open on the jar already doing something, with the item already in a hand as it leaves the tote.",
+        "Open with the jar already in a hand, as it comes out of the bag.",
         "For this jar, show the lid twist or the jar lifted onto the counter. One action per clip. Ten seconds has room for that moment and a glimpse of the bathroom."
       ],
       "img": "n:guide:fx04-blog-ugc-hook-r1",
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "h2": "The Short Version",
+      "h2": "Make the Jar Ad From Your Photo",
       "paras": [
-        "You can post from the jar photo or the public listing, at 6, 10, 15, or 30 seconds. Read the line before you post.",
-        "A finished clip can run in ads, and the download has no watermark."
+        "Read the spoken line, then post the jar clip in the length you picked.",
+        "The download has no watermark, so you can run the clip as an ad."
       ]
     }
   ],
@@ -147,7 +147,7 @@
   ],
   "faq": [
     {
-      "q": "What does a video-ad tool build for a shop?",
+      "q": "What is an AI video ads generator?",
       "a": "A tool that makes a short ad for a product you already sell. You bring the jar photo or the listing, and you get a file with someone speaking. This guide walks through each step."
     },
     {
@@ -160,7 +160,7 @@
     },
     {
       "q": "Do I pay before the first ad?",
-      "a": "No. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Each job shows its credit cost before it starts."
+      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Each job shows its credit cost before it starts."
     },
     {
       "q": "Can I run the file as a paid ad?",
@@ -168,7 +168,7 @@
     },
     {
       "q": "Which shapes and platforms can I use?",
-      "a": "Wherever the ad runs. [YouTube Shorts](page:plat-youtube-shorts) and [TikTok](page:plat-tiktok) want a tall 9:16 file. A square 1:1 file can sit on [Facebook](page:plat-facebook) or [Instagram](page:plat-instagram). 16:9, 4:3, and 3:4 are there when the placement names them."
+      "a": "Use 9:16 for YouTube Shorts and TikTok, and 1:1 for a Facebook or Instagram feed. Use 16:9, 4:3, or 3:4 when the placement names that shape."
     },
     {
       "q": "Can I make ads for many products?",
@@ -176,7 +176,7 @@
     },
     {
       "q": "Do these stand in for a creator?",
-      "a": "Use a generated clip when the jar needs three openings this week. If buyers only trust the founder, film the founder for that one product and use generated clips for the others."
+      "a": "No. Use a generated clip when the jar needs three openings this week. Film the founder only when buyers expect that person on this one product."
     },
     {
       "q": "Will TikTok, Facebook, or Instagram reject the ad?",

@@ -149,7 +149,7 @@
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "Demo One Step on Shorts",
+        "t": "Demo One Step on YouTube Shorts",
         "d": "A short vertical demo that starts on one action, such as a single pump.",
         "href": "/platforms/youtube-shorts-ads"
       },
@@ -239,7 +239,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Product Photos From Every Angle"
     },
     {
       "id": "tpl-story",

@@ -4,7 +4,7 @@
   "description": "Contact us about a photo, a video, or a charge. Email support@aivideosugc.com and get a written next step on credits, billing, or your account.",
   "h1": "Contact Us About a Photo, a Video, or a Charge",
   "eyebrow": "Customer support",
-  "lead": "Have a question, or an idea you want a person to see? Email support@aivideosugc.com and get a written next step. A photo, a video, an actor, or captions all come to the same inbox.",
+  "lead": "Contact us when a photo, a video, or a charge needs a person. Email support@aivideosugc.com and get a written next step. An actor or captions come to the same inbox.",
   "secondary_keywords": [
     "AIVideosUGC customer service",
     "AIVideosUGC billing help",
@@ -37,8 +37,8 @@
       }
     },
     {
-      "t": "Review a Result That Missed",
-      "d": "Get a useful review when the generated image, video, actor, spoken line, or captions miss the brief. Send the cup photo and the result, and we will look.",
+      "t": "Review a Result That Missed the Brief",
+      "d": "Email the cup photo and the result if the image, video, actor, line, or captions miss the brief. We will look at that pair.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/b2f5-contact-results-r1.webp",
         "alt": "Seller compares a ceramic cup beside a closed laptop",
@@ -47,7 +47,7 @@
       }
     },
     {
-      "t": "Sort Out Account Access",
+      "t": "Fix Sign-In and File Access",
       "d": "Get help with signing in, your uploads, or who can see your files.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-privacy-r1.webp",
@@ -78,7 +78,7 @@
     },
     {
       "q": "When will I hear back?",
-      "a": "We answer by email once someone has looked at your files. Sending the details listed below lets us find the job on the first read."
+      "a": "We reply by email after a person has read your note. There is no promised hour. The details in the next answer let us find the job on the first read."
     },
     {
       "q": "What details help support find my photo or video?",

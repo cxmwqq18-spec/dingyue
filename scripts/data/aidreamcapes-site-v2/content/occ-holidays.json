@@ -4,7 +4,7 @@
   "description": "Use this holiday video maker on one gift photo, then post before the ship date is final. An avatar can hold the product while you add the date later.",
   "h1": "Holiday Video Maker for a Festive Gift Ad",
   "eyebrow": "Holiday ad photos and videos",
-  "lead": "Holiday ad photos and videos can go up before the ship-by date is set. An avatar can hold the gift, and you type the date when the carrier confirms it.",
+  "lead": "This holiday video maker lets the gift ad go up before the ship-by date is set. An avatar can hold the gift, and you type the date when the carrier confirms it.",
   "secondary_keywords": [
     "Christmas product photos",
     "holiday video ads",
@@ -19,7 +19,7 @@
       "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before the job runs, and a failed job returns those credits."
     },
     {
-      "q": "Can I add holiday music and seasonal visuals?",
+      "q": "Can I add a holiday song and seasonal pictures?",
       "a": "Yes. Choose a track from the music library, add seasonal pictures, and put captions on in the editor. Use a track you are allowed to play."
     },
     {
@@ -31,7 +31,7 @@
       "a": "Yes. An AI avatar from the library of 53 can read a short gift note beside the product. Keep the product easy to recognize."
     },
     {
-      "q": "What happens to the ad after the holiday ends?",
+      "q": "Can I use the file again after the holiday?",
       "a": "You keep the file you downloaded. Change the date, the voice, or the offer in the editor, and use the scene again for the next holiday."
     },
     {
@@ -48,7 +48,7 @@
     }
   ],
   "examples": {
-    "h2": "More Holiday Ad Creative Examples",
+    "h2": "More Holiday Gift Ad Examples",
     "lead": "Show gift moments and seasonal product scenes, then add current dates or offers after download.",
     "groups": [
       {
@@ -56,21 +56,21 @@
         "items": [
           {
             "ref": "n:guide:f13-occ-holidays-rework-card-15",
-            "title": "Skincare gift set lifted from tissue",
+            "title": "Skincare Gift Set Lifted from Tissue",
             "kind": "photo",
             "product": "skincare gift set",
             "prompt": "Use the uploaded product photo as the same skincare gift set. Show adult hands lifting it from cream tissue in a warm gift scene, with clear space for the shipping cutoff added after download. No text or logos."
           },
           {
             "ref": "n:guide:fx02-occ-holidays-g2",
-            "title": "Gift bottle held in both hands",
+            "title": "Gift Bottle Held in Both Hands",
             "kind": "photo",
             "product": "gift bottle",
             "prompt": "Use the uploaded product photo as the same bottle. Show an adult with a fully visible face holding it beside an open gift box in soft winter light, with clear space for the shipping cutoff added after download. No text or logos."
           },
           {
             "ref": "n:guide:q20-occ-holiday-example-03",
-            "title": "Winter jacket revealed from a gift box",
+            "title": "Winter Jacket Revealed from a Gift Box",
             "kind": "photo",
             "product": "winter jacket",
             "prompt": "Use the uploaded product photo as the same winter jacket. Show adult hands lifting it from a plain gift box, with clear space for a holiday offer added after download. No text or logos."
@@ -125,7 +125,7 @@
       ]
     },
     "picker": {
-      "title": "Choose a holiday ad creative scene",
+      "title": "Choose a Holiday Gift Scene",
       "lead": "Show the product in a seasonal gift moment, then add current details after download.",
       "chips": [
         {
@@ -173,7 +173,7 @@
           "kind": "photo"
         }
       ],
-      "button": "Make a holiday product photo"
+      "button": "Make a holiday video"
     },
     "uses": [],
     "input": [
@@ -205,13 +205,13 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Create Christmas Product Photos in 3 Simple Steps"
+        "h2": "How to Make a Holiday Video in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a Holiday Ad Creative Scene"
+        "h2": "Pick a Gift Scene for the Ad"
       },
       "faq": {
-        "h2": "Questions About Holiday Ad Photos and Videos"
+        "h2": "Questions About the Holiday Video Maker"
       }
     }
   },
@@ -236,7 +236,7 @@
       "alt": "Adult hands tie ribbon around a plain parcel beside a jar."
     },
     {
-      "t": "Test a Second Gift Opening",
+      "t": "Try a Second Opening Line",
       "d": "The jar, the tube, and the scarf share one gift scene. A second opening line gives you a choice, and you publish the one you like.",
       "img": "n:guide:fx02-occ-holidays-benefit-guide",
       "alt": "Adult hands arrange a jar, tube and scarf gift guide set."
@@ -247,11 +247,11 @@
   "relatedLinks": [
     {
       "id": "occ-black-friday",
-      "label": "Black Friday Ad Creatives"
+      "label": "Black Friday Ad Photos and Videos"
     },
     {
       "id": "occ-sale-discount",
-      "label": "Sale Ad Creatives"
+      "label": "Sale Ad Photos and Videos"
     },
     {
       "id": "image-to-video",
@@ -295,7 +295,7 @@
     ]
   },
   "trust": {
-    "h2": "Yours Until the Ad Goes Live",
+    "h2": "Kept Private Until You Share",
     "lead": "Six facts you can count on before a seasonal ad goes out.",
     "items": [
       {
@@ -311,7 +311,7 @@
         "d": "If a job fails, those credits return to the balance on their own. You can run the gift scene again."
       },
       {
-        "t": "Yours Until You Publish",
+        "t": "Stays Private Until You Share",
         "d": "The product photo and the finished gift scene stay in your account. Nothing goes public until you choose to share it."
       },
       {

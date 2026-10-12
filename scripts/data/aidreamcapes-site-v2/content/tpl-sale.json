@@ -257,7 +257,7 @@
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "ASMR Unboxing: Makeup Tools",
+          "label": "Close Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -302,7 +302,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Streamer Reaction: App",
+          "label": "App Reaction Clip",
           "chips": [
             "apps"
           ],
@@ -329,7 +329,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "GRWM Unboxing: Knitwear",
+          "label": "Get-Ready Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -347,7 +347,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "360 Showcase: Linen Shirt",
+          "label": "Full Spin: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -374,7 +374,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Talking Head: Skin Lesson",
+          "label": "Face to Camera: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -383,7 +383,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "POV Discovery: Court Gear",
+          "label": "First-Person Look: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -392,7 +392,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Hook: Home App Walkthrough",
+          "label": "Home App Opening Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -401,7 +401,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance Hook: Phone Demo",
+          "label": "Finance Opening: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -419,7 +419,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "Sensory Hook: Citrus Sip",
+          "label": "Close-Up Sip: Citrus Drink",
           "chips": [
             "food-beverage"
           ],
@@ -482,7 +482,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver Signet Macro Reveal",
+          "label": "Silver Signet Close-Up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -572,7 +572,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint Face Mist Hook",
+          "label": "Mint Face Mist Opening",
           "chips": [
             "viral"
           ],
@@ -589,7 +589,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See More Templates"
     },
     "uses": [],
     "input": [],
@@ -603,7 +603,7 @@
         "h2": "Questions About This Sale Banner Maker"
       },
       "m3": {
-        "h2": "Browse Sale Scenes by Category",
+        "h2": "Pick a Sale Scene",
         "lead": "Pick a scene close to the product. Add the offer after you download."
       }
     }
@@ -691,7 +691,7 @@
   "definition": {
     "title": "What a Sale Post Does in the Feed",
     "paras": [
-      "It is the square you post when the suitcase price changes for a long weekend. The case stays fully visible, and the last day sits where a thumb stops.",
+      "It is the square you post when the suitcase price changes for a long weekend. The case stays fully visible, and the end date sits in the empty area beside the case.",
       "You are filling a feed square, not drawing one from scratch. Next month the same suitcase can carry a new headline for a different event."
     ]
   },
@@ -701,12 +701,12 @@
     "items": [
       {
         "t": "The Offer Lands First",
-        "d": "A thumb on the feed should meet the suitcase offer before it studies the handle. The case stays in the frame so the shopper still knows what is on sale.",
+        "d": "Someone scrolling should see the suitcase offer before they study the handle. The case stays in the frame so the shopper still knows what is on sale.",
         "icon": "Tag"
       },
       {
         "t": "Start From a Ready Square",
-        "d": "The feed frame is already composed. You set the suitcase in it, and the open area is already sitting where the eye lands.",
+        "d": "The feed frame is already composed. You set the suitcase in it, and the open area is already where the offer should sit.",
         "icon": "Image"
       },
       {
@@ -724,11 +724,11 @@
       "items": [
         {
           "t": "Sneaker Square for the Offer",
-          "d": "The white sneaker stays whole, and the lower price sits in the open space where the thumb stops."
+          "d": "The white sneaker stays whole, and the lower price sits in the empty area beside it."
         },
         {
           "t": "Clearance Table",
-          "d": "The product sits on a simple table so a short markdown line has a place beside it."
+          "d": "Your product sits on a simple table so a short price-cut line has a place beside it."
         },
         {
           "t": "Weekend Market",
@@ -776,7 +776,7 @@
         },
         {
           "t": "Studio Clearance",
-          "d": "A plain studio scene so the product reads first and the offer sits in the open area."
+          "d": "A plain studio scene so the shopper notices the product first and the offer sits in the open area."
         },
         {
           "t": "Launch Window",
@@ -810,8 +810,8 @@
           "d": "Run the same sale scene across many products, so a weekend catalog can go out in one batch."
         },
         {
-          "t": "API for Your Store",
-          "d": "Send product photos from your shop software through the API and bring the scenes back to your catalog."
+          "t": "Connect Your Shop Software",
+          "d": "Send product photos from your shop software and bring the finished scenes back to your catalog."
         }
       ]
     }
@@ -838,7 +838,7 @@
       },
       {
         "t": "Paid Plans",
-        "d": "The credit balance covers photos, batches, and API jobs."
+        "d": "Starter, Pro, and Premium credits pay for photos, groups of photos, and jobs from your shop software."
       }
     ]
   }

@@ -31,7 +31,7 @@
     },
     {
       "q": "How long does a UGC ad take to make?",
-      "a": "You review the file in your account after you submit the job. Nothing asks you to reserve a shoot date first."
+      "a": "It does not take a shoot day. You review the file in your account after you submit the job."
     },
     {
       "q": "How do I make a UGC ad with an AI avatar?",
@@ -71,7 +71,7 @@
     },
     {
       "q": "How quickly can I create a product ad?",
-      "a": "Anyone who has the listing or the sentence. Paste it, then review the file in your account, and support can look at that file with you if you ask."
+      "a": "Paste the listing or the sentence, then review the file in your account. You do not wait on a shoot day."
     },
     {
       "q": "Can the avatar speak in a cloned voice?",
@@ -208,7 +208,7 @@
     },
     {
       "t": "Let the AI Write the Ad",
-      "d": "The agent asks about the brand and the line. Answer with a sentence you would print on the skillet label."
+      "d": "The tool asks about the brand and the line. Answer with a sentence you would print on the skillet label."
     },
     {
       "t": "Download or Publish",
@@ -216,7 +216,7 @@
     }
   ],
   "steps_cta": {
-    "label": "Start from your category",
+    "label": "Make an ad in this category",
     "href": "/app/create"
   },
   "blockOrder": [
@@ -247,7 +247,7 @@
       },
       {
         "t": "Regular Posters",
-        "d": "Film yourself once at the packing table and save an AI twin, so later products can use that twin while you pack."
+        "d": "Film yourself once at the packing table and save your face and voice, so later products can use that recording while you pack."
       },
       {
         "t": "Software Shops",
@@ -273,7 +273,7 @@
     "items": [
       {
         "t": "A Face That Fits the Category",
-        "d": "For a pet brand, one AI actor who could plausibly own the dog can cover that aisle.",
+        "d": "For a pet brand, pick an AI actor who looks like they live with the dog.",
         "icon": "Users"
       },
       {
@@ -287,7 +287,7 @@
         "icon": "MessageCircle"
       },
       {
-        "t": "Two Frames for Two Feeds",
+        "t": "A Tall Clip and a Square Clip",
         "d": "A throw-blanket clip can be tall at 9:16 for a phone feed and square at 1:1 for a post. Each frame is its own job.",
         "icon": "Ratio"
       },
@@ -307,7 +307,7 @@
   "benefits": [
     {
       "t": "An Avatar Matched to the Item",
-      "d": "Pick an AI avatar who could plausibly hold a kettle, and let that same face say the line about the handle."
+      "d": "Pick an AI avatar who looks right holding a kettle, and let that face say the line about the handle."
     },
     {
       "t": "A Listing Photo Becomes a Clip",
@@ -341,12 +341,12 @@
           "d": "A photo of the desk lamp, or two sentences about the shade, can become the still and the clip you publish."
         },
         {
-          "t": "AI Video Agent",
-          "d": "The agent can build the whole ad from a short brief. Say the backpack is for a commute and the first frame should be the strap, and it asks what is still missing."
+          "t": "A Tool That Builds the Whole Ad",
+          "d": "The tool can build the whole ad from a short brief. Say the backpack is for a commute and the first frame should be the strap, and it asks what is still missing."
         },
         {
-          "t": "Reuse a Pacing You Like",
-          "d": "If a feed ad's pacing fits your soy candle, describe that pacing and use your own jar."
+          "t": "Reuse a Speed You Like",
+          "d": "If a feed ad moves at a speed that fits your soy candle, describe that speed and use your own jar."
         },
         {
           "t": "Start From the Product Page",
@@ -357,8 +357,8 @@
           "d": "An AI avatar can hold the shampoo and say the line, so you can stay with the orders in front of you. Browse faces on [AI actors](page:ai-actors)."
         },
         {
-          "t": "An AI Twin for the Next Products",
-          "d": "Make an AI twin from your face and voice when the brand is you. Later products can use that twin while you stay at the packing table."
+          "t": "Your Face on the Next Products",
+          "d": "Save your own face and voice when the brand is you. Later products can use that recording while you stay at the packing table."
         }
       ]
     },
@@ -404,8 +404,8 @@
           "d": "The words go out only after you approve them, so the ad carries your phrasing."
         },
         {
-          "t": "Voice Pace Control",
-          "d": "Mark the line as unhurried, and that note gives you a slower delivery on the next run."
+          "t": "Slow the Spoken Line Down",
+          "d": "Mark the line as slow and calm, and the next run uses that slower delivery."
         }
       ]
     }

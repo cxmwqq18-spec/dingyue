@@ -19,11 +19,11 @@
     },
     {
       "q": "How do I get an Instagram Reel from a product link?",
-      "a": "Paste the product page and say who the buyer is. You pick the avatar after you hear the line, captions are added, and the download is already a Reel for the feed, Reels, or Stories."
+      "a": "Paste the product page and say who the buyer is. You get a Reel with captions, and you pick the avatar before you export."
     },
     {
       "q": "Are there ready templates for an Instagram Reel?",
-      "a": "Yes. Open a Reel template, keep your product in the frame, and the tall shape is already set. You are not drawing the safe area yourself before you download."
+      "a": "Yes. Open a Reel template and keep your product in the frame. The tall shape is already set, so you do not measure the edges yourself."
     },
     {
       "q": "What does a file cost in credits?",
@@ -121,7 +121,7 @@
       "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf"
     },
     {
-      "t": "More Budget Buys Reach",
+      "t": "Spend the Budget on Reach",
       "d": "The money that used to start with a creator invoice can buy reach instead. A 15-second ad of this travel mug spends 60 credits, and the charge shows before you start.",
       "img": "n:guide:fx40-plat-instagram-benefit-cost",
       "alt": "Unbranded ceramic travel mug on linen with one green leaf"
@@ -138,7 +138,7 @@
   "more_sections": [
     {
       "eyebrow": "Instagram ad, one place",
-      "h2": "One Hand-Cream Jar, Three Cuts",
+      "h2": "One Product Photo, Three Instagram Versions",
       "lead": "One hand-cream jar becomes the Reel, the voice, and the next test. You settle the script before you export.",
       "items": [
         {
@@ -179,7 +179,7 @@
       },
       {
         "t": "Ads in the Buyer's Language",
-        "d": "You can run the Instagram ad in the buyer's language, with a local cadence instead of a flat translated caption. You do not book a second actor for that cut.",
+        "d": "You can run the Instagram ad in the buyer's language, in a voice that sounds local. You do not book a second actor for that cut.",
         "icon": "Mic"
       },
       {
@@ -195,37 +195,37 @@
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "label": "AI TikTok Ads Generator",
+        "label": "Open the TikTok ads page.",
         "d": "A tall TikTok ad from the same product photo, with the product on screen at the open.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "label": "AI Facebook Ad Generator",
+        "label": "Open the Facebook ads page.",
         "d": "A square Facebook still, or a tall video that fills the phone screen.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Ads",
-        "label": "YouTube Shorts Ads",
+        "label": "Open the YouTube Shorts page.",
         "d": "A tall Short for the phone. A wide YouTube ad is a different file you make on purpose.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
-        "label": "Amazon Product Photos",
+        "label": "Open the Amazon photos page.",
         "d": "A white main image, a close-up, and an in-use frame for the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
-        "label": "Shopify Product Photos",
+        "label": "Open the Shopify photos page.",
         "d": "Square photos for the product page and the collection, plus a video you upload in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "Every Channel in One List",
-        "label": "AI Ads and Product Photos by Platform",
+        "label": "Open the full platform list.",
         "d": "Open every channel and choose where the next file should run.",
         "href": "/ai-video-generation"
       }

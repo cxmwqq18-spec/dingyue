@@ -78,15 +78,15 @@
     },
     {
       "q": "Which placements can use an AI actor?",
-      "a": "Paid ads, product pages, social feeds, short guides, training clips, and lessons. The same presenter can explain a feature on TikTok or Meta, and you can run a batch from a link or the API."
+      "a": "Paid ads, product pages, social feeds, short guides, training clips, and lessons. The same presenter can explain a feature on TikTok or Facebook, and your shop software can request a batch from a link."
     },
     {
       "q": "Is an AI actor a good fit for an explainer?",
       "a": "Yes. The actor can explain the same feature the same way every time, which matters when the product page and the ad must agree."
     },
     {
-      "q": "Can I use one for training or onboarding?",
-      "a": "Yes. If a step changes, replace that sentence and render the lesson again. Each team can watch the same new cut."
+      "q": "Can I update a training clip when a step changes?",
+      "a": "Yes. If a step changes, replace that sentence and make the lesson again. Each person on the team can watch the same new cut."
     },
     {
       "q": "How do brands keep a social feed going?",
@@ -249,7 +249,7 @@
       "cards": [
         {
           "ref": "n:guide:sk1-spk-indoor-1-r1",
-          "label": "Indoor: entryway greeting",
+          "label": "Indoor: Entryway Greeting",
           "chips": [
             "indoor"
           ],
@@ -258,7 +258,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-indoor-2-r1",
-          "label": "Indoor: home corner chat",
+          "label": "Indoor: Home Corner Chat",
           "chips": [
             "indoor"
           ],
@@ -267,7 +267,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-home-1-r3",
-          "label": "Home: sofa welcome",
+          "label": "Home: Sofa Welcome",
           "chips": [
             "home"
           ],
@@ -276,7 +276,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-home-2-r1",
-          "label": "Home: table explanation",
+          "label": "Home: Table Explanation",
           "chips": [
             "home"
           ],
@@ -285,7 +285,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-outdoor-1-r3",
-          "label": "Outdoor: park greeting",
+          "label": "Outdoor: Park Greeting",
           "chips": [
             "outdoor"
           ],
@@ -294,7 +294,7 @@
         },
         {
           "ref": "n:guide:im02-spokesperson-videos-picker-outdoor-r1",
-          "label": "Outdoor: walkway update",
+          "label": "Outdoor: Walkway Update",
           "chips": [
             "outdoor"
           ],
@@ -303,7 +303,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-living-room-1-r2",
-          "label": "Living Room: sofa check-in",
+          "label": "Living Room: Sofa Check-In",
           "chips": [
             "living-room"
           ],
@@ -312,7 +312,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-living-room-2-r1",
-          "label": "Living Room: lounge introduction",
+          "label": "Living Room: Lounge Introduction",
           "chips": [
             "living-room"
           ],
@@ -321,7 +321,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-studio-1-r3",
-          "label": "Studio: creator intro",
+          "label": "Studio: Creator Intro",
           "chips": [
             "studio"
           ],
@@ -330,7 +330,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-studio-2-r1",
-          "label": "Studio: speaking to camera",
+          "label": "Studio: Speaking to Camera",
           "chips": [
             "studio"
           ],
@@ -339,7 +339,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-office-1-r2",
-          "label": "Office: desk explanation",
+          "label": "Office: Desk Explanation",
           "chips": [
             "office"
           ],
@@ -348,7 +348,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-office-2-r1",
-          "label": "Office: workday update",
+          "label": "Office: Workday Update",
           "chips": [
             "office"
           ],
@@ -366,7 +366,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-garden-2-r1",
-          "label": "Garden: greenhouse chat",
+          "label": "Garden: Greenhouse Chat",
           "chips": [
             "garden"
           ],
@@ -375,7 +375,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-gym-1-r3",
-          "label": "Gym: pre-workout greeting",
+          "label": "Gym: Pre-Workout Greeting",
           "chips": [
             "gym"
           ],
@@ -384,7 +384,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-gym-2-r1",
-          "label": "Gym: bench check-in",
+          "label": "Gym: Bench Check-In",
           "chips": [
             "gym"
           ],
@@ -393,7 +393,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-cafe-1-r3",
-          "label": "Cafe: window-seat chat",
+          "label": "Cafe: Window-Seat Chat",
           "chips": [
             "cafe"
           ],
@@ -402,7 +402,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-cafe-2-r2",
-          "label": "Cafe: counter introduction",
+          "label": "Cafe: Counter Introduction",
           "chips": [
             "cafe"
           ],
@@ -411,7 +411,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-kitchen-1-r1",
-          "label": "Kitchen: island explanation",
+          "label": "Kitchen: Island Explanation",
           "chips": [
             "kitchen"
           ],
@@ -420,7 +420,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-kitchen-2-r1",
-          "label": "Kitchen: counter chat",
+          "label": "Kitchen: Counter Chat",
           "chips": [
             "kitchen"
           ],
@@ -438,7 +438,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-podcast-2-r2",
-          "label": "Podcast: podcast intro",
+          "label": "Podcast: Podcast Intro",
           "chips": [
             "podcast"
           ],
@@ -447,7 +447,7 @@
         },
         {
           "ref": "n:guide:im02-spokesperson-videos-picker-fitness-r2",
-          "label": "Fitness: recovery tip",
+          "label": "Fitness: Recovery Tip",
           "chips": [
             "fitness"
           ],
@@ -456,7 +456,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-fitness-2-r2",
-          "label": "Fitness: routine explanation",
+          "label": "Fitness: Routine Explanation",
           "chips": [
             "fitness"
           ],
@@ -465,7 +465,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-beach-1-r2",
-          "label": "Beach: shoreline greeting",
+          "label": "Beach: Shoreline Greeting",
           "chips": [
             "beach"
           ],
@@ -474,7 +474,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-beach-2-r1",
-          "label": "Beach: boardwalk update",
+          "label": "Beach: Boardwalk Update",
           "chips": [
             "beach"
           ],
@@ -483,7 +483,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-car-1-r2",
-          "label": "Car: driver-seat selfie",
+          "label": "Car: Driver-Seat Selfie",
           "chips": [
             "car"
           ],
@@ -492,7 +492,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-car-2-r1",
-          "label": "Car: passenger-seat chat",
+          "label": "Car: Passenger-Seat Chat",
           "chips": [
             "car"
           ],
@@ -501,7 +501,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-hospital-1-r3",
-          "label": "Hospital: staff-room update",
+          "label": "Hospital: Staff-Room Update",
           "chips": [
             "hospital"
           ],
@@ -510,7 +510,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-hospital-2-r1",
-          "label": "Hospital: corridor briefing",
+          "label": "Hospital: Corridor Briefing",
           "chips": [
             "hospital"
           ],
@@ -519,7 +519,7 @@
         },
         {
           "ref": "n:guide:im02-spokesperson-videos-picker-balcony-r1",
-          "label": "Balcony: railing greeting",
+          "label": "Balcony: Railing Greeting",
           "chips": [
             "balcony"
           ],
@@ -528,7 +528,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-balcony-2-r1",
-          "label": "Balcony: plant-side update",
+          "label": "Balcony: Plant-Side Update",
           "chips": [
             "balcony"
           ],
@@ -537,7 +537,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-pet-1-r3",
-          "label": "Pet: dog cuddle chat",
+          "label": "Pet: Dog Cuddle Chat",
           "chips": [
             "pet"
           ],
@@ -546,7 +546,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-pet-2-r1",
-          "label": "Pet: cat cuddle chat",
+          "label": "Pet: Cat Cuddle Chat",
           "chips": [
             "pet"
           ],
@@ -555,7 +555,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-shopping-1-r1",
-          "label": "Shopping: shop aisle update",
+          "label": "Shopping: Shop Aisle Update",
           "chips": [
             "shopping"
           ],
@@ -564,7 +564,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-shopping-2-r1",
-          "label": "Shopping: clothing-rack chat",
+          "label": "Shopping: Clothing-Rack Chat",
           "chips": [
             "shopping"
           ],
@@ -573,7 +573,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-sports-1-r1",
-          "label": "Sports: racket court tip",
+          "label": "Sports: Racket Court Tip",
           "chips": [
             "sports"
           ],
@@ -582,7 +582,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-sports-2-r1",
-          "label": "Sports: ball court chat",
+          "label": "Sports: Ball Court Chat",
           "chips": [
             "sports"
           ],
@@ -591,7 +591,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-study-room-1-r1",
-          "label": "Study Room: desk study chat",
+          "label": "Study Room: Desk Study Chat",
           "chips": [
             "study-room"
           ],
@@ -600,7 +600,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-study-room-2-r1",
-          "label": "Study Room: notebook routine",
+          "label": "Study Room: Notebook Routine",
           "chips": [
             "study-room"
           ],
@@ -609,7 +609,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-classroom-1-r2",
-          "label": "Classroom: lesson introduction",
+          "label": "Classroom: Lesson Introduction",
           "chips": [
             "classroom"
           ],
@@ -618,7 +618,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-terrace-1-r1",
-          "label": "Terrace: rooftop greeting",
+          "label": "Terrace: Rooftop Greeting",
           "chips": [
             "terrace"
           ],
@@ -627,7 +627,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-terrace-2-r1",
-          "label": "Terrace: patio chat",
+          "label": "Terrace: Patio Chat",
           "chips": [
             "terrace"
           ],
@@ -636,7 +636,7 @@
         },
         {
           "ref": "n:guide:im02-spokesperson-videos-picker-bathroom-r1",
-          "label": "Bathroom: robe mirror selfie",
+          "label": "Bathroom: Robe Mirror Selfie",
           "chips": [
             "bathroom"
           ],
@@ -645,7 +645,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-exercise-1-r4",
-          "label": "Exercise: warm-up explanation",
+          "label": "Exercise: Warm-Up Explanation",
           "chips": [
             "exercise"
           ],
@@ -654,7 +654,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-exercise-2-r1",
-          "label": "Exercise: mat recovery chat",
+          "label": "Exercise: Mat Recovery Chat",
           "chips": [
             "exercise"
           ],
@@ -663,7 +663,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-bedroom-1-r3",
-          "label": "Bedroom: bedroom mirror selfie",
+          "label": "Bedroom: Mirror Check With the Product",
           "chips": [
             "bedroom"
           ],
@@ -672,7 +672,7 @@
         },
         {
           "ref": "n:guide:im02-spokesperson-videos-picker-garage-r1",
-          "label": "Garage: storage shelf update",
+          "label": "Garage: Storage Shelf Update",
           "chips": [
             "garage"
           ],
@@ -681,7 +681,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-interview-1-r3",
-          "label": "Interview: street interview answer",
+          "label": "Interview: Street Interview Answer",
           "chips": [
             "interview"
           ],
@@ -690,7 +690,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-pool-1-r2",
-          "label": "Pool: poolside greeting",
+          "label": "Pool: Poolside Greeting",
           "chips": [
             "pool"
           ],
@@ -699,7 +699,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-reporting-1-r3",
-          "label": "Reporting: sidewalk report",
+          "label": "Reporting: Sidewalk Report",
           "chips": [
             "reporting"
           ],
@@ -708,7 +708,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-travel-1-r2",
-          "label": "Travel: airport lounge update",
+          "label": "Travel: Airport Lounge Update",
           "chips": [
             "travel"
           ],
@@ -717,7 +717,7 @@
         },
         {
           "ref": "n:guide:sk1-spk-yoga-1-r1",
-          "label": "Yoga: breathing introduction",
+          "label": "Yoga: Breathing Introduction",
           "chips": [
             "yoga"
           ],
@@ -729,7 +729,7 @@
     },
     "titles": {
       "m4": {
-        "h2": "Where a Spoken Product Point Helps"
+        "h2": "Where an AI Spokesperson Video Runs"
       },
       "m5": {
         "h2": ""
@@ -799,7 +799,7 @@
     },
     {
       "id": "video-hub",
-      "label": "AI Video"
+      "label": "All AI Video Tools"
     },
     {
       "id": "before-after-videos",
@@ -943,7 +943,7 @@
         },
         {
           "t": "A Voice You Pick",
-          "d": "A lower voice lets a candle's scent line sound like a recommendation. A bright promo voice makes it sound like a toy."
+          "d": "A lower voice lets a candle's scent line sound like a quiet recommendation. A brighter voice fits a loud sale, not a calm product."
         },
         {
           "t": "Captions and Music",
@@ -954,7 +954,7 @@
           "d": "Pick a presenter and a setting, or build a custom actor for the brand. Keep that person as the face of later ads."
         },
         {
-          "t": "Links, a Catalog, and an API",
+          "t": "Start From a Link or the Catalog",
           "d": "Start from a product link or a photo, and make one clip per item. An API lets your shop software request the clips."
         },
         {

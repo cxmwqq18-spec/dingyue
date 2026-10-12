@@ -35,7 +35,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Say the pack style in one line, like a matte pouch. An avatar speaks that line only in a later clip."
+      "d": "Name the pack style in one line, such as a matte pouch. A spoken line is only for a later video, not for this still."
     },
     {
       "t": "Download and Compare",
@@ -46,12 +46,12 @@
   "steps_lead": "A photo of the box or pouch starts it. You leave with a square packaging design the listing can use.",
   "faq": [
     {
-      "q": "What is an AI packaging design generator?",
-      "a": "An AI packaging design generator turns one product photo into a packaging design for the listing. You name the style, such as a matte box or a stand-up pouch, and download a square file. It is a picture of the pack you can check, not a printed dieline and not a filmed shelf ad."
+      "q": "What does AI packaging design make for a listing?",
+      "a": "It makes a square packaging picture from one product photo. You name the style, such as a matte box or a stand-up pouch, and download the file. It is a picture you can check, not a print-ready pattern and not a filmed shelf ad."
     },
     {
-      "q": "Do I need design skills to make a pack?",
-      "a": "No. You do not need a design job or a design degree to start. Upload the product photo and name the look in plain words. Publish the square file on the product page when it matches the pack you sell. Check the preview before you do."
+      "q": "Can I make a pack if I have never designed one?",
+      "a": "No. You do not need a design job or a design degree to start. Upload the product photo and name the look in plain words. Publish the square file on the product page when it matches the pack you sell. Check the preview before you publish it."
     },
     {
       "q": "How does the packaging design tool work?",
@@ -515,7 +515,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more video templates"
     },
     "steps": {
       "source": "n:guide:tpl-pack-c3-m2-source",
@@ -626,7 +626,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Photos of Every Side"
     },
     {
       "id": "ind-food-drinks",

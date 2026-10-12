@@ -4,7 +4,7 @@
   "description": "Make Shopify images for the product page with your shop's AI product photo generator. Upload one photo, pick the scene, and download the product image.",
   "h1": "Shopify Product Image Generator for Store Pages",
   "eyebrow": "Shopify stores",
-  "lead": "Your shop's AI product photo generator can make a Shopify product image in a room you never rented, then place that file on the product page.",
+  "lead": "This AI product photo generator makes a Shopify image in a room you never rented. Place that file on the product page.",
   "card": "Shopify product photos, new backgrounds, and short videos, made one by one or many at a time.",
   "secondary_keywords": [
     "Shopify product images",
@@ -15,7 +15,7 @@
   "faq": [
     {
       "q": "What is a Shopify product photo tool?",
-      "a": "It builds a Shopify product photo from a picture you already shot, so the product page can go up without a location day."
+      "a": "It builds a Shopify product photo from a picture you already shot. The product page can go up without renting a room for a shoot."
     },
     {
       "q": "How does a Shopify product photo get made?",
@@ -23,7 +23,7 @@
     },
     {
       "q": "Which photo tool should a Shopify store use?",
-      "a": "Use one that restages your real product, holds a consistent look across the grid, and hands you a file you upload yourself. AIVideosUGC shows the cost before the photo runs. The finished file is ready for your store."
+      "a": "Use AIVideosUGC. It puts your real product in a new scene, holds one look across the grid, and hands you a file you upload yourself. The cost shows before the photo runs."
     },
     {
       "q": "Can I make Shopify product photos without paying?",
@@ -59,7 +59,7 @@
     },
     {
       "t": "Choose Your Image Style",
-      "d": "Ask for the four bowls on a dining table with a little fruit. You are not picking a named image engine."
+      "d": "Ask for the four bowls on a dining table with a little fruit."
     },
     {
       "t": "Download and Add It",
@@ -150,7 +150,7 @@
         },
         {
           "t": "Show the Table With Fruit",
-          "d": "The gallery frame shows the bowls on a dining table with a little fruit, not on the white sweep used in the grid. Shoppers see the size against something familiar."
+          "d": "The gallery frame shows the bowls on a dining table with a little fruit, not on the plain white background used in the grid. Shoppers see the size against something familiar."
         },
         {
           "t": "Add the Clip on the Page",
@@ -211,37 +211,37 @@
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "label": "AI TikTok Ads Generator",
+        "label": "Open TikTok ads",
         "d": "A tall TikTok ad from the same photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
-        "label": "AI Instagram Ads",
+        "label": "Open Instagram ads",
         "d": "A square still or a tall video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "label": "AI Facebook Ad Generator",
+        "label": "Open Facebook ads",
         "d": "A square Facebook photo, or a tall video that fills the screen.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Ads",
-        "label": "YouTube Shorts Ads",
+        "label": "Open YouTube Shorts",
         "d": "A tall Short. A wide ad in the YouTube player is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
-        "label": "Amazon Product Photos",
+        "label": "Open Amazon photos",
         "d": "A white main image, a close-up, and an in-use view for the Amazon gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "AI Ads and Product Photos by Platform",
-        "label": "AI Ads and Product Photos by Platform",
+        "label": "Open every platform",
         "d": "Open the channel list and choose where the next file runs.",
         "href": "/ai-video-generation"
       }

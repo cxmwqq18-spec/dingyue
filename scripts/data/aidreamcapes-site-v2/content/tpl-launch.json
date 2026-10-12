@@ -4,7 +4,7 @@
   "description": "Use the promo video maker on one product photo. Keep the sage-green bag in frame, pick a tall 9:16 or a square 1:1, and download the announcement.",
   "h1": "AI Promo Video Maker for the Day You Release",
   "eyebrow": "Launch video template",
-  "lead": "Have the announcement ready when the sage-green canvas bag ships. Put the finished bag in the frame, say the name the way the label does, and download. You do not start from a blank page.",
+  "lead": "Have the promo video maker ready when the sage-green canvas bag ships. Put the finished bag in the frame, say the name the way the label does, and download. You do not start from a blank page.",
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -88,7 +88,7 @@
     },
     {
       "q": "Why start from a template instead of an empty edit?",
-      "a": "The shape is already a reveal, so the hour goes into the serum and the shade name. An empty edit has no announcement in it yet."
+      "a": "The layout is already a reveal, so your time goes to the serum and the shade name. An empty edit has no announcement in it yet."
     }
   ],
   "visual": {
@@ -477,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell Powder Reveal",
+          "label": "Kettlebell Revealed in a Color Burst",
           "chips": [
             "sports-gym"
           ],
@@ -539,7 +539,7 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "See more launch scenes"
     },
     "input": [],
     "outputs": [],
@@ -549,7 +549,7 @@
         "h2": "Questions About a Product Launch Video"
       },
       "m3": {
-        "h2": "Choose a New Product Promo Video"
+        "h2": "Open a Reveal, an Unboxing, or a Demo"
       }
     }
   },
@@ -644,7 +644,7 @@
     },
     {
       "id": "tpl-angle",
-      "label": "Every Angle"
+      "label": "Product Photos From Every Angle"
     },
     {
       "id": "image-to-video",
@@ -657,15 +657,15 @@
   ],
   "cta_title": "Announce the Item From This Template",
   "definition": {
-    "title": "An Announcement Frame for Release Day",
+    "title": "A Ready Layout for Release Day",
     "paras": [
-      "You get an announcement layout for the day a finished backpack goes public, with room for that photo and an AI avatar to hold the bag.",
-      "You write the sentence about the color. The hour goes to the bag and the name."
+      "You get a ready layout for the day a finished backpack goes public. The photo fits in the frame, and an AI avatar can hold the bag.",
+      "You write the sentence about the color. Your time goes to the bag and the name."
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "On the launch",
+      "eyebrow": "With the announcement",
       "h2": "What a Launch Template Can Carry",
       "lead": "Voice, script, avatar, and another opening can all hang on one photo of the finished item.",
       "items": [
@@ -687,7 +687,7 @@
         },
         {
           "t": "Link, Batch, and API",
-          "d": "A product link, several photos, or your catalog API can start the reveal."
+          "d": "A product link or several photos can start the reveal. Your shop software can send the same request."
         },
         {
           "t": "Editor, Music, and Languages",
@@ -702,31 +702,31 @@
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "label": "AI TikTok Ads Generator",
+        "label": "Post the launch on TikTok",
         "d": "Send a tall launch clip to TikTok from the editor.",
         "href": "page:plat-tiktok"
       },
       {
         "t": "AI Instagram Ads",
-        "label": "AI Instagram Ads",
+        "label": "Post the launch on Instagram",
         "d": "Send a tall or square launch clip to Instagram.",
         "href": "page:plat-instagram"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "label": "AI Facebook Ad Generator",
+        "label": "Post the launch on Facebook",
         "d": "Send the same launch clip to Facebook.",
         "href": "page:plat-facebook"
       },
       {
         "t": "YouTube Shorts Ads",
-        "label": "YouTube Shorts Ads",
+        "label": "Download the Shorts or wide file",
         "d": "Download a tall file for YouTube Shorts, or a wide file when that placement needs it.",
         "href": "page:plat-youtube-shorts"
       },
       {
         "t": "AI Ads and Product Photos by Platform",
-        "label": "AI Ads and Product Photos by Platform",
+        "label": "Open the full channel list",
         "d": "Open the full channel list when the next post is somewhere else.",
         "href": "page:video-hub"
       }

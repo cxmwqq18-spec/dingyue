@@ -30,7 +30,7 @@
       "img": "n:guide:fx16-model-photos-benefit-face-r1",
       "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace.",
       "t": "Show How the Piece Sits",
-      "d": "Show where the hem and the shoulder of the cream knit sit, on a gender, age, and build you describe. Leave the flat file in the gallery when they want the stitch."
+      "d": "Show where the hem and the shoulder of the cream knit sit, on a person you describe. Leave the flat file in the gallery when shoppers want the stitch."
     }
   ],
   "more_sections": [
@@ -44,7 +44,7 @@
           "alt": "Split view of an unbranded rust-orange tote laid flat and the same tote carried by an adult model.",
           "frame": "none",
           "t": "Flat Lay Beside the Worn View",
-          "d": "Shoppers can compare the rust tote laid flat, on a ghost mannequin, or on a shoulder, handles and color included. The next color can reuse that pairing."
+          "d": "Shoppers can compare the rust tote laid flat, on a hanger with nobody in it, or on a shoulder. The next color can reuse that pairing."
         },
         {
           "img": "n:guide:fx16-model-photos-scale-denim-pair-r1",
@@ -57,7 +57,7 @@
           "img": "n:guide:im13-model-photos-after-r1",
           "alt": "Adult South Asian woman with a tight low bun wearing the same heather-gray pullover hoodie in a bright courtyard.",
           "frame": "none",
-          "t": "A New Model for the Next Line",
+          "t": "New Model for the Drop",
           "d": "The next collection can wear a new model or a new setting without a new garment photo. A plain backdrop can come from that same hoodie file."
         }
       ]
@@ -125,7 +125,7 @@
     },
     {
       "q": "Can I create model photos for an entire collection?",
-      "a": "Yes. Run several garment photos in one batch, or send them from your shop software through an API. Each image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. Run several garment photos in one batch, or send them from the shop software you already use. Each image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Which frames can I download?",
@@ -247,8 +247,8 @@
         "h2": "Frequently Asked Questions"
       },
       "m3": {
-        "h2": "See Your Garments on Generated Fashion Models",
-        "lead": "Start with the garment laid flat or hanging in the photo. Compare the worn photo with the real color and shape before you publish."
+        "h2": "Worn Looks You Can Start From",
+        "lead": "Use a flat or hanging photo, then check the worn color and shape before you publish."
       }
     },
     "overview": "See the cut, color and context before you publish. Start from the flat product photo you already have, then use the worn view wherever shoppers need more context.",
@@ -340,7 +340,7 @@
         "d": "You skip model day rates, studio rental, and a round of retouching. Each worn photo is 24 credits, and that charge is shown before it runs."
       },
       {
-        "t": "More of the Drop Gets a Worn Photo",
+        "t": "Worn Photos for More Styles",
         "d": "Hero pieces used to get the shoot. The hoodie and the jacket can get a worn photo too, so more of the catalog looks ready to buy."
       },
       {
@@ -379,7 +379,7 @@
       },
       {
         "t": "Match the Model to the Buyer",
-        "d": "The cream knit on a model who looks like the buyer makes the fit easier to picture. The line sells to people who want that fit, so the model can too.",
+        "d": "The cream knit on a model who looks like the buyer makes the fit easier to picture. Pick a model who fits the people you already sell to.",
         "href": "page:tpl-tryon",
         "label": "Try-on template"
       },
@@ -398,8 +398,8 @@
         "label": "Image to video"
       },
       {
-        "t": "Connect Your Store",
-        "d": "An API lets your catalog software send garment photos in and pull the worn images back."
+        "t": "Send Photos From Your Shop",
+        "d": "Shop software you already use can send garment photos in and pull the worn images back."
       },
       {
         "t": "Make the Ad Version",

@@ -4,7 +4,7 @@
   "description": "Amazon product image requirements: a compliant white background, with the product large in the frame. Download the file and add it in Seller Central.",
   "h1": "Amazon Listing Photos That Follow Image Requirements",
   "eyebrow": "Amazon listings",
-  "lead": "From one photo you already have, make the Amazon main image, a detail, and an in-use view, then repeat that set across the catalog. A batch, or the API, can take the rest. The cost shows before each file.",
+  "lead": "From one photo you already have, meet Amazon product image requirements: a white main image, a detail, and an in-use view. Repeat that set across the catalog. A batch can do the rest. The cost shows before each file.",
   "card": "Amazon listing photos from one product photo: main, detail and in-use.",
   "secondary_keywords": [
     "Amazon main image white background",
@@ -15,7 +15,7 @@
   "faq": [
     {
       "q": "What should the Amazon main image show?",
-      "a": "The main image is the product on pure white, filling about eighty-five percent of the square. Make the long edge 1000 pixels or more, so zoom still looks sharp. No words, logos, or props. Keep a spec line for a later image, and publish the file in Seller Central after you check the current rule."
+      "a": "The main image is the product on pure white, filling about eighty-five percent of the square. Make the long edge 1000 pixels or more, so zoom still looks sharp. No words, logos, or props. Save measurements for a later image, and publish the file in Seller Central after you check the current rule."
     },
     {
       "q": "What happens if a photo breaks those rules?",
@@ -97,15 +97,15 @@
       "items": [
         {
           "t": "Upload and Clean Up",
-          "d": "Upload your ceramic mug and clear the breakfast table behind it. You get a pure white main image of the mug."
+          "d": "Add the mug photo you already shot. You get the mug alone on white, with the table gone."
         },
         {
           "t": "Style the Later Pictures",
-          "d": "Pick an AI actor to lift the mug at the breakfast table. You get a square in-use photo for a later slot."
+          "d": "Show the mug in a hand at the breakfast table. That frame is for the slot under the main image."
         },
         {
           "t": "Many at Once, Then Download",
-          "d": "Use those mug choices on many products at once, or through the API. You download the files and add them in Seller Central."
+          "d": "Run the mug files together, then download them. You add the files in Seller Central yourself."
         }
       ]
     },
@@ -125,7 +125,7 @@
     },
     {
       "t": "One Pass for the Whole Catalog",
-      "d": "One white field and one square size keep the lunch container in line with the rest of the catalog. A batch uses the same choices on every item.",
+      "d": "One white background and one square size keep the lunch container in line with the rest of the catalog. A batch uses the same choices on every item.",
       "img": "f:k2-url-use-open-bento",
       "alt": "Open sage lunch container with its compartments visible on an office desk."
     },
@@ -157,11 +157,11 @@
     {
       "eyebrow": "Amazon catalog",
       "h2": "Amazon Listing Images in One Pass",
-      "lead": "You set one white field and one square size, then those choices land on the rest of the range.",
+      "lead": "You set one white background and one square size, then those choices land on the rest of the range.",
       "items": [
         {
           "t": "Batch the Main Images",
-          "d": "Send a group of products through the same white-field choices in one batch. The cost shows before you start, and a failed job returns those credits."
+          "d": "Send a group of products through the same white-background choices in one batch. The cost shows before you start, and a failed job returns those credits."
         },
         {
           "t": "Images From Your Catalog Tool",
@@ -202,22 +202,22 @@
     "items": [
       {
         "t": "Start Without a Long Build",
-        "d": "You upload the coffee bag and get a white main image before the listing goes up. Nobody has to build a model or a review queue first.",
+        "d": "You upload the coffee bag and get a white main image before the listing goes up. You do not need a developer or a checking line first.",
         "icon": "Zap"
       },
       {
         "t": "Skip the Engineering Payroll",
-        "d": "You pay the plan instead of a machine-learning hire. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. You do not keep a GPU rack warm in the off months.",
+        "d": "You pay the plan instead of hiring a specialist. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits.",
         "icon": "Coins"
       },
       {
-        "t": "Let the Cutouts Keep Improving",
-        "d": "When cutouts get cleaner, the next mug image gets the better version. There is nothing to install or update on your side.",
+        "t": "Cleaner Edges Over Time",
+        "d": "When the cut-out edges get cleaner, the next mug image uses that better version. There is nothing to install or update on your side.",
         "icon": "RefreshCw"
       },
       {
         "t": "Handle a Heavy Listing Week",
-        "d": "In a peak week you can batch a whole run of products in one sitting, and the run finishes. You are not watching a homemade queue stall while the rest of the catalog waits.",
+        "d": "In a peak week you can batch a whole run of products in one sitting, and the run finishes. You are not stuck waiting while the rest of the catalog sits there.",
         "icon": "Layers"
       },
       {
@@ -233,37 +233,37 @@
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "label": "AI TikTok Ads Generator",
+        "label": "Open TikTok ad sizes",
         "d": "A tall TikTok ad from the same upload.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
-        "label": "AI Instagram Ads",
+        "label": "Open Instagram ad sizes",
         "d": "A square still or a tall clip for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "label": "AI Facebook Ad Generator",
+        "label": "Open Facebook ad sizes",
         "d": "A square Facebook photo, or a tall clip that fills the phone.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Ads",
-        "label": "YouTube Shorts Ads",
+        "label": "Open YouTube Shorts sizes",
         "d": "A tall Short. A wide YouTube ad is a different file.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Shopify Product Photos",
-        "label": "Shopify Product Photos",
+        "label": "Open Shopify photo sizes",
         "d": "Square photos for the product page and the collection, plus a video you upload in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "Open Every Platform From Here",
-        "label": "Open Every Platform From Here",
+        "label": "Open the platform list",
         "d": "Open the full list and pick where the next file goes.",
         "href": "/ai-video-generation"
       }
@@ -331,7 +331,7 @@
       },
       {
         "t": "Use One Crop in Every Country",
-        "d": "Use one crop and one white-field rule, then export the mug set you need for each country you sell in."
+        "d": "Use one crop and one white-background rule, then export the mug set you need for each country you sell in."
       },
       {
         "t": "Keep the Budget for Ads",

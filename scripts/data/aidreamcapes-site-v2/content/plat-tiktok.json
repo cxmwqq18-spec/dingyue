@@ -19,7 +19,7 @@
     },
     {
       "q": "Where can I get branded TikTok frames that follow our colors?",
-      "a": "Here. The frames can follow your product and your brand colors before the ad goes into the account."
+      "a": "Yes. The frames can follow your product and your brand colors before the ad goes into the account."
     },
     {
       "q": "How soon can a UGC TikTok ad be ready to review?",
@@ -94,15 +94,15 @@
       "items": [
         {
           "t": "Add a Product Link",
-          "d": "Paste the page for the black over-ear headphones, or upload one photo. You get those headphones ready for the unboxing."
+          "d": "Paste the headphone page, or upload one photo, so the unboxing uses that pair."
         },
         {
           "t": "Select an Actor",
-          "d": "Pick an AI actor to lift the black headphones out of the box. You get the cups in view for the opening."
+          "d": "Pick an AI actor to lift the black headphones out of the box, and keep the cups in the opening."
         },
         {
           "t": "Download or Post",
-          "d": "Add a voice and captions, then publish the unboxing on TikTok. You still set the budget, and the file has no watermark."
+          "d": "Add a voice and captions, then download the unboxing for the TikTok ad account."
         }
       ]
     },
@@ -138,7 +138,7 @@
   "more_sections": [
     {
       "eyebrow": "How an AI TikTok ad is made",
-      "h2": "How AI TikTok Ads Get Made",
+      "h2": "How to Change an AI TikTok Ad After Export",
       "lead": "You can change the AI TikTok ad after the first export, then run another test.",
       "items": [
         {
