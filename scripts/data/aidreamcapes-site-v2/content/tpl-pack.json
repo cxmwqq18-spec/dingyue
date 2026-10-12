@@ -2,9 +2,9 @@
   "id": "tpl-pack",
   "title": "Packaging Mockup Generator for Product Scenes | AIVideosUGC",
   "description": "Place your pouch, box or bottle artwork on a shelf, counter or cafe table before you order printed stock. Square packaging mockups from one photo.",
-  "h1": "Packaging Mockup Generator for Shelf and Scene Previews",
+  "h1": "Packaging Mockup Generator for a Shelf or Cafe Scene",
   "eyebrow": "Product photo template",
-  "lead": "See your pouch, box or bottle artwork in a shelf or cafe scene before you pay for a print run. Upload one photo of the package and get a square preview.",
+  "lead": "Open a shelf, counter or cafe scene, add one photo of the pouch, box or bottle, and download a square preview before you order prints.",
   "secondary_keywords": [
     "box mockup from design photo",
     "pouch packaging mockup",
@@ -30,60 +30,60 @@
   },
   "steps": [
     {
-      "t": "Upload Your Package Photo",
-      "d": "Add one clear photo of the pouch, box or bottle you will ship. The shape in your photo stays the shape in the preview."
+      "t": "Upload Your Product Photo",
+      "d": "Upload one clear photo of the pouch, box or bottle you will ship. The shape in that photo stays the shape in the preview."
     },
     {
-      "t": "Pick a Packaging Scene",
-      "d": "Pick a shelf, counter or cafe setting. The credit cost shows before the square preview is made."
+      "t": "Describe Your Scene",
+      "d": "Name a shelf, counter or cafe setting. The credit cost is shown before the square preview is made."
     },
     {
       "t": "Download and Post",
-      "d": "Save the square file with no watermark. Compare it with your artwork and printer proof before approving production."
+      "d": "Download the square file. It has no watermark. Compare it with your artwork and a printer proof before you approve production."
     }
   ],
-  "steps_h2": "How to Make a Packaging Mockup in 3 Simple Steps",
-  "steps_lead": "One package photo becomes a styled scene preview - no studio, no print order, no wait.",
+  "steps_h2": "Make a Box Mockup from One Package Photo in 3 Steps",
+  "steps_lead": "One photo of the real package, one scene, then a square file you compare with the printer proof.",
   "faq": [
     {
-      "q": "Can I make a packaging mockup from one photo?",
-      "a": "Yes. A clear photo of the pouch, box or bottle can become a square scene preview. The credit cost appears before the job runs."
+      "q": "Can I make a box mockup from a design photo?",
+      "a": "Upload a photo of the pouch, box or bottle you will ship. A design file by itself is not the source. The credit cost appears before the job runs."
     },
     {
-      "q": "Which package shapes work for a mockup?",
+      "q": "Which package shapes work?",
       "a": "Pouches, cartons, bottles, tins, jars and bags work when the package shape is visible in the source photo."
     },
     {
-      "q": "Can a mockup verify my printed colors?",
-      "a": "No. It shows presentation and composition. A printer proof or press sample remains the authority for color, ink and small legal text."
+      "q": "Can a mockup verify printed colors?",
+      "a": "No. It shows presentation and composition. A printer proof or press sample remains the check for color, ink and small legal text."
     },
     {
-      "q": "Will small label text come out clearly?",
-      "a": "Dense ingredient panels and other fine print can blur or change. Use a photo of the real pack for exact wording."
+      "q": "Will small label text stay clear?",
+      "a": "Dense ingredient panels and other fine print can blur or change. Use a photo of the real pack when the wording must be exact."
     },
     {
       "q": "Can I compare two packaging variants?",
-      "a": "Yes. Create both variants in the same scene and compare the front panel, outline and shelf setting side by side."
+      "a": "Yes. Make both variants in the same scene and compare the front panel, outline and shelf setting side by side."
     },
     {
       "q": "Can I use the mockup as my listing photo?",
-      "a": "Use it for a setting or launch concept. Keep a clear photo of the real package for measurements and details buyers must verify."
+      "a": "Use it for a setting or a launch concept. Keep a clear photo of the real package for measurements and for details buyers must verify."
     },
     {
       "q": "What does a packaging preview cost?",
-      "a": "Each square packaging mockup costs 24 credits. The total appears before the job runs, and failed jobs return their credits."
+      "a": "Each product photo costs 24 credits. The total appears before the job runs, and a failed job returns those credits."
     },
     {
-      "q": "Can I share the preview with clients or retailers?",
-      "a": "Yes. Downloaded files have no watermark and can support a retailer deck or pitch before print production."
+      "q": "Can I share the preview with a retailer?",
+      "a": "Yes. The download has no watermark and can support a retailer deck or a pitch before print production."
     },
     {
-      "q": "Can I test a package concept before ordering prints?",
-      "a": "Yes. Use the mockup to compare shelf, counter or cafe presentation before you commit to a print run."
+      "q": "Can I test a concept before I order prints?",
+      "a": "Yes. Use the mockup to compare a shelf, counter or cafe presentation before you commit to a print run."
     },
     {
       "q": "What source photo gives the cleanest mockup?",
-      "a": "Use a sharp photo with the full package visible and limited glare so its outline and front panel stay easy to compare."
+      "a": "Use a sharp photo with the full package visible and limited glare, so the outline and front panel stay easy to compare."
     }
   ],
   "visual": {
@@ -96,8 +96,8 @@
       "n:guide:tpl-pack-c3-m3-shelf-boxes"
     ],
     "picker": {
-      "title": "Preview Your Packaging in a Real Shelf Scene",
-      "lead": "See a pouch, box, or bottle in context before you commit to a print run.",
+      "title": "Browse Video Ad Templates by Category",
+      "lead": "These cards are video ads for other categories, not shelf mockups. For the preview, use the upload box above and add one photo of the package you will ship.",
       "chips": [
         {
           "id": "accessories",
@@ -520,20 +520,122 @@
       "prompt": "Use the uploaded plain kraft coffee pouch as the exact package. Place it on a cafe counter with its front panel visible and the pouch shape unchanged.",
       "sourceTitle": "Your product"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Make a packaging mockup from one package photo"
-      },
       "m3": {
-        "h2": "Choose a packaging mockup scene"
+        "h2": "Browse Video Ad Templates by Category",
+        "lead": "These cards are video ads for other categories, not shelf mockups. For the preview, use the upload box above and add one photo of the package you will ship."
       },
       "faq": {
-        "h2": "Questions about packaging mockup generators"
+        "h2": "Questions About a Packaging Mockup Generator"
       }
     }
-  }
+  },
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq",
+    "cta"
+  ],
+  "reviews": {
+    "h2": "Coffee Packaging Mockup Scenes",
+    "lead": "Each card is a presentation preview. It is not a check of ink or legal text.",
+    "items": [
+      {
+        "example": true,
+        "who": "Coffee shop",
+        "t": "Cafe shelf",
+        "d": "A coffee shop puts a bag on a cafe shelf and judges the composition before a print order."
+      },
+      {
+        "example": true,
+        "who": "Tea shop",
+        "t": "Tin row",
+        "d": "A tea shop puts a tin on a counter so the front panel can be compared with a second variant later."
+      },
+      {
+        "example": true,
+        "who": "Sauce shop",
+        "t": "Bottle line",
+        "d": "A sauce shop puts a bottle on a grocery shelf, starting from a photo of the real bottle."
+      },
+      {
+        "example": true,
+        "who": "Snack shop",
+        "t": "Pouch stack",
+        "d": "A snack shop puts a stand-up pouch in a retail row to judge the front panel."
+      },
+      {
+        "example": true,
+        "who": "Candle shop",
+        "t": "Jar shelf",
+        "d": "A candle shop puts a labeled jar on a wood shelf and leaves fine print to the real pack photo."
+      },
+      {
+        "example": true,
+        "who": "Soap shop",
+        "t": "Carton",
+        "d": "A soap shop puts a carton on a clean counter for a retailer deck, not as the measurement photo."
+      },
+      {
+        "example": true,
+        "who": "Supplement shop",
+        "t": "Jar label",
+        "d": "A supplement shop turns a jar to face forward. Dense ingredient text can blur, so the real label photo stays the source of the wording."
+      },
+      {
+        "example": true,
+        "who": "Pet food shop",
+        "t": "Bag end",
+        "d": "A pet-food shop uses a large bag in a simple shelf scene as a launch concept."
+      },
+      {
+        "example": true,
+        "who": "Juice shop",
+        "t": "Two variants",
+        "d": "A juice shop shows two bottle variants in the same scene and compares the front panel and outline."
+      },
+      {
+        "example": true,
+        "who": "Bakery shop",
+        "t": "Window box",
+        "d": "A bakery shop puts a window box on a counter and checks it against the printer proof before production."
+      }
+    ]
+  },
+  "related_h2": "Product Label Scene Preview for Food Listings",
+  "related_lead": "Food pages to use with the mockup: drink videos, a Spark Ad, a bundle photo for kits, and Shopify.",
+  "relatedLinks": [
+    {
+      "id": "photo-hub",
+      "label": "AI product photo generator"
+    },
+    {
+      "id": "tpl-drink",
+      "label": "AI food and drink videos"
+    },
+    {
+      "id": "tpl-spark-ads-style-video",
+      "label": "Spark Ads style video"
+    },
+    {
+      "id": "tpl-box",
+      "label": "product bundle photos"
+    },
+    {
+      "id": "ind-food-drinks",
+      "label": "AI food and drink product videos"
+    },
+    {
+      "id": "plat-shopify",
+      "label": "Shopify product photos"
+    }
+  ],
+  "cta_title": "Start a Shelf Preview from One Package Photo",
+  "cta_lead": "Upload one photo of the package and see the credit cost before you start."
 }

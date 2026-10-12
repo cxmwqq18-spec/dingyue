@@ -2,56 +2,29 @@
   "id": "tpl-retargeting-video-ad",
   "title": "Retargeting Video Ad Template | AIVideosUGC",
   "description": "Bring viewed products back with a retargeting video from one photo. Show a clear detail, add a confirmed offer after download, and post where they shop.",
-  "h1": "Give Viewed Products a Fresh Reason to Return",
+  "h1": "Retargeting Video Ad for Shoppers Who Already Looked",
   "eyebrow": "Retargeting video template",
-  "lead": "Turn one product photo into a retargeting video ad that gives returning shoppers a clear reason to look again.",
-  "benefits_h2": "Make the retargeting video ad result clear",
-  "benefits": [
-    {
-      "t": "Show the detail they missed",
-      "d": "Bring a viewed product back with one useful detail in focus. Show a seam, pocket, finish or everyday use moment instead of repeating the same product shot.",
-      "img": "n:guide:fx23-retarget-benefit-detail",
-      "alt": "Adult woman turns the lid of a plain speckled ceramic travel mug toward the camera."
-    },
-    {
-      "t": "Test another angle quickly",
-      "d": "Create a routine version and a close-detail version from the source photo. Compare the creative in your campaign without booking another shoot.",
-      "img": "n:guide:fx23-retarget-benefit-angle",
-      "alt": "Adult man adjusts the front pocket zipper on an olive canvas duffel bag."
-    },
-    {
-      "t": "Fit the feed you buy",
-      "d": "Prepare a clear product moment for feed or Reels. Use 1:1 for feed or 9:16 for Reels, then choose 6, 10, 15 or 30 seconds for the story.",
-      "img": "n:guide:fx23-retarget-benefit-format",
-      "alt": "Adult woman slides a charcoal desk organizer into a drawer."
-    },
-    {
-      "t": "Keep live details editable",
-      "d": "Add the confirmed offer, price, date or product link after download. Your audience rules and frequency stay in the ad platform where the campaign runs.",
-      "img": "n:guide:fx23-retarget-benefit-editable",
-      "alt": "Adult holds a plain coral cream jar beside their cheek."
-    }
-  ],
+  "lead": "Make a new clip for a product people already saw, then add the current offer after download.",
   "secondary_keywords": [
     "remarketing video ad",
     "cart reminder video",
     "returning shopper ad",
     "retargeting creative"
   ],
-  "steps_h2": "How to Make a Retargeting Video Ad in 3 Simple Steps",
-  "steps_lead": "Turn one source photo into a focused second look, then add campaign details after download.",
+  "steps_h2": "Make a Remarketing Video Ad in 3 Steps",
+  "steps_lead": "The clip is a new video. It does not know who viewed the product or left a cart.",
   "steps": [
     {
-      "t": "Upload Your Product",
-      "d": "Add a clear source photo with the full product visible. Keep the detail to revisit in frame."
+      "t": "Upload Your Product Photo",
+      "d": "Upload one photo that shows the product and the detail worth a second look. Keep that detail in frame."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose one focused second look, such as a seam, pocket or use moment. Keep the product as the subject."
+      "t": "Describe Your Scene",
+      "d": "Describe one closer look, then pick a size and a length from 6 to 30 seconds. Leave cart status out of the scene."
     },
     {
       "t": "Download and Post",
-      "d": "Download the result, then add your confirmed offer or link in your editor. Set audience and frequency in your ad platform."
+      "d": "Download the clip and add the current offer in your editor. Choose the audience in your ad platform."
     }
   ],
   "maker": {
@@ -73,52 +46,48 @@
   },
   "faq": [
     {
-      "q": "What is a retargeting video ad?",
-      "a": "It is a new product creative for shoppers who have already seen an item. Set the audience, offer and frequency in your ad platform."
+      "q": "What is a retargeting video ad here?",
+      "a": "A new product clip for people who already saw an item. A cart reminder video can use this creative, but the file has no viewer list. You choose the audience, exclusions and frequency in your ad platform."
     },
     {
-      "q": "Does AIVideosUGC choose my retargeting audience?",
-      "a": "No. Choose visitors, cart users, exclusions, budget and frequency in your ad platform."
+      "q": "Does AIVideosUGC know who viewed a product or left a cart?",
+      "a": "No. The clip does not receive browsing or cart data. You choose the audience in your ad platform, and the scene only shows the product."
     },
     {
-      "q": "Can the video know that someone viewed a product or left a cart?",
-      "a": "No. The clip does not receive a viewer history. Keep browsing or cart claims out of the scene unless your ad platform supplies them."
+      "q": "How do I make the second look?",
+      "a": "Upload a photo that shows the detail worth revisiting, describe that one closer look, pick a size and length, then download."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "Upload one clear photo that shows the complete product and the detail you want shoppers to revisit."
+      "q": "Who is it for?",
+      "a": "Electronics and fashion shops running remarketing on Facebook or Instagram, and anyone who needs a fresh creative rather than a repeat of the first ad."
     },
     {
-      "q": "What result does this template show?",
-      "a": "It shows one focused product moment, such as a feature close-up, routine use or a return-to-cart reminder."
+      "q": "What should the scene show?",
+      "a": "One detail the first view may have missed: a lid, a zipper, a finish or a daily-use moment. Keep the product as the subject."
     },
     {
-      "q": "Which length or format should I choose?",
-      "a": "Choose 6, 10, 15 or 30 seconds. Use 1:1 for feed or 9:16 for Reels when those formats match your campaign."
+      "q": "Which size and length should I pick?",
+      "a": "1:1 for a feed and 9:16 for Reels are the usual pair, plus 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds."
     },
     {
-      "q": "Can I change details after download?",
-      "a": "Yes. Add the confirmed price, offer, date or product link in your editor or ad platform after the scene is ready."
-    },
-    {
-      "q": "Do I need a shoot day?",
-      "a": "No. Start with one product photo, choose a scene and review the generated result before posting."
-    },
-    {
-      "q": "Where can I use the clip?",
-      "a": "Use it as creative in a retargeting campaign, feed post or Reels ad. Configure targeting and destination in the platform where you buy media."
-    },
-    {
-      "q": "How much do the videos cost?",
-      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, and you see the charge before you start."
+      "q": "Can I put the current offer on the video here?",
+      "a": "Add the confirmed price, date or link after download. If the offer changes, edit that text on the file you already have."
     },
     {
       "q": "Can I test more than one second look?",
-      "a": "Yes. Create another scene from the source photo and compare the versions in your ad platform without reshooting."
+      "a": "Yes. Make another scene from the same photo and compare the files in your ad platform. You do not need a new shoot for each angle."
+    },
+    {
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
+    },
+    {
+      "q": "Where do I run it?",
+      "a": "As creative in a remarketing campaign, a feed post or a Reels ad. The download has no watermark. Any person on screen is an AI performer, not a past buyer."
     }
   ],
   "visual": {
-    "overview": "A retargeting video puts the product back in a shopper's feed with one clear reason to return. Show it in a familiar routine or focus on a detail the buyer is still weighing, then add your offer and product link after download.",
+    "overview": "",
     "strip": [
       "n:guide:rc7-tpl-retargeting-video-ad-strip-0-r1",
       "n:guide:g1-retarget-shoe-tread-detail",
@@ -134,7 +103,7 @@
       "sourceHint": "Keep the complete headband and both ear cups in clear focus.",
       "result": "n:guide:q14-retarget-step",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter wearing the over-ear headphones walks along a bright station platform and turns toward an arriving train, both ear cups visible. Soft daylight, candid phone-video look. Medium side-follow framing with one smooth handheld move. End side-on at the station with both ear cups visible. Sound: footsteps and low station ambience; no music.",
+      "prompt": "An adult wearing the over-ear headphones walks along a bright station platform and turns toward an arriving train, with both ear cups visible.",
       "options": [
         [
           "Size",
@@ -151,8 +120,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a retargeting video format",
-      "lead": "Pick a format that brings the product back with one clear answer.",
+      "title": "Choose a Scene for a Remarketing Video Ad",
+      "lead": "Open a product scene and show one detail worth a second look. You choose who sees it in your ad platform.",
       "chips": [
         {
           "id": "accessories",
@@ -569,47 +538,98 @@
       "button": "Explore More"
     },
     "titles": {
-      "m2": {
-        "h2": "Make a retargeting video ad from one product photo"
-      },
       "m3": {
-        "h2": "Choose a scene that brings the product back into view"
-      },
-      "m4": {
-        "h2": "Place a retargeting video in social ads and product pages"
-      },
-      "m5": {
-        "h2": "Start a retargeting video with a clear product photo"
-      },
-      "m6": {
-        "h2": "Choose a retargeting video format"
-      },
-      "m7": {
-        "h2": "Add the current offer after download"
+        "h2": "Choose a Scene for a Remarketing Video Ad"
       },
       "faq": {
-        "h2": "Questions about retargeting video ads"
-      },
-      "examples": {
-        "h2": "Retargeting video ad examples"
-      },
-      "templates": {
-        "h2": "More retargeting video templates"
+        "h2": "Retargeting Video Ad Questions"
       }
     }
   },
-  "cta_title": "Give Viewed Products a Fresh Reason to Return",
-  "cta_lead": "Upload one product photo, see the credit cost first and prepare a retargeting video for your next campaign.",
+  "cta_title": "Ready to Add the Current Offer?",
+  "cta_lead": "Upload one product photo and see the credit cost before you set the audience.",
   "relatedLinks": [
     "video-ads",
-    "product-videos",
-    "image-to-video",
-    "url-to-video",
-    "tpl-compare",
-    "tpl-howto",
-    "plat-tiktok",
-    "plat-instagram",
-    "ind-electronics",
-    "templates"
-  ]
+    "tpl-carousel-video-ad",
+    "tpl-film",
+    "tpl-outfit",
+    "plat-facebook",
+    "ind-electronics"
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "Sample Returning Shopper Ad Scenes",
+    "lead": "Example second looks. The audience is chosen in your ad platform, not inside the clip.",
+    "items": [
+      {
+        "example": true,
+        "who": "Drinkware shop",
+        "t": "Lid turn",
+        "d": "Example: a speckled travel mug lid turned toward camera for a second look."
+      },
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "Pocket zip",
+        "d": "Example: a duffel pocket zipper adjusted so a missed detail is the subject."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Drawer slide",
+        "d": "Example: a charcoal desk organizer slid into a drawer."
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Jar beside the cheek",
+        "d": "Example: a coral cream jar held beside a cheek as a closer look. The person is an AI performer."
+      },
+      {
+        "example": true,
+        "who": "Electronics shop",
+        "t": "Port reminder",
+        "d": "Example: one port shown again so a product page can answer a question the first ad skipped."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Stitch close",
+        "d": "Example: a seam held to camera for shoppers who already saw the full outfit."
+      },
+      {
+        "example": true,
+        "who": "Shoe shop",
+        "t": "Tread close",
+        "d": "A shoe shop shows the sole again for people who already viewed the pair. The shop chooses that audience in its ad platform."
+      },
+      {
+        "example": true,
+        "who": "Furniture shop",
+        "t": "Hardware close",
+        "d": "Example: a handle turned once as the reason to look again."
+      },
+      {
+        "example": true,
+        "who": "Food shop",
+        "t": "Pack close",
+        "d": "Example: a pouch seal shown again, with the current offer added after download."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Clip close",
+        "d": "Example: a harness clip fastened once as the detail a first view rushed past."
+      }
+    ]
+  },
+  "related_h2": "Pages for Retargeting Creative",
+  "related_lead": "Video ads, electronics scenes, and Facebook placements for a second look."
 }

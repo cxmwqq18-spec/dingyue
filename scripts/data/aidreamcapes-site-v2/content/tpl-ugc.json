@@ -1,57 +1,30 @@
 {
   "id": "tpl-ugc",
-  "title": "UGC Style Product Photos, Recreated in Minutes | AIVideosUGC",
+  "title": "UGC Style Product Photos for Ads and Listings | AIVideosUGC",
   "description": "See a creator-style photo, recreate it with your own product. One product photo becomes a review, unboxing or demo scene for social ads and listings.",
-  "h1": "Create UGC Style Product Photos for Social Ads",
+  "h1": "UGC Style Product Photos for Ads and Listings",
   "eyebrow": "Ad photo template",
-  "lead": "See a creator-style shot you like, recreate it with your own product. One photo becomes a review, unboxing or demo scene, ready in minutes.",
-  "benefits_h2": "Why sellers choose UGC style product photos",
-  "benefits": [
-    {
-      "t": "No creator or shoot to book",
-      "d": "A believable person or pair of hands appears with your product from one photo, so every listing gets social content on its own schedule.",
-      "img": "n:guide:fx25-tpl-ugc-benefit-1",
-      "alt": "Adult hands holding a plain slate-blue running shoe beside a gym bench after a workout."
-    },
-    {
-      "t": "Several scenes from one photo",
-      "d": "Run the product through a routine shot, a delivery unboxing or a demo, and test which moment holds attention without reshooting.",
-      "img": "n:guide:fx25-tpl-ugc-benefit-2",
-      "alt": "Adult man adjusting a plain folding phone stand at a clean desk in window light."
-    },
-    {
-      "t": "Made for feed and listing spots",
-      "d": "The square image drops into a feed post, carousel or product gallery. Add your caption and price afterwards as editable text.",
-      "img": "n:guide:fx25-tpl-ugc-benefit-3",
-      "alt": "Adult woman with short bob hair holding a plain coral pump bottle beside her cheek at a bathroom vanity."
-    },
-    {
-      "t": "Yours for commercial use",
-      "d": "Downloads carry no AIVideosUGC watermark and can run in your own ads, pages and posts with no extra licensing.",
-      "img": "n:guide:fx25-tpl-ugc-benefit-4",
-      "alt": "Adult man brushing a calm golden dog with a plain wooden grooming brush in a sunlit living room."
-    }
-  ],
+  "lead": "Booking a creator for every product stalls the ad calendar. Upload one product photo and get UGC style product photos for the feed.",
   "secondary_keywords": [
     "creator style product photos",
     "user-generated content style images",
     "lifestyle photos for Instagram ads",
     "fitness product lifestyle photos"
   ],
-  "steps_h2": "How to Make UGC Style Product Photos in 3 Simple Steps",
-  "steps_lead": "Turn one product photo into a creator-style scene you can publish today, with no studio booking and no rescheduling.",
+  "steps_h2": "Make User-Generated Content Style Images",
+  "steps_lead": "Upload the product, pick a creator-style scene, then download a still for the feed.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add a clear full-product photo with the front label facing the camera. Keep the product in frame so the scene preserves its shape."
+      "d": "Upload one product photo with the package or product complete and easy to see. That file is the source for every scene you generate."
     },
     {
       "t": "Pick a Creator Style",
-      "d": "Choose a creator-style scene, then generate it with your product in the frame. Keep the brief focused on one action and setting."
+      "d": "Pick a routine, unboxing or demo style. Add one line about the setting if you want, then generate."
     },
     {
       "t": "Download and Post",
-      "d": "Download the photo and add your caption or offer in your own editor. Keep prices and approved claims editable after download."
+      "d": "Download the photo and add the caption or offer in your own editor. Keep prices and claims as text you can edit later."
     }
   ],
   "maker": {
@@ -73,52 +46,39 @@
   },
   "faq": [
     {
-      "q": "What is a UGC style product photo template?",
-      "a": "It is a ready-made creator-style scene. You add your own product photo and generate a believable review, unboxing or demo shot without filming a creator."
+      "q": "What is a UGC style product photo?",
+      "a": "Upload one product photo and get a creator-style review, unboxing or demo still, without filming a creator. The person in the frame is generated."
     },
     {
-      "q": "Do I need to write prompts to use these templates?",
-      "a": "No. Pick a style, upload your product photo and generate. Step two lets you add one line about the scene if you want."
+      "q": "Do I have to describe the whole scene?",
+      "a": "No. Upload the product photo and pick a routine, unboxing or demo. One short line about the room or the light is optional."
     },
     {
-      "q": "Who are these photo templates built for?",
-      "a": "Ecommerce sellers, marketers and agencies that need fresh social photos for ads, carousels and product pages without booking shoots."
+      "q": "Who are these stills for?",
+      "a": "Ecommerce sellers, marketers and agencies that need social photos for ads, carousels and product pages without booking a shoot."
     },
     {
-      "q": "Which platforms are these photos made for?",
-      "a": "Square photos fit Instagram and TikTok posts, carousels and product galleries. Place them on a tall canvas in your editor for Stories."
+      "q": "Where do the square photos fit?",
+      "a": "They fit Instagram and TikTok posts, carousels and product galleries. For a full-screen Story, place the square on a tall canvas in your editor."
     },
     {
-      "q": "Can beginners use these templates?",
-      "a": "Yes. Upload one product photo, choose a style and download the result. No editing or production experience is needed."
+      "q": "Can a beginner do this?",
+      "a": "Yes. Upload one product photo, choose a style and download the result. No editing background is required."
     },
     {
       "q": "Can I make several scenes from one product photo?",
-      "a": "Yes. Reuse the same photo across a routine, unboxing or demo scene, and generate a new version whenever you need another angle to test."
+      "a": "Yes. Reuse the same photo for a routine, an unboxing or a demo. Each scene is its own job, and the cost is shown before it starts."
     },
     {
-      "q": "How fast is a UGC style photo made?",
-      "a": "A photo is generated in minutes after you start the job, with no studio booking, creator schedule or reshoot in between."
+      "q": "What does a creator-style photo cost, and can it run as an ad?",
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts. You are still responsible for the claims and disclosures in the ad."
     },
     {
-      "q": "What does a creator-style photo cost?",
-      "a": "Each photo costs 24 credits, and the cost is shown before the job starts."
-    },
-    {
-      "q": "Can I use these photos in paid ads?",
-      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for ad claims and disclosures."
-    },
-    {
-      "q": "Can I reuse one product photo across several scenes?",
-      "a": "Yes. Reuse the same clear product photo for a routine, unboxing or demo scene and generate a fresh version for each angle."
-    },
-    {
-      "q": "Should prices and product claims go inside the generated photo?",
-      "a": "Keep prices, offers and approved claims as editable caption or page text, then add them in your own editor after download."
+      "q": "When should I make a video instead?",
+      "a": "Choose video when the ad needs motion, a voice or a sequence. That path starts at [AI UGC video ads](page:video-ads). This template stops at a still."
     }
   ],
   "visual": {
-    "overview": "A creator-style photo shows your product in an everyday moment, ready for social ads and listing galleries.",
     "strip": [
       "n:guide:g1-ugc-running-shoe-review",
       "n:guide:im04-tpl-ugc-strip-01-r1",
@@ -144,8 +104,8 @@
       ]
     },
     "picker": {
-      "title": "Pick a creator style",
-      "lead": "Choose a category, then open a scene and add your own product.",
+      "title": "These cards open a 15-second video",
+      "lead": "Each card is a 9:16 video ad, not a square creator-style photo. Use the upload above for the still, and write the caption after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -563,26 +523,96 @@
     },
     "titles": {
       "m2": {
-        "h2": "Pick a style, add your product"
+        "h2": "Make User-Generated Content Style Images"
       },
       "m3": {
-        "h2": "Pick a creator style"
+        "h2": "These cards open a 15-second video",
+        "lead": "Each card is a 9:16 video ad, not a square creator-style photo. Use the upload above for the still, and write the caption after you download."
       },
       "faq": {
-        "h2": "UGC Style Product Photo Template Questions"
+        "h2": "Questions about UGC style product photos"
       }
     }
   },
   "relatedLinks": [
-    "social-ad-photos",
-    "tpl-story",
-    "video-ads",
-    "tpl-beauty",
-    "tpl-drink",
-    "plat-instagram",
-    "plat-tiktok",
-    "guide-ad-sizes-by-platform",
-    "blog-ai-ugc-video-ads-guide",
-    "guide-first-tiktok-video-ad"
+    {
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
+    },
+    {
+      "id": "ind-health-wellness",
+      "label": "AI lifestyle photos for wellness brands"
+    },
+    {
+      "id": "plat-tiktok",
+      "label": "AI TikTok ads generator"
+    },
+    {
+      "id": "plat-instagram",
+      "label": "AI Instagram ads"
+    },
+    {
+      "id": "unboxing-videos",
+      "label": "AI unboxing video"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
+    }
+  ],
+  "reviews": {
+    "h2": "How sellers use a UGC style product photo",
+    "lead": "A few ways sellers turn one product photo into a creator-style still.",
+    "items": [
+      {
+        "example": true,
+        "who": "Skincare shop",
+        "t": "A routine still",
+        "d": "The shop places the bottle in a morning-routine scene for the feed. The caption, including any claim, is written after download."
+      },
+      {
+        "example": true,
+        "who": "Supplement brand",
+        "t": "Unboxing without a creator",
+        "d": "An unboxing scene is generated from the pouch photo, with hands that are generated rather than a hired creator. The label is checked against the source before the ad runs."
+      },
+      {
+        "example": true,
+        "who": "Fitness seller",
+        "t": "Demo on a simple background",
+        "d": "A demo crop shows the product in use for a fitness post. The same source can be run again if they want a different angle."
+      },
+      {
+        "example": true,
+        "who": "Marketplace seller",
+        "t": "Listing and a social crop",
+        "d": "One square file can go in a carousel and another run can serve the product gallery. Prices stay in the caption, not in the image."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "Several scenes, one product photo",
+        "d": "The agency tests a routine, an unboxing and a demo from the same upload. Each run shows its credit cost first."
+      },
+      {
+        "example": true,
+        "who": "Small brand",
+        "t": "No sample shipment",
+        "d": "They skip sending a sample to a creator for this still. The person in frame is generated, not a customer and not an influencer they hired."
+      }
+    ]
+  },
+  "related_h2": "Wellness photos for TikTok and Instagram",
+  "related_lead": "The ad-image tool, wellness, TikTok, Instagram, Story ads and lifestyle photos.",
+  "cta_title": "Ready to make a creator-style photo?",
+  "cta_lead": "Upload one product photo and pick a scene. You see the credit cost before the job starts.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "reviews",
+    "steps",
+    "related",
+    "faq",
+    "cta"
   ]
 }

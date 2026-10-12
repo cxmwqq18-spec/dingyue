@@ -2,50 +2,31 @@
   "id": "examples",
   "title": "AI Product Photo and Video Examples | AIVideosUGC",
   "description": "See how one product photo becomes a listing image, lifestyle scene or short ad. Compare six product examples and try a direction for your store.",
-  "h1": "AI Product Photo and Video Examples, Start to Finish",
-  "eyebrow": "From photo to ad",
-  "lead": "See how one product photo becomes a listing image, lifestyle scene or short ad. Pick a direction, then try it with your own product.",
-  "card": "Six products, from a travel mug to sunscreen, shown in finished photos and video.",
+  "h1": "AI Product Photo and Video Examples You Can Recreate",
+  "eyebrow": "From photo to finished file",
+  "lead": "Six products, each shown from the source photo to a finished still. Pick a direction and try it with your own item.",
+  "card": "Six products, from a travel mug to sunscreen, shown as finished photos.",
   "secondary_keywords": [
     "AI product video ad examples",
     "AI lifestyle photo examples",
     "product photo to video ad",
     "AI social ad image examples"
   ],
-  "intro": "Browse the complete set, filter by product category, and open a scene to try a similar direction with your product.",
-  "benefits_h2": "Why use the examples gallery?",
-  "benefits": [
-    {
-      "t": "See the whole transformation",
-      "d": "Every card pairs the uploaded starting photo with the finished result, so you see exactly what one image becomes before you spend a credit."
-    },
-    {
-      "t": "Choose a clear direction",
-      "d": "Compare a source photo, scene and finished result instead of inventing a shot from scratch, then choose a direction that fits your product."
-    },
-    {
-      "t": "Keep the product consistent",
-      "d": "Use the same product across the source, scene and result so the finished ad stays easy to review."
-    },
-    {
-      "t": "Results you can publish",
-      "d": "Files you generate from these directions are watermark-free and licensed for commercial use in listings, feeds, and paid ads."
-    }
-  ],
-  "steps_h2": "How to Make AI Product Examples in 3 Simple Steps",
-  "steps_lead": "Three steps take you from an example to a finished image or video of your product.",
+  "intro": "Filter by product, open a scene, and start a similar file from your own photo. The product in your file comes from the photo you upload.",
+  "steps_h2": "From a product photo to a finished still",
+  "steps_lead": "Upload your photo, open the scene you liked, and download your own file.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one photo of the item you want to promote. The result is built around that product, just like the example's starting photo."
+      "d": "Add one photo of the item you want to promote, with the whole product visible."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose a finished look you like and open its tool. Apply that shot type and action to your own product."
+      "t": "Open the Scene",
+      "d": "Choose a finished example and start that shot type with your own product."
     },
     {
       "t": "Download and Post",
-      "d": "Review the finished file and save it. Add price or captions in your editor, then publish it where you sell."
+      "d": "Save the file after you check the product. Add a price or captions in your editor, then publish it."
     }
   ],
   "cases": [
@@ -154,215 +135,38 @@
   ],
   "faq": [
     {
-      "q": "Can I use these examples to plan a video for my product?",
-      "a": "Yes. Upload a sharp product photo, choose the format and length available in the workspace, then describe one clear opening scene. Try another version when you want a different opening."
+      "q": "Can I plan my own file from these examples?",
+      "a": "Yes. Each example shows a source photo and a finished direction. Upload your product photo and ask for that same kind of scene."
     },
     {
-      "q": "Why don't the examples include prices or headlines?",
-      "a": "AI sometimes garbles letters and numbers, so prices, headlines and offers are left for you to add in Canva, CapCut or Ads Manager, where every word and number stays exactly as you type it."
+      "q": "Why is there no price on the examples?",
+      "a": "Prices, headlines, and captions are added by you after download. The example stops at the product picture or clip."
     },
     {
-      "q": "What can I learn from the product video examples?",
-      "a": "Use the examples to compare openings, camera movement, and product framing. Build your own version with a sharp photo, a chosen size, and one clear action."
+      "q": "What should I check on a still example?",
+      "a": "Check that the product's shape and color still match your photo, and that the scene is one you would actually post. Then try that same kind of still with your own item."
     },
     {
-      "q": "How do I choose between a photo and video example?",
-      "a": "Use photo examples to plan listing, lifestyle, or detail images. Use video examples when movement or a product action helps explain how the item is used."
+      "q": "How do I choose a still versus a clip?",
+      "a": "Choose a still when the listing gallery needs a scene. Choose a clip when the selling point is motion, such as a pour, a spray, or a try-on."
     },
     {
-      "q": "Can I use the finished files for paid ads?",
-      "a": "Yes. Images and videos you generate from these directions are watermark-free and licensed for commercial use, including paid ads and product pages. The claims and text you add must be true and pass the platform's review."
+      "q": "Can I use a file I make from an example in a paid ad?",
+      "a": "Yes. Files you generate can be used commercially and have no watermark. The example images on this page are demonstrations, not assets to download and repost."
     },
     {
-      "q": "Will the result look exactly like the example?",
-      "a": "It follows the same shot type and framing, but every result is generated from your specific photo, so details and scene elements differ. Compare the file with your actual product before publishing and rerun the scene if the shape or label drifts."
+      "q": "Will my result match the example exactly?",
+      "a": "No. Your file is built from your photo, in the direction you picked. Check the product before you post it. A failed job returns its credits."
     },
     {
-      "q": "Which format should I try first?",
-      "a": "Start with Square for a product page or feed, 9:16 for short vertical ads, and 16:9 when a wide player or product page calls for it."
+      "q": "Which frame should I try first?",
+      "a": "Try 1:1 for a listing gallery and 9:16 for a full-screen clip. Other frames are 16:9, 4:3, and 3:4. Clip lengths are 6, 10, 15, or 30 seconds."
+    },
+    {
+      "q": "Do the examples include captions?",
+      "a": "No. Add captions, a price, and licensed music after download. Nothing on this page is a finished ad with an offer baked in."
     }
   ],
-  "overview": [
-    {
-      "h2": "How to read a product example",
-      "p": "Each card shows an example product photo, scene direction, and generated result. Look first at the product's outline, color, closure, label area, and other buying details; then look at the new setting or camera movement. The useful question is whether the result gives shoppers a new reason to understand that product."
-    },
-    {
-      "h2": "Use the gallery as a starting point",
-      "p": "These examples show possible directions for your own product. They are prompts for a scene, not a promise that every result will include every prop, hand, reflection, or fold from your photo. Start with the closest product type, borrow its level of detail, and make a separate version when you want another opening or setting."
-    }
-  ],
-  "input_guide": {
-    "h2": "Prepare a source photo that can be compared",
-    "items": [
-      {
-        "t": "Show the whole item",
-        "d": "Keep the product in focus, uncropped, and large enough to inspect. For shoes, bags, jewelry, or electronics, photograph every side you expect the gallery to show."
-      },
-      {
-        "t": "Keep one product in the frame",
-        "d": "A single item makes it easier to tell whether the shape and color stayed consistent. If two products are the point of the comparison, make that relationship explicit in the description."
-      },
-      {
-        "t": "Describe one scene at a time",
-        "d": "Name the place, light, action, and useful framing detail: for example, a coffee bag beside a pour-over brewer on a bright kitchen counter. Save a second action for a new version."
-      },
-      {
-        "t": "Add exact wording after download",
-        "d": "Do not rely on generated lettering for a price, date, headline, or discount code. Keep open space where your message can go, then type the final words after download."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What each result can help you decide",
-    "items": [
-      {
-        "t": "Listing detail",
-        "d": "A packshot, close-up, side view, or size cue helps a shopper judge the object before ordering. Use it beside the main image when the shape or materials need more explanation."
-      },
-      {
-        "t": "Product in context",
-        "d": "A lifestyle scene shows where an item belongs: on a vanity, desk, breakfast table, street, or bath ledge. Choose a setting that makes sense for how the product is used."
-      },
-      {
-        "t": "A feed creative",
-        "d": "A square image can give a scrolling feed a clear product moment and room for your own offer. Add the message in the ad tool so every number stays accurate."
-      },
-      {
-        "t": "A new version to compare",
-        "d": "Change one meaningful variable, such as the opening scene or background, and make another job. Keeping the product and the rest of the direction steady gives you a cleaner comparison."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Scene directions you can adapt",
-    "items": [
-      {
-        "t": "Desk-to-hand product moment",
-        "d": "Phone case on a tidy desk beside earbuds and a notebook; a hand picks it up and turns the camera cutout toward the light."
-      },
-      {
-        "t": "Jewelry scale check",
-        "d": "Silver necklace on a dark top at a neckline; move from the worn view to a close view of the pendant so shoppers can judge length and size."
-      },
-      {
-        "t": "Coffee morning",
-        "d": "Kraft coffee bag on a kitchen counter beside a pour-over brewer, then at a breakfast table with a mug and croissant."
-      },
-      {
-        "t": "Yoga routine",
-        "d": "Teal yoga mat rolled with its strap in a bright room, then unrolled while someone stretches beside a window."
-      },
-      {
-        "t": "Food in use",
-        "d": "Red hot-sauce bottle on a rustic table with fresh chilies; a pour over tacos gives the clip one clear action."
-      },
-      {
-        "t": "Quiet evening product scene",
-        "d": "White candle jar on a living-room coffee table with books and a knit throw, then on a bath ledge beside a folded towel."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the example before you publish",
-    "items": [
-      {
-        "t": "Compare with the real product",
-        "d": "Put the downloaded result beside the item you ship. Check color, proportions, logos, labels, buttons, edges, and the number of pieces before a shopper sees it."
-      },
-      {
-        "t": "Add the words yourself",
-        "d": "Place the price, date, offer, headline, captions, and music in Canva, CapCut, TikTok, Ads Manager, or your usual editor. Type the details yourself to keep campaign wording accurate."
-      },
-      {
-        "t": "Use an honest label",
-        "d": "AI-generated people are not customers. Keep the text focused on the product and check the current disclosure guidance for the platform where you post the image or clip."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When this gallery is useful",
-    "good": [
-      "Sellers building a listing gallery from one clear product photo",
-      "Small shops that need a few distinct settings for social posts or feed ads",
-      "Marketers comparing openings, scenes, or formats for the same product",
-      "Products whose use, scale, or setting is easier to understand in a picture or short clip"
-    ],
-    "not_ideal": [
-      "Exact small lettering, prices, dates, or technical specifications that must be copied without errors",
-      "A customer testimonial or review, because generated people are not real buyers",
-      "A hidden side or unseen feature; provide a source photo for every view you need to show"
-    ]
-  },
-  "examples": {
-    "h2": "One product, many outputs",
-    "lead": "The same product photo can lead to different openings, scenes and close-ups. The product stays the same while the setting changes.",
-    "groups": [
-      {
-        "label": "Three openings for one bottle",
-        "items": [
-          {
-            "ref": "n:gen2:examples-g1",
-            "title": "Glass bottle pulled from a tote on a park bench",
-            "kind": "scene",
-            "product": "green glass water bottle"
-          },
-          {
-            "ref": "n:gen2:examples-g2",
-            "title": "Same glass bottle filled at a kitchen tap",
-            "kind": "scene",
-            "product": "green glass water bottle"
-          },
-          {
-            "ref": "n:gen2:examples-g3",
-            "title": "Same glass bottle on a desk in afternoon light",
-            "kind": "scene",
-            "product": "green glass water bottle"
-          }
-        ]
-      },
-      {
-        "label": "Plain, in use, up close",
-        "items": [
-          {
-            "ref": "n:gen2:examples-g4",
-            "title": "Cork yoga block on a plain table",
-            "kind": "photo",
-            "product": "cork yoga block"
-          },
-          {
-            "ref": "n:gen2:examples-g5",
-            "title": "Same cork block in use on a yoga mat",
-            "kind": "photo",
-            "product": "cork yoga block"
-          },
-          {
-            "ref": "n:gen2:examples-g6",
-            "title": "Close-up of the cork block's grain and edge",
-            "kind": "photo",
-            "product": "cork yoga block"
-          }
-        ]
-      },
-      {
-        "label": "Two seasons",
-        "items": [
-          {
-            "ref": "n:gen2:examples-g7",
-            "title": "Wool throw on an armchair by a snowy window",
-            "kind": "photo",
-            "product": "wool throw"
-          },
-          {
-            "ref": "n:gen2:examples-g8",
-            "title": "Same wool throw on a garden bench in spring",
-            "kind": "photo",
-            "product": "wool throw"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
     "strip": [
       "g:ecommerce-main-image/example-04",
@@ -373,8 +177,8 @@
       "n:guide:k4-plat-instagram-30-visual-strip-4"
     ],
     "picker": {
-      "title": "Find a product scene to try today",
-      "lead": "Filter by product category, then open a scene to recreate it with your product.",
+      "title": "AI lifestyle photo examples",
+      "lead": "Filter by product, open a finished scene, and try that direction with your item.",
       "chips": [
         {
           "id": "accessories",
@@ -385,72 +189,12 @@
           "label": "Apparel"
         },
         {
-          "id": "apps",
-          "label": "Apps"
-        },
-        {
-          "id": "beauty-personal-care",
-          "label": "Beauty & Personal Care"
-        },
-        {
           "id": "clothing",
           "label": "Clothing"
         },
         {
-          "id": "e-commerce",
-          "label": "E-Commerce"
-        },
-        {
-          "id": "education",
-          "label": "Education"
-        },
-        {
-          "id": "explainer",
-          "label": "Explainer"
-        },
-        {
-          "id": "financial-services",
-          "label": "Financial Services"
-        },
-        {
-          "id": "food-beverage",
-          "label": "Food & Beverage"
-        },
-        {
-          "id": "footwear",
-          "label": "Footwear"
-        },
-        {
           "id": "health-fitness",
           "label": "Health & Fitness"
-        },
-        {
-          "id": "jewelry-accessories",
-          "label": "Jewelry & Accessories"
-        },
-        {
-          "id": "kids-toy",
-          "label": "Kids & Toy"
-        },
-        {
-          "id": "pet",
-          "label": "Pet"
-        },
-        {
-          "id": "sports-gym",
-          "label": "Sports & Gym"
-        },
-        {
-          "id": "tech-electronics",
-          "label": "Tech & Electronics"
-        },
-        {
-          "id": "ugc",
-          "label": "UGC"
-        },
-        {
-          "id": "viral",
-          "label": "Trending"
         }
       ],
       "cards": [],
@@ -461,74 +205,80 @@
     "outputs": [],
     "titles": {
       "m3": {
-        "h2": "Find a product scene to try today",
-        "lead": "Filter by product category, then open a scene to recreate it with your product."
+        "h2": "Six product photo examples you can recreate",
+        "lead": "Filter by category, open a finished still, and try that direction with your item."
+      },
+      "m2": {
+        "h2": "From a product photo to a finished still"
       }
     },
     "directoryFilters": {
       "cases": {
         "travel-mug": [
-          "food-beverage",
-          "e-commerce",
-          "financial-services",
-          "ugc",
-          "viral"
+          "food-beverage"
         ],
         "linen-tote": [
           "accessories",
           "apparel",
-          "clothing",
-          "e-commerce",
-          "food-beverage",
-          "footwear",
-          "jewelry-accessories",
-          "ugc",
-          "viral"
+          "clothing"
         ],
-        "fluted-vase": [
-          "apps",
-          "beauty-personal-care",
-          "education",
-          "explainer",
-          "e-commerce",
-          "kids-toy",
-          "pet",
-          "tech-electronics",
-          "ugc",
-          "viral"
-        ],
+        "fluted-vase": [],
         "leather-wallet": [
-          "accessories",
-          "apps",
-          "education",
-          "explainer",
-          "financial-services",
-          "jewelry-accessories",
-          "tech-electronics",
-          "ugc",
-          "viral"
+          "accessories"
         ],
         "running-shoe": [
+          "footwear",
           "apparel",
           "clothing",
-          "e-commerce",
-          "footwear",
           "health-fitness",
-          "sports-gym",
-          "ugc",
-          "viral"
+          "sports-gym"
         ],
         "sunscreen": [
           "beauty-personal-care",
-          "e-commerce",
-          "health-fitness",
-          "kids-toy",
-          "pet",
-          "sports-gym",
-          "ugc",
-          "viral"
+          "health-fitness"
         ]
       }
     }
+  },
+  "related_h2": "Tools that make these directions",
+  "related_lead": "Open a tool, or browse the template library.",
+  "relatedLinks": [
+    "lifestyle-photos",
+    "video-ads",
+    "social-ad-photos",
+    "model-photos",
+    "white-background",
+    "templates"
+  ],
+  "cta_title": "Make this direction with your own product",
+  "cta_lead": "Upload one product photo, pick the scene you liked, and see the credit cost before you start.",
+  "reviews": {
+    "h2": "How shops use these photo examples",
+    "items": [
+      {
+        "example": true,
+        "who": "Drinkware shop",
+        "t": "Desk still",
+        "d": "A drinkware shop turns one mug photo into a desk still a shopper can picture using."
+      },
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "Outfit still",
+        "d": "A bag shop shows one tote beside an everyday outfit so the size reads in a feed."
+      },
+      {
+        "example": true,
+        "who": "Shoe shop",
+        "t": "Feed still",
+        "d": "A shoe shop uses one shoe photo for a simple feed still, then checks the sole and the shape."
+      },
+      {
+        "example": true,
+        "who": "Sunscreen shop",
+        "t": "Tall still",
+        "d": "A sunscreen shop frames one tube photo as a tall still for a full-screen placement. The example is a picture, not a clip."
+      }
+    ]
   }
 }

@@ -2,10 +2,10 @@
   "id": "ind-health-wellness",
   "title": "AI Lifestyle Photos for Wellness Brands | AIVideosUGC",
   "description": "Turn one wellness product photo into lifestyle photos and creator-style ads for routines, product pages and social feeds. Watermark-free files ready to post.",
-  "h1": "Make AI Lifestyle Photos for Wellness Brands Without a Shoot",
-  "eyebrow": "Health & wellness",
-  "lead": "Wellness sales run on trust, and a plain packshot does not build it. Turn one product photo into lifestyle images and creator-style clips set in real routines.",
-  "card": "Supplements, tea and gear shown in the routines where people use them.",
+  "h1": "AI Lifestyle Photos for Wellness Brands, Set in a Real Routine",
+  "eyebrow": "Health and wellness",
+  "lead": "A plain packshot does not show when the product is used. One photo can sit in a morning routine without a claim about what it does to the body.",
+  "card": "Routine stills and short clips for supplements, tea, and gear.",
   "secondary_keywords": [
     "supplement lifestyle photos",
     "wellness product photos",
@@ -15,69 +15,55 @@
   ],
   "faq": [
     {
-      "q": "Can the photos or videos show what my supplement does?",
-      "a": "Show how and when the product is used, not a health result. Keep claims and dosage wording in text your team approves, and skip scenes that imply a body change."
+      "q": "Can the photo or clip show what a supplement does?",
+      "a": "Show how and when it is used, not a health result. Keep claims and dosage in text your team approves, and skip any scene that implies a body change."
     },
     {
-      "q": "Why does the label look washed out in my result?",
-      "a": "Glare on a glossy label usually starts in the source photo. Shoot the bottle upright with the front label centered and use soft side light instead of direct light."
+      "q": "Why does the label look washed out?",
+      "a": "Shoot the bottle upright, front label centered, with soft side light instead of a direct flash. Glare usually starts in that source photo."
     },
     {
-      "q": "Can I use these photos in paid wellness ads?",
-      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads and product pages. Any health claim or offer text you add must be accurate."
+      "q": "Can I use these in paid wellness ads?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Any health claim or offer you add has to be accurate."
     },
     {
-      "q": "Do I need to hire a model or a creator?",
-      "a": "No. Generated people and hands are placed around your product for a per-image credit cost. Arrange a real creator separately if you want a true customer story."
+      "q": "Do I need a model or a creator?",
+      "a": "No for these scenes. Hands and people are generated, at the credit cost shown before the job. Hire a real creator if you need a true customer story."
     },
     {
-      "q": "Can I use an image as an Instagram Story?",
-      "a": "Photos come out square. For a vertical Story, make a 9:16 clip and post that instead."
+      "q": "Can I make a Story from this?",
+      "a": "Yes. A square still fits a feed or a product page. For a vertical Story, render a 9:16 clip at 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "What format are the photos and clips delivered in?",
-      "a": "Photos are square JPGs. Clips are vertical 9:16 at 6, 10, 15 or 30 seconds, so one product works across feeds and listings."
+      "q": "What do the lengths cost?",
+      "a": "A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. The cost is shown before you start, and a failed job returns its credits."
+    },
+    {
+      "q": "Which frames can a clip use?",
+      "a": "Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Pick the one the placement already uses."
+    },
+    {
+      "q": "What should the scene avoid?",
+      "a": "Avoid before-and-after bodies, medical outcomes, and dosage text inside the image. Show the product in a routine, and write the claims where you can proof them."
     }
   ],
-  "benefits_h2": "Why AI Lifestyle Photos for Wellness Brands Skip the Photoshoot",
-  "benefits": [
-    {
-      "t": "Faster, lower-cost production",
-      "d": "Upload one product photo and get the scene back in minutes. No creator fees, studio rental, or waiting on a shoot date.",
-      "img": "n:guide:fx32-health-benefit-yoga",
-      "alt": "Hands unroll a plain teal yoga mat beside a foam roller in a bright studio."
-    },
-    {
-      "t": "Use one photo across channels",
-      "d": "Restage the same bottle, tin or piece of gear for social posts, product pages and paid ads without another shoot.",
-      "img": "n:guide:b2f3-ind-health-breakfast-r1",
-      "alt": "A plain sage bottle stands beside a bowl of breakfast fruit on a wooden table."
-    },
-    {
-      "t": "Trust without the hard sell",
-      "d": "Shoppers see your product in a routine they recognize. The scene answers how it fits the day, without unsupported health claims.",
-      "img": "n:guide:fx32-health-benefit-bands",
-      "alt": "Hands set up plain resistance bands beside a rolled mat."
-    }
-  ],
-  "steps_h2": "How to Make AI Lifestyle Photos for Wellness Brands in 3 Simple Steps",
-  "steps_lead": "Place one wellness product in a routine shoppers recognize, then publish the finished photo or clip.",
+  "steps_h2": "Wellness Product Photos in Three Moves",
+  "steps_lead": "Three things you do on screen. The scene shows use, not a health result.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the bottle, pouch, tin or gear. Keep the whole product and label area visible."
+      "d": "Shoot the bottle or the gear upright, label centered, in soft side light. Glare on a glossy label usually starts in this photo."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose a routine setting and a square photo or vertical clip that fits the channel."
+      "t": "Describe the Routine Scene",
+      "d": "Name the moment, like a mat unrolled by a window or a bottle beside breakfast. Say no health result is shown. Any person is generated."
     },
     {
       "t": "Download and Post",
-      "d": "Download and save the file, then add approved text in your editor before you post it to your store or ad account."
+      "d": "Check the label and the product shape, then download. Add claims or offers in your editor. Captions are not added for you."
     }
   ],
   "visual": {
-    "overview": "Wellness shoppers want to see the product and the routine around it. Every scene stays grounded in use, with no health results on screen.",
     "strip": [
       "n:guide:q16-wellness-mat-unroll",
       "n:guide:im10-ind-health-wellness-strip-first-stretch-r1",
@@ -91,11 +77,15 @@
       "sourceAlt": "Teal yoga mat partly unrolled on a clean studio floor.",
       "result": "n:guide:q16-wellness-mat-stretch",
       "mode": "photo",
-      "prompt": "Place the uploaded teal yoga mat on a bright studio floor beside a window, with an adult beginning a gentle stretch. Keep the mat shape and color unchanged, end with the full mat visible and no health result implied. Natural daylight, clean lifestyle photo, eye-level wide framing.",
+      "prompt": "An adult starts a gentle stretch beside a teal yoga mat on a bright studio floor. The full mat stays visible, and the scene shows no body change.",
       "options": [
         [
-          "Template",
-          "Lifestyle photo"
+          "Photo",
+          "Your product shot"
+        ],
+        [
+          "Scene",
+          "Morning routine"
         ],
         [
           "Size",
@@ -103,72 +93,160 @@
         ]
       ]
     },
-    "picker": {
-      "title": "Choose a wellness scene",
-      "lead": "Pick a routine moment for a product page or social post.",
-      "chips": [],
-      "cards": [],
-      "button": "Make a product photo"
-    },
     "uses": [],
     "input": [],
     "outputs": [],
     "titles": {
-      "m2": {
-        "h2": "How to Make AI Lifestyle Photos for Wellness Brands in 3 Simple Steps"
-      },
-      "m3": {
-        "h2": "AI Lifestyle Photos for Wellness Brands: Choose a Scene",
-        "lead": "Open a routine scene and place your product in it."
-      },
       "faq": {
-        "h2": "Questions About AI Lifestyle Photos for Wellness Brands"
+        "h2": "Questions About Wellness Product Photos"
       }
     }
   },
   "templates_lead": "Pick a routine scene for your wellness product.",
-  "cta_lead": "Place your wellness product in a real routine, starting from one photo.",
+  "cta_lead": "Upload one product photo, describe a daily moment, and leave health claims out of the picture.",
   "relatedLinks": [
-    "ind-beauty-skincare",
-    "ind-food-drinks",
-    "ind-home-living",
-    "ind-fashion-clothing",
-    "lifestyle-photos",
-    "video-ads",
-    "social-ad-photos",
-    "white-background"
+    {
+      "id": "tpl-ugc",
+      "label": "UGC style product photos"
+    },
+    {
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
+    },
+    {
+      "id": "photo-hub",
+      "label": "AI product photo generator"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "white-background",
+      "label": "white background product photos"
+    }
   ],
   "steps_cta": {
     "label": "Create lifestyle photo",
     "href": "/app/create?industry=health-wellness"
   },
-  "more_sections": [
-    {
-      "eyebrow": "Sell where your shoppers already browse",
-      "h2": "Ads for the channels you already sell on",
-      "lead": "Choose a destination, then check its current image and video rules before you publish.",
-      "items": [
-        {
-          "t": "Shopify",
-          "d": "[Product photos for Shopify](/platforms/shopify-product-photos) keep a clean listing view ready for your store."
-        },
-        {
-          "t": "Amazon",
-          "d": "[Product photos for Amazon](/platforms/amazon-product-photos) help you prepare a clear main image for a marketplace listing."
-        },
-        {
-          "t": "TikTok",
-          "d": "[TikTok ads](/platforms/tiktok-ads) give a routine scene a vertical format for a social feed."
-        },
-        {
-          "t": "Meta",
-          "d": "[Facebook ads](/platforms/facebook-ads) give you a square product scene to finish for a paid feed post."
-        },
-        {
-          "t": "YouTube",
-          "d": "[YouTube Shorts ads](/platforms/youtube-shorts-ads) give you a vertical clip to review before posting."
-        }
-      ]
-    }
+  "reasons": {
+    "h2": "Supplement Lifestyle Photos Without a Shoot",
+    "lead": "Show the bottle in a routine people recognize. Leave health results and dosage wording out of the picture.",
+    "items": [
+      {
+        "t": "A routine, not a result",
+        "d": "Place the product in a stretch, a breakfast, or a gym-bag moment. Do not show a body change or a medical outcome.",
+        "img": "n:guide:fx32-health-benefit-yoga",
+        "alt": "Hands unroll a plain teal yoga mat beside a foam roller in a bright studio."
+      },
+      {
+        "t": "One photo, more than one shelf",
+        "d": "The same bottle can become a table still and a short routine clip. Frames for video are 9:16, 1:1, 16:9, 4:3, and 3:4.",
+        "img": "n:guide:b2f3-ind-health-breakfast-r1",
+        "alt": "A plain sage bottle stands beside a bowl of breakfast fruit on a wooden table."
+      },
+      {
+        "t": "Trust without a hard claim",
+        "d": "The scene answers where the product fits the day. Claims, dosage, and offers are written by you, where they can be checked.",
+        "img": "n:guide:fx32-health-benefit-bands",
+        "alt": "Hands set up plain resistance bands beside a rolled mat."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "Fitness Product Lifestyle Images on Every Channel",
+    "lead": "A square still fits a product page. A vertical clip fits a story. Keep the routine honest.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "d": "A 9:16 routine moment for a wellness post in the For You feed.",
+        "href": "/platforms/tiktok-ads"
+      },
+      {
+        "t": "AI Instagram ads",
+        "d": "A square still or a vertical story of the product in use.",
+        "href": "/platforms/instagram-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "d": "A feed still with room to add an approved claim after download.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "d": "A short vertical routine, one action from the first second.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "d": "A clean product image for the listing, claims kept in the copy.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "d": "Matching routine imagery for the product page and the collection.",
+        "href": "/platforms/shopify-product-photos"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "How Sellers Use UGC Style Supplement Photos",
+    "lead": "Example ways wellness sellers use one product photo. These are not quotes, and they are not health claims.",
+    "items": [
+      {
+        "example": true,
+        "who": "Supplement shop",
+        "t": "Bottle beside breakfast",
+        "d": "They upload a front-label photo and ask for the bottle next to fruit on a table. Dosage stays in the approved listing text."
+      },
+      {
+        "example": true,
+        "who": "Mat brand",
+        "t": "Unroll, no outcome",
+        "d": "A mat photo becomes hands unrolling it in a bright room. The scene stops there. It does not show a fitness result."
+      },
+      {
+        "example": true,
+        "who": "Tea label",
+        "t": "Two cuts from one tin",
+        "d": "The same tin photo feeds a square still and a 10-second pour-and-set (40 credits). A 6-second clip is 24 credits, 15 is 60, and 30 is 120."
+      },
+      {
+        "example": true,
+        "who": "Gear seller",
+        "t": "Bands next to a mat",
+        "d": "They show the product being set down, not a body being changed. The person is generated."
+      },
+      {
+        "example": true,
+        "who": "Ad desk",
+        "t": "Still for the page, clip for the feed",
+        "d": "One photo guides a listing still and a vertical routine clip. Offer text is added in an editor."
+      },
+      {
+        "example": true,
+        "who": "Careful brand",
+        "t": "Reject a result scene",
+        "d": "If a preview implies a body change or a medical effect, they discard it and describe only the routine."
+      }
+    ]
+  },
+  "cta_title": "Place the Product in a Routine",
+  "related_h2": "Wellness lifestyle photos",
+  "blockOrder": [
+    "hero",
+    "strip",
+    "reasons",
+    "steps",
+    "platforms",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
   ]
 }

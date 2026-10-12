@@ -2,9 +2,9 @@
   "id": "change-background",
   "title": "AI Product Background Changer | AIVideosUGC",
   "description": "Change a product photo background from one clear image. Keep the item intact, create a new setting for listings or ads, and avoid another studio shoot.",
-  "h1": "Change a product photo background without a reshoot",
+  "h1": "AI product background changer for a new setting",
   "eyebrow": "Photo tool",
-  "lead": "Keep one product photo and change the setting around it. Create a clean studio, warm counter or seasonal scene without booking another shoot.",
+  "lead": "Keep the product photo you have and replace the area around it. Try a studio surface, a counter, or a seasonal scene without another shoot.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -12,68 +12,41 @@
     "new background for Etsy photos",
     "AI backdrop for product shots"
   ],
-  "steps_h2": "How to Make Product Background Changes in 3 Simple Steps",
-  "steps_lead": "Start with one clear product photo, choose a setting and download a fresh scene for your listing or ad.",
+  "steps_h2": "Change product photo background in 3 steps",
+  "steps_lead": "Upload the item, name the new setting, and download a finished photo.",
   "steps": [
     {
-      "t": "Upload Your Image",
-      "d": "Upload one clear product photo with the whole item visible. A tidy outline gives the new setting a clean edge."
+      "t": "Upload Your Product Photo",
+      "d": "Add one photo with the whole item visible. A tidy outline gives the new setting a cleaner edge."
     },
     {
       "t": "Describe Your New Background",
-      "d": "Name one surface, room or outdoor setting. Keep the description focused so the product stays the subject."
+      "d": "Name one surface, room, or outdoor place. Keep the note short so the product stays the subject."
     },
     {
       "t": "Download and Post",
-      "d": "Compare the new setting with your original photo. Download the square result for your store or ad editor."
+      "d": "Compare the new setting with the original photo. Download the square image for the store or the ad editor."
     }
   ],
-  "benefits_h2": "Change the setting without another shoot",
+  "benefits_h2": "What you pay, what you check, and what you download",
   "benefits": [
     {
-      "t": "Keep every listing polished",
-      "d": "Move one item from a cluttered counter to a clean surface so each listing starts with a clear product view.",
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
-      "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall."
+      "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall.",
+      "t": "See the cost before the job",
+      "d": "One photo uses 24 credits. The number appears before you start, and a failed job returns the credits."
     },
     {
-      "t": "Market more angles",
-      "d": "Create a seasonal, studio or outdoor setting from the product photo you already have.",
       "img": "n:guide:fx17-change-background-benefit-seasonal-r1",
-      "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage."
+      "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage.",
+      "t": "Check the item against the original",
+      "d": "Angle and outline should still match the photo you uploaded. Small printed details can shift, so compare before you publish."
     },
     {
-      "t": "Skip another shoot",
-      "d": "Refresh a campaign without unpacking stock, booking space or waiting for a new photo session.",
       "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
-      "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage."
-    }
-  ],
-  "more_sections": [
-    {
-      "eyebrow": "Why change the setting",
-      "h2": "Keep the product clear in every new setting",
-      "lead": "Change the scene around the item while you check its angle, outline and details before publishing.",
-      "items": [
-        {
-          "t": "Create a setting that fits the next listing",
-          "d": "Move the vase to a bright windowsill when the next listing needs a warmer scene.",
-          "img": "n:guide:k5-background-case-1",
-          "alt": "Blue ceramic vase on a sunny windowsill."
-        },
-        {
-          "t": "Keep the item easy to inspect",
-          "d": "A plain face cream jar on wet stone keeps the product surface and edge in view.",
-          "img": "n:guide:k5-background-case-2",
-          "alt": "Plain face cream jar on wet stone."
-        },
-        {
-          "t": "Download a scene ready for the feed",
-          "d": "A brown leather wallet on a cafe table gives a social post a believable setting.",
-          "img": "n:guide:k5-background-case-3",
-          "alt": "Brown leather wallet on a cafe table."
-        }
-      ]
+      "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
+      "t": "Download a finished scene",
+      "d": "You get a complete photo with the new setting. This tool does not hand you a transparent cut-out."
     }
   ],
   "maker": {
@@ -96,35 +69,39 @@
   "faq": [
     {
       "q": "What is an AI product background changer?",
-      "a": "It keeps your product and replaces the setting behind it. Start with one existing photo and download a finished square image with the new background."
+      "a": "It keeps your product photo and replaces the setting around the item. You describe the surface or the room, then download a new image."
     },
     {
-      "q": "How do I use an AI product background changer?",
-      "a": "Upload one product photo, name the surface, color or room you want, then generate and download the new image."
+      "q": "Can I make a new background for an Etsy photo?",
+      "a": "Yes. Upload one product photo, name the surface or the room, and download the square image. The cost shows before the job starts."
     },
     {
-      "q": "Will the product change when the background changes?",
-      "a": "The item should keep its angle, scale and edges. Compare the result with the real product before publishing because small printed details can shift."
+      "q": "Will the product change?",
+      "a": "The item should keep its angle and outline. Compare it with the real product, because small print can shift."
     },
     {
       "q": "Do I get a transparent cut-out?",
-      "a": "No. You get a complete photo with the new setting already in place. Use the white background photo tool for a white background version."
+      "a": "No. You get a complete photo with the new setting already in place. For a plain listing field, make a separate white image."
     },
     {
-      "q": "Which backgrounds suit product photos?",
-      "a": "Simple surfaces and colors keep attention on the item: marble, light wood, stone, linen or one brand color."
+      "q": "Which settings suit product photos?",
+      "a": "Simple surfaces keep attention on the item: light wood, stone, linen, or one quiet color. A busy scene makes the product harder to see."
     },
     {
-      "q": "Can I use the new photo in paid ads?",
+      "q": "Can I use the new photo in a paid ad?",
       "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor."
     },
     {
       "q": "Can I choose a seasonal or outdoor setting?",
-      "a": "Yes. Name one room, surface or outdoor scene, such as a holiday shelf or garden table."
+      "a": "Yes. Name one room, surface, or outdoor scene, such as a holiday shelf or a shaded table."
     },
     {
-      "q": "How is an AI product background changer different from a reshoot?",
-      "a": "A reshoot needs space, lights and setup. Here a new setting comes from your existing photo in minutes, at far less cost."
+      "q": "How is this different from a reshoot?",
+      "a": "A reshoot needs space and lights. Here the new setting comes from a photo you already own. If that photo is blurry, start with [how to take product photos for AI](page:guide-product-photo-tips)."
+    },
+    {
+      "q": "Do you include a library of free backgrounds?",
+      "a": "No. You name the surface or the room yourself. Each photo uses 24 credits, and there is no free background pack."
     }
   ],
   "visual": {
@@ -197,11 +174,8 @@
     },
     "uses": [],
     "titles": {
-      "m2": {
-        "h2": "How to Make Product Background Changes in 3 Simple Steps"
-      },
       "faq": {
-        "h2": "Frequently asked questions"
+        "h2": "Questions about the AI product background changer"
       }
     },
     "input": [
@@ -230,5 +204,76 @@
         "label": "Seasonal garden setting"
       }
     ]
-  }
+  },
+  "blockOrder": [
+    "hero",
+    "steps",
+    "reasons",
+    "benefits",
+    "related",
+    "reviews",
+    "faq"
+  ],
+  "reasons": {
+    "h2": "Why replace the background of a product image",
+    "lead": "Use this when the product is fine and only the area behind it needs to change.",
+    "items": [
+      {
+        "t": "Clear a distracting counter",
+        "d": "Move the product off a messy surface so the listing starts with the item, not the room behind it.",
+        "img": "n:guide:k5-background-case-1",
+        "alt": "Blue ceramic vase on a sunny windowsill."
+      },
+      {
+        "t": "Match the next campaign",
+        "d": "Point the next campaign at one warmer surface or a holiday shelf, and keep the product as the subject.",
+        "img": "n:guide:k5-background-case-2",
+        "alt": "Plain face cream jar on wet stone."
+      },
+      {
+        "t": "Skip another shoot day",
+        "d": "Use the photo you have. A new setting does not require unpacking stock or booking lights.",
+        "img": "n:guide:k5-background-case-3",
+        "alt": "Brown leather wallet on a cafe table."
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "Example ways sellers use an AI backdrop for product shots",
+    "lead": "Ways sellers change a setting before a listing or an ad goes up.",
+    "items": [
+      {
+        "example": true,
+        "who": "Home goods seller",
+        "t": "Move a vase from a cluttered table to a quiet surface",
+        "d": "Keep the product photo. Describe a pale wood table or a plain wall, then check the rim before you publish."
+      },
+      {
+        "example": true,
+        "who": "Seasonal shop",
+        "t": "Try a holiday shelf without restyling the room",
+        "d": "Name one seasonal surface. If the result adds objects you did not ask for, rerun the job with a shorter note."
+      },
+      {
+        "example": true,
+        "who": "Ad editor",
+        "t": "Build a feed scene from the catalog photo",
+        "d": "Put the item on a cafe table or a garden surface, then add the offer in the ad editor after download."
+      },
+      {
+        "example": true,
+        "who": "Listing manager",
+        "t": "Keep a white version and a scene version",
+        "d": "Use a white listing image when the channel wants a plain main photo, and a new setting when the page needs context."
+      }
+    ]
+  },
+  "relatedLinks": [
+    "photo-hub",
+    "white-background",
+    "lifestyle-photos",
+    "model-photos",
+    "tpl-light",
+    "social-ad-photos"
+  ]
 }

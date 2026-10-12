@@ -1,11 +1,11 @@
 {
   "id": "ind-jewelry-accessories",
   "title": "AI Jewelry Product Photos Without a Shoot | AIVideosUGC",
-  "description": "Turn one jewelry photo into macro details, worn try-ons, and gift scenes. Make watermark-free images for listings, social posts, and ads.",
-  "h1": "Make AI Jewelry Product Photos That Show Scale and Detail",
-  "eyebrow": "Jewelry product photos",
-  "lead": "Small pieces are hard to judge on a white card. Turn one jewelry photo into a macro detail or worn scene that shows finish, scale, and where the piece sits.",
-  "card": "Jewelry product photos for close-up detail, try-ons, and daily styling.",
+  "description": "Turn one jewelry photo into macro details, worn try-ons, and gift scenes. Make watermark-free images for listings, social posts, and paid ads.",
+  "h1": "AI Photos for Jewelry and Accessories, Up Close and Worn",
+  "eyebrow": "Jewelry and accessories",
+  "lead": "A small piece is hard to judge on a white card. One sharp photo can become a macro detail or a worn crop that shows finish and scale.",
+  "card": "Macro details, worn crops, and gift scenes from one jewelry photo.",
   "secondary_keywords": [
     "AI jewelry model photos",
     "jewelry close-up photos",
@@ -15,79 +15,57 @@
   ],
   "faq": [
     {
-      "q": "Can I make jewelry product photos without a model shoot?",
-      "a": "Yes. One sharp photo of a ring, necklace, watch, bag, or sunglasses can become a macro detail, worn try-on, or styled scene. Compare the result with the real piece before listing it."
+      "q": "Can I make jewelry photos without a model shoot?",
+      "a": "Yes. One sharp photo of a ring, necklace, watch, bag, or sunglasses can become a macro detail, a worn crop, or a styled scene. Compare it with the real piece before you list it."
     },
     {
-      "q": "Will the AI keep my stones and metal color accurate?",
-      "a": "The result follows the color of your upload, so a flat, evenly lit photo gives the truest tone. Before listing, compare stone count, prong shape, and metal color against the real piece."
+      "q": "Will stones and metal color stay accurate?",
+      "a": "The result follows the color of your upload, so even light gives the truest tone. Before listing, compare stone count, prong shape, and metal color with the piece in your hand."
     },
     {
-      "q": "Can I show my necklace on a model without a photoshoot?",
-      "a": "Yes. One photo of the necklace laid flat can become a tight collarbone shot with a plain neckline. Close crops keep attention on the chain and pendant rather than the person wearing it."
+      "q": "Can a flat necklace photo become a worn crop?",
+      "a": "Yes. Ask for a tight collarbone frame and a plain neckline. The person is generated. Keep the crop on the chain and the pendant."
     },
     {
-      "q": "Can I use a phone photo of a small ring or stud?",
-      "a": "Yes, as long as the source is sharp and fills the frame. Dust and fingerprints are obvious once a small ring is enlarged, so polish the piece and use even light before you upload."
+      "q": "Can I start from a phone photo of a small ring?",
+      "a": "Yes, if the source is sharp and fills the frame. Wipe dust and fingerprints first, and use even light rather than flash on metal."
     },
     {
       "q": "Does this work for bags, watches, and sunglasses?",
-      "a": "Yes. Show the hardware up close, then show the item carried or worn so its size is obvious. A tote on a shoulder or sunglasses pushed up on someone's head does that in one frame."
+      "a": "Yes. Show the hardware up close, then show the item carried or worn so the size is obvious. A tote on a shoulder does that in one frame."
     },
     {
-      "q": "Can I show ring size without printing numbers into the image?",
-      "a": "Yes. A ring beside a familiar coin or card, or worn on an adult hand, gives shoppers a visual size cue. The exact inner diameter and available sizes still belong in the listing text; a [size template](page:tpl-size) keeps the close-up consistent."
+      "q": "How do I show ring size without printing numbers?",
+      "a": "Put the ring beside a familiar coin or card, or on an adult hand. The exact inner diameter and the sizes you sell still belong in the listing text."
     },
     {
-      "q": "Which format works for a jewelry listing and a social post?",
-      "a": "Use a sharp square close-up for a product gallery, then make a 9:16 worn or unboxing scene for Stories. Match metal tone and stone count across both, and check the final [Instagram format](page:plat-instagram) before posting."
+      "q": "Which frame should I use for a listing and a story?",
+      "a": "Use a sharp square close-up for the gallery. For a story, make a 9:16 worn or unboxing scene. Match metal tone and stone count across both."
     },
     {
-      "q": "Can I use the generated photos in paid jewelry ads?",
-      "a": "Yes. Downloaded images are watermark-free and licensed for commercial use, including paid ads, listings, and Stories. Check stone count and metal tone against the real piece, and keep size and care claims accurate."
+      "q": "Can I use the photos in paid jewelry ads?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads and listings. Check stone count and metal tone, and keep size and care claims accurate."
     }
   ],
   "templates_lead": "Choose a jewelry product photo format for close-up detail, a worn try-on, or a gift scene.",
-  "cta_lead": "Upload a clear jewelry photo, choose a close-up or try-on scene, and review the credit cost before you start.",
-  "benefits_h2": "Why AI Jewelry Product Photos Skip a Model Shoot",
-  "benefits": [
-    {
-      "t": "Faster, lower-cost production",
-      "d": "Create macro and worn scenes from one product photo. Skip model casting, studio rental, and a new shoot for every piece.",
-      "img": "n:guide:fx31-ind-jewelry-benefit-macro",
-      "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
-    },
-    {
-      "t": "More views from one piece",
-      "d": "Show one item in close detail, a try-on, a gift scene, and a daily-carry moment while the piece stays recognizable.",
-      "img": "n:guide:fx31-ind-jewelry-benefit-watch",
-      "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
-    },
-    {
-      "t": "Make scale easy to judge",
-      "d": "A close view shows finish, setting, and scale beside a familiar object. Exact measurements and materials stay in the listing.",
-      "img": "n:guide:fx31-ind-jewelry-benefit-bag",
-      "alt": "Adult hand carrying a plain brown leather shoulder bag outdoors."
-    }
-  ],
-  "steps_h2": "How to Make AI Jewelry Product Photos in 3 Simple Steps",
-  "steps_lead": "Turn one clear jewelry photo into a gallery-ready detail or worn scene.",
+  "cta_lead": "Upload a jewelry photo, describe a close-up or a worn crop, and compare the result with the real piece.",
+  "steps_h2": "Jewelry Close-Up Photos in Three Moves",
+  "steps_lead": "Three things you do on screen. Stones and metal are checked against the real piece.",
   "steps": [
     {
-      "t": "Upload Product Photo",
-      "d": "Add one sharp photo in diffused daylight, even a phone macro shot. Keep the piece, stones, and finish clearly visible."
+      "t": "Upload Your Jewelry Photo",
+      "d": "Fill the frame with a sharp, evenly lit photo. Polish the piece first. Dust and fingerprints show up once a small ring is enlarged."
     },
     {
-      "t": "Choose a Scene",
-      "d": "Pick a macro, hand, neckline, wrist, or gift scene. Describe one setting so the piece stays the focus."
+      "t": "Describe the Close-Up or Try-On",
+      "d": "Ask for a macro detail, a worn crop, or a gift scene. Name the metal plainly. Any person is generated, not a customer."
     },
     {
       "t": "Download and Post",
-      "d": "Compare the image with the real piece and save it. Add metal, size, and care text in your editor, then publish."
+      "d": "Compare stone count, prongs, and metal color with the real piece, then download. Add size and care notes in your editor."
     }
   ],
   "visual": {
-    "overview": "Jewelry and accessories need close, well-lit views that make scale and finish easy to judge. Keep the piece centered, then use one worn or styled scene to add context.",
     "strip": [
       "n:guide:q16-jewelry-necklace-clasp",
       "n:guide:q16-jewelry-ring-tryon",
@@ -103,8 +81,12 @@
       "prompt": "Show a silver solitaire ring worn beside a ceramic cup on a pale cafe table.",
       "options": [
         [
-          "Template",
-          "Product photo"
+          "Photo",
+          "Your jewelry photo"
+        ],
+        [
+          "Look",
+          "Worn close-up"
         ],
         [
           "Size",
@@ -112,91 +94,154 @@
         ]
       ]
     },
-    "picker": {
-      "title": "Choose a jewelry ad format",
-      "lead": "Pick a close view or try-on moment that helps shoppers judge scale and finish.",
-      "chips": [],
-      "cards": [],
-      "button": "Make a product photo"
-    },
     "uses": [],
     "input": [],
     "outputs": [],
     "titles": {
-      "m2": {
-        "h2": "Create a jewelry product photo in three steps"
-      },
-      "m3": {
-        "h2": "Choose a jewelry ad format that shows detail"
-      },
       "faq": {
-        "h2": "Questions About AI Jewelry Product Photos"
+        "h2": "Questions About Jewelry and Accessory Photos"
       }
     }
   },
-  "cta_title": "Create a jewelry product photo",
+  "cta_title": "Show the Piece From One Sharp Photo",
   "relatedLinks": [
-    "ind-beauty-skincare",
-    "ind-fashion-clothing",
-    "ind-shoes",
-    "ind-home-living",
-    "model-photos",
-    "photo-hub",
-    "white-background",
-    "templates"
-  ],
-  "more_sections": [
     {
-      "eyebrow": "Where the files go",
-      "h2": "Post Jewelry Ads Where Shoppers Find Them",
-      "lead": "Use the same product photo process for a listing page or a social feed, then add your approved offer details.",
-      "items": [
-        {
-          "t": "Amazon listings",
-          "d": "Use a clear accessory view on your [Amazon product page](page:plat-amazon), then add the exact material and size details."
-        },
-        {
-          "t": "Shopify product pages",
-          "d": "Place a worn or tabletop detail beside your product media on [Shopify](page:plat-shopify), keeping the jewelry and specs consistent."
-        },
-        {
-          "t": "TikTok feeds",
-          "d": "Use a quick try-on or unboxing in a vertical [TikTok ad](page:plat-tiktok) and add the offer in your editor."
-        },
-        {
-          "t": "Instagram Reels",
-          "d": "Turn a clasp, texture, or neckline detail into a vertical [Instagram Reel](page:plat-instagram) for a launch or restock."
-        },
-        {
-          "t": "Facebook feeds",
-          "d": "Use a square or feed-ready [Facebook ad](page:plat-facebook) when shoppers need a clear jewelry detail before they click."
-        }
-      ]
+      "id": "tpl-jewel",
+      "label": "AI jewelry model photos"
     },
     {
-      "eyebrow": "Tools that fit",
-      "h2": "Tools That Fit Jewelry Listings",
-      "lead": "Pick the visual tool that matches the next view shoppers need.",
-      "items": [
-        {
-          "t": "Model Photos",
-          "d": "Show a pendant worn at the neckline with [Model Photos](page:model-photos).",
-          "img": "n:guide:b2f3-ind-jewelry-model-r1",
-          "alt": "Adult woman with a short silver-blonde bob wears a plain silver pendant over a gray crew-neck top."
-        },
-        {
-          "t": "Product Photos",
-          "d": "Create a sharp accessory detail with [Product Photos](page:photo-hub).",
-          "img": "n:guide:fx31-ind-jewelry-tool-product",
-          "alt": "Plain silver bracelet arranged on natural linen in a clean product photo."
-        },
-        {
-          "t": "White Background Photos",
-          "d": "Keep a belt or scarf clear for a listing with [White Background Photos](page:white-background).",
-          "img": "n:guide:fx31-ind-jewelry-tool-white",
-          "alt": "Plain tan leather belt laid in a gentle curve on a white background."
-        }
-      ]
+      "id": "tpl-detail",
+      "label": "product detail photos"
+    },
+    {
+      "id": "tpl-size",
+      "label": "product size reference photo"
+    },
+    {
+      "id": "model-photos",
+      "label": "AI model photos for clothing"
+    },
+    {
+      "id": "white-background",
+      "label": "white background product photos"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
     }
+  ],
+  "reasons": {
+    "h2": "AI Jewelry Model Photos Without a Model Call",
+    "lead": "Skip the model booking. A sharp photo of the piece is enough to try a close crop or a worn frame, then you compare it with the real item.",
+    "items": [
+      {
+        "t": "Macro without a studio day",
+        "d": "A ring, necklace, or stud can become a tight detail from one sharp photo. You skip model casting and a new setup for every piece.",
+        "img": "n:guide:fx31-ind-jewelry-benefit-macro",
+        "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
+      },
+      {
+        "t": "Worn, still about the piece",
+        "d": "A flat necklace photo can become a tight collarbone crop. Keep the chain and the pendant as the subject, and compare stone count before you list.",
+        "img": "n:guide:fx31-ind-jewelry-benefit-watch",
+        "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
+      },
+      {
+        "t": "Scale beside something familiar",
+        "d": "A ring next to a coin, or a bag on a shoulder, shows size without printing numbers into the picture. Exact measurements stay in the listing.",
+        "img": "n:guide:fx31-ind-jewelry-benefit-bag",
+        "alt": "Adult hand carrying a plain brown leather shoulder bag outdoors."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "Jewelry Photos for Etsy and Every Other Shelf",
+    "lead": "A square close-up suits a gallery. A vertical crop suits a story. Match metal tone across both.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "d": "A short worn or unboxing crop for a jewelry post in the For You feed.",
+        "href": "/platforms/tiktok-ads"
+      },
+      {
+        "t": "AI Instagram ads",
+        "d": "A square detail or a vertical try-on for the grid and Stories.",
+        "href": "/platforms/instagram-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "d": "A feed still with room to add the offer after download.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "d": "A tight vertical detail, one piece from the first second.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "d": "A sharp gallery image. Keep size charts in the listing, not burned into the photo.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "d": "Matching product imagery for the piece and the collection.",
+        "href": "/platforms/shopify-product-photos"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "How Sellers Show Accessories Lifestyle Photos",
+    "lead": "Example ways jewelry and accessory sellers use one photo. These are not quotes.",
+    "items": [
+      {
+        "example": true,
+        "who": "Ring maker",
+        "t": "Macro, then a coin for scale",
+        "d": "They upload a sharp top view, ask for a close crop, and place a coin beside the band in a second frame. Inner diameter stays in the listing text."
+      },
+      {
+        "example": true,
+        "who": "Necklace shop",
+        "t": "Flat chain to a collarbone crop",
+        "d": "One flat photo becomes a tight worn crop with a plain neckline. They count stones and links before the image is listed."
+      },
+      {
+        "example": true,
+        "who": "Watch desk",
+        "t": "Wrist crop in daylight",
+        "d": "A straight watch photo becomes an adult wrist in soft light. They reject a result that changes the dial or the lug shape."
+      },
+      {
+        "example": true,
+        "who": "Bag seller",
+        "t": "Hardware, then on a shoulder",
+        "d": "A close hardware frame shows the clasp, and a shoulder crop shows size. The person is generated."
+      },
+      {
+        "example": true,
+        "who": "Etsy studio",
+        "t": "Gift scene from the same photo",
+        "d": "The piece sits in a simple gift scene for a social post, while the listing image stays a clean close-up of the real design."
+      },
+      {
+        "example": true,
+        "who": "Sunglasses line",
+        "t": "Pushed up, logo left out",
+        "d": "They show the frame on a head only from their own photo, and they do not ask for a mark they do not own."
+      }
+    ]
+  },
+  "related_h2": "Jewelry close-ups and worn photos",
+  "blockOrder": [
+    "hero",
+    "strip",
+    "reasons",
+    "steps",
+    "platforms",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
   ]
 }

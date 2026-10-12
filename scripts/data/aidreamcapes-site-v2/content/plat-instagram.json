@@ -2,10 +2,10 @@
   "id": "plat-instagram",
   "title": "AI Instagram Ads for Reels, Stories and Feed | AIVideosUGC",
   "description": "Make an Instagram ad from one product photo. Choose a 9:16 Reel or square still, see the credit cost first, and download without a watermark.",
-  "h1": "Make Instagram Ads from One Product Photo",
+  "h1": "AI Instagram Ads from One Product Photo",
   "eyebrow": "Instagram ads",
-  "lead": "Turn one product photo into an Instagram ad. Choose a Reel-style clip or a square still, then download the file when it is ready.",
-  "card": "Reel-style clips and square product images from one photo.",
+  "lead": "Turn one product photo into an Instagram ad. Choose a tall clip or a square still, see the credit cost first, and download a file with no watermark.",
+  "card": "Instagram ads from one product photo, as a tall clip or a square still.",
   "secondary_keywords": [
     "Instagram Reels ads",
     "Instagram Story ad video",
@@ -14,36 +14,36 @@
   ],
   "faq": [
     {
-      "q": "Can I make an Instagram ad from one product photo?",
-      "a": "Yes. Upload one clear photo, describe your product moment and choose a Reel-style clip or square still. The credit cost appears before you start."
+      "q": "What can I make here for Instagram?",
+      "a": "A tall clip for full-screen placements, or a square still for the grid, both from one product photo. You pick the shape. The credit cost shows first."
     },
     {
-      "q": "Can I make ads for Reels, Stories and the Feed?",
-      "a": "Make a 9:16 clip for Reels or Stories, or a square still for the Feed and carousel. Choose the file for where your ad runs."
+      "q": "How do I make an Instagram ad from one photo?",
+      "a": "Upload a clear picture, describe one moment, choose the tall clip or the square still, and download the file when it is ready."
     },
     {
-      "q": "Do I need to book an Instagram creator or studio?",
-      "a": "No. Use the product photo you already have, then choose the Instagram format you need."
+      "q": "Do you have ready-made Reel layouts?",
+      "a": "No. Describe one moment, choose a tall clip, and download it. No Reel layout is applied for you."
     },
     {
-      "q": "How do I build an Instagram carousel?",
-      "a": "Run one square job for each slide, such as a front view, in-hand view or close detail, then assemble the stills in Instagram."
+      "q": "What does a file cost?",
+      "a": "A still costs 24 credits. A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. If a job fails, those credits return on their own."
     },
     {
-      "q": "Does the download include captions or music?",
-      "a": "No. Add your caption, stickers and sound in Instagram, Canva or Ads Manager after download."
+      "q": "Are music and captions included?",
+      "a": "No. Add the caption, sticker and soundtrack after download. The file has no watermark and is yours to use in organic posts and paid ads."
     },
     {
-      "q": "What photo should I upload for Instagram ads?",
-      "a": "Use a sharp photo that shows the whole product and leaves a little space around it for controls and crops."
+      "q": "Can I run the same file in a paid campaign?",
+      "a": "Yes. Download it, then upload it yourself. Follow the current ad-review prompts for the market where the ad will run."
     },
     {
-      "q": "Can I make different Instagram versions?",
-      "a": "Yes. Run another job from the same photo with a different scene or opening without arranging another shoot."
+      "q": "Do I need a creator or a studio?",
+      "a": "No. If a person appears, that presenter is generated. It is not a real customer and not a creator you booked."
     },
     {
-      "q": "Can I use the file in paid Instagram campaigns?",
-      "a": "Yes. Downloads have no AIVideosUGC watermark. Follow Meta's current ad-review rules when you publish."
+      "q": "Which frame should I check before export?",
+      "a": "Compare your placement with [social media ad sizes](/guides/ad-sizes-by-platform), then preview the file so interface controls do not cover the item."
     }
   ],
   "examples": null,
@@ -52,15 +52,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the whole product so shoppers recognize it from the first frame."
+      "d": "Add one sharp picture of the whole item. Shoppers should recognize it in the first frame."
     },
     {
-      "t": "Pick Your Instagram Format",
-      "d": "Describe one product moment and choose a Reel-style clip or square still. See the credit cost before the file is made."
+      "t": "Describe Your Scene",
+      "d": "Name one moment, then choose a tall clip or a square still. The credit cost shows before the file is made."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file with no watermark, add your caption and offer, then post through Instagram or Ads Manager."
+      "d": "Save the file with no watermark. Add the caption and offer yourself, then post it where the ad will run."
     }
   ],
   "visual": {
@@ -75,8 +75,8 @@
     "steps": {
       "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
       "result": "f:q18-instagram-steps-hand-cream",
-      "mode": "photo",
-      "prompt": "Show plain white hand-cream tube applied beside a bright bathroom mirror for an Instagram product post.",
+      "mode": "video",
+      "prompt": "Show a hand applying a plain white hand-cream tube beside a bright bathroom mirror for an Instagram Reel.",
       "options": [
         [
           "Template",
@@ -84,101 +84,196 @@
         ],
         [
           "Size",
-          "Square"
+          "9:16 · Reel"
         ]
       ],
       "items": [
         {
           "t": "Upload Your Product Photo",
-          "d": "Add one clear photo of the whole product so shoppers recognize it from the first frame."
+          "d": "Add one sharp picture of the whole item. Shoppers should recognize it in the first frame."
         },
         {
-          "t": "Pick Your Instagram Format",
-          "d": "Describe one product moment and choose a Reel-style clip or square still. See the credit cost before the file is made."
+          "t": "Describe Your Scene",
+          "d": "Name one moment, then choose a tall clip or a square still. The credit cost shows before the file is made."
         },
         {
           "t": "Download and Post",
-          "d": "Download the file with no watermark, add your caption and offer, then post through Instagram or Ads Manager."
+          "d": "Save the file with no watermark. Add the caption and offer yourself, then post it where the ad will run."
         }
       ]
+    },
+    "titles": {
+      "faq": {
+        "h2": "Questions before you export an Instagram file"
+      }
     }
   },
-  "benefits_h2": "Make More Instagram Ads, Faster",
+  "benefits_h2": "Product ads for Instagram, in the frames you run",
   "benefits": [
     {
-      "t": "Shorter Production Time",
-      "d": "Start an Instagram Reel or still from one product photo and keep the next ad moving.",
-      "icon": "clock",
+      "t": "One upload, two shapes",
+      "d": "Make a tall clip for full-screen placements or a square still for the grid. Both start from the same picture.",
       "img": "n:guide:fx40-plat-instagram-benefit-time",
       "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf"
     },
     {
-      "t": "Lower Production Cost",
-      "d": "Use your product photo instead of booking a creator, studio and shoot.",
-      "icon": "coins",
+      "t": "Credits instead of a shoot",
+      "d": "A still is 24 credits. A clip is 24, 40, 60 or 120 credits by length. You see the number before the job runs.",
       "img": "n:guide:fx40-plat-instagram-benefit-cost",
       "alt": "Unbranded ceramic travel mug on linen with one green leaf"
     },
     {
-      "t": "Variations to Test",
-      "d": "Change the format or opening and compare versions without reshooting the product.",
-      "icon": "layers",
+      "t": "Another cut without a reshoot",
+      "d": "Change the scene or the shape and run the job again. The item still comes from your upload.",
       "img": "n:guide:fx40-plat-instagram-benefit-variations",
       "alt": "Three pastel lip balm tubes arranged in color groups on a peach surface"
     }
   ],
-  "steps_h2": "How to Make an Instagram Ad in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose the Instagram format and download the file for where your ad runs.",
+  "steps_h2": "Make Instagram Reels ads in 3 steps",
+  "steps_lead": "Upload, choose the shape, download. You add the caption after that.",
   "more_sections": [
     {
-      "eyebrow": "Why sellers choose it",
-      "h2": "Why Sellers Use AI Instagram Ads",
-      "lead": "Keep Instagram creative moving from the product photos you already have.",
+      "eyebrow": "How a file gets finished",
+      "h2": "How Instagram feed ad images get finished",
+      "lead": "Decide the placement, describe the moment, then download.",
       "items": [
         {
-          "t": "Test a New Opening",
-          "d": "Try another Reel opening or still from the same product photo without booking a new shoot.",
-          "img": "n:guide:fx40-plat-instagram-more-opening",
-          "alt": "Hand applying sunscreen from a white tube to the back of the other hand"
+          "t": "Choose the placement first",
+          "d": "A square still suits the grid. A tall clip suits full-screen placements. Pick that before you spend credits."
         },
         {
-          "t": "Use Your Own Product Photo",
-          "d": "Start with the product image you already have and choose a Reel or square format.",
-          "img": "n:guide:fx40-plat-instagram-more-photo",
-          "alt": "Hand placing a blank product photo card beside a folded canvas pouch"
+          "t": "Show one clear action",
+          "d": "A hand, a texture or a single use is enough. The item should stay recognizable."
         },
         {
-          "t": "Download a Clean Instagram File",
-          "d": "Get a clear file for Reels, Stories or the Feed, then add your caption and offer.",
-          "img": "n:guide:fx40-plat-instagram-more-file",
-          "alt": "Tan leather wallet beside a cream blank notebook on a clean surface"
-        }
-      ]
-    },
-    {
-      "eyebrow": "What you can do",
-      "h2": "How AI Helps You Make Instagram Ads",
-      "lead": "Use one product photo to prepare the file for each Instagram format you choose.",
-      "items": [
-        {
-          "t": "Choose the Format That Fits",
-          "d": "Pick a Reel-style clip for Reels or Stories, or a square still for the Feed.",
-          "img": "n:guide:fx40-plat-instagram-more-format",
-          "alt": "Lavender ceramic cup and saucer arranged on a balanced square tabletop"
-        },
-        {
-          "t": "Show the Product in Use",
-          "d": "Use a hand, routine or close detail to make the item easy to understand.",
-          "img": "n:guide:fx40-plat-instagram-more-use",
-          "alt": "Hand pouring herbal tea from a white ceramic teapot into a plain cup"
-        },
-        {
-          "t": "Try Another Audience Angle",
-          "d": "Change the scene or idea and make another version from the same product photo.",
-          "img": "n:guide:fx40-plat-instagram-more-angle",
-          "alt": "White hand-cream tube beside a folded linen towel and a green leaf"
+          "t": "Download, then place it yourself",
+          "d": "The file has no watermark and is yours to use. You upload it. We do not post it for you."
         }
       ]
     }
+  ],
+  "blockOrder": [
+    "hero",
+    "benefits",
+    "steps",
+    "reasons",
+    "features",
+    "platforms",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "benefits_lead": "Pick the placement first, then make a file that fits it.",
+  "reasons": {
+    "h2": "Why an Instagram Story ad video is easier to refresh",
+    "lead": "Stories move on quickly. A new tall file can start from the same product photo.",
+    "items": [
+      {
+        "t": "No creator hold",
+        "d": "You do not wait on a booking. The next file starts when you describe a new moment."
+      },
+      {
+        "t": "A still and a clip from one source",
+        "d": "Keep the square grid even, and make the tall file as its own job so the two do not fight."
+      },
+      {
+        "t": "You write the words",
+        "d": "Captions, prices and stickers stay in your hands. The download does not add them."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "Use one upload on the other channels too",
+    "lead": "Instagram is one stop. The same picture can start files for the other places you sell.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "label": "AI TikTok ads generator",
+        "d": "A tall ad for a short-video feed, started from the same upload.",
+        "href": "/platforms/tiktok-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "label": "AI Facebook ad generator",
+        "d": "A square feed still, or a tall clip for full-screen placements.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "label": "YouTube Shorts ads",
+        "d": "A tall short-form clip. A wide in-stream file is a separate job.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "label": "Amazon product photos",
+        "d": "A plain main image, a detail, and an in-use view for the gallery.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "label": "Shopify product photos",
+        "d": "Square page images, collection tiles, and a clip you add in the admin.",
+        "href": "/platforms/shopify-product-photos"
+      },
+      {
+        "t": "AI ads and product photos by platform",
+        "label": "AI ads and product photos by platform",
+        "d": "Open the full channel list and choose where the next file will run.",
+        "href": "/platforms"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "How shops prepare an Instagram file before a shoot",
+    "lead": "A few ways shops use one upload.",
+    "items": [
+      {
+        "example": true,
+        "who": "Skincare shop",
+        "t": "Routine, then the pack",
+        "d": "Example: a tube upload becomes a bathroom apply so the pack stays in frame."
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Three shades, one grid",
+        "d": "Example: a balm upload becomes a square color row for the grid."
+      },
+      {
+        "example": true,
+        "who": "Cafe brand",
+        "t": "Pour into a cup",
+        "d": "Example: a tin upload becomes a pour so the drink reads at a glance."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Set on a table",
+        "d": "Example: a candle upload becomes a lit table scene for a square still."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Hold, don't crop the hem",
+        "d": "Example: a tote upload becomes a carry so the full shape stays visible."
+      },
+      {
+        "example": true,
+        "who": "Jewelry shop",
+        "t": "One piece, tight and bright",
+        "d": "Example: a necklace upload becomes a worn detail with the chain still complete."
+      }
+    ]
+  },
+  "related_h2": "Tools for the still and the clip",
+  "related_lead": "Open the tool or template that matches the placement you picked.",
+  "relatedLinks": [
+    "video-ads",
+    "social-ad-photos",
+    "tpl-story",
+    "lifestyle-photos",
+    "image-to-video",
+    "model-photos"
   ]
 }

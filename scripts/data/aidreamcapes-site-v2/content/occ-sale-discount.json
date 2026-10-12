@@ -2,9 +2,9 @@
   "id": "occ-sale-discount",
   "title": "Sale Ad Creatives With Editable Offers | AIVideosUGC",
   "description": "Build a sale ad creative from one product photo. Add the confirmed price, code and end date after download, then reuse the scene when the promotion changes.",
-  "h1": "Make Sale Ad Creatives From One Product Photo",
+  "h1": "Create Sale Ad Creatives Fast",
   "eyebrow": "Sale ad creatives",
-  "lead": "Start your sale ad before the offer is final. Build the product scene now, then add the confirmed price, code and date after download. Need a short sale video ad? [Build one from a product photo](/ai-video-generation/ugc-ad-video).",
+  "lead": "Build the product scene now, and add the confirmed price, code, and end date after you download.",
   "secondary_keywords": [
     "discount ad images",
     "sale banner for online store",
@@ -14,28 +14,40 @@
   "plan": [],
   "faq": [
     {
-      "q": "Can AIVideosUGC put the discount on the image for me?",
-      "a": "No. Keep the percentage, price, code and end date as editable text in Canva, CapCut or Ads Manager so you can proofread every character."
+      "q": "Will the discount be printed on the image for me?",
+      "a": "No. Keep the percent, the price, the code, and the end date as text you add after download, so you can check every character."
     },
     {
-      "q": "Can I reuse a sale visual for my next promotion?",
-      "a": "Yes. The product scene stays separate from the offer layer. Replace the text when the promotion changes and keep the same visual."
+      "q": "Can I reuse the scene for the next promotion?",
+      "a": "Yes. The product scene is separate from the offer. Replace the text when the promotion changes and keep the same visual."
     },
     {
-      "q": "Can I show the original price next to the sale price?",
-      "a": "Only show an original price you actually charged. Review the comparison-pricing rules that apply where you sell before publishing the claim."
+      "q": "Can I show the old price next to the sale price?",
+      "a": "Only if you actually charged that old price. Check the comparison-pricing rules where you sell before you publish the claim."
     },
     {
-      "q": "How much open space should I leave for the offer?",
-      "a": "Leave clear space for the offer line and code without covering the product. Preview the smallest screen to make sure both remain readable."
+      "q": "Can I add a countdown to the sale video?",
+      "a": "No. The clip does not include a timer. Add it in your editor or ad platform after download, where you control the end time."
     },
     {
-      "q": "Do I need a creator for sale videos?",
-      "a": "No. Start with your product photo and a chosen scene. The generated file gives you the visual, and you add the offer afterward."
+      "q": "How many credits does a sale photo or video use?",
+      "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The cost shows before you start, and a failed job returns those credits."
     },
     {
-      "q": "Can I run the finished visual as a paid sale ad?",
-      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in paid promotions, subject to the platform rules for your ad."
+      "q": "Do I need a creator for the sale scene?",
+      "a": "No. Start from your product photo. If a person appears, that person is generated, not a real customer."
+    },
+    {
+      "q": "Can I run the file as a paid sale ad?",
+      "a": "Yes. The download has no AIVideosUGC watermark. The platform's ad rules still apply."
+    },
+    {
+      "q": "Can I make sale visuals for many products at once?",
+      "a": "No. Each product photo is its own job. Start the next product when you are ready."
+    },
+    {
+      "q": "How much empty space should I leave for the offer?",
+      "a": "Leave clear room for the offer line and the code without covering the product. Check the smallest screen you will use and make sure both stay readable."
     }
   ],
   "examples": {
@@ -82,23 +94,23 @@
       }
     ]
   },
-  "cta_lead": "Build the sale ad creative first, then add the confirmed offer after download.",
+  "cta_lead": "Download the visual first. Add the price, the code, and the end date when they are confirmed.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product shoppers will buy. Keep the full item in frame."
+      "d": "Start with one clear photo of the product on offer. Keep the full item in frame so shoppers can tell what is on sale."
     },
     {
-      "t": "Pick a Sale Scene",
-      "d": "Choose a product view with clear space for the offer layer. Keep the price, code, and date out of the image."
+      "t": "Describe Your Scene",
+      "d": "Choose a product view with empty space for the offer. Keep the price, the code, and the end date out of the image."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed price, code and end date in your editor. Then post the finished file."
+      "d": "Type the confirmed price, code, and end date in your editor, then post the file. The product scene can stay up while the words change."
     }
   ],
   "visual": {
-    "overview": "Show the product clearly in a sale scene, then add the confirmed offer in an editable layer.",
+    "overview": "The product stays clear. The offer line is typed after download.",
     "strip": [
       "n:guide:q20-occ-sale-gallery-03",
       "f:retargeting-urgency",
@@ -111,7 +123,7 @@
       "source": "n:guide:occ-sale-discount-c3-m2-source",
       "result": "n:guide:q20-occ-sale-discount-steps-result-r2",
       "mode": "photo",
-      "prompt": "Square product photo of pastel skincare bottles and jars on a pale neutral counter, with open space beside the set for an offer line added after download; no words, numbers, prices, discount symbols or labels.",
+      "prompt": "Pastel skincare bottles on a pale counter, with open space beside them for the offer.",
       "options": [
         [
           "Template",
@@ -233,60 +245,138 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Create Sale Ad Creatives in 3 Simple Steps"
+        "h2": "Create promo video ads in three steps"
       },
       "m3": {
         "h2": "Choose a Sale Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions About Sale Ad Creatives"
+        "h2": "Questions about flash sale ad ideas"
       }
     }
   },
-  "benefits_h2": "Keep the product scene while the offer changes",
+  "benefits_h2": "Discount ad images with room for the price",
   "benefits": [
     {
-      "t": "Launch before the offer is final",
-      "d": "Build the product scene in minutes while the price, code and dates are still being confirmed.",
+      "t": "Start before the offer is final",
+      "d": "Build the product scene while the price, the code, and the dates are still being decided. The visual can be ready before the offer wording is final.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-offer",
       "alt": "Denim jacket on a hanger against a pale wall with open space for an offer.",
       "frame": "none"
     },
     {
-      "t": "Skip a reshoot when details change",
-      "d": "Swap the price, code or date in your editor and keep the same product scene.",
+      "t": "Keep the scene when the code changes",
+      "d": "Swap the price, the code, or the end date in your editor and leave the product scene as it is. A late change does not send you back to a shoot.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-reshoot",
       "alt": "Adult hands fold a checked picnic blanket beside a basket at a park table.",
       "frame": "none"
     },
     {
-      "t": "Get more versions from one photo",
-      "d": "Turn one product photo into a square post or short clip for the channel carrying the sale.",
+      "t": "Get a square post or a short clip",
+      "d": "Make a 1:1, 9:16, 16:9, 4:3, or 3:4 version from the same photo. A clip runs 6, 10, 15, or 30 seconds, and the credit cost shows first.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-versions",
       "alt": "Adult hand places a wireless charging pad on a dark desk.",
       "frame": "none"
     },
     {
-      "t": "Skip the creator and studio bill",
-      "d": "Make the sale scene yourself in minutes, with no casting, studio day or shoot to pay for.",
+      "t": "Make the scene from the photo you have",
+      "d": "The sale scene starts from your product photo. Any person in the scene is generated, not a hired shopper.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-no-shoot",
       "alt": "Adult hands prepare a kraft tea pouch beside a plain travel mug in a bright kitchen.",
       "frame": "none"
     }
   ],
-  "steps_h2": "How to Create Sale Ad Creatives in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose a sale scene and add the confirmed offer after download.",
+  "steps_h2": "Create promo video ads in three steps",
+  "steps_lead": "Upload one product photo, leave room for the offer, and add the price after download.",
   "relatedLinks": [
-    "video-ads",
-    "social-ad-photos",
-    "unboxing-videos",
-    "templates",
-    "guides",
-    "occ-black-friday",
-    "occ-holidays",
-    "product-videos",
-    "lifestyle-photos",
-    "tpl-sale",
-    "pricing"
+    {
+      "id": "occ-black-friday",
+      "label": "Black Friday ad creatives"
+    },
+    {
+      "id": "occ-holidays",
+      "label": "holiday ad photos and videos"
+    },
+    {
+      "id": "occ-product-launch",
+      "label": "product launch video and photos"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
+    },
+    {
+      "id": "tpl-sale",
+      "label": "sale banner maker"
+    }
+  ],
+  "reviews": {
+    "h2": "How shops make a sale banner for an online store",
+    "lead": "Three ways a shop leaves room for an offer that is not final yet.",
+    "items": [
+      {
+        "example": true,
+        "who": "A beauty shop",
+        "t": "Leave open space beside the jar",
+        "d": "They upload the jar and ask for a clean counter with empty room on one side. The percent off is typed later, so a changed number does not need a new scene."
+      },
+      {
+        "example": true,
+        "who": "An apparel shop",
+        "t": "Run the jacket scene again next week",
+        "d": "They reuse the same jacket scene for the next code. Only the offer line in the editor changes."
+      },
+      {
+        "example": true,
+        "who": "A home shop",
+        "t": "Fold the blanket, then add the end date",
+        "d": "They show the blanket in use and leave the end date out of the picture. The date is added after download, once the sale window is real."
+      }
+    ]
+  },
+  "trust": {
+    "h2": "What you still edit after download",
+    "lead": "The offer is yours to type, and the file is yours to run.",
+    "items": [
+      {
+        "t": "The price stays out of the generated scene",
+        "d": "Percent, price, code, and end date are typed by you after download, so you can proofread every character."
+      },
+      {
+        "t": "A commercial file with no watermark",
+        "d": "The download has no AIVideosUGC watermark. You can use it in paid promotions, subject to platform rules."
+      },
+      {
+        "t": "The credit cost before you start",
+        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+      },
+      {
+        "t": "Credits back if the job fails",
+        "d": "A failed job returns its credits automatically. A finished file is not refunded just because you dislike it."
+      },
+      {
+        "t": "The upload stays in your account",
+        "d": "The product photo and the result stay in your account until you download them and share them."
+      },
+      {
+        "t": "Music and captions after download",
+        "d": "Add a track you have rights to, and any captions, in your editor. They are not generated into the file."
+      }
+    ]
+  },
+  "cta_title": "Post the sale ad when the price is confirmed",
+  "blockOrder": [
+    "hero",
+    "benefits",
+    "steps",
+    "reviews",
+    "trust",
+    "related",
+    "faq",
+    "cta"
   ]
 }

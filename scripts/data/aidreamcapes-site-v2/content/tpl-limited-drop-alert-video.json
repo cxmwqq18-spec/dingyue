@@ -2,29 +2,29 @@
   "id": "tpl-limited-drop-alert-video",
   "title": "Limited Drop Alert Video Template | AIVideosUGC",
   "description": "Drive urgency for a small release or restock with a drop alert video from one product photo. Add your date, quantity and notify link after download.",
-  "h1": "Limited Drop Alert Videos for Restocks and New Drops",
+  "h1": "Limited Drop Alert Video for a Restock or Small Release",
   "eyebrow": "Limited drop video template",
-  "lead": "Create a timely alert from one product photo, then add the exact date, stock count and notify link after download. You can prepare the next restock or small release without arranging a shoot for every drop.",
+  "lead": "Place the release product in a scene, and add the date and stock note only after download.",
   "secondary_keywords": [
     "restock alert video",
     "limited release ad",
     "shoe drop video",
     "product restock reel"
   ],
-  "steps_h2": "How to Make an AI Limited Drop Alert Video in 3 Simple Steps",
-  "steps_lead": "Turn one product photo into a clear drop moment, then add the confirmed release details.",
+  "steps_h2": "Make a Limited Release Ad in 3 Steps",
+  "steps_lead": "The scene shows the product. The date, quantity and notify link stay editable after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product in the limited drop. Keep its full shape and color visible."
+      "d": "Upload one clear photo of the item in the drop. Keep its shape and color fully visible."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose a reveal, unboxing or in-use moment. Name the one action that should make the release feel timely."
+      "t": "Describe Your Scene",
+      "d": "Describe one reveal or in-use action, then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the finished alert. Add the confirmed date, quantity and notify link in your editor."
+      "d": "Download the alert and add the date, quantity and notify link in your editor. Pause the ad when stock runs out."
     }
   ],
   "maker": {
@@ -46,73 +46,48 @@
   },
   "faq": [
     {
-      "q": "Is this only for shoes?",
-      "a": "No. Use the format for apparel, accessories, cosmetics, or a small home goods release. Keep one product and one clear action per run."
+      "q": "Is a limited drop alert video only for shoes?",
+      "a": "No. A shoe drop video fits, and so does a small apparel release, a beauty shade or a home restock. Keep one product and one action in the scene."
     },
     {
-      "q": "Does AIVideosUGC add music or captions?",
-      "a": "AIVideosUGC does not add narration, music, or captions. Add a track, recorded narration, and text in your editor after download."
+      "q": "How do I build the alert?",
+      "a": "Upload a clear photo of the release item, describe the reveal, pick a size and length, download, then add the date and quantity yourself."
     },
     {
-      "q": "What video length fits a limited drop alert?",
-      "a": "Use 6 seconds for one product-and-date beat, 10 or 15 seconds for a reveal plus call to action, and 30 seconds for a longer sequence. Add the exact stock count and drop date after download."
+      "q": "Why not film the unboxing?",
+      "a": "The scene comes from one product photo, so you can prepare the alert before the release without booking a creator for every colorway."
     },
     {
-      "q": "Can I show a live countdown?",
-      "a": "Add the countdown as an editable text layer or platform element after download, so the time is always current."
+      "q": "Who is it for?",
+      "a": "Shops with a short release window on TikTok, Reels or a product page, including shoe and clothing drops."
     },
     {
-      "q": "What ratio works for a drop alert?",
-      "a": "9:16 fits TikTok and Reels; make a 1:1 version for feeds. Clips cost 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds."
+      "q": "Can a first-time seller use it?",
+      "a": "Yes. One clear photo and a short scene description are enough. You add the live details after the file is ready."
     },
     {
-      "q": "Can the video include the stock quantity?",
-      "a": "Keep the quantity as a text layer you add yourself, so it can be updated as stock changes."
+      "q": "Can the clip show a live countdown or the stock count?",
+      "a": "Add the countdown, date and quantity as text after download. The generator does not keep a clock or a stock number in sync."
     },
     {
-      "q": "Can I create a second limited-drop video from the same source photo?",
-      "a": "Yes. Keep the coral trail shoe as the reference, then change one setting or camera move at a time. Add the current date, price and notify link after download so each version stays easy to update."
+      "q": "Which size and length fit a drop post?",
+      "a": "9:16 for TikTok and Reels, 1:1 for a feed, plus 16:9, 4:3 or 3:4 when you need them. Lengths are 6, 10, 15 or 30 seconds."
     },
     {
-      "q": "Can I run the alert as a paid ad during the drop window?",
-      "a": "Yes. Videos you make can run in your own paid ads, social posts and restock emails, with no AIVideosUGC watermark on the download. You remain responsible for availability, claims and the disclosures the platform requires."
+      "q": "Does it add music or captions?",
+      "a": "No. Add music, a spoken line and captions in your editor, or in the app where you post."
     },
     {
-      "q": "How do I stop showing sold-out urgency?",
-      "a": "Pause or update the ad and replace the quantity layer when the drop sells out, switching to a restock notify message if another release is planned. A limited alert should not keep running after the live number changes."
+      "q": "What does the alert cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first, and a failed job returns its credits. Plans start at $24.50 a month."
+    },
+    {
+      "q": "What should I do when the drop sells out?",
+      "a": "Pause or replace the ad and change the quantity line. A limited alert should not keep running after the number is wrong. The download has no watermark, and any person on screen is an AI performer, not a buyer."
     }
   ],
-  "examples": {
-    "h2": "More limited drop scenes",
-    "lead": "Small-batch products shown up close, with room at the top for your drop details.",
-    "groups": [
-      {
-        "label": "Drop moments",
-        "items": [
-          {
-            "ref": "n:guide:q13-limited-examples-0",
-            "title": "Watch caseback catches the light",
-            "kind": "scene",
-            "product": "wristwatch"
-          },
-          {
-            "ref": "n:guide:q13-limited-examples-1",
-            "title": "Jacket lifted from a plain box",
-            "kind": "scene",
-            "product": "jacket"
-          },
-          {
-            "ref": "n:guide:rc6-tpl-limited-example-shoe-r1",
-            "title": "Trail shoe grip shown before a hike",
-            "kind": "scene",
-            "product": "trail shoe"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Show the limited-release product in a clear reveal, then add timing and availability after download.",
+    "overview": "",
     "strip": [
       "n:guide:rc6-tpl-limited-strip-candle-r1",
       "n:guide:rc6-tpl-limited-strip-shirt-r1",
@@ -127,7 +102,7 @@
       "sourceHint": "Show the full shoe shape and color in a clear view.",
       "result": "n:guide:q13-limited-steps-result-r3",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and preserve the coral trail shoes shape, color and outsole exactly. An adult hiker ties the uploaded coral trail shoes on a rocky trail, then stands to show the tread and full pair. Use a vertical medium frame with one slow push-in; end on both shoes steady in the center with safe space above for an editable date layer. Sound: lace pull, gravel steps and quiet wind; no music.",
+      "prompt": "An adult hiker ties the uploaded coral trail shoes on a rocky trail, then stands so the tread and both shoes stay in frame. Leave room above the shoes for a date you add after download.",
       "options": [
         [
           "Size",
@@ -144,8 +119,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a scene for a limited-drop alert video",
-      "lead": "Show the new item clearly before adding its release details. Start with a clean product view, then choose the scene that makes the drop date and available quantity easy to notice.",
+      "title": "Choose a Scene for a Restock Alert Video",
+      "lead": "Open a product scene and place the item that is actually in the drop. Add the date, quantity and notify link after download.",
       "chips": [
         {
           "id": "accessories",
@@ -561,18 +536,102 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Make a limited-drop alert video for a new product"
-      },
       "faq": {
-        "h2": "Questions about AI limited drop alert videos"
+        "h2": "Limited Drop Alert Video Questions"
+      },
+      "m3": {
+        "h2": "Choose a Scene for a Restock Alert Video"
       }
     }
   },
-  "cta_lead": "Make the drop alert, then add timing and stock details after download."
+  "cta_lead": "Upload the release product and see the credit cost before you start.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "How Shops Use a Restock Alert Video",
+    "lead": "Each card is one shop's drop or restock. Put the date and quantity on after download.",
+    "items": [
+      {
+        "example": true,
+        "who": "Watch shop",
+        "t": "Light catch",
+        "d": "Example: a caseback turned so the metal catches light before a small release."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Box lift",
+        "d": "Example: a jacket lifted from a plain box for a restock post."
+      },
+      {
+        "example": true,
+        "who": "Shoe shop",
+        "t": "Grip check",
+        "d": "Example: a trail-shoe sole shown before a hike for a drop alert."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Colorway hold",
+        "d": "An apparel shop holds one color still, so the post is about that pair. The rest of the line stays off this clip."
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Shade reveal",
+        "d": "Example: a limited shade opened once, with the lot size added as text later."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Small-batch unbox",
+        "d": "Example: a candle lifted from a mailer for a restock note."
+      },
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "First look",
+        "d": "Example: a small-run bag turned once so hardware and shape both read."
+      },
+      {
+        "example": true,
+        "who": "Drink shop",
+        "t": "Flavor drop",
+        "d": "Example: one new flavor held to camera, with the ship date added after download."
+      },
+      {
+        "example": true,
+        "who": "Jewelry shop",
+        "t": "Piece reveal",
+        "d": "Example: a single piece turned on a plain surface for a short release window."
+      },
+      {
+        "example": true,
+        "who": "Fitness shop",
+        "t": "Restock hold",
+        "d": "Example: one color of gear held up, then the notify line added in the editor."
+      }
+    ]
+  },
+  "related_h2": "Pages for a Product Restock Reel",
+  "related_lead": "Video ads, fashion scenes, and TikTok placements for the next restock.",
+  "relatedLinks": [
+    "video-ads",
+    "tpl-outfit",
+    "tpl-carousel-video-ad",
+    "tpl-sale",
+    "ind-fashion-clothing",
+    "plat-tiktok"
+  ],
+  "cta_title": "Ready to Make the Drop Alert?"
 }

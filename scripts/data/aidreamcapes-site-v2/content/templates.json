@@ -2,10 +2,10 @@
   "id": "templates",
   "title": "AI Product Ad Templates for Photos and Videos | AIVideosUGC",
   "description": "Find AI product ad templates for photos and short videos. Choose a style, add one product photo, and get a new asset for your store or social feed.",
-  "h1": "AI Product Ad Templates: See It, Recreate It, Launch It",
+  "h1": "Product Ad Templates: Pick a Layout, Add a Photo",
   "eyebrow": "Product ad templates",
-  "lead": "Get a product ad ready faster: pick a template, add your product photo, and download an asset for your store, social feed, or campaign.",
-  "card": "Ready-made styles for product photos and videos. Pick one, add your product, and publish the next asset.",
+  "lead": "Pick a ready-made layout, add one photo of your item, and download a picture or a clip for your store, your feed, or a paid placement.",
+  "card": "Ready-made layouts for product pictures and short clips. Add your photo and download the next file.",
   "secondary_keywords": [
     "product photo templates",
     "product video templates",
@@ -14,48 +14,48 @@
   ],
   "faq": [
     {
-      "q": "What are AI UGC video ad templates?",
-      "a": "They are ready-made ad formats that place your product photo into a creator-style scene, product demo, or social post layout."
+      "q": "What is a product ad template here?",
+      "a": "It is a ready-made layout for a product picture or a short clip. You add one photo of your item and download a new file. You are not filming a creator."
     },
     {
-      "q": "How do AI UGC video templates work?",
-      "a": "Upload one clear product photo, choose a template, and review the generated asset before you post it."
+      "q": "How do I turn a template into my own file?",
+      "a": "Open a template, upload one product photo, and check the preview. Download when the item, the color, and the framing look right."
     },
     {
-      "q": "Why use AI-generated UGC ads instead of filming creators?",
-      "a": "Templates help you test new hooks and product scenes without booking a creator, studio, or reshoot for every version."
+      "q": "Why start from a template instead of a shoot?",
+      "a": "A template already has a scene and a framing. You skip booking a model and a studio, and you still see the credit cost before the job starts. Add a price or licensed music in your own editor after download."
     },
     {
-      "q": "Who are these templates designed for?",
-      "a": "They are for sellers, brands, and creators who need product assets for stores, social feeds, or paid campaigns."
+      "q": "Who is this library for?",
+      "a": "Online shops that need listing photos, feed stills, or short clips and already have one clear photo of the product. It is a starting layout, not a design team."
     },
     {
-      "q": "Can beginners use these templates?",
-      "a": "Yes. Start with a clear product photo, pick a format, and download the result without editing experience."
+      "q": "Do I need editing experience?",
+      "a": "No. Pick a template and upload a photo. Add a price, a headline, or licensed music in your own editor after download. Captions are not added for you."
     },
     {
-      "q": "What industries are these templates suitable for?",
-      "a": "They suit beauty, clothing, food and beverage, home, jewelry, accessories, apps, and other product categories shown in the template library."
+      "q": "Which categories have templates?",
+      "a": "Open a chip on this page. The groups include Beauty and Personal Care, Clothing, Apparel, Food and Beverage, Footwear, Jewelry and Accessories, Tech and Electronics, and Health and Fitness. There is no Skincare chip and no Home chip."
     },
     {
-      "q": "Can I upload my own product images and videos?",
-      "a": "You can upload your own product image; the template starts from one photo, so a video upload is not required."
+      "q": "Can I upload my own photo?",
+      "a": "Yes. Every template starts from the photo you upload, so the item in the file is yours. A clear, full view of the product gives you a fairer check."
     },
     {
-      "q": "Which platforms are these templates optimized for?",
-      "a": "Use the resulting assets on your store, social feed, or ad campaign, then choose the final spot and crop in the channel where you post."
+      "q": "Which channels do these files fit?",
+      "a": "Picture templates are square by default, which suits a lot of listing galleries. Clip templates can be 9:16, 1:1, 16:9, 4:3, or 3:4, at 6, 10, 15, or 30 seconds. You upload the file yourself."
     },
     {
-      "q": "Are the templates free to use?",
-      "a": "Templates are included with a paid plan, and the current plans and credit allowances are listed on the pricing page."
+      "q": "Are the templates free?",
+      "a": "Browsing this page is free. Making a file uses credits, and the cost is shown before you start. A failed job returns its credits. Plan prices are on the pricing page."
     },
     {
-      "q": "Can I use these video templates for commercial purposes?",
-      "a": "Yes. Downloads are cleared for commercial use and have no watermark, subject to the rules and claims for the platform where you publish."
+      "q": "Can I use the download in paid ads?",
+      "a": "Yes. Finished photos and clips can be used commercially and have no watermark. You are responsible for claims, prices, and music you add later."
     },
     {
-      "q": "Why use templates instead of creating ads from scratch?",
-      "a": "A template gives you a starting structure, so you can spend your time choosing the product angle and testing versions instead of building every layout from a blank page."
+      "q": "Why not build every ad from a blank page?",
+      "a": "A template gives you a scene that already fits a selling moment, so you spend your time on the product and the offer instead of inventing a setup."
     }
   ],
   "visual": {
@@ -78,8 +78,8 @@
       ]
     },
     "picker": {
-      "title": "Browse product ad examples",
-      "lead": "Compare creator-style scenes and product showcases before you choose a template.",
+      "title": "Browse product photo and video templates",
+      "lead": "Filter by category, open a layout, and start from your own photo.",
       "chips": [
         {
           "id": "accessories",
@@ -497,11 +497,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to Make Product Ad Templates in 3 Simple Steps"
+        "h2": "Use a product ad template in three moves"
       },
       "m3": {
-        "h2": "Pick a Product Ad Template for Your Next Campaign",
-        "lead": "Choose a template, add one product photo, and publish a fresh asset."
+        "h2": "Browse Product Photo and Video Templates",
+        "lead": "Filter by category, open a scene, and start that direction from your own photo."
       }
     },
     "directoryFilters": {
@@ -553,17 +553,70 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the product you sell. A clean source keeps the item easy to inspect when you review the result."
+      "d": "Add one clear photo of the item. A full view makes the finished file easier to check."
     },
     {
-      "t": "Pick a Template",
-      "d": "Choose a template for the channel and buyer moment. The preview uses your uploaded item for a quick comparison before posting."
+      "t": "Choose a Template",
+      "d": "Pick the layout that matches the channel and the moment you want to show."
     },
     {
       "t": "Download and Post",
-      "d": "Download the asset when the product and framing look right. Add price or headline in your editor, then post it to your store or campaign."
+      "d": "Save the file when the item looks right. Add a price in your editor, then publish it."
     }
   ],
-  "steps_h2": "How to Make Product Ad Templates in 3 Simple Steps",
-  "steps_lead": "Add one product photo, choose a ready-made format, and download an asset for the channel where you sell."
+  "steps_h2": "Use a product ad template in three moves",
+  "steps_lead": "Add one photo, choose a layout, and download a file you can post.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "templates",
+    "steps",
+    "reviews",
+    "faq",
+    "cta"
+  ],
+  "reviews": {
+    "h2": "What shops make from social media ad templates",
+    "lead": "Example outcomes, not customer quotes. Each card is a kind of file this library is for.",
+    "items": [
+      {
+        "example": true,
+        "who": "Skincare shop",
+        "t": "Routine still",
+        "d": "Example: a serum photo becomes a clean listing still with the bottle fully visible."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Try-on layout",
+        "d": "Example: a garment photo becomes an on-person layout a shopper can judge for fit."
+      },
+      {
+        "example": true,
+        "who": "Drink seller",
+        "t": "Pour clip",
+        "d": "Example: a bottle photo becomes a short pour clip for a feed test."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Room scene",
+        "d": "Example: a single product photo becomes a room scene for a product page gallery."
+      }
+    ]
+  },
+  "related_h2": "Tools behind these templates",
+  "related_lead": "Open the tool, or browse by category and channel.",
+  "relatedLinks": [
+    "video-ads",
+    "lifestyle-photos",
+    "white-background",
+    "model-photos",
+    "industries",
+    "platforms"
+  ],
+  "cta_title": "Pick a template and add your product",
+  "cta_lead": "Upload one product photo, choose a layout, and see the credit cost before you start.",
+  "gallery_h2": "All ecommerce ad templates by type",
+  "gallery_lead": "Each card opens a template page with an example and the steps to use it."
 }

@@ -2,9 +2,9 @@
   "id": "tpl-color",
   "title": "Product Color Variations in a Coordinated Set | AIVideosUGC",
   "description": "Create one coordinated photo for every product color from your own shade photos, so shoppers can compare options in the same scene. Square AI images.",
-  "h1": "Product Color Variations for a Coordinated Photo Set",
+  "h1": "Product Color Variations in One Shared Square Scene",
   "eyebrow": "Product photo template",
-  "lead": "Swatch names hide how a finish looks in context. Show every product color in one coordinated square set so shoppers can compare options.",
+  "lead": "Open one scene, add a photo of each shade you actually sell, and download a square set shoppers can compare.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Your Shade Photos",
-      "d": "Attach one clear photo of the actual shade, with the whole item and texture in frame. Real sources keep finishes honest."
+      "d": "Upload one clear photo of each shade you sell, with the whole item and its texture in frame. Real sources keep the finish honest."
     },
     {
-      "t": "Pick One Scene",
-      "d": "Describe the setting and camera once and apply it to every source. Each square image keeps its true shade."
+      "t": "Describe Your Scene",
+      "d": "Describe the setting once, then use that same description on every source photo. Compare each square with the physical shade before you publish it."
     },
     {
       "t": "Download and Post",
-      "d": "Download each image, compare the hue with the real item, then link it to its option. Shoppers get a clean comparison."
+      "d": "Download each image and compare the hue with the physical item or swatch. Link the file to the matching option in the gallery."
     }
   ],
   "maker": {
@@ -44,44 +44,44 @@
   },
   "faq": [
     {
-      "q": "How do I keep color options consistent?",
-      "a": "The set uses a shared view, light and background so shoppers compare the finish instead of a changing setup."
+      "q": "How do I keep product color variations consistent?",
+      "a": "Use one shared view, light and background for every shade. Shoppers then compare the finish instead of a changing setup."
     },
     {
-      "q": "Can AI create a color I have not photographed?",
-      "a": "It can suggest a color concept, but a generated shade cannot stand in for a real option. Upload a photo of each shade you sell and compare it with the physical swatch."
+      "q": "Can a color I never photographed be a real option?",
+      "a": "No. A generated shade cannot stand in for a color you sell. Upload a photo of each shade and compare the result with the physical swatch."
     },
     {
-      "q": "How should I order color options in a gallery?",
-      "a": "Lead with one clear product photo, then group matching shade images so shoppers can compare options without hunting."
+      "q": "Do I need a photo for every color?",
+      "a": "Yes, when the dye, glaze, fabric or finish changes. Upload a photo of that actual color, then compare the result with the item. The file is not a guaranteed color match."
     },
     {
-      "q": "Do I need a photo for each color?",
-      "a": "For reliable shade matching, use a clear source photo of each actual color, especially when dye, glaze, fabric or finish changes."
+      "q": "How should the gallery be ordered?",
+      "a": "Lead with one clear product photo, then group the matching shade images so shoppers can compare options without hunting."
     },
     {
-      "q": "Will the generated colors match my real products?",
-      "a": "Review every result against the physical item or swatch. Use the real product photo when exact shade matters."
+      "q": "Will the generated colors match my products?",
+      "a": "Check every result against the physical item or swatch. Keep the real shade photo available when exact color matters."
     },
     {
-      "q": "How are variation photos credited?",
-      "a": "Each variation photo costs 24 credits, and the total appears before you create the set."
+      "q": "What does each variation photo cost?",
+      "a": "Each product photo costs 24 credits. The total is shown before you create the set, and a failed job returns those credits."
     },
     {
-      "q": "Can I use colorway photos in a listing gallery?",
-      "a": "Yes. Add each image to its matching option and keep the real shade photo available when exact color matters."
+      "q": "Can I use the set in a listing gallery?",
+      "a": "Yes. Add each image to its matching option. The download has no watermark."
     },
     {
-      "q": "Do I need a reshoot for every color variation?",
-      "a": "No. Once the real shades are photographed, the same coordinated scene can be applied without repeat styled shoots."
+      "q": "Do I need a reshoot for every color?",
+      "a": "No styled reshoot is required once the real shades are photographed. Apply the same scene to those sources, then check each file."
     },
     {
       "q": "How do I compare actual swatches?",
-      "a": "Place each real shade photo in the same scene, then compare every result with the physical swatch before you publish."
+      "a": "Place each real shade photo in the same scene, download the set, and compare every file with the physical swatch before you publish."
     },
     {
       "q": "Can one scene cover several products?",
-      "a": "Yes. Describe one consistent setting and apply it to each uploaded product and shade, then check every result against the real item."
+      "a": "Yes. Describe one setting and apply it to each uploaded product and shade. Check every result against the real item."
     }
   ],
   "visual": {
@@ -114,8 +114,8 @@
       ]
     },
     "picker": {
-      "title": "Show Every Product Color Side by Side",
-      "lead": "Give shoppers a quick way to compare finishes with one coordinated square set.",
+      "title": "Browse Video Ad Templates by Category",
+      "lead": "These cards are video ads for other categories, not colorway photos. For the shade set, use the upload box above and add one photo of each color you sell.",
       "chips": [
         {
           "id": "accessories",
@@ -531,16 +531,124 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions about product color variations"
+        "h2": "Questions About Product Color Variations"
+      },
+      "m3": {
+        "h2": "Browse Video Ad Templates by Category",
+        "lead": "These cards are video ads for other categories, not colorway photos. For the shade set, use the upload box above and add one photo of each color you sell."
       }
     }
   },
-  "steps_h2": "How to Make Product Color Variations in 3 Simple Steps",
-  "steps_lead": "Give every shade the same setting so shoppers compare options. No repeat shoots, no mismatched supplier shots."
+  "steps_h2": "Make Product Variant Images for Shopify in 3 Steps",
+  "steps_lead": "One photo per real shade, one shared description, then a square image you attach to each option.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq",
+    "cta"
+  ],
+  "reviews": {
+    "h2": "Sneaker Color Options Photos",
+    "lead": "Each card starts from photos of shades the shop already sells.",
+    "items": [
+      {
+        "example": true,
+        "who": "Sneaker shop",
+        "t": "Three uppers",
+        "d": "A sneaker shop puts white, black and navy in one scene, each from its own shoe photo."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Tee dyes",
+        "d": "An apparel shop shows four tee dyes in one setup, so shoppers compare the color."
+      },
+      {
+        "example": true,
+        "who": "Mug shop",
+        "t": "Glaze set",
+        "d": "A mug shop shows three glazes in one square style and checks them against the real glaze chips."
+      },
+      {
+        "example": true,
+        "who": "Lip color shop",
+        "t": "Bullet shades",
+        "d": "A lip-color shop shows a row of bullets from photos of the actual colors, not invented dyes."
+      },
+      {
+        "example": true,
+        "who": "Case shop",
+        "t": "Phone colors",
+        "d": "A case shop shows clear, black and sand cases in one setting for a Shopify option gallery."
+      },
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "Canvas colors",
+        "d": "A bag shop frames olive and sand canvas totes the same way for an Amazon color image."
+      },
+      {
+        "example": true,
+        "who": "Frame shop",
+        "t": "Metal finishes",
+        "d": "A frame shop shows brass, black and silver from photos of those finishes."
+      },
+      {
+        "example": true,
+        "who": "Yarn shop",
+        "t": "Skein row",
+        "d": "A yarn shop uploads each skein, so the dye is not guessed."
+      },
+      {
+        "example": true,
+        "who": "Helmet shop",
+        "t": "Shell colors",
+        "d": "A helmet shop shows matte black and gloss white shells in one shared view."
+      },
+      {
+        "example": true,
+        "who": "Bottle shop",
+        "t": "Powder coats",
+        "d": "A bottle shop shows two powder coats of the same shape and compares them with the physical bottles before publishing."
+      }
+    ]
+  },
+  "related_h2": "Amazon Color Variation Images and Shoe Photos",
+  "related_lead": "Shoe and listing pages to use with the color set: a drop video, clothing try-on, shoe photos, Shopify, and Amazon.",
+  "relatedLinks": [
+    {
+      "id": "photo-hub",
+      "label": "AI product photo generator"
+    },
+    {
+      "id": "tpl-limited-drop-alert-video",
+      "label": "limited drop alert video"
+    },
+    {
+      "id": "tpl-tryon",
+      "label": "AI virtual try-on for clothing"
+    },
+    {
+      "id": "plat-amazon",
+      "label": "Amazon product photos"
+    },
+    {
+      "id": "ind-shoes",
+      "label": "AI product photos for shoe brands"
+    },
+    {
+      "id": "plat-shopify",
+      "label": "Shopify product photos"
+    }
+  ],
+  "cta_title": "Start a Color Set from Photos of Real Shades",
+  "cta_lead": "Upload one photo per shade you sell and see the credit cost before you start."
 }

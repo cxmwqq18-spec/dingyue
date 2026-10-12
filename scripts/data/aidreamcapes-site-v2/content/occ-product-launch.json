@@ -2,9 +2,9 @@
   "id": "occ-product-launch",
   "title": "New Product Launch Video and Photos | AIVideosUGC",
   "description": "Create product launch videos and photos from one product image: make a teaser, reveal, and listing asset before launch day, without a studio booking or reshoot.",
-  "h1": "AI Product Launch Video and Photos Before Launch Day",
+  "h1": "Create Your Product Launch Video and Photos Fast",
   "eyebrow": "New product launch",
-  "lead": "Build anticipation for your reveal from one product photo, without booking a shoot. Make a teaser, a reveal clip and listing images before the launch date.",
+  "lead": "Make a teaser and a first-look scene from one product photo, before the launch date is public.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
@@ -13,32 +13,40 @@
   ],
   "faq": [
     {
-      "q": "Can I make launch content before production is finished?",
-      "a": "Yes. Start from a clear photo of the current sample or prototype. The teaser, reveal and listing images all use that one photo, so assets exist while production finishes."
+      "q": "How many credits does a launch photo or video use?",
+      "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the cost before the job starts, and a failed job returns those credits."
     },
     {
-      "q": "Can I change the launch date after making the video?",
-      "a": "Yes. Add the date, price, and code as editable text after download, so confirmed details can change without regenerating the scene."
+      "q": "Can I add a countdown to the launch video?",
+      "a": "No. The clip does not include a timer. Add the countdown in your editor or ad platform after download, where you can change the end time."
     },
     {
-      "q": "Can I add a countdown timer to a launch video?",
-      "a": "No. Add a countdown in CapCut or your ad platform after download, where you can edit the date safely."
+      "q": "Will anyone else see my unreleased product?",
+      "a": "No. The upload and the result stay in your account until you download them and share them."
     },
     {
-      "q": "Will anyone see my unreleased product?",
-      "a": "No. Your uploads and results stay private in your own account until you download and share them, so the product stays under wraps."
+      "q": "What frame should a launch visual use?",
+      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for a feed, 16:9 for a wide page, or 4:3 and 3:4 when the placement needs them. Each frame is its own job."
     },
     {
-      "q": "What video size should a product launch use?",
-      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feeds, and 16:9 for a wide page or YouTube video. Each size is its own generation."
+      "q": "How long can the launch clip be?",
+      "a": "Clips run 6, 10, 15, or 30 seconds. Six seconds fits a quick reveal. Use 15 or 30 seconds when the launch needs a fuller product story."
     },
     {
-      "q": "How long can a launch video be?",
-      "a": "Clips run 6, 10, 15, or 30 seconds. A 6-second clip works for a quick reveal; use 15 or 30 seconds when the launch needs a fuller product story."
+      "q": "Can a generated presenter introduce the product?",
+      "a": "Yes, if you ask for a person in the scene. That presenter is generated, not a real customer. You can also keep the scene on the product alone."
     },
     {
-      "q": "Can I run the finished clips as launch ads?",
-      "a": "Yes. Downloads carry no AIVideosUGC watermark and are yours to use in paid launch posts, subject to each platform's ad review."
+      "q": "Can I change the launch date after the video is made?",
+      "a": "Yes. Add the date as text after download, so a new day does not mean a new scene."
+    },
+    {
+      "q": "Can I run the clip as a paid launch ad?",
+      "a": "Yes. The download has no AIVideosUGC watermark. Platform ad rules still apply."
+    },
+    {
+      "q": "Can I generate launch visuals for many products at once?",
+      "a": "No. Each product photo is its own job. Start the next product when you are ready."
     }
   ],
   "examples": {
@@ -106,23 +114,23 @@
       }
     ]
   },
-  "cta_lead": "Create the teaser or reveal first, then add the launch date after download.",
+  "cta_lead": "Download the teaser, then add the launch date once it is confirmed.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a clear photo of the final item or sample. Every launch asset starts from that one shot."
+      "d": "Use a clear photo of the sample or the finished item. Every first look and listing image starts from that shot."
     },
     {
-      "t": "Pick a Launch Moment",
-      "d": "Choose a first look, reveal, or first-use scene. Each job makes the next launch asset."
+      "t": "Describe Your Scene",
+      "d": "Ask for a covered first look, an unbox, or a first-use moment. Leave the launch date and the price out of the picture."
     },
     {
       "t": "Download and Post",
-      "d": "Type the name, date, and price in your editor. The file is yours to run, with no watermark."
+      "d": "Type the name, the date, and the price in your editor. Post the first look when those details are confirmed."
     }
   ],
   "visual": {
-    "overview": "A teaser, a reveal and listing photos all come from one sample photo, so the launch set is ready while production finishes.",
+    "overview": "A teaser and a reveal come from one sample photo. The launch date goes on after download.",
     "strip": [
       "n:guide:q20-occ-product-launch-card-08",
       "n:guide:q20-occ-product-launch-card-06",
@@ -135,7 +143,7 @@
       "source": "n:guide:occ-product-launch-c3-m2-source",
       "result": "n:guide:occ-product-launch-c3-m2-result",
       "mode": "photo",
-      "prompt": "Still square product photograph of a matte blue water bottle upright on a pale stone ledge beside a folded towel; soft outdoor morning light, centered composition with the full bottle visible and crisp product detail, no readable text, numbers, symbols, signs, screens or labels anywhere in the frame, no logos.",
+      "prompt": "A matte blue bottle on a pale ledge in morning light, with open space for the launch date.",
       "options": [
         [
           "Template",
@@ -255,60 +263,138 @@
     ],
     "titles": {
       "m2": {
-        "h2": "Make launch photos from one product photo"
+        "h2": "Create a launch teaser video in three steps"
       },
       "m3": {
         "h2": "Choose a product launch scene"
       },
       "faq": {
-        "h2": "Questions about product launch photos"
+        "h2": "Questions about a new product launch video"
       }
     }
   },
-  "benefits_h2": "Launch the first look before the product ships",
+  "benefits_h2": "A product reveal video before the item ships",
   "benefits": [
     {
-      "t": "Build demand before production ends",
-      "d": "Build the first look from a current sample photo while the final run is still in progress.",
+      "t": "Show a first look while production finishes",
+      "d": "Start from a sample photo so the first look exists before the full run is packed. You do not need a studio day to get that first visual out.",
       "img": "n:guide:fx01-occ-product-launch-benefit-teaser",
       "alt": "Adult hand lifts a fabric cover from a plain desk lamp in warm window light.",
       "frame": "none"
     },
     {
-      "t": "Give buyers a first look before launch day",
-      "d": "Show the complete product early so buyers understand what is coming before launch day.",
+      "t": "Reveal the product without printing the date",
+      "d": "The scene can show the item coming out of the box. The launch date, the name, and the price stay in your editor until they are confirmed.",
       "img": "n:guide:fx01-occ-product-launch-benefit-packaging",
       "alt": "Adult hands reveal a plain kraft product pouch from an opened shipping box.",
       "frame": "none"
     },
     {
-      "t": "Change launch details without remaking the scene",
-      "d": "Add the confirmed name, price, and date after download as the launch plan changes.",
+      "t": "Move launch day without remaking the scene",
+      "d": "When the day changes, edit the text on the file you already downloaded. The product scene stays put.",
       "img": "n:guide:fx01-occ-product-launch-benefit-details",
       "alt": "Adult hands arrange a natural canvas tote beside a blank planning card on a sunny desk.",
       "frame": "none"
     },
     {
-      "t": "Publish launch assets without a watermark",
-      "d": "Use downloaded launch images and clips in your own posts and paid campaigns.",
+      "t": "Show the first use, then post it",
+      "d": "A hand using the product is enough for the launch post. The download has no AIVideosUGC watermark.",
       "img": "n:guide:fx01-occ-product-launch-benefit-publish",
       "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
       "frame": "none"
     }
   ],
-  "steps_h2": "How to Make Product Launch Videos and Photos in 3 Simple Steps",
-  "steps_lead": "Turn one product photo into a teaser, reveal, or listing asset in three steps, then add confirmed launch details after download.",
+  "steps_h2": "Create a launch teaser video in three steps",
+  "steps_lead": "Upload a sample photo, describe the reveal, and add the launch date after download.",
   "relatedLinks": [
-    "video-ads",
-    "social-ad-photos",
-    "unboxing-videos",
-    "templates",
-    "guides",
-    "occ-black-friday",
-    "occ-holidays",
-    "product-videos",
-    "lifestyle-photos",
-    "tpl-launch",
-    "pricing"
+    {
+      "id": "occ-holidays",
+      "label": "holiday ad photos and videos"
+    },
+    {
+      "id": "occ-sale-discount",
+      "label": "sale ad creatives"
+    },
+    {
+      "id": "occ-black-friday",
+      "label": "Black Friday ad creatives"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "unboxing-videos",
+      "label": "AI unboxing video"
+    },
+    {
+      "id": "tpl-launch",
+      "label": "AI promo video maker"
+    }
+  ],
+  "reviews": {
+    "h2": "How sellers use new product announcement photos",
+    "lead": "Three ways a shop shows the item before launch day.",
+    "items": [
+      {
+        "example": true,
+        "who": "A drink brand",
+        "t": "Stand the bottle on a clean ledge",
+        "d": "They upload the bottle and ask for a bright morning scene with open space beside it. The launch line is added after download."
+      },
+      {
+        "example": true,
+        "who": "A beauty brand",
+        "t": "Give the jar a first look",
+        "d": "They show the jar in soft light before the full lot ships. No date is printed into the image."
+      },
+      {
+        "example": true,
+        "who": "An accessories shop",
+        "t": "Set the sunglasses in daylight",
+        "d": "They keep the frame's shape and color in an outdoor teaser. If a person is in frame, that person is generated, not a real customer."
+      }
+    ]
+  },
+  "trust": {
+    "h2": "What stays in your account until you share it",
+    "lead": "The photo stays in your account, and the date stays yours to add.",
+    "items": [
+      {
+        "t": "The unreleased photo stays in your account",
+        "d": "The upload and the result stay in your account until you download them and share them yourself."
+      },
+      {
+        "t": "No countdown printed into the clip",
+        "d": "The video does not include a timer. Add one in your editor after download if the date should tick down."
+      },
+      {
+        "t": "A commercial file with no watermark",
+        "d": "The download has no AIVideosUGC watermark. You can use it in launch posts and paid ads, subject to platform rules."
+      },
+      {
+        "t": "The credit cost before you start",
+        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+      },
+      {
+        "t": "Credits back if the job fails",
+        "d": "A failed job returns its credits automatically. A result you simply dislike is not refunded."
+      },
+      {
+        "t": "A generated presenter, only if you ask",
+        "d": "The scene can stay on the product. If a person appears, that presenter is generated, not a real customer."
+      }
+    ]
+  },
+  "cta_title": "Share the first look when you are ready",
+  "blockOrder": [
+    "hero",
+    "benefits",
+    "steps",
+    "reviews",
+    "trust",
+    "related",
+    "faq",
+    "cta"
   ]
 }

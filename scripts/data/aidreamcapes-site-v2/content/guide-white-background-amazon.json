@@ -1,117 +1,129 @@
 {
   "id": "guide-white-background-amazon",
   "title": "Amazon White Background Photo Guide | AIVideosUGC",
-  "description": "Make an Amazon-compliant white background main image from a phone photo: pure white RGB 255, product filling 85% of the frame, nothing extra added on top.",
+  "description": "Make an Amazon white background main image from a phone photo: pure white RGB 255, product filling 85% or more of the frame, nothing extra added on top.",
   "h1": "How to Make an Amazon White Background Photo for Your Main Image",
   "eyebrow": "Amazon guide",
-  "lead": "Your main image sits next to dozens of similar listings in Amazon search, and shoppers decide on the thumbnail. Meet the white background rules with one phone photo and a few minutes in the tool, instead of paying for a studio reshoot every product.",
+  "lead": "An Amazon white background photo is a square main image on pure white, with the real product filling at least 85% of the frame and nothing extra drawn on top.",
   "secondary_keywords": [
     "Amazon main image requirements",
     "pure white background product photo",
     "Amazon product photo rules",
     "white background for product listings"
   ],
-  "read_minutes": 4,
-  "summary": "What Amazon requires of a main image, and how to turn an everyday phone photo into a compliant white background version that still matches the item buyers receive.",
+  "read_minutes": 5,
+  "summary": "Make the main image pure white, keep only what you ship, fill most of the square, and check the result against the item in your hand.",
   "sections": [
     {
-      "h2": "What Amazon requires from a main image",
+      "h2": "What are the Amazon main image requirements?",
       "paras": [
-        "[Amazon](page:plat-amazon) treats the main image differently from the rest of your gallery. It appears in search results right next to other sellers' listings, so the rules aim to keep every main image clean and easy to compare.",
-        "These are the core rules in Amazon Seller Central's product image guide. The background is pure white (RGB 255, 255, 255). The product fills 85% or more of the frame. Only the item being sold appears, with no props or accessories that don't come with it. Nothing is added on top: no text, logos, badges, borders, or watermarks. The image shows the actual product, not a drawing, mockup, or placeholder.",
-        "Some categories, such as clothing and jewelry, have extra rules about models and mannequins."
+        "The main image needs a pure white background, the product you actually sell, and no text, badges, or props that do not come in the box.",
+        "Amazon's product image guidance asks for pure white, RGB 255, 255, 255, and for the product to fill 85% or more of the frame. Only the item being sold should appear. Clothing and jewelry listings can add further rules, so read the current Seller Central guide for your category before you upload."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec01",
       "alt": "Olive canvas backpack centered on a pure white background."
     },
     {
-      "h2": "Start with a photo that shows the whole product",
+      "h2": "Does my phone photo already need a white background?",
       "paras": [
-        "Your source photo doesn't need a white background. It needs the whole product, in focus, with even light. Shoot near a window on a plain surface, hold the phone at the product's height, and keep a little space around every edge. Our guide to [taking a product photo that works](page:guide-product-photo-tips) covers the setup.",
-        "Think about what the buyer finds in the box. If you sell a stainless steel water bottle that ships with two lids, both lids belong in the photo. If the carry strap is sold separately, leave it out. For a fuller gallery, plan front, side and back views so shoppers can inspect the whole item. Use the [Every Angle template](page:tpl-angle) when you have a real photo of each side."
+        "No. It needs the whole product, in focus, with even light and a little space around every edge.",
+        "Shoot near a window on a plain surface and hold the phone at the product's height. Show what the buyer finds in the box. If two lids ship with the bottle, both lids belong in the photo. If a strap is sold separately, leave it out."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec02",
       "alt": "Adult hand holds an olive canvas backpack upright beside a bright window."
     },
     {
-      "h2": "Make the white background version in one job",
+      "h2": "How do I make a pure white background product photo?",
       "paras": [
-        "A studio would charge a setup fee for the same white sweep. In AIVideosUGC, open [White Background Photos](page:white-background) and upload your photo instead. Pick a template, or describe the result in one plain sentence, such as \"the bottle and both lids on a pure white background, front view, soft even light.\"",
-        "The image comes out square by default, which suits the main image slot. Each job costs 24 credits and the price shows on screen before you confirm, so a five-product catalog costs five jobs, not five shoots. If a job fails, its credits go straight back to your balance. If something looks off, like a lid sitting at a strange angle, adjust your sentence and make another one."
+        "Upload a clear photo of the whole product and ask for that same item on pure white, including every piece that ships with it.",
+        "Open the [AI product background changer](page:change-background) or the [AI product photo generator](page:photo-hub), then write one plain line such as \"the bottle and both lids on pure white.\" The result is square, which suits a main image. One image uses 24 credits, shown before you confirm. A failed job returns those credits. The finished file is yours to use commercially and has no watermark."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec03",
       "alt": "Olive canvas backpack on a pure white background with a soft grounding shadow."
     },
     {
-      "h2": "Inspect it the way a picky buyer would",
+      "h2": "What Amazon product photo rules should I verify before upload?",
       "paras": [
-        "Open the image at full size and take your time. Use the color picker in any image editor on a few spots near the corners and edges. Each spot should read pure white, with no gray haze or faint tint.",
-        "Then put the real product on your desk next to the screen. The shape, color, finish, and number of parts should match. Labels deserve extra attention, because AI can blur or change small lettering. If the label text isn't right, try again with a sharper source photo where every word is easy to read.",
-        "Last, look at how big the product sits in the square. A small item surrounded by a wide white border looks tiny in search results, right beside listings that fill the frame."
+        "Sample the corners with a color picker, then set the real product next to the screen and compare shape, color, parts, and label.",
+        "Each sampled spot should read pure white, with no gray haze. Zoom in on labels, because small lettering is where a new image tends to drift. If the words are wrong, try again from a sharper source photo. Also check the size in the square. A tiny product in a wide white field looks small beside listings that fill the frame."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec04-r2",
       "alt": "Adult hands compare an olive canvas backpack with a blank white square card."
     },
     {
-      "h2": "Tricky products and how to handle them",
+      "h2": "What if the product is white, clear, or a set?",
       "paras": [
-        "White products. A white diffuser on a white background can lose its outline. Shoot the source photo with light coming from one side so the edges get soft shading, and mention \"gentle side light\" in your description.",
-        "Clear glass and plastic. A glass jar picks up whatever is behind it. Photograph it in front of a plain light wall rather than a cluttered room, so there's nothing odd showing through the glass.",
-        "Multipacks and sets. If the listing is a three-pack of soap bars, the main image should show exactly three bars, not two and not five. Count them in the result before you upload.",
-        "Soft goods. Pillows, bags, and plush toys look flat when they're slumped. Fluff and shape the item before you take the source photo, since the new image follows the shape it sees."
+        "Shape the item first, light the edges, and show exactly the number of pieces the listing sells.",
+        "A white product can disappear on white. Shoot the source with light from one side so the outline has soft shading, and mention gentle side light in the sentence. Clear glass picks up the room behind it, so photograph it against a plain light wall. A three-pack should show three units, not two and not five. Fluff bags and soft goods before the source shot, because the new image follows the shape it sees."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec05",
       "alt": "Adult hand shapes an olive canvas backpack upright on a white sweep."
     },
     {
-      "h2": "Use the rest of your image slots to sell",
+      "h2": "Should a white background for product listings cover every image?",
       "paras": [
-        "The main image has the strictest rules. The images after it are where you show context, scale, and detail, and they often answer the questions that keep people from buying.",
-        "For the water bottle, a useful set could be the bottle tucked into a gym bag, the bottle [in a hand to show its size](page:tpl-size), a [close-up of the lid seal](page:tpl-detail), and an image with three short feature callouts. Make the photos first, then add any words in Canva so the spelling is exactly right. A [lifestyle product photo](page:lifestyle-photos) can fill the gallery slot that shows the bottle in use.",
-        "If you also sell on your own [Shopify store](page:plat-shopify), the same white background photo can lead your product page there, so shoppers who find you in both places see one consistent look."
+        "No. Keep the white rules on the main image only, and use the later slots for use, scale, and detail.",
+        "A useful set might show the bottle in a gym bag, a hand for scale, and a close view of the lid seal. Make the pictures first, then add any words in your own editor. The same white main image can also lead the product page on your own store, so shoppers see one look in both places. For scenes that are not the main image, [AI lifestyle product photos](page:lifestyle-photos) are the separate job."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec06",
       "alt": "Adult holds an olive canvas backpack in a simple product gallery setup."
+    },
+    {
+      "h2": "The short version",
+      "paras": [
+        "Pure white, only what you ship, and the product large in the square. Check the corners, the label, and the part count against the real item.",
+        "The phone photo does not have to start on white. One delivered image is 24 credits, and a failed job returns them."
+      ]
+    },
+    {
+      "h2": "On this page",
+      "paras": [
+        "Six questions follow: Amazon main image requirements, whether the phone shot must already be white, how to make a pure white background product photo, which Amazon product photo rules to verify, tricky products, and whether a white background for product listings should stay on the main image."
+      ]
     }
   ],
-  "checklist": [
-    "Background reads pure white at every corner",
-    "Product fills 85% or more of the square",
-    "Only items included in the sale are shown",
-    "No added text, badges, logos, or borders",
-    "Shape, color, parts, and label match the real product"
-  ],
   "related": [
-    "white-background",
+    "guide-product-photo-tips",
+    "blog-ai-product-photography-guide",
+    "blog-ai-video-review-checklist",
     "plat-amazon",
-    "tpl-size"
+    "blog-model-photos-without-a-photoshoot",
+    "guide-testing-ad-versions"
   ],
   "faq": [
     {
-      "q": "Why does my white background look slightly gray on Amazon?",
-      "a": "Usually part of the background isn't fully white, often near the corners or under the product. Sample a few spots with a color picker. If they read off-white, make another version or brighten the background in an editor before you upload."
+      "q": "Why does my white background look gray on Amazon?",
+      "a": "Part of the backdrop is probably not fully white, often near a corner or under the product. Sample a few spots. If they read off-white, make another version or brighten the backdrop in an editor before you upload."
     },
     {
       "q": "Can an AI-made photo be my Amazon main image?",
-      "a": "Yes, as long as it shows the actual product a buyer will receive, so the result has to match your item closely in shape, color, parts and label. The finished file is yours to use commercially and carries no watermark. Image rules differ by category and can change, so read the current requirements for your category in Seller Central before you upload."
+      "a": "Yes, when it shows the product a buyer will receive. Match shape, color, parts, and label before it goes live. The file is yours to use commercially and has no watermark. Category rules can change, so read the current Seller Central guide for your category before you upload."
     },
     {
-      "q": "How do I verify an Amazon white background?",
-      "a": "Check that the background is pure white (RGB 255, 255, 255), the whole product is visible with no extra props, and the product fills at least 85% of the frame before you upload."
+      "q": "How do I verify the white before I upload?",
+      "a": "Confirm pure white at RGB 255, 255, 255, no extra props, and the product filling at least 85% of the frame."
     },
     {
-      "q": "How many credits does a white background image cost?",
-      "a": "One image costs 24 credits, and the exact cost appears before you start. Credits are set aside while the job runs and return automatically if it fails, so you only pay for delivered results."
+      "q": "How many credits does one white image use?",
+      "a": "One image uses 24 credits. The cost appears before you start, and a failed job returns the credits."
     },
     {
       "q": "Will the product shape change?",
-      "a": "No. The tool should keep the product shape and parts while changing the background; compare the result with your real item before upload."
+      "a": "Compare the result with the real item. If the shape, color, or part count drifted, do not upload that file. Run it again from a sharper photo."
     },
     {
-      "q": "What happens if a white background job fails?",
-      "a": "Failed jobs return their credits automatically. The cost appears before you start, so you can retry after checking the source photo."
+      "q": "Which Amazon product photo rules sit outside the main image?",
+      "a": "Later images can show use, scale, and detail. Keep prices and badges out of the picture and add those words yourself. Category rules for clothing and jewelry can be stricter, so check the current guide for your category."
     }
   ],
   "cta_title": "Make a clean main image for your listing",
-  "cta_lead": "Turn one complete product photo into a white-background main image, then compare the shape and parts before you upload it."
+  "cta_lead": "Turn one complete product photo into a white main image, then compare it with the item you ship.",
+  "relatedLinks": [
+    "guide-product-photo-tips",
+    "blog-ai-product-photography-guide",
+    "blog-ai-video-review-checklist",
+    "plat-amazon",
+    "blog-model-photos-without-a-photoshoot",
+    "guide-testing-ad-versions"
+  ]
 }

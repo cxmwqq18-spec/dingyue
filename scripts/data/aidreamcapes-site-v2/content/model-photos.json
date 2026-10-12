@@ -2,9 +2,9 @@
   "id": "model-photos",
   "title": "AI Model Photos for Fashion | AIVideosUGC",
   "description": "Create on-model fashion photos from one flat product image, so shoppers see the look without booking a model or studio. Use the result on product pages and ads.",
-  "h1": "Bring your products to life on AI fashion models",
+  "h1": "AI model photos for clothing from a flat garment photo",
   "eyebrow": "AI fashion model photos",
-  "lead": "Turn one flat clothing photo into a worn look in minutes. Show shoppers the cut, color and context without booking a model day or a studio.",
+  "lead": "Turn one flat clothing photo into a worn view. The person is generated, not someone you booked, and the image does not replace a size chart.",
   "secondary_keywords": [
     "on-model photos for clothing",
     "AI fashion model images",
@@ -12,71 +12,71 @@
     "AI photos of bags being worn",
     "jewelry on model photos"
   ],
-  "benefits_h2": "Show the look before you publish",
+  "benefits_h2": "Check on-model photos for clothing before you publish",
   "benefits": [
     {
-      "t": "See it worn, not laid flat",
-      "d": "Give shoppers the cut, color and context before they decide.",
       "img": "n:guide:fx16-model-photos-benefit-studio-r1",
-      "alt": "Adult woman with short silver hair wearing a plain heather-gray hoodie in a neutral studio."
+      "alt": "Adult woman with short silver hair wearing a plain heather-gray hoodie in a neutral studio.",
+      "t": "See the piece worn, not only laid flat",
+      "d": "Shoppers get the color and the shape in a worn view. Keep the flat photo next to it for seams and measurements."
     },
     {
-      "t": "Launch collections faster",
-      "d": "Create the next worn look from the flat photo you already have, without booking a model day.",
       "img": "n:guide:fx16-model-photos-benefit-street-r1",
-      "alt": "Adult man with short auburn hair wearing a plain denim jacket on a city sidewalk."
+      "alt": "Adult man with short auburn hair wearing a plain denim jacket on a city sidewalk.",
+      "t": "Use the flat photo you already have",
+      "d": "You do not book a model day to preview the next piece. Each image uses 24 credits, shown before you start."
     },
     {
-      "t": "Keep one worn view across every channel",
-      "d": "Use the same item view on a product page, feed or ad when a collection changes.",
       "img": "n:guide:fx16-model-photos-benefit-face-r1",
-      "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace."
+      "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace.",
+      "t": "Carry one worn view to the page and the ad",
+      "d": "Use the same item on a product page or a square ad. The person stays an AI-generated adult, not a real customer."
     }
   ],
   "more_sections": [
     {
       "eyebrow": "Scale your fashion catalog",
-      "h2": "Compare a flat photo with a worn look",
-      "lead": "Check the garment beside a model, then refresh the scene for the next launch without repeating a shoot.",
+      "h2": "Compare the flat photo with the worn view",
+      "lead": "Put the flat item beside the worn image, then change the room or the street from the same photo.",
       "items": [
         {
-          "t": "Check the garment before you publish",
-          "d": "See the flat item beside a worn view so color, shape and visible details are easy to compare.",
           "img": "n:guide:fx16-model-photos-scale-tote-pair-r1",
           "alt": "Split view of an unbranded rust-orange tote laid flat and the same tote carried by an adult model.",
-          "frame": "none"
+          "frame": "none",
+          "t": "Check the tote before you publish",
+          "d": "Put the flat tote beside the worn view so color and outline are easy to compare."
         },
         {
-          "t": "Keep the same item across channels",
-          "d": "Carry the garment from a product page to a feed or ad while keeping the reference item in view.",
           "img": "n:guide:fx16-model-photos-scale-denim-pair-r1",
           "alt": "Split view of a plain denim jacket laid flat and the same jacket worn by an adult model.",
-          "frame": "none"
+          "frame": "none",
+          "t": "Check a jacket the same way",
+          "d": "Lay the denim jacket beside the worn view and look at the collar, seams, and color before you post."
         },
         {
-          "t": "Refresh the scene for each launch",
-          "d": "Try a new setting from the flat photo you already have when the season or campaign changes.",
           "img": "n:guide:im13-model-photos-after-r1",
           "alt": "Adult South Asian woman with a tight low bun wearing the same heather-gray pullover hoodie in a bright courtyard.",
-          "frame": "none"
+          "frame": "none",
+          "t": "Refresh the setting for the next drop",
+          "d": "Keep the garment reference and change the room or the street when the campaign changes."
         }
       ]
     }
   ],
-  "steps_h2": "How to Make AI Model Photos for Clothing in 3 Simple Steps",
-  "steps_lead": "Start with one clear garment photo, choose a model, then download a worn look for your store or campaign.",
+  "steps_h2": "Make clothing photos without a model shoot in 3 steps",
+  "steps_lead": "Upload the garment, choose an adult look, and download a worn view.",
   "steps": [
     {
-      "t": "Upload your clothing photo",
-      "d": "Add a flat or hanging photo with the whole garment and key details in frame."
+      "t": "Upload Your Clothing Photo",
+      "d": "Use a flat or hanging photo with the whole garment in frame. Labels, seams, and color should be easy to see."
     },
     {
-      "t": "Choose your model",
-      "d": "Pick an adult look and a scene that fit your audience and item. Compare the preview with your real garment before you publish."
+      "t": "Choose an AI Model Look",
+      "d": "Pick an adult look and a scene that fit the item. The person is generated. Compare the preview with the real garment."
     },
     {
       "t": "Download and Post",
-      "d": "Download the worn look for your product page, feed or ad. Keep measurements and a size chart beside it so shoppers can check fit."
+      "d": "Download the worn view for the product page or the ad. Keep a size chart beside it. The image does not prove fit."
     }
   ],
   "maker": {
@@ -101,35 +101,35 @@
   "faq": [
     {
       "q": "What is an AI fashion model generator?",
-      "a": "It shows your clothing or accessory worn by an AI-generated model. Start with one flat product photo and get a styled on-body image for your store."
+      "a": "It shows your clothing or accessory on a generated person. You start with a flat product photo and get a worn image for the store."
     },
     {
-      "q": "How does virtual model photography work?",
-      "a": "Upload a flat garment photo, choose a model and a scene, then generate. The item follows the color and cut in your reference photo."
+      "q": "How does the worn view get made?",
+      "a": "Upload a flat garment photo, choose an adult look and a scene, then generate. Check the color and cut against your reference photo."
     },
     {
-      "q": "Which products work on a virtual model?",
-      "a": "Tops, dresses, outerwear and bags work well. A clear flat garment or accessory photo gives the model a better reference."
+      "q": "Which products work?",
+      "a": "Tops, dresses, outerwear, and bags work best. A clear flat photo gives a better reference than a wrinkled one."
     },
     {
-      "q": "Is it suitable for ecommerce stores?",
-      "a": "Yes. Use the worn view on a product page or social post, and keep a plain product photo for exact details and measurements."
+      "q": "Can a store publish the image?",
+      "a": "Yes, on a product page or a social post. Keep a plain product photo for measurements. Downloads have no watermark and are licensed for commercial use."
     },
     {
-      "q": "Can I choose the model and background?",
-      "a": "Yes. Pick a general adult look and a styled scene. Do not request a real celebrity, and expect small differences between results."
+      "q": "Can I choose the look and the setting?",
+      "a": "Yes. Choose an adult look and a scene. The person is generated. Do not present the photo as a real customer or a celebrity."
     },
     {
       "q": "Does the image prove how clothing fits?",
-      "a": "No. It shows a styled look, not a measured fitting. Keep verified measurements and a size chart in the listing."
+      "a": "No. It does not show your size, your body, or a guaranteed drape. Publish measurements and a size chart with the photo."
     },
     {
-      "q": "Can I run the photo in paid ads?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add a price or offer in your ad editor after download."
+      "q": "Can I use it in a paid ad?",
+      "a": "Yes. Add the offer in your ad editor. Do not write the image up as a photo of a real customer."
     },
     {
-      "q": "Do the garment details stay the same?",
-      "a": "Color and cut follow the flat photo, but small print or closure details can shift. Compare each result with the real item before publishing."
+      "q": "Will garment details stay the same?",
+      "a": "They should follow the reference photo, but small prints and seams can shift. Compare before you publish. The guide to [model photos without a photoshoot](page:blog-model-photos-without-a-photoshoot) covers that check."
     }
   ],
   "visual": {
@@ -156,12 +156,24 @@
       ]
     },
     "picker": {
-      "title": "Visualize your products on AI fashion models",
-      "lead": "Choose a product-first scene to see how one garment could look in a catalog, on a street or in a seasonal setting.",
+      "title": "See AI fashion model images on your garment",
+      "lead": "Start with a flat or hanging photo. Compare the worn view with the real color and cut before you publish.",
       "chips": [
         {
-          "id": "scenes",
-          "label": "Catalog and campaign scenes"
+          "id": "more-looks",
+          "label": "More worn looks"
+        },
+        {
+          "id": "studio",
+          "label": "Studio"
+        },
+        {
+          "id": "street",
+          "label": "Street"
+        },
+        {
+          "id": "terrace",
+          "label": "Terrace"
         }
       ],
       "cards": [
@@ -170,37 +182,65 @@
           "ref": "n:guide:fx16-model-photos-picker-studio-r1",
           "label": "Charcoal sweatshirt, studio catalog",
           "chips": [
-            "scenes"
+            "studio"
           ],
           "prompt": "Use my uploaded plain charcoal sweatshirt as the exact garment reference. Show it on an adult model with short straight gray hair in a clean neutral studio; preserve the garment shape and color, full face visible, no text or logos."
+        },
+        {
+          "kind": "photo",
+          "ref": "n:guide:c5-tpl-outfit-m1-cream-blouse",
+          "label": "Cream blouse in a studio",
+          "chips": [
+            "studio"
+          ],
+          "prompt": "Use my uploaded garment photo as the exact reference. Show it on an adult model in a clean neutral studio; preserve the garment shape and color, full face visible, no text or logos."
         },
         {
           "kind": "photo",
           "ref": "n:guide:fx16-model-photos-picker-street-r1",
           "label": "Blue denim jacket, streetwear walk",
           "chips": [
-            "scenes"
+            "street"
           ],
           "prompt": "Use my uploaded plain blue denim jacket as the exact garment reference. Show it on an adult model with a short straight bob walking on a quiet city sidewalk; preserve the jacket shape and color, full face visible, no text or logos."
+        },
+        {
+          "kind": "photo",
+          "ref": "n:guide:k5-model-case-1",
+          "label": "Camel coat on a sidewalk",
+          "chips": [
+            "street"
+          ],
+          "prompt": "Use my uploaded garment photo as the exact reference. Show it on an adult model on a city sidewalk; preserve the garment shape and color, full face visible, no text or logos."
         },
         {
           "kind": "photo",
           "ref": "n:guide:fx16-model-photos-picker-sunset-r1",
           "label": "Olive overshirt, sunset terrace",
           "chips": [
-            "scenes"
+            "terrace"
           ],
           "prompt": "Use my uploaded plain olive overshirt as the exact garment reference. Show it on an adult model with a tight bun on a quiet terrace at sunset; preserve the overshirt shape and color, full face visible, no text or logos."
+        },
+        {
+          "kind": "photo",
+          "ref": "n:guide:k5-model-photos-uses-0-image",
+          "label": "Linen suit on a terrace",
+          "chips": [
+            "terrace"
+          ],
+          "prompt": "Use my uploaded garment photo as the exact reference. Show it on an adult model on a sunny terrace; preserve the garment shape and color, full face visible, no text or logos."
         }
       ],
       "button": "Make an on-model photo"
     },
     "titles": {
-      "m2": {
-        "h2": "How to Make AI Model Photos for Clothing in 3 Simple Steps"
-      },
       "faq": {
-        "h2": "Frequently asked questions"
+        "h2": "Questions about AI model photos for clothing"
+      },
+      "m3": {
+        "h2": "See AI fashion model images on your garment",
+        "lead": "Start with a flat or hanging photo. Compare the worn view with the real color and cut before you publish."
       }
     },
     "overview": "See the cut, color and context before you publish. Start from the flat product photo you already have, then use the worn view wherever shoppers need more context.",
@@ -233,10 +273,19 @@
   },
   "relatedLinks": [
     "photo-hub",
-    "white-background",
     "lifestyle-photos",
-    "change-background",
     "social-ad-photos",
-    "templates"
+    "tpl-tryon",
+    "tpl-look",
+    "tpl-jewel"
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "benefits",
+    "features",
+    "steps",
+    "related",
+    "faq"
   ]
 }

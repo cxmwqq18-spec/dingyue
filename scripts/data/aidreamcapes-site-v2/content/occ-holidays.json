@@ -2,9 +2,9 @@
   "id": "occ-holidays",
   "title": "Holiday Ad Photos and Videos for Gift Season | AIVideosUGC",
   "description": "Make holiday ad photos and videos from one product photo. Add confirmed dates, prices or offers after download, then reuse the scene as campaigns change.",
-  "h1": "Make Holiday Ad Photos and Videos From One Product Photo",
+  "h1": "Create Holiday Ad Photos and Videos Fast",
   "eyebrow": "Holiday ad creatives",
-  "lead": "Get a gift-ready holiday scene from one product photo. Add the shipping cutoff, price or offer after download, then reuse the scene for another seasonal push.",
+  "lead": "Turn one product photo into a gift-ready scene, then add the shipping date after you download.",
   "secondary_keywords": [
     "Christmas product photos",
     "holiday video ads",
@@ -15,32 +15,40 @@
   "plan": [],
   "faq": [
     {
-      "q": "Can I turn my everyday product photos into holiday versions?",
-      "a": "Yes. Upload the clear product photo you already use, choose a seasonal setting and keep the product itself recognizable."
+      "q": "How many credits does a holiday photo or video use?",
+      "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The cost shows before you start, and a failed job returns those credits."
     },
     {
-      "q": "How do I add \"order by\" dates to my holiday ads?",
-      "a": "Type them in Canva, CapCut or Ads Manager after download. Keeping dates off the generated image lets you change them quickly as cutoffs approach."
+      "q": "Can I add music or captions to the holiday clip?",
+      "a": "Add them after download in your editor. AIVideosUGC does not put music or captions in the file. Use a track you have the rights to play."
     },
     {
-      "q": "Can my holiday ad include a famous character or celebrity?",
-      "a": "Requests involving celebrities, public figures, characters or logos owned by other brands may be declined. Generic seasonal touches such as ornaments, snow and wrapping paper are supported."
+      "q": "Can I make holiday scenes for a whole catalog at once?",
+      "a": "No. Each product photo is its own job. Start the next product when you are ready."
     },
     {
-      "q": "How should I prepare holiday product photos?",
-      "a": "Start with a clear product photo and describe the seasonal setting. Add dates and shipping cutoffs after download."
+      "q": "Can the scene use a real customer or a celebrity?",
+      "a": "No. People in the scene are generated, not real customers. A request that names a celebrity, a public figure, or another brand's character or logo can be declined. Ornaments, snow, and wrapping paper are fine."
     },
     {
-      "q": "Do I need to decorate a set or book a creator?",
-      "a": "No. The seasonal scene is generated around the product photo you upload, so no room has to be decorated and no one has to be filmed. Cutoffs and offers are added after download."
+      "q": "What happens to the visual after the holiday ends?",
+      "a": "You keep the file you downloaded. Change the date or the offer in your editor and reuse the scene for the next seasonal push."
     },
     {
-      "q": "Can I use the holiday clips and images as paid ads?",
-      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in seasonal ads, subject to each platform’s current review rules."
+      "q": "Can I start from my everyday product photo?",
+      "a": "Yes. Upload the clear photo you already use and describe a seasonal setting. The product itself should stay easy to recognize."
     },
     {
-      "q": "Can I add holiday music to a generated clip?",
-      "a": "Yes. Add holiday music after download in CapCut or your ad editor; AIVideosUGC does not add music to the file."
+      "q": "How do I put an order-by date on the ad?",
+      "a": "Type it in your editor after download. Keeping the date off the generated image lets you change it as the cutoff gets closer."
+    },
+    {
+      "q": "Can I run the download as a paid holiday ad?",
+      "a": "Yes. The file has no AIVideosUGC watermark. You can use it in seasonal ads, subject to each platform's current ad rules."
+    },
+    {
+      "q": "Can I make Mother's Day product ads the same way?",
+      "a": "Yes. Describe a Mother's Day table or gift scene instead of a winter one, and add that occasion's date after download."
     }
   ],
   "examples": {
@@ -75,23 +83,23 @@
       }
     ]
   },
-  "cta_lead": "Build the holiday ad creative first, then add confirmed shipping dates and offers after download.",
+  "cta_lead": "Upload one product photo, download the scene, and type the date yourself.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product shoppers may give as a gift."
+      "d": "Use one sharp photo with the full product in frame. That photo is the item shoppers will recognize in the gift scene."
     },
     {
-      "t": "Pick a Holiday Scene",
-      "d": "Choose a gift reveal or seasonal setting that keeps the product easy to recognize."
+      "t": "Describe Your Scene",
+      "d": "Say where it sits: tissue in a box, a winter table, or hands holding a gift. Leave date, price, and offer out of the description."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed shipping cutoff, price or offer in your editor, then post the finished file."
+      "d": "Add the shipping cutoff, price, or code in your editor, then post. Use the photo, or a clip of 6, 10, 15, or 30 seconds."
     }
   ],
   "visual": {
-    "overview": "Show the product in a gift-ready holiday scene, then add dates or offers in an editable layer after download.",
+    "overview": "The product sits in the gift scene. The date and the price go on after download.",
     "strip": [
       "n:guide:q20-occ-holiday-strip-01",
       "n:guide:q20-occ-holiday-strip-02",
@@ -201,53 +209,134 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Create Holiday Ad Photos and Videos in 3 Simple Steps"
+        "h2": "Create Christmas product photos and short clips in three steps"
       },
       "m3": {
         "h2": "Choose a Holiday Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions About Holiday Ad Photos and Videos"
+        "h2": "Questions about holiday ad photos and videos"
       }
     }
   },
-  "benefits_h2": "Show the gift before the shipping cutoff",
+  "benefits_h2": "Holiday video ads from the photo you already have",
   "benefits": [
     {
-      "t": "Go from one photo to a gift ad",
-      "d": "Save shoot prep by turning one product photo into a gift scene while the shipping cutoff is still being confirmed.",
+      "t": "Open on a wrapped gift",
+      "d": "Place the product in tissue and ribbon so it looks like a gift. Type the shipping cutoff after you download.",
       "img": "n:guide:fx02-occ-holidays-benefit-lipstick",
       "alt": "Adult hands lift a lipstick tube from a cream gift box."
     },
     {
-      "t": "Show the gift before you ship it",
-      "d": "Help shoppers picture the wrapped item with a seasonal scene before you prepare a set.",
+      "t": "Show the gift while orders are open",
+      "d": "Put the seasonal scene up while you are still taking orders. Shoppers should still recognize the product from the photo you uploaded.",
       "img": "n:guide:fx02-occ-holidays-benefit-jacket",
       "alt": "Adult creator holds a wool winter jacket beside a gift box."
     },
     {
-      "t": "Change cutoffs without a reshoot",
-      "d": "Add shipping cutoffs, prices and codes after download, so late details do not force a new shoot.",
+      "t": "Move the cutoff without a new scene",
+      "d": "Keep the price, the code, and the order-by date out of the generated file. When the cutoff moves, edit the text and keep the same holiday scene.",
       "img": "n:guide:fx02-occ-holidays-benefit-shipping",
       "alt": "Adult hands tie ribbon around a plain parcel beside a jar."
     },
     {
-      "t": "Skip set costs for seasonal ads",
-      "d": "Create the holiday scene without decorating a room or booking a creator.",
+      "t": "Lay out the gift guide on one table",
+      "d": "Arrange the products in one gift-guide scene. Save it as 9:16, 1:1, 16:9, 4:3, or 3:4. A clip runs 6, 10, 15, or 30 seconds, and the credit cost shows before you start.",
       "img": "n:guide:fx02-occ-holidays-benefit-guide",
       "alt": "Adult hands arrange a jar, tube and scarf gift guide set."
     }
   ],
-  "steps_h2": "How to Create Holiday Ad Photos and Videos in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose a seasonal gift scene and add current details after download.",
+  "steps_h2": "Create Christmas product photos and short clips in three steps",
+  "steps_lead": "Upload a product photo, describe the gift scene, and add the date after download.",
   "relatedLinks": [
-    "video-ads",
-    "social-ad-photos",
-    "unboxing-videos",
-    "occ-black-friday",
-    "occ-sale-discount",
-    "templates",
-    "pricing",
-    "blog-unboxing-videos-for-launches"
+    {
+      "id": "occ-black-friday",
+      "label": "Black Friday ad creatives"
+    },
+    {
+      "id": "occ-sale-discount",
+      "label": "sale ad creatives"
+    },
+    {
+      "id": "occ-product-launch",
+      "label": "product launch video and photos"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
+    },
+    {
+      "id": "unboxing-videos",
+      "label": "AI unboxing video"
+    }
+  ],
+  "reviews": {
+    "h2": "How shops build gift guide product images",
+    "lead": "Three ways a shop uses the scene before the cutoff is confirmed.",
+    "items": [
+      {
+        "example": true,
+        "who": "A skincare shop",
+        "t": "Lift the set out of the tissue",
+        "d": "They upload the gift-set photo and ask for hands lifting it from a box. The order-by line is typed later, so a moved cutoff does not force a new scene."
+      },
+      {
+        "example": true,
+        "who": "An apparel shop",
+        "t": "Hold the coat beside the box",
+        "d": "They keep the coat's color and shape, with a person standing next to an open gift. That person is generated, not a hired customer."
+      },
+      {
+        "example": true,
+        "who": "A home shop",
+        "t": "Reuse one candle scene next weekend",
+        "d": "They download the candle-and-ribbon scene once. For the next push they only change the offer line in the editor."
+      }
+    ]
+  },
+  "trust": {
+    "h2": "What you know before you publish",
+    "lead": "Check the file, the credits, and the rights before the ad goes live.",
+    "items": [
+      {
+        "t": "A file you can run as an ad",
+        "d": "The download has no AIVideosUGC watermark, and you can use it in seasonal ads, subject to the platform's rules."
+      },
+      {
+        "t": "The credit cost before you start",
+        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see that credit cost before you start."
+      },
+      {
+        "t": "Credits back if the job fails",
+        "d": "A failed job returns its credits to your balance on its own."
+      },
+      {
+        "t": "The upload stays in your account",
+        "d": "The product photo and the result stay in your account until you download them and choose to share."
+      },
+      {
+        "t": "Generated people, not real customers",
+        "d": "If a person appears, that presenter is generated. It is not a real shopper and not someone you filmed."
+      },
+      {
+        "t": "Music and captions after download",
+        "d": "Add a track you have rights to, and any captions, in your editor. The file does not arrive with music or captions."
+      }
+    ]
+  },
+  "cta_title": "Post festive Instagram Story ads from this scene",
+  "blockOrder": [
+    "hero",
+    "benefits",
+    "steps",
+    "reviews",
+    "trust",
+    "related",
+    "faq",
+    "cta"
   ]
 }

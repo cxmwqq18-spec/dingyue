@@ -2,10 +2,10 @@
   "id": "trust",
   "title": "Trust and Safety for AI Product Content | AIVideosUGC",
   "description": "How AIVideosUGC keeps AI product ads on the level: what you can make, what requests we decline, how your uploads stay private and how to report a problem.",
-  "h1": "Trust and Safety for AI Product Content",
+  "h1": "AI Content Trust and Safety for Product Ads",
   "eyebrow": "Trust & Safety",
-  "lead": "AIVideosUGC is built for stores making ads about their own products. Here is what that means for your uploads, your results and the people who see them.",
-  "card": "What you can make, how uploads stay private and how to report a problem.",
+  "lead": "AIVideosUGC is for stores making ads about their own products. This page covers AI content trust and safety for your uploads, your results, and the people who see them.",
+  "card": "What you can make, how private uploads stay private, and how to report a problem.",
   "secondary_keywords": [
     "AI content rules",
     "AI generated ads policy",
@@ -17,39 +17,39 @@
     {
       "h2": "What AIVideosUGC is for",
       "paras": [
-        "Online stores use it to turn their own product photos into short AI video ads and store-ready images. Make content for products you sell or are allowed to promote, on your store, marketplaces and social channels."
+        "Online stores use it to turn their own product photos into short video ads and store-ready images. Make content for products you sell or are allowed to promote, on your store, on marketplaces, and on social channels."
       ],
       "img": "n:guide:b2f5-trust-what-it-is-for-r1",
       "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop."
     },
     {
-      "h2": "What we decline",
+      "h2": "AI content rules: what we decline",
       "paras": [
-        "Requests that involve celebrities or other public figures, brand logos or trademarks you do not own, or large amounts of text may be declined. We also do not allow content that impersonates real people, misleads buyers, sexualizes anyone, targets minors or promotes harm."
+        "Requests that involve celebrities or other public figures, brand logos or trademarks you do not own, or large amounts of text may be declined. Content that impersonates a real person, misleads buyers, sexualizes anyone, targets minors, or promotes harm is not allowed."
       ],
       "img": "n:guide:b2f5-trust-what-we-decline-r1",
       "alt": "Seller with short silver-gray hair reviews a plain white mug beside a closed laptop."
     },
     {
-      "h2": "Your uploads and results",
+      "h2": "Private uploads stay in your account",
       "paras": [
-        "Your uploads and results stay in your account and are never shown to other customers. Only upload photos you own or have permission to use, and compare every result with your real product before you publish it."
+        "Private uploads and the files they produce stay in your account and are not shown to other customers. Only upload photos you own or are allowed to use. Compare every result with your real product before you publish it."
       ],
       "img": "n:guide:b2f5-trust-uploads-results-r1",
       "alt": "Seller with a close-cropped haircut checks a ceramic mug beside a closed laptop and a padlock."
     },
     {
-      "h2": "Using AI content in ads",
+      "h2": "Follow the AI-generated ads policy before you publish",
       "paras": [
-        "Show what your product really does. Add prices, dates and claims yourself in your design or ad tool so they are exactly right, and follow each platform's rules, including any rule about labeling AI-generated content."
+        "Show what your product really does. Add prices, dates, and claims yourself in your design or ad tool so they are exact, and follow each platform's rules, including any rule about labeling AI-generated content. The AI content checklist is a practical pass before you post."
       ],
       "img": "n:guide:b2f5-trust-ai-content-r1",
       "alt": "Seller with a short copper-red pixie compares a speckled ceramic mug with the same mug beside a closed laptop."
     },
     {
-      "h2": "Report a problem",
+      "h2": "Report AI misuse",
       "paras": [
-        "If you see content made with AIVideosUGC that breaks these rules, or think your rights have been affected, email support@aivideosugc.com with the details."
+        "If you see content made with AIVideosUGC that breaks these rules, or you think your rights were affected, email support@aivideosugc.com with the details."
       ],
       "img": "n:guide:b2f5-trust-report-problem-r1",
       "alt": "Seller with platinum blonde hair in a tight bun looks at a damaged parcel and a blank envelope beside a closed laptop."
@@ -58,29 +58,39 @@
   "faq": [
     {
       "q": "Can I download the product assets made in my account?",
-      "a": "Yes. Download the photos and videos from your signed-in account and use them commercially without a watermark. Make sure you own the source photo and follow the rules of the platform you post on."
+      "a": "Yes. Download the photos and videos from your signed-in account and use them commercially without a watermark. You still need the rights to the source photo, and you still follow the rules of the platform you post on."
     },
     {
-      "q": "Are my uploads used to show other customers?",
-      "a": "No. Your uploads and results stay in your account and are not shown publicly or to other customers."
+      "q": "Are my uploads shown to other customers?",
+      "a": "No. Your uploads and results stay in your account. They are not public and they are not shown to other customers."
     },
     {
-      "q": "What should I check before publishing AI-generated product content?",
+      "q": "What should I check before publishing?",
       "a": "Compare the result with your product, add accurate prices and claims in your editor, and follow the destination platform's rules for labeling AI-generated content."
     },
     {
-      "q": "Can I make an ad with a celebrity or a brand I don't own?",
-      "a": "No. Requests involving celebrities, other public figures, or logos and trademarks you do not own may be declined. Use the tool for your own products and your own brand."
+      "q": "Can I make an ad with a celebrity or a brand I do not own?",
+      "a": "No. Requests that involve celebrities, other public figures, or logos and trademarks you do not own may be declined. Use the tool for your own products and your own brand."
     },
     {
-      "q": "Where should I check content and data-use rules?",
-      "a": "Read the current Privacy, Terms, Content and Refunds pages for the full policy. This page covers what you can make, how uploads stay private and how a failed job returns credits to your balance."
+      "q": "Where are the full content and data-use rules?",
+      "a": "Read the [Privacy Policy](/privacy), [Terms of Service](/terms), [Content Policy](/content), and [Refund Policy](/refunds) for the full rules. This page covers what you can make, which requests we decline, how uploads stay private, and how to report a problem."
     },
     {
-      "q": "How do I report content that breaks these rules?",
-      "a": "Email support@aivideosugc.com with the link or details of the content and the problem."
+      "q": "How do I report AI misuse?",
+      "a": "Email support@aivideosugc.com with the link or a description of the content and what is wrong."
     }
   ],
-  "ctaTitle": "Start a private product test",
-  "ctaLead": "Use your own product photo, then compare every result with the real item before you publish it."
+  "ctaTitle": "Start with your own product photo",
+  "ctaLead": "Upload a photo you have rights to, then compare every result with the real item before you publish it.",
+  "cta_title": "Start with your own product photo",
+  "cta_lead": "Upload a photo you have rights to, then compare every result with the real item before you publish it.",
+  "relatedLinks": [
+    "contact",
+    "about",
+    "ai-info",
+    "faq",
+    "pricing",
+    "glossary"
+  ]
 }

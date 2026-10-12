@@ -2,48 +2,29 @@
   "id": "tpl-jewel",
   "title": "AI Jewelry Model Photos for On-Model Ads | AIVideosUGC",
   "description": "Turn one jewelry photo into an on-model shot. AI model photos for necklaces, earrings, rings and bracelets, for social ads and product pages.",
-  "h1": "AI Jewelry Model Photos for On-Model Ad Scenes",
+  "h1": "AI Jewelry Model Photos That Show the Piece Worn",
   "eyebrow": "Model photo template",
-  "lead": "A jewelry photo on a plain surface leaves scale and how it sits unclear. Turn one piece photo into an on-model image that shows how it looks in use and catches light.",
+  "lead": "A ring on a plain square does not show scale or how the piece sits. Upload one jewelry photo and get an on-model image you can check against the clasp, stones and edges.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
     "earrings on a model",
     "worn jewelry product photos"
   ],
-  "benefits_h2": "Why make AI jewelry model photos?",
-  "benefits": [
-    {
-      "t": "Show scale on a person",
-      "d": "Place a necklace, earring, ring or bracelet in a believable on-model scene so shoppers can judge scale before they buy."
-    },
-    {
-      "t": "Keep the detail in view",
-      "d": "Use a close frame for the clasp, chain, stone or setting while the piece remains recognizable beside the source photo."
-    },
-    {
-      "t": "Reuse one piece across channels",
-      "d": "Prepare a try-on for a product page, a hand demonstration for a feed or a creator scene for a social ad."
-    },
-    {
-      "t": "Ready to publish",
-      "d": "Download the square image without an AIVideosUGC watermark and add your listed material, size and care details."
-    }
-  ],
-  "steps_h2": "How to Make AI Jewelry Model Photos in 3 Simple Steps",
-  "steps_lead": "Three steps turn one jewelry photo into an on-model image for listings and ads.",
+  "steps_h2": "Necklace on Model Photo",
+  "steps_lead": "Upload the piece, choose how it is worn, then download a photo you can compare with the source.",
   "steps": [
     {
       "t": "Upload Your Jewelry Photo",
-      "d": "Show the full piece on a plain surface, with the clasp, stones and edges visible."
+      "d": "Show the full piece on a plain surface, clasp, stones, and edges visible. Compare the worn view with this sharp source."
     },
     {
       "t": "Pick a Wear Scene",
-      "d": "Choose a try-on, hand demonstration or close detail that matches the piece."
+      "d": "Choose a neckline, hand or close detail that matches the piece you sell. Keep the request to one setting so the jewelry stays recognizable."
     },
     {
       "t": "Download and Post",
-      "d": "Compare the image with the real item, then add material, measurements and care notes."
+      "d": "Compare the download with the real item at full size. Add material, measurements and care notes as text on the listing."
     }
   ],
   "maker": {
@@ -65,32 +46,39 @@
   },
   "faq": [
     {
-      "q": "What jewelry photo should I start with?",
+      "q": "What jewelry photo should I upload?",
       "a": "Use a sharp photo of the complete piece on a plain surface. Keep the chain, clasp, stones and setting visible."
     },
     {
       "q": "Can I show how a necklace sits?",
-      "a": "Yes. Choose an on-model scene that keeps the necklace and neckline in frame. Use your listing for the stated length and material."
+      "a": "Yes. Choose a scene that keeps the necklace and neckline in frame. Put the stated length and material in the listing text, not inside the generated image."
     },
     {
-      "q": "Which pieces work well in an on-model photo?",
-      "a": "Necklaces, earrings, rings, bracelets and cufflinks can work when the source shows their shape and finish clearly."
+      "q": "Which pieces work in a worn photo?",
+      "a": "Necklaces, earrings, rings, bracelets and cufflinks work when the source shows their shape and finish. If a detail is cut off in the source, it will not be reliable in the result."
     },
     {
       "q": "How do I keep a stone or clasp accurate?",
-      "a": "Compare the download with the source photo at full size. Keep only a version whose stone, setting, fastening and color remain recognizable."
+      "a": "Compare the download with the source at full size, and keep only a version whose stone, setting, fastening and color are still recognizable. Reject a frame that invents a prong or changes the metal."
     },
     {
-      "q": "Can I use the image beside a product listing?",
-      "a": "Yes. Use the on-model image beside the standalone product photo so shoppers see both styling context and the exact piece."
+      "q": "Can the worn image sit beside the product listing?",
+      "a": "Yes. Pair it with the standalone product photo so shoppers see both the piece itself and how it is worn."
     },
     {
       "q": "Do I need to hire a jewelry model?",
-      "a": "No. The image is generated from your jewelry photo, so you can prepare an on-model scene without booking a hand or fashion shoot."
+      "a": "No. The worn scene is generated from your piece photo, so you do not book a hand or a fashion shoot. The person is generated, not a real customer."
+    },
+    {
+      "q": "What does a jewelry photo cost?",
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts."
+    },
+    {
+      "q": "What if I also need a scene with no person?",
+      "a": "Use a table or surface scene when scale on a body is not the point. That kind of still is covered by [AI lifestyle product photos](page:lifestyle-photos)."
     }
   ],
   "visual": {
-    "overview": "An on-model jewelry image answers scale and fit while keeping the piece recognizable. Use a worn view or hand demonstration, then pair it with the standalone product photo and stated measurements.",
     "strip": [
       "n:guide:im06-tpl-jewel-strip-0-r1",
       "n:guide:im06-tpl-jewel-strip-1-r1",
@@ -120,8 +108,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a jewelry ad format",
-      "lead": "Pick a try-on, hand demonstration or close detail that makes the piece easy to judge.",
+      "title": "These cards open a 15-second video",
+      "lead": "Each card is a 9:16 video ad, not a photo of your piece being worn. Upload the jewelry photo above, then compare the clasp, stones and edges with your source.",
       "chips": [
         {
           "id": "accessories",
@@ -539,10 +527,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "Make jewelry model photos from one clear piece photo"
+        "h2": "Necklace on Model Photo"
       },
       "m3": {
-        "h2": "Choose a jewelry view shoppers can see"
+        "h2": "These cards open a 15-second video",
+        "lead": "Each card is a 9:16 video ad, not a photo of your piece being worn. Upload the jewelry photo above, then compare the clasp, stones and edges with your source."
       },
       "m4": {
         "h2": "Use jewelry photos on listings and social feeds"
@@ -560,5 +549,86 @@
         "h2": "Questions about AI jewelry model photos"
       }
     }
-  }
+  },
+  "reviews": {
+    "h2": "Worn Jewelry Product Photos",
+    "lead": "A few ways jewelry sellers use one piece photo.",
+    "items": [
+      {
+        "example": true,
+        "who": "Necklace shop",
+        "t": "Scale on a neckline",
+        "d": "The shop chooses a neckline scene so a chain's length is easier to judge than on a flat surface. The listing still states the measured length and material."
+      },
+      {
+        "example": true,
+        "who": "Earring brand",
+        "t": "A pair kept in frame",
+        "d": "Both earrings stay visible in a close worn crop, and the source photo remains beside the result. Metal color is accepted only when it still matches the piece."
+      },
+      {
+        "example": true,
+        "who": "Ring seller",
+        "t": "A hand for scale",
+        "d": "A hand scene shows the band's width without replacing the plain product photo. The stone and setting are compared at full size before publishing."
+      },
+      {
+        "example": true,
+        "who": "Bracelet label",
+        "t": "One piece, two crops",
+        "d": "The same bracelet photo feeds a wrist scene and a tighter clasp crop. Each run shows its credit cost before it starts."
+      },
+      {
+        "example": true,
+        "who": "Social manager",
+        "t": "Feed still, listing beside it",
+        "d": "The worn image goes in the feed, and the untouched product photo stays on the product page. Care notes are typed beside the image, not generated into it."
+      },
+      {
+        "example": true,
+        "who": "Small jewelry team",
+        "t": "No hand-model booking",
+        "d": "The team prepares a worn scene from the piece photo they already have. The person or hand is generated, not a booked model and not a customer."
+      }
+    ]
+  },
+  "related_h2": "Jewelry Lifestyle Photos for Instagram",
+  "related_lead": "The model-photo tool, close-up and size templates, plus Instagram and Shopify pages.",
+  "relatedLinks": [
+    {
+      "id": "model-photos",
+      "label": "AI model photos for clothing"
+    },
+    {
+      "id": "tpl-detail",
+      "label": "product detail photos"
+    },
+    {
+      "id": "tpl-size",
+      "label": "product size reference photo"
+    },
+    {
+      "id": "ind-jewelry-accessories",
+      "label": "AI photos for jewelry and accessories"
+    },
+    {
+      "id": "plat-instagram",
+      "label": "AI Instagram ads"
+    },
+    {
+      "id": "plat-shopify",
+      "label": "Shopify product photos"
+    }
+  ],
+  "cta_title": "Show the piece worn",
+  "cta_lead": "Upload one jewelry photo. You see the credit cost before the job starts.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "reviews",
+    "steps",
+    "related",
+    "faq",
+    "cta"
+  ]
 }

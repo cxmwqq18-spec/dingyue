@@ -1,11 +1,11 @@
 {
   "id": "ind-home-living",
   "title": "AI Product Videos for Home Brands | AIVideosUGC",
-  "description": "Turn one home product photo into room styling, cleaning and organizing video ads. Get watermark-free clips in minutes for listings, social feeds and paid ads.",
-  "h1": "Make AI Product Videos for Home Brands That Show Use",
-  "eyebrow": "Home & living",
-  "lead": "Home shoppers need to see where a product fits and what it does. Turn one clear product photo into a room scene, cleaning demo or organizing moment without building a set.",
-  "card": "Products in lived-in rooms, plus before-and-after clips for organizers.",
+  "description": "Turn one home product photo into a room scene, a cleaning demo, or an organizing clip. Download watermark-free files for listings, social feeds, and paid ads.",
+  "h1": "AI Product Videos for Home Brands, Shown in the Room They Fit",
+  "eyebrow": "Home and living",
+  "lead": "Home shoppers need the product in a room, doing one job. One clear photo can become that scene without building a set.",
+  "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
     "home decor product videos",
     "organizing before and after video",
@@ -15,79 +15,57 @@
   ],
   "faq": [
     {
-      "q": "Can I show a before-and-after of a closet using my organizer?",
-      "a": "Yes. Describe both states, such as \"cluttered closet floor with shoes piled up, then that closet with shoes on a three-tier rack.\" Keep the after true to what your product really holds, so buyers aren't surprised when it arrives."
+      "q": "Can I show a before-and-after of a closet?",
+      "a": "Yes, if the after state is something your product really does. Describe both states in plain words, and do not show a result the product cannot produce."
     },
     {
-      "q": "Will furniture look the right size in the room?",
-      "a": "Scale is the trickiest part of a generated room. Mention the size in your description, like \"a 24-inch round side table next to an armchair,\" and put the real dimensions on the image yourself in Canva."
+      "q": "Will furniture look the right size?",
+      "a": "Scale is the unreliable part. Mention a size in the description, such as a 24-inch round side table next to an armchair, and put the real dimensions on the listing."
     },
     {
-      "q": "Does this work for large items like sofas and beds?",
-      "a": "It can, as long as your photo shows the whole piece. Big furniture looks more natural when you name a room large enough to hold it, like \"open-plan living room\" rather than \"small bedroom.\""
+      "q": "Does this work for sofas and beds?",
+      "a": "It can, when the photo shows the whole piece, including legs. Name a room large enough to hold it. Parts that are cut out of the photo will not be invented reliably."
     },
     {
-      "q": "Can I start from a photo on a white background?",
-      "a": "Yes, a white background or cutout photo is a good starting point. Keep the whole product in frame, including legs, handles, and cords, since the AI won't add parts it can't see."
+      "q": "Can I start from a white-background photo?",
+      "a": "Yes. Keep the whole product in frame, including legs, handles, and cords. The scene can only use what the upload shows."
     },
     {
-      "q": "Can I make a short cleaning demo for a product page?",
-      "a": "Yes. Use one visible mark or strip of crumbs, keep the camera angle steady, and show the treated area beside the untouched area. The [before-and-after video tool](page:before-after-videos) is suited to this comparison."
+      "q": "Can I make a short cleaning demo?",
+      "a": "Yes. Use one visible mess, keep the angle steady, and show the product doing a single pass. A 10-second clip is 40 credits."
     },
     {
-      "q": "Which room details should I add to a generated scene?",
-      "a": "Name the room, nearby furniture, light direction, and the one action shoppers need to see. For a listing, pair the scene with a [home template](page:tpl-home) and keep exact dimensions in the listing details."
+      "q": "What should I name in the scene?",
+      "a": "Name the room, nearby furniture, the light, and the one action shoppers need. Keep exact dimensions and materials in the listing."
     },
     {
-      "q": "Can I run the room clips as paid ads for home products?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product pages. Keep dimensions and capacity claims true to the real item, and pass the platform's ad review."
+      "q": "Can I run the clips as paid ads?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Keep dimensions and capacity claims true to the item."
     },
     {
       "q": "Do I need a studio or a model?",
-      "a": "No for these clips. Rooms, props, and adult hands are generated around your product photo at a per-clip credit cost. A large custom set or an original filmed concept can still be produced separately."
+      "a": "No for these clips. Rooms and adult hands are generated around your photo, at the credit cost shown before the job. A 6-second clip is 24 credits, 15 seconds is 60, and 30 seconds is 120. A failed job returns its credits."
     }
   ],
   "templates_lead": "Choose a room or organizing step that fits the home product.",
-  "cta_lead": "Select the room or use scene where your home product belongs.",
-  "benefits_h2": "Why AI Product Videos for Home Brands Skip the Room Shoot",
-  "benefits": [
-    {
-      "t": "Faster, lower-cost production",
-      "d": "Create a room scene or product demo from one clear photo in minutes. Skip a location, crew, props and another shoot for every new item.",
-      "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
-      "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
-    },
-    {
-      "t": "Reuse one photo across channels",
-      "d": "Place one item in a styling, cleaning or organizing moment for product pages, social posts and paid ads.",
-      "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
-      "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
-    },
-    {
-      "t": "Help shoppers judge the fit",
-      "d": "Show where the product belongs and what it does so buyers can picture scale and use before they add it to the cart.",
-      "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
-      "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair."
-    }
-  ],
-  "steps_h2": "How to Make AI Product Videos for Home Brands in 3 Simple Steps",
-  "steps_lead": "Show one useful home action, then add the real dimensions and offer details before you post.",
+  "cta_lead": "Upload one home product photo, describe a single room action, and check the shape before you post.",
+  "steps_h2": "A Home Product Video in Three Moves",
+  "steps_lead": "Three things you do on screen. Dimensions stay in the listing.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one photo of the whole item, including legs, handles or cords."
+      "d": "Keep the whole item in frame, including legs, handles, and cords. A white-background photo is a fine start if nothing is cut off."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose a room and one action, such as organizing, cleaning or styling. Run one photo through more rooms to show scale and use."
+      "t": "Describe the Room Action",
+      "d": "Name the room, the light, and one action, such as a hand placing pillows or a vacuum passing over crumbs. Hands are generated."
     },
     {
       "t": "Download and Post",
-      "d": "Download and save the clip. Add real dimensions and offer text in your editor, then publish it."
+      "d": "Check the product shape, then download. Add dimensions and materials in your editor. Captions are not added for you."
     }
   ],
   "visual": {
-    "overview": "Home shoppers judge scale, texture, and where a piece fits. Start with a clear photo of a leafy houseplant in a plain ceramic planter, then show it styled by a sunny window.",
     "strip": [
       "n:guide:q17-ind-home-living-strip-0",
       "f:q17-ind-home-living-strip-1",
@@ -101,91 +79,180 @@
       "result": "f:q17-ind-home-living-r2-steps-pillow",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep both pillow shapes, colors and seams exactly. In a bright living room, a hand places the ivory and muted-sage linen pillow pair on a cream reading chair, ending with both pillows fully visible. Soft window light, natural commercial phone-video look. Medium shot at chair height with one gentle push-in. Sound: quiet room tone; no music.",
+      "prompt": "In a bright living room, a hand places the ivory and sage pillow pair on a cream chair, and both pillows stay fully in frame.",
       "options": [
         [
           "Size",
-          "16:9"
+          "9:16 · 1:1 · 16:9 · 4:3 · 3:4"
         ],
         [
           "Length",
-          "10 seconds"
+          "6, 10, 15 or 30 seconds"
         ]
       ],
       "items": [
         {
-          "t": "Start with a clear product photo",
-          "d": "Keep both pillows fully in frame so their matching set, colors, seams, and fabric texture are easy to see."
+          "t": "Upload Your Product Photo",
+          "d": "Keep the whole item in frame, including legs, handles, and cords. A white-background photo is a fine start if nothing is cut off."
         },
         {
-          "t": "Describe one room action",
-          "d": "Show this matching pair placed on a chair, then make one small adjustment to reveal the woven texture."
+          "t": "Describe the Room Action",
+          "d": "Name the room, the light, and one action, such as a hand placing pillows or a vacuum passing over crumbs. Hands are generated."
         },
         {
-          "t": "Add accurate product details",
-          "d": "After download, add the actual dimensions, fabric composition, care instructions, or offer terms."
+          "t": "Download and Post",
+          "d": "Check the product shape, then download. Add dimensions and materials in your editor. Captions are not added for you."
         }
       ]
-    },
-    "picker": {
-      "title": "Choose a home-product ad format",
-      "lead": "Show a clear result, a hands-on demo, or a creator explaining the product.",
-      "chips": [],
-      "cards": [],
-      "button": "Create product video"
     },
     "uses": [],
     "input": [],
     "outputs": [],
     "titles": {
-      "m2": {
-        "h2": "How to Make AI Product Videos for Home Brands in 3 Simple Steps"
-      },
-      "m3": {
-        "h2": "AI Product Videos for Home Brands: Choose an Ad Format"
-      },
       "faq": {
-        "h2": "Questions About AI Product Videos for Home Brands"
+        "h2": "Questions About AI Room Scene Product Photos"
       }
     }
   },
-  "more_sections": [
+  "relatedLinks": [
     {
-      "eyebrow": "Sell it where customers shop",
-      "h2": "Ads for the channels you already sell on",
-      "lead": "Send each home product asset to the channel that needs it next.",
-      "items": [
-        {
-          "t": "Shopify product pages",
-          "d": "Use a clean product scene on your [Shopify product page](/platforms/shopify-product-photos), then add the real dimensions and care details."
-        },
-        {
-          "t": "Amazon listings",
-          "d": "Pair the home-use moment with an [Amazon product image](/platforms/amazon-product-photos) that keeps the item easy to inspect."
-        },
-        {
-          "t": "TikTok ads",
-          "d": "Turn the cleaning or organizing action into a short [TikTok ad](/platforms/tiktok-ads) with the hook added after download."
-        },
-        {
-          "t": "Meta ads",
-          "d": "Use a room or before-and-after scene in a [Meta ad](/platforms/facebook-ads) and keep claims tied to the real product."
-        },
-        {
-          "t": "YouTube Shorts",
-          "d": "Show one useful home action in a [YouTube Shorts ad](/platforms/youtube-shorts-ads), with offer text added in your editor."
-        }
-      ]
+      "id": "tpl-home",
+      "label": "home product videos"
+    },
+    {
+      "id": "tpl-howto",
+      "label": "AI how-to video maker"
+    },
+    {
+      "id": "tpl-compare",
+      "label": "product comparison video"
+    },
+    {
+      "id": "before-after-videos",
+      "label": "before and after video maker"
+    },
+    {
+      "id": "product-videos",
+      "label": "AI product video generator"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
     }
   ],
-  "relatedLinks": [
-    "ind-fashion-clothing",
-    "ind-food-drinks",
-    "ind-health-wellness",
-    "ind-electronics",
-    "before-after-videos",
-    "product-videos",
-    "change-background",
-    "lifestyle-photos"
+  "reasons": {
+    "h2": "Home Decor Product Videos Without a Set",
+    "lead": "You do not need a styled location for every SKU. Start from a clear photo and name the room.",
+    "items": [
+      {
+        "t": "No set to book",
+        "d": "A styling, cleaning, or organizing scene comes back from one photo. You skip the location, the crew, and a failed job returns its credits.",
+        "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
+        "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
+      },
+      {
+        "t": "One photo, several shelves",
+        "d": "Place the same item in a product-page scene and a vertical clip. Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4.",
+        "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
+        "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
+      },
+      {
+        "t": "Show the job, then the size",
+        "d": "A lamp on a chair-side table, or a rack in a closet, helps shoppers judge use. Put real dimensions in the listing, because scale can drift.",
+        "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
+        "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "Home Product Video Ads on Every Channel",
+    "lead": "A vertical clip shows the action. A listing still shows the product. Use the frame that placement wants.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "d": "A 9:16 organizing or cleaning moment for a home post in the For You feed.",
+        "href": "/platforms/tiktok-ads"
+      },
+      {
+        "t": "AI Instagram ads",
+        "d": "A square room still or a vertical demo for the grid and Stories.",
+        "href": "/platforms/instagram-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "d": "A feed still with room to add dimensions after download.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "d": "A short vertical demo, one action from the first second.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "d": "A clean product image for the listing, measurements kept in the copy.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "d": "Matching room imagery for the product page and the collection.",
+        "href": "/platforms/shopify-product-photos"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "How Sellers Use an Organizing Before and After Video",
+    "lead": "Example ways home sellers use one product photo. These are not quotes. The after state has to match what the product really does.",
+    "items": [
+      {
+        "example": true,
+        "who": "Organizer brand",
+        "t": "Closet, then the rack",
+        "d": "They describe a cluttered floor, then shoes on a three-tier rack, and they only show a result the rack can actually produce."
+      },
+      {
+        "example": true,
+        "who": "Lamp shop",
+        "t": "Chair-side, size in the copy",
+        "d": "A lamp photo becomes a hand setting it beside a chair. They write the height in the listing because the room scale can be off."
+      },
+      {
+        "example": true,
+        "who": "Vacuum brand",
+        "t": "One pass over crumbs",
+        "d": "A short clip shows a hand guiding the vacuum over a visible mess. A 10-second cut is 40 credits. A 6-second cut is 24, 15 is 60, and 30 is 120."
+      },
+      {
+        "example": true,
+        "who": "Pillow line",
+        "t": "Both pillows on the chair",
+        "d": "They ask the scene to end with both pillows fully visible, and they reject a result that changes the seam or the color."
+      },
+      {
+        "example": true,
+        "who": "Large furniture",
+        "t": "Whole piece, large room",
+        "d": "A sofa photo shows the entire piece, and the scene names a room big enough to hold it. Legs are in the upload, so they are not invented."
+      },
+      {
+        "example": true,
+        "who": "Listing desk",
+        "t": "White still, then a room",
+        "d": "One cutout photo guides a clean listing image and a room clip. Materials and capacity stay in the product description."
+      }
+    ]
+  },
+  "cta_title": "Put the Product in the Room",
+  "related_h2": "Home product videos and room scenes",
+  "blockOrder": [
+    "hero",
+    "strip",
+    "reasons",
+    "steps",
+    "platforms",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
   ]
 }

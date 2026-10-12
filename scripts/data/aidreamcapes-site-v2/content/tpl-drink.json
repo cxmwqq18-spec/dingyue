@@ -1,10 +1,10 @@
 {
   "id": "tpl-drink",
   "title": "AI Food and Drink Videos With a Fresh Pour | AIVideosUGC",
-  "description": "Turn one bottle or can photo into a vertical pour video with ice and fizz. Use 9:16 for TikTok and Reels with 6, 10, 15 or 30 seconds.",
-  "h1": "Make AI Food and Drink Videos From a Bottle Photo",
+  "description": "Turn one bottle or can photo into a vertical pour video with ice and fizz. Use 9:16 for TikTok and Reels, with clips of 6, 10, 15 or 30 seconds.",
+  "h1": "AI Food and Drink Videos From a Bottle Photo",
   "eyebrow": "Food & drink template",
-  "lead": "A static bottle or can cannot show the pour, fizz or first sip. Turn one package photo into a vertical food and drink video with a clear serving moment for TikTok and Reels.",
+  "lead": "Pick a serving scene and add one bottle or can photo, so the pour, the fizz, or the sip is the clip.",
   "secondary_keywords": [
     "drink pour video",
     "beverage video ad",
@@ -12,47 +12,20 @@
     "food product video for TikTok",
     "beverage product video"
   ],
-  "benefits_h2": "Why make AI food and drink videos?",
-  "benefits": [
-    {
-      "t": "Show the serving moment",
-      "d": "Turn one package photo into a pour, first sip or simple preparation so shoppers see how the drink is enjoyed.",
-      "img": "n:guide:fx28-tpl-drink-benefit-1-r1",
-      "alt": "Adult hand pours clear citrus soda from a plain teal can into an ice-filled tumbler."
-    },
-    {
-      "t": "Create feed-ready clips",
-      "d": "Use a vertical 9:16 video paced around one action for TikTok, Instagram Reels and product pages.",
-      "img": "n:guide:b2f2-tpl-drink-benefit-2-r1",
-      "alt": "Adult hand lifts a plain matte aluminum cold-brew can beside an ice-filled glass on a bright counter."
-    },
-    {
-      "t": "Choose the length you need",
-      "d": "Use 6 seconds for one pour, 10 or 15 seconds for a tasting beat, or 30 seconds for a fuller serving story.",
-      "img": "n:guide:fx28-tpl-drink-benefit-3-r1",
-      "alt": "Adult with short silver-gray hair raises a plain coral sports bottle after a workout."
-    },
-    {
-      "t": "Use it in your own ads",
-      "d": "Download clips without an AIVideosUGC watermark and add approved flavor, price and allergen details in your editor.",
-      "img": "n:guide:fx28-tpl-drink-benefit-4-r1",
-      "alt": "Adult hand holds a plain lilac tea bottle beside a lemon-and-ice glass on a sunlit table."
-    }
-  ],
-  "steps_h2": "How to Make AI Food and Drink Videos in 3 Simple Steps",
-  "steps_lead": "Three steps turn one bottle or can photo into a ready-to-post AI food and drink video.",
+  "steps_h2": "Make a Beverage Product Video in 3 Steps",
+  "steps_lead": "One package photo, a short line about the serve, then a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the full bottle or can with its shape, cap and drink color visible. A clear source gives the generated serving scene more to preserve."
+      "d": "Show the full bottle or can, with the cap and drink color visible. Keep the package easy to recognize."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Name the glass, garnish and one serving action, then choose the length and size. Keep the action focused on one serving moment."
+      "t": "Describe Your Scene",
+      "d": "Name the glass and one action, such as a pour or a sip. Then pick a size and a length."
     },
     {
       "t": "Download and Post",
-      "d": "Check the package, then add flavor, price and allergen details before publishing. Review the package and serving action before you publish it."
+      "d": "Download the file and add flavor or allergen lines in your editor. Keep health claims off the clip."
     }
   ],
   "maker": {
@@ -70,52 +43,48 @@
   },
   "faq": [
     {
-      "q": "What source photo works for a drink clip?",
-      "a": "Use a sharp photo of the full bottle or can with its shape, cap and visible label area clear."
+      "q": "What is a food and drink video template?",
+      "a": "A ready serving scene for a pour, a cold glass, or a first sip. You add a photo of your bottle or can, and the clip shows that serve."
     },
     {
-      "q": "Can the video show a pour?",
-      "a": "Yes. Choose a serving scene with a glass, ice or garnish and keep the package visible beside the action."
+      "q": "How do I make the pour clip?",
+      "a": "Upload the package, name the glass and one action, pick a size and a length, then download the file."
     },
     {
-      "q": "Can the clip show ice and condensation?",
-      "a": "Yes. A cold drink scene can include ice, bubbles or condensation. Keep claims about flavor and ingredients in your product listing."
+      "q": "Why start from a photo instead of a kitchen shoot?",
+      "a": "The serve is built from the package photo you already have. You do not book a kitchen, a creator, or a reshoot."
     },
     {
-      "q": "What length fits a pour clip?",
-      "a": "Use 6 seconds for one pour or opening, 10 or 15 seconds for a tasting beat, and 30 seconds for several serving moments."
+      "q": "Who is this scene for?",
+      "a": "Drink sellers who need a pour, a cold glass, or a sip for a feed, a listing, or an ad."
     },
     {
-      "q": "Where do flavor and allergen details go?",
-      "a": "Add the approved flavor, ingredients and allergen information as text in your editor or product listing after download."
+      "q": "Can I do this on the first try?",
+      "a": "Start with a sharp photo of the full package and name one action, such as a pour or a sip. Check that the package stays recognizable before you post."
     },
     {
-      "q": "Do I need a studio or a creator?",
-      "a": "No. The clip is generated from your bottle or can photo, so you can prepare a serving scene without booking a kitchen shoot."
+      "q": "What photo should I upload?",
+      "a": "A sharp photo of the full bottle or can, with the shape, the cap, and the visible label area clear."
     },
     {
-      "q": "Can the package label be added after download?",
-      "a": "Yes. Add approved package, flavor or pricing details in your editor after download."
+      "q": "Can the clip show ice, fizz, or a sip?",
+      "a": "Yes. A cold scene can include ice, bubbles, or condensation. Keep the package visible beside the glass. A sip is a serving moment, not a health claim."
     },
     {
-      "q": "Can I show a first sip without making a health claim?",
-      "a": "Yes. Show the sip as a serving moment and keep health wording out unless it is approved for your listing."
+      "q": "Which size and length can I pick?",
+      "a": "This template is set up for 9:16. A square cut can sit in a gallery. Use 6 seconds for one pour, or a longer length for a sip. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
-      "q": "What should I verify before publishing?",
-      "a": "Verify the package, flavor, ingredient and allergen details against your approved listing before publishing."
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Should the package stay in frame during a pour?",
-      "a": "Yes. Keep the package visible beside the glass so the serving scene remains tied to the product."
-    },
-    {
-      "q": "Can I use a square version for a product page?",
-      "a": "Yes. Use a square version for a product gallery or feed post, and 9:16 for TikTok and Reels."
+      "q": "Where do flavor and allergen lines go?",
+      "a": "Add approved flavor, ingredient, allergen, and price text in your editor or on the listing after download. The download has no AIVideosUGC watermark and can run in your ads. A person on screen is an AI performer, not a customer."
     }
   ],
   "visual": {
-    "overview": "An AI food and drink video keeps the package recognizable while a pour, first sip or simple preparation gives viewers one clear serving moment.",
+    "overview": "",
     "strip": [
       "n:guide:q11-drink-strip-square-01-r2",
       "n:guide:q11-drink-strip-square-02-r2",
@@ -142,8 +111,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a food or drink ad format",
-      "lead": "Pick a serving, creator or tasting moment that keeps the package clear.",
+      "title": "Choose a Drink Pour Video",
+      "lead": "These cards cover many categories. There is no pour-only filter. Open a drink card, then add the bottle or can you sell.",
       "chips": [
         {
           "id": "accessories",
@@ -560,38 +529,116 @@
       "button": "Explore More"
     },
     "titles": {
-      "m2": {
-        "h2": "Make a food and drink video from one package photo"
-      },
       "m3": {
-        "h2": "Choose a serving scene for AI food and drink videos"
-      },
-      "m4": {
-        "h2": "Use drink videos in feeds and product pages"
-      },
-      "m5": {
-        "h2": "Start with a clear bottle or can photo"
-      },
-      "m6": {
-        "h2": "Choose a vertical drink video format"
-      },
-      "m7": {
-        "h2": "Add flavor details after download"
+        "h2": "Choose a Drink Pour Video"
       },
       "faq": {
-        "h2": "Questions about AI food and drink videos"
+        "h2": "Questions About a Food Product Video for TikTok"
       }
     }
   },
   "relatedLinks": [
-    "product-videos",
-    "tpl-beauty",
-    "video-ads",
-    "ind-food-drinks",
-    "plat-instagram",
-    "plat-tiktok",
-    "lifestyle-photos",
-    "guide-first-tiktok-video-ad",
-    "blog-ai-ugc-video-ads-guide"
-  ]
+    {
+      "id": "product-videos",
+      "label": "AI product video generator"
+    },
+    {
+      "id": "tpl-pack",
+      "label": "packaging mockup generator"
+    },
+    {
+      "id": "tpl-spark-ads-style-video",
+      "label": "Spark Ads style video"
+    },
+    {
+      "id": "ind-food-drinks",
+      "label": "AI food and drink product videos"
+    },
+    {
+      "id": "plat-tiktok",
+      "label": "AI TikTok ads generator"
+    },
+    {
+      "id": "unboxing-videos",
+      "label": "AI unboxing video"
+    }
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "Sample Beverage Video Ad Setups",
+    "lead": "Example scenes for this template. They show how a drink shop could stage one serve.",
+    "items": [
+      {
+        "example": true,
+        "who": "Soda brand",
+        "t": "Pour over ice",
+        "d": "Example: a can tips into an iced glass, and the package stays beside the pour."
+      },
+      {
+        "example": true,
+        "who": "Coffee brand",
+        "t": "Can, then glass",
+        "d": "Example: a cold-brew can is lifted next to an iced glass so the package is still the hero."
+      },
+      {
+        "example": true,
+        "who": "Sports drink",
+        "t": "After the session",
+        "d": "Example: a bottle is raised after a workout, with the shape of the bottle unchanged."
+      },
+      {
+        "example": true,
+        "who": "Tea brand",
+        "t": "Citrus and ice",
+        "d": "Example: a tea bottle sits by a lemon-and-ice glass in daylight."
+      },
+      {
+        "example": true,
+        "who": "Flavor editor",
+        "t": "Allergens after download",
+        "d": "Example: flavor, ingredient, and allergen lines are added in an editor, not baked into the picture."
+      },
+      {
+        "example": true,
+        "who": "Claims reviewer",
+        "t": "No extra health line",
+        "d": "Example: the sip is shown as a serve. Health wording stays off unless the listing already approves it."
+      },
+      {
+        "example": true,
+        "who": "Listing manager",
+        "t": "Package stays in frame",
+        "d": "Example: the bottle remains visible next to the glass so the serve is tied to the product."
+      },
+      {
+        "example": true,
+        "who": "Feed buyer",
+        "t": "Short pour",
+        "d": "Example: a 6-second clip is one pour, and a longer cut can hold a sip."
+      },
+      {
+        "example": true,
+        "who": "Gallery editor",
+        "t": "Square for the page",
+        "d": "Example: a square cut can sit in a product gallery, while 9:16 is the feed cut."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Not a taster's review",
+        "d": "Example: a person who sips on screen is an AI performer, not a customer review."
+      }
+    ]
+  },
+  "related_h2": "Pages for a Juice Commercial Video",
+  "related_lead": "Product videos, packaging stills, and the food-and-drink industry page.",
+  "cta_title": "Ready to Show the Pour?",
+  "cta_lead": "Upload one bottle or can photo and see the credit cost before you start."
 }

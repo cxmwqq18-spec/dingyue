@@ -2,67 +2,56 @@
   "id": "image-to-video",
   "title": "Image to Video AI for Product Ads | AIVideosUGC",
   "description": "Animate one product photo into a short video ad for TikTok, Reels, or product pages. Add clear movement without booking a new shoot or camera crew.",
-  "h1": "Turn Product Images into Video Ads with AI",
+  "h1": "AI Image to Video: Move a Product Photo Into an Ad",
   "eyebrow": "Image to video",
-  "lead": "Turn one product image into a short moving ad. Show a detail shoppers need to see without booking a new shoot.",
+  "lead": "AIVideosUGC adds one clear motion to a product photo you already have, such as a pour, a turn, an open or a stretch. No camera crew and no new shoot. Pick a size, choose 6 to 30 seconds and download a clip for a feed, a listing or a product page.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
     "turn image into video ad",
     "AI photo animation for ads"
   ],
-  "benefits_h2": "Why use image-to-video for product ads?",
+  "benefits_h2": "Turn an Image Into a Video Ad You Can Test",
   "benefits": [
     {
-      "t": "Show one useful motion",
-      "d": "Turn one product photo into a focused movement so shoppers can see how it opens, pours, turns or works.",
-      "icon": "bolt",
-      "img": "n:guide:fx10-image-to-video-benefit-motion-r1",
-      "alt": "Adult hand presses a plain coral cleanser bottle pump into an open palm beside a bright sink."
+      "t": "Motion Without a New Shoot",
+      "d": "Go from a still to a moving clip without booking a camera. Change the first movement and render another version."
     },
     {
-      "t": "Test another opening",
-      "d": "Try a different first movement with the same product photo so you can compare ad openings without a reshoot.",
-      "icon": "refresh",
-      "img": "n:guide:fx10-image-to-video-benefit-opening-r1",
-      "alt": "Adult hands twist open a plain teal reusable bottle on a sunlit kitchen counter."
+      "t": "Credits Instead of a Reshoot",
+      "d": "A 6-second clip uses 24 credits and a 15-second clip uses 60. If the render fails, those credits come back."
     },
     {
-      "t": "Add a product detail to a feed ad",
-      "d": "Show one feature in motion, such as a lid opening or fabric stretching, before the shopper scrolls.",
-      "icon": "target",
-      "img": "n:guide:fx10-image-to-video-benefit-detail-r1",
-      "alt": "Adult hands stretch a plain linen shirt sleeve across a neutral table to show its drape."
+      "t": "Check the Item Before You Post",
+      "d": "Compare the finished motion with the source photo. If the shape, color or label drifts, render again before you post."
     },
     {
-      "t": "Pick a frame that fits",
-      "d": "Choose 9:16, 1:1 or 16:9 to match the feed, listing or product page where the clip will run.",
-      "icon": "layers",
-      "img": "n:guide:fx10-image-to-video-benefit-frame-r1",
-      "alt": "Adult hand flips open the latch of a plain sage-green lunch container on a kitchen counter."
+      "t": "One Feature Before the Scroll",
+      "d": "Show a pump press, a stretch or an open in the first seconds, so the detail is visible before the viewer moves on."
     },
     {
-      "t": "Pick a length that fits",
-      "d": "Choose 6, 10, 15 or 30 seconds when you plan the opening and the detail the shopper needs.",
-      "icon": "clock",
-      "img": "n:guide:fx10-image-to-video-benefit-length-r1",
-      "alt": "Adult hands stretch a plain charcoal resistance band over a yoga mat."
+      "t": "You Name the Motion",
+      "d": "You decide what moves and how long it runs. Sound, captions and price are added after download."
+    },
+    {
+      "t": "Clear to Post",
+      "d": "Finished clips can run in paid or organic placements, and they carry no watermark."
     }
   ],
   "steps_h2": "How to Make an Image-to-Video Ad in 3 Simple Steps",
-  "steps_lead": "Upload one clear product image, describe one movement and download the clip for your ad.",
+  "steps_lead": "Upload one clear product image, name one motion and download the clip.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Bring a still product photo to life without a reshoot. Upload one clear photo with the full product visible and key details easy to see."
+      "d": "Upload one clear photo with the full item visible. The motion is applied to this image."
     },
     {
       "t": "Describe the Motion",
-      "d": "Give the product one clear motion shoppers can notice. Write one sentence that tells the tool what should turn, open, pour, or change."
+      "d": "Name one movement, such as a turn, pour, open or stretch, then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Add movement to your next ad in minutes. Watch the result, then download the short video for your ad, feed, or product page."
+      "d": "Download the clip when it is ready. Add captions, a price or licensed music in your editor, then post it."
     }
   ],
   "maker": {
@@ -84,55 +73,67 @@
   },
   "faq": [
     {
-      "q": "What can image to video show?",
-      "a": "It adds one focused product motion such as a turn, pour, opening, or light change."
+      "q": "What is AI image to video?",
+      "a": "It adds one focused motion to a still product photo, such as a turn, a pour, an open or a stretch."
+    },
+    {
+      "q": "How do I turn a product photo into a video?",
+      "a": "Upload a clear photo, name one motion, pick a size and a length, then download the clip."
     },
     {
       "q": "Does image to video write a script or add audio?",
-      "a": "No. It animates the product image; add a script, narration, music, or captions in your editor after download."
+      "a": "No. The tool only animates the photo. Add a script, narration, music or captions in your editor after download."
     },
     {
-      "q": "What image should I use?",
-      "a": "Use a clear, well-lit photo with the full product visible and its important details in frame."
+      "q": "Which photo should I upload?",
+      "a": "Use a clear, well-lit photo with the full product visible and the important details in frame."
     },
     {
-      "q": "Which video sizes can I choose?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3, or 3:4 in the workspace."
+      "q": "Which sizes can I make?",
+      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4 in the workspace."
     },
     {
-      "q": "Which clip lengths can I choose?",
-      "a": "Choose 6, 10, 15, or 30 seconds."
+      "q": "Which lengths can I choose?",
+      "a": "Choose 6, 10, 15 or 30 seconds."
     },
     {
-      "q": "Can I make several ad versions from one photo?",
-      "a": "Yes. Change the motion or length and compare the clips while keeping the same product image."
+      "q": "How many credits does a clip use?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns its credits."
     },
     {
-      "q": "Can I retry a motion that looks wrong?",
-      "a": "Yes. Describe one simpler motion, generate another version, and check the product against the source photo."
+      "q": "Can I make more than one version from one photo?",
+      "a": "Yes. Change the motion, the size or the length and keep the same photo."
     },
     {
-      "q": "Where can I use the downloaded clip?",
-      "a": "Use it in TikTok, Instagram, Facebook, or a product listing after checking each channel’s current requirements."
+      "q": "Where can I use the clip?",
+      "a": "In a TikTok, Instagram, Facebook or product listing, after you check that channel's current rules."
+    },
+    {
+      "q": "What if the motion looks wrong?",
+      "a": "Describe a simpler motion and generate again. Compare the product with the source photo before you post."
+    },
+    {
+      "q": "Can I use the clip in paid ads?",
+      "a": "Yes. Finished clips can be used commercially and they have no watermark."
     }
   ],
-  "cta_lead": "Start with one product image and see the credit cost before generation.",
+  "cta_lead": "Upload one product image and see the credit cost before you start.",
   "uses": [
     {
-      "t": "A/B Test Paid Ads",
-      "d": "Compare moving product hooks and find a stronger first frame."
+      "t": "A Paid Social Test",
+      "d": "Run the clip in a TikTok, Instagram, Facebook or Shorts test after you check that channel's rules."
     },
     {
-      "t": "E-commerce Marketplaces",
-      "d": "Show a product detail that helps shoppers decide."
+      "t": "The Product Page",
+      "d": "Put the motion next to the photos already on the product page."
     },
     {
-      "t": "Social Media Channels",
-      "d": "Use short motion in TikTok, Reels, or other feeds."
+      "t": "A Marketplace Listing",
+      "d": "Add the download where that marketplace allows a video, then check its current video rules."
     },
     {
-      "t": "Educational Videos",
-      "d": "Explain one product feature with a visual demonstration."
+      "t": "Another Frame",
+      "d": "Render the same motion in 9:16, 1:1, 16:9, 4:3 or 3:4 for the placement you are using."
     }
   ],
   "visual": {
@@ -143,11 +144,11 @@
       "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A slow curl of steam rises from the cream ceramic mug with blue flecks on a wooden counter as morning light moves across its glaze. Medium close-up with one gentle push-in. Sound: soft room tone and a faint ceramic set-down; no music, text or logos."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A slow curl of steam rises from the cream ceramic mug with blue flecks on a wooden counter as morning light moves across its glaze. Medium close-up with one gentle push-in. No music, text or logos."
     },
     "picker": {
-      "title": "",
-      "lead": "",
+      "title": "Product Photo to Video Examples",
+      "lead": "These clips start from a still product photo. Open one if you want a similar motion.",
       "chips": [],
       "cards": [],
       "button": "",
@@ -157,39 +158,160 @@
       {
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-uses-00",
-        "h": "Balm swatch, smooth for a paid ad",
-        "d": "Compare a focused balm movement in a paid feed and find the opening that earns the click."
+        "h": "A Paid Social Test",
+        "d": "Run the clip in a TikTok, Instagram, Facebook or Shorts test after you check that channel's rules."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q2-image-to-video-example-01",
-        "h": "Hydration mix, pour for a listing",
-        "d": "Show hydration mix pouring into a glass so listing shoppers can judge the serving moment."
+        "h": "The Product Page",
+        "d": "Put the motion next to the photos already on the product page."
       },
       {
         "frame": "reels",
         "ref": "n:guide:q2-image-to-video-example-02",
-        "h": "Linen shirt, stretch for social",
-        "d": "Use a short shirt stretch in a TikTok or Reel without another shoot."
+        "h": "A Marketplace Listing",
+        "d": "Add the download where that marketplace allows a video, then check its current video rules."
       },
       {
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-example-03",
-        "h": "Cleanser pump, press for a feature demo",
-        "d": "Show a cleanser pump dispensing one dose so shoppers understand the feature."
+        "h": "Another Frame",
+        "d": "Render the same motion in 9:16, 1:1, 16:9, 4:3 or 3:4 for the placement you are using."
       }
     ],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Turn one product image into a video in 3 steps"
+      "faq": {
+        "h2": "Questions About AI Image to Video"
       },
       "m4": {
         "h2": "Put moving product details to work"
       }
     },
     "overview": ""
-  }
+  },
+  "blockOrder": [
+    "hero",
+    "definition",
+    "picker",
+    "reasons",
+    "steps",
+    "uses",
+    "benefits",
+    "related",
+    "compare",
+    "reviews",
+    "faq",
+    "cta"
+  ],
+  "definition": {
+    "title": "What Is AI Image to Video?",
+    "paras": [
+      "AI image to video adds movement to a still product photo. Shoppers see one action, such as a lid lifting, liquid pouring or fabric stretching, instead of a frozen frame.",
+      "AIVideosUGC keeps the item from your upload. It does not write a script and it does not add sound. Put captions, a price or licensed music on the file in your editor after download."
+    ]
+  },
+  "reasons": {
+    "h2": "Animate a Product Photo for a New Opening",
+    "items": [
+      {
+        "t": "Motion From the Photo You Sell",
+        "d": "The clip starts from your upload, so the item on screen is the one in your catalog. One motion stays easy to follow."
+      },
+      {
+        "t": "A Frame for Each Placement",
+        "d": "Make the same motion in a vertical, square or wide frame, including 4:3 and 3:4, without re-cropping a filmed source."
+      },
+      {
+        "t": "A New Opening, Same Photo",
+        "d": "Change the motion or the length and compare openings while the product photo stays put."
+      }
+    ]
+  },
+  "benefits_lead": "For sellers who need a moving product detail and do not have a shoot on the calendar.",
+  "related_h2": "More From the AIVideosUGC Toolkit",
+  "related_lead": "Explore the rest of the AIVideosUGC tools.",
+  "relatedLinks": [
+    "video-ads",
+    "product-videos",
+    "url-to-video",
+    "unboxing-videos",
+    "spokesperson-videos",
+    "before-after-videos"
+  ],
+  "compare_table": {
+    "title": "Product Photo to Video vs. a Camera Day",
+    "lead": "A still photo and one motion, instead of a camera day or a frame-by-frame edit.",
+    "columns": [
+      "",
+      "AIVideosUGC",
+      "Camera or manual animation"
+    ],
+    "rows": [
+      [
+        "First clip",
+        "One photo and one motion, then a render",
+        "A shoot day or a long manual edit"
+      ],
+      [
+        "What you need",
+        "One product photo and one motion",
+        "A camera setup or animation software"
+      ],
+      [
+        "Another version",
+        "Credits for one new clip",
+        "Another shoot or more edit time"
+      ],
+      [
+        "Frames",
+        "Vertical, square, wide, 4:3 and 3:4",
+        "A new crop for each placement"
+      ],
+      [
+        "Sound",
+        "Added in your editor after download",
+        "Recorded on set or built in the edit"
+      ],
+      [
+        "A failed render",
+        "Credits come back on their own",
+        "The time is already spent"
+      ]
+    ]
+  },
+  "reviews": {
+    "h2": "How Shops Use AI Photo Animation for Ads",
+    "lead": "How a shop uses one product photo when it needs a moving detail for a listing or a paid test.",
+    "items": [
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Balm swatch",
+        "d": "Example: a short balm movement for a paid feed test."
+      },
+      {
+        "example": true,
+        "who": "Drink seller",
+        "t": "Pour for a listing",
+        "d": "Example: hydration mix pouring into a glass on a listing."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Shirt stretch",
+        "d": "Example: a linen shirt stretch for a TikTok or Reel."
+      },
+      {
+        "example": true,
+        "who": "Skincare shop",
+        "t": "Pump press",
+        "d": "Example: a cleanser pump dispensing one dose."
+      }
+    ]
+  },
+  "cta_title": "Ready to Add One Motion?"
 }

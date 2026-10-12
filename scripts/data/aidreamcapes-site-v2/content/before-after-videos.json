@@ -2,41 +2,50 @@
   "id": "before-after-videos",
   "title": "Before and After Video Maker for Product Ads | AIVideosUGC",
   "description": "Show a product change in one short ad: clean a stain, route loose cords or lift dust. Keep the same item and camera for TikTok, Reels or your product page.",
-  "h1": "Create Before and After Videos from One Product Photo",
+  "h1": "Before and After Video Maker: One Photo, One Clear Change",
   "eyebrow": "Before & after video",
-  "lead": "Give shoppers one clear change to judge. Keep the item and camera steady while a stain lifts, cords settle, dust clears or a shelf resets. No second shoot and no invented claim.",
+  "lead": "AIVideosUGC turns one product photo into a before and after video: the same item stays in frame while a stain lifts, cords settle, or dust clears. No second setup, no matched reshoot, no crew. Choose a frame, pick 6 to 30 seconds, and download a clip for TikTok, Reels, or a product page.",
   "secondary_keywords": [
     "AI before and after video",
     "before and after product video",
     "transformation video for ads",
     "before and after TikTok video"
   ],
-  "benefits_h2": "Show the change in one clip",
+  "benefits_h2": "Benefits of a Before and After TikTok Video",
   "benefits": [
     {
-      "t": "See dirty and clean together",
-      "d": "Show a coffee stain lifting from a tote or dust clearing from a shelf, so buyers can judge the visible result in one frame.",
-      "icon": "target",
-      "img": "n:guide:fx48-benefit-shoe",
-      "alt": "Adult hands hold a wooden shoe brush beside one gray running shoe shown scuffed and cleaned."
+      "t": "Ready in Minutes",
+      "d": "Go from the photo you upload to a finished change in minutes. There is no second setup and no filming date.",
+      "icon": "bolt"
     },
     {
-      "t": "Skip the second shoot",
-      "d": "Use one product photo to direct a stain cleanup or a cord reset, without booking another setup to match.",
-      "icon": "shield",
-      "img": "n:guide:fx48-benefit-tote",
-      "alt": "Adult hands wipe a coffee stain from a plain canvas tote, with clean fabric beside it."
+      "t": "Pay for the Clip, Not a Reshoot",
+      "d": "Credits replace a second crew call. A 15-second clip uses 60 credits, and a failed render gives those credits back.",
+      "icon": "coins"
     },
     {
-      "t": "Name the change in one line",
-      "d": "Describe the starting state, the action and the result in one short line, then add your offer or labels after download.",
-      "icon": "check",
-      "img": "n:guide:fx48-benefit-watch",
-      "alt": "Adult hands wipe a plain round cream-dial watch with dusty and clean halves."
+      "t": "More Hooks from One Photo",
+      "d": "Keep the product and try another opening, such as a dust pass, a cord reset, or a stain wipe. Each version spends its own credits.",
+      "icon": "layers"
+    },
+    {
+      "t": "A New Opening Before the Ad Tires",
+      "d": "When shoppers have seen one change too often, swap the action or the setting. You do not rebuild the set.",
+      "icon": "refresh"
+    },
+    {
+      "t": "Labels You Add Yourself",
+      "d": "Add a before or after label, a price, or licensed music after download, so the words stay spelled the way you want.",
+      "icon": "check"
+    },
+    {
+      "t": "Yours to Run, With No Watermark",
+      "d": "Finished clips can be used in paid and organic ads. They carry no watermark.",
+      "icon": "shield"
     }
   ],
-  "steps_h2": "How to Make Before and After Videos in 3 Simple Steps",
-  "steps_lead": "Show one product, one practical action and one visible result in a short ad you can test.",
+  "steps_h2": "How to Use a Before and After Video Maker in 3 Simple Steps",
+  "steps_lead": "Show one product, one practical action, and one visible result.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -44,136 +53,102 @@
     },
     {
       "t": "Describe the Change",
-      "d": "Write one sentence with the starting point, the action and the result, such as dust on one shelf becoming a clean shelf."
+      "d": "Name the start, the action, and the result, like a dusty shelf turning clear. Then pick a frame and length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Get a ready-to-post before-and-after clip in minutes. Download it, then add your offer or labels in your editor."
-    }
-  ],
-  "more_sections": [
-    {
-      "eyebrow": "The comparison",
-      "h2": "Two shoots, or one photo",
-      "lead": "A before-and-after ad used to mean matching two shoots. Start with one product photo and direct one clear change instead.",
-      "items": [
-        {
-          "t": "Two setups to match",
-          "d": "Stage a stained tote, reset it for the clean state and try to match the same camera, light and crop."
-        },
-        {
-          "t": "One photo to direct",
-          "d": "Keep one product reference, then describe the action that takes the tote from stain to clean. The clip is generated for you in minutes."
-        }
-      ]
-    },
-    {
-      "eyebrow": "Why sellers use it",
-      "h2": "Test a clearer product change",
-      "lead": "Show a practical fix buyers understand, then make another opening when your campaign needs a fresh angle.",
-      "items": [
-        {
-          "t": "Start without a crew",
-          "d": "Describe fur on a sofa and the roller pass, then skip a studio setup or filming date.",
-          "img": "n:guide:b2f1-before-after-videos-pet-hair-r1",
-          "frame": "phone"
-        },
-        {
-          "t": "Control the visible result",
-          "d": "Keep the item, camera and claim fixed while you show a watch face becoming clearer after one wipe.",
-          "img": "n:guide:q3-before-after-videos-output-watch-wipe",
-          "frame": "phone"
-        },
-        {
-          "t": "Write the opening you need",
-          "d": "Give one short line that frames dust on a shelf for your ad.",
-          "img": "n:guide:fx48-demo-shelf-dust",
-          "frame": "phone"
-        },
-        {
-          "t": "Test more hooks without reshooting",
-          "d": "Try a dust cleanup opening, a pet-hair pass or a zipper fix without arranging another shoot.",
-          "img": "n:guide:fx48-demo-zipper",
-          "frame": "phone"
-        },
-        {
-          "t": "Finish more versions from one base",
-          "d": "Keep the demonstration ready, then add your offer or before-and-after labels without rebuilding the clip.",
-          "img": "n:guide:q3-before-after-videos-output-watch-compare",
-          "frame": "none"
-        },
-        {
-          "t": "Show the fix at tile level",
-          "d": "Capture a dark grout line before the scrub and a clean section after it, with the same camera angle for an easy comparison.",
-          "img": "n:guide:fx48-demo-tile-grout",
-          "frame": "phone"
-        }
-      ]
+      "d": "Download the clip when it is ready. Add a before or after label, a price, or licensed music in your editor."
     }
   ],
   "maker": {
-      "options": [
-        [
-          "Size",
-          "9:16 vertical or 1:1 square"
-        ],
-        [
-          "Length",
-          "6, 10 or 15 seconds"
-        ]
+    "options": [
+      [
+        "Size",
+        "9:16, 1:1, 16:9, 4:3, or 3:4"
       ],
+      [
+        "Length",
+        "6, 10, 15, or 30 seconds"
+      ]
+    ],
     "cta": "Make my before & after video"
   },
   "faq": [
     {
       "q": "What is a before and after video?",
-      "a": "It is a short clip that shows a starting state, one practical action and the fixed state. You make it from one product photo and use it as a product demonstration ad."
+      "a": "It is a short clip with a starting state, one practical action, and a visible result. You make it from one product photo and use it as a product demonstration."
     },
     {
       "q": "How do I make one from a product photo?",
-      "a": "Upload one clear product photo and describe the starting state, action and result in one sentence. The generated clip keeps the same item and camera in view."
+      "a": "Upload one clear photo of the whole item, describe the start, the action, and the result, pick a frame and a length, then download the clip."
     },
     {
-      "q": "How is this different from a traditional video shoot?",
-      "a": "A shoot needs the item staged twice, a camera setup and often a crew. Here both states are directed from the same photo in minutes, without booking another setup."
+      "q": "How is this different from filming two setups?",
+      "a": "A shoot stages the item twice and tries to match the camera. Here both states are directed from the same photo, in minutes, with no second booking."
     },
     {
-      "q": "Who should use before and after videos?",
-      "a": "Sellers whose product fixes something visible: a tote stain, dust on a shelf, tangled cords or a stuck zipper. Ecommerce brands and ad teams use them on product pages and paid campaigns."
+      "q": "Who should use a before and after video?",
+      "a": "Sellers whose product fixes something visible, such as a stain, dust, loose cords, or a stuck zipper. It suits a product page or a paid ad."
     },
     {
-      "q": "What video styles work for a before and after?",
-      "a": "Keep it simple: a fixed camera, a practical action and both states easy to compare. A cleaning demo, organizer reset or repair moment reads naturally in a feed."
+      "q": "What should the clip not claim?",
+      "a": "Show a change to an item or the space around it, not a health, skin, or body result. A cleaned shoe, a routed cable, or a dust-free shelf should match what the product really does."
     },
     {
-      "q": "What are the limitations?",
-      "a": "The clip shows a change to an item or the space around it, not a health, skin or body result. A cleaned shoe, routed cable or dust-free shelf should match what your product really does."
+      "q": "Which frames and lengths can I choose?",
+      "a": "Choose 9:16, 1:1, 16:9, 4:3, or 3:4, and 6, 10, 15, or 30 seconds. Downloads have no watermark."
     },
     {
-      "q": "Which formats and platforms are supported?",
-      "a": "Download a 9:16 vertical clip for TikTok Ads and Instagram Reels, or a 1:1 square for a product page. Lengths are 6, 10, 15 or 30 seconds, and downloads have no watermark."
+      "q": "How many credits does one clip use?",
+      "a": "A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. The cost shows before you start, and a failed job gives the credits back."
     },
     {
       "q": "Can I add Before and After labels?",
-      "a": "Yes. Add them in your own editor after download, so labels for a stain, cord reset or shelf cleanup stay crisp and correctly spelled."
+      "a": "Yes. Add them in your editor after download, so the words stay spelled the way you want."
+    },
+    {
+      "q": "Can I add captions, a price, or music?",
+      "a": "Yes. Add captions, your price, and licensed music in your editor. This tool does not add them for you."
+    },
+    {
+      "q": "Is anyone on screen a real customer?",
+      "a": "No. Any person in the clip is generated for the ad, not a buyer. Do not present the result as a customer review."
+    },
+    {
+      "q": "Will TikTok or Meta reject this kind of AI ad?",
+      "a": "They do not ban AI ads as a class. Some require a label when a clip could be read as a real customer. Check the current rule before you scale spend."
     }
   ],
   "actor_scene_picker": {
-    "title": "Choose your avatar and scene",
-    "lead": "Pick who presents and where, and start your video with both already set.",
-    "button": "Use this avatar and scene"
+    "title": "Choose a Person and a Scene",
+    "lead": "Pick who is in the frame and where. On the next step, describe one start, one action, and one result.",
+    "button": "Use this person and scene"
   },
   "relatedLinks": [
-    "image-to-video",
-    "url-to-video",
-    "video-ads",
-    "product-videos",
-    "unboxing-videos",
-    "spokesperson-videos",
-    "ai-actors",
-    "templates",
-    "plat-tiktok",
-    "plat-instagram"
+    {
+      "id": "unboxing-videos",
+      "label": "AI unboxing video"
+    },
+    {
+      "id": "product-videos",
+      "label": "AI product video generator"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "spokesperson-videos",
+      "label": "AI spokesperson video"
+    },
+    {
+      "id": "image-to-video",
+      "label": "AI image to video"
+    },
+    {
+      "id": "url-to-video",
+      "label": "URL to video"
+    }
   ],
   "visual": {
     "steps": {
@@ -184,8 +159,8 @@
       "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, an adult hand feeds three loose cords through the organizer slots, leaving the tabletop clear. End with the cords arranged in place. Soft daylight, practical home-demo style. Overhead medium framing with one slow push-in. Sound: cord slide, organizer tap and quiet room tone; no music, text or logos."
     },
     "picker": {
-      "title": "Browse before and after scenes",
-      "lead": "Each card keeps one item and one camera, then shows the fixed state. Pick the change your product really makes.",
+      "title": "See a Before and After Product Video",
+      "lead": "Each example keeps one item and one camera, then shows the result. Pick a change your product really makes.",
       "chips": [],
       "cards": [],
       "button": "Try this video idea"
@@ -193,11 +168,133 @@
     "uses": [],
     "titles": {
       "m2": {
-        "h2": "Create a before and after video in 3 simple steps"
+        "h2": "How to Use a Before and After Video Maker in 3 Simple Steps"
       },
       "m4": {
-        "h2": "Show the change where buyers make decisions"
+        "h2": "Where a Visible Change Helps the Sale"
+      },
+      "faq": {
+        "h2": "Questions About a Before and After Video"
       }
     }
-  }
+  },
+  "blockOrder": [
+    "hero",
+    "definition",
+    "picker",
+    "reasons",
+    "steps",
+    "benefits",
+    "related",
+    "compare",
+    "reviews",
+    "faq",
+    "cta"
+  ],
+  "definition": {
+    "title": "What Is an AI Before and After Video?",
+    "paras": [
+      "An AI before and after video shows one starting state, one practical action, and one visible result, made from a single product photo. The item and the camera stay steady so a shopper can judge the change.",
+      "Use it as a transformation video for ads on TikTok, Reels, Shorts, or a product page. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. The change has to be something your product really does to an item or the space around it, not a health, skin, or body result."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Make a Transformation Video for Ads",
+    "lead": "For sellers whose product fixes something a shopper can see.",
+    "items": [
+      {
+        "t": "Both States in One Shot",
+        "d": "The scuffed side and the cleaned side stay in one frame, so the result is easy to judge. The item does not leave the shot.",
+        "img": "n:guide:fx48-benefit-shoe",
+        "alt": "Adult hands hold a wooden shoe brush beside one gray running shoe shown scuffed and cleaned."
+      },
+      {
+        "t": "No Second Shoot to Match",
+        "d": "One photo directs the wipe. You do not restage the light, the crop, or the camera for a clean take.",
+        "img": "n:guide:fx48-benefit-tote",
+        "alt": "Adult hands wipe a coffee stain from a plain canvas tote, with clean fabric beside it."
+      },
+      {
+        "t": "Only a Change You Can Stand Behind",
+        "d": "You name the start, the action, and the result. Show only a change the product really makes to an item or the space around it.",
+        "img": "n:guide:fx48-benefit-watch",
+        "alt": "Adult hands wipe a plain round cream-dial watch with dusty and clean halves."
+      }
+    ]
+  },
+  "compare_table": {
+    "title": "AIVideosUGC vs. Matching Two Shoots",
+    "lead": "One photo instead of two matched setups. See what you skip when the change is directed, not restaged.",
+    "columns": [
+      "",
+      "AIVideosUGC",
+      "Two matched shoots"
+    ],
+    "rows": [
+      [
+        "Time to first clip",
+        "Minutes",
+        "Time to stage the before, reset the after, and edit"
+      ],
+      [
+        "What you need",
+        "One product photo and one change to describe",
+        "The item staged twice, plus a camera and a crew"
+      ],
+      [
+        "Cost of another version",
+        "Credits for one clip (60 for 15 seconds)",
+        "Another setup and more editing time"
+      ],
+      [
+        "Frames",
+        "9:16, 1:1, 16:9, 4:3, or 3:4 on each clip",
+        "Recut both states for every placement"
+      ],
+      [
+        "Rights",
+        "Commercial use included, no watermark",
+        "Agreed with whoever filmed it"
+      ],
+      [
+        "A take that fails",
+        "The credits go back to your balance",
+        "Both setups are already spent"
+      ]
+    ]
+  },
+  "reviews": {
+    "h2": "Example Changes Sellers Test",
+    "lead": "Example clips of a visible product change. These are not customer quotes, and they are not a health, skin, or body result.",
+    "items": [
+      {
+        "example": true,
+        "who": "Home seller",
+        "t": "Dust on a shelf, then a clear shelf",
+        "d": "A 15-second ad keeps one camera while the shelf goes from dusty to clear."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "One scuff, then a cleaner shoe",
+        "d": "Show the brush and the shoe in one frame so the result is easy to compare."
+      },
+      {
+        "example": true,
+        "who": "Organizer brand",
+        "t": "Loose cords, then a routed bundle",
+        "d": "Keep the same desk and the same holder, and show only the cords settling into place."
+      },
+      {
+        "example": true,
+        "who": "Cleaning brand",
+        "t": "A dark grout line, then a clean section",
+        "d": "Hold the camera still so the scrubbed section can be compared with the line beside it."
+      }
+    ]
+  },
+  "cta_title": "Ready to Show the Change?",
+  "cta_lead": "Upload a product photo and see the credit cost before you start.",
+  "related_h2": "More From the AIVideosUGC Toolkit",
+  "relatedH2": "More From the AIVideosUGC Toolkit"
 }

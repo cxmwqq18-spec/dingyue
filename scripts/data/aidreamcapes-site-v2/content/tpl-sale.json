@@ -1,30 +1,30 @@
 {
   "id": "tpl-sale",
   "title": "Sale Banner Maker for Square Offer Images | AIVideosUGC",
-  "description": "Move stock with a seasonal sale image that leaves clean space for your offer. One product photo becomes a square banner; add discount and dates in Canva.",
-  "h1": "Sale Banner Maker with Open Space for Offer Text",
+  "description": "Move stock with a sale image that leaves clean space for your offer. One product photo becomes a square banner; add the discount and dates yourself.",
+  "h1": "Sale Banner Maker with Room for the Offer",
   "eyebrow": "Ad photo template",
-  "lead": "A discount with no clear sale image gets lost in crowded feeds, and custom banner design for every event takes time you do not have. Upload one product photo and this sale banner maker places it in a seasonal scene with a calm open area ready for your discount, dates and code.",
+  "lead": "A discount with no clear product image disappears in the feed. This sale banner maker turns one product photo into a square scene with a calm area for the offer you add later.",
   "secondary_keywords": [
     "Black Friday banner image",
     "seasonal sale ad image",
     "holiday sale photo for Facebook",
     "winter clearance banner"
   ],
-  "steps_h2": "How to Make Sale Banner Images in 3 Simple Steps",
-  "steps_lead": "Turn one product photo into a sale scene with room for the exact offer your customers should read.",
+  "steps_h2": "Make a seasonal sale ad image",
+  "steps_lead": "Upload the product, leave an open area, then add the real offer after download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product featured in the sale. Keep the full product visible so the sale scene can match it."
+      "d": "Start with one clear photo of the sale product, full item in frame. The scene comes from that photo, not from a typed discount."
     },
     {
       "t": "Pick a Sale Scene",
-      "d": "Share the product scene and open offer area in one sentence. Leave the discount, code and end date for your editor."
+      "d": "Describe the setting and say you want a calm open area. Leave the percentage, code and end date out of the generation."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed discount, code and end date in your editor, then post. Check every figure on a phone preview first."
+      "d": "Add the confirmed discount, code and end date in your editor, then post. Read every figure on a phone preview first."
     }
   ],
   "maker": {
@@ -47,51 +47,35 @@
   "faq": [
     {
       "q": "Why doesn't the banner include my discount text?",
-      "a": "AI-made lettering sometimes garbles words and digits, and a wrong price on a sale ad causes real trouble. Adding the text yourself keeps every figure exact."
+      "a": "Generated lettering can garble words and digits, and a wrong price on a sale ad is a real problem. Add the offer yourself so every figure matches the promotion you approved."
     },
     {
       "q": "What size is the sale image?",
-      "a": "Square by default, which fits Facebook and Instagram feed posts. For a wide website header, set the image on a wider canvas in your design tool."
+      "a": "Square by default, which fits a Facebook or Instagram feed post. For a wide website header, place the image on a wider canvas in your design tool."
     },
     {
-      "q": "Can I reuse one image for different offers?",
-      "a": "Yes. Since the offer is added afterward, this image can carry a percent-off headline in one ad and a free-shipping line in another."
+      "q": "Can I reuse one scene for a different offer?",
+      "a": "Yes. Add the offer as text after download, so the same scene can carry a percent-off line in one ad and a different approved line in another."
     },
     {
-      "q": "Can I make a sale banner in a vertical format?",
-      "a": "The sale template produces a square image by default. Add a 9:16 canvas in your design tool after download if you need a Story or Reel version."
+      "q": "Can I make a vertical sale story from it?",
+      "a": "The template produces a square image. If you need a Story or Reel frame, put that square on a 9:16 canvas after download."
     },
     {
-      "q": "Where can I use the square sale image?",
-      "a": "The 1:1 image fits Facebook and Instagram feeds; place it on a 9:16 canvas for Stories and Reels."
-    },
-    {
-      "q": "Can I update the discount without a new photo?",
-      "a": "Yes. Since the offer is a separate text layer, change the percentage or dates on the same background image."
+      "q": "Where should the discount code go?",
+      "a": "Put the code in the open area as editable text, then read the full offer on a phone-sized preview. Do not ask the generator to paint the code into the photo."
     },
     {
       "q": "How many credits does a sale photo use?",
-      "a": "Each photo costs 24 credits and the charge is shown before you run it."
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts. You are responsible for the offer terms and the disclosures in the ad."
     },
     {
-      "q": "Where should I place a discount code?",
-      "a": "Put the code in the open area as an editable text layer, then check the full offer on a phone-sized preview."
+      "q": "What happens when the sale ends?",
+      "a": "Delete, pause or replace the offer layer so an old date or code is never shown. The product scene can stay for a later promotion or as a plain listing image."
     },
     {
-      "q": "How do I remove an expired promotion?",
-      "a": "Delete or replace the offer layer before reusing the image so an old date or code is never shown."
-    },
-    {
-      "q": "Can I use the sale image without an offer?",
-      "a": "Yes. Keep the clean product scene for a product-page image or add a different approved message later."
-    },
-    {
-      "q": "Can I run these banners as paid sale ads?",
-      "a": "Yes. Images you make can be used in your own paid ads, product pages and social posts, with no AIVideosUGC watermark on the download. You are responsible for the offer terms, claims and disclosures in the ad."
-    },
-    {
-      "q": "What happens to the banner when the sale ends?",
-      "a": "Delete, pause or replace the offer layer so an expired date or code is never shown. The underlying product scene can be reused for a new promotion or kept as a plain listing image."
+      "q": "Can I start from a Black Friday scene and change the holiday later?",
+      "a": "Yes. Keep the product scene and swap the headline. Seasonal campaign notes live on [Black Friday ad creatives](page:occ-black-friday)."
     }
   ],
   "examples": {
@@ -148,7 +132,6 @@
     ]
   },
   "visual": {
-    "overview": "Show the full product in a sale scene with a calm area for the offer added after download.",
     "strip": [
       "n:q10-sale-strip-1",
       "n:q10-sale-strip-2",
@@ -179,8 +162,8 @@
       "resultAlt": "Adult pulls a blue hard-shell suitcase through a bright airport terminal."
     },
     "picker": {
-      "title": "Choose the product for your sale photo",
-      "lead": "Select a product category and set the mood for the offer image.",
+      "title": "These cards open a 15-second video",
+      "lead": "Each card is a 9:16 video ad, not a square sale image with room for an offer. Use the upload above, and add the discount only after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -602,51 +585,96 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make sale product photos in three steps"
+        "h2": "Make a Black Friday Banner Image"
       },
       "faq": {
-        "h2": "Sale Banner Maker Questions"
+        "h2": "Questions about this sale banner maker"
+      },
+      "m3": {
+        "h2": "These cards open a 15-second video",
+        "lead": "Each card is a 9:16 video ad, not a square sale image with room for an offer. Use the upload above, and add the discount only after you download."
       }
     }
   },
-  "cta_lead": "Create the sale banner, then add the confirmed offer after download.",
-  "benefits_h2": "Why sellers choose a sale banner maker",
-  "benefits": [
+  "cta_lead": "Upload one product photo. Type the discount, code and end date after you download.",
+  "relatedLinks": [
     {
-      "t": "Start from one product photo",
-      "d": "Turn a clear product photo into a seasonal sale scene, so your team can prepare creative without booking a new shoot.",
-      "img": "n:guide:fx26-tpl-sale-benefit-photo-r1",
-      "alt": "Adult hands present a plain natural canvas tote on a light stone table with open space for an offer."
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
     },
     {
-      "t": "Leave room for the offer",
-      "d": "Keep a calm area open for the confirmed discount, dates and code you add after download.",
-      "img": "n:guide:fx26-tpl-sale-benefit-offer-r1",
-      "alt": "Adult with a short blonde pixie haircut holds a plain teal insulated lunch container beside a bright kitchen counter."
+      "id": "tpl-tryon",
+      "label": "AI virtual try-on for clothing"
     },
     {
-      "t": "Reuse the scene for new offers",
-      "d": "Update the editable offer layer when the promotion changes while the product image stays useful.",
-      "img": "n:guide:fx26-tpl-sale-benefit-reuse-r1",
-      "alt": "Adult with a short buzz cut lifts a plain olive daypack by its top handle in a bright entryway."
+      "id": "tpl-look",
+      "label": "AI lookbook photos"
     },
     {
-      "t": "Fit feed and product pages",
-      "d": "Use the square image in Facebook and Instagram feeds, carousels or a product page after you add the final offer.",
-      "img": "n:guide:fx26-tpl-sale-benefit-channels-r1",
-      "alt": "Adult woman with a short straight dark bob holds a plain rust canvas crossbody bag at a bright market stall."
+      "id": "tpl-outfit",
+      "label": "AI fashion reels"
+    },
+    {
+      "id": "occ-sale-discount",
+      "label": "sale ad creatives"
+    },
+    {
+      "id": "ind-fashion-clothing",
+      "label": "AI model photos and videos for fashion brands"
     }
   ],
-  "relatedLinks": [
-    "social-ad-photos",
-    "tpl-story",
-    "occ-black-friday",
-    "occ-sale-discount",
-    "occ-holidays",
-    "plat-instagram",
-    "plat-facebook",
-    "ind-fashion-clothing",
-    "guide-testing-ad-versions",
-    "guide-ad-sizes-by-platform"
+  "reviews": {
+    "h2": "Holiday Sale Photo for Facebook",
+    "lead": "A few ways sellers use one product photo as the scene behind an offer.",
+    "items": [
+      {
+        "example": true,
+        "who": "Fashion shop",
+        "t": "Percent off, typed later",
+        "d": "The shop generates a seasonal scene and types the percent, code and end date in its editor. When the number changes, the text layer changes and the product scene can stay."
+      },
+      {
+        "example": true,
+        "who": "Holiday shop",
+        "t": "End date kept out of the file",
+        "d": "The end date is not generated into the image, so an expired promotion is removed by deleting the text layer. The product photo underneath can be reused."
+      },
+      {
+        "example": true,
+        "who": "Sale editor",
+        "t": "One scene, two headlines",
+        "d": "The same scene carries a percent-off line in one ad and a different approved line in another. Both lines are added after download."
+      },
+      {
+        "example": true,
+        "who": "Clearance editor",
+        "t": "Open area for the code",
+        "d": "A calm area is left for the code, then checked on a phone-sized preview before the ad is published. The generated file has no digits in it."
+      },
+      {
+        "example": true,
+        "who": "Marketplace seller",
+        "t": "Feed and the product page",
+        "d": "The square image goes in a Facebook or Instagram feed, or on the product page, after the final offer is added. A wide site header means placing it on a wider canvas in the editor."
+      },
+      {
+        "example": true,
+        "who": "Small team",
+        "t": "No new shoot for the event",
+        "d": "They start from a product photo they already have instead of booking a banner shoot. Claims and offer terms stay their responsibility."
+      }
+    ]
+  },
+  "related_h2": "Seasonal sale templates and fashion pages",
+  "related_lead": "The ad-image tool, fashion templates, the sale occasion and the fashion industry page.",
+  "cta_title": "Set the scene, then add the offer",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "reviews",
+    "steps",
+    "related",
+    "faq",
+    "cta"
   ]
 }

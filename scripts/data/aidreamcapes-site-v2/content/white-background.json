@@ -2,9 +2,9 @@
   "id": "white-background",
   "title": "White Background Product Photos | AIVideosUGC",
   "description": "Create white background product photos from one clear image for Amazon, Shopify, or Etsy. Keep the whole item visible and ready for listings.",
-  "h1": "Add a clean white background to your product photo",
+  "h1": "White background product photos for a listing main image",
   "eyebrow": "White background photos",
-  "lead": "Turn one clear product photo into a clean white background image for Amazon, Shopify or Etsy. Keep the full item in view for a listing without booking a studio.",
+  "lead": "Upload one clear product photo and set the item on white for a marketplace, Shopify, or Etsy listing. The full product stays in frame, and you do not book a studio.",
   "secondary_keywords": [
     "white background product photo maker",
     "white background main image for marketplaces",
@@ -14,16 +14,16 @@
   ],
   "steps": [
     {
-      "t": "Upload your product photo",
-      "d": "Add a clear photo with the whole product visible so shoppers can see its complete shape."
+      "t": "Upload Your Product Photo",
+      "d": "Add a photo with the whole item in frame. Edges and small parts should be easy to see before you change the area behind it."
     },
     {
-      "t": "Add a white background",
-      "d": "Choose a white background that keeps the product edges clear and the listing easy to scan."
+      "t": "Choose a White Background",
+      "d": "Select the white treatment. Look at the outline and the contact shadow, then rerun the job if the edge looks wrong."
     },
     {
       "t": "Download and Post",
-      "d": "Download the finished image and add it to your listing or product page."
+      "d": "Download the square image. Add it to the listing only after you check the category rule for that marketplace."
     }
   ],
   "maker": {
@@ -46,27 +46,35 @@
   "faq": [
     {
       "q": "How do I make a product photo background white?",
-      "a": "Upload one clear product photo, choose a white background and download the finished listing image; a white background tool avoids booking a studio or masking it by hand."
+      "a": "Upload one clear product photo, choose the white treatment, and download the listing image. You do not book a studio or mask the photo by hand."
     },
     {
       "q": "Does Amazon require a white background for product photos?",
-      "a": "Amazon and other marketplaces can set category rules for the main image. Check the current rule for your category before you publish."
+      "a": "Category rules can require a plain main image. Check the current rule for your category, then publish. This page does not guarantee that a file will pass review."
     },
     {
-      "q": "Can a white background keep product depth?",
-      "a": "Even light and a soft contact shadow keep the item readable while the background stays white."
+      "q": "Will the product look flat on white?",
+      "a": "A soft contact shadow keeps the item from looking like a sticker. Even light in the source photo helps the color and texture stay readable."
     },
     {
-      "q": "Can I post white background product photos on Amazon or Shopify?",
-      "a": "Yes. Check each channel's current rule, then add the downloaded white background product photo to your listing or product media."
+      "q": "Can I post the image on Amazon, Shopify, or Etsy?",
+      "a": "Yes, after you check that channel's current image rule. The download has no watermark and is licensed for commercial use. Read the [Amazon white background photo](page:guide-white-background-amazon) guide before you set a main image."
     },
     {
       "q": "How many credits does one photo use?",
-      "a": "You see the cost before you start. One photo uses 24 credits, and failed jobs return the credits."
+      "a": "One product photo uses 24 credits. The cost appears before you start, and a failed job returns those credits."
     },
     {
-      "q": "Can one white background treatment cover my catalog?",
-      "a": "Yes. Apply one white background treatment across product photos so shoppers see a consistent first image."
+      "q": "Can I run this across my whole catalog at once?",
+      "a": "Each photo is its own job. Repeat the same white treatment as you add products."
+    },
+    {
+      "q": "Is there a free white background photo?",
+      "a": "There is no free plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits also work on videos."
+    },
+    {
+      "q": "What should the source photo show?",
+      "a": "The whole product, with edges that are not cut off. A simple background in the original photo makes the white result easier to check."
     }
   ],
   "visual": {
@@ -99,53 +107,88 @@
       ]
     },
     "picker": {
-      "title": "Choose a white background use case",
-      "lead": "Pick a marketplace, store page or catalog use case and start from one clear product photo.",
+      "title": "Choose a white background main image for marketplaces",
+      "lead": "Start from one clear photo. Pick a marketplace main image, a store page, or a catalog frame.",
       "chips": [
         {
-          "id": "listing-use",
-          "label": "Listing uses"
+          "id": "more-listings",
+          "label": "More listing photos"
+        },
+        {
+          "id": "marketplace",
+          "label": "Marketplace"
+        },
+        {
+          "id": "store-page",
+          "label": "Store page"
+        },
+        {
+          "id": "catalog",
+          "label": "Catalog"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:fx14-white-card-marketplace-r1",
-          "label": "Canvas tote, marketplace main image",
+          "label": "Tote on white for marketplace",
           "chips": [
-            "listing-use"
+            "marketplace"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the canvas tote on a pure white background with a soft contact shadow and the complete handles visible, ready for a marketplace main image.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:fx14-white-card-store-r1",
-          "label": "Ceramic mug, store product page",
+          "ref": "n:guide:white-background-kettle",
+          "label": "Sea-glass kettle on white",
           "chips": [
-            "listing-use"
+            "marketplace"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. Place it on a pure white background with a soft contact shadow, ready for a marketplace main image.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx14-white-card-store-r1",
+          "label": "Mug on white for store page",
+          "chips": [
+            "store-page"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the ceramic mug on a pure white background with a soft contact shadow and its handle fully visible, ready for a store product page.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:fx14-white-card-catalog-r1",
-          "label": "Glass jar, catalog consistency",
+          "ref": "n:guide:white-background-fix-m1-house-slippers",
+          "label": "Felt slippers on white",
           "chips": [
-            "listing-use"
+            "store-page"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. Place it on a pure white background with a soft contact shadow, ready for a store product page.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:fx14-white-card-catalog-r1",
+          "label": "Jar on white for catalog match",
+          "chips": [
+            "catalog"
           ],
           "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Place the glass storage jar on a pure white background with a soft contact shadow and consistent centered framing for a catalog.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-fix-m1-planter",
+          "label": "Terracotta planter on white",
+          "chips": [
+            "catalog"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. Place it on a pure white background with a soft contact shadow and consistent centered framing for a catalog.",
           "kind": "photo"
         }
       ],
       "button": "Make a white background photo"
     },
-    "uses": [],
     "titles": {
-      "m2": {
-        "h2": "How to Make White Background Product Photos in 3 Simple Steps"
-      },
       "m3": {
-        "h2": "Get White Background Product Photos Ready for Selling",
-        "lead": "Create a clear white background product photo for a listing or store page."
+        "h2": "Choose a white background main image for marketplaces",
+        "lead": "Start from one clear photo. Pick a marketplace main image, a store page, or a catalog frame."
       },
       "m4": {
         "h2": "Why White Background Product Photos Help Shoppers Compare"
@@ -172,7 +215,7 @@
         "lead": "Choose a square product layout that keeps the item and its edges in view."
       },
       "faq": {
-        "h2": "Frequently asked questions"
+        "h2": "Questions about white background product photos"
       }
     },
     "input": [
@@ -205,64 +248,114 @@
   },
   "benefits": [
     {
-      "t": "Create a clean backdrop for every product photo",
-      "d": "A plain background keeps attention on the item's edges and finish, so shoppers can compare it quickly.",
       "img": "n:guide:k2-white-use-mug",
-      "alt": "Plain cream ceramic mug with a broad handle on pure white."
+      "alt": "Plain cream ceramic mug with a broad handle on pure white.",
+      "t": "Keep the item easy to scan",
+      "d": "A plain field behind the product leaves the outline, color, and finish easy to compare in a listing grid."
     },
     {
-      "t": "Make your product shots look more professional",
-      "d": "Give every item the same clean framing and a soft contact shadow, even when the source was not shot in a studio.",
       "img": "n:guide:k2-white-picker-desk-lamp",
-      "alt": "Curved brass desk lamp with a simple shade on pure white."
+      "alt": "Curved brass desk lamp with a simple shade on pure white.",
+      "t": "Add a soft contact shadow",
+      "d": "Center the item and keep a soft shadow so it does not look like a sticker on the page."
     },
     {
-      "t": "Keep every listing consistently white, from one photo to your catalog",
-      "d": "Apply one white treatment to product pages and marketplace listings so the first look stays consistent.",
       "img": "n:guide:k2-white-picker-serving-bowl",
-      "alt": "Cream stoneware serving bowl with a softly rounded rim on white."
+      "alt": "Cream stoneware serving bowl with a softly rounded rim on white.",
+      "t": "Match the next product to the first",
+      "d": "Use the same white field, the same margin, and the same shadow on the next photo so the listing grid looks like one set."
     },
     {
-      "t": "Use white as a base for edits and new versions",
-      "d": "Start with the clean shot when you need a new layout or campaign version.",
       "img": "n:guide:rx2-white-benefit-jewelry-dish",
-      "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white."
+      "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white.",
+      "t": "Start the next layout from the plain shot",
+      "d": "Download the white image, then build a new crop or campaign version in your editor."
     }
   ],
-  "benefits_h2": "Why White Background Product Photos Make Listings Easier",
-  "steps_h2": "How to Make White Background Product Photos in 3 Simple Steps",
-  "steps_lead": "Three steps turn one product photo into a clean listing image without a studio or reshoot.",
+  "benefits_h2": "Clean product shots without a studio",
+  "steps_h2": "Use the white background product photo maker in 3 steps",
+  "steps_lead": "Upload the photo, choose white, and download the listing image.",
   "more_sections": [
     {
       "eyebrow": "Scale your catalog",
-      "h2": "From first listing to your whole catalog",
-      "lead": "Start with the next product you need to publish, then carry the same clean treatment across the range.",
+      "h2": "Product photos on white for Shopify",
+      "lead": "Download the white image and upload it on the Shopify product page yourself. Repeat the same treatment on the next item.",
       "items": [
         {
-          "t": "Start with one listing",
-          "d": "Make a clean main image for your next product page from one clear product photo.",
           "img": "n:guide:k2-white-picker-reading-glasses",
-          "alt": "Tortoiseshell reading glasses opened and centered on white."
+          "alt": "Tortoiseshell reading glasses opened and centered on white.",
+          "t": "Publish the next listing",
+          "d": "Make the main image for one product page from a single clear photo."
         },
         {
-          "t": "Keep every channel ready",
-          "d": "Reuse the white image on Amazon, Shopify or Etsy after checking each channel's current rules.",
           "img": "n:guide:k2-white-case-linen-shade-lamp",
-          "alt": "Ceramic table lamp with an ivory linen shade on pure white."
+          "alt": "Ceramic table lamp with an ivory linen shade on pure white.",
+          "t": "Reuse it where the rules allow",
+          "d": "After you check each channel, use the same file on Amazon, Shopify, or Etsy."
         },
         {
-          "t": "Grow without another shoot",
-          "d": "Apply the same white treatment across new product photos as your catalog expands.",
           "img": "n:guide:k2-white-picker-leather-sandals",
-          "alt": "Pair of cognac leather sandals with both straps visible on seamless white."
+          "alt": "Pair of cognac leather sandals with both straps visible on seamless white.",
+          "t": "Add new products the same way",
+          "d": "Each new photo is its own job at 24 credits. You see the cost before it starts."
         },
         {
-          "t": "Reuse a clean base",
-          "d": "Start from the white image when you need a new layout or campaign version.",
           "img": "n:guide:k2-white-picker-soap-dispenser",
-          "alt": "Pale sage ceramic soap dispenser with a brushed metal pump on seamless white."
+          "alt": "Pale sage ceramic soap dispenser with a brushed metal pump on seamless white.",
+          "t": "Edit from the plain file",
+          "d": "Leave room around the item in the white file so you can crop a square for the store and a wider frame for an ad."
         }
       ]
     }
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "definition",
+    "benefits",
+    "steps",
+    "features",
+    "related",
+    "reviews",
+    "faq"
+  ],
+  "definition": {
+    "title": "What a white background product photo is for",
+    "paras": [
+      "A white background product photo keeps the item easy to scan in a grid of listings. Color, outline, and small details stay visible because the area behind the product is plain.",
+      "It is a listing image, not a lifestyle scene. Check the current rule for your category before you publish a main image."
+    ]
+  },
+  "reviews": {
+    "h2": "How sellers use a white main image",
+    "lead": "Ways sellers prepare a plain main image before the listing goes up.",
+    "items": [
+      {
+        "example": true,
+        "who": "Marketplace seller",
+        "t": "Replace a busy tabletop before the listing goes up",
+        "d": "Start with the photo you already took. Put the item on white, check the outline, and upload it as the main image if the category rule allows it."
+      },
+      {
+        "example": true,
+        "who": "Shopify store",
+        "t": "Make the catalog feel like one set",
+        "d": "Run the same white treatment on each new product photo. A failed job returns its credits, and the cost is shown first."
+      },
+      {
+        "example": true,
+        "who": "Etsy seller",
+        "t": "Prepare a plain first image, then a scene",
+        "d": "Use the white file as the clear view. Build a lifestyle scene separately when the listing also needs context."
+      }
+    ]
+  },
+  "relatedLinks": [
+    "photo-hub",
+    "change-background",
+    "lifestyle-photos",
+    "plat-amazon",
+    "tpl-color",
+    "tpl-angle"
   ]
 }

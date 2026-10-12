@@ -1,57 +1,30 @@
 {
   "id": "tpl-story",
   "title": "Instagram Story Ad Images with Square Photos | AIVideosUGC",
-  "description": "Turn a square product photo into an Instagram or Facebook Story ad image on a 9:16 canvas, with room left for your headline, price and button.",
-  "h1": "Instagram Story Ad Images Built Around a Square Product Photo",
+  "description": "Turn one product photo into a square Instagram story ad image with room for your headline and price. You place that square on a 9:16 canvas after download.",
+  "h1": "Instagram Story Ad Images from a Square Product Photo",
   "eyebrow": "Ad photo template",
-  "lead": "A feed photo cropped to Stories rarely leaves room for your headline or button. Upload one product photo and get a square image composed to sit inside a 9:16 Story ad.",
-  "benefits_h2": "Why sellers use Instagram Story ad images",
-  "benefits": [
-    {
-      "t": "Built for the full phone screen",
-      "d": "The product sits centered on a 9:16 canvas with calm space above and below, so your headline and offer avoid the item.",
-      "img": "n:guide:fx26-tpl-story-benefit-phone-screen-r1",
-      "alt": "Adult hand holds a plain sunscreen tube centered with open space above and below on a pale coral wall."
-    },
-    {
-      "t": "Clear of stickers and controls",
-      "d": "The product stays away from the top header and lower action area, keeping stickers and the call-to-action button visible.",
-      "img": "n:guide:fx26-tpl-story-benefit-safe-controls-r1",
-      "alt": "Adult hands hold a plain charcoal phone case with one small round camera opening against a pale blue background."
-    },
-    {
-      "t": "One image, both Story platforms",
-      "d": "Place the same square download in Instagram and Facebook Story layouts, and reuse it in feeds, carousels and listings.",
-      "img": "n:guide:fx26-tpl-story-benefit-platforms-r1",
-      "alt": "Adult woman with a short copper bob places a plain cleanser pump bottle on a pale square card."
-    },
-    {
-      "t": "Exact offers added by you",
-      "d": "Type prices, dates and codes in Canva or Ads Manager after download. The image carries no watermark.",
-      "img": "n:guide:fx26-tpl-story-benefit-offers-r1",
-      "alt": "Adult man with short close-cropped hair holds a plain sage sports bottle beside a sunlit gym bench."
-    }
-  ],
+  "lead": "A feed crop often cuts the product and leaves no room for the offer. Upload one photo and get Instagram story ad images composed for a Story layout.",
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
     "Facebook Stories ad image",
     "summer product story ads"
   ],
-  "steps_h2": "How to Make Instagram Story Ad Images in 3 Simple Steps",
-  "steps_lead": "One product photo becomes a Story-ready square scene, with all text added outside the image.",
+  "steps_h2": "Make a Square Story Product Image",
+  "steps_lead": "Upload the product, describe a simple setting, then place the square photo in your Story layout.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show one complete product with open space around it. A clean source lets the product stay clear when you add the Story layout."
+      "d": "Show one complete product with open space around it. A plain or simple background is enough when the product itself is clear."
     },
     {
       "t": "Describe the Setting",
-      "d": "Name a surface, light direction and one prop in one sentence. Keep the requested setting simple so the product stays the focal point."
+      "d": "Name a surface, a light direction, and one prop in one sentence. Keep the product as the subject so the layout has room for text."
     },
     {
       "t": "Download and Post",
-      "d": "Place the square image on a 9:16 canvas and add your price, date and button. Check the final phone view before posting."
+      "d": "Place the square download on a 9:16 canvas and add the price, date and button there. Check the phone view before you post."
     }
   ],
   "maker": {
@@ -74,52 +47,39 @@
   "faq": [
     {
       "q": "Can the Story image include my price or code?",
-      "a": "Add it after download in Canva, CapCut or Ads Manager. The generated image contains no text, so nothing is misspelled."
+      "a": "Add the price, code and button after download in your design or ads tool. The generated image has no text, so a digit cannot be garbled inside the file."
     },
     {
       "q": "Does the template output a 9:16 file?",
-      "a": "It outputs a square photo composed for a Story layout. Place it on a 9:16 canvas in your design tool and add the text."
+      "a": "No. It outputs a square photo composed for a Story layout. Place that square on a 9:16 canvas in your editor, then add the text."
     },
     {
-      "q": "Why not just crop a square photo for Stories?",
-      "a": "A cropped feed photo can cut off the product and leave no room for text. This template keeps the full item centered with open space."
+      "q": "Why not crop a feed photo into a Story?",
+      "a": "A crop can cut off the product and leave no room for a headline. This scene keeps the full item centered, with open space away from the header and the lower button."
     },
     {
-      "q": "Can I use the image in Facebook Stories and feeds?",
-      "a": "Yes. The same square image works in Instagram and Facebook Story layouts, feed posts, carousels and listing galleries."
+      "q": "Can I use the same image in Facebook Stories and in the feed?",
+      "a": "Yes. The square file can go in an Instagram Story layout, a Facebook Story layout, a feed post, a carousel or a listing."
     },
     {
-      "q": "When should I use a 9:16 video instead?",
-      "a": "Choose a full-screen video when you need motion to show the product in use. Use this square photo for a simple offer and product view."
+      "q": "When should I use a vertical video instead?",
+      "a": "Use video when you need motion to show the product in use. This template is the still. Vertical ads start at [AI UGC video ads](page:video-ads)."
     },
     {
-      "q": "How much does a Story photo cost?",
-      "a": "Each photo costs 24 credits, and the charge is shown before you start. Downloads carry no watermark."
+      "q": "What does a Story photo cost?",
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts."
     },
     {
-      "q": "Can I start with a product photo on a plain background?",
-      "a": "Yes. Upload one complete product photo and describe the Story setting you want around it."
+      "q": "Will the full product stay visible?",
+      "a": "Check the edges against your source before you post. The layout leaves space around the product, but the generator does not keep every edge intact."
     },
     {
-      "q": "Will the output keep my full product visible?",
-      "a": "Yes. The Story composition keeps the product complete and leaves calm space around it for your layout."
-    },
-    {
-      "q": "Can I request a hand or person in the Story scene?",
-      "a": "Yes. Describe the hand or adult action in the setting while keeping the uploaded product as the subject."
-    },
-    {
-      "q": "Can I make several Story scenes from one source photo?",
-      "a": "Yes. Run the same source photo again with a different setting or prop for another Story concept."
-    },
-    {
-      "q": "What should I review before I publish the Story?",
-      "a": "Check the product shape, position and every offer detail you add after download before posting."
+      "q": "Can I ask for a hand or a person in the scene?",
+      "a": "Yes. Describe one hand or one adult action while the uploaded product stays the subject. The person is generated, not a hired creator."
     }
   ],
   "output": "Square product photo · Story layout",
   "visual": {
-    "overview": "This template turns one product photo into a square scene made for a Story layout, with the product clear of the header, stickers and action button. Place it on a 9:16 canvas and add your offer text after download.",
     "strip": [
       "n:q10-story-picker-1",
       "n:q10-story-strip-2",
@@ -152,8 +112,8 @@
       "mode": "photo"
     },
     "picker": {
-      "title": "Choose a Story ad photo format",
-      "lead": "Pick a scene, then add your headline and offer on the 9:16 canvas.",
+      "title": "These cards open a 15-second video",
+      "lead": "Each card is a 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a 9:16 canvas and add the price there.",
       "chips": [
         {
           "id": "accessories",
@@ -571,10 +531,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "Turn a product photo into a Story ad"
+        "h2": "Make a Square Story Product Image"
       },
       "m3": {
-        "h2": "Choose a scene for your product Story ad"
+        "h2": "These cards open a 15-second video",
+        "lead": "Each card is a 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a 9:16 canvas and add the price there."
       },
       "m4": {
         "h2": "Use Story ad photos in vertical social ads"
@@ -589,7 +550,7 @@
         "h2": "Add the Story date and offer after download"
       },
       "faq": {
-        "h2": "Questions about Instagram Story ad images"
+        "h2": "Questions about Instagram story ad images"
       },
       "examples": {
         "h2": "Instagram Story ad image examples"
@@ -601,15 +562,84 @@
     }
   },
   "relatedLinks": [
-    "social-ad-photos",
-    "tpl-ugc",
-    "tpl-sale",
-    "plat-instagram",
-    "plat-facebook",
-    "occ-holidays",
-    "guide-ad-sizes-by-platform",
-    "ind-beauty-skincare",
-    "video-ads",
-    "guide-testing-ad-versions"
+    {
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
+    },
+    {
+      "id": "tpl-box",
+      "label": "product bundle photos"
+    },
+    {
+      "id": "tpl-light",
+      "label": "product photo lighting"
+    },
+    {
+      "id": "tpl-beauty",
+      "label": "beauty product video ads"
+    },
+    {
+      "id": "ind-beauty-skincare",
+      "label": "AI product videos and photos for beauty brands"
+    },
+    {
+      "id": "plat-instagram",
+      "label": "AI Instagram ads"
+    }
+  ],
+  "reviews": {
+    "h2": "Where a Facebook Stories Ad Image Fits",
+    "lead": "A few ways sellers use one square product photo in a Story layout.",
+    "items": [
+      {
+        "example": true,
+        "who": "Beauty brand",
+        "t": "Offer above the product",
+        "d": "The product stays centered with calm space above it, and the headline is added on the 9:16 canvas after download. The generated file itself has no price in it."
+      },
+      {
+        "example": true,
+        "who": "Skincare shop",
+        "t": "Same still, two Story apps",
+        "d": "One square download is placed in an Instagram Story layout and a Facebook Story layout. The product is kept clear of the header and the lower button area."
+      },
+      {
+        "example": true,
+        "who": "Seasonal campaign",
+        "t": "A summer scene around the bottle",
+        "d": "The team describes a light surface and one prop, then checks that the full bottle is still visible. The end date of the offer is typed later, so it can be removed when the campaign ends."
+      },
+      {
+        "example": true,
+        "who": "Retail marketer",
+        "t": "Feed crop was cutting the cap",
+        "d": "They stop cropping a square feed photo into a tall frame. The template keeps the whole product in view and leaves space for stickers."
+      },
+      {
+        "example": true,
+        "who": "Media buyer",
+        "t": "Still now, motion later",
+        "d": "A simple offer uses this square photo. When the product needs to be shown in motion, they switch to a vertical video instead of stretching this still."
+      },
+      {
+        "example": true,
+        "who": "Small team",
+        "t": "Text stays editable",
+        "d": "Price, code and button are added in their design tool. Nothing is baked into the image, so a typo is a text fix."
+      }
+    ]
+  },
+  "related_h2": "Beauty templates for a Story ad",
+  "related_lead": "The ad-image tool, beauty templates for bundles, light and video, plus the beauty industry page.",
+  "cta_title": "Build the Story around your product",
+  "cta_lead": "Upload one product photo. Add the headline and offer after you download the square image.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "reviews",
+    "steps",
+    "related",
+    "faq",
+    "cta"
   ]
 }

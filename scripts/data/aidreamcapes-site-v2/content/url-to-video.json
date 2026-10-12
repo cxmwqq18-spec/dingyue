@@ -2,9 +2,9 @@
   "id": "url-to-video",
   "title": "URL to Video AI Generator for Product Ads | AIVideosUGC",
   "description": "Turn a public product URL into a short video ad using its product image and name. Create product demos, ecommerce videos, and social ads without a studio shoot.",
-  "h1": "Turn a Product URL into a Video Ad",
+  "h1": "URL to Video: A Short Ad From a Product Page",
   "eyebrow": "URL to video",
-  "lead": "Turn a product page into a short video ad for social posts, demos, or ecommerce listings. Start with the image and name already on your page.",
+  "lead": "AIVideosUGC reads a public product link, keeps the main image and the product name, and makes a short video from them. No shoot and no asset folder to assemble. Pick a size, choose 6 to 30 seconds and download a clip for a listing, a demo or a paid post.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -12,51 +12,47 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Start from the product page",
+  "benefits_h2": "Benefits of a URL to Video Ad",
   "benefits": [
     {
-      "t": "Paste the link, skip the download",
-      "d": "Paste a public product URL and keep the main product image as your starting reference.",
-      "icon": "clock",
-      "img": "n:guide:fx51-url-benefit-link-r1",
-      "alt": "Adult hands place a sage-green insulated lunch container with a silver clasp on a pale counter beside a closed laptop."
+      "t": "No Download Step First",
+      "d": "Paste a public product page and start from the image and name already on it, so you do not download the photo into a folder first."
     },
     {
-      "t": "Use the photo already on the page",
-      "d": "Confirm the image and name captured from the listing before you make a video.",
-      "icon": "check",
-      "img": "n:guide:fx51-url-benefit-photo-r1",
-      "alt": "Adult hand points to a matte-gray folding phone stand on a tidy desk."
+      "t": "One Selling Point",
+      "d": "The scene shows the feature you name, not every line on the page."
     },
     {
-      "t": "Make another version from the same link",
-      "d": "Reuse one public URL to test a new scene, opening or length for the same item.",
-      "icon": "layers",
-      "img": "n:guide:fx51-url-benefit-version-r1",
-      "alt": "Adult hands lace a plain gray trail running shoe at a trailhead."
+      "t": "A Demo or an Ad",
+      "d": "Use the clip as a product demo, an on-page moment or a paid post."
     },
     {
-      "t": "Show one moment shoppers can judge",
-      "d": "Turn one product detail into a clear scene buyers can understand before purchase.",
-      "icon": "target",
-      "img": "n:guide:fx51-url-benefit-judge-r1",
-      "alt": "Adult hand presses a plain cream-colored pump and dispenses clear gel into an open palm at a bright sink."
+      "t": "The Price Stays in Your Editor",
+      "d": "The link does not bring over prices or reviews. You add those after download."
+    },
+    {
+      "t": "A Frame and a Length You Pick",
+      "d": "Choose a vertical, square or wide frame, plus 4:3 and 3:4, at 6, 10, 15 or 30 seconds."
+    },
+    {
+      "t": "Pay Per Clip",
+      "d": "A 15-second video uses 60 credits. A failed render returns them. Finished files can be used commercially, with no watermark."
     }
   ],
   "steps_h2": "How to Make a Video from a Product URL in 3 Simple Steps",
-  "steps_lead": "Paste a public product page, confirm the captured reference and download a short video for ads or social posts.",
+  "steps_lead": "Paste a public product page, confirm the captured image and download the clip.",
   "steps": [
     {
       "t": "Paste Your Product URL",
-      "d": "Open the product page you already maintain. Paste a public URL that loads without sign-in and shows the variant you sell."
+      "d": "Paste a public product page that opens without a login and shows the variant you sell."
     },
     {
       "t": "Confirm Your Product",
-      "d": "Keep the finished video tied to the right item. Confirm the captured image and name, then upload a photo if the page is blocked."
+      "d": "Check the captured image and name. Upload a photo if the page is blocked or has no usable image."
     },
     {
       "t": "Download and Post",
-      "d": "Turn the product page into an ad you can post. Watch the result, download it and add your current offer in your editor."
+      "d": "Download the clip, then add your current price or offer in an editor before you post."
     }
   ],
   "maker": {
@@ -71,95 +67,74 @@
       ],
       [
         "Length",
-        "6, 10 or 15 seconds"
+        "6, 10, 15 or 30 seconds"
       ]
     ],
     "cta": "Make a video from this link"
   },
   "faq": [
     {
-      "q": "What does the product URL provide?",
-      "a": "A readable public page supplies its main product image and name as the starting reference."
+      "q": "What does a product URL provide?",
+      "a": "A public page that loads without a login supplies its main product image and name."
     },
     {
-      "q": "Can I use a public Shopify or Amazon product page?",
-      "a": "Yes. Use a public Shopify or Amazon product page that loads without sign-in and shows the variant you sell."
+      "q": "How do I make a video from a product link?",
+      "a": "Paste the URL, confirm the image and name, describe the scene, pick a size and length, then download."
+    },
+    {
+      "q": "Can I use a public Shopify or Amazon page?",
+      "a": "Yes, when the page opens without a login and shows the variant you sell."
     },
     {
       "q": "What if the page requires a login?",
-      "a": "Upload the product photo directly when the page requires a login, blocks access or has no usable image."
-    },
-    {
-      "q": "Can I use the same link for another version?",
-      "a": "Yes. Paste the same public URL again and choose a new scene, opening or length for another version."
+      "a": "Upload the product photo directly. The tool cannot read a locked page."
     },
     {
       "q": "Does the URL include prices or reviews?",
-      "a": "No. The tool uses the product image and name; add current prices or reviews in your editor."
+      "a": "No. Add the current price or a review line in your editor."
     },
     {
-      "q": "How long can the video be?",
+      "q": "Which lengths can I choose?",
       "a": "Choose 6, 10, 15 or 30 seconds."
     },
     {
-      "q": "Can I use the video in paid ads?",
-      "a": "Yes. Use the download in TikTok, Instagram, Facebook or other ad channels."
+      "q": "How many credits does a URL to video clip use?",
+      "a": "24 for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. Failed jobs return the credits."
+    },
+    {
+      "q": "Which frames can I pick?",
+      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4."
+    },
+    {
+      "q": "Can I reuse the same link?",
+      "a": "Yes. Paste it again and choose a new scene, opening or length."
+    },
+    {
+      "q": "Can I run the download as an ad?",
+      "a": "Yes. Finished clips can be used commercially, with no watermark. Check each platform's rules before you scale spend."
+    },
+    {
+      "q": "Is a person in the clip a real customer?",
+      "a": "No. Any person on screen is AI-generated, not a customer endorsement."
     }
   ],
-  "cta_lead": "Start with one product URL and see the credit cost before generation.",
+  "cta_lead": "Paste a public product URL and see the credit cost before you start.",
   "uses": [
     {
-      "t": "E-commerce Videos",
-      "d": "Show the product page's main image in an on-page product moment shoppers can judge."
+      "t": "On the Product Page",
+      "d": "Show the listing image in an on-page moment shoppers can judge."
     },
     {
-      "t": "Product Demos",
-      "d": "Use one clear action, such as opening a lunch container or setting a phone stand."
+      "t": "A Hands-On Demo",
+      "d": "Show one action, such as opening a latch or unfolding a stand."
     },
     {
-      "t": "Advertising Videos",
-      "d": "Build a paid ad around one selling point from the listing."
+      "t": "A Paid Post",
+      "d": "Build the clip around one point from the listing, then add the current price after download."
     },
     {
-      "t": "Social Media Videos",
-      "d": "Post a 9:16 video to TikTok, Instagram or YouTube Shorts."
-    }
-  ],
-  "more_sections": [
-    {
-      "eyebrow": "What you keep from the product page",
-      "h2": "What you keep from the product page",
-      "lead": "Carry the listing's useful details into each draft so you can test another angle without starting over.",
-      "items": [
-        {
-          "t": "The page's main image",
-          "d": "Use the product image already on the listing as the starting reference.",
-          "img": "n:guide:fx51-url-page-main-r1",
-          "frame": "none",
-          "alt": "One unbranded matte-black over-ear headphone set rests on a pale desk while an adult hand adjusts the headband."
-        },
-        {
-          "t": "Your selling point",
-          "d": "Write the one feature or benefit you want the video to show.",
-          "img": "n:guide:fx51-url-seller-angle-r1",
-          "frame": "none",
-          "alt": "Adult hand points at one plain cobalt-blue insulated bottle on a pale counter."
-        },
-        {
-          "t": "A frame and length",
-          "d": "Choose 9:16 and 6, 10, 15 or 30 seconds for each version.",
-          "img": "n:guide:fx51-url-format-r1",
-          "frame": "none",
-          "alt": "Adult hands set a plain matte-gray folding phone stand upright on a pale desk."
-        },
-        {
-          "t": "Another version from the same link",
-          "d": "Paste the same public URL again when you need a fresh opening or scene.",
-          "img": "n:guide:fx51-url-another-version-r1",
-          "frame": "none",
-          "alt": "Adult hands turn one plain gray trail running shoe to show its side profile on a pale bench."
-        }
-      ]
+      "t": "A 9:16 Social Post",
+      "d": "Render a vertical clip for TikTok, Instagram or Shorts."
     }
   ],
   "visual": {
@@ -182,8 +157,8 @@
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
     "picker": {
-      "title": "",
-      "lead": "",
+      "title": "Product Page to Video Examples",
+      "lead": "These examples started from a product page. Open one when you want a similar scene.",
       "chips": [],
       "cards": [],
       "button": "",
@@ -193,39 +168,160 @@
       {
         "frame": "browser",
         "ref": "n:guide:q2-url-to-video-uses-01",
-        "h": "E-commerce product videos",
-        "d": "Show one useful product action on the listing page so shoppers can judge the item."
+        "h": "On the Product Page",
+        "d": "Show the listing image in an on-page moment shoppers can judge."
       },
       {
         "frame": "post",
         "ref": "n:guide:q2-url-to-video-case-02",
-        "h": "Product demos",
-        "d": "Use one clear action, such as unfolding a phone stand, in a short demo."
+        "h": "A Hands-On Demo",
+        "d": "Show one action, such as opening a latch or unfolding a stand."
       },
       {
         "frame": "reels",
         "ref": "n:guide:b2f11-url-to-video-uses-2-r1",
-        "h": "Advertising videos",
-        "d": "Build a paid ad around one selling point from the product listing."
+        "h": "A Paid Post",
+        "d": "Build the clip around one point from the listing, then add the current price after download."
       },
       {
         "frame": "post",
         "ref": "n:guide:b2f11-url-to-video-uses-3-r1",
-        "h": "Social media videos",
-        "d": "Post a fresh 9:16 version to TikTok, Instagram or YouTube Shorts."
+        "h": "A 9:16 Social Post",
+        "d": "Render a vertical clip for TikTok, Instagram or Shorts."
       }
     ],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Turn a product URL into a video in 3 steps"
+      "faq": {
+        "h2": "Questions About URL to Video"
       },
       "m4": {
         "h2": "Give each product listing more ways to sell"
       }
     },
     "overview": ""
-  }
+  },
+  "blockOrder": [
+    "hero",
+    "definition",
+    "picker",
+    "reasons",
+    "steps",
+    "benefits",
+    "uses",
+    "related",
+    "compare",
+    "reviews",
+    "faq",
+    "cta"
+  ],
+  "definition": {
+    "title": "What Is URL to Video?",
+    "paras": [
+      "URL to video starts from a public product page instead of a file you download by hand. The tool uses that page's main image and product name as the reference for the clip.",
+      "You still choose the scene, the frame and the length. Prices and reviews on the page are not imported. Add the current offer in your editor after download. If a person appears, that person is AI-generated, not a customer."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons for a Product Link to Video",
+    "items": [
+      {
+        "t": "The Page Is the Starting Point",
+        "d": "Paste a public URL. The main image and the product name come from that page."
+      },
+      {
+        "t": "You Confirm the Item",
+        "d": "Check the captured image and name before the render. If the page is locked or has no usable image, upload a photo instead."
+      },
+      {
+        "t": "Another Cut From the Same Link",
+        "d": "Paste the link again and change the scene or the length when you need a fresh version of the same item."
+      }
+    ]
+  },
+  "benefits_lead": "For sellers who already have a product page and need a clip without a studio.",
+  "related_h2": "More From the AIVideosUGC Toolkit",
+  "related_lead": "Explore the rest of the AIVideosUGC tools.",
+  "relatedLinks": [
+    "video-ads",
+    "product-videos",
+    "image-to-video",
+    "unboxing-videos",
+    "spokesperson-videos",
+    "before-after-videos"
+  ],
+  "compare_table": {
+    "title": "Product Page to Video vs. Collecting Files",
+    "lead": "The public page supplies the image and the name. You still decide the scene.",
+    "columns": [
+      "",
+      "AIVideosUGC",
+      "Collecting assets yourself"
+    ],
+    "rows": [
+      [
+        "First step",
+        "Paste a public product URL",
+        "Download photos and write a brief"
+      ],
+      [
+        "What the page gives you",
+        "Main image and product name",
+        "Whatever you copy off the page by hand"
+      ],
+      [
+        "Prices and reviews",
+        "Not imported",
+        "You decide what to paste in"
+      ],
+      [
+        "A new version",
+        "Same link, a different scene or length",
+        "A new edit or a new shoot"
+      ],
+      [
+        "Frames",
+        "Vertical, square, wide, 4:3 and 3:4",
+        "A separate export for each crop"
+      ],
+      [
+        "A failed render",
+        "Credits return to your balance",
+        "The time is already spent"
+      ]
+    ]
+  },
+  "reviews": {
+    "h2": "Turn a Link Into a Video: Examples",
+    "lead": "How a seller turns one public listing into a clip for the product page, a demo or a paid post.",
+    "items": [
+      {
+        "example": true,
+        "who": "Store seller",
+        "t": "Listing moment",
+        "d": "Example: one product action on the page so shoppers can judge the item."
+      },
+      {
+        "example": true,
+        "who": "Gadget seller",
+        "t": "Phone stand",
+        "d": "A gadget seller unfolds a phone stand so shoppers can see the mechanism."
+      },
+      {
+        "example": true,
+        "who": "Store running ads",
+        "t": "One selling point",
+        "d": "A store running ads builds one paid post around a single point from the listing."
+      },
+      {
+        "example": true,
+        "who": "Social seller",
+        "t": "Vertical post",
+        "d": "Example: a 9:16 version for TikTok, Instagram or Shorts."
+      }
+    ]
+  },
+  "cta_title": "Ready to Paste a Product URL?"
 }

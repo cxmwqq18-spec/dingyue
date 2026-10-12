@@ -2,56 +2,29 @@
   "id": "tpl-product-feature-callout-video",
   "title": "Product Feature Callout Videos | AIVideosUGC",
   "description": "Show one product detail in a focused callout video from a single photo. Choose 6, 10, 15 or 30 seconds for feeds, listings and product pages.",
-  "h1": "Show the Product Detail That Sells the Feature",
+  "h1": "Product Feature Callout Video for One Clear Detail",
   "eyebrow": "Feature callout video template",
-  "lead": "Turn one product photo into a product feature callout video that gives shoppers a clear result, ready for the channel where you sell.",
-  "benefits_h2": "Make the product feature callout result clear",
-  "benefits": [
-    {
-      "t": "Show the result first",
-      "d": "Show the product feature callout outcome in one clear moment so buyers know what they get.",
-      "img": "n:guide:fx22-tpl-feature-benefit-result",
-      "alt": "Hand pressing the pump of a white cleanser bottle by a sink."
-    },
-    {
-      "t": "Skip another shoot",
-      "d": "Use the photo you already have instead of booking creators, locations or gear.",
-      "img": "n:guide:fx22-tpl-feature-benefit-noshoot",
-      "alt": "Hands opening the lid of an olive travel mug."
-    },
-    {
-      "t": "Make more useful versions",
-      "d": "Create another angle from the same source without reshooting.",
-      "img": "n:guide:fx22-tpl-feature-benefit-versions",
-      "alt": "Adult opening the hinged lid of a cream storage box."
-    },
-    {
-      "t": "Keep live details editable",
-      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate.",
-      "img": "n:guide:fx22-tpl-feature-benefit-editable",
-      "alt": "Hand rotating a pale blue ceramic container with a clasp."
-    }
-  ],
+  "lead": "Keep one function in frame, then add the feature name after the file downloads.",
   "secondary_keywords": [
     "feature callout ad",
     "product feature video",
     "single benefit product video",
     "ecommerce feature video"
   ],
-  "steps_h2": "How to Make Product Feature Callout Videos in 3 Simple Steps",
-  "steps_lead": "Turn one product photo into a clear feature video shoppers can understand at a glance.",
+  "steps_h2": "Make a Product Feature Video in 3 Steps",
+  "steps_lead": "One action, one function. The feature name and any measurement go on after download.",
   "steps": [
     {
-      "t": "Upload Your Product",
-      "d": "Add one clear source photo and keep the full product and moving part visible. Use even light so the feature stays easy to read."
+      "t": "Upload Your Product Photo",
+      "d": "Upload one sharp photo that shows the whole product and the moving part. Skip glare and tight crops."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose one action and describe the setting shoppers should see. Keep the moving part in frame for the result."
+      "t": "Describe Your Scene",
+      "d": "Describe the one action around that feature, then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the result, add exact offer or listing details in your editor, then post. Check the feature, final copy and product details before publishing."
+      "d": "Download the clip and add the feature name or measurement in your editor. Check it against the real item."
     }
   ],
   "maker": {
@@ -73,32 +46,48 @@
   },
   "faq": [
     {
-      "q": "What photo should I upload?",
-      "a": "Use a sharp, well-lit photo that shows the whole product and the feature clearly. Avoid glare, tight crops and hidden moving parts."
+      "q": "What is a product feature callout video?",
+      "a": "A short clip built around one visible function, such as a pump, a lid, a hinge or a clasp. The name of that function is added after download."
     },
     {
-      "q": "What result does this template show?",
-      "a": "It creates a product feature callout video that keeps one visible action at the center. Compare the export with your source photo before publishing."
+      "q": "How do I make the callout?",
+      "a": "Upload a photo that shows the whole item and the moving part, describe that one action, pick a size and length, then download."
     },
     {
-      "q": "Which length or format should I choose?",
-      "a": "Use 9:16 for TikTok and Reels, 1:1 for feeds and listings, or 16:9 for a product page. Choose 6, 10, 15 or 30 seconds based on how much of the action shoppers need to see."
+      "q": "Why not explain every benefit in one clip?",
+      "a": "One action stays readable on a phone. A second feature belongs in another version, made from the same photo if you want."
     },
     {
-      "q": "Can I change details after download?",
-      "a": "Yes. Add exact names, prices, dates, measurements or ingredients in your editor after download. Review every detail against the real product before posting."
+      "q": "Who is it for?",
+      "a": "Beauty, electronics and other shops that need a listing or a paid ad to show how one part works."
     },
     {
-      "q": "Do I need a shoot day?",
-      "a": "No. Start from one clear product photo and choose a scene that fits the feature. Review the result before you decide whether another shoot is needed."
+      "q": "What photo works?",
+      "a": "A sharp, evenly lit photo with the full product and the moving part visible. Glare, a tight crop or a hidden hinge makes the function hard to read."
     },
     {
-      "q": "Where can I use the clip?",
-      "a": "Use the downloaded clip in your store, product page or paid social campaign. Add your own captions, offer details and any platform-required disclosure in the editor."
+      "q": "Which size and length should I pick?",
+      "a": "9:16 for TikTok and Reels, 1:1 for a feed or listing, 16:9 for a product page, plus 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds."
+    },
+    {
+      "q": "Can I print the measurement on the video here?",
+      "a": "Add the feature name, size or claim in your editor after download, and check it against the real product before you post."
+    },
+    {
+      "q": "Do I need a shoot to show the motion?",
+      "a": "Start from one still photo and describe the action. Review the result before you decide a separate shoot is needed."
+    },
+    {
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
+    },
+    {
+      "q": "Can I post it as an ad?",
+      "a": "Yes. The download has no AIVideosUGC watermark. Any person in frame is an AI performer, not a customer review, and captions are added after download."
     }
   ],
   "visual": {
-    "overview": "A feature callout video puts one visible function at the center of the frame. Show the moving part in a single action, then add the exact feature name and measurements in your editor.",
+    "overview": "",
     "strip": [
       "n:guide:q13-feature-strip-0",
       "n:guide:q13-feature-strip-1-r2",
@@ -128,12 +117,12 @@
         ]
       ],
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a clean sink, a hand presses the white cleanser pump once and catches a small amount of foam on fingertips. Keep the bottle upright and fully visible. Close three-quarter framing with a gentle push-in. Even task light over the counter. End with the cleanser upright and foam visible on the fingertips. Sound: single pump and quiet room tone, no music.",
+      "prompt": "Beside a clean sink, a hand presses the white cleanser pump once. The bottle stays upright and fully visible, and a little foam shows on the fingertips.",
       "mode": "video"
     },
     "picker": {
-      "title": "Choose a feature callout format",
-      "lead": "Pick a format that shows the feature in one clear action.",
+      "title": "Choose a Scene for a Feature Callout Ad",
+      "lead": "Open a product scene and describe the one moving part you want in frame. Add the feature name after download.",
       "chips": [
         {
           "id": "accessories",
@@ -550,38 +539,16 @@
       "button": "Explore More"
     },
     "titles": {
-      "m2": {
-        "h2": "Create a product-feature callout video from one photo"
-      },
       "m3": {
-        "h2": "Show a product feature in a short video"
-      },
-      "m4": {
-        "h2": "Use product-feature videos on listings and social"
-      },
-      "m5": {
-        "h2": "Start with a clear product-feature photo"
-      },
-      "m6": {
-        "h2": "Choose a product-feature video format"
-      },
-      "m7": {
-        "h2": "Add feature details after download"
+        "h2": "Choose a Scene for a Feature Callout Ad"
       },
       "faq": {
-        "h2": "Questions about product feature callout videos"
-      },
-      "examples": {
-        "h2": "Product feature callout video examples"
-      },
-      "templates": {
-        "h2": "More product feature callout video templates",
-        "lead": "Explore another video style for showing one useful product feature."
+        "h2": "Product Feature Video Questions"
       }
     }
   },
-  "cta_title": "Put the feature in motion",
-  "cta_lead": "Upload one product photo, see the cost first and make a product feature callout video.",
+  "cta_title": "Ready to Show One Function?",
+  "cta_lead": "Upload a photo that shows the moving part and see the credit cost before you start.",
   "more_sections": [
     {
       "eyebrow": "Build the next asset",
@@ -629,5 +596,89 @@
         }
       ]
     }
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "Sample Single Benefit Product Video Uses",
+    "lead": "Example scenes for a single function. One moving part per clip.",
+    "items": [
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Pump press",
+        "d": "A beauty shop presses the cleanser pump once, so that one action is the whole clip."
+      },
+      {
+        "example": true,
+        "who": "Drinkware shop",
+        "t": "Lid open",
+        "d": "Example: hands open a travel-mug lid so the seal is the feature on screen."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Hinge open",
+        "d": "Example: a hinged storage lid opens once so the mechanism stays in frame."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Clasp turn",
+        "d": "Example: a clasp on a ceramic container is rotated toward the camera."
+      },
+      {
+        "example": true,
+        "who": "Electronics shop",
+        "t": "Port close-up",
+        "d": "Example: one port is held to camera so a listing can show where the cable goes."
+      },
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "Zipper pull",
+        "d": "Example: a zipper travels once along the track so the hardware is the point of the clip."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Strap adjust",
+        "d": "Example: a strap shortens once so the fit hardware is easy to see."
+      },
+      {
+        "example": true,
+        "who": "Kitchen shop",
+        "t": "Lid lock",
+        "d": "Example: a lid locks shut in one motion for a product-page loop."
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Cap twist",
+        "d": "Example: a cap turns off so the closure, not the whole routine, is the subject."
+      },
+      {
+        "example": true,
+        "who": "Tool shop",
+        "t": "Button press",
+        "d": "Example: one button is pressed so the control is readable without a second feature in frame."
+      }
+    ]
+  },
+  "related_h2": "Pages for an Ecommerce Feature Video",
+  "related_lead": "Product videos, beauty scenes, and Shopify pages for the same kind of detail.",
+  "relatedLinks": [
+    "product-videos",
+    "tpl-beauty",
+    "tpl-film",
+    "tpl-box",
+    "ind-beauty-skincare",
+    "plat-shopify"
   ]
 }

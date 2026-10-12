@@ -4,46 +4,62 @@
   "description": "AIVideosUGC pricing: Starter at $24.50, Pro at $35 or Premium at $63 a month, with 200 to 600 credits for product photos and videos. Compare plans today.",
   "h1": "AIVideosUGC Pricing for Product Photos and Videos",
   "eyebrow": "Plans and credits",
-  "lead": "AIVideosUGC pricing is three monthly plans, each with a set number of credits to spend on product photos and short videos. Every job shows its cost before it begins.",
-  "card": "Three monthly plans and the credits each one includes.",
+  "lead": "AIVideosUGC pricing is three credit-based plans for product content. Spend the balance on photos or short video ads, and read each job's cost before it starts.",
+  "card": "Starter, Pro, and Premium, with a set credit balance each month.",
   "secondary_keywords": [
     "AI product photo pricing",
     "AI video ad maker cost",
     "credit-based plans for product content",
     "monthly plans for ecommerce visuals"
   ],
-  "intro": "Pick a plan based on how much content you make in a month. Starter comes with 200 credits for $24.50 a month, Pro with 300 credits for $35, and Premium with 600 credits for $63. Your credits work across the photo and video tools, so you can spend them on white background shots one week and vertical video ads the next.",
+  "intro": "Choose a monthly plan by how many photos and videos you need. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A listing photo and a vertical ad draw from the same balance.",
   "credits_explained": [
-    "Credits pay for the jobs you run. A product photo uses 24 credits; video uses 24 for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The exact cost appears before you start.",
-    "The cost appears before you start, and if a job fails its credits return to your balance automatically."
+    "Credits pay for the jobs you run. A product photo is 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm.",
+    "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance on their own."
   ],
-  "teams": "Need more credits for a team or an agency? Email support@aivideosugc.com with roughly how many videos and photos you make each month, and we'll suggest the right setup.",
+  "teams": "Need more credits for a team or an agency? Email support@aivideosugc.com with about how many photos and videos you make in a month, and we will suggest a setup.",
   "faq": [
     {
       "q": "Which plan should a small shop start with?",
-      "a": "Start with Starter at $24.50 for 200 credits if you refresh a few listings. Move to Pro or Premium when you need more credits for weekly ad testing or many products."
+      "a": "Start on Starter at $24.50 for 200 credits when you refresh a few listings. Move to Pro at $35 for 300 credits, or Premium at $63 for 600, when weekly ad tests need more jobs."
     },
     {
-      "q": "Can I use the same credits for photos and videos?",
-      "a": "Yes. One credit balance covers both product photos and short videos, and each job lists its own cost before you confirm."
+      "q": "Can the same credits pay for photos and videos?",
+      "a": "Yes. Photos and videos come out of one credit balance, and each job lists its own price before you confirm."
     },
     {
-      "q": "Can I get a refund for a result I don't like?",
-      "a": "No. A delivered result is not refunded because you dislike it. If a generation fails, its reserved credits return automatically; for a payment review, use the current Refunds policy and contact support."
+      "q": "Can I get a refund for a result I do not like?",
+      "a": "No. A delivered file is not refunded because you dislike it. A failed job returns its reserved credits automatically. For a charge review, use the [Refund Policy](/refunds) and email support."
     },
     {
-      "q": "Are my uploads private on every plan?",
-      "a": "Yes. Whichever plan you choose, your uploads and finished results are kept in your account and never published."
+      "q": "Are uploads private on every plan?",
+      "a": "Yes. On Starter, Pro, and Premium, your uploads and finished files stay in your account and are not published. The [AI content trust and safety](page:trust) page spells out what that covers."
     },
     {
       "q": "What happens to credits when a job fails?",
-      "a": "A failed job releases its reserved credits back to your balance automatically. Check the job status and credit history if the balance does not update."
+      "a": "The reserved credits go back to your balance automatically. If the balance does not update, check the job status and your credit history, then email support with the time of the job."
     },
     {
       "q": "How many credits does a photo or video use?",
-      "a": "A product photo costs 24 credits. Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the exact cost before starting a job."
+      "a": "A product photo is 24 credits. Video is 24 for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see that number before the job starts. Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Product photos are square."
+    },
+    {
+      "q": "Can I use the photos and videos in ads?",
+      "a": "Yes. Downloaded photos and videos are cleared for commercial use on your store, marketplaces, and social ads. Follow each platform's own rules when you publish."
+    },
+    {
+      "q": "Do downloads include a watermark?",
+      "a": "No. Downloaded photos and videos do not include an AIVideosUGC watermark."
     }
   ],
-  "cta_title": "Choose a plan for your next product photo",
-  "cta_lead": "Compare the credit cost for your next photo or video, then start with the plan that fits your work."
+  "cta_title": "Pick the plan that covers this month",
+  "cta_lead": "Check the credit cost of the next photo or video, then start on the monthly plan that fits the work.",
+  "relatedLinks": [
+    "faq",
+    "glossary",
+    "templates",
+    "contact",
+    "about",
+    "trust"
+  ]
 }

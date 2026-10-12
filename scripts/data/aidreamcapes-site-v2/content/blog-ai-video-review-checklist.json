@@ -4,7 +4,7 @@
   "description": "A pre-publish AI content checklist for product photos and video ads: match product details, add prices yourself, and follow platform rules. Save it now.",
   "h1": "An AI Content Checklist for Product Photos and Video Ads",
   "eyebrow": "Pre-publish checks",
-  "lead": "One wrong color, label, or extra part can turn a great-looking AI ad into a misleading one. Run this quick AI content checklist before a photo or video goes on your store, a marketplace, or an ad account, so every result matches the product customers actually receive.",
+  "lead": "An AI content checklist is a short pass over the product, the words, and the rights before a photo or a video goes on your store, a marketplace, or an ad account.",
   "secondary_keywords": [
     "AI video review checklist",
     "check AI product images",
@@ -12,121 +12,119 @@
     "AI ad checks before publishing",
     "AI content disclosure for ads"
   ],
-  "read_minutes": 4,
-  "summary": "What to look at before an AI photo or video goes live: product accuracy, text and prices, rights, and platform labels.",
+  "read_minutes": 5,
+  "summary": "Match the product, add prices yourself, license what appears, and follow the current labeling rule for each site you post on.",
   "sections": [
     {
-      "h2": "Why a quick review is worth it",
+      "h2": "On this page",
       "paras": [
-        "An AI photo or video is a newly generated version of your product image, not a duplicate of the original photo. AI can still change a logo letter, move a button, add a piece, or shift a color.",
-        "Reviewing before you publish gives you a chance to catch product mismatches before customers see the content. The checks below work for listing photos, social posts, and paid ads alike."
+        "What to review, how to check a still, how to check a clip, where the price goes, what you need the rights to use, and when to label a generated person."
+      ],
+      "img": "n:guide:b2f12-blog-review-rules-r1",
+      "alt": "Adult hands hold a plain black travel backpack beside a blank laptop and a blank phone."
+    },
+    {
+      "h2": "What belongs on an AI content checklist?",
+      "paras": [
+        "Check the product against what you ship, then the words, then the rights, then the rule for the site where it will appear.",
+        "A generated photo or video is a new picture built from your upload, not a copy of the original file. A logo letter can shift, a button can move, a piece can appear, or a color can drift. The same pass works for a listing photo, a social post, and a paid ad."
       ],
       "img": "n:guide:fx04-blog-review-why-r2",
       "alt": "Hands check the front pocket and zipper of plain black travel backpack."
     },
     {
-      "h2": "Make sure the product matches what you ship",
+      "h2": "How do I check AI product images?",
       "paras": [
-        "Hold the real item, or your original photo, next to the screen and go through it piece by piece.",
-        "Color: compare the backpack in daylight, not only on a bright monitor. Shape and proportions: are the bag height, width and strap thickness right? Logos and labels: zoom in and read every letter. Parts: count pockets, straps and buckles, because the shipped bag should not gain or lose one. Size: when [a hand or a familiar object](page:tpl-size) is in the frame, does the backpack look the right size beside it?",
-        "Watch for extras as well. A [styled scene](page:lifestyle-photos) might add a candle, a plant, or a second cup. That's fine as decoration, but if a shopper could reasonably think it comes with the order, choose another version or state clearly in the listing what's included."
+        "Hold the real item, or your original photo, next to the screen and go through color, shape, logos, parts, and size.",
+        "Compare color in daylight, not only on a bright monitor. Count pockets, straps, and buckles. Read every letter on a label. If a hand or a familiar object is in the frame, the product should look the right size beside it. A styled scene might add a candle or a plant. That is fine as decoration only if a shopper would not think it comes in the order. [AI lifestyle product photos](page:lifestyle-photos) are where those scenes are made, so review them with the same part count."
       ],
       "img": "n:guide:fx04-blog-review-product-r1",
       "alt": "Hands count pockets, buckles and straps on plain black travel backpack."
     },
     {
-      "h2": "Watch videos more than once",
+      "h2": "What is on an AI video review checklist?",
       "paras": [
-        "Play the clip full screen on your phone, the way most people will see it, then go through it slowly. Movement is where [AI video](page:video-hub) tends to slip: the black backpack label area can blur as it turns, fingers can blend into a strap, or a zipper can change shape halfway through.",
-        "Look closely at the hands holding the black backpack. Count fingers and watch how they grip the straps, open the zipper or turn the bag over.",
-        "Give extra attention to the first frame, since it often becomes the thumbnail. If one short backpack moment is off, trim around it in CapCut; if the problem runs through the whole clip, make a new version."
+        "Play the clip full screen on your phone, then step through it slowly, with extra attention on the hands and the first frame.",
+        "Movement is where a clip tends to slip: a label can blur as the product turns, fingers can blend into a strap, or a zipper can change shape halfway through. Count fingers and watch how they grip. The first frame often becomes the thumbnail. If one short moment is off, trim around it in your editor. If the problem runs through the clip, make a new version. [AI product video generator](page:product-videos) jobs should get this same pass before they are posted."
       ],
       "img": "n:guide:fx04-blog-review-motion-r1",
       "alt": "Hands open the zipper and flap of plain black travel backpack."
     },
     {
-      "h2": "Put words, prices, and offers on last",
+      "h2": "Which checks should I do before I publish the price?",
       "paras": [
-        "Don't ask the AI to write your price, launch date, discount code, or headline into the picture. Generated lettering is often misspelled or garbled. Make the visual first, then add text in Canva, CapCut, or Ads Manager, where you control every character.",
-        "Before posting, check that the price and code on the ad match your store exactly and that any end date hasn't already passed. Then scan the generated image for stray letters on packaging or signs in the background. If you spot any, crop them out or try again."
+        "Make the picture first, then add the price, the date, the code, and the headline yourself.",
+        "Do not ask for those words inside the image or the clip. Generated lettering is often garbled. Add them in Canva, CapCut, or Ads Manager, where you control every character. Before posting, match the price and the code to the store, and confirm any end date has not already passed. If stray letters appear on packaging or on a sign in the background, crop them out or try again."
       ],
       "img": "n:guide:fx04-blog-review-copy-r1",
       "alt": "Plain black travel backpack centered on a white background."
     },
     {
-      "h2": "Own or license everything that appears",
+      "h2": "What do I need to own before an AI ad goes live?",
       "paras": [
-        "Upload only product photos you took yourself or have the rights to use. If you're working from a supplier's photo, make sure your agreement with them covers using it in ads. Feature only logos and trademarks that belong to you. Requests built around another company's marks may be refused, and so may anything involving celebrities or other public figures. Our [Content Policy](/content) and [Trust and Safety](page:trust) pages explain what can be uploaded and how reports are handled.",
-        "The same applies to what you add later. Pick music from the commercial-use library in your editing app or ad platform, or a track you've licensed for advertising, rather than a song you simply like."
+        "Upload only photos you took or have the rights to use, and feature only logos that belong to you.",
+        "If you start from a supplier photo, your agreement with them needs to cover ads. Requests built around another company's marks, or around celebrities, may be refused. The [Content Policy](/content) says what can be uploaded. For music, pick a track from the commercial library in your editor or ad account, or a track you have licensed for advertising."
       ],
       "img": "n:guide:fx04-blog-review-rights-r1",
       "alt": "Hands hold plain black travel backpack beside a plain camera and blank phone."
     },
     {
-      "h2": "Follow each platform's current rules on AI content",
+      "h2": "When do AI-generated content labels apply?",
       "paras": [
-        "Several platforms ask creators and advertisers to mark realistic AI-generated people or scenes, and some offer a toggle or tag for it when you post. The rules differ between platforms and get updated, so read the current policy on each site you use instead of relying on an old screenshot or a forum thread.",
-        "Two habits help wherever you post. Don't present an [AI-generated person](page:model-photos) as a real customer or reviewer. And don't let a caption promise health, skin, or weight results; show how the product is used and leave the conclusions to the shopper."
-      ],
-      "img": "n:guide:b2f12-blog-review-rules-r1",
-      "alt": "Adult hands hold a plain black travel backpack beside a blank laptop and a blank phone."
+        "Read the current rule on each site you post to. Several platforms ask you to mark realistic generated people or scenes, and the rule changes.",
+        "Two habits travel well. Do not present a generated person as a real customer or reviewer, including in [AI model photos for clothing](page:model-photos). And do not let a caption promise health, skin, or weight results. Show how the product is used and leave the conclusion to the shopper."
+      ]
+    },
+    {
+      "h2": "The short version",
+      "paras": [
+        "The product must match the box, the words must be yours, and the photo, logo, and music must be yours or licensed.",
+        "Then follow the current labeling rule for the site you are posting on. If a buyer could feel misled, do not publish that file."
+      ]
     }
   ],
-  "checklist": [
-    "Color, shape, logos, and part count match the real product",
-    "No prop could be mistaken for something included in the order",
-    "The video holds together from first frame to last, with no warping",
-    "Prices, codes, and dates were added by you and match your store",
-    "Every photo, logo, and music track is yours or licensed for ads",
-    "Each platform's current AI labeling rules have been read and followed"
-  ],
   "related": [
-    "faq",
-    "guide-ad-sizes-by-platform",
-    "video-hub"
+    "blog-ai-product-photography-guide",
+    "blog-ai-ugc-video-ads-guide",
+    "blog-model-photos-without-a-photoshoot",
+    "blog-unboxing-videos-for-launches",
+    "guide-product-photo-tips",
+    "guide-testing-ad-versions"
   ],
   "faq": [
     {
       "q": "What should I check before posting an AI-made video?",
-      "a": "Watch it all the way through and compare the product with the real item: shape, color, parts and any label. Make sure every action is something your product really does and that no stray text or logos appear."
+      "a": "Watch it on your phone from the first frame to the last. Confirm the product, the hands, and the label, then confirm any price you added matches the store."
     },
     {
-      "q": "What if only one small detail is wrong?",
-      "a": "Make another version rather than posting it. A wrong button or color can mislead buyers, and each new version shows its credit cost before it starts."
+      "q": "What if a prop looks like it comes with the order?",
+      "a": "Do not use that version, or say clearly in the listing what is included. Decoration is fine only when a shopper would not expect it in the box."
     },
     {
-      "q": "Can I publish a result with a small label error?",
-      "a": "No. Generate another version or use a real label photo. A wrong ingredient, size, color, or safety statement can mislead buyers."
+      "q": "Can I ask the tool to draw my discount code?",
+      "a": "No. Add the code, the price, and the date yourself after download so the characters stay correct."
     },
     {
-      "q": "Does a 30-second video need the same review as a shorter clip?",
-      "a": "Yes. Review the full 30-second video from first frame to last, just as you would a 6, 10 or 15-second clip. Longer footage gives more moments for a label or hand to warp."
+      "q": "Do I have to say a person is generated?",
+      "a": "Check the current rule for each platform or marketplace you use. Do not describe a generated person as a real customer, even where the site lets you mark the ad as generated."
     },
     {
-      "q": "How many credits does a review version use?",
-      "a": "A 6-second version uses 24 credits, a 10-second version uses 40, a 15-second version uses 60 and a 30-second version uses 120. You see the cost before each new version starts."
+      "q": "Can I use a supplier photo as the source?",
+      "a": "Only if your agreement with the supplier covers ads. Otherwise shoot your own photo."
     },
     {
-      "q": "Can an AI-generated person give a customer testimonial?",
-      "a": "No. Do not present an AI-generated person as a customer or reviewer. Keep the claim tied to the product and add the disclosure required by the platform where you post."
-    }
-  ],
-  "steps_h2": "How to Review AI Product Content in 3 Simple Steps",
-  "steps_lead": "Check one backpack from source photo to final frame before you publish the result.",
-  "steps": [
-    {
-      "t": "Compare the product",
-      "d": "Put the original black backpack or its source photo beside the generated result and compare shape, color, parts and label area. You catch mismatches before a shopper sees them."
-    },
-    {
-      "t": "Check motion and copy",
-      "d": "Watch the black backpack move, then check every price, claim and added caption in your editor. You can correct warped motion and wording before the ad runs."
-    },
-    {
-      "t": "Download and Post",
-      "d": "Download the reviewed backpack image or clip only after it matches the item you ship. Add your approved offer and platform disclosure, then publish it where your buyers will see it."
+      "q": "What if one moment in the clip looks wrong?",
+      "a": "Trim that moment in your editor if it is brief. If the error runs through the clip, make a new version instead of posting it."
     }
   ],
   "cta_title": "Check every product detail before your next ad",
-  "cta_lead": "Upload a product photo, review the generated result against the item you ship and download only the version you can stand behind."
+  "cta_lead": "Upload a product photo, compare the result with the item you ship, and add your own price before it goes live.",
+  "relatedLinks": [
+    "blog-ai-product-photography-guide",
+    "blog-ai-ugc-video-ads-guide",
+    "blog-model-photos-without-a-photoshoot",
+    "blog-unboxing-videos-for-launches",
+    "guide-product-photo-tips",
+    "guide-testing-ad-versions"
+  ]
 }

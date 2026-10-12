@@ -1,57 +1,30 @@
 {
   "id": "tpl-tryon",
-  "title": "AI Try-On Clothing Photos in Minutes | AIVideosUGC",
+  "title": "AI Virtual Try-On for Clothing | AIVideosUGC",
   "description": "Show clothing on a model without a booking. AI virtual try-on turns a flat-lay or hanger photo into a realistic on-model view for your listing and social ads.",
-  "h1": "AI Virtual Try-On for Clothing: Your Garment on a Model",
+  "h1": "AI Virtual Try-On for Clothing, from a Flat Lay",
   "eyebrow": "Model photo template",
-  "lead": "Shoppers skip clothing they can only see flat, while booking a model for every arrival is expensive. Upload one garment photo and get an on-model view for listings and social ads.",
-  "benefits_h2": "Why sellers choose AI virtual try-on for clothing",
-  "benefits": [
-    {
-      "t": "Show the garment on a body",
-      "d": "Flat lays cannot show where the hem falls or how sleeves sit. The model view answers those questions from one uploaded photo, so buyers can judge the piece before choosing a size.",
-      "img": "f:fx47-tpl-tryon-benefit-silhouette",
-      "alt": "Adult model wearing a plain olive utility jacket in a clean front view, full silhouette visible."
-    },
-    {
-      "t": "New arrivals on models the week they land",
-      "d": "Each garment gets a person and a believable room without coordinating a shoot. Your new-in collection can show clothes being worn rather than hanging on a rail.",
-      "img": "f:fx47-tpl-tryon-benefit-back-view",
-      "alt": "Adult model showing the back of a plain cream knit cardigan in a rear three-quarter view."
-    },
-    {
-      "t": "Front and back views on demand",
-      "d": "Run a second version from a back source or a clear back description to show collar and rear seams. You give shoppers both sides without asking anyone to pose twice.",
-      "img": "f:fx47-tpl-tryon-benefit-listing-gallery",
-      "alt": "Adult model wearing a plain rust overshirt and dark trousers in a clean ecommerce studio."
-    },
-    {
-      "t": "Ready for Shopify and social",
-      "d": "The square photo sits beside your existing flat lays on the product page and works in launch posts. Add your real measurements and size chart as text after download.",
-      "img": "f:fx47-tpl-tryon-benefit-launch-lookbook",
-      "alt": "Adult model walking in a plain teal satin midi skirt in a warm editorial room."
-    }
-  ],
+  "lead": "Shoppers skip a jacket they can only see folded on a hanger. Upload one garment photo and get an on-model view for the listing and the launch post.",
   "secondary_keywords": [
     "clothing on model from flat lay",
     "AI fashion model photos",
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "steps_h2": "How to Make AI Virtual Try-On Photos for Clothing in 3 Simple Steps",
-  "steps_lead": "Choose a fashion style, add your garment, generate. No casting call and no studio booking.",
+  "steps_h2": "Garment on Model Photo for Shopify",
+  "steps_lead": "Upload the garment, choose a scene, then download a photo you can check against the real piece.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "Add a clear garment photo with its shape and details visible. Keep the collar, closures, sleeves, pockets and hem inside the frame."
+      "d": "Upload a clear garment photo showing collar, closures, sleeves, pockets, and hem. Flat lay or hanger both work if the shape is easy to see."
     },
     {
       "t": "Pick a Fashion Style",
-      "d": "Choose an on-model scene, then generate the garment in that setting. Describe the pose, base layer or view you need."
+      "d": "Pick an on-model scene. Ask for another pose, base layer, or back view only if needed. Generate when the scene matches the garment you sell."
     },
     {
       "t": "Download and Post",
-      "d": "Download the try-on photo and add your real size chart and garment measurements. Check the fit and color against the physical piece before you post."
+      "d": "Download the photo and add the real size chart beside it. Check fit and color against the physical piece before you post."
     }
   ],
   "maker": {
@@ -73,36 +46,39 @@
   },
   "faq": [
     {
-      "q": "What are AI virtual try-on templates for clothing?",
-      "a": "They turn one flat-lay or hanger photo into an on-model product photo. Use the result to show silhouette and styling on a listing or social post."
+      "q": "What is AI virtual try-on for clothing?",
+      "a": "Upload a flat-lay or hanger photo and get that garment on a generated person. Use it beside the flat lay on the listing, or in the launch post."
     },
     {
-      "q": "How do the clothing templates work?",
-      "a": "Upload a clear garment photo, choose a fashion scene and generate the on-model view. Check the product shape, color, seams and closures against the physical piece before publishing."
+      "q": "How do I get from a hanger photo to an on-model photo?",
+      "a": "Upload a clear garment photo, choose a fashion scene and download the result. Check shape, color, seams and closures against the physical piece before you publish."
     },
     {
-      "q": "What clothing categories do these templates cover?",
-      "a": "They cover garments such as jackets, knitwear, dresses, skirts, shirts and trousers. Use a full, well-lit source so the model view can show the right silhouette."
+      "q": "Which garments can I start with?",
+      "a": "Jackets, knitwear, dresses, skirts, shirts and trousers fit when the full garment is in frame. Keep the collar, sleeves, pockets and hem visible in the source."
     },
     {
-      "q": "Can I create multiple photo variations for different styles or collections?",
-      "a": "Yes. Reuse one garment photo across mirror, walk and lookbook scenes to create different listing or launch views. For a back view, provide a clear back source or description, then compare the seams and hem with the physical item."
+      "q": "Can I make more than one scene from the same garment?",
+      "a": "Yes. Run the same photo again for a mirror, walk or lookbook scene. A back view needs a back-facing source or a clear description of the back, and it is a separate job."
     },
     {
-      "q": "Who are the clothing templates designed for?",
-      "a": "They are for clothing sellers, ecommerce teams and agencies that need on-model photos without arranging a shoot. Add the real size chart and garment notes for shoppers."
+      "q": "Who is this for?",
+      "a": "Clothing shops, ecommerce teams and agencies that need an on-model photo without booking a model. The person in the frame is generated, not a hired model and not a customer."
     },
     {
-      "q": "Can beginners use these templates without video production experience?",
-      "a": "Yes. Upload the garment, pick a style and generate, with no video production experience required. Start with a clear front or hanger photo and a simple pose."
+      "q": "Do I need a photo studio to use it?",
+      "a": "No. The path on screen is upload, choose a scene, download. Start with a front or hanger photo and a simple pose."
     },
     {
-      "q": "How quickly can I launch a clothing product photo?",
-      "a": "You can generate a photo in minutes after starting the job. Download it, add accurate size details, and check fit and color before posting."
+      "q": "What does a try-on photo cost, and can I use it in ads?",
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts."
+    },
+    {
+      "q": "Can I use the square photo in an Instagram feed?",
+      "a": "Yes. The same square file can sit in a feed post and on the product page. Placement notes for that channel are on [AI Instagram ads](page:plat-instagram)."
     }
   ],
   "visual": {
-    "overview": "A virtual try-on scene puts your garment on a model so shoppers can see the silhouette before opening the size chart.",
     "strip": [
       "n:guide:tpl-tryon-c3-strip-bomber-front",
       "n:guide:rc3-tpl-tryon-strip-cardigan-r1",
@@ -133,8 +109,8 @@
       "sourceTitle": "Your product"
     },
     "picker": {
-      "title": "Choose a fashion template",
-      "lead": "Browse fashion styles, then add your own garment photo.",
+      "title": "These cards open a 15-second video",
+      "lead": "Each card is a 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem and color against the piece.",
       "chips": [
         {
           "id": "accessories",
@@ -556,14 +532,96 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Create an on-model try-on in three steps"
+        "h2": "Garment on Model Photo for Shopify"
       },
       "m3": {
-        "h2": "Choose a virtual try-on scene for your garment"
+        "h2": "These cards open a 15-second video",
+        "lead": "Each card is a 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem and color against the piece."
       },
       "faq": {
         "h2": "Questions about AI virtual try-on for clothing"
       }
     }
-  }
+  },
+  "reviews": {
+    "h2": "How Shops Use AI Fashion Model Photos",
+    "lead": "A few ways clothing sellers put one garment photo to work.",
+    "items": [
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "New jacket on the product page",
+        "d": "The shop uploads the hanger photo when the carton arrives and places the on-model frame beside the flat lay. Hem, sleeves and pockets are checked against the physical jacket before the listing goes up."
+      },
+      {
+        "example": true,
+        "who": "Dress boutique",
+        "t": "One standing scene for the drop",
+        "d": "The boutique picks a single standing scene for the hero image of a new dress. Neckline, color and closures are compared with the garment on the rail before anyone posts it."
+      },
+      {
+        "example": true,
+        "who": "Knitwear label",
+        "t": "A back view from a second source",
+        "d": "The label uses a back-facing source so the collar and rear seams can show. That second file is its own job, and the cost is shown before it starts."
+      },
+      {
+        "example": true,
+        "who": "Fashion agency",
+        "t": "Same path for every client",
+        "d": "The agency repeats upload, scene and download for each clothing client. People in the frames are generated. They are not hired models and not customers."
+      },
+      {
+        "example": true,
+        "who": "Listing editor",
+        "t": "Size chart added after download",
+        "d": "The square file goes on the product page, and the real size chart is added as text beside it. The photo does not invent measurements."
+      },
+      {
+        "example": true,
+        "who": "Outerwear brand",
+        "t": "Coat that needs a body",
+        "d": "A puffer or coat is shown on a person instead of another hanger crop. Cuffs, pockets and hem stay inside the source frame so the result can be compared fairly."
+      }
+    ]
+  },
+  "related_h2": "Clothing templates and Shopify photos",
+  "related_lead": "Other fashion templates, the model-photo tool, and Shopify listing photos.",
+  "relatedLinks": [
+    {
+      "id": "model-photos",
+      "label": "AI model photos for clothing"
+    },
+    {
+      "id": "tpl-look",
+      "label": "AI lookbook photos"
+    },
+    {
+      "id": "tpl-outfit",
+      "label": "AI fashion reels"
+    },
+    {
+      "id": "tpl-sale",
+      "label": "sale banner maker"
+    },
+    {
+      "id": "ind-fashion-clothing",
+      "label": "AI model photos and videos for fashion brands"
+    },
+    {
+      "id": "plat-shopify",
+      "label": "Shopify product photos"
+    }
+  ],
+  "cta_title": "Put your next garment on a model",
+  "cta_lead": "Upload one garment photo. You see the credit cost before the job starts.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "reviews",
+    "steps",
+    "related",
+    "faq",
+    "cta"
+  ]
 }

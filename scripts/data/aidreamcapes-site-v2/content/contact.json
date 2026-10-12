@@ -4,7 +4,7 @@
   "description": "Questions about credits, a failed job, billing or your account? Email support@aivideosugc.com for a written answer and help with your next ad.",
   "h1": "Contact AIVideosUGC Support",
   "eyebrow": "Customer support",
-  "lead": "Stuck on a photo, a video, your credits or your account? Email us and we'll help you get back to making ads.",
+  "lead": "Need help with a photo, a video, your credits, or your account? Email support@aivideosugc.com and we will help you sort it out.",
   "secondary_keywords": [
     "AIVideosUGC customer service",
     "AIVideosUGC billing help",
@@ -12,13 +12,13 @@
     "contact AIVideosUGC by email"
   ],
   "intro": [
-    "Email support@aivideosugc.com and include the details below so the team can help in one reply. Email also leaves you a written record of the question and the fix.",
-    "To sort it in one reply, include the email address on your account, a short description of the problem and, if it is about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
+    "Contact AIVideosUGC by email at support@aivideosugc.com and include the details below so one reply can solve it. Email also leaves you a written record of the question and the fix.",
+    "Include the email address on your account, a short description of the problem and, if it is about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
   ],
   "topics": [
     {
       "t": "Billing and plans",
-      "d": "Questions about your plan, a charge on your statement, or which plan fits the amount of content you make.",
+      "d": "Questions about your plan, a charge on your statement, or which monthly plan fits how much you make.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-billing-r1.webp",
         "alt": "Black man with a close-cropped haircut reviewing a plan panel beside a product parcel.",
@@ -28,7 +28,7 @@
     },
     {
       "t": "Credits and failed jobs",
-      "d": "If a job failed and the credits did not come back, or a cost was not what you expected, tell us what happened and we will check the job.",
+      "d": "Tell us the job time if credits from a failed job did not return, or if a cost looked wrong. We will check that job.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-credits-r1.webp",
         "alt": "Seller with a short dark buzz cut checking a product parcel beside a laptop.",
@@ -38,7 +38,7 @@
     },
     {
       "t": "Results that missed the mark",
-      "d": "If a photo or video came out very different from your description, send us the details and we will take a look.",
+      "d": "A photo or video came out very different from what you described. Send the details and we will look.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/b2f5-contact-results-r1.webp",
         "alt": "Seller compares a ceramic cup beside a closed laptop",
@@ -48,7 +48,7 @@
     },
     {
       "t": "Account and privacy",
-      "d": "Trouble signing in, or questions about who can see your uploads and results.",
+      "d": "Trouble signing in, or a question about who can see your uploads and results.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-privacy-r1.webp",
         "alt": "Woman with a close-cropped natural afro using a laptop beside a padlock and product pouch.",
@@ -58,7 +58,7 @@
     },
     {
       "t": "Partnerships",
-      "d": "If you run a store, an agency or a creator channel and want to work with us, email a short note about your audience or business and what you have in mind.",
+      "d": "You run a store, an agency, or a creator channel and want to work with us. Email a short note about the business and what you have in mind.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-partnerships-r1.webp",
         "alt": "Two shop partners exchanging a plain parcel across an ecommerce desk.",
@@ -69,28 +69,36 @@
   ],
   "faq": [
     {
-      "q": "How do I get help with AIVideosUGC?",
-      "a": "Email support@aivideosugc.com. Email is the quickest way to reach us, and it gives you a written record of your question and our answer."
+      "q": "How do I reach AIVideosUGC customer service?",
+      "a": "Email support@aivideosugc.com. That is the way to reach us, and it gives you a written record of the question and the answer."
     },
     {
-      "q": "Can you help me before I choose a plan?",
-      "a": "Yes. If you are not sure the tools suit your products, email a short note about what you sell and where you advertise, and we will point you to the right place to start."
+      "q": "Can you help before I choose a plan?",
+      "a": "Yes. If you are not sure the tools suit what you sell, email a short note about the products and where you advertise. We will point you to a starting place, such as [AI image to video](page:image-to-video)."
     },
     {
-      "q": "How long does support take to reply?",
-      "a": "We will reply as soon as we can. Send the account and job details in your first email so the answer does not need a second round."
+      "q": "How long does a reply take?",
+      "a": "We do not publish a reply window. Email support@aivideosugc.com with the account email, what happened, and the job time so the first reply can cover it."
     },
     {
       "q": "What details help support find my job?",
-      "a": "Include the email on your account, a brief description of the issue, roughly when it happened, and a screenshot of any error message."
+      "a": "Include the email on your account, a brief description, roughly when it happened, and a screenshot of any error message."
     },
     {
-      "q": "What happens to my credits if a job fails?",
-      "a": "Failed jobs return their credits to your balance automatically. If you do not see them back, email support with the time of the job and we will check it for you."
+      "q": "What if a failed job did not return credits?",
+      "a": "Failed jobs return their credits automatically. If you do not see them, email support with the time of the job and we will check it."
     },
     {
-      "q": "Which address do I email?",
-      "a": "Email support@aivideosugc.com. Include the email on your account and a short description of what you need."
+      "q": "Do I contact AIVideosUGC by email only?",
+      "a": "Yes. Email support@aivideosugc.com from the address on your account. This site does not list a phone number."
     }
+  ],
+  "relatedLinks": [
+    "faq",
+    "pricing",
+    "trust",
+    "about",
+    "glossary",
+    "ai-info"
   ]
 }

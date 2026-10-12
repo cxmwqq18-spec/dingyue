@@ -2,9 +2,9 @@
   "id": "tpl-film",
   "title": "AI Cinematic Product Video From One Photo | AIVideosUGC",
   "description": "AI cinematic product video from one photo with moody light and a slow camera move. Use 16:9 for web or 9:16 for Shorts/Reels, with 6, 10, 15 or 30 seconds.",
-  "h1": "Create a Cinematic Product Video From One Photo",
+  "h1": "Cinematic Product Video From One Still Photo",
   "eyebrow": "Cinematic video template",
-  "lead": "Turn a flat product shot into a moody product video with a slow camera move, without booking a film crew or a set.",
+  "lead": "Pick a moody reveal and add one photo, so the product gets a slow camera move without a film crew.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a sharp photo with a clear outline so the product stays the focal item. Keep the full silhouette in frame."
+      "d": "Use a sharp photo with the full silhouette in frame. A clear edge gives the move something to follow."
     },
     {
-      "t": "Share Your Video Idea",
-      "d": "Name the surface, one light source and one camera move, then choose the size and duration. The cost shows first."
+      "t": "Describe Your Scene",
+      "d": "Name the surface, one light, and one slow move. Then pick 16:9 or 9:16 and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip, then add a licensed track, product name or offer in your editor. No production budget needed."
+      "d": "Download the file and add a licensed track in your editor. The clip does not include music or captions."
     }
   ],
   "maker": {
@@ -45,52 +45,44 @@
   },
   "faq": [
     {
-      "q": "What products look good in a cinematic video?",
-      "a": "Products with a clear shape or finish, including speakers, bottles, lamps, watches and sunglasses, suit a slow reveal."
+      "q": "What is a cinematic product video template?",
+      "a": "A ready scene that gives one product photo a controlled light and a slow reveal. You bring the still, and the clip opens like a short brand film."
     },
     {
-      "q": "Does the clip come with music?",
-      "a": "No. AIVideosUGC does not add a music track or captions; add licensed audio in your editor after download."
+      "q": "How do I make the film?",
+      "a": "Upload a sharp photo, name the surface, one light, and one camera move, pick a size and a length, then download the file."
     },
     {
-      "q": "Can I show my logo in the scene?",
-      "a": "Your own logo in the uploaded product photo is fine. Another company’s logo or trademark may be rejected."
+      "q": "Why start from a photo instead of a film crew?",
+      "a": "The set, the light, and the move are generated from the photo you already have. You skip the crew, the rental, and the reshoot."
     },
     {
-      "q": "What video size suits a cinematic product video?",
-      "a": "Use 16:9 for your website or YouTube, and 9:16 for TikTok, Reels and other mobile feeds."
+      "q": "Who is this scene for?",
+      "a": "Shops with a clear product shape or finish, such as speakers, bottles, lamps, watches, and sunglasses, that want a polished open for a page or an ad."
     },
     {
-      "q": "How much does a cinematic clip cost?",
-      "a": "A 6-second clip costs 24 credits, 10 seconds costs 40, 15 seconds costs 60 and 30 seconds costs 120."
+      "q": "Can I do this on the first try?",
+      "a": "Start with a sharp full-silhouette photo and name one move, such as a slow push-in or a short side glide. Check the edge before you post."
     },
     {
-      "q": "Can the video add moody lighting to a plain photo?",
-      "a": "Yes. The generated scene can add moody light and a slow camera move; review the product outline and color frame by frame."
+      "q": "What photo should I upload?",
+      "a": "A sharp photo with the full product in frame, clear edges, and enough contrast against the background."
     },
     {
-      "q": "Can I use a cinematic clip in paid ads?",
-      "a": "Yes. Clips can run in your own paid campaigns, website heroes and social posts, with no watermark."
+      "q": "Which size and length can I pick?",
+      "a": "This template is set up for 16:9 and 9:16. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
-      "q": "Do I need a film crew or studio for this look?",
-      "a": "No. The set, lighting and camera move are generated from one photo, without a crew or rental day."
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "What source photo gives the cleanest silhouette?",
-      "a": "Use a sharp photo with the full product in frame, clear edges and enough contrast against its background."
+      "q": "Does the clip include music or my logo?",
+      "a": "No music and no captions. Add a licensed track in your editor. A logo that is part of your uploaded product can remain. Another company's logo or trademark may be rejected."
     },
     {
-      "q": "Can I choose a different camera move?",
-      "a": "Yes. Name one move in your video idea, such as a slow push-in or a short side glide, and review the result before posting."
-    },
-    {
-      "q": "Can I use a reflective product in a dark scene?",
-      "a": "Yes. A clear outline and controlled highlight help reflective finishes read in a darker scene; review every frame for unwanted glare."
-    },
-    {
-      "q": "How should I prepare the clip for a product page?",
-      "a": "Choose 16:9 for a product page, then add the product name or offer details in your editor after download."
+      "q": "Can I run the file in ads?",
+      "a": "Yes. The download has no AIVideosUGC watermark and can run on your site and in paid ads. Review reflective frames for glare before you post. The clip is your ad, not a customer quote."
     }
   ],
   "visual": {
@@ -128,8 +120,8 @@
       "resultAlt": "Rounded pebble-shaped black speaker catches a cool cinematic highlight on a dark sideboard."
     },
     "picker": {
-      "title": "Give Your Product a Cinematic First Look",
-      "lead": "Turn one product photo into a moody moving shot that gives your launch a stronger opening.",
+      "title": "Choose a Moody Product Video",
+      "lead": "These cards cover many categories. There is no reveal-only filter. Open a slow product shot, then add the photo you want in the light.",
       "chips": [
         {
           "id": "accessories",
@@ -545,60 +537,123 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
-    "overview": "An AI cinematic product video gives one product photo a controlled light move and a polished reveal for ads, product pages and social feeds.",
+    "overview": "",
     "titles": {
-      "m2": {
-        "h2": "Make an AI cinematic product video from one photo"
-      },
       "m3": {
-        "h2": "Choose a cinematic treatment for your AI product video"
+        "h2": "Choose a Moody Product Video"
       },
       "faq": {
-        "h2": "Questions about AI cinematic product videos"
+        "h2": "Questions About a Luxury Product Video"
       }
     }
   },
-  "steps_h2": "How to Make a Cinematic Product Video in 3 Simple Steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post product film, with no crew, set or rental day.",
-  "benefits_h2": "Why choose an AI cinematic product video?",
-  "benefits": [
+  "steps_h2": "Make a Product Reveal Video in 3 Steps",
+  "steps_lead": "One sharp photo, a short line about light and movement, then a file you can post.",
+  "relatedLinks": [
     {
-      "t": "Give a flat shot a launch-ready mood",
-      "d": "Add a controlled highlight, shadow or reflection around the product so a plain photo can open a campaign.",
-      "img": "n:guide:fx27-film-benefit-1",
-      "alt": "Plain matte ceramic skincare bottle catches a narrow amber rim light on black stone in a dark studio."
+      "id": "image-to-video",
+      "label": "AI image to video"
     },
     {
-      "t": "Show the finish without a film crew",
-      "d": "Use one slow reveal to show glass, metal, fabric or a clean silhouette without booking a set, crew or rental day.",
-      "img": "n:guide:fx27-film-benefit-2",
-      "alt": "Plain analog watch with a dark leather strap catches a cool highlight on a charcoal stone slab."
+      "id": "tpl-angle",
+      "label": "product packshot photos"
     },
     {
-      "t": "Cut one look for web and feed",
-      "d": "Use 16:9 for YouTube and product pages or 9:16 for Shorts, Reels and TikTok. Choose 6, 10, 15 or 30 seconds.",
-      "img": "n:guide:fx27-film-benefit-3",
-      "alt": "Plain matte-black over-ear headphones sit on a dark plinth under a controlled cool highlight."
+      "id": "tpl-bf",
+      "label": "Black Friday video ads"
     },
     {
-      "t": "Keep your product details in control",
-      "d": "Download without a watermark, then add the product name, licensed audio or offer details in your editor.",
-      "img": "n:guide:fx27-film-benefit-4",
-      "alt": "Plain sculptural desk lamp glows on a dark side table beside a blank wall with a narrow pool of light."
+      "id": "tpl-product-feature-callout-video",
+      "label": "product feature callout video"
+    },
+    {
+      "id": "plat-facebook",
+      "label": "AI Facebook ad generator"
+    },
+    {
+      "id": "ind-electronics",
+      "label": "AI product videos for electronics"
     }
   ],
-  "relatedLinks": [
-    "image-to-video",
-    "product-videos",
-    "unboxing-videos",
-    "tpl-howto",
-    "plat-facebook",
-    "blog-ai-video-review-checklist",
-    "guide-first-tiktok-video-ad",
-    "guide-ad-sizes-by-platform"
-  ]
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "How Shops Use a Brand Film for Products",
+    "lead": "Example scenes for this template. They show how a shop could open a launch with one still.",
+    "items": [
+      {
+        "example": true,
+        "who": "Bottle brand",
+        "t": "Rim light",
+        "d": "Example: a matte bottle catches one narrow highlight on a dark surface."
+      },
+      {
+        "example": true,
+        "who": "Watch shop",
+        "t": "Slow pass",
+        "d": "Example: a watch on a dark strap takes a short side glide so the finish reads."
+      },
+      {
+        "example": true,
+        "who": "Audio brand",
+        "t": "Hero still, then motion",
+        "d": "Example: headphones on a dark plinth get one push-in instead of a rented set."
+      },
+      {
+        "example": true,
+        "who": "Lighting shop",
+        "t": "The product is the light",
+        "d": "Example: a desk lamp glows on a side table, and the move stays slow."
+      },
+      {
+        "example": true,
+        "who": "Launch lead",
+        "t": "Web and feed",
+        "d": "Example: one look is exported at 16:9 for a product page and 9:16 for a short feed cut."
+      },
+      {
+        "example": true,
+        "who": "Small team",
+        "t": "No crew",
+        "d": "Example: the set, the light, and the move come from one photo, with no rental day."
+      },
+      {
+        "example": true,
+        "who": "Editor",
+        "t": "Sound after download",
+        "d": "Example: a licensed track and the product name are added in an editor. The generator does not lay in music."
+      },
+      {
+        "example": true,
+        "who": "Brand reviewer",
+        "t": "Logo check",
+        "d": "Example: a logo that is already on the uploaded product can stay. Another company's mark may be rejected."
+      },
+      {
+        "example": true,
+        "who": "Glass brand",
+        "t": "Glare check",
+        "d": "Example: a reflective item is reviewed frame by frame so a dark scene does not blow out the edge."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Not a testimonial",
+        "d": "Example: the clip is the brand's own film. It is not a customer endorsement."
+      }
+    ]
+  },
+  "related_h2": "Pages for a Cinematic Product Ad",
+  "related_lead": "Image-to-video, electronics scenes, and a Facebook page for the same kind of reveal.",
+  "cta_title": "Ready for a Slow Reveal?",
+  "cta_lead": "Upload one product photo and see the credit cost before you start."
 }

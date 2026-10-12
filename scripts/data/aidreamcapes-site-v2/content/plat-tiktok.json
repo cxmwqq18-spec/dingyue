@@ -2,10 +2,10 @@
   "id": "plat-tiktok",
   "title": "AI TikTok Ads Generator for Product Videos | AIVideosUGC",
   "description": "Make a TikTok ad from one product photo. Choose a 6, 10, 15 or 30 second vertical clip, see the credit cost before you start, and download without a watermark.",
-  "h1": "Make AI TikTok Ads from One Product Photo",
+  "h1": "AI TikTok Ads Generator from One Product Photo",
   "eyebrow": "TikTok ads",
-  "lead": "Turn one product photo into a vertical TikTok ad. Choose 6, 10, 15 or 30 seconds, then download the clip when it is ready.",
-  "card": "Vertical TikTok ad clips from one product photo.",
+  "lead": "Turn one product photo into a vertical TikTok ad. Pick 6, 10, 15 or 30 seconds, see the credit cost first, and download a file with no watermark.",
+  "card": "Vertical TikTok ads from one product photo, with the credit cost shown first.",
   "secondary_keywords": [
     "TikTok video ads for products",
     "vertical product video for TikTok",
@@ -15,35 +15,35 @@
   "faq": [
     {
       "q": "Can I make a TikTok ad from one product photo?",
-      "a": "Yes. Upload one clear photo, describe the product moment in one sentence and choose 6, 10, 15 or 30 seconds. The credit cost appears before you start."
+      "a": "Yes. Upload one clear picture, describe one product moment, and choose 6, 10, 15 or 30 seconds. The credit cost appears before the job starts."
     },
     {
-      "q": "What length can a TikTok ad be?",
-      "a": "Choose 6, 10, 15 or 30 seconds. A short clip can show one action; a longer clip gives a demo more room to finish."
+      "q": "Does this build the ad from my product page link?",
+      "a": "No. The clip starts from the product photo you upload, not from a scraped product URL. You describe the scene yourself."
     },
     {
-      "q": "Do I need to book a TikTok creator or studio?",
-      "a": "No. Use the product photo you already have, then choose the TikTok moment you want to show."
+      "q": "What does a TikTok clip cost?",
+      "a": "A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. We do not promise how soon the file is ready. If a job fails, those credits return on their own."
     },
     {
-      "q": "Does the download include music or captions?",
-      "a": "No. Add sound, captions and your offer in TikTok, CapCut or Ads Manager after download."
+      "q": "Do I need a TikTok creator, a studio, or a voice track?",
+      "a": "No creator and no studio. The file does not include music, captions, or narration. Add those in TikTok or your editor after download. If a person appears, that presenter is generated. It is not a customer and not someone you hired."
     },
     {
-      "q": "Can I send the file straight to TikTok Ads Manager?",
-      "a": "Download the file first, then upload it yourself in TikTok Ads Manager or the TikTok app."
+      "q": "Can AI-made TikTok ads beat a filmed ad?",
+      "a": "We do not promise a higher result than a filmed ad. What you can do is try another opening from the same photo without booking another shoot."
     },
     {
-      "q": "What photo should I upload for a TikTok ad?",
-      "a": "Use a sharp photo that shows the whole product and leaves a little space around it for TikTok controls and captions."
+      "q": "Will this choose my TikTok audience?",
+      "a": "No. You choose the scene and the length. Targeting, budget, and the AI-content label stay in TikTok Ads Manager."
     },
     {
-      "q": "Can I make another version from the same photo?",
-      "a": "Yes. Run another job with a different opening or product moment without arranging another shoot."
+      "q": "Can I make a second version from the same photo?",
+      "a": "Yes. Run another job with a different action or line. Each job shows its own credit cost first."
     },
     {
-      "q": "When should I add TikTok AI-content labels?",
-      "a": "Follow TikTok's current AI-content and ad-review prompts in Ads Manager for the market where you will run the ad."
+      "q": "What should I read before the first file?",
+      "a": "Walk through [how to make a TikTok ad](/guides/first-tiktok-video-ad) for the opening, then check the current TikTok ad rules in Ads Manager on the day you publish."
     }
   ],
   "templates_lead": "Choose a look that puts one clear product action at the center of your TikTok opening.",
@@ -51,15 +51,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear photo of the whole product so viewers know what you sell from the first frame."
+      "d": "Add one sharp picture of the whole item, with a little space around it. That picture is the only source for the clip."
     },
     {
-      "t": "Pick Your TikTok Scene",
-      "d": "Describe one product action and choose a clip length. See the credit cost before the file is made."
+      "t": "Describe Your Scene",
+      "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before the job starts."
     },
     {
       "t": "Download and Post",
-      "d": "Download the 9:16 file with no watermark, add your sound and offer, then upload it to TikTok Ads Manager."
+      "d": "Save the file with no watermark. Add sound and your offer in your own editor, then upload it where the ad will run."
     }
   ],
   "visual": {
@@ -90,96 +90,191 @@
       "items": [
         {
           "t": "Upload Your Product Photo",
-          "d": "Add one clear photo of the whole product so viewers know what you sell from the first frame."
+          "d": "Add one sharp picture of the whole item, with a little space around it. That picture is the only source for the clip."
         },
         {
-          "t": "Pick Your TikTok Scene",
-          "d": "Describe one product action and choose a clip length. See the credit cost before the file is made."
+          "t": "Describe Your Scene",
+          "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before the job starts."
         },
         {
           "t": "Download and Post",
-          "d": "Download the 9:16 file with no watermark, add your sound and offer, then upload it to TikTok Ads Manager."
+          "d": "Save the file with no watermark. Add sound and your offer in your own editor, then upload it where the ad will run."
         }
       ]
+    },
+    "titles": {
+      "faq": {
+        "h2": "Questions before you export a TikTok file"
+      }
     }
   },
-  "benefits_h2": "Launch More TikTok Ads, Faster",
+  "benefits_h2": "A TikTok ad maker for small business clips",
   "benefits": [
     {
-      "t": "Stay On-Trend",
-      "d": "Start from one product photo and make a fresh TikTok opening when the next idea is ready.",
-      "icon": "bolt",
+      "t": "A new opening from the same upload",
+      "d": "When the next idea is ready, start again from the picture you already added. No shoot day in between.",
       "img": "n:guide:fx40-plat-tiktok-benefit-trend",
       "alt": "Hand lifting a coral windbreaker from folded streetwear on a mint tabletop"
     },
     {
-      "t": "Make Fresh Clips on Demand",
-      "d": "Change the first action or line and compare versions without filming the product again.",
-      "icon": "layers",
+      "t": "Pick a length before you spend credits",
+      "d": "Choose 6, 10, 15 or 30 seconds. A short run shows one action. A longer run lets a demo finish.",
       "img": "n:guide:fx40-plat-tiktok-benefit-clips",
       "alt": "Hand repositioning a cobalt reusable water bottle beside a tabletop light"
     },
     {
-      "t": "Ready-to-Post TikTok Ads",
-      "d": "Download a clear vertical clip, then add your sound, caption and offer in your own tools.",
-      "icon": "check",
+      "t": "A file you finish in your own editor",
+      "d": "Download a clean file, then add sound, captions and the offer yourself. Nothing is written onto the clip for you.",
       "img": "n:guide:fx40-plat-tiktok-benefit-ready",
       "alt": "Hand placing a green leaf beside a mint insulated tumbler on a kitchen counter"
     }
   ],
-  "steps_h2": "How to Make a TikTok Ad in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose the TikTok moment to show and download the finished vertical file.",
+  "steps_h2": "Make TikTok video ads for products in 3 steps",
+  "steps_lead": "Three screen actions. The credit cost appears before the file is made.",
   "more_sections": [
     {
-      "eyebrow": "Why sellers choose it",
-      "h2": "Why Sellers Use AI TikTok Ads",
-      "lead": "Move from a product photo to a TikTok-ready clip without arranging a shoot.",
+      "eyebrow": "How the clip is made",
+      "h2": "How a 9:16 product video ad gets made",
+      "lead": "The work is the picture, one sentence, and a download.",
       "items": [
         {
-          "t": "Test a New Opening",
-          "d": "Try another first action from the same product photo without arranging a new shoot.",
-          "img": "n:guide:fx40-plat-tiktok-more-opening",
-          "alt": "Hand opening a yellow lunch container on a bright picnic table"
+          "t": "Start from your own picture",
+          "d": "The item in the frame comes from the upload, so shoppers see what you actually sell."
         },
         {
-          "t": "Use Your Own Product Photo",
-          "d": "Start with the product image you already have and turn it into a TikTok-ready clip.",
-          "img": "n:guide:fx40-plat-tiktok-more-photo",
-          "alt": "Hand setting a blank product photo card beside a natural canvas tote bag"
+          "t": "Say the moment in one line",
+          "d": "Describe the action you want in the opening. You choose the scene. The tool does not pick an audience."
         },
         {
-          "t": "Download a Clean TikTok File",
-          "d": "Get a clear vertical file, then add your sound, caption and offer in TikTok.",
-          "img": "n:guide:fx40-plat-tiktok-more-file",
-          "alt": "Fresh tea poured into an unbranded matte ceramic mug on a bright counter"
-        }
-      ]
-    },
-    {
-      "eyebrow": "How the work moves",
-      "h2": "How AI Speeds Up TikTok Ad Creation",
-      "lead": "Keep the work moving from the idea you wrote to a file you can post.",
-      "items": [
-        {
-          "t": "Lead with the Product Action",
-          "d": "Choose the first movement that gives viewers a reason to stop.",
-          "img": "n:guide:fx40-plat-tiktok-more-action",
-          "alt": "Hand snapping shut a coral food container over a pale blue table"
-        },
-        {
-          "t": "Turn the Idea into a File",
-          "d": "Write one product moment, choose 6, 10, 15 or 30 seconds, and download the clip.",
-          "img": "n:guide:fx40-plat-tiktok-more-idea",
-          "alt": "Orange insulated bottle beside a blank sheet and pencil on a clean table"
-        },
-        {
-          "t": "Skip the Shoot Day",
-          "d": "Use your own product photo when a new TikTok angle is needed.",
-          "img": "n:guide:fx40-plat-tiktok-more-shoot",
-          "alt": "Woven tote bag hanging on an entryway hook in warm morning light"
+          "t": "Leave with a clean file",
+          "d": "The download has no watermark and is yours to use in ads. Preview the full-screen file before you run it."
         }
       ]
     }
   ],
-  "examples": null
+  "examples": null,
+  "blockOrder": [
+    "hero",
+    "benefits",
+    "steps",
+    "reasons",
+    "features",
+    "platforms",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "benefits_lead": "Make the next opening from a picture you already have, in the tall frame TikTok runs.",
+  "reasons": {
+    "h2": "Why a vertical product video for TikTok is easier to try",
+    "lead": "You are testing an opening, not staffing a shoot.",
+    "items": [
+      {
+        "t": "Hiring stays optional",
+        "d": "You can post a test before you hire anyone. A creator is a choice, not a step you have to clear."
+      },
+      {
+        "t": "Two lengths, one picture",
+        "d": "Run 6 seconds and 15 seconds when you want to see which opening holds. Each length is its own job."
+      },
+      {
+        "t": "Know the cost first",
+        "d": "A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60 and 30 is 120. A failed job returns those credits."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "Take the same upload to your other sales channels",
+    "lead": "TikTok is one placement. The same picture can start a file for the other channels you sell on.",
+    "items": [
+      {
+        "t": "AI Instagram ads",
+        "label": "AI Instagram ads",
+        "d": "A square still or a tall clip for the feed.",
+        "href": "/platforms/instagram-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "label": "AI Facebook ad generator",
+        "d": "A square feed still, or a tall clip for full-screen placements.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "label": "YouTube Shorts ads",
+        "d": "A tall short-form clip. A wide in-stream file is a separate job.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "label": "Amazon product photos",
+        "d": "A plain main image, a detail, and an in-use view for the gallery.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "label": "Shopify product photos",
+        "d": "Square page images, collection tiles, and a clip you add in the admin.",
+        "href": "/platforms/shopify-product-photos"
+      },
+      {
+        "t": "AI ads and product photos by platform",
+        "label": "AI ads and product photos by platform",
+        "d": "Open the full channel list and choose where the next file will run.",
+        "href": "/platforms"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "How shops use one upload before they book a shoot",
+    "lead": "A few ways shops use one upload.",
+    "items": [
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Texture in the first second",
+        "d": "Example: a pump bottle upload becomes a hand-apply opening for a tall ad test."
+      },
+      {
+        "example": true,
+        "who": "Drink seller",
+        "t": "Pour, then the label",
+        "d": "Example: a bottle upload becomes a pour onto a table so the label stays readable."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Lid snap as the hook",
+        "d": "Example: a lunch container upload becomes a close snap so the seal is obvious."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "One garment, one motion",
+        "d": "Example: a jacket upload becomes a lift-and-show so the color reads at once."
+      },
+      {
+        "example": true,
+        "who": "Gadget shop",
+        "t": "Feature, then the whole item",
+        "d": "Example: a headphone upload becomes a lift from the case, then a still hold."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Use, not a slogan",
+        "d": "Example: a brush upload becomes a short grooming motion so scale is easy to see."
+      }
+    ]
+  },
+  "related_h2": "Tools that pair with a TikTok ad",
+  "related_lead": "Make the clip, then open the matching tool or template.",
+  "relatedLinks": [
+    "video-ads",
+    "image-to-video",
+    "unboxing-videos",
+    "spokesperson-videos",
+    "tpl-spark-ads-style-video",
+    "tpl-ugc"
+  ]
 }

@@ -2,56 +2,29 @@
   "id": "tpl-box",
   "title": "Product Bundle Photos for Clearer Listings | AIVideosUGC",
   "description": "Show every item in your kit in one square bundle photo. Use it on Amazon, Shopify, gift pages, social ads and posts without another styled shoot.",
-  "h1": "Product Bundle Photos for Items Sold Together",
+  "h1": "Product Bundle Photos That Show Every Shipped Piece",
   "eyebrow": "Product photo template",
-  "lead": "Bundle shoppers want one clear answer: what exactly comes in the box? Upload a photo of the complete kit and get a bundle image that lets buyers count the pieces before ordering.",
-  "benefits_h2": "Product bundle photos that answer buyer questions",
-  "benefits": [
-    {
-      "t": "Answer \"what do I get\" at a glance",
-      "d": "One square image shows every piece and nothing extra, so shoppers can count the kit without opening a dropdown. The contents question is settled before they read the description.",
-      "img": "n:guide:fx44-tpl-box-benefit-count-pieces-r1",
-      "alt": "White cleanser tube, sage cream jar and blue pump bottle arranged as a complete skincare kit."
-    },
-    {
-      "t": "No styled shoot for each gift set",
-      "d": "Arrange a starter kit, refill pack or holiday gift set in a clean scene from one source photo. Seasonal styling is added without booking a product photographer.",
-      "img": "n:guide:fx44-tpl-box-benefit-seasonal-set-r1",
-      "alt": "Teal bottle, folded cream scarf and small ceramic ornament arranged in an open seasonal gift box."
-    },
-    {
-      "t": "Honest contents, controlled by you",
-      "d": "Upload every shipped piece, including the box and inserts, and state the exact count. The image supports your written contents list instead of inventing missing accessories.",
-      "img": "n:guide:fx44-tpl-box-benefit-listing-set-r1",
-      "alt": "Teal pet harness, rolled leash, plain metal bowl and folded towel arranged as a complete travel kit."
-    },
-    {
-      "t": "Ready for listings and gift pages",
-      "d": "Place the square photo as image two on Amazon or Shopify and use it in seasonal gift posts. Downloads carry no AIVideosUGC watermark and can be used commercially.",
-      "img": "n:guide:fx44-tpl-box-benefit-ad-ready-r1",
-      "alt": "Matte black phone stand, braided charging cable and blue power bank arranged as a complete desk bundle."
-    }
-  ],
+  "lead": "Open a bundle scene, add one photo of the complete kit, and download a square image shoppers can count.",
   "secondary_keywords": [
     "what's in the box photo",
     "skincare set product photo",
     "gift set product photography",
     "kit and bundle listing images"
   ],
-  "steps_h2": "How to Make Product Bundle Photos in 3 Simple Steps",
-  "steps_lead": "Choose a bundle style, add every item, generate. No props, shoot day or missing pieces.",
+  "steps_h2": "Make Kit and Bundle Listing Images in 3 Steps",
+  "steps_lead": "Every piece in one photo, one arrangement, then a square file you can price in your editor.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear photo showing every item, the package and any insert. Keep the full set in frame so shoppers can check the contents."
+      "d": "Upload one clear photo of the complete kit, including the box and any insert. Keep every shipped piece in frame so nothing is invented."
     },
     {
-      "t": "Pick a Bundle Style",
-      "d": "Choose an arrangement that keeps every shipped piece visible. Use a clean layout that fits your listing or gift page."
+      "t": "Describe Your Scene",
+      "d": "Name an arrangement that keeps each piece visible, on a clean or light backdrop if that matches the listing. A long description is optional."
     },
     {
       "t": "Download and Post",
-      "d": "Download the image and compare each object with your contents list. Add your current price in the editor before posting."
+      "d": "Download the square image and compare each object with your written contents list. Add the current price in your editor before posting."
     }
   ],
   "maker": {
@@ -74,47 +47,47 @@
   "faq": [
     {
       "q": "What is a product bundle photo template?",
-      "a": "It is a ready-made set scene. Add one photo of your kit and generate a clear image that shows what ships together."
+      "a": "It is a ready-made set scene. Add one photo of the kit you ship and download a square image that shows those pieces together."
     },
     {
-      "q": "Do I need to write prompts to use these templates?",
-      "a": "No. Pick a bundle style, upload your kit photo and generate. Step two can include one short line about the arrangement if you want."
+      "q": "Do I have to write a long description?",
+      "a": "No. Open this bundle template and upload the kit photo. Add one short line about the arrangement only if you want to."
     },
     {
-      "q": "Who are bundle templates built for?",
-      "a": "Ecommerce sellers, gift brands and agencies that need a clean contents view for listings, bundles and ads."
+      "q": "Who is this scene for?",
+      "a": "Shops and gift brands that need a contents view for a listing, a bundle page or an ad, and agencies making that image for them."
     },
     {
-      "q": "Can one photo show every item in my kit?",
-      "a": "Yes. Start with a photo where each piece is visible and the full set fits in the frame."
+      "q": "Can one photo show every item?",
+      "a": "Yes, when each piece is visible and the full set fits in the frame. The image should not add a piece that was not in the photo."
     },
     {
-      "q": "Can I add the bundle price to the photo?",
-      "a": "Add the current price, offer or contents text as an editable layer in your editor after download."
+      "q": "Can I put the price on the photo?",
+      "a": "Add the current price, offer or contents line in your editor after download. The generator does not write that live text for you."
     },
     {
-      "q": "Can I show the bundle on a white background?",
-      "a": "Yes. Choose a clean product scene when a white or light backdrop matches your listing style."
+      "q": "Can the bundle sit on a white background?",
+      "a": "Yes. Choose a clean scene when a white or light backdrop matches the listing."
     },
     {
-      "q": "How fast is a bundle photo made?",
-      "a": "A photo is generated in minutes after you start the job, with no props to buy or second shoot."
+      "q": "Do I need props or a second shoot?",
+      "a": "No. The scene is generated from the kit photo you upload. You are not booking a styled shoot for each gift set."
     },
     {
       "q": "What does a bundle photo cost?",
-      "a": "Each photo costs 24 credits, and the charge is shown before the job starts."
+      "a": "Each product photo costs 24 credits. The charge is shown before the job starts, and a failed job returns those credits."
     },
     {
-      "q": "Can I use the bundle image in paid ads?",
-      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for contents and claims."
+      "q": "Can I use the image in paid ads?",
+      "a": "Yes. Downloads have no watermark and can run in your own ads, pages and posts. You remain responsible for the contents and any claims."
     },
     {
       "q": "Can shoppers count every piece?",
-      "a": "Yes. Arrange the full kit so each piece is visible, then compare the image with your written contents list before posting."
+      "a": "Arrange the full kit so each piece is visible, then compare the download with your written contents list before you post it."
     }
   ],
   "visual": {
-    "overview": "A bundle template keeps every item in one frame so shoppers can see what the set includes before they order.",
+    "overview": "",
     "strip": [
       "n:guide:g1-box-burgundy-sandal-unboxing-r2",
       "n:guide:k1-unboxing-picker-tea-set",
@@ -146,8 +119,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a bundle template",
-      "lead": "Browse bundle scenes, then add one photo of your complete kit.",
+      "title": "Browse Video Ad Templates by Category",
+      "lead": "These cards are video ads for other categories, not bundle photos. For the kit image, use the upload box above and add one photo where every shipped piece is visible.",
       "chips": [
         {
           "id": "accessories",
@@ -563,20 +536,122 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Create product bundle photos from one set image"
-      },
       "m3": {
-        "h2": "Choose a product bundle photo arrangement"
+        "h2": "Browse Video Ad Templates by Category",
+        "lead": "These cards are video ads for other categories, not bundle photos. For the kit image, use the upload box above and add one photo where every shipped piece is visible."
       },
       "faq": {
-        "h2": "Questions about product bundle photos"
+        "h2": "Questions About Product Bundle Photos"
       }
     }
-  }
+  },
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq",
+    "cta"
+  ],
+  "reviews": {
+    "h2": "Gift Set Product Photography for Kits You Already Pack",
+    "lead": "Each card is a kit the shop already packs, then photographs.",
+    "items": [
+      {
+        "example": true,
+        "who": "Skincare shop",
+        "t": "Starter kit",
+        "d": "A skincare shop lays out cleanser, serum and cream, then counts them against the contents list."
+      },
+      {
+        "example": true,
+        "who": "Gift shop",
+        "t": "Holiday set",
+        "d": "A gift shop shows the box with every insert visible, and adds the price in an editor before the seasonal post."
+      },
+      {
+        "example": true,
+        "who": "Hair shop",
+        "t": "Refill pack",
+        "d": "A hair shop lays out shampoo, a mask and a refill pouch so each piece can be counted."
+      },
+      {
+        "example": true,
+        "who": "Coffee shop",
+        "t": "Brew kit",
+        "d": "A coffee shop frames beans, a filter and a mug from a photo that already included all three."
+      },
+      {
+        "example": true,
+        "who": "Baby shop",
+        "t": "Care set",
+        "d": "A baby shop shows three care items plus the carton, and does not add an accessory that was not in the photo."
+      },
+      {
+        "example": true,
+        "who": "Tool shop",
+        "t": "Bit set",
+        "d": "A tool shop opens the case so every bit is visible, then uses that frame as gallery image two."
+      },
+      {
+        "example": true,
+        "who": "Candle shop",
+        "t": "Trio",
+        "d": "A candle shop shows three candles and the box lid in one clean scene."
+      },
+      {
+        "example": true,
+        "who": "Stationery shop",
+        "t": "Desk kit",
+        "d": "A stationery shop arranges a notebook, a pen and clips so the count matches the listing."
+      },
+      {
+        "example": true,
+        "who": "Spice shop",
+        "t": "Rack set",
+        "d": "A spice shop shows the rack and the jars that ship with it, all from the source photo."
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Travel set",
+        "d": "A beauty shop photographs the minis in their pouch and uses that square on a gift page. The file has no watermark."
+      }
+    ]
+  },
+  "related_h2": "Skincare Set Product Photo, Lighting, and Amazon",
+  "related_lead": "More beauty pages for this kit shot: lighting, a Story image, a beauty video, and Amazon.",
+  "relatedLinks": [
+    {
+      "id": "photo-hub",
+      "label": "AI product photo generator"
+    },
+    {
+      "id": "tpl-light",
+      "label": "product photo lighting"
+    },
+    {
+      "id": "tpl-story",
+      "label": "Instagram story ad images"
+    },
+    {
+      "id": "tpl-beauty",
+      "label": "beauty product video ads"
+    },
+    {
+      "id": "ind-beauty-skincare",
+      "label": "AI product videos and photos for beauty brands"
+    },
+    {
+      "id": "plat-amazon",
+      "label": "Amazon product photos"
+    }
+  ],
+  "cta_title": "Start a Bundle Photo from the Full Kit",
+  "cta_lead": "Upload one photo of every piece you ship and see the credit cost before you start."
 }

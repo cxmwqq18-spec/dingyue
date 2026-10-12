@@ -1,10 +1,10 @@
 {
   "id": "tpl-launch",
   "title": "AI Promo Video Maker for New Products | AIVideosUGC",
-  "description": "Announce a new product with a polished launch video made from one photo. Pick 9:16 or 1:1 and add your release date and offer as editable text.",
-  "h1": "AI Promo Video Maker for Your Next Product Launch",
+  "description": "Turn one product photo into a launch video. Pick 9:16 or 1:1, at 6, 10, 15, or 30 seconds. Add the release date and offer in your editor after download.",
+  "h1": "AI Promo Video Maker for the Day You Release",
   "eyebrow": "Launch video template",
-  "lead": "A new product with no announcement gets ignored, but most small shops cannot book a shoot before launch day. Upload one photo of the final item and this AI promo video maker builds a creator-style launch clip that makes the release feel ready for its first customers.",
+  "lead": "Pick a reveal scene and add one photo of the finished item, so the launch clip is ready when the date is set.",
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -12,20 +12,20 @@
     "Instagram launch ad",
     "home decor promo video"
   ],
-  "steps_h2": "How to Make an AI Promo Video in 3 Simple Steps",
-  "steps_lead": "Turn one product photo into a launch moment you can publish when the release details are confirmed.",
+  "steps_h2": "Make a Facebook Promo Video in 3 Steps",
+  "steps_lead": "One photo of the finished item, a short line about the reveal, then a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product you are about to launch."
+      "d": "Use one clear photo of the finished item you plan to release. Keep the whole product inside the frame."
     },
     {
-      "t": "Pick Your Launch Scene",
-      "d": "Share the review, reveal, try-on or demo moment in one sentence."
+      "t": "Describe Your Scene",
+      "d": "Name a reveal, an unboxing, or a short demo. Then pick 9:16 or 1:1 and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed release date, price and offer in your editor, then post the launch clip where customers will see it."
+      "d": "Download the file and add the release date and offer in your editor. Do not promise a date you have not set."
     }
   ],
   "maker": {
@@ -47,79 +47,48 @@
   },
   "faq": [
     {
-      "q": "Should I make a square or a vertical version?",
-      "a": "Vertical 9:16 fills the screen in Stories and Reels, and square 1:1 sits neatly in the feed. You can make one of each. Every version is its own run, with the cost shown before it starts."
+      "q": "What is an AI promo video template?",
+      "a": "A ready reveal, unboxing, or demo scene for a product you are about to release. You add a photo of the finished item, and the clip announces it."
     },
     {
-      "q": "Can I make a promo before my product photos are ready?",
-      "a": "You can start from a text description alone, but the product won't match your real one. For an ad, wait until you have a clear photo of the final item so shoppers see what they'll actually get."
+      "q": "How do I make the launch clip?",
+      "a": "Upload the finished-item photo, name the reveal, pick 9:16 or 1:1 and a length, then download the file and add the date in your editor."
     },
     {
-      "q": "What length should a launch promo use?",
-      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds when the launch needs a full product story. Choose 9:16 for vertical channels."
+      "q": "Why start from a photo instead of a launch shoot?",
+      "a": "The reveal is built from a photo of the final item. You do not book a creator or a studio before release day."
     },
     {
-      "q": "Which ratio is best for launch day?",
-      "a": "Use 9:16 for TikTok and Reels, and a 1:1 version for feeds and listings. Both come from the same source photo."
+      "q": "Who is this scene for?",
+      "a": "Shops, including home brands, that need a Facebook or feed announcement and do not have a shoot on the calendar."
     },
     {
-      "q": "Can I make teaser content before stock arrives?",
-      "a": "Yes. Use a clear product photo to make a coming-soon clip, and add the date as editable text."
+      "q": "Can I do this on the first try?",
+      "a": "Start from a clear photo of the final item. A description alone will not match the real product. Name the reveal, then check the item before you post."
     },
     {
-      "q": "What does a launch clip cost?",
-      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before the job starts."
+      "q": "What photo should I upload?",
+      "a": "One clear photo of the finished item, with the whole product in frame. Wait until that photo exists before you make an ad."
     },
     {
-      "q": "What belongs in a launch teaser?",
-      "a": "Show the product and the reveal, then add the planned date as editable text so the teaser can be updated."
+      "q": "How is a teaser different from release day?",
+      "a": "A teaser can say the item is coming and carry a planned date as text you can edit. Release-day creative should show the live date, the current offer, and the product link."
     },
     {
-      "q": "How is a teaser different from release-day creative?",
-      "a": "A teaser can say coming soon; release-day creative should show the live date, current offer, and the product link."
+      "q": "Which size and length can I pick?",
+      "a": "This template is set up for 9:16 and 1:1. Use 6 seconds for a quick reveal, or a longer length for a demo. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
-      "q": "Where should I put the launch discount?",
-      "a": "Add the approved price or discount as an editable layer in a clear area after download and verify it on a phone preview."
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "What should I check before publishing?",
-      "a": "Confirm the product shape, launch date, price, stock status, link, and crop in the final post."
-    },
-    {
-      "q": "Can I have launch ads ready before the product is in stock?",
-      "a": "Yes. Use a clear photo of the final item to make a coming-soon teaser and add the date as editable text. Wait for a confirmed release date before advertising an exact delivery promise."
-    },
-    {
-      "q": "Do I need a creator or a studio to film the launch?",
-      "a": "No. One photo of the final product becomes a creator-style unboxing or demo clip for a fixed credit cost shown up front. The people on screen are AI-generated, so present the clip as your own ad, not as a customer review."
+      "q": "Can I run the file in ads?",
+      "a": "Yes. The download has no AIVideosUGC watermark. Add the confirmed date, price, and offer after download, and do not state a delivery promise you have not confirmed. A person on screen is an AI performer, not a customer."
     }
   ],
-  "examples": {
-    "h2": "More launch scene examples",
-    "lead": "Creator reviews, product reveals, and hands-on moments for a launch post.",
-    "groups": [
-      {
-        "label": "Reveal and hero",
-        "items": [
-          {
-            "ref": "n:guide:rc4-tpl-launch-examples-unboxing-01-r1",
-            "title": "Hands Reveal a Sage Cream Jar and Tube",
-            "kind": "scene",
-            "product": "face cream"
-          },
-          {
-            "ref": "n:guide:k6-tpl-ugc-picker-steaming-mug",
-            "title": "First Sip Reaction: Steaming Mug",
-            "kind": "scene",
-            "product": "ceramic mug"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Show the new product in a launch moment buyers understand, then add the release details after download.",
+    "overview": "",
     "strip": [
       "n:guide:rc4-tpl-launch-source-bag-r1",
       "n:guide:q12-tpl-launch-case-phone-case-r2",
@@ -151,8 +120,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a product-launch ad format",
-      "lead": "Pick a creator review, demo, unboxing, try-on or first-bite format that opens with the product.",
+      "title": "Choose a New Product Promo Video",
+      "lead": "These cards cover many categories. There is no launch-only filter. Open a reveal or unboxing card, then add a photo of the final item.",
       "chips": [
         {
           "id": "accessories",
@@ -568,37 +537,120 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Create a vertical product-launch video from one photo"
-      },
       "faq": {
-        "h2": "AI Promo Video Maker Questions"
+        "h2": "Questions About a Home Decor Promo Video"
+      },
+      "m3": {
+        "h2": "Choose a New Product Promo Video"
       }
     }
   },
-  "cta_lead": "Make the launch clip, then add the release details after download.",
-  "benefits_h2": "Why sellers use an AI promo video maker",
-  "benefits": [
+  "cta_lead": "Upload one photo of the finished item and see the credit cost before you start.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "Sample Product Launch Video Setups",
+    "lead": "Example scenes for this template. They show how a shop could announce one finished item.",
+    "items": [
+      {
+        "example": true,
+        "who": "Home brand",
+        "t": "Hands on the new item",
+        "d": "Example: hands reveal a cream jar and tube as the first look at a finished product."
+      },
+      {
+        "example": true,
+        "who": "Mug shop",
+        "t": "First use",
+        "d": "Example: a steaming mug is the opening beat for a release-day clip."
+      },
+      {
+        "example": true,
+        "who": "Decor shop",
+        "t": "A home decor promo",
+        "d": "Example: a finished home item is shown in one room, and the date is added later as text."
+      },
+      {
+        "example": true,
+        "who": "Teaser editor",
+        "t": "Coming soon",
+        "d": "Example: a teaser can say the item is coming, with the planned date typed in after download."
+      },
+      {
+        "example": true,
+        "who": "Release editor",
+        "t": "Live date, live offer",
+        "d": "Example: on release day the editor adds the confirmed date, price, and offer. A teaser does not invent them."
+      },
+      {
+        "example": true,
+        "who": "Feed buyer",
+        "t": "Vertical and square",
+        "d": "Example: 9:16 fills a story placement, and 1:1 sits in a feed. Each cut is its own job."
+      },
+      {
+        "example": true,
+        "who": "Claims reviewer",
+        "t": "No delivery promise",
+        "d": "Example: the clip waits for a confirmed date before it states when the item will arrive."
+      },
+      {
+        "example": true,
+        "who": "Launch shop",
+        "t": "Wait for the real item",
+        "d": "Example: a text-only start will not match the product. The ad waits for a clear photo of the final item."
+      },
+      {
+        "example": true,
+        "who": "Small team",
+        "t": "No shoot before launch",
+        "d": "Example: the reveal is generated from the finished-item photo, with no creator booking before release day."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Not a customer unboxing",
+        "d": "Example: a person on screen is an AI performer. Present the clip as your ad, not as a buyer review."
+      }
+    ]
+  },
+  "related_h2": "Pages for an Instagram Launch Ad",
+  "related_lead": "Video ads, home templates, and the product-launch occasion page.",
+  "relatedLinks": [
     {
-      "t": "New launch ad in minutes",
-      "d": "Turn one final product photo into a creator review, unboxing or demo before launch day."
+      "id": "video-ads",
+      "label": "AI UGC video ads"
     },
     {
-      "t": "Spend less than a studio shoot",
-      "d": "Skip casting, booking and gear; make polished launch creative from the photo you already have."
+      "id": "tpl-howto",
+      "label": "AI how-to video maker"
     },
     {
-      "t": "Show more launch moments",
-      "d": "Create review, reveal, unboxing or demo versions from the same product photo without reshooting."
+      "id": "tpl-home",
+      "label": "home product videos"
     },
     {
-      "t": "Keep release details easy to change",
-      "d": "Update the date, price and offer in your editor while the launch video stays reusable."
+      "id": "tpl-compare",
+      "label": "product comparison video"
+    },
+    {
+      "id": "occ-product-launch",
+      "label": "product launch video and photos"
+    },
+    {
+      "id": "plat-instagram",
+      "label": "AI Instagram ads"
     }
-  ]
+  ],
+  "cta_title": "Ready to Announce the Item?"
 }

@@ -1,10 +1,10 @@
 {
   "id": "about",
   "title": "About Us: AI Product Photos and Video Ads | AIVideosUGC",
-  "description": "AIVideosUGC turns one product photo into store images and AI video ads in minutes, with no studio, no casting and private uploads. See how it works.",
+  "description": "AIVideosUGC turns one product photo into store images and short video ads for a small shop, with no studio, no casting, and private uploads. See how it works.",
   "h1": "About AIVideosUGC: Product Visuals Made Simple",
   "eyebrow": "About us",
-  "lead": "AIVideosUGC helps small online shops make product photos and short AI video ads from a single product photo, so a new ad takes minutes instead of a shoot.",
+  "lead": "AIVideosUGC helps a small shop make product photos and short video ads from one product photo, so you can review a file in your account instead of booking a shoot.",
   "secondary_keywords": [
     "AI visuals for Shopify sellers",
     "product content tool for Etsy shops",
@@ -12,37 +12,37 @@
   ],
   "sections": [
     {
-      "h2": "What we make",
+      "h2": "Store images and short video ads",
       "paras": [
-        "Upload a picture of what you sell, pick a template or write the scene you want, and get back a square store image or a short AI video ad of 6, 10, 15 or 30 seconds.",
-        "Every tool does a job sellers do every week: white background shots, lifestyle scenes, on-model photos, feed ad images and vertical videos for TikTok, Instagram Reels and YouTube Shorts. No design software, no ad agency and no studio day."
+        "Upload a picture of what you sell, pick a template or describe the scene, and download a square store image or a short video of 6, 10, 15, or 30 seconds.",
+        "The weekly jobs are a clean listing shot, AI lifestyle product photos, AI model photos for clothing, a feed image, and a vertical clip. No design software, no agency booking, and no studio day."
       ],
       "img": "n:guide:b2f9-about-what-we-make-r1",
       "alt": "Adult seller with a blonde chin-length bob sets a plain ceramic mug on paper beside a closed laptop."
     },
     {
-      "h2": "Who it's for",
+      "h2": "AI visuals for Shopify sellers and small shops",
       "paras": [
-        "It is built for small and growing stores on Shopify, Amazon and Etsy, and for the marketers who run their ads. If you pack orders, write listings and set up campaigns yourself, this is for you.",
-        "You don't need editing skills. A clear photo of your product and a sentence about the scene you picture are enough to start, and you can make a fresh version of an ad whenever a hook or an offer needs testing."
+        "It is built for small and growing stores on Shopify, Amazon, and Etsy, and for the marketers who run their ads. If you pack orders, write listings, and set campaigns yourself, this fits the week you already have.",
+        "You do not need editing skills. A clear product photo and one sentence about the scene are enough to start. It is a product content tool for Etsy shops when a hook or an offer changes and you need a new image or clip. Shopify product photos are one of the listing jobs it covers."
       ],
       "img": "n:guide:fx08-about-who-its-for-r1",
       "alt": "Adult small-shop owner prepares a plain product for a listing at a packing table."
     },
     {
-      "h2": "Your photos stay yours",
+      "h2": "A private AI product photo tool",
       "paras": [
-        "Everything you upload and everything you make stays in your own account. Your product photos and results are never shown to other customers or made public.",
-        "Some requests are turned down, such as ones involving celebrities or other public figures, or logos and trademarks that belong to someone else. That keeps every ad focused on your own products."
+        "Everything you upload and everything you make stays in your own account. Your product photos and results are not shown to other customers or published.",
+        "Some requests are turned down, including celebrities or other public figures, and logos or trademarks that belong to someone else. The ad stays on products you sell."
       ],
       "img": "n:guide:b2f9-about-photos-stay-yours-r1",
       "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock."
     },
     {
-      "h2": "Credit costs you can see",
+      "h2": "Credit costs on screen before you start",
       "paras": [
-        "Every photo and video shows its price in credits before the job starts, so nothing spends without your say-so. Plans run from $24.50 a month with 200 credits.",
-        "Credits are held while a job runs and used only when the result arrives. Delivered results are generally not refunded, which is why the cost is always on screen before you commit; if a job fails, the credits go back to your balance automatically."
+        "Every photo and video shows its price in credits before the job starts, so nothing spends without your say-so. Plans start at $24.50 a month with 200 credits.",
+        "Credits are held while a job runs and used when the file arrives. A delivered file is not refunded, which is why the cost is on screen first. If a job fails, the credits return to your balance automatically."
       ],
       "img": "n:guide:b2f9-about-credit-costs-r1",
       "alt": "Adult seller with a short silver crop reviews plain wooden tokens beside a closed laptop."
@@ -51,29 +51,39 @@
   "faq": [
     {
       "q": "Can I make product ads without hiring an agency?",
-      "a": "Yes. AIVideosUGC is self-serve: upload your product photo or describe the scene, review the result, and download the asset from your account. There is no booking, no shoot day and no waiting on an editor."
+      "a": "Yes. Upload your product photo or describe the scene, review the result, and download it from your account. There is no booking, no shoot day, and no editor to wait on."
     },
     {
-      "q": "How do I get in touch with the AIVideosUGC team?",
-      "a": "Write to support@aivideosugc.com with your question. Email is the best way to reach the team."
+      "q": "How do I reach the team?",
+      "a": "Email support@aivideosugc.com. Email is how you reach the team."
     },
     {
-      "q": "What can I upload to make a product asset?",
-      "a": "Upload a product photo for an image. For a video, you can upload a photo or describe the product and scene. Compare the result with the real item before you download or publish it."
+      "q": "What can I upload?",
+      "a": "Upload a product photo for an image. For a video, upload a photo or describe the product and the scene. Compare the result with the real item before you download or publish it."
     },
     {
       "q": "Who is AIVideosUGC for?",
-      "a": "For online sellers and marketers who need product photos and short ad videos from their own product images or descriptions, without hiring a studio or an agency."
+      "a": "Online sellers and marketers who need product photos and short ad videos from their own product images or descriptions, without a studio or an agency."
     },
     {
-      "q": "How much does AIVideosUGC cost?",
+      "q": "How much does it cost?",
       "a": "Monthly plans start at $24.50 with 200 credits, and each photo or video shows its credit cost before the job starts. If a job fails, its credits come back automatically."
     },
     {
-      "q": "Do you keep a model I can reuse?",
-      "a": "No. Your uploads and results stay in your account, and each new asset starts from the product reference you provide."
+      "q": "Do you keep a presenter I can reuse?",
+      "a": "No. Your uploads and results stay in your account, and each new asset starts from the product reference you provide. There is no saved presenter library."
     }
   ],
   "ctaTitle": "Start with one product photo",
-  "ctaLead": "Pick a photo or video tool, see the cost before you start, and make a store asset for your next listing or ad."
+  "ctaLead": "Pick a photo or video tool, see the cost before you start, and make a store asset for the next listing or ad.",
+  "cta_title": "Start with one product photo",
+  "cta_lead": "Pick a photo or video tool, see the cost before you start, and make a store asset for the next listing or ad.",
+  "relatedLinks": [
+    "pricing",
+    "faq",
+    "contact",
+    "trust",
+    "ai-info",
+    "glossary"
+  ]
 }

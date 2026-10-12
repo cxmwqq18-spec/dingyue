@@ -2,56 +2,29 @@
   "id": "tpl-compare",
   "title": "Product Comparison Videos for Clearer Choices | AIVideosUGC",
   "description": "Show shoppers the difference between your colors, sizes or sets. One photo of both options becomes a comparison clip for listings, Shorts and paid ads.",
-  "h1": "Help Shoppers Compare Your Products Side by Side",
+  "h1": "Make a Product Comparison Video Shoppers Can Judge",
   "eyebrow": "Comparison video template",
-  "lead": "Turn one product photo into a product comparison video that gives shoppers a clear result, ready for the channel where you sell.",
-  "benefits_h2": "Make the product comparison result clear",
-  "benefits": [
-    {
-      "t": "See size choices at a glance",
-      "d": "Show small and large stainless bottles together so shoppers can judge scale before choosing.",
-      "img": "n:guide:fx20-compare-benefit-size-r1",
-      "alt": "Small and large plain stainless bottles standing side by side while an adult hand points between them."
-    },
-    {
-      "t": "Compare colors without another shoot",
-      "d": "Place charcoal and cream tumblers in one frame so the difference is clear from the first second.",
-      "img": "n:guide:fx20-compare-benefit-color-r1",
-      "alt": "Charcoal and warm cream plain insulated tumblers aligned side by side by adult hands."
-    },
-    {
-      "t": "Make finish choices easier",
-      "d": "Show navy and rust knit beanies side by side so shoppers can compare color and texture.",
-      "img": "n:guide:fx20-compare-benefit-finish-r1",
-      "alt": "Navy and rust plain knit beanies shown side by side while adult hands turn them."
-    },
-    {
-      "t": "Show the right capacity",
-      "d": "Arrange two packed backpacks at different sizes so shoppers can see how much each one holds.",
-      "img": "n:guide:fx20-compare-benefit-capacity-r1",
-      "alt": "Two plain canvas backpacks in different sizes shown side by side as an adult opens the larger bag."
-    }
-  ],
+  "lead": "Use one photo that already shows both options, so the difference is the whole clip.",
   "secondary_keywords": [
     "side by side product video",
     "product variant comparison video",
     "color options video",
     "product size comparison video"
   ],
-  "steps_h2": "How to Make Product Comparison Videos in 3 Simple Steps",
-  "steps_lead": "Three simple steps turn one product photo into a comparison result you can post where shoppers choose.",
+  "steps_h2": "Make a Product Variant Comparison Video in 3 Steps",
+  "steps_lead": "One photo of both options, a short description of the difference, then a file you can post.",
   "steps": [
     {
-      "t": "Upload Your Product",
-      "d": "Add one clear source photo with both options in view. Keep each full silhouette and surface visible at a similar scale."
+      "t": "Upload Your Product Photo",
+      "d": "Upload one photo with both options fully in frame and at a similar scale. Even light keeps the difference easy to see."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose a side-by-side scene and describe the difference shoppers should see. Keep the action focused on one comparison."
+      "t": "Describe Your Scene",
+      "d": "Name the difference shoppers should notice, then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the result and add exact offer or listing details in your editor. Post the finished comparison where shoppers choose."
+      "d": "Download the file and add variant names or prices in your editor. Post it where shoppers choose."
     }
   ],
   "maker": {
@@ -74,51 +47,47 @@
   "faq": [
     {
       "q": "What is a product comparison video template?",
-      "a": "It is a ready-made side-by-side scene. Add your own options and generate a comparison that helps shoppers choose."
+      "a": "A ready scene that puts two visible options in one clip. You bring a single photo that already shows both, and the result helps a shopper choose."
     },
     {
-      "q": "Which products can I compare?",
-      "a": "Compare variants such as sizes, colors, finishes or included pieces when both options are visible in your source photo."
+      "q": "How do I make the comparison?",
+      "a": "Upload that photo, name the difference you want people to notice, pick a size and a length, then download the file."
+    },
+    {
+      "q": "Why start from a photo instead of a studio day?",
+      "a": "The clip is built from the photo you already have. You skip a second shoot when both options are already in that frame."
+    },
+    {
+      "q": "Who is this scene for?",
+      "a": "Shops that sell two sizes, colors, finishes or a set, and need the choice to read on a listing, a Short or a paid ad."
+    },
+    {
+      "q": "What do I need for the first comparison?",
+      "a": "Put both options in one clear photo and name the difference in a short line. Download the file and check that both options are still easy to see."
     },
     {
       "q": "What photo should I upload?",
-      "a": "Upload one clear photo that shows both options completely, at a similar scale and in even light."
+      "a": "One sharp frame with both options complete, at a similar scale, in even light. A photo of only one option cannot show the comparison."
     },
     {
-      "q": "Can one photo show both options?",
-      "a": "Yes. A single frame with both products visible gives the comparison one consistent reference."
+      "q": "Which size and length can I pick?",
+      "a": "Use 1:1, 16:9, 9:16, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
-      "q": "Can I compare colors, sizes, finishes or sets?",
-      "a": "Yes. The scene can show visible differences in color, size, finish or included pieces."
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Do I need to write a prompt?",
-      "a": "No. Choose a comparison scene and add a short description of the difference you want shoppers to see."
+      "q": "Can I add names and prices later?",
+      "a": "Yes. Add variant names, measurements and prices in your editor after download. The generator does not write those live details for you."
     },
     {
-      "q": "Which video size should I choose?",
-      "a": "Use 1:1 for a product gallery, 16:9 for a listing embed or 9:16 for Shorts and Reels."
-    },
-    {
-      "q": "Which length can I choose?",
-      "a": "Choose 6, 10, 15 or 30 seconds; the credit cost is shown before you start."
-    },
-    {
-      "q": "Can I add prices or variant names after download?",
-      "a": "Yes. Add exact names, measurements and prices in your editor after downloading."
-    },
-    {
-      "q": "Do I need a shoot day?",
-      "a": "No. The comparison is generated from your product photo, so you do not need a second shoot or studio booking."
-    },
-    {
-      "q": "Where can I use the comparison video?",
-      "a": "Use the download in product listings, product pages, Shorts, Reels and paid ads that fit your channel."
+      "q": "Can I run the file in ads?",
+      "a": "Yes. The download has no AIVideosUGC watermark and can be used in your own listings and paid ads. If a person appears, that person is an AI performer, not a customer."
     }
   ],
   "visual": {
-    "overview": "A comparison video puts two options side by side so shoppers can choose the size, finish or set that suits them.",
+    "overview": "",
     "strip": [
       "n:guide:rc6-tpl-compare-source-canisters-r1",
       "n:guide:rc6-tpl-compare-result-canisters-r1",
@@ -133,7 +102,7 @@
       "sourceHint": "Keep the small and large slate-gray canisters, rounded lids and blank surfaces fully visible.",
       "result": "n:guide:rc6-tpl-compare-result-canisters-r1",
       "mode": "video",
-      "prompt": "Use the uploaded pair as the exact options: one small and one large matte slate-gray storage canister with rounded lids and blank surfaces. Preserve each silhouette and relative size. An adult holds one in each hand beside a pale wood table and raises both equally to show the scale difference. Bright natural home light, chest-up front-facing framing. Sound: soft room tone and two gentle ceramic taps; no music.",
+      "prompt": "An adult holds one small and one large matte slate-gray canister and raises both to the same height, so the size difference is easy to see.",
       "options": [
         [
           "Size",
@@ -150,8 +119,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a comparison template",
-      "lead": "Browse comparison styles, then add two options from your own range.",
+      "title": "Choose a Scene for a Side by Side Product Video",
+      "lead": "Open a scene, then use a photo that shows both options at a similar size. A photo of only one option cannot show the comparison.",
       "chips": [
         {
           "id": "accessories",
@@ -567,22 +536,102 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Make a product-comparison video from one photo"
-      },
       "m3": {
-        "h2": "Choose a product-comparison video scene"
+        "h2": "Choose a Scene for a Side by Side Product Video"
       },
       "faq": {
-        "h2": "Questions about AI product comparison videos"
+        "h2": "Product Comparison Video Questions"
       }
     }
   },
-  "cta_title": "Let shoppers see the difference",
-  "cta_lead": "Upload one product photo, see the cost first and make a product comparison video."
+  "cta_title": "Ready to Compare Two Options?",
+  "cta_lead": "Upload one photo of both options and see the credit cost before you start.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "Sample Color Options Video and Size Setups",
+    "lead": "How a shop can use a product comparison video. Names and prices go on after download.",
+    "items": [
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Size check",
+        "d": "Example: two stainless bottles in one frame so a listing can show small next to large."
+      },
+      {
+        "example": true,
+        "who": "Drinkware shop",
+        "t": "Color choice",
+        "d": "Example: charcoal and cream tumblers aligned together for a color decision."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Finish check",
+        "d": "Example: navy and rust beanies turned in one clip so the knit is easy to compare."
+      },
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "Capacity check",
+        "d": "Example: two canvas packs opened together so shoppers can judge which holds more."
+      },
+      {
+        "example": true,
+        "who": "Kitchen shop",
+        "t": "Set contents",
+        "d": "Example: a two-piece canister set in one frame so the listing shows what is included."
+      },
+      {
+        "example": true,
+        "who": "Storage shop",
+        "t": "Height check",
+        "d": "Example: short and tall bins in one scene for a shelf-fit decision."
+      },
+      {
+        "example": true,
+        "who": "Bedding shop",
+        "t": "Scale check",
+        "d": "Example: two pillow sizes held at the same distance so scale reads in one glance."
+      },
+      {
+        "example": true,
+        "who": "Tool shop",
+        "t": "Grip check",
+        "d": "Example: two handle finishes in one clip for a shopper choosing by feel."
+      },
+      {
+        "example": true,
+        "who": "Furniture shop",
+        "t": "Width check",
+        "d": "A furniture shop frames a narrow shelf and a wide shelf together, then puts the clip on the product page."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Bowl size",
+        "d": "Example: two bowl diameters in one shot for a feeding-station choice."
+      }
+    ]
+  },
+  "related_h2": "Pages for a Product Size Comparison Video",
+  "related_lead": "Product videos, home scenes, and Amazon listing pages for the same kind of choice.",
+  "relatedLinks": [
+    "product-videos",
+    "tpl-howto",
+    "tpl-home",
+    "tpl-launch",
+    "ind-home-living",
+    "plat-amazon"
+  ]
 }

@@ -2,151 +2,106 @@
   "id": "guides",
   "title": "Product Photo and Video Guides | AIVideosUGC",
   "description": "Free product photo and video guides for online sellers: shoot a usable photo on your phone, meet Amazon's main image rules, size ads and test versions.",
-  "h1": "Product Photo and Video Guides for Online Sellers",
+  "h1": "Product Photo and Video Guides for Sellers Doing It Themselves",
   "eyebrow": "How-to guides",
-  "lead": "Doing your own photos and ads without a studio or an agency? These product photo and video guides walk you through one job at a time, from your first usable phone photo to your first paid ad.",
-  "card": "Short how-to guides for sellers, from first photo to first ad.",
+  "lead": "Five short guides for one job at a time: a usable phone photo, a plain-background main image, a first paid clip, the right frame, and a fair test.",
+  "card": "Short how-to guides, from the first photo to the first paid ad.",
   "secondary_keywords": [
     "product photography tips for online sellers",
     "how to make product video ads",
     "ecommerce ad creative tips",
     "Amazon main image tips"
   ],
-  "intro": "Each guide answers the question a seller actually has before spending money or credits: how to shoot a photo an AI tool can work from, how to turn it into an Amazon-ready white background image, how to plan a first TikTok ad, which video shape goes on which platform, and how to compare a few ad versions without guessing. The steps need only a phone, daylight and a plain surface, and every guide ends with a short checklist you can keep open while you work. Read them in any order, then put the result straight into your next listing or campaign.",
-  "benefits_h2": "Why sellers read these guides before opening the tool",
+  "intro": [
+    "Read the guide that matches the job in front of you. Ecommerce ad creative tips and Amazon main image tips are both in this list. Each guide ends in a file you download and post yourself."
+  ],
+  "benefits_h2": "Product photography tips for online sellers",
   "benefits": [
     {
-      "t": "Fewer wasted jobs",
-      "d": "A sharp, well-lit starting photo means the first image or video is far more likely to match your real product, so you spend fewer credits redoing jobs.",
+      "t": "Fewer redos",
+      "d": "A sharp, well-lit source photo makes the first result easier to accept, so you spend fewer credits remaking it.",
       "img": "n:guide:fx03-guides-benefit-source",
       "alt": "Adult seller with a short auburn bob checks a sharp source photo of a plain sage canvas tote before upload."
     },
     {
-      "t": "No studio or agency needed",
-      "d": "Every walkthrough uses a phone, a window and things you already own. You plan, shoot and publish the listing photo or ad yourself.",
+      "t": "No studio required",
+      "d": "The setups use a phone, a window, and a table you already have. You shoot and publish the file yourself.",
       "img": "n:guide:fx03-guides-benefit-studio",
       "alt": "Adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on a kitchen table."
     },
     {
-      "t": "Rules you can check in minutes",
-      "d": "Amazon's white background rules and each platform's video shape are written as plain steps with checklists, so your file is easier to check before upload.",
+      "t": "Rules you can check",
+      "d": "Main-image rules and channel frames are written as steps with a checklist, so you can review the file before upload.",
       "img": "n:guide:fx03-guides-benefit-rules",
       "alt": "Adult seller with a short silver-gray pixie positions a plain ceramic plate fully inside a bright white backdrop."
     },
     {
-      "t": "Ads that improve with every round",
-      "d": "The testing guide shows how to make a few low-cost versions, change one thing at a time, and keep whatever brings sales instead of guessing.",
+      "t": "A fair test",
+      "d": "The testing guide changes one thing at a time, then keeps the version that brings the orders.",
       "img": "n:guide:fx03-guides-benefit-testing",
       "alt": "Two adult sellers compare two plain fabric pouches side by side while choosing an ad version to test."
     }
   ],
-  "steps_h2": "How to Make AI Product Photos and Videos in 3 Simple Steps",
-  "steps_lead": "The same three moves run through every guide: shoot one clear product photo, turn it into the image or video you need, then post it.",
+  "steps_h2": "How to make product video ads",
+  "steps_lead": "Shoot one clear photo, make the file, then post it.",
   "steps": [
     {
       "t": "Shoot Your Product Photo",
-      "d": "Get a cleaner source photo that works across every guide. Put the product in daylight on a plain surface and take one sharp, well-lit phone photo; the photo guide shows the setup."
+      "d": "Put the product in daylight on a plain surface and take one sharp phone photo."
     },
     {
-      "t": "Choose Your Tool",
-      "d": "Choose the right output without guesswork. Upload the photo to the matching tool, pick a template or describe the scene in one sentence, and see the credit cost before you start."
+      "t": "Choose the Tool",
+      "d": "Upload the photo, pick a layout or describe the scene, and read the credit cost before you start."
     },
     {
       "t": "Download and Post",
-      "d": "Put a finished asset into your next listing or campaign. Download the square image or 9:16 video, add text in your ad editor, and use it commercially with no watermark."
+      "d": "Save the still or the clip, add text in your editor, and post it. Files can be used commercially and have no watermark."
     }
   ],
   "faq": [
     {
-      "q": "Do I need a camera or a studio to follow these guides?",
-      "a": "No. Every guide assumes you have a phone, a window with daylight, and a plain surface. If you own more gear, the same steps still apply."
+      "q": "Do I need a camera or a studio?",
+      "a": "No. A phone photo in daylight is enough to start. The photo guide shows the setup."
     },
     {
       "q": "Which guide should I read first?",
-      "a": "Start with the product photo guide. The photo you shoot is the starting point for every image and video you make, so getting it right saves credits and time on everything after."
+      "a": "If you do not have a clear photo yet, start with the phone-photo guide. If the photo is ready, open the guide for the job you are posting today."
     },
     {
-      "q": "Do these guides state platform requirements?",
-      "a": "The platform guides link to the current official requirements. Open the linked TikTok, Meta, Amazon, Shopify or Google page on the day you publish, because specs can change."
+      "q": "Do the guides quote live channel rules?",
+      "a": "They describe the rules sellers run into most often, such as a plain main image and the common frames. Check the channel's current help page before you launch, because those rules change."
     },
     {
-      "q": "How much do the images and videos in the guides cost?",
-      "a": "You pay in credits and see the exact cost before each job starts. A product photo is 24 credits; videos are 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds. If a job fails, its credits go back to your balance."
+      "q": "How much do the files in the guides cost?",
+      "a": "A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The exact cost is shown before every job, and a failed job returns its credits."
     },
     {
-      "q": "Can one source photo work across every guide?",
-      "a": "Yes. A clear, evenly lit product photo can start each guide; follow the platform-specific checks before posting."
+      "q": "Can one source photo feed every guide?",
+      "a": "Yes, if the photo shows the whole item clearly. You can make a still from it and a clip from it. They are separate jobs."
     },
     {
-      "q": "Can I add captions and music after download?",
-      "a": "Yes. Add captions, prices and licensed music in your ad editor after you download the image or video."
+      "q": "Can I add captions and music later?",
+      "a": "Yes. Add captions, a price, and licensed music after download. The tools do not burn captions into the file."
+    },
+    {
+      "q": "Are the guides a substitute for the tool pages?",
+      "a": "No. A guide tells you how to do one job. The tool page is where you make the file. Use both."
+    },
+    {
+      "q": "Can I follow these if I have never run an ad?",
+      "a": "Yes. The first-ad guide assumes you are starting from zero. It stops at a file you can upload. Your ad account setup stays in that channel's own help pages."
     }
   ],
   "relatedLinks": [
-    {
-      "id": "plat-amazon",
-      "label": "Amazon product photos",
-      "href": "/platforms/amazon-product-photos"
-    },
-    {
-      "id": "white-background",
-      "label": "Ecommerce main image",
-      "href": "/ai-image-generation/ecommerce-main-image"
-    },
-    {
-      "id": "guide-product-photo-tips",
-      "label": "Product photo tips",
-      "href": "/guides/product-photo-tips"
-    },
-    {
-      "id": "guide-white-background-amazon",
-      "label": "White background for Amazon",
-      "href": "/guides/white-background-amazon"
-    },
-    {
-      "id": "guide-first-tiktok-video-ad",
-      "label": "First TikTok video ad",
-      "href": "/guides/first-tiktok-video-ad"
-    },
-    {
-      "id": "guide-ad-sizes-by-platform",
-      "label": "Ad sizes by platform",
-      "href": "/guides/ad-sizes-by-platform"
-    },
-    {
-      "id": "guide-testing-ad-versions",
-      "label": "Testing ad versions",
-      "href": "/guides/testing-ad-versions"
-    },
-    {
-      "id": "templates",
-      "label": "Templates",
-      "href": "/templates"
-    },
-    {
-      "id": "pricing",
-      "label": "Pricing",
-      "href": "/pricing"
-    },
-    {
-      "id": "blog",
-      "label": "Blog",
-      "href": "/blog"
-    }
+    "white-background",
+    "video-ads",
+    "social-ad-photos",
+    "lifestyle-photos",
+    "templates",
+    "platforms"
   ],
-  "more_sections": [
-    {
-      "eyebrow": "Three moves",
-      "h2": "From source photo to posted asset",
-      "lead": "Keep one product in view as you shoot, choose the output and download the file.",
-      "items": [
-        {
-          "t": "Shoot, choose, download",
-          "d": "The same plain blue bottle stays in frame from the first phone photo through the tool choice and the downloaded product image.",
-          "img": "n:guide:b2f3-guides-triptych-r1",
-          "alt": "Three-panel story of the same plain matte blue water bottle being photographed with a blank phone, placed on a chosen linen cloth, and held as a finished print."
-        }
-      ]
-    }
-  ]
+  "related_h2": "Tools these guides send you to",
+  "related_lead": "Make the file, or browse layouts and channels.",
+  "cta_title": "Try the step you just read",
+  "cta_lead": "Upload one product photo and see the credit cost before you start."
 }

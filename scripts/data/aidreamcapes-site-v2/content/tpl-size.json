@@ -2,9 +2,9 @@
   "id": "tpl-size",
   "title": "Product Size Reference Photo to Show Scale | AIVideosUGC",
   "description": "Put your product next to a familiar object so shoppers can judge its size at a glance. AI scale photos for listings and ads, from one photo.",
-  "h1": "Product Size Reference Photo Next to Objects Shoppers Know",
+  "h1": "Product Size Reference Photo Beside One Familiar Object",
   "eyebrow": "Product photo template",
-  "lead": "Shoppers need a quick sense of scale, not another dimension table. Put your product beside a familiar object in one clear square image.",
+  "lead": "Open a scale scene, add one photo of the whole item, and name one familiar object so shoppers can judge size at a glance.",
   "secondary_keywords": [
     "size comparison product photo",
     "scale photo for Amazon listing",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Keep the whole item in frame, with no clipped handle, sole or corner. The full outline is the size cue."
+      "d": "Upload one photo with the whole item in frame. A clipped handle, sole or corner removes the size cue."
     },
     {
-      "t": "Pick a Reference Object",
-      "d": "Name one familiar object such as a palm, carry-on or notebook. The generated proportion is a visual cue; compare it with measured dimensions."
+      "t": "Describe Your Scene",
+      "d": "Name a familiar object, such as a palm, notebook or carry-on. The proportion is a visual cue, so keep real measurements in the listing."
     },
     {
       "t": "Download and Post",
-      "d": "Download the image and check the comparison looks natural. Add the real length, width, height or capacity in your listing text."
+      "d": "Download the square image and check that the comparison looks natural. Put the real length, width, height or capacity in the listing text."
     }
   ],
   "maker": {
@@ -45,43 +45,43 @@
   "faq": [
     {
       "q": "Is the size in the photo exact?",
-      "a": "No. It is a visual guide, and generated scale can be slightly off. Put the real length, width, height or capacity in the listing text."
+      "a": "No. Treat it as a visual guide. Generated scale can be slightly off, so put the real length, width, height or capacity in the listing text."
     },
     {
-      "q": "Which object gives a useful size cue?",
-      "a": "Choose one familiar, unbranded object such as a hand, notebook, carry-on or common bottle. Pick the object shoppers will recognize fastest for your product."
+      "q": "Which object makes a useful cue?",
+      "a": "Name one familiar, unbranded object shoppers recognize fastest for that product, such as a hand, a notebook, a carry-on or a common bottle."
     },
     {
       "q": "Should each image use one reference object?",
-      "a": "Yes. One clear reference object keeps the comparison easy to read. Use a separate image when you need a different cue."
+      "a": "Yes. One object keeps the comparison easy to read. Use a second image when you need a different cue."
     },
     {
-      "q": "Where should exact measurements appear?",
-      "a": "Put exact length, width, height and capacity in your listing text or dimension table. Keep the reference photo as the quick visual guide beside those facts."
+      "q": "Where do exact measurements go?",
+      "a": "Put length, width, height and capacity in the listing text or a dimension table. Keep the reference photo as the quick visual beside those facts."
     },
     {
       "q": "Can I use this as an Amazon listing image?",
-      "a": "Yes. A scale comparison can be one of the extra images in an Amazon gallery when it shows the real item."
+      "a": "Yes. A scale comparison can be one extra image in an Amazon gallery when it shows the real item. It does not replace the written dimensions."
     },
     {
-      "q": "Where can I use a size reference photo?",
-      "a": "Use the square image in a product page, Amazon or Shopify gallery, feed post or carousel beside exact dimensions."
+      "q": "Where else can the square image go?",
+      "a": "Use it on a product page, in a Shopify gallery, or in a feed post or carousel, always next to the exact measurements."
     },
     {
-      "q": "Can I make several size scenes from one product photo?",
-      "a": "Yes. Reuse one clear product photo to try another familiar cue or setting. Compare each result with your measured dimensions before posting."
+      "q": "Can I try another object from the same photo?",
+      "a": "Yes. Reuse one clear product photo and name a different familiar object. Compare each result with your measured dimensions before posting."
     },
     {
       "q": "Do I need props or a studio?",
-      "a": "No. The reference object and setting are generated from your product photo, and downloads have no watermark."
+      "a": "No. The reference object and setting are generated from your product photo. A hand in the frame is a generated scale cue, not a customer. Downloads have no watermark."
     },
     {
-      "q": "Can shoppers judge fit from the image?",
-      "a": "They can orient themselves faster, but the listing still needs exact measurements for a purchase decision."
+      "q": "Can shoppers judge fit from the image alone?",
+      "a": "They can orient themselves faster. A purchase decision still needs the exact measurements in the listing."
     },
     {
       "q": "What does a size reference photo cost?",
-      "a": "Each product size reference photo costs 24 credits, shown before the job starts."
+      "a": "Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits."
     }
   ],
   "visual": {
@@ -114,8 +114,8 @@
       ]
     },
     "picker": {
-      "title": "Show Product Scale in One Quick Photo",
-      "lead": "Put your product beside a familiar object so shoppers understand its size at a glance.",
+      "title": "Browse Video Ad Templates by Category",
+      "lead": "These cards are video ads for other categories, not scale photos. For the size image, use the upload box above and name one familiar object.",
       "chips": [
         {
           "id": "accessories",
@@ -531,16 +531,124 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions about product size reference photos"
+        "h2": "Questions About a Product Size Reference Photo"
+      },
+      "m3": {
+        "h2": "Browse Video Ad Templates by Category",
+        "lead": "These cards are video ads for other categories, not scale photos. For the size image, use the upload box above and name one familiar object."
       }
     }
   },
-  "steps_h2": "How to Make a Product Size Reference Photo in 3 Simple Steps",
-  "steps_lead": "Give shoppers a fast visual sense of scale beside exact measurements. No measuring tape shoot, no studio."
+  "steps_h2": "Make a Scale Photo for an Amazon Listing in 3 Steps",
+  "steps_lead": "The whole item in frame, one familiar object, then a square image beside your real measurements.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq",
+    "cta"
+  ],
+  "reviews": {
+    "h2": "A Product Next to an Everyday Object",
+    "lead": "Each card uses one reference object. None of them replace measured dimensions.",
+    "items": [
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "Carry-on cue",
+        "d": "A bag shop places a daypack beside a carry-on outline as a scale cue, and writes the liters in the listing. The picture does not prove it fits the bin."
+      },
+      {
+        "example": true,
+        "who": "Bottle shop",
+        "t": "Hand cue",
+        "d": "A bottle shop places a bottle next to an open palm. The hand is a generated scale cue, not a photo of a customer."
+      },
+      {
+        "example": true,
+        "who": "Notebook shop",
+        "t": "Desk cue",
+        "d": "A notebook shop places a planner beside a closed notebook so the page size is easier to picture."
+      },
+      {
+        "example": true,
+        "who": "Jewelry shop",
+        "t": "Coin cue",
+        "d": "A jewelry shop places a pendant beside a common coin so the face size is easier to see."
+      },
+      {
+        "example": true,
+        "who": "Case shop",
+        "t": "Phone cue",
+        "d": "A case shop places a small case next to a phone outline and leaves the millimeters in the text."
+      },
+      {
+        "example": true,
+        "who": "Shoe shop",
+        "t": "Insole cue",
+        "d": "A shoe shop places a shoe beside a familiar insole length. Fit still depends on the size chart, not the picture."
+      },
+      {
+        "example": true,
+        "who": "Kitchen shop",
+        "t": "Jar cue",
+        "d": "A kitchen shop places a canister beside a common jar so capacity is easier to picture."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Bowl cue",
+        "d": "A pet shop places a bowl beside a familiar mug and writes the real capacity next to the image."
+      },
+      {
+        "example": true,
+        "who": "Tool shop",
+        "t": "Palm cue",
+        "d": "A tool shop places a compact driver in a palm so shoppers can see that it is small enough for a pocket."
+      },
+      {
+        "example": true,
+        "who": "Lamp shop",
+        "t": "Table cue",
+        "d": "A lamp shop places a lamp beside a side table for a quick height cue, and keeps the measured height in the listing."
+      }
+    ]
+  },
+  "related_h2": "Bag Size Reference Image and Jewelry Photos",
+  "related_lead": "Jewelry pages to use with the scale photo: a close-up, an on-model shot, studio lighting, and Amazon.",
+  "relatedLinks": [
+    {
+      "id": "photo-hub",
+      "label": "AI product photo generator"
+    },
+    {
+      "id": "tpl-detail",
+      "label": "product detail photos"
+    },
+    {
+      "id": "tpl-jewel",
+      "label": "AI jewelry model photos"
+    },
+    {
+      "id": "tpl-light",
+      "label": "product photo lighting"
+    },
+    {
+      "id": "ind-jewelry-accessories",
+      "label": "AI photos for jewelry and accessories"
+    },
+    {
+      "id": "plat-amazon",
+      "label": "Amazon product photos"
+    }
+  ],
+  "cta_title": "Start a Scale Photo from One Full Product Shot",
+  "cta_lead": "Upload one photo of the whole item, name one familiar object, and see the credit cost before you start."
 }

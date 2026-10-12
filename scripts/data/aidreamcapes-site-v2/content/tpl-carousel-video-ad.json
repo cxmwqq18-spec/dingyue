@@ -2,56 +2,29 @@
   "id": "tpl-carousel-video-ad",
   "title": "Carousel Video Ads for Product Stories | AIVideosUGC",
   "description": "Turn one product photo into a sequenced carousel video ad, then add your headline and price after download. Choose a format for feeds and product pages.",
-  "h1": "Turn One Product Photo Into a Complete Story",
+  "h1": "Carousel Video Ad That Walks Through One Product",
   "eyebrow": "Carousel video ad template",
-  "lead": "Turn one product photo into a carousel video ad video that gives shoppers a clear result, ready for the channel where you sell.",
-  "benefits_h2": "Make the carousel video ad result clear",
-  "benefits": [
-    {
-      "t": "Show the result first",
-      "d": "Show the carousel video ad outcome in one clear moment so buyers know what they get.",
-      "img": "n:guide:fx19-carousel-benefit-story-01",
-      "alt": "Adult woman opens a plain charcoal commuter backpack at a cafe table."
-    },
-    {
-      "t": "Skip another shoot",
-      "d": "Use the photo you already have instead of booking creators, locations or gear.",
-      "img": "n:guide:fx19-carousel-benefit-shoot-02",
-      "alt": "Adult man pulls a plain teal lunch tote from a kraft mailer."
-    },
-    {
-      "t": "Make more useful versions",
-      "d": "Create another angle from the same source without reshooting.",
-      "img": "n:guide:fx19-carousel-benefit-versions-03",
-      "alt": "Adult woman raises a plain orange sports bottle after a park run."
-    },
-    {
-      "t": "Keep live details editable",
-      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate.",
-      "img": "n:guide:fx19-carousel-benefit-editable-04",
-      "alt": "Adult man rotates a plain coral cream jar on a clean tabletop."
-    }
-  ],
+  "lead": "Place one product photo in a scene and add the headline or price after download. Keep the whole clip on that one product.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
     "Instagram carousel video",
     "sequenced product ad"
   ],
-  "steps_h2": "How to Make Carousel Video Ad Videos in 3 Simple Steps",
-  "steps_lead": "Use one product photo to build an ordered story, then add exact listing details after download.",
+  "steps_h2": "Make a Sequenced Product Ad in 3 Steps",
+  "steps_lead": "The beats stay in order. The headline and price stay in your editor until you confirm them.",
   "steps": [
     {
-      "t": "Upload Your Product",
-      "d": "Add one clear source photo and keep the full product or garment visible. Use the item that appears on your destination page."
+      "t": "Upload Your Product Photo",
+      "d": "Upload one photo of the product that will sit on the destination page. Keep the full item visible."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose one action and describe the setting or comparison shoppers should see. Keep each beat focused so the story moves from opening to next step."
+      "t": "Describe Your Scene",
+      "d": "Describe the ordered beats, then pick a size and a length from 6 to 30 seconds. Keep every beat on the same item."
     },
     {
       "t": "Download and Post",
-      "d": "Download the result and add exact offer or listing details in your editor. Post the clip where shoppers already browse."
+      "d": "Download the file and add the headline or price in your editor. Post it where shoppers already browse."
     }
   ],
   "maker": {
@@ -73,32 +46,48 @@
   },
   "faq": [
     {
+      "q": "What is a carousel video ad here?",
+      "a": "One ordered clip about a single product, moving from an opening look to a use beat and a clear finish. It is a video, not a stack of still cards."
+    },
+    {
+      "q": "How do I set the order?",
+      "a": "Upload one product photo, describe the beats in the order shoppers should see them, pick a size and length, then download."
+    },
+    {
+      "q": "Why keep every beat on the same item?",
+      "a": "The sequence is easier to follow when the product does not change mid-clip. A second product belongs in another file."
+    },
+    {
+      "q": "Who is it for?",
+      "a": "Fashion and electronics shops that want an Instagram, Facebook or product-page clip to walk through one item."
+    },
+    {
       "q": "What photo should I upload?",
-      "a": "Use one sharp photo with the full product visible and enough detail to show its shape, finish and useful features."
+      "a": "One sharp photo of the item that appears on the page you will link to, with the full shape visible."
     },
     {
-      "q": "What result does this template show?",
-      "a": "It creates one ordered carousel video ad that moves from an opening view to a product action and a clear finish."
+      "q": "Which size and length fit a feed sequence?",
+      "a": "1:1 for a square feed, 9:16 for Reels, plus 16:9, 4:3 or 3:4. Use 6 seconds for a short reveal, 10 or 15 for a few beats, or 30 when the story needs more."
     },
     {
-      "q": "Which length or format should I choose?",
-      "a": "Use 6 seconds for a short reveal, 10 or 15 seconds for a few product beats, or 30 seconds when the story needs more explanation. Choose 1:1 for a square feed or 9:16 for a vertical format."
+      "q": "Can I place a headline and price on the video here?",
+      "a": "Add the headline, price and call to action in your editor after download. The generator leaves those live details out."
     },
     {
-      "q": "Can I change details after download?",
-      "a": "Yes. Add or update the headline, price, dimensions and call to action as editable text after download."
+      "q": "Do I need a multi-camera shoot?",
+      "a": "No. The beats are described from one photo. You do not book a location or a creator to get the sequence."
     },
     {
-      "q": "Do I need a shoot day?",
-      "a": "No. Start with the product photo you already have and choose the story beats instead of booking a creator, location or gear."
+      "q": "What does the sequence cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Where can I use the clip?",
-      "a": "Use the downloaded clip in your own paid ads, product pages and posts where the chosen format fits. Downloads carry no AIVideosUGC watermark."
+      "q": "Where can I post the file?",
+      "a": "In your own paid ads, feed posts and product pages. The download has no watermark. Captions are added after download, and any person on screen is an AI performer, not a customer."
     }
   ],
   "visual": {
-    "overview": "A carousel template turns one product photo into an ordered story so shoppers can follow the product from first look to use.",
+    "overview": "",
     "strip": [
       "n:guide:q13-carousel-strip-0",
       "n:guide:q13-carousel-strip-1-r2",
@@ -113,7 +102,7 @@
       "sourceHint": "Show the whole backpack and its main compartments.",
       "result": "n:guide:q13-carousel-steps-result-r2",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult opens the black commuter backpack and places a notebook into its front organizer pocket. End with the pocket open and the full bag visible. Eye-level close framing with a gentle push-in. Warm cafe-window light. Sound: zipper and quiet cafe room tone, no music.",
+      "prompt": "At a cafe table, an adult opens the black commuter backpack and places a notebook in the front pocket. End with the pocket open and the full bag visible.",
       "options": [
         [
           "Size",
@@ -130,8 +119,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a carousel video template",
-      "lead": "Browse product story styles, then add one clear product photo.",
+      "title": "Choose a Scene for a Carousel Ad Video",
+      "lead": "Open one product scene and keep every shot on that same item. Add the headline or price after download.",
       "chips": [
         {
           "id": "accessories",
@@ -547,69 +536,112 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Make a carousel video ad from one product photo"
-      },
       "m3": {
-        "h2": "Plan each scene in a carousel video ad"
+        "h2": "Choose a Scene for a Carousel Ad Video"
       },
       "faq": {
-        "h2": "Questions about carousel video ad videos"
+        "h2": "Carousel Video Ad Questions"
       }
     }
   },
-  "cta_title": "Give shoppers the whole product story",
-  "cta_lead": "Upload one product photo, see the cost first and make a carousel video ad video.",
-  "examples": {
-    "h2": "More carousel video ad examples",
-    "lead": "Pick an ordered product moment, then add the exact offer or listing details after download.",
-    "groups": [
+  "cta_title": "Ready to Sequence the Product?",
+  "cta_lead": "Upload one product photo and see the credit cost before you start.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "How Shops Use an Instagram Carousel Video",
+    "lead": "Example beats for one product. The headline and price go on after download.",
+    "items": [
       {
-        "label": "Product story beats",
-        "items": [
-          {
-            "ref": "n:guide:fx19-carousel-example-open-01",
-            "title": "Canvas toiletry pouch, sink opening",
-            "kind": "scene",
-            "product": "canvas toiletry pouch"
-          },
-          {
-            "ref": "n:guide:fx19-carousel-example-reveal-02",
-            "title": "Blue insulated bottle, tissue reveal",
-            "kind": "scene",
-            "product": "blue insulated bottle"
-          },
-          {
-            "ref": "n:guide:fx19-carousel-example-use-03",
-            "title": "Wooden pet brush, dog grooming",
-            "kind": "scene",
-            "product": "wooden pet brush"
-          },
-          {
-            "ref": "n:guide:fx19-carousel-example-compare-04",
-            "title": "Storage bins, side-by-side comparison",
-            "kind": "scene",
-            "product": "storage bins"
-          },
-          {
-            "ref": "n:guide:fx19-carousel-example-finish-05",
-            "title": "Navy running cap, final product hold",
-            "kind": "scene",
-            "product": "navy running cap"
-          },
-          {
-            "ref": "n:guide:fx19-carousel-example-feature-06",
-            "title": "Teal dog harness, park setup",
-            "kind": "scene",
-            "product": "teal dog harness"
-          }
-        ]
+        "example": true,
+        "who": "Bag shop",
+        "t": "First shot at a cafe",
+        "d": "A bag shop opens the pack at a cafe table as the first shot, and keeps that same pack through the clip.",
+        "img": "n:guide:fx19-carousel-benefit-story-01"
+      },
+      {
+        "example": true,
+        "who": "Food shop",
+        "t": "Reveal from the mailer",
+        "d": "A food shop pulls the tote from a kraft mailer as the reveal shot of that same tote.",
+        "img": "n:guide:fx19-carousel-benefit-shoot-02"
+      },
+      {
+        "example": true,
+        "who": "Drinkware shop",
+        "t": "After the run",
+        "d": "A drinkware shop raises the bottle after a park run as the in-use shot.",
+        "img": "n:guide:fx19-carousel-benefit-versions-03"
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Tabletop turn",
+        "d": "Example: a coral cream jar rotated on a clean table as a closer look.",
+        "img": "n:guide:fx19-carousel-benefit-editable-04"
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Sink open",
+        "d": "Example: a canvas toiletry pouch opened at a sink.",
+        "img": "n:guide:fx19-carousel-example-open-01"
+      },
+      {
+        "example": true,
+        "who": "Drinkware shop",
+        "t": "Tissue reveal",
+        "d": "Example: a blue insulated bottle lifted from tissue.",
+        "img": "n:guide:fx19-carousel-example-reveal-02"
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Grooming shot",
+        "d": "Example: a wooden pet brush used in a grooming beat.",
+        "img": "n:guide:fx19-carousel-example-use-03"
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Same bins, one sequence",
+        "d": "A home shop keeps the same bins in every shot, from the lineup to one bin in use.",
+        "img": "n:guide:fx19-carousel-example-compare-04"
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Cap hold",
+        "d": "An apparel shop holds the cap up as the last shot.",
+        "img": "n:guide:fx19-carousel-example-finish-05"
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Park setup",
+        "d": "A pet shop clips the harness on as the outdoor shot.",
+        "img": "n:guide:fx19-carousel-example-feature-06"
       }
     ]
-  }
+  },
+  "related_h2": "Pages for a Multi-Panel Product Ad",
+  "related_lead": "Video ads, fashion scenes, and Instagram placements for a sequenced product.",
+  "relatedLinks": [
+    "video-ads",
+    "tpl-outfit",
+    "tpl-film",
+    "tpl-retargeting-video-ad",
+    "plat-instagram",
+    "ind-fashion-clothing"
+  ]
 }

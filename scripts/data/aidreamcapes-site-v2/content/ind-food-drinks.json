@@ -1,11 +1,11 @@
 {
   "id": "ind-food-drinks",
   "title": "AI Food and Drink Product Videos | AIVideosUGC",
-  "description": "Turn one food or drink photo into ads for listings and social feeds. Get watermark-free clips in minutes, not weeks, at far less cost than a kitchen shoot.",
-  "h1": "Make AI Food and Drink Product Videos That Drive Cravings",
-  "eyebrow": "Food and beverage brands",
-  "lead": "Hungry shoppers decide fast. Turn one food or drink photo into a clear package reveal, serving moment or product video that makes the next bite easy to imagine.",
-  "card": "Serving scenes, package reveals and product videos from one food photo.",
+  "description": "Turn one food or drink photo into a pour, a first bite, or a shelf shot. Download watermark-free clips for listings, social feeds, and paid ads.",
+  "h1": "AI Food and Drink Product Videos for the Pour and the Plate",
+  "eyebrow": "Food and drinks",
+  "lead": "Hungry shoppers decide quickly. One package photo can become a pour, a first bite, or a shelf moment without booking a kitchen.",
+  "card": "Pours, plates, and package scenes from one food photo.",
   "secondary_keywords": [
     "drink pour video",
     "AI food product photos",
@@ -13,73 +13,56 @@
     "food packaging photos",
     "snack brand TikTok videos"
   ],
-  "intro": [
-    "Show the package clearly, then use a serving scene to show the product’s color, texture, or portion. A cold brew needs beads of condensation on the glass, a hot sauce needs a drizzle over tacos, and granola can be shown with a bowl of milk and berries. Packaging matters just as much, because that is what shoppers look for on a store shelf and in a delivery app.",
-    "Send in a clean package photo and describe one serving moment: a can cracking open over ice, a cookie snapping in half or honey dripping onto toast. Choose a 6-, 10-, 15-, or 30-second vertical clip for a social ad, or use a square photo for a listing."
-  ],
   "faq": [
     {
-      "q": "Will my ingredient list and nutrition facts look right in the image?",
-      "a": "Don't rely on the image for that. Small print on packaging may not come out exactly as printed, and ingredients, allergens, and nutrition facts should always match your real package. If buyers need to see them, use a clear photo of the actual label."
+      "q": "Will the ingredient list and nutrition panel look right?",
+      "a": "Do not rely on the image for that. Small print may not match the real package. Allergens, ingredients, and nutrition facts should always come from the real label."
     },
     {
-      "q": "Can I show a drink being poured if I only have a photo of the can?",
-      "a": "Yes. Describe the glass, the ice, and the color of the liquid, like \"amber iced tea poured over ice in a tall glass.\" The more precise you are about color and texture, the closer the pour looks to your real drink."
+      "q": "Can I show a pour if I only have a photo of the can?",
+      "a": "Yes. Describe the glass, the ice, and the color of the liquid. The closer you are about color and texture, the closer the pour will look."
     },
     {
-      "q": "How long should a food video be for TikTok?",
-      "a": "6 or 10 seconds covers a single moment like a pour or a first bite. Choose 15 seconds for two moments, such as the pack opening and the plated food, or 30 seconds for a longer serving story."
+      "q": "How long should a food clip be?",
+      "a": "6 or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. Credits are 24, 40, 60, and 120. A failed job returns its credits."
     },
     {
-      "q": "Should I spray water on my can for a cold, fresh look?",
-      "a": "No need. Ask for condensation in your description instead, then wipe off fingerprints and photograph the dry can near a window with the light coming from the side."
+      "q": "Should I spray the can for a cold look?",
+      "a": "No. Ask for condensation in the description, then photograph the dry can in side window light with fingerprints wiped off."
     },
     {
       "q": "Can I run the clips as paid food and drink ads?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and delivery-app listings. Keep nutrition, allergen, and ingredient claims to the real label, since small print in the clip may not be exact."
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Keep nutrition, allergen, and ingredient claims on the real package."
     },
     {
       "q": "Do I need a creator or a filming kitchen?",
-      "a": "No for these clips. The hands, adult creator, and setting are generated from your package photo at a per-clip credit cost. For a real customer tasting or an original concept, you can still film one separately."
+      "a": "Not for these clips. Hands and the setting are generated from your package photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
+    },
+    {
+      "q": "Which frames can I use?",
+      "a": "Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. A vertical 9:16 fits a phone feed. A square still fits many listings."
+    },
+    {
+      "q": "What should the scene keep visible?",
+      "a": "Keep the package shape and the main label area recognizable, and end on the full product when you can. Do not ask the clip to invent a flavor that is not in the photo."
     }
   ],
   "templates_lead": "Choose a food ad format that puts one product and one serving moment in focus.",
-  "cta_lead": "Upload one package photo and turn its serving moment into an ad.",
-  "benefits_h2": "Why AI Food and Drink Product Videos Skip the Kitchen Shoot",
-  "benefits": [
-    {
-      "t": "Launch the next flavor in minutes",
-      "d": "Turn a package photo into a serving moment in minutes while the new flavor is fresh. Launch a restock without booking a kitchen or crew.",
-      "img": "n:guide:fx32-food-benefit-packaging",
-      "alt": "Adult hands arrange plain kraft snack pouches beside a lunch container on a bright counter."
-    },
-    {
-      "t": "Keep the package at the center",
-      "d": "Choose the action, setting and frame so shoppers can see the product they will receive.",
-      "img": "n:guide:fx32-food-benefit-pour",
-      "alt": "Clear citrus drink pours into an ice-filled glass beside a plain bottle."
-    },
-    {
-      "t": "Test more serving moments",
-      "d": "Run one photo through a pour, bite, plate or shelf scene and test the hooks without paying for another reshoot.",
-      "img": "n:guide:fx32-food-benefit-serve-r2",
-      "alt": "Adult hands place three plain oat cookies on a ceramic plate beside berries."
-    }
-  ],
-  "steps_h2": "How to Make AI Food and Drink Product Videos in 3 Simple Steps",
-  "steps_lead": "Show one package and one appetizing action, then add exact offer details before you post.",
+  "cta_lead": "Upload one food or drink photo, describe the pour or the plate, and check the pack before you post.",
+  "steps_h2": "Food and Drink Video Ads in Three Moves",
+  "steps_lead": "Three things you do on screen. Nutrition facts stay on the real package.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear package photo. Keep its shape, color and label area in view."
+      "t": "Upload Your Package Photo",
+      "d": "Use a clean photo of the can, bottle, or pouch, label toward the camera. Wipe fingerprints. Leave the can dry."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose one pour, bite or plated moment that makes the serving idea easy to picture."
+      "t": "Describe the Pour or Serving",
+      "d": "Name the glass, ice, and liquid color, or the plate and the bite. The hands are generated. Small print on the pack may not match."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip without a watermark, add exact price and offer details in your editor, then post."
+      "d": "Check the package shape and color, then download. Put allergens, ingredients, and the offer in your editor. Captions are not added for you."
     }
   ],
   "visual": {
@@ -97,7 +80,7 @@
       "result": "f:k7-ind-food-drinks-steps-result-f-food-video-t06",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A hand tilts the citrus bottle and pours once into an ice-filled glass, ending when the stream stops and the full bottle remains beside the glass. Bright morning window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. Sound: clear pour and ice clink; no music.",
+      "prompt": "A hand tilts the citrus bottle and pours once into an ice-filled glass. The pour stops, and the full bottle stays beside the glass.",
       "options": [
         [
           "Size",
@@ -114,74 +97,154 @@
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "How to Make AI Food and Drink Product Videos in 3 Simple Steps"
-      },
-      "m3": {
-        "h2": "AI Food and Drink Product Videos: Choose a Format"
-      },
-      "m4": {
-        "h2": "Use AI Food and Drink Product Videos on Product Pages and Social Feeds"
-      },
-      "m5": {
-        "h2": "Start AI Food and Drink Product Videos With a Clear Package Photo"
-      },
-      "m6": {
-        "h2": "Pick a Shape and Length for AI Food and Drink Product Videos"
-      },
-      "m7": {
-        "h2": "Add Ingredients and Offer Details After Downloading AI Food and Drink Product Videos"
-      },
-      "examples": {
-        "h2": "More AI Food and Drink Product Videos Examples",
-        "lead": "Recipe demos, taste tests, and packable snacks show products in useful moments."
-      },
       "faq": {
-        "h2": "Questions About AI Food and Drink Product Videos"
+        "h2": "Questions About Food Packaging Photos"
       }
     }
   },
   "relatedLinks": [
-    "ind-home-living",
-    "ind-health-wellness",
-    "ind-beauty-skincare",
-    "ind-electronics",
-    "product-videos",
-    "lifestyle-photos",
-    "photo-hub",
-    "templates"
+    {
+      "id": "tpl-drink",
+      "label": "AI food and drink videos"
+    },
+    {
+      "id": "tpl-pack",
+      "label": "packaging mockup generator"
+    },
+    {
+      "id": "tpl-spark-ads-style-video",
+      "label": "Spark Ads style video"
+    },
+    {
+      "id": "product-videos",
+      "label": "AI product video generator"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
+    },
+    {
+      "id": "white-background",
+      "label": "white background product photos"
+    }
   ],
   "steps_cta": {
     "label": "Create product demo",
     "href": "/app/create?industry=food-drinks"
   },
-  "more_sections": [
-    {
-      "eyebrow": "Sell where your shoppers already browse",
-      "h2": "Ads for the channels you already sell on",
-      "lead": "Choose a destination, then check its current image and video rules before you publish.",
-      "items": [
-        {
-          "t": "Shopify",
-          "d": "[Product photos for Shopify](/platforms/shopify-product-photos) keep a clean package view ready for your store."
-        },
-        {
-          "t": "Amazon",
-          "d": "[Product photos for Amazon](/platforms/amazon-product-photos) help you prepare a clear main image for a marketplace listing."
-        },
-        {
-          "t": "TikTok",
-          "d": "[TikTok ads](/platforms/tiktok-ads) put a pour or serving moment into a vertical social feed."
-        },
-        {
-          "t": "Meta",
-          "d": "[Facebook ads](/platforms/facebook-ads) give you a square package scene to finish for a paid feed post."
-        },
-        {
-          "t": "YouTube",
-          "d": "[YouTube Shorts ads](/platforms/youtube-shorts-ads) give you a vertical clip to review before posting."
-        }
-      ]
-    }
+  "reasons": {
+    "h2": "Pour Videos and Plate Shots Without a Kitchen Day",
+    "lead": "The next flavor should not wait on a crew. Start from the package photo while the product is still the one you sell.",
+    "items": [
+      {
+        "t": "Ready when the flavor is",
+        "d": "Turn a package photo into a pour, a bite, or a shelf shot. There is no shoot date, and a failed job returns its credits.",
+        "img": "n:guide:fx32-food-benefit-packaging",
+        "alt": "Adult hands arrange plain kraft snack pouches beside a lunch container on a bright counter."
+      },
+      {
+        "t": "You pick the action",
+        "d": "Choose the pour, the plate, or the shelf, and keep the package readable. Ingredient text is not trusted inside the generated frame.",
+        "img": "n:guide:fx32-food-benefit-pour",
+        "alt": "Clear citrus drink pours into an ice-filled glass beside a plain bottle."
+      },
+      {
+        "t": "More servings, one photo",
+        "d": "Run one photo through a pour, a bite, and a plated scene. Each length shows its credit cost before it runs.",
+        "img": "n:guide:fx32-food-benefit-serve-r2",
+        "alt": "Adult hands place three plain oat cookies on a ceramic plate beside berries."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "AI Food Product Photos and Clips for Every Channel",
+    "lead": "A short pour fits a phone feed. A still of the pack fits a listing. Pick the frame that shelf already uses.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "d": "A 9:16 pour or first bite for a snack post in the For You feed.",
+        "href": "/platforms/tiktok-ads"
+      },
+      {
+        "t": "AI Instagram ads",
+        "d": "A square pack still or a vertical serving clip for the grid and Stories.",
+        "href": "/platforms/instagram-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "d": "A feed still with room to add the offer after download.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "d": "A short vertical serving moment, one pour or bite from the first second.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "d": "A clean package image for the listing. Nutrition facts stay in the copy.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "d": "Matching pack imagery for the product page and the collection.",
+        "href": "/platforms/shopify-product-photos"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "How Sellers Use Snack Brand TikTok Videos",
+    "lead": "Example ways food and drink sellers use one package photo. These are not quotes.",
+    "items": [
+      {
+        "example": true,
+        "who": "Canned drink",
+        "t": "One pour into ice",
+        "d": "They upload the can and describe an amber pour into a tall glass. Condensation is described, not sprayed onto the real can."
+      },
+      {
+        "example": true,
+        "who": "Snack pouch",
+        "t": "Open, then a bite",
+        "d": "A pouch photo becomes a 6-second open (24 credits) and a 15-second plated bite (60 credits)."
+      },
+      {
+        "example": true,
+        "who": "New flavor",
+        "t": "Ship the look the same week",
+        "d": "The package photo is ready before a kitchen day can be booked. They still proof the flavor name against the real pouch."
+      },
+      {
+        "example": true,
+        "who": "Cookie brand",
+        "t": "Plate beside fruit",
+        "d": "Hands set cookies on a plate. The count on the plate is checked so it does not overstate the pack."
+      },
+      {
+        "example": true,
+        "who": "Listing desk",
+        "t": "Pack still and a clip",
+        "d": "One photo guides a white-background pack image and a vertical pour. Allergen lines stay in the listing."
+      },
+      {
+        "example": true,
+        "who": "Careful label",
+        "t": "Do not trust tiny type",
+        "d": "If the preview redraws the ingredient panel, they crop to the serving moment and keep the legal text on the real packaging."
+      }
+    ]
+  },
+  "cta_title": "Turn a Package Photo Into a Serving",
+  "related_h2": "Food and drink videos",
+  "blockOrder": [
+    "hero",
+    "strip",
+    "reasons",
+    "steps",
+    "platforms",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
   ]
 }

@@ -2,9 +2,9 @@
   "id": "lifestyle-photos",
   "title": "AI Lifestyle Product Photos | AIVideosUGC",
   "description": "Create AI lifestyle product photos from one plain image. Place the item in a room, table or cafe scene so shoppers picture using it without a shoot.",
-  "h1": "Put your product in a lifestyle scene",
+  "h1": "AI lifestyle product photos that show where the item belongs",
   "eyebrow": "Lifestyle photo maker",
-  "lead": "Create a believable room, table or cafe scene from one plain product photo. Show where the item belongs without booking a shoot.",
+  "lead": "Place one plain product photo in a room, on a table, or at a cafe. Shoppers can picture using it, and you do not book a set.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,41 +12,41 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Show where your product belongs",
+  "benefits_h2": "Keep the item recognizable without a location fee",
   "benefits": [
     {
-      "t": "Give the product useful context",
-      "d": "Place one clear product photo on a shelf, cafe table or counter so shoppers can picture where it belongs.",
       "img": "n:guide:fx15-lifestyle-benefit-context-r1",
-      "alt": "Matte ceramic planter with a fern on a warm wood shelf in a bright living room."
+      "alt": "Matte ceramic planter with a fern on a warm wood shelf in a bright living room.",
+      "t": "Keep the plain photo beside it",
+      "d": "Use the scene when shoppers need the setting, and keep the original photo for small details."
     },
     {
-      "t": "Make the product pop in a real scene",
-      "d": "Keep the item clear while the setting adds the use moment shoppers need to understand.",
       "img": "n:guide:fx15-lifestyle-benefit-pop-r1",
-      "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup."
+      "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup.",
+      "t": "Keep the item as the subject",
+      "d": "The setting adds the moment. The product's shape and color should still be easy to check."
     },
     {
-      "t": "Ready for a listing",
-      "d": "Build a polished scene from one photo without booking a space, props or a crew.",
       "img": "n:guide:fx15-lifestyle-benefit-listing-r1",
-      "alt": "Plain brushed steel insulated bottle on an entryway console with a folded cloth."
+      "alt": "Plain brushed steel insulated bottle on an entryway console with a folded cloth.",
+      "t": "Publish without a location fee",
+      "d": "You do not rent a room, hire a stylist, or pack the product for a shoot. Each image is 24 credits, shown before you start."
     }
   ],
-  "steps_h2": "How to Create AI Lifestyle Product Photos in 3 Simple Steps",
-  "steps_lead": "Start with one plain product photo, choose the setting, then download the styled scene.",
+  "steps_h2": "Run the AI product scene generator in 3 steps",
+  "steps_lead": "Upload the product, name the place, and download a square scene.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one clear product photo with the whole item in frame. Keep its shape and details easy to see."
+      "d": "Use one photo with the whole item in frame. Shape and small details should be easy to see."
     },
     {
       "t": "Pick a Scene",
-      "d": "Choose a room, cafe table or market moment. Describe the surface, light and one prop so the setting supports the product."
+      "d": "Choose a room, a table, or a market moment. Name the surface, the light, and one prop so the setting supports the product."
     },
     {
       "t": "Download and Post",
-      "d": "Download the finished square image and compare it with your plain product shot. Add your caption, link or price in your own editor."
+      "d": "Compare the scene with your plain photo. Add a caption, a link, or a price in your own editor after download."
     }
   ],
   "maker": {
@@ -69,35 +69,43 @@
   "faq": [
     {
       "q": "What are AI lifestyle product photos?",
-      "a": "They place your product inside a believable real-life scene, such as a room, cafe table or market stall, starting from one plain product photo."
+      "a": "They place your real product photo in a room, on a table, or in another everyday setting. You still review the result before you publish."
     },
     {
-      "q": "How does product staging work?",
-      "a": "Upload one clear product photo, choose a setting and describe the scene in one sentence. The generated image keeps your item in that context."
+      "q": "How do I make a lifestyle product photo?",
+      "a": "Upload one product photo, choose or describe the setting, and download a square image. The credit cost appears before the job starts."
     },
     {
-      "q": "Are AI lifestyle product photos suitable for ecommerce?",
-      "a": "Yes. Use the square image on product pages, Shopify listings and social posts alongside a plain photo that shows the exact item."
+      "q": "Can I use the scene on a product page?",
+      "a": "Yes. Pair it with a plain product photo when shoppers also need an exact view of the item. Downloads have no watermark and are licensed for commercial use."
     },
     {
-      "q": "Can I choose the setting for my product?",
-      "a": "Yes. Name a room, surface, light and one or two props, or choose a ready-made scene. One clear setting usually works well."
+      "q": "Can I choose the setting?",
+      "a": "Yes. Pick a room, a cafe, or a market moment, or describe the surface and light you want."
     },
     {
-      "q": "Can I customize the generated scene?",
-      "a": "Yes. Ask for fewer props, a different surface or another room, then generate a new version from that product photo."
+      "q": "Can I change the scene after the first result?",
+      "a": "Yes. Run another job with a different surface or prop. Each photo is its own 24-credit job."
     },
     {
-      "q": "Does it replace my plain product image?",
-      "a": "No. Keep a plain view so shoppers can inspect the item and its size. The staged scene shows where it fits into daily life."
+      "q": "Does the scene replace my plain product image?",
+      "a": "No. Keep the original photo for details. Use the scene when you want shoppers to picture where the item belongs."
     },
     {
-      "q": "Can the photo run in social ads?",
-      "a": "Yes. Downloads have no watermark and are licensed for commercial use. Add any price or offer in your ad editor."
+      "q": "Can I post the scene in a social ad?",
+      "a": "Yes. Finish the headline and the offer in your ad editor. The photo itself does not add your price for you."
     },
     {
-      "q": "How is product staging different from a photoshoot?",
-      "a": "A shoot needs props, a space and often a crew. Here the scene comes from one existing photo, so you can prepare a new angle without booking another shoot."
+      "q": "How is this different from a photoshoot?",
+      "a": "A shoot needs a place, props, and time on a calendar. Here you start from a photo you already have. Read [how to take product photos for AI](page:guide-product-photo-tips) if the source image is hard to read."
+    },
+    {
+      "q": "Can I use the scene on a Shopify store?",
+      "a": "Yes. Download the square image and upload it on the product page yourself. Each photo is 24 credits, shown before you start."
+    },
+    {
+      "q": "Can I post the scene on Instagram?",
+      "a": "Yes. Download the square image and add your caption in Instagram. Add any price in your own editor after download."
     }
   ],
   "visual": {
@@ -124,8 +132,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a setting shoppers can picture",
-      "lead": "Place one product in a room, cafe or market moment that makes its use easy to understand.",
+      "title": "Choose the setting for your AI lifestyle product photos",
+      "lead": "Pick a room, a cafe table, or a market moment. The product photo stays the reference.",
       "chips": [
         {
           "id": "room-shelf",
@@ -145,8 +153,7 @@
           "ref": "n:guide:fx15-lifestyle-picker-room-r1",
           "label": "Basket on a room shelf",
           "chips": [
-            "room-shelf",
-            "cafe-table"
+            "room-shelf"
           ],
           "prompt": "Use my uploaded product photo as the exact product reference. Place it on a pale wood room shelf with folded linen nearby; preserve its shape and color, with no readable text or logos.",
           "kind": "photo"
@@ -155,8 +162,7 @@
           "ref": "n:guide:fx15-lifestyle-picker-cafe-r1",
           "label": "Bag on a cafe table",
           "chips": [
-            "cafe-table",
-            "farmers-market"
+            "cafe-table"
           ],
           "prompt": "Use my uploaded product photo as the exact product reference. Place it on a marble cafe table beside one plain ceramic cup in soft window light; preserve the product, with no readable text or logos.",
           "kind": "photo"
@@ -165,10 +171,27 @@
           "ref": "n:guide:fx15-lifestyle-picker-market-r1",
           "label": "Tote at a farmers market",
           "chips": [
-            "farmers-market",
-            "room-shelf"
+            "farmers-market"
           ],
           "prompt": "Use my uploaded product photo as the exact product reference. Show it carried at a bright farmers market stall with unmarked produce crates behind it; keep the product fully visible, with no readable text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k5-lifestyle-photos-strip-0",
+          "label": "Handbag on a marble cafe table",
+          "chips": [
+            "cafe-table"
+          ],
+          "prompt": "Use my uploaded product photo as the exact product reference. Place it on a marble cafe table beside one plain cup; preserve the product, with no readable text or logos.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-7-image",
+          "label": "Linen tote at a farmers market",
+          "chips": [
+            "farmers-market"
+          ],
+          "prompt": "Use my uploaded product photo as the exact product reference. Show it at a bright farmers market stall; keep the product fully visible, with no readable text or logos.",
           "kind": "photo"
         }
       ],
@@ -177,36 +200,33 @@
     "uses": [
       {
         "img": "n:guide:k5-lifestyle-photos-uses-0-image",
-        "h": "Give the product useful context",
-        "d": "A shelf or room tells shoppers where the item fits before they read the listing.",
+        "h": "Show where the item sits at home",
+        "d": "A shelf, counter, or entryway tells shoppers the place before they read the description.",
         "alt": "Ceramic planter with a fern on a styled shelf, wide banner framing."
       },
       {
         "img": "n:guide:k5-lifestyle-photos-uses-1-image",
-        "h": "Make the product pop out",
-        "d": "Add the tools or ingredients that make the use case clear at a glance.",
+        "h": "Add the one prop that explains use",
+        "d": "A cup, a cloth, or a tool can show the job the product does. Keep the product larger than the prop.",
         "alt": "Matcha whisk, bowl and plain tin arranged on a linen tablecloth."
       },
       {
         "img": "n:guide:k5-lifestyle-photos-strip-3",
-        "h": "Create a polished scene without a shoot setup",
-        "d": "Place the item in a bright daily scene for a store page or social post without unpacking a shoot kit.",
+        "h": "Show a second everyday moment",
+        "d": "Use a balcony, a doorway, or a market stall when you need another scene of the same product.",
         "alt": "Plain iced tea can opened on a sunny balcony."
       }
     ],
     "titles": {
-      "m2": {
-        "h2": "How to Create AI Lifestyle Product Photos in 3 Simple Steps"
-      },
       "m3": {
-        "h2": "Choose a setting shoppers can picture",
-        "lead": "Show the item in a room, cafe or market moment shoppers can imagine using."
+        "h2": "Choose the setting for your AI lifestyle product photos",
+        "lead": "Pick a room, a cafe table, or a market moment. The product photo stays the reference."
       },
       "m4": {
-        "h2": "Show the product where it belongs"
+        "h2": "Show a product in a home setting photo"
       },
       "faq": {
-        "h2": "Frequently asked questions"
+        "h2": "Questions about AI lifestyle product photos"
       },
       "m5": {
         "h2": "Start with a clear product photo"
@@ -248,54 +268,72 @@
   "more_sections": [
     {
       "eyebrow": "Everyday use",
-      "h2": "See the product in everyday use",
-      "lead": "Give shoppers one familiar moment that shows how the item fits into a normal day.",
+      "h2": "Show one ordinary moment",
+      "lead": "Lifestyle product photography with AI can be one familiar place on the product page.",
       "items": [
         {
-          "t": "Cafe stop",
-          "d": "Let shoppers picture the tote beside a coffee while the product stays prominent.",
           "img": "n:guide:k5-lifestyle-gallery-01",
-          "alt": "Linen tote bag beside a coffee cup at a sunny cafe."
+          "alt": "Linen tote bag beside a coffee cup at a sunny cafe.",
+          "t": "Cafe stop",
+          "d": "Let shoppers picture the bag beside a drink while the product stays large in the frame."
         }
       ]
     },
     {
       "eyebrow": "Product context",
-      "h2": "Show the product where it is actually used",
-      "lead": "Use the finished scene to answer the shopper question: where would I use this?",
+      "h2": "Show the product leaving the house",
+      "lead": "A street or a doorway helps shoppers picture taking the item with them.",
       "items": [
         {
+          "img": "n:guide:k5-lifestyle-gallery-06",
+          "alt": "Hand holding a linen tote bag on a neighborhood street.",
           "t": "Neighborhood carry",
-          "d": "A familiar street setting helps shoppers picture when they would carry the product.",
-          "img": "n:guide:b2f10-lifestyle-photos-gallery06-r1",
-          "alt": "Hand holding a linen tote bag on a neighborhood street."
+          "d": "A simple street or doorway helps shoppers picture when they would take the product with them."
         }
       ]
     },
     {
-      "eyebrow": "Three scene set",
-      "h2": "Stage one product in three scenes",
-      "lead": "Keep the product consistent while you test the room, surface or market moment around it.",
+      "eyebrow": "Same product",
+      "h2": "Three scenes from the same product photo",
+      "lead": "Keep the product the same and change only the surface: a park, a picnic setup, or an entryway.",
       "items": [
         {
-          "t": "City bike carry",
-          "d": "Use a simple outdoor setting to show how the bag fits into a weekend routine.",
           "img": "n:guide:k5-lifestyle-gallery-03",
-          "alt": "Linen tote bag carried beside a city bike."
+          "alt": "Linen tote bag carried beside a city bike.",
+          "t": "Park carry",
+          "d": "A simple outdoor surface shows a weekend use."
         },
         {
-          "t": "Picnic setup",
-          "d": "Give the same product a second surface and a new reason to use it.",
           "img": "n:guide:k5-lifestyle-gallery-04",
-          "alt": "Linen tote bag on a beach picnic blanket."
+          "alt": "Linen tote bag on a beach picnic blanket.",
+          "t": "Picnic setup",
+          "d": "A second surface gives the same product another reason to appear."
         },
         {
-          "t": "Home entryway",
-          "d": "Show the tote in a final everyday setting before shoppers choose their scene.",
           "img": "n:guide:k5-lifestyle-gallery-05",
-          "alt": "Linen tote bag hanging in a bright home entryway."
+          "alt": "Linen tote bag hanging in a bright home entryway.",
+          "t": "Home entryway",
+          "d": "A last everyday spot is useful before you choose which scene to post."
         }
       ]
     }
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "uses",
+    "benefits",
+    "features",
+    "steps",
+    "related",
+    "faq"
+  ],
+  "relatedLinks": [
+    "photo-hub",
+    "change-background",
+    "white-background",
+    "social-ad-photos",
+    "plat-instagram",
+    "plat-shopify"
   ]
 }

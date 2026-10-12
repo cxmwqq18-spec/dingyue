@@ -4,7 +4,7 @@
   "description": "Plain-English definitions for the product photo, video, advertising, and ecommerce terms used across AIVideosUGC and links to the pages where each term matters.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
   "eyebrow": "Glossary",
-  "lead": "New to product content or paid social? Use this glossary to understand AIVideosUGC terms for product footage, credits, ad formats, and the platforms where you promote a store.",
+  "lead": "Use this AIVideosUGC glossary when a product video term or a product photo term is unfamiliar. It is a short ecommerce glossary for credits, frame sizes, ad formats, and the page that uses each one.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -13,7 +13,7 @@
   "entries": [
     {
       "term": "Credits",
-      "definition": "Credits are the balance you spend on AIVideosUGC jobs. A product photo and each video length have their own visible credit cost, which you see before confirming a generation. Credits are held while a job runs and returned when a job fails, so you can understand the spend before choosing another version.",
+      "definition": "Credits are the balance AIVideosUGC spends on a job. A product photo and each video length show their own credit cost before you confirm. Credits are held while the job runs and returned if it fails.",
       "related_page_ids": [
         "pricing",
         "faq"
@@ -21,7 +21,7 @@
     },
     {
       "term": "Aspect ratio",
-      "definition": "Aspect ratio describes a frame's width compared with its height. For video jobs, the AIVideosUGC editor offers five choices: 9:16 tall, 1:1 square, 16:9 wide, plus 4:3 and 3:4 for other layouts. The first three cover the main phone, feed, and product-page cases. Pick the ratio that matches the place you will post, then check the edges after download.",
+      "definition": "Aspect ratio is a frame's width compared with its height. Video jobs offer 9:16, 1:1, 16:9, 4:3, and 3:4. Pick the ratio of the place you will post, then check the edges after download.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "video-hub"
@@ -29,7 +29,7 @@
     },
     {
       "term": "Duration",
-      "definition": "Duration is the running length of a clip. The AIVideosUGC workspace offers 6, 10, 15, or 30 seconds, so you can match one quick product moment or give a multi-step reveal more room. Choose the length with the scene in mind: a single action can stay short, while an unboxing or before-and-after needs time for both parts.",
+      "definition": "Duration is how long a clip runs. The workspace offers 6, 10, 15, or 30 seconds. One action can stay short. An unboxing or a before-and-after needs room for both parts.",
       "related_page_ids": [
         "video-hub",
         "before-after-videos"
@@ -37,7 +37,7 @@
     },
     {
       "term": "White background",
-      "definition": "A white-background image places the product on a plain, even white field with no distracting props. Sellers commonly use this look for a marketplace main image or a clean listing gallery. In AIVideosUGC, start with a complete, in-focus product photo, then inspect the result and confirm the marketplace's current image rules before publishing.",
+      "definition": "A white-background photo places the product on a plain, even white field with no extra props. Sellers use it for a marketplace main image. Start from a complete, in-focus product photo, then check that marketplace's current image rules before you publish.",
       "related_page_ids": [
         "white-background",
         "guide-white-background-amazon"
@@ -45,7 +45,7 @@
     },
     {
       "term": "Packshot",
-      "definition": "A packshot is a clean product photograph in which the item stands alone and the viewer can judge its shape, finish, and controls. It is different from a lifestyle scene with props or a person. The Every Angle template uses packshots to build a consistent front, back, top, or base view for a listing gallery.",
+      "definition": "A packshot is a clean product photograph where the item stands alone so a shopper can judge its shape, finish, and controls. It is not a lifestyle scene with props or a person. The Every Angle template uses packshots for a matching front, back, top, or base view.",
       "related_page_ids": [
         "tpl-angle",
         "examples"
@@ -53,7 +53,7 @@
     },
     {
       "term": "UGC",
-      "definition": "UGC means user-generated content. On AIVideosUGC, a UGC-style ad uses a casual, handheld look that resembles a customer filming a product on a phone. The clip is still AI-generated, so it is not a real customer's review or testimony. Use it to show an action or setting, and follow each platform's disclosure rules.",
+      "definition": "UGC means user-generated content. Here, a UGC-style ad uses a casual handheld look, as if someone filmed the product on a phone. The clip is still AI-generated, so it is not a real customer's review. Follow each platform's disclosure rules.",
       "related_page_ids": [
         "video-ads",
         "ai-info"
@@ -61,7 +61,7 @@
     },
     {
       "term": "B-roll",
-      "definition": "B-roll is supporting footage that shows a product, a hand, a detail, or an everyday action instead of a presenter speaking to camera. AIVideosUGC uses product footage such as a bottle being filled at a desk. AIVideosUGC does not add voiceover, music, or captions. Add music, a voiceover, or captions in your editor after download.",
+      "definition": "B-roll is supporting footage of a product, a hand, a detail, or an everyday action, rather than a presenter talking to the camera. Product clips do not include narration, music, or captions. Add those in your editor after download.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "video-ads"
@@ -69,7 +69,7 @@
     },
     {
       "term": "Spark Ads",
-      "definition": "Spark Ads are TikTok ads that promote an existing post. The AIVideosUGC Spark Ads style template creates a product clip, but it does not make a TikTok post, connect an account, authorize a creator, choose targeting, or set up a campaign. AIVideosUGC does not add voiceover, music, or captions; add them in your editor after download. Finish campaign settings in TikTok Ads Manager.",
+      "definition": "Spark Ads are TikTok ads that promote an existing post. The Spark Ads style template makes a product clip. It does not publish a TikTok post, connect an account, authorize a creator, or choose targeting. Add narration, music, or captions after download, then finish the campaign in TikTok Ads Manager.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "plat-tiktok"
@@ -77,7 +77,7 @@
     },
     {
       "term": "Retargeting",
-      "definition": "Retargeting is advertising to people who have already interacted with your shop, such as visitors or cart users. AIVideosUGC can make the visual asset for a second look at a product, but it cannot see a shopper's history or choose the audience. Set visitors, exclusions, offer, budget, and frequency in your advertising platform.",
+      "definition": "Retargeting is advertising to people who already visited your shop, such as product viewers or cart users. AIVideosUGC can make the visual for that second look. It cannot see shopper history or pick the audience. Set visitors, exclusions, the offer, budget, and frequency in your ad platform.",
       "related_page_ids": [
         "tpl-retargeting-video-ad",
         "social-ad-photos"
@@ -85,7 +85,7 @@
     },
     {
       "term": "Safe zone",
-      "definition": "A safe zone is the part of a social frame where important text and product details remain visible after the platform places buttons, captions, or profile controls over the edges. AIVideosUGC leaves final text to you. Keep the main subject and text away from the lower and right edges, then inspect the preview in each ad manager.",
+      "definition": "A safe zone is the part of a social frame that stays visible after the platform covers the edges with buttons, captions, or profile controls. Final text is yours to add. Keep the product and any later text off the lower and right edges, then preview inside each ad manager.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "plat-tiktok"
@@ -93,7 +93,7 @@
     },
     {
       "term": "Feed ad",
-      "definition": "A feed ad is a paid image or video inserted into a scrolling social feed. AIVideosUGC's feed tools make a clear product scene, often square, with open space for your message. Download the image or clip, add the exact headline, price, or offer in Ads Manager or an editor, and choose the campaign settings there.",
+      "definition": "A feed ad is a paid image or video placed in a scrolling social feed. The feed tools make a clear product scene, often square, with open space for your message. Download the file, then add the exact headline, price, or offer in Ads Manager or an editor.",
       "related_page_ids": [
         "social-ad-photos",
         "plat-facebook"
@@ -101,7 +101,7 @@
     },
     {
       "term": "Ads Manager",
-      "definition": "Ads Manager is the platform tool where you upload an ad and set its text, audience, budget, where the ad appears, and schedule. AIVideosUGC gives you the product photo or video file; it does not publish campaigns or add prices, captions, music, or targeting. Those final choices stay in TikTok, Meta, or another ad tool.",
+      "definition": "Ads Manager is the platform screen where you upload an ad and set its text, audience, budget, placement, and schedule. AIVideosUGC gives you the photo or video file. It does not publish the campaign or add prices, captions, music, or targeting.",
       "related_page_ids": [
         "plat-tiktok",
         "plat-facebook"
@@ -109,7 +109,7 @@
     },
     {
       "term": "Product demo",
-      "definition": "A product demo is a short clip showing an item doing one useful action, such as a kettle pouring, a lid closing, or a lamp switching on. It answers a use question that a still image cannot. In AIVideosUGC, describe one action and provide a photo that shows the moving part, then review the result against the real product.",
+      "definition": "A product demo is a short clip of one useful action, such as a kettle pouring or a lid closing. Describe that single action and upload a photo that shows the moving part. Then compare the result with the real product.",
       "related_page_ids": [
         "product-videos",
         "tpl-howto"
@@ -117,7 +117,7 @@
     },
     {
       "term": "Unboxing",
-      "definition": "An unboxing video focuses on the reveal when a package opens and the product comes out. The box, tissue, insert, and order of the reveal come from your description, while the product photo anchors the item itself. Use this format for launches, gift-ready products, or subscription boxes, then add accurate product and offer text and music after download.",
+      "definition": "An unboxing video follows the moment a package opens and the product comes out. The box, tissue, insert, and reveal order come from your description. The product photo anchors the item. Add accurate offer text and music after download.",
       "related_page_ids": [
         "unboxing-videos",
         "blog-unboxing-videos-for-launches"
@@ -125,7 +125,7 @@
     },
     {
       "term": "Before-and-after",
-      "definition": "Before-and-after is a two-part visual story: show the starting state, then show the change your product makes. It works best for visible changes such as an organized drawer or a covered seat. Describe both halves clearly, and avoid claims about medical, body, or performance results unless your product can support them.",
+      "definition": "Before-and-after shows the starting state, then the change the product makes. It fits a visible change, such as an organized drawer. Describe both halves. Do not claim a medical, body, or performance result unless the real product supports it.",
       "related_page_ids": [
         "before-after-videos",
         "tpl-home"
@@ -133,7 +133,7 @@
     },
     {
       "term": "Lifestyle photo",
-      "definition": "A lifestyle photo places the product in a believable everyday setting so shoppers can picture owning it. A mug can sit beside an open book, or a backpack can hang on a cafe chair. AIVideosUGC builds the scene from your product photo and description; compare the output with the real item before using it on a listing or feed.",
+      "definition": "A lifestyle photo places the product in an everyday setting so a shopper can picture owning it. A mug can sit beside a book. The scene is built from your product photo and your description. Compare the output with the real item before you use it.",
       "related_page_ids": [
         "lifestyle-photos",
         "photo-hub"
@@ -141,7 +141,7 @@
     },
     {
       "term": "On-model photo",
-      "definition": "An on-model photo shows clothing, jewelry, a bag, or another wearable item being worn by a generated model. It helps shoppers see drape and scale alongside a clean product shot. AIVideosUGC does not supply model measurements or confirm clothing fit; keep your size chart and product details with the image.",
+      "definition": "An on-model photo shows clothing, jewelry, a bag, or another wearable on a generated model, so shoppers can see drape and scale. The tool does not supply measurements or confirm fit. Keep your size chart with the image.",
       "related_page_ids": [
         "model-photos",
         "tpl-tryon"
@@ -149,7 +149,7 @@
     },
     {
       "term": "Flat lay",
-      "definition": "A flat lay is a top-down arrangement of a product and selected props on a surface. It can show an outfit, a kit, or the contents of a package in one readable frame. Upload a photo that shows the full product, then describe the surface and arrangement; check that every included item and important detail still matches what you sell.",
+      "definition": "A flat lay is a top-down arrangement of a product and a few props on a surface. Upload a photo of the full product, then describe the surface and the layout. Check that every item in the frame is something you actually sell.",
       "related_page_ids": [
         "tpl-look",
         "tpl-outfit"
@@ -157,7 +157,7 @@
     },
     {
       "term": "Swatch",
-      "definition": "A swatch is a small sample that shows a product's color or finish next to the item itself. A lipstick beside a matching color patch lets shoppers judge the shade, while a color-variant set keeps several options easy to compare. Generate the visual from your product photos, then add names, prices, or shade labels yourself.",
+      "definition": "A swatch is a small sample of color or finish shown beside the product, so a shopper can judge the shade. Generate it from your product photos, then add the shade name and the price yourself.",
       "related_page_ids": [
         "tpl-color",
         "ind-beauty-skincare"
@@ -165,7 +165,7 @@
     },
     {
       "term": "Variant",
-      "definition": "A variant is one purchasable option within your product range, such as a color, size, finish, or capacity. A color-variant image set gives each option a matching visual so the correct image can appear when a shopper selects a swatch. Upload a source photo for each option and assign the downloaded results in Shopify or Amazon.",
+      "definition": "A variant is one purchasable option, such as a color, size, finish, or capacity. Upload a source photo for each option, then assign the downloaded files to the right option in Shopify or Amazon.",
       "related_page_ids": [
         "tpl-color",
         "plat-shopify"
@@ -173,7 +173,7 @@
     },
     {
       "term": "Carousel",
-      "definition": "A carousel combines several cards in one social ad so people can swipe through different products, angles, scenes, or variants. AIVideosUGC makes the individual images or clips; combine them, choose the order, and add the text and destination in your social ad account. Keep each card readable on its own so the product remains clear while someone swipes.",
+      "definition": "A carousel is several cards in one social ad, so people can swipe through products, angles, or variants. AIVideosUGC makes each image or clip. You set the order and add the text and destination in your ad account.",
       "related_page_ids": [
         "tpl-carousel-video-ad",
         "plat-instagram"
@@ -181,7 +181,7 @@
     },
     {
       "term": "CTA (call to action)",
-      "definition": "A CTA, or call to action, is the short instruction that tells someone what to do next, such as shop, learn more, or view a product. AIVideosUGC does not reliably draw exact offer text into a generated scene. Add the accurate CTA, link, date, and price after download in your editor or ad platform.",
+      "definition": "A CTA, or call to action, is the short line that tells someone what to do next, such as shop or view the product. The tool does not put the exact offer, date, or price into the scene. Add the CTA, link, date, and price after download.",
       "related_page_ids": [
         "tpl-limited-drop-alert-video",
         "tpl-carousel-video-ad"
@@ -189,7 +189,7 @@
     },
     {
       "term": "AI-generated content",
-      "definition": "AI-generated content is an image or video created or altered by a model rather than captured entirely in a camera session. AIVideosUGC uses it for product scenes, motion, and generated people. Check every result against the real item, avoid presenting generated people as customers, and follow the current disclosure rules of the platform where you publish.",
+      "definition": "AI-generated content is an image or video a model creates or changes, rather than a frame captured only by a camera. Check every result against the real item. Do not present a generated person as a customer. Follow the disclosure rules of the platform where you publish.",
       "related_page_ids": [
         "trust",
         "video-ads"
@@ -197,23 +197,23 @@
     },
     {
       "term": "Caption",
-      "definition": "A caption is the written text that accompanies a social post or appears as timed text in a video. AIVideosUGC does not add voiceover, music, or captions. Add your own caption in TikTok, CapCut, Canva, Ads Manager, or another editor so the spelling, price, date, discount code, and disclosure match the offer you are actually running.",
+      "definition": "A caption is the written line on a social post, or the timed text inside a video. Product clips do not include captions, music, or narration. Add the caption in TikTok, CapCut, Canva, Ads Manager, or another editor so the price, date, and code match the live offer.",
       "related_page_ids": [
         "ai-info",
         "guide-first-tiktok-video-ad"
       ]
     },
     {
-      "term": "spoken narration",
-      "definition": "A spoken narration is a voice track recorded over a video. AIVideosUGC does not add voiceover, music, or captions. Add music, a voiceover, or captions in your editor after download. Watch it with the sound off: the product and main text should still make sense. Do not present generated speech as a customer testimonial.",
+      "term": "Spoken narration",
+      "definition": "Spoken narration is a voice track played over a video. Product clips do not include narration, music, or captions, so add those in your editor after download. An AI actor clip is different: the actor speaks the one line you write. Do not present that speech as a customer testimonial.",
       "related_page_ids": [
         "ai-info",
-        "tpl-howto"
+        "spokesperson-videos"
       ]
     },
     {
       "term": "Template",
-      "definition": "A template is a ready-made visual direction for a particular product job, such as a white background, unboxing reveal, color set, or product demo. It gives you a focused starting point without requiring a long description. Upload the product photo, follow the template's input advice, and change the wording or run a separate job when you need another direction.",
+      "definition": "A template is a ready-made direction for one product job, such as a white background, an unboxing, or a short demo. Upload the product photo, follow that template's input notes, and run another job when you want a different direction.",
       "related_page_ids": [
         "templates",
         "video-hub"
@@ -221,7 +221,7 @@
     },
     {
       "term": "Marketplace listing",
-      "definition": "A marketplace listing is the product page you maintain inside a selling platform such as Amazon or Etsy. Its image slots and video rules are set by that marketplace, not by AIVideosUGC. Use clean main photos plus detail, scale, or lifestyle views, download the files, and check the current seller requirements before you upload them.",
+      "definition": "A marketplace listing is the product page you keep on a selling platform such as Amazon or Etsy. That platform sets the image slots and video rules. Download the files and check the current seller rules before you upload them.",
       "related_page_ids": [
         "plat-amazon",
         "white-background"
@@ -229,37 +229,19 @@
     },
     {
       "term": "DTC",
-      "definition": "DTC means direct-to-consumer: a brand sells through its own online store instead of relying only on a marketplace or wholesaler. On AIVideosUGC, DTC sellers use product photos and short clips for their Shopify store, social feeds, email, and ads. The term describes the sales route, not a special generation mode or platform connection.",
+      "definition": "DTC means direct-to-consumer: the brand sells through its own online store, not only through a marketplace. Sellers use the photos and short clips for a store, a social feed, email, and ads. It names the sales route. It is not a separate generation mode.",
       "related_page_ids": [
         "ai-info",
         "plat-shopify"
       ]
     }
   ],
-  "faq": [
-    {
-      "q": "What is a credit?",
-      "a": "A credit is the unit AIVideosUGC uses to price a generation job. Check the displayed cost before starting a photo or video job so you know how many credits it will use."
-    },
-    {
-      "q": "What does 9:16 mean?",
-      "a": "9:16 is a tall video frame ratio made for phone-first placements. Choose it when the finished clip is going to a vertical feed, then keep the product and any later text inside the safe area."
-    },
-    {
-      "q": "What is UGC-style content?",
-      "a": "UGC-style content uses a casual, customer-like scene to show a product in use, but an AI-generated scene is not a real customer review. Use it to demonstrate an action or setting and follow the disclosure rules for the place where you publish."
-    },
-    {
-      "q": "What is a packshot?",
-      "a": "A packshot is a clean product photograph in which the item stands alone so shoppers can judge its shape and finish. Use one for a marketplace main image or a consistent listing gallery before adding lifestyle scenes."
-    },
-    {
-      "q": "What is a white-background photo?",
-      "a": "A white-background photo places the complete product on an even white field with no distracting props. Use it as a clean marketplace main image after checking the destination marketplace rules."
-    },
-    {
-      "q": "What is a CTA?",
-      "a": "A CTA, or call to action, tells the viewer what to do next, such as shop or view a product. Add the accurate CTA, offer, date, and destination after download in your editor or ad platform."
-    }
+  "relatedLinks": [
+    "faq",
+    "ai-info",
+    "trust",
+    "pricing",
+    "guides",
+    "blog"
   ]
 }

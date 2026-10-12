@@ -1,11 +1,11 @@
 {
   "id": "ind-electronics",
   "title": "AI Product Videos for Electronics | AIVideosUGC",
-  "description": "Turn one electronics product photo into unboxing, setup and in-use video ads. Get watermark-free clips in minutes for listings, social feeds and paid campaigns.",
-  "h1": "Make AI Product Videos for Electronics That Sell More Angles",
-  "eyebrow": "App and tech brands",
-  "lead": "Your next round of gadget ads can start with one product photo. No creator search, no studio booking, no waiting on a shoot date.",
-  "card": "Unboxings, hands-on demos and everyday-carry scenes from one gadget photo.",
+  "description": "Turn one electronics photo into an unboxing, a setup, or a desk scene. Download watermark-free clips for listings, social feeds, and paid ads.",
+  "h1": "AI Product Videos for Electronics, From the Box to Daily Use",
+  "eyebrow": "Electronics",
+  "lead": "A gadget ad needs the product in a hand, not a claim about installs. One clear photo can become an unboxing, a setup, or a desk scene.",
+  "card": "Unboxings, setups, and everyday-carry scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
     "tech product video ads",
@@ -13,73 +13,56 @@
     "gadget lifestyle video",
     "product video for tech accessories"
   ],
-  "intro": [
-    "Show a gadget where shoppers use it: earbuds on a run, a charger in a carry-on, or a speaker at a desk. One clear product photo gives each ad a real setting without another shoot.",
-    "Upload the product with ports, buttons and indicator lights visible. Describe one action, such as lifting a lid or plugging in a cable. Choose a 6-, 10-, 15-, or 30-second clip; add exact battery and wattage details after download."
-  ],
   "faq": [
     {
-      "q": "How quickly can I launch an electronics video ad?",
-      "a": "Minutes. Upload one product photo, share your idea in a sentence, and download a 6-, 10-, 15- or 30-second clip. There is no shoot date to wait for."
+      "q": "Do I need a shoot before I can make an electronics clip?",
+      "a": "No. Upload one photo, describe the action in a sentence, and download a 6, 10, 15, or 30 second clip. Credits are 24, 40, 60, and 120. A failed job returns its credits."
     },
     {
-      "q": "Can beginners make gadget ads without any video experience?",
-      "a": "Yes. You do not edit footage or learn a timeline. Pick a scene, add your photo and download the clip."
+      "q": "Do I need video editing experience?",
+      "a": "No. You upload a photo, describe one scene, and download the file. Captions, prices, and licensed music are added in your editor afterward."
     },
     {
-      "q": "Can I create multiple ad variations for the same gadget?",
-      "a": "Yes. Run one photo through an unboxing, a demo and a travel scene, then split-test the clips in your ad platform. You do not reshoot anything."
+      "q": "Can I make several cuts of the same gadget?",
+      "a": "Yes. One photo can become an unboxing, a setup, and a travel scene. Check shape and ports on every cut before you test them in an ad account."
     },
     {
-      "q": "What electronics categories do these scenes work for?",
-      "a": "Speakers, headphones, chargers, tablet and laptop stands, phone cases, fitness trackers and other gadgets with a clear physical form."
+      "q": "Which products fit these scenes?",
+      "a": "Speakers, headphones, chargers, stands, phone cases, and other gadgets with a clear physical form. This page does not make app-store install ads from a screenshot alone."
     },
     {
-      "q": "Who are these scenes designed for?",
-      "a": "DTC gadget brands, app and tech marketers, and sellers on Shopify, Amazon and social channels who need new ads every week."
+      "q": "Can I make an electronics clip without hiring a creator?",
+      "a": "Yes. Upload one product photo and pay the credits shown before the job. The person on screen is generated, so post the clip as an ad, not as a customer's review."
     },
     {
-      "q": "Can I run the clips as paid ads for my gadget?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid ads and product videos. Add the real specs and screenshots yourself."
+      "q": "Will the clip state my battery life or wattage?",
+      "a": "Do not rely on the picture for specs. Add battery, wattage, and compatibility yourself in the listing or your editor, where you can check the numbers."
+    },
+    {
+      "q": "Can I run the clips as paid gadget ads?",
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Keep performance claims accurate."
+    },
+    {
+      "q": "What frame should I pick?",
+      "a": "Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. A vertical 9:16 fits a phone feed. A 16:9 fits a wider product page."
     }
   ],
   "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
-  "cta_lead": "Upload one clear gadget photo, choose a hands-on scene, and review the credit cost before you start.",
-  "benefits_h2": "Why AI Product Videos for Electronics Beat Booking a Shoot",
-  "benefits": [
-    {
-      "t": "New gadget ad in minutes",
-      "d": "Skip creator outreach and a studio day. Start with one clear product photo and get a usable scene ready in minutes while the feature is still fresh.",
-      "img": "n:guide:fx31-ind-electronics-benefit-speaker",
-      "alt": "Adult hand setting up a compact matte-graphite rectangular speaker on a wooden desk."
-    },
-    {
-      "t": "More angles at a lower cost",
-      "d": "One photo costs far less than creator fees, crew time and a studio. Run the same gadget through an unboxing, setup and travel moment without paying to reshoot each one.",
-      "img": "n:guide:fx31-ind-electronics-benefit-cable",
-      "alt": "Adult hand connecting a plain braided cable to a compact matte-black charging hub."
-    },
-    {
-      "t": "Keep every spec in your hands",
-      "d": "Choose the scene and action yourself, then add exact battery, wattage and compatibility details in the listing or editor.",
-      "img": "n:guide:fx31-ind-electronics-benefit-ports",
-      "alt": "Adult fingers holding a compact matte-graphite gadget to show its ports and controls."
-    }
-  ],
-  "steps_h2": "How to Make AI Product Videos for Electronics in 3 Simple Steps",
-  "steps_lead": "Show one useful gadget moment, then take the finished clip straight to your listing or ad account.",
+  "cta_lead": "Upload a clear product photo, describe one action, and review the credit cost before the job starts.",
+  "steps_h2": "An Electronics Product Demo Video in Three Moves",
+  "steps_lead": "Three things you do on screen. Real specs are added by you after download.",
   "steps": [
     {
-      "t": "Upload Product Photo",
-      "d": "Add a clear photo that shows the gadget’s shape, ports, and controls."
+      "t": "Upload Your Gadget Photo",
+      "d": "Use a clear photo of the whole product, ports and controls visible if they matter. A straight daylight shot beats a dark hero render."
     },
     {
-      "t": "Choose a Scene",
-      "d": "Pick one hands-on action, such as an unboxing, cable connection, or travel setup."
+      "t": "Describe the Demo",
+      "d": "Name one action, such as a button press, a cable click-in, or an unboxing on a desk. The hand or presenter is generated."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip without a watermark, add exact specs in your editor, and post it to your listing or ad."
+      "d": "Check the shape, color, and port layout against the real unit, then download. Add specs in your editor. Captions are not added for you."
     }
   ],
   "visual": {
@@ -97,7 +80,7 @@
       "result": "n:guide:q16-electronics-speaker-step-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, a hand presses the speaker's single control once, ending with the full speaker still beside a cup. Soft window light, natural commercial phone-video look. Three-quarter close-up at table height with one slow push-in. Sound: one button click and quiet room tone; no music.",
+      "prompt": "A hand presses the speaker's one control on a cafe table, then the full speaker sits beside a cup.",
       "options": [
         [
           "Size",
@@ -113,102 +96,150 @@
     "input": [],
     "outputs": [],
     "titles": {
-      "m2": {
-        "h2": "How to Make AI Product Videos for Electronics in 3 Simple Steps"
-      },
-      "m3": {
-        "h2": "AI Product Videos for Electronics: Choose a Format for the First Shot"
-      },
-      "m4": {
-        "h2": "Use AI Product Videos for Electronics on Listings and Social Feeds"
-      },
-      "m5": {
-        "h2": "Start AI Product Videos for Electronics With a Clear Product Photo"
-      },
-      "m6": {
-        "h2": "Pick a Shape and Length for AI Product Videos for Electronics"
-      },
-      "m7": {
-        "h2": "Add Offer Details After Downloading AI Product Videos for Electronics"
-      },
-      "examples": {
-        "h2": "More AI Product Videos for Electronics Examples",
-        "lead": "Hands-on device views, clean product details, and travel-ready accessories for electronics listings and ads."
-      },
       "faq": {
-        "h2": "Questions About AI Product Videos for Electronics"
+        "h2": "Questions About Electronics Product Videos"
       }
     }
   },
-  "cta_title": "Create an electronics product video",
-  "more_sections": [
+  "cta_title": "Make a Gadget Demo From One Photo",
+  "relatedLinks": [
     {
-      "eyebrow": "Where the files go",
-      "h2": "Post Electronics Ads Where Shoppers Find Them",
-      "lead": "Use the same product photo process for a listing page or a social feed, then add your approved offer details.",
-      "items": [
-        {
-          "t": "Amazon listings",
-          "d": "Use a clear product view on your [Amazon product page](page:plat-amazon), then add the exact compatibility and power details."
-        },
-        {
-          "t": "Shopify product pages",
-          "d": "Place a hands-on demo beside your product media on [Shopify](page:plat-shopify), keeping the gadget and specs consistent."
-        },
-        {
-          "t": "TikTok feeds",
-          "d": "Use a quick setup or unboxing in a vertical [TikTok ad](page:plat-tiktok) and add the offer in your editor."
-        },
-        {
-          "t": "Instagram Reels",
-          "d": "Turn a cable connection or desk demo into a vertical [Instagram Reel](page:plat-instagram) for a product launch or restock."
-        },
-        {
-          "t": "Facebook feeds",
-          "d": "Use a square or feed-ready [Facebook ad](page:plat-facebook) when shoppers need a clear product detail before they click."
-        }
-      ]
+      "id": "tpl-product-feature-callout-video",
+      "label": "product feature callout video"
     },
     {
-      "eyebrow": "Tools that fit",
-      "h2": "Tools That Fit Electronics Ads",
-      "lead": "Choose the format that shows a gadget clearly in a listing or feed.",
-      "items": [
-        {
-          "t": "Product Videos",
-          "d": "Show one useful device action with [Product Videos](page:product-videos).",
-          "img": "n:guide:fx31-ind-electronics-tool-product",
-          "alt": "Adult hand pressing a tactile control on a compact matte-graphite speaker."
-        },
-        {
-          "t": "Unboxing Videos",
-          "d": "Open the package and reveal the device with [Unboxing Videos](page:unboxing-videos).",
-          "img": "n:guide:fx31-ind-electronics-tool-unbox",
-          "alt": "Adult hands lifting a compact matte-black charging hub from a plain kraft box."
-        },
-        {
-          "t": "White Background Photos",
-          "d": "Keep the product shape clear for [White Background Photos](page:white-background).",
-          "img": "n:guide:fx31-ind-electronics-tool-white",
-          "alt": "Compact matte-black charging hub and plain braided cable on a white background."
-        },
-        {
-          "t": "Video Ads",
-          "d": "Turn a product detail into a feed-ready scene with [Video Ads](page:video-ads).",
-          "img": "n:guide:b2f3-ind-electronics-videoad-r1",
-          "alt": "Adult woman with a short ash-blonde pixie holds a compact matte-graphite device beside her cheek in daylight."
-        }
-      ]
+      "id": "tpl-angle",
+      "label": "product packshot photos"
+    },
+    {
+      "id": "tpl-film",
+      "label": "cinematic product video"
+    },
+    {
+      "id": "product-videos",
+      "label": "AI product video generator"
+    },
+    {
+      "id": "unboxing-videos",
+      "label": "AI unboxing video"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
     }
   ],
-  "relatedLinks": [
-    "ind-beauty-skincare",
-    "ind-fashion-clothing",
-    "ind-home-living",
-    "ind-food-drinks",
-    "product-videos",
-    "unboxing-videos",
-    "white-background",
-    "video-ads"
+  "reasons": {
+    "h2": "An AI Unboxing Video for Gadgets, Without the Wait",
+    "lead": "You do not have to wait on a creator to show a speaker, a charger, or a case. The scene starts from your product photo.",
+    "items": [
+      {
+        "t": "No shoot on the calendar",
+        "d": "Upload one photo, name the action, and download a clip. There is no shoot date, and a failed job returns its credits.",
+        "img": "n:guide:fx31-ind-electronics-benefit-speaker",
+        "alt": "Adult hand setting up a compact matte-graphite rectangular speaker on a wooden desk."
+      },
+      {
+        "t": "More cuts, same photo",
+        "d": "Run one gadget through an unboxing, a setup, and a travel scene. You pay the credits shown before each length, not a crew day.",
+        "img": "n:guide:fx31-ind-electronics-benefit-cable",
+        "alt": "Adult hand connecting a plain braided cable to a compact matte-black charging hub."
+      },
+      {
+        "t": "Specs stay in your hands",
+        "d": "You choose the action. Battery, wattage, and compatibility are typed into the listing or your editor, not left to the generated picture.",
+        "img": "n:guide:fx31-ind-electronics-benefit-ports",
+        "alt": "Adult fingers holding a compact matte-graphite gadget to show its ports and controls."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "Tech Product Video Ads on Every Channel",
+    "lead": "Pick a frame the channel already uses. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "d": "A 9:16 unboxing or button press for a gadget ad in the For You feed.",
+        "href": "/platforms/tiktok-ads"
+      },
+      {
+        "t": "AI Instagram ads",
+        "d": "A square still or a vertical setup for the grid and Stories.",
+        "href": "/platforms/instagram-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "d": "A feed still with room to add the spec line after download.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "d": "A short vertical demo, one action from the first second.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "d": "A clean main image of the gadget, with extra views in the gallery.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "d": "Matching product imagery for the device page and the collection.",
+        "href": "/platforms/shopify-product-photos"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "How Sellers Use a Gadget Lifestyle Video",
+    "lead": "Example ways electronics sellers use one product photo. These are not quotes.",
+    "items": [
+      {
+        "example": true,
+        "who": "Speaker brand",
+        "t": "One press on a desk",
+        "d": "They upload a three-quarter photo and ask for a hand pressing the single control, ending on the full speaker."
+      },
+      {
+        "example": true,
+        "who": "Charger shop",
+        "t": "Cable click-in",
+        "d": "A hub photo becomes a hand connecting a plain cable. Port count is checked against the unit before the clip is posted."
+      },
+      {
+        "example": true,
+        "who": "Case maker",
+        "t": "Pocket to table",
+        "d": "The same case photo feeds a 6-second pocket pull (24 credits) and a 10-second desk set-down (40 credits)."
+      },
+      {
+        "example": true,
+        "who": "Launch week",
+        "t": "Unboxing, then setup",
+        "d": "They run two scenes from one photo: the lid opening, then the device on a desk. Specs are added in the listing."
+      },
+      {
+        "example": true,
+        "who": "Accessory desk",
+        "t": "Listing still plus a clip",
+        "d": "One photo guides a white-background main image and a vertical in-use clip. Screenshots of a UI are added by the team, not invented."
+      },
+      {
+        "example": true,
+        "who": "Small catalog",
+        "t": "Each SKU, its own photo",
+        "d": "A new color or a new port layout gets its own upload, so the clip does not borrow details from a different unit."
+      }
+    ]
+  },
+  "related_h2": "Electronics demos and unboxings",
+  "blockOrder": [
+    "hero",
+    "strip",
+    "reasons",
+    "steps",
+    "platforms",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
   ]
 }

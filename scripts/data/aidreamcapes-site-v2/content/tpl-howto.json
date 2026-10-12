@@ -1,37 +1,10 @@
 {
   "id": "tpl-howto",
-  "title": "AI How-To Video Maker: Demos in Minutes | AIVideosUGC",
+  "title": "AI How-To Video Maker for Product Demos | AIVideosUGC",
   "description": "AI how-to video maker: turn one product photo into a clear demo for Shorts and ads without filming a presenter. Choose 9:16 or 16:9 for 6, 10, 15 or 30 seconds.",
-  "h1": "AI How-To Video Maker for Product Demos That Sell",
+  "h1": "AI How-To Video Maker for a Task You Can Follow",
   "eyebrow": "How-to video template",
-  "lead": "An AI how-to video maker turns a product photo into a task demo that shows the work from setup to result for a product page, Short or ad.",
-  "benefits_h2": "Why choose an AI how-to video maker?",
-  "benefits": [
-    {
-      "t": "Answer the how-does-it-work question fast",
-      "d": "Show one repeatable task from setup to result, so buyers can see the product doing its job before they buy.",
-      "img": "n:guide:fx27-howto-benefit-1",
-      "alt": "Adult hands run a compact fabric shaver across an olive knit sweater, leaving a clean panel beside the remaining pills."
-    },
-    {
-      "t": "Make one problem and one fix obvious",
-      "d": "Open on the wrinkled shirt, empty mug or dirty surface, show one deliberate action, then hold on the finished state. Buyers follow the change without a long feature montage.",
-      "img": "n:guide:fx27-howto-benefit-2",
-      "alt": "Adult hand scrubs one grout seam with a plain handheld cleaning brush, leaving a clean section beside the dirty tile."
-    },
-    {
-      "t": "Use the same demo in feed and listing",
-      "d": "Post 9:16 on TikTok or YouTube Shorts and 16:9 on a product page or ad. Choose 6, 10, 15 or 30 seconds for the task.",
-      "img": "n:guide:fx27-howto-benefit-3",
-      "alt": "Adult creator demonstrates a plain resistance band beside a phone on a small tripod in a home workout corner."
-    },
-    {
-      "t": "Publish the instructions you approve",
-      "d": "Download without an AIVideosUGC watermark, then add step labels, safety wording or product details in your editor before posting.",
-      "img": "n:guide:b2f11-tpl-howto-benefits-3-r1",
-      "alt": "Adult holds a plain stainless travel mug beside a generic laptop with a blank screen."
-    }
-  ],
+  "lead": "Pick a product how-to scene and add one photo, so the clip shows the task from setup to the result.",
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -39,20 +12,20 @@
     "YouTube Shorts product tutorial",
     "instructional product video"
   ],
-  "steps_h2": "How to Make AI How-To Videos in 3 Simple Steps",
-  "steps_lead": "Three steps turn one product photo into a ready-to-post task demo, with no studio, presenter or reshoot.",
+  "steps_h2": "Make a Product Demo Video From a Photo in 3 Steps",
+  "steps_lead": "One product photo, a short line about the task, then a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the whole product with working details visible. Keep the tool fully in frame."
+      "d": "Show the whole product, including the part that does the work. Keep every edge inside the frame."
     },
     {
-      "t": "Pick a How-To Style",
-      "d": "Choose the task and one visible change, then generate the clip in your size and length. Keep one change in view."
+      "t": "Describe Your Scene",
+      "d": "Name the task and one change a shopper should see. Then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the video, then add step labels or approved safety wording in your editor. Check the clip before posting."
+      "d": "Download the file and add step labels in your editor. Post it once the action matches the real product."
     }
   ],
   "maker": {
@@ -75,51 +48,47 @@
   "faq": [
     {
       "q": "What is an AI how-to video template?",
-      "a": "It is a ready-made demonstration scene. Add one product photo and generate a clip that shows one useful task from setup to result."
+      "a": "A ready scene that shows one product task from setup to result. You add a photo of your item, and the clip lets a shopper watch the job."
     },
     {
-      "q": "Do I need to write prompts to use these templates?",
-      "a": "No. Pick a task style, upload your product photo and generate. Step two can include one short line about the action if you want."
+      "q": "How do I make the how-to clip?",
+      "a": "Upload the photo, name the task and one visible change, pick a size and a length, then download the file."
     },
     {
-      "q": "Who are how-to templates built for?",
-      "a": "Product sellers, support teams and agencies that need a clear demonstration for listings, Shorts, Reels or ads."
+      "q": "Why start from a photo instead of filming a presenter?",
+      "a": "The demonstration is built from the photo you already have. You do not book a presenter, a studio day, or a reshoot to explain one task."
     },
     {
-      "q": "Can one video show several steps in a row?",
-      "a": "Yes. Keep the clip focused on one task and let the sequence show its main actions in order."
+      "q": "Who is this scene for?",
+      "a": "Sellers, support teams, and agencies that need a clear how-to for a listing, a Short, or an ad."
     },
     {
-      "q": "Will the video include spoken instructions?",
-      "a": "The template creates the visual clip. Add narration, captions or step labels in your editor after download."
+      "q": "Can I do this on the first try?",
+      "a": "Pick a task scene, upload one clear photo, and add a short line about the action. Check the working part before you post."
     },
     {
-      "q": "What product photo works best for a how-to video?",
-      "a": "Use a clear photo of the whole product with its working part visible and no important edge cropped."
+      "q": "What photo should I upload?",
+      "a": "A sharp photo of the whole product, with the working part visible and no important edge cut off."
     },
     {
-      "q": "How many steps fit in one tutorial?",
-      "a": "A short clip works best with one task and a few readable actions. Add longer written instructions outside the generated frame."
+      "q": "Which size and length can I pick?",
+      "a": "This template is set up for 9:16 and 16:9. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
-      "q": "How fast is a how-to video made?",
-      "a": "A clip is generated in minutes after you start the job, with no presenter, studio day or reshoot."
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "What does a how-to video cost?",
-      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before you run it."
+      "q": "Will the file speak the instructions?",
+      "a": "No. The template makes the picture. Add narration, captions, or step labels in your editor after download."
     },
     {
-      "q": "Can I use a how-to video in paid ads?",
-      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for instructions and claims."
-    },
-    {
-      "q": "Can I keep the same product shape in the generated demo?",
-      "a": "Yes. Upload a clear photo of the whole product and review its outline and working parts before posting."
+      "q": "Can I run the file in ads?",
+      "a": "Yes. The download has no AIVideosUGC watermark and can run in your listings and paid ads. You are responsible for the instructions and any claim. If a person appears, that person is an AI performer, not a customer."
     }
   ],
   "visual": {
-    "overview": "An AI how-to video shows one product task from setup to result, so buyers can see how it works before checkout.",
+    "overview": "",
     "strip": [
       "n:q10-howto-strip-1",
       "n:q10-howto-strip-2",
@@ -134,7 +103,7 @@
       "sourceHint": "Show the full tool and the surface it works on.",
       "result": "n:guide:c1-tpl-howto-m2-result-video-916",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Switch on this white handheld steamer beside a blue shirt, then press the fabric in one steady pass. Close side framing with one short push-in. Soft window light. End with the steamer beside the smooth panel of blue fabric. Sound: soft steam hiss and fabric movement; no music.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Switch on this white handheld steamer beside a blue shirt, then press the fabric in one steady pass. Close side framing with one short push-in. Soft window light. End with the steamer beside the smooth panel of blue fabric.",
       "options": [
         [
           "Size",
@@ -151,8 +120,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a how-to template",
-      "lead": "Browse task demos, then add your own product photo.",
+      "title": "Choose a Product How-To Video",
+      "lead": "These cards cover many categories. There is no how-to filter. Open a demo card, then add a photo of your product.",
       "chips": [
         {
           "id": "accessories",
@@ -568,30 +537,120 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Make an AI how-to video from one product photo"
-      },
       "m3": {
-        "h2": "Choose a clear action for your AI how-to video"
+        "h2": "Choose a Product How-To Video"
       },
       "faq": {
-        "h2": "Questions about AI how-to videos"
+        "h2": "Questions About How to Use Product Video Templates"
       }
     }
   },
   "relatedLinks": [
-    "product-videos",
-    "image-to-video",
-    "tpl-film",
-    "plat-shopify",
-    "blog-ai-video-review-checklist",
-    "guide-first-tiktok-video-ad",
-    "guide-ad-sizes-by-platform",
-    "unboxing-videos"
-  ]
+    {
+      "id": "product-videos",
+      "label": "AI product video generator"
+    },
+    {
+      "id": "tpl-home",
+      "label": "home product videos"
+    },
+    {
+      "id": "tpl-launch",
+      "label": "AI promo video maker"
+    },
+    {
+      "id": "tpl-compare",
+      "label": "product comparison video"
+    },
+    {
+      "id": "plat-youtube-shorts",
+      "label": "YouTube Shorts ads"
+    },
+    {
+      "id": "ind-home-living",
+      "label": "AI product videos for home brands"
+    }
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "Sample Instructional Product Video Setups",
+    "lead": "Example scenes for this template. They show how a shop could teach one task.",
+    "items": [
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "One pass, one result",
+        "d": "Example: a fabric shaver crosses a knit once, then the frame holds on the smoother patch."
+      },
+      {
+        "example": true,
+        "who": "Cleaning shop",
+        "t": "Problem, then fix",
+        "d": "Example: a brush works one grout line, and the clip ends on the cleaner seam."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Setup to result",
+        "d": "Example: a handheld steamer starts beside a wrinkled shirt and finishes on the flat cloth."
+      },
+      {
+        "example": true,
+        "who": "Desk brand",
+        "t": "Tool in use",
+        "d": "Example: a compact tool sits next to a laptop while one short action shows what it does."
+      },
+      {
+        "example": true,
+        "who": "Support team",
+        "t": "The question buyers ask",
+        "d": "Example: the clip answers how the item works, with one task and no extra feature tour."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "Another task, same photo",
+        "d": "Example: the same product photo is reused for a second task instead of booking another shoot."
+      },
+      {
+        "example": true,
+        "who": "Listing editor",
+        "t": "Labels after download",
+        "d": "Example: step words and safety lines are typed in an editor after the file downloads."
+      },
+      {
+        "example": true,
+        "who": "Paid social buyer",
+        "t": "A frame for the feed",
+        "d": "Example: a 9:16 task clip is exported for a short feed placement, with the cost shown first."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Not a customer",
+        "d": "Example: if a person demonstrates the task, that person is an AI performer, not a buyer review."
+      },
+      {
+        "example": true,
+        "who": "First-time seller",
+        "t": "A short line is enough",
+        "d": "Example: the seller names the task in one line, generates, and checks the working part before posting."
+      }
+    ]
+  },
+  "related_h2": "Pages for a YouTube Shorts Product Tutorial",
+  "related_lead": "Product videos, home scenes, and a Shorts page that sit next to a how-to clip.",
+  "cta_title": "Ready to Show the Task?",
+  "cta_lead": "Upload one product photo and see the credit cost before you start."
 }

@@ -2,9 +2,9 @@
   "id": "occ-black-friday",
   "title": "Black Friday Ad Creatives for Your Sale | AIVideosUGC",
   "description": "Build a Black Friday sale scene from one product photo. Add the confirmed discount, code and end date after download, then publish the version you approve.",
-  "h1": "Make Black Friday Ad Creatives From One Product Photo",
+  "h1": "Create Black Friday Ad Creatives Fast",
   "eyebrow": "Black Friday ad creatives",
-  "lead": "Get the Black Friday product scene ready before the offer is final. Add the exact discount, code and end date after download, then publish the version you approve.",
+  "lead": "Prepare the Black Friday product scene while the offer is still moving, then place the discount on the file yourself.",
   "secondary_keywords": [
     "Black Friday video ads",
     "Black Friday banner ideas",
@@ -14,28 +14,40 @@
   "plan": [],
   "faq": [
     {
-      "q": "How early should I make my Black Friday ads?",
-      "a": "Start before the offer is final so you can make versions in minutes, not weeks of prep, and finish the visuals before launch."
+      "q": "How early should I make Black Friday ad creatives?",
+      "a": "Start before the offer is final. The product scene can be ready while the discount, the code, and the end date are still moving."
     },
     {
-      "q": "Can you add a countdown timer to my video?",
-      "a": "No. Add the countdown in CapCut or with your ad platform tools, where you control the exact end time."
+      "q": "Can you add a countdown timer to the video?",
+      "a": "No. Add the countdown in your editor or ad platform after download, where you control the exact end time."
     },
     {
-      "q": "Do I need a separate video for each platform?",
-      "a": "Use the size your channel needs. Each version is its own generation, with the credit cost shown before you start."
+      "q": "Do I need a separate file for each placement?",
+      "a": "Use the frame that placement needs: 9:16, 1:1, 16:9, 4:3, or 3:4. Each one is its own job, and the credit cost shows before you start."
     },
     {
-      "q": "Which Black Friday details should stay editable until the offer is final?",
-      "a": "Keep the price, discount, code and end date editable so you can update the wording after download without rebuilding the product scene."
+      "q": "Which Black Friday details should stay editable?",
+      "a": "Keep the price, the discount, the code, and the end date editable. Update them after download without rebuilding the product scene."
     },
     {
       "q": "Do I need a creator or a shoot?",
-      "a": "No. Start from the product photo you upload and a chosen scene, so the sale set does not depend on filming anyone."
+      "a": "No. Start from the product photo and a described scene. If a person appears, that person is generated, not someone you filmed."
     },
     {
-      "q": "Can I run these creatives as paid Black Friday ads?",
-      "a": "Yes. Downloaded files carry no AIVideosUGC watermark and are yours to use in paid campaigns, subject to each platform’s ad rules."
+      "q": "Can I run these as paid Black Friday ads?",
+      "a": "Yes. The download has no AIVideosUGC watermark. Each platform's ad rules still apply."
+    },
+    {
+      "q": "How many credits does a Black Friday photo or video use?",
+      "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. A failed job returns those credits."
+    },
+    {
+      "q": "Can I reuse the scene for Cyber Monday ad creatives?",
+      "a": "Yes. Keep the product scene and change the offer line in your editor for Monday."
+    },
+    {
+      "q": "Can I add music or captions?",
+      "a": "Add them after download in your editor. The file does not include music or captions. Use a track you have the rights to play."
     }
   ],
   "examples": {
@@ -75,23 +87,23 @@
       }
     ]
   },
-  "cta_lead": "Build the Black Friday product scene first, then add the confirmed offer after download.",
+  "cta_lead": "Finish the product scene first. Type the discount, the code, and the end date when they are confirmed.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product or bundle featured in the sale."
+      "d": "Start with one clear photo of the product or the set in the sale. Keep the full item in frame."
     },
     {
-      "t": "Pick a Black Friday Scene",
-      "d": "Choose a sale moment such as a gift reveal or product demo."
+      "t": "Describe Your Scene",
+      "d": "Ask for a gift reveal or a hands-on look, with empty space for the offer. Leave the price, the code, and the end date out."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed price, code and end date in your editor, then post the finished file."
+      "d": "Add the confirmed price, code, and end date in your editor, then post the file. Friday and Monday can share the same scene."
     }
   ],
   "visual": {
-    "overview": "Show the Black Friday product clearly, then add the confirmed offer in an editable layer after download.",
+    "overview": "The product is ready for the sale. The code and the end date go on after download.",
     "strip": [
       "n:guide:q20-occ-bf-uses-01",
       "n:guide:k8-blackfriday-gen2-plat-amazon-g1",
@@ -195,53 +207,134 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Create Black Friday Ad Creatives in 3 Simple Steps"
+        "h2": "Create Black Friday banner ideas in three steps"
       },
       "m3": {
         "h2": "Choose a Black Friday Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions About Black Friday Ad Creatives"
+        "h2": "Questions about Black Friday ad creatives"
       }
     }
   },
-  "benefits_h2": "Change the deal without rebuilding the Black Friday scene",
+  "benefits_h2": "Black Friday video ads from one product photo",
   "benefits": [
     {
-      "t": "Start your sale scene sooner",
-      "d": "Save rework by building the product scene while the Black Friday deal is still being confirmed.",
+      "t": "Start the sale scene before the code exists",
+      "d": "Build the product scene while the Black Friday deal is still being confirmed. The visual can be finished before the percent is final.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for a Black Friday ad."
     },
     {
-      "t": "Get more versions from one photo",
-      "d": "Turn one product photo into a square post or phone-first version without booking another shoot.",
+      "t": "Hold the product up for a phone-first frame",
+      "d": "Make a square post or a 9:16 version from the same photo. Frames also include 16:9, 4:3, and 3:4.",
       "img": "n:guide:fx02-occ-bf-benefit-shoe",
       "alt": "Adult creator holds a plain knit slip-on shoe toward camera in a deal-day demo."
     },
     {
-      "t": "Change deal details without a reshoot",
-      "d": "Add the discount, code and end date after download, so late changes do not send you back to production.",
+      "t": "Change the deal in your editor",
+      "d": "Add the discount, the code, and the end date after download. A late change stays in the text, and the product scene stays put.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
       "alt": "Adult hands place an insulated lunch bag into a kraft shipping box."
     },
     {
-      "t": "Skip creator and studio costs",
-      "d": "Use the downloaded sale scene in your posts and paid campaigns with no casting, studio or shoot.",
+      "t": "Use a quiet at-home demo",
+      "d": "Show the product in a calm at-home moment, a common look for a phone sale ad. If a person is in the frame, that person is generated, not someone you filmed.",
       "img": "n:guide:b2f8-occ-black-friday-benefit-pet-r1",
       "alt": "Adult hand rests on a calm dog lying on a dark sofa."
     }
   ],
-  "steps_h2": "How to Create Black Friday Ad Creatives in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, choose a Black Friday sale scene and add the confirmed offer after download.",
+  "steps_h2": "Create Black Friday banner ideas in three steps",
+  "steps_lead": "Upload the sale product, pick a deal-day scene, and add the offer after download.",
   "relatedLinks": [
-    "video-ads",
-    "social-ad-photos",
-    "unboxing-videos",
-    "occ-sale-discount",
-    "occ-holidays",
-    "templates",
-    "pricing",
-    "guides"
+    {
+      "id": "occ-sale-discount",
+      "label": "sale ad creatives"
+    },
+    {
+      "id": "occ-holidays",
+      "label": "holiday ad photos and videos"
+    },
+    {
+      "id": "occ-product-launch",
+      "label": "product launch video and photos"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "tpl-bf",
+      "label": "Black Friday video ads"
+    },
+    {
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
+    }
+  ],
+  "reviews": {
+    "h2": "How stores get Cyber Monday ad creatives ready",
+    "lead": "Three ways a shop reuses one scene from Friday into Monday.",
+    "items": [
+      {
+        "example": true,
+        "who": "A bag shop",
+        "t": "Pack the duffel, leave the offer blank",
+        "d": "They upload the bag and ask for hands packing it on a table, with empty space beside it. Friday's code and Monday's code are both typed later."
+      },
+      {
+        "example": true,
+        "who": "A desk shop",
+        "t": "Frame the monitor with room for the price",
+        "d": "They keep the monitor on a tidy desk and leave a clear area for the discount. The end time is not burned into the picture."
+      },
+      {
+        "example": true,
+        "who": "A kitchen shop",
+        "t": "Reuse the lunch-bag scene on Monday",
+        "d": "They download one packing scene. Cyber Monday only changes the offer line in the editor."
+      }
+    ]
+  },
+  "trust": {
+    "h2": "What you check before the deal goes live",
+    "lead": "Confirm the file and the credits before the deal goes public.",
+    "items": [
+      {
+        "t": "You type the offer yourself",
+        "d": "The file does not print the discount. You add the price, the code, and the end date, then proofread every character."
+      },
+      {
+        "t": "A commercial file with no watermark",
+        "d": "The download has no AIVideosUGC watermark. You can use it in paid campaigns, subject to each platform's ad rules."
+      },
+      {
+        "t": "The credit cost before you start",
+        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+      },
+      {
+        "t": "Credits back if the job fails",
+        "d": "A failed job returns its credits automatically."
+      },
+      {
+        "t": "The upload stays in your account",
+        "d": "The product photo and the result stay in your account until you download them and share them."
+      },
+      {
+        "t": "No timer inside the file",
+        "d": "Add a countdown in your editor if you want one. The generated clip does not include it, and it does not include music or captions."
+      }
+    ]
+  },
+  "cta_title": "Run Black Friday sale ads for ecommerce from this scene",
+  "blockOrder": [
+    "hero",
+    "benefits",
+    "steps",
+    "reviews",
+    "trust",
+    "related",
+    "faq",
+    "cta"
   ]
 }

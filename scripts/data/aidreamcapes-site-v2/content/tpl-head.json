@@ -2,9 +2,9 @@
   "id": "tpl-head",
   "title": "AI Team Headshots for Your About Page | AIVideosUGC",
   "description": "Make matching team headshots in one shared light, crop and backdrop, each from a teammate's own photo. AI portraits for About and team pages.",
-  "h1": "AI Team Headshots That Match, from Founder to New Hire",
+  "h1": "AI Team Headshots That Match Across the Page",
   "eyebrow": "Team photo template",
-  "lead": "Mismatched team photos make an About page feel unfinished. Create a shared headshot look from each teammate's own approved photo.",
+  "lead": "A team page looks unfinished when every portrait has a different crop and light. Upload each approved photo and get matching AI team headshots.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Each Team Photo",
-      "d": "Upload an approved face-and-shoulders photo with even light. Confirm the business use before upload."
+      "d": "Upload an approved face-and-shoulders photo with even light and nothing covering the face. Confirm the person agreed to this business use before you upload."
     },
     {
       "t": "Pick One Backdrop",
-      "d": "Describe the backdrop, crop, light and clothing once and reuse the brief. Each portrait keeps a personal face."
+      "d": "Describe one backdrop, crop, light and clothing note, then reuse that brief for every teammate. Each portrait should still keep that person's own features."
     },
     {
       "t": "Download and Post",
-      "d": "Download matching portraits for your team page, deck or profiles, with no studio day. Add names and roles as text on your page."
+      "d": "Download each portrait for the team page, deck or profile. Add names and roles as text beside the portraits, not inside them."
     }
   ],
   "maker": {
@@ -46,50 +46,38 @@
   "faq": [
     {
       "q": "What should each teammate upload?",
-      "a": "Use a recent face-and-shoulders photo with even light and no hat, sunglasses or hand covering the face."
+      "a": "A recent face-and-shoulders photo with even light, and no hat, sunglasses or hand covering the face. Use a photo that person has approved for the company to upload."
     },
     {
-      "q": "How can a team page feel consistent?",
-      "a": "A shared backdrop, crop and light gives every portrait one visual system while each person keeps their own features."
+      "q": "How can the team page feel consistent?",
+      "a": "Share one backdrop, one crop and one light across every portrait, while each person keeps their own features. Write the brief once and reuse it."
     },
     {
-      "q": "Can I add names in the headshot?",
-      "a": "Add names and job titles as editable text beside each image, so the portrait stays easy to update."
+      "q": "Can I put names inside the headshot?",
+      "a": "Add names and job titles as text beside each image. Keeping them out of the portrait makes a role change a text edit, not a new generation."
     },
     {
-      "q": "What if I need a headshot of a specific person exactly?",
-      "a": "The output follows the uploaded person’s visible features, but it is not an official identity document. Let the person review it before publishing."
+      "q": "Will this match a specific person exactly?",
+      "a": "No. It follows the features visible in the uploaded photo, and it is still a generated portrait, not an official identity document. Have that person review it before you publish."
     },
     {
-      "q": "How much do team headshots cost?",
-      "a": "Each portrait costs 24 credits, and the total scales with the number of teammates. The current cost appears before creation."
-    },
-    {
-      "q": "How do I publish team portraits safely?",
-      "a": "Get each person’s approval for the portrait and the page where it will appear. Keep names and roles as editable text."
+      "q": "What does a team headshot cost?",
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
     },
     {
       "q": "Do I need permission from each teammate?",
-      "a": "Yes. Use a photo approved for this business use, show the finished portrait to its owner and remove it if they ask."
+      "a": "Yes. Upload only a photo the person agreed you can use for this business purpose, and let them approve the final portrait."
     },
     {
-      "q": "Can I use the headshots beyond the About page?",
-      "a": "Yes. With each person’s approval, downloads can be used on LinkedIn, pitch decks, speaker bios and other business materials."
-    },
-    {
-      "q": "Can each teammate approve the final portrait?",
-      "a": "Yes. Show each person the finished portrait and get approval for the page or material where it will appear before publishing."
+      "q": "Can a new hire match an existing set?",
+      "a": "Yes. Reuse the same backdrop, crop and light brief on the new hire's approved photo. You do not reshoot the rest of the team."
     },
     {
       "q": "Can I use the portraits in a pitch deck?",
-      "a": "Yes. With the person’s approval, use the downloaded portrait in a pitch deck, speaker bio or other business material."
-    },
-    {
-      "q": "Can a new hire match an existing team set?",
-      "a": "Yes. Use an approved face-and-shoulders photo and the same backdrop, crop and light brief, then let the new hire review the result."
+      "a": "Yes. The square file can sit on an About page, a profile or a slide. Keep contact details as text next to the image."
     }
   ],
-  "cta_lead": "Upload one clear photo of the person. See the cost before you start.",
+  "cta_lead": "Upload an approved photo for each person. You see the credit cost before the job starts.",
   "visual": {
     "strip": [
       "n:guide:tpl-head-round4-02",
@@ -120,8 +108,8 @@
       ]
     },
     "picker": {
-      "title": "Give Every Team Member a Matching Headshot Look",
-      "lead": "Create a consistent team photo set from each person's approved portrait for a more polished About page.",
+      "title": "These cards open a 15-second video",
+      "lead": "Each card is a 9:16 video ad. The first one is “ASMR Unboxing: Makeup Tools”. It does not restyle a teammate’s photo. Use the upload above for the square headshot.",
       "chips": [
         {
           "id": "accessories",
@@ -544,46 +532,96 @@
     "titles": {
       "faq": {
         "h2": "Questions about AI team headshots"
+      },
+      "m3": {
+        "h2": "These cards open a 15-second video",
+        "lead": "Each card is a 9:16 video ad. The first one is “ASMR Unboxing: Makeup Tools”. It does not restyle a teammate’s photo. Use the upload above for the square headshot."
+      },
+      "m2": {
+        "h2": "Make Matching Team Headshots"
       }
     }
   },
-  "steps_h2": "How to Make AI Team Headshots in 3 Simple Steps",
-  "steps_lead": "Three steps turn each teammate's photo into a matching portrait, with no studio or scheduling.",
-  "benefits_h2": "Why choose AI team headshots",
-  "benefits": [
+  "steps_h2": "Make Matching Team Headshots",
+  "steps_lead": "Upload each approved photo, reuse one backdrop brief, then download a matching set.",
+  "relatedLinks": [
     {
-      "t": "One look across the whole team",
-      "d": "Use one crop, backdrop and light for every portrait, so your About page reads as one brand while each person keeps their own features.",
-      "img": "n:guide:fx25-tpl-head-benefit-1",
-      "alt": "Professional head-and-shoulders portrait of an adult woman with a short silver pixie haircut against a neutral light-gray studio backdrop."
+      "id": "photo-hub",
+      "label": "AI product photo generator"
     },
     {
-      "t": "Add new hires without another shoot",
-      "d": "Create a matching portrait from an approved photo instead of scheduling a photographer each time someone joins.",
-      "img": "n:guide:fx25-tpl-head-benefit-2",
-      "alt": "Professional head-and-shoulders portrait of an adult man with a close-cropped haircut and round glasses against a neutral light-gray studio backdrop."
+      "id": "change-background",
+      "label": "AI product background changer"
     },
     {
-      "t": "Give every role a clear face",
-      "d": "Show founders, designers and operations leads in the same portrait style for your About page, pitch deck or speaker bio.",
-      "img": "n:guide:fx25-tpl-head-benefit-3",
-      "alt": "Professional head-and-shoulders portrait of an adult woman with a neat tied-back auburn bun against a muted blue-gray studio backdrop."
+      "id": "model-photos",
+      "label": "AI model photos for clothing"
     },
     {
-      "t": "Ready for pages and profiles",
-      "d": "Download square portraits without an AIVideosUGC watermark, then add names, roles and contact details as editable text.",
-      "img": "n:guide:fx25-tpl-head-benefit-4",
-      "alt": "Professional head-and-shoulders portrait of an adult man with a shaved head and trimmed beard against a warm off-white studio backdrop."
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
+    },
+    {
+      "id": "white-background",
+      "label": "white background product photos"
     }
   ],
-  "relatedLinks": [
-    "photo-hub",
-    "model-photos",
-    "tpl-look",
-    "tpl-tryon",
-    "ind-fashion-clothing",
-    "plat-instagram",
-    "plat-shopify",
-    "blog-model-photos-without-a-photoshoot"
+  "reviews": {
+    "h2": "Professional Headshots for Small Business",
+    "lead": "A few ways a small team uses one shared portrait setup.",
+    "items": [
+      {
+        "example": true,
+        "who": "Founding team",
+        "t": "One crop on the About page",
+        "d": "The company picks one backdrop, crop and light, then runs each founder's approved photo through it. Names and roles are typed beside the portraits."
+      },
+      {
+        "example": true,
+        "who": "Hiring manager",
+        "t": "A new hire joins the row",
+        "d": "When someone joins, their portrait uses the same brief as the existing set. There is no new studio booking for one person."
+      },
+      {
+        "example": true,
+        "who": "Operations lead",
+        "t": "Every role has a face",
+        "d": "Founders, design and operations can share one portrait style without looking like different photo shoots. Each person keeps their own features."
+      },
+      {
+        "example": true,
+        "who": "People team",
+        "t": "Permission before upload",
+        "d": "Only a photo the teammate approved for business use is uploaded. The person reviews the result before it is published."
+      },
+      {
+        "example": true,
+        "who": "Pitch author",
+        "t": "Deck and speaker bio",
+        "d": "The same square portrait can go in a deck or a speaker bio. Job titles stay as editable text, not lettering inside the image."
+      },
+      {
+        "example": true,
+        "who": "Small office",
+        "t": "Same crop on the website",
+        "d": "The office reuses one backdrop and one crop for the About page. Names stay in text beside the photo."
+      }
+    ]
+  },
+  "related_h2": "Photo tools for a backdrop and a person",
+  "related_lead": "The product-photo hub, model photos, and other templates that put a person in frame.",
+  "cta_title": "Give the team one portrait style",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "reviews",
+    "steps",
+    "related",
+    "faq",
+    "cta"
   ]
 }

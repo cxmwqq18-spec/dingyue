@@ -4,7 +4,7 @@
   "description": "What AIVideosUGC makes from your product photos, how credits and plans work, what the tools don't do, and what you finish yourself after download.",
   "h1": "What Is AIVideosUGC? Company Facts",
   "eyebrow": "Company facts",
-  "lead": "AIVideosUGC turns one product photo into store images and short AI video ads in minutes, with no studio or casting. Here is exactly what it does, what it costs and what you finish yourself.",
+  "lead": "AIVideosUGC turns one product photo into store images and short video ads, with no studio and no casting. Here is what it does, what it costs, and what you finish after download.",
   "secondary_keywords": [
     "what is AIVideosUGC",
     "AIVideosUGC pricing",
@@ -12,7 +12,7 @@
     "AI product video tool",
     "AI product photo tool"
   ],
-  "summary": "AIVideosUGC is an online tool that turns a product photo or a product page link into short video ads and store-ready product images for online stores.",
+  "summary": "AIVideosUGC turns a product photo or a product page link into short video ads and store-ready images for online stores.",
   "facts": [
     [
       "Name",
@@ -24,7 +24,7 @@
     ],
     [
       "Category",
-      "AI video ad and product photo tool for online stores"
+      "AI product video tool and AI product photo tool for online stores"
     ],
     [
       "Made for",
@@ -32,23 +32,23 @@
     ],
     [
       "Videos",
-      "6, 10, 15 or 30 seconds; 9:16, 1:1 or 16:9; made from a product photo, a product page link or a text description"
+      "6, 10, 15, or 30 seconds; 9:16, 1:1, 16:9, 4:3, or 3:4; made from a product photo, a product page link, or a text description"
     ],
     [
       "Photos",
-      "White-background photos, lifestyle scenes, model photos, background changes and social ad images from a product photo"
+      "White-background photos, lifestyle scenes, model photos, background changes, and social ad images from a product photo"
     ],
     [
       "Pricing",
-      "Monthly plans from $24.50 with 200 credits; the credit cost is shown before every job"
+      "Monthly plans from $24.50 with 200 credits. The credit cost is shown before every job."
     ],
     [
       "Credits",
-      "Held when a job starts, used when it is delivered, returned automatically if a job fails"
+      "Held when a job starts, used when the file is delivered, returned automatically if a job fails"
     ],
     [
       "Commercial use",
-      "Downloaded photos and videos are cleared for commercial use and arrive without a watermark"
+      "Downloaded photos and videos are cleared for commercial use and have no watermark"
     ],
     [
       "Privacy",
@@ -60,13 +60,13 @@
     ]
   ],
   "not_offered": [
-    "Spoken narration, music or captions on product clips (add them in your editor after download; AI actor clips speak the line you write)",
-    "A library of saved presenters you keep for reuse",
+    "Spoken narration, music, or captions on product clips (add them in your editor after download; an AI actor clip speaks the one line you write)",
+    "A library of saved presenters you keep and reuse",
     "Automatic publishing to ad platforms",
-    "A public API"
+    "A public way for other software to submit jobs"
   ],
   "describe": [
-    "After download, add captions, music, voiceover, prices, offers, and campaign settings in your editor or ad platform, then check the result against your product facts and the rules of the destination."
+    "After download, add captions, music, narration, prices, offers, and campaign settings in your editor or ad platform. Then check the file against your product facts and the rules of the place you will post it."
   ],
   "faq": [
     {
@@ -74,24 +74,32 @@
       "a": "An online tool that turns a product photo or a product page link into short video ads and store-ready product images for online stores."
     },
     {
-      "q": "How much does AIVideosUGC cost?",
-      "a": "Monthly plans start at $24.50 with 200 credits. The credit cost of each video or photo is shown before it starts, and failed jobs return their credits."
+      "q": "What is AIVideosUGC pricing?",
+      "a": "Monthly plans start at $24.50 with 200 credits. Each video or photo shows its credit cost before it starts, and a failed job returns those credits."
     },
     {
-      "q": "Does AIVideosUGC add spoken narration or music?",
-      "a": "Product clips come without voiceover, music or captions, so add those in your editor after download. AI actor clips are different: the actor speaks the one line you write, with mouth movement that follows the words."
+      "q": "Does an AIVideosUGC video include a spoken line?",
+      "a": "Product clips come without narration, music, or captions. Add those in your editor after download. An AI actor clip is different: the actor speaks the one line you write, with mouth movement that follows the words. See [AI spokesperson video](page:spokesperson-videos)."
     },
     {
       "q": "What video settings can I choose?",
-      "a": "Choose 6, 10, 15 or 30 seconds and 9:16, 1:1 or 16:9, so the same product photo can produce a vertical ad, a square listing video or a wide banner."
+      "a": "Choose 6, 10, 15, or 30 seconds, and 9:16, 1:1, 16:9, 4:3, or 3:4. The same product photo can become a vertical ad, a square clip, or a wide frame."
     },
     {
       "q": "How many credits does a video or photo use?",
-      "a": "A photo uses 24 credits. Videos use 24 for 6 seconds, 40 for 10 seconds, 60 for 15 seconds and 120 for 30 seconds. The exact cost is always on screen before the job starts."
+      "a": "A photo uses 24 credits. Videos use 24 for 6 seconds, 40 for 10 seconds, 60 for 15 seconds, and 120 for 30 seconds. The exact cost is on screen before the job starts."
     },
     {
       "q": "Can I use the results in ads and on my store?",
-      "a": "Yes. Downloaded photos and videos are cleared for commercial use and have no watermark, so you can run them on marketplaces, social platforms and your own store, subject to each platform's rules."
+      "a": "Yes. Downloaded photos and videos are cleared for commercial use and have no watermark. You can run them on marketplaces, social platforms, and your own store, under each platform's rules."
     }
+  ],
+  "relatedLinks": [
+    "pricing",
+    "faq",
+    "trust",
+    "contact",
+    "glossary",
+    "about"
   ]
 }

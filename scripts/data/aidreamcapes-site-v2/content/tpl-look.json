@@ -1,49 +1,30 @@
 {
   "id": "tpl-look",
   "title": "AI Fashion Lookbook Photos and Outfit Ads | AIVideosUGC",
-  "description": "Turn one outfit photo into a fashion lookbook photo on a person. Street walks, try-ons and reviews for collection pages and launch ads.",
-  "h1": "AI Fashion Lookbook Photos for Complete Outfits",
+  "description": "Turn one outfit photo into AI lookbook photos of one complete look. Use them on the collection page or a launch ad, and check every layer against stock.",
+  "h1": "AI Lookbook Photos for One Complete Outfit",
   "eyebrow": "Model photo template",
-  "lead": "Flat-lay photos make it hard for shoppers to picture an outfit on a person. Upload one complete-look photo and get a fashion lookbook image ready for your collection page or launch carousel.",
+  "lead": "A flat lay makes a full outfit hard to picture on a person. Upload one complete look and get AI lookbook photos for the collection page.",
   "secondary_keywords": [
     "fashion editorial photos",
     "collection launch lookbook",
     "menswear lookbook photos",
     "Instagram lookbook images"
   ],
-  "benefits_h2": "Why make AI lookbook photos from one outfit?",
-  "benefits": [
-    {
-      "t": "No shoot for every look",
-      "d": "Get a street walk, try-on or review image from one outfit photo, without booking models, a location or a photographer."
-    },
-    {
-      "t": "Pieces shown as one outfit",
-      "d": "Each frame keeps the full silhouette visible, so shoppers see how the top, bottom and layers belong together."
-    },
-    {
-      "t": "One visual language for a drop",
-      "d": "Repeat the same crop and light across looks, then use the set as a carousel, launch email or collection page."
-    },
-    {
-      "t": "Yours to publish, no watermark",
-      "d": "Square downloads carry no AIVideosUGC watermark and can run in your own ads, product pages and social posts."
-    }
-  ],
-  "steps_h2": "How to Make AI Lookbook Photos in 3 Simple Steps",
-  "steps_lead": "One outfit photo becomes a ready-to-post lookbook image, with no studio, models or reshoot.",
+  "steps_h2": "Make Instagram Lookbook Images",
+  "steps_lead": "Upload the full outfit, choose one scene, then download a frame for the collection page.",
   "steps": [
     {
       "t": "Upload Your Outfit Photo",
-      "d": "Lay out the complete look in one well-lit frame, with the layers separated."
+      "d": "Lay the full outfit in one well-lit frame, layers separated. Include the top, bottom, outer layer, and shoes if they are part of it."
     },
     {
       "t": "Pick a Lookbook Scene",
-      "d": "Choose a street walk, try-on or review, plus one location and light."
+      "d": "Name one location and one kind of light for an editorial still. Repeat that choice across the drop when the set should feel connected."
     },
     {
       "t": "Download and Post",
-      "d": "Check each layer against your stock, then add price and links."
+      "d": "Check each layer against your stock, then add price and links outside the image. Publish only frames that still match the pieces you can ship."
     }
   ],
   "maker": {
@@ -66,31 +47,38 @@
   "faq": [
     {
       "q": "What should the source photo include?",
-      "a": "Show every piece in the look, including top, bottom, outer layer, shoes and the featured accessory, laid out together in one frame."
+      "a": "Show every piece in the look, including top, bottom, outer layer and the shoes or featured accessory, laid out in one frame. If a layer is missing from the source, the result cannot be trusted to invent it."
     },
     {
       "q": "How do I keep a collection looking connected?",
-      "a": "Reuse one location, light and crop across looks, while letting each garment stay distinct. Open the carousel with the hero look."
+      "a": "Reuse one location, one light and one crop across looks, and let each garment stay distinct. Open the set with the hero outfit."
     },
     {
-      "q": "Can I show more than one outfit per image?",
-      "a": "Use one full look per image so the silhouette stays clear, and make a separate image for another outfit."
+      "q": "Can I show more than one outfit in a single image?",
+      "a": "Use one full look per image so the silhouette stays clear. Make a separate image for the next outfit."
     },
     {
-      "q": "Do I need to book a photographer or models?",
-      "a": "No. Each lookbook photo is generated from an outfit photo you already have, so a whole collection needs no shoot day."
+      "q": "Do I need a photographer or models?",
+      "a": "No. Each lookbook photo is generated from an outfit photo you already have. The person is generated, not someone you booked and not a customer."
     },
     {
-      "q": "Is this different from hiring a UGC creator?",
-      "a": "A creator needs samples, a booking fee and filming time. Here you upload one photo, pick a scene and pay only the credits each job costs."
+      "q": "How is this different from hiring a creator?",
+      "a": "A creator needs samples, a fee and time on the calendar. Here you upload one photo, pick a scene and pay the credits for that job."
     },
     {
-      "q": "How much do the photos cost?",
-      "a": "Each square lookbook photo costs 24 credits, and the charge is shown before you start."
+      "q": "What does a lookbook photo cost?",
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts."
+    },
+    {
+      "q": "Can the same scene cover menswear and womenswear?",
+      "a": "Yes, as long as each outfit has its own source photo and you keep the crop and light steady. Check tailoring and lengths against the garments you sell."
+    },
+    {
+      "q": "Can I use the frames in a launch?",
+      "a": "Yes. They fit a collection page, a carousel or a launch email after you add prices yourself. A launch that also needs motion is covered by [product launch video and photos](page:occ-product-launch)."
     }
   ],
   "visual": {
-    "overview": "A lookbook photo shows one complete outfit on a person in a styled setting, so shoppers can picture the pieces worn together before they buy.",
     "strip": [
       "n:guide:rc3-look-strip-pleated-skirt-r1",
       "n:guide:q9-look-alt-knit-beanie",
@@ -120,8 +108,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a fashion lookbook format",
-      "lead": "Pick the format that answers the styling question for this look.",
+      "title": "These cards open a 15-second video",
+      "lead": "Each card is a 9:16 video ad, not a lookbook still of your outfit. Use the upload above for one editorial photo, then check every layer against the pieces you can ship.",
       "chips": [
         {
           "id": "accessories",
@@ -539,10 +527,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "Make lookbook photos for a new collection"
+        "h2": "Make Instagram Lookbook Images"
       },
       "m3": {
-        "h2": "Choose a setting for your lookbook outfit"
+        "h2": "These cards open a 15-second video",
+        "lead": "Each card is a 9:16 video ad, not a lookbook still of your outfit. Use the upload above for one editorial photo, then check every layer against the pieces you can ship."
       },
       "m4": {
         "h2": "Use lookbook photos on posts and collection pages"
@@ -560,5 +549,86 @@
         "h2": "Questions about AI lookbook photos"
       }
     }
-  }
+  },
+  "reviews": {
+    "h2": "How Sellers Build a Collection Launch Lookbook",
+    "lead": "A few ways a label turns one outfit photo into a lookbook frame.",
+    "items": [
+      {
+        "example": true,
+        "who": "Womenswear label",
+        "t": "Hero look, then the rest",
+        "d": "The label opens the drop with one full outfit on a person, then repeats the same crop and light for the other looks. Each outfit still gets its own source photo."
+      },
+      {
+        "example": true,
+        "who": "Menswear shop",
+        "t": "Tailoring kept in one frame",
+        "d": "Jacket, shirt and trousers stay visible together so the silhouette reads as one outfit. A second outfit is a second image, not a crowded collage."
+      },
+      {
+        "example": true,
+        "who": "Drop planner",
+        "t": "Same location across the set",
+        "d": "One street or studio description is reused so the carousel feels connected. Garment colors are still checked against stock before the set is scheduled."
+      },
+      {
+        "example": true,
+        "who": "Ecommerce team",
+        "t": "Collection page, not a shoot day",
+        "d": "The team builds the collection gallery from outfit photos it already has. Nobody is booked for a location day, and the people in frame are generated."
+      },
+      {
+        "example": true,
+        "who": "Social editor",
+        "t": "Carousel from separate looks",
+        "d": "Each slide is one outfit. Price and product links are added outside the image after download."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "Credits instead of a creator day",
+        "d": "The agency uploads the outfit, picks a scene and pays the credits for that job. It does not send samples to a creator for this still."
+      }
+    ]
+  },
+  "related_h2": "Fashion templates for the next lookbook",
+  "related_lead": "Try-on, outfit video, sale images, the model-photo tool, and the fashion industry page.",
+  "relatedLinks": [
+    {
+      "id": "model-photos",
+      "label": "AI model photos for clothing"
+    },
+    {
+      "id": "tpl-tryon",
+      "label": "AI virtual try-on for clothing"
+    },
+    {
+      "id": "tpl-outfit",
+      "label": "AI fashion reels"
+    },
+    {
+      "id": "tpl-sale",
+      "label": "sale banner maker"
+    },
+    {
+      "id": "ind-fashion-clothing",
+      "label": "AI model photos and videos for fashion brands"
+    },
+    {
+      "id": "plat-instagram",
+      "label": "AI Instagram ads"
+    }
+  ],
+  "cta_title": "Turn one outfit into a lookbook photo",
+  "cta_lead": "Upload one complete outfit. You see the credit cost before the job starts.",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "reviews",
+    "steps",
+    "related",
+    "faq",
+    "cta"
+  ]
 }

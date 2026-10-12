@@ -1,11 +1,11 @@
 {
   "id": "ind-fashion-clothing",
   "title": "AI Fashion Video Ads From a Garment Photo | AIVideosUGC",
-  "description": "Turn one garment photo into try-on, fit-check and review video ads for clothing brands. Produce watermark-free clips quickly on a studio-free budget.",
-  "h1": "Make AI Fashion Video Ads That Show the Fit",
-  "eyebrow": "Fashion video ads",
-  "lead": "Turn a flat garment photo into a styled try-on, fit check or creator review. Ready in minutes with AI, for streetwear, luxury and everyday brands.",
-  "card": "Fashion video ads for try-ons, fit checks, lookbooks, and reviews.",
+  "description": "Turn one garment photo into a try-on, a fit check, or a short look. Download watermark-free photos and clips for fashion brands, social feeds, and paid ads.",
+  "h1": "AI Model Photos and Videos for Fashion Brands, Without a Casting Day",
+  "eyebrow": "Fashion and clothing",
+  "lead": "A flat garment photo can become a try-on, a fit check, or a short look. You skip the casting call and check the print before you post.",
+  "card": "Try-ons, fit checks, lookbooks, and short reviews from one garment photo.",
   "secondary_keywords": [
     "AI on-model clothing photos",
     "AI lookbook for clothing brands",
@@ -13,81 +13,56 @@
     "garment photo to model photo",
     "clothing product photos for Shopify"
   ],
-  "intro": [
-    "Help shoppers picture length, drape, and styling before they order. Start with a full garment photo and describe the fit or movement you want to show.",
-    "Build fashion video ads for try-ons, fit checks, lookbooks, and creator reviews. Keep measurements, fabric, and closures aligned with the real garment."
-  ],
   "faq": [
     {
-      "q": "Can one garment photo make both a TikTok video and a listing image?",
-      "a": "Yes. Choose 9:16 and 6, 10, 15, or 30 seconds for a turn or short walk, and use the same garment photo for a model still or listing image. Keep the whole garment visible and check the fit before publishing."
+      "q": "Can one garment photo make both a vertical clip and a listing image?",
+      "a": "Yes. Use 9:16 and 6, 10, 15, or 30 seconds for a turn or a short walk, and the same photo for an on-model still. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120."
     },
     {
-      "q": "Can I turn a photo of a garment laid flat into an on-model photo?",
-      "a": "Yes. Lay the garment flat or hang it on a plain wall, smooth out the wrinkles, and photograph the whole piece in even light. Then describe the person and setting, for example \"full-length, standing in a bright studio.\""
+      "q": "Can a flat-lay photo become an on-model photo?",
+      "a": "Yes. Smooth the garment, shoot the whole piece in even light, and describe the person and the room. Check seams and hems before you list it."
     },
     {
-      "q": "Will the AI change my print or fabric?",
-      "a": "It works from your photo, so fine stripes, embroidery, and buttons hold up when the upload is sharp and close. Check patterns and trims before you list the image, and make another version if anything drifts."
+      "q": "Will the print or the fabric change?",
+      "a": "The result follows your photo. Fine stripes, embroidery, and buttons hold when the upload is sharp. If a trim moves, make another version. A failed job returns its credits."
     },
     {
-      "q": "Can I show my clothes on a plus-size or petite model?",
-      "a": "You can describe the person you want to see, including height, build, and age range, such as \"petite woman in her 40s\" or \"tall man with a broad frame.\" Showing your real customer helps shoppers picture themselves in the piece."
+      "q": "Can I show a plus-size or petite model?",
+      "a": "Describe the person in plain words, including height, build, and age range. The model is generated. It is not a photo of a real customer."
     },
     {
-      "q": "What photo works best for putting my garment on a model?",
-      "a": "Use a flat-lay or hanger shot with the whole garment visible, front side up and even light. The outline, color, print, and fastenings have to be clear because the generated model keeps those details."
+      "q": "What photo works best for an on-model result?",
+      "a": "A flat lay or a hanger shot, whole garment visible, front side up, even light. Outline, color, print, and fastenings all need to be clear."
     },
     {
-      "q": "How do I keep fabric color accurate?",
-      "a": "Shoot in soft daylight without a warm lamp, and name the color plainly, such as charcoal, ivory, or navy. Check the result against the real garment before publishing; if the tone drifts, generate another version."
+      "q": "How do I keep the fabric color accurate?",
+      "a": "Shoot in soft daylight, not under a warm lamp, and name the color in plain words. Compare the result with the garment before you publish."
     },
     {
       "q": "Can I run the clips as paid clothing ads?",
-      "a": "Yes. Downloaded clips are watermark-free and licensed for commercial use, including paid social ads. Claims about sizing and fabric must match the real item, and the platform still reviews the ad."
+      "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads. Size and fabric claims have to match the real item."
     },
     {
-      "q": "Is an AI model video different from a real UGC creator?",
-      "a": "Yes. The model and scene are generated from your photo at a per-clip credit cost instead of a creator fee and usage terms. The person is not a real customer, so post the video as an ad rather than an independent review."
+      "q": "How is an on-model clip different from a creator?",
+      "a": "You pay the credits shown before the job, not a creator fee. The person is generated, so post it as an ad, not as a customer's review."
     }
   ],
   "templates_lead": "Choose a fashion video ad format for try-ons, fit checks, creator reviews, or fabric details.",
-  "cta_lead": "Upload one garment photo, choose a scene, and review the fit before posting.",
-  "benefits_h2": "Why AI Fashion Video Ads Skip the Studio Day",
-  "benefits": [
-    {
-      "t": "No casting or studio",
-      "d": "Start with one garment photo and show it on an adult model without casting, booking, or reshooting each style.",
-      "img": "n:guide:b2f7-ind-fashion-clothing-benefits-0-r1",
-      "alt": "Adult woman with a short black bob wears a plain light-gray hoodie, with her face and the full garment visible."
-    },
-    {
-      "t": "Show fit in motion",
-      "d": "Use a turn, short walk, or close detail to show the hem, sleeve, drape, or fastening.",
-      "img": "n:guide:fx30-fashion-benefit-detail-r1",
-      "alt": "Hands pinch the hem and sleeve seam of a plain olive overshirt to show drape and stitching."
-    },
-    {
-      "t": "More looks from one garment",
-      "d": "Test a try-on, lookbook, fit check, and creator review while the garment stays recognizable.",
-      "img": "n:guide:fx30-fashion-benefit-review-r1",
-      "alt": "Adult woman holds a plain denim jacket by the shoulders for a fit check."
-    }
-  ],
-  "steps_h2": "How to Make AI Fashion Video Ads in 3 Simple Steps",
-  "steps_lead": "Three steps turn one garment photo into a ready-to-post on-model clip — no casting, no studio, no reshoots.",
+  "cta_lead": "Upload one garment photo, describe the person and the room, and check the credit cost before you start.",
+  "steps_h2": "Fashion Outfit Reels in Three Moves",
+  "steps_lead": "Three things you do on screen, from a flat photo to a clip you can post.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "Add a flat-lay or hanger photo with the whole garment visible. Keep its outline, color, print, and fastenings in frame."
+      "d": "Lay the piece flat or hang it on a plain wall, front up, in even light. The whole garment, hems and fastenings included, stays visible."
     },
     {
-      "t": "Pick a Fashion Ad Scene",
-      "d": "Choose a try-on, fit check, lookbook walk, or review. Describe the model and action in one sentence."
+      "t": "Describe the Model and Scene",
+      "d": "Name the person and setting plainly, like a petite woman in her 40s in a bright hallway. The model is generated, not a customer."
     },
     {
       "t": "Download and Post",
-      "d": "Compare the clip with the garment and save it. Add price and details in your editor, then publish it to your feed or ad."
+      "d": "Check the print, buttons, and color against the real garment, then download. Add size notes in your editor. Captions are not added for you."
     }
   ],
   "visual": {
@@ -120,101 +95,154 @@
     "input": [],
     "outputs": [],
     "titles": {
-      "m2": {
-        "h2": "Create a fashion ad from a garment photo"
-      },
-      "m3": {
-        "h2": "Choose a fashion ad format"
-      },
-      "m4": {
-        "h2": "Use fashion ads in product and social campaigns"
-      },
-      "m5": {
-        "h2": "Start with a clear garment photo"
-      },
-      "m6": {
-        "h2": "Square 1:1 clothing videos for product pages"
-      },
-      "m7": {
-        "h2": "Add size and fit details after download"
-      },
       "faq": {
-        "h2": "Questions About AI Fashion Video Ads"
-      },
-      "examples": {
-        "h2": "More Fashion Video Ad Scenes",
-        "lead": "Try-ons, fit checks, fabric details, and creator reviews for clothing campaigns."
+        "h2": "Questions About a Garment Photo to Model Photo"
       }
     }
   },
-  "more_sections": [
-    {
-      "eyebrow": "Channels",
-      "h2": "Ads for the channels you already sell on",
-      "items": [
-        {
-          "t": "Shopify",
-          "d": "[Create product photos for Shopify](/platforms/shopify-product-photos)."
-        },
-        {
-          "t": "Amazon",
-          "d": "[Prepare Amazon product images and ads](/platforms/amazon-product-photos)."
-        },
-        {
-          "t": "TikTok",
-          "d": "[Build TikTok ad videos](/platforms/tiktok-ads)."
-        },
-        {
-          "t": "Meta",
-          "d": "[Adapt product ads for Facebook](/platforms/facebook-ads)."
-        },
-        {
-          "t": "YouTube",
-          "d": "[Plan YouTube Shorts ads](/platforms/youtube-shorts-ads)."
-        }
-      ]
-    },
-    {
-      "eyebrow": "Keep exploring",
-      "h2": "Related pages",
-      "items": [
-        {
-          "t": "Shoes",
-          "d": "[Shoes](/industries/shoes)."
-        },
-        {
-          "t": "Jewelry & Accessories",
-          "d": "[Jewelry & Accessories](/industries/jewelry-accessories)."
-        },
-        {
-          "t": "Beauty & Skincare",
-          "d": "[Beauty & Skincare](/industries/beauty-skincare)."
-        },
-        {
-          "t": "Home & Living",
-          "d": "[Home & Living](/industries/home-living)."
-        },
-        {
-          "t": "Model Photos",
-          "d": "[Model Photos](/ai-image-generation/on-model-generation)."
-        },
-        {
-          "t": "Lifestyle Photos",
-          "d": "[Lifestyle Photos](/ai-image-generation/lifestyle-scene)."
-        },
-        {
-          "t": "Video Ads",
-          "d": "[Video Ads](/ai-video-generation/ugc-ad-video)."
-        },
-        {
-          "t": "Social Ad Photos",
-          "d": "[Social Ad Photos](/ai-image-generation/feed-ad-still)."
-        }
-      ]
-    }
-  ],
   "steps_cta": {
     "label": "Create fashion ad",
     "href": "/app/create"
-  }
+  },
+  "reasons": {
+    "h2": "AI On-Model Clothing Photos, Checked Before You Post",
+    "lead": "Fit is hard to judge on a hanger. Put the garment on a generated adult and keep the fabric recognizable.",
+    "items": [
+      {
+        "t": "No casting call",
+        "d": "Start with one garment photo and show it on an adult model. You skip talent booking and a new studio day for every color.",
+        "img": "n:guide:fx30-fashion-benefit-fit-r1",
+        "alt": "Adult model turns in a plain light-gray hoodie with the full garment and face visible."
+      },
+      {
+        "t": "Fit you can see move",
+        "d": "A turn, a short walk, or a hem close-up shows drape and fastenings. Fine print holds up better when the upload is sharp.",
+        "img": "n:guide:fx30-fashion-benefit-detail-r1",
+        "alt": "Hands pinch the hem and sleeve seam of a plain olive overshirt to show drape and stitching."
+      },
+      {
+        "t": "More looks, same piece",
+        "d": "Test a try-on, a lookbook frame, and a fit check while the garment stays recognizable. Reject any result that changes the print.",
+        "img": "n:guide:fx30-fashion-benefit-review-r1",
+        "alt": "Adult woman holds a plain denim jacket by the shoulders for a fit check."
+      }
+    ]
+  },
+  "platforms": {
+    "h2": "Clothing Product Photos for Shopify and Social",
+    "lead": "One garment photo can feed a product-page still and a vertical try-on. Pick the frame for the shelf you use.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "d": "A 9:16 turn or short walk for a clothing try-on in the For You feed.",
+        "href": "/platforms/tiktok-ads"
+      },
+      {
+        "t": "AI Instagram ads",
+        "d": "A lookbook still or a vertical fit check for the grid and Stories.",
+        "href": "/platforms/instagram-ads"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "d": "A feed image with space to add the offer after download.",
+        "href": "/platforms/facebook-ads"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "d": "A short vertical look, one turn from the first second.",
+        "href": "/platforms/youtube-shorts-ads"
+      },
+      {
+        "t": "Amazon product photos",
+        "d": "Extra gallery views of the garment. Keep logos you do not own out of the scene.",
+        "href": "/platforms/amazon-product-photos"
+      },
+      {
+        "t": "Shopify product photos",
+        "d": "On-model and flat imagery that matches across the collection.",
+        "href": "/platforms/shopify-product-photos"
+      }
+    ]
+  },
+  "reviews": {
+    "h2": "Where an AI Lookbook for Clothing Brands Helps",
+    "lead": "Example ways clothing sellers use one garment photo. These are not quotes.",
+    "items": [
+      {
+        "example": true,
+        "who": "Basics label",
+        "t": "A turn from a flat lay",
+        "d": "They photograph the hoodie flat, ask for one turn in a bright room, and check the ribbing before the clip is posted."
+      },
+      {
+        "example": true,
+        "who": "Denim shop",
+        "t": "Fit check in the hands",
+        "d": "A jacket photo becomes an adult holding it by the shoulders, so the length is easier to judge than on a hanger."
+      },
+      {
+        "example": true,
+        "who": "Small line",
+        "t": "Three frames, one piece",
+        "d": "The same shirt photo feeds a lookbook still, a 10-second turn (40 credits), and a 15-second walk (60 credits)."
+      },
+      {
+        "example": true,
+        "who": "Size run",
+        "t": "Say the build in the scene",
+        "d": "They describe height and build in the scene text, then compare the silhouette with the sample before listing."
+      },
+      {
+        "example": true,
+        "who": "Marketplace desk",
+        "t": "Still and clip together",
+        "d": "One hanging photo guides an on-model still for the product page and a vertical clip for a reel."
+      },
+      {
+        "example": true,
+        "who": "Print-heavy brand",
+        "t": "Reject a changed pattern",
+        "d": "Stripes and embroidery are checked against the upload. If the repeat shifts, they run another version instead of posting it."
+      }
+    ]
+  },
+  "cta_title": "Show the Garment On a Model",
+  "relatedLinks": [
+    {
+      "id": "tpl-outfit",
+      "label": "AI fashion reels"
+    },
+    {
+      "id": "tpl-tryon",
+      "label": "AI virtual try-on for clothing"
+    },
+    {
+      "id": "tpl-look",
+      "label": "AI lookbook photos"
+    },
+    {
+      "id": "model-photos",
+      "label": "AI model photos for clothing"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "lifestyle-photos",
+      "label": "AI lifestyle product photos"
+    }
+  ],
+  "related_h2": "Fashion try-ons and lookbooks",
+  "blockOrder": [
+    "hero",
+    "strip",
+    "reasons",
+    "steps",
+    "platforms",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
+  ]
 }

@@ -4,116 +4,126 @@
   "description": "Test ad creatives on a small budget without guessing: change one thing at a time, make a few versions from one photo, run them together, and read the results.",
   "h1": "How to Test Ad Creatives Without Guessing",
   "eyebrow": "Ad testing guide",
-  "lead": "Stop betting a small budget on one guess: you can't know in advance which video or photo people will stop for. A few low-cost versions from one product photo show what works, and testing costs credits instead of another creator booking or shoot day.",
+  "lead": "To test ad creatives, change one thing at a time, make a few versions from the same photo, and run them together before you spend more.",
   "secondary_keywords": [
     "ad creative testing for small business",
     "compare ad versions",
     "split test video ads",
     "which ad version works"
   ],
-  "read_minutes": 4,
-  "summary": "Make a few ad versions that differ in one way, run them side by side in your ad platform on a small budget, and read the results fairly so the next round costs less.",
+  "read_minutes": 5,
+  "summary": "Change one thing, run a few versions on the same audience and budget, and read the result only after each version has actually played.",
   "sections": [
     {
-      "h2": "Change one thing at a time",
+      "h2": "How do I keep ad creative testing fair for a small business?",
       "paras": [
-        "A test only teaches you something if the versions differ in one way. Change the opening, the setting, and the offer all at once, and you spend money without learning which change made the difference.",
-        "Things worth testing, one at a time: the opening moment, the setting, [the shape](page:guide-ad-sizes-by-platform) (9:16 or 1:1), the length, and the text or offer you add on top. Start with the opening. It decides whether anyone sees the rest."
+        "Change only one thing between versions. If the opening, the setting, and the offer all move at once, you spend money and learn nothing.",
+        "Worth testing, one at a time: the opening moment, the setting, the shape, the length, and the line you add afterward. Start with the opening. It decides whether anyone sees the rest."
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec01-r1",
       "alt": "Adult hands place the same plain round wall clock beside blank color cards."
     },
     {
-      "h2": "Plan a few versions from one product",
+      "h2": "How do I compare ad versions from one product?",
       "paras": [
-        "Say you sell a plain round wall clock. Keep the product photo, length, and shape the same, and change only how the video starts.",
-        "Version one opens on the clock face coming into focus at dawn. Version two opens on a hand hanging the clock on a kitchen tile. Version three opens with the clock [sliding out of its box](page:unboxing-videos).",
-        "A small set is a sensible starting point on a tight budget. With many more, each version gets too little spend to tell you anything, and every extra version is another job.",
-        "[Photo ads](page:social-ad-photos) work the same way. For a ceramic mug in a feed ad, you might test the setting: the mug on a kitchen counter with steam rising, on a home office desk next to a notebook, and wrapped as a gift with a ribbon. Same mug, same angle, same text added afterward."
+        "Keep the photo, the length, and the shape the same, and change only how the clip starts.",
+        "For a plain round wall clock, one version can open on the face coming into focus at dawn, another on a hand hanging it on kitchen tile, and a third on the clock leaving its box. Photo ads work the same way. A mug can sit on a counter, on a desk, or as a wrapped gift, with the same mug and the same line added later. Build the still versions with the [AI ad image generator](page:social-ad-photos)."
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec02-r1",
       "alt": "Adult woman with a short silver pixie holds a plain round wall clock beside simple kitchen setups."
     },
     {
-      "h2": "Make each version from the same photo",
+      "h2": "How do I split test video ads without three shoots?",
       "paras": [
-        "Normally, three different openings mean three shoots. Here they mean three jobs. Upload the same product photo each time and choose the same shape and length. Change only the sentence that describes the opening. Each video job is made separately, and you see the credit cost before each one, so you know what all three will cost before you commit, from 24 credits for a 6-second video to 120 for 30 seconds.",
-        "Download each file and give it a clear name, such as clock-dawn-9x16. Then add the same caption, text, and music to all three in CapCut or TikTok's editor. If one version gets a different headline, the test is no longer about the opening.",
-        "AIVideosUGC makes the versions. The comparison happens in your ad platform, where real viewers produce real results."
+        "You do not need three shoots. Each opening is another job from the same photo, and the credit cost is shown before you start.",
+        "You see the credit cost before each job, from 24 credits for 6 seconds to 120 for 30 seconds. Name the files so you can tell them apart, such as clock-dawn-9x16. Then add the same caption, the same on-screen line, and the same music to all of them. If one version gets a different headline, you are no longer testing the opening. [AI image to video](page:image-to-video) and [URL to video](page:url-to-video) can supply extra versions from that same product."
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec03-r1",
       "alt": "Hands hold the same plain round wall clock up as the source photo."
     },
     {
-      "h2": "Run them side by side on equal terms",
+      "h2": "How should the versions run side by side?",
       "paras": [
-        "Put all three versions in the same campaign with the same audience, budget, and product page. Most ad platforms let you place several ads in one group with the same audience and budget. Some also offer a built-in test that shows each version to part of the audience. If this is your first TikTok campaign, start with [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad).",
-        "Expect the platform to push more spend to one version early on. That's normal, but a version that barely ran hasn't really been tested. If that happens, a built-in test or separate groups for each version gives a fairer comparison.",
-        "Avoid editing the ads while the test runs. Changes can reset how the platform delivers them and blur the results."
+        "Put them in one campaign with the same audience, the same budget, and the same product page.",
+        "Many ad accounts let several ads share one group. Some also offer a built-in test that shows each version to part of the audience. The account may push spend toward one version early. A version that barely ran has not been tested. Do not edit the ads while the test is live. A change can reset delivery and blur the result."
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec04-r1",
       "alt": "Adult hands hold the same plain round wall clock in two matched side-by-side positions."
     },
     {
-      "h2": "Read the numbers without fooling yourself",
+      "h2": "How do I tell which ad version works?",
       "paras": [
-        "Give the test several days and enough views before you decide. A version that leads after one afternoon or a few hundred views can easily fall behind.",
-        "Look at three numbers, in this order. First, how many people keep watching past the first few seconds, which tells you whether the opening works. Second, the click rate, which shows whether the ad makes people curious enough to visit. Third, the cost per purchase or per add-to-cart, which matters most for your shop. A version can win on views and still lose on sales.",
-        "Sometimes the numbers end up close. That isn't a failed test; it tells you this change doesn't matter much to your buyers. Keep whichever version you like and test a bigger difference next time."
+        "Wait several days, and do not call a winner from one afternoon or from a version that hardly played.",
+        "Read three numbers in order. First, how many people stay past the opening, which tells you if the start works. Second, the click rate, which tells you if people wanted to visit. Third, the cost per purchase or per add-to-cart, which matters most for the shop. A version can win on views and still lose on sales. If the numbers land close, that change did not matter much. Keep the one you prefer and test a bigger difference next."
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec05-r1",
       "alt": "Hands rest beside blank color cards and the same plain round wall clock."
     },
     {
-      "h2": "Keep the winner and test the next thing",
+      "h2": "What should the next test change?",
       "paras": [
-        "Turn off the clear losers and keep the version that brings sales at a cost you can live with. Then start the next round by changing one new thing, like the setting, while keeping the winning opening.",
-        "Keep a simple log with the date, what changed, and the result. After a few rounds, you'll see patterns in what your buyers respond to. When a winning ad starts costing more per sale, that's your cue to make fresh versions.",
-        "Over time, work through the list of things worth testing: opening, setting, shape, length, then the offer. Each round builds on the last, so your next ad starts from what already worked and costs one photo job instead of starting the whole production from scratch. Seasonal pushes leave less room for testing, so prepare [Black Friday ad creatives](page:occ-black-friday) or [sale ad creatives](page:occ-sale-discount) early enough to run a round first."
+        "Turn off the clear losers, keep the version that brings sales at a cost you can live with, and change one new thing.",
+        "Write down the date, what changed, and the result. After a few rounds you will see what your buyers respond to. When a winner starts costing more per sale, make fresh versions. Work through opening, setting, shape, length, then the offer. Each round starts from what already worked."
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec06-r1",
       "alt": "Adult man with short sandy-gray hair holds up the same plain round wall clock at a wood table."
+    },
+    {
+      "h2": "The short version",
+      "paras": [
+        "One difference, a few versions, the same audience and budget, and no edits while they run.",
+        "Judge after several days, write down the result, and let the next round change only the next thing."
+      ]
+    },
+    {
+      "h2": "On this page",
+      "paras": [
+        "Six questions follow: how to keep a small-business test fair, how to compare ad versions, how to split test video ads, how the versions should run side by side, how to tell which ad version works, and what to change next."
+      ]
     }
   ],
-  "checklist": [
-    "Only one difference between versions",
-    "A few versions, not a whole catalog",
-    "Same audience, budget, and product page for each",
-    "No edits while the test runs",
-    "Several days before calling a winner",
-    "Results written down for the next round"
-  ],
   "related": [
-    "video-ads",
-    "social-ad-photos",
-    "guide-first-tiktok-video-ad"
+    "guide-first-tiktok-video-ad",
+    "guide-ad-sizes-by-platform",
+    "blog-ai-ugc-video-ads-guide",
+    "blog-ai-video-review-checklist",
+    "blog-unboxing-videos-for-launches",
+    "guide-product-photo-tips"
   ],
   "faq": [
     {
-      "q": "How much should I spend to test ad versions?",
-      "a": "There's no fixed amount. Set a daily budget you're comfortable with and give each version time to reach a fair number of viewers. If money is tight, test fewer versions so each one gets real spend."
+      "q": "How many versions should a small shop run?",
+      "a": "Start with a few, often three. More than that splits a small budget so thin that no version gets a fair look, and every extra version is another job."
     },
     {
-      "q": "Does AIVideosUGC run or score the tests for me?",
-      "a": "No. You make each version on AIVideosUGC, one job at a time, then download them and compare how they perform in your ad platform's reports."
+      "q": "What should I test first?",
+      "a": "Test the opening. It decides whether anyone watches the rest. Keep the product, the length, and the shape the same until that result is clear."
     },
     {
-      "q": "What should change between ad versions?",
-      "a": "Change one variable at a time, such as the opening, length, or product action. Keep the offer, audience, and destination the same so the test is readable."
+      "q": "Can I change the price on only one version?",
+      "a": "Not if you are testing the picture. Put the same line, price, and music on every file. Test the offer in a later round, on its own."
     },
     {
-      "q": "How do I compare ad versions fairly?",
-      "a": "Use the same audience, budget, offer, and destination for each version. Compare the results after each has had a chance to reach viewers, and wait several days rather than judging the first afternoon."
+      "q": "Where do the numbers come from?",
+      "a": "From your ad account, where real viewers produce the result. The versions are made here. The comparison happens there."
     },
     {
-      "q": "What does three test videos cost in credits?",
-      "a": "Each video is a separate job with its price shown up front: 24, 40, 60 or 120 credits for a 6, 10, 15 or 30-second video. Three 10-second versions at the same length cost 120 credits total, and failed jobs refund their credits automatically."
+      "q": "What if one version gets almost no spend?",
+      "a": "Do not treat it as a loser. Use the account's built-in test, or separate groups, so each version actually runs."
     },
     {
-      "q": "Do I pay once for every version?",
-      "a": "Yes. Each version is its own job, and the credit cost appears before you start. Failed jobs return credits automatically."
+      "q": "How many credits does a test round use?",
+      "a": "Each clip is its own job: 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before every job, and a failed job returns the credits."
     }
   ],
-  "cta_title": "Find your next winning ad angle",
-  "cta_lead": "Make a few fair versions from one product photo, then take the winning hook into your next campaign."
+  "cta_title": "Test one change at a time",
+  "cta_lead": "Make a few versions from one product photo, keep everything else the same, and use your ad account to see which opening people respond to.",
+  "relatedLinks": [
+    "guide-first-tiktok-video-ad",
+    "guide-ad-sizes-by-platform",
+    "blog-ai-ugc-video-ads-guide",
+    "blog-ai-video-review-checklist",
+    "blog-unboxing-videos-for-launches",
+    "guide-product-photo-tips"
+  ]
 }

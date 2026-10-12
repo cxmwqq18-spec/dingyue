@@ -2,36 +2,9 @@
   "id": "tpl-beauty",
   "title": "Beauty Product Video Ads for Skincare Brands | AIVideosUGC",
   "description": "Beauty product video ads from one skincare photo: show a routine, texture or review moment in 9:16 for TikTok and Reels, with 6, 10, 15 or 30 seconds.",
-  "h1": "Beauty Product Video Ads for a Routine Shoppers Can Picture",
+  "h1": "Beauty Product Video Ads for Skincare Routines",
   "eyebrow": "Beauty video template",
-  "lead": "A bottle on a plain counter leaves the routine out of sight. Turn one skincare photo into a beauty product video ad that shows a routine, review or texture moment for TikTok, Reels and product pages.",
-  "benefits_h2": "Why make beauty product video ads?",
-  "benefits": [
-    {
-      "t": "Show the routine, not just the package",
-      "d": "Put a cleanser, cream or tube into a simple morning or evening action so shoppers can picture when they would use it.",
-      "img": "n:guide:fx28-tpl-beauty-benefit-1-r1",
-      "alt": "Adult hand presses a matte ivory cleanser pump beside a bright ceramic sink with white foam."
-    },
-    {
-      "t": "Make texture easy to judge",
-      "d": "Show a pump, foam, cream spread or swatch in close frame, without booking a close-up shoot.",
-      "img": "n:guide:fx28-tpl-beauty-benefit-2-r1",
-      "alt": "Adult hand spreads ivory face cream beside a plain cream jar on pale stone."
-    },
-    {
-      "t": "Try more angles without reshooting",
-      "d": "Reuse one source photo for a routine, hands-only texture scene or creator-style product moment. Test the angle that earns attention.",
-      "img": "n:guide:fx28-tpl-beauty-benefit-3-r1",
-      "alt": "Adult with a short copper pixie holds a plain pale-blue sunscreen tube at a sunlit vanity."
-    },
-    {
-      "t": "Keep every claim in your hands",
-      "d": "Download without a watermark, then add shade names, ingredient lines and usage wording in your editor from your approved listing.",
-      "img": "n:guide:fx28-tpl-beauty-benefit-4-r1",
-      "alt": "Adult hand presents a plain muted-rose moisturizer tube over a clean bathroom counter."
-    }
-  ],
+  "lead": "Pick a routine scene and add one skincare photo, so the clip shows texture, application, or a review moment.",
   "secondary_keywords": [
     "skincare video ads",
     "serum video ad",
@@ -39,20 +12,20 @@
     "skincare routine video",
     "cosmetics product video"
   ],
-  "steps_h2": "How to Make Beauty Product Video Ads in 3 Simple Steps",
-  "steps_lead": "Three steps turn one skincare product photo into a ready-to-post clip, with no studio, model booking or reshoot.",
+  "steps_h2": "Make a TikTok Beauty Ad in 3 Steps",
+  "steps_lead": "One skincare photo, a short line about the moment, then a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add a clear photo of the full bottle, jar or tube. Keep the product fully in frame so its shape stays available."
+      "d": "Use a clear photo of the full bottle, jar, or tube. Keep the cap and the label area easy to see."
     },
     {
-      "t": "Pick a Beauty Style",
-      "d": "Choose a routine, review or texture scene. Match your wording to the moment you want to show."
+      "t": "Describe Your Scene",
+      "d": "Name a routine, a texture close-up, or a review moment. Then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the video, then add your shade, usage line or offer in your editor. Review the package and action before you publish it."
+      "d": "Download the file and add the shade or usage line in your editor. Check the action before you post."
     }
   ],
   "maker": {
@@ -71,51 +44,47 @@
   "faq": [
     {
       "q": "What is a beauty product video template?",
-      "a": "It is a ready-made beauty scene. Add your own skincare photo and generate a routine, review or texture clip without filming a creator."
+      "a": "A ready beauty scene for a routine, a texture close-up, or a review moment. You add your own skincare photo, and the clip shows that moment."
     },
     {
-      "q": "Do I need to write prompts to use these templates?",
-      "a": "No. Pick a beauty style, upload your product photo and generate. Step two can include one short line about the scene if you want."
+      "q": "How do I make the routine clip?",
+      "a": "Upload the bottle, jar, or tube, name the moment, pick a size and a length, then download the file."
     },
     {
-      "q": "Who are these beauty templates built for?",
-      "a": "Skincare sellers, beauty teams and agencies that need fresh product clips for social feeds, listings and ads."
+      "q": "Why start from a photo instead of booking a creator?",
+      "a": "The routine is built from the photo you already have. You skip the creator schedule, the studio booking, and the reshoot."
     },
     {
-      "q": "Can the clip show a routine without a face?",
-      "a": "Yes. Choose hands, a close-up or a product-only routine when the product should stay the focus."
+      "q": "Who is this scene for?",
+      "a": "Skincare sellers, beauty teams, and agencies that need fresh clips for a feed, a listing, or an ad."
     },
     {
-      "q": "Can I make several skincare scenes from one photo?",
-      "a": "Yes. Reuse the same photo across a routine, review, unboxing or texture scene and generate another angle when needed."
+      "q": "Can I do this on the first try?",
+      "a": "Start with one clear photo and a short line about the moment. Check the action, and run it again if the routine looks wrong."
     },
     {
-      "q": "Which platforms are beauty clips made for?",
-      "a": "Use 9:16 clips for TikTok and Reels, or place a square version in a product gallery or feed post."
+      "q": "What photo should I upload?",
+      "a": "A clear photo of the full bottle, jar, or tube, with the cap and the label area easy to see."
     },
     {
-      "q": "How fast is a beauty video made?",
-      "a": "A clip is generated in minutes after you start the job, with no studio booking, creator schedule or reshoot."
+      "q": "Can the routine skip the face?",
+      "a": "Yes. Choose hands, a close-up, or a product-only beat when the package should stay the focus."
     },
     {
-      "q": "What does a beauty video cost?",
-      "a": "A 6-, 10-, 15- or 30-second clip costs 24, 40, 60 or 120 credits, shown before you run it."
+      "q": "Which size and length can I pick?",
+      "a": "This template is set up for 9:16. A square cut can sit in a gallery. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
-      "q": "Can I use a beauty clip in paid ads?",
-      "a": "Yes. Downloads have no AIVideosUGC watermark and can run in your own ads, pages and posts. You remain responsible for claims and disclosures."
+      "q": "What does the clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "What skincare details should remain visible?",
-      "a": "Keep the bottle, cap and label area clear in the source photo so the generated scene can preserve them."
-    },
-    {
-      "q": "What should I check before publishing a skincare ad?",
-      "a": "Check that the product, routine action and usage wording match your approved listing before publishing."
+      "q": "Can I run the file in ads?",
+      "a": "Yes. The download has no AIVideosUGC watermark and can run in your ads, pages, and posts. Add the shade and usage line after download, and match them to the approved listing. A person on screen is an AI performer, not a customer."
     }
   ],
   "visual": {
-    "overview": "A beauty product video ad puts your cleanser, cream or tube inside a routine shoppers recognize, so the product is easier to picture using.",
+    "overview": "",
     "strip": [
       "n:guide:tpl-beauty-round4-m1-cleanser-tube",
       "n:guide:tpl-beauty-round4-sunscreen-tube",
@@ -146,8 +115,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a beauty template",
-      "lead": "Browse beauty styles, then add your own skincare product photo.",
+      "title": "Choose a Skincare Routine Video",
+      "lead": "These cards cover many categories. There is no routine-only filter. Open a skincare card, then add your bottle, jar, or tube.",
       "chips": [
         {
           "id": "accessories",
@@ -563,32 +532,120 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Make beauty product video ads from one product photo"
-      },
       "m3": {
-        "h2": "Choose a beauty routine scene for beauty product video ads"
+        "h2": "Choose a Skincare Routine Video"
       },
       "faq": {
-        "h2": "Questions about beauty product video ads"
+        "h2": "Questions About Skincare Video Ads"
       }
     }
   },
   "relatedLinks": [
-    "video-ads",
-    "tpl-drink",
-    "tpl-ugc",
-    "social-ad-photos",
-    "ind-beauty-skincare",
-    "plat-instagram",
-    "plat-tiktok",
-    "blog-ai-ugc-video-ads-guide",
-    "guide-first-tiktok-video-ad",
-    "guide-ad-sizes-by-platform"
-  ]
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "tpl-box",
+      "label": "product bundle photos"
+    },
+    {
+      "id": "tpl-light",
+      "label": "product photo lighting"
+    },
+    {
+      "id": "tpl-story",
+      "label": "Instagram story ad images"
+    },
+    {
+      "id": "plat-tiktok",
+      "label": "AI TikTok ads generator"
+    },
+    {
+      "id": "ind-beauty-skincare",
+      "label": "AI product videos and photos for beauty brands"
+    }
+  ],
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
+  ],
+  "reviews": {
+    "h2": "Sample Serum Video Ad Setups",
+    "lead": "Example scenes for this template. They show how a beauty shop could film a routine from one photo.",
+    "items": [
+      {
+        "example": true,
+        "who": "Cleanser shop",
+        "t": "Pump at the sink",
+        "d": "Example: a hand presses a pump once, and the bottle stays readable beside the basin."
+      },
+      {
+        "example": true,
+        "who": "Moisturizer shop",
+        "t": "Texture, not a speech",
+        "d": "Example: cream spreads beside the jar so the finish is the point of the clip."
+      },
+      {
+        "example": true,
+        "who": "Sunscreen shop",
+        "t": "Product in the light",
+        "d": "Example: a tube is held up outdoors, with the package still easy to recognize."
+      },
+      {
+        "example": true,
+        "who": "Routine brand",
+        "t": "Hands only",
+        "d": "Example: the routine is shown with hands and the product, and no face is required."
+      },
+      {
+        "example": true,
+        "who": "Shade editor",
+        "t": "Words after download",
+        "d": "Example: the shade name and the usage line are typed in an editor after the file downloads."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "Four moments, one photo",
+        "d": "Example: the same bottle photo is reused for a routine, a texture pass, a review beat, and an unboxing."
+      },
+      {
+        "example": true,
+        "who": "Listing manager",
+        "t": "Square and vertical",
+        "d": "Example: a 9:16 cut goes to a short feed, and a square cut can sit in a product gallery."
+      },
+      {
+        "example": true,
+        "who": "Claims reviewer",
+        "t": "Match the listing",
+        "d": "Example: the action and the usage line are checked against the approved listing before the ad runs."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Not a buyer review",
+        "d": "Example: a person on screen is an AI performer. The clip is the brand's ad, not a customer testimonial."
+      },
+      {
+        "example": true,
+        "who": "First-time seller",
+        "t": "One line about the moment",
+        "d": "Example: the seller names the routine beat in one line and checks the cap and label before posting."
+      }
+    ]
+  },
+  "related_h2": "Pages for a Cosmetics Product Video",
+  "related_lead": "Video ads, beauty stills, and a TikTok page that pair with a routine clip.",
+  "cta_title": "Ready to Show the Routine?",
+  "cta_lead": "Upload one skincare photo and see the credit cost before you start."
 }

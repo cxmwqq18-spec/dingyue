@@ -4,131 +4,126 @@
   "description": "AI product photography for online sellers: turn one photo into listing and social images without a shoot. See what to upload and how to set the scene.",
   "h1": "AI Product Photography: Getting Usable Shots From One Photo",
   "eyebrow": "Photo guide",
-  "lead": "AI product photography can turn one clear photo of your product into a white background shot, a styled scene, or a close-up. Here's how to set it up so the results look like the item you actually ship.",
+  "lead": "AI product photography turns one clear photo of your product into a white listing image, a styled scene, or a close view, as long as you check each result against the item you ship.",
   "secondary_keywords": [
     "AI product photos for ecommerce",
     "AI product photo tips",
     "product photos from one image",
     "AI lifestyle product images"
   ],
-  "read_minutes": 4,
-  "summary": "How to turn one product photo into listing and social images without a shoot, and what to confirm before you use them.",
+  "read_minutes": 5,
+  "summary": "One sharp photo becomes listing and social images when you name the surface and the light, then compare the result with the real product.",
   "sections": [
     {
-      "h2": "What AI product photography can do for a small shop",
+      "h2": "On this page",
       "paras": [
-        "AI product photography starts with a photo you already have. In AIVideosUGC, you upload it, choose a template or describe the shot you want, and get a new image of the same product: on a [clean white background](page:white-background), on a [kitchen counter](page:lifestyle-photos), under [studio-style light](page:tpl-light), or [worn by a model](page:model-photos).",
-        "For a small shop, that covers a lot of everyday needs. A new listing needs more than one image. A seasonal post needs a fresh setting. A product that only has a supplier photo needs something that matches the rest of your store. For [food and drinks](page:ind-food-drinks), a clear package photo can become a serving scene without a new shoot. Instead of booking a shoot for each of these, you can make the images when you need them.",
-        "It won't replace every photo. When a buyer needs to see an exact detail, like the stitching on a bag or the ports on a charger, your own close-up is still the safer choice. AI images are most useful for showing setting, scale, and mood around a product that already looks right."
-      ],
-      "img": "n:guide:fx04-blog-photo-shop-scene-r1",
-      "alt": "Hands open tan handbag on a sunlit desk beside a folded sweater."
-    },
-    {
-      "h2": "Start with a source photo that's easy to read",
-      "paras": [
-        "The new image can only be as accurate as the photo you give it, so a few minutes of setup here saves you from making the same image over and over.",
-        "Shoot near a window in daylight, with the product on a plain table or a sheet of white paper. Fill most of the frame with the product, keep it in sharp focus, and turn off filters and beauty modes on your phone. Peel off price stickers and move anything that isn't part of what you sell. Our guide to [taking a product photo that works](page:guide-product-photo-tips) has the full setup.",
-        "Show the side you want buyers to see. If the front label matters, face it straight at the camera. For a set, lay out every piece you'll actually ship and leave out anything you won't."
-      ],
-      "img": "n:guide:fx04-blog-photo-source-clear-r1",
-      "alt": "Hands place tan handbag upright on a clean pale studio surface."
-    },
-    {
-      "h2": "Pick a look, then describe it in plain words",
-      "paras": [
-        "Templates are the quickest route when you already know the kind of image you need: a white background for a marketplace, studio lighting for your main product shot, a close-up for texture, or one image per color. When you have a specific setting in mind, write it out instead.",
-        "A useful description names the surface, the place, the light, and one or two props. For example: \"A tan handbag on a light wood cafe table, soft morning window light, a folded scarf blurred in the background.\" That paints a clear picture without crowding the product. To see how a plain starting photo turns into finished scenes, browse our [AI product photo examples](page:examples), from handbags and boots to jackets.",
-        "Leave out printed words, famous faces, and logos you don't own. Lettering inside AI images often comes out misspelled, and requests involving public figures or other companies' marks may be turned down."
-      ],
-      "img": "n:guide:fx04-blog-photo-look-cafe-r1",
-      "alt": "A hand lifts tan handbag from a softly lit cafe table."
-    },
-    {
-      "h2": "Match each image to where it will appear",
-      "paras": [
-        "Decide where an image is going before you make it. [Amazon](page:plat-amazon), for example, asks for a pure white background on the main image, while the images after it can show the product in use, next to a familiar object for size, or up close.",
-        "On your own store, a consistent look matters more than variety. If your collection pages use soft gray backdrops, keep new images in that same style so the grid stays tidy. For [social posts and feed ads](page:social-ad-photos), a lived-in scene with some empty space is handy, because you can drop your offer into that space later in Canva or Ads Manager.",
-        "Square images suit product grids, marketplace galleries, and feed posts. Start with the full tan handbag in frame, then leave empty space only where your editor will add an offer."
-      ],
-      "img": "n:guide:fx04-blog-photo-marketplace-r1",
-      "alt": "Hands place tan handbag into a simple kraft shipping box."
-    },
-    {
-      "h2": "Check the result against the real product",
-      "paras": [
-        "Before an image goes on a listing, put it next to the product in your hand. Look at color, shape, proportions, logos, and the number of parts. Zoom in on labels, buttons, and edges, where small changes tend to hide.",
-        "If something is off, don't try to cover it with a caption. Make the image again with a clearer description or a sharper source photo. Each new image is its own request, and you'll see the cost before it starts.",
-        "A simple rule: if a buyer could open the box and feel misled by the picture, that picture doesn't go live. More checks are in [Before You Publish: A Checklist for AI Content](page:blog-ai-video-review-checklist)."
+        "What one photo can replace, how to shoot it, how to describe the scene, where each file goes, and what to compare before you publish."
       ],
       "img": "n:guide:fx04-blog-photo-review-r1",
       "alt": "Hands inspect tan handbag beside a blank phone."
     },
     {
-      "h2": "Keep costs and files under control",
+      "h2": "What can AI product photos for ecommerce replace?",
       "paras": [
-        "The credit cost appears before each generation. If a job fails, its credits return to your balance.",
-        "Your uploads and results stay in your own account and aren't shown publicly, so you can try ideas for an unreleased product without them turning up anywhere else."
+        "They can replace many listing, social, and ad images that would otherwise need a new shoot, as long as the result still matches the item you ship.",
+        "A new listing needs more than one picture. A seasonal post needs a fresh setting. A supplier photo may not match the rest of the store. They will not replace every shot. When a buyer must see stitching or the ports on a charger, your own close photo is still the safer file. Generated images are most useful for setting, scale, and mood around a product that already looks right."
+      ],
+      "img": "n:guide:fx04-blog-photo-shop-scene-r1",
+      "alt": "Hands open tan handbag on a sunlit desk beside a folded sweater."
+    },
+    {
+      "h2": "How do I get product photos from one image?",
+      "paras": [
+        "Shoot a sharp photo near a window, on a plain table, with the product filling the frame and filters off.",
+        "Peel price stickers and move anything you do not ship. Face the label at the camera if the words matter. For a set, lay out every piece that is actually in the box. Open the [AI product photo generator](page:photo-hub) once that file is clean. One image uses 24 credits, shown before the job starts."
+      ],
+      "img": "n:guide:fx04-blog-photo-source-clear-r1",
+      "alt": "Hands place tan handbag upright on a clean pale studio surface."
+    },
+    {
+      "h2": "Which AI product photo tips keep the product honest?",
+      "paras": [
+        "Name the surface, the place, the light, and one prop. Leave printed words, famous faces, and logos you do not own out of the request.",
+        "\"A tan handbag on a light wood cafe table, soft morning window light, a folded scarf blurred behind it\" paints the scene without crowding the product. Lettering inside a generated image is often misspelled, so add headlines later in your editor. For a marketplace main image, make [white background product photos](page:white-background) from the same source file."
+      ],
+      "img": "n:guide:fx04-blog-photo-look-cafe-r1",
+      "alt": "A hand lifts tan handbag from a softly lit cafe table."
+    },
+    {
+      "h2": "How do I make AI lifestyle product images that still match the product?",
+      "paras": [
+        "Describe a real place the product would sit, and keep the product as the largest thing in the frame.",
+        "A kitchen counter, a desk, or an entry table is enough. Do not ask for a crowd of props that a shopper might think are included. If the listing is for one bag, the scarf in the background is decoration, not a second item in the box. Say so in the product text if there is any chance of confusion. Use the [AI product background changer](page:change-background) when you only want a new backdrop and the product itself should stay as it is."
       ],
       "img": "n:guide:fx04-blog-photo-social-scene-r1",
       "alt": "A hand sets tan handbag beside a folded scarf on an entry table."
+    },
+    {
+      "h2": "Where should each AI product photo go?",
+      "paras": [
+        "Decide the destination before you make the image. A marketplace main image is stricter than a social post.",
+        "A main image usually wants pure white and nothing extra. Later gallery images can show use, scale, or a close detail. On your own store, match the backdrop you already use so the grid stays tidy. Square files suit product grids and feed posts. Leave empty space only where you will add an offer later."
+      ],
+      "img": "n:guide:fx04-blog-photo-marketplace-r1",
+      "alt": "Hands place tan handbag into a simple kraft shipping box."
+    },
+    {
+      "h2": "How do I check an AI product photo before it goes live?",
+      "paras": [
+        "Put the image next to the product in your hand and compare color, shape, proportions, logos, and the number of parts.",
+        "Zoom in on labels, buttons, and edges. If something is off, do not hide it with a caption. Make the image again with a clearer sentence or a sharper source photo. Each new image is its own request, and you see the cost first. If a buyer could open the box and feel misled, that picture does not go live. Uploads and results stay in your account and are not shown publicly."
+      ]
+    },
+    {
+      "h2": "The short version",
+      "paras": [
+        "One sharp daylight photo, a plain sentence for the surface and the light, and a check against the real item before anything goes on a listing.",
+        "White and lifestyle images are separate jobs at 24 credits each. A failed job returns the credits."
+      ]
     }
   ],
-  "checklist": [
-    "Use a sharp daylight photo with filters turned off",
-    "Remove stickers and anything you don't ship",
-    "Choose a template or describe the surface, place, and light",
-    "Keep prices, headlines, and other wording out of the request",
-    "Compare color, shape, and parts with the real item",
-    "Add any text afterward in Canva or Ads Manager"
-  ],
   "related": [
-    "photo-hub",
     "guide-product-photo-tips",
-    "white-background"
+    "guide-white-background-amazon",
+    "blog-model-photos-without-a-photoshoot",
+    "blog-ai-video-review-checklist",
+    "guide-ad-sizes-by-platform",
+    "blog-ai-ugc-video-ads-guide"
   ],
   "faq": [
     {
       "q": "Can AI product photos replace a photoshoot?",
-      "a": "For many listing and ad images, yes: one clear photo of your product becomes new scenes and backgrounds. A real photo is still the starting point, and each result should be checked against the actual item before it goes live."
+      "a": "For many listing and ad images, one clear photo becomes new scenes. A real photo is still the starting point, and each result should be checked against the item before it goes live."
     },
     {
-      "q": "What if the product in the result looks different from mine?",
-      "a": "Don't use that image. Make it again with a sharper photo or a clearer description. Each new image is its own request, with the cost shown before it starts."
+      "q": "What if the product in the result looks different?",
+      "a": "Do not use that image. Make it again with a sharper photo or a clearer sentence. Each new image shows its cost before it starts."
     },
     {
-      "q": "Can I start AI product photography without studio lighting?",
-      "a": "Yes. A sharp phone photo near a window works; use even light, keep the full product in frame, and avoid glare and heavy filters."
+      "q": "Can I start without studio lighting?",
+      "a": "Yes. A sharp phone photo near a window is enough. Use even light, keep the full product in frame, and leave filters off."
     },
     {
       "q": "How many credits does one product photo use?",
-      "a": "One product photo uses 24 credits. You see the credit cost before the generation starts."
+      "a": "One product photo uses 24 credits. You see the cost before the generation starts."
     },
     {
-      "q": "Do white-background and lifestyle images count as separate tasks?",
-      "a": "Yes. Each generated image is its own task, so a white-background shot and a lifestyle shot each show their own cost before you start."
+      "q": "Are a white image and a lifestyle image the same job?",
+      "a": "No. Each generated image is its own task, so each one shows its own cost before you start."
     },
     {
-      "q": "What happens if a product photo job fails?",
-      "a": "Failed jobs return their credits to your balance automatically. You can try again with a sharper source photo or a clearer scene description."
+      "q": "What happens if the job fails?",
+      "a": "Failed jobs return their credits. You can try again with a sharper source photo or a clearer scene sentence."
     }
   ],
-  "steps_h2": "How to Make AI Product Photos in 3 Simple Steps",
-  "steps_lead": "Use one clear handbag photo to make a finished image you can place in a listing or ad.",
-  "steps": [
-    {
-      "t": "Capture a clear source photo",
-      "d": "Upload a sharp photo of the tan handbag with its full shape and handles in frame. You keep that same handbag as the reference for every finished image."
-    },
-    {
-      "t": "Choose a look and write the scene",
-      "d": "Choose a background or describe the setting, light and one prop for the handbag. You get a scene that suits the listing or ad while the product stays the focus."
-    },
-    {
-      "t": "Download and Post",
-      "d": "Download the finished handbag image after comparing it with the original photo. Add your price or offer in your store or ad editor."
-    }
-  ],
-  "cta_title": "Turn one handbag photo into your next listing set",
-  "cta_lead": "Upload a clear handbag photo, choose a scene and download a finished image for your store or ad."
+  "cta_title": "Turn one product photo into your next listing set",
+  "cta_lead": "Upload a clear photo, choose a scene, and download a finished image you have checked against the real item.",
+  "relatedLinks": [
+    "guide-product-photo-tips",
+    "guide-white-background-amazon",
+    "blog-model-photos-without-a-photoshoot",
+    "blog-ai-video-review-checklist",
+    "guide-ad-sizes-by-platform",
+    "blog-ai-ugc-video-ads-guide"
+  ]
 }

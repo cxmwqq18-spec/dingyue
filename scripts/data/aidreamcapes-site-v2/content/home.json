@@ -1,10 +1,10 @@
 {
   "id": "home",
   "title": "AI Product Videos & Photos for Online Stores | AIVideosUGC",
-  "description": "Create AI product videos and photos from one upload for TikTok, Amazon, Shopify and social ads. See the credit cost before each job.",
+  "description": "Turn one product photo into AI UGC video ads and store-ready product photos. Pick a scene, see the credit cost first, and download files for every channel.",
   "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "Launch more product ads from one clear photo",
-  "lead": "Launch a new product ad from one clear photo. Pick a scene or actor, then download a file for your next campaign in minutes.\n\nFrame options: 9:16 · 1:1 · 16:9 · 4:3 · 3:4 · watermark-free downloads.",
+  "lead": "Launch a new product ad from one clear photo. Pick a scene or an AI presenter, then download a file for your next campaign. You see the credit cost before the job starts.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -17,41 +17,41 @@
   "templates_title": null,
   "templates_lead": null,
   "platforms_title": null,
-  "benefits_h2": "Get more campaign assets without another shoot",
+  "benefits_h2": "Every AI UGC Video and Product Photo Tool You Need",
   "benefits": [
     {
-      "t": "Spend far less than a shoot",
-      "d": "Start from a product photo and skip creators, a studio, props and a shoot day.",
-      "icon": "bolt"
+      "t": "AI UGC Video Ads",
+      "d": "Upload a product photo and get a creator-style [UGC video ad](/ai-video-generation/ugc-ad-video) for [TikTok ads](/platforms/tiktok-ads) and other vertical placements.",
+      "icon": "play"
     },
     {
-      "t": "Get a new ad in minutes",
-      "d": "Choose a scene, actor or product format and turn the photo into a campaign version in minutes.",
-      "icon": "clock"
-    },
-    {
-      "t": "Turn one photo into many versions",
-      "d": "Change the format, scene or opening and test another angle from the same product photo.",
-      "icon": "layers"
-    },
-    {
-      "t": "Sell without models or a set",
-      "d": "Show the item in a creator-style ad, demo or lifestyle scene without casting, props or a studio setup.",
+      "t": "AI Actors and Spokespeople",
+      "d": "Pick an AI presenter to hold or use your product on camera. If they speak, you write the line. No casting call and no shoot day.",
       "icon": "users"
     },
     {
-      "t": "Keep launches moving",
-      "d": "Make a new scene for an offer or seasonal launch from the approved product photo.",
+      "t": "URL to Video",
+      "d": "Paste a public product page link. The clip starts from the main product image and the product name on that page.",
+      "icon": "layers"
+    },
+    {
+      "t": "Image to Video",
+      "d": "Give a still product shot a short movement you describe in one line, like a slow turn or a hand pick-up.",
       "icon": "refresh"
     },
     {
-      "t": "Hand off ready-to-post files",
-      "d": "Swap the opening, actor or scene and compare the downloads in your ad platform.",
+      "t": "Product Photos",
+      "d": "Make listing and social images with the [AI product photo generator](/ai-image-generation): white backgrounds, lifestyle scenes and on-model shots.",
+      "icon": "sparkle"
+    },
+    {
+      "t": "Background Changer",
+      "d": "Put your product in a new setting, then compare the color and outline with your original photo before you post.",
       "icon": "target"
     }
   ],
   "steps_h2": "How to Make AI Product Videos and Photos in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, say what you want, and download an ad you can post today.",
+  "steps_lead": "Upload one product photo, describe the scene, and download the file. Add your price and captions in your editor before you post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -63,21 +63,21 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download and post the file, then add your own price or caption in your editor before posting."
+      "d": "Download the file. Add your price, offer and captions in your editor, then post it."
     }
   ],
   "ugc": {
     "eyebrow": "A clear way to make creator-style ads",
     "title": "What is AI UGC?",
     "paras": [
-      "AI UGC is a creator-style ad made with a generated presenter, product scene and script. It gives ecommerce teams a way to show a product without booking a new shoot.",
+      "AI UGC means a creator-style ad: an AI presenter shows your product in a scene you describe, and you write any line they say. It lets a store show the product without booking a new shoot.",
       "Upload the product photo and choose a scene or actor. Get a 6, 10, 15 or 30 second clip built around your real product for a paid ad, product page or social post.",
       "The presenter is AI-generated, not a real customer; use the clip to show your product."
     ],
     "formats": [
       {
-        "t": "Product review-style ads",
-        "d": "Show a presenter explaining the item and its use in a direct-to-camera ad."
+        "t": "Direct-to-camera ads",
+        "d": "An AI presenter explains the item and shows how it is used."
       },
       {
         "t": "Problem-to-solution ads",
@@ -95,7 +95,7 @@
   },
   "audience": {
     "title": "Built for Teams That Launch Fast",
-    "lead": "Start from the product photo you already have, pick the channel, and get a ready-to-post ad for your next campaign.",
+    "lead": "Start from the product photo you already have and pick the channel. Download the ad, then add captions and a price before you post.",
     "items": [
       {
         "t": "Ecommerce and D2C brands",
@@ -106,7 +106,7 @@
       },
       {
         "t": "Dropshippers",
-        "d": "Test whether a product earns attention with a few scenes before ordering a larger creative package.",
+        "d": "Try a few scenes for a new product before you book a shoot.",
         "img": "n:gen2:video-ads-g3",
         "alt": "Snack pouch set down beside a lunch container on an office desk.",
         "frame": "phone"
@@ -134,7 +134,7 @@
       },
       {
         "t": "App and SaaS companies",
-        "d": "Show one product feature in a short demo that tells shoppers what to do next.",
+        "d": "Show one feature in a short demo so a viewer can see what the product does.",
         "img": "n:gen2:ind-electronics-g2",
         "alt": "Tablet stand holds a dark-screen tablet on a tidy desk.",
         "frame": "browser"
@@ -145,17 +145,17 @@
     [
       "Time to first ad",
       "Days to weeks of shoot coordination",
-      "Minutes from one product photo"
+      "You pick 6, 10, 15 or 30 seconds and see the credit cost first"
     ],
     [
       "Upfront cost",
       "Creators, studio time and gear before launch",
-      "Costs far less than creators, a studio and gear"
+      "The credit price shown before the job, not a studio day or a creator booking"
     ],
     [
       "New versions",
       "Another shoot for each new angle",
-      "New versions in minutes, no reshoot"
+      "Run the same photo again with a new scene, opening or presenter"
     ],
     [
       "Product control",
@@ -213,8 +213,8 @@
       "a": "No. The people in these clips are generated by AI. Use them as part of your product marketing, not as customer testimonials, and follow any platform rules for AI-generated content."
     },
     {
-      "q": "Can I make multiple versions for A/B testing?",
-      "a": "Yes. Run the same photo with different scenes, actors or openings, then compare the downloads in your ad platform. You do not need another shoot."
+      "q": "Can I make more than one version of an ad?",
+      "a": "Yes. Run the same photo with a different scene, presenter or opening, then compare the downloads in your ad account. Each run shows its credit cost first."
     },
     {
       "q": "Can I run these videos as paid ads?",
@@ -258,8 +258,8 @@
   "more_sections": [
     {
       "eyebrow": "One place for every channel",
-      "h2": "One product photo, several campaign assets",
-      "lead": "Keep ads and store images together, so the next campaign starts with the asset you already have.",
+      "h2": "One Upload, Ready for Every Channel",
+      "lead": "Make a version for each place you sell, and a fresh angle when an ad starts to tire.",
       "items": [
         {
           "t": "Make the next ad from the asset you have",
@@ -285,36 +285,6 @@
       ]
     }
   ],
-  "seller_scenarios": {
-    "title": "One product photo, four ways to start selling",
-    "lead": "Example scenes: four sellers, four products, one photo each, and something ready to post in minutes.",
-    "items": [
-      {
-        "audience": "Shopify skincare shop",
-        "tool": "photo-hub",
-        "task": "Get a clean product shot and a fresh social ad from one face cream jar photo, no new shoot.",
-        "ref": "n:rx3-home-scenario-1-r1"
-      },
-      {
-        "audience": "Home goods seller",
-        "tool": "product-videos",
-        "task": "Show shoppers the tidy drawer they want, straight from one organizer photo. No room to stage.",
-        "ref": "n:rx3-home-scenario-2-r1"
-      },
-      {
-        "audience": "Accessories seller",
-        "tool": "video-ads",
-        "task": "Turn one canvas bag photo into a casual launch clip without booking a model.",
-        "ref": "n:rx3-home-scenario-3-r1"
-      },
-      {
-        "audience": "Snack brand",
-        "tool": "unboxing-videos",
-        "task": "Have a first-taste unboxing video ready in minutes from one snack pouch photo.",
-        "ref": "n:rx3-home-scenario-4-r1"
-      }
-    ]
-  },
   "visual": {
     "strip": [
       "f:carousel-storytelling-v",
@@ -858,5 +828,94 @@
     }
   },
   "cta_lead": "Upload one product photo, pick a result and see the cost before you start.",
-  "cta_title": "Start your next ad with one product photo"
+  "cta_title": "Start your next ad with one product photo",
+  "benefits_lead": "No studio booking and no creator search. Videos, product photos and AI presenters all start from the same upload.",
+  "closing": {
+    "h2": "The AI UGC Video Generator Built for Product Sellers",
+    "paras": [
+      "Most stores do not need a studio to test a new ad. They need a clear product photo, an idea for the scene and a clear price per try.",
+      "AIVideosUGC keeps that in one place: videos up to 30 seconds, product photos for every listing, and the cost on screen before each job."
+    ]
+  },
+  "trust": {
+    "h2": "What Sellers Can Count On With AIVideosUGC",
+    "lead": "The details that matter when you pay per ad.",
+    "items": [
+      {
+        "t": "Five Frame Sizes",
+        "d": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4 before you start, so each channel gets a file in its own shape."
+      },
+      {
+        "t": "Videos Up to 30 Seconds",
+        "d": "Choose 6, 10, 15 or 30 seconds. Use a 6-second clip as a hook, or a 30-second clip to show the product in use."
+      },
+      {
+        "t": "Cost on Screen First",
+        "d": "A 6-second video is 24 credits and a 30-second one is 120. You see the cost before every job."
+      },
+      {
+        "t": "Credits Back on Failed Jobs",
+        "d": "If a job fails, its credits return to your balance on their own. Finished files are charged at the price shown before the job."
+      },
+      {
+        "t": "Commercial Use, No Watermark",
+        "d": "Run your videos and photos in paid ads, on product pages and in posts. Downloads carry no watermark."
+      },
+      {
+        "t": "Private by Default",
+        "d": "Your uploads and results stay in your own account. Nothing goes to a public gallery."
+      }
+    ]
+  },
+  "compare_h2": "AIVideosUGC vs. Traditional UGC Creation",
+  "reviews": {
+    "h2": "How Sellers Use AIVideosUGC",
+    "lead": "Example ways shops start from one product photo. These are examples, not customer quotes.",
+    "items": [
+      {
+        "example": true,
+        "who": "Shopify skincare shop",
+        "t": "A clean shot and a social ad from one jar",
+        "d": "A skincare shop uploads one jar photo, makes a clean product shot, then makes a separate social ad from that same photo.",
+        "img": "n:rx3-home-scenario-1-r1"
+      },
+      {
+        "example": true,
+        "who": "Home goods seller",
+        "t": "A tidy drawer without staging a room",
+        "d": "A home goods shop turns one organizer photo into a short video of that organizer in a tidy drawer.",
+        "img": "n:rx3-home-scenario-2-r1"
+      },
+      {
+        "example": true,
+        "who": "Accessories seller",
+        "t": "A launch clip without booking a model",
+        "d": "An accessories shop turns one canvas bag photo into a launch clip with an AI presenter, without booking a model.",
+        "img": "n:rx3-home-scenario-3-r1"
+      },
+      {
+        "example": true,
+        "who": "Snack brand",
+        "t": "A first-taste unboxing from one pouch",
+        "d": "A snack brand turns one pouch photo into an unboxing clip that opens the package and shows the product. Captions go on in an editor before posting.",
+        "img": "n:rx3-home-scenario-4-r1"
+      }
+    ]
+  },
+  "blockOrder": [
+    "hero",
+    "definition",
+    "picker",
+    "steps",
+    "benefits",
+    "features",
+    "audience",
+    "closing",
+    "related",
+    "trust",
+    "compare",
+    "reviews",
+    "faq",
+    "cta"
+  ]
 }

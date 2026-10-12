@@ -2,9 +2,9 @@
   "id": "tpl-bf",
   "title": "Black Friday Video Ads From One Photo | AIVideosUGC",
   "description": "Build a Black Friday video ad from one product photo, then add the confirmed offer after download. Choose a scene for social feeds and product pages.",
-  "h1": "Show the Black Friday Deal Before the Rush",
+  "h1": "Black Friday Video Ads You Can Post Before the Rush",
   "eyebrow": "Black Friday template",
-  "lead": "Turn one product photo into a Black Friday video ad that gives shoppers a clear result, ready for the channel where you sell.",
+  "lead": "Place your product photo in a scene, then add the price, code and end date after the file downloads.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -14,16 +14,16 @@
   ],
   "steps": [
     {
-      "t": "Upload Your Product",
-      "d": "Add one clear source photo and keep the full product or garment visible. Use a photo that matches the item in your Black Friday offer."
+      "t": "Upload Your Product Photo",
+      "d": "Upload one sharp photo of the product in the offer. Keep the full shape and finish visible."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose one offer scene and describe the setting shoppers should see. Keep the product central while the cost stays visible before you run it."
+      "t": "Describe Your Scene",
+      "d": "Describe the deal setting, then pick a size and a length from 6 to 30 seconds. Leave the exact price out of the scene."
     },
     {
       "t": "Download and Post",
-      "d": "Download the result and add exact price, code or end date in your editor. Post the finished clip where the offer appears."
+      "d": "Download the clip and add the confirmed price, code or end date in your editor before you post."
     }
   ],
   "maker": {
@@ -45,79 +45,48 @@
   },
   "faq": [
     {
+      "q": "What does this Black Friday template make?",
+      "a": "A product clip for a deal post. The scene shows the item. You type the confirmed price, code and end date after download."
+    },
+    {
+      "q": "How does the scene come together?",
+      "a": "Upload one product photo, describe the setting, pick a size and a length, then download and add the offer in your editor."
+    },
+    {
+      "q": "Why not book a shoot for the sale?",
+      "a": "The clip starts from a photo you already have, so you can prepare the creative before the sale week without a studio day."
+    },
+    {
+      "q": "Who should use it?",
+      "a": "Shops that need a product clip for Black Friday, Cyber Monday or a later holiday offer, on Facebook, Instagram or a product page."
+    },
+    {
+      "q": "Can I do this without editing experience?",
+      "a": "Yes. The generator builds the product scene. You add the offer text afterward in an editor you already use."
+    },
+    {
       "q": "What photo should I upload?",
-      "a": "Use one sharp photo with the full product visible and enough light to show its shape and finish."
+      "a": "One sharp photo of the item that is actually in the offer, with the full shape and finish visible."
     },
     {
-      "q": "What result does this template show?",
-      "a": "It creates a Black Friday video ad that keeps the product clear while leaving the exact offer details for your editor."
+      "q": "Which size and length fit a deal post?",
+      "a": "9:16 for Stories and Reels, 1:1 for a square feed, or 16:9, 4:3 or 3:4 when the placement needs them. Lengths are 6, 10, 15 or 30 seconds."
     },
     {
-      "q": "Which length or format should I choose?",
-      "a": "Use 6 seconds for one price beat, 10 or 15 seconds for a product action, or 30 seconds for a fuller offer story. Choose 9:16 for Stories and Reels or 1:1 for a square feed."
+      "q": "Does the generator write the discount?",
+      "a": "No. Add the live price, code and end date after download. If the offer changes, edit that text instead of making a new clip."
     },
     {
-      "q": "Can I change details after download?",
-      "a": "Yes. Add or update the confirmed price, discount, code and end date as editable text after download."
+      "q": "What does a clip cost?",
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Do I need a shoot day?",
-      "a": "No. Start with the product photo you already have and choose a deal scene instead of booking a creator, location or gear."
-    },
-    {
-      "q": "Where can I use the clip?",
-      "a": "Use the downloaded clip in your own paid social ads, product pages and posts where the chosen format fits. Downloads carry no AIVideosUGC watermark."
+      "q": "Can I use the download in paid ads?",
+      "a": "Yes. It has no AIVideosUGC watermark. If a person appears, that person is an AI performer, not a shopper who bought the deal."
     }
   ],
-  "examples": {
-    "h2": "More Black Friday video ad examples",
-    "lead": "Pick a deal-ready product moment, then add the confirmed offer after download.",
-    "groups": [
-      {
-        "label": "Offer-ready product scenes",
-        "items": [
-          {
-            "ref": "n:guide:rc4-tpl-bf-examples-unboxing-01-r1",
-            "title": "Coral cream set, gift-box reveal",
-            "kind": "scene",
-            "product": "face cream set"
-          },
-          {
-            "ref": "n:guide:f16-r10-bf-example-headphones-r1",
-            "title": "Over-ear headphones, fold-down demo",
-            "kind": "scene",
-            "product": "over-ear headphones"
-          },
-          {
-            "ref": "n:guide:fx19-bf-example-unbox-01",
-            "title": "Cobalt water bottle, gift unboxing",
-            "kind": "scene",
-            "product": "cobalt water bottle"
-          },
-          {
-            "ref": "n:guide:fx19-bf-example-tryon-02",
-            "title": "Olive jacket, hallway try-on",
-            "kind": "scene",
-            "product": "olive jacket"
-          },
-          {
-            "ref": "n:guide:fx19-bf-example-band-demo-03",
-            "title": "Blue pet leash, park setup",
-            "kind": "scene",
-            "product": "blue pet leash"
-          },
-          {
-            "ref": "n:guide:fx19-bf-example-gift-reveal-04",
-            "title": "Lavender travel bag, gift reveal",
-            "kind": "scene",
-            "product": "lavender travel bag"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
-    "overview": "Show the Black Friday product clearly, then add the confirmed offer in an editable layer after download.",
+    "overview": "",
     "strip": [
       "n:guide:rc4-tpl-bf-source-pump-r1",
       "n:guide:rc4-tpl-bf-result-pump-r1",
@@ -131,7 +100,7 @@
       "result": "n:guide:rc4-tpl-bf-result-pump-r1",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded product photo as the exact featured item. Show one adult creator presenting the uploaded sage-green pump bottle in a warm seasonal home scene, then turn the bottle slightly toward camera once and hold. Smooth handheld push-in, soft holiday lights, clear product focus, natural room sound, no spoken words, no text, labels, logos, numbers, or watermark.",
+      "prompt": "An adult presenter holds the uploaded sage-green pump bottle in a warm holiday room, turns it once toward the camera, and holds. Soft lights, product in focus, no spoken words and no price on screen.",
       "options": [
         [
           "Size",
@@ -148,8 +117,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a Black Friday ad format",
-      "lead": "Choose a creator hook, product demo, gift unboxing or try-on. Add the confirmed offer after download.",
+      "title": "Choose a Scene for a Black Friday Sale Video",
+      "lead": "Open a product scene and place the item that is in your offer. The price, code and end date go on after download.",
       "chips": [
         {
           "id": "accessories",
@@ -565,48 +534,114 @@
       ],
       "button": "Explore More"
     },
-    "uses": [],
     "input": [],
     "outputs": [],
     "after": null,
     "titles": {
-      "m2": {
-        "h2": "Make Black Friday video ads from one product photo"
-      },
       "faq": {
-        "h2": "Questions about Black Friday video ad videos"
+        "h2": "Black Friday Video Ad Questions"
+      },
+      "m3": {
+        "h2": "Choose a Scene for a Black Friday Sale Video"
       }
     }
   },
-  "steps_h2": "How to Make Black Friday Video Ad Videos in 3 Simple Steps",
-  "steps_lead": "Use one product photo to build a deal scene, then add exact offer details after download.",
-  "cta_lead": "Upload one product photo, see the cost first and make a Black Friday video ad video.",
-  "benefits_h2": "Make the Black Friday video ad result clear",
-  "benefits": [
-    {
-      "t": "Show the result first",
-      "d": "Show the Black Friday video ad outcome in one clear moment so buyers know what they get.",
-      "img": "n:guide:fx19-bf-benefit-result-01",
-      "alt": "Adult woman holds a plain coral face-cream jar above an open kraft gift box."
-    },
-    {
-      "t": "Skip another shoot",
-      "d": "Use the photo you already have instead of booking creators, locations or gear.",
-      "img": "n:guide:fx19-bf-benefit-shoot-02",
-      "alt": "Adult man closes a plain olive insulated lunch tote on a kitchen counter."
-    },
-    {
-      "t": "Make more useful versions",
-      "d": "Create another angle from the same source without reshooting.",
-      "img": "n:guide:fx19-bf-benefit-versions-03",
-      "alt": "Adult woman stretches a plain teal resistance band in a home gym."
-    },
-    {
-      "t": "Keep live details editable",
-      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate.",
-      "img": "n:guide:fx19-bf-benefit-editable-04",
-      "alt": "Adult man rotates a plain sage pump bottle in a clean studio."
-    }
+  "steps_h2": "Build Black Friday Video Ad Ideas in 3 Steps",
+  "steps_lead": "The product stays in the scene. The price, code and end date stay in your editor until you confirm them.",
+  "cta_lead": "Upload the product in your offer and see the credit cost before you start.",
+  "cta_title": "Ready to Make the Deal Clip?",
+  "blockOrder": [
+    "hero",
+    "picker",
+    "steps",
+    "reviews",
+    "related",
+    "faq"
   ],
-  "cta_title": "Make the deal easy to see"
+  "reviews": {
+    "h2": "How Shops Use a Holiday Sale Video Ad",
+    "lead": "Each card shows how one shop uses the scene. Add the offer after download.",
+    "items": [
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Gift box, offer added later",
+        "d": "A beauty shop shows the jar over an open gift box, then types the offer after download.",
+        "img": "n:guide:fx19-bf-benefit-result-01"
+      },
+      {
+        "example": true,
+        "who": "Food shop",
+        "t": "Counter close",
+        "d": "Example: an olive lunch tote closed on a kitchen counter for a sale clip.",
+        "img": "n:guide:fx19-bf-benefit-shoot-02"
+      },
+      {
+        "example": true,
+        "who": "Fitness shop",
+        "t": "Band in a home gym",
+        "d": "A fitness shop shows the band stretched in a home gym and leaves the price off the video.",
+        "img": "n:guide:fx19-bf-benefit-versions-03"
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Studio turn",
+        "d": "A beauty shop turns the bottle in a clean studio and adds the price after download.",
+        "img": "n:guide:fx19-bf-benefit-editable-04"
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Unbox reveal",
+        "d": "Example: a coral cream set opened as a gift-box reveal.",
+        "img": "n:guide:rc4-tpl-bf-examples-unboxing-01-r1"
+      },
+      {
+        "example": true,
+        "who": "Electronics shop",
+        "t": "Fold demo",
+        "d": "Example: over-ear headphones folded once so the product stays in frame.",
+        "img": "n:guide:f16-r10-bf-example-headphones-r1"
+      },
+      {
+        "example": true,
+        "who": "Drinkware shop",
+        "t": "Gift unbox",
+        "d": "Example: a cobalt bottle lifted from a gift pack.",
+        "img": "n:guide:fx19-bf-example-unbox-01"
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Hallway try-on",
+        "d": "Example: an olive jacket tried on in a hallway.",
+        "img": "n:guide:fx19-bf-example-tryon-02"
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Park setup",
+        "d": "Example: a blue leash clipped on before a park walk.",
+        "img": "n:guide:fx19-bf-example-band-demo-03"
+      },
+      {
+        "example": true,
+        "who": "Travel shop",
+        "t": "Gift reveal",
+        "d": "Example: a lavender travel bag opened as a gift.",
+        "img": "n:guide:fx19-bf-example-gift-reveal-04"
+      }
+    ]
+  },
+  "related_h2": "Pages for Facebook Black Friday Ads",
+  "related_lead": "More video ads, electronics scenes, and Facebook placements for the same sale week.",
+  "relatedLinks": [
+    "video-ads",
+    "tpl-film",
+    "tpl-carousel-video-ad",
+    "tpl-retargeting-video-ad",
+    "occ-black-friday",
+    "plat-facebook"
+  ]
 }
