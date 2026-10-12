@@ -23,7 +23,7 @@
     },
     {
       "q": "Which photo tool should a Shopify store use?",
-      "a": "Use one that can restage your real product, hold a consistent look, and hand you a file you upload yourself. That is the job of this page. We do not rank ourselves against other tools."
+      "a": "Use one that can restage your real product, hold a consistent look, and hand you a file you upload yourself. The finished file is ready for your store. We do not rank ourselves against other tools."
     },
     {
       "q": "Can I make these photos without paying?",
@@ -34,7 +34,7 @@
       "a": "Yes. The same product photo can sit on the Shopify page and in a paid post. You spend credits, not a location fee."
     },
     {
-      "q": "What does a store actually get?",
+      "q": "What does a Shopify product photo tool create?",
       "a": "You get another scene when the collection needs one, and you can take the old background off a phone photo before that scene is made."
     },
     {
@@ -170,12 +170,12 @@
   ],
   "benefits_lead": "One photo is enough for the next tile on the Shopify collection grid.",
   "reasons": {
-    "h2": "Why Stores Use Shopify Product Photos",
-    "lead": "The next Shopify product photo does not need a location scout.",
+    "h2": "Why Stores Make Product Photos Without a Shoot",
+    "lead": "The next product photo does not need a location scout.",
     "items": [
       {
         "t": "Photos Without the Shoot Bill",
-        "d": "A product photo is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. That stands in for a studio invoice on the images you were going to reshoot.",
+        "d": "A product photo is 24 credits. The charge appears before you start, so you can budget the images you were going to reshoot.",
         "icon": "Coins"
       },
       {
@@ -248,7 +248,7 @@
     ]
   },
   "reviews": {
-    "h2": "How shops use Shopify product photos",
+    "h2": "How Shops Put the Photos to Work",
     "lead": "A few ways a shop turns one upload into page files.",
     "items": [
       {

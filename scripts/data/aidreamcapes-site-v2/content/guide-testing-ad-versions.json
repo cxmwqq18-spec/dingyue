@@ -148,7 +148,7 @@
   ],
   "faq": [
     {
-      "q": "What do people mean by a video ad generator?",
+      "q": "What is a video ad generator?",
       "a": "A way to get a short paid-ad file from a product you already sell. For a desk lamp, you bring the photo, and you name the first second. The crew stays off the calendar for that test."
     },
     {
@@ -172,7 +172,7 @@
       "a": "Use 9:16 when the test runs on a phone screen, 1:1 when it sits in a feed, and 16:9 when the screen is wide. 4:3 and 3:4 are only for a placement that lists them. A second shape is a different test."
     },
     {
-      "q": "Can one test cover every candle in the catalog?",
+      "q": "Can I test ads for multiple products at once?",
       "a": "Yes, if each candle has its own photo. Reuse one opening as the note, and let an API start a file when a new candle arrives. Forty candles means forty files."
     },
     {
@@ -197,7 +197,7 @@
     },
     {
       "q": "Where do the numbers come from?",
-      "a": "From the ad account, after each version has played. This page does not invent a winner. You read who stayed, who clicked, and what a sale cost."
+      "a": "From the ad account, after each version has played. The test does not invent a winner. You read who stayed, who clicked, and what a sale cost."
     },
     {
       "q": "What if the ad account barely shows one version?",

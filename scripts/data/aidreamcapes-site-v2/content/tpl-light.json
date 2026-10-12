@@ -44,7 +44,7 @@
   },
   "faq": [
     {
-      "q": "What does a lighting template set up for me?",
+      "q": "What does a product lighting template include?",
       "a": "A frame that already puts a highlight on glass or metal. Drop in the lipstick tube. Someone on screen beside it is an AI avatar. You do not book a lighting crew to test the shine."
     },
     {
@@ -601,7 +601,7 @@
         "example": true,
         "who": "Ceramic shop",
         "t": "Gloss cup",
-        "d": "A ceramic shop puts a glossy cup on a plain surface with a soft shadow, and edits the file on this page."
+        "d": "A ceramic shop puts a glossy cup on a plain surface with a soft shadow, and edits the file in the editor."
       },
       {
         "example": true,
@@ -625,7 +625,7 @@
         "example": true,
         "who": "Bottle shop",
         "t": "Clear glass",
-        "d": "A bottle shop describes the light on this page, gets a scene back, and compares the glass with the real bottle."
+        "d": "A bottle shop describes the light, gets a scene back, and compares the glass with the real bottle."
       }
     ]
   },
@@ -701,12 +701,12 @@
   ],
   "platforms": {
     "h2": "Place the Lit Clip on the Channels You Sell",
-    "lead": "The lit clip can run on the channels where you already sell. Send it from here, or download and post it yourself.",
+    "lead": "The lit clip can run on the channels where you already sell. Post it straight to the channel, or download and post it yourself.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "Send a tall lit clip to TikTok from this page.",
+        "d": "Send a tall lit clip to TikTok from the editor.",
         "href": "page:plat-tiktok"
       },
       {

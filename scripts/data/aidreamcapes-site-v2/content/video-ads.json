@@ -562,7 +562,7 @@
     },
     {
       "t": "A Plan Instead of a Creator Invoice",
-      "d": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 15-second ad is 60 credits, shown before it runs. If a render fails, those credits come back."
+      "d": "Each job shows its credit charge before it runs. A 15-second ad is 60 credits, and a failed render returns those credits."
     },
     {
       "t": "Variants From the Same Product",

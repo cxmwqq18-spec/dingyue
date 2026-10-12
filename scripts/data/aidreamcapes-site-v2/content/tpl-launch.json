@@ -55,7 +55,7 @@
       "a": "Give it the lamp photo and the sentence you want said. The clip comes back sized for a post. Shorten it if the reveal takes too long."
     },
     {
-      "q": "Why template a launch instead of filming a creator?",
+      "q": "Why use a launch template instead of filming a creator?",
       "a": "You can fix the sentence on launch week without calling a presenter back. A filmed shoot locks that sentence to one afternoon, and a color name on the box may still change."
     },
     {
@@ -702,12 +702,12 @@
   ],
   "platforms": {
     "h2": "Send the Launch Where the Audience Is",
-    "lead": "The launch can go out on the channels you already sell on. Push the clip from here, or download it and post it yourself. The credit cost shows before you start.",
+    "lead": "The launch can go out on the channels you already sell on. Post the clip straight to the channel, or download it and post it yourself. The credit cost shows before you start.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "Send a tall launch clip to TikTok from this page.",
+        "d": "Send a tall launch clip to TikTok from the editor.",
         "href": "page:plat-tiktok"
       },
       {

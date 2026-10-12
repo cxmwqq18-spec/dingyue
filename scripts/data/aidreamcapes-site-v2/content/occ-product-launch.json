@@ -17,7 +17,7 @@
       "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that cost before you confirm the job. If it fails, those credits return."
     },
     {
-      "q": "Can my own tools request launch videos?",
+      "q": "Can I create launch videos through an API?",
       "a": "Yes. Your tools can ask for a launch preview from a product link through the API. The file stays in your account until you share it."
     },
     {
@@ -62,7 +62,7 @@
     }
   ],
   "examples": {
-    "h2": "More product launch examples",
+    "h2": "More Product Launch Examples",
     "lead": "Teasers, packaging previews and first-use shots for launch week.",
     "groups": [
       {
@@ -345,7 +345,7 @@
     }
   ],
   "reviews": {
-    "h2": "How sellers use new product announcement photos",
+    "h2": "How Sellers Use New Product Announcement Photos",
     "lead": "Three ways a shop shows the item before launch day.",
     "items": [
       {
@@ -386,7 +386,7 @@
       },
       {
         "t": "Know the Spend Before Launch",
-        "d": "You know the spend before you commit, so the preview stays on budget. A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+        "d": "You know the spend before you commit, with photo and video charges shown before you confirm, so the preview stays on budget."
       },
       {
         "t": "A Failed Job Returns the Credits",

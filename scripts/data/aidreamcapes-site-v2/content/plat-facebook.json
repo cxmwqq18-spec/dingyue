@@ -34,7 +34,7 @@
       "a": "Some will, some will not. The clip is built to feel like a creator video. Say it is AI when Facebook asks you to. Hiding that on purpose is not the goal."
     },
     {
-      "q": "When is the file actually in my hands?",
+      "q": "How long does it take to get a Facebook ad file?",
       "a": "When the render ends, you download the file. Pick the avatar, rewrite the line, and you are not holding the launch for a camera crew."
     },
     {
@@ -141,7 +141,7 @@
         },
         {
           "t": "Keep the Savings",
-          "d": "Money that used to pay a creator and a half-day studio for one Facebook video can stay in the ad account. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+          "d": "Money that used to pay a creator and a half-day studio for one Facebook video can stay in the ad account. Each job shows its credit charge before it starts."
         },
         {
           "t": "Three Openings to Test",
@@ -225,7 +225,7 @@
     ]
   },
   "reviews": {
-    "h2": "How shops put a Facebook ad together",
+    "h2": "How Shops Put a Facebook Ad Together",
     "lead": "A few ways shops use a link or a photo. These are examples, not quotes from a named customer.",
     "items": [
       {

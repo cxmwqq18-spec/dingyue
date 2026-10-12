@@ -27,10 +27,10 @@
   ],
   "intro": [
     "An AI video generator builds a clip from a short note, a product page link, or a photo you upload, and you never book a crew. AIVideosUGC is aimed at stores, agencies, and people who buy ads: pick an AI actor, clone a voice you have rights to in the languages you sell in, and publish to Meta or TikTok.",
-    "You can edit the clip before you download it. Downloads have no watermark and can run as ads. Starter is $24.50 a month for 200 credits, with commercial use on paid plans."
+    "You can edit the clip before you download it. Downloads have no watermark and can run as ads, and commercial use is included on paid plans."
   ],
   "steps_h2": "How to Create AI Videos in 3 Simple Steps",
-  "steps_lead": "You stay on this page until the file is downloaded.",
+  "steps_lead": "You stay in the editor until the file is downloaded.",
   "steps": [
     {
       "t": "Share Your Product Idea",
@@ -59,7 +59,7 @@
       "a": "Yes. A supplement brand can have someone deliver one product fact in a steady voice, the way a desk update would. Lengths are 6, 10, 15, or 30 seconds. You write the line so it stays a fact you can stand behind."
     },
     {
-      "q": "What does the tool do with my note?",
+      "q": "How does the tool use my video brief?",
       "a": "It turns your note into a clip you can watch. For a kettle, that can mean the handle in frame and a person naming why the whistle matters. You can still change the line in the editor."
     },
     {
@@ -79,7 +79,7 @@
       "a": "Yes. Pick an AI actor who fits the buyer for that skincare jar, and a delivery that is calm rather than loud. It is still your ad. Do not present that actor as a customer who bought the jar."
     },
     {
-      "q": "What changes for the team if the video is made here?",
+      "q": "What does my team get from making videos here?",
       "a": "The shoot comes off that week. A two-person shop can still put a new color of the lunch box on video without booking a crew."
     },
     {
@@ -100,10 +100,10 @@
     },
     {
       "q": "What should an ecommerce ad include?",
-      "a": "The product a shopper can buy, shown clearly, with a line you approve. AIVideosUGC starts that from your photo. Starter is $24.50 a month for 200 credits, and paid plans include commercial use. The file has no watermark."
+      "a": "The product a shopper can buy, shown clearly, with a line you approve. AIVideosUGC starts that from your photo. Paid plans include commercial use, and the finished file has no watermark."
     },
     {
-      "q": "Do I pick a video model by name?",
+      "q": "Can I choose a video model?",
       "a": "No. Describe the look, length, and frame, then judge the finished file. Open the tool that fits: motion from a still, a spoken ad, a demo, an unboxing, or an AI actor."
     },
     {
@@ -798,7 +798,7 @@
         "example": true,
         "who": "Apparel shop",
         "t": "On-camera person and editor",
-        "d": "An apparel shop picks an AI actor and trims the clip in the editor on this page, without opening another app."
+        "d": "An apparel shop picks an AI actor and trims the clip in the editor, without opening another app."
       },
       {
         "example": true,

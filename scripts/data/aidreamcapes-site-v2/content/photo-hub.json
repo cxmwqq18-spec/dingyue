@@ -16,7 +16,7 @@
     {
       "icon": "coins",
       "t": "Lower-Cost Product Photos",
-      "d": "A studio day is the expensive part. Here each photo is 24 credits, and Starter is $24.50 a month for 200 credits, so what you used to pay the photographer can go toward reaching buyers."
+      "d": "A studio day is the expensive part. Here each photo is 24 credits, so what you used to pay the photographer can go toward reaching buyers instead."
     },
     {
       "icon": "clock",
@@ -45,7 +45,7 @@
     }
   ],
   "steps_h2": "Steps to Make an AI Product Image",
-  "steps_lead": "Most stores finish a scene without leaving this page.",
+  "steps_lead": "Most stores finish a scene without opening another tool.",
   "steps": [
     {
       "t": "Describe or Upload Your Product",
@@ -83,7 +83,7 @@
       "a": "This tool creates a file you can put on a product page. Bring the photo you already have, and it builds a scene around the item."
     },
     {
-      "q": "What do I hand over before a photo comes back?",
+      "q": "What do I upload to make a product photo?",
       "a": "The clearest picture you have of the product, plus a sentence about where it should sit. A skillet reads better from a top-down photo than from a dark crop. Ask for a warmer light if the first file looks cold."
     },
     {
@@ -264,7 +264,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Example ways shops use the photos",
+    "h2": "Example Ways Shops Use the Photos",
     "lead": "These are example uses, not quotes from a named customer. Each card is one way a shop can continue from a product photo.",
     "items": [
       {
@@ -301,7 +301,7 @@
         "example": true,
         "who": "Solo seller",
         "t": "See the credit cost before you start",
-        "d": "A product photo is 24 credits. Starter is $24.50 for 200 credits a month. There is no free plan."
+        "d": "Each photo runs on a paid plan, and the 24-credit charge shows before the job starts."
       },
       {
         "example": true,

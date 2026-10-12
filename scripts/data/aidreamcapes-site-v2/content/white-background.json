@@ -49,8 +49,8 @@
       "a": "Upload it and download a file where the product sits on white. On a teapot, the handle and the lid knob both stay inside the frame."
     },
     {
-      "q": "Where should my shop make its white product photos?",
-      "a": "Make them on this page. The run ends in a file you can download, and you can stay in this browser tab the whole time."
+      "q": "How can I create white-background product photos?",
+      "a": "Make them in the tool: upload a photo, run the white-background job, and download the finished file."
     },
     {
       "q": "Does a marketplace main image have to sit on white?",
@@ -65,7 +65,7 @@
       "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. One photo spends 24 credits. Those credits also pay for videos."
     },
     {
-      "q": "I have a folder of product photos. Can each one get this same white field?",
+      "q": "Can I apply a white background to many product photos?",
       "a": "Yes. Send the folder through the API, or click through the files in the app."
     },
     {
@@ -390,7 +390,7 @@
     ]
   },
   "reviews": {
-    "h2": "How sellers use a white main image",
+    "h2": "How Sellers Use a White Main Image",
     "lead": "Ways sellers prepare a plain main image before the listing goes up.",
     "items": [
       {

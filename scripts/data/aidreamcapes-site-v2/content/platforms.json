@@ -33,12 +33,12 @@
       "a": "There is no shoot date to book. Paste the listing or a photo of the item and pick an AI actor. Read the finished file on a phone before you put spend behind it."
     },
     {
-      "q": "What do I do to get a UGC-style ad that uses an AI avatar?",
+      "q": "How do I make a UGC ad with an AI avatar?",
       "a": "Start from the product you can photograph today, then choose an adult face from the actor library. Read the draft out loud. If the claim is one you can support, export the frame the app expects."
     },
     {
       "q": "Where do the presenters for these ads come from?",
-      "a": "They come from the actor library on this site. You pick a face, and that person holds your item and says the line. You do not book a studio."
+      "a": "They come from the actor library. You pick a face, and that person holds your item and says the line. You do not book a studio."
     },
     {
       "q": "Can a product page become the UGC ad?",
@@ -57,7 +57,7 @@
       "a": "Filmed UGC needs a person, a time, and a place. The AI version uses an actor from the library and your product photo, so a second hook is another job rather than another afternoon. Use the filmed piece when you want a specific person your buyers already know."
     },
     {
-      "q": "Can AI UGC do the job of a human creator?",
+      "q": "Can AI UGC replace a human creator?",
       "a": "Use it when you need several openings for the same blender. If the ad only works because a founder your buyers already follow is on camera, film that person and keep the AI clips for the other products."
     },
     {
@@ -220,7 +220,7 @@
         "TikTok",
         "The scrolling video feed",
         "9:16",
-        "A tall clip at 6, 10, 15, or 30 seconds. Hand it to TikTok from here, or save it and upload yourself."
+        "Post a 6, 10, 15, or 30-second tall clip straight to TikTok, or save it and upload yourself."
       ],
       [
         "Instagram",
@@ -238,7 +238,7 @@
         "YouTube Shorts",
         "The Shorts shelf",
         "9:16",
-        "A tall clip at 6, 10, 15, or 30 seconds. Add a voice and captions when the action needs them, then upload the download to Shorts."
+        "Choose a 6, 10, 15, or 30-second tall clip. Add a voice and captions when the action needs them, then upload the download to Shorts."
       ],
       [
         "Amazon",
@@ -439,7 +439,7 @@
   "closing": {
     "h2": "Know the Cost Before You Render",
     "paras": [
-      "Starter is $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600. Play the cut with the sound off and read the captions before you put money behind it.",
+      "Play the cut with the sound off and read the captions before you put money behind it. The monthly plans and their credit balances are on the [pricing page](page:pricing).",
       "A still is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The cost is on screen before the job starts."
     ]
   }

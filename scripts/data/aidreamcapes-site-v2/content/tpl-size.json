@@ -84,7 +84,7 @@
       "a": "Yes. Put the square on the product page, run the clip as an ad, or send the file to a client who sells the same scarf."
     },
     {
-      "q": "Why name a reference object inside a layout instead of building the comparison yourself?",
+      "q": "Why use a size template instead of building a comparison yourself?",
       "a": "Your effort goes into picking the object shoppers trust. The blanket stays in a layout that already has a place for that object, and you only name what sits beside it."
     }
   ],
@@ -748,7 +748,7 @@
         },
         {
           "t": "API for a Catalog",
-          "d": "Send listing photos from your shop software through the API and get size files back. Each one spends credits from your plan. Starter is $24.50 a month."
+          "d": "Send listing photos from your shop software through the API and get size files back. Each one spends the same credits as a file you make by hand."
         },
         {
           "t": "A Clip When You Need Motion",
@@ -763,7 +763,7 @@
     "items": [
       {
         "t": "24 Credits a Photo",
-        "d": "Each product photo is 24 credits. You see that cost before you start. A video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+        "d": "You see the credit cost before you start: 24 for a photo, or 24, 40, 60, or 120 for a video at 6, 10, 15, or 30 seconds."
       },
       {
         "t": "No Watermark",
@@ -775,7 +775,7 @@
       },
       {
         "t": "Paid Plans",
-        "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
+        "d": "The shared balance covers these size files."
       },
       {
         "t": "Commercial Use",

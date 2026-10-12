@@ -223,7 +223,7 @@
         "example": true,
         "who": "Small ads shop",
         "t": "Voice, captions, and a track",
-        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the step in the editor on this page."
+        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the step in the editor before export."
       },
       {
         "example": true,

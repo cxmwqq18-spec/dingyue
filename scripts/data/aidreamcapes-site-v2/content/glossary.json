@@ -4,7 +4,7 @@
   "description": "Plain-English definitions for the product photo, video, advertising, and ecommerce terms used across AIVideosUGC and links to the pages where each term matters.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
   "eyebrow": "Glossary",
-  "lead": "Plain definitions for the photo, video, and ad words on this site. Open a term when it is new, then use the linked page for the next step.",
+  "lead": "Plain definitions for the photo, video, and ad words you will see here. Open a term when it is new, then use the linked page for the next step.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -117,7 +117,7 @@
     },
     {
       "term": "Unboxing",
-      "definition": "An unboxing video shows a package opening and the product coming out. You describe the box, the paper, the insert, and the order things appear. Your product photo keeps the item looking like yours. Music can come from the library. Type the price so it matches your store now.",
+      "definition": "An unboxing video shows a package opening and the product coming out. You describe the box, the paper, the insert, and the order things appear. Your product photo keeps the item looking like yours. Music can come from the library. Add the current price after the download.",
       "related_page_ids": [
         "unboxing-videos",
         "blog-unboxing-videos-for-launches"
@@ -197,7 +197,7 @@
     },
     {
       "term": "Caption",
-      "definition": "A caption is words on a video that show at the right time, or the written line under a social post. Videos can include captions. Edit them in the editor on this site so the price, the date, and any code match your store now.",
+      "definition": "A caption is words on a video that show at the right time, or the written line under a social post. Videos can include captions. Edit them in the editor so the price, the date, and any code match your store now.",
       "related_page_ids": [
         "ai-info",
         "guide-first-tiktok-video-ad"
@@ -261,7 +261,7 @@
     },
     {
       "term": "API",
-      "definition": "An API is a way for your other software to start a product photo or a video here. The credit cost matches the same photo or video on this site. If it fails, the credits come back. A product photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds.",
+      "definition": "An API lets your other software request a product photo or a video from your account, with the same credit charges and failed-job returns you see in the app. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds.",
       "related_page_ids": [
         "pricing",
         "faq"

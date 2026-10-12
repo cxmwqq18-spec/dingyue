@@ -84,7 +84,7 @@
       "a": "Yes. Run the close-up as an ad and hand the same file to a client for a listing. The export has no watermark."
     },
     {
-      "q": "What does the close-up template already set up?",
+      "q": "What does a product detail template include?",
       "a": "The crop and the moment the feature appears are already chosen. You name the feature in words a buyer actually uses, such as the grain or the weave."
     }
   ],
@@ -560,7 +560,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How shops use a detail close-up",
+    "h2": "How Shops Use a Detail Close-Up",
     "lead": "One feature fills the picture, taken from a sharp photo. A voice or a presenter can point at that same feature.",
     "items": [
       {
@@ -596,7 +596,7 @@
       {
         "example": true,
         "who": "Watch shop",
-        "t": "Script on this page",
+        "t": "Write the Script",
         "d": "A watch shop enlarges the side knob and edits the script without leaving the page."
       },
       {
@@ -620,8 +620,8 @@
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Typed on this page",
-        "d": "An apparel shop types the bottom seam on this page, keeps the full garment photo first, and checks the close-up."
+        "t": "Type the Detail",
+        "d": "An apparel shop types the bottom seam, keeps the full garment photo first, and checks the close-up."
       }
     ]
   },
@@ -659,7 +659,7 @@
     {
       "eyebrow": "Beside the crop",
       "h2": "Tools Around a Detail Ad",
-      "lead": "Voice, a script, and a post stay with the close-up, so the detail ad is finished on this page.",
+      "lead": "Voice, a script, and a post stay with the close-up, so the detail ad is ready to publish.",
       "items": [
         {
           "t": "A Read Voice or a Clone",

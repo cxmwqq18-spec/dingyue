@@ -69,7 +69,7 @@
       "a": "A clinic front desk and a software shop both fit when the page should read as one team."
     },
     {
-      "q": "Who has to agree before a face goes into the row?",
+      "q": "Do I need permission to use a person's face in a team portrait?",
       "a": "Each person agrees first. The result is not a passport or any other identity document. Put the shop logo on the intro if you want it there. A clip filmed at work can run under that intro. Faces still come only from approved photos."
     },
     {
@@ -680,7 +680,7 @@
       },
       {
         "t": "Credits Instead of a Shoot Fee",
-        "d": "Each portrait spends credits on Starter at $24.50 a month, Pro at $35, or Premium at $63. Money you do not pay a portrait studio can stay on hiring and on ads.",
+        "d": "Each portrait spends credits on whichever paid plan fits your team. Money you do not pay a portrait studio can stay on hiring and on ads.",
         "icon": "Coins"
       },
       {

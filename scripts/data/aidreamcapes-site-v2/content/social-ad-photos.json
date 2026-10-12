@@ -19,7 +19,7 @@
       "alt": "A plain charcoal hiking shoe on a clean city curb with open space for a headline.",
       "icon": "check",
       "t": "A Price You Can Budget",
-      "d": "The hiking-shoe square is 24 credits, shown before it runs. If the image fails, those credits come back. Starter is $24.50 a month for 200 credits."
+      "d": "The hiking-shoe square is 24 credits, shown before it runs. If the image fails, those credits come back. You budget the grid one photo at a time."
     },
     {
       "img": "n:guide:fx18-social-benefit-editor",
@@ -443,7 +443,7 @@
     "faq"
   ],
   "reviews": {
-    "h2": "How stores test AI images for paid social ads",
+    "h2": "How Stores Test AI Images for Paid Social Ads",
     "lead": "Ways a store tries a square scene before it spends on the ad.",
     "items": [
       {

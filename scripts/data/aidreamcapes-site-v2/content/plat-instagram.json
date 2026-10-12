@@ -22,7 +22,7 @@
       "a": "Paste the product page and say who the buyer is. You pick the avatar after you hear the line, and the download is already a Reel."
     },
     {
-      "q": "Is the Reels frame already drawn?",
+      "q": "Is the Instagram Reel already sized for posting?",
       "a": "Yes. The Reel starts from a frame that already fits a tall phone, so you are not drawing the safe area yourself."
     },
     {
@@ -122,7 +122,7 @@
     },
     {
       "t": "More Budget Buys Reach",
-      "d": "The money that used to start with a creator invoice can buy reach instead. A 15-second Instagram ad spends 60 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
+      "d": "The money that used to start with a creator invoice can buy reach instead. A 15-second Instagram ad spends 60 credits, and the charge appears before you start.",
       "img": "n:guide:fx40-plat-instagram-benefit-cost",
       "alt": "Unbranded ceramic travel mug on linen with one green leaf"
     },
@@ -231,7 +231,7 @@
     ]
   },
   "reviews": {
-    "h2": "How shops put an Instagram ad together",
+    "h2": "How Shops Put an Instagram Ad Together",
     "lead": "A few ways shops use a link or a photo. These are examples, not quotes from a named customer.",
     "items": [
       {

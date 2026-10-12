@@ -28,7 +28,7 @@
     },
     {
       "t": "More of the Budget Stays on Ads",
-      "d": "A 15-second clip is 60 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second cut is 24 credits when the ad only needs a short hold. You see that cost before it runs."
+      "d": "A 15-second clip is 60 credits, and a 6-second cut is 24 when the ad only needs a short hold. You see that cost before it runs, and the money you save on a crew stays in the ad budget."
     },
     {
       "t": "You Still Hold the Edit",
@@ -79,7 +79,7 @@
     },
     {
       "q": "Is there a charge to start from a link?",
-      "a": "Yes. Clips spend credits on a monthly plan. Starter is $24.50 a month for 200 credits. A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see that number before it runs."
+      "a": "Yes. Clips spend credits on a monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
     },
     {
       "q": "What kinds of clips can a link become?",
@@ -95,10 +95,10 @@
     },
     {
       "q": "Which file types and frames are available?",
-      "a": "Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds. The download has no watermark."
+      "a": "Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Choose a 6, 10, 15, or 30-second length. The download has no watermark."
     },
     {
-      "q": "What actually happens after I paste the page?",
+      "q": "What happens after I paste a product page?",
       "a": "The photo and the facts you already wrote are what the page contributes. You still approve the sentence before the clip is kept."
     },
     {
@@ -114,7 +114,7 @@
       "a": "Because the page is already maintained. The ad should not make you retype the facts and upload the photo again."
     },
     {
-      "q": "What if I want it moving quickly?",
+      "q": "How quickly can I create a video from a product listing?",
       "a": "Paste the page, approve the drafted sentence, and export. That is the whole path when the page is already public."
     },
     {
@@ -122,7 +122,7 @@
       "a": "You confirm the actor, the script, and the credits first. The 6, 10, 15, or 30 seconds is the length of the video, not a wait you have to book."
     },
     {
-      "q": "What is the simplest path from a listing to an ad?",
+      "q": "How do I turn a product listing into an ad?",
       "a": "Paste the page and approve one sentence. Captions come with the file."
     }
   ],

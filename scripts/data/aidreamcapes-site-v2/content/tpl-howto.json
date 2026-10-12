@@ -47,7 +47,7 @@
   },
   "faq": [
     {
-      "q": "What do I get when I open a how-to template?",
+      "q": "What does a how-to video template include?",
       "a": "You get a demo frame aimed at one task, such as opening an earbud case with one hand. Put your case in the frame. An AI avatar can do the open. A presenter is not on the calendar for this one."
     },
     {
@@ -627,7 +627,7 @@
       {
         "example": true,
         "who": "Support team",
-        "t": "Edit on this page",
+        "t": "Edit Before You Post",
         "d": "A support team adjusts the clip in the built-in editor instead of moving the file to another app."
       },
       {
@@ -652,7 +652,7 @@
         "example": true,
         "who": "Solo seller",
         "t": "Type the task here",
-        "d": "A solo seller types the task on this page and gets words, a scene, and a clip to check before posting."
+        "d": "A solo seller types the task and gets words, a scene, and a clip to check before posting."
       }
     ]
   },
@@ -702,12 +702,12 @@
   ],
   "platforms": {
     "h2": "Post the How-To Where Buyers Scroll",
-    "lead": "Put the how-to where shoppers already scroll. Send the clip from here, or download it and post it yourself.",
+    "lead": "Put the how-to where shoppers already scroll. Post the clip straight to the channel, or download it and post it yourself.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "Send a tall how-to to TikTok from this page.",
+        "d": "Send a tall how-to to TikTok from the editor.",
         "href": "page:plat-tiktok"
       },
       {

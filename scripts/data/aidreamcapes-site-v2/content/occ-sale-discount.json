@@ -14,7 +14,7 @@
   "plan": [],
   "faq": [
     {
-      "q": "What does a countdown clip spend in credits?",
+      "q": "How many credits does a countdown video cost?",
       "a": "A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before you start. If a job fails, those credits come back. A finished file is not refunded just because you dislike it."
     },
     {
@@ -26,7 +26,7 @@
       "a": "Yes. Use the AI avatar from your other clips, so the sale video looks like the same shop."
     },
     {
-      "q": "Where do I put the moment the offer ends?",
+      "q": "How do I add an offer end time to a sale video?",
       "a": "Set the end in the editor, and move it if the sale window shifts. You decide when it stops."
     },
     {
@@ -315,7 +315,7 @@
     }
   ],
   "reviews": {
-    "h2": "How shops make a sale banner for an online store",
+    "h2": "How Shops Make a Sale Banner for an Online Store",
     "lead": "Three ways a shop leaves room for an offer that is not final yet.",
     "items": [
       {
@@ -348,7 +348,7 @@
       },
       {
         "t": "A Smaller Bill to Get a Buyer",
-        "d": "What you save on creators can go straight to reach. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+        "d": "What you save on creators can go straight to reach, since each job draws from the credit balance you already have."
       },
       {
         "t": "A Full Slate of Sale Clips",

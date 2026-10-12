@@ -62,8 +62,8 @@
       "a": "A failed run puts its credits back. If the file does not match what you asked for, use the [Refund Policy](/refunds)."
     },
     {
-      "q": "What is a Spark-style video on this page?",
-      "a": "A tall phone video of your product that you post from your own TikTok account. This page makes the video. A paid promotion is turned on in TikTok after that."
+      "q": "What is a Spark-style video?",
+      "a": "A tall phone video of your product that you post from your own TikTok account. The video is made from your product reference. A paid promotion is turned on in TikTok after that."
     },
     {
       "q": "What can I use as the starting input?",
@@ -587,7 +587,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "TikTok moments shops post from their account",
+    "h2": "TikTok Moments Shops Post From Their Account",
     "lead": "Ways shops use one product photo as a TikTok moment. Post the file from your account before any paid boost.",
     "items": [
       {
@@ -723,7 +723,7 @@
       },
       {
         "t": "What Another Language Costs",
-        "d": "The tea line can be spoken for the shoppers who read Spanish. A 15-second cut of that line is 60 credits, on Starter at $24.50 a month with 200 credits.",
+        "d": "The tea line can be spoken for the shoppers who read Spanish. A 15-second cut of that line is 60 credits on a paid plan, and the charge shows first.",
         "icon": "Coins"
       }
     ]

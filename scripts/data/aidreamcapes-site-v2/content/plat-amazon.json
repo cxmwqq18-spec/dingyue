@@ -34,7 +34,7 @@
       "a": "Yes. When a new product is saved in your catalog tool, that tool can request the image. You choose the moment it goes into Seller Central, and we never sign in to the seller account."
     },
     {
-      "q": "Which pictures should follow the main image?",
+      "q": "What other images should I add to an Amazon listing?",
       "a": "A close-up, a sense of size, and the item in use. Each one answers the next question a shopper has."
     },
     {
@@ -270,7 +270,7 @@
     ]
   },
   "reviews": {
-    "h2": "How shops fill a gallery before a studio booking",
+    "h2": "How Shops Fill a Gallery Before a Studio Booking",
     "lead": "A few ways shops use one upload.",
     "items": [
       {

@@ -48,7 +48,7 @@
     },
     {
       "q": "Can a product link lead to more than one version?",
-      "a": "Yes. Paste the listing, or let your shop software send it through the API. Ask for the lamp switched off in one version and switched on in the next, then trim both in the editor on this page."
+      "a": "Yes. Paste the listing, or let your shop software send it through the API. Ask for the lamp switched off in one version and switched on in the next, then trim both in the editor before you export."
     }
   ],
   "templates_lead": "Choose a room scene, an organizing how-to, or a comparison that fits the product.",
@@ -260,7 +260,7 @@
         "example": true,
         "who": "Small ads shop",
         "t": "Voice, captions, and a track",
-        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the room clip in the editor on this page."
+        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the room clip in the editor before export."
       },
       {
         "example": true,

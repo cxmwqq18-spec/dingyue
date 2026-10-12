@@ -48,7 +48,7 @@
     },
     {
       "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send that link from your own shop through the API. Ask for a short script and pick an AI avatar. Make a few versions, including one in another language, and trim the clip in the editor on this page."
+      "a": "Yes. Paste the product page, or send that link from your own shop through the API. Ask for a short script and pick an AI avatar. Make a few versions, including one in another language, and trim the clip in the editor before you export."
     }
   ],
   "steps_h2": "How to Make Wellness Product Photos in 3 Simple Steps",
@@ -251,7 +251,7 @@
         "example": true,
         "who": "Small ads shop",
         "t": "Voice, captions, and a track",
-        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the clip in the editor on this page."
+        "d": "They choose a voice, or a short sample of their own. They check the captions, pick a music track, and trim the clip in the editor before export."
       },
       {
         "example": true,

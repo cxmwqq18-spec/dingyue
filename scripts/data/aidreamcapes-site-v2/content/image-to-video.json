@@ -19,7 +19,7 @@
     },
     {
       "t": "A Credit Price You Can See",
-      "d": "A 6-second clip is 24 credits and a 15-second clip is 60. Starter is $24.50 a month for 200 credits."
+      "d": "A 6-second clip is 24 credits and a 15-second clip is 60, with the charge shown before it runs. Starter is $24.50 a month for 200 credits."
     },
     {
       "t": "No Camera Day to Book",
@@ -65,7 +65,7 @@
   },
   "faq": [
     {
-      "q": "What does image to video do with a product photo?",
+      "q": "What can image to video do with a product photo?",
       "a": "It animates a still picture into a short video. For sellers, that means a product photo becomes a UGC-style ad with motion, a voiceover and captions."
     },
     {
