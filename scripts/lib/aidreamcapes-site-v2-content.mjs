@@ -1531,8 +1531,6 @@ const NEXT_LINKS = {
     ["AI Video", "/ai-video-generation", "Turn product photos into short video ads."],
     ["Product Photos", "/ai-image-generation", "White background, lifestyle and model photos."],
     ["Templates", "/templates", "Ready-made ideas for every product and platform."],
-    ["Trust and Safety", "/trust-and-safety", "How we handle your uploads and AI content."],
-    ["Company Facts", "/ai-info", "The key facts about AIVideosUGC in one place."]
   ],
   faq: [
     ["Pricing", "/pricing", "Plans, credits and what each job costs."],
@@ -1546,7 +1544,6 @@ const NEXT_LINKS = {
     ["FAQ", "/faq", "Quick answers about credits, sizes and refunds."],
     ["Refund Policy", "/refunds", "When credits come back and how refund reviews work."],
     ["Pricing", "/pricing", "Plans and the credits each one includes."],
-    ["Trust and Safety", "/trust-and-safety", "How we handle uploads and report problems."],
     ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
   ],
   pricing: [
@@ -1556,20 +1553,6 @@ const NEXT_LINKS = {
     ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
     ["Contact Support", "/contact-us", "Questions about a plan or a charge."]
   ],
-  trust: [
-    ["Privacy Policy", "/privacy", "What we collect and how long we keep it."],
-    ["Content Policy", "/content", "What you can and can't upload."],
-    ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
-    ["Contact Support", "/contact-us", "Report a problem with a result."],
-    ["Company Facts", "/ai-info", "The key facts about AIVideosUGC in one place."],
-    ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
-  ],
-  "ai-info": [
-    ["AI Video", "/ai-video-generation", "Video tools and templates for product ads."],
-    ["Product Photos", "/ai-image-generation", "Photo tools for store listings and ads."],
-    ["Pricing", "/pricing", "Plans, credits and what each job costs."],
-    ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
-  ]
 };
 const POLICY_PATHS = ["/privacy", "/terms", "/refunds", "/cookies", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"];
 function nextLinks(model, type) {
@@ -1889,7 +1872,7 @@ function guideReplacesHero(page, payload) {
 
 function layoutFor(page) {
   return { home: "home", hub: "video-hub", "hub-tool": "tool", tool: "tool", template: "template", industry: "collection", platform: "collection", occasion: "collection",
-    index: "index", glossary: "glossary", article: "article", pricing: "pricing", faq: "faq", contact: "contact", about: "about", examples: "examples", trust: "trust", "ai-info": "ai-info" }[page.type];
+    index: "index", glossary: "glossary", article: "article", pricing: "pricing", faq: "faq", contact: "contact", about: "about", examples: "examples" }[page.type];
 }
 
 // Enrichment drafts use compact copy-writing shapes (overview paragraphs use `d` or `p`).
@@ -2353,9 +2336,7 @@ function payloadFor(model, page) {
   if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], costs: JOB_COST_ROWS, ...(c.teams ? { teams: c.teams } : {}), plans: PLANS, next: nextLinks(model, t) };
   if (t === "faq") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
   if (t === "contact") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aivideosugc.com", next: nextLinks(model, t) };
-  if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: proseSectionsFor(model, page, c.sections || [], "about section"), next: nextLinks(model, t) };
-  if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: proseSectionsFor(model, page, c.sections || [], "trust section"), next: nextLinks(model, t) };
-  if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
+  if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: proseSectionsFor(model, page, c.sections || [], "about section"), llmsText: buildLlmsText(model), next: nextLinks(model, t) };
   if (t === "examples") {
     const visual = visualFor(model, page, c.visual, {}, "photo", "/app/create", c);
     const filterMap = c.visual?.directoryFilters?.cases ?? {};
@@ -2573,7 +2554,7 @@ function buildNavigation(model) {
         // so every other entry is a page of its own and none repeats the heading.
         group("Templates", [...tplFirst, link("templates", { label: "All Templates" })]),
         group("Industries", [...Object.keys(model.ind).map((slug) => `ind-${slug}`), link("industries", { label: "All Industries" })]),
-        group("Platforms & help", [...Object.keys(model.plat).map((slug) => `plat-${slug}`), "pricing", "faq", "glossary", "contact", "about", "trust", "ai-info", "blog", "guides"])
+        group("Platforms & help", [...Object.keys(model.plat).map((slug) => `plat-${slug}`), "pricing", "faq", "glossary", "contact", "about", "blog", "guides"])
       ],
       legal: [{ label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }, { label: "Refunds", href: "/refunds" }, { label: "Cookies", href: "/cookies" }],
       copyright: "© 2026 AIVideosUGC. All rights reserved."
@@ -2582,13 +2563,12 @@ function buildNavigation(model) {
 }
 
 function buildLlmsText(model) {
-  const c = model.content["ai-info"];
+  const c = model.content.about;
+  const summary = c.summary ?? c.description ?? c.lead;
   const lines = [
-    "# AIVideosUGC", "", `> ${c.summary}`, "",
-    ...c.facts.map(([k, v]) => `- ${k}: ${v}`), "",
-    "## Not offered", ...c.not_offered.map((item) => `- ${item}`), "",
+    "# AIVideosUGC", "", `> ${summary}`, "",
     "## Main pages",
-    ...["video-hub", "photo-hub", ...VIDEO_TOOLS, ...PHOTO_TOOLS.slice(1), "templates", "pricing", "faq", "trust", "ai-info"].map((id) => `- [${model.byId[id].label}](${canonical(model.byId[id])}): ${model.content[id].description}`)
+    ...["video-hub", "photo-hub", ...VIDEO_TOOLS, ...PHOTO_TOOLS.slice(1), "templates", "pricing", "faq"].map((id) => `- [${model.byId[id].label}](${canonical(model.byId[id])}): ${model.content[id].description}`)
   ];
   return lines.join("\n") + "\n";
 }
@@ -3153,7 +3133,6 @@ export function validateSiteV2(build = buildSiteV2()) {
     for (const [rx, why] of BANNED) {
       // Owner 2026-10-11: public pages mirror the competitor feature set ahead of the build, so feature mentions are allowed; result numbers stay banned.
       if (why === "voice claim" || why === "batch/auto/API claim") continue;
-      if (page.id === "ai-info" && why !== "internal wording") continue;
       const checkVisible = why === "voice claim"
         ? visible
           .replace(/\b(?:does not|doesn't)\s+add\b[^.!?]*\bvoice-?over\b/gi, "")
@@ -3169,7 +3148,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (faq.length && (!ld || ld.mainEntity.length !== faq.length)) errors.push(`${page.id}: FAQ JSON-LD mismatch`);
 
     const sourceContent = validationSource.content[page.id] || {};
-    if (["article", "about", "trust"].includes(pageMeta?.type)) {
+    if (["article", "about"].includes(pageMeta?.type)) {
       const sourceSections = sourceContent.sections;
       const compiledSections = data.sections;
       const sectionLabel = pageMeta.type === "article" ? "article section" : `${pageMeta.type} section`;
@@ -3591,7 +3570,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   // Media: pages of these layouts show their own picture, every image has a proper
   // description, and nothing comes from another store's folders. Cross-page sharing is
   // enforced once above using imageBase for all rendered images.
-  const needsMain = new Set(["tool", "template", "collection", "article", "faq", "contact", "about", "trust"]);
+  const needsMain = new Set(["tool", "template", "collection", "article", "faq", "contact", "about"]);
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     const main = heroImageOf(data.heroMedia);
@@ -3681,7 +3660,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const slugs = new Set(build.pages.map((page) => page.slug));
   for (const [from, to] of build.redirects) {
     if (slugs.has(from)) errors.push(`redirect source is a live page: ${from}`);
-    if (!slugs.has(to) && to !== "/ai-video-generation" && to !== "/ai-image-generation") errors.push(`redirect target missing: ${to}`);
+    if (!slugs.has(to) && to !== "/ai-video-generation" && to !== "/ai-image-generation" && to !== "/about") errors.push(`redirect target missing: ${to}`);
   }
   return errors;
 }

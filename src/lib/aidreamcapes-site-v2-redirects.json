@@ -162,5 +162,13 @@
  [
   "/search",
   "/templates"
+ ],
+ [
+  "/trust-and-safety",
+  "/about"
+ ],
+ [
+  "/ai-info",
+  "/about"
  ]
 ]

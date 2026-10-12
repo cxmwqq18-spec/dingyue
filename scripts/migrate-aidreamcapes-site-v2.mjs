@@ -16,7 +16,11 @@ import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, ha
 
 const SITE_ID = AIDREAMCAPES_SITE_ID;
 // This route rename keeps the old LivePage as a separate row until it is backed up and retired below.
-const retiredRouteSlugs = Object.freeze(["/ai-video-generation/competitor-comparison"]);
+const retiredRouteSlugs = Object.freeze([
+  "/ai-video-generation/competitor-comparison",
+  "/trust-and-safety",
+  "/ai-info"
+]);
 const applyLocal = hasArgument("--apply-local");
 const applyProduction = hasArgument("--apply-production");
 assert(!(applyLocal && applyProduction), "Choose one database write target.");

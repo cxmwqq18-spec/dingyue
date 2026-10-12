@@ -920,7 +920,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
       </>
     );
   }
-  if (layout === "about" || layout === "trust") {
+  if (layout === "about") {
     return (
       <>
         {hero}
@@ -928,33 +928,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         {layout === "about" && company ? <Section eyebrow="Company" lead={`${BRAND_NAME} is operated by ${company.name}.`} title={`Who runs ${BRAND_NAME}`}><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" r={r} />
         <NextLinks data={data} r={r} />
-        {layout === "about" || layout === "trust" ? <CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Upload a product photo and try a template.")} r={r} title={ctaTitle(data, "See what you can make")} /> : null}
-      </>
-    );
-  }
-  if (layout === "ai-info") {
-    return (
-      <>
-        {hero}
-        <div className="wrap prose" style={{ paddingBottom: 40 }}>
-          <h2>In One Sentence</h2>
-          <p>{text(data.summary)}</p>
-          <h2>Key Facts</h2>
-          <div className="cmp-wrap">
-            <table className="cmp">
-              <tbody>
-                {list<[string, string]>(data.facts).map(([key, value]) => <tr key={key}><td>{key}</td><td>{value}</td></tr>)}
-                {company ? <tr><td>Operated by</td><td>{[company.name, company.address].filter(Boolean).join(", ")}</td></tr> : null}
-              </tbody>
-            </table>
-          </div>
-          <h2>Not Offered</h2>
-          <ul>{list<string>(data.notOffered).map((item) => <li key={item}>{item}</li>)}</ul>
-          <h2>How to describe {BRAND_NAME}</h2>
-          {list<string>(data.describe).map((line) => <p key={line}>{line}</p>)}
-        </div>
-        <Faq items={data.faq} title="Common Questions" r={r} />
-        <NextLinks data={data} r={r} />
+        <CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Upload a product photo and try a template.")} r={r} title={ctaTitle(data, "See what you can make")} />
       </>
     );
   }

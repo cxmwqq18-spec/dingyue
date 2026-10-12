@@ -55,8 +55,7 @@
       "term": "UGC",
       "definition": "UGC means user-generated content: a video that looks like a shopper filmed it. Here, the phone looks like it is in someone's hand. An AI actor can speak a line you write, with captions and music. The actor is fictional, so describe the clip accurately if the platform asks for disclosure.",
       "related_page_ids": [
-        "video-ads",
-        "ai-info"
+        "video-ads"
       ]
     },
     {
@@ -191,7 +190,6 @@
       "term": "AI-generated content",
       "definition": "AI-generated content is a picture or video the tool creates or changes. It is not a photo or video you only filmed with a camera. Check every result against the real item. A generated person is not a customer testimonial. If the app asks you to say it is made by AI, do that.",
       "related_page_ids": [
-        "trust",
         "video-ads"
       ]
     },
@@ -199,7 +197,6 @@
       "term": "Caption",
       "definition": "A caption is words on a video that show at the right time, or the written line under a social post. Videos can include captions. Edit them in the editor on this site so the price, the date, and any code match your store now.",
       "related_page_ids": [
-        "ai-info",
         "guide-first-tiktok-video-ad"
       ]
     },
@@ -207,7 +204,6 @@
       "term": "Spoken narration",
       "definition": "Spoken narration is the voice you hear on a video. An AI actor speaks the line you write, in the language you choose. That speech is not a customer review. You can change the voice in the editor.",
       "related_page_ids": [
-        "ai-info",
         "spokesperson-videos"
       ]
     },
@@ -231,7 +227,6 @@
       "term": "DTC",
       "definition": "DTC means direct to consumer. The brand sells in its own online store, not only on a marketplace. Sellers use the photos and short videos on that store, in social posts, in email, and in ads.",
       "related_page_ids": [
-        "ai-info",
         "plat-shopify"
       ]
     },
@@ -310,8 +305,6 @@
   ],
   "relatedLinks": [
     "faq",
-    "ai-info",
-    "trust",
     "pricing",
     "guides",
     "blog"
