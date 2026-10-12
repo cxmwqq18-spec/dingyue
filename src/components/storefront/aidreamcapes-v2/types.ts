@@ -68,6 +68,7 @@ export type V2BenefitIcon = "bolt" | "layers" | "target" | "coins" | "clock" | "
 export type V2Item = {
   t: string;
   d: string;
+  soon?: boolean;
   img?: V2Image;
   alt?: string;
   frame?: "phone" | "browser" | "none";
@@ -76,7 +77,7 @@ export type V2Item = {
 export type V2ImageItem = V2Item & { href?: string; prompt?: string };
 export type V2Faq = { q: string; a: string };
 export type V2Crumb = { label: string; href: string };
-export type V2Card = { key: string; name: string; line?: string; kind: "video" | "photo"; href: string; image: V2Image; tags: string[]; industries: string[]; platforms: string[]; filterTags?: string[]; cardType?: "template" | "case"; videoExample?: boolean; product?: string; mediaRef?: string; video?: V2Video };
+export type V2Card = { key: string; name: string; line?: string; soon?: boolean; kind: "video" | "photo"; href: string; image: V2Image; tags: string[]; industries: string[]; platforms: string[]; filterTags?: string[]; cardType?: "template" | "case"; videoExample?: boolean; product?: string; mediaRef?: string; video?: V2Video };
 export type V2Example = { key: string; title: string; product: string; kind: "clip" | "scene" | "photo"; href: string; mediaRef: string; image: V2Image; video?: V2Video };
 export type V2ExampleGroup = { label: string; items: V2Example[] };
 export type V2Examples = { h2: string; lead?: string; groups: V2ExampleGroup[] };
@@ -97,12 +98,12 @@ export type V2GlossaryEntry = { term: string; definition: string; related: { lab
 // A row of facts. When `links` is present each name in `value` also leads to its own page.
 export type V2SpecRow = [label: string, value: string, links?: { label: string; href: string }[]];
 export type V2DirectorySpecs = { title: string; lead?: string; columns: string[]; rows: string[][] };
-export type V2DirectoryScene = { t: string; d: string; href?: string; image?: V2Image };
+export type V2DirectoryScene = { t: string; d: string; soon?: boolean; href?: string; image?: V2Image };
 // Page-owned text blocks used for competitor parity: a plain definition and a
 // three-column comparison table. Neither carries images or internal metadata.
 export type V2Definition = { title: string; paras: string[] };
 export type V2CompareTable = { title: string; lead?: string; columns: string[]; rows: string[][] };
-export type V2TextSectionCard = { t: string; d: string; href?: string; label?: string; img?: V2Image };
+export type V2TextSectionCard = { t: string; d: string; soon?: boolean; href?: string; label?: string; img?: V2Image };
 export type V2TextSection = { eyebrow: string; title: string; lead?: string; cards: V2TextSectionCard[] };
 export type V2Article = { title: string; href: string; text: string; minutes: number; section: string };
 
@@ -115,7 +116,7 @@ export const V2_BLOCK_IDS = [
   "plan", "sizes", "input", "outputs", "after", "limitations", "tools"
 ] as const;
 export type V2BlockId = (typeof V2_BLOCK_IDS)[number];
-export type V2CardBlockItem = { t: string; d: string; img?: V2Image; alt?: string; icon?: string };
+export type V2CardBlockItem = { t: string; d: string; soon?: boolean; img?: V2Image; alt?: string; icon?: string };
 export type V2CardBlock = { h2: string; lead?: string; items: V2CardBlockItem[] };
 export type V2ReviewItem = V2CardBlockItem & { example: boolean; who: string; source?: string };
 export type V2ReviewBlock = { h2: string; lead?: string; items: V2ReviewItem[] };

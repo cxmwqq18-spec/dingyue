@@ -473,7 +473,7 @@ function cardRef(model, key, role = "alt", force = false) {
   if (model.spreadEnabled) model.spreadUse.set(key, (model.spreadUse.get(key) ?? 0) + 1);
   model.currentPageCardCount += 1;
   const result = {
-    key, name: card.name, line: LINES[key], kind: card.kind,
+    key, name: card.name, line: LINES[key], ...(typeof card.soon === "boolean" ? { soon: card.soon } : {}), kind: card.kind,
     // Template cards open the workspace with that template (tagshop pattern),
     // including cards whose template lives on a tool page.
     href: toolAppHref(model, model.byId[card.made_with ?? card.tool] ?? model.byId[card.pageId], key),
@@ -1898,7 +1898,8 @@ function layoutFor(page) {
 function enrichmentFor(model, page, c) {
   const item = (value, linkify = false) => {
     const entry = typeof value === "string" ? { t: value, d: "" } : value && typeof value === "object" ? { t: value.t ?? "", d: value.d ?? "" } : { t: "", d: "" };
-    return linkify ? { ...entry, d: inlineLinks(model, entry.d, page.id) } : entry;
+    const soon = value && typeof value === "object" && typeof value.soon === "boolean" ? { soon: value.soon } : {};
+    return linkify ? { ...entry, ...soon, d: inlineLinks(model, entry.d, page.id) } : { ...entry, ...soon };
   };
   const items = (value, linkify = false) => Array.isArray(value) ? value.map((entry) => item(entry, linkify)).filter((entry) => entry.t) : [];
   const section = (value) => {
@@ -1957,7 +1958,7 @@ function textSectionsFor(model, page, c) {
   return value.map((section) => {
     const cards = imageItemsFor(model, page, (Array.isArray(section.cards) ? section.cards : []).map((card) => {
       const d = inlineLinks(model, String(card.d ?? ""), page.id);
-      const out = { t: String(card.t ?? ""), d, ...(card.href ? { href: resolveSectionHref(model, page.id, card.href) } : {}) };
+      const out = { t: String(card.t ?? ""), d, ...(typeof card.soon === "boolean" ? { soon: card.soon } : {}), ...(card.href ? { href: resolveSectionHref(model, page.id, card.href) } : {}) };
       if (typeof card.label === "string" && card.label.trim()) out.label = card.label;
       if (typeof card.img === "string" && card.img.trim()) out.img = card.img;
       if (typeof card.alt === "string" && card.alt.trim()) out.alt = card.alt;
@@ -2276,6 +2277,7 @@ function payloadFor(model, page) {
       ? c.directory_scenes.map((item) => ({
           t: String(item.t || ""),
           d: inlineLinks(model, String(item.d || ""), page.id),
+          ...(typeof item.soon === "boolean" ? { soon: item.soon } : {}),
           ...(typeof item.href === "string" ? { href: item.href } : {}),
           ...(typeof item.image === "string" ? { image: mediaImage(model, item.image, "card") } : {})
         })).filter((item) => item.t && item.d)
@@ -2338,7 +2340,7 @@ function payloadFor(model, page) {
       const imageOverrides = c.visual?.directoryFilters?.itemImages ?? {};
       out.items = model.pages.filter((p) => p.id.startsWith(prefix)).map((p) => ({ label: p.label, href: p.url, text: model.content[p.id].card || snippet(model.content[p.id].lead, 140), image: imageOverrides[p.url] ? mediaImage(model, imageOverrides[p.url], "card") : pageCardImage(model, p.id), filterTags: filterMap[p.url] ?? [] }));
       if (page.id === "industries") {
-        out.features = (c.features || []).map((entry) => ({ t: entry.t, d: inlineLinks(model, entry.d, page.id) }));
+        out.features = (c.features || []).map((entry) => ({ t: entry.t, d: inlineLinks(model, entry.d, page.id), ...(typeof entry.soon === "boolean" ? { soon: entry.soon } : {}) }));
       }
     } else {
       out.articles = model.pages.filter((p) => p.section === page.id).map((p) => ({ title: model.content[p.id].h1, summary: model.content[p.id].summary || "", minutes: model.content[p.id].read_minutes || 5, href: p.url, image: pageCardImage(model, p.id) }));
@@ -2557,7 +2559,7 @@ function buildNavigation(model) {
   return {
     version: 2,
     menus: [
-      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Pick from 24 presenters for your ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
+      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Browse presenter looks for your next ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
       { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.filter((id) => id !== "photo-hub").map(tool) }], popular: popular(["size", "color", "angle"]), hubLink: link("photo-hub", { label: "All photo tools →" }), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${realTemplateCount(model)} templates →`, href: "/templates" } },
       { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
@@ -2861,6 +2863,13 @@ export function validateSiteV2(build = buildSiteV2()) {
   const validationModel = buildModel(validationSource);
   if (validationSource.cardAssignmentDocument?.version !== 1 || !validationSource.cardAssignmentDocument.pages || typeof validationSource.cardAssignmentDocument.pages !== "object" || Array.isArray(validationSource.cardAssignmentDocument.pages)) errors.push("dynamic card assignments are malformed (expected version 1 and a pages map)");
   const technicalKeys = new Set(["href", "src", "srcset", "sizes", "key", "kind", "industries", "platforms", "id", "section", "tool_id", "mediaref", "ref", "url", "width", "height", "duration", "uploaddate", "w", "h"]);
+  const validateSoonFlags = (value, label, seen = new Set()) => {
+    if (Array.isArray(value)) return value.forEach((item, index) => validateSoonFlags(item, `${label}[${index}]`, seen));
+    if (!value || typeof value !== "object" || seen.has(value)) return;
+    seen.add(value);
+    if (Object.prototype.hasOwnProperty.call(value, "soon") && typeof value.soon !== "boolean") errors.push(`${label}.soon must be a boolean`);
+    for (const [key, child] of Object.entries(value)) validateSoonFlags(child, `${label}.${key}`, seen);
+  };
   const publicText = (value, key = "") => {
     if (typeof value === "string") return [value];
     if (Array.isArray(value)) return value.flatMap((item) => publicText(item));
@@ -3067,6 +3076,8 @@ export function validateSiteV2(build = buildSiteV2()) {
       seen[key].set(norm, page.id);
     }
     const data = page.contentJson.sections.v2_main.settings.data;
+    validateSoonFlags(validationSource.content[page.id] ?? {}, `${page.id} source`);
+    validateSoonFlags(data, `${page.id} payload`);
     validateVisual(page.id, page.contentJson.sections.v2_main.settings.layout, data, validationSource.content[page.id] ?? {});
     if (page.id === "ai-actors") {
       const scenes = Array.isArray(data.actorScenes) ? data.actorScenes : [];

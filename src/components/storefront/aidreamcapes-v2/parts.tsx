@@ -3,6 +3,10 @@ import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Defin
 import type { V2Company } from "./company";
 import { Coins, Captions, DollarSign, Gauge, Calendar, Camera, CircleCheck, Clapperboard, Clock, Copy, Crop, Droplet, Eye, FileText, Film, Gem, Hand, House, Image, Images, Languages, Laptop, Layers, LayoutGrid, Link, MessageCircle, Mic, Music, Package, Palette, PenLine, Play, Ratio, RefreshCw, Repeat, Rocket, Ruler, Scissors, Share2, ShieldCheck, Shirt, Smartphone, Sparkles, Star, Store, Sun, Tag, Target, Timer, Type, UserCheck, UserRound, Users, Utensils, WandSparkles, Zap } from "lucide-react";
 
+function SoonLabel({ soon }: { soon?: boolean }) {
+  return soon ? <span className="v-soon">Coming soon</span> : null;
+}
+
 export function normalizeStepLabel(label: string): string {
   return ["Product photo", "Your photo", "Photo"].includes(label.trim()) ? "Your product" : label;
 }
@@ -204,7 +208,7 @@ export function MoreSections({ sections, r }: { sections?: V2MoreSection[]; r: V
 
 export function FitSection({ block, r }: { block?: V2FitBlock; r: V2Resolvers }) {
   if (!block) return null;
-  const fitList = (items: V2Item[]) => items.map((item) => <li key={item.t}><b>{item.t}</b>{item.d ? <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p> : null}</li>);
+  const fitList = (items: V2Item[]) => items.map((item) => <li key={item.t}><b>{item.t}<SoonLabel soon={item.soon} /></b>{item.d ? <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p> : null}</li>);
   return <Section eyebrow="Good fit" title={block.h2}>
     <div className="two-col enrichment-fit">
       <div><h3>Good matches</h3><ul className="prose check">{fitList(block.good)}</ul></div>
@@ -276,7 +280,7 @@ export function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolve
         const image = item.alt ? { ...item.img, alt: item.alt } : item.img;
         const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
         return <article className="v-image-item-row" key={`${item.t}-${index}`}>
-          <div className="v-image-item-copy"><h3>{item.href ? <a href={r.href(item.href)}>{item.t}</a> : item.t}</h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
+          <div className="v-image-item-copy"><h3>{item.href ? <a href={r.href(item.href)}>{item.t}</a> : item.t}<SoonLabel soon={item.soon} /></h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
           <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
         </article>;
       })}
@@ -295,7 +299,7 @@ export function Boxes({ items, className = "ben", r }: { items: V2Item[]; classN
     {items.map((item) => (
       <div key={item.t}>
         {item.icon ? <BenefitIcon name={item.icon} /> : null}
-        <b>{item.t}</b>
+        <b>{item.t}<SoonLabel soon={item.soon} /></b>
         <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p>
       </div>
     ))}
@@ -309,7 +313,7 @@ export function Steps({ items }: { items: V2Item[] }) {
       {items.map((item, index) => (
         <div className="step" key={item.t}>
           <span className="n">{index + 1}</span>
-          <h3>{normalizeStepLabel(item.t)}</h3>
+          <h3>{normalizeStepLabel(item.t)}<SoonLabel soon={item.soon} /></h3>
           <p>{item.d}</p>
         </div>
       ))}
@@ -339,7 +343,7 @@ export function DirectoryScenes({ items, r }: { items: V2DirectoryScene[]; r: V2
       <div className="ideas directory-scenes">
         {items.map((item) => <div key={item.t}>
           {item.image ? <Img image={item.image} r={r} className="directory-scene-media" /> : null}
-          <b>{item.href ? <a href={r.href(item.href)}>{item.t} →</a> : item.t}</b>
+          <b>{item.href ? <a href={r.href(item.href)}>{item.t} →</a> : item.t}<SoonLabel soon={item.soon} /></b>
           <p><RichText r={r} text={item.d} /></p>
         </div>)}
       </div>
@@ -406,7 +410,7 @@ export function TextSections({ sections, r }: { sections: V2TextSection[]; r: V2
             {section.cards.map((card) => (
               <div key={card.t}>
                 {card.img ? <div className="text-section-media"><Img image={card.img} r={r} /></div> : null}
-                <b>{card.t}</b>
+                <b>{card.t}<SoonLabel soon={card.soon} /></b>
                 <p><RichText r={r} text={card.d} /></p>
                 {card.href ? <p className="meta-line"><a href={r.href(card.href)}>{card.label || card.t} →</a></p> : null}
               </div>
@@ -536,7 +540,7 @@ export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r:
         <Img image={card.image} r={r} />
       </div>
       <div className="tb">
-        <h3><a className="card-title" href={r.href(card.href)}>{card.name}</a></h3>
+        <h3><a className="card-title" href={r.href(card.href)}>{card.name}</a><SoonLabel soon={card.soon} /></h3>
         {card.line ? <p>{card.line}</p> : null}
         <span className="use">Use this template →</span>
       </div>
@@ -557,7 +561,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
         ) : <Img image={card.image} r={r} />}
       </div>
       <div className="tb">
-        <h3>{card.name}</h3>
+        <h3>{card.name}<SoonLabel soon={card.soon} /></h3>
         <a className="use" href={r.href(card.href)}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</a>
       </div>
     </article>
@@ -962,7 +966,7 @@ function BlockCard({ item, r, children, before, mark }: { item: V2CardBlockItem;
       {item.img?.src ? <figure><Img image={item.img} r={r} /></figure> : null}
       <div className="v1-card-copy">
         {item.img?.src ? null : mark ?? <span aria-hidden="true" className="v1-mark" />}
-        <h3>{item.t}</h3>
+        <h3>{item.t}<SoonLabel soon={item.soon} /></h3>
         <p><RichText r={r} text={item.d} /></p>
         {children}
       </div>
