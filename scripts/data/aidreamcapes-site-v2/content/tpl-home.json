@@ -72,7 +72,7 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "This template is set up for 9:16. A square cut can sit in a gallery. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Start at 9:16 for TikTok and Reels, or pick 1:1, 16:9, 4:3, or 3:4. A square cut can sit in a gallery. Lengths are 6, 10, 15, or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -111,8 +111,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a Drawer Organizer Video",
-      "lead": "These cards cover many categories, and none of them is a drawer-organizer scene. Pick a calm home shot, then add the organizer you sell.",
+      "title": "Choose a Scene for a Storage Product Video",
+      "lead": "Open a calm home or kitchen scene, then add the organizer you sell.",
       "chips": [
         {
           "id": "accessories",
@@ -530,7 +530,7 @@
     },
     "titles": {
       "m3": {
-        "h2": "Choose a Drawer Organizer Video"
+        "h2": "Choose a Scene for a Storage Product Video"
       },
       "faq": {
         "h2": "Questions About an Organizer Before and After Video"
@@ -542,14 +542,15 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
     "reviews",
+    "steps",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Sample Home Organization Video Ad Setups",
-    "lead": "Example scenes for this template. They show how a home shop could stage one reset.",
+    "h2": "How Home Sellers Use a Storage Product Video",
+    "lead": "Example setups. Each one shows how a home shop could stage one reset.",
     "items": [
       {
         "example": true,
@@ -561,7 +562,7 @@
         "example": true,
         "who": "Pantry brand",
         "t": "Shelf reset",
-        "d": "Example: a clear bin lands on a shelf, above plain containers, as the single change."
+        "d": "Example: a clear bin is set on a shelf beside plain containers, as the only change."
       },
       {
         "example": true,
@@ -577,9 +578,9 @@
       },
       {
         "example": true,
-        "who": "Spec editor",
+        "who": "Storage brand",
         "t": "Sizes after download",
-        "d": "Example: dimensions and capacity are typed in an editor after the file downloads."
+        "d": "Example: the seller adds dimensions and capacity in an editor after the file downloads."
       },
       {
         "example": true,

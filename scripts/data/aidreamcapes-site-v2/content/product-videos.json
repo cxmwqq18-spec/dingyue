@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a clear demo that shows how the item works. Create videos for stores, product pages and paid social in 6, 10, 15 or 30 seconds.",
   "h1": "AI Product Video Generator: Show One Action From a Photo",
   "eyebrow": "AI product video generator",
-  "lead": "AIVideosUGC turns one product photo into a short demo of a single operation, such as a latch closing, a pour or a switch. No studio booking. Pick a size, choose 6 to 30 seconds and download a clip for a product page, a marketplace listing or a paid ad.",
+  "lead": "AIVideosUGC turns one product photo into a short demo of a single operation, such as a latch closing, a pour or a switch. No studio booking. Pick a size, choose 6, 10, 15 or 30 seconds, and download a clip for a product page, a marketplace listing or a paid ad.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
@@ -13,24 +13,24 @@
   ],
   "benefits": [
     {
-      "t": "The Question a Still Leaves Open",
-      "d": "Show how a lid, pump, hinge or drawer behaves before checkout."
+      "t": "No Filming Day to Book",
+      "d": "Upload a photo already on the listing. There is no crew and no sample to ship."
     },
     {
       "t": "On the Listing or in an Ad",
-      "d": "Place the demo next to your listing photos, or render a 9:16 version for a paid ad."
+      "d": "Place the demo next to your listing photos, or make a 9:16 version for a paid ad."
     },
     {
       "t": "Credits, Not a Studio Day",
-      "d": "A 10-second demo uses 40 credits. A failed render returns those credits."
+      "d": "A 10-second demo uses 40 credits. If the job fails, those credits come back."
     },
     {
       "t": "Check It Against the Real Item",
-      "d": "Watch the finished demo next to the product in your hand. If a color, button or moving part drifts, render another version."
+      "d": "Watch the finished demo next to the product in your hand. If a color, button or moving part drifts, make another version."
     },
     {
-      "t": "You Decide the Last Frame",
-      "d": "Name what moves, where it happens and where the clip should stop."
+      "t": "You Set the Size and the Length",
+      "d": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4, and 6, 10, 15 or 30 seconds."
     },
     {
       "t": "Yours to Publish",
@@ -44,7 +44,7 @@
     },
     {
       "t": "Describe the Action",
-      "d": "Name one operation, where it happens and where the last frame should stop. Then pick a size and a length."
+      "d": "Name one action, where it happens and how it should end. Then pick a size and a length."
     },
     {
       "t": "Download and Post",
@@ -65,6 +65,18 @@
     "cta": "Make my product demo"
   },
   "faq": [
+    {
+      "q": "How do I make a product video from one photo?",
+      "a": "Upload one clear product photo, name one action a buyer would ask about, pick a size and a length, then download the demo."
+    },
+    {
+      "q": "How long should a product demo video be?",
+      "a": "Choose 6, 10, 15 or 30 seconds. A shorter clip fits a feed. Use a longer one when the action needs more of the motion on screen."
+    },
+    {
+      "q": "Can I start from a product link instead of a photo?",
+      "a": "No. This page starts from one product photo. To start from a public product link, use URL to video."
+    },
     {
       "q": "What does a product demo video show?",
       "a": "One useful operation from start to finish, such as a lid opening, a latch closing, a pour or a switch turning on."
@@ -112,8 +124,13 @@
   ],
   "actor_scene_picker": {
     "title": "Choose an AI Presenter",
-    "lead": "Pick a generated presenter and a setting. The person on screen is AI-generated, not a customer, and the demo still shows one product action.",
-    "button": "Use this avatar and scene"
+    "lead": "Pick a generated presenter and a setting. The person on screen is AI-generated, not a customer. The clip shows one product action and does not add a spoken line.",
+    "button": "Use this avatar and scene",
+    "actor_picker": {
+      "cta": {
+        "prompt": "Show the uploaded product doing one clear action in the chosen setting. Keep its shape, color and label as in the photo. No spoken line, captions or music."
+      }
+    }
   },
   "visual": {
     "strip": [
@@ -130,7 +147,7 @@
       "result": "n:guide:k1-product-videos-step-mug-lift",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded product photo as the exact product reference. Keep its shape, color and label area unchanged. Show one clear operation in a bright, natural setting, ending with the feature held still for inspection. Steady product-demo camera and realistic light. Sound: the real action and quiet room tone; no text, logos or music.",
+      "prompt": "Show one clear action in a bright room, then hold the product still so a shopper can see it. Keep the shape, color and label as in the photo. Leave music, captions and logos off.",
       "options": [
         [
           "Size",
@@ -143,8 +160,8 @@
       ]
     },
     "picker": {
-      "title": "See an AI Product Demo Video",
-      "lead": "Pick one operation, then open the example with its action ready to edit.",
+      "title": "See AI Product Demo Videos",
+      "lead": "Pick one operation and open an example that shows that action.",
       "chips": [
         {
           "id": "hands-on",
@@ -162,7 +179,7 @@
           "chips": [
             "everyday"
           ],
-          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands open the compact umbrella on a rainy sidewalk, ending with the canopy fully open and centered. Natural overcast light, practical product demo style, close handheld framing. Sound: fabric snap and rain ambience; no music, text or logos.",
+          "prompt": "Hands open the compact umbrella on a rainy sidewalk and stop when the canopy is fully open. Keep the umbrella's shape and color as in the photo.",
           "kind": "video"
         },
         {
@@ -171,7 +188,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands unfold the compact bicycle once and pause on the central hinge fully open. Outdoor morning light, clear hands-on demo style, medium close framing with one slow push-in. Sound: hinge click and light street ambience; no music, text or logos.",
+          "prompt": "Hands unfold the compact bicycle once and pause with the central hinge fully open. Keep the bike's shape and color as in the photo.",
           "kind": "video"
         },
         {
@@ -180,7 +197,7 @@
           "chips": [
             "everyday"
           ],
-          "prompt": "Use the uploaded product photo as the exact product reference. A hand presses the desk lamp switch once and the warm light spreads across the desk, ending with the lamp glowing steadily. Evening desk setting, natural product demo look, close side framing. Sound: switch click and quiet room tone; no music, text or logos.",
+          "prompt": "A hand presses the desk lamp switch once. Warm light spreads across the desk, then the lamp stays on. Keep the lamp's shape and color as in the photo.",
           "kind": "video"
         },
         {
@@ -189,7 +206,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands slide the divided trays into an open drawer and stop with the compartments aligned. Bright home light, practical organization demo style, overhead close framing. Sound: smooth drawer glide and item movement; no music, text or logos.",
+          "prompt": "Hands slide the divided trays into an open drawer and stop when the compartments line up. Keep the drawer's shape and color as in the photo.",
           "kind": "video"
         },
         {
@@ -198,7 +215,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands coil the cable and pack the compact charger into a fabric travel pouch, ending with the pouch closed and centered. Soft window light, tidy travel demo style, overhead close framing. Sound: cable movement and zipper pull; no music, text or logos.",
+          "prompt": "Hands coil the cable and pack the compact charger into a fabric travel pouch, then close the pouch. Keep the charger's shape and color as in the photo.",
           "kind": "video"
         },
         {
@@ -207,7 +224,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands open the padded laptop sleeve and slide a generic laptop halfway inside, ending with the interior and fit visible. Soft desk light, practical tech demo style, over-shoulder close framing. Sound: zipper and fabric movement; no music, text or logos.",
+          "prompt": "Hands open the padded laptop sleeve and slide a laptop halfway in, so the fit is visible. Keep the sleeve's shape and color as in the photo.",
           "kind": "video"
         },
         {
@@ -216,7 +233,7 @@
           "chips": [
             "everyday"
           ],
-          "prompt": "Use the uploaded product photo as the exact product reference. Adult hands close the divided lunchbox lid and press the side latch once, ending with the seal fully closed. Bright kitchen light, clear food-storage demo style, close tabletop framing. Sound: lid click and quiet kitchen ambience; no music, text or logos.",
+          "prompt": "Hands close the divided lunchbox and press the side latch once, until the seal is shut. Keep the lunchbox's shape and color as in the photo.",
           "kind": "video"
         }
       ],
@@ -250,7 +267,7 @@
       ],
       [
         "First version",
-        "Describe one operation and render it",
+        "Describe one operation and generate it",
         "Film that operation on set"
       ],
       [
@@ -269,7 +286,7 @@
         "Set during the edit"
       ],
       [
-        "A failed render",
+        "A failed job",
         "Credits return to your balance",
         "The shoot is paid either way"
       ]
@@ -280,10 +297,10 @@
     "definition",
     "picker",
     "reasons",
+    "compare",
     "steps",
     "benefits",
     "related",
-    "compare",
     "reviews",
     "faq",
     "cta"
@@ -296,25 +313,25 @@
     ]
   },
   "reasons": {
-    "h2": "Reasons the Demo Uses Your Photo",
+    "h2": "Reasons to Show One Product Action",
     "items": [
       {
-        "t": "One Operation, Start to Finish",
-        "d": "A latch, a pour, a fold or a switch is easier to judge than a list of features."
+        "t": "One Action, Start to Finish",
+        "d": "A latch, a pour, a fold or a switch is easier to judge than a feature list. The clip follows that one action from the start to the end."
       },
       {
-        "t": "The Item Comes From Your Photo",
-        "d": "Shape and color stay tied to the photo you upload. Check the result against the real item before it goes live."
+        "t": "It Starts From Your Photo",
+        "d": "Shape and color begin with the photo you upload. Check the result against the real item before it goes live, in case a detail drifts."
       },
       {
-        "t": "Another Angle Without a New Shoot",
-        "d": "Describe a second operation when the listing or the ad needs a different view of the same item."
+        "t": "A Second Action, No New Shoot",
+        "d": "Describe another operation when the listing or the ad needs a different view. You do not book a second filming day."
       }
     ]
   },
   "benefits_lead": "For sellers who need the moving part to be obvious on the product page.",
   "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "Explore the rest of the AIVideosUGC tools.",
+  "related_lead": "Other video tools for a product page or a paid ad.",
   "relatedLinks": [
     "video-ads",
     "image-to-video",
@@ -331,28 +348,28 @@
         "example": true,
         "who": "Independent store",
         "t": "Lip balm routine",
-        "d": "Example: a close routine demo for a product page.",
+        "d": "An independent store puts a close lip-balm routine on the product page.",
         "img": "n:guide:q3-product-videos-board-03-lip-balm-routine"
       },
       {
         "example": true,
         "who": "Marketplace seller",
         "t": "Shoe fit",
-        "d": "Example: a running-shoe fit clip for a listing.",
+        "d": "A marketplace seller uses a running-shoe fit clip on a listing.",
         "img": "n:guide:q3-product-videos-board-06-running-shoe-try-on"
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "First sip",
-        "d": "A drink seller uses a first-sip angle in an ad test without booking another shoot.",
+        "d": "A drink seller uses a first-sip angle in an ad test, without booking another shoot.",
         "img": "n:guide:q3-product-videos-board-08-citrus-taste-review"
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Fabric shaver",
-        "d": "A home shop shows a fabric shaver clearing fabric, then compares the clip with the real tool before the listing goes up.",
+        "d": "A home shop shows a fabric shaver clearing fabric, then checks the clip against the real tool before the listing goes up.",
         "img": "n:guide:f11-r10-product-videos-fabric-shaver-demo"
       }
     ]

@@ -100,7 +100,7 @@
       "result": "n:guide:rc4-tpl-bf-result-pump-r1",
       "mode": "video",
       "length": 15,
-      "prompt": "An adult presenter holds the uploaded sage-green pump bottle in a warm holiday room, turns it once toward the camera, and holds. Soft lights, product in focus, no spoken words and no price on screen.",
+      "prompt": "Hold the bottle in a warm holiday room and turn it once. Leave the price off.",
       "options": [
         [
           "Size",
@@ -553,11 +553,19 @@
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
     "steps",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
+  "definition": {
+    "title": "Get the Right Look from the Photo You Have",
+    "paras": [
+      "The sale clip starts from the product photo you upload, so you can skip a studio camera and a large set. The download has no watermark. Add the price, code and end date in your editor afterward."
+    ]
+  },
   "reviews": {
     "h2": "How Shops Use a Holiday Sale Video Ad",
     "lead": "Each card shows how one shop uses the scene. Add the offer after download.",
@@ -573,7 +581,7 @@
         "example": true,
         "who": "Food shop",
         "t": "Counter close",
-        "d": "Example: an olive lunch tote closed on a kitchen counter for a sale clip.",
+        "d": "A food shop closes the lunch tote on the kitchen counter, then adds the offer after download.",
         "img": "n:guide:fx19-bf-benefit-shoot-02"
       },
       {
@@ -594,54 +602,72 @@
         "example": true,
         "who": "Beauty shop",
         "t": "Unbox reveal",
-        "d": "Example: a coral cream set opened as a gift-box reveal.",
+        "d": "A beauty shop opens the cream set as a gift reveal and leaves the price off the clip.",
         "img": "n:guide:rc4-tpl-bf-examples-unboxing-01-r1"
       },
       {
         "example": true,
         "who": "Electronics shop",
         "t": "Fold demo",
-        "d": "Example: over-ear headphones folded once so the product stays in frame.",
+        "d": "An electronics shop folds the headphones once so the shape stays in frame, then adds the deal after download.",
         "img": "n:guide:f16-r10-bf-example-headphones-r1"
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "Gift unbox",
-        "d": "Example: a cobalt bottle lifted from a gift pack.",
+        "d": "A drinkware shop lifts the bottle from the gift pack and types the offer later.",
         "img": "n:guide:fx19-bf-example-unbox-01"
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Hallway try-on",
-        "d": "Example: an olive jacket tried on in a hallway.",
+        "d": "An apparel shop shows the jacket tried on in a hallway and keeps the discount out of the scene.",
         "img": "n:guide:fx19-bf-example-tryon-02"
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Park setup",
-        "d": "Example: a blue leash clipped on before a park walk.",
+        "d": "A pet shop clips the leash on before a park walk and adds the offer after download.",
         "img": "n:guide:fx19-bf-example-band-demo-03"
       },
       {
         "example": true,
         "who": "Travel shop",
         "t": "Gift reveal",
-        "d": "Example: a lavender travel bag opened as a gift.",
+        "d": "A travel shop lifts the bag from the gift box and adds the end date after download.",
         "img": "n:guide:fx19-bf-example-gift-reveal-04"
       }
     ]
   },
   "related_h2": "Pages for Facebook Black Friday Ads",
-  "related_lead": "More video ads, electronics scenes, and Facebook placements for the same sale week.",
+  "related_lead": "Video ads and electronics templates for the same sale week, plus Black Friday creatives and Facebook ads.",
   "relatedLinks": [
-    "video-ads",
-    "tpl-film",
-    "tpl-carousel-video-ad",
-    "tpl-retargeting-video-ad",
-    "occ-black-friday",
-    "plat-facebook"
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "tpl-film",
+      "label": "cinematic product video"
+    },
+    {
+      "id": "tpl-carousel-video-ad",
+      "label": "carousel video ad"
+    },
+    {
+      "id": "tpl-retargeting-video-ad",
+      "label": "retargeting video ad"
+    },
+    {
+      "id": "occ-black-friday",
+      "label": "Black Friday ad creatives"
+    },
+    {
+      "id": "plat-facebook",
+      "label": "AI Facebook ad generator"
+    }
   ]
 }

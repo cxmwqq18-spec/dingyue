@@ -11,7 +11,7 @@
     "holiday sale photo for Facebook",
     "winter clearance banner"
   ],
-  "steps_h2": "Make a seasonal sale ad image",
+  "steps_h2": "Make a Sale Banner in 3 Steps",
   "steps_lead": "Upload the product, leave an open area, then add the real offer after download.",
   "steps": [
     {
@@ -144,7 +144,7 @@
       "source": "n:guide:tpl-sale-c3-m2-source",
       "result": "n:guide:f14-sale-steps-result-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded product photo as the exact featured item. Place it in a seasonal sale scene with a calm, uncluttered area beside it for an offer added later. Keep the full product visible, use soft directional light, and include no text, logos, labels, numbers, or watermarks.",
+      "prompt": "Place the suitcase in a seasonal scene with a calm open area beside it for an offer added later.",
       "options": [
         [
           "Template",
@@ -162,8 +162,8 @@
       "resultAlt": "Adult pulls a blue hard-shell suitcase through a bright airport terminal."
     },
     "picker": {
-      "title": "These cards open a 15-second video",
-      "lead": "Each card is a 9:16 video ad, not a square sale image with room for an offer. Use the upload above, and add the discount only after you download.",
+      "title": "Browse Product Scenes by Category",
+      "lead": "These clips are other video scenes. Make the square sale image in the upload box, then add the offer after download.",
       "chips": [
         {
           "id": "accessories",
@@ -585,14 +585,14 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make a Black Friday Banner Image"
+        "h2": "Make a Sale Banner in 3 Steps"
       },
       "faq": {
         "h2": "Questions about this sale banner maker"
       },
       "m3": {
-        "h2": "These cards open a 15-second video",
-        "lead": "Each card is a 9:16 video ad, not a square sale image with room for an offer. Use the upload above, and add the discount only after you download."
+        "h2": "Browse Product Scenes by Category",
+        "lead": "These clips are other video scenes. Make the square sale image in the upload box, then add the offer after download."
       }
     }
   },
@@ -624,7 +624,7 @@
     }
   ],
   "reviews": {
-    "h2": "Holiday Sale Photo for Facebook",
+    "h2": "Sale Scenes Sellers Build from One Photo",
     "lead": "A few ways sellers use one product photo as the scene behind an offer.",
     "items": [
       {
@@ -665,12 +665,11 @@
       }
     ]
   },
-  "related_h2": "Seasonal sale templates and fashion pages",
+  "related_h2": "Fashion Pages to Use with a Sale Banner",
   "related_lead": "The ad-image tool, fashion templates, the sale occasion and the fashion industry page.",
   "cta_title": "Set the scene, then add the offer",
   "blockOrder": [
     "hero",
-    "picker",
     "reviews",
     "steps",
     "related",

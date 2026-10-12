@@ -41,9 +41,9 @@
       "alt": "Hands place tan handbag upright on a clean pale studio surface."
     },
     {
-      "h2": "Which AI product photo tips keep the product honest?",
+      "h2": "Which AI product photo tips keep the item looking right?",
       "paras": [
-        "Name the surface, the place, the light, and one prop. Leave printed words, famous faces, and logos you do not own out of the request.",
+        "Name the surface, the place, the light, and one prop. Leave printed words, famous faces, and logos you do not own out of the request. The [Content Policy](/content) says what can be uploaded.",
         "\"A tan handbag on a light wood cafe table, soft morning window light, a folded scarf blurred behind it\" paints the scene without crowding the product. Lettering inside a generated image is often misspelled, so add headlines later in your editor. For a marketplace main image, make [white background product photos](page:white-background) from the same source file."
       ],
       "img": "n:guide:fx04-blog-photo-look-cafe-r1",
@@ -62,7 +62,7 @@
       "h2": "Where should each AI product photo go?",
       "paras": [
         "Decide the destination before you make the image. A marketplace main image is stricter than a social post.",
-        "A main image usually wants pure white and nothing extra. Later gallery images can show use, scale, or a close detail. On your own store, match the backdrop you already use so the grid stays tidy. Square files suit product grids and feed posts. Leave empty space only where you will add an offer later."
+        "A main image usually wants pure white and nothing extra. Later gallery images can show use, scale, or a close detail. On your own store, match the backdrop you already use so the grid stays tidy. Product photos come out square, which fits a product grid and a feed post. Leave empty space only where you will add an offer later."
       ],
       "img": "n:guide:fx04-blog-photo-marketplace-r1",
       "alt": "Hands place tan handbag into a simple kraft shipping box."
@@ -78,7 +78,7 @@
       "h2": "The short version",
       "paras": [
         "One sharp daylight photo, a plain sentence for the surface and the light, and a check against the real item before anything goes on a listing.",
-        "White and lifestyle images are separate jobs at 24 credits each. A failed job returns the credits."
+        "White and lifestyle images are separate jobs at 24 credits each. A finished image is commercially usable and has no watermark. A failed job returns the credits."
       ]
     }
   ],
@@ -114,6 +114,14 @@
     {
       "q": "What happens if the job fails?",
       "a": "Failed jobs return their credits. You can try again with a sharper source photo or a clearer scene sentence."
+    },
+    {
+      "q": "Can I use the photo on my store and in ads?",
+      "a": "Yes. A finished image is commercially usable and has no watermark. Compare it with the item you ship before you publish."
+    },
+    {
+      "q": "What shape is the downloaded photo?",
+      "a": "Product photos come out square. That fits a product grid and most feed posts."
     }
   ],
   "cta_title": "Turn one product photo into your next listing set",

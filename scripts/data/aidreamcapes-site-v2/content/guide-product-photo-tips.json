@@ -36,7 +36,7 @@
       "h2": "How do I photograph products for an online store?",
       "paras": [
         "Hold the phone level with the product, keep every edge inside the frame, and switch portrait mode, filters, and beauty settings off.",
-        "Shooting down on a bottle or a box makes it look as if it is tipping backward. Tap the label to lock focus. If white areas look blown out, lower the brightness until the surface texture comes back. Those phone effects change edges and color, and the changes can ride into the new picture."
+        "Shooting down on a bottle or a box makes it look as if it is tipping backward. Tap the label to lock focus. If white areas look blown out, lower the brightness until the surface texture comes back. Those phone effects change the edges and the color, and the new image copies what it sees."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec03",
       "alt": "Plain gray running shoe centered with its full shape and edges in focus."
@@ -54,7 +54,7 @@
       "h2": "What should I check before I upload a product photo?",
       "paras": [
         "Zoom until you can read the label, then hold the real item next to the screen and compare the color in daylight.",
-        "Edges should be crisp, not smeared. Move cups, lids, and anything else out of the frame. Upload the original file, not a screenshot or a picture that passed through a chat app, because those copies are usually compressed. The uploader accepts JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF, and TIFF. The default limit is 32 MB."
+        "Edges should be crisp, not smeared. Move cups, lids, and anything else out of the frame. Upload the original file, not a screenshot or a picture that passed through a chat app, because those copies are usually compressed. JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF, and TIFF files all work, up to 32 MB."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec05-r2",
       "alt": "Adult hands compare a plain gray running shoe with a blank silhouette card."
@@ -63,7 +63,7 @@
       "h2": "How do I describe the scene so the result stays accurate?",
       "paras": [
         "Name the product, the surface, and the light in one plain sentence, and leave prices and headlines out.",
-        "\"A matte black bottle on a gym bench in early light\" is useful. \"Make it look premium\" is not. Add the price later in your own editor, where the spelling stays yours. From this photo you can open the [AI product photo generator](page:photo-hub) for other looks, or make [AI lifestyle product photos](page:lifestyle-photos) when the listing needs a setting."
+        "\"A matte black bottle on a gym bench in early light\" is useful. \"Make it look premium\" is not. When the new image comes back, hold the real item beside the screen and check the color, the label, and the shape. Add the price later in your own editor, where the spelling stays yours. From this photo you can open the [AI product photo generator](page:photo-hub) for other looks, or make [AI lifestyle product photos](page:lifestyle-photos) when the listing needs a setting."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec06-r2",
       "alt": "Adult hands hold a plain gray running shoe beside a blank notebook."
@@ -74,21 +74,15 @@
         "Shoot at product height, in window light, with filters off and the label readable. Extra angles and one plain sentence come after that.",
         "Each image job shows its credit cost before it starts. A failed job returns the credits."
       ]
-    },
-    {
-      "h2": "On this page",
-      "paras": [
-        "Six questions follow: product photography with a phone, product photo lighting at home, how to photograph products for an online store, which product photo angles to capture, what to inspect before upload, and how to describe the scene."
-      ]
     }
   ],
   "related": [
     "guide-white-background-amazon",
     "blog-ai-product-photography-guide",
     "blog-model-photos-without-a-photoshoot",
-    "blog-ai-video-review-checklist",
-    "guide-ad-sizes-by-platform",
-    "guide-first-tiktok-video-ad"
+    "change-background",
+    "white-background",
+    "model-photos"
   ],
   "faq": [
     {
@@ -122,8 +116,8 @@
     "guide-white-background-amazon",
     "blog-ai-product-photography-guide",
     "blog-model-photos-without-a-photoshoot",
-    "blog-ai-video-review-checklist",
-    "guide-ad-sizes-by-platform",
-    "guide-first-tiktok-video-ad"
+    "change-background",
+    "white-background",
+    "model-photos"
   ]
 }

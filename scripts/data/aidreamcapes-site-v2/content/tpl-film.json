@@ -70,7 +70,7 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "This template is set up for 16:9 and 9:16. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Use 16:9 for a page or 9:16 for a short feed. You can also pick 1:1, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -78,7 +78,7 @@
     },
     {
       "q": "Does the clip include music or my logo?",
-      "a": "No music and no captions. Add a licensed track in your editor. A logo that is part of your uploaded product can remain. Another company's logo or trademark may be rejected."
+      "a": "No music and no captions. Add a licensed track in your editor after download. A logo already printed on the product photo stays part of that photo. The clip does not add a new logo."
     },
     {
       "q": "Can I run the file in ads?",
@@ -96,7 +96,7 @@
     ],
     "steps": {
       "source": "n:guide:c1-tpl-film-m2-source",
-      "sourceAlt": "Compact black speaker photographed alone on a dark display plinth.",
+      "sourceAlt": "Compact black speaker photographed alone on a dark display stand.",
       "sourceTitle": "Product photo",
       "sourceHint": "Keep the product silhouette crisp against its background.",
       "result": "n:guide:f14-film-steps-result-r2",
@@ -120,8 +120,8 @@
       "resultAlt": "Rounded pebble-shaped black speaker catches a cool cinematic highlight on a dark sideboard."
     },
     "picker": {
-      "title": "Choose a Moody Product Video",
-      "lead": "These cards cover many categories. There is no reveal-only filter. Open a slow product shot, then add the photo you want in the light.",
+      "title": "Choose a Scene for a Moody Product Video",
+      "lead": "Open a slow product shot, then add the photo you want in that light.",
       "chips": [
         {
           "id": "accessories",
@@ -543,7 +543,7 @@
     "overview": "",
     "titles": {
       "m3": {
-        "h2": "Choose a Moody Product Video"
+        "h2": "Choose a Scene for a Moody Product Video"
       },
       "faq": {
         "h2": "Questions About a Luxury Product Video"
@@ -581,10 +581,11 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
     "reviews",
+    "steps",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
     "h2": "How Shops Use a Brand Film for Products",
@@ -600,25 +601,25 @@
         "example": true,
         "who": "Watch shop",
         "t": "Slow pass",
-        "d": "Example: a watch on a dark strap takes a short side glide so the finish reads."
+        "d": "Example: a watch on a dark strap takes a short side glide so the finish is easy to see."
       },
       {
         "example": true,
         "who": "Audio brand",
-        "t": "Hero still, then motion",
-        "d": "Example: headphones on a dark plinth get one push-in instead of a rented set."
+        "t": "Still, then a push-in",
+        "d": "Example: headphones on a dark stand get one push-in, instead of a rented set."
       },
       {
         "example": true,
         "who": "Lighting shop",
         "t": "The product is the light",
-        "d": "Example: a desk lamp glows on a side table, and the move stays slow."
+        "d": "Example: a desk lamp glows on a side table, and the camera move stays slow."
       },
       {
         "example": true,
-        "who": "Launch lead",
+        "who": "Product page owner",
         "t": "Web and feed",
-        "d": "Example: one look is exported at 16:9 for a product page and 9:16 for a short feed cut."
+        "d": "Example: the same photo is made once at 16:9 for the product page, and again at 9:16 for a short feed."
       },
       {
         "example": true,
@@ -628,21 +629,21 @@
       },
       {
         "example": true,
-        "who": "Editor",
+        "who": "Small shop",
         "t": "Sound after download",
-        "d": "Example: a licensed track and the product name are added in an editor. The generator does not lay in music."
+        "d": "Example: the file has no music. The shop adds a licensed track and the product name in an editor."
       },
       {
         "example": true,
-        "who": "Brand reviewer",
-        "t": "Logo check",
-        "d": "Example: a logo that is already on the uploaded product can stay. Another company's mark may be rejected."
+        "who": "Product owner",
+        "t": "Marks stay on the product",
+        "d": "Example: a mark already printed on the uploaded product stays in the photo. The clip does not add a new logo."
       },
       {
         "example": true,
         "who": "Glass brand",
         "t": "Glare check",
-        "d": "Example: a reflective item is reviewed frame by frame so a dark scene does not blow out the edge."
+        "d": "Example: a glass brand checks the reflective edge before posting, so a dark scene does not wash it out."
       },
       {
         "example": true,

@@ -15,7 +15,7 @@
       "h2": "Store images and short video ads",
       "paras": [
         "Upload a picture of what you sell, pick a template or describe the scene, and download a square store image or a short video of 6, 10, 15, or 30 seconds.",
-        "The weekly jobs are a clean listing shot, AI lifestyle product photos, AI model photos for clothing, a feed image, and a vertical clip. No design software, no agency booking, and no studio day."
+        "In a typical week that means a clean listing shot, a lifestyle photo, a model photo for clothing, a feed image, and a vertical clip. No design software, no agency booking, and no studio day."
       ],
       "img": "n:guide:b2f9-about-what-we-make-r1",
       "alt": "Adult seller with a blonde chin-length bob sets a plain ceramic mug on paper beside a closed laptop."
@@ -23,8 +23,8 @@
     {
       "h2": "AI visuals for Shopify sellers and small shops",
       "paras": [
-        "It is built for small and growing stores on Shopify, Amazon, and Etsy, and for the marketers who run their ads. If you pack orders, write listings, and set campaigns yourself, this fits the week you already have.",
-        "You do not need editing skills. A clear product photo and one sentence about the scene are enough to start. It is a product content tool for Etsy shops when a hook or an offer changes and you need a new image or clip. Shopify product photos are one of the listing jobs it covers."
+        "It is built for small shops on Shopify, Amazon, and Etsy, and for the people who run their ads. If you pack orders, write listings, and set up campaigns yourself, this fits the work you already do.",
+        "You do not need editing skills. A clear product photo and one sentence about the scene are enough to start. It is a product content tool for Etsy shops when a listing changes and you need a new image or clip."
       ],
       "img": "n:guide:fx08-about-who-its-for-r1",
       "alt": "Adult small-shop owner prepares a plain product for a listing at a packing table."
@@ -33,7 +33,7 @@
       "h2": "A private AI product photo tool",
       "paras": [
         "Everything you upload and everything you make stays in your own account. Your product photos and results are not shown to other customers or published.",
-        "Some requests are turned down, including celebrities or other public figures, and logos or trademarks that belong to someone else. The ad stays on products you sell."
+        "Some requests are turned down, including celebrities or other public figures, and logos or trademarks that belong to someone else. Keep the image or clip on a product you sell."
       ],
       "img": "n:guide:b2f9-about-photos-stay-yours-r1",
       "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock."
@@ -41,7 +41,7 @@
     {
       "h2": "Credit costs on screen before you start",
       "paras": [
-        "Every photo and video shows its price in credits before the job starts, so nothing spends without your say-so. Plans start at $24.50 a month with 200 credits.",
+        "Every photo and video shows its credit cost before the job starts, so you see the price before anything is spent. Plans start at $24.50 a month with 200 credits.",
         "Credits are held while a job runs and used when the file arrives. A delivered file is not refunded, which is why the cost is on screen first. If a job fails, the credits return to your balance automatically."
       ],
       "img": "n:guide:b2f9-about-credit-costs-r1",
@@ -51,19 +51,19 @@
   "faq": [
     {
       "q": "Can I make product ads without hiring an agency?",
-      "a": "Yes. Upload your product photo or describe the scene, review the result, and download it from your account. There is no booking, no shoot day, and no editor to wait on."
+      "a": "Yes. Upload your product photo, describe the scene, and download the file from your account. There is no booking, no shoot day, and no editor to wait on."
     },
     {
       "q": "How do I reach the team?",
-      "a": "Email support@aivideosugc.com. Email is how you reach the team."
+      "a": "Email support@aivideosugc.com. That is the way to reach the team."
     },
     {
       "q": "What can I upload?",
-      "a": "Upload a product photo for an image. For a video, upload a photo or describe the product and the scene. Compare the result with the real item before you download or publish it."
+      "a": "Upload a product photo for an image. For a video, upload a product photo or paste a product page link, then describe the scene. Compare the result with the real item before you publish it."
     },
     {
       "q": "Who is AIVideosUGC for?",
-      "a": "Online sellers and marketers who need product photos and short ad videos from their own product images or descriptions, without a studio or an agency."
+      "a": "Online sellers and marketers who need product photos and short ad videos from their own product photos, without a studio or an agency."
     },
     {
       "q": "How much does it cost?",
@@ -71,13 +71,13 @@
     },
     {
       "q": "Do you keep a presenter I can reuse?",
-      "a": "No. Your uploads and results stay in your account, and each new asset starts from the product reference you provide. There is no saved presenter library."
+      "a": "No. Your uploads and results stay in your account, and each new file starts from the product photo you provide. There is no saved presenter you can reuse."
     }
   ],
   "ctaTitle": "Start with one product photo",
-  "ctaLead": "Pick a photo or video tool, see the cost before you start, and make a store asset for the next listing or ad.",
+  "ctaLead": "Pick a photo or video tool, see the cost before you start, and make an image or clip for the next listing or ad.",
   "cta_title": "Start with one product photo",
-  "cta_lead": "Pick a photo or video tool, see the cost before you start, and make a store asset for the next listing or ad.",
+  "cta_lead": "Pick a photo or video tool, see the cost before you start, and make an image or clip for the next listing or ad.",
   "relatedLinks": [
     "pricing",
     "faq",

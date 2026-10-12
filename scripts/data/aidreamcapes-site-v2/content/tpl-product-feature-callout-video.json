@@ -11,7 +11,7 @@
     "single benefit product video",
     "ecommerce feature video"
   ],
-  "steps_h2": "Make a Product Feature Video in 3 Steps",
+  "steps_h2": "Make a Product Feature Callout Video in 3 Steps",
   "steps_lead": "One action, one function. The feature name and any measurement go on after download.",
   "steps": [
     {
@@ -50,19 +50,19 @@
       "a": "A short clip built around one visible function, such as a pump, a lid, a hinge or a clasp. The name of that function is added after download."
     },
     {
-      "q": "How do I make the callout?",
+      "q": "How do I make a product feature callout video?",
       "a": "Upload a photo that shows the whole item and the moving part, describe that one action, pick a size and length, then download."
     },
     {
-      "q": "Why not explain every benefit in one clip?",
+      "q": "How many features should one callout video cover?",
       "a": "One action stays readable on a phone. A second feature belongs in another version, made from the same photo if you want."
     },
     {
-      "q": "Who is it for?",
+      "q": "Which shops use a product feature callout video?",
       "a": "Beauty, electronics and other shops that need a listing or a paid ad to show how one part works."
     },
     {
-      "q": "What photo works?",
+      "q": "What product photo works for a feature callout?",
       "a": "A sharp, evenly lit photo with the full product and the moving part visible. Glare, a tight crop or a hidden hinge makes the function hard to read."
     },
     {
@@ -70,7 +70,7 @@
       "a": "9:16 for TikTok and Reels, 1:1 for a feed or listing, 16:9 for a product page, plus 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds."
     },
     {
-      "q": "Can I print the measurement on the video here?",
+      "q": "Can I add the feature name on the video here?",
       "a": "Add the feature name, size or claim in your editor after download, and check it against the real product before you post."
     },
     {
@@ -121,8 +121,8 @@
       "mode": "video"
     },
     "picker": {
-      "title": "Choose a Scene for a Feature Callout Ad",
-      "lead": "Open a product scene and describe the one moving part you want in frame. Add the feature name after download.",
+      "title": "Browse Product Scenes by Category",
+      "lead": "Pick a scene close to your product, then describe the one moving part. Add the feature name after download.",
       "chips": [
         {
           "id": "accessories",
@@ -540,7 +540,8 @@
     },
     "titles": {
       "m3": {
-        "h2": "Choose a Scene for a Feature Callout Ad"
+        "h2": "Browse Product Scenes by Category",
+        "lead": "Pick a scene close to your product, then describe the one moving part. Add the feature name after download."
       },
       "faq": {
         "h2": "Product Feature Video Questions"
@@ -606,8 +607,8 @@
     "faq"
   ],
   "reviews": {
-    "h2": "Sample Single Benefit Product Video Uses",
-    "lead": "Example scenes for a single function. One moving part per clip.",
+    "h2": "Ways Shops Show One Product Feature",
+    "lead": "Each clip keeps one moving part in frame. Add the feature name after download.",
     "items": [
       {
         "example": true,
@@ -619,59 +620,59 @@
         "example": true,
         "who": "Drinkware shop",
         "t": "Lid open",
-        "d": "Example: hands open a travel-mug lid so the seal is the feature on screen."
+        "d": "A drinkware shop opens a travel-mug lid so the seal is the feature on screen."
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Hinge open",
-        "d": "Example: a hinged storage lid opens once so the mechanism stays in frame."
+        "d": "A home shop opens a hinged storage lid once so the mechanism stays in frame."
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Clasp turn",
-        "d": "Example: a clasp on a ceramic container is rotated toward the camera."
+        "d": "A home shop turns a clasp on a ceramic container toward the camera."
       },
       {
         "example": true,
         "who": "Electronics shop",
         "t": "Port close-up",
-        "d": "Example: one port is held to camera so a listing can show where the cable goes."
+        "d": "An electronics shop holds one port to the camera so a listing can show where the cable goes."
       },
       {
         "example": true,
         "who": "Bag shop",
         "t": "Zipper pull",
-        "d": "Example: a zipper travels once along the track so the hardware is the point of the clip."
+        "d": "A bag shop runs a zipper once along the track so the hardware is the point of the clip."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Strap adjust",
-        "d": "Example: a strap shortens once so the fit hardware is easy to see."
+        "d": "An apparel shop shortens a strap once so the fit hardware is easy to see."
       },
       {
         "example": true,
         "who": "Kitchen shop",
         "t": "Lid lock",
-        "d": "Example: a lid locks shut in one motion for a product-page loop."
+        "d": "A kitchen shop locks a lid shut in one motion for a product-page loop."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Cap twist",
-        "d": "Example: a cap turns off so the closure, not the whole routine, is the subject."
+        "d": "A beauty shop turns a cap off so the closure, not the whole routine, is the subject."
       },
       {
         "example": true,
         "who": "Tool shop",
         "t": "Button press",
-        "d": "Example: one button is pressed so the control is readable without a second feature in frame."
+        "d": "A tool shop presses one button so the control is easy to see, with no second feature in frame."
       }
     ]
   },
-  "related_h2": "Pages for an Ecommerce Feature Video",
+  "related_h2": "Product Videos and Beauty Pages for This Detail",
   "related_lead": "Product videos, beauty scenes, and Shopify pages for the same kind of detail.",
   "relatedLinks": [
     "product-videos",

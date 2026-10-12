@@ -5,7 +5,7 @@
   "h1": "AI Model Photos and Videos for Fashion Brands, Without a Casting Day",
   "eyebrow": "Fashion and clothing",
   "lead": "A flat garment photo can become a try-on, a fit check, or a short look. You skip the casting call and check the print before you post.",
-  "card": "Try-ons, fit checks, lookbooks, and short reviews from one garment photo.",
+  "card": "Try-ons, fit checks, lookbooks, and review-style clips from one garment photo.",
   "secondary_keywords": [
     "AI on-model clothing photos",
     "AI lookbook for clothing brands",
@@ -24,7 +24,7 @@
     },
     {
       "q": "Will the print or the fabric change?",
-      "a": "The result follows your photo. Fine stripes, embroidery, and buttons hold when the upload is sharp. If a trim moves, make another version. A failed job returns its credits."
+      "a": "The result follows your photo. Fine stripes, embroidery, and buttons stay closer when the upload is sharp. If a trim moves, make another version. A failed job returns its credits."
     },
     {
       "q": "Can I show a plus-size or petite model?",
@@ -47,10 +47,10 @@
       "a": "You pay the credits shown before the job, not a creator fee. The person is generated, so post it as an ad, not as a customer's review."
     }
   ],
-  "templates_lead": "Choose a fashion video ad format for try-ons, fit checks, creator reviews, or fabric details.",
+  "templates_lead": "Choose a fashion video ad format for try-ons, fit checks, review-style clips, or fabric details.",
   "cta_lead": "Upload one garment photo, describe the person and the room, and check the credit cost before you start.",
   "steps_h2": "Fashion Outfit Reels in Three Moves",
-  "steps_lead": "Three things you do on screen, from a flat photo to a clip you can post.",
+  "steps_lead": "Go from a flat photo to a clip you can post. Check the print before it goes live.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
@@ -116,7 +116,7 @@
       },
       {
         "t": "Fit you can see move",
-        "d": "A turn, a short walk, or a hem close-up shows drape and fastenings. Fine print holds up better when the upload is sharp.",
+        "d": "A turn, a short walk, or a hem close-up shows drape and fastenings. Fine print is easier to check when the upload is sharp.",
         "img": "n:guide:fx30-fashion-benefit-detail-r1",
         "alt": "Hands pinch the hem and sleeve seam of a plain olive overshirt to show drape and stitching."
       },
@@ -154,7 +154,7 @@
       },
       {
         "t": "Amazon product photos",
-        "d": "Extra gallery views of the garment. Keep logos you do not own out of the scene.",
+        "d": "Extra gallery views of the garment, with the full piece and the color easy to see.",
         "href": "/platforms/amazon-product-photos"
       },
       {
@@ -166,7 +166,7 @@
   },
   "reviews": {
     "h2": "Where an AI Lookbook for Clothing Brands Helps",
-    "lead": "Example ways clothing sellers use one garment photo. These are not quotes.",
+    "lead": "How clothing sellers use one garment photo. The model is generated, not a customer.",
     "items": [
       {
         "example": true,
@@ -233,7 +233,7 @@
       "label": "AI lifestyle product photos"
     }
   ],
-  "related_h2": "Fashion try-ons and lookbooks",
+  "related_h2": "Templates and tools for clothing ads",
   "blockOrder": [
     "hero",
     "strip",

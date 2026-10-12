@@ -1,7 +1,7 @@
 {
   "id": "guides",
   "title": "Product Photo and Video Guides | AIVideosUGC",
-  "description": "Free product photo and video guides for online sellers: shoot a usable photo on your phone, meet Amazon's main image rules, size ads and test versions.",
+  "description": "Free product photo and video guides for online sellers: shoot a usable phone photo, meet Amazon's main image rules, pick the ad size, and test versions.",
   "h1": "Product Photo and Video Guides for Sellers Doing It Themselves",
   "eyebrow": "How-to guides",
   "lead": "Five short guides for one job at a time: a usable phone photo, a plain-background main image, a first paid clip, the right frame, and a fair test.",
@@ -13,9 +13,10 @@
     "Amazon main image tips"
   ],
   "intro": [
-    "Read the guide that matches the job in front of you. Ecommerce ad creative tips and Amazon main image tips are both in this list. Each guide ends in a file you download and post yourself."
+    "Each guide ends in a file you download and post yourself. Read the one for the job you are doing today."
   ],
-  "benefits_h2": "Product photography tips for online sellers",
+  "benefits_h2": "Reasons to read a guide first",
+  "benefits_lead": "If the photo is the problem, start with product photography tips for online sellers. Open the Amazon main image tips before you list, and the ecommerce ad creative tips before you pay for a test.",
   "benefits": [
     {
       "t": "Fewer redos",
@@ -31,7 +32,7 @@
     },
     {
       "t": "Rules you can check",
-      "d": "Main-image rules and channel frames are written as steps with a checklist, so you can review the file before upload.",
+      "d": "Amazon main image rules and ad sizes are checks you do on the file before you upload.",
       "img": "n:guide:fx03-guides-benefit-rules",
       "alt": "Adult seller with a short silver-gray pixie positions a plain ceramic plate fully inside a bright white backdrop."
     },
@@ -42,7 +43,7 @@
       "alt": "Two adult sellers compare two plain fabric pouches side by side while choosing an ad version to test."
     }
   ],
-  "steps_h2": "How to make product video ads",
+  "steps_h2": "How to make product video ads or photos",
   "steps_lead": "Shoot one clear photo, make the file, then post it.",
   "steps": [
     {
@@ -50,7 +51,7 @@
       "d": "Put the product in daylight on a plain surface and take one sharp phone photo."
     },
     {
-      "t": "Choose the Tool",
+      "t": "Make the File",
       "d": "Upload the photo, pick a layout or describe the scene, and read the credit cost before you start."
     },
     {
@@ -68,12 +69,12 @@
       "a": "If you do not have a clear photo yet, start with the phone-photo guide. If the photo is ready, open the guide for the job you are posting today."
     },
     {
-      "q": "Do the guides quote live channel rules?",
-      "a": "They describe the rules sellers run into most often, such as a plain main image and the common frames. Check the channel's current help page before you launch, because those rules change."
+      "q": "Do platform image and ad rules change?",
+      "a": "Yes. These guides cover the rules sellers hit most often, such as a plain main image and the usual ad sizes. Check that channel's current help page before you launch."
     },
     {
       "q": "How much do the files in the guides cost?",
-      "a": "A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The exact cost is shown before every job, and a failed job returns its credits."
+      "a": "A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The exact cost is shown before every job, and a failed job returns its credits."
     },
     {
       "q": "Can one source photo feed every guide?",
@@ -84,8 +85,8 @@
       "a": "Yes. Add captions, a price, and licensed music after download. The tools do not burn captions into the file."
     },
     {
-      "q": "Are the guides a substitute for the tool pages?",
-      "a": "No. A guide tells you how to do one job. The tool page is where you make the file. Use both."
+      "q": "Where do I make the file after I read a guide?",
+      "a": "On the page that guide points to. The guide tells you how to do the job. That page is where you upload the photo and make the file."
     },
     {
       "q": "Can I follow these if I have never run an ad?",

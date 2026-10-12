@@ -4,7 +4,7 @@
   "description": "How AIVideosUGC keeps AI product ads on the level: what you can make, what requests we decline, how your uploads stay private and how to report a problem.",
   "h1": "AI Content Trust and Safety for Product Ads",
   "eyebrow": "Trust & Safety",
-  "lead": "AIVideosUGC is for stores making ads about their own products. This page covers AI content trust and safety for your uploads, your results, and the people who see them.",
+  "lead": "AI content trust and safety means you make ads for products you sell, upload photos you have rights to, and check every result before you publish it.",
   "card": "What you can make, how private uploads stay private, and how to report a problem.",
   "secondary_keywords": [
     "AI content rules",
@@ -17,7 +17,7 @@
     {
       "h2": "What AIVideosUGC is for",
       "paras": [
-        "Online stores use it to turn their own product photos into short video ads and store-ready images. Make content for products you sell or are allowed to promote, on your store, on marketplaces, and on social channels."
+        "Online stores use AIVideosUGC to turn their own product photos into short video ads and store-ready images. A person shown with the product is generated, not a real customer. Make content for products you sell or are allowed to promote, on your store, on marketplaces, and on social channels."
       ],
       "img": "n:guide:b2f5-trust-what-it-is-for-r1",
       "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop."
@@ -25,15 +25,15 @@
     {
       "h2": "AI content rules: what we decline",
       "paras": [
-        "Requests that involve celebrities or other public figures, brand logos or trademarks you do not own, or large amounts of text may be declined. Content that impersonates a real person, misleads buyers, sexualizes anyone, targets minors, or promotes harm is not allowed."
+        "Requests that involve celebrities or other public figures, or brand logos and trademarks you do not own, may be declined. Content that impersonates a real person, misleads buyers, sexualizes anyone, targets minors, or promotes harm is not allowed."
       ],
       "img": "n:guide:b2f5-trust-what-we-decline-r1",
       "alt": "Seller with short silver-gray hair reviews a plain white mug beside a closed laptop."
     },
     {
-      "h2": "Private uploads stay in your account",
+      "h2": "Image rights for AI and private uploads",
       "paras": [
-        "Private uploads and the files they produce stay in your account and are not shown to other customers. Only upload photos you own or are allowed to use. Compare every result with your real product before you publish it."
+        "Only upload photos you own or are allowed to use. Private uploads and the files they produce stay in your account and are not shown to other customers. Compare every result with your real product before you publish it."
       ],
       "img": "n:guide:b2f5-trust-uploads-results-r1",
       "alt": "Seller with a close-cropped haircut checks a ceramic mug beside a closed laptop and a padlock."
@@ -41,7 +41,7 @@
     {
       "h2": "Follow the AI-generated ads policy before you publish",
       "paras": [
-        "Show what your product really does. Add prices, dates, and claims yourself in your design or ad tool so they are exact, and follow each platform's rules, including any rule about labeling AI-generated content. The AI content checklist is a practical pass before you post."
+        "Show what your product really does. Add prices, dates, and claims yourself in your design or ad tool so they are exact, and follow each platform's rules, including any rule about labeling AI-generated content. Use the [AI content checklist](page:blog-ai-video-review-checklist) before you post."
       ],
       "img": "n:guide:b2f5-trust-ai-content-r1",
       "alt": "Seller with a short copper-red pixie compares a speckled ceramic mug with the same mug beside a closed laptop."
@@ -57,8 +57,8 @@
   ],
   "faq": [
     {
-      "q": "Can I download the product assets made in my account?",
-      "a": "Yes. Download the photos and videos from your signed-in account and use them commercially without a watermark. You still need the rights to the source photo, and you still follow the rules of the platform you post on."
+      "q": "Can I download the photos and videos made in my account?",
+      "a": "Yes. Download them from your signed-in account and use them commercially, with no watermark. You still need the rights to the source photo, and you still follow the rules of the platform you post on."
     },
     {
       "q": "Are my uploads shown to other customers?",
@@ -69,12 +69,16 @@
       "a": "Compare the result with your product, add accurate prices and claims in your editor, and follow the destination platform's rules for labeling AI-generated content."
     },
     {
+      "q": "Is the person in the ad a real customer?",
+      "a": "No. Presenters are generated. They are not real customers, so do not post the clip as a review from a real person."
+    },
+    {
       "q": "Can I make an ad with a celebrity or a brand I do not own?",
       "a": "No. Requests that involve celebrities, other public figures, or logos and trademarks you do not own may be declined. Use the tool for your own products and your own brand."
     },
     {
       "q": "Where are the full content and data-use rules?",
-      "a": "Read the [Privacy Policy](/privacy), [Terms of Service](/terms), [Content Policy](/content), and [Refund Policy](/refunds) for the full rules. This page covers what you can make, which requests we decline, how uploads stay private, and how to report a problem."
+      "a": "Read the [Privacy Policy](/privacy), [Terms of Service](/terms), [Content Policy](/content), and [Refund Policy](/refunds)."
     },
     {
       "q": "How do I report AI misuse?",

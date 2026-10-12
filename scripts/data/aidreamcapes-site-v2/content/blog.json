@@ -1,7 +1,7 @@
 {
   "id": "blog",
   "title": "Ecommerce Product Content Blog for Sellers | AIVideosUGC",
-  "description": "Product photo, AI video, launch, and pre-publish guides for small online shops. Make your own listing images and video ads faster, for less, without a shoot.",
+  "description": "Guides for small online shops: listing photos, short ads, launch clips, and the check before you publish. Each article starts from a photo you already have.",
   "h1": "An Ecommerce Product Content Blog for Small Shops",
   "eyebrow": "Seller articles",
   "lead": "Five articles on listing photos, short ads, launch clips, and the check you do before you publish. Each one starts from a product photo you already have.",
@@ -13,17 +13,17 @@
     "AI product content tips"
   ],
   "intro": [
-    "These articles are for shops that make their own listing photos and short ads. They cover a usable source photo, a spoken clip, a pre-publish check, a launch reveal, and a person wearing the item without a shoot.",
+    "These articles are for shops that make their own listing photos and short ads. They cover a usable source photo, a creator-style ad, a pre-publish check, a launch reveal, and a person wearing the item without a shoot.",
     "Read the piece that matches the job, then make the file in the tool it names. You download it and post it yourself."
   ],
   "faq": [
     {
       "q": "Where do I start if I am new to this?",
-      "a": "Start with the photography article if your only asset is a phone photo. Start with the ad article if you already have a clear product photo and need a clip."
+      "a": "If you only have a phone photo, start with the photography article. If you already have a clear product photo and need a clip, start with the ad article."
     },
     {
-      "q": "Do the articles replace the tool pages?",
-      "a": "No. An article explains the job. The tool page is where the file is made. The link in the article opens that tool."
+      "q": "Should I read the article or open the tool?",
+      "a": "Read the article for the job, then open the tool it names. The article explains the job. The tool is where the file is made."
     },
     {
       "q": "What should I check before I publish?",
@@ -38,16 +38,16 @@
       "a": "Yes. One article shows how to start from a clear garment photo and describe the person and the setting. Check the fit before you post."
     },
     {
-      "q": "How much does a file cost?",
-      "a": "A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The cost is shown before you start, and a failed job returns its credits."
+      "q": "How much does a photo or a clip cost?",
+      "a": "A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start, and a failed job returns its credits."
     },
     {
-      "q": "Can I use the same check before every post?",
-      "a": "Yes. The checklist article is the repeatable review: product match, a second watch for clips, and your own words for any price or claim."
+      "q": "Are the people in the clips real customers?",
+      "a": "No. The person is generated. Do not give them a name or a line that says they bought the product."
     },
     {
-      "q": "Where are the channel-specific answers?",
-      "a": "Frame and upload rules live on the platform pages and in the guides. These articles stay on the content job, not the ad-account setup."
+      "q": "Which size should I use for TikTok or a product grid?",
+      "a": "Product photos come out square. Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. The ad-size guide and the platform pages say which frame a placement uses."
     }
   ],
   "relatedLinks": [
@@ -58,8 +58,8 @@
     "templates",
     "industries"
   ],
-  "steps_h2": "Product photo tips for online stores",
-  "steps_lead": "Clip ideas for small brands, and shop content ideas you can make from one photo.",
+  "steps_h2": "How to go from an article to a posted file",
+  "steps_lead": "Pick the piece for the job, make one file, then download it and add your own price or captions.",
   "steps": [
     {
       "t": "Pick the Article",
@@ -67,7 +67,7 @@
     },
     {
       "t": "Make One File",
-      "d": "Upload one product photo in the tool the article names, and read the credit cost before you start."
+      "d": "Upload one clear photo in the tool the article names, and read the credit cost before you start."
     },
     {
       "t": "Download and Post",

@@ -259,7 +259,7 @@
   "benefits": [
     {
       "t": "Start before the offer is final",
-      "d": "Build the product scene while the price, the code, and the dates are still being decided. The visual can be ready before the offer wording is final.",
+      "d": "Build the product scene while the price and the code are still being decided. Leave the product clear, with empty space for the offer.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-offer",
       "alt": "Denim jacket on a hanger against a pale wall with open space for an offer.",
       "frame": "none"
@@ -273,7 +273,7 @@
     },
     {
       "t": "Get a square post or a short clip",
-      "d": "Make a 1:1, 9:16, 16:9, 4:3, or 3:4 version from the same photo. A clip runs 6, 10, 15, or 30 seconds, and the credit cost shows first.",
+      "d": "The photo is square. A clip from the same photo runs 6, 10, 15, or 30 seconds, in 9:16, 1:1, 16:9, 4:3, or 3:4.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-versions",
       "alt": "Adult hand places a wireless charging pad on a dark desk.",
       "frame": "none"
@@ -360,7 +360,7 @@
       },
       {
         "t": "The upload stays in your account",
-        "d": "The product photo and the result stay in your account until you download them and share them."
+        "d": "The product photo and the result stay in your account. They are not published until you share them."
       },
       {
         "t": "Music and captions after download",

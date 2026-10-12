@@ -11,16 +11,16 @@
     "Instagram carousel video",
     "sequenced product ad"
   ],
-  "steps_h2": "Make a Sequenced Product Ad in 3 Steps",
-  "steps_lead": "The beats stay in order. The headline and price stay in your editor until you confirm them.",
+  "steps_h2": "How to Make a Carousel Video Ad in 3 Simple Steps",
+  "steps_lead": "The shots stay in the order you describe. The headline and price stay in your editor until you confirm them.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one photo of the product that will sit on the destination page. Keep the full item visible."
+      "d": "Upload one photo of the product shoppers will see on the product page. Keep the full item visible."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the ordered beats, then pick a size and a length from 6 to 30 seconds. Keep every beat on the same item."
+      "d": "Describe the shots in order, then pick a size and a length from 6 to 30 seconds. Keep every shot on the same item."
     },
     {
       "t": "Download and Post",
@@ -46,19 +46,19 @@
   },
   "faq": [
     {
-      "q": "What is a carousel video ad here?",
-      "a": "One ordered clip about a single product, moving from an opening look to a use beat and a clear finish. It is a video, not a stack of still cards."
+      "q": "What is a carousel video ad?",
+      "a": "One ordered clip about a single product, from an opening look to an in-use shot and a clear finish. It is a video, not a stack of still cards."
     },
     {
-      "q": "How do I set the order?",
-      "a": "Upload one product photo, describe the beats in the order shoppers should see them, pick a size and length, then download."
+      "q": "How do I make a carousel video ad?",
+      "a": "Upload one product photo, describe the shots in the order shoppers should see them, pick a size and length, then download."
     },
     {
-      "q": "Why keep every beat on the same item?",
-      "a": "The sequence is easier to follow when the product does not change mid-clip. A second product belongs in another file."
+      "q": "Should one carousel video ad show two products?",
+      "a": "No. Keep every shot on the same item so the sequence is easy to follow. Put a second product in another file."
     },
     {
-      "q": "Who is it for?",
+      "q": "Who is a carousel video ad for?",
       "a": "Fashion and electronics shops that want an Instagram, Facebook or product-page clip to walk through one item."
     },
     {
@@ -67,15 +67,15 @@
     },
     {
       "q": "Which size and length fit a feed sequence?",
-      "a": "1:1 for a square feed, 9:16 for Reels, plus 16:9, 4:3 or 3:4. Use 6 seconds for a short reveal, 10 or 15 for a few beats, or 30 when the story needs more."
+      "a": "1:1 for a square feed, 9:16 for Reels, plus 16:9, 4:3 or 3:4. Use 6 seconds for a short reveal, 10 or 15 for a few shots, or 30 when the story needs more."
     },
     {
-      "q": "Can I place a headline and price on the video here?",
-      "a": "Add the headline, price and call to action in your editor after download. The generator leaves those live details out."
+      "q": "Can I place a headline and price on the video?",
+      "a": "Add the headline, price and call to action in your editor after download. The file does not include a headline or price."
     },
     {
       "q": "Do I need a multi-camera shoot?",
-      "a": "No. The beats are described from one photo. You do not book a location or a creator to get the sequence."
+      "a": "No. The shots come from one photo. You do not book a location or a creator to get the sequence."
     },
     {
       "q": "What does the sequence cost?",
@@ -119,8 +119,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a Scene for a Carousel Ad Video",
-      "lead": "Open one product scene and keep every shot on that same item. Add the headline or price after download.",
+      "title": "Browse Video Ad Templates by Category",
+      "lead": "Open a category and rebuild a scene from your own product photo. Add the headline and price after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -541,14 +541,14 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Choose a Scene for a Carousel Ad Video"
+        "h2": "Browse Video Ad Templates by Category"
       },
       "faq": {
         "h2": "Carousel Video Ad Questions"
       }
     }
   },
-  "cta_title": "Ready to Sequence the Product?",
+  "cta_title": "Ready to Make the Carousel Video?",
   "cta_lead": "Upload one product photo and see the credit cost before you start.",
   "blockOrder": [
     "hero",
@@ -556,11 +556,12 @@
     "steps",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
     "h2": "How Shops Use an Instagram Carousel Video",
-    "lead": "Example beats for one product. The headline and price go on after download.",
+    "lead": "One product per clip. The headline and price go on after download.",
     "items": [
       {
         "example": true,
@@ -587,28 +588,28 @@
         "example": true,
         "who": "Beauty shop",
         "t": "Tabletop turn",
-        "d": "Example: a coral cream jar rotated on a clean table as a closer look.",
+        "d": "A beauty shop rotates a coral cream jar on a clean table for a closer look.",
         "img": "n:guide:fx19-carousel-benefit-editable-04"
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Sink open",
-        "d": "Example: a canvas toiletry pouch opened at a sink.",
+        "d": "A beauty shop opens a canvas toiletry pouch at a sink.",
         "img": "n:guide:fx19-carousel-example-open-01"
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "Tissue reveal",
-        "d": "Example: a blue insulated bottle lifted from tissue.",
+        "d": "A drinkware shop lifts a blue insulated bottle from tissue.",
         "img": "n:guide:fx19-carousel-example-reveal-02"
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Grooming shot",
-        "d": "Example: a wooden pet brush used in a grooming beat.",
+        "d": "A pet shop uses a wooden pet brush in a grooming shot.",
         "img": "n:guide:fx19-carousel-example-use-03"
       },
       {

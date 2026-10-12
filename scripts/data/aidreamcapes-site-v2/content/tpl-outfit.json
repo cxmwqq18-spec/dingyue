@@ -72,7 +72,7 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "This template is set up for 9:16. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Use 9:16 for TikTok and Reels. You can also pick 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -98,11 +98,11 @@
       "result": "n:guide:tpl-outfit-c3-m2-result-9x16",
       "resultPosition": "center 20%",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and seam details exactly. An adult model turns once to show the side fit of the beige zip jacket. Use a full-length medium frame with a slow tracking move so the collar, cuffs, hem and shoes stay visible. Soft studio daylight keeps the beige jacket and seams clear. End facing forward with the full jacket centered. Sound: quiet room tone and a light fabric rustle. No music. Keep the final pose steady for a thumbnail and leave safe space for platform controls."
+      "prompt": "An adult turns once in the beige zip jacket so the side fit shows. The collar, cuffs, hem and shoes stay in frame, in soft studio daylight."
     },
     "picker": {
       "title": "Choose from Outfit Reel Ideas",
-      "lead": "These cards cover many categories. There is no try-on filter. Open a clothing card, then add a photo of the garment.",
+      "lead": "Open a clothing card, then add a photo of the garment you sell. The other categories are there when the next ad is not apparel.",
       "chips": [
         {
           "id": "accessories",
@@ -532,14 +532,15 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
     "reviews",
+    "steps",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
     "h2": "Sample AI Clothing Model Video Setups",
-    "lead": "Example scenes for this template. They show how a clothing shop could present one outfit.",
+    "lead": "Example scenes for one outfit, including a menswear video ad. They are not buyer reviews.",
     "items": [
       {
         "example": true,
@@ -569,25 +570,25 @@
         "example": true,
         "who": "Menswear shop",
         "t": "A menswear cut",
-        "d": "Example: a menswear shop uses the jacket turn as its menswear video ad, then checks the color against the source photo."
+        "d": "Example: a menswear shop uses one jacket turn as its menswear video ad, then checks the color against the source photo."
       },
       {
         "example": true,
-        "who": "Size editor",
-        "t": "Price after download",
-        "d": "Example: size, price, and fabric notes are typed in an editor after the file downloads."
+        "who": "Dress shop",
+        "t": "Hem and sleeves",
+        "d": "Example: a dress shop uses one short walk so the hem and sleeves stay in frame, then adds the size notes after download."
       },
       {
         "example": true,
-        "who": "Color reviewer",
-        "t": "Match the cloth",
-        "d": "Example: the exported color is compared with the garment photo before the reel is posted."
+        "who": "Color shop",
+        "t": "Color against the cloth",
+        "d": "Example: the shop compares the reel with the garment photo and posts only when the color still matches."
       },
       {
         "example": true,
-        "who": "Feed buyer",
-        "t": "Vertical first",
-        "d": "Example: a 9:16 reel is the feed cut. The credit cost is shown before the job runs."
+        "who": "Feed editor",
+        "t": "TikTok cut first",
+        "d": "Example: the shop posts a 9:16 fashion TikTok ad first, then can make another length from the same photo."
       },
       {
         "example": true,
@@ -598,13 +599,13 @@
       {
         "example": true,
         "who": "Founder",
-        "t": "Not a customer fit check",
-        "d": "Example: the person wearing the outfit is an AI performer, not a buyer review."
+        "t": "AI performer, not a buyer",
+        "d": "Example: the person wearing the outfit is an AI performer, so the shop does not present the reel as a customer fit check."
       }
     ]
   },
   "related_h2": "Pages for a Fashion TikTok Ad",
-  "related_lead": "Video ads, try-on and lookbook templates, and the fashion industry page.",
+  "related_lead": "Video ads, try-on, lookbook, a sale banner, TikTok, and the fashion page.",
   "relatedLinks": [
     {
       "id": "video-ads",

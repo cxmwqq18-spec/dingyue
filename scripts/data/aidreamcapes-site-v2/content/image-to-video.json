@@ -4,38 +4,38 @@
   "description": "Animate one product photo into a short video ad for TikTok, Reels, or product pages. Add clear movement without booking a new shoot or camera crew.",
   "h1": "AI Image to Video: Move a Product Photo Into an Ad",
   "eyebrow": "Image to video",
-  "lead": "AIVideosUGC adds one clear motion to a product photo you already have, such as a pour, a turn, an open or a stretch. No camera crew and no new shoot. Pick a size, choose 6 to 30 seconds and download a clip for a feed, a listing or a product page.",
+  "lead": "AIVideosUGC adds one clear motion to a product photo you already have, such as a pour, a turn, a lid opening or a stretch. No camera crew and no new shoot. Pick a size, choose 6, 10, 15 or 30 seconds, and download a clip for a feed, a listing or a product page.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
     "turn image into video ad",
     "AI photo animation for ads"
   ],
-  "benefits_h2": "Turn an Image Into a Video Ad You Can Test",
+  "benefits_h2": "See the Cost, Then Check the Clip",
   "benefits": [
     {
-      "t": "Motion Without a New Shoot",
-      "d": "Go from a still to a moving clip without booking a camera. Change the first movement and render another version."
+      "t": "See the Credit Cost First",
+      "d": "A 6-second clip uses 24 credits and a 15-second clip uses 60. You see that cost before the job starts."
     },
     {
-      "t": "Credits Instead of a Reshoot",
-      "d": "A 6-second clip uses 24 credits and a 15-second clip uses 60. If the render fails, those credits come back."
+      "t": "A Failed Job Returns the Credits",
+      "d": "If the clip does not generate, those credits come back to your balance. You can name a simpler motion and try again."
     },
     {
-      "t": "Check the Item Before You Post",
-      "d": "Compare the finished motion with the source photo. If the shape, color or label drifts, render again before you post."
+      "t": "Match It to the Source Photo",
+      "d": "Compare the shape, color and label with the photo you uploaded. If a detail drifts, make another version before you post."
     },
     {
-      "t": "One Feature Before the Scroll",
-      "d": "Show a pump press, a stretch or an open in the first seconds, so the detail is visible before the viewer moves on."
+      "t": "Add Sound and a Price Later",
+      "d": "The clip does not add sound, captions or a price. Put those on in your editor, and use music you have the rights to."
     },
     {
       "t": "You Name the Motion",
-      "d": "You decide what moves and how long it runs. Sound, captions and price are added after download."
+      "d": "You decide what moves and how long the clip runs. The tool does not invent a script or add a presenter."
     },
     {
       "t": "Clear to Post",
-      "d": "Finished clips can run in paid or organic placements, and they carry no watermark."
+      "d": "Finished clips can run in a paid or organic placement, and they carry no watermark."
     }
   ],
   "steps_h2": "How to Make an Image-to-Video Ad in 3 Simple Steps",
@@ -47,7 +47,7 @@
     },
     {
       "t": "Describe the Motion",
-      "d": "Name one movement, such as a turn, pour, open or stretch, then pick a size and a length from 6 to 30 seconds."
+      "d": "Name one movement, like a pour or a lid opening. Then pick a size and a 6, 10, 15 or 30 second length."
     },
     {
       "t": "Download and Post",
@@ -74,7 +74,7 @@
   "faq": [
     {
       "q": "What is AI image to video?",
-      "a": "It adds one focused motion to a still product photo, such as a turn, a pour, an open or a stretch."
+      "a": "It adds one focused motion to a still product photo, such as a turn, a pour, a lid opening or a stretch."
     },
     {
       "q": "How do I turn a product photo into a video?",
@@ -86,11 +86,11 @@
     },
     {
       "q": "Which photo should I upload?",
-      "a": "Use a clear, well-lit photo with the full product visible and the important details in frame."
+      "a": "Use a clear, well-lit photo with the full product visible and the important details in the frame."
     },
     {
       "q": "Which sizes can I make?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4 in the workspace."
+      "a": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4."
     },
     {
       "q": "Which lengths can I choose?",
@@ -132,8 +132,8 @@
       "d": "Add the download where that marketplace allows a video, then check its current video rules."
     },
     {
-      "t": "Another Frame",
-      "d": "Render the same motion in 9:16, 1:1, 16:9, 4:3 or 3:4 for the placement you are using."
+      "t": "An Organic Post",
+      "d": "Post the clip on your store or in an organic feed. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for that placement."
     }
   ],
   "visual": {
@@ -144,7 +144,7 @@
       "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A slow curl of steam rises from the cream ceramic mug with blue flecks on a wooden counter as morning light moves across its glaze. Medium close-up with one gentle push-in. No music, text or logos."
+      "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. One gentle push-in. Keep the mug's shape, color and label as in the photo, and leave music, text and logos off."
     },
     "picker": {
       "title": "Product Photo to Video Examples",
@@ -176,8 +176,8 @@
       {
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-example-03",
-        "h": "Another Frame",
-        "d": "Render the same motion in 9:16, 1:1, 16:9, 4:3 or 3:4 for the placement you are using."
+        "h": "An Organic Post",
+        "d": "Post the clip on your store or in an organic feed. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for that placement."
       }
     ],
     "input": [],
@@ -188,7 +188,7 @@
         "h2": "Questions About AI Image to Video"
       },
       "m4": {
-        "h2": "Put moving product details to work"
+        "h2": "Where to Place an AI Image to Video"
       }
     },
     "overview": ""
@@ -196,7 +196,6 @@
   "blockOrder": [
     "hero",
     "definition",
-    "picker",
     "reasons",
     "steps",
     "uses",
@@ -215,25 +214,25 @@
     ]
   },
   "reasons": {
-    "h2": "Animate a Product Photo for a New Opening",
+    "h2": "Reasons to Animate a Product Photo",
     "items": [
       {
-        "t": "Motion From the Photo You Sell",
-        "d": "The clip starts from your upload, so the item on screen is the one in your catalog. One motion stays easy to follow."
+        "t": "The Photo You Already Sell",
+        "d": "The clip starts from the photo you already sell. One motion, such as a pour, a turn or a stretch, is what the shopper follows."
       },
       {
-        "t": "A Frame for Each Placement",
-        "d": "Make the same motion in a vertical, square or wide frame, including 4:3 and 3:4, without re-cropping a filmed source."
+        "t": "A Size for Each Placement",
+        "d": "Make that motion in 9:16, 1:1, 16:9, 4:3 or 3:4. You do not re-crop a filmed shot for every feed."
       },
       {
-        "t": "A New Opening, Same Photo",
-        "d": "Change the motion or the length and compare openings while the product photo stays put."
+        "t": "A New Opening Without a New Shoot",
+        "d": "Change the motion or the length and keep the same photo. The next test does not need a camera day."
       }
     ]
   },
-  "benefits_lead": "For sellers who need a moving product detail and do not have a shoot on the calendar.",
+  "benefits_lead": "The cost is clear before you start, and sound, captions and a price go on after download.",
   "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "Explore the rest of the AIVideosUGC tools.",
+  "related_lead": "Other video tools that start from the same kind of product photo.",
   "relatedLinks": [
     "video-ads",
     "product-videos",
@@ -253,7 +252,7 @@
     "rows": [
       [
         "First clip",
-        "One photo and one motion, then a render",
+        "One photo and one motion, then the clip is made",
         "A shoot day or a long manual edit"
       ],
       [
@@ -277,7 +276,7 @@
         "Recorded on set or built in the edit"
       ],
       [
-        "A failed render",
+        "A failed job",
         "Credits come back on their own",
         "The time is already spent"
       ]
@@ -291,25 +290,25 @@
         "example": true,
         "who": "Beauty shop",
         "t": "Balm swatch",
-        "d": "Example: a short balm movement for a paid feed test."
+        "d": "A beauty shop uses a short balm movement in a paid feed test."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Pour for a listing",
-        "d": "Example: hydration mix pouring into a glass on a listing."
+        "d": "A drink seller shows a hydration mix pouring into a glass on a listing."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Shirt stretch",
-        "d": "Example: a linen shirt stretch for a TikTok or Reel."
+        "d": "An apparel shop uses a linen shirt stretch for a TikTok or Reel."
       },
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Pump press",
-        "d": "Example: a cleanser pump dispensing one dose."
+        "d": "A skincare shop shows a cleanser pump dispensing one dose."
       }
     ]
   },

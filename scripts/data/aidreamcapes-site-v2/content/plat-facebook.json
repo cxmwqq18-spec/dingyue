@@ -108,40 +108,40 @@
       }
     }
   },
-  "benefits_h2": "Facebook ads for small business, without a shoot day",
+  "benefits_h2": "Reasons Facebook ads for small business can skip a shoot",
   "benefits": [
     {
       "t": "A square still or a tall clip",
       "d": "Use a square still in the feed, or a tall clip where a full-screen placement needs it. Both start from your upload."
     },
     {
-      "t": "Another file when the old one tires",
-      "d": "Change the opening or the setting and run the job again. You do not book a new shoot to refresh the ad."
+      "t": "A fresh file when an ad goes quiet",
+      "d": "Change the opening or the setting and run it again. You do not book a new shoot to refresh the ad."
     },
     {
       "t": "The offer stays in Ads Manager",
       "d": "Headline, price and button text are added after download, so each audience can read a different line."
     }
   ],
-  "steps_h2": "Make Facebook video ads for ecommerce, or a square still, in 3 steps",
+  "steps_h2": "Make Facebook video ads for ecommerce in 3 steps",
   "steps_lead": "Upload, describe the moment, download. You place the file yourself.",
   "more_sections": [
     {
-      "eyebrow": "How the file is finished",
-      "h2": "How square video ads for Facebook get finished",
-      "lead": "The square video is the feed file. Add the headline and the price in Ads Manager after you download.",
+      "eyebrow": "The business case",
+      "h2": "The case for square video ads for Facebook",
+      "lead": "A square video is one feed option. It is not a promise of cheaper clicks.",
       "items": [
         {
-          "t": "Show the item plainly",
-          "d": "One familiar action is enough. Shoppers should know what the item is before they read the headline."
+          "t": "Show one action a still cannot",
+          "d": "A short clip can show a pour, an open or a fit. Keep it to one action so the product is obvious before the headline."
         },
         {
-          "t": "Make the next version on purpose",
-          "d": "Change the scene, not a dozen settings at once, so the test stays readable."
+          "t": "Spend a test, not a shoot day",
+          "d": "Another version starts from the same product photo. You see the credit cost before you start, and a failed file returns those credits."
         },
         {
-          "t": "You publish it",
-          "d": "We do not send the file to Ads Manager. You download it, check the crop, and upload it."
+          "t": "Change one thing, then read it",
+          "d": "Swap the scene or the opening and keep the product the same. You download the file and upload it in Ads Manager yourself."
         }
       ]
     }
@@ -157,9 +157,9 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "Keep the next ad moving from a picture you already have.",
+  "benefits_lead": "Start the next ad from a picture you already have, in the shape the placement needs.",
   "reasons": {
-    "h2": "Why Facebook feed ad images are simple to refresh",
+    "h2": "Why Facebook feed ad images need no creator",
     "lead": "A new file should not wait on a creator's calendar.",
     "items": [
       {

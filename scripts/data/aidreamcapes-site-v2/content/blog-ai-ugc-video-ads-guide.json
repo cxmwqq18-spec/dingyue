@@ -1,10 +1,10 @@
 {
   "id": "blog-ai-ugc-video-ads-guide",
   "title": "AI UGC Video Ads Guide: What Makes One Work | AIVideosUGC",
-  "description": "Plan an AI-generated creator-style product ad, check that it is not presented as a customer review, then edit the opening, scene, and final details.",
+  "description": "AI UGC video ads guide: plan a creator-style clip from one product photo, then add captions after download. Do not present the person as a real customer.",
   "h1": "AI UGC Video Ads Guide: Creator-Style Clips for Your Shop",
   "eyebrow": "Video ad guide",
-  "lead": "This AI UGC video ads guide shows how to make a creator-style clip from one product photo, and how to keep the generated person from being presented as a real customer.",
+  "lead": "Make a creator-style clip from one product photo, and do not present the generated person as a real customer.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator style product videos",
@@ -33,10 +33,11 @@
       "alt": "Hands hold plain gray skincare jar beside a bathroom mirror and open its lid."
     },
     {
-      "h2": "How to make UGC ads from a product photo?",
+      "h2": "How to make UGC ads from a product photo in 3 steps",
       "paras": [
-        "Upload a clear photo, write one sentence about who is there, where they are, what they do with the product, and how it is filmed.",
-        "A usable line for a gray jar: \"An adult at a bright bathroom counter opens the jar, scoops a little onto the back of a hand, and turns the jar toward the phone.\" Leave on-screen words, famous faces, and logos you do not own out of the request. Those may be refused. Add captions yourself, because lettering drawn into the clip is often wrong. [AI spokesperson video](page:spokesperson-videos) is the job when the clip is a person talking about one feature. [AI image to video](page:image-to-video) fits when you want motion from the still without a spoken part."
+        "Upload one clear photo, write one sentence for the scene, and download a clip you caption yourself.",
+        "A usable line for a gray jar: \"An adult at a bright bathroom counter opens the jar, scoops a little onto the back of a hand, and turns the jar toward the phone.\" Leave on-screen words, famous faces, and logos you do not own out of the request. Those may be declined. The [Content Policy](/content) says what can be uploaded. Add captions yourself, because lettering drawn into the clip is often wrong.",
+        "[AI spokesperson video](page:spokesperson-videos) is the job when the clip is a person talking about one feature. [AI image to video](page:image-to-video) fits when you want motion from the still without a spoken part."
       ],
       "img": "n:guide:fx04-blog-ugc-scene-r1",
       "alt": "Hands scoop a small amount from plain gray skincare jar onto a hand."
@@ -54,7 +55,8 @@
       "h2": "How long should AI video ads for TikTok be?",
       "paras": [
         "Use 6 or 10 seconds for one action, 15 when the product has to be used, and 30 for a fuller demo. Pick 9:16 so the clip fills the phone.",
-        "Six seconds is a lid coming off. Use ten seconds when that same action needs a second angle. Fifteen seconds can take the product out, use it, and set it down. Thirty seconds leaves room for a longer demo. Those lengths cost 24, 40, 60, and 120 credits, shown before each job. Use 1:1 for a square feed, 16:9 for a wide YouTube video, and 3:4 or 4:3 when the placement asks. Each version is a new job. [AI product video generator](page:product-videos) is the place for a demo that is more demonstration than a scroll-stopping open."
+        "Six seconds is a lid coming off. Ten seconds fits that action plus a second look. Fifteen can take the product out, use it, and set it down. Thirty leaves room for a longer demo. Those lengths cost 24, 40, 60, and 120 credits, shown before you start.",
+        "Use 1:1 for a square feed, 16:9 for a wide screen, and 3:4 or 4:3 when the placement asks for them. Each length or frame is a new clip. For a demo that shows the product in use, rather than one quick action, start with the [AI product video generator](page:product-videos)."
       ],
       "img": "n:guide:fx04-blog-ugc-length-r1",
       "alt": "Hands close plain gray skincare jar on a neutral bedroom dresser."
@@ -63,7 +65,7 @@
       "h2": "How do I finish short video ads for small brands?",
       "paras": [
         "Treat the download as raw footage. Add captions, music, the price, and any code yourself. Captions are not added for you.",
-        "Put the words on in CapCut, TikTok, Canva, or Ads Manager so every character is yours. Keep the line short and away from the bottom and right edge of a vertical video, where the caption and buttons sit. The upper middle of the frame is a safer spot. Use a track cleared for ads."
+        "Put the words on in CapCut, TikTok, Canva, or Ads Manager so every character is yours. Keep the line short and away from the bottom and right edge of a vertical video, where the buttons sit. The upper middle of the frame is a safer spot. Use music you are allowed to run in an ad."
       ],
       "img": "n:guide:fx04-blog-ugc-edit-r1",
       "alt": "Hands hold plain gray skincare jar over a vanity beside a blank phone."
@@ -78,8 +80,8 @@
     {
       "h2": "The short version",
       "paras": [
-        "One photo, one action in the first frame, a length of 6 to 30 seconds, and your own captions and licensed sound.",
-        "The person is generated. Say what the product does, not that a customer said so."
+        "One photo, one action in the first frame, a length of 6 to 30 seconds, and your own captions and music you are allowed to use.",
+        "The person is generated. Say what the product does, not that a customer said so. A finished clip is commercially usable and has no watermark."
       ]
     }
   ],
@@ -87,8 +89,8 @@
     "guide-first-tiktok-video-ad",
     "guide-testing-ad-versions",
     "guide-ad-sizes-by-platform",
-    "blog-unboxing-videos-for-launches",
     "blog-ai-video-review-checklist",
+    "blog-unboxing-videos-for-launches",
     "blog-ai-product-photography-guide"
   ],
   "faq": [
@@ -115,6 +117,10 @@
     {
       "q": "What if the clip shows a part my product does not have?",
       "a": "Do not post it. Make the clip again and name the exact action and the exact product in the sentence."
+    },
+    {
+      "q": "Can I use the clip in a paid ad?",
+      "a": "Yes. A finished clip is commercially usable and has no watermark. Add captions and music after download, and do not present the person as a customer."
     }
   ],
   "cta_title": "Make a creator-style ad from one product photo",
@@ -123,8 +129,8 @@
     "guide-first-tiktok-video-ad",
     "guide-testing-ad-versions",
     "guide-ad-sizes-by-platform",
-    "blog-unboxing-videos-for-launches",
     "blog-ai-video-review-checklist",
+    "blog-unboxing-videos-for-launches",
     "blog-ai-product-photography-guide"
   ]
 }

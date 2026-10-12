@@ -12,32 +12,35 @@
     "square ad images for social media",
     "AI images for paid social ads"
   ],
-  "benefits_h2": "A Facebook ad image maker with the credit cost shown first",
+  "benefits_h2": "Reasons to use a Facebook ad image maker",
   "benefits": [
     {
       "img": "n:guide:fx18-social-benefit-offer",
       "alt": "A plain charcoal hiking shoe on a clean city curb with open space for a headline.",
       "icon": "check",
       "t": "See 24 credits before you start",
-      "d": "Each square photo shows its cost first. A failed job returns the credits. There is no percentage saving claimed on this page."
+      "d": "The cost is on screen before the photo starts. If it fails, the credits come back."
     },
     {
       "img": "n:guide:fx18-social-benefit-editor",
       "alt": "A plain charcoal hiking shoe on a pale studio surface with clean space above the product.",
       "icon": "bolt",
       "t": "Keep the offer in your words",
-      "d": "Leave open space for the headline. Type the exact price and offer in your ad editor so a generated line cannot invent a discount."
+      "d": "Leave open space for the headline. Type the price and the offer in your ad editor so the picture cannot invent a discount."
     },
     {
       "img": "n:guide:fx18-social-benefit-scene",
       "alt": "A plain charcoal hiking shoe on a warm oak entryway floor beside a neutral mat.",
       "icon": "layers",
       "t": "Try another scene without a shoot",
-      "d": "Move the same product from a curb to a studio surface or an entryway. Each version is its own job."
+      "d": "Move the same product from a curb to a studio surface or an entryway. Each version is a separate photo."
     },
     {
       "t": "Export a square file for the feed",
-      "d": "Download a square image for a common feed placement. Check the crop inside the ad tool before the campaign goes live."
+      "d": "Download a square image for a common feed placement. Check the crop in your ad tool before the campaign goes live.",
+      "icon": "target",
+      "img": "n:guide:fx18-social-output-final",
+      "alt": "A plain charcoal hiking shoe on a pale stone walkway beside low greenery, framed for a square social ad."
     }
   ],
   "steps_h2": "Use the product ad creative generator in 3 steps",
@@ -49,7 +52,7 @@
     },
     {
       "t": "Pick a Scene",
-      "d": "Choose a backdrop that matches how people use the product. Say where you want open space for the headline."
+      "d": "Choose a backdrop that matches how people use the product. Leave an open area for the headline you will add later."
     },
     {
       "t": "Download and Post",
@@ -106,7 +109,7 @@
     },
     {
       "q": "Do I have to label the image as AI?",
-      "a": "Rules differ by platform and region. Follow the disclosure shown in your ad account for that campaign. This page does not decide that for you. A related still is [UGC style product photos](page:tpl-ugc)."
+      "a": "Rules differ by platform and region. Follow the disclosure your ad account shows for that campaign. For a more casual still, see [UGC style product photos](page:tpl-ugc)."
     }
   ],
   "visual": {
@@ -114,7 +117,7 @@
       "source": "n:guide:im13-social-steps-source-r1",
       "result": "n:guide:im13-social-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded matte sage-green insulated bottle as the exact product reference. Preserve its shape, color and screw cap while placing it on a warm wood entryway bench; change the setting only."
+      "prompt": "Place this matte sage-green insulated bottle on a warm wood entryway bench. Keep the shape, color, and cap."
     },
     "picker": {
       "title": "Browse square scenes for the feed",
@@ -137,7 +140,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Place it on a clean city curb in soft morning light with open space for later HTML headline.",
+          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Place it on a clean city curb in soft morning light with open space for a headline.",
           "kind": "photo"
         },
         {
@@ -147,7 +150,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Place it on a warm oak entryway floor beside a blank cream wall with room for later HTML headline.",
+          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Place it on a warm oak entryway floor beside a blank cream wall with room for a headline.",
           "kind": "photo"
         },
         {
@@ -157,7 +160,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Set it on a seamless pale gray studio sweep with a soft shadow and blank space for later HTML headline.",
+          "prompt": "Use the uploaded charcoal hiking shoe as the exact product reference. Keep its color, laces and sole unchanged. Set it on a seamless pale gray studio sweep with a soft shadow and blank space for a headline.",
           "kind": "photo"
         },
         {
@@ -167,7 +170,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Place a plain matte sage insulated bottle on a bright entryway bench as an adult hand reaches to pick it up. Keep the bottle fully visible with clean blank wall space for a later HTML headline.",
+          "prompt": "Place a plain matte sage insulated bottle on a bright entryway bench as an adult hand reaches to pick it up. Keep the bottle fully visible with clean blank wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -177,7 +180,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain cream ceramic mug beside a closed laptop on a tidy oak desk as an adult hand lifts it. Keep the handle clear and leave blank wall space for a later HTML headline.",
+          "prompt": "Show a plain cream ceramic mug beside a closed laptop on a tidy oak desk as an adult hand lifts it. Keep the handle clear and leave blank wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -187,7 +190,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain cream canvas tote carried by an adult through a quiet sidewalk. Keep the full bag visible with clear sky space for a later HTML headline.",
+          "prompt": "Show a plain cream canvas tote carried by an adult through a quiet sidewalk. Keep the full bag visible with clear sky space for a headline.",
           "kind": "photo"
         },
         {
@@ -197,7 +200,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a compact unbranded rounded graphite speaker on a tidy desk as an adult hand presses one button. Keep the speaker fully visible with clean wall space for a later HTML headline.",
+          "prompt": "Show a compact unbranded rounded graphite speaker on a tidy desk as an adult hand presses one button. Keep the speaker fully visible with clean wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -207,7 +210,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show an unbranded folding graphite phone stand holding a plain phone with one small circular camera opening as an adult hand adjusts it on a desk. Leave blank wall space for a later HTML headline.",
+          "prompt": "Show an unbranded folding graphite phone stand holding a plain phone with one small circular camera opening as an adult hand adjusts it on a desk. Leave blank wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -217,7 +220,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain cream ceramic serving bowl as an adult hand pours red sauce over vegetables on a clean kitchen counter. Keep the bowl fully visible with clear wall space for a later HTML headline.",
+          "prompt": "Show a plain cream ceramic serving bowl as an adult hand pours red sauce over vegetables on a clean kitchen counter. Keep the bowl fully visible with clear wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -227,7 +230,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain olive utility jacket on a simple wooden peg as an adult hand adjusts the cuff. Keep the full garment visible with clean wall space for a later HTML headline.",
+          "prompt": "Show a plain olive utility jacket on a simple wooden peg as an adult hand adjusts the cuff. Keep the full garment visible with clean wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -237,7 +240,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain walnut desk organizer with open compartments as an adult hand places a pen inside. Keep the organizer fully visible with blank wall space for a later HTML headline.",
+          "prompt": "Show a plain walnut desk organizer with open compartments as an adult hand places a pen inside. Keep the organizer fully visible with blank wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -247,7 +250,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain matte cream desk lamp as an adult hand turns its small switch beside a notebook. Keep the lamp fully visible with clean wall space for a later HTML headline.",
+          "prompt": "Show a plain matte cream desk lamp as an adult hand turns its small switch beside a notebook. Keep the lamp fully visible with clean wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -257,7 +260,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain teal pet leash as an adult hand clips it to a calm dog collar on a clean bench. Keep the hardware visible with blank wall space for a later HTML headline.",
+          "prompt": "Show a plain teal pet leash as an adult hand clips it to a calm dog collar on a clean bench. Keep the hardware visible with blank wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -267,7 +270,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain cream candle jar on a wooden side table as an adult hand lifts the lid. Keep the jar fully visible with clean wall space for a later HTML headline.",
+          "prompt": "Show a plain cream candle jar on a wooden side table as an adult hand lifts the lid. Keep the jar fully visible with clean wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -277,7 +280,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain cognac leather sandal on a pale stone step as an adult hand adjusts the strap. Keep the full sandal visible with blank wall space for a later HTML headline.",
+          "prompt": "Show a plain cognac leather sandal on a pale stone step as an adult hand adjusts the strap. Keep the full sandal visible with blank wall space for a headline.",
           "kind": "photo"
         },
         {
@@ -287,7 +290,7 @@
             "feed-ready",
             "product-focus"
           ],
-          "prompt": "Show a plain kraft coffee pouch with no label beside a hand grinder as adult hands pour beans into the grinder. Keep the products visible with clean wall space for a later HTML headline.",
+          "prompt": "Show a plain kraft coffee pouch with no label beside a hand grinder as adult hands pour beans into the grinder. Keep the products visible with clean wall space for a headline.",
           "kind": "photo"
         }
       ],
@@ -332,8 +335,8 @@
       },
       {
         "img": "n:guide:fx18-social-use-gym",
-        "h": "Set up the next campaign angle",
-        "d": "Put the same item in a gym or another real place when the next ad needs a different context.",
+        "h": "Show it in a second place",
+        "d": "Put the same bottle on a gym bench when the next ad needs a different setting.",
         "alt": "Adult hand setting a plain matte teal bottle on a clean gym bench beside a folded towel."
       }
     ],
@@ -366,29 +369,25 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Full creative control",
-      "h2": "Square ad images for social media, piece by piece",
-      "lead": "Keep the product clear, pick the setting, and finish the words in your editor.",
+      "eyebrow": "From one photo",
+      "h2": "Square ad images for social media from one photo",
+      "lead": "The item stays recognizable, the setting is one you pick, and the headline waits until download.",
       "items": [
         {
-          "t": "Keep the product clear",
-          "d": "Start from one product photo and keep its shape and color easy to inspect."
+          "t": "Keep the item recognizable",
+          "d": "The photo you upload is the product in the frame. Shape and color stay easy to check at a small size."
         },
         {
-          "t": "Leave room for the exact line",
-          "d": "Reserve open space for the headline, price, or offer you add after download."
+          "t": "Put it where people use it",
+          "d": "A desk, a sidewalk, or an entryway tells shoppers how someone uses it, instead of a product floating on empty space."
         },
         {
-          "t": "Switch the scene",
-          "d": "Move the same item from a city curb to a warm entryway or a plain studio look."
+          "t": "Save the words for your editor",
+          "d": "Keep a calm area empty. You add the headline, the price, and the offer after download."
         },
         {
-          "t": "Export the square",
-          "d": "Download a square file for the feed, then place it in the campaign editor."
-        },
-        {
-          "t": "Do not expect a full ad file",
-          "d": "This page makes the picture. It does not schedule posts or write the legal line for the offer."
+          "t": "Place the file in the campaign",
+          "d": "Download the square and put it in the ad tool. The picture does not schedule the post or write the offer line."
         }
       ]
     }
@@ -406,7 +405,7 @@
   ],
   "reviews": {
     "h2": "How stores test AI images for paid social ads",
-    "lead": "Example workflows, not quotes from customers.",
+    "lead": "Ways a store tries a square scene before it spends on the ad.",
     "items": [
       {
         "example": true,
@@ -418,13 +417,13 @@
         "example": true,
         "who": "Apparel seller",
         "t": "Use a worn view only when the garment matches",
-        "d": "If you need the piece on a person, use an AI-generated adult and compare it with the flat photo. Do not present it as a customer."
+        "d": "If the piece should be worn, use an AI-generated adult and set that view next to the flat photo. The person in the frame is not a customer."
       },
       {
         "example": true,
         "who": "Promo manager",
         "t": "Change the offer without a new shoot",
-        "d": "Keep the scene and update the price in the ad editor. The picture does not lock an old discount into the pixels."
+        "d": "Keep the scene and change the price in the ad editor. The photo does not keep the old discount."
       },
       {
         "example": true,

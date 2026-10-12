@@ -72,7 +72,7 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "This template is set up for 9:16 and 16:9. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Use 9:16 or 16:9 for this how-to. You can also pick 1:1, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -103,7 +103,7 @@
       "sourceHint": "Show the full tool and the surface it works on.",
       "result": "n:guide:c1-tpl-howto-m2-result-video-916",
       "mode": "video",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Switch on this white handheld steamer beside a blue shirt, then press the fabric in one steady pass. Close side framing with one short push-in. Soft window light. End with the steamer beside the smooth panel of blue fabric.",
+      "prompt": "Turn on the white handheld steamer beside a blue shirt and press the fabric in one steady pass. Soft window light, with the steamer and the smoothed cloth both in frame.",
       "options": [
         [
           "Size",
@@ -121,7 +121,7 @@
     },
     "picker": {
       "title": "Choose a Product How-To Video",
-      "lead": "These cards cover many categories. There is no how-to filter. Open a demo card, then add a photo of your product.",
+      "lead": "Browse scenes by category, open one that shows a single task, then add a photo of your product.",
       "chips": [
         {
           "id": "accessories",
@@ -545,7 +545,7 @@
         "h2": "Choose a Product How-To Video"
       },
       "faq": {
-        "h2": "Questions About How to Use Product Video Templates"
+        "h2": "Questions About How to Use a Product Video"
       }
     }
   },
@@ -581,71 +581,72 @@
     "steps",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Sample Instructional Product Video Setups",
-    "lead": "Example scenes for this template. They show how a shop could teach one task.",
+    "h2": "How Shops Teach One Product Task",
+    "lead": "These instructional product video setups show one task, from the first move to the result.",
     "items": [
       {
         "example": true,
         "who": "Home shop",
         "t": "One pass, one result",
-        "d": "Example: a fabric shaver crosses a knit once, then the frame holds on the smoother patch."
+        "d": "A home shop shows a fabric shaver crossing a knit once, then holds on the smoother patch."
       },
       {
         "example": true,
         "who": "Cleaning shop",
         "t": "Problem, then fix",
-        "d": "Example: a brush works one grout line, and the clip ends on the cleaner seam."
+        "d": "A cleaning shop shows a brush on one grout line, and ends on the cleaner seam."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Setup to result",
-        "d": "Example: a handheld steamer starts beside a wrinkled shirt and finishes on the flat cloth."
+        "d": "An apparel shop starts a handheld steamer beside a wrinkled shirt and finishes on the flat cloth."
       },
       {
         "example": true,
         "who": "Desk brand",
         "t": "Tool in use",
-        "d": "Example: a compact tool sits next to a laptop while one short action shows what it does."
+        "d": "A desk brand sets a compact tool next to a laptop and shows one short action."
       },
       {
         "example": true,
         "who": "Support team",
         "t": "The question buyers ask",
-        "d": "Example: the clip answers how the item works, with one task and no extra feature tour."
+        "d": "A support team shows how the item works, with one task and no tour of other features."
       },
       {
         "example": true,
         "who": "Agency",
         "t": "Another task, same photo",
-        "d": "Example: the same product photo is reused for a second task instead of booking another shoot."
+        "d": "An agency uses the same product photo for a second task instead of booking another shoot."
       },
       {
         "example": true,
         "who": "Listing editor",
         "t": "Labels after download",
-        "d": "Example: step words and safety lines are typed in an editor after the file downloads."
+        "d": "A listing editor types step words and safety lines after the file downloads."
       },
       {
         "example": true,
-        "who": "Paid social buyer",
+        "who": "Ad buyer",
         "t": "A frame for the feed",
-        "d": "Example: a 9:16 task clip is exported for a short feed placement, with the cost shown first."
+        "d": "An ad buyer exports a 9:16 task clip for a short feed placement and checks the credit cost first."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "Not a customer",
-        "d": "Example: if a person demonstrates the task, that person is an AI performer, not a buyer review."
+        "t": "Shown as your ad",
+        "d": "A founder who includes a person shows that person as an AI performer, and presents the clip as the shop's own ad."
       },
       {
         "example": true,
         "who": "First-time seller",
         "t": "A short line is enough",
-        "d": "Example: the seller names the task in one line, generates, and checks the working part before posting."
+        "d": "A first-time seller names the task in one line, makes the clip, and checks the working part before posting."
       }
     ]
   },

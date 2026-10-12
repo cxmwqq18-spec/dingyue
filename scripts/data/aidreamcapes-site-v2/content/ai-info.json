@@ -12,7 +12,7 @@
     "AI product video tool",
     "AI product photo tool"
   ],
-  "summary": "AIVideosUGC turns a product photo or a product page link into short video ads and store-ready images for online stores.",
+  "summary": "It makes store images and short videos from a product photo or a public product page link.",
   "facts": [
     [
       "Name",
@@ -32,7 +32,7 @@
     ],
     [
       "Videos",
-      "6, 10, 15, or 30 seconds; 9:16, 1:1, 16:9, 4:3, or 3:4; made from a product photo, a product page link, or a text description"
+      "6, 10, 15, or 30 seconds; 9:16, 1:1, 16:9, 4:3, or 3:4; made from a product photo or a product page link. You describe the scene in that same step."
     ],
     [
       "Photos",
@@ -48,7 +48,7 @@
     ],
     [
       "Commercial use",
-      "Downloaded photos and videos are cleared for commercial use and have no watermark"
+      "Downloaded photos and videos can be used commercially and have no watermark"
     ],
     [
       "Privacy",
@@ -60,18 +60,18 @@
     ]
   ],
   "not_offered": [
-    "Spoken narration, music, or captions on product clips (add them in your editor after download; an AI actor clip speaks the one line you write)",
-    "A library of saved presenters you keep and reuse",
-    "Automatic publishing to ad platforms",
-    "A public way for other software to submit jobs"
+    "Spoken narration, music, or captions on a product clip. Add those in your editor after download. A spokesperson clip is separate: the actor says the one line you write.",
+    "A saved presenter you can keep and reuse on the next video.",
+    "Posting the file for you. You download it and publish it yourself.",
+    "Outside software cannot send a job for you."
   ],
   "describe": [
-    "After download, add captions, music, narration, prices, offers, and campaign settings in your editor or ad platform. Then check the file against your product facts and the rules of the place you will post it."
+    "AIVideosUGC is an online tool that turns a product photo, or a public product page link, into store images and short videos. You choose the frame and the length, see the credit cost, and download a file with no watermark. You add captions, prices, and music yourself after download."
   ],
   "faq": [
     {
       "q": "What is AIVideosUGC?",
-      "a": "An online tool that turns a product photo or a product page link into short video ads and store-ready product images for online stores."
+      "a": "An online tool for stores. Upload a product photo, or paste a product page link, and download a store image or a short video."
     },
     {
       "q": "What is AIVideosUGC pricing?",
@@ -79,7 +79,7 @@
     },
     {
       "q": "Does an AIVideosUGC video include a spoken line?",
-      "a": "Product clips come without narration, music, or captions. Add those in your editor after download. An AI actor clip is different: the actor speaks the one line you write, with mouth movement that follows the words. See [AI spokesperson video](page:spokesperson-videos)."
+      "a": "Product clips come without narration, music, or captions. Add those in your editor after download. A spokesperson clip is different: the actor says the one line you write, and the mouth movement follows the words. See [AI spokesperson video](page:spokesperson-videos)."
     },
     {
       "q": "What video settings can I choose?",
@@ -91,7 +91,7 @@
     },
     {
       "q": "Can I use the results in ads and on my store?",
-      "a": "Yes. Downloaded photos and videos are cleared for commercial use and have no watermark. You can run them on marketplaces, social platforms, and your own store, under each platform's rules."
+      "a": "Yes. Downloaded photos and videos can be used commercially and have no watermark. You can post them on marketplaces, social platforms, and your own store, under each platform's rules."
     }
   ],
   "relatedLinks": [

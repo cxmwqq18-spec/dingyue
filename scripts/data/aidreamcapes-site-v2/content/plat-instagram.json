@@ -108,7 +108,7 @@
       }
     }
   },
-  "benefits_h2": "Product ads for Instagram, in the frames you run",
+  "benefits_h2": "Why product ads for Instagram start from one photo",
   "benefits": [
     {
       "t": "One upload, two shapes",
@@ -133,21 +133,21 @@
   "steps_lead": "Upload, choose the shape, download. You add the caption after that.",
   "more_sections": [
     {
-      "eyebrow": "How a file gets finished",
-      "h2": "How Instagram feed ad images get finished",
-      "lead": "Decide the placement, describe the moment, then download.",
+      "eyebrow": "What the file includes",
+      "h2": "What an Instagram feed ad image includes",
+      "lead": "You get a still or a clip made from your photo. The caption and the soundtrack stay with you.",
       "items": [
         {
-          "t": "Choose the placement first",
-          "d": "A square still suits the grid. A tall clip suits full-screen placements. Pick that before you spend credits."
+          "t": "9:16 for Reels and Stories",
+          "d": "A square still is for the grid. A Reel or Story clip lasts 6, 10, 15 or 30 seconds."
         },
         {
-          "t": "Show one clear action",
-          "d": "A hand, a texture or a single use is enough. The item should stay recognizable."
+          "t": "A generated person, if one appears",
+          "d": "That presenter is made for the frame. They are not a creator you hired, and they are not a real customer."
         },
         {
-          "t": "Download, then place it yourself",
-          "d": "The file has no watermark and is yours to use. You upload it. We do not post it for you."
+          "t": "No caption and no soundtrack",
+          "d": "Add the caption, sticker and soundtrack after download. The file has no watermark, and you post it yourself."
         }
       ]
     }
@@ -165,8 +165,8 @@
   ],
   "benefits_lead": "Pick the placement first, then make a file that fits it.",
   "reasons": {
-    "h2": "Why an Instagram Story ad video is easier to refresh",
-    "lead": "Stories move on quickly. A new tall file can start from the same product photo.",
+    "h2": "Why an Instagram Story ad video needs no creator",
+    "lead": "Stories move on. The next tall file can start from the same product photo, with no booking.",
     "items": [
       {
         "t": "No creator hold",
@@ -174,11 +174,11 @@
       },
       {
         "t": "A still and a clip from one source",
-        "d": "Keep the square grid even, and make the tall file as its own job so the two do not fight."
+        "d": "Make the square still and the tall clip as two files, so each crop stays clean."
       },
       {
-        "t": "You write the words",
-        "d": "Captions, prices and stickers stay in your hands. The download does not add them."
+        "t": "You add the words and the sound",
+        "d": "Add captions, prices, stickers and sound in Instagram after download. The file comes without them."
       }
     ]
   },
@@ -255,7 +255,7 @@
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Hold, don't crop the hem",
+        "t": "Carry it with the hem in frame",
         "d": "Example: a tote upload becomes a carry so the full shape stays visible."
       },
       {

@@ -1,7 +1,7 @@
 {
   "id": "change-background",
   "title": "AI Product Background Changer | AIVideosUGC",
-  "description": "Change a product photo background from one clear image. Keep the item intact, create a new setting for listings or ads, and avoid another studio shoot.",
+  "description": "Change a product photo background from one clear image. Keep the item recognizable, create a new setting for listings or ads, and avoid another studio shoot.",
   "h1": "AI product background changer for a new setting",
   "eyebrow": "Photo tool",
   "lead": "Keep the product photo you have and replace the area around it. Try a studio surface, a counter, or a seasonal scene without another shoot.",
@@ -28,7 +28,7 @@
       "d": "Compare the new setting with the original photo. Download the square image for the store or the ad editor."
     }
   ],
-  "benefits_h2": "What you pay, what you check, and what you download",
+  "benefits_h2": "See the cost, check the product, then download",
   "benefits": [
     {
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
@@ -46,7 +46,7 @@
       "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
       "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
       "t": "Download a finished scene",
-      "d": "You get a complete photo with the new setting. This tool does not hand you a transparent cut-out."
+      "d": "You download a finished photo with the new setting already in place. It is not a transparent cut-out."
     }
   ],
   "maker": {
@@ -81,10 +81,10 @@
     },
     {
       "q": "Do I get a transparent cut-out?",
-      "a": "No. You get a complete photo with the new setting already in place. For a plain listing field, make a separate white image."
+      "a": "No. You download a finished photo with the new setting already in place. For a plain main photo, make a separate white image."
     },
     {
-      "q": "Which settings suit product photos?",
+      "q": "Which backgrounds suit product photos?",
       "a": "Simple surfaces keep attention on the item: light wood, stone, linen, or one quiet color. A busy scene makes the product harder to see."
     },
     {
@@ -220,13 +220,13 @@
     "items": [
       {
         "t": "Clear a distracting counter",
-        "d": "Move the product off a messy surface so the listing starts with the item, not the room behind it.",
+        "d": "Replace the messy surface behind the item so the listing starts with the product, not the room.",
         "img": "n:guide:k5-background-case-1",
         "alt": "Blue ceramic vase on a sunny windowsill."
       },
       {
         "t": "Match the next campaign",
-        "d": "Point the next campaign at one warmer surface or a holiday shelf, and keep the product as the subject.",
+        "d": "Use a warmer surface or a holiday shelf for the next campaign, and keep the product as the subject.",
         "img": "n:guide:k5-background-case-2",
         "alt": "Plain face cream jar on wet stone."
       },
@@ -252,7 +252,7 @@
         "example": true,
         "who": "Seasonal shop",
         "t": "Try a holiday shelf without restyling the room",
-        "d": "Name one seasonal surface. If the result adds objects you did not ask for, rerun the job with a shorter note."
+        "d": "Name one seasonal surface. If the result adds objects you did not ask for, run it again with a shorter note."
       },
       {
         "example": true,

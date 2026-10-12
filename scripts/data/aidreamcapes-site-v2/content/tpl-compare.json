@@ -11,7 +11,7 @@
     "color options video",
     "product size comparison video"
   ],
-  "steps_h2": "Make a Product Variant Comparison Video in 3 Steps",
+  "steps_h2": "How to Make a Product Comparison Video in 3 Simple Steps",
   "steps_lead": "One photo of both options, a short description of the difference, then a file you can post.",
   "steps": [
     {
@@ -50,7 +50,7 @@
       "a": "A ready scene that puts two visible options in one clip. You bring a single photo that already shows both, and the result helps a shopper choose."
     },
     {
-      "q": "How do I make the comparison?",
+      "q": "How do I make a product comparison video?",
       "a": "Upload that photo, name the difference you want people to notice, pick a size and a length, then download the file."
     },
     {
@@ -58,7 +58,7 @@
       "a": "The clip is built from the photo you already have. You skip a second shoot when both options are already in that frame."
     },
     {
-      "q": "Who is this scene for?",
+      "q": "Who is a product comparison video for?",
       "a": "Shops that sell two sizes, colors, finishes or a set, and need the choice to read on a listing, a Short or a paid ad."
     },
     {
@@ -79,7 +79,7 @@
     },
     {
       "q": "Can I add names and prices later?",
-      "a": "Yes. Add variant names, measurements and prices in your editor after download. The generator does not write those live details for you."
+      "a": "Yes. Add variant names, measurements and prices in your editor after download. The file does not include names or prices."
     },
     {
       "q": "Can I run the file in ads?",
@@ -119,8 +119,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a Scene for a Side by Side Product Video",
-      "lead": "Open a scene, then use a photo that shows both options at a similar size. A photo of only one option cannot show the comparison.",
+      "title": "Browse Video Ad Templates by Category",
+      "lead": "Open a category and rebuild a scene from a product photo you already have. Add names and prices after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -541,7 +541,7 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Choose a Scene for a Side by Side Product Video"
+        "h2": "Browse Video Ad Templates by Category"
       },
       "faq": {
         "h2": "Product Comparison Video Questions"
@@ -556,59 +556,60 @@
     "steps",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Sample Color Options Video and Size Setups",
-    "lead": "How a shop can use a product comparison video. Names and prices go on after download.",
+    "h2": "Side-by-Side Setups for Sizes, Colors and Sets",
+    "lead": "Use it as a color options video or a product size comparison video. Names and prices go on after download.",
     "items": [
       {
         "example": true,
         "who": "Home shop",
         "t": "Size check",
-        "d": "Example: two stainless bottles in one frame so a listing can show small next to large."
+        "d": "A home shop puts two stainless bottles in one frame so a listing can show small next to large."
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "Color choice",
-        "d": "Example: charcoal and cream tumblers aligned together for a color decision."
+        "d": "A drinkware shop lines up charcoal and cream tumblers so the color choice is the whole clip."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Finish check",
-        "d": "Example: navy and rust beanies turned in one clip so the knit is easy to compare."
+        "d": "An apparel shop turns navy and rust beanies in one clip so the knit is easy to compare."
       },
       {
         "example": true,
         "who": "Bag shop",
         "t": "Capacity check",
-        "d": "Example: two canvas packs opened together so shoppers can judge which holds more."
+        "d": "A bag shop opens two canvas packs together so shoppers can judge which holds more."
       },
       {
         "example": true,
         "who": "Kitchen shop",
         "t": "Set contents",
-        "d": "Example: a two-piece canister set in one frame so the listing shows what is included."
+        "d": "A kitchen shop shows a two-piece canister set in one frame so the listing shows what is included."
       },
       {
         "example": true,
         "who": "Storage shop",
         "t": "Height check",
-        "d": "Example: short and tall bins in one scene for a shelf-fit decision."
+        "d": "A storage shop places short and tall bins in one scene for a shelf-fit decision."
       },
       {
         "example": true,
         "who": "Bedding shop",
         "t": "Scale check",
-        "d": "Example: two pillow sizes held at the same distance so scale reads in one glance."
+        "d": "A bedding shop holds two pillow sizes at the same distance so scale reads in one glance."
       },
       {
         "example": true,
         "who": "Tool shop",
         "t": "Grip check",
-        "d": "Example: two handle finishes in one clip for a shopper choosing by feel."
+        "d": "A tool shop shows two handle finishes in one clip for a shopper choosing by feel."
       },
       {
         "example": true,
@@ -620,11 +621,11 @@
         "example": true,
         "who": "Pet shop",
         "t": "Bowl size",
-        "d": "Example: two bowl diameters in one shot for a feeding-station choice."
+        "d": "A pet shop shows two bowl diameters in one shot for a feeding-station choice."
       }
     ]
   },
-  "related_h2": "Pages for a Product Size Comparison Video",
+  "related_h2": "Pages for a Side by Side Product Video",
   "related_lead": "Product videos, home scenes, and Amazon listing pages for the same kind of choice.",
   "relatedLinks": [
     "product-videos",

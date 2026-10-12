@@ -19,7 +19,7 @@
     },
     {
       "t": "Choose a White Background",
-      "d": "Select the white treatment. Look at the outline and the contact shadow, then rerun the job if the edge looks wrong."
+      "d": "Select the white background. Look at the outline and the contact shadow, then run it again if the edge looks wrong."
     },
     {
       "t": "Download and Post",
@@ -46,11 +46,11 @@
   "faq": [
     {
       "q": "How do I make a product photo background white?",
-      "a": "Upload one clear product photo, choose the white treatment, and download the listing image. You do not book a studio or mask the photo by hand."
+      "a": "Upload one clear product photo, choose the white background, and download the listing image. You do not book a studio or mask the photo by hand."
     },
     {
       "q": "Does Amazon require a white background for product photos?",
-      "a": "Category rules can require a plain main image. Check the current rule for your category, then publish. This page does not guarantee that a file will pass review."
+      "a": "Category rules can require a plain main image. Check the current rule for your category, then publish. A white file is not a promise that the listing will pass review."
     },
     {
       "q": "Will the product look flat on white?",
@@ -62,11 +62,11 @@
     },
     {
       "q": "How many credits does one photo use?",
-      "a": "One product photo uses 24 credits. The cost appears before you start, and a failed job returns those credits."
+      "a": "One product photo uses 24 credits. The cost appears before you start, and if the photo fails those credits come back."
     },
     {
       "q": "Can I run this across my whole catalog at once?",
-      "a": "Each photo is its own job. Repeat the same white treatment as you add products."
+      "a": "Each photo is separate. Repeat the same white background as you add products."
     },
     {
       "q": "Is there a free white background photo?",
@@ -268,8 +268,8 @@
     {
       "img": "n:guide:rx2-white-benefit-jewelry-dish",
       "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white.",
-      "t": "Start the next layout from the plain shot",
-      "d": "Download the white image, then build a new crop or campaign version in your editor."
+      "t": "Keep a clean file for the next version",
+      "d": "A plain background is easier to reuse when the same item needs a product page and a later ad."
     }
   ],
   "benefits_h2": "Clean product shots without a studio",
@@ -277,9 +277,9 @@
   "steps_lead": "Upload the photo, choose white, and download the listing image.",
   "more_sections": [
     {
-      "eyebrow": "Scale your catalog",
+      "eyebrow": "The next product",
       "h2": "Product photos on white for Shopify",
-      "lead": "Download the white image and upload it on the Shopify product page yourself. Repeat the same treatment on the next item.",
+      "lead": "Download the white image and upload it on the Shopify product page yourself. Repeat the same white background on the next item.",
       "items": [
         {
           "img": "n:guide:k2-white-picker-reading-glasses",
@@ -291,13 +291,13 @@
           "img": "n:guide:k2-white-case-linen-shade-lamp",
           "alt": "Ceramic table lamp with an ivory linen shade on pure white.",
           "t": "Reuse it where the rules allow",
-          "d": "After you check each channel, use the same file on Amazon, Shopify, or Etsy."
+          "d": "After you check each channel, use the same file on your Shopify store or on Etsy."
         },
         {
           "img": "n:guide:k2-white-picker-leather-sandals",
           "alt": "Pair of cognac leather sandals with both straps visible on seamless white.",
           "t": "Add new products the same way",
-          "d": "Each new photo is its own job at 24 credits. You see the cost before it starts."
+          "d": "Each new photo costs 24 credits. You see that cost before it starts."
         },
         {
           "img": "n:guide:k2-white-picker-soap-dispenser",
@@ -340,7 +340,7 @@
         "example": true,
         "who": "Shopify store",
         "t": "Make the catalog feel like one set",
-        "d": "Run the same white treatment on each new product photo. A failed job returns its credits, and the cost is shown first."
+        "d": "Run the same white background on each new product photo. If it fails, the credits come back, and the cost is shown first."
       },
       {
         "example": true,

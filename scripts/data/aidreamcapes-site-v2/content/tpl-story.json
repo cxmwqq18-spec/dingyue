@@ -11,7 +11,7 @@
     "Facebook Stories ad image",
     "summer product story ads"
   ],
-  "steps_h2": "Make a Square Story Product Image",
+  "steps_h2": "Make a Square Story Product Image in 3 Steps",
   "steps_lead": "Upload the product, describe a simple setting, then place the square photo in your Story layout.",
   "steps": [
     {
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "Can the Story image include my price or code?",
-      "a": "Add the price, code and button after download in your design or ads tool. The generated image has no text, so a digit cannot be garbled inside the file."
+      "a": "Add the price, code and button after download in your design or ads tool. The generated image has no text, so you can change a digit without making the image again."
     },
     {
       "q": "Does the template output a 9:16 file?",
@@ -76,6 +76,14 @@
     {
       "q": "Can I ask for a hand or a person in the scene?",
       "a": "Yes. Describe one hand or one adult action while the uploaded product stays the subject. The person is generated, not a hired creator."
+    },
+    {
+      "q": "Who are Instagram story ad images for?",
+      "a": "Beauty and skincare shops, and other product sellers who need the item fully in frame with room for a headline. Upload one photo and download the square."
+    },
+    {
+      "q": "Can a beginner make a Story image?",
+      "a": "Yes. Upload one product photo, name a simple setting, and download the square. Add the price and button in your editor after that."
     }
   ],
   "output": "Square product photo · Story layout",
@@ -108,11 +116,11 @@
           "Add after download"
         ]
       ],
-      "prompt": "Use the uploaded hot sauce bottle as the product and preserve its bottle shape, black cap, blank label area and color. An adult hand tilts the bottle and drizzles sauce over a finished taco plate on a pale counter, with fresh chilies nearby and open space above for a Story headline. Square ad-photo composition, natural daylight, no text or logos.",
+      "prompt": "An adult hand tilts the hot sauce bottle and drizzles it over a taco plate on a pale counter, with fresh chilies nearby and open space above for a headline.",
       "mode": "photo"
     },
     "picker": {
-      "title": "These cards open a 15-second video",
+      "title": "Video previews, not the square Story photo",
       "lead": "Each card is a 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a 9:16 canvas and add the price there.",
       "chips": [
         {
@@ -531,10 +539,10 @@
     },
     "titles": {
       "m2": {
-        "h2": "Make a Square Story Product Image"
+        "h2": "Make a Square Story Product Image in 3 Steps"
       },
       "m3": {
-        "h2": "These cards open a 15-second video",
+        "h2": "Video previews, not the square Story photo",
         "lead": "Each card is a 9:16 video ad, not the square Story photo. Use the upload above, then place that square on a 9:16 canvas and add the price there."
       },
       "m4": {
@@ -588,8 +596,8 @@
     }
   ],
   "reviews": {
-    "h2": "Where a Facebook Stories Ad Image Fits",
-    "lead": "A few ways sellers use one square product photo in a Story layout.",
+    "h2": "How sellers use a square Story ad image",
+    "lead": "A few ways sellers place one square product photo in an Instagram or Facebook Story.",
     "items": [
       {
         "example": true,
@@ -613,7 +621,7 @@
         "example": true,
         "who": "Retail marketer",
         "t": "Feed crop was cutting the cap",
-        "d": "They stop cropping a square feed photo into a tall frame. The template keeps the whole product in view and leaves space for stickers."
+        "d": "They stop cropping a square feed photo into a tall frame. The scene leaves space around the product for stickers, and they check the edges against the source before posting."
       },
       {
         "example": true,
@@ -630,7 +638,7 @@
     ]
   },
   "related_h2": "Beauty templates for a Story ad",
-  "related_lead": "The ad-image tool, beauty templates for bundles, light and video, plus the beauty industry page.",
+  "related_lead": "The ad-image tool, bundle and lighting templates, beauty video, the beauty industry page, and Instagram ads.",
   "cta_title": "Build the Story around your product",
   "cta_lead": "Upload one product photo. Add the headline and offer after you download the square image.",
   "blockOrder": [

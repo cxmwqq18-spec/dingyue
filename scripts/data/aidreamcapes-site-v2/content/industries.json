@@ -19,7 +19,7 @@
   "faq": [
     {
       "q": "Which category should I open first?",
-      "a": "Open the category of the product in your hand. A mixed catalog does not need a special page. Make one item, then open the next category."
+      "a": "Open the category of the product you are listing. If you sell more than one kind of item, finish this one, then open the next category."
     },
     {
       "q": "Can I start from a phone photo?",
@@ -27,7 +27,7 @@
     },
     {
       "q": "How is this different from the template library?",
-      "a": "This directory groups ideas by what you sell. The template library groups them by layout. Open a category to see the moments, then a template to make that layout."
+      "a": "These pages group ideas by what you sell. The template library groups them by layout, such as a try-on or a white background. Open a category to see the moments, then a template to make that layout."
     },
     {
       "q": "Can one photo become both a still and a clip?",
@@ -88,7 +88,7 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Make AI product photos by category, or a clip from the same photo."
+        "h2": "How to make AI product photos by category in 3 steps"
       },
       "m3": {
         "h2": "Ecommerce content ideas by industry",
@@ -135,7 +135,7 @@
     },
     "overview": "Group the directory by product type, then open your category for examples matched to what you actually sell."
   },
-  "steps_h2": "Make AI product photos by category, or a clip from the same photo.",
+  "steps_h2": "How to make AI product photos by category in 3 steps",
   "steps_lead": "Open your category, add one photo, and download a file you can post.",
   "steps": [
     {
@@ -143,8 +143,8 @@
       "d": "Open your category and add one photo of the item you sell."
     },
     {
-      "t": "Pick the Buyer Moment",
-      "d": "Choose the moment shoppers expect, such as a try-on, a pour, or the item in use."
+      "t": "Choose a Template",
+      "d": "Pick the template for the moment shoppers expect, such as a try-on, a pour, or the item in use."
     },
     {
       "t": "Download and Post",
@@ -166,31 +166,31 @@
   ],
   "trust": {
     "h2": "AI images for small online shops",
-    "lead": "Six selling situations. Open the category of the product in your hand.",
+    "lead": "For a shop that has the product photo and needs a listing still or a short clip.",
     "items": [
       {
-        "t": "An online store",
-        "d": "Show one product as a still or a short clip from a single photo."
+        "t": "A store owner",
+        "d": "Turn one product photo into a square still or a short clip. The credit cost is on screen before the job starts."
       },
       {
         "t": "A one-person shop",
-        "d": "You make the file yourself. The credit cost is on the screen before the job starts."
+        "d": "You upload the photo, download the file, and post it yourself. You do not have to book a studio to make that first version."
       },
       {
-        "t": "A shop testing two scenes",
-        "d": "Keep the same photo, change the scene, and post the version you want."
+        "t": "A shop trying two looks",
+        "d": "Run the same photo again with a different scene, then post the version you want to keep."
       },
       {
-        "t": "A product worn or held",
-        "d": "A generated person can hold or wear the item. You are not booking a model."
+        "t": "Clothing, shoes, or jewelry",
+        "d": "A generated person can wear or hold the item. That person is not a customer, and the picture does not replace your size chart."
       },
       {
-        "t": "A new item with no shoot yet",
-        "d": "Make a first file, look at it, and decide later whether that item needs a studio."
+        "t": "A launch with no shoot yet",
+        "d": "Make a first file from the photo you have. Check it against the real item before you decide on a studio."
       },
       {
-        "t": "A catalog with several aisles",
-        "d": "Finish this item, then open the next category."
+        "t": "More than one aisle",
+        "d": "Finish this item, then open the next category. Each job is priced on its own."
       }
     ]
   },

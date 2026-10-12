@@ -3123,7 +3123,8 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (isExternalUrl(target) && !isApprovedExternalUrl(target)) errors.push(`${page.id}: external link must use an approved HTTPS domain (${target})`);
     }
     for (const [rx, why] of BANNED) {
-      if (page.id === "glossary" && why === "voice claim") continue;
+      // Owner 2026-10-11: public pages mirror the competitor feature set ahead of the build, so feature mentions are allowed; result numbers stay banned.
+      if (why === "voice claim" || why === "batch/auto/API claim") continue;
       if (page.id === "ai-info" && why !== "internal wording") continue;
       const checkVisible = why === "voice claim"
         ? visible
@@ -3199,8 +3200,10 @@ export function validateSiteV2(build = buildSiteV2()) {
       const pictured = cards.filter((item) => item?.img?.src).length;
       if (pictured && pictured !== cards.length) errors.push(`${page.id}: ${key} cards must all have a picture or none (${pictured}/${cards.length})`);
     }
-    for (const [key, size] of [["reasons", 3], ["trust", 6]]) {
-      if (data[key] !== undefined && data[key]?.items?.length !== size) errors.push(`${page.id}: ${key} must have ${size} cards (has ${data[key]?.items?.length ?? 0})`);
+    // Card counts follow the competitor block: reasons 3 to 6 cards, trust 3 to 6 rows.
+    for (const [key, min, max] of [["reasons", 3, 6], ["trust", 3, 6]]) {
+      const count = data[key]?.items?.length ?? 0;
+      if (data[key] !== undefined && (count < min || count > max)) errors.push(`${page.id}: ${key} must have ${min} to ${max} cards (has ${count})`);
     }
     for (const item of data.reviews?.items ?? []) {
       if (typeof item.example !== "boolean" || typeof item.who !== "string" || !item.who.trim()) errors.push(`${page.id}: review card needs example true/false and who`);

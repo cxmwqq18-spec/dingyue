@@ -1,10 +1,10 @@
 {
   "id": "video-ads",
   "title": "AI UGC Video Ads for TikTok, Reels and Shorts | AIVideosUGC",
-  "description": "Turn one product photo into a creator-style ad for TikTok, Reels or Shorts. Skip a studio shoot, test new hooks and add final copy after download.",
+  "description": "Turn one product photo into a creator-style ad for TikTok, Reels or Shorts. Skip a studio shoot, test a new opening, and add captions after download.",
   "h1": "AI UGC Video Ads Generator: Scroll-Stopping Product Ads from One Photo",
   "eyebrow": "AI UGC video ads",
-  "lead": "AIVideosUGC turns one product photo into a creator-style video ad, with an AI presenter, a believable setting and your product in the shot. No creators to book, no studio day, no camera. Pick a size, choose 6 to 30 seconds and download a clip ready for TikTok, Reels or Shorts.",
+  "lead": "AIVideosUGC turns one product photo into a creator-style video ad, with an AI presenter, a believable setting and your product in the shot. No creators to book, no studio day, no camera. Pick a size, choose 6, 10, 15 or 30 seconds, and download a clip ready for TikTok, Reels or YouTube Shorts.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
@@ -14,7 +14,7 @@
   "definition": {
     "title": "What Is an AI UGC Video Ad Generator?",
     "paras": [
-      "An AI UGC video ad generator is a tool that creates short, creator-style product ads from your own product photo. An AI presenter shows, uses or talks about the item in a setting you describe, with no filming, casting or production team.",
+      "An AI UGC video ad generator is a tool that creates short, creator-style product ads from your own product photo. An AI presenter shows or uses the item in a setting you describe, with no filming, casting or production team.",
       "AIVideosUGC is built for sellers who run paid social ads. Each clip uses one frame you choose: 9:16, 1:1, 16:9, 4:3 or 3:4. Match that frame to the placement, then add captions and licensed music after download."
     ]
   },
@@ -25,11 +25,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Say where the ad happens and what the presenter does, then pick a size and a length from 6 to 30 seconds."
+      "d": "Say where the ad happens and what the presenter does, then pick a size and a length of 6, 10, 15 or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip when it is ready. Add captions, your price or licensed music in your editor, then post to TikTok, Reels, Shorts or Meta."
+      "d": "Download the clip. Add captions, your price or licensed music in your editor, then post to TikTok, Reels, YouTube Shorts or Meta."
     }
   ],
   "maker": {
@@ -59,12 +59,20 @@
       "a": "Use AIVideosUGC when you already have a product photo and you want a creator-style ad in 9:16, 1:1, 16:9, 4:3 or 3:4, plus another version from the same photo."
     },
     {
+      "q": "Is an AI UGC video ad free to make?",
+      "a": "No. Plans start at $24.50 a month. A 6-second ad uses 24 credits, 10 seconds uses 40, 15 seconds uses 60 and 30 seconds uses 120. You see that cost before the job starts."
+    },
+    {
       "q": "Do I own the rights to the video ads I make?",
-      "a": "You can use finished clips commercially in paid and organic ads, and they carry no watermark."
+      "a": "You can use finished clips commercially in paid ads and organic posts, and they carry no watermark."
     },
     {
       "q": "What sizes and platforms can I make ads for?",
       "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4 for TikTok, Instagram Reels, YouTube Shorts and Meta feeds."
+    },
+    {
+      "q": "Can I make a video ad for every product at once?",
+      "a": "No. Each clip starts from one product photo. Upload the next photo when you want a clip for another item."
     },
     {
       "q": "Which video lengths can I choose?",
@@ -84,7 +92,7 @@
     },
     {
       "q": "Is the presenter a real customer?",
-      "a": "No. The presenter is an AI-generated brand performer, not a customer endorsement. Use a factual script and disclose AI content when a platform requires it."
+      "a": "No. The presenter is AI-generated, not a customer endorsement. Keep the scene factual, and disclose AI content when a platform requires it."
     },
     {
       "q": "Can I add captions, prices or music after download?",
@@ -506,19 +514,19 @@
   "benefits": [
     {
       "t": "A Clip Without a Shoot Day",
-      "d": "Start from the photo you upload and download a finished clip without a creator brief, a sample shipment or an edit queue."
+      "d": "Start from the photo you upload and download a finished clip without booking a creator, shipping a sample or waiting on an edit."
     },
     {
       "t": "Pay Per Clip, Not Per Shoot",
-      "d": "Credits replace creator fees, studio rental and editing hours. A 15-second ad uses 60 credits, and a failed render returns its credits automatically."
+      "d": "Credits replace creator fees, studio rental and editing hours. A 15-second ad uses 60 credits, and if the job fails, those credits return automatically."
     },
     {
       "t": "A Presenter, Not a Customer Quote",
-      "d": "Any person on screen is an AI presenter, not a buyer review. Keep the spoken line factual, and disclose AI content when a platform requires it."
+      "d": "Any person on screen is an AI presenter, not a buyer review. Keep the scene factual, and disclose AI content when a platform requires it."
     },
     {
       "t": "Fresh Creative Before Fatigue Hits",
-      "d": "Shoppers tune out an ad they have seen too often. Swap in a new presenter, setting or opening before results slip, without booking another shoot."
+      "d": "Shoppers tune out an ad they have seen too often. Swap in a new presenter, setting or opening before that same ad gets old, without booking another shoot."
     },
     {
       "t": "You Set the Direction",
@@ -526,14 +534,14 @@
     },
     {
       "t": "Yours to Run as Ads",
-      "d": "Finished clips can be used commercially in paid and organic ads, with no watermark."
+      "d": "Finished clips can be used commercially in paid ads and organic posts, with no watermark."
     }
   ],
   "steps_h2": "How to Make AI UGC Video Ads in 3 Simple Steps",
   "steps_lead": "Go from one clear product photo to a short ad ready for your next test.",
   "compare_table": {
     "title": "AIVideosUGC vs. Traditional Video Ad Production",
-    "lead": "One photo and one scene replace a shoot. A new version costs credits, and a failed render returns them.",
+    "lead": "One photo and one scene replace a shoot. A new version costs credits, and a failed job returns them.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -542,7 +550,7 @@
     "rows": [
       [
         "First ad",
-        "One photo and one scene, then a render",
+        "One photo and one scene, then one clip",
         "Days to weeks of booking, shooting and editing"
       ],
       [
@@ -598,60 +606,60 @@
     "items": [
       {
         "t": "Built From Your Real Product",
-        "d": "Every ad starts from the photo you upload, so the item on screen matches what you sell, not a generic stand-in. The hook stays tied to what shoppers will actually receive."
+        "d": "Every ad starts from the photo you upload, so the item on screen matches what you sell, not a generic stand-in. The opening stays tied to what shoppers will actually receive."
       },
       {
         "t": "Sized for Paid Social",
-        "d": "Clips render in 9:16, 1:1, 16:9, 4:3 or 3:4, the sizes TikTok, Reels, Shorts and Meta feeds use, so you are not re-cropping a raw file before launch."
+        "d": "Each clip comes out in 9:16, 1:1, 16:9, 4:3 or 3:4, the sizes TikTok, Reels, Shorts and Meta feeds use, so you pick the frame instead of cropping one file into every placement."
       },
       {
         "t": "Many Angles From One Upload",
-        "d": "Keep the same photo and change the presenter, scene or opening line to make a new version, then test which one your audience stops for."
+        "d": "Keep the same photo and change the presenter, the scene or the first action to make a new version, then test which one your audience stops for."
       }
     ]
   },
   "benefits_lead": "For sellers who need another product ad from a photo they already have, without booking a shoot.",
   "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "Explore the rest of the AIVideosUGC tools.",
+  "related_lead": "Other clips you can make from a product photo or a product page.",
   "reviews": {
     "h2": "What Sellers Make With AIVideosUGC",
-    "lead": "Example ads a seller can make from one product photo, and the placement each one is for.",
+    "lead": "How a shop uses one product photo for a feed, Reels, Shorts or TikTok test.",
     "items": [
       {
         "example": true,
         "who": "Electronics shop",
         "t": "Desk showcase",
-        "d": "Example: a compact speaker on a desk for a feed test."
+        "d": "An electronics shop uploads a speaker photo and tests a desk scene in the feed."
       },
       {
         "example": true,
         "who": "Bag shop",
         "t": "Mirror fit check",
-        "d": "Example: a crossbody bag fit check for a Reels test."
+        "d": "A bag shop uploads a crossbody photo and tests a mirror fit check in Reels."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Pocket showcase",
-        "d": "Example: a tinted lip balm shown up close for a Shorts test."
+        "d": "A beauty shop uploads a lip balm photo and tests a close shot in YouTube Shorts."
       },
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Morning routine",
-        "d": "Example: a 15-second texture demo for a Reels test."
+        "d": "A skincare shop uploads a jar photo and tests a 15-second texture demo in Reels."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "First sip",
-        "d": "Example: a citrus pour-and-sip opening for a TikTok test."
+        "d": "A drink seller uploads a bottle photo and tests a pour-and-sip opening on TikTok."
       },
       {
         "example": true,
         "who": "Shoe seller",
         "t": "Creator showcase",
-        "d": "Example: a running-shoe showcase for a paid social test."
+        "d": "A shoe seller uploads a running-shoe photo and tests a showcase in a paid social post."
       }
     ]
   },

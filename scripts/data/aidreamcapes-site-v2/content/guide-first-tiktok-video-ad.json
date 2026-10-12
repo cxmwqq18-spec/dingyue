@@ -1,10 +1,10 @@
 {
   "id": "guide-first-tiktok-video-ad",
   "title": "How to Make a TikTok Ad for Your Store | AIVideosUGC",
-  "description": "Make your first TikTok ad from one product photo: pick one reason to buy, open on the product in action, post a vertical 9:16 video, launch on a small budget.",
+  "description": "Make your first TikTok ad from one product photo: pick one reason to buy, show the product in action, post a vertical 9:16 video, launch on a small budget.",
   "h1": "How to Make a TikTok Ad When You've Never Made One",
   "eyebrow": "TikTok guide",
-  "lead": "To make a TikTok ad, pick one product and one reason to buy, open on that product in action, and post a vertical clip you can launch on a budget you control.",
+  "lead": "To make a TikTok ad, pick one product and one reason to buy, start with that product in action, and post a vertical clip on a budget you can pause.",
   "secondary_keywords": [
     "TikTok ads for small business",
     "TikTok video ad tips",
@@ -12,7 +12,7 @@
     "first TikTok ad campaign"
   ],
   "read_minutes": 5,
-  "summary": "One reason to buy, a vertical clip that opens on the product, text and licensed sound added by you, then a small first campaign.",
+  "summary": "One reason to buy, a vertical clip that starts with the product in action, then your own line and a licensed track, then a small first campaign.",
   "sections": [
     {
       "h2": "How should TikTok ads for small business start?",
@@ -63,7 +63,7 @@
       "h2": "How do I launch a first TikTok ad campaign?",
       "paras": [
         "Send people to the product page for the item in the clip, set a daily budget you can afford while you learn, and let it run for a few days before you judge it.",
-        "Write the caption the way you would text a friend: one line, no pile of hashtags. Watch it once on mute and once with sound. The product should be on screen in the first second, the words should be readable, and the price in the ad should match checkout. If you made two openings, run them together, with the same audience and the same budget."
+        "Write the caption the way you would text a friend: one line, no pile of hashtags. Watch it once on mute and once with sound. The product should be on screen in the first two seconds, the words should be readable, and the price in the ad should match checkout. If you made two openings, run them together, with the same audience and the same budget."
       ],
       "img": "n:guide:fx06-guide-first-tiktok-video-ad-sec06-r2",
       "alt": "Adult hands hold a plain peach sunscreen tube beside a notebook on a bright desk."
@@ -71,14 +71,8 @@
     {
       "h2": "The short version",
       "paras": [
-        "One product, one reason, a 9:16 clip that opens on the action, then your own line and a licensed track.",
+        "One product, one reason, a 9:16 clip that starts with the action, then your own line and a licensed track.",
         "Credits are 24, 40, 60, or 120 for 6, 10, 15, or 30 seconds. Start with a budget you can pause, and read the first few days before you spend more."
-      ]
-    },
-    {
-      "h2": "On this page",
-      "paras": [
-        "Six questions follow: how TikTok ads for small business should start, TikTok video ad tips for the opening, a vertical video ad for products, length and credits, captions and sound, and a first TikTok ad campaign."
       ]
     }
   ],
@@ -86,9 +80,9 @@
     "guide-testing-ad-versions",
     "guide-ad-sizes-by-platform",
     "blog-ai-ugc-video-ads-guide",
-    "blog-unboxing-videos-for-launches",
-    "blog-ai-video-review-checklist",
-    "guide-product-photo-tips"
+    "plat-tiktok",
+    "plat-instagram",
+    "plat-youtube-shorts"
   ],
   "faq": [
     {
@@ -122,8 +116,8 @@
     "guide-testing-ad-versions",
     "guide-ad-sizes-by-platform",
     "blog-ai-ugc-video-ads-guide",
-    "blog-unboxing-videos-for-launches",
-    "blog-ai-video-review-checklist",
-    "guide-product-photo-tips"
+    "plat-tiktok",
+    "plat-instagram",
+    "plat-youtube-shorts"
   ]
 }

@@ -1,10 +1,10 @@
 {
   "id": "blog-model-photos-without-a-photoshoot",
   "title": "Model Photos Without a Photoshoot | AIVideosUGC",
-  "description": "Get model photos without a photoshoot: photograph the garment flat, describe the model and setting, then check the fit before posting. Learn how and try it.",
+  "description": "Get model photos without a photoshoot: photograph the garment flat, pick an adult look and setting, then check the fit before posting. Learn how and try it.",
   "h1": "How to Get Model Photos Without a Photoshoot",
   "eyebrow": "Clothing & jewelry",
-  "lead": "You can get model photos without a photoshoot by photographing the garment flat, describing who wears it and where, then checking the fit details before you post.",
+  "lead": "You can get model photos without a photoshoot by photographing the garment flat, picking an adult look and a scene, then checking the fit details before you post.",
   "secondary_keywords": [
     "AI model photos for clothing",
     "on-model photos from a flat lay",
@@ -18,7 +18,7 @@
     {
       "h2": "On this page",
       "paras": [
-        "When to skip the shoot, how to photograph the garment, how to describe the person, how jewelry differs, what to compare, and why the face will not match across photos."
+        "When to skip the shoot, how to photograph the garment, how to pick the look, how jewelry differs, what to compare, and why the face will not match across photos."
       ],
       "img": "n:guide:fx05-model-work",
       "alt": "Adult man with short silver hair wearing a plain gray hoodie outside a storefront."
@@ -26,8 +26,8 @@
     {
       "h2": "When do model photos without a photoshoot make sense?",
       "paras": [
-        "They suit new arrivals, short runs, and print-on-demand, when booking a person, a photographer, and a day is hard to justify.",
-        "You upload a photo of the piece, describe who wears it and where, and get an image of it being worn. They are a weak way to prove exact fit. A generated image cannot tell a shopper how a medium will sit on their body, so keep the size chart and the measurements on the listing."
+        "Model photos without a photoshoot suit new arrivals, short runs, and print-on-demand, when booking a person, a photographer, and a day is hard to justify.",
+        "You upload a photo of the piece, pick who wears it and where, and get an image of it being worn. They do not prove exact fit. A generated image cannot tell a shopper how a medium will sit on their body, so keep the size chart and the measurements on the listing."
       ],
       "img": "n:guide:fx05-model-when",
       "alt": "Adult woman with short copper hair wearing a plain gray hoodie on an autumn city sidewalk."
@@ -44,8 +44,8 @@
     {
       "h2": "How do I get on-model photos from a flat lay?",
       "paras": [
-        "One or two sentences are enough: the person, the pose, the place, and the light. The clothing comes from your photo, so you do not need to redesign it in words.",
-        "A linen dress might be \"a woman in her forties walking a sunny beach path, relaxed, late afternoon light.\" A hoodie might be \"a young man leaning on a brick wall, hands in the front pocket, overcast daylight.\" Describe ages and builds that match what you sell. Do not describe a celebrity or ask for a lookalike. Those requests may be refused. If you also need the piece on a table rather than a person, make [AI lifestyle product photos](page:lifestyle-photos) as a separate image."
+        "Pick an adult look and a scene that fit the piece. A short line can name the person, the pose, and the light. The clothing comes from your photo, so you do not redesign the garment in words.",
+        "A linen dress might be \"a woman in her forties walking a sunny beach path, relaxed, late afternoon light.\" A hoodie might be \"a young man leaning on a brick wall, hands in the front pocket, overcast daylight.\" Match the age and build to what you sell. Do not ask for a celebrity or a lookalike. Those requests may be refused. If you also need the piece on a table rather than a person, make [AI lifestyle product photos](page:lifestyle-photos) as a separate image."
       ],
       "img": "n:guide:fx05-model-setting",
       "alt": "Adult Black woman with short natural hair wearing a plain gray hoodie by a brick wall."
@@ -60,10 +60,10 @@
       "alt": "Adult woman with short auburn hair wearing a plain gray hoodie by a leafy park path."
     },
     {
-      "h2": "How do I review clothing photos without a model before I post them?",
+      "h2": "How do I review clothing photos without a model?",
       "paras": [
         "Compare each image with the real piece. Check the neckline, sleeve and hem length, where the print sits, the button count, and which side the zipper is on.",
-        "Stripes and checks should line up the way they do on the garment. Hands and hairlines deserve a second look. If anything does not match, make a new version rather than posting one that is close enough. Plan two or three images per piece: one full view, one closer crop of the cloth or the stone, and one in a setting that fits how it is worn. Each is its own request at 24 credits, shown first. Files come out square by default, which suits a product gallery. For a feed post, the [AI ad image generator](page:social-ad-photos) can place a checked still into an ad frame after this review."
+        "Stripes and checks should line up the way they do on the garment. Hands and hairlines deserve a second look. If anything does not match, make a new version rather than posting one that is close enough. Plan two or three images per piece: one full view, one closer crop of the cloth or the stone, and one in a setting that fits how it is worn. Each image is 24 credits, and the cost is shown before you start. Files come out square by default, which suits a product gallery. For a feed post, the [AI ad image generator](page:social-ad-photos) can turn a checked photo into a square ad image after this review."
       ],
       "img": "n:guide:fx05-model-fit",
       "alt": "Adult East Asian man checking the sleeve and hem of a plain gray hoodie in a fitting room."
@@ -89,7 +89,7 @@
     "tpl-jewel",
     "ind-fashion-clothing",
     "blog-ai-video-review-checklist",
-    "guide-first-tiktok-video-ad"
+    "ind-jewelry-accessories"
   ],
   "faq": [
     {
@@ -98,7 +98,7 @@
     },
     {
       "q": "Will the same person appear in all my photos?",
-      "a": "No. There is no saved person to reuse, so the face can differ from one image to the next. Using the same words for age, hair, and build helps the set look related."
+      "a": "No. Choose the look again on each photo. The face can change. Repeat the same age, hair, and build if you want the pictures to feel like one set."
     },
     {
       "q": "What source photo works?",
@@ -122,13 +122,13 @@
     }
   ],
   "cta_title": "Put your next piece on a person",
-  "cta_lead": "Upload one garment or jewelry photo, describe the setting, and review the fit before you post.",
+  "cta_lead": "Upload one garment or jewelry photo, pick the look and the setting, then review the fit before you post.",
   "relatedLinks": [
     "model-photos",
     "tpl-tryon",
     "tpl-jewel",
     "ind-fashion-clothing",
     "blog-ai-video-review-checklist",
-    "guide-first-tiktok-video-ad"
+    "ind-jewelry-accessories"
   ]
 }

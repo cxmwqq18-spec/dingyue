@@ -4,7 +4,7 @@
   "description": "AIVideosUGC pricing: Starter at $24.50, Pro at $35 or Premium at $63 a month, with 200 to 600 credits for product photos and videos. Compare plans today.",
   "h1": "AIVideosUGC Pricing for Product Photos and Videos",
   "eyebrow": "Plans and credits",
-  "lead": "AIVideosUGC pricing is three credit-based plans for product content. Spend the balance on photos or short video ads, and read each job's cost before it starts.",
+  "lead": "AIVideosUGC pricing is three monthly plans. Use the credits on product photos or short video ads, and check the credit cost before each job starts.",
   "card": "Starter, Pro, and Premium, with a set credit balance each month.",
   "secondary_keywords": [
     "AI product photo pricing",
@@ -17,7 +17,7 @@
     "Credits pay for the jobs you run. A product photo is 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm.",
     "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance on their own."
   ],
-  "teams": "Need more credits for a team or an agency? Email support@aivideosugc.com with about how many photos and videos you make in a month, and we will suggest a setup.",
+  "teams": "Need more credits than Premium includes? Email support@aivideosugc.com with how many photos and videos you make in a month.",
   "faq": [
     {
       "q": "Which plan should a small shop start with?",
@@ -25,11 +25,11 @@
     },
     {
       "q": "Can the same credits pay for photos and videos?",
-      "a": "Yes. Photos and videos come out of one credit balance, and each job lists its own price before you confirm."
+      "a": "Yes. Photos and videos come out of one credit balance, and each job shows its credit cost before you confirm."
     },
     {
       "q": "Can I get a refund for a result I do not like?",
-      "a": "No. A delivered file is not refunded because you dislike it. A failed job returns its reserved credits automatically. For a charge review, use the [Refund Policy](/refunds) and email support."
+      "a": "A failed job returns its reserved credits automatically. If a delivered file does not match what you asked for, use the [Refund Policy](/refunds) to request a review, then email support."
     },
     {
       "q": "Are uploads private on every plan?",
@@ -45,7 +45,7 @@
     },
     {
       "q": "Can I use the photos and videos in ads?",
-      "a": "Yes. Downloaded photos and videos are cleared for commercial use on your store, marketplaces, and social ads. Follow each platform's own rules when you publish."
+      "a": "Yes. You can use downloaded photos and videos in your own ads, on product pages, and in social posts. Follow each platform's rules when you publish."
     },
     {
       "q": "Do downloads include a watermark?",

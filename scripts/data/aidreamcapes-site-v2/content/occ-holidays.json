@@ -3,7 +3,7 @@
   "title": "Holiday Ad Photos and Videos for Gift Season | AIVideosUGC",
   "description": "Make holiday ad photos and videos from one product photo. Add confirmed dates, prices or offers after download, then reuse the scene as campaigns change.",
   "h1": "Create Holiday Ad Photos and Videos Fast",
-  "eyebrow": "Holiday ad creatives",
+  "eyebrow": "Holiday ad photos and videos",
   "lead": "Turn one product photo into a gift-ready scene, then add the shipping date after you download.",
   "secondary_keywords": [
     "Christmas product photos",
@@ -28,7 +28,7 @@
     },
     {
       "q": "Can the scene use a real customer or a celebrity?",
-      "a": "No. People in the scene are generated, not real customers. A request that names a celebrity, a public figure, or another brand's character or logo can be declined. Ornaments, snow, and wrapping paper are fine."
+      "a": "No. People in the scene are generated. They are not real customers, real celebrities, or people you filmed."
     },
     {
       "q": "What happens to the visual after the holiday ends?",
@@ -112,7 +112,7 @@
       "source": "n:guide:occ-holidays-c3-m2-source",
       "result": "n:guide:occ-holidays-c3-m2-result",
       "mode": "photo",
-      "prompt": "A gift-ready product scene with clear space for the shipping cutoff added after download.",
+      "prompt": "A white candle jar in a gift scene, with clear space for the shipping cutoff.",
       "options": [
         [
           "Template",
@@ -229,7 +229,7 @@
     },
     {
       "t": "Show the gift while orders are open",
-      "d": "Put the seasonal scene up while you are still taking orders. Shoppers should still recognize the product from the photo you uploaded.",
+      "d": "Use the photo you already sell with, so the product stays recognizable in the gift scene. Put it up while you are still taking orders.",
       "img": "n:guide:fx02-occ-holidays-benefit-jacket",
       "alt": "Adult creator holds a wool winter jacket beside a gift box."
     },
@@ -241,7 +241,7 @@
     },
     {
       "t": "Lay out the gift guide on one table",
-      "d": "Arrange the products in one gift-guide scene. Save it as 9:16, 1:1, 16:9, 4:3, or 3:4. A clip runs 6, 10, 15, or 30 seconds, and the credit cost shows before you start.",
+      "d": "Arrange the products in one gift-guide scene. The photo is square, and a clip of that scene can run 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4.",
       "img": "n:guide:fx02-occ-holidays-benefit-guide",
       "alt": "Adult hands arrange a jar, tube and scarf gift guide set."
     }
@@ -308,7 +308,7 @@
       },
       {
         "t": "The credit cost before you start",
-        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see that credit cost before you start."
+        "d": "A photo uses 24 credits. Video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
       },
       {
         "t": "Credits back if the job fails",
@@ -316,7 +316,7 @@
       },
       {
         "t": "The upload stays in your account",
-        "d": "The product photo and the result stay in your account until you download them and choose to share."
+        "d": "The product photo and the result stay in your account. They are not published until you share them."
       },
       {
         "t": "Generated people, not real customers",
@@ -328,7 +328,7 @@
       }
     ]
   },
-  "cta_title": "Post festive Instagram Story ads from this scene",
+  "cta_title": "Post festive Instagram Story ads",
   "blockOrder": [
     "hero",
     "benefits",

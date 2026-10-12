@@ -114,8 +114,8 @@
       ]
     },
     "picker": {
-      "title": "Browse Video Ad Templates by Category",
-      "lead": "These cards are video ads for other categories, not scale photos. For the size image, use the upload box above and name one familiar object.",
+      "title": "Browse Product Scenes by Category",
+      "lead": "These clips are other video scenes. For the size photo, use the upload box and name one familiar object.",
       "chips": [
         {
           "id": "accessories",
@@ -539,16 +539,15 @@
         "h2": "Questions About a Product Size Reference Photo"
       },
       "m3": {
-        "h2": "Browse Video Ad Templates by Category",
-        "lead": "These cards are video ads for other categories, not scale photos. For the size image, use the upload box above and name one familiar object."
+        "h2": "Browse Product Scenes by Category",
+        "lead": "These clips are other video scenes. For the size photo, use the upload box and name one familiar object."
       }
     }
   },
-  "steps_h2": "Make a Scale Photo for an Amazon Listing in 3 Steps",
+  "steps_h2": "Make a Product Size Reference Photo in 3 Steps",
   "steps_lead": "The whole item in frame, one familiar object, then a square image beside your real measurements.",
   "blockOrder": [
     "hero",
-    "picker",
     "steps",
     "reviews",
     "related",
@@ -621,8 +620,8 @@
       }
     ]
   },
-  "related_h2": "Bag Size Reference Image and Jewelry Photos",
-  "related_lead": "Jewelry pages to use with the scale photo: a close-up, an on-model shot, studio lighting, and Amazon.",
+  "related_h2": "Jewelry and Listing Photos Beside the Scale Shot",
+  "related_lead": "Pair the scale photo with a close-up, an on-model jewelry shot, studio lighting, and Amazon.",
   "relatedLinks": [
     {
       "id": "photo-hub",

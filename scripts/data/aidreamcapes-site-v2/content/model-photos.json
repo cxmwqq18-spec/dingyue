@@ -12,7 +12,7 @@
     "AI photos of bags being worn",
     "jewelry on model photos"
   ],
-  "benefits_h2": "Check on-model photos for clothing before you publish",
+  "benefits_h2": "On-model photos for clothing, without a model day",
   "benefits": [
     {
       "img": "n:guide:fx16-model-photos-benefit-studio-r1",
@@ -23,42 +23,42 @@
     {
       "img": "n:guide:fx16-model-photos-benefit-street-r1",
       "alt": "Adult man with short auburn hair wearing a plain denim jacket on a city sidewalk.",
-      "t": "Use the flat photo you already have",
-      "d": "You do not book a model day to preview the next piece. Each image uses 24 credits, shown before you start."
+      "t": "Start from the flat photo you have",
+      "d": "Skip a model booking for the next piece. Each image uses 24 credits, and that number shows before you start."
     },
     {
       "img": "n:guide:fx16-model-photos-benefit-face-r1",
       "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace.",
-      "t": "Carry one worn view to the page and the ad",
-      "d": "Use the same item on a product page or a square ad. The person stays an AI-generated adult, not a real customer."
+      "t": "Use one worn view on the page and the ad",
+      "d": "Put the same item on a product page or a square ad. The person is a generated adult, not a real customer."
     }
   ],
   "more_sections": [
     {
-      "eyebrow": "Scale your fashion catalog",
-      "h2": "Compare the flat photo with the worn view",
-      "lead": "Put the flat item beside the worn image, then change the room or the street from the same photo.",
+      "eyebrow": "What to compare",
+      "h2": "Check a bag, a jacket, and a new setting",
+      "lead": "AI photos of bags being worn should sit beside the flat tote. Do the same for a jacket, then try another setting.",
       "items": [
         {
           "img": "n:guide:fx16-model-photos-scale-tote-pair-r1",
           "alt": "Split view of an unbranded rust-orange tote laid flat and the same tote carried by an adult model.",
           "frame": "none",
-          "t": "Check the tote before you publish",
-          "d": "Put the flat tote beside the worn view so color and outline are easy to compare."
+          "t": "Check a bag while it is carried",
+          "d": "Put the flat tote beside the worn view and look at the handles, color, and outline."
         },
         {
           "img": "n:guide:fx16-model-photos-scale-denim-pair-r1",
           "alt": "Split view of a plain denim jacket laid flat and the same jacket worn by an adult model.",
           "frame": "none",
-          "t": "Check a jacket the same way",
+          "t": "Check the jacket at the seams",
           "d": "Lay the denim jacket beside the worn view and look at the collar, seams, and color before you post."
         },
         {
           "img": "n:guide:im13-model-photos-after-r1",
           "alt": "Adult South Asian woman with a tight low bun wearing the same heather-gray pullover hoodie in a bright courtyard.",
           "frame": "none",
-          "t": "Refresh the setting for the next drop",
-          "d": "Keep the garment reference and change the room or the street when the campaign changes."
+          "t": "Try another room or street",
+          "d": "Keep the same garment photo and change the courtyard or the sidewalk when the listing changes."
         }
       ]
     }
@@ -96,23 +96,23 @@
     ],
     "cta": "Make an on-model photo"
   },
-  "cta_title": "Put your next collection on a model",
-  "cta_lead": "Upload one flat product photo, choose a model, and see the cost before you start.",
+  "cta_title": "Preview the next piece on a generated person",
+  "cta_lead": "Upload one flat clothing photo. You see the credit cost before you start, and the image does not replace a size chart.",
   "faq": [
     {
       "q": "What is an AI fashion model generator?",
       "a": "It shows your clothing or accessory on a generated person. You start with a flat product photo and get a worn image for the store."
     },
     {
-      "q": "How does the worn view get made?",
+      "q": "How do AI model photos for clothing get made?",
       "a": "Upload a flat garment photo, choose an adult look and a scene, then generate. Check the color and cut against your reference photo."
     },
     {
-      "q": "Which products work?",
-      "a": "Tops, dresses, outerwear, and bags work best. A clear flat photo gives a better reference than a wrinkled one."
+      "q": "Which products can I put on an AI model?",
+      "a": "Tops, dresses, outerwear, and bags work best. Jewelry on model photos works from a clear product photo too. A flat photo with the whole item in frame beats a wrinkled one."
     },
     {
-      "q": "Can a store publish the image?",
+      "q": "Can I publish these photos on my store?",
       "a": "Yes, on a product page or a social post. Keep a plain product photo for measurements. Downloads have no watermark and are licensed for commercial use."
     },
     {
@@ -232,7 +232,7 @@
           "prompt": "Use my uploaded garment photo as the exact reference. Show it on an adult model on a sunny terrace; preserve the garment shape and color, full face visible, no text or logos."
         }
       ],
-      "button": "Make an on-model photo"
+      "button": "See more worn looks"
     },
     "titles": {
       "faq": {
@@ -287,5 +287,7 @@
     "steps",
     "related",
     "faq"
-  ]
+  ],
+  "benefits_lead": "Shoppers see the piece on a person, starting from the flat photo you already have.",
+  "related_h2": "Related photo tools"
 }

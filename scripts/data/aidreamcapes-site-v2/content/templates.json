@@ -27,7 +27,7 @@
     },
     {
       "q": "Who is this library for?",
-      "a": "Online shops that need listing photos, feed stills, or short clips and already have one clear photo of the product. It is a starting layout, not a design team."
+      "a": "Online shops that already have one clear photo of the product and need a listing still, a feed image, or a short clip."
     },
     {
       "q": "Do I need editing experience?",
@@ -35,7 +35,7 @@
     },
     {
       "q": "Which categories have templates?",
-      "a": "Open a chip on this page. The groups include Beauty and Personal Care, Clothing, Apparel, Food and Beverage, Footwear, Jewelry and Accessories, Tech and Electronics, and Health and Fitness. There is no Skincare chip and no Home chip."
+      "a": "Use the chips on the scene wall. Skincare is under Beauty and Personal Care. Clothing, Apparel, Food and Beverage, Footwear, Jewelry and Accessories, Tech and Electronics, and Health and Fitness each have a chip, along with accessories, pets, sports, and apps. Home layouts, such as a tidy-room clip, are in the template gallery on this page."
     },
     {
       "q": "Can I upload my own photo?",
@@ -493,11 +493,11 @@
           "kind": "video"
         }
       ],
-      "button": "Explore More"
+      "button": "Start with your photo"
     },
     "titles": {
       "m2": {
-        "h2": "Use a product ad template in three moves"
+        "h2": "How to make a product ad from a template in 3 steps"
       },
       "m3": {
         "h2": "Browse Product Photo and Video Templates",
@@ -564,7 +564,7 @@
       "d": "Save the file when the item looks right. Add a price in your editor, then publish it."
     }
   ],
-  "steps_h2": "Use a product ad template in three moves",
+  "steps_h2": "How to make a product ad from a template in 3 steps",
   "steps_lead": "Add one photo, choose a layout, and download a file you can post.",
   "blockOrder": [
     "hero",
@@ -573,47 +573,48 @@
     "steps",
     "reviews",
     "faq",
+    "related",
     "cta"
   ],
   "reviews": {
     "h2": "What shops make from social media ad templates",
-    "lead": "Example outcomes, not customer quotes. Each card is a kind of file this library is for.",
+    "lead": "Four ways a shop uses a template, from a listing still to a short clip.",
     "items": [
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Routine still",
-        "d": "Example: a serum photo becomes a clean listing still with the bottle fully visible."
+        "d": "A skincare shop turns one serum photo into a listing still with the bottle fully in frame."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Try-on layout",
-        "d": "Example: a garment photo becomes an on-person layout a shopper can judge for fit."
+        "d": "An apparel shop turns a garment photo into an on-person layout so a shopper can judge the fit."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Pour clip",
-        "d": "Example: a bottle photo becomes a short pour clip for a feed test."
+        "d": "A drink seller turns a bottle photo into a short pour clip for a feed test."
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Room scene",
-        "d": "Example: a single product photo becomes a room scene for a product page gallery."
+        "d": "A home shop turns one product photo into a room scene for the product page gallery."
       }
     ]
   },
-  "related_h2": "Tools behind these templates",
-  "related_lead": "Open the tool, or browse by category and channel.",
+  "related_h2": "Tools and directories for these templates",
+  "related_lead": "Open a photo or video tool, or browse by category and channel.",
   "relatedLinks": [
-    "video-ads",
-    "lifestyle-photos",
-    "white-background",
-    "model-photos",
-    "industries",
-    "platforms"
+    {"id": "video-ads", "label": "AI UGC video ads"},
+    {"id": "lifestyle-photos", "label": "AI lifestyle product photos"},
+    {"id": "white-background", "label": "White background product photos"},
+    {"id": "model-photos", "label": "AI model photos for clothing"},
+    {"id": "industries", "label": "Browse by industry"},
+    {"id": "platforms", "label": "Browse by platform"}
   ],
   "cta_title": "Pick a template and add your product",
   "cta_lead": "Upload one product photo, choose a layout, and see the credit cost before you start.",

@@ -35,8 +35,8 @@
     {
       "h2": "How do I split test video ads without three shoots?",
       "paras": [
-        "You do not need three shoots. Each opening is another job from the same photo, and the credit cost is shown before you start.",
-        "You see the credit cost before each job, from 24 credits for 6 seconds to 120 for 30 seconds. Name the files so you can tell them apart, such as clock-dawn-9x16. Then add the same caption, the same on-screen line, and the same music to all of them. If one version gets a different headline, you are no longer testing the opening. [AI image to video](page:image-to-video) and [URL to video](page:url-to-video) can supply extra versions from that same product."
+        "You do not need three shoots. Each opening is another job from the same photo.",
+        "Each clip is its own job: 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The cost is on screen before you start, and a failed job returns the credits. Name the files so you can tell them apart, such as clock-dawn-vertical. Then add the same caption, the same on-screen line, and the same music to every file. If one version gets a different headline, you are no longer testing the opening. [AI image to video](page:image-to-video) makes another clip from that photo. [URL to video](page:url-to-video) makes one from the product page link."
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec03-r1",
       "alt": "Hands hold the same plain round wall clock up as the source photo."
@@ -73,12 +73,6 @@
       "paras": [
         "One difference, a few versions, the same audience and budget, and no edits while they run.",
         "Judge after several days, write down the result, and let the next round change only the next thing."
-      ]
-    },
-    {
-      "h2": "On this page",
-      "paras": [
-        "Six questions follow: how to keep a small-business test fair, how to compare ad versions, how to split test video ads, how the versions should run side by side, how to tell which ad version works, and what to change next."
       ]
     }
   ],

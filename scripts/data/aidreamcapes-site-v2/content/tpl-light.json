@@ -1,10 +1,10 @@
 {
   "id": "tpl-light",
   "title": "Product Photo Lighting Without a Studio | AIVideosUGC",
-  "description": "Fix harsh snapshots with soft, directional light and clean highlights on glass, metal and gloss. AI product relighting from one uploaded photo.",
+  "description": "Product photo lighting for glass, metal, and gloss. Fix a harsh snapshot with soft, directional light and clean highlights, from one uploaded photo.",
   "h1": "Product Photo Lighting for Glass, Metal and Gloss",
   "eyebrow": "Product photo template",
-  "lead": "Open a lighting scene, add one clear photo, and describe the light so glass, metal and gloss read without a studio kit.",
+  "lead": "Upload one clear photo and describe the light so glass, metal, and gloss stay easy to see, without a studio kit.",
   "secondary_keywords": [
     "studio lighting for product photos",
     "perfume bottle photography",
@@ -14,11 +14,11 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a photo with the whole product in focus, including the cap, base and reflective edges. A plain snapshot is enough."
+      "d": "Upload a sharp photo of the whole product, with the edges that catch light in focus. A plain snapshot is enough."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the light direction, how soft the shadow should be, and how glass or metal should read. The result is a square relit photo."
+      "d": "Name the light direction, how soft the shadow should be, and how glass or metal should look. The result is a square photo."
     },
     {
       "t": "Download and Post",
@@ -40,12 +40,12 @@
         "Described in your words"
       ]
     ],
-    "cta": "Relight my product"
+    "cta": "Make my lighting photo"
   },
   "faq": [
     {
-      "q": "Which products work well with relighting?",
-      "a": "Glass, metal, ceramic and glossy items can show a useful change in highlight and shadow. Compare the download with the real surface before you publish."
+      "q": "Which products show a useful lighting change?",
+      "a": "Glass, metal, ceramic, and glossy items can show a useful change in highlight and shadow. Compare the download with the real surface before you publish."
     },
     {
       "q": "Do I need a studio setup?",
@@ -56,24 +56,24 @@
       "a": "The generated image can soften highlights and keep the product face easier to read. Reflective results still need a review, because a highlight can shift."
     },
     {
-      "q": "Will relighting change the shape or color?",
-      "a": "It can. Compare the silhouette, color and finish with the real item whenever those must stay exact."
+      "q": "Will the new lighting change the shape or color?",
+      "a": "It can. Compare the silhouette, color, and finish with the real item whenever those must stay exact."
     },
     {
       "q": "Which light suits an Amazon listing?",
-      "a": "Use even front fill when shoppers need a clear product face. Save stronger contrast for ads and detail views."
+      "a": "Use even light from the front when shoppers need a clear product face. Save stronger contrast for ads and detail views."
     },
     {
       "q": "Can I describe a light direction?",
       "a": "Yes. Describe the direction, the shadow softness and the surface you want to read, then compare the result with the real item."
     },
     {
-      "q": "What does a relit photo cost?",
+      "q": "What does a lighting photo cost?",
       "a": "Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits."
     },
     {
-      "q": "Does the relit photo have a watermark?",
-      "a": "No. You can use it in a listing or your own ad. Compare glass, metal and gloss with the real item first."
+      "q": "Does the lighting photo have a watermark?",
+      "a": "No. You can use it in a listing or your own ad. Compare glass, metal, and gloss with the real item first."
     },
     {
       "q": "Can I use one relit photo in both a listing and an ad?",
@@ -81,7 +81,7 @@
     },
     {
       "q": "Can I add offer text on the photo?",
-      "a": "Add the offer in your editor after export. The relight does not write prices or other words onto the photo."
+      "a": "Add the offer in your editor after export. The lighting photo does not add prices or other words."
     }
   ],
   "visual": {
@@ -97,7 +97,7 @@
       "source": "f:q8-tpl-light-input-good-01",
       "result": "n:guide:f15-r2-tpl-light-output-white-mug-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded plain white ceramic mug as the exact product. Relight it beside a bright window with warm side light, a defined cast shadow and a clear highlight across the glaze while keeping its rim, handle and color unchanged.",
+      "prompt": "Give this white mug warm window light from the side, a soft shadow, and a clear highlight on the glaze. Keep the rim, handle, and color as they are.",
       "options": [
         [
           "Template",
@@ -116,8 +116,8 @@
       "sourceHint": "Show the full mug, rim and handle in focus."
     },
     "picker": {
-      "title": "Browse Video Ad Templates by Category",
-      "lead": "These cards are video ads for other categories, not lighting setups. For the relight, use the upload box above and describe the light direction and the surface.",
+      "title": "Video Ad Templates for Other Products",
+      "lead": "These cards are short video ads. For lighting on your own item, upload the photo above and describe the direction, the shadow, and the surface.",
       "chips": [
         {
           "id": "accessories",
@@ -541,8 +541,8 @@
         "h2": "Questions About Product Photo Lighting"
       },
       "m3": {
-        "h2": "Browse Video Ad Templates by Category",
-        "lead": "These cards are video ads for other categories, not lighting setups. For the relight, use the upload box above and describe the light direction and the surface."
+        "h2": "Video Ad Templates for Other Products",
+        "lead": "These cards are short video ads. For lighting on your own item, upload the photo above and describe the direction, the shadow, and the surface."
       }
     }
   },
@@ -558,20 +558,20 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Perfume Bottle Photography Setups",
-    "lead": "Each card is a light a shop describes. Reflective results still need a check against the real item.",
+    "h2": "Light Setups for Glass, Metal and Gloss",
+    "lead": "Perfume bottle photography is one of these setups, next to metal, gloss, and glass. Check every download against the real item.",
     "items": [
       {
         "example": true,
         "who": "Fragrance shop",
         "t": "Soft bottle",
-        "d": "A fragrance shop uses soft side light on a perfume bottle so the glass edge stays readable."
+        "d": "A fragrance shop uses soft side light on a perfume bottle so the glass edge stays easy to see."
       },
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Even jar",
-        "d": "A skincare shop uses even front fill on a cream jar for the listing, instead of a hard highlight."
+        "d": "A skincare shop uses even front light on a cream jar for the listing, instead of a hard highlight."
       },
       {
         "example": true,
@@ -583,13 +583,13 @@
         "example": true,
         "who": "Drinkware shop",
         "t": "Steel cup",
-        "d": "A drinkware shop keeps the reflection on a steel cup controlled, instead of a blown-out glare."
+        "d": "A drinkware shop keeps the reflection on a steel cup controlled, instead of a bright glare."
       },
       {
         "example": true,
         "who": "Jewelry shop",
         "t": "Chain",
-        "d": "A jewelry shop runs light along a chain so the metal reads without a lighting kit."
+        "d": "A jewelry shop runs light along a chain so the metal is easy to see, without a lighting kit."
       },
       {
         "example": true,
@@ -619,12 +619,12 @@
         "example": true,
         "who": "Bottle shop",
         "t": "Clear glass",
-        "d": "A bottle shop uses front fill on clear glass so the label area is easier to see."
+        "d": "A bottle shop uses even front light on clear glass so the label area is easier to see."
       }
     ]
   },
-  "related_h2": "Skincare Product Photo with Soft Light",
-  "related_lead": "More beauty pages for a soft-light shot: a bundle photo, a Story image, a beauty video, and Amazon.",
+  "related_h2": "More Pages for a Soft-Light Product Photo",
+  "related_lead": "A skincare product photo with soft light, a bundle photo, a Story image, a beauty video, and Amazon.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -651,6 +651,6 @@
       "label": "Amazon product photos"
     }
   ],
-  "cta_title": "Start a Relight from One Clear Snapshot",
+  "cta_title": "Start from One Clear Snapshot",
   "cta_lead": "Upload one photo of the whole product and see the credit cost before you start."
 }

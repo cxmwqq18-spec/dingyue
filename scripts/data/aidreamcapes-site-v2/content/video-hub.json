@@ -26,8 +26,8 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "An AI video generator for ecommerce makes a short product clip from a photo you upload and a scene you describe. You pick the frame and the length. No filming crew is required for the first cut.",
-    "AIVideosUGC is an ecommerce video maker for that job. Finished clips can run as ads or sit on a product page, with commercial use and no watermark. Captions, prices, and licensed music go on after download."
+    "An AI video generator for ecommerce makes a short product clip from a photo you upload and a scene you describe. You pick the frame and the length. You do not book a shoot for that first clip.",
+    "AIVideosUGC is an ecommerce video maker for store ads and product pages. Commercial use is included, and the file has no watermark. Add captions, a price, and licensed music after you download."
   ],
   "steps_h2": "How to Make Short Videos for Online Stores in 3 Simple Steps",
   "steps_lead": "Go from one clear photo to a clip you can download.",
@@ -56,7 +56,7 @@
     },
     {
       "q": "What kinds of product videos can I make?",
-      "a": "Creator-style ads, explainers, showcases, presenter-led clips, and social clips. Open the matching tool from the format list when you want that job specifically."
+      "a": "Creator-style ads, explainers, showcases, presenter-led clips, and social clips. Open the matching tool under the format list when you want that kind of clip."
     },
     {
       "q": "Which frames and lengths are available?",
@@ -72,7 +72,7 @@
     },
     {
       "q": "What product photo works best?",
-      "a": "Use a clear, well-lit photo with the whole product in frame. Upload only a photo you own or have permission to use."
+      "a": "Use a clear, well-lit photo with the whole product visible. Upload only a photo you own or have permission to use."
     },
     {
       "q": "Can I use the download in a paid ad?",
@@ -84,20 +84,20 @@
     },
     {
       "q": "Do I choose which AI model makes the video?",
-      "a": "No. Upload a photo, pick a frame and a length, and describe the scene. There is no model menu."
+      "a": "No. You do not pick a model name. Upload a photo, choose a frame and a length, and describe the scene."
     },
     {
       "q": "Can I start from a product page link?",
-      "a": "No. Upload one product photo and describe the scene. A product page link is handled on the URL to video page, not here."
+      "a": "Not on this page. Upload one product photo and describe the scene. For a product link, use the URL to video page."
     },
     {
       "q": "How long does a video take, and can I add captions?",
-      "a": "A clip is ready in minutes. The exact wait depends on the length and on load. Add captions, a price, and licensed music in your editor after download. This tool does not add them for you."
+      "a": "There is no fixed wait. It depends on the length and how many jobs are ahead of yours. Add captions, a price, and licensed music in your editor after download. This tool does not add them for you."
     }
   ],
   "examples": {
     "h2": "Videos an Ecommerce Video Maker Can Generate",
-    "lead": "Pick the format that matches the job, then start that clip from your own photo.",
+    "lead": "Pick the format that matches what you are making, then start that clip from your own photo.",
     "groups": [
       {
         "label": "Creator-style product ads",
@@ -173,7 +173,7 @@
       "resultPosition": "center 20%",
       "mode": "video",
       "length": 10,
-      "prompt": "I wanted to show you this insulated bottle before I head out.",
+      "prompt": "An adult holds the bottle and turns it toward the camera in a bright room.",
       "options": [
         [
           "Frame",
@@ -199,7 +199,7 @@
         },
         {
           "id": "apps",
-          "label": "Apps"
+          "label": "Desk gear"
         },
         {
           "id": "beauty-personal-care",
@@ -211,11 +211,11 @@
         },
         {
           "id": "e-commerce",
-          "label": "E-Commerce"
+          "label": "Listings"
         },
         {
           "id": "education",
-          "label": "Education"
+          "label": "How-to"
         },
         {
           "id": "explainer",
@@ -223,7 +223,7 @@
         },
         {
           "id": "financial-services",
-          "label": "Financial Services"
+          "label": "Work desk"
         },
         {
           "id": "food-beverage",
@@ -243,7 +243,7 @@
         },
         {
           "id": "kids-toy",
-          "label": "Kids & Toy"
+          "label": "Kids & Toys"
         },
         {
           "id": "pet",
@@ -259,7 +259,7 @@
         },
         {
           "id": "ugc",
-          "label": "UGC"
+          "label": "Creator style"
         },
         {
           "id": "viral",
@@ -269,7 +269,7 @@
       "cards": [
         {
           "ref": "n:guide:im01-video-hub-bike-r2",
-          "label": "Folding Bike Commute UGC",
+          "label": "Folding Bike Commute",
           "chips": [
             "accessories"
           ],
@@ -279,7 +279,7 @@
         },
         {
           "ref": "n:guide:img3-video-earbud-box-r1",
-          "label": "Earbud Box Reveal UGC",
+          "label": "Earbud Box Reveal",
           "chips": [
             "accessories"
           ],
@@ -299,7 +299,7 @@
         },
         {
           "ref": "n:guide:im01-video-hub-sweater-r1",
-          "label": "Knit Sweater Mirror UGC",
+          "label": "Knit Sweater Mirror",
           "chips": [
             "apparel"
           ],
@@ -309,7 +309,7 @@
         },
         {
           "ref": "n:guide:b2f12-video-hub-picker4-r1",
-          "label": "Phone Tripod App Setup",
+          "label": "Phone Tripod Setup",
           "chips": [
             "apps"
           ],
@@ -319,7 +319,7 @@
         },
         {
           "ref": "n:guide:im01-video-hub-tablet-r1",
-          "label": "Tablet Stand App Demo",
+          "label": "Tablet Stand Demo",
           "chips": [
             "apps"
           ],
@@ -339,7 +339,7 @@
         },
         {
           "ref": "n:guide:k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4",
-          "label": "Sheet Mask Routine UGC",
+          "label": "Sheet Mask Routine",
           "chips": [
             "beauty-personal-care"
           ],
@@ -429,7 +429,7 @@
         },
         {
           "ref": "n:guide:im01-video-hub-finance-r1",
-          "label": "Finance Desk Dashboard UGC",
+          "label": "Desk Dashboard Clip",
           "chips": [
             "financial-services"
           ],
@@ -439,7 +439,7 @@
         },
         {
           "ref": "n:guide:mx1w-video-hub-financial-services-2-r1",
-          "label": "Finance Chart Explainer",
+          "label": "Desk Chart Explainer",
           "chips": [
             "financial-services"
           ],
@@ -449,7 +449,7 @@
         },
         {
           "ref": "n:guide:k3-social-example-hot-sauce",
-          "label": "Hot Sauce Pour UGC",
+          "label": "Hot Sauce Pour",
           "chips": [
             "food-beverage"
           ],
@@ -489,7 +489,7 @@
         },
         {
           "ref": "n:guide:q1-video-ex-gym-protein",
-          "label": "Post Workout Shaker UGC",
+          "label": "Post Workout Shaker",
           "chips": [
             "health-fitness"
           ],
@@ -519,7 +519,7 @@
         },
         {
           "ref": "n:guide:im01-video-hub-scarf-r1",
-          "label": "Silk Scarf Unboxing ASMR",
+          "label": "Silk Scarf Unboxing",
           "chips": [
             "jewelry-accessories"
           ],
@@ -529,7 +529,7 @@
         },
         {
           "ref": "n:guide:mx1w-video-hub-jewelry-accessories-3-r1",
-          "label": "Silver Bracelet Fasten UGC",
+          "label": "Silver Bracelet Close-up",
           "chips": [
             "jewelry-accessories"
           ],
@@ -549,7 +549,7 @@
         },
         {
           "ref": "n:guide:mx1w-video-hub-kids-toy-2-r1",
-          "label": "Color Blocks Unboxing UGC",
+          "label": "Color Blocks Unboxing",
           "chips": [
             "kids-toy"
           ],
@@ -559,7 +559,7 @@
         },
         {
           "ref": "n:guide:mx1w-video-hub-pet-1-r1",
-          "label": "Dog Brush Care UGC",
+          "label": "Dog Brush Care",
           "chips": [
             "pet"
           ],
@@ -609,7 +609,7 @@
         },
         {
           "ref": "n:guide:img3-video-supplement-creator-r1",
-          "label": "Supplement Creator Demo UGC",
+          "label": "Supplement Creator Demo",
           "chips": [
             "ugc"
           ],
@@ -619,7 +619,7 @@
         },
         {
           "ref": "n:guide:k1-unboxing-gallery-headphones-box",
-          "label": "Headphone Product Demo UGC",
+          "label": "Headphone Product Demo",
           "chips": [
             "ugc"
           ],
@@ -639,7 +639,7 @@
         },
         {
           "ref": "n:guide:img3-video-phone-case-compare-r1",
-          "label": "Phone Case Compare Hook",
+          "label": "Phone Case Compare",
           "chips": [
             "viral"
           ],
@@ -681,8 +681,8 @@
   "definition": {
     "title": "What Is an AI Video Generator for Ecommerce?",
     "paras": [
-      "An AI video generator for ecommerce makes a short product clip from a photo you upload and a scene you describe. You pick the frame and the length. No filming crew is required for the first cut.",
-      "AIVideosUGC is an ecommerce video maker for that job. Finished clips can run as ads or sit on a product page, with commercial use and no watermark. Captions, prices, and licensed music go on after download."
+      "An AI video generator for ecommerce makes a short product clip from a photo you upload and a scene you describe. You pick the frame and the length. You do not book a shoot for that first clip.",
+      "AIVideosUGC is an ecommerce video maker for store ads and product pages. Commercial use is included, and the file has no watermark. Add captions, a price, and licensed music after you download."
     ]
   },
   "reasons": {
@@ -691,11 +691,11 @@
     "items": [
       {
         "t": "Starts From Your Product Photo",
-        "d": "Every clip begins with the photo you upload, so the item on screen is the one you sell. You are not describing a product from scratch."
+        "d": "Every clip begins with the photo you upload, so the item on screen is the one you sell. You do not have to describe its shape and color in words."
       },
       {
         "t": "Frames Your Channels Already Use",
-        "d": "Render 9:16, 1:1, 16:9, 4:3, or 3:4. A vertical file can go to TikTok, and the same photo can be rendered again for a square or wide placement."
+        "d": "Make it in 9:16, 1:1, 16:9, 4:3, or 3:4. A vertical file can go to TikTok, and you can make the same photo again as a square or a wide clip."
       },
       {
         "t": "Another Version Without Another Shoot",
@@ -731,31 +731,31 @@
   ],
   "reviews": {
     "h2": "Example AI Video Ads for Shopify Sellers",
-    "lead": "Example jobs for a type of shop. These are not customer quotes.",
+    "lead": "How a type of shop might use one product photo. These are not customer quotes.",
     "items": [
       {
         "example": true,
         "who": "Beauty shop",
         "t": "A short creator clip for a cleanser",
-        "d": "One product photo becomes a creator-style clip for a paid social test, with no bathroom reshoot."
+        "d": "A beauty shop turns one cleanser photo into a creator-style clip for a paid social test."
       },
       {
         "example": true,
         "who": "Housewares seller",
         "t": "One action that shows the bottle",
-        "d": "A short demo shows the collapsible bottle doing the one thing shoppers need to see."
+        "d": "A housewares seller uses one photo to show the one action shoppers need, such as a bottle folding down."
       },
       {
         "example": true,
         "who": "Outdoor apparel shop",
         "t": "A jacket in motion",
-        "d": "A seasonal movement clip comes from one jacket photo, with no model day."
+        "d": "An outdoor shop makes a movement clip from one jacket photo, without booking a model day."
       },
       {
         "example": true,
         "who": "Electronics seller",
         "t": "An unboxing for launch week",
-        "d": "Headphones get an opening clip from one product photo for the launch posts."
+        "d": "An electronics seller makes an opening clip from one headphone photo for the launch posts."
       }
     ]
   },

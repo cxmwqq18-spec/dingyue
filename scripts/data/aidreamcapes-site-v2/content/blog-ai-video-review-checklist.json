@@ -4,7 +4,7 @@
   "description": "A pre-publish AI content checklist for product photos and video ads: match product details, add prices yourself, and follow platform rules. Save it now.",
   "h1": "An AI Content Checklist for Product Photos and Video Ads",
   "eyebrow": "Pre-publish checks",
-  "lead": "An AI content checklist is a short pass over the product, the words, and the rights before a photo or a video goes on your store, a marketplace, or an ad account.",
+  "lead": "An AI content checklist is a last look at the product, the words, and the rights before a photo or a video goes on your store, a marketplace, or an ad account.",
   "secondary_keywords": [
     "AI video review checklist",
     "check AI product images",
@@ -45,7 +45,7 @@
       "h2": "What is on an AI video review checklist?",
       "paras": [
         "Play the clip full screen on your phone, then step through it slowly, with extra attention on the hands and the first frame.",
-        "Movement is where a clip tends to slip: a label can blur as the product turns, fingers can blend into a strap, or a zipper can change shape halfway through. Count fingers and watch how they grip. The first frame often becomes the thumbnail. If one short moment is off, trim around it in your editor. If the problem runs through the clip, make a new version. [AI product video generator](page:product-videos) jobs should get this same pass before they are posted."
+        "Movement is where a clip tends to slip: a label can blur as the product turns, fingers can blend into a strap, or a zipper can change shape halfway through. Count fingers and watch how they grip. The first frame often becomes the thumbnail. If one short moment is off, trim around it in your editor. If the problem runs through the clip, make a new version. Run this same check on an [AI product video generator](page:product-videos) clip before you post it."
       ],
       "img": "n:guide:fx04-blog-review-motion-r1",
       "alt": "Hands open the zipper and flap of plain black travel backpack."
@@ -72,7 +72,7 @@
       "h2": "When do AI-generated content labels apply?",
       "paras": [
         "Read the current rule on each site you post to. Several platforms ask you to mark realistic generated people or scenes, and the rule changes.",
-        "Two habits travel well. Do not present a generated person as a real customer or reviewer, including in [AI model photos for clothing](page:model-photos). And do not let a caption promise health, skin, or weight results. Show how the product is used and leave the conclusion to the shopper."
+        "Keep two rules on every site. Do not present a generated person as a real customer or reviewer, including in [AI model photos for clothing](page:model-photos). And do not let a caption promise health, skin, or weight results. Show how the product is used and let the shopper decide."
       ]
     },
     {

@@ -14,13 +14,13 @@
   "benefits_h2": "Benefits of a Before and After TikTok Video",
   "benefits": [
     {
-      "t": "Ready in Minutes",
-      "d": "Go from the photo you upload to a finished change in minutes. There is no second setup and no filming date.",
+      "t": "Start From One Photo",
+      "d": "Upload the photo, name the change, and download the clip. You do not book a filming date.",
       "icon": "bolt"
     },
     {
       "t": "Pay for the Clip, Not a Reshoot",
-      "d": "Credits replace a second crew call. A 15-second clip uses 60 credits, and a failed render gives those credits back.",
+      "d": "Credits replace a second crew call. A 15-second clip uses 60 credits, and a failed job gives those credits back.",
       "icon": "coins"
     },
     {
@@ -45,7 +45,7 @@
     }
   ],
   "steps_h2": "How to Use a Before and After Video Maker in 3 Simple Steps",
-  "steps_lead": "Show one product, one practical action, and one visible result.",
+  "steps_lead": "Upload one photo, name the change, and download a clip you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -84,7 +84,7 @@
     },
     {
       "q": "How is this different from filming two setups?",
-      "a": "A shoot stages the item twice and tries to match the camera. Here both states are directed from the same photo, in minutes, with no second booking."
+      "a": "A shoot stages the item twice and tries to match the camera. Here both states come from the same photo, with no second booking."
     },
     {
       "q": "Who should use a before and after video?",
@@ -116,7 +116,7 @@
     },
     {
       "q": "Will TikTok or Meta reject this kind of AI ad?",
-      "a": "They do not ban AI ads as a class. Some require a label when a clip could be read as a real customer. Check the current rule before you scale spend."
+      "a": "Check the current rule on TikTok and Meta before you spend more. Some ask for a label when a clip could be read as a real customer."
     }
   ],
   "actor_scene_picker": {
@@ -156,7 +156,7 @@
       "result": "n:guide:fx48-steps-cable-organizer",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, an adult hand feeds three loose cords through the organizer slots, leaving the tabletop clear. End with the cords arranged in place. Soft daylight, practical home-demo style. Overhead medium framing with one slow push-in. Sound: cord slide, organizer tap and quiet room tone; no music, text or logos."
+      "prompt": "Loose cords on the desk, then a hand feeds them through the organizer. The camera stays put, and the desk ends clear."
     },
     "picker": {
       "title": "See a Before and After Product Video",
@@ -174,7 +174,7 @@
         "h2": "Where a Visible Change Helps the Sale"
       },
       "faq": {
-        "h2": "Questions About a Before and After Video"
+        "h2": "Questions About a Before and After Video Maker"
       }
     }
   },
@@ -195,7 +195,7 @@
     "title": "What Is an AI Before and After Video?",
     "paras": [
       "An AI before and after video shows one starting state, one practical action, and one visible result, made from a single product photo. The item and the camera stay steady so a shopper can judge the change.",
-      "Use it as a transformation video for ads on TikTok, Reels, Shorts, or a product page. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. The change has to be something your product really does to an item or the space around it, not a health, skin, or body result."
+      "Use it as a before and after product video, and as a transformation video for ads, on TikTok, Reels, Shorts, or a product page. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. The change has to be something your product really does to an item or the space around it, not a health, skin, or body result."
     ]
   },
   "reasons": {
@@ -210,13 +210,13 @@
       },
       {
         "t": "No Second Shoot to Match",
-        "d": "One photo directs the wipe. You do not restage the light, the crop, or the camera for a clean take.",
+        "d": "You start from one photo. You do not restage the light, the crop, or the camera for a clean take.",
         "img": "n:guide:fx48-benefit-tote",
         "alt": "Adult hands wipe a coffee stain from a plain canvas tote, with clean fabric beside it."
       },
       {
-        "t": "Only a Change You Can Stand Behind",
-        "d": "You name the start, the action, and the result. Show only a change the product really makes to an item or the space around it.",
+        "t": "A Change the Product Really Makes",
+        "d": "You name the start, the action, and the result. The change stays on the item, or on the space around it.",
         "img": "n:guide:fx48-benefit-watch",
         "alt": "Adult hands wipe a plain round cream-dial watch with dusty and clean halves."
       }
@@ -232,9 +232,9 @@
     ],
     "rows": [
       [
-        "Time to first clip",
-        "Minutes",
-        "Time to stage the before, reset the after, and edit"
+        "How the first clip happens",
+        "From the photo you uploaded",
+        "Stage the before, reset the after, then edit"
       ],
       [
         "What you need",
@@ -265,7 +265,7 @@
   },
   "reviews": {
     "h2": "Example Changes Sellers Test",
-    "lead": "Example clips of a visible product change. These are not customer quotes, and they are not a health, skin, or body result.",
+    "lead": "Sample setups for a type of shop, not a buyer review and not a skin or body result.",
     "items": [
       {
         "example": true,

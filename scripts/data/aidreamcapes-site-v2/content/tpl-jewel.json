@@ -4,15 +4,15 @@
   "description": "Turn one jewelry photo into an on-model shot. AI model photos for necklaces, earrings, rings and bracelets, for social ads and product pages.",
   "h1": "AI Jewelry Model Photos That Show the Piece Worn",
   "eyebrow": "Model photo template",
-  "lead": "A ring on a plain square does not show scale or how the piece sits. Upload one jewelry photo and get an on-model image you can check against the clasp, stones and edges.",
+  "lead": "A ring on a plain background does not show scale or how the piece sits. Upload one jewelry photo and get an on-model image you can check against the clasp, stones, and edges.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
     "earrings on a model",
     "worn jewelry product photos"
   ],
-  "steps_h2": "Necklace on Model Photo",
-  "steps_lead": "Upload the piece, choose how it is worn, then download a photo you can compare with the source.",
+  "steps_h2": "Make AI Jewelry Model Photos in 3 Steps",
+  "steps_lead": "A necklace on model photo starts here: upload the piece, choose a neckline, hand, or close crop, then compare the download with the source.",
   "steps": [
     {
       "t": "Upload Your Jewelry Photo",
@@ -91,7 +91,7 @@
       "source": "n:guide:tpl-jewel-m2-source",
       "result": "n:guide:rc3-jewel-step-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Keep the full pendant and chain curve inside the crop, with soft window light and natural skin texture. Chest-up product-ad framing, clean styling, no text or logos. End with the piece still enough for a shopper to compare with the source image. Leave room around the neckline so the result can sit beside material, length and care details in a listing.",
+      "prompt": "Show an adult wearing the silver necklace at the collarbone, with a light touch on the chain so the size is easy to judge. Keep the pendant and chain in frame, in soft window light.",
       "options": [
         [
           "Template",
@@ -105,11 +105,13 @@
           "Upload",
           "One clear photo of the piece"
         ]
-      ]
+      ],
+      "sourceTitle": "Product photo",
+      "sourceHint": "Show the full necklace, clasp, and edges in frame."
     },
     "picker": {
-      "title": "These cards open a 15-second video",
-      "lead": "Each card is a 9:16 video ad, not a photo of your piece being worn. Upload the jewelry photo above, then compare the clasp, stones and edges with your source.",
+      "title": "Short video ads, not worn jewelry photos",
+      "lead": "Each card is a short video ad. To show your piece worn, upload the jewelry photo above, then compare the clasp, stones, and edges with your source.",
       "chips": [
         {
           "id": "accessories",
@@ -527,11 +529,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "Necklace on Model Photo"
+        "h2": "Make AI Jewelry Model Photos in 3 Steps"
       },
       "m3": {
-        "h2": "These cards open a 15-second video",
-        "lead": "Each card is a 9:16 video ad, not a photo of your piece being worn. Upload the jewelry photo above, then compare the clasp, stones and edges with your source."
+        "h2": "Short video ads, not worn jewelry photos",
+        "lead": "Each card is a short video ad. To show your piece worn, upload the jewelry photo above, then compare the clasp, stones, and edges with your source."
       },
       "m4": {
         "h2": "Use jewelry photos on listings and social feeds"
@@ -564,7 +566,7 @@
         "example": true,
         "who": "Earring brand",
         "t": "A pair kept in frame",
-        "d": "Both earrings stay visible in a close worn crop, and the source photo remains beside the result. Metal color is accepted only when it still matches the piece."
+        "d": "An earring brand keeps both earrings on a model in a close crop. The source photo stays beside the result, and they keep it only when the metal color still matches."
       },
       {
         "example": true,
@@ -576,13 +578,13 @@
         "example": true,
         "who": "Bracelet label",
         "t": "One piece, two crops",
-        "d": "The same bracelet photo feeds a wrist scene and a tighter clasp crop. Each run shows its credit cost before it starts."
+        "d": "The same bracelet photo is used for a wrist scene and a tighter clasp crop. Each run shows its credit cost before it starts."
       },
       {
         "example": true,
         "who": "Social manager",
         "t": "Feed still, listing beside it",
-        "d": "The worn image goes in the feed, and the untouched product photo stays on the product page. Care notes are typed beside the image, not generated into it."
+        "d": "The worn image goes in the feed, and the plain product photo stays on the product page. Care notes are typed beside the image, not placed inside it."
       },
       {
         "example": true,
@@ -592,8 +594,8 @@
       }
     ]
   },
-  "related_h2": "Jewelry Lifestyle Photos for Instagram",
-  "related_lead": "The model-photo tool, close-up and size templates, plus Instagram and Shopify pages.",
+  "related_h2": "Jewelry Photos for Listings and Instagram",
+  "related_lead": "Close-ups, a size reference, jewelry lifestyle photos for Instagram, and Shopify listings.",
   "relatedLinks": [
     {
       "id": "model-photos",
@@ -624,7 +626,6 @@
   "cta_lead": "Upload one jewelry photo. You see the credit cost before the job starts.",
   "blockOrder": [
     "hero",
-    "picker",
     "reviews",
     "steps",
     "related",

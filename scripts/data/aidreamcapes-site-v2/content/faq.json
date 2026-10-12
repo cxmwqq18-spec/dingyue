@@ -4,7 +4,7 @@
   "description": "AIVideosUGC FAQ: what you can make, photo upload tips, video lengths and sizes, credits, refunds, privacy and adding prices to ads. Find your answer here.",
   "h1": "AIVideosUGC FAQ: Answers Before You Start",
   "eyebrow": "Help center",
-  "lead": "The AIVideosUGC FAQ covers how AI product videos work, credits and refunds for AI content, who can see your uploads, and using AI images in ads.",
+  "lead": "Read how AI product videos work, then the answers on AI product photo questions, credits and refunds for AI content, and using AI images in ads.",
   "card": "Lengths, credits, uploads, privacy, and finishing the ad yourself.",
   "secondary_keywords": [
     "how AI product videos work",
@@ -14,20 +14,36 @@
   ],
   "faq": [
     {
+      "q": "How do AI product videos work?",
+      "a": "Upload one photo of the real item, pick a template or describe one scene, then choose a length and a frame. Download the file when it is ready. Add the price, captions, and music afterward in your editor."
+    },
+    {
       "q": "What video lengths and frame sizes can I choose?",
-      "a": "Pick 6, 10, 15, or 30 seconds, then pick a frame: 9:16, 1:1, 16:9, 4:3, or 3:4. Product photos are square by default. The cost is shown before the job starts."
+      "a": "Pick 6, 10, 15, or 30 seconds, then pick a frame: 9:16, 1:1, 16:9, 4:3, or 3:4. Product photos are square. The cost is shown before you start."
+    },
+    {
+      "q": "What photo should I upload?",
+      "a": "Use one clear, in-focus photo of the real item, with the whole product visible. A plain surface and daylight make the color and shape easier to check. The photo you download is square."
     },
     {
       "q": "How do credits work?",
       "a": "You see the credit cost before you start. Credits are held when the job starts and used when the file is delivered. If the job fails, the credits come back."
     },
     {
-      "q": "Who can see my uploads and results?",
-      "a": "Other customers cannot see them. The photos you upload and the files you make stay in your account and are not published. If you email support about a job, we can look up that job."
+      "q": "How many credits does a product photo or a video use?",
+      "a": "A product photo costs 24 credits. Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The exact cost appears before you start, and a failed job returns its credits."
     },
     {
-      "q": "How do I add prices when using AI images in ads?",
-      "a": "Add prices, codes, and headlines after download, in Canva, CapCut, Ads Manager, or a similar tool. Typed text stays accurate. Captions and music go on the same way. The [AI ad image generator](page:social-ad-photos) makes the picture. The offer text stays yours."
+      "q": "Can I get a refund if I have not used the credits I bought?",
+      "a": "You can request a refund for purchased credits within 30 days if none of those credits have been used. See the [Refund Policy](/refunds). A failed job is separate: its credits return automatically. A file that was delivered is not refunded just because you dislike it."
+    },
+    {
+      "q": "Who can see my uploads and results?",
+      "a": "Other customers cannot see them. The photos you upload and the files you make are not published. If you email support about a job, we can look up that job."
+    },
+    {
+      "q": "How do I add a price when using AI images in ads?",
+      "a": "Add the price, code, and headline after download, in your editor or in Ads Manager. Type the number yourself so it matches the live offer. Captions and music go on the same way. The [AI ad image generator](page:social-ad-photos) makes the picture. The offer text stays yours."
     },
     {
       "q": "Can I use the images and videos commercially?",
@@ -36,18 +52,10 @@
     {
       "q": "Do downloaded images and videos have a watermark?",
       "a": "No. Downloaded images and videos do not include an AIVideosUGC watermark."
-    },
-    {
-      "q": "Can I get a refund if I have not used the credits I bought?",
-      "a": "You can request a refund for purchased credits within 30 days if none of those credits have been used. See the [Refund Policy](/refunds). A failed job is separate: its credits return automatically."
-    },
-    {
-      "q": "How many credits does a product photo or a video use?",
-      "a": "A product photo costs 24 credits. Use a clear, in-focus photo of the real item. Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The exact cost appears before you start, and a failed job returns its credits."
     }
   ],
-  "cta_title": "Check the cost, then make one asset",
-  "cta_lead": "Find the answer you need, compare the credit cost, and start with a plan that fits the next product ad.",
+  "cta_title": "Check the cost, then make one file",
+  "cta_lead": "Find the answer you need, compare the credit cost, and start with a plan that fits the next ad.",
   "relatedLinks": [
     "pricing",
     "glossary",

@@ -1,18 +1,18 @@
 {
   "id": "examples",
   "title": "AI Product Photo and Video Examples | AIVideosUGC",
-  "description": "See how one product photo becomes a listing image, lifestyle scene or short ad. Compare six product examples and try a direction for your store.",
+  "description": "Six product photo stills you can recreate from your own photo, from a desk scene to a lifestyle shot. Pick a direction and try it with your item.",
   "h1": "AI Product Photo and Video Examples You Can Recreate",
   "eyebrow": "From photo to finished file",
-  "lead": "Six products, each shown from the source photo to a finished still. Pick a direction and try it with your own item.",
-  "card": "Six products, from a travel mug to sunscreen, shown as finished photos.",
+  "lead": "Pick a finished photo and redo that scene with your own product. These six cards are stills, from a travel mug to a sunscreen tube.",
+  "card": "Six product photo stills, from a travel mug to a sunscreen tube, that you can recreate.",
   "secondary_keywords": [
     "AI product video ad examples",
     "AI lifestyle photo examples",
     "product photo to video ad",
     "AI social ad image examples"
   ],
-  "intro": "Filter by product, open a scene, and start a similar file from your own photo. The product in your file comes from the photo you upload.",
+  "intro": "Each card goes from a product photo to a finished still. The file you make uses the photo you upload.",
   "steps_h2": "From a product photo to a finished still",
   "steps_lead": "Upload your photo, open the scene you liked, and download your own file.",
   "steps": [
@@ -32,8 +32,8 @@
   "cases": [
     {
       "id": "travel-mug",
-      "t": "Product Scene: Matte travel mug on a desk",
-      "d": "Start with a matte white travel mug, place it in a clean desk scene and review the finished product image.",
+      "t": "Desk still: Matte travel mug",
+      "d": "A matte white mug on a clean desk, so the listing shows a place a shopper recognizes.",
       "imageRefs": [
         "g:ecommerce-main-image/source-input",
         "g:ecommerce-main-image/example-03",
@@ -49,8 +49,8 @@
     },
     {
       "id": "linen-tote",
-      "t": "Lifestyle Scene: Linen tote for a city day",
-      "d": "Start with a linen tote, show it beside an everyday outfit and review the finished lifestyle image.",
+      "t": "Lifestyle still: Linen tote beside an outfit",
+      "d": "The tote sits next to everyday clothes, so the size is easy to judge in a feed.",
       "imageRefs": [
         "g:lifestyle-scene/source-input",
         "g:lifestyle-scene/example-01",
@@ -66,8 +66,8 @@
     },
     {
       "id": "fluted-vase",
-      "t": "Product Scene: Fluted vase with flowers",
-      "d": "Start with a white fluted vase, place it with flowers in a bright room and review the finished product image.",
+      "t": "Room still: Fluted vase with flowers",
+      "d": "A white fluted vase with flowers in a bright room, for a home listing that needs a setting.",
       "imageRefs": [
         "g:background-remove-replace/source-input",
         "g:background-remove-replace/example-01",
@@ -83,8 +83,8 @@
     },
     {
       "id": "leather-wallet",
-      "t": "Detail Scene: Brown leather wallet",
-      "d": "Start with a brown leather wallet, show its material and finish in close detail and review the finished image.",
+      "t": "Detail still: Brown leather wallet",
+      "d": "A close view of the leather, the stitching, and the finish.",
       "imageRefs": [
         "g:macro-details/source-input",
         "g:macro-details/hero-output",
@@ -100,8 +100,8 @@
     },
     {
       "id": "running-shoe",
-      "t": "Product Scene: Gray running shoe for a feed ad",
-      "d": "Start with a gray knit running shoe, set it in a simple feed-ad scene and review the finished product image.",
+      "t": "Feed still: Gray running shoe",
+      "d": "A simple social ad image of a gray knit shoe. Check the sole and the shape before you post it.",
       "imageRefs": [
         "g:feed-ad-still/example-02",
         "g:feed-ad-still/example-01",
@@ -117,8 +117,8 @@
     },
     {
       "id": "sunscreen",
-      "t": "Vertical Scene: Sunscreen tube for a short ad",
-      "d": "Start with a plain sunscreen tube, frame it for a vertical scene and review the finished product image.",
+      "t": "Tall still: Sunscreen tube in daylight",
+      "d": "A tall frame of a plain sunscreen tube in daylight. This card is a photo, not a video.",
       "imageRefs": [
         "g:story-ad-vertical/source-input",
         "g:story-ad-vertical/example-01",
@@ -135,36 +135,36 @@
   ],
   "faq": [
     {
-      "q": "Can I plan my own file from these examples?",
-      "a": "Yes. Each example shows a source photo and a finished direction. Upload your product photo and ask for that same kind of scene."
+      "q": "How do I recreate an example with my own product?",
+      "a": "Upload a photo of your item and open the example you liked. Your file is built from that photo, in the same kind of scene."
     },
     {
-      "q": "Why is there no price on the examples?",
-      "a": "Prices, headlines, and captions are added by you after download. The example stops at the product picture or clip."
+      "q": "Can I upload my own product photo?",
+      "a": "Yes. The product in your file comes from the photo you upload. Use a photo that shows the whole item."
     },
     {
-      "q": "What should I check on a still example?",
-      "a": "Check that the product's shape and color still match your photo, and that the scene is one you would actually post. Then try that same kind of still with your own item."
+      "q": "Why start from an example instead of a photoshoot?",
+      "a": "An example shows a finished direction before you book a shoot. Upload one product photo, make a still in that direction, and check the product before you post it."
     },
     {
-      "q": "How do I choose a still versus a clip?",
-      "a": "Choose a still when the listing gallery needs a scene. Choose a clip when the selling point is motion, such as a pour, a spray, or a try-on."
+      "q": "Are these example images free to download?",
+      "a": "No. The pictures on this page are demonstrations, not files to repost. A file you generate uses credits. Plans start at $24.50 a month with 200 credits."
     },
     {
-      "q": "Can I use a file I make from an example in a paid ad?",
-      "a": "Yes. Files you generate can be used commercially and have no watermark. The example images on this page are demonstrations, not assets to download and repost."
+      "q": "Can I use a file I make in a paid ad?",
+      "a": "Yes. A file you generate can be used commercially and has no watermark. You download it and post it yourself."
     },
     {
       "q": "Will my result match the example exactly?",
-      "a": "No. Your file is built from your photo, in the direction you picked. Check the product before you post it. A failed job returns its credits."
+      "a": "No. Your file follows the direction you picked, using your photo. Check the shape and color before you post. A failed job returns its credits."
     },
     {
-      "q": "Which frame should I try first?",
-      "a": "Try 1:1 for a listing gallery and 9:16 for a full-screen clip. Other frames are 16:9, 4:3, and 3:4. Clip lengths are 6, 10, 15, or 30 seconds."
+      "q": "Do the examples include captions, a price, or music?",
+      "a": "No. Add captions, a price, and licensed music after download. Nothing on this page is a finished ad with an offer in the picture."
     },
     {
-      "q": "Do the examples include captions?",
-      "a": "No. Add captions, a price, and licensed music after download. Nothing on this page is a finished ad with an offer baked in."
+      "q": "Are these six examples videos?",
+      "a": "No. Each card is a photo still. A product photo to video ad starts in a video tool. Clip lengths are 6, 10, 15, or 30 seconds, in 9:16, 1:1, 16:9, 4:3, or 3:4."
     }
   ],
   "visual": {
@@ -178,15 +178,11 @@
     ],
     "picker": {
       "title": "AI lifestyle photo examples",
-      "lead": "Filter by product, open a finished scene, and try that direction with your item.",
+      "lead": "Browse AI lifestyle photo examples, listing stills, and feed images. Filter by what you sell and try one with your item.",
       "chips": [
         {
           "id": "accessories",
           "label": "Accessories"
-        },
-        {
-          "id": "apparel",
-          "label": "Apparel"
         },
         {
           "id": "clothing",
@@ -206,7 +202,7 @@
     "titles": {
       "m3": {
         "h2": "Six product photo examples you can recreate",
-        "lead": "Filter by category, open a finished still, and try that direction with your item."
+        "lead": "Browse AI lifestyle photo examples, listing stills, and feed images. Filter by what you sell and try one with your item."
       },
       "m2": {
         "h2": "From a product photo to a finished still"
@@ -214,12 +210,9 @@
     },
     "directoryFilters": {
       "cases": {
-        "travel-mug": [
-          "food-beverage"
-        ],
+        "travel-mug": [],
         "linen-tote": [
           "accessories",
-          "apparel",
           "clothing"
         ],
         "fluted-vase": [],
@@ -227,18 +220,15 @@
           "accessories"
         ],
         "running-shoe": [
-          "footwear",
-          "apparel",
           "clothing",
-          "health-fitness",
-          "sports-gym"
+          "health-fitness"
         ],
         "sunscreen": [
-          "beauty-personal-care",
           "health-fitness"
         ]
       }
-    }
+    },
+    "overview": "Each card goes from a product photo to a finished still. The file you make uses the photo you upload."
   },
   "related_h2": "Tools that make these directions",
   "related_lead": "Open a tool, or browse the template library.",

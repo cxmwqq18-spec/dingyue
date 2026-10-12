@@ -16,7 +16,7 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo of the complete kit, including the box and any insert. Keep every shipped piece in frame so nothing is invented."
+      "d": "Upload one clear photo of the full kit, box and insert included. Keep every shipped piece in frame so it matches the order."
     },
     {
       "t": "Describe Your Scene",
@@ -102,7 +102,7 @@
       "sourceHint": "Include the coffee bag, grinder, mug and every piece that ships with the kit.",
       "result": "n:guide:rc2-tpl-box-coffee-result-square-r3",
       "mode": "photo",
-      "prompt": "Use the uploaded coffee starter kit as the exact product set: preserve its plain kraft pouch, black hand grinder, speckled white mug and their colors. Show the complete kit together on a bright wood table with every item visible. Natural window light, square product photo, no text or logos.",
+      "prompt": "The full coffee kit on a wood table, with every piece you ship left visible.",
       "options": [
         [
           "Template",
@@ -119,8 +119,8 @@
       ]
     },
     "picker": {
-      "title": "Browse Video Ad Templates by Category",
-      "lead": "These cards are video ads for other categories, not bundle photos. For the kit image, use the upload box above and add one photo where every shipped piece is visible.",
+      "title": "Browse Scenes by Category",
+      "lead": "Open a card for a short video of your product. The square bundle photo starts in the upload box: one photo of the full kit.",
       "chips": [
         {
           "id": "accessories",
@@ -541,8 +541,8 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Browse Video Ad Templates by Category",
-        "lead": "These cards are video ads for other categories, not bundle photos. For the kit image, use the upload box above and add one photo where every shipped piece is visible."
+        "h2": "Browse Scenes by Category",
+        "lead": "Open a card for a short video of your product. The square bundle photo starts in the upload box: one photo of the full kit."
       },
       "faq": {
         "h2": "Questions About Product Bundle Photos"
@@ -596,7 +596,7 @@
         "example": true,
         "who": "Tool shop",
         "t": "Bit set",
-        "d": "A tool shop opens the case so every bit is visible, then uses that frame as gallery image two."
+        "d": "A tool shop opens the case so every bit is visible, then uses that photo as the second image in the gallery."
       },
       {
         "example": true,
@@ -620,7 +620,7 @@
         "example": true,
         "who": "Beauty shop",
         "t": "Travel set",
-        "d": "A beauty shop photographs the minis in their pouch and uses that square on a gift page. The file has no watermark."
+        "d": "A beauty shop photographs the minis in their pouch and posts that square image on a gift page."
       }
     ]
   },

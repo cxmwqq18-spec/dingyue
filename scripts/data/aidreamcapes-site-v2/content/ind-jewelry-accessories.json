@@ -49,7 +49,7 @@
   ],
   "templates_lead": "Choose a jewelry product photo format for close-up detail, a worn try-on, or a gift scene.",
   "cta_lead": "Upload a jewelry photo, describe a close-up or a worn crop, and compare the result with the real piece.",
-  "steps_h2": "Jewelry Close-Up Photos in Three Moves",
+  "steps_h2": "How to Make Jewelry Close-Up Photos in 3 Steps",
   "steps_lead": "Three things you do on screen. Stones and metal are checked against the real piece.",
   "steps": [
     {
@@ -118,8 +118,8 @@
       "label": "product size reference photo"
     },
     {
-      "id": "model-photos",
-      "label": "AI model photos for clothing"
+      "id": "photo-hub",
+      "label": "AI product photo generator"
     },
     {
       "id": "white-background",
@@ -136,13 +136,13 @@
     "items": [
       {
         "t": "Macro without a studio day",
-        "d": "A ring, necklace, or stud can become a tight detail from one sharp photo. You skip model casting and a new setup for every piece.",
+        "d": "A pendant on linen can become a tight detail from one sharp photo. You skip a new setup for every piece.",
         "img": "n:guide:fx31-ind-jewelry-benefit-macro",
         "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
       },
       {
-        "t": "Worn, still about the piece",
-        "d": "A flat necklace photo can become a tight collarbone crop. Keep the chain and the pendant as the subject, and compare stone count before you list.",
+        "t": "Worn on a wrist",
+        "d": "A straight watch photo can sit on an adult wrist in daylight. Check the dial and the lugs against the real watch before you list it.",
         "img": "n:guide:fx31-ind-jewelry-benefit-watch",
         "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
       },
@@ -155,8 +155,8 @@
     ]
   },
   "platforms": {
-    "h2": "Jewelry Photos for Etsy and Every Other Shelf",
-    "lead": "A square close-up suits a gallery. A vertical crop suits a story. Match metal tone across both.",
+    "h2": "Jewelry Photos for Etsy, Stores, and Feeds",
+    "lead": "Download a square close-up for an Etsy listing or a store gallery, and a vertical crop for a story. You upload the file yourself. Match the metal tone in both.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -208,9 +208,9 @@
       },
       {
         "example": true,
-        "who": "Watch desk",
-        "t": "Wrist crop in daylight",
-        "d": "A straight watch photo becomes an adult wrist in soft light. They reject a result that changes the dial or the lug shape."
+        "who": "Earring shop",
+        "t": "Both studs in the frame",
+        "d": "They ask for both studs in a tight crop and reject a result that changes the post or the metal color."
       },
       {
         "example": true,
@@ -232,7 +232,7 @@
       }
     ]
   },
-  "related_h2": "Jewelry close-ups and worn photos",
+  "related_h2": "Jewelry templates and listing photos",
   "blockOrder": [
     "hero",
     "strip",

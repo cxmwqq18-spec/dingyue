@@ -4,7 +4,7 @@
   "description": "A plain-English guide to social media ad sizes: when to use vertical 9:16, square 1:1 or wide 16:9 on TikTok, Instagram, Facebook and YouTube.",
   "h1": "Social Media Ad Sizes: Which Shape Goes Where",
   "eyebrow": "Ad size guide",
-  "lead": "Social media ad sizes come down to the shape of the frame: 9:16 for a full phone screen, 1:1 for feeds, and 16:9 for wide screens, with 4:3 and 3:4 when a placement asks for them.",
+  "lead": "Social media ad sizes come down to the shape of the frame: 9:16 for a full phone screen, 1:1 for feeds, and 16:9 for wide screens. Use 4:3 or 3:4 only when the placement lists that shape.",
   "secondary_keywords": [
     "9:16 vs 1:1 vs 16:9",
     "vertical video ad size",
@@ -18,8 +18,8 @@
     {
       "h2": "How do I choose 9:16 vs 1:1 vs 16:9?",
       "paras": [
-        "Match the shape to where the ad plays. Tall for a phone held upright, square for a feed, wide for a laptop or a TV.",
-        "An aspect ratio is only the shape of the frame. 9:16 is a tall rectangle, 1:1 is a square, and 16:9 is the wide television shape. Pixel counts change by placement, so confirm the crop in the ad manager preview. The size list also includes 4:3 and 3:4. For the current Shorts file rules, see [YouTube Shorts ad specs](https://support.google.com/google-ads/answer/16041697?hl=en-GB)."
+        "Match the shape to the screen. 9:16 fills an upright phone, 1:1 sits in a feed, and 16:9 fits a laptop or a TV.",
+        "These are shapes, not pixel sizes. Pixel counts change by placement, so check the crop in the ad manager before you publish. 4:3 and 3:4 are available too. Use them only when that placement lists that shape. For the current Shorts file rules, see [YouTube Shorts ad specs](https://support.google.com/google-ads/answer/16041697?hl=en-GB)."
       ],
       "img": "n:guide:fx05-guide-shapes",
       "alt": "Plain white sunscreen tube shown inside vertical, square, and wide blank frame shapes."
@@ -27,8 +27,8 @@
     {
       "h2": "What vertical video ad size fills a phone?",
       "paras": [
-        "Use 9:16 for TikTok, Reels, Stories, and YouTube Shorts so the product gets the whole screen.",
-        "The app covers the top and bottom with the account name, the caption, and the like buttons. Keep the product and any words you add in the middle. Cover the top and bottom of your phone with your fingers. If you can still see the product and read the offer, the frame is safe."
+        "Use 9:16 so the product fills TikTok, Reels, Stories, and YouTube Shorts.",
+        "The caption runs along the bottom, and the like and share buttons sit on the right. Keep the product and any words you add in the middle. Cover the bottom and the right side of your phone with your fingers. If you can still see the product and read the offer, the frame is safe."
       ],
       "img": "n:guide:fx05-guide-vertical",
       "alt": "Adult woman with a short dark bob holds a plain white sunscreen tube in a tall phone-shaped composition."
@@ -36,8 +36,8 @@
     {
       "h2": "What is the Instagram Reels ad size?",
       "paras": [
-        "Reels ads on Instagram and Facebook use 9:16, the same tall frame as Stories. Do not put the 1:1 feed file in that placement.",
-        "A wide file dropped into that spot shows empty bands above and below. Make the tall version on purpose instead of cropping a landscape clip and hoping the product survives."
+        "Reels on Instagram and Facebook use 9:16, the same tall frame as Stories. Do not put the square feed file in that placement.",
+        "A wide file in that spot leaves empty bands above and below. Make the tall version as its own file. Cutting a landscape clip down afterward often crops the product."
       ],
       "img": "n:guide:b2f9-guide-ad-sizes-by-platform-mistakes-r1",
       "alt": "Adult hand checks a plain white sunscreen tube inside a simple blank preview frame with generous margins."
@@ -45,8 +45,8 @@
     {
       "h2": "When should I use square ads for the Facebook feed?",
       "paras": [
-        "Use a 1:1 file for the Facebook and Instagram feeds, and whenever you are not sure which placement will win.",
-        "It is also the usual shape for a carousel, where every card should match. A still of the same product at that square size can sit in the feed beside the video."
+        "Use a 1:1 file for the Facebook and Instagram feeds, and whenever you are not sure which placement will run.",
+        "It is also the usual shape for a carousel, and every card should match. A still of the same product at that square size can sit in the feed beside the video."
       ],
       "img": "n:guide:fx05-guide-square",
       "alt": "Adult Black man with short hair holds a plain white sunscreen tube centered in a square feed composition."
@@ -54,8 +54,8 @@
     {
       "h2": "Which aspect ratio for TikTok ads fills the screen?",
       "paras": [
-        "TikTok in-feed ads use 9:16. A 16:9 clip on an upright phone becomes a thin band and the product looks small.",
-        "On TikTok, keep the product off the bottom and the right edge, where the caption and the buttons sit. Make the 9:16 version as its own job with [AI UGC video ads](page:video-ads). Other lengths and tools are on the [AI video generator for ecommerce](page:video-hub)."
+        "TikTok in-feed ads use 9:16. A 16:9 clip on an upright phone shrinks to a thin band, and the product looks small.",
+        "Make that tall file as its own job with [AI UGC video ads](page:video-ads). Do not drop the wide version in and hope the crop keeps the product. Other lengths and tools are on the [AI video generator for ecommerce](page:video-hub)."
       ],
       "img": "n:guide:fx05-guide-wide",
       "alt": "Adult hand presents a plain white sunscreen tube in a wide horizontal tabletop scene."
@@ -63,8 +63,8 @@
     {
       "h2": "Which social media ad size should I make first?",
       "paras": [
-        "Make 9:16 first. It covers TikTok, Reels, Stories, and Shorts. Add 1:1 next if you also run feed ads. Make 16:9 only when you know the viewer is on a wide screen.",
-        "Each shape is its own job. A 10-second clip is 40 credits, so a second shape costs another 40 credits, not another filming day. Keep the same photo and the same sentence, and change only the size. All five shapes can run 6, 10, 15, or 30 seconds, at 24, 40, 60, or 120 credits. Do not slice a tall video down to a square in an editor. That often cuts off the product. [AI image to video](page:image-to-video) can rebuild the scene at the new shape from the same still."
+        "Make 9:16 first. It covers the full-screen phone placements. Add 1:1 if you also run feed ads. Make 16:9 only when the viewer is on a wide screen.",
+        "Each shape is its own job. A finished clip does not switch shapes by itself. A 10-second clip is 40 credits, so a second shape costs another 40 credits, not another shoot. Keep the same photo and the same sentence, and change only the size. All five shapes can run 6, 10, 15, or 30 seconds, at 24, 40, 60, or 120 credits. Do not slice a tall video down to a square in an editor. That often cuts the product off. [AI image to video](page:image-to-video) can rebuild the scene at the new shape from the same still."
       ],
       "img": "n:guide:fx05-guide-first",
       "alt": "Adult woman with short curly hair holds a plain white sunscreen tube upright in a vertical social ad scene."
@@ -72,14 +72,8 @@
     {
       "h2": "The short version",
       "paras": [
-        "9:16 for full-screen phone ads, 1:1 for feeds, 16:9 for wide screens, plus 4:3 and 3:4 when a placement asks. Keep the product off the edges.",
-        "Preview on your own phone. A second shape is another job with the cost shown first, and a failed job returns the credits."
-      ]
-    },
-    {
-      "h2": "On this page",
-      "paras": [
-        "Six questions follow: 9:16 vs 1:1 vs 16:9, the vertical video ad size, the Instagram Reels ad size, square ads for the Facebook feed, the aspect ratio for TikTok ads, and which shape to make first."
+        "9:16 for full-screen phone ads, 1:1 for feeds, and 16:9 for wide screens. Use 4:3 or 3:4 only when the placement lists them. Keep the product in the middle.",
+        "Check the preview on your phone. A second shape is another job, the cost shows first, and a failed job returns the credits."
       ]
     }
   ],
@@ -87,9 +81,9 @@
     "guide-first-tiktok-video-ad",
     "guide-testing-ad-versions",
     "blog-ai-ugc-video-ads-guide",
-    "blog-unboxing-videos-for-launches",
-    "guide-product-photo-tips",
-    "blog-ai-video-review-checklist"
+    "plat-tiktok",
+    "plat-instagram",
+    "plat-facebook"
   ],
   "faq": [
     {
@@ -98,7 +92,7 @@
     },
     {
       "q": "How do I keep text inside the safe area?",
-      "a": "Leave space at the edges for buttons, captions, and profile controls. Add the final words after download, then check the preview in each ad manager."
+      "a": "Leave the bottom and the right edge clear for captions and buttons. Add the final words after you download, then check the preview in each ad manager."
     },
     {
       "q": "Does another shape mean filming again?",
@@ -109,8 +103,8 @@
       "a": "All five shapes can be 6, 10, 15, or 30 seconds. Use 6 for one moment, 10 for a short demo, 15 for a simple sequence, and 30 for a longer one."
     },
     {
-      "q": "Do you offer 4:3 and 3:4?",
-      "a": "Yes. The choices are 9:16, 1:1, 16:9, 4:3, and 3:4."
+      "q": "When should I use 4:3 or 3:4?",
+      "a": "Only when the ad manager lists that shape. If it does not, stay with 9:16, 1:1, or 16:9. All five shapes are available."
     },
     {
       "q": "What mistakes make the ad look broken?",
@@ -123,8 +117,8 @@
     "guide-first-tiktok-video-ad",
     "guide-testing-ad-versions",
     "blog-ai-ugc-video-ads-guide",
-    "blog-unboxing-videos-for-launches",
-    "guide-product-photo-tips",
-    "blog-ai-video-review-checklist"
+    "plat-tiktok",
+    "plat-instagram",
+    "plat-facebook"
   ]
 }

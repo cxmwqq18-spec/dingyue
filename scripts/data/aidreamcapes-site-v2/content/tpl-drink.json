@@ -72,7 +72,7 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "This template is set up for 9:16. A square cut can sit in a gallery. Use 6 seconds for one pour, or a longer length for a sip. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Start at 9:16 for a feed, or pick 1:1, 16:9, 4:3, or 3:4. A square cut can sit in a gallery. Use 6 seconds for one pour, or 10, 15, or 30 seconds when the sip needs longer. The credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -111,8 +111,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a Drink Pour Video",
-      "lead": "These cards cover many categories. There is no pour-only filter. Open a drink card, then add the bottle or can you sell.",
+      "title": "Choose a Scene for a Drink Pour Video",
+      "lead": "Open a Food & Beverage scene, or look through the other scenes. Then add the bottle or can you sell.",
       "chips": [
         {
           "id": "accessories",
@@ -530,7 +530,7 @@
     },
     "titles": {
       "m3": {
-        "h2": "Choose a Drink Pour Video"
+        "h2": "Choose a Scene for a Drink Pour Video"
       },
       "faq": {
         "h2": "Questions About a Food Product Video for TikTok"
@@ -566,14 +566,15 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
     "reviews",
+    "steps",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Sample Beverage Video Ad Setups",
-    "lead": "Example scenes for this template. They show how a drink shop could stage one serve.",
+    "h2": "How Drink Sellers Use a Beverage Video Ad",
+    "lead": "Example setups. Each one shows how a drink shop could stage one serve.",
     "items": [
       {
         "example": true,
@@ -585,7 +586,7 @@
         "example": true,
         "who": "Coffee brand",
         "t": "Can, then glass",
-        "d": "Example: a cold-brew can is lifted next to an iced glass so the package is still the hero."
+        "d": "Example: a cold-brew can is lifted next to an iced glass, and the can stays easy to recognize."
       },
       {
         "example": true,
@@ -601,15 +602,15 @@
       },
       {
         "example": true,
-        "who": "Flavor editor",
-        "t": "Allergens after download",
-        "d": "Example: flavor, ingredient, and allergen lines are added in an editor, not baked into the picture."
+        "who": "Juice seller",
+        "t": "Allergen line after download",
+        "d": "Example: a juice seller adds flavor and allergen text in an editor after the file downloads."
       },
       {
         "example": true,
-        "who": "Claims reviewer",
-        "t": "No extra health line",
-        "d": "Example: the sip is shown as a serve. Health wording stays off unless the listing already approves it."
+        "who": "Wellness drink",
+        "t": "Sip, not a health claim",
+        "d": "Example: a wellness drink shows the sip as a serve and leaves health wording off the clip."
       },
       {
         "example": true,
@@ -619,15 +620,15 @@
       },
       {
         "example": true,
-        "who": "Feed buyer",
-        "t": "Short pour",
-        "d": "Example: a 6-second clip is one pour, and a longer cut can hold a sip."
+        "who": "Short-form shop",
+        "t": "One pour, six seconds",
+        "d": "Example: the shop uses a 6-second clip for one pour, and a longer cut when the sip needs more time."
       },
       {
         "example": true,
-        "who": "Gallery editor",
-        "t": "Square for the page",
-        "d": "Example: a square cut can sit in a product gallery, while 9:16 is the feed cut."
+        "who": "Catalog seller",
+        "t": "Square on the product page",
+        "d": "Example: a square cut sits in the product gallery, and 9:16 is the feed cut."
       },
       {
         "example": true,

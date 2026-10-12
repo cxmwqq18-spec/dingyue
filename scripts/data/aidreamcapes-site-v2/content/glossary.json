@@ -4,7 +4,7 @@
   "description": "Plain-English definitions for the product photo, video, advertising, and ecommerce terms used across AIVideosUGC and links to the pages where each term matters.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
   "eyebrow": "Glossary",
-  "lead": "Use this AIVideosUGC glossary when a product video term or a product photo term is unfamiliar. It is a short ecommerce glossary for credits, frame sizes, ad formats, and the page that uses each one.",
+  "lead": "A short ecommerce glossary of product video terms and product photo terms. Open an entry when the word is new, then go to the page that uses it.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -13,7 +13,7 @@
   "entries": [
     {
       "term": "Credits",
-      "definition": "Credits are the balance AIVideosUGC spends on a job. A product photo and each video length show their own credit cost before you confirm. Credits are held while the job runs and returned if it fails.",
+      "definition": "Credits are what each job spends. A product photo is 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. The cost is on screen before you confirm, and a failed job returns its credits.",
       "related_page_ids": [
         "pricing",
         "faq"
@@ -21,7 +21,7 @@
     },
     {
       "term": "Aspect ratio",
-      "definition": "Aspect ratio is a frame's width compared with its height. Video jobs offer 9:16, 1:1, 16:9, 4:3, and 3:4. Pick the ratio of the place you will post, then check the edges after download.",
+      "definition": "Aspect ratio is how wide a frame is compared with its height. A video can be 9:16, 1:1, 16:9, 4:3, or 3:4. Product photos are square. Pick the frame of the place you will post, then check the edges after you download.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "video-hub"
@@ -29,7 +29,7 @@
     },
     {
       "term": "Duration",
-      "definition": "Duration is how long a clip runs. The workspace offers 6, 10, 15, or 30 seconds. One action can stay short. An unboxing or a before-and-after needs room for both parts.",
+      "definition": "Duration is how long a clip runs. You can choose 6, 10, 15, or 30 seconds. One action can stay short. An unboxing or a before-and-after needs time for both parts.",
       "related_page_ids": [
         "video-hub",
         "before-after-videos"
@@ -45,7 +45,7 @@
     },
     {
       "term": "Packshot",
-      "definition": "A packshot is a clean product photograph where the item stands alone so a shopper can judge its shape, finish, and controls. It is not a lifestyle scene with props or a person. The Every Angle template uses packshots for a matching front, back, top, or base view.",
+      "definition": "A packshot is a clean product photograph where the item stands alone, so a shopper can judge its shape and finish. It is not a lifestyle scene with props or a person. The Every Angle template makes matching square views of the front, back, top, or base from a photo of each real side.",
       "related_page_ids": [
         "tpl-angle",
         "examples"
@@ -189,7 +189,7 @@
     },
     {
       "term": "AI-generated content",
-      "definition": "AI-generated content is an image or video a model creates or changes, rather than a frame captured only by a camera. Check every result against the real item. Do not present a generated person as a customer. Follow the disclosure rules of the platform where you publish.",
+      "definition": "AI-generated content is an image or video an AI model creates or changes, rather than a frame captured only by a camera. Check every result against the real item. Do not present a generated person as a customer. Follow the disclosure rules of the platform where you publish.",
       "related_page_ids": [
         "trust",
         "video-ads"
@@ -213,7 +213,7 @@
     },
     {
       "term": "Template",
-      "definition": "A template is a ready-made direction for one product job, such as a white background, an unboxing, or a short demo. Upload the product photo, follow that template's input notes, and run another job when you want a different direction.",
+      "definition": "A template is a ready-made direction for one product job, such as a white background, an unboxing, or a short demo. Upload the product photo, follow the notes on that template, and run another job when you want a different direction.",
       "related_page_ids": [
         "templates",
         "video-hub"
@@ -229,7 +229,7 @@
     },
     {
       "term": "DTC",
-      "definition": "DTC means direct-to-consumer: the brand sells through its own online store, not only through a marketplace. Sellers use the photos and short clips for a store, a social feed, email, and ads. It names the sales route. It is not a separate generation mode.",
+      "definition": "DTC means direct-to-consumer. The brand sells through its own online store, not only through a marketplace. Sellers use the photos and short clips on that store, in a social feed, in email, and in ads.",
       "related_page_ids": [
         "ai-info",
         "plat-shopify"

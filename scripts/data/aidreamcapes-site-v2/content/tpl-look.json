@@ -11,8 +11,8 @@
     "menswear lookbook photos",
     "Instagram lookbook images"
   ],
-  "steps_h2": "Make Instagram Lookbook Images",
-  "steps_lead": "Upload the full outfit, choose one scene, then download a frame for the collection page.",
+  "steps_h2": "Make Fashion Editorial Photos in 3 Steps",
+  "steps_lead": "Upload the full outfit, name one location and one light, then download the photo for the collection page.",
   "steps": [
     {
       "t": "Upload Your Outfit Photo",
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "What should the source photo include?",
-      "a": "Show every piece in the look, including top, bottom, outer layer and the shoes or featured accessory, laid out in one frame. If a layer is missing from the source, the result cannot be trusted to invent it."
+      "a": "Show every piece in the look, including top, bottom, outer layer and the shoes or featured accessory, laid out in one frame. If a layer is missing from the source photo, do not treat the frame as if that piece is there."
     },
     {
       "q": "How do I keep a collection looking connected?",
@@ -91,7 +91,7 @@
       "source": "n:guide:rc3-tpl-look-step-source-r2",
       "result": "n:guide:rc3-tpl-look-step-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the garment and preserve its shape, color and details. An adult wears the ivory tailored suit, smooths the jacket lapel once, and faces the camera with the full outfit visible. Keep the jacket, trousers, shoes and bag inside the frame, with bright studio daylight and natural styling. Full-body fashion-ad still, clean neutral background, no text or logos. End in a calm pose that lets a shopper compare the complete silhouette. Leave clean space around the outfit for a collection crop and keep accessory details unobstructed.",
+      "prompt": "An adult wears the ivory tailored suit and faces the camera, with the jacket, trousers, shoes and bag in frame. Bright studio daylight keeps the full outfit visible.",
       "options": [
         [
           "Template",
@@ -108,8 +108,8 @@
       ]
     },
     "picker": {
-      "title": "These cards open a 15-second video",
-      "lead": "Each card is a 9:16 video ad, not a lookbook still of your outfit. Use the upload above for one editorial photo, then check every layer against the pieces you can ship.",
+      "title": "Short Video Templates Beside the Lookbook Photo",
+      "lead": "Each card is a 9:16 video ad, separate from the lookbook photo on this page. Start from your outfit photo, then check every layer against the pieces you can ship.",
       "chips": [
         {
           "id": "accessories",
@@ -527,11 +527,11 @@
     },
     "titles": {
       "m2": {
-        "h2": "Make Instagram Lookbook Images"
+        "h2": "Make Fashion Editorial Photos in 3 Steps"
       },
       "m3": {
-        "h2": "These cards open a 15-second video",
-        "lead": "Each card is a 9:16 video ad, not a lookbook still of your outfit. Use the upload above for one editorial photo, then check every layer against the pieces you can ship."
+        "h2": "Short Video Templates Beside the Lookbook Photo",
+        "lead": "Each card is a 9:16 video ad, separate from the lookbook photo on this page. Start from your outfit photo, then check every layer against the pieces you can ship."
       },
       "m4": {
         "h2": "Use lookbook photos on posts and collection pages"
@@ -552,48 +552,72 @@
   },
   "reviews": {
     "h2": "How Sellers Build a Collection Launch Lookbook",
-    "lead": "A few ways a label turns one outfit photo into a lookbook frame.",
+    "lead": "Example ways a label builds the set, including menswear lookbook photos.",
     "items": [
       {
         "example": true,
         "who": "Womenswear label",
         "t": "Hero look, then the rest",
-        "d": "The label opens the drop with one full outfit on a person, then repeats the same crop and light for the other looks. Each outfit still gets its own source photo."
+        "d": "Example: a womenswear label opens the drop with one full outfit on a person, then repeats the same crop and light. Each outfit still gets its own source photo."
       },
       {
         "example": true,
         "who": "Menswear shop",
-        "t": "Tailoring kept in one frame",
-        "d": "Jacket, shirt and trousers stay visible together so the silhouette reads as one outfit. A second outfit is a second image, not a crowded collage."
+        "t": "Tailoring in one frame",
+        "d": "Example: a menswear shop keeps the jacket, shirt and trousers visible together so the silhouette reads as one outfit. The next outfit is a second image."
       },
       {
         "example": true,
         "who": "Drop planner",
         "t": "Same location across the set",
-        "d": "One street or studio description is reused so the carousel feels connected. Garment colors are still checked against stock before the set is scheduled."
+        "d": "Example: one street or studio description is reused so the carousel feels connected. Colors are checked against stock before the set is scheduled."
       },
       {
         "example": true,
         "who": "Ecommerce team",
         "t": "Collection page, not a shoot day",
-        "d": "The team builds the collection gallery from outfit photos it already has. Nobody is booked for a location day, and the people in frame are generated."
+        "d": "Example: the gallery is built from outfit photos the shop already has. Nobody is booked for a location day, and the person in frame is generated."
       },
       {
         "example": true,
         "who": "Social editor",
-        "t": "Carousel from separate looks",
-        "d": "Each slide is one outfit. Price and product links are added outside the image after download."
+        "t": "One outfit per slide",
+        "d": "Example: each carousel slide is one outfit. Price and product links are added outside the image after download."
       },
       {
         "example": true,
         "who": "Agency",
         "t": "Credits instead of a creator day",
-        "d": "The agency uploads the outfit, picks a scene and pays the credits for that job. It does not send samples to a creator for this still."
+        "d": "Example: the agency uploads the outfit, picks a scene and pays the credits for that photo. It does not send samples out for this frame."
+      },
+      {
+        "example": true,
+        "who": "Color shop",
+        "t": "One frame per color",
+        "d": "Example: each colorway gets its own source photo and the same crop, so the set stays easy to compare."
+      },
+      {
+        "example": true,
+        "who": "Launch editor",
+        "t": "Page and launch email",
+        "d": "Example: the photos go on the collection page and in a launch email. Prices are added outside the image."
+      },
+      {
+        "example": true,
+        "who": "Reseller",
+        "t": "Lengths against stock",
+        "d": "Example: a reseller checks jacket length and trouser length against the pieces it can ship before the set is scheduled."
+      },
+      {
+        "example": true,
+        "who": "Boutique",
+        "t": "Shoes stay in the look",
+        "d": "Example: when shoes belong to the outfit, they are in the source photo and in the frame. A missing layer is left out."
       }
     ]
   },
-  "related_h2": "Fashion templates for the next lookbook",
-  "related_lead": "Try-on, outfit video, sale images, the model-photo tool, and the fashion industry page.",
+  "related_h2": "Templates for Instagram Lookbook Images",
+  "related_lead": "Model photos, clothing try-on, fashion reels, sale banners, the fashion page, and Instagram.",
   "relatedLinks": [
     {
       "id": "model-photos",

@@ -1,17 +1,17 @@
 {
   "id": "tpl-ugc",
   "title": "UGC Style Product Photos for Ads and Listings | AIVideosUGC",
-  "description": "See a creator-style photo, recreate it with your own product. One product photo becomes a review, unboxing or demo scene for social ads and listings.",
+  "description": "Turn one product photo into UGC style product photos: a review, unboxing, or demo still for ads and listings. Write the caption after you download.",
   "h1": "UGC Style Product Photos for Ads and Listings",
   "eyebrow": "Ad photo template",
-  "lead": "Booking a creator for every product stalls the ad calendar. Upload one product photo and get UGC style product photos for the feed.",
+  "lead": "Booking a creator for every product slows the next post. Upload one product photo and get UGC style product photos for the feed.",
   "secondary_keywords": [
     "creator style product photos",
     "user-generated content style images",
     "lifestyle photos for Instagram ads",
     "fitness product lifestyle photos"
   ],
-  "steps_h2": "Make User-Generated Content Style Images",
+  "steps_h2": "Make User-Generated Content Style Images in 3 Steps",
   "steps_lead": "Upload the product, pick a creator-style scene, then download a still for the feed.",
   "steps": [
     {
@@ -63,7 +63,7 @@
     },
     {
       "q": "Can a beginner do this?",
-      "a": "Yes. Upload one product photo, choose a style and download the result. No editing background is required."
+      "a": "Yes. Upload one product photo, choose a style and download the result. You do not need editing experience."
     },
     {
       "q": "Can I make several scenes from one product photo?",
@@ -91,7 +91,7 @@
       "source": "n:guide:tpl-ugc-m2-source",
       "result": "n:guide:k6-tpl-ugc-step-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, clear bottle body, sage-green lid, loop handle and base exactly. Show this same reusable bottle with a light curl of condensation in a calm after-workout home setting, the full product clearly in view. Square still-life creator photo, soft late-afternoon light, no text or logos.",
+      "prompt": "The bottle sits in a quiet corner after a workout, with a light curl of condensation and the whole bottle easy to see.",
       "options": [
         [
           "Template",
@@ -104,7 +104,7 @@
       ]
     },
     "picker": {
-      "title": "These cards open a 15-second video",
+      "title": "Video previews, not the creator-style photo",
       "lead": "Each card is a 9:16 video ad, not a square creator-style photo. Use the upload above for the still, and write the caption after you download.",
       "chips": [
         {
@@ -523,10 +523,10 @@
     },
     "titles": {
       "m2": {
-        "h2": "Make User-Generated Content Style Images"
+        "h2": "Make User-Generated Content Style Images in 3 Steps"
       },
       "m3": {
-        "h2": "These cards open a 15-second video",
+        "h2": "Video previews, not the creator-style photo",
         "lead": "Each card is a 9:16 video ad, not a square creator-style photo. Use the upload above for the still, and write the caption after you download."
       },
       "faq": {
@@ -580,7 +580,7 @@
         "example": true,
         "who": "Fitness seller",
         "t": "Demo on a simple background",
-        "d": "A demo crop shows the product in use for a fitness post. The same source can be run again if they want a different angle."
+        "d": "A demo still shows the product in use for a fitness post. The same source can be run again if they want a different angle."
       },
       {
         "example": true,
@@ -602,8 +602,8 @@
       }
     ]
   },
-  "related_h2": "Wellness photos for TikTok and Instagram",
-  "related_lead": "The ad-image tool, wellness, TikTok, Instagram, Story ads and lifestyle photos.",
+  "related_h2": "Lifestyle photos for Instagram and TikTok",
+  "related_lead": "The ad-image tool, wellness photos, TikTok, Instagram, unboxing video, and lifestyle photos.",
   "cta_title": "Ready to make a creator-style photo?",
   "cta_lead": "Upload one product photo and pick a scene. You see the credit cost before the job starts.",
   "blockOrder": [

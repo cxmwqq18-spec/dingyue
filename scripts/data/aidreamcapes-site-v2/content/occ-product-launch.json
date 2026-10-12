@@ -22,11 +22,11 @@
     },
     {
       "q": "Will anyone else see my unreleased product?",
-      "a": "No. The upload and the result stay in your account until you download them and share them."
+      "a": "No. The upload and the result stay in your account, and they are not published until you share them."
     },
     {
       "q": "What frame should a launch visual use?",
-      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for a feed, 16:9 for a wide page, or 4:3 and 3:4 when the placement needs them. Each frame is its own job."
+      "a": "A product photo is square. For video, use 9:16 for Stories, Reels, and TikTok, 1:1 for a feed, 16:9 for a wide page, or 4:3 and 3:4 when the placement needs them. Each video is its own job."
     },
     {
       "q": "How long can the launch clip be?",
@@ -298,7 +298,7 @@
     },
     {
       "t": "Show the first use, then post it",
-      "d": "A hand using the product is enough for the launch post. The download has no AIVideosUGC watermark.",
+      "d": "A hand using the product is enough for the launch post. Keep the clip on that one action so the item stays easy to recognize.",
       "img": "n:guide:fx01-occ-product-launch-benefit-publish",
       "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
       "frame": "none"
@@ -357,12 +357,12 @@
     ]
   },
   "trust": {
-    "h2": "What stays in your account until you share it",
+    "h2": "What you check before the first look goes out",
     "lead": "The photo stays in your account, and the date stays yours to add.",
     "items": [
       {
         "t": "The unreleased photo stays in your account",
-        "d": "The upload and the result stay in your account until you download them and share them yourself."
+        "d": "The upload and the result stay in your account. They are not published until you share them."
       },
       {
         "t": "No countdown printed into the clip",

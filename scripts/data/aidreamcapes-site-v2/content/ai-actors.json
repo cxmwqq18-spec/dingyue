@@ -3,12 +3,12 @@
   "title": "AI Actors for UGC Ads | AIVideosUGC",
   "description": "Create UGC ads from one product photo. Choose an AI actor, write the line, and make a fresh cut for paid ads, product pages, or social posts.",
   "h1": "AI Actors for UGC Ads You Can Cast From One Photo",
-  "eyebrow": "AI actor directory",
+  "eyebrow": "AI actors",
   "lead": "Pick a presenter, write the line, and make a fresh cut from one product photo. Try another face before you book a shoot.",
   "actor_visual": {
     "titles": {
       "m2": {
-        "h2": "Make an actor ad in three moves",
+        "h2": "How to Make an AI Actor Ad in 3 Simple Steps",
         "lead": "Upload a product photo, write the line, and download a vertical clip."
       }
     },
@@ -39,15 +39,15 @@
       "items": [
         {
           "t": "Upload Your Product Photo",
-          "d": "Start with one clear product photo that shows the item your customer will receive. Keep the full shape and color visible so the actor can present the right product."
+          "d": "Use one clear photo of the item you sell. Keep the full shape and color in frame."
         },
         {
-          "t": "Write Your Line",
-          "d": "Write the exact line you want the actor to say. Choose an actor and setting that fit the product and the audience you want to reach."
+          "t": "Write the Line",
+          "d": "Type the sentence the presenter should say, then pick an actor whose setting fits the product."
         },
         {
           "t": "Download and Post",
-          "d": "Download the vertical ad when the line and delivery look right. Post it as a paid ad, product page video, social post or setup guide."
+          "d": "Save the clip when the line looks right. Add captions or a price in your editor, then post it."
         }
       ],
       "actor_cards": [
@@ -911,34 +911,34 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Use cases",
+      "eyebrow": "After download",
       "h2": "Where a spoken product clip can run",
       "lead": "Four places a seller can put the clip after download.",
       "items": [
         {
-          "t": "Paid feed test",
-          "d": "Open on the product and the line you wrote, then try a second line if the first one stalls.",
+          "t": "Paid ads",
+          "d": "Open on the product and the line you wrote. If you want another test, keep the photo and write a second line.",
           "img": "n:guide:cwa-uses-paid-01-r1",
           "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway for a paid social ad.",
           "frame": "phone"
         },
         {
-          "t": "Product page explainer",
-          "d": "Put the presenter beside one feature so a shopper sees the point before they buy.",
+          "t": "Product pages",
+          "d": "Put the presenter next to one feature so a shopper sees the point before they buy. It stays a short clip, not a long lesson.",
           "img": "n:guide:cwa-uses-product-page-02-r1",
           "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk for a product page video.",
           "frame": "browser"
         },
         {
-          "t": "Social refresh",
-          "d": "Change the presenter or the line when a feed post starts to feel familiar.",
+          "t": "Social posts",
+          "d": "Change the presenter or the line when a post starts to feel familiar. The product photo stays the same.",
           "img": "n:guide:cwa-uses-social-03-r1",
           "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote for a vertical social clip.",
           "frame": "phone"
         },
         {
-          "t": "Short setup guide",
-          "d": "Show one setup action beside the product so buyers can follow it without a long manual.",
+          "t": "Product guides",
+          "d": "Show one setup step beside the product so a buyer can follow it. This is for shoppers, not a staff training film.",
           "img": "n:guide:cwa-uses-guide-04-r1",
           "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp for a product guide.",
           "frame": "none"
@@ -950,12 +950,12 @@
   "cta_lead": "Pick an actor, write one line, and see the credit cost before you start.",
   "faq": [
     {
-      "q": "What is an AI actor on this page?",
-      "a": "An AI actor is a generated adult presenter, not a customer and not someone you hired. You pick the person, write a line, and the spokesperson tool makes a product clip."
+      "q": "What is an AI actor?",
+      "a": "A generated adult presenter, not a customer and not someone you hired. You pick the person, write a line, and the spokesperson tool makes a product clip."
     },
     {
       "q": "How does a line become a clip?",
-      "a": "Upload one product photo, type the sentence, and choose a presenter. This directory opens that setup as a 10-second 9:16 clip. A failed job returns its credits."
+      "a": "Upload one product photo, type the sentence, and choose a presenter. The clip you start here is 10 seconds in a 9:16 frame. A failed job returns its credits."
     },
     {
       "q": "Where can I use the clip?",
@@ -975,7 +975,7 @@
     },
     {
       "q": "Can I pick the face, a separate voice, and a language?",
-      "a": "You can pick one of 53 adult presenters and you write the line they say. This page does not offer a voice catalog, voice cloning, or a language list."
+      "a": "You pick one of 53 adult presenters, and you write the line they say. There is no separate voice list, no voice cloning, and no language menu."
     },
     {
       "q": "Can I use the clip commercially?",
@@ -997,7 +997,7 @@
     "faq",
     "cta"
   ],
-  "steps_h2": "Make an actor ad in three moves",
+  "steps_h2": "How to Make an AI Actor Ad in 3 Simple Steps",
   "steps_lead": "Upload a product photo, write the line, and download a vertical clip.",
   "steps": [
     {
@@ -1018,20 +1018,20 @@
     "lead": "Three practical reasons to make the next cut here instead of booking a shoot.",
     "items": [
       {
-        "t": "A new cut before the shoot",
-        "d": "Write one line, pick a presenter, and open a 10-second vertical ad before a camera day is on the calendar.",
+        "t": "Before the shoot",
+        "d": "Write one line and pick a presenter. You can make a 10-second vertical ad before a camera day is on the calendar.",
         "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
         "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
       },
       {
-        "t": "Same product, another presenter",
-        "d": "Keep the upload and change the actor or the opening line when you want a second version to test.",
+        "t": "Another version",
+        "d": "Keep the same product photo. Change the actor or the opening line when you want a second cut to test.",
         "img": "n:guide:fx50-ai-actors-benefit-2",
         "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
       },
       {
-        "t": "The line is the one you wrote",
-        "d": "The presenter delivers the sentence you typed. Captions, a price, and licensed music still go on after download.",
+        "t": "Your own line",
+        "d": "The presenter says the sentence you typed. Add captions, a price, and licensed music in an editor after you download.",
         "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
         "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
       }
@@ -1045,25 +1045,25 @@
         "example": true,
         "who": "Skincare shop",
         "t": "Jar and one benefit",
-        "d": "Example: a presenter holds the jar and delivers the one benefit you wrote, in a 10-second feed test."
+        "d": "A skincare shop uses a presenter to hold the jar and say the one benefit written for that clip, in a 10-second feed test."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Bottle on the counter",
-        "d": "Example: a presenter names the flavor and shows the bottle. You add the offer after download."
+        "d": "A drink seller uses a presenter to name the flavor and show the bottle. The offer goes on in an editor after download."
       },
       {
         "example": true,
         "who": "Gadget shop",
         "t": "One control, up close",
-        "d": "Example: a presenter points to one control on the device in a short vertical clip."
+        "d": "A gadget shop uses a presenter to point to one control on the device in a short vertical clip."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Fit in one sentence",
-        "d": "Example: a presenter names the fit while the garment stays visible, for an organic post."
+        "d": "An apparel shop uses a presenter to name the fit while the garment stays visible, for an organic post."
       }
     ]
   },
@@ -1076,5 +1076,27 @@
     "product-videos",
     "unboxing-videos",
     "before-after-videos"
+  ],
+  "benefits_h2": "Why sellers cast an AI actor",
+  "benefits_lead": "Three practical reasons to make the next cut here instead of booking a shoot.",
+  "benefits": [
+    {
+      "t": "Before the shoot",
+      "d": "Write one line and pick a presenter. You can make a 10-second vertical ad before a camera day is on the calendar.",
+      "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
+      "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
+    },
+    {
+      "t": "Another version",
+      "d": "Keep the same product photo. Change the actor or the opening line when you want a second cut to test.",
+      "img": "n:guide:fx50-ai-actors-benefit-2",
+      "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
+    },
+    {
+      "t": "Your own line",
+      "d": "The presenter says the sentence you typed. Add captions, a price, and licensed music in an editor after you download.",
+      "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
+      "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
+    }
   ]
 }

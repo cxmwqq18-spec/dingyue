@@ -38,7 +38,7 @@
       "d": "Name a shelf, counter or cafe setting. The credit cost is shown before the square preview is made."
     },
     {
-      "t": "Download and Post",
+      "t": "Download and Compare",
       "d": "Download the square file. It has no watermark. Compare it with your artwork and a printer proof before you approve production."
     }
   ],
@@ -96,8 +96,8 @@
       "n:guide:tpl-pack-c3-m3-shelf-boxes"
     ],
     "picker": {
-      "title": "Browse Video Ad Templates by Category",
-      "lead": "These cards are video ads for other categories, not shelf mockups. For the preview, use the upload box above and add one photo of the package you will ship.",
+      "title": "Short Video Ads, Separate from the Mockup",
+      "lead": "Each card is a video ad for another product. Your packaging preview is the square image made from one photo of the pouch, box or bottle you will ship.",
       "chips": [
         {
           "id": "accessories",
@@ -517,7 +517,7 @@
       "source": "n:guide:tpl-pack-c3-m2-source",
       "result": "n:f15-r10-tpl-pack-steps-open-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded plain kraft coffee pouch as the exact package. Place it on a cafe counter with its front panel visible and the pouch shape unchanged.",
+      "prompt": "A plain kraft coffee pouch sits on a cafe counter with the front panel facing forward.",
       "sourceTitle": "Your product"
     },
     "input": [],
@@ -525,8 +525,8 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "Browse Video Ad Templates by Category",
-        "lead": "These cards are video ads for other categories, not shelf mockups. For the preview, use the upload box above and add one photo of the package you will ship."
+        "h2": "Short Video Ads, Separate from the Mockup",
+        "lead": "Each card is a video ad for another product. Your packaging preview is the square image made from one photo of the pouch, box or bottle you will ship."
       },
       "faq": {
         "h2": "Questions About a Packaging Mockup Generator"
@@ -536,80 +536,80 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
     "reviews",
+    "steps",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "Coffee Packaging Mockup Scenes",
-    "lead": "Each card is a presentation preview. It is not a check of ink or legal text.",
+    "h2": "Coffee Packaging Mockup and Other Shelf Scenes",
+    "lead": "Example shelf scenes, from a coffee bag to a pouch packaging mockup. Not a check of ink or legal text.",
     "items": [
       {
         "example": true,
         "who": "Coffee shop",
         "t": "Cafe shelf",
-        "d": "A coffee shop puts a bag on a cafe shelf and judges the composition before a print order."
+        "d": "Example: a coffee shop puts a bag on a cafe shelf and judges the composition before a print order."
       },
       {
         "example": true,
         "who": "Tea shop",
         "t": "Tin row",
-        "d": "A tea shop puts a tin on a counter so the front panel can be compared with a second variant later."
+        "d": "Example: a tea shop puts a tin on a counter so the front panel can be compared with a second variant later."
       },
       {
         "example": true,
         "who": "Sauce shop",
         "t": "Bottle line",
-        "d": "A sauce shop puts a bottle on a grocery shelf, starting from a photo of the real bottle."
+        "d": "Example: a sauce shop puts a bottle on a grocery shelf, starting from a photo of the real bottle."
       },
       {
         "example": true,
         "who": "Snack shop",
         "t": "Pouch stack",
-        "d": "A snack shop puts a stand-up pouch in a retail row to judge the front panel."
+        "d": "Example: a snack shop puts a stand-up pouch in a retail row to judge the front panel."
       },
       {
         "example": true,
         "who": "Candle shop",
         "t": "Jar shelf",
-        "d": "A candle shop puts a labeled jar on a wood shelf and leaves fine print to the real pack photo."
+        "d": "Example: a candle shop puts a labeled jar on a wood shelf and leaves fine print to the real pack photo."
       },
       {
         "example": true,
         "who": "Soap shop",
         "t": "Carton",
-        "d": "A soap shop puts a carton on a clean counter for a retailer deck, not as the measurement photo."
+        "d": "Example: a soap shop puts a carton on a clean counter for a retailer deck, not as the measurement photo."
       },
       {
         "example": true,
         "who": "Supplement shop",
         "t": "Jar label",
-        "d": "A supplement shop turns a jar to face forward. Dense ingredient text can blur, so the real label photo stays the source of the wording."
+        "d": "Example: a supplement shop turns a jar to face forward. Dense ingredient text can blur, so the real label photo stays the source of the wording."
       },
       {
         "example": true,
         "who": "Pet food shop",
         "t": "Bag end",
-        "d": "A pet-food shop uses a large bag in a simple shelf scene as a launch concept."
+        "d": "Example: a pet-food shop uses a large bag in a simple shelf scene as a launch concept."
       },
       {
         "example": true,
         "who": "Juice shop",
         "t": "Two variants",
-        "d": "A juice shop shows two bottle variants in the same scene and compares the front panel and outline."
+        "d": "Example: a juice shop shows two bottle variants in the same scene and compares the front panel and outline."
       },
       {
         "example": true,
         "who": "Bakery shop",
         "t": "Window box",
-        "d": "A bakery shop puts a window box on a counter and checks it against the printer proof before production."
+        "d": "Example: a bakery shop puts a window box on a counter and checks it against the printer proof before production."
       }
     ]
   },
   "related_h2": "Product Label Scene Preview for Food Listings",
-  "related_lead": "Food pages to use with the mockup: drink videos, a Spark Ad, a bundle photo for kits, and Shopify.",
+  "related_lead": "Food pages to use with the mockup: drink videos, a Spark Ads style video, bundle photos for kits, and Shopify.",
   "relatedLinks": [
     {
       "id": "photo-hub",

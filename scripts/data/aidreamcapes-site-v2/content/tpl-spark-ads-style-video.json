@@ -12,7 +12,7 @@
     "TikTok product footage"
   ],
   "steps_h2": "Make a Native TikTok Ad in 3 Steps",
-  "steps_lead": "You get a vertical product clip. Posting, sound and the Spark authorization happen in TikTok.",
+  "steps_lead": "You get a product clip. Posting, sound, and the Spark authorization happen in TikTok.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -20,7 +20,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe one everyday action, then pick 9:16 and 6 to 30 seconds. You get the video file. The campaign stays in TikTok Ads Manager."
+      "d": "Describe one everyday action, then pick 9:16 and 6, 10, 15, or 30 seconds. The campaign stays in TikTok Ads Manager."
     },
     {
       "t": "Download and Post",
@@ -46,7 +46,7 @@
   },
   "faq": [
     {
-      "q": "What is a Spark Ads style video here?",
+      "q": "What is a Spark Ads style video?",
       "a": "A vertical product clip you can post from your own TikTok account and then authorize for promotion. This page makes the footage. It does not create the ad campaign."
     },
     {
@@ -551,33 +551,52 @@
       }
     }
   },
-  "cta_title": "Ready to Export the TikTok Clip?",
+  "cta_title": "Ready to make the TikTok clip?",
   "cta_lead": "Upload one product photo and see the credit cost before you post it yourself.",
   "relatedLinks": [
-    "video-ads",
-    "tpl-drink",
-    "tpl-film",
-    "tpl-pack",
-    "plat-tiktok",
-    "ind-food-drinks"
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "tpl-drink",
+      "label": "AI food and drink videos"
+    },
+    {
+      "id": "tpl-film",
+      "label": "cinematic product video"
+    },
+    {
+      "id": "tpl-pack",
+      "label": "packaging mockup generator"
+    },
+    {
+      "id": "plat-tiktok",
+      "label": "AI TikTok ads generator"
+    },
+    {
+      "id": "ind-food-drinks",
+      "label": "AI food and drink product videos"
+    }
   ],
   "blockOrder": [
     "hero",
     "picker",
     "steps",
     "reviews",
+    "faq",
     "related",
-    "faq"
+    "cta"
   ],
   "reviews": {
-    "h2": "Sample Spark Ads Video Template Moments",
-    "lead": "Example TikTok moments. Post the file from your account before any paid boost.",
+    "h2": "TikTok moments shops post from their account",
+    "lead": "Ways shops use one product photo as a TikTok moment. Post the file from your account before any paid boost.",
     "items": [
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Steam the shirt",
-        "d": "Example: a garment steamer passes over a cream shirt for a creator-style TikTok moment."
+        "d": "An apparel shop shows a steamer passing over a cream shirt, then posts that moment from the shop account."
       },
       {
         "example": true,
@@ -589,52 +608,52 @@
         "example": true,
         "who": "Electronics shop",
         "t": "Case fit",
-        "d": "Example: a sage phone case is fitted so the camera opening stays visible."
+        "d": "An electronics shop shows a sage phone case being fitted so the camera opening stays visible."
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Cable route",
-        "d": "Example: a charging cable is routed through a desk tray as the product moment."
+        "d": "A home shop shows a charging cable routed through a desk tray, with the cable easy to see."
       },
       {
         "example": true,
         "who": "Food shop",
         "t": "Counter pour",
-        "d": "Example: a drink is poured once on a kitchen counter for a native-looking post."
+        "d": "A food shop shows one pour on a kitchen counter, then adds the caption in TikTok."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Routine beat",
-        "d": "Example: one step of a routine is shown, then the caption is added in TikTok."
+        "d": "A beauty shop shows one step of a routine, then adds the caption in TikTok."
       },
       {
         "example": true,
         "who": "Shoe shop",
         "t": "On-foot hold",
-        "d": "Example: a shoe is held at the ankle so the pair reads in a vertical frame."
+        "d": "A shoe shop holds one shoe at the ankle so the pair stays visible in the vertical frame."
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Leash clip",
-        "d": "Example: a leash is clipped on in a hallway, with sound added after download."
+        "d": "A pet shop shows a leash clipped on in a hallway. Sound is added after download."
       },
       {
         "example": true,
         "who": "Fitness shop",
         "t": "Band pull",
-        "d": "Example: one band pull is the whole moment, posted from the shop account."
+        "d": "A fitness shop uses one band pull as the whole moment and posts it from the shop account."
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "Lid sip",
-        "d": "Example: a lid is opened and the bottle is raised, then the offer is typed in TikTok."
+        "d": "A drinkware shop shows the lid opened and the bottle raised, then types the offer in TikTok."
       }
     ]
   },
   "related_h2": "Pages for TikTok Product Footage",
-  "related_lead": "Video ads, food scenes, and TikTok placements you can post from your account."
+  "related_lead": "UGC video ads, food and drink scenes, a brand film, packaging previews, TikTok ads, and the food industry page."
 }

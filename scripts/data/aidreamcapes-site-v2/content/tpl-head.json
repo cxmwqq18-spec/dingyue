@@ -18,7 +18,7 @@
     },
     {
       "t": "Pick One Backdrop",
-      "d": "Describe one backdrop, crop, light and clothing note, then reuse that brief for every teammate. Each portrait should still keep that person's own features."
+      "d": "Describe one backdrop, crop, light, and clothing note, then reuse those same notes for every teammate. Each portrait should still keep that person's own features."
     },
     {
       "t": "Download and Post",
@@ -50,7 +50,7 @@
     },
     {
       "q": "How can the team page feel consistent?",
-      "a": "Share one backdrop, one crop and one light across every portrait, while each person keeps their own features. Write the brief once and reuse it."
+      "a": "Share one backdrop, one crop, and one light across every portrait, while each person keeps their own features. Write that setup once and reuse it."
     },
     {
       "q": "Can I put names inside the headshot?",
@@ -70,7 +70,7 @@
     },
     {
       "q": "Can a new hire match an existing set?",
-      "a": "Yes. Reuse the same backdrop, crop and light brief on the new hire's approved photo. You do not reshoot the rest of the team."
+      "a": "Yes. Reuse the same backdrop, crop, and light on the new hire's approved photo. You do not reshoot the rest of the team."
     },
     {
       "q": "Can I use the portraits in a pitch deck?",
@@ -108,8 +108,8 @@
       ]
     },
     "picker": {
-      "title": "These cards open a 15-second video",
-      "lead": "Each card is a 9:16 video ad. The first one is “ASMR Unboxing: Makeup Tools”. It does not restyle a teammate’s photo. Use the upload above for the square headshot.",
+      "title": "Short Video Scenes, Not Headshots",
+      "lead": "These cards are vertical video ads. They do not turn a teammate photo into a portrait. For the square headshot, use the upload at the top.",
       "chips": [
         {
           "id": "accessories",
@@ -531,19 +531,19 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions about AI team headshots"
+        "h2": "Questions About AI Team Headshots"
       },
       "m3": {
-        "h2": "These cards open a 15-second video",
-        "lead": "Each card is a 9:16 video ad. The first one is “ASMR Unboxing: Makeup Tools”. It does not restyle a teammate’s photo. Use the upload above for the square headshot."
+        "h2": "Short Video Scenes, Not Headshots",
+        "lead": "These cards are vertical video ads. They do not turn a teammate photo into a portrait. For the square headshot, use the upload at the top."
       },
       "m2": {
-        "h2": "Make Matching Team Headshots"
+        "h2": "Make Matching Team Headshots in 3 Steps"
       }
     }
   },
-  "steps_h2": "Make Matching Team Headshots",
-  "steps_lead": "Upload each approved photo, reuse one backdrop brief, then download a matching set.",
+  "steps_h2": "Make Matching Team Headshots in 3 Steps",
+  "steps_lead": "Upload each approved photo, reuse one backdrop, then download a matching set.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -572,49 +572,73 @@
   ],
   "reviews": {
     "h2": "Professional Headshots for Small Business",
-    "lead": "A few ways a small team uses one shared portrait setup.",
+    "lead": "Example setups for a small team that wants one portrait style.",
     "items": [
       {
         "example": true,
         "who": "Founding team",
         "t": "One crop on the About page",
-        "d": "The company picks one backdrop, crop and light, then runs each founder's approved photo through it. Names and roles are typed beside the portraits."
+        "d": "Example: the founders share one backdrop, crop, and light. Each portrait still follows that person's own photo. Names sit in text beside the image."
       },
       {
         "example": true,
         "who": "Hiring manager",
         "t": "A new hire joins the row",
-        "d": "When someone joins, their portrait uses the same brief as the existing set. There is no new studio booking for one person."
+        "d": "Example: a new teammate's approved photo uses the same backdrop and crop. The rest of the team is not reshot."
       },
       {
         "example": true,
         "who": "Operations lead",
-        "t": "Every role has a face",
-        "d": "Founders, design and operations can share one portrait style without looking like different photo shoots. Each person keeps their own features."
+        "t": "Every role, one look",
+        "d": "Example: design and operations use the same portrait style, and each person keeps their own features."
       },
       {
         "example": true,
         "who": "People team",
         "t": "Permission before upload",
-        "d": "Only a photo the teammate approved for business use is uploaded. The person reviews the result before it is published."
+        "d": "Example: only a photo the teammate approved for business use is uploaded, and that person checks the result before it goes live."
       },
       {
         "example": true,
         "who": "Pitch author",
         "t": "Deck and speaker bio",
-        "d": "The same square portrait can go in a deck or a speaker bio. Job titles stay as editable text, not lettering inside the image."
+        "d": "Example: the same square portrait goes in a deck and a speaker bio. The job title stays as text, not lettering inside the image."
       },
       {
         "example": true,
         "who": "Small office",
-        "t": "Same crop on the website",
-        "d": "The office reuses one backdrop and one crop for the About page. Names stay in text beside the photo."
+        "t": "Profile, not a second shoot",
+        "d": "Example: the office reuses the square file on a profile page and keeps the phone number in the page text."
+      },
+      {
+        "example": true,
+        "who": "Remote team",
+        "t": "Same light, different cities",
+        "d": "Example: teammates in different cities upload their own approved photos and come back with one shared backdrop."
+      },
+      {
+        "example": true,
+        "who": "Recruiter",
+        "t": "Jobs page row",
+        "d": "Example: the jobs page uses the same crop for every portrait, and the role names stay as editable text."
+      },
+      {
+        "example": true,
+        "who": "Press contact",
+        "t": "Name stays outside the photo",
+        "d": "Example: a press note uses the portrait and types the person's name and title underneath."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Not an ID photo",
+        "d": "Example: the portrait follows the uploaded photo, and the person reviews it before it is published. It is not an official identity document."
       }
     ]
   },
   "related_h2": "Photo tools for a backdrop and a person",
-  "related_lead": "The product-photo hub, model photos, and other templates that put a person in frame.",
-  "cta_title": "Give the team one portrait style",
+  "related_lead": "Product photo tools for a clean backdrop, a model photo, and a white background.",
+  "cta_title": "Ready for Matching Team Headshots?",
   "blockOrder": [
     "hero",
     "picker",

@@ -4,7 +4,7 @@
   "description": "Turn one product photo into AI UGC video ads and store-ready product photos. Pick a scene, see the credit cost first, and download files for every channel.",
   "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "Launch more product ads from one clear photo",
-  "lead": "Launch a new product ad from one clear photo. Pick a scene or an AI presenter, then download a file for your next campaign. You see the credit cost before the job starts.",
+  "lead": "Pick a scene or an AI presenter, then download a file for the next campaign. The credit cost is on screen before the job starts.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -70,7 +70,7 @@
     "eyebrow": "A clear way to make creator-style ads",
     "title": "What is AI UGC?",
     "paras": [
-      "AI UGC means a creator-style ad: an AI presenter shows your product in a scene you describe, and you write any line they say. It lets a store show the product without booking a new shoot.",
+      "A creator-style ad: an AI presenter shows your product in a scene you describe, and you write any line they say. A store can show the product without booking a new shoot.",
       "Upload the product photo and choose a scene or actor. Get a 6, 10, 15 or 30 second clip built around your real product for a paid ad, product page or social post.",
       "The presenter is AI-generated, not a real customer; use the clip to show your product."
     ],
@@ -106,35 +106,35 @@
       },
       {
         "t": "Dropshippers",
-        "d": "Try a few scenes for a new product before you book a shoot.",
+        "d": "Try a few scenes for a new product before you book a shoot. Keep the cuts you want to post.",
         "img": "n:gen2:video-ads-g3",
         "alt": "Snack pouch set down beside a lunch container on an office desk.",
         "frame": "phone"
       },
       {
         "t": "Small businesses",
-        "d": "Explain what your product does with a clear demo you can make on a small production schedule.",
+        "d": "Explain what the product does in a short demo, without booking a studio.",
         "img": "n:gen2:ind-food-drinks-g3",
         "alt": "Pasta sauce jar beside a finished plate of pasta.",
         "frame": "browser"
       },
       {
         "t": "Marketers and agencies",
-        "d": "Build client-ready variants from the same source photo, then send each channel its own format.",
+        "d": "Make a few versions from the same product photo, then give each channel the frame it needs.",
         "img": "n:img3-gen2-spokesperson-videos-g3-r2",
         "alt": "Adult presenter with short curls holds a plain blank snack pouch at chest height in a bright kitchen.",
         "frame": "phone"
       },
       {
         "t": "Content creators",
-        "d": "Turn a product brief into a camera-style concept without filming every take yourself.",
+        "d": "Turn a product photo into a creator-style clip without filming every take yourself.",
         "img": "n:gen2:video-ads-g2",
         "alt": "Canvas tote bag packed item by item on a hallway bench.",
         "frame": "phone"
       },
       {
         "t": "App and SaaS companies",
-        "d": "Show one feature in a short demo so a viewer can see what the product does.",
+        "d": "Show one feature from a still, so a viewer can see what the product does.",
         "img": "n:gen2:ind-electronics-g2",
         "alt": "Tablet stand holds a dark-screen tablet on a tidy desk.",
         "frame": "browser"
@@ -165,7 +165,17 @@
     [
       "Where it runs",
       "Export and resize for each channel",
-      "Campaign file in the frame and length you choose"
+      "A file in the frame and length you pick"
+    ],
+    [
+      "Who is on camera",
+      "A creator you book and brief",
+      "An AI presenter. You write the line. Not a real customer."
+    ],
+    [
+      "Captions and price",
+      "Added during the edit, or by the creator",
+      "You add captions, a price, and music in your editor after download."
     ]
   ],
   "pricingSummary": {
@@ -193,8 +203,8 @@
   },
   "faq": [
     {
-      "q": "What can I make with AIVideosUGC?",
-      "a": "You can make short video ads, product and unboxing videos, white-background photos, lifestyle photos, model photos and social ad images. Most start from a photo of your product."
+      "q": "What can I make from one product photo?",
+      "a": "You can make short video ads, product and unboxing videos, white-background photos, lifestyle photos, model photos, and social ad images."
     },
     {
       "q": "What photo should I upload?",
@@ -223,6 +233,14 @@
     {
       "q": "Do I need to hire a model or creator?",
       "a": "No. The results start from one product photo, so there is no casting, sample shipping or filming date. Present people in the clips as part of your ad, not as customer reviews."
+    },
+    {
+      "q": "Do the videos include captions?",
+      "a": "No. Download the file, then add captions, a price, and an offer in your own editor before you post."
+    },
+    {
+      "q": "Can I edit the clip after it is made?",
+      "a": "No. Download the file, then change text and music in your editor. To try a new scene, presenter, frame, or length, start another job. You see the credit cost before that job."
     }
   ],
   "limitations": {
@@ -258,8 +276,8 @@
   "more_sections": [
     {
       "eyebrow": "One place for every channel",
-      "h2": "One Upload, Ready for Every Channel",
-      "lead": "Make a version for each place you sell, and a fresh angle when an ad starts to tire.",
+      "h2": "One Upload, a Version for Each Channel",
+      "lead": "Make a version for each place you sell, and a fresh angle when an ad starts to feel familiar.",
       "items": [
         {
           "t": "Make the next ad from the asset you have",
@@ -270,14 +288,14 @@
         },
         {
           "t": "Keep each channel on its own format",
-          "d": "Create a vertical ad for social, a square image for a listing or a wider frame where the tool supports it.",
+          "d": "Create a vertical ad for social, a square image for a listing, or a wider frame when that shape is offered.",
           "img": "n:guide:im03-home-more-vacuum-r1",
           "alt": "Adult man uses a plain handheld cordless vacuum to lift crumbs from a dark sofa.",
           "frame": "phone"
         },
         {
-          "t": "Refresh the message before ad fatigue sets in",
-          "d": "Swap the opening, scene or actor and compare the downloads in your ad platform.",
+          "t": "Refresh the message when an ad feels familiar",
+          "d": "Swap the opening, scene, or actor, then compare the downloads in your ad platform.",
           "img": "n:gen2:before-after-videos-g3",
           "alt": "Closet shelf shown messy on one side and neatly folded on the other.",
           "frame": "none"
@@ -312,8 +330,8 @@
       ]
     },
     "picker": {
-      "title": "Recreate what you love",
-      "lead": "Recreate a product scene with your own photo and launch a campaign in minutes.",
+      "title": "Pick a Scene and Use Your Own Product",
+      "lead": "Pick a scene you like, upload your product photo, and get that look with your own product in it.",
       "chips": [
         {
           "id": "accessories",
@@ -341,7 +359,7 @@
         },
         {
           "id": "education",
-          "label": "Education"
+          "label": "How-To Demos"
         },
         {
           "id": "explainer",
@@ -349,7 +367,7 @@
         },
         {
           "id": "financial-services",
-          "label": "Financial Services"
+          "label": "Desk and Office"
         },
         {
           "id": "food-beverage",
@@ -369,7 +387,7 @@
         },
         {
           "id": "kids-toy",
-          "label": "Kids & Toy"
+          "label": "Kids and Toys"
         },
         {
           "id": "pet",
@@ -819,7 +837,7 @@
         "h2": "How to Make AI Product Videos and Photos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Recreate What You Love with Your Product",
+        "h2": "Pick a Scene and Use Your Own Product",
         "lead": "Pick a scene you like, upload your product photo, and get that look with your own product in it."
       },
       "faq": {
@@ -834,7 +852,7 @@
     "h2": "The AI UGC Video Generator Built for Product Sellers",
     "paras": [
       "Most stores do not need a studio to test a new ad. They need a clear product photo, an idea for the scene and a clear price per try.",
-      "AIVideosUGC keeps that in one place: videos up to 30 seconds, product photos for every listing, and the cost on screen before each job."
+      "AIVideosUGC keeps that in one place: videos up to 30 seconds, product photos for your listings, and the cost on screen before each job."
     ]
   },
   "trust": {
@@ -843,7 +861,7 @@
     "items": [
       {
         "t": "Five Frame Sizes",
-        "d": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4 before you start, so each channel gets a file in its own shape."
+        "d": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4 before you start, so the file matches the place you will post it."
       },
       {
         "t": "Videos Up to 30 Seconds",

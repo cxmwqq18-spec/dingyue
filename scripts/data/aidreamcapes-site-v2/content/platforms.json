@@ -4,7 +4,7 @@
   "description": "Turn one product photo into ads and photos for TikTok, Instagram, Facebook, Shorts, Amazon, and Shopify. See the specs and download a watermark-free file.",
   "h1": "AI Ads and Product Photos by Platform, Sized for Where You Post",
   "eyebrow": "Choose your channel",
-  "lead": "One product photo, a file for the channel you pick. Choose a frame, download it, and upload it where you sell.",
+  "lead": "One product photo, then a file for that channel, including vertical video ads for TikTok and Reels. Choose the frame, download it, and upload it where you sell.",
   "card": "Frames and ideas for the six channels this directory covers.",
   "secondary_keywords": [
     "social media ad sizes for products",
@@ -26,7 +26,7 @@
     },
     {
       "q": "What frame should a feed still use?",
-      "a": "Use 1:1 when the gallery is square. Use 3:4 or 4:3 when you want a slightly tall or slightly wide still. This tool exports those frames. It does not export a 4:5 file."
+      "a": "Use a square still. Photos from this tool are square. It does not export a 4:5 still, or a 4:3 or 3:4 still. If the feed wants 4:5, crop the square file in your editor, then upload it."
     },
     {
       "q": "How long can a clip be?",
@@ -45,7 +45,7 @@
       "a": "No. You download the file and upload it yourself. Add the headline, the price, and any licensed music in your editor first."
     },
     {
-      "q": "Can one creative run everywhere unchanged?",
+      "q": "Can one file run on every channel unchanged?",
       "a": "The product can stay the same. The frame usually should not. A square listing still and a 9:16 clip are two jobs from one photo."
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "q": "Where do captions go?",
-      "a": "Add them after download in your editor or in the ad account. This tool does not burn captions into the file."
+      "a": "Add them after download in your editor or in the ad account. This tool does not put captions on the file."
     }
   ],
   "visual": {
@@ -97,11 +97,11 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "Make a channel file in three moves"
+        "h2": "How to make a channel file in 3 steps"
       },
       "m3": {
         "h2": "Ecommerce ads by channel",
-        "lead": "Open the channel you post on. TikTok, Instagram, Facebook, YouTube Shorts, Amazon, and Shopify each show the frame they expect."
+        "lead": "Open the channel you post on. TikTok, Instagram and Reels, Facebook, YouTube Shorts, Amazon, and Shopify each show the frame they expect."
       }
     },
     "directoryFilters": {
@@ -135,11 +135,11 @@
       }
     }
   },
-  "benefits_h2": "What you set before the job starts",
+  "benefits_h2": "What you choose before you start",
   "benefits": [
     {
       "t": "The frame is chosen up front",
-      "d": "You pick 9:16, 1:1, 16:9, 4:3, or 3:4 before the job runs, instead of cropping a leftover file later.",
+      "d": "A photo is square. A clip can be 9:16, 1:1, 16:9, 4:3, or 3:4. You pick the clip frame before the job runs.",
       "img": "f:k4-plat-tiktok-18-visual-uses-1-image",
       "alt": "Open snack pouch on a car dashboard during a vertical product demo."
     },
@@ -150,8 +150,8 @@
       "alt": "Small matte white insulated food jar beside a packed lunch on a bright kitchen counter."
     },
     {
-      "t": "The length is on the label",
-      "d": "A clip is 6, 10, 15, or 30 seconds. Credits are 24, 40, 60, or 120, shown before you start.",
+      "t": "Length and credits are on screen",
+      "d": "A clip is 6, 10, 15, or 30 seconds. Credits are 24, 40, 60, or 120, and that cost is shown before you start.",
       "img": "n:guide:b2f7-platforms-benefits-2-r1",
       "alt": "Plain white ceramic jar with a lid on a light studio background."
     },
@@ -162,7 +162,7 @@
       "alt": "Leafy houseplant in a white ceramic planter on a light studio background."
     }
   ],
-  "steps_h2": "Make a channel file in three moves",
+  "steps_h2": "How to make a channel file in 3 steps",
   "steps_lead": "Add one photo, pick the frame, and download a file you upload yourself.",
   "steps": [
     {
@@ -171,7 +171,7 @@
     },
     {
       "t": "Choose the Frame",
-      "d": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4. For a clip, also pick 6, 10, 15, or 30 seconds."
+      "d": "A photo is square. For a clip, pick 9:16, 1:1, 16:9, 4:3, or 3:4, and a length of 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
@@ -180,7 +180,7 @@
   ],
   "directory_specs": {
     "title": "Frames you can export for each channel",
-    "lead": "Social media ad sizes for products are the TikTok, Instagram, Facebook, and Shorts rows. Amazon and Shopify rows are listing frames. This tool does not export a 4:5 file.",
+    "lead": "Social media ad sizes for products depend on the channel. Photos from this tool are square. Clips can be 9:16, 1:1, 16:9, 4:3, or 3:4. If a feed wants 4:5, crop the square file in your editor.",
     "columns": [
       "Channel",
       "Where it runs",
@@ -196,15 +196,15 @@
       ],
       [
         "Instagram",
-        "Feed still or full-screen clip",
-        "4:5 for a feed still, or 9:16 for the full-screen slot. This tool does not export 4:5.",
-        "Stills in 1:1, 4:3, or 3:4. Clips in 9:16, 1:1, or 16:9."
+        "Feed still or a full-screen clip such as Reels",
+        "4:5 for many feed stills, or 9:16 for the full-screen slot",
+        "Square stills. Crop to 4:5 in your editor if the feed asks for it. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4."
       ],
       [
         "Facebook",
-        "Feed still or full-screen clip",
-        "4:5 for a feed still, or 9:16 for the full-screen slot. This tool does not export 4:5.",
-        "Stills in 1:1, 4:3, or 3:4. Clips in 9:16, 1:1, or 16:9."
+        "Feed still or a full-screen clip",
+        "4:5 for many feed stills, or 9:16 for the full-screen slot",
+        "Square stills. Crop to 4:5 in your editor if the feed asks for it. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4."
       ],
       [
         "YouTube Shorts",
@@ -216,13 +216,13 @@
         "Amazon",
         "Listing gallery or a sponsored clip",
         "A square main image, plus a wide clip where ads allow it",
-        "Square stills, plus clips in 16:9 or 9:16 at 6, 10, 15, or 30 seconds."
+        "Square stills. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4, at 6, 10, 15, or 30 seconds."
       ],
       [
         "Shopify",
         "Product gallery",
         "Square stills",
-        "Square stills, plus a clip at 6, 10, 15, or 30 seconds. You add them in the store admin."
+        "Square stills, plus a clip at 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4. You add the files in the store admin."
       ]
     ]
   },

@@ -54,7 +54,7 @@
       "a": "Upload a clear photo of the release item, describe the reveal, pick a size and length, download, then add the date and quantity yourself."
     },
     {
-      "q": "Why not film the unboxing?",
+      "q": "Why start from a product photo instead of filming the drop?",
       "a": "The scene comes from one product photo, so you can prepare the alert before the release without booking a creator for every colorway."
     },
     {
@@ -102,7 +102,7 @@
       "sourceHint": "Show the full shoe shape and color in a clear view.",
       "result": "n:guide:q13-limited-steps-result-r3",
       "mode": "video",
-      "prompt": "An adult hiker ties the uploaded coral trail shoes on a rocky trail, then stands so the tread and both shoes stay in frame. Leave room above the shoes for a date you add after download.",
+      "prompt": "An adult hiker ties the coral trail shoes on a rocky trail, then stands so the tread and both shoes stay in frame. Leave room above the shoes for a date you add after download.",
       "options": [
         [
           "Size",
@@ -552,73 +552,74 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
     "reviews",
+    "steps",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "How Shops Use a Restock Alert Video",
-    "lead": "Each card is one shop's drop or restock. Put the date and quantity on after download.",
+    "h2": "Shoe Drop Video and Other Small Releases",
+    "lead": "Example setups for a short release. Add the date and quantity after download.",
     "items": [
       {
         "example": true,
         "who": "Watch shop",
-        "t": "Light catch",
+        "t": "Caseback in the light",
         "d": "Example: a caseback turned so the metal catches light before a small release."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Box lift",
+        "t": "Jacket out of the box",
         "d": "Example: a jacket lifted from a plain box for a restock post."
       },
       {
         "example": true,
         "who": "Shoe shop",
-        "t": "Grip check",
+        "t": "Sole before the hike",
         "d": "Example: a trail-shoe sole shown before a hike for a drop alert."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Colorway hold",
-        "d": "An apparel shop holds one color still, so the post is about that pair. The rest of the line stays off this clip."
+        "t": "One color, held still",
+        "d": "Example: an apparel shop holds one color still, so the post is about that pair. The rest of the line stays off this clip."
       },
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "Shade reveal",
+        "t": "One shade, opened once",
         "d": "Example: a limited shade opened once, with the lot size added as text later."
       },
       {
         "example": true,
         "who": "Home shop",
-        "t": "Small-batch unbox",
+        "t": "Candle out of the mailer",
         "d": "Example: a candle lifted from a mailer for a restock note."
       },
       {
         "example": true,
         "who": "Bag shop",
-        "t": "First look",
+        "t": "Bag turned once",
         "d": "Example: a small-run bag turned once so hardware and shape both read."
       },
       {
         "example": true,
         "who": "Drink shop",
-        "t": "Flavor drop",
+        "t": "One new flavor",
         "d": "Example: one new flavor held to camera, with the ship date added after download."
       },
       {
         "example": true,
         "who": "Jewelry shop",
-        "t": "Piece reveal",
+        "t": "One piece, plain surface",
         "d": "Example: a single piece turned on a plain surface for a short release window."
       },
       {
         "example": true,
         "who": "Fitness shop",
-        "t": "Restock hold",
+        "t": "One color of gear",
         "d": "Example: one color of gear held up, then the notify line added in the editor."
       }
     ]
@@ -626,12 +627,30 @@
   "related_h2": "Pages for a Product Restock Reel",
   "related_lead": "Video ads, fashion scenes, and TikTok placements for the next restock.",
   "relatedLinks": [
-    "video-ads",
-    "tpl-outfit",
-    "tpl-carousel-video-ad",
-    "tpl-sale",
-    "ind-fashion-clothing",
-    "plat-tiktok"
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "tpl-outfit",
+      "label": "AI fashion reels"
+    },
+    {
+      "id": "tpl-carousel-video-ad",
+      "label": "carousel video ad"
+    },
+    {
+      "id": "tpl-sale",
+      "label": "sale banner maker"
+    },
+    {
+      "id": "ind-fashion-clothing",
+      "label": "AI model photos and videos for fashion brands"
+    },
+    {
+      "id": "plat-tiktok",
+      "label": "AI TikTok ads generator"
+    }
   ],
   "cta_title": "Ready to Make the Drop Alert?"
 }

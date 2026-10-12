@@ -4,7 +4,7 @@
   "description": "Build a Black Friday sale scene from one product photo. Add the confirmed discount, code and end date after download, then publish the version you approve.",
   "h1": "Create Black Friday Ad Creatives Fast",
   "eyebrow": "Black Friday ad creatives",
-  "lead": "Prepare the Black Friday product scene while the offer is still moving, then place the discount on the file yourself.",
+  "lead": "Prepare the Black Friday product scene before the discount is final, then type the discount on the file yourself.",
   "secondary_keywords": [
     "Black Friday video ads",
     "Black Friday banner ideas",
@@ -15,7 +15,7 @@
   "faq": [
     {
       "q": "How early should I make Black Friday ad creatives?",
-      "a": "Start before the offer is final. The product scene can be ready while the discount, the code, and the end date are still moving."
+      "a": "Start before the offer is final. The product scene can be ready while the discount, the code, and the end date are still being set."
     },
     {
       "q": "Can you add a countdown timer to the video?",
@@ -23,7 +23,7 @@
     },
     {
       "q": "Do I need a separate file for each placement?",
-      "a": "Use the frame that placement needs: 9:16, 1:1, 16:9, 4:3, or 3:4. Each one is its own job, and the credit cost shows before you start."
+      "a": "A product photo is square. For video, use the frame that placement needs: 9:16, 1:1, 16:9, 4:3, or 3:4. Each video is its own job, and the credit cost shows before you start."
     },
     {
       "q": "Which Black Friday details should stay editable?",
@@ -116,7 +116,7 @@
       "source": "n:guide:black-friday-m2-source",
       "result": "n:guide:q20-occ-bf-steps-result",
       "mode": "photo",
-      "prompt": "A plain product in an open gift box, with clear space for the Black Friday offer added after download.",
+      "prompt": "A leather duffel on a dark backdrop, with clear space beside it for the offer.",
       "options": [
         [
           "Template",
@@ -171,7 +171,7 @@
             "gift-reveal",
             "sale-demo"
           ],
-          "prompt": "Use the uploaded product photo as the product. An adult hand holds it beside a plain parcel in a phone-first feed composition, with clear space for the Black Friday offer added after download. No text or logos.",
+          "prompt": "Use the uploaded product photo as the product. An adult hand holds it beside a plain parcel in a vertical feed composition, with clear space for the Black Friday offer added after download. No text or logos.",
           "kind": "photo"
         }
       ],
@@ -221,25 +221,25 @@
   "benefits": [
     {
       "t": "Start the sale scene before the code exists",
-      "d": "Build the product scene while the Black Friday deal is still being confirmed. The visual can be finished before the percent is final.",
+      "d": "Build the gift-box scene while the Black Friday deal is still being confirmed. Finish that shot before the percent is final.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for a Black Friday ad."
     },
     {
-      "t": "Hold the product up for a phone-first frame",
-      "d": "Make a square post or a 9:16 version from the same photo. Frames also include 16:9, 4:3, and 3:4.",
+      "t": "Hold the product up for a phone ad",
+      "d": "Hold the product toward the camera for the sale ad. The photo is square, and a video from the same photo can be 9:16, 1:1, 16:9, 4:3, or 3:4.",
       "img": "n:guide:fx02-occ-bf-benefit-shoe",
       "alt": "Adult creator holds a plain knit slip-on shoe toward camera in a deal-day demo."
     },
     {
       "t": "Change the deal in your editor",
-      "d": "Add the discount, the code, and the end date after download. A late change stays in the text, and the product scene stays put.",
+      "d": "Add the discount, the code, and the end date after download. You only change the text, and the product scene stays put.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
       "alt": "Adult hands place an insulated lunch bag into a kraft shipping box."
     },
     {
       "t": "Use a quiet at-home demo",
-      "d": "Show the product in a calm at-home moment, a common look for a phone sale ad. If a person is in the frame, that person is generated, not someone you filmed.",
+      "d": "Show the product in a calm at-home moment. If a person is in the frame, that person is generated, not someone you filmed.",
       "img": "n:guide:b2f8-occ-black-friday-benefit-pet-r1",
       "alt": "Adult hand rests on a calm dog lying on a dark sofa."
     }
@@ -286,7 +286,7 @@
         "example": true,
         "who": "A desk shop",
         "t": "Frame the monitor with room for the price",
-        "d": "They keep the monitor on a tidy desk and leave a clear area for the discount. The end time is not burned into the picture."
+        "d": "They keep the monitor on a tidy desk and leave a clear area for the discount. The end time is not printed on the picture."
       },
       {
         "example": true,
@@ -318,7 +318,7 @@
       },
       {
         "t": "The upload stays in your account",
-        "d": "The product photo and the result stay in your account until you download them and share them."
+        "d": "The product photo and the result stay in your account. They are not published until you share them."
       },
       {
         "t": "No timer inside the file",
@@ -326,7 +326,7 @@
       }
     ]
   },
-  "cta_title": "Run Black Friday sale ads for ecommerce from this scene",
+  "cta_title": "Run Black Friday sale ads for ecommerce",
   "blockOrder": [
     "hero",
     "benefits",

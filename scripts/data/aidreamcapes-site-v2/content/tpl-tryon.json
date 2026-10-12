@@ -1,7 +1,7 @@
 {
   "id": "tpl-tryon",
   "title": "AI Virtual Try-On for Clothing | AIVideosUGC",
-  "description": "Show clothing on a model without a booking. AI virtual try-on turns a flat-lay or hanger photo into a realistic on-model view for your listing and social ads.",
+  "description": "Show clothing on a model without a booking. AI virtual try-on turns a flat-lay or hanger photo into an on-model view for your listing and social ads.",
   "h1": "AI Virtual Try-On for Clothing, from a Flat Lay",
   "eyebrow": "Model photo template",
   "lead": "Shoppers skip a jacket they can only see folded on a hanger. Upload one garment photo and get an on-model view for the listing and the launch post.",
@@ -11,7 +11,7 @@
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "steps_h2": "Garment on Model Photo for Shopify",
+  "steps_h2": "Make a Garment on Model Photo for Shopify in 3 Steps",
   "steps_lead": "Upload the garment, choose a scene, then download a photo you can check against the real piece.",
   "steps": [
     {
@@ -91,7 +91,7 @@
       "source": "n:guide:tpl-tryon-c3-m2-source",
       "result": "n:guide:tpl-tryon-c3-m2-result",
       "mode": "photo",
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult model wears the garment and turns once in soft daylight to show the full silhouette, collar, sleeves, pockets and hem. Keep the pose relaxed and leave enough space for the complete outline. Natural fashion UGC look, eye-level handheld framing, one gentle push-in. Sound: fabric movement, no music. End facing camera with the garment centered for a listing review. Keep the background quiet and leave a clean edge around the garment for a listing crop.",
+      "prompt": "An adult wears the garment in soft daylight, with the collar, sleeves, pockets, and hem still in frame.",
       "options": [
         [
           "Template",
@@ -109,7 +109,7 @@
       "sourceTitle": "Your product"
     },
     "picker": {
-      "title": "These cards open a 15-second video",
+      "title": "Video previews, not the on-model photo",
       "lead": "Each card is a 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem and color against the piece.",
       "chips": [
         {
@@ -532,10 +532,10 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Garment on Model Photo for Shopify"
+        "h2": "Make a Garment on Model Photo for Shopify in 3 Steps"
       },
       "m3": {
-        "h2": "These cards open a 15-second video",
+        "h2": "Video previews, not the on-model photo",
         "lead": "Each card is a 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem and color against the piece."
       },
       "faq": {

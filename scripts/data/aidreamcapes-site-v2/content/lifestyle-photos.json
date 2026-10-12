@@ -4,7 +4,7 @@
   "description": "Create AI lifestyle product photos from one plain image. Place the item in a room, table or cafe scene so shoppers picture using it without a shoot.",
   "h1": "AI lifestyle product photos that show where the item belongs",
   "eyebrow": "Lifestyle photo maker",
-  "lead": "Place one plain product photo in a room, on a table, or at a cafe. Shoppers can picture using it, and you do not book a set.",
+  "lead": "Place one plain product photo in a room, on a table, or at a cafe. Shoppers can picture using it, and you do not book a location.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,28 +12,28 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Keep the item recognizable without a location fee",
+  "benefits_h2": "Realistic scenes shoppers can judge",
   "benefits": [
     {
       "img": "n:guide:fx15-lifestyle-benefit-context-r1",
       "alt": "Matte ceramic planter with a fern on a warm wood shelf in a bright living room.",
-      "t": "Keep the plain photo beside it",
-      "d": "Use the scene when shoppers need the setting, and keep the original photo for small details."
+      "t": "A room they recognize",
+      "d": "The planter sits on a wood shelf in a living room. That is easier to judge than the same planter on a blank background."
     },
     {
       "img": "n:guide:fx15-lifestyle-benefit-pop-r1",
       "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup.",
-      "t": "Keep the item as the subject",
-      "d": "The setting adds the moment. The product's shape and color should still be easy to check."
+      "t": "A moment that looks lived in",
+      "d": "A hand sets the bag next to a cup. The shape and color stay easy to check."
     },
     {
       "img": "n:guide:fx15-lifestyle-benefit-listing-r1",
       "alt": "Plain brushed steel insulated bottle on an entryway console with a folded cloth.",
-      "t": "Publish without a location fee",
-      "d": "You do not rent a room, hire a stylist, or pack the product for a shoot. Each image is 24 credits, shown before you start."
+      "t": "A normal spot in the house",
+      "d": "The bottle stands on an entryway console with a folded cloth. Shoppers can see a real hallway, then check small print on the plain photo."
     }
   ],
-  "steps_h2": "Run the AI product scene generator in 3 steps",
+  "steps_h2": "How to use the AI product scene generator",
   "steps_lead": "Upload the product, name the place, and download a square scene.",
   "steps": [
     {
@@ -85,7 +85,7 @@
     },
     {
       "q": "Can I change the scene after the first result?",
-      "a": "Yes. Run another job with a different surface or prop. Each photo is its own 24-credit job."
+      "a": "Yes. Start again with a different surface or prop. Each photo costs 24 credits."
     },
     {
       "q": "Does the scene replace my plain product image?",
@@ -93,7 +93,7 @@
     },
     {
       "q": "Can I post the scene in a social ad?",
-      "a": "Yes. Finish the headline and the offer in your ad editor. The photo itself does not add your price for you."
+      "a": "Yes. Finish the headline and the offer in your ad editor. The photo does not include your price."
     },
     {
       "q": "How is this different from a photoshoot?",
@@ -105,7 +105,7 @@
     },
     {
       "q": "Can I post the scene on Instagram?",
-      "a": "Yes. Download the square image and add your caption in Instagram. Add any price in your own editor after download."
+      "a": "Yes. These square images work as Instagram product scene photos. Add the caption in Instagram, and add any price in your own editor."
     }
   ],
   "visual": {
@@ -113,7 +113,7 @@
       "source": "n:guide:q5-life-tote-source-r2",
       "result": "n:guide:q5-life-tote-hero-r2",
       "mode": "photo",
-      "prompt": "Use the uploaded cream canvas tote as the exact product reference. Place it on a wooden stall table at a farmers market with fresh produce behind it; preserve its shape and color, with no text or logos.",
+      "prompt": "Place this cream canvas tote on a wooden stall table at a farmers market, with produce crates behind it. Keep the bag's shape and color.",
       "sourceTitle": "Your product photo",
       "sourceHint": "Keep the complete bag and both handles visible.",
       "options": [
@@ -201,8 +201,8 @@
       {
         "img": "n:guide:k5-lifestyle-photos-uses-0-image",
         "h": "Show where the item sits at home",
-        "d": "A shelf, counter, or entryway tells shoppers the place before they read the description.",
-        "alt": "Ceramic planter with a fern on a styled shelf, wide banner framing."
+        "d": "A shelf or a counter tells shoppers the room before they read the description.",
+        "alt": "Ceramic planter with a fern on a styled living-room shelf."
       },
       {
         "img": "n:guide:k5-lifestyle-photos-uses-1-image",
@@ -212,8 +212,8 @@
       },
       {
         "img": "n:guide:k5-lifestyle-photos-strip-3",
-        "h": "Show a second everyday moment",
-        "d": "Use a balcony, a doorway, or a market stall when you need another scene of the same product.",
+        "h": "Show the product in use",
+        "d": "An open drink on a balcony shows someone using it, not just the can on a plain background.",
         "alt": "Plain iced tea can opened on a sunny balcony."
       }
     ],
@@ -267,53 +267,53 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Everyday use",
-      "h2": "Show one ordinary moment",
-      "lead": "Lifestyle product photography with AI can be one familiar place on the product page.",
+      "eyebrow": "No location day",
+      "h2": "Lifestyle product photography with AI from one photo",
+      "lead": "You do not rent a room or hire a stylist. The scene starts from the product photo you already have.",
       "items": [
         {
           "img": "n:guide:k5-lifestyle-gallery-01",
           "alt": "Linen tote bag beside a coffee cup at a sunny cafe.",
-          "t": "Cafe stop",
-          "d": "Let shoppers picture the bag beside a drink while the product stays large in the frame."
+          "t": "Cafe table, no rental",
+          "d": "The bag stays beside one cup. Each image is 24 credits, shown before you start."
         }
       ]
     },
     {
-      "eyebrow": "Product context",
-      "h2": "Show the product leaving the house",
-      "lead": "A street or a doorway helps shoppers picture taking the item with them.",
+      "eyebrow": "Store and ads",
+      "h2": "Lifestyle images for Shopify stores, posts, and ads",
+      "lead": "Download the square photo for the product page, a post, or an ad.",
       "items": [
         {
           "img": "n:guide:k5-lifestyle-gallery-06",
           "alt": "Hand holding a linen tote bag on a neighborhood street.",
           "t": "Neighborhood carry",
-          "d": "A simple street or doorway helps shoppers picture when they would take the product with them."
+          "d": "A street scene is enough for the post. Add the caption and any price in your own editor."
         }
       ]
     },
     {
       "eyebrow": "Same product",
-      "h2": "Three scenes from the same product photo",
-      "lead": "Keep the product the same and change only the surface: a park, a picnic setup, or an entryway.",
+      "h2": "Three consistent scenes from one product photo",
+      "lead": "Keep the bag the same and change only the place: a park, a picnic, or an entryway.",
       "items": [
         {
           "img": "n:guide:k5-lifestyle-gallery-03",
           "alt": "Linen tote bag carried beside a city bike.",
           "t": "Park carry",
-          "d": "A simple outdoor surface shows a weekend use."
+          "d": "The bag is carried beside a bike, so the weekend use is obvious."
         },
         {
           "img": "n:guide:k5-lifestyle-gallery-04",
           "alt": "Linen tote bag on a beach picnic blanket.",
           "t": "Picnic setup",
-          "d": "A second surface gives the same product another reason to appear."
+          "d": "The same bag sits on a picnic blanket, outdoors."
         },
         {
           "img": "n:guide:k5-lifestyle-gallery-05",
           "alt": "Linen tote bag hanging in a bright home entryway.",
           "t": "Home entryway",
-          "d": "A last everyday spot is useful before you choose which scene to post."
+          "d": "A bright entryway gives you a home version to compare with the two outdoor scenes."
         }
       ]
     }

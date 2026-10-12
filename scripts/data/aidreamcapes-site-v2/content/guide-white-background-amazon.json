@@ -54,7 +54,7 @@
       "h2": "What if the product is white, clear, or a set?",
       "paras": [
         "Shape the item first, light the edges, and show exactly the number of pieces the listing sells.",
-        "A white product can disappear on white. Shoot the source with light from one side so the outline has soft shading, and mention gentle side light in the sentence. Clear glass picks up the room behind it, so photograph it against a plain light wall. A three-pack should show three units, not two and not five. Fluff bags and soft goods before the source shot, because the new image follows the shape it sees."
+        "A white product can disappear on white. Shoot the source with light from one side so the outline has soft shading, and mention gentle side light in the line you type. Clear glass picks up the room behind it, so photograph it against a plain light wall. A three-pack should show three units, not two and not five. Fluff bags and soft goods before the source shot, because the new image follows the shape it sees."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec05",
       "alt": "Adult hand shapes an olive canvas backpack upright on a white sweep."
@@ -74,19 +74,13 @@
         "Pure white, only what you ship, and the product large in the square. Check the corners, the label, and the part count against the real item.",
         "The phone photo does not have to start on white. One delivered image is 24 credits, and a failed job returns them."
       ]
-    },
-    {
-      "h2": "On this page",
-      "paras": [
-        "Six questions follow: Amazon main image requirements, whether the phone shot must already be white, how to make a pure white background product photo, which Amazon product photo rules to verify, tricky products, and whether a white background for product listings should stay on the main image."
-      ]
     }
   ],
   "related": [
     "guide-product-photo-tips",
-    "blog-ai-product-photography-guide",
-    "blog-ai-video-review-checklist",
+    "white-background",
     "plat-amazon",
+    "blog-ai-product-photography-guide",
     "blog-model-photos-without-a-photoshoot",
     "guide-testing-ad-versions"
   ],
@@ -114,15 +108,19 @@
     {
       "q": "Which Amazon product photo rules sit outside the main image?",
       "a": "Later images can show use, scale, and detail. Keep prices and badges out of the picture and add those words yourself. Category rules for clothing and jewelry can be stricter, so check the current guide for your category."
+    },
+    {
+      "q": "What if my Amazon main image breaks the rules?",
+      "a": "Replace it. A main image that breaks the white, size, or product rules can come off the listing, and the listing can drop out of search until the image is fixed. Later photos can show the product in use. Read the current Seller Central guide for your category before you upload again."
     }
   ],
   "cta_title": "Make a clean main image for your listing",
   "cta_lead": "Turn one complete product photo into a white main image, then compare it with the item you ship.",
   "relatedLinks": [
     "guide-product-photo-tips",
-    "blog-ai-product-photography-guide",
-    "blog-ai-video-review-checklist",
+    "white-background",
     "plat-amazon",
+    "blog-ai-product-photography-guide",
     "blog-model-photos-without-a-photoshoot",
     "guide-testing-ad-versions"
   ]

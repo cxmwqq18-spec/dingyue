@@ -23,7 +23,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download each view and compare controls with your source photos. Place the set after the hero image on the listing or in the ad."
+      "d": "Download each view and check buttons and ports against your photos. Place the set after the main image on your listing or ad."
     }
   ],
   "maker": {
@@ -66,7 +66,7 @@
     },
     {
       "q": "Where should the set sit in a gallery?",
-      "a": "Keep a clear hero image first. Add the packshot set after it so shoppers see the full item before the side views."
+      "a": "Keep a clear main image first. Add the packshot set after it so shoppers see the full item before the side views."
     },
     {
       "q": "Do the source photos already have to be square?",
@@ -98,7 +98,7 @@
       "source": "n:guide:tpl-angle-round4-speaker-controls",
       "result": "n:guide:b2f11-tpl-angle-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded speaker as the exact product. Show coordinated front and rear views with plain unmarked raised-dot controls and the USB-C port visible, preserving its shape, color and wrist strap. Neutral studio background, no text or logos.",
+      "prompt": "Front and back of the speaker on one plain backdrop, with the port left as it was photographed.",
       "options": [
         [
           "Template",
@@ -115,8 +115,8 @@
       ]
     },
     "picker": {
-      "title": "Browse Video Ad Templates by Category",
-      "lead": "These cards are video ads for other categories, not side-view packshots. For the square views, use the upload box above and add one photo of each side you photographed.",
+      "title": "Browse Scenes by Category",
+      "lead": "Open a card for a short video of your product. Square side views start in the upload box: one photo for each side you shot.",
       "chips": [
         {
           "id": "accessories",
@@ -540,13 +540,13 @@
         "h2": "Questions About Product Packshot Photos"
       },
       "m3": {
-        "h2": "Browse Video Ad Templates by Category",
-        "lead": "These cards are video ads for other categories, not side-view packshots. For the square views, use the upload box above and add one photo of each side you photographed."
+        "h2": "Browse Scenes by Category",
+        "lead": "Open a card for a short video of your product. Square side views start in the upload box: one photo for each side you shot."
       }
     }
   },
   "steps_h2": "Make Product Photos from Different Angles in 3 Steps",
-  "steps_lead": "One photo per side, one shared backdrop, then files you can place after the hero image.",
+  "steps_lead": "One photo per side, one shared backdrop, then files you can place after the main listing image.",
   "blockOrder": [
     "hero",
     "picker",

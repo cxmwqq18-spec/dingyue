@@ -4,7 +4,7 @@
   "description": "Create unboxing videos from one product photo. Show the box, tissue, product and included pieces for TikTok, Shorts, store pages and paid ads.",
   "h1": "AI Unboxing Video Maker: Open the Parcel from One Photo",
   "eyebrow": "AI unboxing video maker",
-  "lead": "AIVideosUGC turns one product photo into an AI unboxing video: the parcel opens, tissue shifts, and the item you sell ends in frame. No sample to mail, no creator to book, no camera crew. Choose a frame, pick 6 to 30 seconds, and download a clip for TikTok, Reels, Shorts, or a product page.",
+  "lead": "AIVideosUGC turns one product photo into an AI unboxing video: the parcel opens, the tissue moves, and you end on the item you sell. No sample to mail, no creator to book, no camera crew. Choose a frame, pick 6 to 30 seconds, and download a clip for TikTok, Reels, Shorts, or a product page.",
   "secondary_keywords": [
     "unboxing video maker",
     "product unboxing video for TikTok",
@@ -14,34 +14,34 @@
   "benefits_h2": "Benefits of a Product Unboxing Video for TikTok",
   "benefits": [
     {
-      "t": "Ready in Minutes",
-      "d": "Go from the photo you upload to a finished open in minutes. There is no creator brief, no sample shipment, and no wait on an edit.",
+      "t": "No Sample to Ship",
+      "d": "Start from the photo you already have. There is no creator brief, no sample shipment, and no filming day.",
       "icon": "bolt",
       "img": "n:guide:fx13-unboxing-stage-open-package",
       "alt": "Adult hands open a kraft box around a matte blue insulated bottle."
     },
     {
       "t": "Pay for the Clip, Not a Shoot",
-      "d": "Credits replace a creator fee and a filming day. A 15-second open uses 60 credits, and a failed render gives those credits back.",
+      "d": "Credits replace a creator fee and a filming day. A 15-second open uses 60 credits. If that job fails, the credits come back.",
       "icon": "coins"
     },
     {
       "t": "More Versions from One Photo",
-      "d": "Change the hook, the box, or the presenter and render again from the same photo. Keep the version shoppers stop for.",
+      "d": "Change the opening, the box, or the presenter and make another clip from the same photo. Keep the version you want to test.",
       "icon": "layers",
       "img": "n:guide:fx13-unboxing-stage-lift-tissue",
       "alt": "Adult hands lift tissue to reveal a plain hard-cover notebook in a box."
     },
     {
-      "t": "A Fresh Open Before the Ad Tires",
+      "t": "Refresh a Tired Ad",
       "d": "When an ad has been seen too often, swap the opening, the tissue, or the setting. You do not book another unboxing to find out.",
       "icon": "refresh",
       "img": "n:guide:fx13-unboxing-stage-main-item",
       "alt": "Adult hands lift a plain olive pet harness from an open cardboard box."
     },
     {
-      "t": "You Choose the Order",
-      "d": "You set the box, the action, the presenter, and the length. Add your captions, price, and licensed music after download so the ad stays on brand.",
+      "t": "Add Your Own Words",
+      "d": "Captions, your price, and licensed music go on in your editor after you download. The open stays the one you described.",
       "icon": "check",
       "img": "n:guide:b2f12-unboxing-videos-acc-r1",
       "alt": "Adult hands lay a plain compact mirror and pouch beside an open box."
@@ -122,18 +122,18 @@
     },
     {
       "q": "Will words printed on the box come out right?",
-      "a": "Lettering can vary. Check every label, and add final brand text in your editor after download."
+      "a": "Check every label on the download, and add final brand text in your editor. Lettering can vary."
     },
     {
       "q": "Will TikTok or Meta reject an AI unboxing ad?",
-      "a": "They do not ban AI ads as a class. Some require a label when a clip could be read as a real customer. Check the current rule before you scale spend."
+      "a": "Do not present the clip as a customer review. Before you spend, read the current TikTok or Meta rule and add any label it asks for."
     }
   ],
   "cta_lead": "Upload a product photo and see the credit cost before you start.",
   "actor_scene_picker": {
-    "title": "Pick a Presenter for the Open",
-    "lead": "Choose who opens the parcel and where, then carry that setup into the video.",
-    "button": "Use this reveal setup"
+    "title": "Pick an AI Presenter",
+    "lead": "Choose a generated presenter and a scene. This person is not a customer, and what they say is not a review.",
+    "button": "Use this presenter"
   },
   "visual": {
     "strip": [],
@@ -143,7 +143,7 @@
       "result": "n:guide:k1-unboxing-step-result-candle",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded product photo as the exact product reference. Keep its shape and color unchanged. Adult hands open a plain shipping box, fold back tissue and lift the product toward the camera, ending with the item centered and steady. Warm natural light, realistic handheld product-video look. Sound: box and tissue movement; no text, logos or music.",
+      "prompt": "Adult hands open a plain shipping box, fold the tissue back, and lift the product until it sits centered.",
       "options": [
         [
           "Size",
@@ -223,7 +223,7 @@
     "title": "What Is an AI Unboxing Video?",
     "paras": [
       "An AI unboxing video is a short clip of a parcel opening onto your product, built from a photo of the item you sell. You describe the box, the tissue, and the order shoppers should see. Nothing is filmed and no crew is booked.",
-      "Sellers use it as a packaging reveal video on TikTok, Reels, Shorts, or a product page. Each render can be 9:16, 1:1, 16:9, 4:3, or 3:4."
+      "Sellers use it as a packaging reveal video on TikTok, Reels, Shorts, or a product page. Each clip can be 9:16, 1:1, 16:9, 4:3, or 3:4."
     ]
   },
   "reasons": {
@@ -232,13 +232,13 @@
     "items": [
       {
         "t": "Starts From the Item You Sell",
-        "d": "The open uses the photo you upload, so the item in frame is the one you sell, not a generic stand-in. Check the shape and color on the download before you post.",
+        "d": "The open uses the photo you upload, so the item on screen is the one you sell, not a stand-in. Check the shape and color on the download before you post.",
         "img": "n:guide:fx13-unboxing-benefit-box-product",
         "alt": "Adult hands peel tissue back around a plain matte skincare jar in a package."
       },
       {
         "t": "Framed for Where You Post",
-        "d": "Render 9:16, 1:1, 16:9, 4:3, or 3:4, the frames TikTok, Reels, Shorts, and product pages use. You are not recropping a filmed open for each placement.",
+        "d": "Make it in 9:16, 1:1, 16:9, 4:3, or 3:4, the frames TikTok, Reels, Shorts, and product pages use. You do not have to crop one filmed open for every place you post.",
         "img": "n:guide:fx13-unboxing-stage-vertical-frame",
         "alt": "Adult hands reveal a plain matte travel mug from tissue in an open box."
       },
@@ -252,7 +252,7 @@
   },
   "compare_table": {
     "title": "AIVideosUGC vs. Filming an Unboxing",
-    "lead": "Quicker to try and easier to repeat. See what changes when one product photo replaces a sample shipment.",
+    "lead": "One product photo instead of a sample shipment. Here is what changes.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -260,9 +260,9 @@
     ],
     "rows": [
       [
-        "Time to first open",
-        "Minutes",
-        "Days to ship a sample, film, and edit"
+        "How you start",
+        "Upload one photo and describe the open",
+        "Ship a sample, then film and edit"
       ],
       [
         "What you need",
@@ -277,7 +277,7 @@
       [
         "Frames",
         "9:16, 1:1, 16:9, 4:3, or 3:4 on each clip",
-        "Recut the footage for every placement"
+        "Cut the footage again for every place you post"
       ],
       [
         "Rights",
@@ -299,25 +299,25 @@
         "example": true,
         "who": "Travel shop",
         "t": "End on the bag",
-        "d": "A 15-second open finishes with the tote centered, so shoppers can see the shape before they buy."
+        "d": "A travel shop makes a 15-second open that finishes with the tote centered, so the shape is clear before checkout."
       },
       {
         "example": true,
         "who": "Gift shop",
-        "t": "Hero item, then the extras",
-        "d": "Show the main product first, then the pieces that come with it, so the set is clear before checkout."
+        "t": "Main item, then the extras",
+        "d": "A gift shop shows the main product first, then the pieces that come with it, so the set is clear before checkout."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Sweater lifted from the parcel",
-        "d": "Use the lift as the first second of a paid social test, still from the same product photo."
+        "d": "An apparel shop uses the sweater lift in the first second of a paid social test, still from the same product photo."
       },
       {
         "example": true,
         "who": "Electronics shop",
         "t": "Device and cable in one frame",
-        "d": "Lay the cable beside the device so the listing shows what arrives in the box."
+        "d": "An electronics shop lays the cable beside the device so the listing shows what arrives in the box."
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "id": "photo-hub",
   "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
-  "description": "Turn one product photo into listing, lifestyle and ad images for your store. Skip the studio bookings and see the credit cost before you start.",
+  "description": "Turn one product photo into listing, lifestyle and ad images for your store. Skip the studio booking and see the credit cost before you start.",
   "h1": "Make listing, lifestyle, and ad images with an AI product photo generator",
   "eyebrow": "AI product photo generator",
   "lead": "Start with one clear product photo. Build a listing image, a room scene, or a square ad, then download the version for your store.",
@@ -11,7 +11,7 @@
     "ecommerce product photo AI",
     "AI product photo templates"
   ],
-  "benefits_h2": "What an AI product image generator changes for a small catalog",
+  "benefits_h2": "Benefits of an AI product image generator",
   "benefits": [
     {
       "icon": "coins",
@@ -20,13 +20,13 @@
     },
     {
       "icon": "clock",
-      "t": "Skip the shoot date",
-      "d": "Move from a plain product photo to a room scene or a square ad without booking a photographer."
+      "t": "Skip booking a photographer",
+      "d": "Move from a plain product photo to a room scene or a square ad without a shoot date."
     },
     {
       "icon": "layers",
       "t": "Cover the listing, the scene, and the ad",
-      "d": "Use one product photo for a clean listing, a detail, a room, or a social image. Each look is its own job."
+      "d": "Use one product photo for a clean listing, a detail, a room, or a social image. Each look is a separate photo."
     },
     {
       "icon": "users",
@@ -36,12 +36,12 @@
     {
       "icon": "refresh",
       "t": "Make the next look when the listing changes",
-      "d": "Run another image when the product, the offer, or the season changes. There is no studio calendar to clear."
+      "d": "Make another image when the product, the offer, or the season changes. You do not wait on a studio date."
     },
     {
       "icon": "target",
       "t": "Compare scenes before you post",
-      "d": "Make more than one background or crop, then choose the file for the product page or the ad."
+      "d": "Make a second background, then choose the file for the product page or the ad."
     }
   ],
   "steps_h2": "Make a product photo in 3 steps",
@@ -75,28 +75,28 @@
   },
   "faq": [
     {
-      "q": "What can this photo generator make from one product photo?",
-      "a": "A new product image from one clear photo you upload. Typical results are a listing image, a room scene, a detail, or a square ad. You review the file before you publish."
+      "q": "What can an AI product photo generator make from one photo?",
+      "a": "A listing image, a room scene, a detail, or a square ad. Upload one clear photo and review the file before you publish."
     },
     {
-      "q": "How does it work?",
-      "a": "Upload a product photo or describe the image, choose the photo type and the scene, then generate a square result. The credit cost appears before you start."
+      "q": "How do I make the photo from one product picture?",
+      "a": "Upload a product photo and describe the scene, then generate a square image. The credit cost appears before you start."
     },
     {
-      "q": "Is there a free way to make these photos?",
-      "a": "There is no free plan on the pricing page. Each image uses 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "Is there a free AI product photo generator plan?",
+      "a": "No. Each image uses 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Are the photos usable on a product page?",
       "a": "Yes, for listing, lifestyle, and ad images. Check each result against the product you ship so color, shape, and details still match."
     },
     {
-      "q": "What kinds of photos can I make?",
-      "a": "Clean listing, lifestyle, on-model, close detail, or social ad images. Every result starts from the photo or the description you provide."
+      "q": "Can I make a white background and a room scene?",
+      "a": "Yes. A clean listing and a room scene are separate photos, and each one uses 24 credits. Check the product in both before you publish."
     },
     {
-      "q": "What do I skip compared with a studio day?",
-      "a": "You skip the studio booking and the model call time. You still check the image, and you still add prices yourself after download."
+      "q": "Do these photos replace a studio shoot?",
+      "a": "They take the place of the studio booking for a new scene. You still compare the file with the product you ship, and you add prices in your own editor after download."
     },
     {
       "q": "Are the downloads copyright-free?",
@@ -113,7 +113,7 @@
   ],
   "examples": {
     "h2": "Examples of ecommerce product photos",
-    "lead": "More scenes from the same four groups. Upload your product photo and describe the setting you want.",
+    "lead": "More beach, desert, studio, and room scenes. Upload your product photo and describe the setting you want.",
     "groups": [
       {
         "label": "Coastal",
@@ -143,7 +143,7 @@
           },
           {
             "ref": "n:guide:mx1w-photo-hub-desert-2-r1",
-            "title": "Desert: sandals on warm sand",
+            "title": "Desert: hat and sandals on sand",
             "kind": "photo",
             "product": "woven hat and leather sandals"
           }
@@ -195,7 +195,7 @@
     {
       "ref": "n:guide:img2-photo-hub-hero-result-r1",
       "name": "Ready for your store",
-      "line": "Same lipstick, styled into a real scene in minutes",
+      "line": "Same lip balm, set in a vanity scene you can check before you publish.",
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
@@ -206,15 +206,15 @@
       "sourceAlt": "Plain coral lip balm tube fully in frame on pure white, cap beside it, blank label area and soft even light.",
       "result": "n:guide:img1-photo-hub-steps-result-r1",
       "mode": "photo",
-      "prompt": "A clean vanity photo as I apply this lip balm before work.",
+      "prompt": "A bright vanity scene with this lip balm being applied before work.",
       "options": [
         [
-          "Your product",
-          "Your product"
+          "Size",
+          "Square · 1:1"
         ],
         [
-          "Size",
-          "Square"
+          "Start with",
+          "Photo or description"
         ]
       ]
     },
@@ -235,8 +235,8 @@
       }
     }
   },
-  "cta_title": "Put your next product photo to work",
-  "cta_lead": "Upload one clear product photo, choose a scene and see the credit cost before you start.",
+  "cta_title": "One product photo, then another scene",
+  "cta_lead": "Upload a clear photo, choose a listing, a room, or a square ad, and see the credit cost before you start.",
   "blockOrder": [
     "hero",
     "picker",
@@ -245,10 +245,11 @@
     "examples",
     "related",
     "reviews",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "How sellers use the photo set",
+    "h2": "How sellers use one product photo",
     "lead": "Ways sellers build a listing image, a room scene, or an ad from one product photo.",
     "items": [
       {
@@ -292,5 +293,7 @@
     "change-background",
     "social-ad-photos",
     "templates"
-  ]
+  ],
+  "benefits_lead": "A small catalog can make the next scene from a photo it already has.",
+  "related_h2": "Related photo tools"
 }

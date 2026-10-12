@@ -4,7 +4,7 @@
   "description": "Turn one electronics photo into an unboxing, a setup, or a desk scene. Download watermark-free clips for listings, social feeds, and paid ads.",
   "h1": "AI Product Videos for Electronics, From the Box to Daily Use",
   "eyebrow": "Electronics",
-  "lead": "A gadget ad needs the product in a hand, not a claim about installs. One clear photo can become an unboxing, a setup, or a desk scene.",
+  "lead": "Show the gadget in a hand. One clear photo can become an unboxing, a setup, or a desk scene.",
   "card": "Unboxings, setups, and everyday-carry scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
@@ -27,8 +27,8 @@
       "a": "Yes. One photo can become an unboxing, a setup, and a travel scene. Check shape and ports on every cut before you test them in an ad account."
     },
     {
-      "q": "Which products fit these scenes?",
-      "a": "Speakers, headphones, chargers, stands, phone cases, and other gadgets with a clear physical form. This page does not make app-store install ads from a screenshot alone."
+      "q": "Which electronics can I show from one photo?",
+      "a": "Speakers, headphones, chargers, stands, phone cases, and other gadgets with a clear shape. Use that product's own photo, and name one action, such as a button press or an unboxing."
     },
     {
       "q": "Can I make an electronics clip without hiring a creator?",
@@ -50,11 +50,11 @@
   "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
   "cta_lead": "Upload a clear product photo, describe one action, and review the credit cost before the job starts.",
   "steps_h2": "An Electronics Product Demo Video in Three Moves",
-  "steps_lead": "Three things you do on screen. Real specs are added by you after download.",
+  "steps_lead": "Add the real specs after you download. Three steps take you from the photo to the clip.",
   "steps": [
     {
       "t": "Upload Your Gadget Photo",
-      "d": "Use a clear photo of the whole product, ports and controls visible if they matter. A straight daylight shot beats a dark hero render."
+      "d": "Use a clear daylight photo of the whole product. Keep ports and controls visible when they matter."
     },
     {
       "t": "Describe the Demo",
@@ -134,7 +134,7 @@
     "items": [
       {
         "t": "No shoot on the calendar",
-        "d": "Upload one photo, name the action, and download a clip. There is no shoot date, and a failed job returns its credits.",
+        "d": "Upload one photo, name the action, and download a clip. There is no shoot date to book.",
         "img": "n:guide:fx31-ind-electronics-benefit-speaker",
         "alt": "Adult hand setting up a compact matte-graphite rectangular speaker on a wooden desk."
       },
@@ -154,7 +154,7 @@
   },
   "platforms": {
     "h2": "Tech Product Video Ads on Every Channel",
-    "lead": "Pick a frame the channel already uses. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120.",
+    "lead": "Pick the frame that channel already runs. A vertical clip fits a phone feed, and a wider frame fits a product page.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -190,7 +190,7 @@
   },
   "reviews": {
     "h2": "How Sellers Use a Gadget Lifestyle Video",
-    "lead": "Example ways electronics sellers use one product photo. These are not quotes.",
+    "lead": "How electronics sellers use one product photo. The hand or presenter is generated, not a customer.",
     "items": [
       {
         "example": true,
@@ -225,12 +225,12 @@
       {
         "example": true,
         "who": "Small catalog",
-        "t": "Each SKU, its own photo",
+        "t": "Each product, its own photo",
         "d": "A new color or a new port layout gets its own upload, so the clip does not borrow details from a different unit."
       }
     ]
   },
-  "related_h2": "Electronics demos and unboxings",
+  "related_h2": "Feature clips, packshots, and product videos",
   "blockOrder": [
     "hero",
     "strip",

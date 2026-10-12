@@ -22,7 +22,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download the close-up and check color and construction against the source. Place it after the full-product hero, not in its place."
+      "d": "Download the close-up and check color and construction against the source. Place it after the full product photo, not in its place."
     }
   ],
   "maker": {
@@ -81,7 +81,7 @@
     },
     {
       "q": "Does the close-up have a watermark?",
-      "a": "No. Place it after the full product photo. Check the color against the source before you publish."
+      "a": "No. The download has no watermark. Check the color against the source photo before you publish."
     }
   ],
   "visual": {
@@ -115,7 +115,7 @@
     },
     "picker": {
       "title": "Browse Video Ad Templates by Category",
-      "lead": "These cards are video ads for other categories, not close-up photos. For the detail shot, use the upload box above and name the stitch, grain or clasp you want enlarged.",
+      "lead": "Open a category and rebuild a scene from a product photo you already have.",
       "chips": [
         {
           "id": "accessories",
@@ -540,12 +540,12 @@
       },
       "m3": {
         "h2": "Browse Video Ad Templates by Category",
-        "lead": "These cards are video ads for other categories, not close-up photos. For the detail shot, use the upload box above and name the stitch, grain or clasp you want enlarged."
+        "lead": "Open a category and rebuild a scene from a product photo you already have."
       }
     }
   },
-  "steps_h2": "Make a Macro Product Photography Shot in 3 Steps",
-  "steps_lead": "One sharp source, one named feature, then a square file that sits after the hero shot.",
+  "steps_h2": "How to Make Product Detail Photos in 3 Simple Steps",
+  "steps_lead": "One sharp source, one named feature, then a square file that sits after the full product photo.",
   "blockOrder": [
     "hero",
     "picker",
@@ -556,8 +556,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Leather Goods Product Photos",
-    "lead": "Each card is one feature a shop enlarges from a sharp photo.",
+    "h2": "The Feature Shoppers Check Up Close",
+    "lead": "Leather goods product photos work this way. A clasp, a zipper or wood grain can too: one feature, taken from a sharp photo.",
     "items": [
       {
         "example": true,

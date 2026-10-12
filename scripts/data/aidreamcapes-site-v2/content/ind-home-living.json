@@ -20,7 +20,7 @@
     },
     {
       "q": "Will furniture look the right size?",
-      "a": "Scale is the unreliable part. Mention a size in the description, such as a 24-inch round side table next to an armchair, and put the real dimensions on the listing."
+      "a": "Put the real dimensions on the listing. You can name a size in the scene, such as a 24-inch round side table next to an armchair, because the room scale can be off."
     },
     {
       "q": "Does this work for sofas and beds?",
@@ -49,7 +49,7 @@
   ],
   "templates_lead": "Choose a room or organizing step that fits the home product.",
   "cta_lead": "Upload one home product photo, describe a single room action, and check the shape before you post.",
-  "steps_h2": "A Home Product Video in Three Moves",
+  "steps_h2": "How to Make a Home Product Video in 3 Steps",
   "steps_lead": "Three things you do on screen. Dimensions stay in the listing.",
   "steps": [
     {
@@ -142,17 +142,17 @@
   ],
   "reasons": {
     "h2": "Home Decor Product Videos Without a Set",
-    "lead": "You do not need a styled location for every SKU. Start from a clear photo and name the room.",
+    "lead": "You do not need a styled location for every product. Start from a clear photo and name the room.",
     "items": [
       {
         "t": "No set to book",
-        "d": "A styling, cleaning, or organizing scene comes back from one photo. You skip the location, the crew, and a failed job returns its credits.",
+        "d": "A cleaning pass, like a vacuum over crumbs on a sofa, comes back from one photo. You skip the location and the crew.",
         "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
         "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
       },
       {
-        "t": "One photo, several shelves",
-        "d": "Place the same item in a product-page scene and a vertical clip. Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4.",
+        "t": "A product page and a clip",
+        "d": "The same organizer can sit in a product-page scene and a vertical clip. Use the frame that placement already takes.",
         "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
         "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
       },
@@ -201,7 +201,7 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Use an Organizing Before and After Video",
+    "h2": "How Sellers Use Room Scenes and Organizing Clips",
     "lead": "Example ways home sellers use one product photo. These are not quotes. The after state has to match what the product really does.",
     "items": [
       {
@@ -220,7 +220,7 @@
         "example": true,
         "who": "Vacuum brand",
         "t": "One pass over crumbs",
-        "d": "A short clip shows a hand guiding the vacuum over a visible mess. A 10-second cut is 40 credits. A 6-second cut is 24, 15 is 60, and 30 is 120."
+        "d": "A short clip shows a hand guiding the vacuum over a visible mess. A 10-second cut costs 40 credits."
       },
       {
         "example": true,

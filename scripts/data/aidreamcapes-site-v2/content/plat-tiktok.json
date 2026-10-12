@@ -15,15 +15,15 @@
   "faq": [
     {
       "q": "Can I make a TikTok ad from one product photo?",
-      "a": "Yes. Upload one clear picture, describe one product moment, and choose 6, 10, 15 or 30 seconds. The credit cost appears before the job starts."
+      "a": "Yes. Upload one clear picture, describe one product moment, and choose 6, 10, 15 or 30 seconds. The credit cost appears before you start."
     },
     {
       "q": "Does this build the ad from my product page link?",
-      "a": "No. The clip starts from the product photo you upload, not from a scraped product URL. You describe the scene yourself."
+      "a": "No. The clip starts from the product photo you upload, not from a product page link. You describe the scene yourself."
     },
     {
       "q": "What does a TikTok clip cost?",
-      "a": "A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. We do not promise how soon the file is ready. If a job fails, those credits return on their own."
+      "a": "A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. If a file fails, those credits return on their own."
     },
     {
       "q": "Do I need a TikTok creator, a studio, or a voice track?",
@@ -35,15 +35,15 @@
     },
     {
       "q": "Will this choose my TikTok audience?",
-      "a": "No. You choose the scene and the length. Targeting, budget, and the AI-content label stay in TikTok Ads Manager."
+      "a": "No. You choose the scene and the length. Targeting and budget stay in TikTok Ads Manager. Check TikTok's current rules for AI content on the day you publish."
     },
     {
       "q": "Can I make a second version from the same photo?",
-      "a": "Yes. Run another job with a different action or line. Each job shows its own credit cost first."
+      "a": "Yes. Make another file with a different action or line. Each file shows its own credit cost first."
     },
     {
-      "q": "What should I read before the first file?",
-      "a": "Walk through [how to make a TikTok ad](/guides/first-tiktok-video-ad) for the opening, then check the current TikTok ad rules in Ads Manager on the day you publish."
+      "q": "How fast can I get the TikTok file?",
+      "a": "We do not promise a finish time. The credit cost shows before you start. For the opening, walk through [how to make a TikTok ad](/guides/first-tiktok-video-ad), then check TikTok's ad rules on the day you publish."
     }
   ],
   "templates_lead": "Choose a look that puts one clear product action at the center of your TikTok opening.",
@@ -55,7 +55,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before the job starts."
+      "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
     },
     {
       "t": "Download and Post",
@@ -94,7 +94,7 @@
         },
         {
           "t": "Describe Your Scene",
-          "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before the job starts."
+          "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
         },
         {
           "t": "Download and Post",
@@ -108,7 +108,7 @@
       }
     }
   },
-  "benefits_h2": "A TikTok ad maker for small business clips",
+  "benefits_h2": "A TikTok ad maker for small business owners",
   "benefits": [
     {
       "t": "A new opening from the same upload",
@@ -124,7 +124,7 @@
     },
     {
       "t": "A file you finish in your own editor",
-      "d": "Download a clean file, then add sound, captions and the offer yourself. Nothing is written onto the clip for you.",
+      "d": "Download a clean file, then add sound, captions, and the offer in your own editor.",
       "img": "n:guide:fx40-plat-tiktok-benefit-ready",
       "alt": "Hand placing a green leaf beside a mint insulated tumbler on a kitchen counter"
     }
@@ -143,11 +143,11 @@
         },
         {
           "t": "Say the moment in one line",
-          "d": "Describe the action you want in the opening. You choose the scene. The tool does not pick an audience."
+          "d": "Describe the action you want in the opening. You choose the scene."
         },
         {
-          "t": "Leave with a clean file",
-          "d": "The download has no watermark and is yours to use in ads. Preview the full-screen file before you run it."
+          "t": "Check the tall frame",
+          "d": "Preview the full-screen file before you post it. Keep the product clear of the player buttons."
         }
       ]
     }
@@ -167,19 +167,19 @@
   "benefits_lead": "Make the next opening from a picture you already have, in the tall frame TikTok runs.",
   "reasons": {
     "h2": "Why a vertical product video for TikTok is easier to try",
-    "lead": "You are testing an opening, not staffing a shoot.",
+    "lead": "You are trying an opening, not booking a shoot.",
     "items": [
       {
         "t": "Hiring stays optional",
-        "d": "You can post a test before you hire anyone. A creator is a choice, not a step you have to clear."
+        "d": "Post a test before you hire a creator. Hiring can wait until you want a filmed version."
       },
       {
         "t": "Two lengths, one picture",
-        "d": "Run 6 seconds and 15 seconds when you want to see which opening holds. Each length is its own job."
+        "d": "Run a 6-second clip and a 15-second clip from the same photo. Each length is a separate file."
       },
       {
         "t": "Know the cost first",
-        "d": "A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60 and 30 is 120. A failed job returns those credits."
+        "d": "A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. If a file fails, those credits return on their own."
       }
     ]
   },
@@ -202,7 +202,7 @@
       {
         "t": "YouTube Shorts ads",
         "label": "YouTube Shorts ads",
-        "d": "A tall short-form clip. A wide in-stream file is a separate job.",
+        "d": "A tall short-form clip. A wide in-stream file is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
@@ -233,37 +233,37 @@
         "example": true,
         "who": "Beauty shop",
         "t": "Texture in the first second",
-        "d": "Example: a pump bottle upload becomes a hand-apply opening for a tall ad test."
+        "d": "A beauty shop uses a pump-bottle photo for a hand-apply opening on a tall ad test."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Pour, then the label",
-        "d": "Example: a bottle upload becomes a pour onto a table so the label stays readable."
+        "d": "A drink seller uses a bottle photo for a pour onto a table, with the label kept readable."
       },
       {
         "example": true,
         "who": "Home shop",
-        "t": "Lid snap as the hook",
-        "d": "Example: a lunch container upload becomes a close snap so the seal is obvious."
+        "t": "Lid snap in the first second",
+        "d": "A home shop uses a lunch-container photo for a closing snap so the seal is easy to see."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "One garment, one motion",
-        "d": "Example: a jacket upload becomes a lift-and-show so the color reads at once."
+        "d": "An apparel shop uses a jacket photo for a lift-and-show so the color is clear right away."
       },
       {
         "example": true,
         "who": "Gadget shop",
         "t": "Feature, then the whole item",
-        "d": "Example: a headphone upload becomes a lift from the case, then a still hold."
+        "d": "A gadget shop uses a headphone photo for a lift from the case, then a still hold."
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Use, not a slogan",
-        "d": "Example: a brush upload becomes a short grooming motion so scale is easy to see."
+        "d": "A pet shop uses a brush photo for a short grooming motion so the size is easy to see."
       }
     ]
   },

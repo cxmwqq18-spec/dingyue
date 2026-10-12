@@ -15,11 +15,11 @@
   "faq": [
     {
       "q": "Can I make a YouTube Shorts ad from one product photo?",
-      "a": "Yes. Upload one clear picture, describe one action, and choose 6, 10, 15 or 30 seconds. The credit cost shows before the job starts."
+      "a": "Yes. Upload one clear picture, describe one action, and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
     },
     {
       "q": "Is this the same as a skippable in-stream ad?",
-      "a": "No. This page is for a tall Shorts file. A 16:9 in-stream ad is a separate wide job. Do not crop one and call it the other."
+      "a": "No. This page is for a tall Shorts file. A 16:9 in-stream ad is a separate wide file. Do not crop a wide ad and use it as a Short."
     },
     {
       "q": "Do Shorts ads need a creator or narration?",
@@ -27,11 +27,11 @@
     },
     {
       "q": "What does a Short cost in credits?",
-      "a": "A still costs 24 credits. A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. If a job fails, those credits return on their own."
+      "a": "A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. If a file fails, those credits return on their own."
     },
     {
       "q": "Can I customize the scene?",
-      "a": "Yes. You write the action, choose the length, and can run another job with a different scene. There is no automatic hook test."
+      "a": "Yes. You write the action, choose the length, and can make another file with a different scene. You choose which opening to publish."
     },
     {
       "q": "Are AI clips allowed in YouTube ads?",
@@ -39,7 +39,7 @@
     },
     {
       "q": "Can the same tall file run somewhere else?",
-      "a": "A 9:16 file can be tried in other tall placements, but preview it in each player. Controls differ, and a pass in one does not mean a pass in another."
+      "a": "A 9:16 file can be tried in other tall placements, but preview it in each player. The buttons sit in different places, so check the product each time."
     },
     {
       "q": "Which sizes should I compare?",
@@ -56,7 +56,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before the job starts."
+      "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
     },
     {
       "t": "Download and Post",
@@ -108,7 +108,7 @@
         },
         {
           "t": "Describe Your Scene",
-          "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before the job starts."
+          "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
         },
         {
           "t": "Download and Post",
@@ -130,32 +130,32 @@
     },
     {
       "t": "Swap the opening, keep the item",
-      "d": "Run the same upload with a new action when you want another test. No new filming."
+      "d": "Run the same photo with a new action when you want another test. The item on screen is still the product from that photo."
     },
     {
       "t": "No queue for a shoot",
-      "d": "You are not waiting on a location, a creator or an edit bay. The next job starts when you describe the scene."
+      "d": "You are not waiting on a location, a creator, or an editor. Describe the scene and start the next file."
     }
   ],
   "steps_h2": "Make vertical video ads for YouTube in 3 steps",
-  "steps_lead": "This path is for Shorts. A wide in-stream ad is a separate job.",
+  "steps_lead": "This path is for Shorts. A wide in-stream ad is a separate file.",
   "more_sections": [
     {
       "eyebrow": "How the Short is finished",
       "h2": "How short product videos for YouTube get finished",
-      "lead": "Picture, one line, a length, a download.",
+      "lead": "You bring the photo and one line about the action. Then you pick the length and download the file.",
       "items": [
         {
           "t": "Lead with the action",
-          "d": "Put the useful motion first. Do not open on a logo."
+          "d": "Open on the product in use. A logo is a weak first frame."
         },
         {
-          "t": "Keep the item in frame",
-          "d": "Describe the action so the product stays recognizable for the whole clip."
+          "t": "Keep the product recognizable",
+          "d": "Describe the action so the item stays clear for the whole clip."
         },
         {
           "t": "You add sound after",
-          "d": "The download has no soundtrack, no captions and no watermark. It is yours to use."
+          "d": "The download has no soundtrack, no captions, and no watermark. Add sound and words in your editor."
         }
       ]
     }
@@ -181,17 +181,17 @@
         "d": "A Short has little time. Describe a single use so the item is understood before the viewer moves on."
       },
       {
-        "t": "A new test is another job",
-        "d": "Change the scene or the length and run it again. Nothing here picks a winner for you."
+        "t": "A new test is a new file",
+        "d": "Change the scene or the length and run it again. You choose which opening to publish."
       },
       {
         "t": "The wide frame is separate",
-        "d": "16:9 is for a regular in-stream slot, not for Shorts. Order that shape on its own if you need it."
+        "d": "16:9 is for a regular in-stream slot, not for Shorts. Make that wide file on its own if you need it."
       }
     ]
   },
   "platforms": {
-    "h2": "Make a file for the other places you sell.",
+    "h2": "Make a file for the other places you sell",
     "lead": "Shorts is one placement. The same picture can start a file for the other channels.",
     "items": [
       {
@@ -240,37 +240,37 @@
         "example": true,
         "who": "Kitchen shop",
         "t": "One use, start to finish",
-        "d": "Example: a pan upload becomes a single cook motion so the handle stays visible."
+        "d": "A kitchen shop uses a pan photo for one cook motion, with the handle kept visible."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Swatch, then the tube",
-        "d": "Example: a gloss upload becomes a swatch with the tube still in frame."
+        "d": "A beauty shop uses a gloss photo for a swatch, with the tube still in frame."
       },
       {
         "example": true,
         "who": "Electronics shop",
         "t": "Unclip, then show the fit",
-        "d": "Example: an earbud case upload becomes an open-case hold."
+        "d": "An electronics shop uses an earbud case photo for an open-case hold."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Open, pour, stop",
-        "d": "Example: a can upload becomes a short pour so the label faces camera."
+        "d": "A drink seller uses a can photo for a short pour, with the label facing the camera."
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Click the lamp on",
-        "d": "Example: a lamp upload becomes a switch-on so the shade shape reads."
+        "d": "A home shop uses a lamp photo for a switch-on, so the shade shape is easy to see."
       },
       {
         "example": true,
         "who": "Fitness shop",
         "t": "Unfold, then hold",
-        "d": "Example: a mat upload becomes an unroll so the length is obvious."
+        "d": "A fitness shop uses a mat photo for an unroll, so the length is easy to see."
       }
     ]
   },

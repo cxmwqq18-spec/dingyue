@@ -72,7 +72,7 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "This template is set up for 9:16. A square cut can sit in a gallery. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Pick 9:16 for a TikTok or Reels cut, or 1:1, 16:9, 4:3 or 3:4 when the placement needs another shape. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -102,7 +102,7 @@
       "resultAlt": "Matte ivory cleanser pump pressed beside a bright sink with white foam on fingertips.",
       "mode": "video",
       "length": 10,
-      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a bright ceramic sink, an adult hand presses the matte ivory cleanser pump once and catches a small amount of white foam on fingertips. Keep the full bottle upright and clearly visible. Close three-quarter framing with a gentle push-in. Soft morning window light. End with the bottle and foamed fingertips in frame. Sound: a single pump and quiet bathroom room tone; no music.",
+      "prompt": "One pump of cleanser at a bright sink, with the bottle upright and easy to see.",
       "options": [
         [
           "Size",
@@ -116,7 +116,7 @@
     },
     "picker": {
       "title": "Choose a Skincare Routine Video",
-      "lead": "These cards cover many categories. There is no routine-only filter. Open a skincare card, then add your bottle, jar, or tube.",
+      "lead": "Open a skincare card, add your bottle, jar, or tube, and make a routine, texture, or review clip.",
       "chips": [
         {
           "id": "accessories",
@@ -576,71 +576,72 @@
     "steps",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Sample Serum Video Ad Setups",
-    "lead": "Example scenes for this template. They show how a beauty shop could film a routine from one photo.",
+    "h2": "How Beauty Shops Use a Serum Video Ad",
+    "lead": "Each card is one way a shop turns a single skincare photo into a routine clip.",
     "items": [
       {
         "example": true,
         "who": "Cleanser shop",
         "t": "Pump at the sink",
-        "d": "Example: a hand presses a pump once, and the bottle stays readable beside the basin."
+        "d": "A cleanser shop shows one pump at the sink, with the bottle still readable beside the basin."
       },
       {
         "example": true,
         "who": "Moisturizer shop",
-        "t": "Texture, not a speech",
-        "d": "Example: cream spreads beside the jar so the finish is the point of the clip."
+        "t": "Texture close-up",
+        "d": "A moisturizer shop shows the cream spread beside the jar, so the finish is the point of the clip."
       },
       {
         "example": true,
         "who": "Sunscreen shop",
         "t": "Product in the light",
-        "d": "Example: a tube is held up outdoors, with the package still easy to recognize."
+        "d": "A sunscreen shop holds the tube up outdoors, with the package still easy to recognize."
       },
       {
         "example": true,
         "who": "Routine brand",
         "t": "Hands only",
-        "d": "Example: the routine is shown with hands and the product, and no face is required."
+        "d": "A routine brand shows the steps with hands and the product, and leaves the face out of frame."
       },
       {
         "example": true,
-        "who": "Shade editor",
+        "who": "Beauty editor",
         "t": "Words after download",
-        "d": "Example: the shade name and the usage line are typed in an editor after the file downloads."
+        "d": "A beauty editor types the shade name and the usage line after the file downloads."
       },
       {
         "example": true,
         "who": "Agency",
         "t": "Four moments, one photo",
-        "d": "Example: the same bottle photo is reused for a routine, a texture pass, a review beat, and an unboxing."
+        "d": "An agency reuses one bottle photo for a routine, a texture close-up, a review moment, and an unboxing."
       },
       {
         "example": true,
         "who": "Listing manager",
         "t": "Square and vertical",
-        "d": "Example: a 9:16 cut goes to a short feed, and a square cut can sit in a product gallery."
+        "d": "A listing manager sends a 9:16 clip to a short feed and keeps a square cut for the product gallery."
       },
       {
         "example": true,
         "who": "Claims reviewer",
         "t": "Match the listing",
-        "d": "Example: the action and the usage line are checked against the approved listing before the ad runs."
+        "d": "A claims reviewer checks the action and the usage line against the approved listing before the ad runs."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "Not a buyer review",
-        "d": "Example: a person on screen is an AI performer. The clip is the brand's ad, not a customer testimonial."
+        "t": "Brand ad, not a review",
+        "d": "A founder keeps any person on screen as an AI performer. The clip is the brand's ad, not a customer review."
       },
       {
         "example": true,
         "who": "First-time seller",
         "t": "One line about the moment",
-        "d": "Example: the seller names the routine beat in one line and checks the cap and label before posting."
+        "d": "A first-time seller names the routine moment in one line and checks the cap and label before posting."
       }
     ]
   },

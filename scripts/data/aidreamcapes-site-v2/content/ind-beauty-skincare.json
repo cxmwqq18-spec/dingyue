@@ -1,11 +1,11 @@
 {
   "id": "ind-beauty-skincare",
   "title": "AI Beauty UGC Ads From a Product Photo | AIVideosUGC",
-  "description": "Turn one beauty photo into a routine, a swatch, or a short review. Download watermark-free clips for a listing, a feed, or a paid ad, and check the shade first.",
+  "description": "Turn one beauty photo into a routine, a swatch, or a review-style clip. Download watermark-free clips for a listing, feed, or paid ad, and check the shade.",
   "h1": "AI Product Videos and Photos for Beauty Brands, From One Photo",
   "eyebrow": "Beauty and skincare",
-  "lead": "Shoppers trust a shade they can see in use. One daylight photo of the package becomes a routine, a swatch, or a short review without a studio day.",
-  "card": "Routines, swatches, unboxings, and short reviews from one beauty photo.",
+  "lead": "Shoppers trust a shade they can see in use. One daylight photo of the package becomes a routine, a swatch, or a review-style clip without a studio day.",
+  "card": "Routines, swatches, unboxings, and review-style clips from one beauty photo.",
   "secondary_keywords": [
     "skincare product video ideas",
     "AI cosmetics product photos",
@@ -14,7 +14,7 @@
     "makeup product photos"
   ],
   "steps_h2": "Your Next Beauty Video Ad for TikTok",
-  "steps_lead": "Three things you do on screen. The rest is checking the shade before you post.",
+  "steps_lead": "Check the shade before you post. Three steps take you from the photo to the clip.",
   "steps": [
     {
       "t": "Upload Your Beauty Product Photo",
@@ -63,7 +63,7 @@
       "a": "You upload one photo and pay the credits shown before the job, instead of a creator fee and revision rounds. The person is generated, so present the clip as an ad, not as a customer's review."
     }
   ],
-  "templates_lead": "Choose a beauty UGC ad format for a routine, texture demo, creator review, or unboxing.",
+  "templates_lead": "Choose a beauty UGC ad format for a routine, a texture demo, a review-style clip, or an unboxing.",
   "cta_lead": "Upload a product photo, describe one scene, and review the credit cost before the job starts.",
   "visual": {
     "overview": "",
@@ -105,12 +105,12 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Skincare Product Video Ideas Without the Wait",
+    "h2": "Why Skincare Product Video Ideas Skip the Wait",
     "lead": "A missed reply or a surprise invoice does not have to hold the next shade launch. Start from the photo you already have.",
     "items": [
       {
         "t": "No shoot on the calendar",
-        "d": "Skip the creator search and the booking. You get a routine, swatch, or review scene when the job finishes, and a failed job returns its credits.",
+        "d": "Skip the creator search and the booking. You get a routine, a swatch, or a review-style scene when the job finishes.",
         "img": "n:guide:fx29-beauty-benefit-routine",
         "alt": "Plain pump-bottle moisturizers arranged beside a bathroom mirror with a hand reaching for one."
       },
@@ -166,7 +166,7 @@
   },
   "reviews": {
     "h2": "How a Skincare Texture Video Gets Used",
-    "lead": "Example ways beauty sellers put one photo to work. These are not quotes, and the people on screen are generated.",
+    "lead": "How beauty sellers put one photo to work. Anyone in the clip is generated, not a customer.",
     "items": [
       {
         "example": true,
@@ -233,7 +233,7 @@
       "label": "white background product photos"
     }
   ],
-  "related_h2": "Beauty product videos and photos",
+  "related_h2": "Routines, swatches, and listing stills",
   "blockOrder": [
     "hero",
     "strip",

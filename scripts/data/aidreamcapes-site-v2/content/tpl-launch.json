@@ -76,7 +76,7 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "This template is set up for 9:16 and 1:1. Use 6 seconds for a quick reveal, or a longer length for a demo. The product also offers 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Use 9:16 or 1:1 for this launch clip. Other sizes are 16:9, 4:3, and 3:4. Use 6 seconds for a quick reveal, or 10, 15, or 30 seconds for a demo. The credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -99,11 +99,11 @@
     ],
     "steps": {
       "source": "n:guide:rc4-tpl-launch-source-bag-r1",
-      "sourceTitle": "Product photo of a sage-green canvas crossbody bag",
-      "sourceHint": "Show the uploaded sage-green canvas crossbody bag clearly before choosing the launch scene.",
+      "sourceTitle": "Product photo",
+      "sourceHint": "Show the sage-green canvas bag clearly, with the whole bag in frame.",
       "result": "n:guide:rc4-tpl-launch-result-bag-r1",
       "mode": "video",
-      "prompt": "Use the uploaded product photo as the exact featured item. Show one adult creator lifting the uploaded sage-green canvas crossbody bag from a tabletop and holding it toward camera once. Bright home entryway, gentle handheld push-in, clear product focus, natural room sound, no spoken words, no text, labels, logos, numbers, or watermark.",
+      "prompt": "An adult lifts the sage-green canvas bag from a table and holds it toward the camera once. Bright entryway, with the bag kept in focus.",
       "options": [
         [
           "Size",
@@ -121,7 +121,7 @@
     },
     "picker": {
       "title": "Choose a New Product Promo Video",
-      "lead": "These cards cover many categories. There is no launch-only filter. Open a reveal or unboxing card, then add a photo of the final item.",
+      "lead": "Browse scenes by category and open a reveal, an unboxing, or a short demo. Then add a photo of the finished item.",
       "chips": [
         {
           "id": "accessories",
@@ -542,7 +542,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About a Home Decor Promo Video"
+        "h2": "Questions About a Product Launch Video"
       },
       "m3": {
         "h2": "Choose a New Product Promo Video"
@@ -556,71 +556,72 @@
     "steps",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Sample Product Launch Video Setups",
-    "lead": "Example scenes for this template. They show how a shop could announce one finished item.",
+    "h2": "How Shops Announce a Finished Item",
+    "lead": "A few ways a shop can announce one finished item when the release date is real.",
     "items": [
       {
         "example": true,
         "who": "Home brand",
         "t": "Hands on the new item",
-        "d": "Example: hands reveal a cream jar and tube as the first look at a finished product."
+        "d": "A home brand shows hands revealing a cream jar and tube as the first look at a finished product."
       },
       {
         "example": true,
         "who": "Mug shop",
         "t": "First use",
-        "d": "Example: a steaming mug is the opening beat for a release-day clip."
+        "d": "A mug shop opens on a steaming mug as the first beat of a release-day clip."
       },
       {
         "example": true,
         "who": "Decor shop",
         "t": "A home decor promo",
-        "d": "Example: a finished home item is shown in one room, and the date is added later as text."
+        "d": "A decor shop shows one finished home item in a room, and types the date on after download."
       },
       {
         "example": true,
         "who": "Teaser editor",
         "t": "Coming soon",
-        "d": "Example: a teaser can say the item is coming, with the planned date typed in after download."
+        "d": "A teaser editor can say the item is coming, with the planned date typed in after download."
       },
       {
         "example": true,
         "who": "Release editor",
         "t": "Live date, live offer",
-        "d": "Example: on release day the editor adds the confirmed date, price, and offer. A teaser does not invent them."
+        "d": "On release day, the editor adds the confirmed date, price, and offer. A teaser does not invent them."
       },
       {
         "example": true,
         "who": "Feed buyer",
         "t": "Vertical and square",
-        "d": "Example: 9:16 fills a story placement, and 1:1 sits in a feed. Each cut is its own job."
+        "d": "A feed buyer uses 9:16 for a story placement and 1:1 in the feed. Each size is its own job."
       },
       {
         "example": true,
-        "who": "Claims reviewer",
-        "t": "No delivery promise",
-        "d": "Example: the clip waits for a confirmed date before it states when the item will arrive."
+        "who": "Shop owner",
+        "t": "Confirmed date only",
+        "d": "A shop owner waits for a confirmed date before the clip says when the item arrives."
       },
       {
         "example": true,
         "who": "Launch shop",
-        "t": "Wait for the real item",
-        "d": "Example: a text-only start will not match the product. The ad waits for a clear photo of the final item."
+        "t": "Start from the real item",
+        "d": "A launch shop waits for a clear photo of the final item. Words alone will not match the product."
       },
       {
         "example": true,
         "who": "Small team",
         "t": "No shoot before launch",
-        "d": "Example: the reveal is generated from the finished-item photo, with no creator booking before release day."
+        "d": "A small team makes the reveal from the finished-item photo, with no creator booking before release day."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "Not a customer unboxing",
-        "d": "Example: a person on screen is an AI performer. Present the clip as your ad, not as a buyer review."
+        "t": "Present it as your ad",
+        "d": "A founder treats a person on screen as an AI performer and presents the clip as the shop's ad, not as a buyer review."
       }
     ]
   },

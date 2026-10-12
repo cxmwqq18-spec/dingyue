@@ -1,7 +1,7 @@
 {
   "id": "plat-shopify",
   "title": "AI Shopify Product Photos and Videos | AIVideosUGC",
-  "description": "Make Shopify product photos, collection tiles, and short product videos from one upload. Choose square or social-ready formats, then add files in Shopify admin.",
+  "description": "Make Shopify product photos, collection tiles, and short product videos from one upload. Download a square still or a clip, then add the file in Shopify admin.",
   "h1": "Shopify Product Photos for Pages, Grids and Clips",
   "eyebrow": "Shopify stores",
   "lead": "Make a square product image, a matching collection tile, or a short product clip from one upload. Download it, then add the file yourself in Shopify admin.",
@@ -19,7 +19,7 @@
     },
     {
       "q": "What image size works on a product page?",
-      "a": "A square file around 2048 by 2048 pixels is a practical start. Check the image size your store is set to use before you upload."
+      "a": "Use a square file so the product page and the collection grid match. Check the image size your store is set to use before you upload."
     },
     {
       "q": "How do I make a collection look consistent?",
@@ -31,11 +31,11 @@
     },
     {
       "q": "Can I add a clip on the product page?",
-      "a": "Yes. Make a clip of 6, 10, 15 or 30 seconds and add it in product media yourself. A still is 24 credits. Clip credits are 24, 40, 60 or 120 by length."
+      "a": "Yes. Make a clip of 6, 10, 15 or 30 seconds and add it in product media yourself. A still is 24 credits, and a clip is 24, 40, 60 or 120 credits by length. If a file fails, those credits return on their own."
     },
     {
       "q": "Should a tall social clip sit in the product gallery?",
-      "a": "Keep square images in the gallery. Make the tall file as a separate job so the grid stays even."
+      "a": "Keep square images in the gallery. Make the tall file as a separate download so the grid stays even."
     },
     {
       "q": "Are the files mine to put on the store?",
@@ -87,7 +87,7 @@
         ],
         [
           "Use",
-          "Product page · home · social"
+          "Product page"
         ]
       ],
       "items": [
@@ -111,23 +111,23 @@
       }
     }
   },
-  "benefits_h2": "Shopify product images for the page, the grid and a clip",
+  "benefits_h2": "Give Shopify product images a cleaner look",
   "benefits": [
     {
-      "t": "One treatment across the grid",
-      "d": "Use the same square crop so collection tiles line up. Shoppers should not feel each product came from a different shoot.",
+      "t": "One look across the grid",
+      "d": "Use the same square crop so collection tiles line up. The grid should look like one shop.",
       "img": "n:guide:fx42-shopify-benefit-collection",
       "alt": "Three plain ceramic home goods arranged as a consistent ecommerce collection grid."
     },
     {
       "t": "A page image and an ad version",
-      "d": "The store file and the ad file can start from the same upload. Make them as separate jobs so each frame is right.",
+      "d": "The store file and the ad file can start from the same upload. Make them as separate downloads so the page stays square and the ad can use its own shape.",
       "img": "n:guide:fx42-shopify-benefit-versions",
       "alt": "Plain reusable water bottle shown in a clean product view and a handheld lifestyle angle."
     },
     {
-      "t": "A new scene without a reshoot",
-      "d": "Try another setting from the picture you already have when a campaign needs a different room.",
+      "t": "A different room",
+      "d": "Keep the product and place it in another setting when the campaign needs a new background.",
       "img": "n:guide:fx42-shopify-benefit-scene",
       "alt": "Adult hands place a plain linen storage basket on a bright shelf."
     }
@@ -136,21 +136,21 @@
   "steps_lead": "Decide where the file will sit, then download it and add it in admin.",
   "more_sections": [
     {
-      "eyebrow": "How a store file is finished",
-      "h2": "How a Shopify product page video fits beside stills",
-      "lead": "Stills carry the gallery: one plain tile and one in-use scene, as two jobs. A clip is a third file you add yourself.",
+      "eyebrow": "Example files",
+      "h2": "Examples of a Shopify product page video and stills",
+      "lead": "A product page usually needs more than one file. Make each one as its own download.",
       "items": [
         {
-          "t": "Still first",
-          "d": "Build the square page image before you spend credits on a clip. The gallery should make sense with the sound off."
+          "t": "Plain square tile",
+          "d": "A clean image of the whole item for the collection. Keep the crop the same as the tiles beside it."
         },
         {
-          "t": "Clip second",
-          "d": "A clip runs 6, 10, 15 or 30 seconds and costs 24, 40, 60 or 120 credits. A still is 24. Both prices show before you start."
+          "t": "In-use scene",
+          "d": "The same product in a room, saved as its own file for the gallery."
         },
         {
-          "t": "You place every file",
-          "d": "Nothing is pushed into the store design. Add media in the product admin, and check your store's current size rules."
+          "t": "Short clip",
+          "d": "A clip of 6, 10, 15 or 30 seconds that you add in product media. The stills should still make sense with the sound off."
         }
       ]
     }
@@ -165,22 +165,34 @@
     "reviews",
     "faq"
   ],
-  "benefits_lead": "Keep the catalog looking like one shop, then test a new scene when you need it.",
+  "benefits_lead": "Try a cleaner backdrop, a lifestyle frame, or another room from the photo you already have.",
   "reasons": {
-    "h2": "Why Shopify collection page photos should match",
-    "lead": "A grid that jumps in color and crop makes the catalog look unfinished.",
+    "h2": "Benefits of Shopify collection page photos that match",
+    "lead": "A grid that jumps in color and crop looks unfinished. Here is what you can do from photos you already have.",
     "items": [
       {
-        "t": "Older products can catch up",
-        "d": "You do not reshoot the archive. Start from the picture each item already has."
+        "t": "See the cost first",
+        "d": "A still is 24 credits, and a clip is 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds. The price shows before you start, and a failed file returns those credits."
       },
       {
-        "t": "The gallery stays square",
-        "d": "Keep square images in the product gallery. Make a tall file as its own job so the grid does not break."
+        "t": "Skip a new shoot",
+        "d": "Older products can use the picture they already have. You do not book another shoot to make the grid match."
       },
       {
-        "t": "You set the price and the name",
-        "d": "The download is the picture or the clip. Title, price and variant labels stay in the admin."
+        "t": "One photo per product",
+        "d": "Each item starts from its own picture. Add the next product when that photo is ready."
+      },
+      {
+        "t": "No model to hire",
+        "d": "You do not need a hired model or a rented prop kit to try a new backdrop. The scene starts from the photo you upload."
+      },
+      {
+        "t": "No studio day",
+        "d": "There is no studio appointment to wait on. Make the file when the product photo is ready."
+      },
+      {
+        "t": "Your name and price",
+        "d": "The download is the picture or the clip. You still set the name, the price, and the variants in Shopify admin."
       }
     ]
   },
@@ -209,7 +221,7 @@
       {
         "t": "YouTube Shorts ads",
         "label": "YouTube Shorts ads",
-        "d": "A tall short-form clip. A wide in-stream file is a separate job.",
+        "d": "A tall short-form clip. A wide in-stream ad is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
@@ -234,37 +246,37 @@
         "example": true,
         "who": "Home shop",
         "t": "Three ceramics, one crop",
-        "d": "Example: a bowl upload becomes a square tile that matches the other two colors in the collection."
+        "d": "A home shop uses a bowl photo for a square tile that matches the other colors in the collection."
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Serum on the page, clip for the ad",
-        "d": "Example: a bottle upload becomes a square page image and a separate apply clip."
+        "d": "A beauty shop uses a bottle photo for a square page image, and a separate clip of it being applied."
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Folded, then a try-on",
-        "d": "Example: a linen shirt upload becomes a flat tile and a worn still."
+        "d": "A clothing shop uses a linen shirt photo for a flat tile, then a worn scene as a second file."
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "Bag on white, then the cup",
-        "d": "Example: a coffee bag upload becomes a plain tile and a brew scene."
+        "d": "A drink seller uses a coffee bag photo for a plain tile, then a brew scene as a second file."
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Brush in the grid",
-        "d": "Example: a grooming glove upload becomes a square tile with the whole glove visible."
+        "d": "A pet shop uses a grooming glove photo for a square tile with the whole glove visible."
       },
       {
         "example": true,
         "who": "Kitchen shop",
         "t": "Set of four, same light",
-        "d": "Example: a bowl upload becomes four color tiles with the same crop and backdrop."
+        "d": "A kitchen shop makes one square tile for each bowl color, with the same crop and backdrop."
       }
     ]
   },

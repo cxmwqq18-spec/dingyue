@@ -1,10 +1,10 @@
 {
   "id": "ind-shoes",
   "title": "AI Shoe UGC Ads From a Product Photo | AIVideosUGC",
-  "description": "Turn one shoe photo into shoe UGC ads for on-foot demos, unboxings, fit checks, and reviews. Make watermark-free clips for social posts and product pages.",
+  "description": "Turn one shoe photo into on-foot demos, unboxings, fit checks, and listing stills. Download watermark-free clips and photos for social posts and product pages.",
   "h1": "AI Product Photos for Shoe Brands, On Foot and in Motion",
   "eyebrow": "Shoes",
-  "lead": "Shoppers want the pair on a foot, not only on a white sweep. One clear side photo can become a listing still and a short step.",
+  "lead": "Shoppers want the pair on a foot, not only on a plain white background. One clear side photo can become a listing still and a short step.",
   "card": "On-foot steps, unboxings, fit checks, and listing stills from one shoe photo.",
   "secondary_keywords": [
     "sneaker product photos",
@@ -20,7 +20,7 @@
     },
     {
       "q": "Can I get a sole or heel view from a side shot?",
-      "a": "Not reliably. The result can only show what is in the upload. For tread or heel, start from a separate photo of that side."
+      "a": "Start from a separate photo of the sole or the heel. A side shot will not show tread that was not in the upload."
     },
     {
       "q": "Does this work for an Amazon main image?",
@@ -47,10 +47,10 @@
       "a": "Choose 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4. Credits are 24, 40, 60, and 120 for those lengths. A failed job returns its credits. The person on screen is generated, not a reviewer."
     }
   ],
-  "templates_lead": "Choose a shoe UGC ad format for an on-foot demo, unboxing, wear test, or creator review.",
+  "templates_lead": "Choose a shoe format for an on-foot demo, an unboxing, or a fit check.",
   "cta_lead": "Upload a side profile, describe one step or fit check, and review the credit cost before you start.",
-  "steps_h2": "On-Foot Shoe Photos in Three Moves",
-  "steps_lead": "Three things you do on screen. Hidden parts of the shoe are not invented.",
+  "steps_h2": "How to Make On-Foot Shoe Photos in 3 Steps",
+  "steps_lead": "Three things you do on screen. The clip shows the sides you photographed.",
   "steps": [
     {
       "t": "Upload Your Shoe Photo",
@@ -82,7 +82,7 @@
       "options": [
         [
           "Size",
-          "9:16 · Social feeds"
+          "9:16"
         ],
         [
           "Length",
@@ -164,7 +164,7 @@
     ]
   },
   "reviews": {
-    "h2": "Where Sneaker and Shoe Photos Do the Work",
+    "h2": "How Sellers Use Sneaker and Shoe Photos",
     "lead": "Example ways footwear sellers use one pair photo. These are not quotes.",
     "items": [
       {
@@ -201,7 +201,7 @@
         "example": true,
         "who": "Fit page",
         "t": "Hands plus a step",
-        "d": "One photo becomes a fit check in the hands and a 15-second step (60 credits). A 6-second cut is 24 credits and a 30-second cut is 120."
+        "d": "One photo becomes a fit check in the hands and a 15-second step (60 credits)."
       }
     ]
   },
@@ -232,7 +232,7 @@
       "label": "AI UGC video ads"
     }
   ],
-  "related_h2": "Shoe photos and on-foot clips",
+  "related_h2": "Shoe colors, listings, and ad pages",
   "blockOrder": [
     "hero",
     "strip",

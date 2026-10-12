@@ -115,7 +115,7 @@
     },
     "picker": {
       "title": "Browse Video Ad Templates by Category",
-      "lead": "These cards are video ads for other categories, not colorway photos. For the shade set, use the upload box above and add one photo of each color you sell.",
+      "lead": "Open a category and rebuild a scene from a product photo you already have.",
       "chips": [
         {
           "id": "accessories",
@@ -540,12 +540,12 @@
       },
       "m3": {
         "h2": "Browse Video Ad Templates by Category",
-        "lead": "These cards are video ads for other categories, not colorway photos. For the shade set, use the upload box above and add one photo of each color you sell."
+        "lead": "Open a category and rebuild a scene from a product photo you already have."
       }
     }
   },
-  "steps_h2": "Make Product Variant Images for Shopify in 3 Steps",
-  "steps_lead": "One photo per real shade, one shared description, then a square image you attach to each option.",
+  "steps_h2": "How to Make Product Color Variations in 3 Simple Steps",
+  "steps_lead": "One photo per real shade, one shared description, then square product variant images for Shopify or Amazon.",
   "blockOrder": [
     "hero",
     "picker",
@@ -556,8 +556,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Sneaker Color Options Photos",
-    "lead": "Each card starts from photos of shades the shop already sells.",
+    "h2": "Shade Sets from Photos the Shop Already Sells",
+    "lead": "Sneaker color options photos work the same way as mugs, cases or yarn: each shade starts from a photo the shop already sells.",
     "items": [
       {
         "example": true,
@@ -621,7 +621,7 @@
       }
     ]
   },
-  "related_h2": "Amazon Color Variation Images and Shoe Photos",
+  "related_h2": "Amazon, Shopify and Shoe Pages for the Color Set",
   "related_lead": "Shoe and listing pages to use with the color set: a drop video, clothing try-on, shoe photos, Shopify, and Amazon.",
   "relatedLinks": [
     {
