@@ -49808,6 +49808,186 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "fx19-bf-benefit-result-01": {
+        "file": "fx19-bf-benefit-result-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman holds a plain coral face-cream jar above an open kraft gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-bf-benefit-shoot-02": {
+        "file": "fx19-bf-benefit-shoot-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man closes a plain olive insulated lunch tote on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-bf-benefit-versions-03": {
+        "file": "fx19-bf-benefit-versions-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman stretches a plain teal resistance band in a home gym.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-bf-benefit-editable-04": {
+        "file": "fx19-bf-benefit-editable-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man rotates a plain sage pump bottle in a clean studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-bf-example-unbox-01": {
+        "file": "fx19-bf-example-unbox-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift a plain cobalt water bottle from a kraft gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-bf-example-tryon-02": {
+        "file": "fx19-bf-example-tryon-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman in a plain olive jacket shows the fit in a hallway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-bf-example-band-demo-03": {
+        "file": "fx19-bf-example-band-demo-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man clips a plain blue pet leash beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-bf-example-gift-reveal-04": {
+        "file": "fx19-bf-example-gift-reveal-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with short red curls lifts a plain lavender travel bag from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-benefit-story-01": {
+        "file": "fx19-carousel-benefit-story-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman opens a plain charcoal commuter backpack at a cafe table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-benefit-shoot-02": {
+        "file": "fx19-carousel-benefit-shoot-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man pulls a plain teal lunch tote from a kraft mailer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-benefit-versions-03": {
+        "file": "fx19-carousel-benefit-versions-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman raises a plain orange sports bottle after a park run.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-benefit-editable-04": {
+        "file": "fx19-carousel-benefit-editable-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man rotates a plain coral cream jar on a clean tabletop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-example-open-01": {
+        "file": "fx19-carousel-example-open-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman opens a plain canvas toiletry pouch beside a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-example-reveal-02": {
+        "file": "fx19-carousel-example-reveal-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man lifts a plain blue insulated bottle from tissue paper.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-example-use-03": {
+        "file": "fx19-carousel-example-use-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman uses a plain wooden pet brush on a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-example-compare-04": {
+        "file": "fx19-carousel-example-compare-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man compares two plain storage bins side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-example-finish-05": {
+        "file": "fx19-carousel-example-finish-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman holds a plain navy running cap after a park walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx19-carousel-example-feature-06": {
+        "file": "fx19-carousel-example-feature-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man clips a plain teal harness onto a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
