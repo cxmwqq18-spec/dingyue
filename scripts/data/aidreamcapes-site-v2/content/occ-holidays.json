@@ -149,7 +149,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:guide:fx02-occ-holidays-picker-use",
+          "ref": "n:guide:b2f8-occ-holidays-picker-use-r1",
           "label": "Seasonal Product Use",
           "chips": [
             "seasonal-use",
@@ -165,7 +165,7 @@
             "gift-guide",
             "gift-reveal"
           ],
-          "prompt": "Use the uploaded product photo as the product. Adult hands hold it beside a wrapped parcel near a snowy window, with clear space for the shipping cutoff added after download. No text or logos.",
+          "prompt": "Adult hands hold a wrapped parcel beside a plain candle jar by a snowy window.",
           "kind": "photo"
         }
       ],

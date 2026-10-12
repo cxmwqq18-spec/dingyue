@@ -14316,6 +14316,83 @@
       1280
     ],
     "items": {
+      "b2f8-product-videos-picker-charger-r1": {
+        "file": "b2f8-product-videos-picker-charger-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain compact charger and coiled cable packed inside a fabric travel pouch.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f8-product-videos-strip-trail-shoe-r1": {
+        "file": "b2f8-product-videos-strip-trail-shoe-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal mesh trail shoe shown clearly from the front three-quarter angle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f8-plat-amazon-card-beauty-r1": {
+        "file": "b2f8-plat-amazon-card-beauty-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands hold a plain opaque pump bottle beside a bathroom sink and folded robe.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f8-plat-amazon-more-beauty-r1": {
+        "file": "b2f8-plat-amazon-more-beauty-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands hold a plain opaque pump bottle beside a bathroom sink and folded robe.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f8-plat-amazon-more-food-r1": {
+        "file": "b2f8-plat-amazon-more-food-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holds a plain terracotta pantry jar on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f8-occ-holidays-picker-use-r1": {
+        "file": "b2f8-occ-holidays-picker-use-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand applies plain lip balm beside a wrapped gift.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f8-occ-black-friday-benefit-pet-r1": {
+        "file": "b2f8-occ-black-friday-benefit-pet-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand rests on a calm dog lying on a dark sofa.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
       "im01-video-hub-grwm-r2": {
         "file": "im01-video-hub-grwm-r2",
         "w": 864,

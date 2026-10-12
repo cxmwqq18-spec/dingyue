@@ -106,7 +106,7 @@
       "n:guide:f2-product-operation-strip-2",
       "n:guide:k1-product-videos-case-vacuum",
       "n:guide:k1-product-videos-strip-bike-pump",
-      "n:guide:k1-product-videos-strip-trail-shoe",
+      "n:guide:b2f8-product-videos-strip-trail-shoe-r1",
       "n:guide:b1-video-ads-result"
     ],
     "steps": {
@@ -178,7 +178,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-charger",
+          "ref": "n:guide:b2f8-product-videos-picker-charger-r1",
           "label": "Travel charger packs away",
           "chips": [
             "hands-on"
