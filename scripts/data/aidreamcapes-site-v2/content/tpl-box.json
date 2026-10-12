@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "Answer \"what do I get\" at a glance",
-      "d": "One square image shows every piece and nothing extra, so shoppers can count the kit without opening a dropdown. The contents question is settled before they read the description."
+      "d": "One square image shows every piece and nothing extra, so shoppers can count the kit without opening a dropdown. The contents question is settled before they read the description.",
+      "img": "n:guide:fx44-tpl-box-benefit-count-pieces-r1",
+      "alt": "White cleanser tube, sage cream jar and blue pump bottle arranged as a complete skincare kit."
     },
     {
       "t": "No styled shoot for each gift set",
-      "d": "Arrange a starter kit, refill pack or holiday gift set in a clean scene from one source photo. Seasonal styling is added without booking a product photographer."
+      "d": "Arrange a starter kit, refill pack or holiday gift set in a clean scene from one source photo. Seasonal styling is added without booking a product photographer.",
+      "img": "n:guide:fx44-tpl-box-benefit-seasonal-set-r1",
+      "alt": "Teal bottle, folded cream scarf and small ceramic ornament arranged in an open seasonal gift box."
     },
     {
       "t": "Honest contents, controlled by you",
-      "d": "Upload every shipped piece, including the box and inserts, and state the exact count. The image supports your written contents list instead of inventing missing accessories."
+      "d": "Upload every shipped piece, including the box and inserts, and state the exact count. The image supports your written contents list instead of inventing missing accessories.",
+      "img": "n:guide:fx44-tpl-box-benefit-listing-set-r1",
+      "alt": "Teal pet harness, rolled leash, plain metal bowl and folded towel arranged as a complete travel kit."
     },
     {
       "t": "Ready for listings and gift pages",
-      "d": "Place the square photo as image two on Amazon or Shopify and use it in seasonal gift posts. Downloads carry no AIVideosUGC watermark and can be used commercially."
+      "d": "Place the square photo as image two on Amazon or Shopify and use it in seasonal gift posts. Downloads carry no AIVideosUGC watermark and can be used commercially.",
+      "img": "n:guide:fx44-tpl-box-benefit-ad-ready-r1",
+      "alt": "Matte black phone stand, braided charging cable and blue power bank arranged as a complete desk bundle."
     }
   ],
   "secondary_keywords": [
