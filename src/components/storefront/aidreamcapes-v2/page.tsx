@@ -681,6 +681,8 @@ function IndexPage({ data, r }: Props) {
           </div>
         </section>
       ) : null}
+      <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />
+      {list<{ label: string; href: string }>(data.relatedLinks).length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={list<{ label: string; href: string }>(data.relatedLinks)} r={r} title={text(data.relatedH2) || "Related pages"} /> : null}
       <Faq items={data.faq} title="Questions" r={r} />
       {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
     </>
@@ -725,6 +727,7 @@ function ActorDirectoryPage({ data, r }: Props) {
   const honesty = data.honesty as { h2: string; items: V2Item[] } | undefined;
   const cta = data.cta as { title: string; lead: string; href: string } | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  const actorRelatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
   const actorVisual = data.visual as V2Visual | undefined;
   const filterOptions = [
     { key: "scene", label: "Scene", values: scenes },
@@ -735,7 +738,6 @@ function ActorDirectoryPage({ data, r }: Props) {
   return <>
     <Crumbs items={data.breadcrumbs} r={r} />
     <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
-    {actorVisual ? <VisualSteps buttonLabel="Make my video" visual={actorVisual} r={r} /> : null}
     <section className="actor-directory-section" aria-label="AI actor directory">
       <div className="wrap">
         <style>{actorDirectoryCss}</style>
@@ -779,10 +781,12 @@ function ActorDirectoryPage({ data, r }: Props) {
     <AidreamcapesV2ActorFilters />
     <section className="actor-support-copy"><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
     <BenefitsSection data={data} fallbackTitle="Why sellers cast an AI actor" r={r} />
+    {/* Same order as the competitor: the actor wall sits right under the hero, the steps come after the reasons. */}
+    {actorVisual ? <VisualSteps buttonLabel="Make my video" visual={actorVisual} r={r} /> : null}
     {howTo.length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={text(data.stepsH2) || "Make a spoken product ad"}><Steps items={howTo} /></Section> : null}
     <MoreSections r={r} sections={data.more_sections as never} />
     {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
-    {relatedGroups.length ? <Section eyebrow="Related tools and guides" title="Plan where the actor ad runs">
+    {actorRelatedLinks.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={actorRelatedLinks} r={r} title={text(data.relatedH2) || "Related pages"} /> : relatedGroups.length ? <Section eyebrow="Related tools and guides" title={text(data.relatedH2) || "Plan where the actor ad runs"}>
       <div className="related">
         {relatedGroups.map((group) => <div key={group.title}>
           <h3>{group.title}</h3>
@@ -790,6 +794,7 @@ function ActorDirectoryPage({ data, r }: Props) {
         </div>)}
       </div>
     </Section> : null}
+    <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />
     <Faq items={data.faq} title="Questions" r={r} />
     {cta?.href ? <CtaBand href={r.href(cta.href)} lead={cta.lead} r={r} title={cta.title} /> : null}
   </>;
@@ -964,6 +969,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
           <ul>{list<{ label: string; href: string }>(data.relatedTemplates).map((item) => <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>)}</ul>
         </div>
       </VisualDirectoryFilter>
+      <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />
       <Faq items={data.faq} title="Questions" r={r} />
       {(data.cta as { href?: string } | undefined)?.href ? <CtaBand note={text(data.startNote)} href={text((data.cta as { href: string }).href)} lead={text((data.cta as { lead: string }).lead)} r={r} title={text((data.cta as { title: string }).title)} /> : null}
     </>;

@@ -101,17 +101,17 @@ const TOOL_REL = {
   // describe things the tool can make, with at most one overlap between sibling tools.
   "image-to-video": ["ba", "bf", "compare", "film"], "url-to-video": ["ba", "beauty", "drink", "home"],
   "video-ads": ["bf", "creator", "launch", "outfit"], "product-videos": ["demo", "drink", "howto", "launch"],
-  "unboxing-videos": ["creator", "demo", "film", "unbox"], "before-after-videos": ["ba", "compare", "home", "howto"],
+  "unboxing-videos": ["unbox", "creator", "demo", "film"], "before-after-videos": ["ba", "compare", "home", "howto"],
   "spokesperson-videos": ["beauty", "outfit", "unbox"], "photo-hub": ["white", "size", "life", "model", "head", "angle", "pack"],
   "white-background": ["white", "color", "angle", "detail"], "lifestyle-photos": ["life", "bg", "pack", "ugc"], "model-photos": ["model", "tryon", "jewel", "look"],
-  "change-background": ["white", "light", "bg", "life"], "social-ad-photos": ["feed", "white", "ugc", "sale"]
+  "change-background": ["bg", "white", "light", "life"], "social-ad-photos": ["feed", "white", "ugc", "sale"]
 };
 const OCCASION_SPREAD_KEYS = new Set(["sale", "bf", "story", "ugc"]);
 const PLATFORM_SPREAD_KEYS = new Set(["creator", "demo", "unbox", "ba", "howto", "film", "beauty", "drink", "home", "outfit", "launch", "compare", "bf", "white", "life", "bg", "model", "feed", "angle", "detail", "pack", "tryon", "jewel", "look", "story", "sale", "ugc", "color", "light", "box", "size", "head"]);
 const IND_TOOLS = {
   "beauty-skincare": ["video-ads", "lifestyle-photos", "white-background", "photo-hub"], "fashion-clothing": ["model-photos", "lifestyle-photos", "video-ads", "social-ad-photos"],
   shoes: ["white-background", "lifestyle-photos", "photo-hub", "video-ads"], "jewelry-accessories": ["model-photos", "photo-hub", "white-background"],
-  electronics: ["product-videos", "unboxing-videos", "white-background", "video-ads"], "health-wellness": ["white-background", "lifestyle-photos", "video-ads", "social-ad-photos"],
+  electronics: ["product-videos", "unboxing-videos", "white-background", "video-ads"], "health-wellness": ["lifestyle-photos", "white-background", "video-ads", "social-ad-photos"],
   "food-drinks": ["product-videos", "white-background", "lifestyle-photos", "photo-hub"], "home-living": ["before-after-videos", "product-videos", "change-background", "lifestyle-photos"]
 };
 const PLAT_TOOLS = {
@@ -2242,7 +2242,8 @@ function payloadFor(model, page) {
     if (c.visual) {
       const visualMode = c.visual.steps?.mode ?? "photo";
       const visualTool = visualMode === "video" ? recommendedVideoTool(model, page) : recommendedPhotoTool(model, page);
-      const toolMaker = model.content[visualTool.id]?.maker ?? {};
+      // A page can set its own hero options and button; otherwise it borrows the recommended tool's.
+      const toolMaker = c.maker ?? model.content[visualTool.id]?.maker ?? {};
       visualMaker = {
         options: (toolMaker.options || []).slice(0, 3),
         cta: toolMaker.cta || (visualMode === "video" ? "Make my video" : "Make my photos"),
