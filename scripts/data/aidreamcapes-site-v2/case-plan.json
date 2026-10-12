@@ -884,9 +884,10 @@
     ],
     "ind-jewelry-accessories": [
       {
-        "ref": "n:guide:rb2-ind-jewelry-accessories-case-earrings-r1",
-        "product": "gold hoop earrings",
-        "title": "Try-on: Gold hoops before the mirror"
+        "ref": "n:guide:im10-ind-jewelry-accessories-card-necklace-tryon-r1",
+        "product": "silver pendant necklace",
+        "title": "Try-on: Silver pendant necklace before the mirror",
+        "prompt": "A woman adjusts a plain silver pendant necklace before a bedroom mirror."
       },
       {
         "ref": "n:gen2:ind-jewelry-accessories-c2",
