@@ -4,7 +4,7 @@
   "description": "Plain-English definitions for the product photo, video, advertising, and ecommerce terms used across AIVideosUGC and links to the pages where each term matters.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
   "eyebrow": "Glossary",
-  "lead": "Plain definitions for the photo, video, and ad words on this site. Open a word when it is new, then go to the page that uses it.",
+  "lead": "Plain definitions for the photo, video, and ad words on this site. Open a term when it is new, then use the linked page for the next step.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -53,7 +53,7 @@
     },
     {
       "term": "UGC",
-      "definition": "UGC means user-generated content: a video that looks like a shopper filmed it. Here, the phone looks like it is in someone's hand. An AI actor can speak a line you write, with captions and music. The person is made by the tool, so this is not a real customer's review. Say the person is made by AI if the app asks.",
+      "definition": "UGC means user-generated content: a video that looks like a shopper filmed it. Here, the phone looks like it is in someone's hand. An AI actor can speak a line you write, with captions and music. The actor is fictional, so describe the clip accurately if the platform asks for disclosure.",
       "related_page_ids": [
         "video-ads",
         "ai-info"
@@ -69,7 +69,7 @@
     },
     {
       "term": "Spark Ads",
-      "definition": "Spark Ads are TikTok ads that boost a post you already published. You can send a video to TikTok from AIVideosUGC, with an AI voice, captions, and music. In TikTok Ads Manager you still choose who sees it, the budget, and the Spark permission TikTok asks for. Do not present the actor as a customer.",
+      "definition": "Spark Ads are TikTok ads that boost a post you already published. You can send a video to TikTok from AIVideosUGC, with an AI voice, captions, and music. In TikTok Ads Manager you still choose who sees it, the budget, and the Spark permission TikTok asks for. Keep the actor’s role clear in the ad.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "plat-tiktok"
@@ -189,7 +189,7 @@
     },
     {
       "term": "AI-generated content",
-      "definition": "AI-generated content is a picture or video the tool creates or changes. It is not a photo or video you only filmed with a camera. Check every result against the real item. Do not present a made-up person as a customer. If the app asks you to say it is made by AI, do that.",
+      "definition": "AI-generated content is a picture or video the tool creates or changes. It is not a photo or video you only filmed with a camera. Check every result against the real item. A generated person is not a customer testimonial. If the app asks you to say it is made by AI, do that.",
       "related_page_ids": [
         "trust",
         "video-ads"
@@ -237,7 +237,7 @@
     },
     {
       "term": "AI actor",
-      "definition": "An AI actor is a made-up person on screen who can hold, wear, or talk about a product. You pick one from the actor list, or describe the look. The person is not a real customer. The picture does not replace a size chart.",
+      "definition": "An AI actor is a made-up person on screen who can hold, wear, or talk about a product. You pick one from the actor list, or describe the look. The on-screen person is fictional; the picture does not replace a size chart.",
       "related_page_ids": [
         "ai-actors",
         "spokesperson-videos"
@@ -253,7 +253,7 @@
     },
     {
       "term": "AI voice",
-      "definition": "An AI voice is the voice an actor uses for the line you write. You pick the language by writing the line in it. The voice is made by the tool. It is not a recording of a customer.",
+      "definition": "An AI voice is the voice an actor uses for the line you write. You pick the language by writing the line in it. The voice is made by the tool. It is generated audio, not a customer recording.",
       "related_page_ids": [
         "spokesperson-videos",
         "ai-actors"

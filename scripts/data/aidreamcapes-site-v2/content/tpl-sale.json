@@ -4,7 +4,7 @@
   "description": "Move stock with a sale image that leaves clean space for your offer. One product photo becomes a square banner; add the discount and dates yourself.",
   "h1": "Sale Banner Maker with Room for the Offer",
   "eyebrow": "Ad photo template",
-  "lead": "A discount with no clear product image disappears in the feed. This sale banner maker turns one product photo into a square scene with empty space for the offer you add later.",
+  "lead": "A candle shop can lead the feed with this weekend's price. Set the jar in a sale square and put Saturday's end date where the eye lands first.",
   "secondary_keywords": [
     "Black Friday banner image",
     "seasonal sale ad image",
@@ -12,19 +12,19 @@
     "winter clearance banner"
   ],
   "steps_h2": "How to Make a Sale Banner in 3 Simple Steps",
-  "steps_lead": "Upload the product, leave an open area, then add the real offer after download.",
+  "steps_lead": "Open a layout, set the product and the offer, then post the square.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the sale product, with the whole item showing. The scene comes from that photo, not from a typed discount."
+      "d": "Upload one clear photo of the product on offer. The template supplies a square composition made for a feed."
     },
     {
       "t": "Pick a Sale Scene",
-      "d": "Describe the setting and ask for empty space beside the product. Leave the percent, the code, and the end date out."
+      "d": "Place the discount, code, and event dates so the promotion leads. The price reaches scrollers first."
     },
     {
       "t": "Download and Post",
-      "d": "Add the confirmed discount, code and end date in your editor, then post. Read every number on a phone preview first."
+      "d": "Download the square and publish it on Instagram. The offer is large enough to read in the feed."
     }
   ],
   "maker": {
@@ -46,48 +46,48 @@
   },
   "faq": [
     {
-      "q": "Why doesn't the banner include my discount text?",
-      "a": "Generated lettering can mix up words and numbers, and a wrong price on a sale ad is a real problem. Add the offer yourself so every number matches the promotion you approved."
+      "q": "What is an Instagram sale post template?",
+      "a": "A square that keeps the product recognizable while the promotion is easy to read. A mug can fill the frame, with the member price large enough to read on a phone."
+    },
+    {
+      "q": "How do I make a sale post?",
+      "a": "Upload a product photo, choose a sale scene, place the offer you approved, and download the square. Check it on a phone, then post."
+    },
+    {
+      "q": "Can the post show my discount and the event date?",
+      "a": "Yes. The layout is there so the promotion leads. You enter the percent, the code, and the dates that match the sale you approved, then read them back before publishing."
     },
     {
       "q": "What size is the sale image?",
-      "a": "Square by default, which fits a Facebook or Instagram feed post. For a wide website header, place the image on a wider background in your design tool."
+      "a": "Square, which fits an Instagram or Facebook feed post. For a wide site header, place that square on a wider background in your design tool."
     },
     {
-      "q": "Can I reuse one scene for a different offer?",
-      "a": "Yes. Add the offer as text after download. The same scene can carry a percent-off line in one ad and another approved line in a second ad."
+      "q": "Can I reuse one scene for a later promotion?",
+      "a": "Yes. Keep the product scene and change the headline. One week can be a percent off, and the next can be a different approved line."
     },
     {
-      "q": "Can I make a vertical sale story from it?",
-      "a": "The template produces a square image. If you need a tall Story or Reel, put that square on a tall 9:16 background after download."
+      "q": "Can I make a tall Story from the sale square?",
+      "a": "The template gives you a square. For a tall Story or Reel, set that square on a 9:16 background after download."
     },
     {
       "q": "Where should the discount code go?",
-      "a": "Put the code in the open area as editable text, then read the full offer on a phone-sized preview. Do not ask the tool to write the code into the photo."
+      "a": "In the open part of the layout, as text you can still edit. Read the full offer on a phone-sized preview before the ad runs."
     },
     {
       "q": "How many credits does a sale photo use?",
-      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts. You are responsible for the offer terms and for what the ad must say."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed job returns those credits. The download has no watermark. You can use it in your ads, pages, and posts. You are responsible for the offer terms."
     },
     {
-      "q": "What happens when the sale ends?",
-      "a": "Delete, pause, or replace the offer text you added so an old date or code is never shown. The product scene can stay for a later promotion or as a plain listing image."
+      "q": "What should I do when the sale ends?",
+      "a": "Pause or replace the post so an old date or code is not still up. The product scene can stay for a later promotion or as a plain listing image."
     },
     {
-      "q": "Can I start from a Black Friday scene and change the holiday later?",
-      "a": "Yes. Keep the product scene and swap the headline. Seasonal campaign notes live on [Black Friday ad creatives](page:occ-black-friday)."
+      "q": "Can I start from a holiday scene and change it later?",
+      "a": "Yes. Keep the product scene and swap the headline when the holiday passes. Seasonal notes live on [Black Friday ad creatives](page:occ-black-friday)."
     },
     {
-      "q": "Do I need a paid plan for a sale banner?",
-      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A sale photo is 24 credits, shown before you start."
-    },
-    {
-      "q": "Can I batch sale photos or use the API?",
-      "a": "Yes. Run the same scene across a catalog, or send photos from your own software (API). Each photo spends 24 credits from your plan. A failed job returns those credits."
-    },
-    {
-      "q": "Can a generated person appear in the sale scene?",
-      "a": "Yes. Ask for a generated person to wear or hold the product, or keep the product alone. The person is generated. The discount is still typed by you after download."
+      "q": "Do I need a paid subscription for a sale post?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos, a batch, and a job sent through the API all draw from that balance."
     }
   ],
   "examples": {
@@ -608,7 +608,7 @@
       }
     }
   },
-  "cta_lead": "Upload one product photo. Type the discount, code and end date after you download.",
+  "cta_lead": "Open a sale template, set your product and the promotion in the frame, and download a square for Instagram.",
   "relatedLinks": [
     {
       "id": "social-ad-photos",
@@ -677,9 +677,9 @@
       }
     ]
   },
-  "related_h2": "Fashion Pages to Use With a Sale Banner",
-  "related_lead": "The ad-image tool, fashion templates, the sale page, and the fashion page.",
-  "cta_title": "Set the Scene, Then Add the Offer",
+  "related_h2": "Picture Tools Beside This Sale Post",
+  "related_lead": "Staging, backgrounds, and fashion looks sit with this template, along with the fashion pages and the sale occasion page.",
+  "cta_title": "Post the Offer Where Shoppers See It",
   "blockOrder": [
     "hero",
     "features",
@@ -692,29 +692,29 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is a Sale Banner?",
+    "title": "What Is an Instagram Sale Post?",
     "paras": [
-      "A sale banner is a square product scene with an empty area beside the item. You type the discount, the code, and the end date after download, so the numbers match the promotion you approved.",
-      "Use one scene across a feed post, a product page, and a later headline. When the offer changes, replace the text you added and keep the product picture."
+      "It is the square a shop uses when a tote bag's price changes for a long weekend. The bag stays fully visible, and the last day sits where a thumb stops.",
+      "You are filling in a feed square, not drawing one. Next month, the same tote can carry a new headline for a different event."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Use a Sale Banner",
-    "lead": "The product stays recognizable, and the offer stays in your hands.",
+    "h2": "Why Sellers Start From a Sale Template",
+    "lead": "The square should make the promotion obvious to someone scrolling the shop's feed.",
     "items": [
       {
-        "t": "A Layout With Room for the Offer",
-        "d": "The scene leaves an empty area beside the product. You place the discount, the code, and the dates there after download.",
+        "t": "The Offer Is in Front",
+        "d": "A thumb on the feed should meet the mug's Saturday price before it meets the handle. The mug stays in the frame so the shopper still knows what is on offer.",
         "icon": "Tag"
       },
       {
-        "t": "A Scene You Can List Today",
-        "d": "One product photo becomes a square image you can put on a feed or a product page once the offer text is yours.",
+        "t": "Start From a Square",
+        "d": "The feed frame is already composed. You set the scarf in it, and the price is already sitting where the eye lands.",
         "icon": "Image"
       },
       {
-        "t": "Phone, Store, and Feed",
-        "d": "The same square can go to Instagram, Facebook, or your store. A wider header means placing it on a wider background in your editor.",
+        "t": "One Look, Several Places",
+        "d": "Use the scarf square on the feed and again on the product page. When the next event starts, only the headline changes, so the shop still looks like the same shop.",
         "icon": "Share2"
       }
     ]
@@ -722,60 +722,60 @@
   "more_sections": [
     {
       "eyebrow": "Start from a scene",
-      "h2": "Sale Banner Scenes for the Feed",
-      "lead": "Starting scenes for a feed post. None of them put the discount in the photo.",
+      "h2": "Sale Scenes for the Instagram Feed",
+      "lead": "Starting scenes that put a promotion or an event in front of the product.",
       "items": [
         {
           "t": "Holiday Storefront",
-          "d": "A seasonal shop front, with an empty area beside the product for the offer you add later."
+          "d": "A seasonal shop front, with the holiday offer beside the product."
         },
         {
           "t": "Clearance Table",
-          "d": "The product sits on a simple table so a short offer line has room beside it."
+          "d": "The product sits on a simple table so a short markdown line has a place beside it."
         },
         {
           "t": "Weekend Market",
-          "d": "An outdoor stall for a short promotion. You type the dates after download."
+          "d": "An outdoor stall for a short event, with the dates large in the headline."
         },
         {
           "t": "Gift Table",
-          "d": "A gift-ready setting. The price stays out of the generated file."
+          "d": "A gift-ready setting for an event, with the price large enough to read as someone scrolls."
         },
         {
           "t": "End of Season",
-          "d": "A late-season setting. Swap the headline when the event changes."
+          "d": "A late-season setting. Swap the headline when that event changes."
         },
         {
           "t": "New Color Drop",
-          "d": "The color comes from the product you uploaded. The offer line is added after download."
+          "d": "The color comes from the product you uploaded, and the offer line sits with it."
         },
         {
           "t": "Bundle Stack",
-          "d": "Group the products you uploaded, with open space for the bundle terms you type."
+          "d": "Group the products you uploaded, with the bundle price sitting in the open space."
         },
         {
           "t": "Member Offer",
-          "d": "A clean scene for a customer offer. You add the code so the digits stay correct."
+          "d": "A clean scene for a customer offer, with the member code large enough to copy at a glance."
         },
         {
           "t": "Last Day Look",
-          "d": "A simple scene you can reuse, because the end date is not written into the file."
+          "d": "A simple scene for a closing day, with the date large enough to see in the feed."
         },
         {
           "t": "Square Feed Post",
-          "d": "A square layout for a Facebook or Instagram feed once the offer is in place."
+          "d": "A square layout for an Instagram or Facebook feed once the offer is in place."
         },
         {
           "t": "Product Page Banner",
-          "d": "The product stays fully visible, with room for a headline you add on the product page."
+          "d": "The product stays fully visible, with room for the headline on the product page."
         },
         {
           "t": "Laid-Flat Offer",
-          "d": "The item lies flat with empty space along one edge for the line you type later."
+          "d": "The item lies flat, with space along one edge for the offer line."
         },
         {
           "t": "Person With the Product",
-          "d": "A generated person wears or holds the product. The discount is not written into the photo."
+          "d": "An AI avatar wears or holds the product while the discount stays part of the post."
         },
         {
           "t": "Studio Clearance",
@@ -783,57 +783,57 @@
         },
         {
           "t": "Launch Window",
-          "d": "A launch setting for a new item. You add the code and the end date after download."
+          "d": "A launch setting for a new item, with the code and the end date in the headline."
         }
       ]
     },
     {
-      "eyebrow": "More tools here",
-      "h2": "Features for a Sale Banner",
-      "lead": "Scene tools around the square image. The offer text is still typed by you.",
+      "eyebrow": "Around the square",
+      "h2": "Picture Tools for a Sale Post",
+      "lead": "Scene tools around the square, so the promotion still leads once the product is in place.",
       "items": [
         {
           "t": "Backgrounds and Setting",
-          "d": "Put the product on white, on a see-through background, in a new setting, or against a softer background. Compare the outline with your original photo."
+          "d": "Place the product on white, on a see-through ground, in a new setting, or against a softer background. The product shape stays the one you uploaded."
         },
         {
-          "t": "People, Laid-Flat Photos, and Cleanup",
-          "d": "A generated person can wear the item. You can also ask for a top-down photo, a garment with no visible mannequin, a softer shadow, or a cleaned product shot."
+          "t": "Models, Flat Lays, and Cleanup",
+          "d": "An AI avatar can wear the item. You can also ask for a top-down photo, a garment with no visible mannequin, a softer shadow, or a cleaned product shot."
         },
         {
-          "t": "Edit, Resize, and Color",
-          "d": "Resize the square, change a garment color, or remove a stray object. Type the offer in the editor so a wrong number is never written into the photo."
+          "t": "Retouch, Resize, and Color",
+          "d": "Resize the square, change a garment color, or remove a stray object. The offer stays as text, so the next headline is a quick edit."
         },
         {
-          "t": "Product Video Next",
-          "d": "Turn the same photo into a short clip when the feed needs motion, with a voice and captions if you want them. A video spends 24, 40, 60, or 120 credits (points on your plan) for 6, 10, 15, or 30 seconds."
+          "t": "A Product Video Next",
+          "d": "Turn the same photo into a short clip when the feed needs motion, with a voiceover and captions if you want them. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
         },
         {
-          "t": "Batch for a Catalog",
-          "d": "Run the same sale scene across many products. Each photo is 24 credits, and that cost is shown before the job starts."
+          "t": "A Batch for the Catalog",
+          "d": "Run the same sale scene across many products, so a weekend catalog can go out in one pass."
         },
         {
           "t": "API for Your Store",
-          "d": "Send product photos from your own software (API) and bring the scenes back to your catalog. Each photo spends credits from your plan. Starter is $24.50 a month."
+          "d": "Send product photos from your shop software through the API and bring the scenes back to your catalog."
         }
       ]
     }
   ],
   "trust": {
     "h2": "What You Can Count On",
-    "lead": "The offer numbers stay yours. The credit cost is shown first.",
+    "lead": "The square goes out with your price on it, ready for the feed.",
     "items": [
       {
         "t": "24 Credits a Photo",
-        "d": "Each sale photo is 24 credits (points on your plan). You see that cost before you start."
+        "d": "Each sale photo is 24 credits. You see that cost before you start."
       },
       {
         "t": "No Watermark",
         "d": "The download has no AIVideosUGC watermark, and you can use it in your own ads, pages, and posts."
       },
       {
-        "t": "You Type the Offer",
-        "d": "Generated lettering can mix up words and numbers. Add the discount, code, and end date yourself so they match the promotion you approved."
+        "t": "The Price Shoppers Read",
+        "d": "The discount, the code, and the end date you type are the words on the square, big enough to read while scrolling."
       },
       {
         "t": "Failed Jobs Return Credits",

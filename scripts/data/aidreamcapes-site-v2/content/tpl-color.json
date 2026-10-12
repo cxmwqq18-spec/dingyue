@@ -4,7 +4,7 @@
   "description": "Make one matching square photo for every color you sell, from your own photo of that color. Shoppers can then compare the options in the same scene.",
   "h1": "Product Color Variations in One Shared Square Scene",
   "eyebrow": "Product photo template",
-  "lead": "Open one scene, add a photo of each color you actually sell, and download a square set shoppers can compare. The same photos can also start a clip with a voice.",
+  "lead": "Shoppers can compare every shade in one ad, on the same counter. Take the photos already on your listing and place them in one scene from this wall.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Your Shade Photos",
-      "d": "Upload a clear photo of each real color you sell, with the whole item and its texture in the picture."
+      "d": "Use the product-page photos of the rose, nude, and berry shades. They form one set in the counter scene."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the setting once and reuse that description on every photo. Compare each photo with the real color before you publish."
+      "d": "Berry is the fall bottle. Nude is the office bottle. Write it that plainly so shoppers know which shade is which."
     },
     {
       "t": "Download and Post",
-      "d": "Download each image and match the color to the real item or a sample. Then link that file to the matching option in your gallery."
+      "d": "Put the square of the three bottles in the gallery, or make a tall clip saying the fall shade. A photo costs 24 credits first."
     }
   ],
   "maker": {
@@ -44,52 +44,48 @@
   },
   "faq": [
     {
-      "q": "What are product color variation photos?",
-      "a": "A square set of one product in the shades you actually sell, shown in one shared scene so shoppers compare the finish. Each shade starts from a photo of that color."
+      "q": "What is a product color template?",
+      "a": "A product color template is a ready-made scene that puts every shade you sell in one view. A sneaker shop can put white, black, and navy on the same surface, and a spoken line can name the pair that is new this month."
     },
     {
-      "q": "How do I make product color variations?",
-      "a": "Upload one photo per real shade, describe the setting once, and download a square for each. The same photos can also start a clip with a script and a voice."
+      "q": "How does a shade template become a video?",
+      "a": "Add the shade photos, name each color in the script, and export a square for the gallery. A shade you never photographed is not added."
     },
     {
-      "q": "Why use this instead of a new shoot for every color?",
-      "a": "The scene is placed on photos you already have, so you skip a new styled shoot. The tool will not invent a color you never photographed."
+      "q": "Why use this instead of hiring a creator to film each color?",
+      "a": "You skip the wait for a creator and the cost of filming every color. The photos already exist, so the ad can go out while that filming day belongs to someone else."
     },
     {
-      "q": "Who is a color set for?",
-      "a": "Shops that sell more than one finish, including sneakers, apparel, mugs, cases and yarn, on Shopify or Amazon."
+      "q": "Who is a shade template for?",
+      "a": "Shop owners and small teams who have to show which color is which. In a mug shop that person is the owner, not a producer with a crew on payroll."
     },
     {
       "q": "Can a beginner make the set?",
-      "a": "Yes. Upload the color photos and use the same description on each. You do not need editing experience. Compare every file with the real color sample before you publish."
+      "a": "Yes. A shop that has never opened a timeline can still make the row. They choose the scene, and the photos they already took decide what is in frame."
     },
     {
-      "q": "Which products fit a color set?",
-      "a": "Any product whose dye, glaze, fabric, or finish changes, as long as you photograph the real color. One scene can cover several products if each photo shows the real item."
+      "q": "Which products fit a color template?",
+      "a": "Phone cases, dye lots, and hardware all fit when people hesitate over the finish. Clear, smoke, and lilac cases are a normal set. A software screenshot is the wrong file, because nothing in it is a finish you can hold."
     },
     {
-      "q": "Can I upload my own photos?",
-      "a": "Yes. Upload your own color photos. The file may not match the real color exactly. Keep the real item or a color sample nearby, and compare before you publish."
+      "q": "Can I use my own photos, a clip, and a logo?",
+      "a": "Yes. A listing photo that already shows the logo is the right file. A short clip you already have can supply the motion."
     },
     {
-      "q": "Which platforms can I use the files on?",
-      "a": "Listing galleries on Amazon and Shopify, plus TikTok, Instagram, Facebook and YouTube when you also make a clip from the same photos."
+      "q": "Which placements and frame sizes can I use?",
+      "a": "TikTok, Reels, Facebook, YouTube, and LinkedIn all work. A Facebook Story wants 9:16, often at 6 or 10 seconds. The Instagram grid wants 1:1. YouTube can take 16:9, and 4:3 or 3:4 covers a banner. 15 and 30 seconds are there when a shade needs a longer look."
     },
     {
-      "q": "Is there a free plan?",
-      "a": "No. There is no free plan. Each product photo costs 24 credits. A credit is a unit your plan spends. You see the total before it starts, and if it fails those credits come back. Plans start at $24.50 a month."
+      "q": "Do I need a paid plan to use a template?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
     },
     {
-      "q": "Can I use the set commercially?",
-      "a": "Yes. Add each image to the matching option in your own listing or ads. The download has no watermark."
+      "q": "Can I use the shade ad in campaigns and client work?",
+      "a": "Yes. Run the shade row as a paid ad and place the file on the product page, including work for a client. The download has no watermark."
     },
     {
-      "q": "Why start from a shared scene?",
-      "a": "The shared scene keeps the view, the light, and the background the same, so shoppers compare color instead of a changing setup. You still check every color against the item."
-    },
-    {
-      "q": "Can a voice, a presenter or a product link be part of this?",
-      "a": "Yes. Paste the product page link to write a first script, an on-screen person, and a voice in another language. You can also send a photo through the API, which is how your own shop software starts it. The color photos still come from real photos."
+      "q": "What does the color template already set up for me?",
+      "a": "The scene already sets the surface, the crop, and the moment the shade name appears. You bring the offer, such as which color is the seasonal one. You do not design the camera move."
     }
   ],
   "visual": {
@@ -553,7 +549,7 @@
     }
   },
   "steps_h2": "How to Make Product Color Variations in 3 Simple Steps",
-  "steps_lead": "One photo per real color, one shared description, then square photos of each color for Shopify or Amazon.",
+  "steps_lead": "One shared counter makes the shades easy to tell apart. Shoppers stop comparing tables and start comparing color.",
   "blockOrder": [
     "hero",
     "picker",
@@ -629,8 +625,8 @@
       }
     ]
   },
-  "related_h2": "Related Pages for Color Sets",
-  "related_lead": "Shoe and listing pages to use with the color set: a launch alert, clothing try-on, shoe photos, Shopify, and Amazon.",
+  "related_h2": "Tools and Templates Around a Shade Set",
+  "related_lead": "Use these with the shade set: a product photo tool, a drop alert, clothing try-on, shoe-brand photos, and the Amazon and Shopify listing pages.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -657,37 +653,37 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Create Your First Shade Set",
-  "cta_lead": "Upload one photo per color you sell and see the credit cost before you start. A credit is a unit your plan spends.",
+  "cta_title": "Put Those Shades on One Counter",
+  "cta_lead": "Get every shade into one ad you can post. Add the shade photos you sell.",
   "more_sections": [
     {
-      "eyebrow": "Included with the template",
-      "h2": "Features of Product Color Variations",
-      "lead": "The squares still come from real shade photos. These are the extras you can add around that set.",
+      "eyebrow": "In the same editor",
+      "h2": "Tools Around a Shade Ad",
+      "lead": "A spoken shade name and a line you can fix sit on the same page, so the ad is done without another tool.",
       "items": [
         {
-          "t": "AI Voiceover",
-          "d": "Turn the same shade photos into a clip and add a spoken line. You approve the words, and the voice is not a customer recording."
+          "t": "A Voice or a Voice Clone",
+          "d": "A stock voice, or a clone from a short sample, can read the shade line out loud."
         },
         {
-          "t": "A Script You Can Edit",
-          "d": "A script can be drafted from your note or from the product page link. Change any line before you download the clip."
+          "t": "A Script You Can Rewrite",
+          "d": "You can change any sentence before the ad is made. Start from a note or the product link, and name the shade and the offer."
         },
         {
-          "t": "On-Screen People You Can Pick",
-          "d": "Pick a generated person from the presenter list, called the actor library, to hold one color. That person is not a real buyer."
+          "t": "An AI Avatar on Camera",
+          "d": "An AI avatar can hold one color on camera, so you skip booking a model for the shade row. Add B-roll of the product alone when you want the item to fill the frame between lines."
         },
         {
-          "t": "A Product Link or the API",
-          "d": "Paste a product page link to write a first script. Or send a color photo through the API, which is how your own shop software starts it. The color photos still need a real photo of that color."
+          "t": "A Listing Link or the API",
+          "d": "Paste the product page to draft the first script. Or let your shop software send each shade photo through the API."
         },
         {
-          "t": "Built-In Editor and Another Language",
-          "d": "Change the script and switch the voice to another language in the built-in editor. The download has no watermark."
+          "t": "Edit Here in Another Language",
+          "d": "A Spanish storefront can hear the color names in Spanish while the English cut keeps the same three tees. The captions can follow that voice, and you can move them in the editor."
         },
         {
-          "t": "More Versions, Then Publish",
-          "d": "Make another version for a second market from the same photos. Publish on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
+          "t": "More Cuts, Then Post",
+          "d": "Render a second cut for another country from the same photos. Publish to Instagram, YouTube, TikTok, or Facebook from the account you connect, or download and post it yourself."
         }
       ]
     }

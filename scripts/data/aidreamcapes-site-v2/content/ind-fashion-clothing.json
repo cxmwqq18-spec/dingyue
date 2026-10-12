@@ -4,7 +4,7 @@
   "description": "Turn one garment photo into a try-on, a fit check, or a short look. Download watermark-free photos and clips for fashion brands, social feeds, and paid ads.",
   "h1": "AI Model Photos and Videos for Fashion Brands, Without a Casting Day",
   "eyebrow": "Clothing",
-  "lead": "A photo of the garment laid flat, or a product link, can become a try-on, a fit check, or a short clip of the outfit. The ad is a casual creator-style video, called UGC, with a spoken voice and captions. Check the print before you post.",
+  "lead": "A buyer hesitates on a wool coat until she can see the hem move. Upload the flat photo and an AI avatar can walk it down a hallway.",
   "card": "Try-ons, fit checks, outfit photos, and review-style clips from one garment photo.",
   "secondary_keywords": [
     "AI on-model clothing photos",
@@ -16,57 +16,57 @@
   "faq": [
     {
       "q": "Can one garment photo make both a vertical clip and a listing image?",
-      "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a turn or a short walk. The same photo can also make a still of someone wearing it. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120."
+      "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a turn or a short walk. The same photo can also make a still of someone wearing it. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits."
     },
     {
-      "q": "Can a photo of clothes laid flat become a photo of someone wearing them?",
-      "a": "Yes. Smooth the garment, shoot the whole piece in even light, or paste a product link, and describe the person and the room. Check seams and hems before you list it."
+      "q": "Can a flat-lay photo become a photo of someone wearing the piece?",
+      "a": "Yes. Smooth the garment, shoot the whole piece in even light, or paste a product link, and describe the avatar and the room."
     },
     {
       "q": "Will the print or the fabric change?",
       "a": "The result follows your photo. Fine stripes, embroidery, and buttons stay closer when the upload is sharp. If a trim moves, make another version. A failed job returns its credits."
     },
     {
-      "q": "Can I show a plus-size or petite model?",
-      "a": "Describe the person in plain words, including height, build, and age range. The model is made up. It is not a photo of a real customer."
+      "q": "Can I show a plus-size or petite build?",
+      "a": "Yes. Describe height, build, and age range in plain words. The AI avatar is generated for the ad."
     },
     {
-      "q": "What photo works best when someone should appear wearing it?",
+      "q": "What photo works when someone should appear in the clothes?",
       "a": "Lay it flat or hang it, with the whole garment visible, front side up, in even light. The outline, color, print, and fastenings all need to be clear."
     },
     {
       "q": "How do I keep the fabric color accurate?",
-      "a": "Shoot in soft daylight, not under a warm lamp, and name the color in plain words. Compare the result with the garment before you publish."
+      "a": "Shoot in soft daylight, not under a warm lamp, and name the color in plain words."
     },
     {
       "q": "Can I run the clips as paid clothing ads?",
       "a": "Yes. The download has no watermark, and you can use it in paid ads. Size and fabric details have to match the real item."
     },
     {
-      "q": "How is a clip of someone wearing it different from hiring a creator?",
-      "a": "You pick a made-up model from the actor library, a list of generated people. You pay the credits shown before the job, not a creator fee. Post it as an ad, not as a customer's review."
+      "q": "How is this different from hiring a creator?",
+      "a": "You pick an AI avatar and pay the credits shown before the job, not a creator fee. Post the clip as an ad."
     },
     {
       "q": "Can a try-on include a voice and captions?",
-      "a": "Yes. Choose a generated model, and the clip can include a spoken line and captions. Check the print, then publish the file to TikTok or Meta. A failed job returns its credits."
+      "a": "Yes. The clip can include a spoken line and captions, and you can publish it to TikTok, Instagram, or Facebook."
     }
   ],
-  "templates_lead": "Choose a fashion video ad format for try-ons, fit checks, review-style clips, or fabric details.",
-  "cta_lead": "Paste a product link or upload one garment photo, pick a model, and check the credit cost before you start.",
+  "templates_lead": "Pick a try-on, a fit check, a review-style clip, or a fabric close-up.",
+  "cta_lead": "The next drop can go on an AI avatar from one garment photo.",
   "steps_h2": "Short Fashion Outfit Videos in Three Steps",
-  "steps_lead": "Go from a flat photo to a clip you can post. Three steps, and check the print before it goes live.",
+  "steps_lead": "You download an ad you can post. Lay the piece out, then choose who wears it.",
   "steps": [
     {
       "t": "Add the Garment Photo or Link",
-      "d": "Paste a product link, or lay the piece flat in even light, whole garment and fastenings visible."
+      "d": "Spread the linen shirt on a bed, front up, sleeves in frame. That photo is the piece the try-on uses."
     },
     {
       "t": "Pick a Made-Up Person",
-      "d": "The actor library is a list of made-up people. Pick one, set height and build, and name the room. Not a real customer."
+      "d": "Describe a taller frame if the line is long. You can change the face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice and Captions",
-      "d": "A spoken voice and captions come in the video shape you picked. Post to TikTok or Meta (Facebook and Instagram) after the print matches."
+      "d": "Download the file and put it where that shop already sells."
     }
   ],
   "visual": {
@@ -105,65 +105,62 @@
     }
   },
   "steps_cta": {
-    "label": "Create fashion ad",
+    "label": "Make a clothing ad",
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Clothing Photos of Someone Wearing It, Checked Before You Post",
-    "lead": "Fit is hard to judge on a hanger. Put the garment on a generated adult, from a photo or a product link, and keep the fabric recognizable.",
+    "h2": "When a Drop Cannot Wait on a Fitting",
+    "lead": "The next color can still be shown on a body if the fitting from Tuesday never happened.",
     "items": [
       {
         "t": "Faster Than a Casting Day",
-        "d": "Start with one garment photo or a product link and show it on an adult model. You skip booking a model and a new studio day for every color.",
-        "img": "n:guide:fx30-fashion-benefit-fit-r1",
-        "alt": "Adult model turns in a plain light-gray hoodie with the full garment and face visible."
+        "d": "A striped knit can leave as a try-on from the flat photo alone. The credit cost is on screen before the job runs, so the test does not start with a model invoice.",
+        "img": "n:guide:fx30-fashion-benefit-fit-r1"
       },
       {
-        "t": "More Looks, Every Channel",
-        "d": "A turn, a short walk, or a close-up of the hem can be made together. A batch is several jobs from one photo. Small patterns are easier to check when the photo is sharp.",
-        "img": "n:guide:fx30-fashion-benefit-detail-r1",
-        "alt": "Hands pinch the hem and sleeve seam of a plain olive overshirt to show drape and stitching."
+        "t": "Looks for Every Channel",
+        "d": "A flat photo can also make the still for the product page. The second file does not wait on a separate crew.",
+        "img": "n:guide:fx30-fashion-benefit-detail-r1"
       },
       {
-        "t": "Check the Print Yourself",
-        "d": "Test a try-on, a set of outfit photos, and a fit check, and keep the garment recognizable. Reject any result that changes the print.",
-        "img": "n:guide:fx30-fashion-benefit-review-r1",
-        "alt": "Adult woman holds a plain denim jacket by the shoulders for a fit check."
+        "t": "Help the Shopper Decide",
+        "d": "Let the jacket turn once so the buyer sees the lining, then send her to the product page. She sees how it moves and has a place to buy it.",
+        "img": "n:guide:fx30-fashion-benefit-review-r1"
       }
     ]
   },
   "platforms": {
-    "h2": "Clothing Product Photos for Shopify and Social",
-    "lead": "One garment photo can make a product-page photo and a tall try-on video. Publish the clip to TikTok or Meta (Facebook and Instagram) after the print checks out.",
+    "h2": "Where a Try-On Can Run",
+    "lead": "One flat lay can feed a phone feed and a product page. Match the shape to the place.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
-        "d": "A tall 9:16 turn or short walk for a clothing try-on on the TikTok home feed.",
+        "t": "TikTok Try-Ons",
+        "d": "A tall phone video of a turn or a short walk for a clothing ad in the TikTok feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram Ads",
-        "d": "An outfit photo, or a tall fit-check video, for the profile grid and for Instagram Stories.",
+        "t": "Instagram Fit Checks",
+        "d": "An outfit still, or a tall fit-check video, for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook Ad Generator",
-        "d": "A feed image with space to add the offer after download.",
+        "t": "Facebook Feed Ads",
+        "d": "A feed image with room to add the offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Ads",
-        "d": "A short vertical look, one turn from the first second.",
+        "t": "YouTube Shorts Looks",
+        "d": "A short vertical look that opens on one turn.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Product Photos",
+        "t": "Amazon Gallery Photos",
         "d": "Extra gallery views of the garment, with the full piece and the color easy to see.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
-        "d": "Photos of someone wearing the garment, and photos of it laid flat, that match across the collection.",
+        "t": "Shopify Outfit Photos",
+        "d": "Worn photos and flat lays that match across the collection.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -234,7 +231,7 @@
       }
     ]
   },
-  "cta_title": "Show the Garment On a Model",
+  "cta_title": "Put the Next Drop on a Model",
   "relatedLinks": [
     {
       "id": "tpl-outfit",
@@ -275,33 +272,33 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Included in the job",
-      "h2": "Features Clothing Sellers Get With the Clip",
-      "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
+      "eyebrow": "With the clip",
+      "h2": "What a Clothing Ad Can Include",
+      "lead": "A spoken line can come with the try-on, so the ad is ready to post.",
       "items": [
         {
-          "t": "A Link Becomes the Try-On",
-          "d": "Paste the product page. The job uses the garment on that page and starts a turn, a fit check, or a short clip of the outfit."
+          "t": "A Product Link Opens the Try-On",
+          "d": "A product page is enough to start a turn, a short walk, or a closer look."
         },
         {
-          "t": "A Model From the Library",
-          "d": "Choose a made-up model and describe height and build."
+          "t": "An Avatar From the Library",
+          "d": "Name the build in a few words and an AI avatar wears the skirt."
         },
         {
           "t": "Voice and Captions Included",
-          "d": "A spoken line and on-screen captions come with the clip. Size notes are still safer when you type them."
+          "d": "Captions can still name the fabric when the sound is off."
         },
         {
           "t": "A Script for the Look",
-          "d": "Ask for a short script about one turn or one walk. Change a word in the editor before you post."
+          "d": "You get a short script about one turn or one walk, and you can change a word in the editor."
         },
         {
-          "t": "Edit on the Same Page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark."
+          "t": "Edit on This Page",
+          "d": "You can trim the clip and fix a caption here, then download a file with no watermark."
         },
         {
           "t": "Another Language, Then Publish",
-          "d": "Make the same turn again in another language, then publish the file to TikTok or Meta."
+          "d": "The same turn can run again in another language on TikTok, Instagram, or Facebook."
         }
       ]
     }

@@ -4,7 +4,7 @@
   "description": "Make YouTube Shorts ads from a product photo or a product link. Pick an AI actor, a voice, and 6, 10, 15 or 30 seconds, then see the cost first.",
   "h1": "YouTube Shorts Ads from a Photo or a Link",
   "eyebrow": "YouTube Shorts",
-  "lead": "Make YouTube Shorts ads from a product photo or a product link. Pick an AI actor and a voice, choose 6, 10, 15, or 30 seconds, and download a tall video with no watermark.",
+  "lead": "Open a YouTube Shorts ad on the product, not on a logo, so the first second earns the watch. Name the product after that move.",
   "card": "YouTube Shorts ads from a photo or a product link, in the tall shape Shorts uses.",
   "secondary_keywords": [
     "YouTube Shorts video ads",
@@ -14,53 +14,53 @@
   ],
   "faq": [
     {
-      "q": "What is an AI video for YouTube Shorts ads?",
-      "a": "A tall product video made from your photo or your product link, with an [AI actor](/ai-video-generation/ai-actors) and a voice you can edit. It is not a real customer review."
+      "q": "What should a YouTube Shorts ad feel like?",
+      "a": "A hand setting the product down and saying who it is for, with an [AI actor](/ai-video-generation/ai-actors) you can revoice. It is a tall Short."
     },
     {
-      "q": "Can I customize the script, actor, and visuals?",
-      "a": "Yes. Rewrite the script, swap the actor, change the voice, and adjust the scene before you download."
+      "q": "Can a Short earn more of the watch?",
+      "a": "A product opening is easier to stay with than a logo opening. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
     },
     {
-      "q": "What does a Short cost in credits?",
-      "a": "A video costs 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Credits are what your monthly plan gives you to spend. You see the cost before you start. If a file fails, those credits come back on their own. There is no free plan."
+      "q": "Is this a cheaper way to produce Shorts?",
+      "a": "Yes. You pay credits for each Short. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Are AI videos allowed in YouTube ads?",
-      "a": "Follow Google's current rules for checking ads, and for saying when a video is made by AI, on the day you publish. We do not send the ad in for you, and we do not promise it will be approved. Do not present a generated actor as a real customer."
+      "q": "Will the person on camera look like a drawing?",
+      "a": "The mouth meets the words, and the eyes stay on the product. The voice can sit in an accent you pick. If YouTube asks you to say the person is AI, say it."
     },
     {
-      "q": "How should I treat the actors and voices?",
-      "a": "They are AI actors, not people you hired. You can change the tone and the language. Do not say a shopper will think they are a real customer."
+      "q": "Can I fix the words after I see the person?",
+      "a": "Yes. Rewrite the line after you see the avatar, then download."
+    },
+    {
+      "q": "Will YouTube accept an AI Short as an ad?",
+      "a": "It can, if the product in the video is the product you ship and you say so when YouTube asks. We do not send the ad in. Read the disclosure rules on the day you publish."
     },
     {
       "q": "Does a Short start from a product link?",
-      "a": "Yes. Paste a product page link, or upload a photo. A wide 16:9 ad, the kind that plays in the YouTube player, is a separate file. Do not cut a wide ad down and use it as a Short."
-    },
-    {
-      "q": "Will people watch longer?",
-      "a": "We do not promise people will watch longer. You can try another first few seconds, another actor, or another script, and you choose which file to publish."
+      "a": "Yes. The product page can start the YouTube Shorts ad. If you also need the wide player ad, render that shape on its own. Do not crop the Short and call it a player ad."
     },
     {
       "q": "Which sizes should I compare?",
-      "a": "Use [social media ad sizes](/guides/ad-sizes-by-platform) before you download, and keep the product away from the buttons on the video player."
+      "a": "Use [social media ad sizes](/guides/ad-sizes-by-platform) before you download, and keep the product away from the buttons on the player."
     }
   ],
   "examples": null,
-  "templates_lead": "Choose a template that shows one useful product action in the first seconds.",
-  "cta_lead": "Paste a product link or upload a photo, pick an actor, and download a tall Shorts file.",
+  "templates_lead": "Choose a template that shows one useful product action in the opening seconds.",
+  "cta_lead": "Paste a product link or upload a photo, pick an avatar, and download a tall Shorts file.",
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "Paste a product page link, or upload one sharp picture of the whole item."
+      "d": "The listing already says the roller is firm and a foot long. Those two facts are the spoken line."
     },
     {
       "t": "Select an Actor",
-      "d": "Pick an AI actor who can hold the product, or show the item with no person."
+      "d": "Use the AI avatar in a grey tank for this Short."
     },
     {
       "t": "Save and Download",
-      "d": "Save the tall video with no watermark. Make a wide YouTube ad as its own file."
+      "d": "The file comes down as a tall Short with captions under the product."
     }
   ],
   "maker": {
@@ -122,40 +122,40 @@
       }
     }
   },
-  "benefits_h2": "Why YouTube Shorts Advertisers Start With an AI Video",
+  "benefits_h2": "Why YouTube Shorts Ads Skip the Booking",
   "benefits": [
     {
-      "t": "No Film Day to Book",
-      "d": "Start the next Short from a photo or a product link, without booking a film day."
+      "t": "Three Versions, Then Pick",
+      "d": "You can run a hand on the product, a close-up, and a voice naming one fact, then spend the afternoon in the ad account instead of booking a studio."
     },
     {
-      "t": "More Versions to Test",
-      "d": "Make another version with a new action, actor, or script. You choose which first seconds to publish."
+      "t": "New Version When One Fades",
+      "d": "When an angle goes quiet, you can make a new YouTube Shorts ad that starts with the product in use, without booking another shoot."
     },
     {
-      "t": "No Production Delays",
-      "d": "You are not waiting on a place to film, a person to record it, or an editor. Describe the scene and start the next file."
+      "t": "Use the Photo You Have",
+      "d": "The next YouTube Shorts ad uses a photo that is already on the product page. You do not wait for a rented studio to open."
     }
   ],
   "steps_h2": "Generate YouTube Shorts Ads in 3 Steps",
-  "steps_lead": "This page is for Shorts, the tall video. A wide ad that plays in the YouTube player is a separate file.",
+  "steps_lead": "You download a tall YouTube Shorts ad. A wide ad for the YouTube player is its own file.",
   "more_sections": [
     {
-      "eyebrow": "How the Short is finished",
-      "h2": "What You Can Set on a Short",
-      "lead": "You bring the product. Then you set the script, the actor, and the length.",
+      "eyebrow": "YouTube Shorts controls",
+      "h2": "Set the Product, Hands, and Line for YouTube Shorts",
+      "lead": "You settle the product, the hand, and the line before the file leaves.",
       "items": [
         {
-          "t": "Built for People Running Ads",
-          "d": "Turn a product link into a Short. A video costs 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Credits are what your monthly plan gives you to spend."
+          "t": "A URL Becomes the Ad",
+          "d": "Paste the product page and get a Short. A 15-second file spends 60 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
         },
         {
-          "t": "Actors That Hold the Product",
-          "d": "Start from the product photo and have an AI actor hold it, or show the item alone."
+          "t": "Avatar in the Ad",
+          "d": "Upload a photo of the product. An AI avatar sets it down and says one real fact about it."
         },
         {
-          "t": "An Editor for the Whole Ad",
-          "d": "Change the script, the voice, the actor, the on-screen words, and the music, then download the file."
+          "t": "Edit the Ad Line Here",
+          "d": "Fix a wrong fact in the line and leave the avatar in place, without moving the job to another app."
         }
       ]
     }
@@ -170,54 +170,54 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "A Shorts test can start from the picture on the product page, or from the product link.",
+  "benefits_lead": "A YouTube Shorts ad can start from the picture on the product page, or from the product link.",
   "reasons": {
-    "h2": "Why Choose AIVideosUGC for YouTube Shorts Ads?",
-    "lead": "Pick the face, the voice, and the first seconds. You decide what gets published.",
+    "h2": "What You Can Change on a YouTube Shorts Ad",
+    "lead": "A second face on your YouTube Shorts ad does not require a second booking.",
     "items": [
       {
-        "t": "Actors You Can Pick for the Shop",
-        "d": "Pick a different AI actor when you want a new face, or build a custom one for the shop.",
+        "t": "A Different Face Next",
+        "d": "You can put a different face on the next YouTube Shorts ad, a navy hoodie after a grey tank, so the channel is not one face on repeat. You do not send a casting call.",
         "icon": "UserRound"
       },
       {
-        "t": "Voices Shoppers Can Follow",
-        "d": "Use an AI voice and on-screen words in the language you sell in, with a tone that fits the product.",
+        "t": "A Local Voice",
+        "d": "Buyers can hear the line in a Texas accent, not a neutral read. That is the voice you pick for this account.",
         "icon": "Mic"
       },
       {
-        "t": "Test the First Seconds Yourself",
-        "d": "Make another file to try a new script, actor, or voice. You choose which first seconds to publish.",
+        "t": "Keep the Version That Wins",
+        "d": "You keep the opening people stay with and retire the one they skip. The choice is yours after both have run.",
         "icon": "Timer"
       }
     ]
   },
   "platforms": {
-    "h2": "Make Video Ads for Your Other Channels Too",
-    "lead": "Shorts is one place to post. Use the tall video on TikTok, Instagram, or Facebook, or make a separate file for a wide YouTube ad.",
+    "h2": "Other Screens for Your YouTube Shorts Ad",
+    "lead": "The same photo can also start a file for TikTok, Instagram, Facebook, Amazon, or Shopify.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "A tall ad for TikTok, started from the same photo.",
+        "d": "A tall TikTok ad from the same photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
         "label": "AI Instagram Ads",
-        "d": "A square photo or a tall video for Instagram.",
+        "d": "A square still or a tall video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
         "label": "AI Facebook Ad Generator",
-        "d": "A square photo for Facebook, or a tall video that fills the screen.",
+        "d": "A square Facebook photo, or a tall video that fills the screen.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "Amazon Product Photos",
         "label": "Amazon Product Photos",
-        "d": "A plain main image, a detail, and an in-use view for the gallery.",
+        "d": "A white main image, a close-up, and an in-use view for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
@@ -229,7 +229,7 @@
       {
         "t": "AI Ads and Product Photos by Platform",
         "label": "AI Ads and Product Photos by Platform",
-        "d": "Open the full channel list and choose where the next file will run.",
+        "d": "Open the full channel list and choose where the next file runs.",
         "href": "/platforms"
       }
     ]
@@ -300,8 +300,8 @@
       }
     ]
   },
-  "related_h2": "Related Tools for a Shorts Ad",
-  "related_lead": "Open the link tool, the actor tool, or a how-to template once you know what the product should do.",
+  "related_h2": "Tools That Pair With a YouTube Shorts Ad",
+  "related_lead": "Open the link tool, the actor tool, or a how-to template once you know the action.",
   "relatedLinks": [
     "video-ads",
     "url-to-video",

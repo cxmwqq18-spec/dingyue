@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a how-to demo for Shorts and ads, with no presenter to film. Pick a tall 9:16 or a wide 16:9, at 6, 10, 15, or 30 seconds.",
   "h1": "AI How-To Video Maker for a Task You Can Follow",
   "eyebrow": "How-to video template",
-  "lead": "Pick a how-to scene and add one photo, so the clip shows the task from the first step to the result. A voice, on-screen words (captions), or a generated person (an AI actor) can join the same file.",
+  "lead": "A blender is easier to explain when the frame is already a demo. Drop the blender in, say how the lid locks, and let an AI avatar show that move. You do not start from a blank page.",
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -13,19 +13,19 @@
     "instructional product video"
   ],
   "steps_h2": "How to Make a Product How-To Video in 3 Simple Steps",
-  "steps_lead": "You need one photo, one short task line, and a file you can post. The step shows how many credits it uses.",
+  "steps_lead": "Take a finished how-to home: pick the frame, put the bottle in, and download the file.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the whole product, including the part that does the work. Keep every edge inside the frame."
+      "d": "Open a short lesson demo, such as press, pause, then a second press. The lesson frame is ready without drawing."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the task and one change a shopper should see. Then pick a shape and a length from 6 to 30 seconds."
+      "d": "Use the listing photo or paste the product page link. The line follows the hands and names the cap shoppers miss."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add step labels in your own editor. Post it when the action matches the real product."
+      "d": "Get captions on the presses and a clip you can post. Ten seconds costs 40 credits before render; pauses can be trimmed in the editor."
     }
   ],
   "maker": {
@@ -47,48 +47,48 @@
   },
   "faq": [
     {
-      "q": "What is an AI how-to video?",
-      "a": "It shows one task from the first move to the result. You can add an AI actor, a script, a voice, and captions. Start from a product photo or a product link."
+      "q": "What do I get when I open a how-to template?",
+      "a": "You get a demo frame aimed at one task, such as opening an earbud case with one hand. Put your case in the frame. An AI avatar can do the open. A presenter is not on the calendar for this one."
     },
     {
-      "q": "How do I make the how-to clip?",
-      "a": "Upload the photo, name the task, and pick a shape and a length. Lengths are 6, 10, 15, or 30 seconds. Shapes are tall phone 9:16, square 1:1, wide 16:9, slightly wide 4:3, and slightly tall 3:4."
+      "q": "How does the template become a video?",
+      "a": "Paste the listing link or drop in the spice tin photo, then write the line you want heard. What comes back is a clip you can post. If a pause feels long, shorten it before the file goes up."
     },
     {
-      "q": "Why start here instead of filming a presenter?",
-      "a": "Try one version before you book a creator. Change the spoken line, the actor, or the language, and make another file. Check the action against the real product before you post."
+      "q": "Why use this instead of hiring someone to film the task?",
+      "a": "You can change the spoken line after the first cut, and the spend stays on the monthly plan rather than a shoot day. A creator's afternoon locks you to one version."
     },
     {
-      "q": "Who is this scene for?",
-      "a": "Shops, agencies, and founders who need to show how a product works. You can make a first file without video editing experience."
+      "q": "Which shops get the most from a how-to?",
+      "a": "A founder filming in a stock room, and an agency that owes a client a demo before the week ends. If the product has a move a buyer must copy, this frame fits."
     },
     {
-      "q": "Can I do this on the first try?",
-      "a": "Yes. Upload one clear photo, describe the single task, and download the file. Type a price in your own editor after download, if the listing needs one."
+      "q": "Can I do this if I have never edited a video?",
+      "a": "Yes. A photo of a ring on the table is enough to start, even if you have never edited a video."
     },
     {
-      "q": "What can I upload?",
-      "a": "A product photo, a short clip you already filmed, or a product page link. The task should match the real item."
+      "q": "Which products fit a how-to template?",
+      "a": "Anything a shopper has to see in use: beauty, home, food, gadgets, fitness, and more. Swap the item and the line, and the same shape can speak to a different buyer."
     },
     {
-      "q": "Where can I publish it?",
-      "a": "Publish to TikTok, Instagram, or Facebook in one step, or download a file for YouTube. Pick the video shape before you start."
+      "q": "Can the how-to use files from my shop?",
+      "a": "Yes. A logo in the corner and a clip you shot last spring can both go in. The item in the photo should be the one you ship, so the demo matches the shelf."
     },
     {
-      "q": "What does the clip cost?",
-      "a": "A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark."
+      "q": "Where can I post the finished how-to?",
+      "a": "Match the frame to the placement. Use 9:16 for a phone story, 1:1 for a square tile, and 16:9 for a wide screen. 4:3 and 3:4 sit in the same picker. A LinkedIn placement can take the wide file. YouTube Shorts can take the tall one."
     },
     {
-      "q": "Can I run the file in ads?",
-      "a": "Yes. Use the download in your ads, pages, and posts. People on screen are AI actors, so present the clip as your shop's ad."
+      "q": "Do I pay to use a template?",
+      "a": "Yes. Templates sit on a paid subscription. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A clip spends 24 credits at 6 seconds, 40 at 10, 60 at 15, and 120 at 30. If a job fails, those credits come back."
     },
     {
-      "q": "Can I make several products at once?",
-      "a": "Yes. Run the same task on many photos at once, or start them from your own software (the API). Each one shows its credit cost first."
+      "q": "Can I run the how-to in ads and in client work?",
+      "a": "Yes. A client handoff and a paid placement can use the same file, and the download has no watermark. Read the license on your plan before you pass the file on."
     },
     {
-      "q": "Will the file speak the steps?",
-      "a": "Yes. Turn on an AI voice and captions so the steps are heard and read. You can still type a price in your own editor after download."
+      "q": "Why not build the ad from a blank file?",
+      "a": "This frame is already a lesson, so the hour can go to the spout and the pour instead of to the shape of the ad. A blank timeline asks you to invent that shape."
     }
   ],
   "visual": {
@@ -656,58 +656,58 @@
       }
     ]
   },
-  "related_h2": "Pages for a YouTube Shorts Product Tutorial",
-  "related_lead": "Product videos, home scenes, and a Shorts page that sit next to a how-to clip.",
-  "cta_title": "Ready to Show the Task?",
-  "cta_lead": "Upload one product photo. Add a voice or an actor if you want one, and see the credit cost before you start.",
+  "related_h2": "More Pages Beside a How-To",
+  "related_lead": "Product videos, room scenes, and a Shorts page that sit well next to a task demo.",
+  "cta_title": "Fill This How-To With Your Product",
+  "cta_lead": "You leave with a how-to clip you can post. Add a honey jar photo and let an AI avatar show the drizzle.",
   "definition": {
-    "title": "What Is an AI How-To Video?",
+    "title": "A Task Demo With the Frame Done",
     "paras": [
-      "An AI how-to video shows one product task a shopper can follow, from the setup to the result.",
-      "Start with a photo or a product link. Add a short script (the words), an AI voice, captions, and an AI actor if the task needs a person. The download has no watermark, and you can use it in ads and on your pages."
+      "You get a frame for one task, like showing how a lace goes from loose to a finished bow.",
+      "Your photo sits in that frame. You write the line. An AI avatar handles the bow."
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "What you can add",
-      "h2": "Features for a Product How-To Video",
-      "lead": "The same photo can carry a voice, a script, and an actor.",
+      "eyebrow": "In the file",
+      "h2": "What a How-To Template Can Carry",
+      "lead": "Voice, script, avatar, and a second version can all sit on the same product photo.",
       "items": [
         {
           "t": "AI Voice",
-          "d": "A voice can read the task out loud, so the shopper hears each move."
+          "d": "A voice reads the task out loud, or you clone a voice you want to keep across demos."
         },
         {
-          "t": "Auto Captions",
-          "d": "Words on the screen can name the step while the clip plays."
+          "t": "On-Screen Captions",
+          "d": "Captions can name the step while the picture moves."
         },
         {
           "t": "AI Script",
-          "d": "Ask for a short script, then edit the line before the clip is made."
+          "d": "You get a short script you can edit before the clip is made."
         },
         {
-          "t": "Actor Library",
-          "d": "Choose an AI actor to show the task. Post the clip as your shop's ad."
+          "t": "AI Avatar",
+          "d": "An AI avatar you pick can present the task, and you can post the clip as your shop's ad."
         },
         {
-          "t": "Link, Many Photos, and API",
-          "d": "Paste a product link, run one task on many photos at once, or start them from your own software (the API)."
+          "t": "Link, Batch, and API",
+          "d": "A product link, a batch of photos, or your catalog API can start the how-to."
         },
         {
           "t": "Editor, Music, and Languages",
-          "d": "Trim in the built-in editor, pick a track from the music library, and repeat the task in another language."
+          "d": "You can trim in the built-in editor, add a track from the music library, and repeat the task in another language."
         }
       ]
     }
   ],
   "platforms": {
-    "h2": "Publish the How-To on TikTok, Instagram, Facebook, and YouTube",
-    "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before you start.",
+    "h2": "Post the How-To Where Buyers Scroll",
+    "lead": "Put the how-to where shoppers already scroll. Send the clip from here, or download it and post it yourself.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "Publish the how-to to TikTok in one step, in a tall phone shape.",
+        "d": "Send a tall how-to to TikTok from this page.",
         "href": "page:plat-tiktok"
       },
       {
@@ -719,13 +719,13 @@
       {
         "t": "AI Facebook Ad Generator",
         "label": "AI Facebook Ad Generator",
-        "d": "Send the same how-to to Facebook in one step.",
+        "d": "Send the same how-to to Facebook.",
         "href": "page:plat-facebook"
       },
       {
         "t": "YouTube Shorts Ads",
         "label": "YouTube Shorts Ads",
-        "d": "Download a tall file for YouTube Shorts, or a wide file when the post needs it.",
+        "d": "Download a tall file for YouTube Shorts, or a wide file when the placement needs it.",
         "href": "page:plat-youtube-shorts"
       },
       {

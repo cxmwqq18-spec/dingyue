@@ -4,7 +4,7 @@
   "description": "Put your product next to a familiar object so shoppers can judge its size at a glance. AI scale photos for listings and ads, from one photo.",
   "h1": "Product Size Reference Photo Beside One Familiar Object",
   "eyebrow": "Product photo template",
-  "lead": "Start a size photo, add one photo of the whole item, and name one familiar object so shoppers can judge the size at a glance.",
+  "lead": "A folded blanket's size is easier to trust when a familiar object sits beside it. Open a size layout, use one photo of the whole blanket, and skip the blank prompt.",
   "secondary_keywords": [
     "size comparison product photo",
     "scale photo for Amazon listing",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one photo that shows the whole item. A cut-off handle, sole, or corner hides how big it is."
+      "d": "Use a photo that shows the whole travel pillow, edge to edge. The listing photo is enough, and you skip a second shoot."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name a familiar object: a palm, notebook, or carry-on. This is only a hint. Keep real measurements in the listing."
+      "d": "Pick an object shoppers understand, such as a closed notebook beside the pillow. An avatar can say how it packs in words you edit."
     },
     {
       "t": "Download and Post",
-      "d": "Download the square image and check that the comparison looks natural. Put the real length, width, height or capacity in the listing text."
+      "d": "Save a square for the listing or a 9:16 clip that says the size aloud. Shoppers can judge size before reading details."
     }
   ],
   "maker": {
@@ -44,48 +44,48 @@
   },
   "faq": [
     {
-      "q": "Is the size in the photo exact?",
-      "a": "No. Treat it as a visual guide. The size in the picture can be slightly off, so put the real length, width, height, or capacity in the listing text."
+      "q": "What is a size video ad template?",
+      "a": "It shows the whole item next to something shoppers already understand. A daypack beside a carry-on outline makes the pack size obvious, and you skip building that comparison on a studio table."
     },
     {
-      "q": "Which object makes a useful size hint?",
-      "a": "Name one familiar, unbranded object shoppers recognize for that product, such as a hand, a notebook, a carry-on, or a common mug."
+      "q": "How does a size template become a finished file?",
+      "a": "You leave with a file that shows the scale. Put the full thermos in the layout, choose a phone as the reference, and download the square for the listing."
     },
     {
-      "q": "Should each image use one reference object?",
-      "a": "Yes. One object keeps the comparison easy to read. Make a second image when you need a different hint."
+      "q": "Why a template instead of filming a scale setup?",
+      "a": "Building a scale setup means finding the prop and the time. When you want the thermos beside a bowl instead of a canister, you name the new object in this layout and render again."
     },
     {
-      "q": "Where do exact measurements go?",
-      "a": "Put length, width, height, and capacity in the listing text or a dimension table. Keep the reference photo as the quick visual beside those facts."
+      "q": "Who needs a size template?",
+      "a": "Sellers whose product is hard to judge from a photo alone. A jewelry shop showing a ring, and the freelancer who makes ads for that shop, both need the comparison to be obvious."
     },
     {
-      "q": "Can I use this as an Amazon listing image?",
-      "a": "Yes. A size comparison can be one extra image in an Amazon gallery when it shows the real item. It does not replace the written dimensions."
+      "q": "Can I show scale if I have never edited?",
+      "a": "Yes. One full photo and the three steps are enough to show scale in a few minutes. You name the familiar object, and the layout places it."
     },
     {
-      "q": "Where else can the square image go?",
-      "a": "Use it on a product page, in a Shopify gallery, or in a feed post, always next to the exact measurements."
+      "q": "Which products are hard to size from a photo alone?",
+      "a": "Small goods and soft goods. A compact, a scarf, and a folded towel can each sit beside one familiar object so the scale reads without a ruler."
     },
     {
-      "q": "Can I make several size hints or use the API?",
-      "a": "Yes. Reuse one product photo and name another object, or send listing photos from your own software (API). Each photo is 24 credits. A failed job returns those credits."
+      "q": "Can I start from photos and clips I shot?",
+      "a": "Yes. Your logo can mark the corner, and the ring should be the one from your bench photo. A clip of the band is optional."
     },
     {
-      "q": "Do I need props or a studio?",
-      "a": "No. The reference object and the setting are generated from your product photo. A hand in the photo is a generated size hint, not a customer. Downloads have no watermark."
+      "q": "Which platforms can the file go to?",
+      "a": "The square still belongs on the product page. A tall 9:16 cut can run on TikTok, 1:1 can sit in the shop grid, and 16:9, 4:3, or 3:4 cover a YouTube or LinkedIn placement."
     },
     {
-      "q": "Can shoppers judge fit from the image alone?",
-      "a": "They can get a rough idea of the size. A purchase still needs the exact measurements in the listing, and a size chart where fit depends on it."
+      "q": "Do size templates sit on a paid subscription?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Each product photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The cost shows before the job, and a failed job returns the credits."
     },
     {
-      "q": "What does a size reference photo cost?",
-      "a": "Each product photo costs 24 credits. The cost is shown before the job starts. Starter is $24.50 a month for 200 credits."
+      "q": "Can I use the size file in ads and for clients?",
+      "a": "Yes. Put the square on the product page, run the clip as an ad, or send the file to a client who sells the same scarf."
     },
     {
-      "q": "Can I also make a spoken clip from this photo?",
-      "a": "Yes. The same photo can become a short video with a script, a voice, captions, music, and an AI actor. Publish that clip to TikTok, Instagram, or Facebook, or download it. Video credits are 24, 40, 60, or 120 for 6, 10, 15, or 30 seconds."
+      "q": "Why name a reference object inside a layout instead of building the comparison yourself?",
+      "a": "Your effort goes into picking the object shoppers trust. The blanket stays in a layout that already has a place for that object, and you only name what sits beside it."
     }
   ],
   "visual": {
@@ -552,7 +552,7 @@
     }
   },
   "steps_h2": "How to Make a Product Size Reference Photo in 3 Simple Steps",
-  "steps_lead": "The whole item in the photo, one familiar object, then a square image beside your real measurements.",
+  "steps_lead": "Add the full item, name one familiar object, and download a file you can post.",
   "blockOrder": [
     "hero",
     "features",
@@ -630,8 +630,8 @@
       }
     ]
   },
-  "related_h2": "Related Pages for Size Photos",
-  "related_lead": "Pair the size photo with a close-up, a jewelry photo on a person, studio lighting, and Amazon.",
+  "related_h2": "Pages to Pair With a Size Template",
+  "related_lead": "A close-up, a jewelry photo on a person, studio lighting, and Amazon sit beside this size template.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -658,128 +658,128 @@
       "label": "Amazon Product Photos"
     }
   ],
-  "cta_title": "Start a Size Photo From One Full Product Shot",
-  "cta_lead": "Upload one photo of the whole item, name one familiar object, and see the credit cost before you start.",
+  "cta_title": "Build a Size Ad From a Template",
+  "cta_lead": "Add one full product photo, name a familiar object, and download a creator-style file you can post.",
   "definition": {
-    "title": "What Is a Product Size Reference Photo?",
+    "title": "What Is a Product Size Template?",
     "paras": [
-      "A product size reference photo places your item beside one familiar object so shoppers can judge the size at a glance. It is a size hint, not a measured drawing.",
-      "Put the real length, width, height, or capacity in the listing text. Check the picture against those numbers before you post it on Amazon or your product page."
+      "A size template sets your item beside one object shoppers already know. A sewing kit next to a common coin is the comparison, and the square can live on the listing.",
+      "Start from one photo of the whole item or from a product page. Download a square image, or a short video sized for the channel you post on."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Use a Size Reference Photo",
-    "lead": "Shoppers get a quick size hint. The listing still carries the real measurements.",
+    "h2": "Why a Size Template Is Worth Opening",
+    "lead": "Scale is easy to see, and the file can become a spoken ad without a set.",
     "items": [
       {
-        "t": "Size at a Glance",
-        "d": "A familiar object next to the product is easier to read than a product floating on a plain ground with no size hint at all.",
+        "t": "Scale Inside a Selling Shape",
+        "d": "A familiar object sits next to the product, inside a layout that already behaves like a shopper video.",
         "icon": "Ruler"
       },
       {
-        "t": "No Props to Collect",
-        "d": "The reference object and the setting are generated from your product photo. You do not need a studio or a borrowed suitcase.",
+        "t": "No Props to Gather",
+        "d": "The reference object and the setting are generated from your product photo. The light kit stays in storage.",
         "icon": "Sparkles"
       },
       {
-        "t": "One Photo, Another Hint",
-        "d": "Reuse a clear product photo and name a different object. Compare each result with your measured dimensions before posting.",
+        "t": "Another Hint, Same Photo",
+        "d": "Reuse the product photo, name a different object, or swap the language and render again.",
         "icon": "Repeat"
       },
       {
-        "t": "The Numbers Stay in the Listing",
-        "d": "The picture does not replace length, width, height, or capacity. Those facts stay in the listing text.",
+        "t": "A Script for the Spoken Cut",
+        "d": "When you need motion, a drafted script, a voice, and captions can explain the scale on camera.",
         "icon": "FileText"
       }
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "Pick a size hint",
-      "h2": "Browse Size Scenes by Familiar Object",
-      "lead": "Start from one object. The picture is only a size hint. The real measurements stay in the listing.",
+      "eyebrow": "Pick a starting scene",
+      "h2": "Size Templates by Familiar Object",
+      "lead": "Each scene puts one recognizable object beside the product, then the same photo can become a spoken clip.",
       "items": [
         {
           "t": "Palm or Hand",
-          "d": "A bottle or a small tool sits beside an open palm. The hand is generated, not a photo of a customer."
+          "d": "A bottle or a small tool sits beside an open palm, ready for a still or a short spoken ad."
         },
         {
           "t": "Closed Notebook",
-          "d": "A planner or a small bag sits beside a notebook so the page size is easier to picture."
+          "d": "A planner or a small bag sits beside a notebook so the page size reads in the layout."
         },
         {
           "t": "Carry-On Outline",
-          "d": "A daypack sits beside a carry-on outline. The picture does not prove it fits an overhead bin."
+          "d": "A daypack sits beside a carry-on outline in a creator-style frame you can post."
         },
         {
           "t": "Common Coin",
-          "d": "A pendant or a powder case sits beside a common coin so the face size is easier to see."
+          "d": "A pendant or a compact sits beside a common coin so the face size is easy to catch."
         },
         {
           "t": "Phone Outline",
-          "d": "A small case sits next to a phone outline. Millimeters stay in the listing text."
+          "d": "A small case sits next to a phone outline inside the same selling layout."
         },
         {
           "t": "Familiar Mug",
-          "d": "A bowl or a canister sits beside a mug. Write the real capacity next to the image."
+          "d": "A bowl or a canister sits beside a mug, with room for a voiceover if you want motion."
         }
       ]
     },
     {
       "eyebrow": "Also in the project",
-      "h2": "Features for a Size Reference Photo",
-      "lead": "Ways to make the size photo, and a clip from the same picture when you need motion.",
+      "h2": "Features Around the Size Template",
+      "lead": "Ways to build the size file, and a clip from the same picture when the feed needs motion.",
       "items": [
         {
-          "t": "One Object in the Photo",
-          "d": "Name a single familiar object so the comparison stays easy to read. Use a second image when you need a different hint."
+          "t": "One Object in the Frame",
+          "d": "Name a single familiar object so the comparison stays easy to read. Render a second file when you want a different hint."
         },
         {
-          "t": "Batch Another Hint",
-          "d": "Reuse the same product photo for a palm version and a notebook version. Each photo spends 24 credits (points on your plan), shown before you start."
+          "t": "A Batch of Hints",
+          "d": "Reuse the same product photo for two familiar objects. A catalog can leave with both hints in one pass."
         },
         {
-          "t": "Generated Hand or Model",
-          "d": "The hand in the size hint, or a [photo of someone wearing the item](page:model-photos), is generated. It does not replace a size chart."
+          "t": "A Generated Hand or Model",
+          "d": "The hand in the frame, or a [photo of someone wearing the item](page:model-photos), is an AI avatar you can reuse on the next ad."
         },
         {
           "t": "Start From a Product Link",
           "d": "Paste a public [product page link](page:url-to-video) when you want that page's main image as the starting photo."
         },
         {
-          "t": "API for Catalog Photos",
-          "d": "Send listing photos from your own software (API) and get size photos back. Each one spends credits from your plan. Starter is $24.50 a month."
+          "t": "API for a Catalog",
+          "d": "Send listing photos from your shop software through the API and get size files back. Each one spends credits from your plan. Starter is $24.50 a month."
         },
         {
           "t": "A Clip When You Need Motion",
-          "d": "Turn the same photo into a short video with a voice, captions, music, and an AI actor, then publish to TikTok, Instagram, or Facebook."
+          "d": "An avatar can stand next to the product while music plays, and you can add the scale in a caption. Post that clip on Facebook, or use the wide cut on YouTube."
         }
       ]
     }
   ],
   "trust": {
     "h2": "What You Can Count On",
-    "lead": "A size hint in the picture, the real measurements in the listing, and the credit cost up front.",
+    "lead": "The file is ready for a listing or a feed post.",
     "items": [
       {
         "t": "24 Credits a Photo",
-        "d": "Each product photo is 24 credits (points on your plan). The cost is shown before you start."
+        "d": "Each product photo is 24 credits. You see that cost before you start. A video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
       },
       {
         "t": "No Watermark",
-        "d": "Downloads have no AIVideosUGC watermark. You can use the image in a listing, a gallery, or a feed post."
-      },
-      {
-        "t": "Not a Measured Drawing",
-        "d": "The size in the picture can be slightly off. Put the real length, width, height, or capacity in the listing text."
+        "d": "Downloads have no AIVideosUGC watermark. Use the file in a listing, a gallery, or a feed post."
       },
       {
         "t": "Failed Jobs Return Credits",
-        "d": "If it fails, the credits set aside for it return to your balance."
+        "d": "If the job fails, the credits set aside for it return to your balance."
       },
       {
         "t": "Paid Plans",
         "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
+      },
+      {
+        "t": "Commercial Use",
+        "d": "The file can run in your ads and in work you do for clients. A person in the frame is an AI avatar."
       }
     ]
   }

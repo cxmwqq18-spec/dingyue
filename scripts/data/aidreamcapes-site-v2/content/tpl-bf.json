@@ -4,7 +4,7 @@
   "description": "Build a Black Friday video ad from one product photo, then add the confirmed offer after download. Choose a setup for social posts and product pages.",
   "h1": "Black Friday Video Ads You Can Post Before the Rush",
   "eyebrow": "Black Friday template",
-  "lead": "Place your product photo in a setup, and add a spoken AI voice if you want one. Put the price, code, and end date on after you download.",
+  "lead": "A puffer jacket you already photographed can sit in a sale scene that looks ready for the holiday feed.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one sharp photo of the product in the offer. Keep the full shape and finish visible."
+      "d": "Use one sharp photo of the wool coat on sale, with its full shape and finish visible. Shoppers recognize the coat."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the setting, pick a spoken AI voice, and choose 6 to 30 seconds. Leave the exact price out of the video."
+      "d": "Describe the setting, choose a spoken AI voice if wanted, and select 6, 10, 15, or 30 seconds. The scene is ready for posting."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip, add captions if needed, and type the confirmed price, code, or end date."
+      "d": "Save the clip and add captions if you need them. Type the confirmed price, code, or end date yourself."
     }
   ],
   "maker": {
@@ -46,23 +46,23 @@
   "faq": [
     {
       "q": "What does this Black Friday template make?",
-      "a": "A deal clip from your product photo, with an AI actor, a script, and a spoken voice if you want them. You still type the confirmed price, code, and end date after download."
+      "a": "A deal clip built from the tote photo you already have. An AI avatar, a script, and a spoken voice can come with it."
     },
     {
-      "q": "How does the scene come together?",
-      "a": "Upload one product photo, describe the setting, pick a size and a length, then add captions or the offer in the editor on this site."
+      "q": "How does the sale scene come together?",
+      "a": "Upload one headphone photo, describe the setting, pick a size and a length, then add captions or the offer in the editor on this site."
     },
     {
-      "q": "Why not book a shoot for the sale?",
-      "a": "The background is built from the photo you have, so you can skip a studio camera and a big setup before sale week."
+      "q": "Why skip a shoot during sale week?",
+      "a": "The blanket photo from the product page is enough to build the sale scene. You can spend the week on the offer, not on a new shoot."
     },
     {
       "q": "Who should use it?",
       "a": "Shops that need a product clip for Black Friday, Cyber Monday, or a later holiday offer, on Facebook, Instagram, TikTok, or a product page."
     },
     {
-      "q": "Can I do this without editing experience?",
-      "a": "Yes. The setup is built for you. Add stickers, captions, a song from the music library, or an AI voice in the editor on this site. Put the offer on only after you confirm it."
+      "q": "Can I do this with no editing practice?",
+      "a": "Yes. The sale scene is built from your sneaker photo. A song from the music library can sit under the voice in the editor here."
     },
     {
       "q": "What photo should I upload?",
@@ -73,20 +73,20 @@
       "a": "Use a tall 9:16 for Stories and Reels, or a square 1:1 for the feed. A wide 16:9, a slightly wide 4:3, and a slightly tall 3:4 are there when the post needs that shape. Lengths are 6, 10, 15, or 30 seconds. Publish to TikTok, Facebook, or Instagram from the same project."
     },
     {
-      "q": "Does the generator write the discount?",
+      "q": "Does the tool write the discount?",
       "a": "No. Add the live price, code, and end date after download. If the offer changes, edit that text instead of trusting an old file."
     },
     {
       "q": "What does a clip cost?",
-      "a": "Credits are what each video spends. 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. If it fails, those credits come back. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
+      "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. If it fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. It has no watermark, which means no logo is stamped on the file. If a person appears, that person is an AI actor, not a shopper who bought the deal."
+      "a": "Yes. Nothing is stamped on the file, so the download can run in paid ads."
     },
     {
-      "q": "Can I start from a product link, many products at once, or my own software?",
-      "a": "Yes. Paste a product page link for a script and a voice copied from one you may use. When many products share the sale setup, run them at once (a batch), or start jobs from your own software (the API). Another language can reuse the same photo. You still confirm the offer text."
+      "q": "Can I start from a product link or my own software?",
+      "a": "Yes. Paste a product page link for a script and a voice cloned from one you may use. When many products share the sale setup, run them in one go, or start jobs from your own software through the API. Another language can reuse the same photo."
     }
   ],
   "visual": {
@@ -551,9 +551,9 @@
     }
   },
   "steps_h2": "How to Make a Black Friday Ad in 3 Simple Steps",
-  "steps_lead": "The product stays in the scene. The price, code, and end date wait until you confirm them.",
-  "cta_lead": "Upload the product in your offer and add a spoken voice if you want one. Credits are what the video spends, and you see that cost before you start.",
-  "cta_title": "Ready to Make Your Sale Video?",
+  "steps_lead": "You leave with a holiday clip, and the wool coat stays in the scene.",
+  "cta_lead": "Upload the product in your offer and get a sale clip back. The credit cost is on screen first.",
+  "cta_title": "Ready to Make Your Sale Video",
   "blockOrder": [
     "hero",
     "picker",
@@ -565,9 +565,10 @@
     "cta"
   ],
   "definition": {
-    "title": "A Sale Scene From the Photo You Have",
+    "title": "What This Sale Template Is For",
     "paras": [
-      "The background is built from the photo you upload, so you can skip a studio camera and a big spend. The download has no watermark, which means no logo is stamped on the file. Add the confirmed price, code, and end date after download."
+      "A knit sweater from your product page can sit in a scene made for the sale post.",
+      "The sweater and the beanie can share one setup, so the shop grid looks like one sale."
     ]
   },
   "reviews": {
@@ -646,8 +647,8 @@
       }
     ]
   },
-  "related_h2": "Pages for Facebook Black Friday Ads",
-  "related_lead": "Video ads and electronics templates for the same sale week, plus Black Friday creatives and Facebook ads.",
+  "related_h2": "Pages for a Black Friday Sale",
+  "related_lead": "The sale clip can continue into video ads, holiday creatives, and Facebook ads on these pages.",
   "relatedLinks": [
     {
       "id": "video-ads",
@@ -676,22 +677,22 @@
   ],
   "reasons": {
     "h2": "Three Things You Can Add",
-    "lead": "Start from the photo you have. Add your words and a spoken voice. Add the offer only after you confirm the numbers.",
+    "lead": "The sale scene, your own wording, and one look across the shop are the three things you can add to the photo you already have.",
     "items": [
       {
-        "t": "Start From a Ready Setup",
-        "d": "Open a ready setup, keep your product, and add your words, stickers, and captions. A song from the music library can play under the clip. The layout is already there, so you do not start from a blank file.",
-        "icon": "LayoutGrid"
+        "t": "A Sale Look From Your Photo",
+        "icon": "Camera",
+        "d": "A boot photo can become a sale scene for the feed, without renting a camera for that clip."
       },
       {
-        "t": "Show the Product Right Away",
-        "d": "Turn the photo into a clip with an AI actor, a script, and a spoken voice. Publish it to TikTok, Facebook, or Instagram in one step. Type the real price only after download.",
-        "icon": "Play"
+        "t": "Sound Like Your Shop",
+        "icon": "Type",
+        "d": "The candle clip can sound like your shop, not like a generic sale banner. Put the shop's own wording on it, and the post reads as yours."
       },
       {
-        "t": "Website, Many Products, or Your Software",
-        "d": "Make the same deal setup on the website. When you have many products, run them at once (a batch), or start jobs from your own software (the API). In the editor on this site you can edit, resize, change the background, and try another language. Plans start at $24.50 a month.",
-        "icon": "Layers"
+        "t": "One Sale Look for the Whole Shop",
+        "icon": "Palette",
+        "d": "Sale posts can match across the shop when they reuse one setup. On this site you can edit, resize, and try another language. Many products can run in one go, or your software can start them through the API."
       }
     ]
   }

@@ -4,7 +4,7 @@
   "description": "Make a short alert video for a small release or restock from one product photo. After you download it, add the date, the quantity, and your link.",
   "h1": "Limited Drop Alert Video for a Restock or Small Release",
   "eyebrow": "Small release video template",
-  "lead": "A limited drop alert video is a short clip for a small release or restock. Put the product in a scene. Add a voiceover, a spoken voice, and captions, words on the screen. Add the date only after you download. Credits, what each job spends, are shown before you start.",
+  "lead": "Tell shoppers a small restock is back, without filming a new season. Put the navy cap in a frame that already behaves like an alert. An AI avatar wears the color you photograph.",
   "secondary_keywords": [
     "restock alert video",
     "limited release ad",
@@ -12,19 +12,19 @@
     "product restock reel"
   ],
   "steps_h2": "Make a Limited Release Ad in 3 Steps",
-  "steps_lead": "The scene shows the product. Add the spoken line here, and keep the date and quantity editable after download.",
+  "steps_lead": "Leave with an alert you can post: open the frame, add the hoodie and the sentence, and download the clip.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo of the item in this release, or paste its product page link."
+      "d": "The frame is already a short alert, with room for one garment. You can say the hoodie is back without holding a fitting."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name how the product appears and a short spoken line, then pick a size and a length from 6 to 30 seconds."
+      "d": "Use a photo of the color that returned, or the product page link. Returned sizes, date, count, and buy link appear after download."
     },
     {
       "t": "Download and Post",
-      "d": "Download the alert, add the date and quantity, and post to TikTok, Facebook, or Instagram. Pause it when you sell out."
+      "d": "Captions can carry the sentence while the hoodie is on screen, and you do not wait on a crew to get the file."
     }
   ],
   "maker": {
@@ -46,44 +46,44 @@
   },
   "faq": [
     {
-      "q": "What is a limited drop alert video?",
-      "a": "A ready scene for a short release. You add your product photo, a hook (the opening line), a script (the words), and a voiceover (a spoken voice). An AI actor, a generated person, can hold the item. You type the date and the quantity after download."
+      "q": "What is inside a drop-alert template for clothes?",
+      "a": "A short alert frame for a restock, such as a wool coat that just returned. The photographed color is the one that appears worn. You do not need to book a person to say it is back."
     },
     {
-      "q": "How do I build the alert?",
-      "a": "Upload the photo or paste a product page link. Take the script, pick an AI actor and a spoken voice, choose a size and a length, then download. You can make several versions from that same photo."
+      "q": "What do I do to turn the template into an alert?",
+      "a": "Start from whichever color actually came back in the mail. The clip speaks to someone shopping for a restock."
     },
     {
-      "q": "Why start from a product photo instead of filming the drop?",
-      "a": "The scene comes from the photo or the product link. You can prepare the alert before the release, and you do not need a creator for every color."
+      "q": "What kinds of clothes can a drop alert show?",
+      "a": "A restocked trainer, a wedding-guest dress, or a work jacket. If a shopper wears it and you can photograph it, the alert can carry it. Leave out a color you cannot ship."
     },
     {
-      "q": "Who is this release alert for?",
-      "a": "Shops with a short time to sell, including shoes, clothes, a beauty color, or a home restock. They post on TikTok, Instagram Reels, or a product page."
+      "q": "Can I cut several alerts for one drop?",
+      "a": "Yes. The same tee can get a tall alert for a phone and a second sentence for shoppers who only want the grey. You keep the photo and change the sentence."
     },
     {
-      "q": "Can a first-time seller use it?",
-      "a": "Yes. One clear photo and a short line are enough. You can set words on screen, music, and the spoken line before you download."
+      "q": "Who is a drop alert like this for?",
+      "a": "A label that brings pieces back in small piles and cannot stop for a fitting. The person who writes the caption can also make the clip."
     },
     {
-      "q": "Can the clip show a live countdown or the stock count?",
-      "a": "Add the countdown, the date, and the quantity as text after download. This tool does not read a clock or a stock number from your store."
+      "q": "Can I send a drop alert if I have never cut a video?",
+      "a": "Yes. Photograph the scarf flat and type the line, even if you have never edited a video."
     },
     {
-      "q": "Which size and length fit a drop post?",
-      "a": "Use 9:16, a tall phone shape, for TikTok and Instagram Reels. 1:1 is a square for the main feed. You can also pick 16:9 (wide), 4:3, or 3:4 (tall). Lengths are 6, 10, 15, or 30 seconds. You can post to TikTok or Meta (Facebook and Instagram)."
-    },
-    {
-      "q": "Does it include music, captions, or a voiceover?",
-      "a": "Yes. In the editor, set a spoken voice, words on screen, and a track from the music library. You can speak the line again in another language."
+      "q": "When is the alert file in my hands?",
+      "a": "When the render finishes. You can post it in that same work session, with no fitting on the calendar."
     },
     {
       "q": "What does the alert cost?",
-      "a": "A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Credits are what the job spends. You see the cost first, and a failed job returns those credits. Plans start at $24.50 a month. There is no free plan. The download has no watermark, nothing stamped on the file."
+      "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. If the job fails, those credits return. The file has no watermark."
     },
     {
-      "q": "What should I do when the drop sells out?",
-      "a": "Pause or replace the ad and change the quantity line. The API lets your product list start the next alert. Any person on screen is an AI actor, a generated person, not a buyer."
+      "q": "When do I add the date, the count, and the link?",
+      "a": "After download, in the editor. The template does not invent a date or a quantity for you."
+    },
+    {
+      "q": "Where can I post the alert?",
+      "a": "On TikTok, Instagram, or Facebook, in a tall, square, or wide frame, plus 4:3 and 3:4. Use it in ads and on the product page, inside your plan's license."
     }
   ],
   "visual": {
@@ -548,7 +548,7 @@
       }
     }
   },
-  "cta_lead": "Upload the product and add the spoken line. You see the credit cost, what the job spends, before you start.",
+  "cta_lead": "Get the restock in front of people who are already scrolling. Add the beanie that came back and open the alert.",
   "blockOrder": [
     "hero",
     "picker",
@@ -624,8 +624,8 @@
       }
     ]
   },
-  "related_h2": "Pages for the Next Restock Video",
-  "related_lead": "Video ads, fashion scenes, and TikTok placements for the next restock.",
+  "related_h2": "Pages for the Next Restock",
+  "related_lead": "Video ads, fashion scenes, and TikTok placements that can carry the next alert.",
   "relatedLinks": [
     {
       "id": "video-ads",
@@ -652,42 +652,42 @@
       "label": "AI TikTok Ads Generator"
     }
   ],
-  "cta_title": "Show the Limited Drop Before It Sells Out",
+  "cta_title": "Show the Restock in the Scroll",
   "more_sections": [
     {
       "eyebrow": "On this alert",
-      "h2": "Features for a Small Release Alert",
-      "lead": "Use these on the release alert. You can still edit the date, the quantity, and your link after download.",
+      "h2": "What a Drop Alert Can Carry",
+      "lead": "One garment photo is enough to post an alert with a voice and an avatar.",
       "items": [
         {
           "icon": "play",
-          "t": "Spoken Voice, Words on Screen, and Music",
-          "d": "Add a spoken voice, words on screen, and a track from the music library before you download."
+          "t": "Voice, Captions, and a Track",
+          "d": "The alert can carry a voice, captions, and a track from the music library."
         },
         {
           "icon": "users",
-          "t": "AI Actors and a Digital Twin",
-          "d": "Pick an AI actor, a generated person, to hold the item. Or pick a digital twin, that same person saved to use again. They are not buyers."
+          "t": "AI Avatars and an AI Twin",
+          "d": "An AI avatar wears the release piece. An AI twin can be that same presenter on the next restock."
         },
         {
           "icon": "sparkle",
-          "t": "A Script From a Line or a Link",
-          "d": "Ask for a short script, the words to say. Or paste a product page link and start the alert from that page."
+          "t": "A Script or a Product Link",
+          "d": "A short script, or a product link, can start the alert from the garment page."
         },
         {
           "icon": "layers",
-          "t": "A Batch of Versions From One Photo",
-          "d": "Make another version from the same photo for a second opening line. Each job shows its credit cost first. Credits are what the job spends."
+          "t": "Several Alerts From One Photo",
+          "d": "One garment photo can make another opening. Each job shows its credit cost first."
         },
         {
           "icon": "check",
-          "t": "Edit Here, Then Publish",
-          "d": "Trim in the editor, then post to TikTok or Meta (Facebook and Instagram). The file has no watermark, nothing stamped on it."
+          "t": "Edit, Then Publish",
+          "d": "You can trim in the editor, then post to TikTok, Instagram, or Facebook. Nothing is stamped on the file."
         },
         {
           "icon": "globe",
-          "t": "Another Language, or the API",
-          "d": "Speak the line in another language. Or use the API so your product list can start this alert."
+          "t": "Another Language or the API",
+          "d": "The line can go out in another language, or the API can start the next restock from your catalog."
         }
       ]
     }

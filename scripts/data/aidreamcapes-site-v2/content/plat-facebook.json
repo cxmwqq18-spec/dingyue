@@ -4,7 +4,7 @@
   "description": "Make a Facebook ad from one product photo. Choose a square image or a tall phone Reel. You pay in credits, and you see the cost first. No watermark.",
   "h1": "AI Facebook Ad Generator from One Product Photo",
   "eyebrow": "Facebook ads",
-  "lead": "Paste a product link or start from one photo. Pick a presenter made by AI (an actor), a script, and a voice. A credit is what your plan spends on each file, and you see that cost first. Then publish the Facebook ad, or download it with no watermark.",
+  "lead": "Turn a product page into a Facebook video ad that looks like a friend filmed it. An AI avatar holds the product, and a second cut is ready once that render finishes.",
   "card": "Facebook ads from one product photo, as a square photo or a tall clip.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
@@ -14,57 +14,57 @@
   ],
   "faq": [
     {
-      "q": "What is an AI Facebook ad from a product photo?",
-      "a": "A square photo or a tall clip made from a product link or a photo you upload. A presenter made by AI can hold the item and speak a script. That person is not a real customer."
+      "q": "What does an AI Facebook UGC ad look like?",
+      "a": "It looks like a customer holding your product and saying why they use it. An AI avatar and a voice do that job, in the feed next to posts from friends, and you did not hire someone to film it."
     },
     {
-      "q": "Can this lower my Facebook ad costs?",
-      "a": "We do not promise cheaper ad results. You can make another version, with another actor or line, without paying for a new photo shoot. Each file spends credits, and you see the amount first."
+      "q": "Does this style of ad work on Facebook?",
+      "a": "A clip of someone handling the product sits more naturally among posts from friends than a polished brand film does. Make one version for gift buyers and another for people replacing a worn one, then see which opening you want to spend on."
     },
     {
-      "q": "Are these files allowed in Facebook ads?",
-      "a": "Follow the current ad rules for the country where the ad will run. If Ads Manager (Facebook's ad tool) asks you to mark the ad as AI, do that there. We do not guarantee approval."
+      "q": "Can I stop paying a creator for every Facebook test?",
+      "a": "Yes. The tests come out of the plan instead of a new invoice."
     },
     {
-      "q": "Do people know the ad is AI-made?",
-      "a": "The file does not pretend a person in it is a real customer. If Facebook asks you to mark the ad as AI, do that in Ads Manager when you publish."
+      "q": "Do these videos follow Facebook's ad rules?",
+      "a": "You can run the file when the offer is true and the product is the one you ship. Do not invent a customer, and do not claim a result you have not seen. We do not send the ad in for you. Read Facebook's policy on the day you publish."
     },
     {
-      "q": "What does a Facebook clip cost?",
-      "a": "A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the price before you start. A photo is 24 credits. If a job fails, those credits come back on their own."
+      "q": "Will people realize the ad is made by AI?",
+      "a": "Some will, some will not. The clip is built to feel like a creator video. Say it is AI when Facebook asks you to. Hiding that on purpose is not the goal."
     },
     {
-      "q": "Where do the headline and the price go?",
-      "a": "Add the headline, the price, and the button when you publish to Meta (Facebook and Instagram's ad system). Or add them in Ads Manager after you download. The clip can already include a spoken script and on-screen captions."
+      "q": "When is the file actually in my hands?",
+      "a": "When the render ends, you download the file. Pick the avatar, rewrite the line, and you are not holding the launch for a camera crew."
     },
     {
-      "q": "Does the file include sound, captions or music?",
-      "a": "Yes. A clip can include a spoken voice, captions, and a music track. Change them in the editor, then publish to Meta or download. The file has no watermark."
+      "q": "What does a Facebook video cost in credits?",
+      "a": "A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo spends 24. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The cost shows before you start. A failed job returns those credits."
     },
     {
-      "q": "How do I turn a product link into a Facebook ad?",
-      "a": "Paste the product page. We bring in the pictures and the description, draft a script, and you pick an actor and a voice. Then publish to Meta, or download the file."
+      "q": "Where should the price and the offer line go?",
+      "a": "Put the price and the offer line off the product, in a spot the player buttons will not cover. You add that text in the editor."
     },
     {
-      "q": "How should I compare two versions?",
-      "a": "Change one thing at a time, such as the actor or the first line. Then use [how to test ad versions](/guides/testing-ad-versions) before you spend more on the winner. You can make those versions together from the same link."
+      "q": "How should I compare two openings?",
+      "a": "Change one thing at a time, such as the avatar or the first line. Then use [how to test ad versions](/guides/testing-ad-versions) before you spend more on the winner. Those versions can be made together from the same link."
     }
   ],
   "examples": null,
-  "templates_lead": "Pick a scene that keeps your product clear in the Facebook format you choose.",
-  "cta_lead": "Choose the Facebook shape, then get the file ready for Ads Manager (Facebook's ad tool).",
+  "templates_lead": "Pick a scene that keeps the product clear in the Facebook shape you chose.",
+  "cta_lead": "Choose the Facebook shape, then download a file you can drop into Ads Manager.",
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "Paste your product page link so the pictures and description come in, or upload one photo."
+      "d": "Paste the lamp's listing. The photos of the shade and the base become the shots in the Facebook video ad."
     },
     {
       "t": "Choose an Actor",
-      "d": "Pick a presenter from the actor library, or make one for your buyers. They are made by AI, not a creator you hired."
+      "d": "Choose an AI avatar in a grey sweater, someone who looks like the buyer, speaking the way your captions already sound."
     },
     {
       "t": "Finish and Publish",
-      "d": "Add a script, a spoken voice, captions, and music, then publish to Meta (Facebook's ads) or download with no watermark."
+      "d": "Download the clip and attach it to the campaign. The render is the file you place."
     }
   ],
   "visual": {
@@ -112,40 +112,40 @@
       }
     }
   },
-  "benefits_h2": "Reasons to Use Clips That Look Customer-Made",
+  "benefits_h2": "Why Facebook Video Ads Skip the Booking",
   "benefits": [
     {
-      "t": "Another Ad Without a New Shoot",
-      "d": "Make the next version from the same link or photo. You see the credit cost before it starts, and a failed job gives those credits back."
+      "t": "Stretch the Ad Budget",
+      "d": "More of the Facebook budget can buy reach, because the video costs less to make than hiring a creator for every test."
     },
     {
-      "t": "A File Whenever the Home Screen Needs One",
-      "d": "There is no creator to book. Paste a link or upload a photo when you want a new opening."
+      "t": "Refresh the Offer",
+      "d": "When the offer changes, you make a new Facebook video ad that names the new date. You are not stuck with the old video because a creator is booked through next week."
     },
     {
-      "t": "A New Opening Before Shoppers Tire of the Old Ad",
-      "d": "Swap the actor, the line or the scene so the ad does not repeat the same first second."
+      "t": "Retire a Tired Opening",
+      "d": "When people flick past the opening, you can swap in a new one, such as a hand on the product. The Facebook video ad gets another look without a new shoot."
     }
   ],
   "steps_h2": "Steps to Make Facebook Ads That Look Customer-Made",
-  "steps_lead": "Start from a link or a photo, pick an actor, then publish or download.",
+  "steps_lead": "You leave with a Facebook video ad Ads Manager can take.",
   "more_sections": [
     {
-      "eyebrow": "Why video",
-      "h2": "Why a Facebook Video Ad Can Help",
-      "lead": "A clip can show the product in use. It is not a promise of cheaper clicks.",
+      "eyebrow": "Why a Facebook video",
+      "h2": "Why a Facebook Video Ad Should Move",
+      "lead": "A moving Facebook ad is harder to scroll past than a still.",
       "items": [
         {
-          "t": "Show One Action a Photo Cannot",
-          "d": "A short clip can show a pour, an open, or a fit, with an actor holding the item. We do not promise more clicks."
+          "t": "Video Beats a Still",
+          "d": "A clip of a hand on the product is harder to pass than a catalog still."
         },
         {
-          "t": "Many Versions From One Link",
-          "d": "Turn one product link into many clips at once. Each file shows its credit cost first. If a file fails, those credits come back."
+          "t": "Keep the Savings",
+          "d": "Money that used to pay a creator and a half-day studio for one Facebook video can stay in the ad account. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
         },
         {
-          "t": "Edit, Then Publish to Facebook",
-          "d": "Change the script, voice, captions, music, or actor in the editor. Then publish to Meta (Facebook's ads) or download the file yourself."
+          "t": "Three Openings to Test",
+          "d": "You can show the same product to different buyers, with a different opening for each. Put more of the budget on the opening you want to spend on, and keep the others for people who already visited the page."
         }
       ]
     }
@@ -160,66 +160,66 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "UGC means the ad looks like a customer filmed it. Skip the photo shoot. The next file can start from a link or a picture you already have.",
+  "benefits_lead": "Your next Facebook video ad does not start with a talent email.",
   "reasons": {
-    "h2": "Why Use AIVideosUGC for Facebook Ads That Look Customer-Made",
-    "lead": "Templates, languages, and a presenter made by AI, with no creator to wait on.",
+    "h2": "What Changes With Facebook Video Ads",
+    "lead": "One marketer can cover a Facebook offer in more than one language.",
     "items": [
       {
-        "t": "No Wait for a Creator",
-        "d": "Nothing to mail and no date to book. The next file starts from a link or a photo you already have.",
+        "t": "No Backlog of Videos",
+        "d": "The clip is ready when the offer is ready, so you do not pause the campaign for a creator's other clients.",
         "icon": "Clock"
       },
       {
-        "t": "Facebook Ad Templates",
-        "d": "Start from a template made for the home screen, then change the actor, the line, and how the photo is trimmed. One run can make more than one version.",
+        "t": "A Flexible Ad Layout",
+        "d": "Several colorways can go out as separate files. The files share one feed-shaped template, and the last color is framed as carefully as the first.",
         "icon": "LayoutGrid"
       },
       {
-        "t": "The Language Your Buyers Use",
-        "d": "Write the script and the spoken voice in the language your buyers use. You do not book a new filming day for each language.",
+        "t": "Ads in the Buyer's Language",
+        "d": "You can deliver the Facebook ad in the buyer's language, in the phrasing a local shop would use. That version does not need a second crew.",
         "icon": "Languages"
       }
     ]
   },
   "platforms": {
-    "h2": "Create Customer-Style Video Ads for Your Other Sites",
-    "lead": "Facebook is one place an ad can run. The same link can start a file for the other ad sites too.",
+    "h2": "Other Channels for a Facebook Video Ad",
+    "lead": "The same product photo can also start a TikTok, Instagram, Shorts, Amazon, or Shopify file. Facebook is one placement.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "A tall phone-shaped ad for short video, started from the same upload.",
+        "d": "A tall TikTok ad from the same product photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
         "label": "AI Instagram Ads",
-        "d": "A square photo or a tall clip for the post screen.",
+        "d": "A square still or a tall Reel for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "YouTube Shorts Ads",
         "label": "YouTube Shorts Ads",
-        "d": "A tall clip for a short video. A wide video that plays inside a YouTube video is a separate job.",
+        "d": "A tall Short. A wide YouTube ad is a different file.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
         "label": "Amazon Product Photos",
-        "d": "A plain main image, a detail, and an in-use view for the gallery.",
+        "d": "A white main image, a close-up, and an in-use frame for the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
         "label": "Shopify Product Photos",
-        "d": "Square product photos, collection photos, and a clip you add in Shopify yourself.",
+        "d": "Square photos for the product page and the collection, plus a video you upload in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "AI Ads and Product Photos by Platform",
         "label": "AI Ads and Product Photos by Platform",
-        "d": "Open the full list and pick where the next file goes.",
+        "d": "Open every channel and choose where the next file should run.",
         "href": "/platforms"
       }
     ]
@@ -290,8 +290,8 @@
       }
     ]
   },
-  "related_h2": "Related Tools for a Facebook Ad",
-  "related_lead": "Pick the tool or template that matches where the ad will show.",
+  "related_h2": "Tools Next to a Facebook Video Ad",
+  "related_lead": "Open the tool or template that matches the placement you are cutting for.",
   "relatedLinks": [
     "video-ads",
     "social-ad-photos",

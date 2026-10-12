@@ -4,7 +4,7 @@
   "description": "Find product photos and videos matched to your industry, from skincare to sneakers and snacks. Make them from one photo, ready to download and post.",
   "h1": "AI Product Content by Industry, Picked for What You Sell",
   "eyebrow": "Browse by industry",
-  "lead": "Start with what you sell. One photo can become a picture or a short video, with a spoken line, an actor, a voice, captions, and music.",
+  "lead": "One photo of the item on your desk is enough to start a creator-style ad. Open the row that matches it.",
   "card": "Photo and video ideas matched to what you sell.",
   "secondary_keywords": [
     "AI product photos by category",
@@ -13,57 +13,105 @@
     "AI images for small online shops"
   ],
   "intro": [
-    "Open the category of the item you have. The page shows what shoppers look for, then you make a photo or a video from one photo.",
-    "A video can include a spoken line, an AI actor, a voice, captions, and a song from the music library. Send it to TikTok or Meta (Facebook and Instagram), or download the file."
+    "Open the category of the item you have. That page shows the moment shoppers use to decide, then you make a photo or a video from one picture.",
+    "A video can include a script, an AI avatar, a voiceover, captions, and a track from the music library. Send it to TikTok, Facebook, or Instagram, or download the file."
   ],
   "faq": [
+    {
+      "q": "Why do creator-style ads tend to get watched?",
+      "a": "Shoppers stay when the clip feels like advice from someone who uses the item. For a blender, show the lid in the first second and the smoothie before you mention the blades."
+    },
+    {
+      "q": "What does AI UGC mean for a shop ad?",
+      "a": "AI UGC, on this page, means a product clip that looks like a creator made it. An AI avatar says a line you wrote, and you did not book a film crew to get that clip."
+    },
+    {
+      "q": "Do I have to film something before I choose a plan?",
+      "a": "No. You choose a plan first. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+    },
+    {
+      "q": "How long does a UGC ad take to make?",
+      "a": "You review the file in your account after you submit the job. Nothing on this page asks you to reserve a shoot date first."
+    },
+    {
+      "q": "What is the path from an AI avatar to a UGC ad?",
+      "a": "Open the category that matches the product, put an AI avatar on screen, and use a sentence you would print on the label. Export that file and load it in the ad account yourself."
+    },
+    {
+      "q": "Where do the AI avatars for these ads come from?",
+      "a": "The AI avatars are part of AIVideosUGC. Open the actor library, pick a face, and that face can say the line you wrote."
+    },
+    {
+      "q": "Can a listing URL become the whole video ad?",
+      "a": "Yes. A public face-oil page can supply the photo and the product name. Your shop software can send that link through the API."
+    },
+    {
+      "q": "Do I need a creator's permission to run the ad?",
+      "a": "No. You can run the download as a paid ad for your own shop. The face was generated here, so there is no creator signature to collect."
+    },
+    {
+      "q": "Can I change the video after it generates?",
+      "a": "Yes. If the sweater color is right and the sentence is wrong, change the sentence and run the job again."
+    },
+    {
+      "q": "How is a filmed creator video unlike one made with an AI avatar?",
+      "a": "A filmed creator video puts a person you hired on camera. An AI avatar can take that role when a shop adds a new opening for the same kettle each week."
+    },
+    {
+      "q": "Can an AI avatar stand in for a human creator?",
+      "a": "Yes, for the extra openings. If buyers already follow a specific founder, film that founder for the main spot, and use an AI avatar for the openings you would not hire out."
+    },
+    {
+      "q": "How many languages can the avatar speak?",
+      "a": "As many as you can write accurately. A soap shop selling into Germany can type a German line and have an AI avatar speak it. A cloned voice needs a short sample you are allowed to use."
+    },
+    {
+      "q": "Which languages can I write the line in?",
+      "a": "Whichever language is already on the listing. This page does not hand you a fixed menu of language names."
+    },
+    {
+      "q": "Who can turn a product around into an ad quickly?",
+      "a": "Anyone who has the listing or the sentence. Paste it, then review the file in your account, and support can look at that file with you if you ask."
+    },
+    {
+      "q": "Can the avatar speak in a cloned voice?",
+      "a": "Yes. Give it a short sample from a speaker you are allowed to use, and an AI avatar can say a new script in that voice on the next product."
+    },
+    {
+      "q": "Can I make these ads without hiring a creator?",
+      "a": "Yes. If you already filmed the product yourself, use that clip and add a generated voice. If you only have a photo, an AI avatar can hold the item and speak."
+    },
+    {
+      "q": "How does an AI UGC ad actually get made?",
+      "a": "You supply the product photo and the sentence. The spoken line comes from that sentence, and an AI avatar delivers it in the language you typed."
+    },
+    {
+      "q": "Can a clip work as a recommendation, a how-to, an unboxing, or a review?",
+      "a": "Yes. A how-to can stop once the shirt is buttoned. You start from the photo you already have."
+    },
+    {
+      "q": "What should I look for in a tool for this job?",
+      "a": "Judge the tool by whether one photo of your item can become a clip you would actually post. AIVideosUGC is built for that path."
+    },
     {
       "q": "Which category should I open first?",
       "a": "Open the category of the product you are listing. If you sell more than one kind of item, finish this one, then open the next category."
     },
     {
-      "q": "Can I start from a phone photo?",
-      "a": "Yes. Use one clear photo with the whole item visible. Daylight and a plain surface make the color and shape easier to check."
+      "q": "How is a category page different from the template library?",
+      "a": "These pages group ideas by what you sell. The template library groups them by layout, such as someone wearing the item or a white background. Open a category to see the ideas, then a template to make that layout."
     },
     {
-      "q": "How is this different from the template library?",
-      "a": "These pages group ideas by what you sell. The template library groups them by layout, such as someone wearing the item, or a white background. Open a category to see the ideas. Then open a template to make that layout."
-    },
-    {
-      "q": "Can one photo become both a picture and a video?",
-      "a": "Yes. Upload the same photo on the category page. Choose a picture template or a video template. Each one shows its credit cost before it starts."
-    },
-    {
-      "q": "Do these pages tell me the ad size for each app?",
-      "a": "Sizes for each app are on the platform pages. These pages focus on the moment that helps someone buy. A video can be 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4."
+      "q": "Can I begin with a phone photo?",
+      "a": "Yes. Use one clear photo with the whole item visible. Daylight and a plain surface make the color and the shape easier to check."
     },
     {
       "q": "Will the file keep my product's color and shape?",
-      "a": "The file is built from the photo you upload. Start with a picture that already shows the real color and the full shape. Check the result before you post it."
-    },
-    {
-      "q": "What should a new product show first?",
-      "a": "Show the moment a shopper uses to decide. For a jar, show the texture. For clothes, show the fit. For a drink, show a pour. For a gadget, show it turned on."
-    },
-    {
-      "q": "Can I run these files as paid ads?",
-      "a": "Yes. You can use the downloads for your shop, and they have no watermark. The video can include an AI voice, captions, and music from the library. Type the price yourself. Do not say anything the real product cannot do."
-    },
-    {
-      "q": "Can the video include a voice and captions?",
-      "a": "Yes. Ask for an AI actor, a spoken line, and captions. Edit them in the editor on this site. The actor is not a real customer."
+      "a": "The file is built from the photo you upload. Start with a picture that already shows the color and the full shape."
     },
     {
       "q": "Can I publish from the category page?",
-      "a": "You make the file from the category page. Then send it to TikTok or Meta (Facebook and Instagram) in one click, or download it. You still set the budget and who sees the ad in the ad account."
-    },
-    {
-      "q": "Can I start this category from a product link?",
-      "a": "Yes. Paste a public product page. The main image and the name start the file. You still pick the template for the moment that helps someone buy."
-    },
-    {
-      "q": "Can I make several versions of one item?",
-      "a": "Yes. A batch means several versions from the same photo. Use one for another scene or another actor. Each one shows its credit cost first."
+      "a": "You make the file from the category page, then send it to TikTok, Facebook, or Instagram, or download it. You still set the budget and the audience in the ad account."
     }
   ],
   "visual": {
@@ -152,23 +200,23 @@
     "overview": "Pick the category. Then make a photo or a video from one photo, with a spoken line, an actor, and captions if you want them."
   },
   "steps_h2": "How to Make a Product Photo or Video in 3 Steps",
-  "steps_lead": "Open your category, add a photo or a link, and download a file you can post.",
+  "steps_lead": "You leave with a file you can post once you pick the category that matches the item.",
   "steps": [
     {
       "t": "Share the Product",
-      "d": "Open your category and add one photo, or paste the public product page."
+      "d": "Find the category for the item, then add the photo you use on the listing. Say who should care, in one sentence."
     },
     {
       "t": "Let the AI Write the Ad",
-      "d": "Ask for the spoken line, an AI actor, and the language to use."
+      "d": "The agent asks about the brand and the line. Answer with a sentence you would print on the skillet label."
     },
     {
       "t": "Download or Publish",
-      "d": "The video can include a voice, captions, and music. Send it to TikTok or Meta (Facebook and Instagram), or save it."
+      "d": "The skillet clip comes back with a voice and captions, and an AI avatar already in the frame, ready for you to post."
     }
   ],
   "steps_cta": {
-    "label": "Start creating",
+    "label": "Start from your category",
     "href": "/app/create"
   },
   "blockOrder": [
@@ -185,37 +233,37 @@
     "cta"
   ],
   "trust": {
-    "h2": "Built for Shops That Need the Next Ad",
-    "lead": "Six kinds of sellers. Open the category for the product you have. You see the credit cost before it starts.",
+    "h2": "AI Ads by Industry, for Every Kind of Seller",
+    "lead": "Whatever you sell, you can open a category and make the ad from a photo you already have.",
     "items": [
       {
-        "t": "An Online Store",
-        "d": "Show one product with a square photo or a short video. Add an AI actor and a spoken line when motion helps the shopper decide."
+        "t": "For DTC Stores",
+        "d": "A shop can show a mug being filled, then try a second opening while the listing stays up."
       },
       {
-        "t": "A Seller Testing New Items",
-        "d": "Make a short video for the listing before you decide to keep that product. Run the same photo again with another scene."
+        "t": "Trial Listings",
+        "d": "Put a short clip of the new serum on the listing before you order a second carton, so you can judge that clip first."
       },
       {
-        "t": "A Small Shop",
-        "d": "Explain the item with a person on screen when you have the photo and no studio. You download the file or publish it yourself."
+        "t": "Neighborhood Sellers",
+        "d": "A bakery can show the loaf on the counter with an AI avatar naming the grain."
       },
       {
-        "t": "Marketers and Agencies",
-        "d": "Make several versions of one product for the apps a client already uses. Each one shows its own credit cost."
+        "t": "Teams Serving Clients",
+        "d": "You can return two openings from a client's tote photo, and the media plan stays with the person who owns the ad account."
       },
       {
-        "t": "People Who Post Often",
-        "d": "Pick an AI actor and keep a similar person across posts in this category."
+        "t": "Regular Posters",
+        "d": "Film yourself once at the packing table and save an AI twin, so later products can use that twin while you pack."
       },
       {
-        "t": "Apps and Software",
-        "d": "Show one action of the product, with a spoken line and captions. The video does not replace the real screen of your app."
+        "t": "Software Shops",
+        "d": "Show the one button that exports the report, large enough to read."
       }
     ]
   },
-  "related_h2": "Make Your Ad, or Browse Another Way",
-  "related_lead": "Start from a link, an actor, or a template, or open the pages for each app.",
+  "related_h2": "Make the Ad, or Browse Another Way",
+  "related_lead": "Start from a link, an AI avatar, or a template, or open the page for each app you post on.",
   "relatedLinks": [
     "url-to-video",
     "spokesperson-videos",
@@ -224,131 +272,147 @@
     "templates",
     "platforms"
   ],
-  "cta_title": "Make a file for the product you sell",
-  "cta_lead": "Open your category, upload one photo, and see the credit cost before you start.",
+  "cta_title": "Make the Next Ad in Your Category",
+  "cta_lead": "Make the next ad from the photo already on the listing. Open the category for the item on your desk.",
   "reasons": {
-    "h2": "What One Product Ad Can Include",
-    "lead": "The same category page can start a photo or a full video.",
+    "h2": "Included With Every Export",
+    "lead": "An avatar, a language, the frames, and your logo can ride along with every category you open.",
     "items": [
       {
-        "t": "An AI Actor",
-        "d": "Pick a person to show the product. The picture does not replace a size chart.",
-        "icon": "UserRound"
+        "t": "A Face That Fits the Category",
+        "d": "For a pet brand, one AI actor who could plausibly own the dog can cover that aisle.",
+        "icon": "Users"
       },
       {
-        "t": "A Video From the Photo",
-        "d": "Turn the product photo into a short video. Shapes: 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4. Lengths: 6, 10, 15, or 30 seconds.",
-        "icon": "Film"
-      },
-      {
-        "t": "The Language You Write",
-        "d": "The actor speaks the language of the line you type. You do not pay extra for another language.",
+        "t": "Ads in Any Language",
+        "d": "The spoken line can use the language already printed on the product page. A Japanese tea tin can stay in Japanese.",
         "icon": "Languages"
       },
       {
-        "t": "Tone in the Line",
-        "d": "Type the mood you want. The actor says your line in that mood. Edit the sentence before you publish.",
-        "icon": "Mic"
+        "t": "Support on the File",
+        "d": "Support can open a launch file with you when something looks off, and you decide whether it posts.",
+        "icon": "MessageCircle"
       },
       {
-        "t": "A Built-In Editor",
-        "d": "Change the words, the captions, the voice, or the person on screen, without another app.",
-        "icon": "Scissors"
+        "t": "Two Frames for Two Feeds",
+        "d": "A throw-blanket clip can be tall at 9:16 for a phone feed and square at 1:1 for a post. Each frame is its own job.",
+        "icon": "Ratio"
       },
       {
-        "t": "Captions on the File",
-        "d": "Captions come with the video. Change the words so any price matches the price in your store now.",
-        "icon": "Captions"
+        "t": "A File Ready to Download",
+        "d": "When the job finishes, the file is waiting in your account to download.",
+        "icon": "Gauge"
+      },
+      {
+        "t": "Your Logo and the Real Color",
+        "d": "Put your logo on the end card and keep the body cream's real color. The spoken line can sound like your shop.",
+        "icon": "Palette"
       }
     ]
   },
-  "benefits_h2": "What You Can Count On Before You Post",
+  "benefits_h2": "One Place for the Whole UGC Ad",
   "benefits": [
     {
-      "t": "An Actor Library",
-      "d": "Browse actors for this category and pick one. The face is made by AI."
+      "t": "An Avatar Matched to the Item",
+      "d": "Pick an AI avatar who could plausibly hold a kettle, and let that same face say the line about the handle."
     },
     {
-      "t": "A Line in Your Language",
-      "d": "Write the spoken line in the language you want heard."
+      "t": "A Listing Photo Becomes a Clip",
+      "d": "The blender photo on the listing can move into a clip, and you can start without opening a second design tool."
     },
     {
-      "t": "Help With One File",
-      "d": "Email support about one file and we can look that file up."
+      "t": "The Offer in the Buyer's Language",
+      "d": "If the buyer reads French, type the offer in French so the jacket sizes stay what you sell."
     },
     {
-      "t": "A Shape for the App",
-      "d": "Photos are square. A video can be 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4."
+      "t": "Set the Feeling of the Line",
+      "d": "Note that the mug line should feel quiet, like a late kitchen. The AI avatar's delivery follows that note."
     },
     {
-      "t": "Publish or Download",
-      "d": "Send the file to TikTok or Meta (Facebook and Instagram) in one click, or save it and upload it yourself."
+      "t": "Trim It on This Page",
+      "d": "Cut the last second off a phone-case clip in the editor on this page. The trim stays here."
     },
     {
-      "t": "Your Brand on the File",
-      "d": "Add a logo, colors, and the tone of the line in the editor."
+      "t": "Restyle the Captions",
+      "d": "Captions arrive with the clip. Recolor them toward the honey label so the words stay readable on a bright counter."
     }
   ],
   "more_sections": [
     {
       "eyebrow": "Start from what you have",
-      "h2": "Ways to Start Your Next Product Ad",
-      "lead": "Six starts. Each one uses the product you actually sell.",
+      "h2": "Everything That Goes Into the Ad",
+      "lead": "You can start from the photo, the link, or the note you already have, and the ad is built in one place.",
       "items": [
         {
-          "t": "A Photo or a Short Note",
-          "d": "A photo of your product, or a short note about it, becomes a picture or a video."
+          "t": "Use the Listing Photo",
+          "d": "A photo of the desk lamp, or two sentences about the shade, can become the still and the clip you publish."
         },
         {
-          "t": "Words Written for You",
-          "d": "Describe the product and the buyer. The tool writes the spoken line, and you can edit every sentence."
+          "t": "AI Video Agent",
+          "d": "The agent can build the whole ad from a short brief. Say the backpack is for a commute and the first frame should be the strap, and it asks what is still missing."
         },
         {
-          "t": "A Style You Can Use",
-          "d": "Describe a look you are allowed to use, then put your product in that look."
+          "t": "Reuse a Pacing You Like",
+          "d": "If a feed ad's pacing fits your soy candle, describe that pacing and use your own jar."
         },
         {
-          "t": "A Product Link",
-          "d": "Paste a public product page. The main image and the name start the video. Open [URL to video](page:url-to-video)."
+          "t": "Start From the Product Page",
+          "d": "Paste the public page for the face oil. Open [URL to video](page:url-to-video) when you want that flow, and the photo on the page becomes the clip."
         },
         {
-          "t": "An Actor Library",
-          "d": "Browse actors and pick one for this item. Open [AI actors](page:ai-actors)."
+          "t": "AI Avatars Instead of Filming Yourself",
+          "d": "An AI avatar can hold the shampoo and say the line, so you can stay with the orders in front of you. Browse faces on [AI actors](page:ai-actors)."
         },
         {
-          "t": "A Person You Keep Using",
-          "d": "Describe the person you want to keep using for this category."
+          "t": "An AI Twin for the Next Products",
+          "d": "Make an AI twin from your face and voice when the brand is you. Later products can use that twin while you stay at the packing table."
         }
       ]
     },
     {
       "eyebrow": "Compared with a shoot",
-      "h2": "AIVideosUGC vs Booking a Shoot",
-      "lead": "Booking a camera shoot is separate from those credits.",
+      "h2": "AIVideosUGC Next to Hiring a Creator",
+      "lead": "You spend credits instead of a creator's day rate, and a photo you already have is enough to start.",
       "items": [
         {
-          "t": "How You Start",
-          "d": "Upload a photo or paste a link, instead of booking a person and a place to film."
+          "t": "Start From Today's Photo",
+          "d": "Upload the photo you took for the listing. That begins the file, whether or not a creator is free."
         },
         {
-          "t": "What You Confirm First",
-          "d": "You see the credit cost before it starts. If it fails, those credits come back."
+          "t": "Review It in Your Account",
+          "d": "You watch the file in your account and decide when it is ready to use."
         },
         {
-          "t": "What a File Costs",
-          "d": "A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+          "t": "What the Job Costs",
+          "d": "You know each cost before the job starts, so a test can stay on budget. A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
         },
         {
-          "t": "Another Version",
-          "d": "Run the same photo again for a new scene, a new actor, or a new first line."
+          "t": "Another Version on Your Calendar",
+          "d": "Run the coffee tin again with the lid off. A fresh set of credits covers that next version."
         },
         {
-          "t": "Who Says the Line",
-          "d": "You write it. An AI actor is not a quote from a customer."
+          "t": "The Line Stays as You Typed It",
+          "d": "You type the sentence about the cedar note, and that sentence stays as you typed it."
         },
         {
-          "t": "Two First Lines",
-          "d": "Make a second version and compare the files in your ad account."
+          "t": "Swap the Product, Keep the Scene",
+          "d": "Keep the kitchen counter and change only the soy candle. The same scene takes the new candle."
+        },
+        {
+          "t": "One Face for the Whole Line",
+          "d": "Use one AI avatar for the whole lip-balm line, so the face stays steady each time you add a scent."
+        },
+        {
+          "t": "Trying a Second Opening",
+          "d": "Make another version with a new first line and compare the two files in your ad account."
+        },
+        {
+          "t": "Staying On the Brand",
+          "d": "The words go out only after you approve them, so the ad carries your phrasing."
+        },
+        {
+          "t": "Voice Pace Control",
+          "d": "Mark the line as unhurried, and that note gives you a slower delivery on the next run."
         }
       ]
     }
@@ -399,7 +463,7 @@
     "h2": "Plans for the Next Product",
     "paras": [
       "Starter is $24.50 a month with 200 credits. Pro is $35 with 300. Premium is $63 with 600.",
-      "A product photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. That number is on screen before you start."
+      "If a job fails, those credits return. You keep a finished file."
     ]
   }
 }

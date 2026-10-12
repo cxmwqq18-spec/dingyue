@@ -4,7 +4,7 @@
   "description": "A product content blog for small shops: photos for a product page, short ads, and launch clips. Use a ready-made ad with words, a voice, and a person on screen.",
   "h1": "An Ecommerce Product Content Blog for Small Shops",
   "eyebrow": "Seller articles",
-  "lead": "Five articles on photos for a product page, short ads, launch clips, and the check before you publish. Pick a ready-made ad, add your product, and get the words, a voice to say them, and a person on screen.",
+  "lead": "Five guides cover product-page photos, short ads, launch clips, and the last look before you publish. When a guide points at a layout, drop in your product and get a script, a voice, and an avatar.",
   "card": "Articles on product photos, short ads, and launches.",
   "secondary_keywords": [
     "product photo tips for online stores",
@@ -13,61 +13,61 @@
     "AI product content tips"
   ],
   "intro": [
-    "These articles are for shops that make their own photos for a product page, and their own short ads. A ready-made ad brings an opening line, the words to say, a voice, and a person on screen. You add your product, then post the file on TikTok, Instagram, Facebook, or YouTube Shorts.",
-    "Read the article that matches the job, then open the tool it names. You can paste a [product link](page:url-to-video), pick an on-screen person from the [actor library](page:ai-actors), or start from a ready-made layout in the [template gallery](page:templates). There is no free plan. Downloads have no watermark, which means no extra mark is added on the file, and [plans start at $24.50 a month](page:pricing)."
+    "You get a still for the product page, or a clip that talks, from a guide that names the tool. These five pieces are for a shop that writes its own captions and photographs its own goods. You bring the item.",
+    "Open the guide that matches the job, then open the tool it names. Paste a [product link](page:url-to-video), choose a face in the [actor library](page:ai-actors), or begin from a layout in the [template gallery](page:templates). Downloads do not carry a watermark. [Plans start at $24.50 a month](page:pricing)."
   ],
   "faq": [
     {
-      "q": "What is an ad template in these articles?",
-      "a": "A ready-made ad with an opening line, the words to say, a voice, and a person on screen. You add your product instead of filming someone or building the ad from nothing."
+      "q": "What counts as a ready-made ad in these guides?",
+      "a": "It means the opening and the person on screen are already chosen. Your job is the product photo and one sentence you can stand behind, such as the jar holds eight ounces."
     },
     {
-      "q": "How does a template become a file?",
-      "a": "Upload a photo of your product, or paste the product page link. Type the sentence you want spoken. The tool gives you a clip that looks like a creator filmed it, and you can post that clip."
+      "q": "How does a layout become a finished file?",
+      "a": "Pick the guide, then put in a photo of the item you ship. Keep the sentence to something you can show, such as the size on the label. The file you download is the one you post."
     },
     {
-      "q": "Why not film a creator?",
-      "a": "You can try another opening line, another person on screen, or another sentence without waiting for a film day. A creator can still film your main product. These files are the versions you try in an ad test."
+      "q": "Why use a generated ad instead of filming a creator?",
+      "a": "You can change the opening line and export another file without waiting on a creator's calendar. Book the person when the campaign needs that specific face."
     },
     {
-      "q": "Who are the articles for?",
-      "a": "Shops, marketers, and agencies that sell online. The articles cover a product photo, a short ad, a launch clip, a check before you publish, and someone wearing the item."
+      "q": "Who are the guides written for?",
+      "a": "A person packing orders who also runs the ads will get the most from them. The five pieces are a product photo, a short ad, a launch clip, a check before you publish, and clothing on a person."
     },
     {
       "q": "Can a beginner follow them?",
-      "a": "Yes. Upload one photo and follow the article into the tool it names. You do not need to edit the video yourself before the first file."
+      "a": "Yes. If you can photograph the bottle on a table, you can follow the guide. The tool it names is the only app you open for that file."
     },
     {
-      "q": "Which kinds of products do the articles cover?",
-      "a": "They point at [beauty](page:ind-beauty-skincare), [fashion](page:ind-fashion-clothing), [food and drinks](page:ind-food-drinks), [home](page:ind-home-living), and [electronics](page:ind-electronics). The same tools work for other products you ship."
+      "q": "Which products do the guides cover?",
+      "a": "They point at [beauty](page:ind-beauty-skincare), [fashion](page:ind-fashion-clothing), [food and drinks](page:ind-food-drinks), [home](page:ind-home-living), and [electronics](page:ind-electronics). The same tools work for other goods you ship."
     },
     {
-      "q": "Can I upload my own photo or a product page?",
-      "a": "Yes. A clear photo of the product you ship is the right start. You can also paste a product page link when the article names that tool."
+      "q": "May I bring photos and clips I already shot?",
+      "a": "Yes. Start with the photo of the item that actually ships, dust and all. A logo file is useful only when you are allowed to put that mark on the ad."
     },
     {
       "q": "Which platforms can I post to?",
-      "a": "Post on [TikTok](page:plat-tiktok), [Instagram](page:plat-instagram), [Facebook](page:plat-facebook), [YouTube Shorts](page:plat-youtube-shorts), [Amazon](page:plat-amazon), or [Shopify](page:plat-shopify). A video can be tall (9:16), square (1:1), wide (16:9), 4:3, or 3:4. Product photos come out square."
+      "a": "Use the frame the placement asks for. [Shopify](page:plat-shopify) and [Amazon](page:plat-amazon) want a square photo. A tall 9:16 clip fits [TikTok](page:plat-tiktok) and [YouTube Shorts](page:plat-youtube-shorts). [Instagram](page:plat-instagram) and [Facebook](page:plat-facebook) can take a square still or a tall clip. Video can also be 1:1, 16:9, 4:3, or 3:4."
     },
     {
-      "q": "Is there a free plan?",
-      "a": "No. Plans start at $24.50 a month with 200 credits. Credits pay for each photo or video. A download has no watermark. You see the cost before every job."
+      "q": "Do I pay before I can use a layout?",
+      "a": "Yes. Layouts sit on a paid plan. Starter is $24.50 a month for 200 credits. Credits pay for each photo or video, and the cost shows before every job."
     },
     {
       "q": "Can I use the file in a paid ad?",
-      "a": "Yes. You can use a finished photo or clip in ads and on your store. It has no watermark. Do not say the person on screen is a real buyer. The [Content Policy](/content) says what you can upload."
+      "a": "Yes. Put the file on a product page or hand it to a client whose brand you are allowed to show. The [Content Policy](/content) says what you can upload."
     },
     {
-      "q": "Why start from a template?",
-      "a": "The opening line and the layout are already there, so you spend the time on your product and your sentence. You are not building every ad from nothing."
+      "q": "Why start from a layout instead of a blank file?",
+      "a": "These guides already decided where the product appears, so your time goes to the claim. A sweater line can say it is merino."
     },
     {
       "q": "How much does a photo or a clip cost?",
       "a": "A product photo is 24 credits. A 6-second clip is 24, 10 seconds is 40, 15 is 60, and 30 is 120. If a job fails, those credits come back."
     },
     {
-      "q": "Are the people in the clips real customers?",
-      "a": "No. The person is made by the tool. Do not give them a name or a line that says they bought the product."
+      "q": "Are the people in the clips buyers?",
+      "a": "No. The face is generated. Do not give that avatar a customer's name or a line that claims they purchased the product."
     }
   ],
   "relatedLinks": [
@@ -79,23 +79,23 @@
     "industries"
   ],
   "steps_h2": "How to Turn a Guide Into a Posted Ad",
-  "steps_lead": "Pick the article for the job, make one file, then download it and add your own price or captions.",
+  "steps_lead": "You get a file you can post, with the price typed in the app you already use.",
   "steps": [
     {
       "t": "Pick the Article",
-      "d": "Open the article that matches the job: photos for a product page, a short ad, a launch clip, or a check before you publish."
+      "d": "Open the piece that matches the job: stills for a product page, a short ad, a launch clip, or the check before anything goes live."
     },
     {
       "t": "Make One File",
-      "d": "Upload one clear photo in the tool the article names. Credits pay for that photo or video. Read the cost first."
+      "d": "Upload one clear photo in the tool the guide names. You see the credit cost for the still or clip before it runs."
     },
     {
       "t": "Download and Post",
-      "d": "Save the file, add a price or captions in an app you already use, and post it on your store or ad account."
+      "d": "Save the file, add the price and caption in the app you already use, then publish to your store or ad account."
     }
   ],
-  "related_h2": "Tools Used in These Articles",
-  "related_lead": "Make the file, or browse layouts and categories.",
-  "cta_title": "Try it on the product you are posting",
-  "cta_lead": "Upload one product photo and see the credit cost before you start."
+  "related_h2": "Tools the Guides Send You To",
+  "related_lead": "The guides land you in the tool that finishes the file, or in layouts and shop categories.",
+  "cta_title": "Put Your Product on a Layout You Like",
+  "cta_lead": "Open a guide, add one product photo, and check the credit cost before anything is rendered."
 }

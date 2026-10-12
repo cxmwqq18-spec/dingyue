@@ -4,7 +4,7 @@
   "description": "Turn one home product photo into a room scene, a cleaning demo, or an organizing clip. Download files with no watermark for listings, feeds, and paid ads.",
   "h1": "AI Product Videos for Home Brands, Shown in the Room They Fit",
   "eyebrow": "Home and living",
-  "lead": "Home shoppers need the product in a room, doing one job. Paste a product link or one clear photo and get that scene. You do not need to build a styled room. Credits are what each job spends.",
+  "lead": "A wool throw can leave the white sweep and sit on a sofa a shopper can picture. Name the sofa and the afternoon light, and that photo becomes a room.",
   "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
     "home decor product videos",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Can I show a before-and-after of a closet?",
-      "a": "Yes, if the after state is something your product really does. Describe both states in plain words, and do not show a result the product cannot produce."
+      "q": "Can I show a closet before and after?",
+      "a": "Yes, when the after state is something the product really does. Describe both states in plain language, and do not invent a result the rack cannot produce."
     },
     {
-      "q": "Will furniture look the right size?",
-      "a": "Put the real dimensions on the listing. You can name a size in the scene, such as a 24-inch round side table beside an armchair. The pictured size can still be off."
+      "q": "Will furniture show up at the right size?",
+      "a": "The scale in the picture can drift. Put the true dimensions in the listing, and you can still mention a size in the scene, such as a 24-inch side table next to an armchair."
     },
     {
       "q": "Does this work for sofas and beds?",
-      "a": "It can, when the photo shows the whole piece, including the legs. Name a room large enough to hold it. If a part is missing from the photo, such as a leg or a handle, the result cannot add it."
+      "a": "Yes, if the photo shows the whole piece, legs included, and you name a room large enough to hold it. A missing leg or handle cannot be invented later."
     },
     {
-      "q": "Can I start from a white-background photo?",
-      "a": "Yes. Keep the whole product in the picture, including legs, handles, and cords. The scene can only use what the photo shows."
+      "q": "Can I start from a photo on a white background?",
+      "a": "Yes. Keep the entire product in frame, including legs, handles, and cords. The scene can only use what that photo already shows."
     },
     {
       "q": "Can I make a short cleaning demo?",
-      "a": "Yes. Show one mess you can see, keep the camera steady, and show the product making a single pass. A 10-second clip spends 40 credits."
+      "a": "Yes. Show one mess the viewer can see, hold the camera steady, and let the product make a single pass."
     },
     {
-      "q": "What should I name in the scene?",
-      "a": "Name the room, nearby furniture, the light, and the one action shoppers need. Keep exact dimensions and materials in the listing."
+      "q": "What should I describe in the scene?",
+      "a": "Name the room, the furniture nearby, the light, and the one action shoppers need to see. Keep exact dimensions and materials in the listing text."
     },
     {
-      "q": "Can I run the clips as paid ads?",
-      "a": "Yes. Downloads have no watermark, so no logo is stamped on the file. You can use them in paid ads. Keep the size, and how much it holds, true to the item."
+      "q": "Can I run these clips as paid ads?",
+      "a": "Yes. Downloads carry no watermark, so a room clip can go straight into a paid ad."
     },
     {
-      "q": "Do I need a studio or a model?",
-      "a": "You do not need a studio, and you do not hire anyone. Pick a person the tool creates. A clip can include a spoken line and captions. A 6-second clip spends 24 credits, 15 seconds spends 60, and 30 seconds spends 120. If it fails, those credits come back."
+      "q": "Do I need a studio or a hired model?",
+      "a": "No. Choose an AI avatar instead of booking a model or a set. A clip can include a voiceover and captions, and if that clip fails, the credits for the job return."
     },
     {
-      "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send that link from your own shop software (the API). Ask for a short script and pick a person the tool creates. Make a few versions, including one in another language. Trim the clip in the editor on this page. Choose a voice and a music track, and check the captions. Then send it to TikTok, Facebook, or Instagram. Put the real size in the listing, because the pictured size can be off."
+      "q": "Can a product link lead to more than one version?",
+      "a": "Yes. Paste the listing, or let your shop software send it through the API. Ask for the lamp switched off in one version and switched on in the next, then trim both in the editor on this page."
     }
   ],
-  "templates_lead": "Choose a room or organizing step that fits the home product.",
-  "cta_lead": "Paste a product link or upload one photo. Pick a person the tool creates, and publish a room clip with a spoken line and captions. Check the product shape before you post.",
+  "templates_lead": "Choose a room scene, an organizing how-to, or a comparison that fits the product.",
+  "cta_lead": "Download a room clip you can run as an ad. Add the photo already on the listing, and the file is ready to post.",
   "steps_h2": "How to Make a Home Product Video in 3 Simple Steps",
-  "steps_lead": "Three things you do on screen. The clip can include a spoken line and captions. Dimensions stay in the listing.",
+  "steps_lead": "You leave with a clip sized for the feed you picked, made from the pillow photo.",
   "steps": [
     {
       "t": "Upload Your Product",
-      "d": "Paste the product page, or upload a photo with legs, handles, and cords visible. A short note about the item works too."
+      "d": "Upload the pillow photo with both pillows fully in frame. Say whether they sit on a cream chair or a bed."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick a person the tool creates for the room. Hands can set the product down. You do not hire a model."
+      "d": "Choose an AI avatar seated beside the chair, and keep that face if you make a second pillow color."
     },
     {
       "t": "Generate and Publish",
-      "d": "You get a spoken line and on-screen captions. Send the clip to TikTok, Facebook, or Instagram. Keep sizes in the listing."
+      "d": "You leave with a voiced clip and on-screen captions, already framed for the feed you picked."
     }
   ],
   "visual": {
@@ -145,61 +145,61 @@
     }
   ],
   "reasons": {
-    "h2": "Why Home Brands Skip a Styled Room",
-    "lead": "You do not need a decorated room for every product. Start from a product link or a clear photo and name the room.",
+    "h2": "Start the Room Ad From a Photo You Own",
+    "lead": "Make the room scene from the photo already on the listing, and the ad can start without a booked set.",
     "items": [
       {
-        "t": "No Set to Book",
-        "d": "You get one cleaning sweep, like a vacuum over crumbs on a sofa, from one photo. You skip the location and the crew.",
+        "t": "Know the Spend Before You Run",
+        "d": "You know what the clip will spend before you commit, so the test stays inside the budget. A 10-second clip of the vacuum crossing the sofa is 40 credits, and that number shows before you confirm the job.",
         "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
         "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
       },
       {
-        "t": "A Product Page and a Clip",
-        "d": "The same organizer can be a product-page photo, a tall phone clip, and a second version. Use the shape of the place you will post.",
+        "t": "One Photo, Two Placements",
+        "d": "One organizer photo covers a square still for the product page and a tall clip of hands dropping shirts into the bins.",
         "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
         "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
       },
       {
-        "t": "Show the Job, Then the Size",
-        "d": "A lamp beside a chair, or a rack in a closet, shows how it is used. Put the real size in the listing. The pictured size can be off.",
+        "t": "Show the Piece Turned On",
+        "d": "Shoppers see the lamp switched on beside the reading chair, which is the moment that sells the piece. The scene comes from the photo already on the listing.",
         "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
         "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair."
       }
     ]
   },
   "platforms": {
-    "h2": "Create Home Ads for the Places You Sell",
-    "lead": "A tall clip shows the action, and a listing photo shows the product. Send the clip to TikTok, Facebook, or Instagram from this page. Keep sizes in the listing.",
+    "h2": "Where a Room Ad Can Run",
+    "lead": "One room scene can cover the feeds, the listings, and the product pages already on your calendar.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "d": "A tall phone clip (9:16) of organizing or cleaning, for TikTok's main feed.",
+        "d": "A tall cleaning or organizing clip for TikTok, with the product moving in the first second.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
-        "d": "A square room photo or a tall demo for the feed and Stories.",
+        "d": "A square room photo or a tall demo for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "d": "A feed photo with room to add sizes after you download it.",
+        "d": "A feed ad that places the product in a room, leaving space to add your offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Ads",
-        "d": "A short phone-screen demo, one action from the first second.",
+        "d": "One clear action, framed as a Short, so the job of the product is obvious right away.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
-        "d": "A clean product image for the listing. Keep measurements in the written text.",
+        "d": "A clean product image for the listing, ready to sit beside your written specs.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
-        "d": "Matching room imagery for the product page and the collection.",
+        "d": "Matching room imagery for the product page and the collection it belongs to.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -276,8 +276,8 @@
       }
     ]
   },
-  "cta_title": "Put the Product in the Room",
-  "related_h2": "Home Product Videos and Room Scenes",
+  "cta_title": "Put Your Next Product in a Room",
+  "related_h2": "Templates and Tools for Home Sellers",
   "maker": {
     "options": [
       [

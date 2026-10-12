@@ -4,7 +4,7 @@
   "description": "Redo AI product photo and video examples from your own photo: a desk photo, or a short ad with an actor, voice, and captions. Credits (plan units) show first.",
   "h1": "See It. Recreate It. AI Product Photo and Video Examples",
   "eyebrow": "From photo to finished file",
-  "lead": "Pick a look you like, add your own product, and make a photo or a short ad. A template is a ready-made look, so you do not have to write a long prompt. A prompt is the text you type to describe the scene.",
+  "lead": "Start from a photo you would actually run, and get your own version with the product you sell. The desk card already picked the room and the crop. Drop your item into that frame, and the same quiet setting comes back as your file. A short ad from that still is a separate file.",
   "card": "Six product photos you can recreate, from a travel mug to a sunscreen tube, plus a way to start a short ad.",
   "secondary_keywords": [
     "AI product video ad examples",
@@ -12,28 +12,28 @@
     "product photo to video ad",
     "AI social ad image examples"
   ],
-  "intro": "Each card is a finished photo you can recreate from your own product photo. The same photo can also start a short ad with an actor, a spoken line, and captions.",
+  "intro": "You can see the size and the setting before you spend a credit. The tote card puts the bag beside clothes so a shopper can judge the size. Use your own tote in that frame, and turn the still into a short ad when you want motion.",
   "steps_h2": "How to Recreate an Example in 3 Simple Steps",
-  "steps_lead": "Upload your photo, open the look you liked, and download or publish your file.",
+  "steps_lead": "You get your own version of a scene you would actually post. Pick the card, add the item you sell, and take the file.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add one photo of the item, with the whole product visible."
+      "d": "Look at the room and the crop. Open the card that already looks like the post you would run for this product."
     },
     {
       "t": "Open the Example",
-      "d": "Choose a finished look and start that scene with your own product."
+      "d": "One photo of the whole product is enough. A product page works when its pictures are of the item you ship."
     },
     {
       "t": "Download or Publish",
-      "d": "Check the product, then download the file or send it to TikTok, Instagram, or Facebook."
+      "d": "Check the product against the item you ship, then save the photo or publish the short ad."
     }
   ],
   "cases": [
     {
       "id": "travel-mug",
-      "t": "Desk Photo: Matte Travel Mug",
-      "d": "A matte white mug on a clean desk, so the listing shows a place a shopper recognizes.",
+      "t": "Desk Scene for a Matte Travel Mug",
+      "d": "A quiet desk tells a shopper where this mug belongs. Rebuild that setting around the mug you actually sell.",
       "imageRefs": [
         "g:ecommerce-main-image/source-input",
         "g:ecommerce-main-image/example-03",
@@ -44,13 +44,13 @@
         "Travel mug in a desk scene",
         "Finished travel mug image"
       ],
-      "ctaLabel": "Try the travel mug product scene",
-      "ctaPrompt": "Recreate a matte white travel mug product scene from my uploaded product photo on a clean desk, keeping the mug shape, lid and colors consistent."
+      "ctaLabel": "Try this desk scene",
+      "ctaPrompt": "Place my uploaded travel mug on a clean desk in the same kind of finished scene, and keep the mug shape, lid, and colors as they are."
     },
     {
       "id": "linen-tote",
-      "t": "Lifestyle Photo: Linen Tote Beside an Outfit",
-      "d": "The tote sits next to everyday clothes, so the size is easy to judge in a social post.",
+      "t": "Tote Beside an Everyday Outfit",
+      "d": "Clothes next to the bag make the size obvious in a social post. Use your own tote in that same kind of everyday frame.",
       "imageRefs": [
         "g:lifestyle-scene/source-input",
         "g:lifestyle-scene/example-01",
@@ -61,13 +61,13 @@
         "Linen tote in an everyday scene",
         "Finished linen tote image"
       ],
-      "ctaLabel": "Try the linen tote everyday scene",
-      "ctaPrompt": "Recreate a linen tote lifestyle scene from my uploaded product photo beside an everyday outfit in bright natural light, keeping the tote shape and color consistent."
+      "ctaLabel": "Try this outfit scene",
+      "ctaPrompt": "Place my uploaded linen tote beside an everyday outfit in bright daylight, and keep the tote shape and color as they are."
     },
     {
       "id": "fluted-vase",
-      "t": "Room Photo: Fluted Vase With Flowers",
-      "d": "A white fluted vase with flowers in a bright room, for a home listing that needs a setting.",
+      "t": "Vase With Flowers in a Bright Room",
+      "d": "A room around the vase makes a home listing feel lived in. Recreate this flower setting with the vase you ship.",
       "imageRefs": [
         "g:background-remove-replace/source-input",
         "g:background-remove-replace/example-01",
@@ -78,13 +78,13 @@
         "Fluted vase with flowers",
         "Finished vase image"
       ],
-      "ctaLabel": "Try the vase room scene",
-      "ctaPrompt": "Recreate a white fluted vase room scene from my uploaded product photo with flowers in a bright room, keeping the vase shape and color consistent."
+      "ctaLabel": "Try this room scene",
+      "ctaPrompt": "Place my uploaded fluted vase in a bright room with flowers, and keep the vase shape and color as they are."
     },
     {
       "id": "leather-wallet",
-      "t": "Close-Up Photo: Brown Leather Wallet",
-      "d": "A close view of the leather, the stitching, and the finish.",
+      "t": "Close View of a Leather Wallet",
+      "d": "Stitching and grain are the reason someone picks this wallet up. Ask for that tight crop on your own piece.",
       "imageRefs": [
         "g:macro-details/source-input",
         "g:macro-details/hero-output",
@@ -95,13 +95,13 @@
         "Leather wallet detail",
         "Finished wallet image"
       ],
-      "ctaLabel": "Try the wallet close-up",
-      "ctaPrompt": "Recreate a brown leather wallet detail scene from my uploaded product photo, keeping the wallet shape, stitching and color consistent."
+      "ctaLabel": "Try this close view",
+      "ctaPrompt": "Make a tight detail scene of my uploaded brown leather wallet, and keep the shape, stitching, and color as they are."
     },
     {
       "id": "running-shoe",
-      "t": "Social Photo: Gray Running Shoe",
-      "d": "A simple social ad image of a gray knit shoe. Check the sole and the shape before you post it.",
+      "t": "Social Still of a Knit Running Shoe",
+      "d": "Shoppers can read the shoe at a glance in this feed crop. Rebuild this social frame around the shoe you sell, with the sole in the picture.",
       "imageRefs": [
         "g:feed-ad-still/example-02",
         "g:feed-ad-still/example-01",
@@ -112,13 +112,13 @@
         "Running shoe in a social scene",
         "Finished running shoe image"
       ],
-      "ctaLabel": "Try the running shoe social scene",
-      "ctaPrompt": "Recreate a gray knit running shoe feed scene from my uploaded product photo, keeping the shoe shape, sole and color consistent."
+      "ctaLabel": "Try this social still",
+      "ctaPrompt": "Place my uploaded gray knit running shoe in a simple social-feed scene, and keep the shoe shape, sole, and color as they are."
     },
     {
       "id": "sunscreen",
-      "t": "Tall Photo: Sunscreen Tube in Daylight",
-      "d": "A tall photo of a plain sunscreen tube in daylight. This card is a photo, not a video.",
+      "t": "Tall Daylight Shot of Sunscreen",
+      "d": "This tall daylight frame fills a Story or a Reel with your tube. The card is a still of a plain tube, ready to redo with the tube you sell.",
       "imageRefs": [
         "g:story-ad-vertical/source-input",
         "g:story-ad-vertical/example-01",
@@ -129,54 +129,54 @@
         "Sunscreen tube in a tall scene",
         "Finished sunscreen image"
       ],
-      "ctaLabel": "Try the sunscreen tall photo",
-      "ctaPrompt": "Recreate a plain sunscreen tube vertical scene from my uploaded product photo in clear daylight, keeping the tube shape and cap color consistent."
+      "ctaLabel": "Try this tall photo",
+      "ctaPrompt": "Place my uploaded sunscreen tube in a tall daylight scene, and keep the tube shape and cap color as they are."
     }
   ],
   "faq": [
     {
-      "q": "What are these AI product photo and video examples?",
-      "a": "They are finished looks you can redo with your own item. The six cards on this page are photos. A short video ad, with an actor, a spoken line, and captions, starts from the same kind of photo."
+      "q": "What is an example on this page?",
+      "a": "It is a photo with the setting already chosen, not an empty prompt box. One card is a desk and a crop. You bring the item you sell. A short ad is a later choice, after that still looks like the item in your box."
     },
     {
-      "q": "How do I recreate an example with my own product?",
-      "a": "Upload a photo of your item and open the example you liked. Your file is built from that photo, in the same kind of scene. You can then add a script (the words to say), an actor, and captions if you want a short ad."
+      "q": "How does an example become my file?",
+      "a": "Paste the product page or upload one photo, then type the one sentence the ad should say. For a serum, the bottle photo is enough. A photo costs 24 credits, and a 15-second video costs 60. The cost shows before anything runs."
     },
     {
-      "q": "Why start from an example instead of filming a creator?",
-      "a": "An example shows a finished look before you book a studio day or a creator. Upload one product photo, make a photo or a short ad, and check the product before you publish it."
+      "q": "Why start here instead of booking a creator?",
+      "a": "You can try a second opening without waiting on a creator's calendar. A shop selling phone grips can drop yesterday's photo into a desk scene this afternoon, then make another file that opens on a different line. Each file is its own credit charge, and you pick which one to post."
     },
     {
-      "q": "Who are these examples for?",
-      "a": "Stores, marketers, agencies, and anyone selling online who wants a product photo or a short ad without a studio day."
+      "q": "Which shops get the most from these examples?",
+      "a": "A one-person shop packing orders at night gets the most from these cards. A marketer who has to hand a client a file by Friday, and a founder who has never booked a studio, use them the same way. A brand that already photographs every product in-house can skip this page."
     },
     {
-      "q": "Can a beginner use an example?",
-      "a": "Yes. You do not need editing experience. Upload a product photo, open a look, and the tool can add the script (the words to say), the actor, and the captions."
+      "q": "Can I use an example if I have never edited video?",
+      "a": "Yes. Taking a photo of the whole item and opening a card is the skill this page asks for. You type one sentence, and the spoken line is filled in from that. There is no timeline to learn."
     },
     {
-      "q": "Which products do these examples fit?",
-      "a": "The page shows a mug, a tote, a vase, a wallet, a shoe, and sunscreen. The same path fits skincare, beauty, fashion, food and drink, technology, fitness, and home goods."
+      "q": "Which products fit these scenes?",
+      "a": "Small packages and larger ones both fit these scenes. A tea tin uses the same cards: pick the crop that fits a small package, then compare the tin in the file with the tin you ship."
     },
     {
-      "q": "Can I upload my own product photo?",
-      "a": "Yes. The product in your file comes from the photo you upload, or from a product page link. Use a photo that shows the whole item. See [URL to video](page:url-to-video)."
+      "q": "Can the product come from a photo I took?",
+      "a": "Yes. The item in the file comes from the photo you upload, or from a product page you paste. Show the whole product. See [URL to video](page:url-to-video)."
     },
     {
-      "q": "Which platforms can I publish to?",
-      "a": "You can post on TikTok, Instagram, Facebook, and YouTube. Shapes are 9:16 (tall phone), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), and 3:4 (a bit tall). You can send the file from the tool, or download it and post it yourself."
+      "q": "Where can I post the file?",
+      "a": "Most shops post the tall 9:16 file first, because it fills a phone. Use 1:1 when the placement is a square feed, and 16:9 when the placement is YouTube. 4:3 and 3:4 are there when a slot asks for them. You can publish from here, or download the file and put it on your store."
     },
     {
-      "q": "Is there a free plan for these examples?",
-      "a": "No. The pictures on this page are only here to show the look. They are not files to download and repost. A file you make spends credits, the units on a paid plan. Plans start at $24.50 a month with 200 credits. The download has no watermark, so no logo is stamped on it."
+      "q": "Do I pay to make a file from an example?",
+      "a": "Yes. The pictures on this page only show the look. A file you make spends credits on a paid plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Can I use a file I make in a paid ad?",
-      "a": "Yes. A file you make can be used in ads and on your store. It has no watermark, so no logo is stamped on it."
+      "q": "Can I run the file as a paid ad?",
+      "a": "Yes. The download has no watermark, so it can run as a paid placement and sit on your product page. A file you make for a client is the same kind of download. You still follow the ad account's rules on what the video is allowed to claim."
     },
     {
-      "q": "Why use an example instead of starting from nothing?",
-      "a": "An example already has a scene, how tight the photo is, and a mood (the feeling of the scene). You spend your time on the product and the spoken line, not on building the picture from a blank page."
+      "q": "Why not build the ad from a blank page?",
+      "a": "A blank page makes you invent the desk, the crop, and the first line at the same time. The desk card already chose the room. You only decide whether the item in the photo is yours, and what the voice should say."
     }
   ],
   "visual": {
@@ -243,8 +243,8 @@
     },
     "overview": "Each card is a finished photo you can recreate from your own product photo. Filter by fashion, fitness, or accessories, or browse all six. Skincare, beauty, food and drink, technology, and home goods use that same path. When you want a video, that photo can also start a short ad with an actor, a spoken line, captions, and music. You can send it to TikTok, Instagram, or Facebook."
   },
-  "related_h2": "Tools that make these directions",
-  "related_lead": "Open a tool, or browse the template library.",
+  "related_h2": "Tools That Make These Scenes",
+  "related_lead": "The scene you liked can become the photo or the short ad you post. Open the tool that fits, or browse layouts you can start from.",
   "relatedLinks": [
     "lifestyle-photos",
     "video-ads",
@@ -253,6 +253,6 @@
     "white-background",
     "templates"
   ],
-  "cta_title": "Ready to Recreate This with Your Product",
-  "cta_lead": "Upload one product photo, open the look you liked, and see the credit cost before you start."
+  "cta_title": "Start From a Scene You Would Post",
+  "cta_lead": "You leave with your own product in a scene you would already post. Upload one photo, open that scene, and the credit cost is on screen before it starts."
 }

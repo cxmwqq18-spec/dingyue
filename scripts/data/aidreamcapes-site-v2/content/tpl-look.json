@@ -4,7 +4,7 @@
   "description": "Turn one outfit photo into photos of the full outfit worn together. Use them on a collection page or a launch ad, and check each piece you can ship.",
   "h1": "AI Lookbook Photos for One Complete Outfit",
   "eyebrow": "Outfit photo template",
-  "lead": "Upload one full outfit for a lookbook, photos of that outfit worn together. An AI actor, a generated person, can wear it. When you turn the same photo into a video, you can add a spoken voice. Credits, what each job spends, are shown before you start.",
+  "lead": "Get a clothing ad from a coat and scarf worn as one set. You bring the picture where both pieces show. You do not start from a blank page.",
   "secondary_keywords": [
     "fashion editorial photos",
     "collection launch lookbook",
@@ -12,19 +12,19 @@
     "Instagram lookbook images"
   ],
   "steps_h2": "Make Outfit Photos for the Collection in 3 Steps",
-  "steps_lead": "Upload the full outfit, name one location and one light, then download the photo for the collection page.",
+  "steps_lead": "Leave with a still and a clip of the set: open the frame, add the jacket, the tee, and the trouser, and download.",
   "steps": [
     {
       "t": "Upload Your Outfit Photo",
-      "d": "Lay the full outfit in one bright photo, with each piece apart. Include the top, bottom, outer piece, and shoes if they belong."
+      "d": "Pick the frame keeping the jacket with the trouser as one worn set. The set is ready without booking a model."
     },
     {
       "t": "Pick a Lookbook Scene",
-      "d": "Name one place and one kind of light. Use that same choice on every outfit so the set feels connected."
+      "d": "Upload one photo where every piece in the set is visible, or paste the collection link. Change the spoken line so it names the set."
     },
     {
       "t": "Download and Post",
-      "d": "Check each piece against what you can ship. Add the price and links outside the image, and post only matching photos."
+      "d": "Take a still for the collection page and a captioned clip worn by an AI avatar. Check the jacket hem against the shippable piece."
     }
   ],
   "maker": {
@@ -46,44 +46,44 @@
   },
   "faq": [
     {
-      "q": "What should the source photo include?",
-      "a": "Show every piece in the outfit, including the top, bottom, outer piece, and the shoes or main extra, in one photo. If a piece is missing from your photo, leave it out of the result."
+      "q": "What do I get from a lookbook template?",
+      "a": "A frame that holds a cardigan, a tank, and a skirt together as one worn set. Add that photo. An AI avatar wears the three pieces. You do not have to book a model."
     },
     {
-      "q": "How do I keep a collection looking connected?",
-      "a": "Reuse one place, one light, and one framing across outfits, and keep each piece easy to tell apart. A digital twin, the same generated person, can repeat so the set feels like one shoot. Start with the main outfit."
+      "q": "How do I go from the template to a look video?",
+      "a": "Put in the photo that shows every piece you actually ship in the set. Write a line that names the set."
     },
     {
-      "q": "Can I show more than one outfit in a single image?",
-      "a": "Use one full outfit per image so the outline stays clear. Make a separate image for the next outfit."
+      "q": "Which clothes belong in a look?",
+      "a": "Pieces you sell as a combination a person can put on, whether that is a rain set or a dinner set. If one piece in the photo is not for sale, leave it out of the frame."
     },
     {
-      "q": "Do I need a photographer or models?",
-      "a": "No. Each photo is made from an outfit photo you already have. The person is an AI actor you pick from the actor list, not someone you booked and not a customer."
+      "q": "Can one collection become more than one look?",
+      "a": "Yes. Keep the blazer and swap the shirt color for the next render. A long rail of sizes can share the blazer photo."
     },
     {
-      "q": "How is this different from hiring a creator?",
-      "a": "A creator needs samples, a fee, and time on the calendar. Here you upload one photo or paste a product page link, pick a scene, and pay the credits, what that job spends."
+      "q": "Who should build looks this way?",
+      "a": "A clothing shop that posts sets rather than single tees, and does not keep a model on a retainer. The person who writes the caption can build the look."
     },
     {
-      "q": "What does a lookbook photo cost?",
-      "a": "Each photo costs 24 credits. Credits are what the job spends. The cost is shown before you start, and a failed job returns those credits. There is no free plan. The download has no watermark, nothing stamped on the file, and you can use it in your own ads, pages, and posts."
+      "q": "What if I have never made a clothing video?",
+      "a": "You can still make the look. Start from the outfit photo and one sentence, even if you have never edited a video."
     },
     {
-      "q": "Can the same scene cover menswear and womenswear?",
-      "a": "Yes. Menswear and womenswear can share one framing and one light when each outfit has its own photo. Check the fit and the lengths against the clothes you sell."
+      "q": "When do I have a look file I can post?",
+      "a": "After the render. You can post in that same sitting, and you do not need to book a studio."
     },
     {
-      "q": "Can I use the frames in a launch?",
-      "a": "Yes. They fit a collection page, a carousel (you swipe through several), or a launch email after you add prices yourself. A launch that also needs a video is covered by [product launch video and photos](page:occ-product-launch)."
+      "q": "What does a look photo or a clip cost?",
+      "a": "A still spends 24 credits. A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns its credits. The file has no watermark."
     },
     {
-      "q": "Can the look include a voiceover and captions?",
-      "a": "The outfit photo is a still picture. When you make a video from the same outfit photo, add a spoken voice, words on screen, and a music track. Then post that video to TikTok or Meta (Facebook and Instagram)."
+      "q": "Where can I use the look, including a launch?",
+      "a": "On a collection page, in a swipeable set, or in a launch email after you add prices yourself. A launch that also needs video is covered by [product launch video and photos](page:occ-product-launch)."
     },
     {
-      "q": "Can I start from a product link or another language?",
-      "a": "Yes. Paste a product page link and ask for a short script, the words to say. You can speak the line in another language. The API lets your product list start the next outfit. You see what the job spends before each job."
+      "q": "What should I compare before I post?",
+      "a": "Check each piece you can actually ship: color, outline, and what is included. The person on screen is an AI avatar."
     }
   ],
   "visual": {
@@ -624,8 +624,8 @@
       }
     ]
   },
-  "related_h2": "Templates for Instagram Outfit Photos",
-  "related_lead": "Model photos, clothing try-on, fashion reels, sale banners, the fashion page, and Instagram.",
+  "related_h2": "Pages Around an Outfit Look",
+  "related_lead": "Model photos, try-on, fashion clips, sale frames, the fashion page, and Instagram.",
   "relatedLinks": [
     {
       "id": "model-photos",
@@ -652,8 +652,8 @@
       "label": "AI Instagram Ads"
     }
   ],
-  "cta_title": "Show the Full Outfit on the Collection Page",
-  "cta_lead": "Upload one complete outfit. You see the credit cost, what the job spends, before the job starts.",
+  "cta_title": "Show Buyers the Whole Set",
+  "cta_lead": "Shoppers see every piece in the set. Add the photo of the dress and belt, and open the ad.",
   "blockOrder": [
     "hero",
     "picker",
@@ -666,38 +666,38 @@
   "more_sections": [
     {
       "eyebrow": "On this look",
-      "h2": "Features for AI Lookbook Photos",
-      "lead": "The outfit photo is a still you check against what you can ship. The video from that photo can carry the voice and the words.",
+      "h2": "What a Lookbook Template Can Carry",
+      "lead": "The clip can carry a voice, captions, and music, and the still can sit on the collection page.",
       "items": [
         {
           "icon": "play",
-          "t": "Spoken Voice, Words on Screen, and Music",
-          "d": "On the video, add a spoken voice, words on screen, and a track from the music library. The outfit photo stays a picture."
+          "t": "Voice, Captions, and Music",
+          "d": "A voice can read the line, captions can name the set, and a track can come from the music library. The lookbook frame can stay a still."
         },
         {
           "icon": "users",
-          "t": "AI Actors and a Digital Twin",
-          "d": "An AI actor, a generated person, wears the outfit. A digital twin, that same person, can repeat across the set."
+          "t": "AI Avatars and an AI Twin",
+          "d": "An AI avatar wears the outfit. An AI twin can repeat that same presenter across the collection."
         },
         {
           "icon": "sparkle",
           "t": "A Script From a Line or a Link",
-          "d": "Ask for a short script, the words to say. Or paste a product page link and start from that page's outfit photo."
+          "d": "A short script, or a product link, can start from that page's outfit photo."
         },
         {
           "icon": "layers",
-          "t": "A Batch of Framings From One Outfit",
-          "d": "Make another photo from the same shot when the next slide needs a new framing. Each photo is 24 credits, shown first. Credits are what the job spends."
+          "t": "More Frames From One Outfit",
+          "d": "One outfit photo can make another crop for the next slide. Each photo is 24 credits, shown first."
         },
         {
           "icon": "check",
-          "t": "Edit the Clip, Then Publish",
-          "d": "Trim the short clip in the editor, then post it to TikTok or Meta (Facebook and Instagram). The file has no watermark, nothing stamped on it."
+          "t": "Edit the Clip, Then Post",
+          "d": "You can trim in the editor, then send it to TikTok, Instagram, or Facebook. The file has no watermark."
         },
         {
           "icon": "globe",
-          "t": "Another Language, or the Catalog API",
-          "d": "Speak the line in another language. Or use the API so your product list can start the next outfit."
+          "t": "Another Language, or the API",
+          "d": "The line can go out in another language, or the API can start the next outfit from your catalog."
         }
       ]
     }

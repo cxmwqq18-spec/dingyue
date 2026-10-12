@@ -4,7 +4,7 @@
   "description": "Make an Instagram ad from one product photo. Choose a tall phone Reel or a square photo. You pay in credits, and you see the cost first. No watermark.",
   "h1": "AI Instagram Ads from One Product Photo",
   "eyebrow": "Instagram ads",
-  "lead": "Paste a product link or start from one photo. UGC means the ad looks like a customer filmed it. Pick a presenter made by AI (an actor) and a voice. A credit is what your plan spends on each file, and you see that cost first. Then publish the Instagram ad, or download it with no watermark.",
+  "lead": "Keep an Instagram ad running on weeks when no creator is free. The clip comes from the product page, and you can cut a second version in another setting.",
   "card": "Instagram ads from one product photo, as a tall clip or a square photo.",
   "secondary_keywords": [
     "Instagram Reels ads",
@@ -14,53 +14,53 @@
   ],
   "faq": [
     {
-      "q": "What can I make here for Instagram?",
-      "a": "A tall phone clip for Reels and Stories, or a square photo for your profile, from a product link or one photo. You can add an actor, a script, a spoken voice, and captions. The credit cost shows first."
+      "q": "What counts as an Instagram ad here?",
+      "a": "It is a paid Reel or feed post: someone holding your product and saying who it is for. It sits more comfortably beside friends' posts than a glossy brand film does."
     },
     {
-      "q": "How do I make an Instagram ad from a link?",
-      "a": "Paste the product page. A script, pictures, and captions can be drafted for you. Pick an actor and a voice, choose the tall clip or the square photo, then publish or download."
+      "q": "What do I do to get an Instagram Reel?",
+      "a": "Paste the product page and say who the buyer is. You pick the avatar after you hear the line, and the download is already a Reel."
     },
     {
-      "q": "Do you have ready-made Reel layouts?",
-      "a": "Yes. Start from a Reel, Story, or post template, then swap the product, the actor, and the line. You can also describe one moment with no template."
+      "q": "Is the Reels frame already drawn?",
+      "a": "Yes. The Reel starts from a frame that already fits a tall phone, so you are not drawing the safe area yourself."
     },
     {
-      "q": "What does a file cost?",
-      "a": "A photo costs 24 credits. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the price before you start. If a job fails, those credits come back on their own."
+      "q": "What does a file cost in credits?",
+      "a": "A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost first. A failed job returns those credits."
     },
     {
-      "q": "Are music, captions and a voice included?",
-      "a": "Yes. A clip can include captions, a spoken voice, and a music track. Change them in the editor before you publish or download. The file has no watermark."
+      "q": "Are music, captions, and a voice included?",
+      "a": "Yes. Choose an AI voice, captions, and a track from the music library. The same script can be spoken in another language."
     },
     {
-      "q": "Can I publish the file as a paid ad?",
-      "a": "Yes. Publish it to Instagram or Meta (Facebook and Instagram's ad system) from here, or download it and upload it yourself. Follow the current review checks for the country where the ad will run."
+      "q": "Can I run the file as a paid ad?",
+      "a": "Yes. Publish it or download it and run it in Instagram ads. The download has no AIVideosUGC watermark. Instagram still applies its own ad rules."
     },
     {
-      "q": "Do I need a creator or a studio?",
-      "a": "No. Pick someone from the actor library, or make a presenter that looks like you. If a person appears, that presenter is made by AI. It is not a real customer, and not a creator you booked."
+      "q": "Do I have to book a person and a room?",
+      "a": "No. Use a photo you already have. The person in the Reel is an AI avatar, and the setting can be the one already in the photo."
     },
     {
-      "q": "Which picture should I check before download?",
-      "a": "Compare your ad spot with [social media ad sizes](/guides/ad-sizes-by-platform), then preview the file so on-screen buttons do not cover the product."
+      "q": "Which frame should I check before download?",
+      "a": "Compare your placement with [social media ad sizes](/guides/ad-sizes-by-platform), then preview the file so on-screen buttons do not cover the product."
     }
   ],
   "examples": null,
-  "templates_lead": "Choose a look for a Reel or square Instagram post featuring your product.",
-  "cta_lead": "Choose Reels, Stories, or the profile posts first, then make a photo or clip that fits.",
+  "templates_lead": "Choose a look for a Reel or a square post that keeps your product clear.",
+  "cta_lead": "Pick Reels, Stories, or the feed first, then make a photo or a clip that fits.",
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "Paste the product page. We bring in the pictures and the description, or you upload a photo."
+      "d": "The listing shows the tote, the strap, and the size. Those pictures set the order of the Reel."
     },
     {
       "t": "Choose an Actor",
-      "d": "Pick someone from the actor library, or make a presenter that looks like you. A voice can match the language you sell in."
+      "d": "Pick an AI avatar for this Reel, or make one from a short clip of you if it should sound like the shop."
     },
     {
       "t": "Download and Publish",
-      "d": "Publish to Instagram or download with no watermark. Captions, a spoken voice, and music can already be on the file."
+      "d": "The file comes down as a Reel. You attach it to the campaign."
     }
   ],
   "visual": {
@@ -112,46 +112,46 @@
       }
     }
   },
-  "benefits_h2": "Why AIVideosUGC for Instagram Ads",
+  "benefits_h2": "Instagram Ads Without Waiting on a Creator",
   "benefits": [
     {
-      "t": "A Shorter Path to the Next Reel",
-      "d": "Start from a product link or a photo like this. No photo shoot to schedule, and you can make many openings at once.",
+      "t": "Publish When Ready",
+      "d": "A quiet week on set does not have to mean a quiet feed. The hand-cream ad and the organic Reel can both come from the same photo.",
       "img": "n:guide:fx40-plat-instagram-benefit-time",
       "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf"
     },
     {
-      "t": "Credits, Not a Photo Shoot",
-      "d": "A photo is 24 credits. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the number before the job runs.",
+      "t": "More Budget Buys Reach",
+      "d": "The money that used to start with a creator invoice can buy reach instead. A 15-second Instagram ad spends 60 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
       "img": "n:guide:fx40-plat-instagram-benefit-cost",
       "alt": "Unbranded ceramic travel mug on linen with one green leaf"
     },
     {
-      "t": "More Than One Opening",
-      "d": "Change the actor, how the items sit together, or how the photo is trimmed, and run it again. The product still comes from your link or upload.",
+      "t": "Keep the Face People Know",
+      "d": "When one opening gets the replies, the next Instagram ad can use that AI avatar again. Try one lip balm clip that opens on the tubes, and another that opens on a hand using them.",
       "img": "n:guide:fx40-plat-instagram-benefit-variations",
       "alt": "Three pastel lip balm tubes arranged in color groups on a peach surface"
     }
   ],
   "steps_h2": "Make Instagram Ads With AI in 3 Steps",
-  "steps_lead": "Paste a link, pick an actor, then publish or download.",
+  "steps_lead": "You finish with an Instagram ad the account can run.",
   "more_sections": [
     {
-      "eyebrow": "In one place",
-      "h2": "A Video Ad Maker for Instagram",
-      "lead": "A product link, a talking presenter, and the editor are in one place.",
+      "eyebrow": "Instagram ad, one place",
+      "h2": "The Whole Instagram Ad in One Place",
+      "lead": "You settle the script, the picture, and the person holding the product before you export.",
       "items": [
         {
-          "t": "Turn a Link Into a Video",
-          "d": "Paste a product page and get a clip. You can also start from a photo if you do not have a link."
+          "t": "Start From the URL",
+          "d": "Paste the product page and get a Reel. You are not paying a production invoice for every test of the first line."
         },
         {
-          "t": "An Actor Holding the Product",
-          "d": "A person made by AI can hold the item and explain it. They are not a creator you hired."
+          "t": "An Avatar in the Frame",
+          "d": "An AI avatar can hold the product and say who it is for. You can start from a photo you already have on your phone."
         },
         {
-          "t": "Edit Script, Voice and Music",
-          "d": "Change the script, the voice, the captions, the actor and the music, then publish to Instagram or download."
+          "t": "Fix the Line Here",
+          "d": "Change the line or the voice without opening a second app to export the Reel."
         }
       ]
     }
@@ -166,66 +166,66 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "Make the next Reel from a link or a photo, then test another actor or line.",
+  "benefits_lead": "Your next Instagram Reel does not start on a creator's calendar.",
   "reasons": {
-    "h2": "Why Customer-Style Videos Help Instagram Ads",
-    "lead": "A spoken voice, a template, and no creator to book.",
+    "h2": "Why UGC-Style Instagram Ads Help",
+    "lead": "A second country can hear the Instagram ad without a second shoot.",
     "items": [
       {
-        "t": "No Wait for a Creator",
-        "d": "The next Story or Reel starts when you paste a link. You do not wait on a booking.",
+        "t": "Keep Tests on Schedule",
+        "d": "The clip is on your calendar when the offer is. You do not wait on a creator who is filming another brand.",
         "icon": "Clock"
       },
       {
-        "t": "Spoken Voices",
-        "d": "Add a natural spoken voice in the language you sell in. You do not book a new recording for each language.",
+        "t": "Ads in the Buyer's Language",
+        "d": "You can run the Instagram ad in the buyer's language, with a local cadence instead of a flat translated caption. You do not book a second actor for that cut.",
         "icon": "Mic"
       },
       {
-        "t": "Instagram Templates",
-        "d": "Start from a Reel, Story, or post template, then make many versions when you need more than one.",
+        "t": "One Reel Frame, Many Products",
+        "d": "Several products can share one Reels frame. Only the product and the first spoken line change.",
         "icon": "LayoutGrid"
       }
     ]
   },
   "platforms": {
-    "h2": "Create Ads for Your Other Sites",
-    "lead": "Instagram is one place to post. The same link can start a file for the other ad sites too.",
+    "h2": "Other Channels Besides Instagram Ads",
+    "lead": "The same product can start a file for TikTok, Facebook, Shorts, Amazon, or Shopify. Instagram is one placement.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "AI TikTok Ads Generator",
-        "d": "A tall phone-shaped ad for short video, started from the same upload.",
+        "d": "A tall TikTok ad from the same product photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
         "label": "AI Facebook Ad Generator",
-        "d": "A square photo for the home screen, or a tall clip that fills the phone.",
+        "d": "A square Facebook still, or a tall video that fills the phone.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Ads",
         "label": "YouTube Shorts Ads",
-        "d": "A tall clip for a short video. A wide video that plays inside a YouTube video is a separate job.",
+        "d": "A tall Short. A wide YouTube ad is a different file.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
         "label": "Amazon Product Photos",
-        "d": "A plain main image, a detail, and an in-use view for the gallery.",
+        "d": "A white main image, a close-up, and an in-use frame for the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
         "label": "Shopify Product Photos",
-        "d": "Square product photos, collection photos, and a clip you add in Shopify yourself.",
+        "d": "Square photos for the product page and the collection, plus a video you upload in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "AI Ads and Product Photos by Platform",
         "label": "AI Ads and Product Photos by Platform",
-        "d": "Open the full list and pick where the next file goes.",
+        "d": "Open every channel and choose where the next file should run.",
         "href": "/platforms"
       }
     ]
@@ -296,7 +296,7 @@
       }
     ]
   },
-  "related_h2": "Related Tools for an Instagram Ad",
+  "related_h2": "Tools That Pair With an Instagram Ad",
   "related_lead": "Open the tool or template that matches where the ad will show.",
   "relatedLinks": [
     "video-ads",

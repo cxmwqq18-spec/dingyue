@@ -4,7 +4,7 @@
   "description": "Turn a public product URL into a short video with a script, an AI actor and a voice. Make demos, paid ads and social posts without a studio shoot.",
   "h1": "URL to Video: A Finished Ad From a Product Page",
   "eyebrow": "URL to video",
-  "lead": "Paste a public product page address (the URL) and get a short ad. It includes a script, an AI actor, a voice and captions, the words on screen. You do not need a shoot or a folder of photos. Pick a video size and a length of 6, 10, 15 or 30 seconds. Then download it, or post it on TikTok, Facebook or Instagram. Credits are what your plan spends on each video, and you see the number before you start.",
+  "lead": "A public product page can become a spoken ad without a new shoot. Paste that page.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -12,43 +12,47 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Why Choose AIVideosUGC to Turn a Link Into a Video",
+  "benefits_h2": "Why Shops Start From the Listing",
   "benefits": [
     {
-      "t": "From the Product Page",
-      "d": "The link brings the image and the product details into a finished ad. You do not start from an empty folder of files."
+      "t": "The Page Does the Gathering",
+      "d": "You do not re-upload a stand mixer's photo. The picture on the public page is the one that enters the project."
     },
     {
-      "t": "A Script You Can Edit",
-      "d": "The listing becomes a script you can change, including a version for another language when you sell in more than one market."
+      "t": "Scripts in the Languages You Sell",
+      "d": "The script for a green-tea tin can use the fact the listing already states. If you also sell it in French, that page can be drafted in French and the wording stays yours."
     },
     {
-      "t": "An Actor and a Voice",
-      "d": "Pick an AI actor and a voice from the list, or make an actor for your brand."
+      "t": "Actors That Can Carry an Ad",
+      "d": "Use one actor for a gold hoop and a silver hoop so the two ads look like one shop."
     },
     {
-      "t": "A Clip for Each Product",
-      "d": "Make a new clip per product link, then try another actor or opening without booking a shoot."
+      "t": "More of the Budget Stays on Ads",
+      "d": "A 15-second clip is 60 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second cut is 24 credits when the ad only needs a short hold. You see that cost before it runs."
     },
     {
-      "t": "Edit, Then Publish",
-      "d": "Change the script, the voice, the captions and the music. Then send the ad to TikTok, Facebook or Instagram."
+      "t": "You Still Hold the Edit",
+      "d": "If the draft for a denim jacket says relaxed and the page says slim, keep the page's word. You can also change the voice without starting a new project."
+    },
+    {
+      "t": "No Shoot on the Calendar",
+      "d": "A public page for a desk lamp is enough. You do not book a room, a camera, or a person to hold it."
     }
   ],
   "steps_h2": "How to Make a Video From a Product Page in 3 Simple Steps",
-  "steps_lead": "Paste a public product page, pick an actor and a voice, then check the script.",
+  "steps_lead": "A public product page is the only link you need.",
   "steps": [
     {
       "t": "Paste Your Product Page",
-      "d": "Paste a public product page. Its image, name and reviews come in with the link."
+      "d": "Use the wool throw page a shopper can open without logging in. The photo on that page is what the clip should hold."
     },
     {
       "t": "Select an AI Actor",
-      "d": "Choose an AI actor and a voice."
+      "d": "Pick the actor in a knit sweater for the wool throw, with a quieter voice so it does not sound like a shout."
     },
     {
       "t": "Write the Script",
-      "d": "A script is written from the page. Edit it, then download it or post it on TikTok, Facebook or Instagram."
+      "d": "The draft may call the throw heavy. If the listing says lightweight, keep the listing's word, then download the clip."
     }
   ],
   "maker": {
@@ -70,83 +74,75 @@
   },
   "faq": [
     {
-      "q": "What does a product URL (the page address) give you?",
-      "a": "If the page opens with no login, you get its main image, the product name and any reviews on that page."
+      "q": "How does a shop get a clip from a listing?",
+      "a": "Paste the public product page. After you approve the sentence, download the clip."
     },
     {
-      "q": "Does the product link write the script?",
-      "a": "Yes. A script is written from the page, and you can edit the lines, the captions and the language before the clip is finished."
+      "q": "Is there a charge to start from a link?",
+      "a": "Yes. Clips spend credits on a monthly plan. Starter is $24.50 a month for 200 credits. A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see that number before it runs."
     },
     {
-      "q": "Is URL to video free?",
-      "a": "No. Plans start at $24.50 a month. Credits are what that plan spends on each video. A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see that number before you start."
+      "q": "What kinds of clips can a link become?",
+      "a": "A link can become the ad that names one fact, a clip that shows one action, or the post you put on a phone-shaped placement."
     },
     {
-      "q": "How do I make a video from a product link?",
-      "a": "Paste the page address. Pick an actor and a voice, then check the script. Choose a size and a length. Then download it, or post it on TikTok, Facebook or Instagram."
+      "q": "Is this meant for marketing?",
+      "a": "Yes. Use it when the next ad should come from the page you already keep up to date."
     },
     {
-      "q": "Can I use a public Shopify or Amazon page?",
-      "a": "Yes, if the page opens with no login and shows the item you sell, such as that color or size."
+      "q": "Can I change the drafted script?",
+      "a": "Yes. If a draft disagrees with the page, keep the page's word before you finish the clip."
     },
     {
-      "q": "What if the page requires a login?",
-      "a": "Upload the product photo directly. A locked page cannot be read."
+      "q": "Which file types and frames are available?",
+      "a": "Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds. The download has no watermark."
     },
     {
-      "q": "Can reviews on the page appear in the clip?",
-      "a": "Yes. When the page has reviews, they can be brought into the script so the clip mentions what buyers already said."
+      "q": "What actually happens after I paste the page?",
+      "a": "The photo and the facts you already wrote are what the page contributes. You still approve the sentence before the clip is kept."
     },
     {
-      "q": "Which lengths can I choose?",
-      "a": "Choose 6, 10, 15 or 30 seconds."
+      "q": "Do I need editing experience?",
+      "a": "No. If you can copy the page address, you can start. The editor is there when you want to change a word or the music."
     },
     {
-      "q": "How many credits does a URL to video clip use?",
-      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Credits are what your plan spends. If the video fails, those credits come back."
+      "q": "Which pages can be used?",
+      "a": "Use a product page a shopper can open without an account, including Shopify, Amazon, WooCommerce, and WordPress listings. If the page asks for a login, upload the photo instead."
     },
     {
-      "q": "Which sizes can I pick?",
-      "a": "A tall phone video is 9:16. A square is 1:1. A wide video is 16:9. 3:4 is tall, but 9:16 is taller."
+      "q": "Why bother starting from the listing?",
+      "a": "Because the page is already maintained. The ad should not make you retype the facts and upload the photo again."
     },
     {
-      "q": "Can I make clips for several product links at once?",
-      "a": "Yes. Paste the links you want and make a clip for each one, instead of rebuilding every ad by hand."
+      "q": "What if I want it moving quickly?",
+      "a": "Paste the page, approve the drafted sentence, and export. That is the whole path when the page is already public."
     },
     {
-      "q": "Can I edit the script, the voice and the captions?",
-      "a": "Yes. Change the script, swap the voice, fix a caption and pick a song in the editor before you download or post."
+      "q": "How long does the render take?",
+      "a": "You confirm the actor, the script, and the credits first. The 6, 10, 15, or 30 seconds is the length of the video, not a wait you have to book."
     },
     {
-      "q": "How long do I wait for a clip from a product page?",
-      "a": "You confirm the actor, the script and how many credits it uses. The clip is then ready to download. The 6, 10, 15 or 30 seconds is how long the video is, not how long you wait. If it fails, those credits come back."
-    },
-    {
-      "q": "Can I publish to TikTok, Facebook or Instagram?",
-      "a": "Yes. Send the finished clip to TikTok, Facebook or Instagram from the same screen, or download it. You can use it in paid ads and in posts you publish yourself. No logo is stamped on the file. Check each app's rules before you spend more on ads."
-    },
-    {
-      "q": "Is a person in the clip a real customer?",
-      "a": "No. Any person on screen is made by AI. They are not a real customer who bought the product."
+      "q": "What is the simplest path from a listing to an ad?",
+      "a": "Paste the page and approve one sentence. Captions come with the file."
     }
   ],
-  "cta_lead": "Paste a public product page address, check the script, and see how many credits it uses before you start.",
+  "cta_lead": "Paste a public product page.",
   "uses": [
     {
       "t": "Listing Videos",
-      "d": "Turn the product page into a short ad that names one feature and the current price. The clip uses that page's image as the product."
+      "d": "The clip can name the size and the price already on a yoga-mat page, using that page's photo of the rolled mat."
     },
     {
       "t": "Product Demos",
-      "d": "Show one action, such as opening a latch, with an actor and a voice. You do not need to film it."
+      "d": "Have the actor open a lunch-box latch once, so a buyer sees the seal. That clip can sit on the product page. You are not filming a kitchen."
     },
     {
       "t": "Paid Ad Videos",
-      "d": "Build the ad from the link, with captions on the clip. Post it on TikTok, Facebook or Instagram, or download it to use somewhere else."
+      "d": "A face-cream ad can use the page you already send people to. Captions are in the file, so the claim can be read with the sound low."
     },
     {
       "t": "Social Feed Videos",
-      "d": "Make a tall 9:16 clip for TikTok, Instagram or YouTube Shorts. A voice and captions are already in the file."
+      "d": "Use 9:16 so a pour of cold brew reads on a phone. The same file can go to a Shorts placement later if that is where it sells."
     }
   ],
   "visual": {
@@ -231,39 +227,39 @@
   "definition": {
     "title": "What Is URL to Video?",
     "paras": [
-      "URL to video means a public product page address becomes a short ad. The page gives the image, the name and any reviews. A script, an actor and a voice are added, and you get a short clip.",
-      "You can edit the script, the captions and the music before you download or post. Choose 6, 10, 15 or 30 seconds. Sizes are a tall phone (9:16), a square (1:1) and a wide shape (16:9). 3:4 is tall, but 9:16 is taller. Anyone on screen is AI, not a customer."
+      "URL to video means a public product page becomes the spoken ad. The photo already on that page is the one the actor holds, along with the name and the points you wrote.",
+      "Edit the script, the captions, and the music before you download or publish. Lengths are 6, 10, 15, or 30 seconds. Frames include square 1:1, wide 16:9, and tall 9:16, plus 4:3 and 3:4. The person on screen is an AI actor."
     ]
   },
   "reasons": {
-    "h2": "Key Advantages of Creating a Video From a Product Link",
-    "lead": "Paste the page you already sell from. The script, the actor and the voice come with it.",
+    "h2": "Why Start From the Product Page",
+    "lead": "The page you already sell from can carry the photos, the facts, and the social proof into the ad.",
     "items": [
       {
-        "t": "Less Setup Before the Ad",
-        "d": "Paste the link and the product is already there, so you skip gathering photos into a folder first.",
+        "t": "Less Prep Before the Ad",
+        "d": "A blender's size and photo are already on the listing. Paste that page instead of rebuilding the brief from a folder of loose files.",
         "icon": "Link"
       },
       {
-        "t": "Script, Voice and Edit Included",
-        "d": "The script, the voice and the edit are made for you. You change only what you want.",
+        "t": "The Heavy Lifting Is Done",
+        "d": "After a lipstick page is in, you do not assemble the clip by hand. Change the shade sentence if that word is off, and leave the rest.",
         "icon": "WandSparkles"
       },
       {
-        "t": "A Clip for Every Link",
-        "d": "Paste several product links and get a clip for each one, for a launch, a demo or a social post.",
+        "t": "Many Links, One Sitting",
+        "d": "Paste the navy sneaker page and the white sneaker page in the same sitting. Each color gets its own clip from the page it already has.",
         "icon": "Layers"
       },
       {
-        "t": "Reviews From the Page",
-        "d": "When the page has reviews, they can be brought into the video so shoppers see what buyers already said.",
+        "t": "Proof Already on the Page",
+        "d": "If a headphone listing already shows a note about the battery, that note can be spoken in the ad.",
         "icon": "Star"
       }
     ]
   },
-  "benefits_lead": "For shops that already have a product page and want an ad without a shoot.",
-  "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "When you already have a photo, or you want a presenter-led clip.",
+  "benefits_lead": "A product that already has a page can feed the next ad, demo, and social clip.",
+  "related_h2": "When You Are Not Starting From a Link",
+  "related_lead": "If you already have a photo, or you want a presenter-led clip, start in one of these tools.",
   "relatedLinks": [
     "video-ads",
     "product-videos",
@@ -273,8 +269,8 @@
     "before-after-videos"
   ],
   "compare_table": {
-    "title": "A Product Link vs. Building the Ad Yourself",
-    "lead": "The page supplies the product. You still edit the script before it runs.",
+    "title": "A Product Link vs. Building the Ad by Hand",
+    "lead": "The page supplies the product, and you approve the script that comes back.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -282,34 +278,34 @@
     ],
     "rows": [
       [
-        "Start",
-        "Paste one or many product links",
-        "Download files and write the instructions"
+        "Where you start",
+        "Paste one page, or several",
+        "Download files and write the brief"
       ],
       [
-        "Script",
-        "Written from the page, then you edit it",
-        "You write every line"
+        "The script",
+        "Drafted from the page, then you edit it",
+        "Every line written from scratch"
       ],
       [
         "Reviews",
-        "Brought in when the page has them",
-        "You copy them by hand"
+        "A note already on the product page can be spoken.",
+        "You retype that note into the script yourself."
       ],
       [
         "Actor and voice",
-        "Pick from the list",
-        "Book a person to say the lines"
+        "Chosen from the library",
+        "A person booked to say the lines"
       ],
       [
-        "Video size",
-        "Tall 9:16, square 1:1, wide 16:9, 4:3 and 3:4",
-        "A separate file for each size"
+        "Frame",
+        "Square 1:1, wide 16:9, tall 9:16, plus 4:3 and 3:4",
+        "A separate export for each shape"
       ],
       [
-        "If it fails",
-        "Spent credits come back",
-        "The time is already spent"
+        "If a render fails",
+        "The credits you spent come back",
+        "The time is already gone"
       ]
     ]
   },
@@ -379,22 +375,22 @@
       }
     ]
   },
-  "cta_title": "Ready to Turn a Product Link Into an Ad?",
+  "cta_title": "Start the Next Ad From a Product Page",
   "trust": {
-    "h2": "More Ads From a Link, With Less Hassle",
-    "lead": "Same product page. Another actor, another voice, or another language.",
+    "h2": "More Ads From the Same Link",
+    "lead": "One public page can feed more than the single clip you export today.",
     "items": [
       {
-        "t": "Actors to Compare",
-        "d": "Run the same product link with another actor when you want a second version to test."
+        "t": "Actors You Can Test",
+        "d": "Keep a candle page and swap the AI actor when you want a second opening in the test."
       },
       {
         "t": "Templates and Voices",
-        "d": "Start from an ad template and let a chosen voice say the script, instead of booking someone to record it."
+        "d": "Start from a template that already has a place for a folded scarf. Pick the voice that will read the line. You are not booking a recording booth."
       },
       {
         "t": "Another Language",
-        "d": "Keep the product and switch the language for a market that uses a different language."
+        "d": "A leather belt does not change. The spoken line can be the Spanish one your other market already uses on that page."
       }
     ]
   }

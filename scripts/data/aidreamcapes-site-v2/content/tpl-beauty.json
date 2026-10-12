@@ -4,7 +4,7 @@
   "description": "Beauty product video ads from one skincare photo. Show a routine, a texture, or a review in a tall 9:16 size for TikTok and Reels, at 6, 10, 15, or 30 seconds.",
   "h1": "Beauty Product Video Ads for Skincare Routines",
   "eyebrow": "Beauty video template",
-  "lead": "Pick a routine template and add one skincare photo. Download a clip with a script, a spoken AI voice, and captions you can edit.",
+  "lead": "The moisturizer on your bathroom shelf is enough for a sink-side ad. The words come back readable, and you do not have to write a long prompt.",
   "secondary_keywords": [
     "skincare video ads",
     "serum video ad",
@@ -13,19 +13,19 @@
     "cosmetics product video"
   ],
   "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
-  "steps_lead": "One skincare photo and a spoken AI voice, then a file you can caption and post.",
+  "steps_lead": "You get a routine clip from one bottle photo. The example is a vitamin C serum.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a clear photo of the full bottle, jar, or tube. Keep the cap and the label area easy to see."
+      "d": "Open the sink routine for the vitamin C serum you apply in the morning. The speaking pace is already set."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the routine moment, pick an AI voice, then choose a length from 6 to 30 seconds."
+      "d": "Use a clear full-bottle photo of the serum, including the dropper and label. Hands can frame the clear bottle when you want no face."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file, add captions or the color name, and check the cap before you post."
+      "d": "Choose 6, 10, 15, or 30 seconds and set the voice. Add the shade name in captions, then save or post the serum clip."
     }
   ],
   "maker": {
@@ -43,48 +43,48 @@
   },
   "faq": [
     {
-      "q": "What is a beauty product video template?",
-      "a": "A ready beauty template with an AI actor, a spoken voice, and a script. Add your bottle, jar, or tube and get a routine, texture, or review clip without filming someone."
+      "q": "What does a beauty video template include?",
+      "a": "It is a sink-side ad shape for a bottle you already photographed. Add the sunscreen tube and the clip comes back ready to trim. You are not filming a morning routine from a bare timeline."
     },
     {
-      "q": "How does the routine clip come together?",
-      "a": "You get an opening line, a script, the pictures, and a spoken voice. Upload your photo, adjust the words, pick 6, 10, 15, or 30 seconds, and download."
+      "q": "How does the routine clip get built?",
+      "a": "Add the cream photo, name the jar in the line you would actually say, and pick 6, 10, 15, or 30 seconds. A product link can supply the first draft. Your own software can start that job through the API."
     },
     {
       "q": "Why start here instead of booking a creator?",
-      "a": "Credits are what each video spends. You can post sooner, try another script, and change the words without a shoot. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
+      "a": "Your usual creator is booked past the launch week. You can still change the shade name and cut a second mascara version while that booking stays out."
     },
     {
-      "q": "Who is this scene for?",
-      "a": "Skincare sellers, beauty teams, agencies, and founders. Any person on screen is an AI actor, not a customer who reviewed the product."
+      "q": "Who should use a beauty template?",
+      "a": "Someone selling a shampoo who already has the bottle photo. A small beauty team and an agency making a client file fit the same way. Anyone on screen is an AI avatar. A launch week and a quiet Tuesday both work."
     },
     {
-      "q": "Can I do this on the first try?",
-      "a": "Yes. Upload one clear photo and follow the three steps. Captions, a song from the music library, and the AI voice can be set in the editor on this site."
+      "q": "Can I do this with no editing practice?",
+      "a": "Yes. One clear lip-balm photo is the start. Shorten a long caption in the editor on this site, and a song from the music library can sit under the voice."
     },
     {
-      "q": "Can the routine skip the face?",
-      "a": "Yes. Choose hands, a close-up, or only the product when the package should stay the focus."
+      "q": "Is this only for skincare?",
+      "a": "This page is for beauty and personal care: a routine, a texture, or a short review. The wider library also has clothing, food, fitness, pets, and home. Open another template when the product is not a beauty item."
     },
     {
-      "q": "Can I upload my own photos and clips?",
-      "a": "Yes. Use a photo file (JPG, PNG, or WebP) of the full bottle, jar, or tube, or a short clip you have the rights to. Keep the cap and label easy to see."
+      "q": "Can I bring photos and clips I already own?",
+      "a": "Yes. Bring the toner photo you shot on the shelf, plus a short clip if you filmed the texture yourself and you have the rights. The toner can be the only subject in the frame."
     },
     {
-      "q": "Where can I publish the clip?",
-      "a": "Pick a tall phone size (9:16), a square (1:1), or a wide screen (16:9). The 4:3 size is a bit wider than tall, and 3:4 is a bit taller than wide. Publish the file to TikTok, Facebook, Instagram, or YouTube in one step from the same project."
+      "q": "Where do these beauty clips get posted?",
+      "a": "Choose the shape for the placement you already use. A tall 9:16 suits a TikTok story, a square 1:1 suits a Facebook feed, and 16:9, 4:3, or 3:4 cover the other slots. Instagram, YouTube, and LinkedIn can take the file you download, or you can publish from this project."
     },
     {
-      "q": "What does the clip cost?",
-      "a": "Credits are what each video spends. A clip is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number first. If it fails, those credits come back. Starter is $24.50 a month with 200 credits."
+      "q": "What does a beauty clip cost?",
+      "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number first. If it fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no watermark, which means no logo is stamped on the file. It can run in ads, pages, and posts. Match the color name and the how-to line to the listing you already approved."
+      "q": "Can the file run in paid ads and client work?",
+      "a": "Yes. A blush clip can run as a paid ad or go to a client as a delivery. The file is clean of any overlaid mark."
     },
     {
-      "q": "Can I start from a product link, many at once, or my own software?",
-      "a": "Yes. Paste the product page link and AIVideosUGC writes the script. You can run many products at once (a batch), or start them from your own software (the API). The same photo can carry the routine in another language."
+      "q": "Why is a layout faster than building the sink scene myself?",
+      "a": "The sink, the pace, and the place the compact sits are already decided. You spend the time on the shade name, then post."
     }
   ],
   "visual": {
@@ -648,8 +648,8 @@
       }
     ]
   },
-  "related_h2": "Pages for a Cosmetics Product Video",
-  "related_lead": "Video ads, beauty photos, and a TikTok page that pair with a routine clip.",
-  "cta_title": "Ready to Create Your First Video?",
-  "cta_lead": "Upload one skincare photo, pick an AI voice, and see the credit cost before you start."
+  "related_h2": "Pages That Pair With a Routine Clip",
+  "related_lead": "A routine clip can lead into video ads, beauty photos, and TikTok layouts on these pages.",
+  "cta_title": "Make the Routine Clip You Delayed",
+  "cta_lead": "A cleanser photo is enough to make the routine clip you postponed. The credit cost is on screen first."
 }

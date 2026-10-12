@@ -4,7 +4,7 @@
   "description": "AIVideosUGC pricing: Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits are what you spend on a photo or video.",
   "h1": "AIVideosUGC Pricing for Product Photos and Videos",
   "eyebrow": "Plans and credits",
-  "lead": "AIVideosUGC pricing is three monthly plans for product photos and spoken video ads. Credits are what you spend to make each photo or video. You see the cost before you start. No watermark means no logo is stamped on the file. A size such as 9:16 is the shape of the video.",
+  "lead": "Choose a credit plan for product photos and short video ads. AIVideosUGC shows the charge for each job before you approve it.",
   "card": "Starter, Pro, and Premium, with a set credit balance each month.",
   "secondary_keywords": [
     "AI product photo pricing",
@@ -12,64 +12,48 @@
     "credit-based plans for product content",
     "monthly plans for ecommerce visuals"
   ],
-  "intro": "Choose a monthly plan by how many photos and videos you need. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A listing photo and a vertical ad draw from the same balance.",
+  "intro": "Starter gives you 200 credits for $24.50 per month. Pro gives you 300 for $35, and Premium gives you 600 for $63. Use the same balance for listing photos and video ads.",
   "credits_explained": [
-    "Credits are what you spend to make a photo or a video. A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see that number before you start. A job on this page means one photo or one video. The size names are the shape of the video. 9:16 is a tall phone video. 1:1 is a square. 16:9 is wide. 3:4 is a tall shape. Product photos are square. Each video includes a script, a spoken voice, and captions on the screen. It also includes an AI actor and a song from the music library.",
-    "We set the credits aside when you start, and we take them when the file is ready. If the work fails, the credits come back by themselves. The same credits pay for a video made from a product link. They also pay for a batch, which means several versions at once. They also pay for the API. The API is a connection that lets your own shop system start the work. Downloads have no watermark, so there is no logo on the file. You can send the finished file to TikTok or to Meta. Meta is Facebook and Instagram."
+    "One product photo uses 24 credits. A 6-second video uses 24, a 10-second video uses 40, a 15-second video uses 60, and a 30-second video uses 120. The amount appears before you confirm the job.",
+    "A job reserves its credits while it runs and charges them when the file is ready. When a job fails, the reserved credits return to your balance automatically."
   ],
-  "teams": "Need more credits than Premium includes? Email support@aivideosugc.com with how many photos and videos you make in a month.",
+  "teams": "If your shop or agency needs more than Premium, email support@aivideosugc.com with the number of photos and videos you plan to make each month.",
   "faq": [
     {
-      "q": "Which plan should a small shop start with?",
-      "a": "Start on Starter at $24.50 for 200 credits when you update a few product pages. Move to Pro at $35 for 300 credits, or Premium at $63 for 600, when you make more ads each week."
+      "q": "Which plan fits a small shop?",
+      "a": "Starter is $24.50 per month for 200 credits. Choose Pro at $35 for 300 or Premium at $63 for 600 when your product content schedule needs a larger balance."
     },
     {
-      "q": "Can the same credits pay for photos and videos?",
-      "a": "Yes. Photos and videos use the same credits. Each one shows its cost before you start."
+      "q": "Can photos and videos use one credit balance?",
+      "a": "Yes. Both formats draw from the same monthly credits, and the charge for each job is shown before you approve it."
     },
     {
-      "q": "Can I get a refund for a result I do not like?",
-      "a": "If the work fails, the credits we set aside come back on their own. If a delivered file does not match what you asked for, use the [Refund Policy](/refunds) to ask for a review, then email support."
+      "q": "How much does a product photo or video cost?",
+      "a": "A product photo uses 24 credits. Videos use 24 credits at 6 seconds, 40 at 10, 60 at 15, or 120 at 30."
     },
     {
-      "q": "Are uploads private on every plan?",
-      "a": "Yes. On Starter, Pro, and Premium, your uploads and finished files stay in your account. We do not publish them. The [trust and safety page](page:trust) says what that covers."
+      "q": "What happens if a job fails?",
+      "a": "The credits reserved for that job are returned to your balance automatically. Check the job record if the balance has not updated, then contact support."
     },
     {
-      "q": "What happens to my credits if the work fails?",
-      "a": "The credits we set aside go back to your balance on their own. If the balance does not update, check the status of that work and your credit history. Then email support with the time you started it."
+      "q": "Can I use the files in paid ads?",
+      "a": "Yes. You may use downloaded photos and videos for your store, marketplaces, and social advertising. Follow the publishing rules of each platform."
     },
     {
-      "q": "How many credits does a photo or video use?",
-      "a": "A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see the number before you start. 9:16 is a tall phone video, 1:1 is a square, and 16:9 is wide. Product photos are square."
+      "q": "Are downloads free of a watermark?",
+      "a": "Yes. Downloaded photos and videos do not carry an AIVideosUGC watermark."
     },
     {
-      "q": "Can I use the photos and videos in ads?",
-      "a": "Yes. You can use downloaded photos and videos in your own ads, on product pages, and in social posts. Follow the rules of the place you post."
+      "q": "Are my uploads private on each plan?",
+      "a": "Yes. Uploads and finished files remain in your account on Starter, Pro, and Premium. They are not published to other customers. Read the [AI content trust and safety](page:trust) page for the full scope."
     },
     {
-      "q": "Do downloads include a watermark?",
-      "a": "No. Downloaded photos and videos do not include an AIVideosUGC watermark. A watermark is a logo stamped on the file."
-    },
-    {
-      "q": "What does a video include?",
-      "a": "You get a script written from your product, a spoken voice, and captions on the screen. You also get an AI actor and a music track. You see the credit cost before you start. A photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40, a 15-second video costs 60, and a 30-second video costs 120."
-    },
-    {
-      "q": "Can I paste a product link?",
-      "a": "Yes. Paste a link to a product you sell. The tool writes the script, the voice, and the video from that page. You need permission to use that page and the photos on it."
-    },
-    {
-      "q": "Can I send a file to TikTok, Facebook, or Instagram from here?",
-      "a": "Yes. When the file looks right, send it to TikTok or Meta, or download it and post it yourself. Meta is Facebook and Instagram. A watermark is a logo on the file, and the download has none. Follow the rules where you post, including a note that the video was made with AI."
-    },
-    {
-      "q": "Can I make several versions at once, or connect my own shop system?",
-      "a": "Yes. You can make several versions of one product at once. That is a batch. You can also use the API, a connection that lets your shop system start the work. Both use the same credits. If the work fails, the credits come back."
+      "q": "Can I request a review of a charge?",
+      "a": "A delivered file is not refunded because you dislike the result. A failed job returns its credits automatically; for a charge review, use the [Refund Policy](/refunds) and email support."
     }
   ],
-  "cta_title": "Pick the Plan That Covers This Month",
-  "cta_lead": "Check how many credits the next photo or video will use, then pick the monthly plan that covers it.",
+  "cta_title": "Choose a Credit Plan for Your Next Asset",
+  "cta_lead": "Pick the monthly balance that fits how many photos and videos you make, and start with your next listing or ad.",
   "relatedLinks": [
     "faq",
     "glossary",

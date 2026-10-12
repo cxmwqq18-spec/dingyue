@@ -4,60 +4,60 @@
   "description": "Turn one product photo into a listing image, a room scene, and an ad for your store. Skip the studio booking and see the cost before you start.",
   "h1": "Make listing, lifestyle, and ad images with an AI product photo generator",
   "eyebrow": "AI product photo generator",
-  "lead": "Start with one clear product photo or a short description. Make a listing image, a room scene, or a square ad. Then download the file, or turn that photo into a product video.",
+  "lead": "A scene that felt like too much rigging can still be the photo. Describe the room you wanted for the candle, and the product you already shot goes there.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
     "ecommerce product photo AI",
     "AI product photo templates"
   ],
-  "benefits_h2": "Benefits of an AI Product Image Generator",
+  "benefits_h2": "AI Product Photo Generator",
   "benefits": [
     {
       "icon": "coins",
-      "t": "See the Cost Before You Make the Photo",
-      "d": "Each product photo uses 24 credits. You see that number before you start. If the photo fails, those credits come back."
+      "t": "Lower-Cost Product Photos",
+      "d": "A studio day is the expensive part. Here each photo is 24 credits, and Starter is $24.50 a month for 200 credits, so what you used to pay the photographer can go toward reaching buyers."
     },
     {
       "icon": "clock",
-      "t": "Skip the Shoot Date",
-      "d": "Move from a plain product photo to a room scene or a square ad without booking a photographer."
+      "t": "Create Photos Without a Studio Booking",
+      "d": "The spring candle can go live from the photo you took on the packing table. A rental day does not have to be on the books first."
     },
     {
       "icon": "layers",
-      "t": "Make a Batch of Product Photos",
-      "d": "Make a listing, a room scene, and a square ad from one upload. Each photo is its own file and uses 24 credits."
+      "t": "Create Several Scenes From One Upload",
+      "d": "The same mug can be a white-background listing, a kitchen counter, and a square for an ad. A store can also send files through the API."
     },
     {
       "icon": "users",
-      "t": "Skip Models and Extra Props",
-      "d": "Describe the scene instead of arranging a set and props. Any person in the scene is generated, so you do not book a model."
+      "t": "Skip the Model and Prop Rental",
+      "d": "A ceramic vase does not need a hired model or a rented plant. Describe the shelf it sits on. If a hand should hold it, pick an AI actor."
     },
     {
       "icon": "refresh",
-      "t": "Make Another Photo When the Listing Changes",
-      "d": "Make a new scene when the product, a sale offer, or the season changes. You do not wait on a studio calendar."
+      "t": "Create Product Photos on Your Schedule",
+      "d": "A holiday offer can be pictured on a Sunday night from the laptop. The tool does not keep studio hours."
     },
     {
       "icon": "target",
-      "t": "Compare Two Scenes Before You Post",
-      "d": "Make a second background, then choose the file for the product page or the ad."
+      "t": "Test a Second Product Scene",
+      "d": "Run the lotion on marble, then again on a bathroom shelf, and keep the one that matches the page."
     }
   ],
   "steps_h2": "Steps to Make an AI Product Image",
-  "steps_lead": "Describe or upload the product, choose a style, then download the photo or make a video.",
+  "steps_lead": "Most stores finish a scene without leaving this page.",
   "steps": [
     {
       "t": "Describe or Upload Your Product",
-      "d": "Type the scene you want, or upload a photo with the whole item visible on a simple background."
+      "d": "A top-down photo of a skillet is a strong start. If you have no photo yet, describe the black enamel and the long handle."
     },
     {
       "t": "Choose a Photo Style",
-      "d": "Pick a listing photo, a lifestyle scene, or the item on a model."
+      "d": "Ask for the skillet on a weeknight stove, with the handle in warm light. You do not pick a model name."
     },
     {
       "t": "Check the Photo, Then Use It",
-      "d": "Review the file, ask for another version, or turn the photo into a product video. Downloads have no watermark."
+      "d": "Put the file on the product page. The same still can later open a video ad."
     }
   ],
   "maker": {
@@ -79,60 +79,60 @@
   },
   "faq": [
     {
-      "q": "What does an AI product photo generator make?",
-      "a": "A listing image, a room scene, a close-up of one detail, or a square ad. You start from one clear photo or a short description. You review the file before you publish."
+      "q": "What can this product photo tool create?",
+      "a": "This tool creates a file you can put on a product page. Bring the photo you already have, and it builds a scene around the item."
     },
     {
-      "q": "How do I make the photo from one product picture?",
-      "a": "Upload a product photo or describe the scene, choose the style, then make a square image. You see how many credits it will use before you start."
+      "q": "What do I hand over before a photo comes back?",
+      "a": "The clearest picture you have of the product, plus a sentence about where it should sit. A skillet reads better from a top-down photo than from a dark crop. Ask for a warmer light if the first file looks cold."
     },
     {
-      "q": "Is there a free AI product photo generator plan?",
-      "a": "No. There is no free plan. Each image uses 24 credits. Starter is $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "What should a shop check before trusting a photo tool?",
+      "a": "Check that the product still matches what you sell. The file should keep the shape and color buyers recognize."
     },
     {
-      "q": "Are the photos usable on a product page?",
-      "a": "Yes, for a listing image, a room scene, and an ad image. Check each result against the product you ship so the color, shape, and details still match."
+      "q": "What do I pay to start making photos?",
+      "a": "Starter is $24.50 a month for 200 credits. Each photo is 24 credits. Pro is $35 for 300 credits, and Premium is $63 for 600. You see the number before the photo is made."
     },
     {
-      "q": "Can I make a white background and a room scene?",
-      "a": "Yes. A clean listing and a room scene are separate photos, and each one uses 24 credits. Check the product in both before you publish."
+      "q": "Can a shop put these photos on a product page?",
+      "a": "Yes. A three-candle set can use one file on the product page and another in an email. Check the glass color against the set you pack before either file goes out."
     },
     {
-      "q": "Do these photos replace a studio shoot?",
-      "a": "They replace the studio booking for a new scene. You still compare the file with the product you ship. Add prices in your own editor after download."
+      "q": "Why make the photo here instead of reusing the supplier shot?",
+      "a": "It adds a scene to the supplier shot, such as a mug on a desk, while keeping the product recognizable."
     },
     {
-      "q": "Can I use the downloads on my store?",
-      "a": "Downloads have no watermark. You can use them on your store and in ads, under our terms. You still need the rights to the photo you upload. Our [AI product photography guide](page:blog-ai-product-photography-guide) explains that check."
+      "q": "Am I allowed to post these photos on the store and in ads?",
+      "a": "Yes. The file downloads with no watermark. You still have to own the photo you started from, or have permission to use it. Our [AI product photography guide](page:blog-ai-product-photography-guide) covers that check."
     },
     {
-      "q": "Can I add a price or a logo on the photo?",
-      "a": "Add prices, sale offers, and logo text in your editor after download. Words the tool writes on the photo can be wrong. See [Shopify product photos](page:plat-shopify) for where those files go."
+      "q": "Can I put a price or a logo on the photo?",
+      "a": "Add prices, offers, and logo text in your own editor after download. Words drawn onto the photo can come out wrong, so proof them. See [Shopify product photos](page:plat-shopify) for where those files usually go."
     },
     {
-      "q": "Where are the AI product photo templates?",
-      "a": "Browse [product ad templates](page:templates) for plain product photos, lifestyle scenes, and ad layouts. Then upload your product photo here and describe the scene."
+      "q": "Where do I find product photo templates?",
+      "a": "Browse [product ad templates](page:templates) for plain product photos, lifestyle scenes, and ad layouts. Then upload your photo here and describe the scene."
     },
     {
-      "q": "Can I make photos in bulk or connect my store through an API?",
-      "a": "Yes. Upload several photos to make scenes in one batch, or send photos from your store software through the API. Each photo still uses 24 credits, shown before you start."
+      "q": "Can I make a stack of photos or connect my store?",
+      "a": "Yes. Upload several photos or send them from store software through the API, then make a scene for each."
     },
     {
-      "q": "Can I turn the photo into a video with a voiceover?",
-      "a": "Yes. Turn that photo into a product video. Then add a spoken voice, on-screen captions, or a song from the music library. A 6-second clip uses 24 credits. A 10-second clip uses 40, a 15-second clip uses 60, and a 30-second clip uses 120. [Image to video](page:image-to-video) is that next step."
+      "q": "Can the photo become a video with a spoken line?",
+      "a": "Yes. Turn that photo into a product video, then add a spoken voice, on-screen captions, or a song from the music library. A 6-second clip uses 24 credits. A 10-second clip uses 40, a 15-second clip uses 60, and a 30-second clip uses 120. [Image to video](page:image-to-video) is that next step."
     }
   ],
   "examples": {
-    "h2": "Examples of AI Product Photos",
-    "lead": "More beach, desert, studio, and room scenes. Upload your product photo and describe the setting you want.",
+    "h2": "AI Product Photo Generator Scenes for Any Catalog",
+    "lead": "Upload the product and name the setting you want. The groups below are looks a catalog can publish.",
     "groups": [
       {
         "label": "Coastal",
         "items": [
           {
             "ref": "n:im07-photo-hub-tote-r1",
-            "title": "Coastal: linen tote on a beach blanket",
+            "title": "Coastal: Linen Tote on a Beach Blanket",
             "kind": "photo",
             "product": "linen tote bag"
           },
@@ -149,7 +149,7 @@
         "items": [
           {
             "ref": "n:guide:img1-photo-hub-desert-r1",
-            "title": "Desert: ceramic kettle on stone",
+            "title": "Desert: Ceramic Kettle on Stone",
             "kind": "photo",
             "product": "sea-glass ceramic kettle"
           },
@@ -166,7 +166,7 @@
         "items": [
           {
             "ref": "n:guide:k2-white-picker-tea-kettle",
-            "title": "Plain studio: stovetop kettle on white",
+            "title": "Plain Studio: Stovetop Kettle on White",
             "kind": "photo",
             "product": "stovetop kettle"
           },
@@ -183,7 +183,7 @@
         "items": [
           {
             "ref": "n:guide:ind-home-living-m3-lit-lamp",
-            "title": "Indoor: table lamp in living room",
+            "title": "Indoor: Table Lamp in a Living Room",
             "kind": "photo",
             "product": "table lamp"
           },
@@ -200,14 +200,14 @@
   "hero_cards": [
     {
       "ref": "n:guide:img2-photo-hub-hero-source-r1",
-      "name": "Your product photo",
-      "line": "One clear photo is all you upload",
+      "name": "The Photo You Start With",
+      "line": "One clear shot of the item is enough to begin.",
       "href": "/ai-image-generation/ecommerce-main-image"
     },
     {
       "ref": "n:guide:img2-photo-hub-hero-result-r1",
-      "name": "Ready for your store",
-      "line": "Same lip balm, set in a vanity scene you can check before you publish.",
+      "name": "A Scene You Can Post",
+      "line": "The same balm, now in a vanity setting you can check before it goes on the page.",
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
@@ -251,8 +251,8 @@
       }
     }
   },
-  "cta_title": "One Product Photo, Then More Scenes",
-  "cta_lead": "Upload a clear photo and make a batch of scenes. You see the credit cost before you start. You can turn that photo into a product video next.",
+  "cta_title": "Create an AI Product Photo Scene",
+  "cta_lead": "Take the photo you already have and ask for the room the listing has been missing.",
   "blockOrder": [
     "hero",
     "picker",
@@ -337,7 +337,7 @@
     "image-to-video",
     "video-hub"
   ],
-  "benefits_lead": "Make the next scene from a photo you already have, one at a time or several at once.",
-  "related_h2": "Related Tools",
-  "related_lead": "From this product photo you can make a short video, pick a generated person, or start from a product page link."
+  "benefits_lead": "Here is what changes when the next scene starts from a photo you already own.",
+  "related_h2": "What to Do With the Photo Next",
+  "related_lead": "Once the photo is approved, it can keep working on another page."
 }

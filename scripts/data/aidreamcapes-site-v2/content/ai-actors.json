@@ -4,7 +4,7 @@
   "description": "Pick an AI actor and a voice, then make a shop video from one product photo. Write the words or let AI write them for paid ads, product pages, or social posts.",
   "h1": "AI Actors for UGC Ads You Can Cast From One Photo",
   "eyebrow": "AI actors",
-  "lead": "Pick an actor and a voice. Write the words, or let AI write them. One product photo makes the video.",
+  "lead": "Performance ads can put a person on camera for the next placement. Pick an adult AI actor whose look fits the buyer, and reuse that face on the placements you already run.",
   "actor_visual": {
     "titles": {
       "m2": {
@@ -912,33 +912,33 @@
   "more_sections": [
     {
       "eyebrow": "Where it runs",
-      "h2": "Different Uses for an AI Actor",
-      "lead": "Four places to put the video after you pick the face, the voice, and the words.",
+      "h2": "Where AI Actors Can Show Up in Product Ads",
+      "lead": "The same face can work in more than one place the shop already publishes.",
       "items": [
         {
-          "t": "Paid Ads",
-          "d": "Match the face, voice, and background to the shopper you want. Use the same photo in another language, then post to TikTok, Facebook, or Instagram.",
+          "t": "Run AI Actor Ads on Social",
+          "d": "A running-shoe ad can go out with an AI actor instead of a booked shoot. Write the line in each language you sell in, and keep the shoe in frame.",
           "img": "n:guide:cwa-uses-paid-01-r1",
           "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway for a paid social ad.",
           "frame": "phone"
         },
         {
-          "t": "Product Pages",
-          "d": "Put the actor on the product page to explain one feature. Shoppers can read the words on screen.",
+          "t": "Add an AI Actor to Product Pages",
+          "d": "A travel mug page can include a short clip where someone names the lid, then stops. The shopper is still looking at the mug they can order.",
           "img": "n:guide:cwa-uses-product-page-02-r1",
           "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk for a product page video.",
           "frame": "browser"
         },
         {
-          "t": "Social Posts",
-          "d": "Use the same face on each post. Change the opening line or the language when people have seen that post a lot.",
+          "t": "Reuse an AI Actor Across Posts",
+          "d": "A tote brand can post on Thursday with the same presenter as last month, and a different line for people who commute. The face stays recognizable.",
           "img": "n:guide:cwa-uses-social-03-r1",
           "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote for a vertical social clip.",
           "frame": "phone"
         },
         {
-          "t": "Product Guides",
-          "d": "Use the actor for one setup step. A buyer can follow the voice and the words on screen.",
+          "t": "Explain Product Features on Camera",
+          "d": "A portable lamp can be explained by pointing at the button, then the charge light. The shopper can replay that file from the product page.",
           "img": "n:guide:cwa-uses-guide-04-r1",
           "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp for a product guide.",
           "frame": "none"
@@ -946,44 +946,44 @@
       ]
     }
   ],
-  "cta_title": "Pick an Actor and Make Your First Video",
-  "cta_lead": "Pick an actor and a voice. You see the credit cost before you start. Credits are what you spend on each video.",
+  "cta_title": "Choose AI Actors for the Next Ad",
+  "cta_lead": "Choose a face and a voice, then make a product video. You see the credit cost before you start.",
   "faq": [
     {
-      "q": "What is an AI actor?",
-      "a": "A person made by AI who speaks on camera. Not a real customer, and not someone you hired. You pick the face and a voice. You write the words, or AI writes them. This page makes the product video."
+      "q": "Who appears in these clips?",
+      "a": "An adult AI actor, built for ads, not a cartoon. You choose the face and write the line. Use them as your presenter. Do not treat the clip as a review from a buyer."
     },
     {
-      "q": "How do the words become a video?",
-      "a": "Upload one product photo, or paste a product page link. Pick an actor and a voice, then approve what they will say. The video on this page is 10 seconds and tall for a phone (9:16). You can edit the words on screen. It costs 40 credits. If the video fails, those credits come back."
+      "q": "What do I do to get a clip from a line of text?",
+      "a": "Bring the product and the sentence you want said, then choose the face and voice. On this page the result is a 10-second vertical clip, 9:16, at 40 credits, and that cost shows before you start."
     },
     {
-      "q": "Where can I use the video?",
-      "a": "Use it as a paid ad, on a product page, in a normal social post, or as a short setup guide. You can use the finished video to sell. It has no watermark, so no logo is stamped on the video. You can post it to TikTok, Facebook, or Instagram."
+      "q": "Where does a shop actually put this clip?",
+      "a": "Wherever the product already appears. A shoe brand might run it as the ad, then keep a shorter cut on the product page. The file has no watermark."
     },
     {
-      "q": "Can an actor explain one feature of the product?",
-      "a": "Yes. Name one feature in what they say, and keep that part of the product visible. This is a short product video, not a long lesson."
+      "q": "Can one actor explain a single feature?",
+      "a": "Yes. Point at the lamp's power button and say what it does, and keep that button in frame. The next render can repeat the explanation when you add a color."
     },
     {
-      "q": "Can I use an actor for staff training?",
-      "a": "No. This tool makes product videos for selling. It does not make training videos for your staff. The closest use is a short setup guide for a buyer."
+      "q": "Can we use an actor in a training clip?",
+      "a": "Yes. A warehouse lead can write the packing steps as a script, then change a sentence when the rule changes. A second language is another render of that same script."
     },
     {
-      "q": "How do shops use an actor in a social post?",
-      "a": "They pick an actor and a voice, edit the words on screen and the music on the page, and post a tall phone video (9:16). To try a new opening line, they keep the photo and make the video again."
+      "q": "How does a shop keep an actor on social?",
+      "a": "Use one face often enough that people recognize the tote posts. When a line gets old, change the first sentence and post a 9:16 cut."
     },
     {
-      "q": "Can I pick the face, a separate voice, and a language?",
-      "a": "Yes. This page lists 53 adult actors. You pick a voice. You write the words in the language you sell in. You can also use a voice you are allowed to copy. There is no fixed language list."
+      "q": "Are the face and the voice locked together?",
+      "a": "No. Choose the face and voice separately from the library, then write the line in the language you sell in. A cloned voice is only allowed when you have rights to the sample."
     },
     {
-      "q": "Can I use the video to sell?",
-      "a": "Yes. You can use the finished video to sell. It has no watermark, so no logo is stamped on it. The person is made by AI. Do not call it a review from a real customer."
+      "q": "Can I run the clip as a paid ad?",
+      "a": "Yes. The download has no watermark. You still need the right to use the product photo, and any voice sample you upload. Do not present the actor as a live shopper."
     },
     {
-      "q": "What should I avoid when I publish?",
-      "a": "Do not show an AI-made person as a real buyer. Follow each app's rules for saying the video is AI-made. Add any price yourself after you download."
+      "q": "What should we be careful about?",
+      "a": "Follow the platform's disclosure rules when a label is required. Do not imitate a real person who never agreed; hire a human when the job needs a specific living performer. Add prices to the file after download."
     }
   ],
   "blockOrder": [
@@ -997,47 +997,47 @@
     "cta"
   ],
   "steps_h2": "How to Make an AI Actor Ad in 3 Simple Steps",
-  "steps_lead": "Upload a product photo, pick a voice, and post a tall phone video.",
+  "steps_lead": "Add the product, choose who speaks, and post a tall clip.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use one clear photo, or paste a product page link. Keep the whole product in the photo."
+      "d": "Upload one clear photo, or paste a product page link, with the whole item in frame."
     },
     {
       "t": "Pick Actor and Voice",
-      "d": "Choose an actor and a voice. Type the words, or let AI write them."
+      "d": "Pick a face and a voice. Type the line, or let AI draft it, then approve the words."
     },
     {
       "t": "Edit and Publish",
-      "d": "Add words on screen and a song from the song list, then post to TikTok, Facebook, or Instagram."
+      "d": "Add words on screen and a track from the music library, then post to TikTok, Facebook, or Instagram."
     }
   ],
   "reasons": {
-    "h2": "Reasons to Use an AI Actor",
-    "lead": "Use this when you want a new video without booking a camera day.",
+    "h2": "Why Brands Choose AI Actors for Product Ads",
+    "lead": "A brand can move a spoken ad without waiting on a crew.",
     "items": [
       {
-        "t": "Speed",
-        "d": "Pick a face and a voice, then make a 10-second tall phone ad without booking a camera day.",
+        "t": "Launch a Product Ad",
+        "d": "A serum launch can put a person beside the jar without waiting on a crew's next open day.",
         "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
         "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
       },
       {
-        "t": "More Versions",
-        "d": "Keep the same product photo. Change the actor, the first line, or the language when you want another video to test.",
+        "t": "Test Different AI Actors",
+        "d": "Keep the serum photo. Put a different adult actor on it, or change the first sentence, and keep the cut that belongs on the account. Each render shows its credit cost first.",
         "img": "n:guide:fx50-ai-actors-benefit-2",
         "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
       },
       {
-        "t": "Your Words",
-        "d": "The actor says the words you approved. You can edit the words on screen and the music on this page.",
+        "t": "Keep the Approved Script",
+        "d": "The actor says the serum line you accepted, on every render. You do not chase a creator to fix a word.",
         "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
         "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
       }
     ]
   },
-  "related_h2": "Explore Other Tools",
-  "related_lead": "Start from a link, a photo, or the words you want said, then add an actor who speaks on screen.",
+  "related_h2": "More Ways to Start Ads With AI Actors",
+  "related_lead": "The actor can also start from another tool on this site.",
   "relatedLinks": [
     "spokesperson-videos",
     "url-to-video",
@@ -1046,24 +1046,24 @@
     "image-to-video",
     "product-videos"
   ],
-  "benefits_h2": "Reasons to Use an AI Actor",
-  "benefits_lead": "Use this when you want a new video without booking a camera day.",
+  "benefits_h2": "Why Brands Choose AI Actors for Product Ads",
+  "benefits_lead": "A brand can move a spoken ad without waiting on a crew.",
   "benefits": [
     {
-      "t": "Speed",
-      "d": "Pick a face and a voice, then make a 10-second tall phone ad without booking a camera day.",
+      "t": "Launch a Product Ad",
+      "d": "A serum launch can put a person beside the jar without waiting on a crew's next open day.",
       "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
       "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
     },
     {
-      "t": "More Versions",
-      "d": "Keep the same product photo. Change the actor, the first line, or the language when you want another video to test.",
+      "t": "Test Different AI Actors",
+      "d": "Keep the serum photo. Put a different adult actor on it, or change the first sentence, and keep the cut that belongs on the account. Each render shows its credit cost first.",
       "img": "n:guide:fx50-ai-actors-benefit-2",
       "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
     },
     {
-      "t": "Your Words",
-      "d": "The actor says the words you approved. You can edit the words on screen and the music on this page.",
+      "t": "Keep the Approved Script",
+      "d": "The actor says the serum line you accepted, on every render. You do not chase a creator to fix a word.",
       "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
       "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
     }

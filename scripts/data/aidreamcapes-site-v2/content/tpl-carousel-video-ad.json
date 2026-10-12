@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a short video of that one item, shot by shot. Add your headline and price after download. Pick a shape for the post or product page.",
   "h1": "Carousel Video Ad That Walks Through One Product",
   "eyebrow": "Carousel video ad template",
-  "lead": "Place one product photo in a scene, add an AI voice or a script, and keep every shot on that one product. This is one video, not a stack of still cards.",
+  "lead": "A water bottle can get the whole clip: closed, opened on a table, then the lid in frame at the end. Bring one photo of that bottle. You do not have to hire a model for this file.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -12,19 +12,19 @@
     "sequenced product ad"
   ],
   "steps_h2": "How to Make a Carousel Video Ad in 3 Simple Steps",
-  "steps_lead": "The shots stay in the order you write. Set the voice in the editor. Add the headline and price after you download.",
+  "steps_lead": "You leave with one clip of the lunch bag, in the shot order you write.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one photo of the product shoppers will see on the product page. Keep the full item visible."
+      "d": "Use one product-page photo of the lunch bag, keeping the full bag visible. The file stays focused on that product."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the shots in order, all of this one item. Add a short script and pick 6, 10, 15, or 30 seconds."
+      "d": "List the shots of this lunch bag: closed, open, strap. Add a short script and pick 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Set the voice in the editor, download the file with no watermark, and post it."
+      "d": "Set the voice in the editor and save a file with nothing stamped on it. Add your headline and price after download."
     }
   ],
   "maker": {
@@ -47,47 +47,51 @@
   "faq": [
     {
       "q": "What is a carousel video ad?",
-      "a": "One video of a single product, from a first look, to the item in use, then a clear ending. It is a video, not a stack of still cards. You can add an AI voice and an on-screen person. That person is not a customer."
+      "a": "One video that stays on a single product the whole way: closed, in use, then a last clear view. It is a video, not a row of still cards."
     },
     {
-      "q": "How do I make a carousel video ad?",
-      "a": "Upload one product photo and list the shots in order. Add or edit a script, pick a shape and a length, then download. You can also paste the product page link to write a first script and pick the on-screen person."
+      "q": "How does a carousel video ad get built?",
+      "a": "Upload the backpack photo and write the shot order yourself: zipped, open, strap. You can change the words and pick 9:16 or another shape, then download."
     },
     {
-      "q": "What products can a carousel video ad show?",
-      "a": "One item per file: a bag, a bottle, a beauty product, apparel or electronics. Everyday fashion fits, and so does any product you can photograph. Put a second product in another file."
+      "q": "Which clothing categories fit, and what else can it show?",
+      "a": "If you have a photo of the garment, it can be the one product in the clip, whether it is a work jacket or a running short. A brush, a pan, or a planter can take the same treatment. Each file stays on one product."
     },
     {
       "q": "Can I make more than one version?",
-      "a": "Yes. Keep the same photo and make another version for a second audience, a different first line, or another language. Each file shows its cost in credits before it runs. A credit is a unit your plan spends."
+      "a": "Yes. The scarf photo stays. Write a second opening for shoppers who bought the navy one last year. Another language can be its own file."
     },
     {
       "q": "Who is a carousel video ad for?",
-      "a": "Fashion and electronics shops, and other stores that want a clip on Instagram, Facebook, TikTok, or the product page to walk through one item. You do not have to hire a photographer."
+      "a": "A shop that wants one clip to stay on a single product, on the product page or in a paid placement. Clothing labels use the same path for a single garment."
     },
     {
       "q": "Can a beginner make one?",
-      "a": "Yes. You do not need editing experience. Upload the photo, adjust the script and the voice in the built-in editor, and download."
+      "a": "Yes. Bring the candle photo. Fix the line about the scent in the editor on this site, set the voice, and download."
+    },
+    {
+      "q": "How soon can I have a file to post?",
+      "a": "Once the frying pan photo is uploaded, the next screen is the editor, not a hold for a studio. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
       "q": "Where can I post the file?",
-      "a": "On TikTok, Instagram, Facebook, YouTube, and your product page. Shapes are a tall phone video (9:16), a square (1:1), a wide screen (16:9), a classic photo (4:3), or a tall photo (3:4). The download has no watermark."
+      "a": "On TikTok, Instagram, Facebook, YouTube, LinkedIn, and your product page. Shapes are a tall phone video at 9:16, a square at 1:1, a wide screen at 16:9, plus 4:3 and 3:4. The download has nothing stamped on it."
     },
     {
       "q": "What does the clip cost?",
-      "a": "A credit is a unit your plan spends. A clip costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the number before it starts. If the clip fails, those credits come back. Plans start at $24.50 a month."
+      "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the number before it starts. If the clip fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Is there a free plan?",
-      "a": "No. There is no free plan. Plans start at $24.50 a month, and the download has no watermark."
+      "q": "Do I pay to make a carousel video ad?",
+      "a": "Yes. Making the clip spends credits."
     },
     {
-      "q": "Can I start from a product link or an API?",
-      "a": "Yes. Paste the product page link to write a first scene, a script, and the on-screen person. You can also send the photo through the API. The API is how your own shop software starts the clip. Check the product in the file before you post."
+      "q": "Can I start from a product link or my own software?",
+      "a": "Yes. A product page can steer the first draft. Your shop software can send the photo through the API. Put the headline and the price on after download."
     },
     {
       "q": "Can the voice be in another language?",
-      "a": "Yes. Make the same clip with a voice in another language, and approve the words before you post."
+      "a": "Yes. Make the same clip with a voice in another language, then post that version."
     }
   ],
   "visual": {
@@ -552,8 +556,8 @@
       }
     }
   },
-  "cta_title": "Post the Clip Where People Scroll",
-  "cta_lead": "Upload one product photo, add a voice if you want one, and see the credit cost before you start. A credit is a unit your plan spends.",
+  "cta_title": "Post the One-Product Clip Next",
+  "cta_lead": "Upload one photo of a ceramic mug and get the clip. The credit cost is on screen first.",
   "blockOrder": [
     "hero",
     "picker",
@@ -640,7 +644,7 @@
     ]
   },
   "related_h2": "Pages for a One-Product Video",
-  "related_lead": "Video ads, fashion scenes, and Instagram posts for one product shown in order.",
+  "related_lead": "One product shown in order can continue into video ads, fashion scenes, and Instagram posts.",
   "relatedLinks": [
     "video-ads",
     "tpl-outfit",
@@ -652,32 +656,32 @@
   "more_sections": [
     {
       "eyebrow": "Included with the template",
-      "h2": "Features of a Carousel Video Ad",
-      "lead": "The clip still follows one product. These are the pieces you can add before you download.",
+      "h2": "What a Carousel Video Ad Includes",
+      "lead": "You can add a voice, a script, and music, and the shots still follow one product in the order you set.",
       "items": [
         {
-          "t": "AI Voiceover",
-          "d": "Add a spoken line about the one product in the clip. You approve the words, and the voice is not a customer recording."
+          "t": "A Spoken Voice",
+          "d": "A spoken line about the one product can ride on the clip, so shoppers hear what the item is for."
         },
         {
           "t": "A Script You Can Edit",
-          "d": "A script can be drafted from your note or from the product page link. Change any line in the built-in editor before you download."
+          "d": "The draft can open on the desk lamp's cord. Write a note about that cord, or paste the product page, and change any line in the editor."
         },
         {
-          "t": "On-Screen People You Can Pick",
-          "d": "Pick a generated person from the presenter list, called the actor library, to hold or show the product. That person is not a real buyer."
+          "t": "An AI Avatar Shows the Item",
+          "d": "An AI avatar can show a canvas tote on a shoulder. The photo you uploaded still decides the tote's color and hardware."
         },
         {
           "t": "A Product Link or the API",
-          "d": "Paste a product page link to write a first scene and script. Or send the photo through the API, which is how your own shop software starts it. You still check the file."
+          "d": "The blender's product page can be the note the draft follows. If your shop software should start the job, use the API and the clip can start from the system you already run."
         },
         {
-          "t": "Built-In Editor and Another Language",
-          "d": "Change the script, the voice, and the words on screen in one editor. You can also use a voice in another language. The download has no watermark."
+          "t": "Editor, Music, and Another Language",
+          "d": "Change the script, the voice, and the words on screen in one editor. Add a song, or retell the clip in another language, without leaving this site."
         },
         {
-          "t": "More Versions, Then Publish",
-          "d": "Make another version for a second audience from the same photo. Publish the file on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
+          "t": "A Second Cut for Repeat Buyers",
+          "d": "Keep the sneaker photo and write a new opening for people who already own last year's color. That second file is another ad from the picture you already have."
         }
       ]
     }

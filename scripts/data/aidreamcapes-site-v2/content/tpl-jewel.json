@@ -4,7 +4,7 @@
   "description": "Turn one jewelry photo into a photo of someone wearing it. For necklaces, earrings, rings, and bracelets, ready for social ads and product pages.",
   "h1": "AI Jewelry Model Photos That Show the Piece Worn",
   "eyebrow": "Model photo template",
-  "lead": "A ring on a plain background does not show the size or how the piece sits. Upload one jewelry photo. You can make a worn photo, remove the background, and set a light you can check on the clasp, stones, and edges.",
+  "lead": "This template lifts a tennis bracelet off the grey cloth and keeps every stone you photographed. The next piece you shoot can use that same look.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
@@ -12,19 +12,19 @@
     "worn jewelry product photos"
   ],
   "steps_h2": "How to Make AI Jewelry Model Photos in 3 Simple Steps",
-  "steps_lead": "Start with a necklace photo. Upload the piece, choose a neck, a hand, or a close-up, then compare the download with your original.",
+  "steps_lead": "Leave with a jewelry photo that still shows every link: start from the chain photo, choose the one edit, and download.",
   "steps": [
     {
       "t": "Upload Your Jewelry Photo",
-      "d": "Show the full piece on a plain surface, with the clasp, stones, and edges visible. Compare the worn photo with this sharp original."
+      "d": "Photograph the trace chain so the clasp sits inside the frame, even when the links disappear into the cloth."
     },
     {
       "t": "Pick a Wear Scene",
-      "d": "Choose a neck, a hand, or a close-up that matches the piece you sell. Keep the request to one scene so the jewelry stays recognizable."
+      "d": "Pick the edit this listing needs. A pendant whose length matters wants a neck; a hoop matching its sisters wants the shared crop."
     },
     {
       "t": "Download and Post",
-      "d": "Compare the download with the real item at full size. Add material, measurements and care notes as text on the listing."
+      "d": "You get a file whose links and clasp still match the shot you took."
     }
   ],
   "maker": {
@@ -46,44 +46,44 @@
   },
   "faq": [
     {
-      "q": "What jewelry photo should I upload?",
-      "a": "Use a sharp photo of the complete piece on a plain surface. Keep the chain, clasp, stones, and mount visible."
+      "q": "How do I stop a weak jewelry photo from going live?",
+      "a": "Put the download next to the shot you took and read the engraving. A prong that moved means that file stays off the site. On a large upload, the API can hold back frames that fail the same look."
+    },
+    {
+      "q": "Can I try the API on one piece before the whole catalog?",
+      "a": "Yes. Send one earring, not the whole tray, and read that result before the catalog run."
+    },
+    {
+      "q": "What should the source photo include?",
+      "a": "A sharp frame of the complete piece on a plain surface, with the chain, clasp, stones, and mount visible."
     },
     {
       "q": "Can I show how a necklace sits?",
-      "a": "Yes. Choose a scene at the neck and keep the chain in the photo. Put the measured length and the material in the listing text."
+      "a": "Yes. Choose a view at the neck and keep the chain in the photo. Put the measured length and the material in the listing text."
     },
     {
-      "q": "Which pieces work in a worn photo?",
-      "a": "Necklaces, earrings on a person, rings, bracelets, and cufflinks work when your photo shows their shape and surface. If a detail is cut off in your photo, the new photo can get it wrong."
+      "q": "Which pieces can appear worn?",
+      "a": "Necklaces, earrings, rings, bracelets, and cufflinks, when your photo shows their shape and surface. If a detail is cut off in the source, the new photo can miss it too."
     },
     {
-      "q": "How do I keep a stone or clasp accurate?",
-      "a": "Compare the download with your original at full size. Keep a version whose stone, mount, clasp, and color still match. Do not keep a photo that adds a prong or changes the metal. A prong is the little claw on a stone."
+      "q": "How do I keep a stone or clasp faithful?",
+      "a": "Compare the download with your original at full size. Keep a version whose stone, mount, clasp, and color still match. Do not keep a photo that invents a claw or shifts the metal."
     },
     {
-      "q": "Can I remove the background and add light?",
-      "a": "Yes. Clear the table and the props, then add a shadow and a light that leave gold and stones readable. Check the edge before you publish."
+      "q": "Can I clear the background and set the light?",
+      "a": "Yes. The grey cloth can go, and a shadow can sit under the piece so the metal stays easy to read."
     },
     {
-      "q": "Can one setup cover many pieces?",
-      "a": "Yes. Run the same background, shadow, and framing on many photos at once, or start them from your own software (the API). Each photo is 24 credits, shown before you start."
-    },
-    {
-      "q": "Do I need to hire a jewelry model?",
-      "a": "No. The worn scene is generated from your piece photo. The person or the hand is AI, not a booked model and not a customer."
+      "q": "Do I need to book a jewelry model?",
+      "a": "No. A worn picture is built from your piece photo. Ask for a neck on a pendant, and a hand on a ring. The person you see is an AI model."
     },
     {
       "q": "What does a jewelry photo cost?",
-      "a": "Each photo costs 24 credits. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark, and you can use it in your ads, pages, and posts."
+      "a": "Each photo costs 24 credits. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before you start. If it fails, those credits come back. The download has no watermark."
     },
     {
-      "q": "Can I try the API on one piece first?",
-      "a": "Yes. Upload one jewelry photo and try a background removal, a shadow, or a worn photo. Read the 24-credit cost before you send a larger catalog."
-    },
-    {
-      "q": "What if I also need a scene with no person?",
-      "a": "Use a table scene when size on a body is not the point. Photos with no person are on the [AI lifestyle product photos](page:lifestyle-photos) page."
+      "q": "What if I want a scene with no person?",
+      "a": "Use a table scene when size on a body is not the point. Photos with no person are on the [lifestyle product photos](page:lifestyle-photos) page."
     }
   ],
   "visual": {
@@ -572,8 +572,8 @@
       }
     ]
   },
-  "related_h2": "Jewelry Photos for Listings and Instagram",
-  "related_lead": "Close-ups, a size reference, jewelry lifestyle photos for Instagram, and Shopify listings.",
+  "related_h2": "More Jewelry Photo Paths",
+  "related_lead": "Close shots, a size reference, lifestyle frames, and the listing pages you already use.",
   "relatedLinks": [
     {
       "id": "model-photos",
@@ -600,8 +600,8 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Show the Piece Worn",
-  "cta_lead": "Upload one jewelry photo. You see the credit cost before you start.",
+  "cta_title": "Put the Jewelry Line on One Look",
+  "cta_lead": "Get a clean cutout or a worn shot from one piece photo.",
   "blockOrder": [
     "hero",
     "trust",
@@ -616,105 +616,105 @@
     "cta"
   ],
   "definition": {
-    "title": "Small Details Are Easy to Lose If You Edit in a Rush",
+    "title": "What This Jewelry Template Is For",
     "paras": [
-      "A chain, a clasp, and a small stone are easy to lose if you trim the photo in a rush. Clearing a background, resizing, and matching the catalog used to be work you did by hand.",
-      "Upload the piece and keep the worn result next to that sharp original. Do not use a photo that changes the metal or adds a prong, the little claw on a stone."
+      "A clasp, a link, or a stone stays recognizable, starting from the shot you already have.",
+      "A neck view shows how far a pendant drops. A plain desk works when the listing does not need a person for scale. The API can run the next photo in that same look."
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "For a larger catalog",
-      "h2": "Try the API on One Jewelry Photo",
-      "lead": "The API lets your own software run the edit. Try one piece, and read the credit cost before you continue.",
+      "eyebrow": "Try one piece",
+      "h2": "Test the API on a Single Photo",
+      "lead": "One piece is enough to see the edit before a larger run.",
       "items": [
         {
           "t": "Upload the Piece",
-          "d": "Send one sharp photo of the full item, with the clasp and the stones inside the photo."
+          "d": "One sharp photo, clasp included, is enough to see how the edit treats the piece."
         },
         {
-          "t": "Run One Edit",
-          "d": "Try removing the background, adding a shadow, or showing the piece worn. Then look at the result beside the original."
+          "t": "Try One Edit",
+          "d": "Clear the cloth on that single photo and the links come out separate, still matching the piece you shot."
         },
         {
-          "t": "Read the Cost First",
-          "d": "A photo spends 24 credits. If it fails, those credits come back. The download has no watermark."
+          "t": "The Cost Shows First",
+          "d": "You see the 24 credits before a photo runs. If it fails, those credits come back. The download has no watermark."
         }
       ]
     }
   ],
   "trust": {
-    "h2": "What a Jewelry Shop Gets From One Photo",
-    "lead": "You do less editing by hand, the photos match, and you skip a new shoot.",
+    "h2": "What Changes for a Jewelry Catalog",
+    "lead": "Retouch bills drop, the email matches the site, and the piece on both still looks like your photo.",
     "items": [
       {
-        "t": "Less Time on Each Piece",
-        "d": "Background removal, shadows, and framing start from the photo you already have, so the team spends less time on each piece."
+        "t": "Retouch Bills Get Smaller",
+        "d": "A full tray of studs can start from photos you already shot. You are not mailing each stud out for a hand cutout."
       },
       {
-        "t": "One Look Everywhere You Post",
-        "d": "The same background and framing can go on the product page and the social feed, so the photos match."
+        "t": "The Email Matches the Site",
+        "d": "The bangle on the product page and the bangle in the newsletter can share a background you chose, so the gold does not go warm in one place and cold in the other."
       },
       {
-        "t": "You Decide What Matches",
-        "d": "Compare the metal, stone, and clasp with the original photo, and keep only the photos that still match."
+        "t": "You Approve the File",
+        "d": "You choose the file that goes up, and the next shots can use that same look."
       }
     ]
   },
   "reasons": {
-    "h2": "Show Luxury and Vintage Pieces Without Editing by Hand",
-    "lead": "One piece photo can remove the background, keep the real shine, and match the rest of the set.",
+    "h2": "Fine Pieces Without a Hand Retouch",
+    "lead": "Keep the links, keep the metal color, and run the next photo through that same edit.",
     "items": [
       {
-        "t": "Clean Edges on Metal",
-        "d": "Lift a chain, a hoop, or a shiny band off the table. Check the edge against the original photo before you publish.",
+        "t": "Edges That Keep the Links",
+        "d": "Each link stays separate when the grey cloth goes, and the metal color stays with the photo you took. A polished cuff can use the same edit.",
         "icon": "Gem"
       },
       {
-        "t": "Color and Shine Kept",
-        "d": "Gold, stones, and texture should still match the piece you uploaded, on a table or on a generated person.",
+        "t": "Keep the Metal You Shot",
+        "d": "The gold stays the color you shot, on an AI model or on a styled table.",
         "icon": "Sparkles"
       },
       {
-        "t": "One Look Across the Set",
-        "d": "Use the same background, shadow, and framing on the pieces you upload. Many at once is a batch, and the API lets your own software run it.",
+        "t": "Every SKU Shares a Crop",
+        "d": "The next photo can use the square you chose, with a shadow sitting under the piece rather than floating beside it. Your catalog can hand the next SKU to the API.",
         "icon": "Layers"
       }
     ]
   },
   "benefits": [
     {
-      "t": "Remove the Background and the Props",
-      "d": "Clear the table, pins, and markers. Leave the piece itself, and compare the edge with the original photo."
+      "t": "Clear the Table and the Props",
+      "d": "Paper tags and pin heads come off a tangled charm bracelet first. A mirror-finish band can leave the grey cloth in that same edit, and the stand comes off too."
     },
     {
-      "t": "Shadows and Lighting",
-      "d": "Add a soft shadow and a light that keeps gold and stones easy to see."
+      "t": "A Shadow Under the Metal",
+      "d": "A diamond table or a platinum edge stays readable, and the gold keeps the color from your photo."
     },
     {
-      "t": "Leave the Piece Intact",
-      "d": "Edit the background and the light. Compare the stone, the mount, and the clasp at full size."
+      "t": "The Heirloom Stays as Shot",
+      "d": "On an old locket, the engraving stays the shape you photographed while the area around the piece changes."
     },
     {
-      "t": "Center Every Size",
-      "d": "Line up rings, earrings, and chains so each size sits in the same place on the listing."
+      "t": "Line Up the Size Run",
+      "d": "A size-5 ring and a size-9 ring sit on the same point of the square. A long necklace can take a taller crop when it needs the length, and the ring row keeps its own square."
     },
     {
-      "t": "Show It on a Generated Person",
-      "d": "Place the piece on a neck, a hand, or a wrist so the size is easier to judge."
+      "t": "On a Neck, for Scale",
+      "d": "A pendant's length is easy to judge at the collarbone on an AI model, and you do not book a model for that shot. A ring can use a hand for scale."
     },
     {
-      "t": "Many at Once, and API",
-      "d": "Run the same edits on many pieces, or connect your own software (the API) when the catalog is large."
+      "t": "Batch the Whole Tray",
+      "d": "When one brooch looks right, that crop can run across the whole tray. The API can start the next piece from your catalog."
     }
   ],
-  "benefits_h2": "Jewelry Photo Tools in One Place",
-  "benefits_lead": "Remove the background, set the light, center the piece, and show it worn. A large catalog can run through your own software (the API).",
+  "benefits_h2": "The Jewelry Edits, Side by Side",
+  "benefits_lead": "Clear the cloth, light the metal, and keep the piece looking like the photo you took.",
   "closing": {
-    "h2": "Keep One Quality Bar Across the Photos",
+    "h2": "Share One Look Across the Upload",
     "paras": [
-      "Before a photo goes live, compare the metal color, the stone, and the clasp with the original. Do not publish a photo that fails that check. You can run it again.",
-      "The same check can run through the API, so a big upload is checked before anyone posts it."
+      "If a link fused or a prong shifted, do not put that file on the site.",
+      "A large upload can take the same look through the API, so the rest of the catalog matches the photo you liked."
     ]
   }
 }

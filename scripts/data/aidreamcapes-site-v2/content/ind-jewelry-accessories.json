@@ -4,7 +4,7 @@
   "description": "Turn one jewelry photo into tight close-ups, worn try-ons, and gift scenes. Make images with no watermark for listings, social posts, and paid ads.",
   "h1": "AI Photos for Jewelry and Accessories, Up Close and Worn",
   "eyebrow": "Jewelry and accessories",
-  "lead": "A small piece is hard to judge on a plain white card. Paste a product link or one sharp photo. Try a tight close-up, or a close photo of it being worn, so the finish and the size are easy to see. Credits are what each job spends.",
+  "lead": "Shoppers can see a hoop on an adult ear, made from the sharp photo you already took.",
   "card": "Tight close-ups, worn photos, and gift scenes from one jewelry photo.",
   "secondary_keywords": [
     "AI jewelry model photos",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Can I make jewelry photos without a model shoot?",
-      "a": "Yes. One sharp photo of a ring, necklace, watch, bag, or sunglasses can become a tight close-up, a photo of it worn, or a styled scene. Compare it with the real piece before you list it."
+      "q": "Can I photograph jewelry without hiring a model?",
+      "a": "Yes. One sharp photo can become a tight close-up, a worn frame, or a styled scene."
     },
     {
-      "q": "Will stones and metal color stay accurate?",
-      "a": "The result follows the color in your photo, so even light gives the truest tone. Before you list it, compare the stone count, the setting, and the metal color with the piece in your hand."
+      "q": "Will the stones and the metal color stay true?",
+      "a": "They follow the stones and the metal color in your photo. Even light gives the truest tone, and a sharp source keeps the setting readable."
     },
     {
-      "q": "Can a flat necklace photo show it being worn?",
-      "a": "Yes. Ask for a close photo at the collarbone and a plain neckline. The person is created by the tool. Keep the photo on the chain and the pendant."
+      "q": "Can a flat lay of a necklace become a worn photo?",
+      "a": "Yes. Ask for a close frame at the collarbone and a plain neckline. An AI avatar wears it. Keep the frame on the chain and the pendant."
     },
     {
-      "q": "Can I start from a phone photo of a small ring?",
-      "a": "Yes, if the source is sharp and fills the picture. Wipe off dust and fingerprints first, and use even light rather than a flash on the metal."
+      "q": "Can a phone photo of a tiny ring work?",
+      "a": "Yes, when the source is sharp and the ring fills the frame. Wipe dust and fingerprints first, and use even light instead of a flash on the metal."
     },
     {
-      "q": "Does this work for bags, watches, and sunglasses?",
-      "a": "Yes. Show the clasp and the metal parts up close, then show the item carried or worn so the size is obvious. A tote on a shoulder does that in one photo."
+      "q": "Will this cover bags, watches, and sunglasses?",
+      "a": "Yes. Show the clasp and the metal parts up close, then show the item carried or worn so the size reads at once. Sunglasses on a face do that in one frame."
     },
     {
-      "q": "How do I show ring size without printing numbers?",
-      "a": "Put the ring beside a familiar coin or card, or on an adult hand. The exact size inside the ring, and the sizes you sell, still belong in the listing text."
+      "q": "How do I suggest ring size without printing numbers on the photo?",
+      "a": "Set the ring beside a familiar coin or card, or on an adult hand. The exact inner size, and the sizes you sell, still belong in the listing text."
     },
     {
-      "q": "Which shape should I use for a listing and a story?",
-      "a": "Use a sharp square close-up for the gallery. For a story, make a tall worn or unboxing scene (9:16). Match the metal color and the stone count in both."
+      "q": "Which frame should I use for a gallery and a story?",
+      "a": "Use a sharp square close-up for the gallery. For a story, make a tall worn or unboxing scene at 9:16."
     },
     {
-      "q": "Can I use the photos in paid jewelry ads?",
-      "a": "Yes. Downloads have no watermark, so no logo is stamped on the file. You can use them in paid ads and listings. Check the stone count and the metal color, and keep size and care claims accurate."
+      "q": "Can these files run as paid jewelry ads?",
+      "a": "Yes. Files download without a watermark, so you can use them in paid ads and on listings."
     },
     {
-      "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send that link from your own shop software (the API). Ask for a short script and pick a person the tool creates. Make a few versions, including one in another language. Trim the clip in the editor on this page. Choose a voice and a music track, and check the captions. Then send it to TikTok, Facebook, or Instagram. Compare the stones, the setting, and the metal color with the real piece before you list it."
+      "q": "Can I begin from a product link and make several versions?",
+      "a": "Yes. Paste the product page, or send it from your shop software through the API. Ask for the hoops on an ear in one version and flat on linen in the other."
     }
   ],
-  "templates_lead": "Choose a jewelry photo for a close-up, a worn try-on, or a gift scene.",
-  "cta_lead": "Paste a product link or upload one sharp photo. Pick a person the tool creates, and publish a clip with a spoken line and captions. Compare the result with the real piece.",
+  "templates_lead": "Pick a close-up, a worn try-on, or a gift scene that suits the piece.",
+  "cta_lead": "Download a worn frame you can run as an ad. You start from the sharp photo you already took, and the credit cost is on screen before you confirm.",
   "steps_h2": "How to Make Jewelry Close-Up Photos in 3 Simple Steps",
-  "steps_lead": "Three things you do on screen. The clip can include a spoken line and captions. Stones and metal are checked against the real piece.",
+  "steps_lead": "You see the bracelet on a wrist, then you choose what the voice says.",
   "steps": [
     {
       "t": "Upload Your Piece",
-      "d": "Paste the product page, or upload a sharp photo that fills the picture. A short note about the metal works too."
+      "d": "Use a photo where the links and the clasp are both sharp. Name the metal in a short note."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick a person the tool creates for a worn close-up. Check it against the real piece. You do not hire a model."
+      "d": "Pick an AI avatar with a plain sleeve so the bracelet stays visible on the wrist. Keep that face for a second metal."
     },
     {
       "t": "Generate and Publish",
-      "d": "A clip can add a spoken line and captions. Send it to TikTok, Facebook, or Instagram, then check the metal."
+      "d": "The worn frame downloads with a spoken line and captions, and you can send that file to the feed you already sell on."
     }
   ],
   "visual": {
@@ -107,7 +107,7 @@
       }
     }
   },
-  "cta_title": "Show the Piece From One Sharp Photo",
+  "cta_title": "Show the Piece Worn, From One Photo",
   "relatedLinks": [
     {
       "id": "tpl-jewel",
@@ -135,61 +135,61 @@
     }
   ],
   "reasons": {
-    "h2": "Why Jewelry Brands Skip Hiring a Model",
-    "lead": "Skip booking a model. A product link or a sharp photo is enough for a close view or a worn photo. Then compare it with the real item.",
+    "h2": "A Worn Frame Before You Call a Model",
+    "lead": "A worn frame comes from the photo already on the listing, and you can run it without booking a model.",
     "items": [
       {
-        "t": "Close-Up Without a Studio Day",
-        "d": "A pendant on linen can become a tight detail from one sharp photo. You skip a new setup for every piece.",
+        "t": "Close-Up of the Clasp",
+        "d": "A tight view of the clasp comes from the linen photo of the pendant you already have, which saves a fresh studio day on the next piece.",
         "img": "n:guide:fx31-ind-jewelry-benefit-macro",
         "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
       },
       {
-        "t": "Worn on a Wrist",
-        "d": "A straight watch photo can sit on an adult wrist in daylight. Check the watch face and the strap joints against the real watch before you list it.",
+        "t": "Wrist Clip and Gallery Still",
+        "d": "One watch photo becomes a wrist clip for the phone feed and a square of the dial for the gallery.",
         "img": "n:guide:fx31-ind-jewelry-benefit-watch",
         "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
       },
       {
-        "t": "Scale Beside Something Familiar",
-        "d": "A ring next to a coin, or a bag on a shoulder, shows size without printing numbers into the picture. Exact measurements stay in the listing.",
+        "t": "Show the Bag on a Shoulder",
+        "d": "A tote on an adult shoulder makes the size obvious in one frame, and the ad can run without a fit-model booking.",
         "img": "n:guide:fx31-ind-jewelry-benefit-bag",
         "alt": "Adult hand carrying a plain brown leather shoulder bag outdoors."
       }
     ]
   },
   "platforms": {
-    "h2": "Create Jewelry Ads for the Places You Sell",
-    "lead": "A square close-up fits a listing. A tall phone photo fits a story. Send the clip to TikTok, Facebook, or Instagram from this page, then download the photo. Match the metal color.",
+    "h2": "Frames for a Worn Piece",
+    "lead": "Use the same worn shot across feeds, listings, and the product page, each one framed for that spot.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "d": "A short worn or unboxing photo for a jewelry post in TikTok's main feed.",
+        "d": "A vertical try-on or unboxing for TikTok, opening on the piece itself.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
-        "d": "A square detail or a tall try-on for the feed and Stories.",
+        "d": "A square detail or a tall worn frame for the grid and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "d": "A feed photo with room to add the offer after you download it.",
+        "d": "A feed image of the piece, with room to place your offer after download.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Ads",
-        "d": "A tight phone-screen detail, one piece from the first second.",
+        "d": "A tight Short that stays on one piece from the first moment.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
-        "d": "A sharp gallery image. Keep size charts in the listing, not printed on the photo.",
+        "d": "A sharp gallery image you can put on the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
-        "d": "Matching product imagery for the piece and the collection.",
+        "d": "Consistent imagery for the piece and the collection around it.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -266,7 +266,7 @@
       }
     ]
   },
-  "related_h2": "Jewelry Templates and Listing Photos",
+  "related_h2": "Jewelry Templates and Listing Tools",
   "maker": {
     "options": [
       [

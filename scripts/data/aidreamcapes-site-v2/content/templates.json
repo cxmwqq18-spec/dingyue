@@ -4,7 +4,7 @@
   "description": "Find product ad templates for a photo or a short video. Pick a style, add one product photo, and get a new file for your store or a social post.",
   "h1": "Product Ad Templates: Pick a Look, Rebuild It, Post It",
   "eyebrow": "Product ad templates",
-  "lead": "Find a product ad template you like, add the item you sell, and get a spoken ad. The words, the voice, the captions, and a presenter made by the tool come with it. You do not type instructions.",
+  "lead": "Put the photo of your sneaker on the ad you wish you had made, and get a speaking clip back. You do not have to write a long prompt.",
   "card": "Ready-made layouts for product pictures and short clips. Add your photo and download the next file.",
   "secondary_keywords": [
     "product photo templates",
@@ -15,47 +15,47 @@
   "faq": [
     {
       "q": "What is a product ad template?",
-      "a": "It is a ready layout for a product picture or a short spoken clip. You add your item and get a script, a spoken voice, captions, and a presenter made by the tool. You are not hiring a real person to film it."
+      "a": "It is a finished ad shape waiting for your product. For a ceramic vase, you add the photo and the glaze name, and the clip comes back speaking. You are not starting from a bare timeline."
     },
     {
       "q": "How does a product ad template work?",
-      "a": "Open a template, upload a photo or paste a product link, and check the preview. The script, the voice, and the presenter are filled in. The presenter is made by the tool, not a real customer. Download or post when the item and the words look right."
+      "a": "You add the product photo or the product link, then fix the one line a buyer would actually say. When the frame shows your protein powder, save the clip or post it from this project."
     },
     {
-      "q": "Why use a template instead of filming a creator?",
-      "a": "You skip hiring a person and renting a studio. You can make another version, or switch the language. Credits are what you spend. You see the cost before you start."
+      "q": "Why use a template instead of hiring a creator?",
+      "a": "The creator you wanted is booked through next Thursday, and a second opening line can still be made while you wait. A lipstick ad can get that new line without a new booking."
     },
     {
-      "q": "Who are these templates for?",
-      "a": "Online shops, marketers, and agencies. You may need a store photo, a photo for social, or a short spoken clip. You already have a product photo or a product link."
+      "q": "Which shops and teams is this library for?",
+      "a": "A founder with one yoga-mat photo, a marketer refreshing this month's ads, and an agency making a client file all land here. The shared step is that you already have a picture of the item."
     },
     {
-      "q": "Can a beginner use these templates?",
-      "a": "Yes. You do not need editing experience. Pick a template and add a photo. In the editor on this page, you can shorten the clip, fix the captions, or add a song."
+      "q": "I have never edited a video. Can I still use a template?",
+      "a": "Yes. Add a photo of the watch and follow the three steps on this page. If a caption is too long, shorten it in the editor here, or drop a song under the voice."
     },
     {
-      "q": "Which industries have templates here?",
-      "a": "Use the category buttons on the examples. Skincare sits under Beauty & Personal Care. Clothing, Apparel, Food & Beverage, and Footwear each have a button. So do Jewelry & Accessories, Tech & Electronics, and Health & Fitness. Accessories, Pet, Sports & Gym, and Apps have buttons too. Home layouts, such as a tidy-room clip, are in the template gallery on this page."
+      "q": "Which kinds of shops have templates here?",
+      "a": "Use the category buttons on the wall. Beauty and personal care covers skincare. Clothing, food and drink, footwear, jewelry, electronics, and fitness each have a button. Pets, sports, apps, and home scenes are in the library too."
     },
     {
-      "q": "Can I upload my own photos and clips?",
-      "a": "Yes. Upload a product photo or a clip you are allowed to use, or paste a product link. The item in the file should be yours. A clear, full view is easier to check."
+      "q": "Am I allowed to bring my own pictures and clips?",
+      "a": "Yes, if you have the right to use them. A front-on photo of the frying pan and your shop wordmark are the usual pair. A clip you filmed yourself can come in too."
     },
     {
-      "q": "Which platforms are these templates made for?",
-      "a": "Clip templates fit TikTok, Instagram, Facebook, and YouTube. Lengths are 6, 10, 15, or 30 seconds. Shapes are a tall phone video (9:16), a square (1:1), a wide video (16:9), a slightly wide 4:3, or a tall 3:4. Picture templates are square. Send a finished file to TikTok or Meta, or download it and post it yourself. Meta is Facebook and Instagram."
+      "q": "Where can I publish a file from these layouts?",
+      "a": "Pick the length first: 6, 10, 15, or 30 seconds. A tall 9:16 file is what a TikTok placement usually wants. Use a square 1:1 for a Facebook feed, 16:9 when the placement is wide, and 4:3 or 3:4 when the slot asks for those. Instagram, YouTube, and LinkedIn can take the download, or you can post the file yourself. Picture templates stay square."
     },
     {
-      "q": "Are the templates free?",
-      "a": "No. Making a file spends credits. Credits are what your plan uses for each photo or video. You see the cost before you start. If the work fails, the credits come back. Prices are on the [pricing page](page:pricing)."
+      "q": "Do these templates cost anything?",
+      "a": "Yes. Making a file spends credits. You see the cost before you start, and if the work fails the credits come back. Prices are on the [pricing page](page:pricing). Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. Finished photos and clips can be used in paid ads. They have no watermark, which means no logo on the file. You are still responsible for what the ad says, the price, and the offer."
+      "a": "Yes. A dog-treat clip can run as a paid ad, and the same file can go to a client as a delivery. The file is clean of any overlaid mark."
     },
     {
-      "q": "Why use a template instead of a blank page?",
-      "a": "A template already has a scene, a script, a voice, and a presenter made by the tool. You spend your time on the product and the offer."
+      "q": "Why not start from an empty timeline?",
+      "a": "The layout already knows the scene, so you decide the offer and post. A tea tin ad does not start by building the kitchen from nothing."
     }
   ],
   "visual": {
@@ -554,45 +554,45 @@
   "steps": [
     {
       "t": "Add Your Product",
-      "d": "Upload one clear photo, or paste a link to a product you sell."
+      "d": "Open the travel mug ad card with its scene and speaking pace. Your starting layout is ready."
     },
     {
       "t": "Choose a Template",
-      "d": "Pick the layout. You also get a script, a voice, captions, and a presenter made by the tool."
+      "d": "The frame fills with the travel mug you sell. Upload a clear photo, or paste the product page link."
     },
     {
       "t": "Download or Post",
-      "d": "Check the item and the words, then download it with no logo, or send it to TikTok, Facebook, or Instagram."
+      "d": "The travel mug clip comes back with nothing stamped on it. Post the tall version where your shop already runs ads."
     }
   ],
   "steps_h2": "How to Make a Product Ad From a Template in 3 Steps",
-  "steps_lead": "Add a photo or a product link, pick a layout, and download or post the ad. Credits are what a plan spends on each file. You see the cost before you start.",
-  "benefits_h2": "What These Product Ad Templates Include",
-  "benefits_lead": "A template is a full ad, not only an empty layout. The words, the voice, and a presenter come with it.",
+  "steps_lead": "You get a speaking ad from a layout you already like. A travel mug is the example below, and the credit line is on screen first.",
+  "benefits_h2": "Pieces Already Inside the Layout",
+  "benefits_lead": "Open one card and the ad is already a speaking clip. You bring the product photo.",
   "benefits": [
     {
       "t": "An AI Script",
-      "d": "The template writes the words from your product. You start from a spoken ad, not a blank page."
+      "d": "For a backpack, the draft can open on the padded strap, not on a generic hello. Change the color name in that line and the ad matches your listing."
     },
     {
-      "t": "A Spoken Voice",
-      "d": "The clip comes with a voice made by the tool. It reads the script."
+      "t": "A Voice on the Clip",
+      "d": "A generated voice reads the script out loud, in the language you pick for that version. Shoppers hear the line while they watch."
     },
     {
-      "t": "Captions on the Video",
-      "d": "Captions are written on the clip, so shoppers can read the words while the voice plays."
+      "t": "Captions on the Clip",
+      "d": "The words sit on the video, so shoppers can read the line while the voice plays. A candle ad can show the scent name on screen."
     },
     {
-      "t": "A Presenter From the Actor Library",
-      "d": "Pick a presenter made by the tool to hold the product or say the line. The person is not a real buyer."
+      "t": "An AI Avatar From the Library",
+      "d": "An AI avatar from the library can hold the necklace in a daylight close-up. If the face should be yours, an AI twin can be built from photos you already took."
     },
     {
-      "t": "Editor and Music Library",
-      "d": "Shorten the clip and add a song from the music library, without leaving the page."
+      "t": "Editor and a Music Library",
+      "d": "You can trim the blender clip to the sentence about the glass jar, and lay a track under it, in the editor on this site."
     },
     {
-      "t": "Link, Languages, Batch, and API",
-      "d": "Paste a product link, or make the ad in another language. A batch is several versions at once. You can send the file to TikTok or Meta. Meta is Facebook and Instagram. The API is a connection that lets your own shop system start the work."
+      "t": "From a Product Link to a Post",
+      "d": "A headphone product page can drive the first draft, so you paste that link instead of describing the item from scratch. A second language can reuse the same photo, and your own software can start the job through the API."
     }
   ],
   "blockOrder": [
@@ -671,8 +671,8 @@
       }
     ]
   },
-  "related_h2": "Tools and Pages for These Templates",
-  "related_lead": "Open a photo tool or a video tool, or browse by category and by where you post.",
+  "related_h2": "Tools and Pages Next to These Templates",
+  "related_lead": "A photo tool, a video tool, or a page for your category is ready when the template is not the whole job.",
   "relatedLinks": [
     {
       "id": "video-ads",
@@ -699,8 +699,8 @@
       "label": "Browse by Platform"
     }
   ],
-  "cta_title": "Pick a Template and Add Your Product",
-  "cta_lead": "Upload one product photo, choose a layout, and see the credit cost before you start.",
-  "gallery_h2": "All Product Ad Templates by Type",
-  "gallery_lead": "Each card opens a template page with an example and the steps to use it."
+  "cta_title": "Start From the Layout You Like",
+  "cta_lead": "Upload the scarf photo and get the clip from the layout you like.",
+  "gallery_h2": "Every Product Ad Template in the Library",
+  "gallery_lead": "You get an ad built around the item you sell. Open a card, watch the example, and fill the fields."
 }

@@ -4,7 +4,7 @@
   "description": "Change a product photo background from one clear image. Keep the item recognizable, create a new setting for listings or ads, and avoid another studio shoot.",
   "h1": "AI product background changer for a new setting",
   "eyebrow": "Photo tool",
-  "lead": "Remove the old background and put a studio surface, a counter, or a seasonal scene behind the same product photo. Credits are what you spend on a photo, and you see that cost before you start.",
+  "lead": "The bottle is fine. The kitchen behind it is not. Ask for a stone slab, and the photo stays the bottle you sell. One photo is 24 credits, shown before you start.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -13,40 +13,40 @@
     "AI backdrop for product shots"
   ],
   "steps_h2": "How to Change a Product Background in 3 Simple Steps",
-  "steps_lead": "Upload the item, name the new setting, and download a finished photo.",
+  "steps_lead": "The bottle you already photographed is the start.",
   "steps": [
     {
       "t": "Upload Your Image",
-      "d": "Add one photo that shows the whole item. A clear shape around the item helps the new background meet it cleanly."
+      "d": "A side-on photo of a soap bottle, with the whole bottle in frame, is enough."
     },
     {
       "t": "Describe the New Setting",
-      "d": "Name one surface, room, or outdoor place. Keep the note short so the product stays easy to see."
+      "d": "Say stone slab, or a pale wood counter. A short ask keeps the bottle easy to see."
     },
     {
       "t": "Download Your Photo",
-      "d": "Compare the new setting with the original photo. Download the square image for the store or the ad editor."
+      "d": "Save the square for the listing, or take the finished photo into an ad."
     }
   ],
-  "benefits_h2": "Why Sellers Use This Product Background Changer",
+  "benefits_h2": "AI Product Background Changer Benefits",
   "benefits": [
     {
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
       "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall.",
-      "t": "24 Credits a Photo",
-      "d": "One photo costs 24 credits, shown before you start. If the photo fails, those credits come back. You can also make several backgrounds from that same photo."
+      "t": "Create a New Background With Credits",
+      "d": "A new backdrop is a short job, not a studio booking. If the photo fails, those credits come back."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-seasonal-r1",
       "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage.",
-      "t": "Check the Item's Shape",
-      "d": "The shape should still match the photo you uploaded. Small printed words can change, so compare them before you publish."
+      "t": "Keep Product Details in View",
+      "d": "The new setting leaves the label in the frame, so the product is easier to recognize."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
       "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
-      "t": "A Sharp Finished Photo",
-      "d": "You download a square photo with the new setting filled in, and no watermark. It is not a see-through file with an empty background."
+      "t": "Download a Finished Product Photo",
+      "d": "The download is a finished photo with the setting painted in, and it has no watermark. It is not an empty cutout."
     }
   ],
   "maker": {
@@ -68,48 +68,60 @@
   },
   "faq": [
     {
-      "q": "What is an AI product background changer?",
-      "a": "It keeps your product photo and replaces the setting around the item. You describe the surface or the room, then download a new image."
+      "q": "What happens to the old room in my photo?",
+      "a": "It removes the old room and fills that space with a setting you name. A soap bottle on a messy counter can come back on a gray sweep."
+    },
+    {
+      "q": "Does the AI product background changer include a background library?",
+      "a": "No. There is no free backdrop library. Describe the surface you want; one photo costs 24 credits, shown before you start, and a failed job returns those credits."
+    },
+    {
+      "q": "What should I check on the first photo?",
+      "a": "Check whether the soap bottle still looks like the one on your shelf. The credit cost is on screen before the photo is made."
+    },
+    {
+      "q": "I have the photo. What do I type?",
+      "a": "Name one surface, such as pale wood under a candle. You get a square with that wood filled in behind the candle."
+    },
+    {
+      "q": "Can the area behind the product become white?",
+      "a": "Yes. Ask for white and you get a finished photo of the item on white, not an empty cutout. A studio table is a different ask."
     },
     {
       "q": "Can I make a new background for an Etsy photo?",
-      "a": "Yes. Upload one product photo, name the surface or the room, and download the square image. The cost shows before you start."
+      "a": "Yes. Upload one product photo, name the surface or the room, and download the square. The cost shows before the job starts."
     },
     {
-      "q": "Will the product change?",
-      "a": "The item should keep its angle and shape. Compare it with the real product, because small printed words can change."
+      "q": "Will the product itself change?",
+      "a": "The product should keep its angle and shape. Small printed words can shift, so compare the label with the photo you uploaded."
     },
     {
-      "q": "Do I get a see-through background?",
+      "q": "Do I get a see-through file?",
       "a": "No. You download a finished photo with the new setting already filled in. For a plain main photo, make a separate white image."
     },
     {
-      "q": "Which backgrounds suit product photos?",
-      "a": "Simple surfaces keep attention on the item: light wood, stone, linen, or one quiet color. A busy scene makes the product harder to see."
+      "q": "Which settings suit a product photo?",
+      "a": "Use simple surfaces such as light wood, stone, linen, or one quiet color. A busy scene can make the product harder to see."
     },
     {
       "q": "Can I use the new photo in a paid ad?",
-      "a": "Yes. The download has no watermark, so no logo is stamped on the file. You can use it for your business. Add any price or offer in your ad editor."
+      "a": "Yes. The download has no watermark. You can use it for your business. Add any price or offer in your ad editor."
     },
     {
       "q": "Can I choose a seasonal or outdoor setting?",
-      "a": "Yes. Name one room, surface, or outdoor scene, such as a holiday shelf or a shaded table."
+      "a": "Yes. Name one room, one surface, or one outdoor scene, such as a holiday shelf or a shaded table."
     },
     {
       "q": "How is this different from a new photo shoot?",
-      "a": "A new photo shoot needs space and lights. Here the new setting comes from a photo you already own. If that photo is blurry, start with [how to take product photos for AI](page:guide-product-photo-tips)."
-    },
-    {
-      "q": "Do you include a free background library?",
-      "a": "No. There is no free plan and no free set of backgrounds. Pick a studio, wood, or garden scene on this page, or describe your own surface. Each photo is 24 credits. If the photo fails, those credits come back."
+      "a": "A new photo shoot needs space and lights. Here the new setting comes from a photo you already own. If it is blurry, start with [how to take product photos for AI](page:guide-product-photo-tips)."
     },
     {
       "q": "Can the new photo become a video?",
-      "a": "Yes. Open [URL to video](page:url-to-video) from a product link, or [image to video](page:image-to-video) from the photo. Add a written script, a spoken AI voice, on-screen captions, and music. Then publish to TikTok or Meta (Facebook and Instagram)."
+      "a": "Yes. Open [a page-to-ad tool](page:url-to-video) from a product link, or [a moving clip](page:image-to-video) from the photo. Add a written script, a spoken AI voice, on-screen words, and music. Then publish a tall cut on TikTok, or a square on Meta."
     },
     {
       "q": "Can I edit the photo without another app?",
-      "a": "Yes. The editor here can add a short line of text, crop the photo, or write the line in another language. You do not have to open a separate editor."
+      "a": "Yes. Add a short line of text or crop the photo here, then write that line in another language without opening a separate editor."
     }
   ],
   "visual": {
@@ -222,24 +234,24 @@
     "faq"
   ],
   "reasons": {
-    "h2": "When a New Background Helps the Photo",
-    "lead": "Start with a quiet surface, a shelf for an ad, or one outdoor table. Use it when the product photo is already fine.",
+    "h2": "Why Use an AI Product Background Changer",
+    "lead": "Use it when the product is fine and only the area behind it is wrong.",
     "items": [
       {
-        "t": "Show the Product First",
-        "d": "Swap a cluttered counter for a quiet surface, so the listing starts on the product.",
+        "t": "Remove a Distracting Background",
+        "d": "A soap bottle shot on a busy kitchen gets a quiet gray sweep you can use on the listing.",
         "img": "n:guide:k5-background-case-1",
         "alt": "Blue ceramic vase on a sunny windowsill."
       },
       {
-        "t": "Match the Next Ad",
-        "d": "Use a warmer surface or a holiday shelf for the next ad, and keep the product easy to see.",
+        "t": "Match Backgrounds to Campaigns",
+        "d": "The holiday week can put the same candle on a pine shelf. Next month the shelf can be plain linen. The candle does not move.",
         "img": "n:guide:k5-background-case-2",
         "alt": "Plain face cream jar on wet stone."
       },
       {
-        "t": "Spend Less on the Shoot",
-        "d": "Use the photo you already have. A new background does not mean unpacking the product or booking lights.",
+        "t": "Save on Background Production",
+        "d": "One photo is 24 credits, shown before you start. That is the cost of a new setting, not a designer's afternoon.",
         "img": "n:guide:k5-background-case-3",
         "alt": "Brown leather wallet on a cafe table."
       }
@@ -319,7 +331,7 @@
     "spokesperson-videos",
     "product-videos"
   ],
-  "benefits_lead": "See the credit cost, check the item against the original, and download a sharp square photo.",
-  "related_h2": "Related Tools",
-  "related_lead": "Turn the new photo into an ad or a video, including one with a person presenting the product."
+  "benefits_lead": "A consistent product image keeps the listing focused.",
+  "related_h2": "After the New Background",
+  "related_lead": "The square can keep working after you save it."
 }

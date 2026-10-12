@@ -4,7 +4,7 @@
   "description": "Make a short fashion video from one clothing photo for TikTok, Instagram, and a product page. Pick a length of 6, 10, 15, or 30 seconds before you post.",
   "h1": "AI Fashion Reels That Show the Full Outfit",
   "eyebrow": "Fashion video template",
-  "lead": "Make a short fashion reel, a phone video, from one clothing photo, so the full outfit is easy to see in motion. An AI actor, a generated person, wears it, with a spoken voice and words on screen. Credits, what each job spends, are shown before you start.",
+  "lead": "Get a reel of a dress in motion from one photo. Name the move, such as a half turn toward the zipper. You do not start from a blank page.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -13,19 +13,19 @@
     "menswear video ad"
   ],
   "steps_h2": "Make a Clothing Video Ad in 3 Steps",
-  "steps_lead": "One clothing photo and a spoken line, then a file you can post to TikTok, Facebook, or Instagram.",
+  "steps_lead": "Leave with a reel of the coat turning: open the frame, add the coat and the move, and download.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the full garment flat, on a hanger, or on a mannequin. Or paste the product page link."
+      "d": "Choose the frame for someone shopping for clothes, with room for one garment to move. The half turn is the point of this shot."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name one action and a short spoken line, then pick a size and a length from 6 to 30 seconds."
+      "d": "Use the coat flat, on a hanger, on a form, or paste the product link. The requested move shows the lining."
     },
     {
       "t": "Download and Post",
-      "d": "Check the color against the clothing, then post to TikTok, Facebook, or Instagram. Add the size in the editor if you need it."
+      "d": "Get captions on the move and an AI avatar wearing the coat. Check the color against the shippable coat before posting."
     }
   ],
   "maker": {
@@ -43,44 +43,44 @@
   },
   "faq": [
     {
-      "q": "What is an AI fashion reel template?",
-      "a": "A ready try-on scene that puts one outfit in motion. You add a clothing photo, a hook (the opening line), a script (the words), and a voiceover (a spoken voice). An AI actor, a generated person, wears the outfit."
+      "q": "What does an outfit reel template give me?",
+      "a": "A clothing frame where one outfit moves, such as a jumpsuit turning toward its buttons. Your photo goes in. An AI avatar wears the jumpsuit in the file. You do not call someone in to get that turn."
     },
     {
-      "q": "How do I make the outfit reel?",
-      "a": "Upload the clothing or paste a product page link. Name one action, such as a turn or a short walk. Pick an AI actor, a size, and a length, then download."
+      "q": "What happens after I pick the outfit template?",
+      "a": "Add the skirt photo and name the move. The file comes back as a reel for people who are out shopping for clothes."
     },
     {
-      "q": "Why start from a photo instead of a fitting day?",
-      "a": "The try-on is built from the garment photo or the product link you already have. You can skip another shoot until you decide you need one."
+      "q": "What clothing can go in the reel?",
+      "a": "A raincoat, a pair of shorts, or a knit vest, plus anything else a person wears that you can photograph whole. If the hem is cut off in the photo, the turn can lose it too."
     },
     {
-      "q": "Who is this scene for?",
-      "a": "Clothing shops, including menswear and womenswear, that need a reel, a listing, or a paid ad from one garment photo."
+      "q": "Can I make several reels for one collection?",
+      "a": "Yes. Keep the blazer photo and ask for another move, or aim the next reel at shoppers who care about the lining."
     },
     {
-      "q": "Can I do this on the first try?",
-      "a": "Yes. Use a sharp photo of the full garment and name one action. Set captions and the spoken line before you post, and check the color against the garment."
+      "q": "Who gets use from an outfit reel?",
+      "a": "A clothing seller who wants the garment in motion and does not have a fitting booked. One person can pick the move and post the file."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "A sharp, evenly lit photo of the full piece of clothing. A flat lay (a top-down photo), a hanger, or a mannequin can work. A product page link can be used when you do not have the file."
+      "q": "Can I make a reel with no video background?",
+      "a": "Yes. A photo and one sentence are enough to begin, even if you have never edited a video."
     },
     {
-      "q": "What should I check before posting?",
-      "a": "Compare the color, the fit, and the outline with your photo. Add the real size and price in the editor. The person on screen is an AI actor, not a check of how it fits a real customer."
+      "q": "When can I download the outfit reel?",
+      "a": "After the render. You can download it in that same sitting, without a fitting on the calendar."
     },
     {
-      "q": "Which size and length can I pick?",
-      "a": "Use 9:16, a tall phone shape, for TikTok and Instagram Reels. You can also pick 1:1 (square), 16:9 (wide), 4:3, or 3:4 (tall). Lengths are 6, 10, 15, or 30 seconds. You can post to TikTok or Meta (Facebook and Instagram)."
+      "q": "Which frame and length can I pick?",
+      "a": "Use 9:16 for TikTok and Instagram Reels. Also 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds. You can post to TikTok, Instagram, or Facebook."
     },
     {
-      "q": "What does the clip cost?",
-      "a": "A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Credits are what the job spends. A failed job returns those credits. Plans start at $24.50 a month. There is no free plan. The download has no watermark, nothing stamped on the file."
+      "q": "What does the reel cost?",
+      "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns those credits. The download has no watermark."
     },
     {
-      "q": "Can I use it in ads, in another language, or from my own tools?",
-      "a": "Yes. Post it to TikTok or Meta (Facebook and Instagram). You can speak the line in another language and make several actions from the same photo. The API lets your product list start the next color. Add any note the platform asks you to show."
+      "q": "Can I run it in ads, in another language, or from my catalog?",
+      "a": "Yes. Post it to TikTok, Instagram, or Facebook, speak the line in another language, and make another move from the same photo. The API can start the next color from your product list. The person on screen is an AI avatar."
     }
   ],
   "visual": {
@@ -527,8 +527,8 @@
       }
     }
   },
-  "cta_title": "Show the Outfit Turning in a Short Video",
-  "cta_lead": "Upload one clothing photo and add the spoken line. You see the credit cost, what the job spends, before you start.",
+  "cta_title": "Play the Full Outfit as a Reel",
+  "cta_lead": "Shoppers see the full outfit move. Add the jeans photo, name the turn, and open the reel.",
   "blockOrder": [
     "hero",
     "picker",
@@ -604,8 +604,8 @@
       }
     ]
   },
-  "related_h2": "Pages for a Fashion TikTok Ad",
-  "related_lead": "Video ads, try-on, outfit photos, a sale banner, TikTok, and the fashion page.",
+  "related_h2": "Pages Beside an Outfit Reel",
+  "related_lead": "Video ads, try-on, outfit photos, a sale frame, TikTok, and the fashion page.",
   "relatedLinks": [
     {
       "id": "video-ads",
@@ -635,38 +635,38 @@
   "more_sections": [
     {
       "eyebrow": "On this reel",
-      "h2": "Features for a Fashion Video",
-      "lead": "These sit on the outfit video. Check the color and the outline against the clothing before you post.",
+      "h2": "What an Outfit Reel Can Carry",
+      "lead": "One clothing photo can become a reel with a voice, captions, and music.",
       "items": [
         {
           "icon": "play",
-          "t": "Spoken Voice, Words on Screen, and Music",
-          "d": "Add a spoken voice, words on screen, and a track from the music library before you download."
+          "t": "Voice, Captions, and Music",
+          "d": "A voice can read the line, captions can sit on the move, and a track can come from the music library."
         },
         {
           "icon": "users",
-          "t": "AI Actors and a Digital Twin",
-          "d": "Pick an AI actor, a generated person, to wear the clothing. Or use a digital twin, that same person saved to use again. They are not buyers."
+          "t": "AI Avatars and an AI Twin",
+          "d": "An AI avatar can wear the clothing, or an AI twin can keep the same presenter on the next reel."
         },
         {
           "icon": "sparkle",
-          "t": "A Script From a Line or a Link",
-          "d": "Ask for a short script, the words to say. Or paste a product page link and start the video from that page."
+          "t": "A Script or a Page Link",
+          "d": "A short script, or a product link, can start the reel from the garment page."
         },
         {
           "icon": "layers",
-          "t": "A Batch of Actions From One Photo",
-          "d": "Make another action from the same clothing photo when you want a second opening line. Each job shows its credit cost first. Credits are what the job spends."
+          "t": "Another Move From One Photo",
+          "d": "One clothing photo can make a second move when you want a new opening. Each job shows its credit cost first."
         },
         {
           "icon": "check",
-          "t": "Edit Here, Then Publish",
-          "d": "Trim in the editor, then post to TikTok or Meta (Facebook and Instagram). The file has no watermark, nothing stamped on it."
+          "t": "Trim Here, Then Post",
+          "d": "You can trim in the editor, then post to TikTok, Instagram, or Facebook. The file has no watermark."
         },
         {
           "icon": "globe",
-          "t": "Another Language, or the Catalog API",
-          "d": "Speak the line in another language. Or use the API so your product list can start the next video."
+          "t": "Another Language or the API",
+          "d": "The line can go out in another language, or the API can start the next reel from your product list."
         }
       ]
     }

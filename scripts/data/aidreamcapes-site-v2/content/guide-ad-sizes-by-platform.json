@@ -4,7 +4,7 @@
   "description": "Social media ad sizes for TikTok, Instagram, Facebook, and YouTube. Pick a tall phone video, a square post, or a wide screen, and make each file.",
   "h1": "Social Media Ad Sizes: Which Shape Goes Where",
   "eyebrow": "Ad size guide",
-  "lead": "Social media ad sizes are the shape of the video. 9:16 is a tall phone screen. 1:1 is a square in the feed, the scrolling list of posts. 16:9 is a wide screen. Start from a product link or a photo. The file comes back in that shape. It can include a script, words on screen, a spoken voice, and a song.",
+  "lead": "Your ad fills the phone instead of sitting in a strip of black bars. For a sunscreen bottle, the tall file is the one that does that, with the tube in the middle, clear of the buttons.",
   "secondary_keywords": [
     "9:16 vs 1:1 vs 16:9",
     "vertical video ad size",
@@ -13,101 +13,99 @@
     "aspect ratio for TikTok ads"
   ],
   "read_minutes": 8,
-  "summary": "Make 9:16 first for full-screen phone ads, add 1:1 for feeds, and make 16:9 only when the screen is wide.",
+  "summary": "A small shop can cover a phone, a feed, and a wide screen without guessing the shape. Make the tall 9:16 file first for phone ads, add a square for the feed, and make 16:9 only when the screen is wide.",
   "sections": [
     {
-      "h2": "Social Video Styles That Make Shoppers Stop",
+      "h2": "Which Social Styles Make a Shopper Stop",
       "paras": [
-        "Pick the format that shows one reason to buy. The shape comes after that.",
-        "Trend challenges. When a song is popular right now, show your product in that trend and time the edit to the music. A hand snapping a stand open is enough.",
-        "How-to tips. Teach one use, such as a lid that does not leak when tipped. A short script is turned into the video. Use a generated person, or show only the product.",
-        "A day with the product. A morning routine, a commute, a desk. Keep the product in the action from the first moment.",
-        "Reply videos. Answer a comment by showing the product doing the thing they asked about. It should look like a reply. The offer must stay easy to read.",
-        "A short list. Three reasons, said fast, with the product on screen the whole time. Good when people save posts to compare later.",
-        "Behind the packing table. Show the fill, the seal, or the unboxing. Shoppers trust a process they can see.",
-        "A calm lifestyle picture. Put the product in good light, on a real surface, for a square post on your profile. The mood can help sell it. The words on the label must still match the real product.",
-        "A short funny moment. One joke, then the product, easy to see. If the joke hides the item, it is the wrong joke."
+        "The right style gives a shopper one clear reason to stop. Pick the style that shows that reason. The shape comes after the idea is clear.",
+        "A coffee lid that clicks shut can be the whole clip. Time that click to a track shoppers already hum, and end when the lid is closed. Pick a track they still hear this week.",
+        "A backpack clasp that opens with one hand is a better clip than a lecture. Show that one motion, and let the spoken line name it. Save a longer list of tips for a later file.",
+        "A lunchbox clip sells the moment the lid comes off at noon and the food is right there. Start on the open box, and let that be the whole file.",
+        "Answering a real question, like how it fits in a pocket, gives the shopper the detail they asked for. Show that, and keep the answer readable.",
+        "A shopper comparing two water bottles will pause for the lid, the weight, and whether it fits a car cup holder. Say those and leave the bottle in the frame the whole time. Another point can wait for a later file.",
+        "Watching the fill, the seal, and the unbox gives people a step they can trust.",
+        "Soft light and a real surface can sell the mood on your profile, often as a square. The label still has to match the product page.",
+        "One joke, then the product, easy to see. Keep the item in view once the joke lands."
       ]
     },
     {
-      "h2": "A Shape That Fits Each App",
+      "h2": "Which Shape Fits Each App",
       "paras": [
-        "Each place the ad shows gets its own file, built at that shape. Do not cut a wide video down by hand and hope the product stays in view.",
-        "YouTube and Shorts. Use 16:9 when the screen is wide, and 9:16 for Shorts. A tall file is its own job. A job is one file you make. They are not a cash price. Cutting the wide version down afterward often loses the product. See [YouTube Shorts](page:plat-youtube-shorts) for where the tall shape is used.",
-        "Instagram and Facebook. Reels wants 9:16, the tall phone shape. Do not put the square post file there. You will get empty bars above and below. The feed, the scrolling list of posts, wants a square, 1:1. A carousel is a post you swipe card by card. Every card should be the same shape.",
-        "TikTok. Ads in the scrolling list use 9:16. A wide 16:9 video on an upright phone shrinks to a thin strip, and the product looks small. Make the tall file with [AI UGC video ads](page:video-ads). UGC means the video looks like a phone video a shopper might film. Anyone on screen is generated, not a real buyer.",
-        "A feed where people stop and read. The same product can sit in a square post or a wide post. Keep the words large. The claim must match the product page."
+        "Each placement gets a file that already fills its screen. Make that shape on its own, so the product stays large.",
+        "A wide YouTube screen gets a 16:9 file, and Shorts get a tall one that fills the phone. The tall file is its own job. See [YouTube Shorts](page:plat-youtube-shorts).",
+        "A square planter fills the scrolling feed, where people pass posts. The full-screen video placement and Stories want the tall file, and a square dropped into that tall slot leaves bars. Make the feed file and the tall file as two jobs.",
+        "A 9:16 file fills the TikTok screen, so the product stays large. A wide clip on an upright phone shrinks to a strip. Build the tall file with [AI UGC video ads](page:video-ads).",
+        "A square or a wide post gives people room to pause and read. Keep the words large, and keep the claim identical to the product page."
       ],
       "img": "n:guide:fx05-guide-vertical",
       "alt": "Adult woman with a short dark bob holds a plain white sunscreen tube in a tall phone-shaped composition."
     },
     {
-      "h2": "Shapes That Keep the Product on Screen",
+      "h2": "What Each Shape Keeps on Screen",
       "paras": [
-        "Match the shape to the screen. Then check what gets cut off before you pay to run the ad. These are shapes, not a promise of an exact width and height. Check the crop, the part that gets cut off, on the screen where you set up the ad. A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30.",
-        "16:9, the wide shape. Use it for a laptop, a TV-style ad, a longer demo, or a desktop feed. It is a poor fit for a full phone screen.",
-        "9:16, the tall shape. This fills TikTok, Reels, Stories, and Shorts. Words on screen run along the bottom. The like and share buttons sit on the right. Keep the product and any words in the middle. Cover the bottom and the right side of your phone with your fingers. If you can still see the product and read the offer, the shape is safe.",
-        "1:1, the square shape. Use it for Facebook and Instagram feeds, for a swipeable carousel, and when you are not sure where the ad will run. A still photo of the same product can sit beside the video.",
-        " 3:4 is a little taller than a square. Use them only when that ad spot lists them. If the screen where you set up the ad does not list that shape, stay with 9:16, 1:1, or 16:9. All five shapes are available. For current Shorts file rules, see [YouTube Shorts size rules](https://support.google.com/google-ads/answer/16041697?hl=en-GB)."
+        "The product stays in the part of the screen shoppers can actually see. Match the shape to the screen, then check what the app covers. Confirm the crop in the ad manager. These are shapes, not a promise of one pixel size.",
+        "16:9 fills a laptop, a longer demo, or a desktop feed. A full phone screen wants the tall file instead.",
+        "9:16 is the tall shape, and it is the one that fills a phone. Account names sit at the top. Like and share sit on the right. Keep the sunscreen tube and any words in the middle, clear of those buttons.",
+        "1:1 fills a Facebook or Instagram feed, a swipeable row of cards, and the spots where the placement is still undecided. A still can use this shape too.",
+        "4:3, a little wider than a square, and 3:4, a little taller, fit the few placements that list them. When you want a shape the setup screen names, use 9:16, 1:1, or 16:9 for the rest. For current Shorts file rules, see [YouTube Shorts size rules](https://support.google.com/google-ads/answer/16041697?hl=en-GB)."
       ],
       "img": "n:guide:fx05-guide-shapes",
       "alt": "Plain white sunscreen tube shown inside vertical, square, and wide blank frame shapes."
     },
     {
-      "h2": "Reasons to Make Each Size Here",
+      "h2": "Why Make Each Size Here",
       "paras": [
-        "You skip the evening of trimming. The same photo can be used for every place the ad shows. Each shape shows its credit cost before it starts.",
-        "See what is popular in your product category right now. Put the product into a song or a challenge while people still know it. You are not guessing from last month's post.",
-        "Borrow a speed you like. Paste a short video whose rhythm fits the product. The tool reads the opening line and the speed, then builds your item into that rhythm. It does not copy someone else's footage.",
-        "Post without being on camera. Use a presenter from the [actor library](page:ai-actors), a list of generated people, or show only the product. Anyone on screen is generated. Do not name them as a buyer.",
-        "Turn a page into a video. Paste your product link, or a short page you wrote. [URL to video](page:url-to-video) pulls in the title, the photos, and the reason to buy. You get a tall video with a spoken voice."
+        "One coat photo can feed a tall file and a square file. They are two jobs, and each one shows its credit cost before it starts.",
+        "Opening on the cap, when other serum ads open on the dropper, gives your file a different first second. Use a track that still shows up where your buyers scroll.",
+        "You set the gap between the first word and the product, and that pace is yours. For a pour-over kettle, the gap might be one second. Put that gap in your own script.",
+        "You can post without standing on camera. Pick an AI actor from the [actor library](page:ai-actors), make one for the brand, or show only the product. Anyone on screen is an AI actor you chose for the shop.",
+        "The size and the color on a wool throw's product page can become the spoken line in a tall file, next to the photo you already took. That page is enough to begin. See [URL to video](page:url-to-video)."
       ],
       "img": "n:guide:fx05-guide-first",
       "alt": "Adult woman with short curly hair holds a plain white sunscreen tube upright in a vertical social ad scene."
     },
     {
-      "h2": "How Shops Put This to Work",
+      "h2": "How Two Shops Split the Shapes",
       "paras": [
-        "These are examples of how a shop would use it, not quotes from a customer.",
-        "Example. A home shop used to spend an evening cutting one video. Now they paste the product page. They make a 9:16 file and a 1:1 file as two jobs. They watch both on a phone before they pay to run the ad.",
-        "Example. A skincare shop needs a second opening line for the same bottle. They keep the photo and the offer. They change the first line. They run the two files together, for the same people, with the same ad budget."
+        "A home shop gets a 9:16 file and a 1:1 file from the product page, instead of an evening spent cutting one video apart. They run the file that fills the placement.",
+        "A skincare shop gets a second opening for the same lip balm without a new photo. They keep the photo and the offer, change the first line, and run the two files for the same people on the same budget."
       ]
     },
     {
-      "h2": "A Setup for the Product You Actually Sell",
+      "h2": "Which Style Fits the Product You Sell",
       "paras": [
-        "The speed should match the product. A joke that hides the label is the wrong style.",
-        "Beauty and skincare. Show a routine, a texture, or a before-and-after of the surface. That means the surface first, then after the product. Hold the real item next to the screen and check the color.",
-        "Fashion. Change the outfit in time with the music, or show the garment flat on a door and then worn. Do not add a side of the item that the photo never showed.",
-        "Home and living. Show the product in the room it belongs in, plus one close-up of the joint, the cord, or the finish.",
-        "Food and drinks. The pour, the steam, the first bite. Six or ten seconds is often enough.",
-        "Jewelry. Show it on a hand or a collar, with the clasp visible.",
-        "Electronics and gadgets. One action, such as a stand unfolding or a case closing. Words stay in the middle so the buttons do not cover them."
+        "A pace that fits the product keeps the label easy to see. Keep the joke clear of the label too.",
+        "Beauty and skincare. A routine, a texture, or the surface before and after shows the shade in context. Hold the real item next to the screen and check the shade.",
+        "Fashion. Shoppers see the dress on a door and then worn, in the same color in both frames. Show the back when the photo you took includes the back.",
+        "Home. A shopper sees the room the piece belongs in, plus one close view of the joint, the cord, or the finish.",
+        "Food and drink. The pour, the steam, or the first bite is enough to show the product. Six or ten seconds often covers it.",
+        "Jewelry. A hand or a collar shows the piece at the size a shopper will wear it, with the clasp visible.",
+        "Gadgets. One motion, an earbuds case snapping shut, is enough to show what it does. Keep the words in the middle, where the buttons leave them readable."
       ]
     },
     {
-      "h2": "Features That Build the Social Video",
+      "h2": "What the Editor Handles for You",
       "paras": [
-        "This tool does the chores that used to take three different apps.",
-        "A trend watch for your product category. It points at a song and an opening line that fit the product, so you are not posting last month's joke.",
-        "Presenters, or none. Pick someone from the actor library, make one for the brand, or leave people out. Do not give a generated person a buyer's name.",
-        "Edits that follow the music. Choose a song from the ad music library, and the edits land on that rhythm. Before you pay to run the ad, check that the ad spot allows that song.",
-        "A script you can edit. It is written from the product page, like a reply to a shopper. You can change the line before the job starts.",
-        "Start with a link. Get a video back. A product link or a short page becomes a tall video with a spoken voice. [AI image to video](page:image-to-video) is the way in when you already have the still photo.",
-        "Finish in one place. The words on screen, the spoken voice, and the song are in the editor. You can change how those words look. You can make several opening lines from the same photo. You can publish to TikTok or Meta in one step. Meta means Facebook and Instagram. Or you can download the file. The download has no watermark stamped on it. A developer can start the same job through the API, a connection from your shop system. Each file is its own job. If a job fails, the credits come back."
+        "The chores that used to mean three apps sit in one place.",
+        "You get an opening that fits the product, such as a candle flame in the first second, and a track that matches a slow shot. You still pick the line, and you pick one that fits this season.",
+        "A brand that never shows a face can still have a spoken line. Leave the frame on the product, and put that line on the caption track.",
+        "Cuts can land on a beat you pick from the ad music library. A spoon tap can sit on that beat.",
+        "A script you can edit. It is written from the product page, like a reply to a shopper. Change the line before the job starts.",
+        "A photo you already took of the cutting board is enough to start the clip. [AI image to video](page:image-to-video) is the way in. A product link is the other door, and it helps when the page has the size and the material written out.",
+        "Finish in one place. Captions, the spoken voice, and the song live in the editor. You can change how the words look, and you can make several openings from the same photo."
       ]
     },
     {
-      "h2": "From a Link to Today's Post in 5 Steps",
+      "h2": "Five Moves Before You Post",
       "paras": [
-        "You are not cutting the video picture by picture. There are five steps, then a check on your phone.",
-        "Step 1. Paste a product link, a short video whose speed you want, or a photo of the item.",
-        "Step 2. The tool reads the speed. It notes the opening line, how fast it moves, and where the product must stay visible.",
-        "Step 3. Build the shape you picked. The edit follows the song. The shapes are 9:16, 1:1, 16:9, 4:3, or 3:4.",
-        "This is not one of the five steps. A second shape is another job. It is not included in the first one.",
-        "Step 4. Add words on screen, a spoken voice, and music. Keep the words off the bottom and the right edge.",
-        "Step 5. Download a file with no watermark, or publish to TikTok or Meta (Facebook and Instagram). Then read it on your phone.",
-        "The cost shows first. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
+        "You spend your time on the shape and the line. The frame-by-frame trim is already handled.",
+        "A photo of the whole phone stand is the usual start. A product link works when the page already shows that stand. Bring a clip when you want the pace of something you filmed yourself.",
+        "Mark the second where the label has to be readable. The rest of the timing can flex around that second.",
+        "Pick one shape for this job: 9:16, 1:1, 16:9, 4:3, or 3:4. A second shape is a separate job.",
+        "The spoken line sits on screen in the middle, clear of the bottom and the right edge, where the app covers words. A song can wait until this pass looks right.",
+        "Download the file. Nothing is stamped on it. Play it on your phone before you pay to run it, and check that the product is still in the middle.",
+        "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
       ],
       "img": "n:guide:b2f9-guide-ad-sizes-by-platform-mistakes-r1",
       "alt": "Adult hand checks a plain white sunscreen tube inside a simple blank preview frame with generous margins."
@@ -115,8 +113,8 @@
     {
       "h2": "The Short Version",
       "paras": [
-        "Use 9:16 for full-screen phone ads, 1:1 for the scrolling feed, and 16:9 for wide screens. Use 4:3 or 3:4 only when that ad spot lists them. Keep the product in the middle.",
-        "A script, words on screen, a spoken voice, and a song from the music library can be included. A second shape is another job. The cost shows first. If a job fails, the credits come back. The download has no watermark."
+        "Three shapes cover the screens a small shop actually buys. Use 9:16 for full-screen phone ads, 1:1 for the scrolling feed, and 16:9 for wide screens. Use 4:3 or 3:4 only when that placement lists them. Keep the product in the middle.",
+        "A script, captions, a spoken voice, and a song can be included. A further shape is another job. If a job fails, the credits come back."
       ],
       "img": "n:guide:fx05-guide-square",
       "alt": "Adult Black man with short hair holds a plain white sunscreen tube centered in a square feed composition."
@@ -132,36 +130,40 @@
   ],
   "faq": [
     {
-      "q": "Can I turn a longer video into a TikTok, a Reel, or a Short?",
-      "a": "Yes. Ask for 9:16 and a length of 6, 10, 15, or 30 seconds. The useful moment stays in the tall phone shape, with room for words on screen. Do not slice a wide file down yourself. That often cuts the product off."
+      "q": "Can a wide file become the tall phone version?",
+      "a": "Yes. Make the tall version as its own job, with the words placed for a phone. Watch that tall file before you retire the wide one."
     },
     {
       "q": "Can I post without showing my face?",
-      "a": "Yes. Use a presenter from the actor library, or show only the product. Anyone on screen is generated. Do not present them as a customer or a reviewer."
+      "a": "Yes. Keep the frame on the product and use a spoken line, or put an AI actor in the shot when the ad needs a person."
     },
     {
       "q": "Are the music and the spoken voice safe to use in an ad?",
-      "a": "The music library is built for ads, and the voice is generated. Before you pay to run the ad, check that the ad spot allows that song. A song that is fine on a personal post is often not allowed in an ad."
+      "a": "Yes for the tracks in the music library and for the voice this product generates. A track you brought from somewhere else is yours to clear. Before you pay to run the ad, confirm that placement allows the library track."
     },
     {
       "q": "Can the edit follow the music?",
-      "a": "Yes. Pick a song and the edits follow that rhythm. Lengths stay 6, 10, 15, or 30 seconds. Those cost 24, 40, 60, or 120 credits, in that order."
+      "a": "Yes. A zipper pull can sit on a beat you chose. If the cuts get so fast that the label blurs, slow the clip down. The product has to stay readable."
     },
     {
-      "q": "Can I start from a product page?",
-      "a": "Yes. Paste the product link. The title, the photos, and the reason to buy come in with it. You can edit the script before the job starts. A second shape is a separate job. A 10-second video is 40 credits."
+      "q": "Can I start from a product page or a short article?",
+      "a": "Yes. A page that already lists the size and the fabric can supply the spoken line. You can change that line before the job starts. A photo you took of the item is enough when the page is thin."
     },
     {
       "q": "Can I change how the words on screen look?",
-      "a": "Yes. Change how the on-screen words look, and keep them in the middle. The account name, the post text, and the buttons sit along the bottom and the right edge."
+      "a": "Yes. The words can use your shop's color, and they can sit still instead of bouncing. Set that before you spend the credits."
     },
     {
       "q": "Can the same ad run in another language?",
-      "a": "Yes. The same script can be written on screen and spoken in another language. You do not need to film again. The shape rules do not change for a new language. Use 4:3 or 3:4 only when the ad setup screen lists that shape. Downloads have no watermark."
+      "a": "Yes. A shop that sells the same kettle in Spanish needs a second file. The scene can stay. The spoken line is the part you replace."
+    },
+    {
+      "q": "Which shape should a small shop make first?",
+      "a": "9:16, when the first placement is a full phone screen. Add a square when the same offer also sits in a scrolling feed. Make the wide 16:9 file only when the screen itself is wide."
     }
   ],
   "cta_title": "Make the Right Size, Then Post It",
-  "cta_lead": "Start from a product photo or a product link, pick 9:16, 1:1, or 16:9, and download a file with no watermark.",
+  "cta_lead": "You get a file that fills the screen you are buying. Start from a product photo or a product link, and pick 9:16, 1:1, or 16:9.",
   "relatedLinks": [
     "plat-tiktok",
     "plat-instagram",

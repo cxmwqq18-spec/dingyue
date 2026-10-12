@@ -4,7 +4,7 @@
   "description": "Create launch videos and photos from one product image. Make a short preview, a reveal, and a listing photo before launch day. No studio booking or reshoot.",
   "h1": "Create Your Product Launch Video and Photos Fast",
   "eyebrow": "New product launch",
-  "lead": "Paste a product link and get a script, an actor, and a voice for a short teaser. A teaser is a preview you post before the date is public.",
+  "lead": "Turn the sample photo into a preview you can share. Add the launch date when that date is real.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
@@ -13,52 +13,52 @@
   ],
   "faq": [
     {
-      "q": "How many credits does a launch photo or video use?",
-      "a": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the cost before you start. If it fails, those credits come back."
+      "q": "How do credits work for a launch photo or video?",
+      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that cost before you confirm the job. If it fails, those credits return."
     },
     {
-      "q": "Can I change the timer on the launch video?",
-      "a": "Yes. Set the end time in the editor and move it if the day changes. You decide when the countdown stops."
+      "q": "Can my own tools request launch videos?",
+      "a": "Yes. Your tools can ask for a launch preview from a product link through the API. The file stays in your account until you share it."
+    },
+    {
+      "q": "Can an AI avatar appear in the preview?",
+      "a": "Yes. An AI avatar can stand beside the product in the preview. Leave the avatar out if you want the product alone."
+    },
+    {
+      "q": "How do I change the end time?",
+      "a": "Set it in the editor and move it if the day changes. You decide when the preview stops pointing at that moment."
+    },
+    {
+      "q": "Can I bring my own product footage into the preview?",
+      "a": "Yes. Upload the clip or the photo you already have. It can sit with the avatar and the script."
     },
     {
       "q": "Will anyone else see my unreleased product?",
       "a": "No. The upload and the result stay in your account, and they are not published until you share them."
     },
     {
-      "q": "What shape should the launch video use?",
-      "a": "A product photo is square. For a phone video on Stories, Reels, or TikTok, use tall 9:16. Use square 1:1 for a square post, wide 16:9 for a wide page, or 4:3 and 3:4 when the spot needs them. Each video is a separate run."
+      "q": "What frame should the launch video use?",
+      "a": "A product photo is square. For a phone video, use tall 9:16. Use square 1:1 for a square post, wide 16:9 for a wide page, or 4:3 and 3:4 when the placement asks for them."
     },
     {
       "q": "How long can the launch clip be?",
       "a": "Clips run 6, 10, 15, or 30 seconds. Six seconds fits a quick reveal. Use 15 or 30 seconds when the launch needs a fuller product story."
     },
     {
-      "q": "Can the countdown use an actor from the library?",
-      "a": "Yes. Pick one, describe the look and the outfit, or build one from a short clip of you. That person is generated."
-    },
-    {
-      "q": "Can I bring my own product clip into the countdown?",
-      "a": "Yes. Upload the clip or the photo you already have. It can sit next to the actor, the script, and the timer."
-    },
-    {
       "q": "Can I make launch videos for many products at once?",
-      "a": "Yes. You can run many product links at once, and each one comes back as its own countdown. Check every file before it is published."
+      "a": "Yes. Run several product links and each one comes back as its own preview. Check every file before it is published."
     },
     {
-      "q": "Can my own tools request launch videos?",
-      "a": "Yes. An API is a connection that lets your own tools ask for a countdown from a product link. The file stays in your account until you share it."
+      "q": "Can I add a voice, music, and captions?",
+      "a": "Yes. Turn captions on after you read the line, then pick a voice you would use at the counter. A music track is optional, and only one you are allowed to play."
     },
     {
-      "q": "Can I add a spoken voice, music, and captions?",
-      "a": "Yes. Choose an AI voice, set the pace, pick a track from the music library, and turn on captions (the words on screen). The same script can be spoken in another language."
-    },
-    {
-      "q": "Can I publish the short preview to TikTok or Meta?",
-      "a": "Yes. Publish in one click to TikTok, Instagram, YouTube, or Meta, or download the file. Meta here means Facebook and Instagram. The download has no AIVideosUGC watermark. Each app still has its own ad rules."
+      "q": "Can I publish the preview to TikTok, Instagram, or YouTube?",
+      "a": "Yes. Post the saved preview on the channel that is launching the product."
     },
     {
       "q": "Can I change the launch date after the video is made?",
-      "a": "Yes. Move the timer or the date line in the editor, so a new day does not mean a new scene."
+      "a": "Yes. Move the end time or the date line in the editor, so a new day does not mean a new scene."
     }
   ],
   "examples": {
@@ -126,19 +126,19 @@
       }
     ]
   },
-  "cta_lead": "Finish the actor, the script, and the timer. Add the launch date once it is confirmed.",
+  "cta_lead": "Build the preview around the sample photo. Type the launch date when it is real, and move the end time if the day changes.",
   "steps": [
     {
       "t": "Add Your Product Link",
-      "d": "Start from the product page. The photos and launch details come in, ready for the timer."
+      "d": "Open the product page so the sample photo drives the preview. You add the date in the editor when it is real."
     },
     {
       "t": "Create Your Actor",
-      "d": "Choose a ready-made actor, or describe a new one. The mouth moves with the voice you pick."
+      "d": "Pick an AI avatar who can stand beside the product. Leave the product fully visible."
     },
     {
       "t": "Set Script, Timer, and Publish",
-      "d": "Edit the script, pick a voice and a track from the music library, set the timer, then publish to TikTok, Instagram, or YouTube."
+      "d": "Set the end time in the editor and publish to your launch channel. Move that time if the day changes."
     }
   ],
   "visual": {
@@ -285,39 +285,39 @@
       }
     }
   },
-  "benefits_h2": "Reasons to Use a Product Reveal Video",
+  "benefits_h2": "What a Launch Preview Includes",
   "benefits": [
     {
-      "t": "An Actor for the Countdown",
-      "d": "Pick an actor to introduce the launch, or describe the look, the age, and the outfit. A short clip of you can become that person, with a face and a voice of their own.",
+      "t": "An Avatar for the Reveal",
+      "d": "An AI avatar can stand as the cover comes off the desk lamp, with the shade fully visible.",
       "img": "n:guide:fx01-occ-product-launch-benefit-teaser",
       "alt": "Adult hand lifts a fabric cover from a plain desk lamp in warm window light.",
       "frame": "none"
     },
     {
-      "t": "A Script That Builds the Wait",
-      "d": "Paste the product page or describe the item. AIVideosUGC writes an opening line and the reasons to care. You can edit every line of the countdown.",
+      "t": "One Reason in Your Words",
+      "d": "Shoppers get one clear reason to care about the kraft pouch before it ships. You can edit that line once it sits beside the opened box.",
       "img": "n:guide:fx01-occ-product-launch-benefit-packaging",
       "alt": "Adult hands reveal a plain kraft product pouch from an opened shipping box.",
       "frame": "none"
     },
     {
-      "t": "A Voice That Builds the Wait",
-      "d": "Choose an AI voice, then set the pace and the mood so the launch feels more urgent as the day gets closer.",
+      "t": "Pace the Voice Toward Launch",
+      "d": "A steadier voice introduces the tote and the blank card. A quicker read lands in the week you ship, and the tote stays in both.",
       "img": "n:guide:fx01-occ-product-launch-benefit-details",
       "alt": "Adult hands arrange a natural canvas tote beside a blank planning card on a sunny desk.",
       "frame": "none"
     },
     {
-      "t": "Several Versions Before You Choose",
-      "d": "Make more than one countdown and compare the opening line and the script. Look at how other shops set a deadline, then keep the opening you want.",
+      "t": "Two Openings, Then You Choose",
+      "d": "Steam the blue shirt in both openings, and keep the first line that matches the real ship week.",
       "img": "n:guide:fx01-occ-product-launch-benefit-publish",
       "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
       "frame": "none"
     }
   ],
   "steps_h2": "How to Create a Launch Teaser Video in 3 Simple Steps",
-  "steps_lead": "Paste the product link, choose an actor, then set the script, the timer, and where it goes live. Credits are what each launch photo or video uses, and the cost shows before you start.",
+  "steps_lead": "The sample photo drives the preview. You set the end time, and you can move it.",
   "relatedLinks": [
     {
       "id": "occ-holidays",
@@ -369,36 +369,36 @@
     ]
   },
   "trust": {
-    "h2": "What You Check Before the First Look Goes Out",
-    "lead": "The photo stays in your account, and the date stays yours to add.",
+    "h2": "Private Until You Share the Look",
+    "lead": "The photo stays with you, and the date is yours to add.",
     "items": [
       {
-        "t": "The Unreleased Photo Stays in Your Account",
+        "t": "Unreleased Work Stays Private",
         "d": "The upload and the result stay in your account. They are not published until you share them."
       },
       {
-        "t": "A Timer You Can Move",
-        "d": "Set the end time on the countdown and change it in the editor if launch day moves. The clock is not printed on the product."
+        "t": "An End Time You Can Move",
+        "d": "Set the end time and change it in the editor if launch day moves. The date sits in the editor, and the product picture stays as shot."
       },
       {
-        "t": "A File for Paid Ads, With No Watermark",
-        "d": "The download has no AIVideosUGC watermark. You can use it in launch posts and paid ads. Each app still has its own ad rules."
+        "t": "No Watermark on the File",
+        "d": "The download has no AIVideosUGC watermark, so launch posts and paid ads are fine. Each app still has its own rules."
       },
       {
-        "t": "The Credit Cost Before You Start",
-        "d": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
+        "t": "Know the Spend Before Launch",
+        "d": "You know the spend before you commit, so the preview stays on budget. A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
       },
       {
-        "t": "Credits Come Back If It Fails",
-        "d": "If it fails, those credits come back on their own. A finished file is not refunded just because you dislike it."
+        "t": "A Failed Job Returns the Credits",
+        "d": "If the job fails, those credits return on their own. A finished file is not refunded just because you dislike it."
       },
       {
-        "t": "An Actor Only If You Want One",
-        "d": "Pick someone from the actor library, or leave the scene on the product. If a person appears, that person is generated."
+        "t": "An Avatar or the Product Alone",
+        "d": "You can leave the preview on the product alone, or pick an AI avatar from the library. When a person appears, that person is generated."
       }
     ]
   },
-  "cta_title": "Publish the Launch Teaser Video When the Date Is Set",
+  "cta_title": "Add the Launch Date When It Is Real",
   "blockOrder": [
     "hero",
     "benefits",

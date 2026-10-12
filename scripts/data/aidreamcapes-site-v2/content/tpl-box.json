@@ -4,7 +4,7 @@
   "description": "Show every item in your kit in one square bundle photo. Use it on Amazon, Shopify, gift pages, social ads, and posts without booking another photo shoot.",
   "h1": "Product Bundle Photos That Show Every Shipped Piece",
   "eyebrow": "Product photo template",
-  "lead": "Open this kit template and add one photo of the complete kit. Download a square image, or turn it into a short kit video with a spoken voice.",
+  "lead": "Shoppers can count the set from one square. A skillet, a lid, and a spatula in one photo is what the parcel contains. A short video of the same set can carry speech afterward.",
   "secondary_keywords": [
     "what's in the box photo",
     "skincare set product photo",
@@ -12,19 +12,19 @@
     "kit and bundle listing images"
   ],
   "steps_h2": "How to Make a Bundle Photo in 3 Simple Steps",
-  "steps_lead": "Every piece in one photo, then one square file. That photo spends 24 credits. Credits are what your plan spends. Add the price after download, or make a kit video with a script.",
+  "steps_lead": "You get one square file shoppers can count, from one photo of the candle set. Add a script if you also want a kit video.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a clear photo of the full kit, with the box and paper insert. Every piece you ship should be visible."
+      "d": "The candle, the matches, and the card can each stay visible in the setup you pick."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name how the pieces sit so each one stays visible. Add a script and a spoken AI voice if you make a kit video."
+      "d": "One clear picture of the complete candle set is enough, and every piece in the parcel shows up in the square."
     },
     {
       "t": "Download and Post",
-      "d": "Download the square image and compare each object with your contents list. Add the price after download."
+      "d": "Save a square of the candle set with every piece visible. A kit video can use a script and spoken AI voice."
     }
   ],
   "maker": {
@@ -46,48 +46,52 @@
   },
   "faq": [
     {
-      "q": "What is a product bundle photo template?",
-      "a": "A ready setup for the kit you ship. Add one photo of every piece and download a square image. You can also add an AI actor, a spoken voice, and a script for a kit video."
+      "q": "What does a product bundle photo template include?",
+      "a": "It is a square for the set you ship. Put the mugs, the cocoa, and the ribbon in one photo and download that square. A short video can be added when the listing also needs speech."
     },
     {
-      "q": "How do I make the bundle photo?",
-      "a": "Upload one photo of the full kit, name how the pieces sit so each one stays visible, and download the square image. You do not need a long note."
+      "q": "How does the bundle photo come together?",
+      "a": "One photo of the full set is the input. Keep the hammer on the left and the case on the right so neither one hides, then download the square. Several kits can start from your own software through the API."
     },
     {
-      "q": "Why use this instead of a new photo shoot?",
-      "a": "It starts from the kit photo you already have. You skip lights, a camera, and a new photo setup for every new gift."
+      "q": "Why this instead of another photo shoot?",
+      "a": "The picnic-basket photo you took on the table is the one to use. A second video of the set does not mean renting lights again."
     },
     {
-      "q": "Who is this scene for?",
-      "a": "Shops, gift brands, and agencies that need a contents view for a listing, a bundle page, or an ad."
+      "q": "Who should use a kit layout?",
+      "a": "Shops, gift brands, and agencies that need a contents view for a listing, a bundle page, or an ad. Owners with one set to show fit here too."
     },
     {
-      "q": "Can I do this on the first try?",
-      "a": "Yes. If every piece is already in the photo, follow the three steps. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
+      "q": "Can I do this on a first try?",
+      "a": "Yes, when every piece is already in the photo. Follow the three steps. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
     },
     {
-      "q": "Can one photo show every item?",
-      "a": "Yes, when each piece is visible and the full set fits in the frame. The image should not add a piece that was not in the photo."
+      "q": "Which shops is this layout for?",
+      "a": "Any set you ship as one unit: skincare kits, gifts, care bundles, and similar groups. Clothing, food singles, and electronics live in the wider library. Open another template when you are not showing a set."
     },
     {
-      "q": "Can I upload my own photos and clips?",
-      "a": "Yes. Use a photo file (JPG, PNG, or WebP) of the complete kit, or a short clip you have the rights to. Keep the box and the paper insert in the photo when they ship."
+      "q": "What should I upload?",
+      "a": "A JPG, PNG, or WebP of the complete kit, or a short clip you have the rights to. Include the box and the paper insert when they ship with the order. The square keeps the pieces that were in that photo."
     },
     {
-      "q": "Where can I publish the file?",
-      "a": "The photo is square, for a product gallery. A video of the same kit can be tall (9:16), square (1:1), or wide (16:9). The 4:3 size is a bit wider than tall, and 3:4 is a bit taller than wide. Publish it to TikTok, Facebook, Instagram, or YouTube in one step."
+      "q": "Where can I publish the kit file?",
+      "a": "The photo is square, for a product gallery. A video of the same kit can be 9:16, 1:1, 16:9, 4:3, or 3:4. Use the tall file for a TikTok placement and the square for a Facebook feed. YouTube can take the wide file. Instagram or LinkedIn can take the download, or you post it yourself."
     },
     {
       "q": "What does a bundle photo cost?",
-      "a": "Credits are what each photo or video spends. Each product photo costs 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month with 200 credits. If it fails, those credits come back."
+      "a": "Each product photo spends 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the number first. If it fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Can I use the image in paid ads?",
-      "a": "Yes. Downloads have no watermark, which means no logo is stamped on the file. They can run in your own ads, pages, and posts. You remain responsible for the contents and any claims."
+      "a": "Yes. The file is clean of any overlaid mark, and a client delivery can use the same kit square."
     },
     {
-      "q": "Can I start from a product link, many kits at once, or my own software?",
-      "a": "Yes. Paste the kit product link for a script and a voice copied from one you may use. Or run many kits at once (a batch), or send them from your own software (the API). Add the current price in your editor after download. The same photo can be used for another language."
+      "q": "Why a kit template instead of an empty frame?",
+      "a": "The way the pieces are arranged is already in the layout. Your time goes to the notebook, the pen, and the clips matching the contents list."
+    },
+    {
+      "q": "When do I add the price?",
+      "a": "After download, in your own editor. The generated file does not invent the current price. If the offer changes, change that text instead of trusting an old file."
     }
   ],
   "visual": {
@@ -627,8 +631,8 @@
       }
     ]
   },
-  "related_h2": "Related Pages for Kit and Bundle Photos",
-  "related_lead": "More beauty pages for this kit shot: lighting, a Story image, a beauty video, and Amazon.",
+  "related_h2": "Pages for Kit and Bundle Photos",
+  "related_lead": "The kit square can continue into lighting, a Story image, a beauty video, and Amazon pages.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -655,6 +659,6 @@
       "label": "Amazon Product Photos"
     }
   ],
-  "cta_title": "Ready to Create Your First Kit Photo?",
-  "cta_lead": "Upload one photo of every piece you ship. Add a script or a spoken AI voice for the kit video, and see the credit cost first."
+  "cta_title": "Count the Pieces in the Square",
+  "cta_lead": "Upload one photo of every piece you ship and get the square back. The credit cost is on screen first."
 }

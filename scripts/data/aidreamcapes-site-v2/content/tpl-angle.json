@@ -4,7 +4,7 @@
   "description": "A packshot is a clean product photo on a plain background. Turn one photo of each side into front, back, top, and base views for your gallery or ads.",
   "h1": "Product Packshot Photos for Every Side You Photographed",
   "eyebrow": "Product photo template",
-  "lead": "A packshot is a clean product photo on a plain background. Add one photo of one side and download that square view, then repeat. You can also make a short video with a spoken voice.",
+  "lead": "The speaker grille you already photographed can sit on a square with the backdrop you will reuse for the front. When the ad needs speech, those photos can carry a voice later.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Side Photos",
-      "d": "Upload one photo of one side, with the whole item visible. A real photo of that side keeps ports, handles, and corners accurate."
+      "d": "The set matches because the layout keeps one shared backdrop. Name the side first: front, back, top, or the face that shows the charger port."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the view and one background, then reuse those words. Add a script and a spoken AI voice if you make an ad."
+      "d": "A picture where the whole charger is visible keeps the port you photographed. Handles and corners stay where they are in that photo."
     },
     {
       "t": "Download and Post",
-      "d": "Download the view, check the ports, and repeat for the next side. Add captions if you make a video."
+      "d": "Save the square, then move to the charger's next side. The next side is ready for a short ad with script, spoken voice, and captions."
     }
   ],
   "maker": {
@@ -45,48 +45,52 @@
   },
   "faq": [
     {
-      "q": "What is a multi-angle packshot template?",
-      "a": "A packshot is a clean product photo on a plain background. This is a ready setup for the sides you photographed. It can also add an AI actor, a spoken voice, and a script if that photo becomes a short ad. The person on screen is generated, not a real customer."
+      "q": "What does a multi-angle packshot template include?",
+      "a": "It is a square setup for sides you already shot. Add the camera dial photo and download that view. Speech can be added later if the listing also needs a short ad."
     },
     {
-      "q": "How do I make product packshot photos of every side?",
-      "a": "Upload one photo of one side, name one shared background, and download that square view. Repeat for the front, then the sides that show ports, buttons, or the base."
+      "q": "How do the side views get made?",
+      "a": "You get one square per side you upload. Start with the headphone earcup, keep the backdrop, and download that square before you do the front. A product link can supply words for a short ad, and your software can start the next side through the API."
     },
     {
-      "q": "Can one photo show a port that was hidden?",
-      "a": "No. Photograph that side and upload it. A made-up view cannot be trusted to show a connector, latch, or button that was not in the photo."
+      "q": "Why use this instead of a new photo day?",
+      "a": "The power-bank photo from last month is enough for this listing. A second opening line for that ad can be cut without calling a crew back in."
     },
     {
-      "q": "Who is this scene for?",
-      "a": "Electronics shops, listing managers, and agencies that need front, back, and detail views, plus a spoken clip when the ad needs one. A person on screen is an AI actor."
+      "q": "Who is this side-view layout for?",
+      "a": "Electronics shops, listing managers, and agencies that need front, back, and detail views, plus a spoken clip when the ad needs one. A person on screen is an AI avatar."
     },
     {
-      "q": "Can I do this on the first try?",
-      "a": "Yes. Upload a clear photo of each side. You do not need a spinning photo stand. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
+      "q": "Can I do this with no studio practice?",
+      "a": "Yes. Upload a clear photo of each side. You do not need a turntable. If you also make a video, set captions, a song, and an AI voice in the editor on this site."
     },
     {
-      "q": "Which shops can use these views?",
-      "a": "Any product with sides shoppers ask about, including chargers, audio, and cameras. Open another template when the product is not electronics."
+      "q": "Which products belong on this page?",
+      "a": "Audio gear and other hard goods with sides to show. Clothing, food, and beauty live in the wider library. Open another template when the product is not a hard good with sides to show."
     },
     {
-      "q": "Which files can I upload?",
-      "a": "Use a photo file (JPG, PNG, or WebP) that shows the whole product. You can also upload a short clip you have the rights to, when the ad needs motion you already filmed."
+      "q": "Which files can I bring?",
+      "a": "Bring a JPG, PNG, or WebP that shows the whole product. A short clip you have the rights to can come in when the ad needs motion you already filmed."
     },
     {
-      "q": "Where can I publish the file?",
-      "a": "Each photo you download is square. A video from the same photos can be tall (9:16), square (1:1), or wide (16:9). The 4:3 size is a bit wider than tall, and 3:4 is a bit taller than wide. Publish it to TikTok, Facebook, Instagram, or YouTube in one step."
+      "q": "Where can the file be published?",
+      "a": "Each photo is square. A video from the same router photos can be 9:16, 1:1, 16:9, 4:3, or 3:4. A tall file fits a TikTok placement. A square fits a Facebook feed. YouTube can take the wide file, and Instagram or LinkedIn can take the download. You can also post it yourself."
     },
     {
       "q": "What does each angle photo cost?",
-      "a": "Credits are what each photo or video spends. Each product photo costs 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Starter is $24.50 a month with 200 credits. If it fails, those credits come back."
+      "a": "Each product photo spends 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the number first. If it fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Can I run these files in ads?",
-      "a": "Yes. Downloads have no watermark, which means no logo is stamped on the file. You can use them in your listings and your own paid ads. Compare the buttons and ports with your photo before you post."
+      "a": "Yes. Downloads have nothing stamped on them, so you can use them in listings, paid ads, and work you deliver for a client."
     },
     {
-      "q": "Can I start from a product link, many at once, or my own software?",
-      "a": "Yes. Paste your product page link for a script, an AI actor, and a voice copied from one you may use. You can also run many products at once (a batch), or send them from your own software (the API). The photos still have to show the sides you claim."
+      "q": "Why a template instead of a blank frame?",
+      "a": "The square crop and the shared backdrop are already chosen. Your job is the side you photographed, not building a frame from a blank file."
+    },
+    {
+      "q": "Can one photo show a port that was hidden?",
+      "a": "No. Photograph that side and upload it. A made-up view is not a safe way to show a connector, latch, or button that was not in the photo."
     }
   ],
   "visual": {
@@ -550,7 +554,7 @@
     }
   },
   "steps_h2": "How to Make Side Photos in 3 Simple Steps",
-  "steps_lead": "Each time you get one square photo, and it spends 24 credits. Credits are what your plan spends. Keep the same background on every side.",
+  "steps_lead": "Each pass gives you one square photo of that side, with the same backdrop on every upload. A charger is the walk-through below.",
   "blockOrder": [
     "hero",
     "picker",
@@ -625,8 +629,8 @@
       }
     ]
   },
-  "related_h2": "Amazon Gallery Images and Electronics Videos",
-  "related_lead": "Use these with the side-view photos: product photos, electronics videos, and Amazon listing images.",
+  "related_h2": "Pages for Side Views and Electronics",
+  "related_lead": "Side views can sit next to product photos, electronics videos, and Amazon listing images from these pages.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -653,6 +657,6 @@
       "label": "Amazon Product Photos"
     }
   ],
-  "cta_title": "Ready to Make Your First Side Photo?",
-  "cta_lead": "Upload one photo of one side. Add a spoken voice or captions if the ad needs them, and check the credit cost before you start."
+  "cta_title": "Start With the Side You Shot",
+  "cta_lead": "Upload one photo of one side and get that square back. Add a spoken voice or captions if the ad needs them. The credit cost is on screen first."
 }

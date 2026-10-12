@@ -4,7 +4,7 @@
   "description": "AI cinematic product video from one photo: moody light and a slow camera move. Use wide 16:9 on the web or tall 9:16 on a phone, in 6, 10, 15 or 30 seconds.",
   "h1": "Cinematic Product Video From One Still Photo",
   "eyebrow": "Film-style video template",
-  "lead": "Pick a moody opening and add one photo. The product gets a slow camera move, a voice, and background music, with no film crew.",
+  "lead": "A product can take a quiet first second before anyone names it. Pick a slow, dark open from the wall and use one photo with a clean outline.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use a sharp photo that shows the full product outline. A clear edge gives the camera move something to follow."
+      "d": "Use the catalog photo where the earcup edge reads against a plain ground. The dark open you picked is the slow move around that shape."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the surface, one light, and one slow move. Then pick a size and 6, 10, 15, or 30 seconds."
+      "d": "Name one thing the open can actually show, the hinge or the matte shell. That single fact is the line, and it matches the picture."
     },
     {
       "t": "Download and Post",
-      "d": "Add a voice, captions, and background music, then download. A logo on the photo stays. No new logo is added."
+      "d": "Put a 16:9 file on the product page and a 9:16 file on a Short. A 10-second clip costs 40 credits, listed first."
     }
   ],
   "maker": {
@@ -45,48 +45,48 @@
   },
   "faq": [
     {
-      "q": "What is a cinematic product video template?",
-      "a": "A ready scene for one product photo, with a light you choose and a slow camera move. You add the photo, a voice, captions, and background music. The clip opens like a short film."
+      "q": "What is a cinematic ad template?",
+      "a": "A cinematic ad template is a ready-made open with low light, a slow move, and room for one calm line. The product arrives before the sales line."
     },
     {
-      "q": "How do I make the film?",
-      "a": "Upload a sharp photo, or paste a product link. Name the surface, one light, and one camera move. Pick a size and a length. Then add sound in the editor and download."
+      "q": "How does a reveal template become a video?",
+      "a": "Use one clean product photo, set the opening line, and export a wide file for the product page. The product is recognizable before the sentence lands."
     },
     {
-      "q": "Why start from a photo instead of a film crew?",
-      "a": "The set, the light, and the camera move are made from the photo you already have. You skip the crew, the rental, and a new shoot."
+      "q": "Why use this instead of hiring a film crew?",
+      "a": "You skip crews who are booked weeks ahead, and you skip the rental. One clean photo is enough, so a launch that moved up can still have its first second."
     },
     {
-      "q": "Who is this scene for?",
-      "a": "Shops that sell a product with a clear shape or finish, such as speakers, bottles, lamps, watches, or sunglasses. Use it when you want a polished opening for a page or an ad."
+      "q": "Who is a reveal template for?",
+      "a": "Brands that want the first second to feel considered. A small shop posting its own launch is the usual case, and a director on staff is not required."
     },
     {
-      "q": "Can I do this on the first try?",
-      "a": "Start with a sharp photo that shows the whole product. Name one move, such as moving closer or sliding along the side. Check the edge before you post."
+      "q": "Can a beginner make a moody open?",
+      "a": "Yes. Film school is not a requirement. Pick the dark open. One catalog photo is the whole shot."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "A sharp photo with the full product in the frame and clear edges, so it stands out from the background. A public product link works when that page already shows the photo."
+      "q": "Which products fit a cinematic open?",
+      "a": "A speaker, a lamp, or a bottle with a clean outline can take a slow move. A busy flat lay, with the product as one item among ten, is a weak start."
     },
     {
-      "q": "Which size and length can I pick?",
-      "a": "Each video uses one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. Make a wide 16:9 file for a page, and a tall 9:16 file for a phone post. Those are two files from the same photo. Lengths are 6, 10, 15, or 30 seconds. You see the credit cost before it starts."
+      "q": "Can I use my catalog photo, a clip, and a logo?",
+      "a": "Yes. A logo that is already in the photo stays in the photo. If you want motion the still does not have, a clip from your own archive can supply it."
     },
     {
-      "q": "What does the clip cost?",
-      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. If the clip fails, those credits come back. Plans start at $24.50 a month."
+      "q": "Which placements and sizes fit a reveal?",
+      "a": "The product page, a Short, a feed post, and a banner each have a frame. The product page can take 16:9. A Short wants 9:16. A feed post can be 1:1, and 4:3 or 3:4 covers a banner. Lengths are 6, 10, 15, or 30 seconds. LinkedIn is comfortable with the wide file."
     },
     {
-      "q": "Does the clip include a voice, music, or my logo?",
-      "a": "You can add an AI voice, captions, and a track from the music library in the built-in editor. A logo already printed on the product photo stays part of that photo. The clip does not add a new logo."
+      "q": "Do I need a paid plan to use a template?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
     },
     {
-      "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no AIVideosUGC watermark, so our name is not stamped on the file. It can run on your site and in paid ads. You can also send it to TikTok, or to Meta (Facebook and Instagram), from your account. Check shiny shots for glare before you post. The clip is your ad, not a customer quote."
+      "q": "Can I run the reveal in ads and client work?",
+      "a": "Yes. Run the open as an ad, and deliver the same file to a client for their product page. The file is not watermarked."
     },
     {
-      "q": "Can I make several products, or use the API?",
-      "a": "Yes. Reuse the same light for a set of photos. That is a batch. You can switch the spoken line to another language. The API lets your own software send the photos. Each one shows its credit cost first."
+      "q": "What does a cinematic template already decide?",
+      "a": "The low light and the slow push are already decided. You choose which finish is in the photo, and what the one sentence says."
     }
   ],
   "visual": {
@@ -555,7 +555,7 @@
     }
   },
   "steps_h2": "How to Make a Product Reveal in 3 Simple Steps",
-  "steps_lead": "One sharp photo, a short line about light and movement, then a file you can post.",
+  "steps_lead": "The earcup is on screen before the sentence, so shoppers see the shape before they hear the line.",
   "relatedLinks": [
     {
       "id": "image-to-video",
@@ -659,102 +659,102 @@
       }
     ]
   },
-  "related_h2": "Pages for a Cinematic Product Ad",
-  "related_lead": "Image to video, electronics scenes, and a Facebook page for the same kind of opening.",
-  "cta_title": "Ready for a Slow Reveal?",
-  "cta_lead": "Upload one product photo. Add a voice or background music if you want them. You see the credit cost before you start.",
+  "related_h2": "Pages Around a Reveal Ad",
+  "related_lead": "Image to video, clean product photos, a Black Friday ad, a feature highlight, Facebook ads, and electronics videos.",
+  "cta_title": "Ready for a Moody Open",
+  "cta_lead": "Give the product a quiet open you can post. Add one product photo.",
   "definition": {
-    "title": "What Is a Cinematic Product Video?",
+    "title": "What Is a Cinematic Ad Template?",
     "paras": [
-      "A cinematic product video gives one photo a light you choose and a slow camera move, so the product opens like a short film.",
-      "You can add a calm voice, captions, and background music in the editor."
+      "A cinematic template is a slow open on one product photo, with the light kept low, so the product arrives before the sales line. The shape stays fully visible before the voice starts.",
+      "You choose the sentence, and whether a music track sits under the room. A wide file goes to the product page. A tall file goes to a phone feed."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Use a Moody Product Video",
-    "lead": "One sharp photo replaces the crew, the rental, and a new shoot.",
+    "h2": "Why Sellers Start From a Template",
+    "lead": "A launch that moved up can still have its open, without waiting on a rented room. The scene already has a light and a move.",
     "items": [
       {
-        "t": "No Crew for the First Look",
-        "d": "The set, the light, and the camera move come from the photo you already have.",
-        "icon": "Clapperboard"
+        "t": "Faster Than Booking a Creator",
+        "d": "The move runs from one photo you already have, so you skip the crew and the rental.",
+        "icon": "Clock"
       },
       {
-        "t": "The Edge Stays Readable",
-        "d": "A clear outline gives the slow move something to follow, so the finish stays easy to see.",
-        "icon": "Eye"
-      },
-      {
-        "t": "Sound Without Another App",
-        "d": "Add a voice, captions, and background music in the same editor, then download.",
-        "icon": "Music"
-      },
-      {
-        "t": "Wide Page, Then a Phone Size",
-        "d": "Make the wide cut for the product page, then make a tall 9:16 cut from the same photo for a phone post.",
-        "icon": "Smartphone"
-      },
-      {
-        "t": "A Dark Scene You Can Check",
-        "d": "Look at shiny shots before you post, so a bright spot does not hide the edge.",
-        "icon": "Sun"
-      },
-      {
-        "t": "Credits, Not a Rental Day",
-        "d": "A 15-second clip uses 60 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
+        "t": "Credits Instead of a Shoot Fee",
+        "d": "Each reveal spends credits on Starter at $24.50 a month, Pro at $35, or Premium at $63. Budget that would have gone to a rental can stay on distribution.",
         "icon": "Coins"
+      },
+      {
+        "t": "More Than One Cut to Test",
+        "d": "Cut a wide version and a tall version from the same photo, and try two lines. Spend on the open that holds attention.",
+        "icon": "Layers"
+      },
+      {
+        "t": "Rewrite the Line, Render Again",
+        "d": "Soften the line or rename the finish in the script and render again. A wording fix does not restart a crew call.",
+        "icon": "PenLine"
+      },
+      {
+        "t": "No Hold on a Creator Calendar",
+        "d": "The open is ready when the product photo is, even if the launch moved up. You are not waiting on a booked crew.",
+        "icon": "Calendar"
+      },
+      {
+        "t": "Light and Move Are Set",
+        "d": "You decide the finish and the offer, because the slow push and the low light already belong to the scene.",
+        "icon": "LayoutGrid"
       }
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "Features",
-      "h2": "Features for a Moody Product Video",
-      "lead": "Light, movement, a voice, and a music track can all come from the one photo you upload.",
+      "eyebrow": "Inside the open",
+      "h2": "Tools Around a Reveal Ad",
+      "lead": "A calm line and a music bed can ride under the dark open, so the reveal is finished from one photo.",
       "items": [
         {
-          "t": "A Calm Voice on the Reveal",
-          "d": "Add an AI voice that names the product while the camera moves."
+          "t": "A Calm Voice or a Clone",
+          "d": "A stock voice, or a clone from a short sample, can carry the open."
         },
         {
           "t": "Captions on the Slow Move",
-          "d": "Put a short line on screen in the built-in editor, then download the file."
+          "d": "A short line can sit on the move, and you can reposition it in the editor before export."
         },
         {
           "t": "Several Products, One Light",
-          "d": "Reuse one dark setup for the products you sell. Each clip shows its credit cost before it starts."
+          "d": "The same dark setup can cover the products you sell, so one light serves the whole line."
         },
         {
-          "t": "Start From the Product Link",
-          "d": "Paste a public product page when the photo is already online. The camera move uses the product shown there."
+          "t": "Open From a Product Link",
+          "d": "The open can start from a product photo that is already online. Paste that page and the camera move uses the product shown there."
         },
         {
           "t": "A Script for the Opening",
-          "d": "Ask for a short line about the finish, then edit the words before the voice reads them."
+          "d": "The AI video agent can draft a line about the finish, and you can edit it before the voice reads."
         },
         {
-          "t": "A Presenter From the Actor Library",
-          "d": "If a person should appear, pick an AI actor from the actor library."
+          "t": "An AI Avatar in the Open",
+          "d": "An AI avatar can appear in the open when a person should be on camera. Add B-roll of the product alone when the object should take the frame."
         },
         {
-          "t": "A Track From the Music Library",
-          "d": "Add background music under the quiet room sound, or keep only that room sound."
+          "t": "A Track Under the Room",
+          "d": "Music from the library can sit under the quiet room, or the room can be the only sound."
         },
         {
-          "t": "Finish It in the Built-In Editor",
-          "d": "Trim the move, place the caption, and set the voice without a second app."
+          "t": "Finish in the Built-In Editor",
+          "d": "You can trim the push so the product is named once it fills the frame, with the caption sitting beside it."
         },
         {
-          "t": "The Same Light in Another Language",
-          "d": "Keep the shot and switch the spoken line and captions to the language you sell in."
+          "t": "Same Light, Another Language",
+          "d": "The same shot can run in the language you sell in, with the spoken line and the captions switched."
         },
         {
-          "t": "Post to TikTok or Meta",
-          "d": "Send the finished file to TikTok, or to Meta (Facebook and Instagram), from your account. Or download it for the product page."
+          "t": "Send the Open Out",
+          "d": "The open can go to YouTube, or to Facebook and Instagram, from the account you connect. Downloading and posting yourself is there too."
         },
         {
           "t": "An API for a Product Line",
-          "d": "The API lets your own software send photos when a product line needs the same opening. Each one still shows its credit cost."
+          "d": "Shop software can send photos through the API when a line needs the same open."
         }
       ]
     }

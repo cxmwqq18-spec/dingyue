@@ -4,7 +4,7 @@
   "description": "Turn one electronics photo into an unboxing, a setup, or a desk scene. Download watermark-free clips for listings, social feeds, and paid ads.",
   "h1": "AI Product Videos for Electronics, From the Box to Daily Use",
   "eyebrow": "Tech & Electronics",
-  "lead": "Show the gadget in a hand. A product link or one clear photo can become an unboxing, a setup, or a desk scene, with a spoken voice and captions.",
+  "lead": "A new charger can get its own demo before anyone replies to a casting email. Upload a clear photo of the brick and let an AI avatar point at the ports.",
   "card": "Unboxings, setups, and daily-use scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Do I need a shoot before I can make an electronics clip?",
-      "a": "No. Upload one photo or paste a product link, name the action, and download the clip. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A failed job returns its credits."
+      "q": "Do I need a shoot before I can make an electronics ad?",
+      "a": "No. Upload one photo or paste a product link, name the action, and download the ad. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A failed job returns its credits."
     },
     {
       "q": "Do I need video editing experience?",
-      "a": "No. Voice and captions come with the clip, and you can fix them in the editor on the same page. Prices, specs, and music you add stay where you can check them."
+      "a": "No. A spoken voice and captions come with the clip, and you can fix them in the editor on this page."
     },
     {
       "q": "Can I make several versions of the same gadget?",
-      "a": "Yes. One photo can become an unboxing, a setup, and a travel scene. Check the shape and the ports on every version before you try them as ads."
+      "a": "Yes. One photo can become an unboxing, a setup, and a travel scene."
     },
     {
       "q": "Which electronics can I show from one photo?",
-      "a": "Speakers, headphones, chargers, stands, phone cases, and other gadgets with a clear shape. Use that product's own photo, and name one action, such as a button press or an unboxing."
+      "a": "Stands, phone cases, docks, and other gadgets with a clear shape. Use that product's own photo, and name one action, such as a button press or an unboxing."
     },
     {
-      "q": "Can I make an electronics clip without hiring a creator?",
-      "a": "Yes. Upload one product photo or paste a link, pick a made-up presenter, and pay the credits shown before the job. Post the clip as an ad, not as a customer's review."
+      "q": "Can I make an electronics ad without hiring a creator?",
+      "a": "Yes. Upload one product photo or paste a link, pick an AI avatar, and pay the credits shown before the job. Post the clip as an ad."
     },
     {
       "q": "Will the clip state my battery life or wattage?",
-      "a": "Do not trust the picture for the numbers. Add battery life, watts, and which devices it fits in the listing or your editor, where you can check them."
+      "a": "Do not trust the picture for the numbers. Add battery life, watts, and which devices it fits in the listing or the editor, where you can check them."
     },
     {
       "q": "Can I run the clips as paid gadget ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. Do not overstate how well the gadget works."
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. Do not overstate how the gadget performs."
     },
     {
       "q": "What video shape should I pick?",
-      "a": "Video shapes are a tall phone video (9:16), a square (1:1), a wide video (16:9), 4:3, or 3:4. 4:3 is a bit wider than a square. 3:4 is a bit taller than a square. A tall 9:16 fits a phone feed. A wide 16:9 fits a product page."
+      "a": "Use 9:16 for a phone feed, 1:1 for a square, 16:9 for a wide product page, and 4:3 or 3:4 when the page asks for them."
     },
     {
-      "q": "Can the gadget clip include a voice and captions?",
-      "a": "Yes. Pick a made-up presenter and the clip can include a spoken line and captions. The numbers still belong in your listing, where you can check them."
+      "q": "Can the gadget ad include a voice and captions?",
+      "a": "Yes. Pick an AI avatar and the clip can include a spoken line and captions."
     }
   ],
-  "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
-  "cta_lead": "Paste a product link or upload a clear photo, pick a presenter, and review the credit cost before the job starts.",
+  "templates_lead": "Pick an unboxing, a desk setup, or a travel scene that keeps the ports and the shape clear.",
+  "cta_lead": "A gadget demo can start from a product link or one clear photo.",
   "steps_h2": "An Electronics Product Demo Video in Three Steps",
-  "steps_lead": "Add the real specs after you download. Three steps: a link or a photo, a made-up person, then a spoken voice and captions.",
+  "steps_lead": "You download an ad you can post. Add the device, then choose who holds it.",
   "steps": [
     {
       "t": "Add the Gadget Photo or Link",
-      "d": "Paste a product link, or use a daylight photo of the whole unit. Keep ports visible when they matter."
+      "d": "Lay the earbuds on a plain desk and photograph them from above. That picture is the product the demo is about."
     },
     {
       "t": "Pick a Made-Up Person",
-      "d": "The actor library is a list of made-up people. Pick one for the demo."
+      "d": "Pick an AI avatar unpacking a power bank at a kitchen table. You can change that face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice, Then Post",
-      "d": "A spoken voice and captions come in the video shape you picked. Post to TikTok or Meta (Facebook and Instagram) after the ports match."
+      "d": "The file is ready to download, and it goes on the channel you sell on."
     }
   ],
   "visual": {
@@ -105,7 +105,7 @@
       }
     }
   },
-  "cta_title": "Make a Gadget Demo From One Photo",
+  "cta_title": "Run a Gadget Ad This Week",
   "relatedLinks": [
     {
       "id": "tpl-product-feature-callout-video",
@@ -133,61 +133,58 @@
     }
   ],
   "reasons": {
-    "h2": "An AI Unboxing Video for Gadgets, Without the Wait",
-    "lead": "You do not have to wait on a creator to show a speaker, a charger, or a case. Start from the product photo or the product link.",
+    "h2": "A Device Demo That Does Not Start With Outreach",
+    "lead": "Device teams use them when the calendar and the creator invoices get in the way.",
     "items": [
       {
-        "t": "No Shoot to Book",
-        "d": "Upload one photo or paste the product link, name the action, and download a clip. There is no shoot date to book.",
-        "img": "n:guide:fx31-ind-electronics-benefit-speaker",
-        "alt": "Adult hand setting up a compact matte-graphite rectangular speaker on a wooden desk."
+        "t": "Save the Hunt",
+        "d": "A compact speaker can be the demo. You film nothing: the product photo is the source, and the credit cost is on screen before you start.",
+        "img": "n:guide:fx31-ind-electronics-benefit-speaker"
       },
       {
-        "t": "Pay With Credits, Not a Crew",
-        "d": "Run one gadget through an unboxing, a setup, and a travel scene. A batch is several jobs from one photo. You pay with credits. Credits are what your plan spends on each job, and the number shows before each length.",
-        "img": "n:guide:fx31-ind-electronics-benefit-cable",
-        "alt": "Adult hand connecting a plain braided cable to a compact matte-black charging hub."
+        "t": "Credits, Not Day Rates",
+        "d": "The gadget ad spends credits on your plan, so more of the budget can stay on reaching buyers.",
+        "img": "n:guide:fx31-ind-electronics-benefit-cable"
       },
       {
-        "t": "You Choose the Words",
-        "d": "Pick the person, the desk, the tone, and a short script. Battery life, watts, and which devices it fits stay in your listing, not in the picture.",
-        "img": "n:guide:fx31-ind-electronics-benefit-ports",
-        "alt": "Adult fingers holding a compact matte-graphite gadget to show its ports and controls."
+        "t": "You Set Every Detail",
+        "d": "You decide the desk a keyboard sits on, and you write the one line about the dial.",
+        "img": "n:guide:fx31-ind-electronics-benefit-ports"
       }
     ]
   },
   "platforms": {
-    "h2": "Tech Product Video Ads on Every Channel",
-    "lead": "Pick the video shape that channel already uses, then publish the clip to TikTok or Meta (Facebook and Instagram). A tall clip fits a phone feed, and a wide shape fits a product page.",
+    "h2": "Where a Device Demo Can Run",
+    "lead": "One device can feed a phone feed and a product page. Match the shape to the place.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
-        "d": "A tall 9:16 unboxing or button press for a gadget ad on the TikTok home feed.",
+        "t": "TikTok Unboxings",
+        "d": "A tall phone video of an unboxing or a button press for a gadget ad in the TikTok feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram Ads",
-        "d": "A square photo, or a tall setup video, for the profile grid and for Instagram Stories.",
+        "t": "Instagram Setup Clips",
+        "d": "A square still, or a tall setup video, for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook Ad Generator",
-        "d": "A photo for the feed, with space to add the spec line after you download.",
+        "t": "Facebook Feed Ads",
+        "d": "A feed image with room to add the spec line after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Ads",
-        "d": "A short vertical demo, one action from the first second.",
+        "t": "YouTube Shorts Demos",
+        "d": "A short vertical demo that opens on one action.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Product Photos",
-        "d": "A clean main image of the gadget, with extra views in the gallery.",
+        "t": "Amazon Listing Photos",
+        "d": "A clean photo of the gadget, with extra views in the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
-        "d": "Matching product imagery for the device page and the collection.",
+        "t": "Shopify Device Photos",
+        "d": "Matching images for the device page and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -258,7 +255,7 @@
       }
     ]
   },
-  "related_h2": "Feature Clips, Plain Product Photos, and Product Videos",
+  "related_h2": "Demos, Plain Photos, and Product Videos",
   "blockOrder": [
     "hero",
     "strip",
@@ -272,33 +269,33 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Included in the job",
-      "h2": "Features Gadget Sellers Get With the Clip",
-      "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
+      "eyebrow": "With the clip",
+      "h2": "What a Gadget Ad Can Include",
+      "lead": "A spoken line can ride with the clip, so the demo is ready to post.",
       "items": [
         {
-          "t": "A Link Becomes the Demo",
-          "d": "Paste the product page. The job uses the gadget on that page and starts an unboxing, a setup, or a desk scene."
+          "t": "A Product Link Opens the Demo",
+          "d": "A product page is enough to start an unboxing, a setup, or a desk scene."
         },
         {
-          "t": "A Presenter From the Library",
-          "d": "Choose a made-up presenter for the demo."
+          "t": "An Avatar From the Library",
+          "d": "An AI avatar can sit at the desk and hold the webcam. Choose a face that fits who buys this kind of camera."
         },
         {
           "t": "Voice and Captions Included",
-          "d": "A spoken line and on-screen captions come with the clip. Battery, wattage, and compatibility stay in the listing."
+          "d": "Captions can spell the product name while the sound is off."
         },
         {
           "t": "A Script for One Action",
-          "d": "Ask for a short script about a button press or an unboxing. Change a word in the editor before you post."
+          "d": "You get a short script about a button press or an unboxing, and you can change a word in the editor."
         },
         {
-          "t": "Edit on the Same Page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark."
+          "t": "Edit on This Page",
+          "d": "You can trim the clip and fix a caption here, then download a file with no watermark."
         },
         {
           "t": "Another Language, Then Publish",
-          "d": "Make the same demo again in another language, then publish the file to TikTok or Meta."
+          "d": "The same demo can run again in another language on TikTok, Instagram, or Facebook."
         }
       ]
     }

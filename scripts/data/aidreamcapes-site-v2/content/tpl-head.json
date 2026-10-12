@@ -4,7 +4,7 @@
   "description": "Make matching team headshots from each teammate's own photo, with one shared light, face framing, and background. AI portraits for About and team pages.",
   "h1": "AI Team Headshots That Match Across the Page",
   "eyebrow": "Team photo template",
-  "lead": "A team page looks unfinished when portraits are framed and lit differently. Upload the approved photos together and get matching AI team headshots.",
+  "lead": "A small team can look like one staff on the about page when the backdrop and the crop match. Use a portrait treatment from the wall on photos each person has already approved.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Each Team Photo",
-      "d": "Upload a clear photo of the face and shoulders, in even light, with nothing on the face. The person must agree before you upload."
+      "d": "Each person at the bike shop sends an agreed face-and-shoulders photo. Shared backdrop and crop keep the intro consistent."
     },
     {
       "t": "Pick One Background",
-      "d": "Set one background, one crop (how tight the face is), one light, and one clothes note. Reuse it. Keep each person's own face."
+      "d": "Say who wrenches and who fits bikes, in a single sentence. That line is the intro a voice can read."
     },
     {
       "t": "Download and Post",
-      "d": "Download the set for the page or a slide deck. Keep names in text beside each portrait."
+      "d": "Save the squares for the about page. The spoken intro is separate: 1:1 if it lives on LinkedIn, 9:16 if it is a Story."
     }
   ],
   "maker": {
@@ -45,51 +45,51 @@
   },
   "faq": [
     {
-      "q": "What is an AI team headshot?",
-      "a": "A square portrait from an approved photo, with a background, framing, and light you can reuse for every teammate. Framing means how the face is cut. Each person keeps their own features. It is not an ID card or a passport photo."
+      "q": "What is a team portrait template?",
+      "a": "A team portrait template is one portrait treatment for a whole staff page, plus a short intro if you want a voice. Every face starts from a photo that person approved."
     },
     {
-      "q": "What should each teammate upload?",
-      "a": "A recent photo of the face and shoulders, in even light, with no hat, sunglasses, or hand covering the face. Use a photo that person has approved for the company to upload."
+      "q": "How does a team template become portraits and a video?",
+      "a": "Add each approved photo, set the intro sentence, and save squares for the about page. The row looks like one room when those photos share the treatment."
     },
     {
-      "q": "How can the team page feel consistent?",
-      "a": "Share one background, one framing, and one light across every portrait, while each person keeps their own features. Write that setup once and reuse it, including for the whole set at once."
+      "q": "Why use this instead of hiring a photographer or a creator?",
+      "a": "You skip the search for one date the whole staff can attend. A new hire can join the row when they send an approved photo."
     },
     {
-      "q": "Can I put names inside the headshot?",
-      "a": "Add names and job titles as text beside each image. Keeping them out of the portrait makes a role change a text edit, not a new photo. A caption belongs on a short intro clip, not inside the photo."
+      "q": "Who is a team template for?",
+      "a": "Small teams that should look like one staff on the site. A four-person cafe with no office manager is a usual case."
     },
     {
-      "q": "Will this match a specific person exactly?",
-      "a": "No. It follows the features visible in the uploaded photo. It is still a made portrait, not a camera photo, and not an ID card. Have that person review it before you publish."
+      "q": "Can a beginner make the set?",
+      "a": "Yes. The person who updates the about page can do this on a first try. They choose the treatment. Each approved photo supplies that face."
     },
     {
-      "q": "What does a team headshot cost?",
-      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed photo returns those credits. The download has no watermark, so our name is not stamped on the file. You can use it in your own ads, pages, and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
+      "q": "Which teams and industries fit?",
+      "a": "A clinic front desk and a software shop both fit when the page should read as one team."
     },
     {
-      "q": "Do I need permission from each teammate?",
-      "a": "Yes. Upload only a photo the person agreed you can use for this business purpose, and let them approve the final portrait."
+      "q": "Who has to agree before a face goes into the row?",
+      "a": "Each person agrees first. The result is not a passport or any other identity document. Put the shop logo on the intro if you want it there. A clip filmed at work can run under that intro. Faces still come only from approved photos."
     },
     {
-      "q": "Can a new hire match an existing set?",
-      "a": "Yes. Reuse the same background, framing, and light on the new hire's approved photo. You do not reshoot the rest of the team."
+      "q": "Which placements and sizes fit the intro?",
+      "a": "Square portraits stay on the site, and the intro fits LinkedIn, a Story, or an embed. LinkedIn is comfortable at 1:1, a Story wants 9:16, and an embed can be 16:9. 4:3 and 3:4 cover a banner. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "Can I use the portraits in a pitch deck?",
-      "a": "Yes. The square file can sit on an About page, a profile, or a slide. Keep contact details as text next to the image."
+      "q": "Do I need a paid plan to use a template?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
     },
     {
-      "q": "Can a short intro have a voice, captions, and music?",
-      "a": "Yes. Keep the portraits as photos, and add an AI voice, captions, and background music on a short intro clip beside them. You can post that clip to TikTok, or to Meta (Facebook and Instagram), or download it. The portrait is not a customer quote."
+      "q": "Can I use the portraits and intro in ads and client work?",
+      "a": "Yes, if each person agreed to that use. The squares can go on the site and in a deck, and the intro can run as an ad for the shop. The download has no watermark."
     },
     {
-      "q": "Can my own software send the team photos?",
-      "a": "Yes. The API lets your own software send approved photos when a staff page needs the same framing. Each photo still needs that person's permission, and each one shows its credit cost first."
+      "q": "Why start from a template instead of matching photos by hand?",
+      "a": "The treatment locks one backdrop and one crop, so a new hire can sit beside the owner without a layout you build by hand."
     }
   ],
-  "cta_lead": "Upload an approved photo for each person. You see the credit cost, from your monthly plan, before it starts.",
+  "cta_lead": "Match the next hire to the rest of the team. Add an approved photo for each person. The credit cost shows before the run.",
   "visual": {
     "strip": [
       "n:guide:tpl-head-round4-02",
@@ -555,7 +555,7 @@
     }
   },
   "steps_h2": "How to Make Team Headshots in 3 Simple Steps",
-  "steps_lead": "Upload each approved photo, reuse one background, then download a matching set.",
+  "steps_lead": "One backdrop holds the whole row, so the about page reads as one team instead of photos from different rooms.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -648,9 +648,9 @@
       }
     ]
   },
-  "related_h2": "Photo Tools for Backgrounds and Portraits",
-  "related_lead": "Product photo tools for a clean background, a model photo, and a white background.",
-  "cta_title": "Ready for Matching Team Headshots?",
+  "related_h2": "Photo Tools Beside the Team Row",
+  "related_lead": "A product photo tool, a background change, model photos, ad images, lifestyle photos, and a white background.",
+  "cta_title": "Ready to Match the Next Hire",
   "blockOrder": [
     "hero",
     "picker",
@@ -663,97 +663,97 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is an AI Team Headshot?",
+    "title": "What Is a Team Portrait Template?",
     "paras": [
-      "An AI team headshot is a square portrait made from an approved photo of that person. Everyone uses one background, one framing (how the face is cut), and one light.",
-      "Names and roles stay as text beside the image. A short intro clip beside the row can have a voice, captions, and background music. The portrait is not an ID card or a passport photo."
+      "A team portrait template gives a whole staff page one backdrop, one crop, and one light, so everyone looks like they stood in the same room. Each portrait starts from a photo that person approved.",
+      "The portraits are ready for a site or a deck. Names stay in text beside the image, so a new job title does not force a new photo."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Use Matching Team Headshots",
-    "lead": "One background and one framing, so the About page looks like one team.",
+    "h2": "Why Sellers Start From a Template",
+    "lead": "A new hire can be on the about page before the next busy weekend, without a portrait day next month. One treatment is how a small shop does that.",
     "items": [
       {
-        "t": "One Look Across the Row",
-        "d": "Share one background, one framing, and one light. Each person keeps the features in their own photo.",
-        "icon": "Users"
+        "t": "Faster Than Booking a Creator",
+        "d": "The treatment runs on photos the team already approved, so the page does not wait on a studio hold.",
+        "icon": "Clock"
       },
       {
-        "t": "A New Hire Joins Without a Reshoot",
-        "d": "Reuse the same background and framing on the new photo. The rest of the team stays as it is.",
-        "icon": "UserCheck"
+        "t": "Credits Instead of a Shoot Fee",
+        "d": "Each portrait spends credits on Starter at $24.50 a month, Pro at $35, or Premium at $63. Money you do not pay a portrait studio can stay on hiring and on ads.",
+        "icon": "Coins"
       },
       {
-        "t": "The Whole Set in One Batch",
-        "d": "Upload the approved photos together and get the same framing back, instead of booking a studio for each person.",
+        "t": "More Than One Cut to Test",
+        "d": "Render the row once, then a second intro line for a different audience. Keep the cut you want to publish.",
         "icon": "Layers"
       },
       {
-        "t": "Names Stay Easy to Change",
-        "d": "Put the name and the role in text beside the portrait, so a title change is not a new image.",
-        "icon": "Type"
+        "t": "Rewrite the Line, Render Again",
+        "d": "Change a role in the text beside the photo, or rewrite the intro script and render again. A title change is not a new booking.",
+        "icon": "PenLine"
       },
       {
-        "t": "You Still Need a Yes",
-        "d": "Upload only a photo that person agreed you can use, and let them check the result before it goes live.",
-        "icon": "ShieldCheck"
+        "t": "No Hold on a Creator Calendar",
+        "d": "The treatment is ready when a new hire sends an approved photo. You are not waiting on a photographer's calendar.",
+        "icon": "Calendar"
       },
       {
-        "t": "The Cost Shows Before You Start",
-        "d": "Each photo uses 24 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
-        "icon": "Coins"
+        "t": "The Next Hire Matches",
+        "d": "The new hire inherits the same backdrop and crop, so you are not rebuilding a layout for one person. The spoken intro can say what they do.",
+        "icon": "LayoutGrid"
       }
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "Features",
-      "h2": "Features for Team Headshots",
-      "lead": "The portraits stay photos of your teammates. A short intro beside them can have a voice, captions, and a music track.",
+      "eyebrow": "With the row",
+      "h2": "Tools Around a Team Portrait",
+      "lead": "The intro beside the portraits can carry a voice, captions, and music, while the portraits stay photos of your teammates.",
       "items": [
         {
-          "t": "A Voice for a Short Intro",
-          "d": "Add an AI voice on a short team intro that sits beside the portraits. The portrait itself stays a photo."
+          "t": "A Voice for the Intro",
+          "d": "A stock voice, or a clone from a short sample, can speak the short intro. The square portraits stay photos."
         },
         {
-          "t": "Captions on That Intro",
-          "d": "Put a name line or a one-sentence intro on the clip in the built-in editor. Keep job titles out of the portrait."
+          "t": "Captions Beside the Row",
+          "d": "A name line or a one-sentence intro can sit on the clip, and you can move it in the editor. Job titles stay in text beside the portrait."
         },
         {
-          "t": "The Whole Team at Once",
-          "d": "Run every approved photo with the same background and framing. Each photo shows its credit cost first."
+          "t": "The Whole Team in One Pass",
+          "d": "Every approved photo can run with the same background and crop, so the row matches in one pass."
         },
         {
-          "t": "Start From a Public Page Link",
-          "d": "Paste a public about-page link when you want a short intro clip. Headshots still come from photos each person approved."
+          "t": "Start From a Public Page",
+          "d": "Paste a public about-page link and the intro can start from the words already on that page."
         },
         {
           "t": "A Script for the Intro",
-          "d": "Ask for one spoken line about the team, then edit it before the voice reads it."
+          "d": "The AI video agent can draft one spoken line about the team, and you can edit it."
         },
         {
-          "t": "A Presenter, Not a Replacement",
-          "d": "The portrait follows the uploaded person. A separate AI actor can introduce the team. That actor is not the teammate."
+          "t": "An AI Avatar Introduces Them",
+          "d": "A separate AI avatar can introduce the team while each portrait stays the person in the photo. Add B-roll of the shop or the product if the intro needs it."
         },
         {
-          "t": "A Track Under the Intro",
-          "d": "Add background music from the music library under the intro clip. The square portraits stay photos on the page."
+          "t": "Music Under the Intro",
+          "d": "A track from the music library can sit under the intro. The square portraits on the page stay stills."
         },
         {
-          "t": "Framing and Background in the Editor",
-          "d": "Set the framing, the light, and the background in one place, then reuse those notes for the next person."
+          "t": "Crop and Background Here",
+          "d": "You can set the crop, the light, and the background once, then reuse those choices for the next person."
         },
         {
-          "t": "An Intro in Another Language",
-          "d": "Keep the portraits and switch the spoken intro and its captions to another language. Names on the page stay text you edit."
+          "t": "The Intro in Another Language",
+          "d": "The spoken intro and its captions can switch to another language while the portraits stay. Names on the page stay text you edit."
         },
         {
-          "t": "Post the Intro to TikTok or Meta",
-          "d": "Send the intro clip to TikTok, or to Meta (Facebook and Instagram), from your account. The square portraits stay for the site, the slide deck, and the profile."
+          "t": "Post the Intro",
+          "d": "The intro can go to LinkedIn, YouTube, or to Facebook and Instagram, from the account you connect. The square portraits stay for the site and the deck."
         },
         {
           "t": "An API for Approved Photos",
-          "d": "The API lets your own software send photos when a staff page needs the same framing. Send only photos the person agreed to. Each one shows its credit cost."
+          "d": "Your own software can send photos through the API when a staff page needs the same crop."
         }
       ]
     }

@@ -4,7 +4,7 @@
   "description": "Show shoppers the difference between your colors, sizes, or sets. One photo of both options becomes a comparison clip for listings, YouTube Shorts and paid ads.",
   "h1": "Make a Product Comparison Video Shoppers Can Judge",
   "eyebrow": "Comparison video template",
-  "lead": "Use one photo that already shows both options, then add a voice and a script so the difference is the whole clip.",
+  "lead": "Shoppers can judge two options in one look, when both sit in a single photo at a close scale. Choose a side-by-side layout from the wall and use a picture that already holds the pair.",
   "secondary_keywords": [
     "side by side product video",
     "product variant comparison video",
@@ -12,19 +12,19 @@
     "product size comparison video"
   ],
   "steps_h2": "How to Make a Product Comparison Video in 3 Simple Steps",
-  "steps_lead": "One photo of both options, a short script about the difference, then a file you can post.",
+  "steps_lead": "One shared frame lets shoppers judge the pair. Two photos shot on different days make a weak comparison.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one photo with both options fully in the picture and at a similar scale. Even light keeps the difference easy to see."
+      "d": "Show the maple board and walnut board together in one listing photo. Your chosen layout supplies the frame."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the difference, pick a size and 6, 10, 15 or 30 seconds, and add a short script."
+      "d": "Maple shows knife marks sooner. Walnut hides them. Say that difference in plain words so a shopper can choose."
     },
     {
       "t": "Download and Post",
-      "d": "Add the option names in the editor, download the file with no watermark, and post it."
+      "d": "A tall clip can linger on the walnut grain. A 1:1 still can sit under the two options on the product page."
     }
   ],
   "maker": {
@@ -46,52 +46,48 @@
   },
   "faq": [
     {
-      "q": "What is a product comparison video?",
-      "a": "A clip that puts two options you can see in one picture, so a shopper can judge the difference. You bring one photo that already shows both."
+      "q": "What is a product comparison template?",
+      "a": "A product comparison template is a ready-made layout that holds two choices in one view. A skincare shop can keep the day cream and the night cream side by side, at a scale a shopper can judge."
     },
     {
-      "q": "How do I make a product comparison video?",
-      "a": "Upload that photo, name the difference, add or edit a script and a voice, pick a size and a length, then download."
+      "q": "How does a comparison template become a video?",
+      "a": "Place the pair photo in the layout, write how the two differ, and export a square for the listing. A shopper can point at one option without guessing."
     },
     {
-      "q": "Why start from a photo instead of a studio day?",
-      "a": "The clip is built from the photo you already have. You skip another shoot when both options are already in that photo. An on-screen person can point at the difference."
+      "q": "Why use this instead of hiring someone to film both options?",
+      "a": "You can publish the comparison before a filming day opens up. The pair photo is already in the listing, so the ad does not sit behind that search."
     },
     {
-      "q": "Who is a product comparison video for?",
-      "a": "Shops that sell two sizes, colors, finishes, or a set. The choice should be easy to see on a listing, a YouTube Short, TikTok, Instagram, or a paid ad."
+      "q": "Who should use a comparison template?",
+      "a": "Owners, marketers, and founders who sell two close choices and have to explain them in one breath. The person writing the line is often the shop owner."
     },
     {
-      "q": "Can a beginner make one?",
-      "a": "Yes. No editing experience is required. Put both options in one clear photo, then adjust the script in the built-in editor."
+      "q": "Can someone new to video make one?",
+      "a": "Yes. Someone who has never cut a timeline can still make it. They pick the side-by-side layout. The photo of both items does the arranging."
     },
     {
-      "q": "What should the photo include?",
-      "a": "One sharp photo with both options complete, at a similar scale, in even light. A photo of only one option cannot show the comparison."
+      "q": "Which catalogs fit a comparison?",
+      "a": "Any pair a shopper has to weigh can use it, such as a 12-ounce tumbler beside a 20-ounce one. Both sizes have to be in that one photo. A hero shot of a single tumbler is the wrong start."
     },
     {
-      "q": "Can I upload my own photo and start from a link?",
-      "a": "Yes. Upload your own photo of both options, or paste the product page link to write a first script and pick the on-screen person. You can also send the photo through the API, which is how your own shop software starts it."
+      "q": "Can I use my own pair photo, a clip, and a logo?",
+      "a": "Yes. A pair photo that already includes the logo is the right start. A short clip of the two products being set down can be the motion."
     },
     {
-      "q": "Which size, length and platforms can I use?",
-      "a": "Use a square (1:1), a wide screen (16:9), a tall phone video (9:16), a classic photo (4:3), or a tall photo (3:4). Lengths are 6, 10, 15, or 30 seconds. Post the file on TikTok, Instagram, Facebook, YouTube, or the product page."
+      "q": "Which placements and sizes fit a comparison?",
+      "a": "YouTube, a Facebook Story, the product page, and a banner each have a frame. YouTube is comfortable at 16:9. A Facebook Story wants 9:16 at 6 or 10 seconds. The product page can take 1:1, and 4:3 or 3:4 covers a banner. 15 and 30 seconds are there when the difference needs more time."
     },
     {
-      "q": "Is there a free plan?",
-      "a": "No. There is no free plan. A credit is a unit your plan spends. A clip costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. If the clip fails, those credits come back. Plans start at $24.50 a month."
+      "q": "Do I need a paid plan to use a template?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
     },
     {
-      "q": "Can I use the file commercially?",
-      "a": "Yes. The download has no watermark and can be used in your listings and paid ads. If a person appears, the tool made that person. They are not a customer. Add names and prices in the editor."
+      "q": "Can I run the comparison in ads and client work?",
+      "a": "Yes. Run the pair as a paid ad and place the same file on the product page, including work for a client. The download has no watermark."
     },
     {
-      "q": "Why use a template instead of building the ad from nothing?",
-      "a": "The scene already holds both options in one picture, so you can spend your time on the difference shoppers should notice. You can still make a second version for another audience or language."
-    },
-    {
-      "q": "Can the voice be in another language?",
-      "a": "Yes. Make the same comparison with a voice in another language, and approve the words before you post."
+      "q": "What does a side-by-side template already include?",
+      "a": "The layout already chooses which option sits on the left and when the difference is spoken. You write how the two products differ. You do not invent the shot list."
     }
   ],
   "visual": {
@@ -556,8 +552,8 @@
       }
     }
   },
-  "cta_title": "Create Your First Comparison Video",
-  "cta_lead": "Upload one photo of both options and see the credit cost before you start. A credit is a unit your plan spends.",
+  "cta_title": "Ready to Show the Difference",
+  "cta_lead": "Show the difference in one ad a shopper can judge. Add one photo that holds both options. The credit cost appears before the run.",
   "blockOrder": [
     "hero",
     "picker",
@@ -633,8 +629,8 @@
       }
     ]
   },
-  "related_h2": "Pages for a Side by Side Product Video",
-  "related_lead": "Product videos, home scenes, and Amazon listing pages for the same kind of choice.",
+  "related_h2": "Pages That Sit Beside a Comparison",
+  "related_lead": "Pair the comparison with product videos, a how-to, home scenes, a launch film, the home-living industry page, and Amazon listing photos.",
   "relatedLinks": [
     "product-videos",
     "tpl-howto",
@@ -645,33 +641,33 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Included with the template",
-      "h2": "Features of a Product Comparison Video",
-      "lead": "Both options stay in the photo you upload. These are the pieces you can add so the difference is easy to follow.",
+      "eyebrow": "On this page",
+      "h2": "Tools Around a Comparison Ad",
+      "lead": "Voice, a script, and publishing stay beside the layout, so the comparison is finished in one place.",
       "items": [
         {
-          "t": "AI Voiceover",
-          "d": "Add a spoken line that names the difference between the two options. You approve the words, and the voice is not a customer recording."
+          "t": "Voiceover or a Cloned Voice",
+          "d": "A stock voice, or a clone from a short sample, can name the difference out loud."
         },
         {
-          "t": "A Script You Can Edit",
-          "d": "A script can be drafted from your note or from the product page link. Change any line in the built-in editor before you download."
+          "t": "A Script You Rewrite",
+          "d": "You can edit any line so it says how the two options differ. Begin with a note or the listing link."
         },
         {
-          "t": "On-Screen People You Can Pick",
-          "d": "Pick a generated person from the presenter list, called the actor library, to point at either option. That person is not a real buyer."
+          "t": "An AI Avatar Points It Out",
+          "d": "An AI avatar can gesture at either option, so you do not film a presenter. Drop in B-roll of each product when the choice needs a closer view."
         },
         {
-          "t": "A Product Link or the API",
-          "d": "Paste a product page link to write a first script. Or send the photo through the API, which is how your own shop software starts it. The photo still has to show both options."
+          "t": "Listing Link or Shop API",
+          "d": "Paste the product page for a first script. Your own software can also send the pair photo through the API."
         },
         {
-          "t": "Built-In Editor and Another Language",
-          "d": "Change the script and switch the voice to another language in one editor. The download has no watermark."
+          "t": "Another Language in This Editor",
+          "d": "Buyers in France can hear the two jacket weights named in French. The picture of the pair stays. The captions can move with that voice."
         },
         {
-          "t": "More Versions, Then Publish",
-          "d": "Make another version for a second audience from the same photo. Publish on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
+          "t": "A Second Cut, Then Publish",
+          "d": "Another version for a different buyer comes from the same photo, so you can test two hooks. Send it to YouTube, TikTok, Instagram, or Facebook from a connected account, or download it and post on your own."
         }
       ]
     }

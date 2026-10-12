@@ -4,7 +4,7 @@
   "description": "Show clothing on a model without a booking. AI virtual try-on turns a flat-lay or hanger photo into an on-model view for your listing and social ads.",
   "h1": "AI Virtual Try-On for Clothing, from a Flat Lay",
   "eyebrow": "Model photo template",
-  "lead": "Shoppers skip a jacket they can only see folded on a hanger. Upload one garment photo and get an on-model view for the listing and the launch post.",
+  "lead": "A chambray shirt that only exists on a hanger can still be the ad. Upload that photo, choose an AI avatar, and the try-on carries a spoken line.",
   "secondary_keywords": [
     "clothing on model from flat lay",
     "AI fashion model photos",
@@ -12,19 +12,19 @@
     "jacket product photos on a model"
   ],
   "steps_h2": "How to Make a Garment on Model Photo in 3 Simple Steps",
-  "steps_lead": "Upload the garment, choose a scene, then download a photo you can check against the real piece before it goes on Shopify.",
+  "steps_lead": "You leave with a clip the shop can post. The piece goes in as a photo.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "Upload a clear garment photo. Show the collar, how it fastens, the sleeves, pockets, and hem. Flat lay or hanger is fine."
+      "d": "The olive chore coat can arrive as a flat photo or as its product page. That coat is the one in the ad."
     },
     {
       "t": "Pick a Fashion Style",
-      "d": "Pick an on-model scene that matches the garment. Ask for another pose, a shirt underneath, or a back view only if needed."
+      "d": "Pick an AI avatar, choose the tone, and let the script generator draft the opening line. Change any word before it goes out."
     },
     {
       "t": "Download and Post",
-      "d": "Download the photo and add the real size chart beside it. Check fit and color against the physical piece before you post."
+      "d": "You get a voiceover, on-screen captions, and a shape for the channel you sell on."
     }
   ],
   "maker": {
@@ -46,48 +46,40 @@
   },
   "faq": [
     {
-      "q": "What is AI virtual try-on for clothing?",
-      "a": "Upload a flat-lay or hanger photo and get that garment on a generated person. Use it beside the flat lay on the listing, or in the launch post."
+      "q": "What do these clothing ad templates include?",
+      "a": "You get the piece on an AI avatar, a spoken line, and a clip you can approve. A photo of a knit polo is enough to start."
     },
     {
-      "q": "How do I get from a hanger photo to an on-model photo?",
-      "a": "Upload a clear garment photo, choose a fashion scene and download the result. Check shape, color, seams and closures against the physical piece before you publish."
+      "q": "How does a clothing template become an ad?",
+      "a": "Put up a photo of a cardigan and name the shopper, for example someone buying a softer layer. The draft comes back as a clip you can post from this page."
     },
     {
-      "q": "Which garments can I start with?",
-      "a": "Jackets, knitwear, dresses, skirts, shirts and trousers fit when the full garment is in frame. Keep the collar, sleeves, pockets and hem visible in the source."
+      "q": "Which kinds of clothing can I start with?",
+      "a": "Start with a denim jacket, a dress, or a tailored trouser. The template is for a piece a person has on, so a folded stack is a weak source photo."
     },
     {
-      "q": "Can I make more than one scene from the same garment?",
-      "a": "Yes. Run the same photo again for a mirror scene, a walking scene, or a styled catalog scene. A back view needs a photo of the back, or a clear note about the back, and it is a separate run."
+      "q": "Can I make several ads for one collection?",
+      "a": "Yes. The same trench can run once for a commute and again for a wet weekend, using the photo you already have. Shops with a long rack do this each time a new color lands."
     },
     {
-      "q": "Who is this for?",
-      "a": "Clothing shops, ecommerce teams and agencies that need an on-model photo without booking a model. The person in the frame is generated, not a hired model and not a customer."
+      "q": "Which shops are these clothing templates built around?",
+      "a": "A shop that sells its own jackets and restocks through the month. The owner can run it, or someone on the marketing desk can."
     },
     {
-      "q": "Do I need a photo studio to use it?",
-      "a": "No. The path on screen is upload, choose a scene, download. Start with a front or hanger photo and a simple pose."
+      "q": "Can I use them if I have never edited a video?",
+      "a": "Yes. You supply the garment and say what the ad should claim. The template handles the avatar, the opening, and the cut. Earlier video experience is not required."
     },
     {
-      "q": "What does a try-on photo cost, and can I use it in ads?",
-      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts."
+      "q": "After I upload a garment, when is the ad ready to post?",
+      "a": "The clip is ready to download once generation finishes. Take the file from this page and post the cut the shop already uses."
     },
     {
-      "q": "Can I use the square photo in an Instagram feed?",
-      "a": "Yes. The same square file can sit in a feed post and on the product page. Notes on where it fits are on [AI Instagram ads](page:plat-instagram)."
+      "q": "What does a clothing ad cost, and can I post the square crop?",
+      "a": "A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still from the same garment spends 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. The download has no watermark. Notes on the square crop are on [AI Instagram ads](page:plat-instagram)."
     },
     {
-      "q": "Do I pay before it starts, and do I book a model?",
-      "a": "The credit cost is on screen before the run starts, and a failed run puts those credits back. You are not booking a model or a studio on this path."
-    },
-    {
-      "q": "Can I add a spoken line and publish the ad?",
-      "a": "Yes. This template downloads a square on-model photo. Add a spoken line when you build the ad, then publish to TikTok, Instagram, or Facebook. Check the garment against the real piece first."
-    },
-    {
-      "q": "Is there an API?",
-      "a": "Yes. API means a connection from your own shop. It can send a garment and bring the finished photo back."
+      "q": "Can my shop send garments in from its own system?",
+      "a": "Yes. An API connection can send a garment from your catalog and bring the finished ad back. A failed job returns its credits."
     }
   ],
   "visual": {
@@ -621,8 +613,8 @@
       }
     ]
   },
-  "related_h2": "Clothing Templates and Shopify Photos",
-  "related_lead": "Other fashion templates, the model-photo tool, and Shopify listing photos.",
+  "related_h2": "More Fashion Templates and Listing Photos",
+  "related_lead": "More clothing templates, model photos, and Shopify listing shots are ready when you need the next file.",
   "relatedLinks": [
     {
       "id": "model-photos",
@@ -649,8 +641,8 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Show the Next Garment on a Person",
-  "cta_lead": "Upload one garment photo. The credit cost is on screen before the job starts.",
+  "cta_title": "Show This Season's Piece on a Person",
+  "cta_lead": "The shop gets a try-on it can post. Upload the next garment to start.",
   "blockOrder": [
     "hero",
     "picker",
@@ -662,33 +654,33 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Included with the photo",
-      "h2": "Features for an On-Model Clothing Photo",
-      "lead": "The square file shows the garment on a generated person. A script and a spoken line can go with the ad when you publish.",
+      "eyebrow": "With the ad",
+      "h2": "What a Clothing Ad Can Include",
+      "lead": "You get a try-on you can publish, with the script and the voice already in the file.",
       "items": [
         {
-          "t": "A Product Link Starts the Look",
-          "d": "Paste the product page so this uses the right garment. The on-model photo still starts from your hanger or flat-lay shot."
+          "t": "Start From a Product Link",
+          "d": "Skip a fresh shoot and paste the product page so the ad uses that garment. A hanger photo or a flat lay can still be the source."
         },
         {
-          "t": "A Generated Person Wears It",
-          "d": "Pick a generated person for the jacket or dress."
+          "t": "An AI Avatar Wears It",
+          "d": "A wool coat can go on an AI avatar you pick from the library. Swap the face when the shop's usual customer looks different."
         },
         {
-          "t": "A Spoken Line for the Ad",
-          "d": "Add a spoken line in the language your buyers use when you turn the photo into the ad."
+          "t": "A Voiceover Buyers Understand",
+          "d": "Buyers hear a spoken line in their own language, built from the photo you already have."
         },
         {
-          "t": "A Script for the Launch",
-          "d": "Describe the piece in a sentence. The script writer drafts the line, and you can change it before you post."
+          "t": "A Script for the Hook",
+          "d": "One sentence about the piece gets you a drafted opening line, and you can rewrite any word."
         },
         {
-          "t": "Edit Before You Post",
-          "d": "Trim the ad in the built-in editor. The download has no watermark. Check seams and color against the real garment."
+          "t": "Edit It on This Page",
+          "d": "Finish the trim on this page, and the download has no watermark."
         },
         {
-          "t": "Several Versions, Then Publish",
-          "d": "Run the same photo for another pose or another language, then publish to TikTok, Instagram, or Facebook."
+          "t": "Several Cuts, Then Publish",
+          "d": "One photo can become another pose or another language, then go out on TikTok, Instagram, or Facebook."
         }
       ]
     }

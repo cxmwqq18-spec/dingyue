@@ -4,7 +4,7 @@
   "description": "Make Shopify product photos in a new background, or many at once, plus a short video for your store. See the cost first, then download with no logo on the file.",
   "h1": "Shopify Product Photos for Pages, Grids and Clips",
   "eyebrow": "Shopify stores",
-  "lead": "Make Shopify product photos for the product page and the collection. Try a new background, or make many from pictures you already have. Then add each file yourself in Shopify.",
+  "lead": "You can show the product in a room you never rented, then download the Shopify product photo and place it on the page.",
   "card": "Shopify product photos, new backgrounds, and short videos, made one by one or many at a time.",
   "secondary_keywords": [
     "Shopify product images",
@@ -14,52 +14,56 @@
   ],
   "faq": [
     {
-      "q": "What is a Shopify product photo made here?",
-      "a": "A square photo for the product page, a matching small photo for the collection, or a short video. You start from a photo you upload or a scene you describe."
+      "q": "What does this photo tool make for a store?",
+      "a": "It builds a Shopify product photo from a picture you already shot, so the product page can go up without a location day."
     },
     {
-      "q": "How does a Shopify product photo get made?",
-      "a": "You upload a picture or describe the scene, pick a style, and download the file. You add it in Shopify yourself. We do not put it on the store for you."
+      "q": "How does a Shopify picture get made?",
+      "a": "Upload the product and say where you want it, such as on a bench. You get a file back, and you can ask for more light before you download."
     },
     {
-      "q": "Is there a free plan for these Shopify photos?",
-      "a": "No. There is no free plan. Starter is $24.50 a month for 200 credits. Credits are what your monthly plan gives you to spend. Pro is $35 a month for 300 credits, and Premium is $63 a month for 600. A photo costs 24 credits. Downloads have no watermark, so no logo is stamped on the file."
+      "q": "Which photo tool should a Shopify store use?",
+      "a": "Use one that can restage your real product, hold a consistent look, and hand you a file you upload yourself. That is the job of this page. We do not rank ourselves against other tools."
     },
     {
-      "q": "Can I put these photos on my store?",
-      "a": "Yes. Downloads have no watermark and are yours to put on the product page. You still write the name, the price, and what you say about the product. We do not put the files into Shopify for you."
+      "q": "Can I make these photos without paying?",
+      "a": "No. Every photo spends credits on a paid monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. There is no zero-cost way to run a photo."
     },
     {
-      "q": "What image size works on a product page?",
-      "a": "Use a square file, the same width and height, so the product page and the collection match. Check the photo size your store uses before you upload."
+      "q": "Do these photos belong on a store?",
+      "a": "Yes. The same product photo can sit on the Shopify page and in a paid post. You spend credits, not a location fee."
     },
     {
-      "q": "Can I refresh a whole collection at once?",
-      "a": "Yes. Make many photos from the pictures you already have. Use the same shape and a similar background, so older products can sit next to new ones."
+      "q": "What does a store actually get?",
+      "a": "You get another scene when the collection needs one, and you can take the old background off a phone photo before that scene is made."
     },
     {
-      "q": "Can I add a video on the product page?",
-      "a": "Yes. Make a video of 6, 10, 15, or 30 seconds and add it on the product page yourself. A video costs 24, 40, 60, or 120 credits, based on how long it is. If a file fails, those credits come back on their own."
+      "q": "Can I use the photos in public?",
+      "a": "Yes. The download can go on the product page and in your ads. If a form asks who owns the file, the answer is in the terms you accepted with the plan."
     },
     {
       "q": "What should the upload look like?",
       "a": "Start with a clear, well-lit photo of the whole item. [how to take product photos for AI](/guides/product-photo-tips) shows what kind of photo works."
+    },
+    {
+      "q": "Can I refresh a whole collection together?",
+      "a": "Yes. Run many products in one batch so the grid shares a look. Each file spends credits, and the cost shows before you start. If a job fails, those credits come back."
     }
   ],
-  "templates_lead": "Pick matching looks for the collection, the product page, and a short product video.",
-  "cta_lead": "Start with one product, or update many collection photos from pictures you already have.",
+  "templates_lead": "Pick a matching look for the collection, the product page, and a short video.",
+  "cta_lead": "Turn one product photo into the collection tile, the scene, and the clip you add in Shopify.",
   "steps": [
     {
       "t": "Upload Your Product or Describe It",
-      "d": "Write the scene you want, or upload one clear photo of the whole item."
+      "d": "Upload the folded throw. If you only have a sentence, describe a window seat and generate from that instead."
     },
     {
       "t": "Choose Your Image Style",
-      "d": "Pick a square photo for the page, a small photo for the collection, or a video of 6, 10, 15, or 30 seconds."
+      "d": "Ask for the throw on a wooden bench with soft afternoon light. You are not picking a named image engine."
     },
     {
       "t": "Download and Add It",
-      "d": "Tweak it, then download with no watermark, meaning no logo on the file. Add the photo or video in Shopify yourself."
+      "d": "If the fringe is hidden, describe it back into view, then download and add the file in Shopify admin."
     }
   ],
   "visual": {
@@ -111,46 +115,46 @@
       }
     }
   },
-  "benefits_h2": "Give Your Shopify Product a Fresh Look",
+  "benefits_h2": "Shopify Product Photos Can Change Rooms",
   "benefits": [
     {
-      "t": "One Look Across the Collection",
-      "d": "Use the same square shape so the collection photos line up. The collection should look like one shop.",
+      "t": "A Fresh Collection Grid",
+      "d": "Give the ceramics in the collection a setting that belongs together, so the Shopify grid looks planned. One product photo is enough to start the next tile.",
       "img": "n:guide:fx42-shopify-benefit-collection",
       "alt": "Three plain ceramic home goods arranged as a consistent ecommerce collection grid."
     },
     {
-      "t": "A Page File and an Ad File",
-      "d": "Download the store image and the ad image separately, so the page stays square and the ad can use its own shape.",
+      "t": "Page Shot and Life Shot",
+      "d": "Keep a clean frame for the product page, then a second frame of the water bottle in a hand for the ad. Both come from one upload.",
       "img": "n:guide:fx42-shopify-benefit-versions",
       "alt": "Plain reusable water bottle shown in a clean product view and a handheld lifestyle angle."
     },
     {
-      "t": "A Coast, a Desert, or a Room",
-      "d": "Keep the product, and place it by the sea, in a desert, on a plain background, or in a room.",
+      "t": "Photo in a Real Room",
+      "d": "You get a lifestyle frame of the linen basket on a bright shelf, and the plain product shot stays a separate download.",
       "img": "n:guide:fx42-shopify-benefit-scene",
       "alt": "Adult hands place a plain linen storage basket on a bright shelf."
     }
   ],
   "steps_h2": "Steps to Make a Shopify Photo or Video",
-  "steps_lead": "Describe a scene or upload a photo, pick a style, then download.",
+  "steps_lead": "The Shopify product photo is ready to drop into the product admin.",
   "more_sections": [
     {
-      "eyebrow": "Example files",
-      "h2": "Examples of Shopify Product Photos",
-      "lead": "A product page usually needs more than one file. Make each one as its own download.",
+      "eyebrow": "Shopify files",
+      "h2": "Shopify Product Photos a Page Can Use",
+      "lead": "A collection tile, a scene, and a Shopify product video are separate downloads.",
       "items": [
         {
-          "t": "Plain Square Photo",
-          "d": "A clean photo of the whole item for the collection. Keep the same shape as the photos beside it."
+          "t": "The Tile Shoppers See",
+          "d": "You get the whole product, square, with nothing fighting it. Use this as the image in the collection."
         },
         {
-          "t": "Product in Use",
-          "d": "The same product in a room, by the sea, or on a plain background, saved as its own file."
+          "t": "Lifestyle Photo Beside the Grid",
+          "d": "The gallery frame shows the product in a real seat, not on the white sweep used in the grid. Shoppers see the size against something familiar."
         },
         {
-          "t": "Short Video",
-          "d": "A video of 6, 10, 15, or 30 seconds that you add on the product page. You can also start that video from the photo you just made."
+          "t": "Product Video on the Page",
+          "d": "Turn the still into a 6, 10, 15, or 30 second clip and add that Shopify product video on the page. A video spends 24, 40, 60, or 120 credits."
         }
       ]
     }
@@ -164,81 +168,81 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "Put the same product by the sea, in a desert, on a plain background, or in a room.",
+  "benefits_lead": "One photo is enough for the next tile on the Shopify collection grid.",
   "reasons": {
-    "h2": "Benefits of Shopify Product Photos",
-    "lead": "Here is what you can do with the photos you already have.",
+    "h2": "Why Stores Use Shopify Product Photos",
+    "lead": "The next Shopify product photo does not need a location scout.",
     "items": [
       {
-        "t": "See the Cost First",
-        "d": "A photo costs 24 credits. Credits are what your monthly plan gives you to spend. A video costs 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start. If a file fails, those credits come back.",
+        "t": "Photos Without the Shoot Bill",
+        "d": "A product photo is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. That stands in for a studio invoice on the images you were going to reshoot.",
         "icon": "Coins"
       },
       {
-        "t": "Skip Another Film Day",
-        "d": "Older products can use the picture they already have. You do not book another film day to refresh the collection.",
+        "t": "Photos Before the Photographer",
+        "d": "You can upload tonight and put a file on the product page, even when the photographer's next open morning is weeks out.",
         "icon": "Images"
       },
       {
-        "t": "Many Products at Once",
-        "d": "Make photos for many products at one time. Each item still starts from its own photo.",
+        "t": "The Collection in One Run",
+        "d": "Generate Shopify product photos for many products together when the grid needs a refresh. It is closer to restocking the page than booking another location.",
         "icon": "Layers"
       },
       {
-        "t": "No Model and No Props",
-        "d": "You do not hire a model, or rent extra items, just to try a new background. The scene starts from the photo you upload.",
+        "t": "No Chair Rental Required",
+        "d": "The new Shopify photo can show the product over a wooden chair you never bought, and nobody has to be booked to sit in it.",
         "icon": "Sparkles"
       },
       {
-        "t": "Start When the Photo Is Ready",
-        "d": "There is no studio appointment. Make the file in the evening, on a weekend, or between orders.",
+        "t": "Product Photos After Hours",
+        "d": "You can export a new Shopify product photo late at night, after the orders are packed, when the studio you used to rent is closed.",
         "icon": "Clock"
       },
       {
-        "t": "Test Another Background",
-        "d": "Make a second photo with a wider or tighter view, a new look, or a new layout. Compare it with the first. You pick which file goes on the product page.",
+        "t": "Two Photos, Then Choose",
+        "d": "You can keep the Shopify photo that matches the collection. Make one frame in a dim room and one in a bright hallway, then pick.",
         "icon": "RefreshCw"
       }
     ]
   },
   "platforms": {
-    "h2": "Make files for the other channels you also use",
-    "lead": "The store is one place to post. The same photo can start a file for the other channels.",
+    "h2": "Files for the Other Channels You Also Use",
+    "lead": "Shopify gets the page photos. The same product can also start a TikTok, Instagram, Facebook, Shorts, or Amazon file.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
-        "label": "AI TikTok ads generator",
-        "d": "A tall ad for TikTok, started from the same photo.",
+        "t": "AI TikTok Ads Generator",
+        "label": "AI TikTok Ads Generator",
+        "d": "A tall TikTok ad from the same photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
-        "label": "AI Instagram ads",
-        "d": "A square photo or a tall video for Instagram.",
+        "t": "AI Instagram Ads",
+        "label": "AI Instagram Ads",
+        "d": "A square still or a tall video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
-        "label": "AI Facebook ad generator",
-        "d": "A square photo for Facebook, or a tall video that fills the screen.",
+        "t": "AI Facebook Ad Generator",
+        "label": "AI Facebook Ad Generator",
+        "d": "A square Facebook photo, or a tall video that fills the screen.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
-        "label": "YouTube Shorts ads",
-        "d": "A tall short video. A wide ad that plays in the YouTube player is a separate download.",
+        "t": "YouTube Shorts Ads",
+        "label": "YouTube Shorts Ads",
+        "d": "A tall Short. A wide ad in the YouTube player is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
-        "label": "Amazon product photos",
-        "d": "A plain main image, a detail, and an in-use view for the gallery.",
+        "t": "Amazon Product Photos",
+        "label": "Amazon Product Photos",
+        "d": "A white main image, a close-up, and an in-use view for the Amazon gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "AI ads and product photos by platform",
-        "label": "AI ads and product photos by platform",
-        "d": "Open the full channel list and choose where the next file will run.",
+        "t": "AI Ads and Product Photos by Platform",
+        "label": "AI Ads and Product Photos by Platform",
+        "d": "Open the channel list and choose where the next file runs.",
         "href": "/platforms"
       }
     ]
@@ -309,8 +313,8 @@
       }
     ]
   },
-  "related_h2": "Related Tools for the Page and the Video",
-  "related_lead": "Open the tool for the next file.",
+  "related_h2": "Tools for Shopify Product Photos and Videos",
+  "related_lead": "Open the next tool for another photo, a clip, or a template.",
   "relatedLinks": [
     "product-videos",
     "url-to-video",
