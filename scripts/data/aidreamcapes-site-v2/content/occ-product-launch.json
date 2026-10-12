@@ -75,14 +75,14 @@
         "label": "Launch examples",
         "items": [
           {
-            "ref": "n:guide:q20-occ-product-launch-card-01",
-            "title": "Serum Sample First Look",
+            "ref": "n:guide:b2f4-occ-product-launch-cream-r1",
+            "title": "Face Cream First Look",
             "kind": "photo",
-            "product": "serum bottle",
-            "prompt": "Create a first-look launch photo for my serum bottle: hold the bottle beside a cheek in soft vanity light, keep the bottle and dropper exact, no text or logos."
+            "product": "face cream jar",
+            "prompt": "Create a first-look launch photo for my face cream jar: hold the plain jar beside a cheek in soft vanity light, keep the jar exact, no text or logos."
           },
           {
-            "ref": "n:guide:f13-occ-product-launch-rework-card-14",
+            "ref": "n:guide:b2f4-occ-product-launch-liptint-r1",
             "title": "Lip Tint Colorway Reveal",
             "kind": "photo",
             "product": "lip tint",
@@ -96,7 +96,7 @@
             "prompt": "Create an arrival teaser for my matte black sunglasses: place them on a sunny city sidewalk with a clear silhouette and soft shadow, preserve the frame, no text or logos."
           },
           {
-            "ref": "n:guide:q20-occ-product-launch-card-07",
+            "ref": "n:guide:b2f4-occ-product-launch-petbrush-r1",
             "title": "Pet Brush Debut Scene",
             "kind": "photo",
             "product": "pet brush",
