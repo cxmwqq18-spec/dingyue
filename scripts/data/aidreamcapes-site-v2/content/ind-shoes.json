@@ -52,16 +52,22 @@
   "benefits_h2": "Why AI Shoe UGC Ads Skip a New Shoot",
   "benefits": [
     {
-      "t": "Faster, lower-cost production",
-      "d": "Create an on-foot demo or creator review from one shoe photo. Skip talent booking, studio rental, and a new shoot for every pair."
+      "t": "Fit checks without a new shoot",
+      "d": "Show a seller holding the pair for a fit check from one clear shoe photo. Skip talent booking, studio rental, and a new shoot for every pair.",
+      "img": "n:guide:fx30-shoes-benefit-fit-r1",
+      "alt": "Adult man holds a pair of plain gray walking shoes for a fit check."
     },
     {
       "t": "More angles from one pair",
-      "d": "Try a step, unboxing, fit check, and review while the pair stays recognizable across your ad set."
+      "d": "Try a step, unboxing, fit check, and review while the pair stays recognizable across your ad set.",
+      "img": "n:guide:fx30-shoes-benefit-material-r1",
+      "alt": "Macro view of a plain taupe shoe showing leather grain, flat laces, stitching and sole edge."
     },
     {
       "t": "Show the pair on foot",
-      "d": "An on-foot moment shows profile, collar, and visible construction so shoppers can judge the pair before they buy."
+      "d": "An on-foot moment shows profile, collar, and visible construction so shoppers can judge the pair before they buy.",
+      "img": "n:guide:fx30-shoes-benefit-step-r1",
+      "alt": "Adult wearing a plain walking shoe takes one measured step on a clean sidewalk."
     }
   ],
   "steps_h2": "How to Make AI Shoe UGC Ads in 3 Simple Steps",
@@ -193,5 +199,9 @@
         }
       ]
     }
-  ]
+  ],
+  "steps_cta": {
+    "label": "Create shoe ad",
+    "href": "/app/create"
+  }
 }

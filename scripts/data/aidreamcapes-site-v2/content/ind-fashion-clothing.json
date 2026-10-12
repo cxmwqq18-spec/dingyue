@@ -57,15 +57,21 @@
   "benefits": [
     {
       "t": "No casting or studio",
-      "d": "Start with one garment photo and show it on an adult model without casting, booking, or reshooting each style."
+      "d": "Start with one garment photo and show it on an adult model without casting, booking, or reshooting each style.",
+      "img": "n:guide:fx30-fashion-benefit-fit-r1",
+      "alt": "Adult model turns in a plain light-gray hoodie with the full garment and face visible."
     },
     {
       "t": "Show fit in motion",
-      "d": "Use a turn, short walk, or close detail to show the hem, sleeve, drape, or fastening."
+      "d": "Use a turn, short walk, or close detail to show the hem, sleeve, drape, or fastening.",
+      "img": "n:guide:fx30-fashion-benefit-detail-r1",
+      "alt": "Hands pinch the hem and sleeve seam of a plain olive overshirt to show drape and stitching."
     },
     {
       "t": "More looks from one garment",
-      "d": "Test a try-on, lookbook, fit check, and creator review while the garment stays recognizable."
+      "d": "Test a try-on, lookbook, fit check, and creator review while the garment stays recognizable.",
+      "img": "n:guide:fx30-fashion-benefit-review-r1",
+      "alt": "Adult woman holds a plain denim jacket by the shoulders for a fit check."
     }
   ],
   "steps_h2": "How to Make AI Fashion Video Ads in 3 Simple Steps",
@@ -88,7 +94,7 @@
     "overview": "",
     "strip": [
       "n:guide:rb2-ind-fashion-clothing-strip-1-r1",
-      "n:guide:ind-fashion-clothing-m2-result",
+      "n:guide:fx30-fashion-strip-face-r1",
       "n:guide:rb2-ind-fashion-clothing-strip-2-r2",
       "n:guide:rb2-ind-fashion-clothing-strip-4-r3",
       "n:guide:rb2-ind-fashion-clothing-strip-5-r1",
@@ -206,5 +212,9 @@
         }
       ]
     }
-  ]
+  ],
+  "steps_cta": {
+    "label": "Create fashion ad",
+    "href": "/app/create"
+  }
 }

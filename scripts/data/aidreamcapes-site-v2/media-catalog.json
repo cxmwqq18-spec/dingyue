@@ -24243,34 +24243,37 @@
         ]
       },
       "fx08-about-hero-r1": {
-        "file": "fx08-about-hero-r1",
+        "file": "gen2guide-fx08-about-hero-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "Seller with a short copper bob holding a white ceramic jar beside a laptop with an abstract preview.",
+        "alt": "Adult seller presents a plain product beside a laptop with a store image preview.",
         "variants": [
           640,
           1280
-        ]
+        ],
+        "source": "Codex imagegen"
       },
       "fx08-contact-hero-r1": {
-        "file": "fx08-contact-hero-r1",
+        "file": "gen2guide-fx08-contact-hero-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "Seller with short platinum hair reviewing a white ceramic bottle beside an open laptop at a packing desk.",
+        "alt": "Adult seller reviews a product upload on a laptop at a tidy support desk.",
         "variants": [
           640,
           1280
-        ]
+        ],
+        "source": "Codex imagegen"
       },
       "fx08-trust-hero-r1": {
-        "file": "fx08-trust-hero-r1",
+        "file": "gen2guide-fx08-trust-hero-r1",
         "w": 1024,
         "h": 1024,
-        "alt": "Seller comparing a speckled ceramic mug with its product image beside a brass padlock.",
+        "alt": "Adult seller compares a plain product with its laptop image beside a padlock.",
         "variants": [
           640,
           1280
-        ]
+        ],
+        "source": "Codex imagegen"
       },
       "fx08-about-make-r1": {
         "file": "fx08-about-make-r1",
@@ -48930,28 +48933,6 @@
         ],
         "source": "Codex imagegen"
       },
-      "fx08-contact-hero-r1": {
-        "file": "gen2guide-fx08-contact-hero-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult seller reviews a product upload on a laptop at a tidy support desk.",
-        "variants": [
-          640,
-          1280
-        ],
-        "source": "Codex imagegen"
-      },
-      "fx08-about-hero-r1": {
-        "file": "gen2guide-fx08-about-hero-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult seller presents a plain product beside a laptop with a store image preview.",
-        "variants": [
-          640,
-          1280
-        ],
-        "source": "Codex imagegen"
-      },
       "fx08-about-what-we-make-r1": {
         "file": "gen2guide-fx08-about-what-we-make-r1",
         "w": 1024,
@@ -48990,17 +48971,6 @@
         "w": 1024,
         "h": 1024,
         "alt": "Adult seller reviews a product job estimate beside plain wooden tokens.",
-        "variants": [
-          640,
-          1280
-        ],
-        "source": "Codex imagegen"
-      },
-      "fx08-trust-hero-r1": {
-        "file": "gen2guide-fx08-trust-hero-r1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Adult seller compares a plain product with its laptop image beside a padlock.",
         "variants": [
           640,
           1280
@@ -52419,6 +52389,176 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "fx30-fashion-benefit-fit-r1": {
+        "file": "fx30-fashion-benefit-fit-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult model turns in a plain light-gray hoodie with the full garment and face visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-fashion-benefit-detail-r1": {
+        "file": "fx30-fashion-benefit-detail-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands pinch the hem and sleeve seam of a plain olive overshirt to show drape and stitching.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-fashion-benefit-review-r1": {
+        "file": "fx30-fashion-benefit-review-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult woman holds a plain denim jacket by the shoulders for a fit check.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-fashion-tool-model-r1": {
+        "file": "fx30-fashion-tool-model-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult model wears a plain sand overshirt and trousers in a clean studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-fashion-tool-lifestyle-r1": {
+        "file": "fx30-fashion-tool-lifestyle-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult woman in a plain navy jacket walks past a storefront with a small tote.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-fashion-tool-video-r1": {
+        "file": "fx30-fashion-tool-video-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult model turns in a plain terracotta cardigan in a bright fitting room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-fashion-tool-social-r1": {
+        "file": "fx30-fashion-tool-social-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Hands style a plain cream knit top on a hanger beside folded trousers.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-fashion-strip-face-r1": {
+        "file": "fx30-fashion-strip-face-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult model wears the same plain heather-gray hoodie with the full face and shoulders visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-benefit-step-r1": {
+        "file": "fx30-shoes-benefit-step-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult wearing a plain walking shoe takes one measured step on a clean sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-benefit-material-r1": {
+        "file": "fx30-shoes-benefit-material-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Macro view of a plain taupe shoe showing leather grain, flat laces, stitching and sole edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-benefit-fit-r1": {
+        "file": "fx30-shoes-benefit-fit-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult man holds a pair of plain gray walking shoes for a fit check.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-detail-r1": {
+        "file": "fx30-shoes-detail-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Close-up of a plain tan leather shoe showing toe cap, laces, stitching and outsole edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-pack-r1": {
+        "file": "fx30-shoes-pack-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Open plain cream shoe box with tissue and one unbranded sage-green walking shoe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-tool-white-r1": {
+        "file": "fx30-shoes-tool-white-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Plain cream walking shoe centered alone on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-tool-product-r1": {
+        "file": "fx30-shoes-tool-product-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Macro view of a plain navy canvas shoe showing eyelets, stitching and textured upper.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-tool-video-r1": {
+        "file": "fx30-shoes-tool-video-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult takes one step in plain burgundy walking shoes on a clean sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx30-shoes-tool-lifestyle-r1": {
+        "file": "fx30-shoes-tool-lifestyle-r1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult woman in a plain cream shoe walks beside a storefront, cropped to the knees.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
