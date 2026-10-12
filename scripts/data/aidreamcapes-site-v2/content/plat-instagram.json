@@ -3,7 +3,7 @@
   "title": "Instagram UGC Ad Videos for Reels | AIVideosUGC",
   "description": "Build Instagram UGC ad videos from one product photo. Add a voice and captions, then post the Reel to Stories, Reels, or the main feed today.",
   "h1": "Instagram UGC Ad Videos From One Photo",
-  "eyebrow": "Instagram ads",
+  "eyebrow": "Instagram Ads From One Photo",
   "lead": "Instagram UGC ad videos can keep running on weeks when no creator is free. The Reel comes from the product page, and you can make a second version in another setting before the offer ends.",
   "card": "Instagram ads from one product photo, as a tall clip or a square photo.",
   "secondary_keywords": [
@@ -14,35 +14,35 @@
   ],
   "faq": [
     {
-      "q": "What counts as an Instagram ad here?",
+      "q": "What counts as an Instagram ad I can run?",
       "a": "It is a paid Reel, Story, or feed post: someone holding your product, an unboxing, or a short review. It sits more comfortably beside friends' posts than a glossy brand film does."
     },
     {
-      "q": "How do I get an Instagram Reel from a product link?",
+      "q": "How do I get an Instagram Reel from my product link?",
       "a": "Paste the product page and say who the buyer is. You get a Reel with captions, and you pick the avatar before you export."
     },
     {
-      "q": "Are there ready templates for an Instagram Reel?",
+      "q": "Are there ready Reel templates I can post?",
       "a": "Yes. Open a Reel template and keep your product in the frame. The tall shape is already set, so you do not measure the edges yourself."
     },
     {
-      "q": "What does a file cost in credits?",
+      "q": "What does an Instagram Reel cost in credits?",
       "a": "A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost first. A failed job returns those credits."
     },
     {
-      "q": "Are music, captions, and a voice included?",
+      "q": "Do I get music, captions, and a voice on the Reel?",
       "a": "Yes. Choose an AI voice, captions, and a track from the music library. The same script can be spoken in another language. You can still change a word before you export."
     },
     {
-      "q": "Can I run the file as a paid ad?",
+      "q": "Can I run the Reel as a paid Instagram ad?",
       "a": "Yes. Publish it or download it and run it in Instagram ads. The download has no AIVideosUGC watermark. Instagram still applies its own ad rules to every file."
     },
     {
-      "q": "Do I have to book a person and a room?",
+      "q": "Do I have to book a person and a room for the Reel?",
       "a": "No. Use a photo you already have. The person in the Reel is an AI avatar from a library of 53 AI actors. The setting can be the one already in the photo."
     },
     {
-      "q": "Which frame should I check before download?",
+      "q": "Which frame should I check before I download the Reel?",
       "a": "Compare your placement with [social media ad sizes](/guides/ad-sizes-by-platform), then preview the file so on-screen buttons do not cover the product."
     }
   ],
@@ -108,7 +108,7 @@
     },
     "titles": {
       "faq": {
-        "h2": "Questions Before You Post an Instagram Ad"
+        "h2": "Questions Before You Post a Reel"
       }
     }
   },
@@ -137,16 +137,16 @@
   "steps_lead": "You finish with an Instagram Reel or a square post the account can run.",
   "more_sections": [
     {
-      "eyebrow": "Instagram ad, one place",
-      "h2": "One Product Photo, Three Instagram Versions",
+      "eyebrow": "Finish the Reel in One Place",
+      "h2": "One Hand-Cream Jar, Three Reels",
       "lead": "One hand-cream jar becomes the Reel, the voice, and the next test. You settle the script before you export.",
       "items": [
         {
-          "t": "Start From the Product Link",
+          "t": "Start From the Hand-Cream Link",
           "d": "Paste the hand-cream page and get a Reel of that jar. You are not paying a production invoice for every test of the first line."
         },
         {
-          "t": "An Avatar in the Frame",
+          "t": "An Avatar Holds the Hand Cream",
           "d": "An AI avatar can hold the hand-cream jar and say who it is for. You can start from a photo you already have on your phone."
         },
         {
@@ -190,41 +190,41 @@
     ]
   },
   "platforms": {
-    "h2": "Other Channels Besides Instagram Ads",
+    "h2": "Post the Same Photo on Other Channels",
     "lead": "The same product photo can start a file for TikTok, Facebook, Shorts, Amazon, or Shopify. Instagram is one of those placements.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
+        "t": "Tall TikTok Ad From This Photo",
         "label": "Open the TikTok ads page.",
         "d": "A tall TikTok ad from the same product photo, with the product on screen at the open.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Facebook Ad Generator",
+        "t": "Facebook Ad From This Photo",
         "label": "Open the Facebook ads page.",
         "d": "A square Facebook still, or a tall video that fills the phone screen.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Ads",
+        "t": "YouTube Short From This Photo",
         "label": "Open the YouTube Shorts page.",
         "d": "A tall Short for the phone. A wide YouTube ad is a different file you make on purpose.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Product Photos",
+        "t": "Amazon Photos From This Product",
         "label": "Open the Amazon photos page.",
         "d": "A white main image, a close-up, and an in-use frame for the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
+        "t": "Shopify Photos From This Product",
         "label": "Open the Shopify photos page.",
         "d": "Square photos for the product page and the collection, plus a video you upload in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
-        "t": "Every Channel in One List",
+        "t": "Every Channel for the Next File",
         "label": "Open the full platform list.",
         "d": "Open every channel and choose where the next file should run.",
         "href": "/ai-video-generation"

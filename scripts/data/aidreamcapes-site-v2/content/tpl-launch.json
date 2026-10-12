@@ -3,7 +3,7 @@
   "title": "AI Promo Video Maker for New Products | AIVideosUGC",
   "description": "Use the promo video maker on one product photo. Keep the sage-green bag in frame, pick a tall 9:16 or a square 1:1, and download the announcement.",
   "h1": "AI Promo Video Maker for the Day You Release",
-  "eyebrow": "Launch video template",
+  "eyebrow": "Promo Video for Release Day",
   "lead": "Have the promo video maker ready when the sage-green canvas bag ships. Put the finished bag in the frame, say the name the way the label does, and download. You do not start from a blank page.",
   "secondary_keywords": [
     "product launch video",
@@ -660,37 +660,37 @@
     "title": "A Ready Layout for Release Day",
     "paras": [
       "You get a ready layout for the day a finished backpack goes public. The photo fits in the frame, and an AI avatar can hold the bag.",
-      "You write the sentence about the color. Your time goes to the bag and the name."
+      "You write the sentence about the color. You spend your time on the bag and the name."
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "With the announcement",
-      "h2": "What a Launch Template Can Carry",
+      "eyebrow": "On the Announcement Clip",
+      "h2": "Add a Voice, a Line, and a Face",
       "lead": "Voice, script, avatar, and another opening can all hang on one photo of the finished item.",
       "items": [
         {
-          "t": "AI Voice",
+          "t": "Hear the Announcement in a Voice",
           "d": "A voice delivers the announcement, or you clone one voice and keep it for later releases."
         },
         {
-          "t": "On-Screen Captions",
+          "t": "Show the Line With the Sound Off",
           "d": "Captions can carry the reveal line while the product is on screen."
         },
         {
-          "t": "AI Script",
+          "t": "Edit the Line Before It Renders",
           "d": "You get a short script you can fix before the clip is rendered."
         },
         {
-          "t": "AI Avatar",
+          "t": "Let an Avatar Present the Release",
           "d": "An AI avatar you pick can present the release, and you can run the clip as your shop's ad."
         },
         {
-          "t": "Link, Batch, and API",
+          "t": "Start From a Link or Your Catalog",
           "d": "A product link or several photos can start the reveal. Your shop software can send the same request."
         },
         {
-          "t": "Editor, Music, and Languages",
+          "t": "Trim, Add Music, or Change Language",
           "d": "You can trim in the built-in editor, add a track from the music library, and make the announcement in another language."
         }
       ]
@@ -701,31 +701,31 @@
     "lead": "The launch can go out on the channels you already sell on. Post the clip straight to the channel, or download it and post it yourself. The credit cost shows before you start.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
+        "t": "Send a Tall Clip to TikTok",
         "label": "Post the launch on TikTok",
         "d": "Send a tall launch clip to TikTok from the editor.",
         "href": "page:plat-tiktok"
       },
       {
-        "t": "AI Instagram Ads",
+        "t": "Send the Clip to Instagram",
         "label": "Post the launch on Instagram",
         "d": "Send a tall or square launch clip to Instagram.",
         "href": "page:plat-instagram"
       },
       {
-        "t": "AI Facebook Ad Generator",
+        "t": "Send the Same Clip to Facebook",
         "label": "Post the launch on Facebook",
         "d": "Send the same launch clip to Facebook.",
         "href": "page:plat-facebook"
       },
       {
-        "t": "YouTube Shorts Ads",
+        "t": "Download a File for Shorts",
         "label": "Download the Shorts or wide file",
         "d": "Download a tall file for YouTube Shorts, or a wide file when that placement needs it.",
         "href": "page:plat-youtube-shorts"
       },
       {
-        "t": "AI Ads and Product Photos by Platform",
+        "t": "Open the Full Channel List",
         "label": "Open the full channel list",
         "d": "Open the full channel list when the next post is somewhere else.",
         "href": "page:video-hub"

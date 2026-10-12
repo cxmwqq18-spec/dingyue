@@ -3,7 +3,7 @@
   "title": "Cinematic Ads With Studio Light | AIVideosUGC",
   "description": "Make cinematic ads with studio-style light from one product photo. Set a slow dark move, then download the clip and post it where you already sell.",
   "h1": "Cinematic Ads With Studio Light, From One Photo",
-  "eyebrow": "Film-style video template",
+  "eyebrow": "Cinematic Ads Without a Set",
   "lead": "A slow, dark cinematic move on the black speaker uses studio-style light from the photo you already sell. There is no set to book.",
   "secondary_keywords": [
     "cinematic product ad",
@@ -125,7 +125,7 @@
     },
     "picker": {
       "title": "Choose a Cinematic Scene for Your Product",
-      "lead": "Open a slow product shot, then add the photo you want in that light.",
+      "lead": "You add the photo you already sell, such as the black speaker, and get a slow shot with no set to book.",
       "chips": [
         {
           "id": "accessories",
@@ -703,13 +703,13 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Inside the open",
+      "eyebrow": "Finish the Dark Open",
       "h2": "What You Can Add to a Cinematic Open",
       "lead": "A calm line and a music bed can ride under the dark open, so the reveal is finished from one photo.",
       "items": [
         {
-          "t": "A Calm Voice or a Clone",
-          "d": "A stock voice, or a clone from a short sample, can carry the open."
+          "t": "No Voice Actor to Book",
+          "d": "Use a ready-made voice, or a clone from a short sample, so you are not booking a voice actor."
         },
         {
           "t": "Captions on the Slow Move",
@@ -724,7 +724,7 @@
           "d": "The open can start from a product photo that is already online. Paste that page and the camera move uses the product shown there."
         },
         {
-          "t": "A Script for the Opening",
+          "t": "A Spoken Line You Can Edit",
           "d": "A draft line about the finish can be written for you, and you can edit it before the voice reads."
         },
         {
@@ -741,20 +741,20 @@
         },
         {
           "t": "Same Light, Another Language",
-          "d": "The same shot can run in the language you sell in, with the spoken line and the captions switched."
+          "d": "Run the same shot in the language you sell in. You switch the spoken line and the captions, with no new shoot."
         },
         {
           "t": "Send the Open Out",
           "d": "The open can go to YouTube, or to Facebook and Instagram, from the account you connect. Downloading and posting yourself is there too."
         },
         {
-          "t": "An API for a Product Line",
+          "t": "Connect Your Shop Software",
           "d": "Your shop software can send each product photo in, so a whole line can use the same open."
         }
       ]
     },
     {
-      "eyebrow": "Creative control",
+      "eyebrow": "You Control the Shot",
       "h2": "Full Creative Control From One Photo",
       "lead": "You set the scene, the spoken line, and the frame size. The product photo is the only thing you need to bring.",
       "items": [
@@ -775,8 +775,8 @@
           "d": "Trim the move, shift the caption, and swap the track in the built-in editor. A wording fix does not start a new crew call."
         },
         {
-          "t": "Captions on the Slow Move",
-          "d": "Captions land on the move in time with the spoken line. Read them, and fix a wrong word before the file goes out."
+          "t": "Fix Captions Before You Post",
+          "d": "Captions land with the spoken line. You read them and fix a wrong word before the file goes out."
         },
         {
           "t": "A Size for the Placement",

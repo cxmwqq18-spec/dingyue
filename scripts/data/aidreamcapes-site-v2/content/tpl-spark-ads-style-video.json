@@ -3,8 +3,8 @@
   "title": "TikTok Spark Ads: Create a Clip | AIVideosUGC",
   "description": "Create a TikTok Spark Ads clip from a product photo or a product link. Download the tall file and post it from your own TikTok account today.",
   "h1": "TikTok Spark Ads You Create and Post",
-  "eyebrow": "Spark Ads style template",
-  "lead": "Make a TikTok Spark Ads clip for the tea shop from the listing it already has. The finished file is what you publish from the shop's TikTok account.",
+  "eyebrow": "Publish From Your TikTok Account",
+  "lead": "Make a TikTok Spark Ads clip for the sage bottle from the listing you already have. The finished file is what you publish from your TikTok account.",
   "secondary_keywords": [
     "TikTok Spark Ads creative",
     "native TikTok ad",
@@ -67,7 +67,7 @@
     },
     {
       "q": "What can I use as the starting input?",
-      "a": "The granola listing, the pouch photo on your desk, or a few lines you already wrote about the crunch."
+      "a": "The sage bottle listing, the bottle photo on your desk, or a few lines you already wrote about the hike."
     },
     {
       "q": "Will captions and a spoken line be included?",
@@ -75,7 +75,7 @@
     },
     {
       "q": "Do I have to write a long script first?",
-      "a": "No. A line about the crunch is enough to start. You can shorten the draft before it is spoken."
+      "a": "No. A line about the hike is enough to start. You can shorten the draft before it is spoken."
     },
     {
       "q": "Can I make several versions or use the API?",
@@ -656,33 +656,33 @@
   "related_lead": "A product link, image to video, an AI actor, creator-style video ads, TikTok ads, and product videos sit beside this template.",
   "more_sections": [
     {
-      "eyebrow": "Pick a starting point",
+      "eyebrow": "Start From the Listing You Have",
       "h2": "Six Starting Points, One Tall Clip",
       "lead": "Use the input you already have. Post the finished file from your TikTok account.",
       "items": [
         {
           "t": "Paste the Product Link",
-          "d": "A serum's product page already knows the texture and the bottle. Paste that link and it becomes the tall clip you post from TikTok."
+          "d": "The sage bottle page already lists the size and the lid. You paste that link and it becomes the tall clip you post from TikTok."
         },
         {
           "t": "Render a Batch of Openings",
-          "d": "One headphone set can leave as a batch of openings in the same job. You post the opening that fits the shop's TikTok, and you hold the others."
+          "d": "One sage bottle can leave as a batch of openings in the same job. You post the opening that fits your TikTok, and you hold the others."
         },
         {
           "t": "Edit a Clip You Filmed",
-          "d": "The headphone unboxing you filmed last month can be tightened into the tall frame. You stay in this editor for the cut."
+          "d": "A bottle clip you filmed last month can be tightened into the tall frame. You stay in this editor for the cut."
         },
         {
-          "t": "Type the Zipper Line",
-          "d": "Write that the backpack zipper closes and the lining shows. The picture for that beat is what the tall clip uses."
+          "t": "Type the Lid Line",
+          "d": "You write that the hinged lid opens and the bottle stays in frame. That beat is what the tall clip uses."
         },
         {
           "t": "Edit the Spoken Script",
-          "d": "Tell it the scarf is for cold commutes. The words come back as a draft you can cut before anyone speaks them."
+          "d": "You type that the sage bottle is for a hike. The words come back as a draft you can cut before anyone speaks them."
         },
         {
           "t": "Pick the City Voice",
-          "d": "The scarf line can be spoken in the accent your city actually hears. You choose the voice before the clip is rendered."
+          "d": "The bottle line can be spoken in the accent your city actually hears. You choose the voice before the clip is rendered."
         }
       ]
     }
@@ -692,15 +692,15 @@
   "benefits": [
     {
       "t": "Several Openings to Test",
-      "d": "Render another first line for the serum, watch both, and spend on the one the shop wants to keep. The credit cost of each clip shows first."
+      "d": "You render another first line for the sage bottle, watch both, and keep the one you want to spend on. The credit cost of each clip shows first."
     },
     {
       "t": "Pick a Different Look",
-      "d": "The headphones do not have to look like a desk. Ask for a hand-drawn look, or a small modeled scene, if that matches the shop's other posts."
+      "d": "The sage bottle does not have to sit on a desk. You can ask for a hand-drawn look, or a small modeled scene, if that matches your other posts."
     },
     {
-      "t": "About the Item You Sell",
-      "d": "Shoppers see this skillet, not a generic home pan. The handle, the rivets, and the size from your listing are what the picture stays on."
+      "t": "Show the Bottle You Sell",
+      "d": "Shoppers see this sage bottle, not a generic drink bottle. The lid, the color, and the size from your listing are what the picture stays on."
     },
     {
       "t": "Frames for More Than TikTok",
@@ -713,7 +713,7 @@
     "items": [
       {
         "t": "Start From What You Have",
-        "d": "The listing is enough to begin. If the skillet photo is the only file on your desk, the missing spoken line can be drafted before you render.",
+        "d": "The listing is enough to begin. If the sage bottle photo is the only file on your desk, the missing spoken line can be drafted before you render.",
         "icon": "Link"
       },
       {
@@ -722,8 +722,8 @@
         "icon": "Calendar"
       },
       {
-        "t": "What Another Language Costs",
-        "d": "The tea line can be spoken for the shoppers who read Spanish. A 15-second cut of that line is 60 credits on a paid plan, and the charge shows first.",
+        "t": "Say the Line in Spanish",
+        "d": "The bottle line can be spoken for shoppers who read Spanish. A 15-second cut of that line is 60 credits on a paid plan, and the charge shows first.",
         "icon": "Coins"
       }
     ]

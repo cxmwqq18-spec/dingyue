@@ -3,7 +3,7 @@
   "title": "Countdown Sale Video Maker | AIVideosUGC",
   "description": "Make a countdown sale video that says the last day out loud. Paste the product page, pick an avatar, set the end date, and download the file.",
   "h1": "Create a Countdown Sale Video",
-  "eyebrow": "Sale ad creatives",
+  "eyebrow": "Sale Ads You Can Post",
   "lead": "Get a sale video that says the last day out loud. Paste the product page, pick an avatar, set the end date, and change the offer line before you download.",
   "secondary_keywords": [
     "discount ad images",
@@ -14,44 +14,44 @@
   "plan": [],
   "faq": [
     {
-      "q": "How many credits does a sale video cost?",
+      "q": "How many credits do I spend on a sale photo or a sale video?",
       "a": "A sale video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo spends 24 credits. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before you start. If a job fails, those credits come back. A finished file is not refunded just because you dislike it."
     },
     {
-      "q": "Can my own software ask for sale videos?",
+      "q": "Can my shop software request a sale video from a product link?",
       "a": "Yes. Your tools can request a sale video from a product link through the API. The file stays in your account until you decide to share it."
     },
     {
-      "q": "Can an AI avatar present the sale?",
+      "q": "Can one AI avatar present the denim jacket through the sale?",
       "a": "Yes. Use the same AI avatar from your other clips, so the sale video looks like the same shop."
     },
     {
-      "q": "How do I add an offer end time to a sale video?",
-      "a": "Set the end in the editor, and move it if the sale window shifts. You decide when it stops."
+      "q": "How do I say the last day in the sale video before I download?",
+      "a": "Set the end date in the editor before you download, and move it if the sale window shifts. The cream jar stays in frame while you decide when the offer stops."
     },
     {
-      "q": "Can I add footage I already filmed on my table?",
+      "q": "Can I add the clip I already filmed on my table?",
       "a": "Paste a product page so the photos come in, upload a picture, or add a clip you already shot. You still check the offer before it goes out."
     },
     {
-      "q": "Can I run the same scene on the next offer?",
+      "q": "Can I keep the same scene and only swap the next offer?",
       "a": "Yes. Keep the product scene and swap the line, the voice, or the end date when the code changes."
     },
     {
-      "q": "Can I show the earlier price beside the sale price?",
+      "q": "Can I show the earlier price beside the sale price in the ad?",
       "a": "Only if you really charged that earlier price. Check the rules where you sell before an old price sits next to the new one."
     },
     {
-      "q": "Can I run the file as a paid sale ad?",
+      "q": "Can I run the download as a paid sale ad?",
       "a": "Yes. The download has no AIVideosUGC watermark, so you can place it as a paid ad. The app you pick still has its own rules."
     },
     {
-      "q": "Can I make sale videos for many products together?",
+      "q": "Can I make sale videos for many products in one sitting?",
       "a": "Yes. Send several product links and each one comes back as its own ad. Review every file before it is published."
     }
   ],
   "examples": {
-    "h2": "More Sale Ad Creative Examples",
+    "h2": "More Sale Scenes You Can Post",
     "lead": "Product scenes with room beside the item for the offer you type after download.",
     "groups": [
       {
@@ -110,7 +110,7 @@
     }
   ],
   "visual": {
-    "overview": "The product stays clear. You type the offer line in the editor before you download.",
+    "overview": "The product stays clear in the shot. You type the offer line in the editor, then download a clip you can run.",
     "strip": [
       "n:guide:q20-occ-sale-gallery-03",
       "f:retargeting-urgency",
@@ -248,10 +248,10 @@
         "h2": "How to Make a Countdown Sale Video in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a Sale Ad Creative Scene"
+        "h2": "Pick a Sale Scene to Post"
       },
       "faq": {
-        "h2": "Questions About Flash Sale Ad Ideas"
+        "h2": "Questions Before Your Sale Ad"
       }
     }
   },
@@ -261,28 +261,28 @@
       "t": "One AI Avatar for the Sale",
       "d": "One AI avatar carries the denim jacket through this sale, so the hanger clip looks like the same shop as your other videos. Leave open wall space beside the jacket, and that face opens by naming the last day.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-offer",
-      "alt": "Denim jacket on a hanger against a pale wall with open space for an offer.",
+      "alt": "A denim jacket hangs on a hanger against a pale wall, with open space for the offer. You add the last day without a new shoot.",
       "frame": "none"
     },
     {
       "t": "A Spoken Pitch With the Deadline",
       "d": "You get a spoken pitch from the picnic blanket page, and the last day lands as the final line. A buyer hears the offer while the hands keep folding the blanket.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-reshoot",
-      "alt": "Adult hands fold a checked picnic blanket beside a basket at a park table.",
+      "alt": "Adult hands fold a checked picnic blanket beside a basket at a park table. You show the blanket in use while you name the sale.",
       "frame": "none"
     },
     {
       "t": "Slow the Voice on the End Date",
       "d": "A buyer can catch the end date when the voice eases on Thursday night. Pick a warm voice, keep the rest of the line quick, and leave the charging pad in the shot.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-versions",
-      "alt": "Two adult hands set a round black charging pad on a dark cloth.",
+      "alt": "Two adult hands set a round black charging pad on a dark cloth. The pad stays in the sale shot you post.",
       "frame": "none"
     },
     {
       "t": "Run Two Openings, Keep One",
       "d": "Make two cuts of the tea pouch. One opens on the pack beside the mug, and the other opens by naming the last day. Keep the file you want to run.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-no-shoot",
-      "alt": "Adult hands prepare a kraft tea pouch beside a plain travel mug in a bright kitchen.",
+      "alt": "Adult hands prepare a kraft tea pouch beside a plain travel mug in a bright kitchen. You open the sale on that pack, with no film day.",
       "frame": "none"
     }
   ],

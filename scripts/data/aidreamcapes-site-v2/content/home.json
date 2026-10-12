@@ -3,7 +3,7 @@
   "title": "AI UGC Video Ads and Product Photos | AIVideosUGC",
   "description": "Turn one product photo into AI UGC video ads and store-ready product photos. Pick a scene, see the credit cost first, and download files for every channel.",
   "h1": "Make AI UGC Ads From One Product Photo",
-  "eyebrow": "Launch more product ads from one clear photo",
+  "eyebrow": "Post More Ads from One Photo",
   "lead": "Turn one product photo into an AI UGC ad, with an actor, a spoken line, and a file you can post. You can read that line before anyone puts the ad up.",
   "secondary_keywords": [
     "AI product video generator",
@@ -101,42 +101,42 @@
         "t": "Put the Gift Set on Camera",
         "d": "Show the cream tube, the cream jar, and the soap bar coming out of the gift box the week they are packed. The shop stays open while you compare two openings.",
         "img": "n:img3-gen2-unboxing-videos-g2-r3",
-        "alt": "Plain white cream tube, round white cream jar and white soap bar revealed in an open gift box.",
+        "alt": "Open the gift box in the ad so buyers see the white cream tube, jar, and soap bar.",
         "frame": "browser"
       },
       {
         "t": "Test the Snack Ad Early",
         "d": "A dropshipping desk can show the snack pouch beside a lunch container before the first carton arrives. Retire the cuts nobody watches. Keep the one they do.",
         "img": "n:gen2:video-ads-g3",
-        "alt": "Snack pouch set down beside a lunch container on an office desk.",
+        "alt": "Set the snack pouch beside the lunch container, and post that desk scene.",
         "frame": "phone"
       },
       {
         "t": "Film the Pasta Sauce Yourself",
         "d": "A two-person food shop can show the pasta sauce jar beside a finished plate, without an agency invoice. The monthly plan includes a credit balance you can see before you start.",
         "img": "n:gen2:ind-food-drinks-g3",
-        "alt": "Pasta sauce jar beside a finished plate of pasta.",
+        "alt": "Set the sauce jar beside the finished pasta so the ad shows the meal.",
         "frame": "browser"
       },
       {
         "t": "Clear a Queue of Client Ads",
         "d": "Monday's client sells a snack pouch. Tuesday's sells a scheduling app. Both get a new cut here, and the strategist stays on the media plan.",
         "img": "n:img3-gen2-spokesperson-videos-g3-r2",
-        "alt": "Adult presenter with short curls holds a plain blank snack pouch at chest height in a bright kitchen.",
+        "alt": "A presenter with short curls holds your blank snack pouch in a bright kitchen, ready to post.",
         "frame": "phone"
       },
       {
         "t": "Keep Packing the Tote on Camera",
         "d": "Someone who posts product rounds can pack the canvas tote on the hallway bench from one photo. The channel does not go quiet during a travel week.",
         "img": "n:gen2:video-ads-g2",
-        "alt": "Canvas tote bag packed item by item on a hallway bench.",
+        "alt": "Pack the canvas tote on the hallway bench so the ad shows what fits.",
         "frame": "phone"
       },
       {
         "t": "Explain the Tablet Stand",
         "d": "An app team can show the tablet stand on a tidy desk while a person explains one feature. The clip is there to win a signup, and no studio was booked for it.",
         "img": "n:gen2:ind-electronics-g2",
-        "alt": "Tablet stand holds a dark-screen tablet on a tidy desk.",
+        "alt": "Show the tablet on its stand at a tidy desk, with the screen dark, ready to post.",
         "frame": "browser"
       }
     ]
@@ -291,31 +291,31 @@
     }
   ],
   "limitations": {
-    "h2": "Check These Details Before You Publish",
+    "h2": "Check the Product, Then Post",
     "items": [
       {
-        "t": "Exact Measurements",
-        "d": "Add your own dimensions and fit notes to the listing.",
+        "t": "Add the Real Size",
+        "d": "Add the real size and fit notes so buyers are not guessing on the listing.",
         "supported": false
       },
       {
-        "t": "Hidden Sides and Parts",
-        "d": "Photograph ports, seams, backs or contents the upload does not show.",
+        "t": "Show the Hidden Side",
+        "d": "Photograph the ports, seams, or back yourself so the listing shows what the upload hides.",
         "supported": false
       },
       {
         "t": "Performance Claims",
-        "d": "Confirm that any result or demonstration matches a real test.",
+        "d": "Only post a demo that matches a test you already ran.",
         "supported": false
       },
       {
-        "t": "Words, Prices and Offers",
-        "d": "Proofread captions, prices, and offers in the built-in editor before you post.",
+        "t": "Read the Price, Then Post",
+        "d": "Read the caption, the price, and the offer in the editor, then post the ad.",
         "supported": false
       },
       {
-        "t": "Color and Package Contents",
-        "d": "Compare the file with the real product before you post.",
+        "t": "Match the Color You Ship",
+        "d": "Compare the file with the product you ship, then post the one that matches.",
         "supported": false
       }
     ]

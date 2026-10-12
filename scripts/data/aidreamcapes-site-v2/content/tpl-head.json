@@ -3,7 +3,7 @@
   "title": "UGC Templates for Team Headshots | AIVideosUGC",
   "description": "Pick a headshot template and match every teammate from a photo they already approved. Download one shared backdrop for the about page and team row.",
   "h1": "Pick a Headshot Template and Match the Team",
-  "eyebrow": "Team photo template",
+  "eyebrow": "One Backdrop for the Whole Team",
   "lead": "Pick one headshot template, then match every teammate to it from a photo they already approved. The row shares one backdrop, one crop, and one light, starting with the teammate in the dark green shirt.",
   "secondary_keywords": [
     "matching team headshots",
@@ -120,7 +120,7 @@
       ]
     },
     "picker": {
-      "title": "Browse Templates by Category",
+      "title": "Find a Scene for a Short Ad",
       "lead": "Open a scene to turn the same photo into a short video ad. For a square team headshot, use the upload above.",
       "chips": [
         {
@@ -543,7 +543,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Questions About Team Headshot Templates"
       },
       "m3": {
         "h2": "Choose a Video Scene",
@@ -703,7 +703,7 @@
   },
   "more_sections": [
     {
-      "eyebrow": "With the row",
+      "eyebrow": "For the Intro Beside the Row",
       "h2": "Tools Around a Team Portrait",
       "lead": "The intro beside the portraits can carry a voice, captions, and music, while the portraits stay photos of your teammates.",
       "items": [

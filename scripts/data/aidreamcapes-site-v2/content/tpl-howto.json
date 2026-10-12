@@ -3,7 +3,7 @@
   "title": "AI How-To Video Templates for Demos | AIVideosUGC",
   "description": "Drop your product into a how-to video template that already shows one step. An AI avatar runs the demo, and you download a clip you can post.",
   "h1": "AI How-To Video Maker for a Product Demo",
-  "eyebrow": "How-to video template",
+  "eyebrow": "How-To Videos You Can Post",
   "lead": "Drop the white steamer into a beauty demo that already shows one press, and let an AI avatar do that pass. Say how the press should look on the blue shirt.",
   "secondary_keywords": [
     "product how-to video",
@@ -664,7 +664,7 @@
   },
   "more_sections": [
     {
-      "eyebrow": "In the file",
+      "eyebrow": "Inside the Steamer Clip",
       "h2": "What a How-To Template Can Carry",
       "lead": "Voice, a script, and an avatar can all sit on the same steamer photo.",
       "items": [
@@ -685,11 +685,11 @@
           "d": "An AI avatar you pick can present the press, and you can post the clip as your shop's ad."
         },
         {
-          "t": "Start From a Link or a Batch",
+          "t": "Start from a Link, Batch, or API",
           "d": "A product link, a batch of photos, or the shop software you already use can start the how-to."
         },
         {
-          "t": "Trim, Music, and Languages",
+          "t": "Trim, Add Music, Pick a Language",
           "d": "You can trim in the built-in editor, add a track from the music library, and repeat the press in another language."
         }
       ]
@@ -700,31 +700,31 @@
     "lead": "Put the steamer how-to where shoppers already scroll. Post the clip straight to the channel, or download it and post it yourself.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
+        "t": "Post the Steamer on TikTok",
         "label": "TikTok How-To for This Steamer",
         "d": "Send a tall steamer how-to to TikTok from the editor.",
         "href": "page:plat-tiktok"
       },
       {
-        "t": "AI Instagram Ads",
+        "t": "Post the Steamer on Instagram",
         "label": "Instagram How-To for This Press",
         "d": "Send a tall or square how-to of the press to Instagram.",
         "href": "page:plat-instagram"
       },
       {
-        "t": "AI Facebook Ad Generator",
+        "t": "Post the Steamer on Facebook",
         "label": "Facebook How-To for This Steamer",
         "d": "Send the same steamer how-to to Facebook.",
         "href": "page:plat-facebook"
       },
       {
-        "t": "YouTube Shorts Ads",
+        "t": "Steamer Clip for YouTube Shorts",
         "label": "YouTube Shorts How-To Clip",
         "d": "Download a tall file of the press for YouTube Shorts, or a wide file when the placement needs it.",
         "href": "page:plat-youtube-shorts"
       },
       {
-        "t": "Ads and Photos by Platform",
+        "t": "Post on the Next Channel",
         "label": "All Platform Sizes for This How-To",
         "d": "Open the channel list when the next post is not one of these four.",
         "href": "page:video-hub"

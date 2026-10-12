@@ -3,9 +3,9 @@
   "title": "AI UGC and AI Ads Blog | AIVideosUGC",
   "description": "Browse the AI UGC and AI ads blog for a product photo, a short ad, or a launch clip. Open the guide that matches the job, then make that file.",
   "h1": "An AI UGC and AI Ads Blog for Small Shops",
-  "eyebrow": "Seller articles",
+  "eyebrow": "Guides You Can Post Today",
   "lead": "This AI UGC and AI ads blog has five short guides. Open the one for the photo, ad, or launch in front of you.",
-  "card": "Articles on product photos, short ads, and launches.",
+  "card": "Open a guide and leave with a product photo, a short ad, or a launch clip you can post.",
   "secondary_keywords": [
     "product photo tips for online stores",
     "video ad ideas for small brands",
@@ -13,7 +13,7 @@
     "AI product content tips"
   ],
   "intro": [
-    "Open the article that matches the job: a product-page photo, a short ad, a launch clip, or a last look. These five pieces are for a shop that writes its own captions and photographs its own goods.",
+    "Start with one of the five guides: a product photo, a short ad, a launch clip, or a last look. You write your own caption, use a photo of your own goods, and post without a shoot.",
     "Open the guide that matches the job, then open the tool it names. Paste a [product link](page:url-to-video), choose a face in the [actor library](page:ai-actors), or begin from a layout in the [template gallery](page:templates). Downloads do not carry a watermark. [Plans are on the pricing page](page:pricing)."
   ],
   "faq": [
@@ -26,47 +26,47 @@
       "a": "Pick the guide, then put in a photo of the item you ship. Keep the sentence to something you can show, such as the size on the label. The file you download is the one you post."
     },
     {
-      "q": "Why use a generated ad instead of filming a creator?",
+      "q": "Why make a short ad instead of waiting on a creator to film?",
       "a": "You can change the opening line and export another file without waiting on a creator's calendar. Book the person when the campaign needs that specific face."
     },
     {
-      "q": "Who are the guides written for?",
+      "q": "Who gets the most from these five guides?",
       "a": "A person packing orders who also runs the ads will get the most from them. The five pieces are a product photo, a short ad, a launch clip, a check before you publish, and clothing on a person."
     },
     {
-      "q": "Can a beginner follow them?",
+      "q": "Can a beginner make a file from one bottle photo?",
       "a": "Yes. If you can photograph the bottle on a table, you can follow the guide. The tool it names is the only app you open for that file."
     },
     {
-      "q": "Which products do the guides cover?",
+      "q": "Which products can I make a photo or a short ad for?",
       "a": "They point at [beauty](page:ind-beauty-skincare), [fashion](page:ind-fashion-clothing), [food and drinks](page:ind-food-drinks), [home](page:ind-home-living), and [electronics](page:ind-electronics). The same tools work for other goods you ship."
     },
     {
-      "q": "May I bring photos and clips I already shot?",
+      "q": "Can I start from photos and clips I already shot?",
       "a": "Yes. Start with the photo of the item that actually ships, dust and all. A logo file is useful only when you are allowed to put that mark on the ad."
     },
     {
-      "q": "Which platforms can I post to?",
+      "q": "Which platforms can I post the photo or the clip to?",
       "a": "Use the frame the placement asks for. [Shopify](page:plat-shopify) and [Amazon](page:plat-amazon) want a square photo. A tall 9:16 clip fits [TikTok](page:plat-tiktok) and [YouTube Shorts](page:plat-youtube-shorts). [Instagram](page:plat-instagram) and [Facebook](page:plat-facebook) can take a square still or a tall clip. Video can also be 1:1, 16:9, 4:3, or 3:4."
     },
     {
-      "q": "Do I pay before I can use a layout?",
+      "q": "Do I pay before I can open a guide and make a file?",
       "a": "Yes. Layouts sit on a paid plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits pay for each photo or video, and the cost shows before every job."
     },
     {
-      "q": "Can I use the file in a paid ad?",
+      "q": "Can I put the downloaded file in a paid ad?",
       "a": "Yes. Put the file on a product page or hand it to a client whose brand you are allowed to show. The [Content Policy](/content) says what you can upload."
     },
     {
-      "q": "Why start from a layout instead of a blank file?",
+      "q": "Why start from a guide instead of a blank sweater ad?",
       "a": "These guides already decided where the product appears, so your time goes to the claim. A sweater line can say it is merino."
     },
     {
-      "q": "How much does a photo or a clip cost?",
+      "q": "How many credits does a product photo or a clip cost?",
       "a": "A product photo is 24 credits. A 6-second clip is 24, 10 seconds is 40, 15 is 60, and 30 is 120. If a job fails, those credits come back."
     },
     {
-      "q": "Are the people in the clips buyers?",
+      "q": "Are the faces in the clip real customers?",
       "a": "No. The face is generated. Do not give that avatar a customer's name or a line that claims they purchased the product."
     }
   ],

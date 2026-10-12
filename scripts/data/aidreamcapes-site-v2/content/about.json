@@ -3,7 +3,7 @@
   "title": "About UGC Ecommerce Ad Templates | AIVideosUGC",
   "description": "AIVideosUGC makes UGC product photos and video ad templates for a small ecommerce shop. Upload one photo and download a file you can post today.",
   "h1": "About AIVideosUGC: UGC Photos and Video Ads",
-  "eyebrow": "About us",
+  "eyebrow": "Built for Shop Owners",
   "lead": "Creators and shoot days slow a small shop down. AIVideosUGC turns a product photo or a product page link into UGC store images and short video ads. Add a presenter, voice, captions, or music, then review the file before you publish.",
   "secondary_keywords": [
     "AI visuals for Shopify sellers",
@@ -21,13 +21,13 @@
       "alt": "Adult seller with a blonde chin-length bob holds a speckled mug on paper beside an open laptop."
     },
     {
-      "h2": "For Shop Owners at the Packing Table",
+      "h2": "Get a Listing While You Pack",
       "paras": [
         "A clear product photo and one sentence about the scene give you a listing image or an ad. Use the same path for a Shopify, Amazon, or Etsy catalog when the next order is already on the table.",
         "Paste a product page when a listing changes, or make several versions from one photo when the campaign needs a new angle. The editor lets you adjust the words, presenter, voice, and captions before download."
       ],
       "img": "n:guide:fx08-about-who-its-for-r1",
-      "alt": "Adult small-shop owner prepares a plain product for a listing at a packing table."
+      "alt": "Adult shop owner gets one product ready for a listing at a packing table."
     },
     {
       "h2": "Your Uploads Stay in Your Account",
@@ -48,10 +48,10 @@
       "alt": "Adult seller with a short silver crop moves plain wooden tokens beside an open laptop."
     },
     {
-      "h2": "Fast Ads, Actors, and Languages",
+      "h2": "Skip the Shoot for the Next Ad",
       "paras": [
         "A photo or a link can become the ad without booking a shoot. Pick from 53 AI actors, or make an AI twin from a photo you have rights to use. A voice you may use can be cloned. The same ad can be made again in another language.",
-        "Email support@aivideosugc.com if a job or a file needs a person. Plans stay on the pricing page, and each job still shows its credit charge before it starts."
+        "Email support@aivideosugc.com when a file needs a person. You still see the credit charge before the job starts, and plans stay on the pricing page."
       ]
     }
   ],
@@ -61,15 +61,15 @@
       "a": "AIVideosUGC makes UGC store images and short video ads from a product photo or a product page link. You use AI actors, a script, and a voice, and you review the file before you download it."
     },
     {
-      "q": "Can I make creator-style clips here?",
+      "q": "Can I make a creator-style clip of my product?",
       "a": "Yes. A generated presenter can talk about the product in a creator-style clip. For help with an account, a job, or a file, email support@aivideosugc.com."
     },
     {
-      "q": "What are the best uses for AIVideosUGC?",
-      "a": "Shops use it for video ads, product photos, and social clips. Start with a product photo or a product page link you are allowed to use, then add a short scene description."
+      "q": "What can a shop make from one product photo?",
+      "a": "You can post a video ad, a product photo, or a social clip from one mug photo. Start with that photo or a product page you may use, then add a short scene."
     },
     {
-      "q": "Can I use AIVideosUGC for marketing?",
+      "q": "Can I make shop ads without booking a studio?",
       "a": "Yes. It is for online sellers and marketers who need product images and short ads from their own catalog. You do not book a studio or a creator for every item."
     },
     {
@@ -77,15 +77,15 @@
       "a": "No. Starter is $24.50 per month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Each job shows its credit charge before it starts."
     },
     {
-      "q": "Can I reuse an AI actor?",
+      "q": "Can I use the same AI actor on my next ad?",
       "a": "Yes. You can select an AI actor for a video and change the presenter in the editor. The files and references you create remain in your account."
     },
     {
-      "q": "Can a video include a voice and captions?",
+      "q": "Can my product video include a voice and captions?",
       "a": "Yes. A video can include a spoken line, captions, and music, and the editor lets you change those elements before download."
     },
     {
-      "q": "Can I publish the files on my store or social channels?",
+      "q": "Can I post the ad on my store and on social channels?",
       "a": "Yes. Download the file or send it to TikTok, Instagram, or Facebook, then follow the rules of the channel where you publish. Your own software can also start a job through the API."
     }
   ],

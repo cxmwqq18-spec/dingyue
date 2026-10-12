@@ -3,7 +3,7 @@
   "title": "Product Color Variations in a Coordinated Set | AIVideosUGC",
   "description": "Make one matching square photo for every color you sell, from your own photo of that color. Shoppers can then compare the options in the same scene.",
   "h1": "Product Color Variations in One Shared Square Scene",
-  "eyebrow": "Product photo template",
+  "eyebrow": "Every Shade in One Scene",
   "lead": "Line up your product color variations on one square counter. Drop in a photo of each dispenser shade you sell, so shoppers can compare them.",
   "secondary_keywords": [
     "colorway product photos",
@@ -44,47 +44,47 @@
   },
   "faq": [
     {
-      "q": "What is a UGC video template for these colors?",
+      "q": "What does a color template give me for the dispenser shades?",
       "a": "A UGC video template is a ready-made scene. You drop your own dispenser photos in, and you do not write a long prompt first. A home shop can put white, gray, and sand dispensers on the same counter. A spoken line can name the shade that is new this month."
     },
     {
-      "q": "How do I turn a shade template into my file?",
+      "q": "How do I turn a shade template into a square I can post?",
       "a": "Drop the dispenser photos into the scene you picked, name each color in the script, and export a square for the gallery. A shade you never photographed is not added. You review the script before the export."
     },
     {
-      "q": "Why use a template instead of hiring a creator?",
+      "q": "Why use a template instead of filming every dispenser color?",
       "a": "You skip the wait for a creator and the cost of filming every color. The dispenser photos already exist, so you drop them into the template. The ad can go out while that filming day belongs to someone else."
     },
     {
-      "q": "Who is a shade template for?",
+      "q": "Who should use a shade template if I run the shop myself?",
       "a": "Shop owners and small teams who have to show which color is which. In a home shop that person is the owner, not a producer with a crew on payroll."
     },
     {
-      "q": "Can a beginner make the set?",
+      "q": "Can I make the shade set if I have never edited video?",
       "a": "Yes. A shop that has never edited a video can still make the row. They choose the scene, and the photos they already took decide what is in frame."
     },
     {
-      "q": "Which products fit a color template?",
+      "q": "Which products fit a color template when shoppers compare the finish?",
       "a": "Dispensers, cases, and hardware all fit when people hesitate over the finish. White, gray, and sand are a normal set. A software screenshot is the wrong file, because nothing in it is a finish you can hold."
     },
     {
-      "q": "Can I use my own photos, a clip, and a logo?",
+      "q": "Can I use my own shade photos, a clip I have, and the logo?",
       "a": "Yes. A listing photo that already shows the logo is the right file, and you can add up to 7 reference photos of shades you sell. A short clip you already have can supply the motion."
     },
     {
-      "q": "Which placements and frame sizes can I use?",
+      "q": "Which placements and frames can I use for the shade ad?",
       "a": "TikTok, Reels, Facebook, YouTube, and LinkedIn all work. A Facebook Story wants 9:16, often at 6 or 10 seconds. The Instagram grid wants 1:1. YouTube can take 16:9, and 4:3 or 3:4 covers a banner. 15 and 30 seconds are there when a shade needs a longer look."
     },
     {
-      "q": "Do I need a paid plan to use a template?",
+      "q": "Do I need a paid plan before I make the shade set?",
       "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
     },
     {
-      "q": "Can I use the shade ad in campaigns and client work?",
+      "q": "Can I run the shade ad as a paid campaign and for a client?",
       "a": "Yes. Run the shade row as a paid ad and place the file on the product page, including work for a client. The download has no watermark."
     },
     {
-      "q": "What does the color template already set up for me?",
+      "q": "What is already set so I do not have to plan the camera move?",
       "a": "The scene already sets the surface, the crop, and the moment the shade name appears. You bring the offer, such as which dispenser color is the seasonal one. You do not design the camera move."
     }
   ],
@@ -118,7 +118,7 @@
       ]
     },
     "picker": {
-      "title": "Browse Video Ad Templates by Category",
+      "title": "Browse Templates and Drop Your Photo",
       "lead": "Open a category and make a scene from a product photo you already have.",
       "chips": [
         {
@@ -540,7 +540,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Questions Before You Post the Shades"
       },
       "m3": {
         "h2": "Pick a Template Category",
@@ -654,12 +654,12 @@
   "cta_lead": "Get every dispenser shade into one ad you can post. Add the shade photos you already sell.",
   "more_sections": [
     {
-      "eyebrow": "In the same editor",
-      "h2": "Tools Around a Shade Ad",
+      "eyebrow": "Edit the Shade Before You Post",
+      "h2": "Finish the Shade Ad in the Editor",
       "lead": "A spoken shade name and a line you can fix sit on the same page, so the ad is done without another tool.",
       "items": [
         {
-          "t": "A Voice or a Voice Clone",
+          "t": "Add a Voice or Your Clone",
           "d": "A stock voice, or a clone from a short sample, can read the shade line out loud."
         },
         {
@@ -667,11 +667,11 @@
           "d": "You can change any sentence before the ad is made. Start from a note or the product link, and name the shade and the offer."
         },
         {
-          "t": "An AI Avatar on Camera",
+          "t": "Put an AI Avatar on Camera",
           "d": "An AI avatar can hold one color on camera, so you skip booking a model. Add a clip of the product alone when you want it to fill the frame."
         },
         {
-          "t": "A Product Page or Your Shop Software",
+          "t": "Paste a Listing or Use Shop Software",
           "d": "Paste the product page to draft the first script. Or let your shop software send each shade photo through the API."
         },
         {

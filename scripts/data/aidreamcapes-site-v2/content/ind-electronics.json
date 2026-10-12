@@ -3,7 +3,7 @@
   "title": "App Install UGC Ads for Tech Shops | AIVideosUGC",
   "description": "Make UGC ads for app installs and signups from a tech brand. Upload an app link or a screenshot, pick an avatar, and post a product walkthrough.",
   "h1": "UGC Ads That Drive App Installs",
-  "eyebrow": "Tech & Electronics",
+  "eyebrow": "Speaker Ads Without a Shoot",
   "lead": "A speaker can get a demo before anyone answers a casting email. Upload one clear photo and let an AI avatar press its button.",
   "card": "Unboxings, setups, and daily-use scenes from one gadget photo.",
   "secondary_keywords": [
@@ -15,39 +15,39 @@
   ],
   "faq": [
     {
-      "q": "Do I need a shoot before I can make an electronics ad?",
+      "q": "Do I need a shoot before I can make a speaker ad?",
       "a": "No. Upload one photo of the speaker or paste a product link, name the button the avatar presses, and download the ad. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns its credits."
     },
     {
-      "q": "Do I need video editing experience?",
+      "q": "Do I need editing skills to make a speaker ad?",
       "a": "No. A spoken voice and captions come with the speaker clip, and you can fix them in the editor before you export."
     },
     {
-      "q": "Can I make several versions of the same gadget?",
+      "q": "Can I make several speaker ads from one photo?",
       "a": "Yes. One speaker photo can become an unboxing, a button press, and a desk scene."
     },
     {
-      "q": "Which electronics can I show from one photo?",
+      "q": "Which gadgets can I turn into an ad from one photo?",
       "a": "Speakers, cables, docks, and other gadgets with a clear shape. Use that product's own photo, and name one action, such as a button press or an unboxing."
     },
     {
-      "q": "Can I make an electronics ad without hiring a creator?",
+      "q": "Can I make a speaker ad without hiring a creator?",
       "a": "Yes. Upload one speaker photo or paste a link, pick an AI avatar, and pay the credits shown before the job. Post the clip as an ad."
     },
     {
-      "q": "Will the clip state my battery life or wattage?",
-      "a": "Do not trust the picture for the numbers. Add battery life, watts, and which devices the cable fits in the listing or the editor, where you can check them."
+      "q": "Will the speaker clip state my battery life or wattage?",
+      "a": "Add battery life, watts, and which devices the cable fits in the listing or the editor. Do not trust the picture for those numbers, so you can check them first."
     },
     {
-      "q": "Can I run the clips as paid gadget ads?",
+      "q": "Can I run the speaker clip as a paid ad?",
       "a": "Yes. The download has no watermark, and you can use it in paid ads. Do not overstate how the speaker performs."
     },
     {
-      "q": "What video shape should I pick?",
+      "q": "What video shape should I pick for a speaker ad?",
       "a": "Use 9:16 for a phone feed, 1:1 for a square, and 16:9 for a wide page. Use 4:3 or 3:4 when the page asks for them."
     },
     {
-      "q": "Can the gadget ad include a voice and captions?",
+      "q": "Can the speaker ad include a voice and captions?",
       "a": "Yes. Pick an AI avatar and the speaker clip can include a spoken line and captions."
     }
   ],
@@ -101,7 +101,7 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions About Electronics Product Videos"
+        "h2": "Questions Before You Post a Speaker Ad"
       }
     }
   },
@@ -269,7 +269,7 @@
   "more_sections": [
     {
       "eyebrow": "On the finished clip",
-      "h2": "What a Gadget Ad Can Include",
+      "h2": "What You Can Add Before You Post",
       "lead": "A spoken line can ride with the clip, so the demo is ready to post.",
       "items": [
         {
@@ -277,7 +277,7 @@
           "d": "A product page is enough to start an unboxing, a setup, or a desk scene."
         },
         {
-          "t": "An Avatar From the Library",
+          "t": "An Avatar Holds the Webcam",
           "d": "An AI avatar can sit at the desk and hold the speaker. Choose a face that fits who buys this kind of gadget."
         },
         {

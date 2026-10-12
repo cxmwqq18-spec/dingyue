@@ -83,7 +83,7 @@
     },
     {
       "q": "What if I want a scene with no person?",
-      "a": "Use a table scene when size on a body is not the point. Photos with no person are on the [lifestyle product photos](page:lifestyle-photos) page."
+      "a": "Use a table scene when size on a body is not the point. You can still clear the cloth and keep one shadow."
     }
   ],
   "visual": {
@@ -556,7 +556,7 @@
         "h2": "Add Jewelry Details After Download"
       },
       "faq": {
-        "h2": "Questions About AI Jewelry Model Photos"
+        "h2": "Jewelry Photo Questions Before You List"
       }
     }
   },
@@ -624,7 +624,7 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Try one piece",
+      "eyebrow": "See the Edit on One Piece",
       "h2": "Try One Photo Before the Whole Tray",
       "lead": "One piece is enough to see the edit before a larger run.",
       "items": [

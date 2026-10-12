@@ -3,9 +3,9 @@
   "title": "UGC Video Ads by Industry You Sell | AIVideosUGC",
   "description": "Open the industry you sell in and turn one photo into a UGC ad. Download the clip and post it without booking a studio day. Cost shows first.",
   "h1": "UGC Video Ads for the Industry You Sell In",
-  "eyebrow": "Browse by industry",
+  "eyebrow": "Find the Ad for Your Product",
   "lead": "Open the industry that matches what you sell, and turn one photo into a UGC ad. You already have the photo.",
-  "card": "Photo and video ideas matched to what you sell.",
+  "card": "Open your category and make a clip from one photo of the item.",
   "secondary_keywords": [
     "AI product photos by category",
     "ecommerce content ideas by industry",
@@ -152,7 +152,7 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "How to Make a Product Photo or Video in 3 Steps"
+        "h2": "How to Make the Ad in 3 Steps"
       },
       "m3": {
         "h2": "Ideas for What You Sell",
@@ -282,7 +282,7 @@
         "icon": "Languages"
       },
       {
-        "t": "Support on the File",
+        "t": "Get Help When a File Looks Wrong",
         "d": "Support can open a launch file with you when something looks off, and you decide whether it posts.",
         "icon": "MessageCircle"
       },
@@ -292,7 +292,7 @@
         "icon": "Ratio"
       },
       {
-        "t": "A File Ready to Download",
+        "t": "Download the File When It Finishes",
         "d": "When the job finishes, the file is waiting in your account to download.",
         "icon": "Gauge"
       },
@@ -332,7 +332,7 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Start from what you have",
+      "eyebrow": "Start From What You Already Have",
       "h2": "Everything That Goes Into the Ad",
       "lead": "You can start from the photo, the link, or the note you already have, and the ad is built in one place.",
       "items": [
@@ -363,7 +363,7 @@
       ]
     },
     {
-      "eyebrow": "Compared with a shoot",
+      "eyebrow": "Skip the Shoot for This Ad",
       "h2": "AIVideosUGC Next to Hiring a Creator",
       "lead": "You spend credits instead of a creator's day rate, and a photo you already have is enough to start.",
       "items": [
@@ -453,9 +453,9 @@
     ]
   },
   "closing": {
-    "h2": "Plans for the Next Product",
+    "h2": "Pick a Plan for This Month",
     "paras": [
-      "Pick the monthly plan that fits how many products you are launching this month.",
+      "Pick Starter, Pro, or Premium for how many products you launch this month. You see each job's credit cost before it starts.",
       "If a job fails, those credits return. You keep a finished file."
     ]
   }

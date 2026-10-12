@@ -3,9 +3,9 @@
   "title": "AI UGC Ads for Beauty and Cosmetics | AIVideosUGC",
   "description": "Show a skincare step, a makeup look, or hair care in a beauty and cosmetics UGC ad. Start from one product photo, then download a clip you can post.",
   "h1": "Beauty UGC Ad Generator for Cosmetics",
-  "eyebrow": "Clothing",
+  "eyebrow": "Clothing Ads Without a Shoot",
   "lead": "AI model photos and videos for fashion brands start from one flat photo. A buyer trusts a wool coat once the hem moves, and an AI avatar can walk it down a hallway with no casting day.",
-  "card": "Try-on clips, outfit photos, and review-style videos from one garment photo.",
+  "card": "You get try-on clips, outfit photos, and review videos from one garment photo, so the fit is easy to see.",
   "secondary_keywords": [
     "AI on-model clothing photos",
     "AI lookbook for clothing brands",
@@ -15,39 +15,39 @@
   ],
   "faq": [
     {
-      "q": "Can one garment photo make both a vertical clip and a listing image?",
+      "q": "Can one hoodie photo make both a vertical clip and a listing image?",
       "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a turn or a short walk. The same photo can also make a still of someone wearing the piece. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits."
     },
     {
-      "q": "Can a flat-lay photo become a photo of someone wearing the piece?",
+      "q": "Can a flat photo of the hoodie become a photo of someone wearing it?",
       "a": "Yes. Smooth the garment, shoot the whole piece in even light, or paste a product link, and describe the avatar and the room. You can pick from 53 AI actors when you want a face that already exists."
     },
     {
-      "q": "Will the print or the fabric change?",
+      "q": "Will the hoodie's print or fabric change in the try-on?",
       "a": "The result follows your photo. Fine stripes, embroidery, and buttons stay closer when the upload is sharp. If a trim moves, make another version. A failed job returns its credits."
     },
     {
-      "q": "Can I show a plus-size or petite build?",
+      "q": "Can I show the hoodie on a plus-size or petite build?",
       "a": "Yes. Describe height, build, and age range in plain words. The AI avatar is generated for that ad, and you can ask again if the outline is off."
     },
     {
-      "q": "What photo works when someone should appear in the clothes?",
+      "q": "What photo works when someone should wear the hoodie?",
       "a": "Lay it flat or hang it, with the whole garment visible, front side up, in even light. The outline, color, print, and fastenings all need to be clear before you start."
     },
     {
-      "q": "How do I keep the fabric color accurate?",
+      "q": "How do I keep the hoodie fabric color true?",
       "a": "Shoot in soft daylight, not under a warm lamp, and name the color in plain words so the file can be checked against the sample."
     },
     {
-      "q": "Can I run the clips as paid clothing ads?",
+      "q": "Can I post these hoodie clips as paid clothing ads?",
       "a": "Yes. The download has no watermark, and you can use it in paid ads. Size and fabric details have to match the real garment you ship."
     },
     {
-      "q": "How is this different from hiring a creator?",
+      "q": "How is a hoodie try-on different from hiring a creator?",
       "a": "You pick an AI avatar and pay the credits shown before the job, not a creator fee. Post the clip as an ad once the hem and the color match the sample."
     },
     {
-      "q": "Can a try-on include a voice and captions?",
+      "q": "Can the hoodie try-on include a voice and captions?",
       "a": "Yes. The clip can include a spoken line and captions, and you can publish it to TikTok, Instagram, or Facebook. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     }
   ],
@@ -100,7 +100,7 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions About a Garment Photo to Model Photo"
+        "h2": "From a Garment Photo to a Try-On"
       }
     }
   },
@@ -271,7 +271,7 @@
   "more_sections": [
     {
       "eyebrow": "With the clip",
-      "h2": "What a Clothing Ad Can Include",
+      "h2": "What Your Clothing Ad Can Show",
       "lead": "A spoken line can come with the try-on, so the ad is ready to post on the channel you already use.",
       "items": [
         {

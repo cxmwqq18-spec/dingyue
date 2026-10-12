@@ -3,8 +3,8 @@
   "title": "FAQ: Credits, Uploads, Privacy and More | AIVideosUGC",
   "description": "AIVideosUGC FAQ: what you can make, photo upload tips, video lengths and sizes, credits, refunds, privacy and adding prices to ads. Find your answer here.",
   "h1": "AIVideosUGC FAQ: Answers Before You Start",
-  "eyebrow": "Help center",
-  "lead": "AIVideosUGC FAQ answers on product videos, photos, credits, privacy, and using finished files in ads. The first sentence of each answer is the part to act on.",
+  "eyebrow": "Help Before You Make a File",
+  "lead": "Read the AIVideosUGC answer on videos, photos, credits, privacy, and ads, then make the next file. The first sentence of each answer tells you what to do.",
   "card": "Check the length, the credits, the actor, the voice, and where you can post.",
   "secondary_keywords": [
     "how AI product videos work",
@@ -14,59 +14,59 @@
   ],
   "faq": [
     {
-      "q": "What is an AIVideosUGC product video?",
+      "q": "What product video can I post from one photo or a link?",
       "a": "It is a product video made from your photo or a product link, with an AI actor, a spoken voice, music, and on-screen captions. Download it, or send it to TikTok or Meta. You pick the length and the shape, such as 9:16, before it runs."
     },
     {
-      "q": "Can I make a UGC-style product video?",
+      "q": "Can I post a UGC-style product video without filming?",
       "a": "Yes. A UGC-style clip shows the product the way a shopper video would, with a presenter and a voice. You can publish it on your product page or in an ad, and label it the way that site asks."
     },
     {
-      "q": "What can I use these videos and photos for?",
+      "q": "Where can I post these videos and photos?",
       "a": "Shops use them as paid ads, as clips on a product page, and as social posts that need a presenter and movement. Start with one clear product image and pick the frame the channel wants."
     },
     {
-      "q": "Which plans and credit amounts are available?",
+      "q": "Which plan covers the photos and videos I need?",
       "a": "Starter is $24.50 per month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A product photo uses 24 credits. A video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. See [Pricing](page:pricing)."
     },
     {
-      "q": "What happens after I approve a job?",
+      "q": "What file do I get after I approve a job?",
       "a": "After you approve, the tool spends the credits shown on screen and puts the file in your account when it is ready. If the file fails, those credits come back."
     },
     {
-      "q": "Can I start from a product page link?",
+      "q": "Can I start a video from the product page I already sell?",
       "a": "Yes. Paste a public product page you are allowed to use, and the tool can start the video from that page. Review the result against the product before you post it."
     },
     {
-      "q": "What lengths and frames can I select?",
+      "q": "Which length and frame can I pick for the ad?",
       "a": "Choose 6, 10, 15, or 30 seconds. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Product photos are square. The credit charge appears before you start."
     },
     {
-      "q": "What kind of photo should I upload?",
+      "q": "What photo should I upload so the product stays recognizable?",
       "a": "Use a sharp photo where the whole product is visible and the color is easy to judge. You can add up to 7 reference photos when the job asks for them. A clean photo gives the file a reliable start."
     },
     {
-      "q": "Who can see my uploads and generated files?",
+      "q": "Can another shop see my uploads or my finished files?",
       "a": "Other customers cannot see your uploads or your generated files. They stay in your account and are not posted for you."
     },
     {
-      "q": "Can I use the images and videos in my own ads?",
+      "q": "Can I run these images and videos as my own ads?",
       "a": "Yes. You can publish downloaded images and videos on your product pages, in your ads, and in social posts. Follow the rules of the place you post them."
     },
     {
-      "q": "Do downloads include a watermark?",
+      "q": "Will a watermark sit on the file I post?",
       "a": "No. Downloaded images and videos do not include an AIVideosUGC watermark. You can use the file in a paid ad."
     },
     {
-      "q": "Can I edit a file after it is generated?",
+      "q": "Can I edit the file before I post it?",
       "a": "Yes. Change the words, captions, voice, music, or presenter in the editor, then download the file. You can also start another job when you want a different scene."
     },
     {
-      "q": "Do I pay before the first file?",
+      "q": "Do I pay before I make the first photo or video?",
       "a": "Yes. You start on a paid plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The credit cost shows before every job, and a failed job returns its credits."
     },
     {
-      "q": "Can I use my own face or another language?",
+      "q": "Can the ad use my face, or run in another language?",
       "a": "Yes. You can clone your face and voice into an AI twin, and you can run the same product video again in another language. Check the line before you post it. The actor library has 53 AI actors if you would rather pick one."
     }
   ],
@@ -81,7 +81,7 @@
     "guide-product-photo-tips"
   ],
   "reasons": {
-    "h2": "What You Can Do From Here",
+    "h2": "Turn an Answer Into a File",
     "lead": "You can use these tools today, starting from one product photo.",
     "items": [
       {

@@ -3,7 +3,7 @@
   "title": "UGC Inspiration Gallery of Ad Templates | AIVideosUGC",
   "description": "Browse an inspiration gallery of UGC and product ad templates. Pick a layout, add your own product photo, and post the ad without writing a prompt.",
   "h1": "See a Template, Drop In Your Product, Post It",
-  "eyebrow": "Product ad templates",
+  "eyebrow": "Product Ad Templates to Post",
   "lead": "See a product ad template, drop in the photo you already have, and post a speaking clip. You skip the blank prompt.",
   "card": "Ready-made layouts for product pictures and short clips. Add your photo and download the next file.",
   "secondary_keywords": [
@@ -14,11 +14,11 @@
   ],
   "faq": [
     {
-      "q": "What is a product ad template?",
+      "q": "What is a product ad template for the item I sell?",
       "a": "A product ad template is a finished layout for your product, with the scene and the speaking pace already set. Add the leather duffel photo, and an AI actor can deliver the line. You are not building the ad from an empty timeline."
     },
     {
-      "q": "How does a product ad template work?",
+      "q": "How does a template become an ad I can post?",
       "a": "You add the product photo or the product link, then set the one line a buyer would actually say. When the frame shows your serum, an AI actor speaks it. Save the clip, or post it to your shop."
     },
     {
@@ -26,31 +26,31 @@
       "a": "The creator you wanted is booked, and a second opening line can still be made while you wait. A serum ad can get that new line, plus a fresh script, without a new booking."
     },
     {
-      "q": "Who are these product ad templates for?",
+      "q": "Who should use a product ad template?",
       "a": "A founder with one necklace photo, a marketer refreshing this month's ads, and an agency making a client file all start here. The shared step is a picture of the item you already sell."
     },
     {
-      "q": "I have never edited a video. Can I still use a template?",
+      "q": "I have never edited a video. Can I still make an ad from a template?",
       "a": "Yes. Start with a watch photo and the three steps above. If a caption runs long, shorten it in the editor, or drop a song under the voice."
     },
     {
       "q": "Which industries are these product ad templates for?",
-      "a": "Accessories, apparel, beauty, clothing, food, and home goods all have layouts here, and so do apps, education, and fitness. Use the category buttons to open one."
+      "a": "Accessories, apparel, apps, beauty and personal care, and clothing all have layouts. So do e-commerce, education, explainers, financial services, food and beverage, and footwear. Health and fitness, jewelry, kids and toys, pets, sports, and tech are included. Creator-style ads and viral layouts are included too. Open one with the category buttons."
     },
     {
-      "q": "Am I allowed to bring my own pictures and clips?",
+      "q": "Can I use my own pictures and clips in a template?",
       "a": "Yes, if you have the right to use them. A front-on photo of the frying pan and your shop logo are a usual pair. A clip you filmed yourself can come in too, with up to 7 reference images on one job."
     },
     {
-      "q": "Where can I publish a file from these layouts?",
+      "q": "Where can I publish the ad from these layouts?",
       "a": "Post the download on TikTok, YouTube, Facebook, Instagram, or LinkedIn, or publish it from a connected account. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. Use 9:16 for TikTok, 1:1 for a square feed, 16:9 when the placement is wide, and 4:3 or 3:4 when the slot asks for those."
     },
     {
-      "q": "Do these templates cost anything?",
+      "q": "Do these ad templates cost credits to use?",
       "a": "Yes. A photo spends 24 credits, and a clip spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start, and a failed job returns the credits. Prices are on the [pricing page](page:pricing). Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Can I use the download in paid ads?",
+      "q": "Can I use the download in a paid ad?",
       "a": "Yes. A necklace clip can run as a paid ad, and the same file can go to a client. The download has no watermark, and you still need rights to the product photo. An AI twin can keep one face across versions. The API can start the next file from your catalog."
     },
     {
@@ -571,23 +571,23 @@
   "benefits_lead": "Open one card and the ad is already a speaking clip. You bring the product photo.",
   "benefits": [
     {
-      "t": "An AI Script",
+      "t": "Draft the Line About the Strap",
       "d": "For a backpack, the draft can open on the padded strap, not on a generic hello. Change the color name in that line and the ad matches your listing."
     },
     {
-      "t": "A Voice on the Clip",
+      "t": "A Voice Shoppers Hear",
       "d": "A generated voice reads the script out loud, in the language you pick for that version. Shoppers hear the line while they watch."
     },
     {
-      "t": "Captions on the Clip",
+      "t": "Captions Shoppers Can Read",
       "d": "The words sit on the video, so shoppers can read the line while the voice plays. A candle ad can show the scent name on screen."
     },
     {
-      "t": "An AI Avatar From the Library",
+      "t": "An Avatar Holds the Necklace",
       "d": "An AI avatar from the library can hold the necklace in a daylight close-up. If the face should be yours, an AI twin can be built from photos you already took."
     },
     {
-      "t": "Editor and a Music Library",
+      "t": "Trim the Blender Clip and Add Music",
       "d": "You can trim the blender clip to the sentence about the glass jar, and lay a track under it in the editor."
     },
     {

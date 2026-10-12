@@ -3,7 +3,7 @@
   "title": "AI UGC Videos for Food and Beverage | AIVideosUGC",
   "description": "Make AI UGC videos for food and beverage products from one package photo. Show a pour or a plate, then download a clip you can post without a kitchen day.",
   "h1": "AI UGC Videos for Food and Beverage Products",
-  "eyebrow": "Food & Beverage",
+  "eyebrow": "Food and Drink Ads",
   "lead": "Upload the citrus bottle and let an AI avatar pour it over ice for an AI UGC video. You get a clip you can post, without booking a kitchen for the pour.",
   "card": "Pours, plates, and package scenes from one food photo.",
   "secondary_keywords": [
@@ -16,7 +16,7 @@
   "faq": [
     {
       "q": "Will the ingredient list and nutrition panel look right?",
-      "a": "Do not rely on the image for small print. Allergens, ingredients, and nutrition facts should always come from the real label."
+      "a": "The pour is what you post. Keep allergens, ingredients, and nutrition facts on the real citrus label, not in the image's small print."
     },
     {
       "q": "Can I turn a bottle photo into a pour video?",
@@ -39,11 +39,11 @@
       "a": "Not for these clips. Pick an AI avatar, or let the hands come from your bottle photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
     },
     {
-      "q": "Which video shapes can I use?",
+      "q": "Which shapes can the food ad use?",
       "a": "Use 9:16 for a phone feed, 1:1 for a square, 16:9 for a wide page, and 4:3 or 3:4 when the page asks for them. A square photo fits many listings."
     },
     {
-      "q": "What should the scene keep visible?",
+      "q": "What should stay visible on the package?",
       "a": "Keep the package shape and the main label area recognizable, and end on the full product when you can. Do not ask the clip to invent a flavor that is not in the photo."
     },
     {
@@ -66,7 +66,7 @@
     },
     {
       "t": "Add a Spoken Voice, Then Post",
-      "d": "Download the file and post it where that citrus drink already sells."
+      "d": "Download the citrus pour with the voice and captions already in it, and post it where that drink sells."
     }
   ],
   "visual": {
@@ -102,7 +102,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About Food Packaging Photos and Pours"
+        "h2": "Questions Before You Post the Pour"
       }
     }
   },
@@ -272,8 +272,8 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "With the clip",
-      "h2": "What a Food Ad Can Include",
+      "eyebrow": "In the Finished Clip",
+      "h2": "A Pour Ad You Can Post",
       "lead": "A spoken line can ride with the citrus pour, so the ad is ready to post.",
       "items": [
         {
@@ -281,11 +281,11 @@
           "d": "A product page is enough to start a citrus pour, a cookie bite, or a pouch on the shelf."
         },
         {
-          "t": "An Avatar From the Library",
+          "t": "Pick a Face for the Pour",
           "d": "An AI avatar can sit with the glass. Choose a face that fits a kitchen, not a studio host."
         },
         {
-          "t": "Voice and Captions Included",
+          "t": "Voice and Captions Ready to Post",
           "d": "A voice can name the citrus flavor, and captions can repeat that line on screen."
         },
         {
@@ -293,7 +293,7 @@
           "d": "You get a short script about one pour or one bite, and you can change a word in the editor."
         },
         {
-          "t": "Edit Before You Export",
+          "t": "Trim and Fix, Then Download",
           "d": "You can trim the clip and fix a caption here, then download a file with no watermark."
         },
         {

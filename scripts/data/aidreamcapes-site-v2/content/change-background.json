@@ -32,19 +32,19 @@
   "benefits": [
     {
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
-      "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall.",
+      "alt": "Same matte blue ceramic vase on a pale wood studio table against a warm wall, ready for the listing.",
       "t": "Save the Hours and the Fee",
       "d": "A pale wood studio table behind the vase is a short job, not a studio booking. If the photo fails, those credits come back."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-seasonal-r1",
-      "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage.",
+      "alt": "Same matte blue ceramic vase on a seasonal shelf with oatmeal linen and green foliage, ready to list.",
       "t": "Keep Edges and Small Details",
       "d": "The seasonal shelf leaves the vase rim and the blue color in frame, so the product is still easy to recognize."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
-      "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
+      "alt": "Same matte blue ceramic vase on a shaded garden table with oatmeal linen and green foliage, ready to post.",
       "t": "Download a Sharp Finished Photo",
       "d": "The garden-table photo is a finished file with the setting already in it, and it has no watermark. It is sharp enough for a listing or a paid ad."
     }
@@ -179,7 +179,7 @@
     "uses": [],
     "titles": {
       "faq": {
-        "h2": "Questions About the AI Product Background Changer"
+        "h2": "Questions Before You List the Vase"
       }
     },
     "input": [
@@ -226,19 +226,19 @@
         "t": "Clear the Counter Behind the Cleanser",
         "d": "A mint cleanser tube on a plant-filled counter comes back on a quiet gray backdrop. The listing shows the tube, not the leaves.",
         "img": "n:guide:k5-background-case-1",
-        "alt": "Mint cleanser tube on a plant-filled counter."
+        "alt": "Mint cleanser tube on a plant-filled counter, ready for the listing."
       },
       {
         "t": "Pair the Sneakers With the Bag",
         "d": "Set the black and white sneakers beside the purple handbag on one pale backdrop. Both stay the products you sell, and only the floor behind them changes.",
         "img": "n:guide:k5-background-case-2",
-        "alt": "Black and white sneakers beside a purple handbag."
+        "alt": "Black and white sneakers beside a purple handbag, ready to list."
       },
       {
         "t": "Move Serum and Sunscreen",
         "d": "Place the serum among green leaves, then the two sunscreen bottles on the beach. Each new setting is a short credit job, and the charge appears before the photo is made.",
         "img": "n:guide:k5-background-case-3",
-        "alt": "Serum bottle among green leaves and two sunscreen bottles on sand."
+        "alt": "Serum bottle among green leaves and two sunscreen bottles on sand, ready to post."
       }
     ]
   },

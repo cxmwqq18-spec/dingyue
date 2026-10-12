@@ -3,7 +3,7 @@
   "title": "AI UGC for Home Decor | AIVideosUGC",
   "description": "Make AI UGC for home decor from a photo you own. Put the vacuum, the lamp, or the pillows in the room, then download a clip you can post today.",
   "h1": "AI UGC for Home Decor, Shown in the Room",
-  "eyebrow": "Home and living",
+  "eyebrow": "Room Ads for Home Decor",
   "lead": "Turn one home decor photo into an AI UGC clip in the room it belongs in. A pillow can leave the plain white backdrop and sit on the bed.",
   "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
@@ -15,39 +15,39 @@
   ],
   "faq": [
     {
-      "q": "Can I show a closet before and after?",
+      "q": "Can I show the closet before and after without a new shoot?",
       "a": "Yes, when the after state is something the product really does. Describe both states in plain language, and do not invent a result the rack cannot produce."
     },
     {
-      "q": "Will furniture show up at the right size?",
+      "q": "Will the sofa or the table show up at the right size in the room?",
       "a": "The scale in the picture can drift. Put the true dimensions in the listing. You can still mention a size in the scene, such as a 24-inch side table next to an armchair."
     },
     {
-      "q": "Does this work for sofas and beds?",
+      "q": "Can I put a sofa or a bed in the room from one photo?",
       "a": "Yes, if the photo shows the whole piece, legs included, and you name a room large enough to hold it. A missing leg or handle cannot be invented later."
     },
     {
-      "q": "Can I start from a photo on a white background?",
+      "q": "Can I start from a white-background photo and still get a room?",
       "a": "Yes. Keep the entire product in frame, including legs, handles, and cords. The scene can only use what that photo already shows."
     },
     {
-      "q": "Can I make a short cleaning demo?",
+      "q": "Can I make a short cleaning demo of the vacuum without filming?",
       "a": "Yes. Show one mess the viewer can see, hold the camera steady, and let the product make a single pass."
     },
     {
-      "q": "What should I describe in the scene?",
+      "q": "What should I describe so the room scene is ready to post?",
       "a": "Name the room, the furniture nearby, the light, and the one action shoppers need to see. Keep exact dimensions and materials in the listing text."
     },
     {
-      "q": "Can I run these clips as paid ads?",
+      "q": "Can I run the room clip as a paid ad after I download it?",
       "a": "Yes. Downloads carry no watermark, so a room clip can go straight into a paid ad."
     },
     {
-      "q": "Do I need a studio or a hired model?",
+      "q": "Do I need a studio or a hired model for the room clip?",
       "a": "No. Choose an AI avatar instead of booking a model or a set. A clip can include a voice, a voiceover, captions, a music track, and a script. If that clip fails, the credits return."
     },
     {
-      "q": "Can a product link lead to more than one version?",
+      "q": "Can one lamp listing give me the lamp off and the lamp on?",
       "a": "Yes. Paste the listing, or let your shop software send it through the API. Ask for the lamp off in one version and on in the next, then trim both in the editor before you export."
     }
   ],
@@ -152,19 +152,19 @@
         "t": "Cover the Whole Listing",
         "d": "One photo of the vacuum can feed a clip for every room on the listing, so you are not booking a creator for each cushion. A 10-second clip of the vacuum crossing the sofa is 40 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
         "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
-        "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
+        "alt": "An adult hand guides a plain cordless vacuum over crumbs on a sofa cushion. You show that cleaning pass without booking a studio."
       },
       {
         "t": "Skip the Studio Booking",
         "d": "You do not book a studio for the closet organizer. One organizer photo covers a square still for the product page and a tall clip of hands dropping shirts into the bins.",
         "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
-        "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
+        "alt": "Adult hands place folded shirts into a plain fabric closet organizer. You show the bins in use without a shoot."
       },
       {
         "t": "Keep One Presenter",
         "d": "The same AI actor can present the lamp switched on beside the reading chair, then the next piece in that room. Shoppers see the lamp on, which is the moment that sells the piece.",
         "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
-        "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair."
+        "alt": "An adult hand adjusts a plain ceramic table lamp beside a reading chair. You put the lamp in the room shoppers can picture."
       }
     ]
   },
@@ -183,13 +183,13 @@
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "Place the Product on Facebook",
-        "d": "A feed placement that puts the product in a room, with space to add your offer after you download.",
+        "t": "Put the Lamp on Facebook",
+        "d": "Put the lamp in a room on Facebook, then add your offer and post it.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "Show One Action in a Short",
-        "d": "One clear action, framed as a YouTube Short, so the job of the product is obvious right away.",
+        "t": "Show the Vacuum in a Short",
+        "d": "Show the cordless vacuum crossing the cushion in a YouTube Short. You show the job without a studio.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
@@ -198,8 +198,8 @@
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Match the Room on Shopify",
-        "d": "Matching room imagery for the Shopify product page and the collection it belongs to.",
+        "t": "Use the Same Room on Shopify",
+        "d": "Use the same room photo on the Shopify product page and the collection, so you do not shoot twice.",
         "href": "/platforms/shopify-product-photos"
       }
     ]

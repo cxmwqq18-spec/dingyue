@@ -3,7 +3,7 @@
   "title": "AI Virtual Fashion Model Photos | AIVideosUGC",
   "description": "Create virtual model photos without a photoshoot. Put your garment on an AI fashion model, check the fit, and download a lookbook image you can post.",
   "h1": "Virtual Model Photos Without a Photoshoot",
-  "eyebrow": "Clothing & jewelry",
+  "eyebrow": "On-Model Photos Without a Shoot",
   "lead": "A flat photo of the garment can become a virtual model photo of an adult wearing it. Check the collar, hem, and zipper before you post.",
   "secondary_keywords": [
     "AI model photos for clothing",
@@ -82,21 +82,21 @@
       "alt": "Adult Black woman with short natural hair wearing a plain gray hoodie by a brick wall."
     },
     {
-      "h2": "More Photo Tools for the Same Piece",
+      "h2": "More Looks From the Same Hoodie",
       "paras": [
         "A messy background can become a plain field before anyone wears the hoodie. The piece was shot on a messy bed, and the [background tool](page:change-background) clears that so the collar stays easy to see.",
         "If the shop's other photos sit on warm gray, ask for that same gray behind the hoodie too.",
         "A tote that is not worn can sit on a bench with [lifestyle photos](page:lifestyle-photos), beside the on-model hoodie shot.",
         "A dark phone photo can be brightened, and a stray cup can come out of the corner. Save the pixel size the marketplace form asks for.",
-        "When the piece should be on a person, open [model photos](page:model-photos) and use the photo you just cleaned.",
+        "To put the hoodie on a person without another shoot, open [model photos](page:model-photos) and use the photo you just cleaned.",
         "After the neckline check, the file can go on the product page. A feed post can use the same file if the crop still shows the hem.",
         "Clean dust and loose wrinkles off the photo first, so the result has less to invent.",
         "Start from the square photo, then make a taller or wider version for the place that needs it.",
         "A large catalog can send garments through the API and get the photos back. Your own system can start that work.",
         "Type your own headline and price on the downloaded file, so the letters stay exact.",
-        "Run the colors together when they should share one look. Review each file before it goes up.",
+        "Run the hoodie colors together so the set shares one look. Review each file before it goes up.",
         "A teammate can open the same set and mark a bad neckline before anyone posts it.",
-        "Write down the person's name in your notes and keep the logo file in the same folder. The next piece can start from those two.",
+        "Write the saved person's name in your notes and keep the logo file in the same folder. The next hoodie can start from those two.",
         "Use the logo you already own, and read every letter before the file goes on the listing.",
         "The saved looks open from the shop computer or from a phone, so a teammate can check a hem away from the desk."
       ]
@@ -104,8 +104,8 @@
     {
       "h2": "Check the Hoodie Before You Post",
       "paras": [
-        "A flat photo becomes an adult wearing the hoodie, without a studio morning. Check the collar, hem, and zipper before you post.",
-        "One image costs 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Saving the look keeps the same person on the next piece."
+        "You turn a flat hoodie photo into an adult wearing it, with no studio morning. Check the collar, hem, and zipper before you post.",
+        "Saving the look keeps the same person on the next hoodie. One image costs 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
       ]
     }
   ],
@@ -119,15 +119,15 @@
   ],
   "faq": [
     {
-      "q": "How does a flat garment photo become an on-model picture?",
+      "q": "How does a flat hoodie photo become an on-model picture?",
       "a": "Photograph the garment so the whole piece is in frame, choose the adult you saved, and name the room. Then compare the collar, hem, and zipper with the real piece before you post."
     },
     {
-      "q": "Can I put my own clothing on a generated adult?",
+      "q": "Can I put the clothing I sell on a generated adult?",
       "a": "Yes. The garment in the picture is yours. You choose who wears it, and you can save that person for the next color in the set."
     },
     {
-      "q": "Will one saved face stay through a whole lookbook?",
+      "q": "Can one saved face stay through my whole lookbook?",
       "a": "Only when you pick the saved person again. A new description can grow a different face. Keep a note of the name you saved so the next piece starts there."
     },
     {
@@ -135,11 +135,11 @@
       "a": "It puts the garment on a person in a room you name. It can look like a catalog photo. Check the neckline, length, print, and zippers. It does not replace a fit model or your size chart."
     },
     {
-      "q": "Can a catalog send these photos through the API?",
+      "q": "Can my shop software send these photos through the API?",
       "a": "Yes. A catalog can send products through the API and get the on-model photos back. Your own system can start that work for the next color."
     },
     {
-      "q": "Do I need to say the person in the photo is generated?",
+      "q": "Do I need to say the person in the photo is generated before I post?",
       "a": "Check the current disclosure rule for the site where the image will appear. Rules differ, and they change. When a label is required, add it before you post."
     },
     {

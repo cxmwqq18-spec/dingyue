@@ -3,7 +3,7 @@
   "title": "AI UGC Generator for Video Ads | AIVideosUGC",
   "description": "Create AI UGC video ads from one product photo with the AI UGC generator. Pick the face, the language, and the line, then download a cut you can test.",
   "h1": "Create AI UGC Video Ads on Demand",
-  "eyebrow": "UGC video template",
+  "eyebrow": "UGC Video Ad Template",
   "lead": "Create an AI UGC ad from one product photo. Pick the AI avatar, the language, and the line. Download a cut you can test on TikTok, or a square for the grid.",
   "secondary_keywords": [
     "creator style product photos",
@@ -132,7 +132,7 @@
       ]
     },
     "picker": {
-      "title": "Browse Video Templates by Category",
+      "title": "Browse UGC Templates to Post",
       "lead": "Each card is a tall 9:16 UGC video ad. Upload your product photo above, then write the caption after you download.",
       "chips": [
         {
@@ -658,7 +658,7 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "On this ad",
+      "eyebrow": "Set the Whole Ad",
       "h2": "Full Control on Every UGC Ad",
       "lead": "You set the face, the sound, the words, and the file on one ad, then download it.",
       "items": [

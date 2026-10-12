@@ -3,7 +3,7 @@
   "title": "Beauty Video Templates for Products | AIVideosUGC",
   "description": "Pick a beauty video template, drop in your own product, and download a clip with the frame and the voice already set. Skip a blank timeline and post it.",
   "h1": "Beauty Video Templates for the Product You Sell",
-  "eyebrow": "Product photo template",
+  "eyebrow": "Templates You Can Post",
   "lead": "Upload a side-view photo that shows the buttons and the USB-C port, and download a square for the listing. Repeat with the next side when you want another image.",
   "secondary_keywords": [
     "multi-angle product photos",
@@ -45,51 +45,51 @@
   },
   "faq": [
     {
-      "q": "What does this side-view template include?",
+      "q": "What does the side-view template include for me to download?",
       "a": "You get one square photo for each side you upload, with the crop already set. Use the side that shows the buttons or the USB-C port, and download that photo. A spoken line can be added later if you also make a short ad."
     },
     {
-      "q": "How do these templates get made?",
+      "q": "How do I get a square photo of each side of the speaker?",
       "a": "You get one square per side you upload. Start with the speaker's port side, keep the backdrop, and download that square before you do the front. A product link can supply words for a short ad, and your software can start the next side through the API."
     },
     {
-      "q": "Why use this instead of filming a creator?",
+      "q": "Why use the speaker photo instead of filming a creator?",
       "a": "The speaker photo you already have is enough for this listing. A second opening line for that ad can be cut without calling a crew back in."
     },
     {
-      "q": "Who is this template for?",
+      "q": "Who is this for if I sell serum, lipstick, or hair care?",
       "a": "Shops and listing managers who need a square photo of each side, starting with this speaker. A person on screen, if you add one, is an AI avatar. Beginners can start from one clear photo."
     },
     {
-      "q": "Can beginners use this template?",
+      "q": "Can I start from one photo if I have never filmed?",
       "a": "Yes. Upload a clear photo of each side. You do not need a turntable. If you also make a video, set captions, a song, and an AI voice in the editor."
     },
     {
-      "q": "Which products work with this template?",
+      "q": "Which products can I drop in and then post?",
       "a": "It fits products you already photograph from the side, starting with this speaker. Open another card in the gallery when you want a food or fitness video instead."
     },
     {
-      "q": "Can I use photos and clips I already shot?",
+      "q": "Can I start from speaker photos and clips I already shot?",
       "a": "Yes. Bring a JPG, PNG, or WebP that shows the whole speaker, including the port and the wrist strap. A short clip you have the rights to can come in when the ad needs motion you already filmed."
     },
     {
-      "q": "Which platforms are these files ready for?",
+      "q": "Where can I post these square photos and videos?",
       "a": "Each photo is square. A video from the same speaker photos can be 9:16, 1:1, 16:9, 4:3, or 3:4. A tall file fits a TikTok placement. A square fits a Facebook feed. YouTube can take the wide file, and Instagram can take the download. You can also post it yourself."
     },
     {
-      "q": "Are these templates free to use?",
+      "q": "Can I use the side-view template without spending credits?",
       "a": "No. Each product photo spends 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the number first. If it fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Can I use these files in ads?",
+      "q": "Can I post these files in paid ads and listings?",
       "a": "Yes. Downloads have nothing stamped on them, so you can use them in listings, paid ads, and work you deliver for a client."
     },
     {
-      "q": "Why use a template instead of starting from scratch?",
+      "q": "Why start from a template instead of a blank ad?",
       "a": "The size and the crop are already chosen. You add the side photo, check the words, and download. You do not build the ad from a blank file."
     },
     {
-      "q": "Can one photo show a port that was hidden?",
+      "q": "Can one speaker photo show a USB-C port that was hidden?",
       "a": "No. Photograph that side and upload it. A made-up view is not a safe way to show a USB-C port, button, or wrist strap that was not in the photo."
     }
   ],
@@ -545,7 +545,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Side-View Questions Before You Post"
       },
       "m3": {
         "h2": "Browse Scenes by Category",

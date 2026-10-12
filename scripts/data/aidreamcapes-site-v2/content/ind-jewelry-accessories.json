@@ -3,9 +3,9 @@
   "title": "AI UGC Ads for Jewelry Brands | AIVideosUGC",
   "description": "Make AI UGC ads for jewelry from a photo of the ring or necklace. An actor wears it and says your line. See the credit cost, then download the file.",
   "h1": "AI UGC Ads for Jewelry, Worn on Camera",
-  "eyebrow": "Jewelry and accessories",
+  "eyebrow": "Post Jewelry Worn on Camera",
   "lead": "Show the ring on a hand and the necklace at the collarbone, with an AI actor and a spoken line you approve. Earrings and bracelets can get the same worn ad.",
-  "card": "Tight close-ups, worn photos, and gift scenes from one jewelry photo.",
+  "card": "One jewelry photo gives you a close-up, a worn shot, and a gift scene you can post.",
   "secondary_keywords": [
     "AI jewelry model photos",
     "jewelry close-up photos",
@@ -142,19 +142,19 @@
         "t": "A Tight View of the Clasp",
         "d": "A tight view of the clasp comes from the linen photo of the pendant you already have. That saves a fresh studio day on the next piece.",
         "img": "n:guide:fx31-ind-jewelry-benefit-macro",
-        "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
+        "alt": "Post this close view of the silver pendant on linen, and skip a new studio day."
       },
       {
         "t": "One Watch, Two Frames",
         "d": "One watch photo becomes a wrist clip for the phone feed and a square of the dial for the gallery.",
         "img": "n:guide:fx31-ind-jewelry-benefit-watch",
-        "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
+        "alt": "Show the unbranded silver watch on a wrist in daylight, and post that worn ad."
       },
       {
         "t": "Show the Bag on a Shoulder",
         "d": "A tote on an adult shoulder makes the size obvious in one frame, and the ad can run without a fit-model booking.",
         "img": "n:guide:fx31-ind-jewelry-benefit-bag",
-        "alt": "Adult hand carrying a plain brown leather shoulder bag outdoors."
+        "alt": "Show the brown leather bag on a shoulder outdoors so the size is obvious in the ad."
       }
     ]
   },
@@ -163,32 +163,32 @@
     "lead": "Use the same worn shot across feeds, listings, and the product page, each one framed for that spot.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
+        "t": "Post the Bracelet on TikTok",
         "d": "A vertical try-on of the bracelet for TikTok, opening on the wrist itself.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram Ads",
+        "t": "Post the Ring on Instagram",
         "d": "A square detail of the ring, or a tall worn frame, for the grid and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook Ad Generator",
+        "t": "Run the Pendant on Facebook",
         "d": "A feed image of the pendant, with room to place your offer after download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Ads",
+        "t": "Post the Watch as a Short",
         "d": "A tight Short that stays on the watch from the first moment.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Product Photos",
+        "t": "List the Piece on Amazon",
         "d": "A sharp gallery image of the piece you can put on the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
+        "t": "Match the Bag on Your Store",
         "d": "Consistent imagery for the bag and the pieces around it.",
         "href": "/platforms/shopify-product-photos"
       }

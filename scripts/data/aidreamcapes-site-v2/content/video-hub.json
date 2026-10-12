@@ -3,7 +3,7 @@
   "title": "AI Video Generator for Ecommerce Ads | AIVideosUGC",
   "description": "AI video generator for ads from one product photo. Choose 6, 10, 15, or 30 seconds, see the cost in plan credits first, and download for social or your store.",
   "h1": "AI Video Generator for Ecommerce: Ads from One Product Photo",
-  "eyebrow": "AI video tools for online sellers",
+  "eyebrow": "Post Ads From One Photo",
   "lead": "An AI video generator lets a brand, an agency, or a creator put this week's product on video. You keep the shoot budget for the media buy, and you approve the file before it runs.",
   "maker": {
     "options": [
@@ -705,7 +705,7 @@
         "lead": "Swap in your product, keep the kind of scene, and start a clip from your own photo."
       },
       "faq": {
-        "h2": "Questions About an AI Video Generator"
+        "h2": "AI Video Generator Answers"
       }
     },
     "uses": []

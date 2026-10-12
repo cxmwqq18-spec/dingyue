@@ -4,7 +4,7 @@
   "description": "Make a beauty UGC ad from one cosmetic photo. Show the shade on a wrist, then download a clip for the feed or a paid beauty ad. Cost shows first.",
   "h1": "Make a Beauty UGC Ad From One Product Photo",
   "eyebrow": "Beauty & Personal Care",
-  "lead": "Make a beauty UGC ad from one cosmetic photo. A tinted moisturizer sells when the swatch on a wrist matches the bottle on the desk. An AI avatar can apply it, speak the shade name, and hand you a clip for the feed.",
+  "lead": "A tinted moisturizer sells when the swatch on a wrist matches the bottle on the desk. An AI avatar applies it, says the shade name, and hands you a beauty ad from that one photo.",
   "card": "Routines, color samples, unboxings, and review-style clips from one beauty photo.",
   "secondary_keywords": [
     "skincare product video ideas",
@@ -100,7 +100,7 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions About Beauty Product Photos and Ads"
+        "h2": "Answers on Beauty Photos and Ads"
       }
     }
   },
@@ -270,8 +270,8 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "With the clip",
-      "h2": "What a Beauty Ad Can Include",
+      "eyebrow": "In the Finished Beauty Clip",
+      "h2": "Put These in the Beauty Ad",
       "lead": "The clip can carry a spoken line, so the ad is ready for the feed.",
       "items": [
         {
@@ -279,7 +279,7 @@
           "d": "A product page is enough to start a routine, a shade swipe, or an unboxing."
         },
         {
-          "t": "An Avatar From the Library",
+          "t": "Pick an Avatar Who Would Buy It",
           "d": "An AI avatar can hold the compact. Pick someone who would actually buy that shade."
         },
         {

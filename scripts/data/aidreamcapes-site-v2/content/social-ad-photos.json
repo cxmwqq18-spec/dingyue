@@ -16,28 +16,28 @@
   "benefits": [
     {
       "img": "n:guide:fx18-social-benefit-offer",
-      "alt": "A plain charcoal hiking shoe on a clean city curb with open space for a headline.",
+      "alt": "You can post this square: a plain charcoal hiking shoe on a clean city curb, with open space for a headline.",
       "icon": "check",
       "t": "Skip the Studio Bill",
       "d": "The charcoal hiking shoe square is 24 credits, shown before it runs. If the image fails, those credits come back. You skip a studio day for this one shoe."
     },
     {
       "img": "n:guide:fx18-social-benefit-editor",
-      "alt": "A plain charcoal hiking shoe on a pale studio surface with clean space above the product.",
+      "alt": "You show the shoe clearly: a plain charcoal hiking shoe on a pale studio surface, with clean space above it.",
       "icon": "bolt",
       "t": "Show the Shoe Clearly",
       "d": "A clear charcoal hiking shoe is easier to buy than a dark crop. Shoppers can see the shoe, so that pair is less likely to sit unsold."
     },
     {
       "img": "n:guide:fx18-social-benefit-scene",
-      "alt": "A plain charcoal hiking shoe on a warm oak entryway floor beside a neutral mat.",
+      "alt": "You post a look shoppers can picture wearing: a plain charcoal hiking shoe on a warm oak entryway floor beside a neutral mat.",
       "icon": "layers",
       "t": "Invite a Bigger Order",
       "d": "The same charcoal hiking shoe on a warm oak floor looks ready to wear out the door. A buyer can picture it with the rest of a real outfit."
     },
     {
       "img": "n:guide:fx18-social-output-final",
-      "alt": "A plain charcoal hiking shoe on a pale stone walkway beside low greenery, framed for a square social ad.",
+      "alt": "You can post it while the offer holds: a plain charcoal hiking shoe on a pale stone walkway beside low greenery.",
       "icon": "target",
       "t": "Post While the Offer Holds",
       "d": "The stone-walkway square can be ready while your sale note is still the one you planned. You are not hunting for a photographer the night before."
@@ -89,7 +89,7 @@
     },
     {
       "q": "How often should a small shop post product photos?",
-      "a": "Three finished photos a week is enough if you can keep that pace when orders pile up. Reply to the comments. That conversation is part of the post."
+      "a": "Pick a pace you can keep when orders pile up, such as three finished photos a week. One product photo can supply those squares, and you still reply to the comments."
     },
     {
       "q": "How much does a social ad image cost?",
@@ -109,7 +109,7 @@
     },
     {
       "q": "Do I have to label the image as AI?",
-      "a": "Rules differ by app and by country. Show the label your ad account asks for. For a looser phone-shot look, see [casual phone-style product photos](page:tpl-ugc)."
+      "a": "Follow the label your ad account asks for, then post the square. Rules differ by app and by country. For a looser phone-shot look, see [casual phone-style product photos](page:tpl-ugc)."
     }
   ],
   "visual": {
@@ -311,7 +311,7 @@
         "h2": "Download a Square Social Ad Image"
       },
       "faq": {
-        "h2": "Questions About the AI Ad Image Generator"
+        "h2": "AI Ad Image Generator Answers"
       }
     },
     "uses": [
@@ -319,25 +319,25 @@
         "img": "n:guide:fx18-social-use-tote",
         "h": "Show a Morning Routine",
         "d": "Place a plain bottle in a work bag so the ad shows a commute, not the product alone.",
-        "alt": "Adult hand placing a plain sage insulated bottle into an unbranded canvas tote on an entryway bench."
+        "alt": "You post the commute, no shoot: an adult hand places a plain sage insulated bottle into an unbranded canvas tote on an entryway bench."
       },
       {
         "img": "n:guide:b2f1-social-ad-photos-use-carry-r1",
         "h": "Make the Carry Obvious",
         "d": "A sidewalk moment shows how the bag is used. Keep the product large enough to recognize when the photo is small.",
-        "alt": "Adult carrying a plain cream canvas tote along a quiet city sidewalk."
+        "alt": "You show how the tote is carried: an adult carries a plain cream canvas tote on a quiet city sidewalk, ready to post."
       },
       {
         "img": "n:guide:fx18-social-use-mug",
         "h": "Leave a Calm Area for the Offer",
         "d": "A desk scene keeps the product easy to see and leaves a calm spot for your offer. Add the price after download.",
-        "alt": "Adult hand lifting a plain cream ceramic mug beside a closed laptop on an oak desk."
+        "alt": "You leave room for the offer: an adult hand lifts a plain cream ceramic mug by a closed laptop on an oak desk."
       },
       {
         "img": "n:guide:fx18-social-use-gym",
         "h": "Show It in a Second Place",
         "d": "Put the same bottle on a gym bench, or move it to a holiday table when the next post is seasonal.",
-        "alt": "Adult hand setting a plain matte teal bottle on a clean gym bench beside a folded towel."
+        "alt": "You post it in a second place: an adult hand sets a plain matte teal bottle on a clean gym bench beside a folded towel."
       }
     ],
     "input": [
@@ -369,7 +369,7 @@
   },
   "more_sections": [
     {
-      "eyebrow": "One project",
+      "eyebrow": "Finish in One Project",
       "h2": "Finish the Post Without a Second App",
       "lead": "Brighten the shot, add your line, and export the square in this same project.",
       "items": [
@@ -411,7 +411,7 @@
       ]
     },
     {
-      "eyebrow": "From a note",
+      "eyebrow": "Name the Scene You Want",
       "h2": "Describe the Scene, Keep the Product",
       "lead": "Your note only has to name the setting. The product in your upload is the part that stays.",
       "items": [

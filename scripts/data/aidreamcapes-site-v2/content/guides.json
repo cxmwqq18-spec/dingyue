@@ -3,7 +3,7 @@
   "title": "UGC Templates and Seller Guides | AIVideosUGC",
   "description": "Open UGC video templates and seller guides, drop in your product, and make one file. Pick a phone photo, a white main image, a first video, or a fair test.",
   "h1": "UGC Video Templates and Guides You Can Recreate",
-  "eyebrow": "How-to guides",
+  "eyebrow": "Make Today's File From a Guide",
   "lead": "Pick the UGC video template guide for today's job, then make that one file. Start from a phone photo, a white main image, a first video, the right frame, or a test of two versions.",
   "card": "Short how-to guides, from the first photo to the first paid ad.",
   "secondary_keywords": [
@@ -23,25 +23,25 @@
       "t": "Fewer Retries on the Tote",
       "d": "A sharp photo of the sage canvas tote makes the first file easier to accept, so you spend fewer credits making that tote again.",
       "img": "n:guide:fx03-guides-benefit-source",
-      "alt": "Adult seller with a short auburn bob checks a sharp source photo of a plain sage canvas tote before upload."
+      "alt": "An adult seller with a short auburn bob checks a sharp photo of the plain sage canvas tote. You upload that photo instead of booking a shoot."
     },
     {
       "t": "No Studio to Book",
       "d": "You shoot the bamboo lunch container on the kitchen table, with a phone, by the window you already have.",
       "img": "n:guide:fx03-guides-benefit-studio",
-      "alt": "Adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on a kitchen table."
+      "alt": "An adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on the kitchen table. You start from that photo and skip the studio."
     },
     {
       "t": "Fit the Plate in Frame",
       "d": "The main-image rules are already written out, so the ceramic plate can sit fully inside the bright white backdrop before it goes live.",
       "img": "n:guide:fx03-guides-benefit-rules",
-      "alt": "Adult seller with a short silver-gray pixie positions a plain ceramic plate fully inside a bright white backdrop."
+      "alt": "An adult seller with a short silver-gray pixie sets a plain ceramic plate fully inside a bright white backdrop. You can use that main image on the listing."
     },
     {
       "t": "One Change at a Time",
       "d": "The testing guide changes one thing on the two fabric pouches, then keeps the version you want to run.",
       "img": "n:guide:fx03-guides-benefit-testing",
-      "alt": "Two adult sellers compare two plain fabric pouches side by side while choosing an ad version to test."
+      "alt": "Two adult sellers compare two plain fabric pouches side by side. You keep the version you want to run, without a second shoot."
     }
   ],
   "steps_h2": "How to Make Product Video Ads or Photos",
@@ -62,51 +62,51 @@
   ],
   "faq": [
     {
-      "q": "What are these guides?",
+      "q": "What seller job does each guide finish for me?",
       "a": "Short how-tos for one seller job each. They cover a phone photo, a plain main image, a first video ad, the frame each app wants, and a fair test of versions."
     },
     {
-      "q": "How does a guide become a file?",
+      "q": "How do I turn a guide into a file I can post?",
       "a": "You follow the steps, upload your product photo or paste the product page, and make the file on the tool that guide names. The guide is the plan. The tool makes the file."
     },
     {
-      "q": "Why read a guide instead of hiring someone to film?",
+      "q": "Why use a guide instead of hiring someone to film the lunch container?",
       "a": "A lunch-container photo on the kitchen table is enough to start the phone-photo guide after you close. Hiring someone to film that container means waiting on their calendar. The guide uses the picture you can take yourself."
     },
     {
-      "q": "Who are the guides for?",
+      "q": "Who should use these guides if I have never booked a studio?",
       "a": "Someone packing orders who has never booked a studio. A marketer can use the same pages when a client needs a file this week. A shop with a full photo team can skip them."
     },
     {
-      "q": "Can I follow them if I have never edited video?",
+      "q": "Can I make a file if I have never edited video?",
       "a": "Yes. You need a phone photo, not a timeline. The first-ad guide stops at a file you can post. Setting up the ad account stays in that app's own help."
     },
     {
-      "q": "Which kinds of shops are they for?",
-      "a": "The photo steps and the video steps are the same kind of task for every shop. Rules differ by product type, so check the [page for your kind of shop](page:industries) before you upload."
+      "q": "Which kinds of shops can follow the photo steps and the video steps?",
+      "a": "You use the same photo steps and video steps for the tote, the lunch container, and every other shop. Rules differ by product type, so check the [page for your kind of shop](page:industries) before you upload."
     },
     {
-      "q": "Can one phone photo feed every guide?",
+      "q": "Can one phone photo of my product feed every guide?",
       "a": "Yes, if it shows the whole item clearly. A still and a clip made from it are separate files, each with its own credit cost."
     },
     {
-      "q": "Where can I post the file?",
+      "q": "Where can I post the file once I download it?",
       "a": "Wherever the guide's shape fits. A tall file is the phone placement. A square sits in a feed. The [platform pages](page:video-hub) name the usual frames. Your own store can use the download too."
     },
     {
-      "q": "How much do the files cost?",
+      "q": "How many credits do a photo and a clip cost?",
       "a": "A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The cost shows before you start. If a file does not finish, its credits come back."
     },
     {
-      "q": "Can I sell with the file?",
+      "q": "Can I run the file in ads and on my store?",
       "a": "Yes. Use it in ads and on your store. The download has no watermark."
     },
     {
-      "q": "Which guide makes a video with a person and a voice?",
+      "q": "Which guide gives me a video with a person and a voice?",
       "a": "The first-ad guide does, when you want a person on screen. You can also keep the frame on the product and still have a spoken line. The photo guides stop at a still."
     },
     {
-      "q": "Why follow a guide instead of a blank start?",
+      "q": "Why follow a guide instead of spending credits on a blank start?",
       "a": "The guide names the one task, the file you should end with, and the checks to make before you spend credits on a second try."
     }
   ],

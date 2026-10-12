@@ -3,7 +3,7 @@
   "title": "Holiday Video Maker for Gift Season | AIVideosUGC",
   "description": "Use this holiday video maker on one gift photo, then post before the ship date is final. An avatar can hold the product while you add the date later.",
   "h1": "Holiday Video Maker for a Festive Gift Ad",
-  "eyebrow": "Holiday ad photos and videos",
+  "eyebrow": "Post a Festive Gift Video",
   "lead": "This holiday video maker lets the gift ad go up before the ship-by date is set. An avatar can hold the gift, and you type the date when the carrier confirms it.",
   "secondary_keywords": [
     "Christmas product photos",
@@ -56,7 +56,7 @@
         "items": [
           {
             "ref": "n:guide:f13-occ-holidays-rework-card-15",
-            "title": "Skincare Gift Set Lifted from Tissue",
+            "title": "Skincare Gift Set Lifted From Tissue",
             "kind": "photo",
             "product": "skincare gift set",
             "prompt": "Use the uploaded product photo as the same skincare gift set. Show adult hands lifting it from cream tissue in a warm gift scene, with clear space for the shipping cutoff added after download. No text or logos."
@@ -70,7 +70,7 @@
           },
           {
             "ref": "n:guide:q20-occ-holiday-example-03",
-            "title": "Winter Jacket Revealed from a Gift Box",
+            "title": "Winter Jacket Revealed From a Gift Box",
             "kind": "photo",
             "product": "winter jacket",
             "prompt": "Use the uploaded product photo as the same winter jacket. Show adult hands lifting it from a plain gift box, with clear space for a holiday offer added after download. No text or logos."
@@ -295,8 +295,8 @@
     ]
   },
   "trust": {
-    "h2": "Kept Private Until You Share",
-    "lead": "Six facts you can count on before a seasonal ad goes out.",
+    "h2": "Checks Before the Holiday Ad",
+    "lead": "Six checks on credits, privacy, and the gift scene before a holiday ad goes out.",
     "items": [
       {
         "t": "Cleared for Paid Ads",
@@ -315,11 +315,11 @@
         "d": "The product photo and the finished gift scene stay in your account. Nothing goes public until you choose to share it."
       },
       {
-        "t": "An AI Avatar or Your Clip",
+        "t": "Use an Avatar or a Clip of You",
         "d": "Use an AI avatar from the library of 53. Or build one from a short clip of yourself."
       },
       {
-        "t": "Voice, Captions, and a Track",
+        "t": "Add a Voice, Captions, and Music",
         "d": "A voice, captions, and a track from the music library can sit on the clip. Edit them in place before the ad goes live."
       }
     ]

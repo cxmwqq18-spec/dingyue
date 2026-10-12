@@ -3,9 +3,9 @@
   "title": "UGC Templates Inspiration Gallery | AIVideosUGC",
   "description": "Browse the UGC video templates inspiration gallery, drop in the mug you sell, and download a file you can post. You skip writing a long prompt.",
   "h1": "See It. Recreate It. Launch From UGC Video Templates",
-  "eyebrow": "From photo to finished file",
+  "eyebrow": "From Your Photo to a Post",
   "lead": "Pick a scene you would already post, drop in the mug you sell, and get that file back. These AI product photo and video examples skip a long prompt. A short ad from the same photo is a second file, with the desk, the crop, and the room already chosen.",
-  "card": "Six product photos you can recreate, from a travel mug to a sunscreen tube, plus a way to start a short ad.",
+  "card": "Recreate six photos, from the travel mug to the sunscreen tube, then start a short ad from that same shot.",
   "secondary_keywords": [
     "AI product video ad examples",
     "AI lifestyle photo examples",
@@ -135,11 +135,11 @@
   ],
   "faq": [
     {
-      "q": "What is an AI product photo example?",
+      "q": "What do I get from an AI product photo example?",
       "a": "It is a finished photo with the room and the crop already chosen, not an empty box. One card is a desk and a mug. You bring the item you sell. A short ad is a later file, after that still matches the item in your box."
     },
     {
-      "q": "How does an example become my file?",
+      "q": "How do I turn an example into a file I can post?",
       "a": "Paste the product page or upload one photo, then type the one sentence the ad should say. For the sunscreen tube, the photo of the whole tube is enough. A photo costs 24 credits, and a 15-second video costs 60. The cost shows before anything runs."
     },
     {
@@ -147,31 +147,31 @@
       "a": "You can try a second opening without waiting on a creator's calendar. A shop with a knit running shoe can drop yesterday's photo into the feed card, then make another file that opens on a different line. Each file is its own credit charge."
     },
     {
-      "q": "Who are these examples for?",
+      "q": "Who are these examples for if I do not have a studio?",
       "a": "A one-person shop packing orders at night gets the most from these cards. A marketer who must hand a client a file this week uses them the same way. A brand that already photographs every product in a studio can skip this set."
     },
     {
-      "q": "Can I use an example if I have never edited video?",
+      "q": "Can I make a file from an example if I have never edited video?",
       "a": "Yes. A photo of the whole item and one open card are enough. You type one line, and the spoken words are filled in from that. A short ad can use one of 53 AI actors. There is no timeline to learn before the first file."
     },
     {
-      "q": "Which products fit these scenes?",
+      "q": "Which products fit these scenes, from the mug to the sunscreen?",
       "a": "Small packages and larger ones both fit. A travel mug, a tote, a vase, a wallet, a running shoe, and a sunscreen tube each have a card. Pick the crop that fits the item, then compare the file with what you ship."
     },
     {
-      "q": "Can the product come from a photo I took?",
+      "q": "Can I use a photo I took of the product I ship?",
       "a": "Yes. The item in the file comes from the photo you upload, or from a product page you paste. Show the whole product, including the lid or the sole. See [URL to video](page:url-to-video) when you start from a link."
     },
     {
-      "q": "Where can I post the file?",
+      "q": "Where can I post the tall file, the square, or the wide one?",
       "a": "Most shops post the tall 9:16 file first, because it fills a phone. Use 1:1 when the placement is a square feed, and 16:9 when the placement is wide. 4:3 and 3:4 are there when a slot asks for them. Post it on your social account, or download it for the store."
     },
     {
-      "q": "Do I pay to make a file from an example?",
+      "q": "Do I pay credits to make a file from an example?",
       "a": "Yes. The pictures here only show the look. A file you make spends credits on a paid plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before the job starts. A failed job returns those credits."
     },
     {
-      "q": "Can I use the file in ads and client work?",
+      "q": "Can I run the file as a paid ad and in client work?",
       "a": "Yes. The download has no watermark, so it can run as a paid ad and sit on your product page. A file you make for a client is the same kind of download. You still follow the ad account's rules on what the video may claim."
     },
     {
@@ -189,8 +189,8 @@
       "n:guide:k4-plat-instagram-30-visual-strip-4"
     ],
     "picker": {
-      "title": "AI lifestyle photo examples",
-      "lead": "Browse photos of products in everyday settings, and photos made for social ads. Filter by fashion, fitness, or accessories. Skincare, beauty, food and drink, technology, and home goods start the same way.",
+      "title": "Lifestyle Photos You Can Recreate",
+      "lead": "Rebuild a fashion, fitness, or accessories scene around the product you sell. Use it as a social ad photo too. Skincare, beauty, food and drink, technology, and home goods start from that same photo.",
       "chips": [
         {
           "id": "fashion",
@@ -241,7 +241,7 @@
         ]
       }
     },
-    "overview": "Each card is a finished photo you can recreate from your own product photo. Filter by fashion, fitness, or accessories, or browse all six. Skincare, beauty, food and drink, technology, and home goods use that same path. When you want a video, that photo can also start a short ad with an actor, a spoken line, captions, and music. You can send it to TikTok, Instagram, or Facebook."
+    "overview": "Each card is a finished photo, like the mug on the desk, rebuilt from your own shot. That shot can start a short ad with an actor, a spoken line, captions, and music. You post it on TikTok, Instagram, or Facebook without filming the scene."
   },
   "related_h2": "Tools That Make These Scenes",
   "related_lead": "The scene you liked can become the photo or the short ad you post. Open the tool that fits that job, or start from a layout you already trust.",

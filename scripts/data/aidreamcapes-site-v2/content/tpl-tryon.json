@@ -3,7 +3,7 @@
   "title": "AI Clothing Video Templates for Brands | AIVideosUGC",
   "description": "Clothing brands use these AI video templates to turn a flat garment photo into a clip you can post. Upload the piece, skip the model booking, and download.",
   "h1": "Clothing Video Templates Your Brand Can Post",
-  "eyebrow": "Clothing video template",
+  "eyebrow": "Clothing Videos You Can Post",
   "lead": "Turn a flat photo of the olive bomber into a clothing video your shop can post, with no model booking. Choose an AI avatar, and the clip can still carry a spoken line.",
   "secondary_keywords": [
     "clothing on model from flat lay",
@@ -71,7 +71,7 @@
     },
     {
       "q": "After I upload a garment, when is the ad ready to post?",
-      "a": "The on-model file is ready to download once generation finishes. Take it and post the cut the shop already uses. Lengths for a clip are 6, 10, 15, or 30 seconds."
+      "a": "You can download the on-model clip of the olive bomber and post the length your shop already uses. A clip is 6, 10, 15, or 30 seconds, and you skip the booking."
     },
     {
       "q": "What does a clothing ad cost, and can I post the square crop?",
@@ -109,8 +109,8 @@
       "sourceTitle": "Your Product"
     },
     "picker": {
-      "title": "Browse Video Templates by Category",
-      "lead": "Each card is a tall 9:16 clothing video. Use the upload above, then check the collar, hem, and color against the piece.",
+      "title": "Pick a Clothing Video to Post",
+      "lead": "Each card is a tall 9:16 clothing video you can post. Upload the olive bomber, then check the collar, hem, and color against the piece.",
       "chips": [
         {
           "id": "accessories",

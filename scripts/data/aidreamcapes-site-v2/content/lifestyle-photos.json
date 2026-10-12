@@ -3,7 +3,7 @@
   "title": "AI Product Staging for Real Scenes | AIVideosUGC",
   "description": "Use AI product staging to place your item in a real-life scene, held, worn, or set on a table. Upload one photo and download the scene you can post.",
   "h1": "AI Product Staging That Puts Your Item in a Real Scene",
-  "eyebrow": "Lifestyle photo maker",
+  "eyebrow": "Lifestyle Photos Without a Shoot",
   "lead": "Product staging lets you publish the white-background tote on a cafe table. Shoppers see the bag where it would go. One scene is 24 credits, shown before you start.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
@@ -68,47 +68,47 @@
   },
   "faq": [
     {
-      "q": "What is a lifestyle product photo?",
+      "q": "What is a lifestyle photo of the product I sell?",
       "a": "A lifestyle product photo shows the item in a place a buyer recognizes, made from the catalog photo you already have. A tote on a cafe table is one example. The bag stays the bag."
     },
     {
-      "q": "How does the scene get built?",
+      "q": "How do I build a cafe scene from my tote photo?",
       "a": "Use the catalog photo as the reference and name a place, such as a cafe table. Download the square when the straps still match the tote you uploaded."
     },
     {
-      "q": "Can a store publish these scenes?",
+      "q": "Can I publish the cafe scene on my product page?",
       "a": "Yes. A tote shop can put the cafe-table square on the product page. Add the price yourself after you download the file."
     },
     {
-      "q": "Can I choose the place for my product?",
+      "q": "Can I pick a cafe, a shelf, or a market for my product?",
       "a": "Yes. Name the kind of place, such as a cafe table, a room shelf, or a market stall. The product photo stays the reference. You can ask for a different place next."
     },
     {
-      "q": "What can I still change once the scene exists?",
+      "q": "What can I still change after the tote scene is made?",
       "a": "You can change the surface, or run a second scene from the same tote. Your store software can request one through the API."
     },
     {
-      "q": "Can I try another place after the first result?",
+      "q": "Can I try another place for the same tote?",
       "a": "Yes. Start again with a different surface or one extra object. Each photo is 24 credits. Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits, and Premium is $63 for 600."
     },
     {
-      "q": "Does the scene replace my plain product photo?",
+      "q": "Does the cafe scene replace my plain tote photo?",
       "a": "No. Keep the original for small details such as a stitch or a strap. Use the scene when you want shoppers to picture where the tote belongs."
     },
     {
-      "q": "How is this different from a photoshoot?",
+      "q": "How is a staged tote photo different from a photoshoot?",
       "a": "A shoot needs a place, a few extra objects, and a day on the calendar. Here you start from a photo you already have. If that photo is hard to read, start with [how to take product photos for AI](page:guide-product-photo-tips)."
     },
     {
-      "q": "Can I use the scene on a Shopify store?",
+      "q": "Can I put the tote scene on my Shopify store?",
       "a": "Yes. Download the square and upload it on the product page yourself."
     },
     {
-      "q": "Can I post the scene on Instagram?",
+      "q": "Can I post the tote scene on Instagram?",
       "a": "Yes. The square works as the product photo in the feed. Write the caption in Instagram, and add any price in your own editor."
     },
     {
-      "q": "Can I post the scene in a paid ad?",
+      "q": "Can I use the tote scene in a paid ad?",
       "a": "Yes. Finish the headline and the offer in your ad editor. The photo does not include your price."
     }
   ],
@@ -230,13 +230,13 @@
         "h2": "Picture the Product in Everyday Use"
       },
       "faq": {
-        "h2": "Questions About AI Lifestyle Product Photos"
+        "h2": "Questions Before You Post the Scene"
       },
       "m5": {
-        "h2": "Start With a Clear Product Photo"
+        "h2": "Start With the Photo You Already Have"
       },
       "m6": {
-        "h2": "Download a Square Lifestyle Photo"
+        "h2": "Download a Square Photo to Post"
       }
     },
     "input": [
@@ -284,7 +284,7 @@
       ]
     },
     {
-      "eyebrow": "Store, Post, or Ad",
+      "eyebrow": "Ready for the Store or Ad",
       "h2": "A Staged Scene for Every Channel",
       "lead": "The street photo is a square you can drop into the feed.",
       "items": [
@@ -297,7 +297,7 @@
       ]
     },
     {
-      "eyebrow": "Same Item",
+      "eyebrow": "Same Tote, More Scenes",
       "h2": "Several Staged Scenes From One Tote",
       "lead": "The bag stays the bag. Only the place changes: a park path, a picnic, or an entryway.",
       "items": [
@@ -342,7 +342,7 @@
     "plat-shopify"
   ],
   "platforms": {
-    "h2": "Product Staging Tools for Every Scene",
+    "h2": "Stage and Finish the Tote Photo",
     "lead": "Product staging starts here. Clean the catalog photo, stage the tote, size the file, and hand it to the person who posts it.",
     "items": [
       {

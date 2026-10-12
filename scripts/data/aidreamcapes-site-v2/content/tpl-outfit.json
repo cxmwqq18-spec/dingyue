@@ -3,7 +3,7 @@
   "title": "AI Video Templates for Clothing | AIVideosUGC",
   "description": "Use AI video templates for clothing brands. Turn a flat photo of the beige zip jacket into a reel on a person, then download and post the file.",
   "h1": "AI Video Templates for Clothing Brands",
-  "eyebrow": "Fashion video template",
+  "eyebrow": "A Reel From One Flat Photo",
   "lead": "Get a clothing video of the beige zip jacket on a person, from one flat photo. Streetwear, everyday pieces, and a blazer can use the same reel.",
   "secondary_keywords": [
     "outfit reel ideas",
@@ -43,39 +43,39 @@
   },
   "faq": [
     {
-      "q": "What does an outfit reel template give me?",
+      "q": "What does an outfit reel give me for the beige zip jacket?",
       "a": "A clothing frame where one outfit moves, such as the beige zip jacket turning so the side fit shows. Your flat photo goes in. An AI avatar wears the jacket in the file. You do not book a fitting to get that turn."
     },
     {
-      "q": "What happens after I pick the outfit template?",
+      "q": "What do I get after I add the jacket photo to the template?",
       "a": "Add the jacket photo and name the move. A script and a voiceover can ride on that turn. The file comes back as a reel for people shopping for clothes. A track from the music library can sit under the voice."
     },
     {
-      "q": "What clothing can go in the reel?",
+      "q": "What clothing can go in the reel, from the jacket to a blazer?",
       "a": "Streetwear, everyday fashion, and luxury apparel all fit, including the beige zip jacket, a denim overshirt, or a tailored blazer. If the hem is cut off in the photo, the turn can lose it too."
     },
     {
-      "q": "Can I make several reels for one collection?",
+      "q": "Can I make several reels from one jacket photo?",
       "a": "Yes. Keep the jacket photo and ask for another move, or aim the next reel at shoppers who care about the lining. A second color can start from the same flat photo."
     },
     {
-      "q": "Who should use an outfit reel template?",
+      "q": "Who should use an outfit reel if I have no fitting booked?",
       "a": "A clothing seller who wants the garment in motion and does not have a fitting booked. One person can name the move and post the file. Online clothing shops and fashion labels both fit."
     },
     {
-      "q": "Can I make a reel if I have never edited a video?",
+      "q": "Can I make the jacket reel if I have never edited a video?",
       "a": "Yes. A photo and one sentence are enough to begin, even if you have never edited a video. You can still trim the turn in the editor before you post."
     },
     {
-      "q": "When can I download the outfit reel?",
+      "q": "When can I download the outfit reel and post it?",
       "a": "In that same sitting, once the file is ready. You do not wait on a fitting. The credit cost shows before the run, and a failed job returns the credits."
     },
     {
-      "q": "Which frame and length can I pick?",
+      "q": "Which frame and length can I pick before I post?",
       "a": "Use 9:16 for TikTok and Instagram Reels. Also 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds. You can post to TikTok, Instagram, or Facebook."
     },
     {
-      "q": "What does the reel cost?",
+      "q": "How many credits does the jacket reel cost?",
       "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns those credits. The download has no watermark."
     },
     {
@@ -632,23 +632,23 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "On this reel",
-      "h2": "What an Outfit Reel Can Carry",
+      "eyebrow": "On the Beige Jacket Reel",
+      "h2": "What You Can Post With the Reel",
       "lead": "One clothing photo can become a reel with a voice, captions, and music.",
       "items": [
         {
           "icon": "play",
-          "t": "Voice, Captions, and Music",
+          "t": "Add Voice, Captions, and Music",
           "d": "A voice can read the line, captions can sit on the move, and a track can come from the music library."
         },
         {
           "icon": "users",
-          "t": "AI Avatars and an AI Twin",
+          "t": "Use an AI Avatar or a Twin",
           "d": "An AI avatar can wear the clothing, or an AI twin can keep the same presenter on the next reel."
         },
         {
           "icon": "sparkle",
-          "t": "A Script or a Page Link",
+          "t": "Start From a Script or the Listing",
           "d": "A short script, or a product link, can start the reel from the garment page."
         },
         {
@@ -663,7 +663,7 @@
         },
         {
           "icon": "globe",
-          "t": "Another Language, or Start It From Your Catalog",
+          "t": "Another Language or Your Product List",
           "d": "The line can go out in another language, or the API can start the next reel from your product list."
         }
       ]

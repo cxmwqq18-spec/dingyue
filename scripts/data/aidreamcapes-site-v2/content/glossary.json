@@ -3,7 +3,7 @@
   "title": "AI UGC and Digital Marketing Glossary | AIVideosUGC",
   "description": "Plain definitions of AI UGC and digital marketing terms, from video ads to product photos. Open a term, follow the link, and make the photo or video.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
-  "eyebrow": "Glossary",
+  "eyebrow": "Find a Term and Make the File",
   "lead": "Plain AI UGC definitions for the photo, video, and ad words you will meet here. Open a term, follow the link, and make the file.",
   "secondary_keywords": [
     "ecommerce glossary",
@@ -341,7 +341,7 @@
     },
     {
       "term": "Ad spend",
-      "definition": "Ad spend is the budget you set in the ad account for who sees the ad. It is separate from the credits a photo or a video uses on your plan.",
+      "definition": "Ad spend is the budget you set in the ad account for who sees the ad. You make the photo or clip here, and that file spends credits, not that budget.",
       "related_page_ids": [
         "pricing",
         "plat-facebook"
@@ -349,7 +349,7 @@
     },
     {
       "term": "CTR",
-      "definition": "CTR means click-through rate. It is how many people clicked after they saw the ad. Read it in the ad account. It is not a promise about the next ad.",
+      "definition": "CTR means click-through rate: how many people clicked after they saw the ad. You read it in the ad account, then make a new opening here if you want a test. It is not a promise about the next ad.",
       "related_page_ids": [
         "guide-testing-ad-versions",
         "plat-facebook"
@@ -357,7 +357,7 @@
     },
     {
       "term": "CPC",
-      "definition": "CPC means cost per click: the charge in the ad account when someone clicks. That charge is not the same as the credits a file spends here.",
+      "definition": "CPC means cost per click, the charge in the ad account when someone clicks. You make the photo or clip here, and that file spends credits, not the click charge.",
       "related_page_ids": [
         "pricing",
         "plat-facebook"
@@ -365,7 +365,7 @@
     },
     {
       "term": "Conversion rate",
-      "definition": "Conversion rate is how many clicks become an order, as the ad account counts them. Use it to compare two of your own ads.",
+      "definition": "Conversion rate is how many clicks become an order, as the ad account counts them. You make two ads here, then use that number to keep the one you want.",
       "related_page_ids": [
         "guide-testing-ad-versions",
         "plat-shopify"
@@ -381,7 +381,7 @@
     },
     {
       "term": "Content marketing",
-      "definition": "Content marketing is the posts and videos you publish so shoppers learn the product before they buy. A short product clip can be one of those posts.",
+      "definition": "Content marketing is the posts and videos you publish so shoppers learn the product before they buy. You make a short clip from the product photo and post it, with no shoot to book.",
       "related_page_ids": [
         "blog",
         "video-hub"
@@ -389,7 +389,7 @@
     },
     {
       "term": "Display ad",
-      "definition": "A display ad is a paid picture on a website or in an app, outside a social feed. The product should still be easy to see in that picture.",
+      "definition": "A display ad is a paid picture on a website or in an app, outside a social feed. You make that picture here so the product stays easy to see, then post it.",
       "related_page_ids": [
         "plat-facebook",
         "social-ad-photos"
@@ -405,7 +405,7 @@
     },
     {
       "term": "Deep learning",
-      "definition": "Deep learning is the training that lets a tool build a new picture or clip from what it has learned. You still upload your own photo and approve the file.",
+      "definition": "Deep learning is the training that lets the tool build a picture or clip from what it learned. You upload your own photo, skip the shoot, and approve the file before you post.",
       "related_page_ids": [
         "video-hub",
         "image-to-video"

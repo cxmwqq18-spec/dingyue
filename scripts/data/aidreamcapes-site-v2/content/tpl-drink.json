@@ -3,7 +3,7 @@
   "title": "Food and Beverage Video Templates | AIVideosUGC",
   "description": "Pick a food and beverage video template, drop in the can or bottle you sell, and get a pour without writing a prompt. See the credit cost, then post the file.",
   "h1": "Food and Beverage Video Templates for a Pour",
-  "eyebrow": "Food & drink template",
+  "eyebrow": "Pour Templates You Can Post",
   "lead": "Pick a food and beverage video template, drop in the can you sell, and get that same pour without writing a prompt. The package photo already on the listing is enough to start.",
   "secondary_keywords": [
     "drink pour video",
@@ -64,7 +64,7 @@
     },
     {
       "q": "Which drinks and categories fit?",
-      "a": "Soda cans, cold brew bottles, juice cartons, and tea glasses fit when the package photo is clear. A loose splash with no package is a poor start. The shared gallery also has other categories."
+      "a": "A clear package photo of a soda can, cold brew bottle, juice carton, or tea glass is enough to post. A loose splash with no package is a poor start. The shared gallery also covers other products you can post."
     },
     {
       "q": "Can I use my can photo, a clip, and a logo?",
@@ -115,8 +115,8 @@
       ]
     },
     "picker": {
-      "title": "Choose a Scene for a Drink Pour Video",
-      "lead": "Open a Food & Beverage scene, or look through the other scenes. Then add the bottle or can you sell.",
+      "title": "Pick a Pour You Can Post",
+      "lead": "Open a drink scene, or browse the others. Drop in the bottle or can you sell and post that pour.",
       "chips": [
         {
           "id": "accessories",
@@ -537,7 +537,7 @@
         "h2": "Choose a Scene for a Drink Pour Video"
       },
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Questions Before You Post the Pour"
       }
     }
   },

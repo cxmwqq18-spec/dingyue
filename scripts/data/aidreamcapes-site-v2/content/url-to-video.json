@@ -3,7 +3,7 @@
   "title": "Convert a Link to Video Ads | AIVideosUGC",
   "description": "Convert a link to video from a public product page. Paste your product link, approve the script and the actor, and download an ad you can post.",
   "h1": "Convert a Link to Video From the Product Page",
-  "eyebrow": "URL to video",
+  "eyebrow": "Paste a Link and Post the Clip",
   "lead": "A URL to video run turns a public product page into a spoken ad. Paste that page, and the lunch box photo there stays the product in the clip.",
   "secondary_keywords": [
     "product link to video",
@@ -70,55 +70,55 @@
   },
   "faq": [
     {
-      "q": "How does a shop get a clip from a listing?",
+      "q": "How do I get a clip from my lunch box listing?",
       "a": "Paste the public product page, pick an AI actor, approve the script, and download the clip. The photo on that page is the product in the file."
     },
     {
-      "q": "Is there a charge to start from a link?",
+      "q": "Do I pay credits to start a video from a product link?",
       "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before it runs, and a failed render returns those credits."
     },
     {
-      "q": "What kinds of clips can a link become?",
+      "q": "What clips can I post from one product link?",
       "a": "A listing video, a product demo, a paid ad, or a social clip. Each one can use the photo and the facts already on that public page."
     },
     {
-      "q": "Is this meant for marketing?",
+      "q": "Can I use the clip for ads, the product page, and social posts?",
       "a": "Yes. Shops use it for ads, product pages, and social posts. You approve the script before the file is downloaded."
     },
     {
-      "q": "Can I change the drafted script?",
+      "q": "Can I change the drafted script before the lunch box clip is made?",
       "a": "Yes. Read the script, change any line that does not match the listing, and then render. The wording stays yours."
     },
     {
-      "q": "Which file types and frames are available?",
+      "q": "Which frames and lengths can I download?",
       "a": "You download a video file. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "What happens after I paste a product page?",
+      "q": "What do I get after I paste the lunch box page?",
       "a": "The photo and the written facts come in from that page. You get a draft script, then you pick an actor and a voice before the clip is made."
     },
     {
-      "q": "Do I need editing experience?",
+      "q": "Do I need editing experience for the first clip?",
       "a": "No. You can still open the editor if you want to trim the clip, change the music, or fix a line. A first clip does not require a timeline."
     },
     {
-      "q": "Which pages can be used?",
+      "q": "Which product pages can I paste to start a clip?",
       "a": "Public product pages a shopper can open without logging in. A locked page, a private file, or a page with no product photo will not supply the picture."
     },
     {
-      "q": "Why bother starting from the listing?",
+      "q": "Why start from the listing instead of gathering the files myself?",
       "a": "The page already has the product photo and the facts you would otherwise retype. You spend the time on the script and the actor, not on gathering files."
     },
     {
-      "q": "How do I go from a listing link to a finished clip?",
+      "q": "How do I go from the lunch box link to a clip I can post?",
       "a": "Paste the link, approve the script, and start the render. You see the credit cost first. There is no separate shoot to schedule before that."
     },
     {
-      "q": "How long does the render take?",
-      "a": "There is no fixed time. The render starts after you approve the script and the actor. If it fails, the credits for that job come back."
+      "q": "How long do I wait for the lunch box clip?",
+      "a": "There is no fixed time for the lunch box clip. The render starts after you approve the script and the actor. If it fails, the credits for that job come back."
     },
     {
-      "q": "How do I turn a product listing into an ad?",
+      "q": "How do I turn the lunch box listing into an ad I can run?",
       "a": "Paste the listing, pick a tall or square frame, approve the spoken line, and download. The file has no watermark and can run as an ad."
     }
   ],
@@ -161,7 +161,7 @@
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
     "picker": {
-      "title": "Product Page to Video Examples",
+      "title": "Clips Made From a Product Page",
       "lead": "These examples started from a product page. Open one when you want a similar scene.",
       "chips": [],
       "cards": [],
@@ -199,7 +199,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About URL to Video"
+        "h2": "URL to Video Questions Before You Post"
       },
       "m4": {
         "h2": "Ways to Use a Product-Page Video"
@@ -261,8 +261,8 @@
     "before-after-videos"
   ],
   "compare_table": {
-    "title": "A Product Link vs Building the Ad by Hand",
-    "lead": "The page supplies the product, and you approve the script that comes back.",
+    "title": "Paste the Link, Skip the Blank Build",
+    "lead": "Paste the lunch box page and the product is already in the project. You approve the script, then download a clip you can post.",
     "columns": [
       "",
       "AIVideosUGC",

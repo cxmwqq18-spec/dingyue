@@ -3,7 +3,7 @@
   "title": "Before and After Video Maker for Product Ads | AIVideosUGC",
   "description": "Make a before and after video from one product photo. Show one change, such as grease leaving the same stovetop, then download the clip and post it.",
   "h1": "Before and After Video Maker: One Photo, One Clear Change",
-  "eyebrow": "Before & after video",
+  "eyebrow": "Watch the Grease Come Off",
   "lead": "Show one before and after on the product you upload, like grease wiped off the same stovetop. Then download the clip with that stove still in frame.",
   "secondary_keywords": [
     "AI before and after video",
@@ -15,7 +15,7 @@
   "benefits": [
     {
       "t": "Get a Complete Before and After Video",
-      "d": "The desk-mat clip comes back as one file you can watch from the stain to the clean surface. Try a second opening while that stain is still the test you care about.",
+      "d": "The stovetop clip comes back as one file you can watch from the grease to the clean surface. Try a second opening while that grease is still the change you want to test.",
       "icon": "bolt"
     },
     {
@@ -25,17 +25,17 @@
     },
     {
       "t": "Test Another Opening",
-      "d": "Use the same stained cloth and change who explains the wipe, or which frame opens the ad.",
+      "d": "Use the same greasy stovetop and change who explains the wipe, or which frame opens the ad.",
       "icon": "layers"
     },
     {
       "t": "Refresh the Presenter or Opening",
-      "d": "If shoppers have stopped watching the cord-wrap ad, put a different person on the same tangle. The desk does not get rebuilt for that second test.",
+      "d": "If shoppers have stopped watching the stovetop ad, put a different person on that same greasy stove. The stove does not get rebuilt for that second test.",
       "icon": "refresh"
     },
     {
       "t": "Keep the Approved Product Claim",
-      "d": "You write that the coffee ring lifts off the coaster. The clip does not invent a second claim, and nobody has to relearn the product from scratch.",
+      "d": "You write that the grease lifts off the stovetop. The clip does not invent a second claim, and nobody has to relearn the product.",
       "icon": "check"
     },
     {
@@ -79,12 +79,12 @@
       "a": "It makes a short ad where one thing changes and the product stays. Grease can leave a stovetop while the camera stays in the same place."
     },
     {
-      "q": "How do I make the clip from one photo?",
+      "q": "How do I make a before and after video from one photo?",
       "a": "Upload the before photo and describe the after in a sentence. Read the line when the file comes back, then change the music before you export."
     },
     {
       "q": "Which products fit a before and after video?",
-      "a": "It is for catalogs with many small changes to show, rather than one film for a whole month. TikTok can take a tall file, and Meta can take a square."
+      "a": "It fits shops with many small changes to show, like grease wiped off one stovetop, rather than one film for a whole month. TikTok can take a tall file, and Meta can take a square."
     },
     {
       "q": "What does a before and after clip cost?",
@@ -208,9 +208,9 @@
       },
       {
         "t": "Test Different Voice Tones",
-        "d": "Two voice tones give you a choice for the same cutting board, the garlic cloves, and the press.",
+        "d": "Two voice tones let you test the same garlic-press ad without booking a second shoot.",
         "img": "n:guide:ba1b-before-after-videos-benefit3-r1",
-        "alt": "The same wood board: whole garlic on the left, pressed garlic and a plain stainless press on the right."
+        "alt": "Same wood cutting board: whole garlic and skins on the left, pressed garlic and a stainless garlic press on the right."
       }
     ]
   },
@@ -341,7 +341,7 @@
   "related_lead": "A still, a spoken ad, or a product page can be the next job for this item.",
   "more_sections": [
     {
-      "eyebrow": "In the clip",
+      "eyebrow": "Inside One Finished Clip",
       "h2": "What Comes With the Change Clip",
       "lead": "One file carries the change a second setup used to require.",
       "items": [

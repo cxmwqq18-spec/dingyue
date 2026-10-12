@@ -3,7 +3,7 @@
   "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
   "description": "This AI product photo generator can remove the background, add a soft shadow, and turn one photo into a listing or lifestyle scene. See the credit cost first.",
   "h1": "Make listing, lifestyle, and ad images with an AI product photo generator",
-  "eyebrow": "AI product photo generator",
+  "eyebrow": "Post the Lip Balm Photo",
   "lead": "Put the lip balm on the vanity you wanted. This AI product photo generator starts from the photo you already shot, so you can skip the studio day.",
   "secondary_keywords": [
     "AI product image generator",
@@ -79,47 +79,47 @@
   },
   "faq": [
     {
-      "q": "What does this product photo tool make?",
+      "q": "What photo can I post from the lip balm picture I have?",
       "a": "It builds a product photo from the picture you already have, so you can put a scene on the product page. The lip balm stays the item you uploaded."
     },
     {
-      "q": "How does the photo tool build a scene?",
+      "q": "How do I turn a lip balm photo into a scene I can post?",
       "a": "Use the clearest picture you have of the lip balm, plus a sentence about where it should sit. A full tube reads better than a dark crop. You can add up to 7 reference photos. Ask for warmer light if the first file looks cold. Name the vanity, and keep the cap in the frame."
     },
     {
-      "q": "What should I check before I trust the photo?",
+      "q": "What should I check before I post the lip balm photo?",
       "a": "Check that the lip balm still matches what you sell. The file should keep the shape and the color buyers recognize."
     },
     {
-      "q": "Can I make these product photos for free?",
+      "q": "Can I make a lip balm photo before I pick a plan?",
       "a": "No. Starter is $24.50 a month for 200 credits. Each photo is 24 credits. Pro is $35 for 300 credits, and Premium is $63 for 600. You see the number before the photo is made."
     },
     {
-      "q": "Can a shop put these photos on a product page?",
+      "q": "Can I put the lip balm photo on the product page?",
       "a": "Yes. A lip balm can use one file on the product page and another in an email. Check the tube color against the one you pack before either file goes out."
     },
     {
-      "q": "What do I gain if I already have a supplier photo?",
+      "q": "What do I get if I already have a supplier photo of the balm?",
       "a": "It adds a scene to the supplier shot, such as the balm on a vanity, while keeping the product recognizable."
     },
     {
-      "q": "Am I allowed to post these photos on the store and in ads?",
+      "q": "Can I post the lip balm photo on my store and in ads?",
       "a": "Yes. The file downloads with no watermark. You still have to own the photo you started from, or have permission to use it. Our [AI product photography guide](page:blog-ai-product-photography-guide) covers that check."
     },
     {
-      "q": "Can I put a price or a logo on the photo?",
+      "q": "Can I add my price or logo before I post the photo?",
       "a": "Add prices, offers, and logo text in your own editor after download. Words drawn onto the photo can come out wrong, so proof them. See [Shopify product photos](page:plat-shopify) for where those files usually go."
     },
     {
-      "q": "Where do I find product photo templates?",
+      "q": "Where do I find a template for the lip balm photo?",
       "a": "Browse [product ad templates](page:templates) for plain product photos, lifestyle scenes, and ad layouts. Then upload your photo here and describe the scene."
     },
     {
-      "q": "Can I make a stack of photos or connect my store?",
+      "q": "Can I make a stack of photos, or connect the store I already run?",
       "a": "Yes. Upload several photos, or send them from store software through the API, then make a scene for each one."
     },
     {
-      "q": "Can the photo become a video with a spoken line?",
+      "q": "Can the lip balm photo become a video with a spoken line?",
       "a": "Yes. Turn that photo into a product video, then add a spoken voice, on-screen captions, or a song from the music library. A 6-second clip uses 24 credits. A 10-second clip uses 40, a 15-second clip uses 60, and a 30-second clip uses 120. [Image to video](page:image-to-video) is that next step."
     }
   ],
@@ -200,14 +200,14 @@
   "hero_cards": [
     {
       "ref": "n:guide:img2-photo-hub-hero-source-r1",
-      "name": "The Photo You Start With",
-      "line": "One clear shot of the lip balm is enough to begin.",
+      "name": "Start with the Balm Photo",
+      "line": "One clear shot of your lip balm is enough to start the next scene.",
       "href": "/ai-image-generation/ecommerce-main-image"
     },
     {
       "ref": "n:guide:img2-photo-hub-hero-result-r1",
-      "name": "A Scene You Can Post",
-      "line": "The same balm, now on a vanity you can check before it goes on the page.",
+      "name": "A Vanity Scene You Can Post",
+      "line": "Check the balm on the vanity, then put that scene on the page.",
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
@@ -247,7 +247,7 @@
         "lead": "Try a beach, a desert, a plain studio, or a room. These four photos are examples. Upload your own product and describe the setting."
       },
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Questions Before You Post"
       }
     }
   },

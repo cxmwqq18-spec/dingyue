@@ -3,7 +3,7 @@
   "title": "Shopify AI Product Photo Generator | AIVideosUGC",
   "description": "Make Shopify images for the product page with your shop's AI product photo generator. Upload one photo, pick the scene, and download the product image.",
   "h1": "Shopify Product Image Generator for Store Pages",
-  "eyebrow": "Shopify stores",
+  "eyebrow": "Shopify Photos Without a Shoot",
   "lead": "This AI product photo generator makes a Shopify image in a room you never rented. Place that file on the product page.",
   "card": "Shopify product photos, new backgrounds, and short videos, made one by one or many at a time.",
   "secondary_keywords": [
@@ -111,7 +111,7 @@
     },
     "titles": {
       "faq": {
-        "h2": "Frequently Asked Questions"
+        "h2": "Questions About Shopify Photos"
       }
     }
   },
@@ -121,26 +121,26 @@
       "t": "A Fresh Collection Grid",
       "d": "Give the ceramics in the collection a setting that belongs together, so the Shopify grid looks planned. One product photo is enough to start the next tile.",
       "img": "n:guide:fx42-shopify-benefit-collection",
-      "alt": "Three plain ceramic home goods arranged as a consistent ecommerce collection grid."
+      "alt": "You get a matching collection grid. Three plain ceramic home goods sit together for the Shopify page."
     },
     {
       "t": "Page Shot and Life Shot",
       "d": "Keep a clean frame for the product page, then a second frame of the water bottle in a hand for the ad. Both come from one upload.",
       "img": "n:guide:fx42-shopify-benefit-versions",
-      "alt": "Plain reusable water bottle shown in a clean product view and a handheld lifestyle angle."
+      "alt": "You get both shots of the water bottle. One is a clean product view, and one is a handheld lifestyle angle."
     },
     {
       "t": "Photo in a Real Room",
       "d": "You get a lifestyle frame of the linen basket on a bright shelf. The plain product shot stays a separate download.",
       "img": "n:guide:fx42-shopify-benefit-scene",
-      "alt": "Adult hands place a plain linen storage basket on a bright shelf."
+      "alt": "You get a lifestyle photo for the page. Adult hands place a plain linen basket on a bright shelf."
     }
   ],
   "steps_h2": "Steps to Make a Shopify Photo or Video",
   "steps_lead": "The Shopify product photo of the bowls is ready to drop into the product admin.",
   "more_sections": [
     {
-      "eyebrow": "Shopify files",
+      "eyebrow": "Files Ready for the Product Page",
       "h2": "Examples of Shopify Product Photos",
       "lead": "Use the square of the four bowls on the collection grid, the table scene with fruit, and a short clip on the product page. Each file is its own download.",
       "items": [
@@ -207,42 +207,42 @@
   },
   "platforms": {
     "h2": "Files for the Other Channels You Also Use",
-    "lead": "Shopify gets the page photos. The same product can also start a TikTok, Instagram, Facebook, Shorts, or Amazon file.",
+    "lead": "You put the bowls on the Shopify page, then start a TikTok, Instagram, Facebook, Shorts, or Amazon file from the same photo.",
     "items": [
       {
-        "t": "AI TikTok Ads Generator",
+        "t": "TikTok Ads from One Photo",
         "label": "Open TikTok ads",
-        "d": "A tall TikTok ad from the same photo.",
+        "d": "You post a tall TikTok ad of the bowls from that same photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram Ads",
+        "t": "Instagram Ads from One Photo",
         "label": "Open Instagram ads",
-        "d": "A square still or a tall video for Instagram.",
+        "d": "You post a square still or a tall video of the bowls on Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook Ad Generator",
+        "t": "Facebook Ads from One Photo",
         "label": "Open Facebook ads",
-        "d": "A square Facebook photo, or a tall video that fills the screen.",
+        "d": "You post a square photo of the bowls, or a tall video that fills the Facebook screen.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Ads",
+        "t": "YouTube Shorts from One Photo",
         "label": "Open YouTube Shorts",
-        "d": "A tall Short. A wide ad in the YouTube player is a separate download.",
+        "d": "You post a tall Short of the bowls. A wide YouTube ad is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Product Photos",
+        "t": "Amazon Photos Ready to List",
         "label": "Open Amazon photos",
-        "d": "A white main image, a close-up, and an in-use view for the Amazon gallery.",
+        "d": "You list a white main image, a close-up, and an in-use view of the bowls on Amazon.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "AI Ads and Product Photos by Platform",
+        "t": "Post on the Next Channel",
         "label": "Open every platform",
-        "d": "Open the channel list and choose where the next file runs.",
+        "d": "Open the channel list and post the bowls where you already sell.",
         "href": "/ai-video-generation"
       }
     ]
