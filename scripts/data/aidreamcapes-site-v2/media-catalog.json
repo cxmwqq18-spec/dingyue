@@ -50574,6 +50574,276 @@
           640,
           1280
         ]
+      },
+      "fx42-shopify-benefit-collection": {
+        "file": "fx42-shopify-benefit-collection",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three plain ceramic home goods arranged as a consistent ecommerce collection grid.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-benefit-versions": {
+        "file": "fx42-shopify-benefit-versions",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain reusable water bottle shown in a clean product view and a handheld lifestyle angle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-benefit-scene": {
+        "file": "fx42-shopify-benefit-scene",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place a plain linen storage basket on a bright shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-media-product": {
+        "file": "fx42-shopify-media-product",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte unbranded ceramic travel mug centered on a pale product surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-media-collection": {
+        "file": "fx42-shopify-media-collection",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three plain amber skincare bottles arranged in matching neutral styling.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-media-video": {
+        "file": "fx42-shopify-media-video",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand rotates a plain compact desk fan to show its front and side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-media-creator": {
+        "file": "fx42-shopify-media-creator",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man holds a plain insulated coffee tumbler toward the camera in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-channel-product-page": {
+        "file": "fx42-shopify-channel-product-page",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain olive canvas backpack standing upright on a light wood surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-channel-collection": {
+        "file": "fx42-shopify-channel-collection",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three unbranded ceramic planters arranged in matching soft light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-channel-media": {
+        "file": "fx42-shopify-channel-media",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands snap the lid onto a plain stainless lunch container.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-channel-social": {
+        "file": "fx42-shopify-channel-social",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short auburn bob holds a plain coral insulated bottle by a sunny window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-format-spotlight": {
+        "file": "fx42-shopify-format-spotlight",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain ceramic diffuser rotating on a small pedestal in soft studio light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-format-problem": {
+        "file": "fx42-shopify-format-problem",
+        "w": 1536,
+        "h": 864,
+        "alt": "Adult hand wipes a coffee spill from a plain fabric organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-format-howto": {
+        "file": "fx42-shopify-format-howto",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands assemble a plain compact desk organizer on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-spec-wide": {
+        "file": "fx42-shopify-spec-wide",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain wooden serving board and folded linen arranged with horizontal negative space.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-spec-vertical": {
+        "file": "fx42-shopify-spec-vertical",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain portable blender bottle in a tall centered kitchen arrangement.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-spec-square": {
+        "file": "fx42-shopify-spec-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage ceramic vase centered on a pale square plinth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-spec-landscape": {
+        "file": "fx42-shopify-spec-landscape",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain woven storage bin and folded towels arranged left to right on a shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-spec-portrait": {
+        "file": "fx42-shopify-spec-portrait",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain linen apron hanging neatly from a wooden hook.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-cat-dropshipping": {
+        "file": "fx42-shopify-cat-dropshipping",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand clips a plain magnetic cable organizer onto a tidy desk cable.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-cat-beauty": {
+        "file": "fx42-shopify-cat-beauty",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short dark pixie applies plain face cream beside a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-cat-home": {
+        "file": "fx42-shopify-cat-home",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand places a plain ceramic lamp on a side table in a bright living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-cat-fashion": {
+        "file": "fx42-shopify-cat-fashion",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short blonde bob adjusts an unbranded linen overshirt in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-cat-health": {
+        "file": "fx42-shopify-cat-health",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man pours water beside a plain supplement pouch on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-cat-living": {
+        "file": "fx42-shopify-cat-living",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand slides a plain woven storage basket onto a low shelf in a calm room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-format-comparison-square": {
+        "file": "fx42-shopify-format-comparison-square",
+        "w": 768,
+        "h": 768,
+        "alt": "Two plain reusable lunch containers aligned side by side, one open and one closed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx42-shopify-format-seasonal-square": {
+        "file": "fx42-shopify-format-seasonal-square",
+        "w": 768,
+        "h": 768,
+        "alt": "Plain ceramic candle holder with an evergreen sprig in warm winter light.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
