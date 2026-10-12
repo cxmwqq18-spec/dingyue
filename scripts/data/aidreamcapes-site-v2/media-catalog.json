@@ -23401,7 +23401,7 @@
         "file": "k1-unboxing-step-result-candle",
         "w": 1024,
         "h": 1024,
-        "alt": "Hands reveal a plain white candle jar from a kraft carton and cream tissue.",
+        "alt": "Open kraft box with cream tissue, a plain white candle jar and a blank card.",
         "variants": [
           640,
           1280
@@ -49442,6 +49442,160 @@
           640,
           1280
         ]
+      },
+      "fx13-unboxing-hero-candle": {
+        "file": "fx13-unboxing-hero-candle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a kraft parcel and lift tissue to reveal a plain white candle jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-gallery-candle-hands": {
+        "file": "fx13-unboxing-gallery-candle-hands",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain white candle jar from a tissue-lined kraft gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-gallery-powerbank": {
+        "file": "fx13-unboxing-gallery-powerbank",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain matte power bank and cable from a paper insert.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-gallery-apparel": {
+        "file": "fx13-unboxing-gallery-apparel",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands reveal a folded plain sage overshirt from a tissue-lined mailer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-gallery-lunchbox": {
+        "file": "fx13-unboxing-gallery-lunchbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain matte lunchbox from an open cardboard box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-benefit-box-product": {
+        "file": "fx13-unboxing-benefit-box-product",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands peel tissue back around a plain matte skincare jar in a package.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-benefit-sweater-lift": {
+        "file": "fx13-unboxing-benefit-sweater-lift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a folded plain oatmeal sweater from an open parcel.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-benefit-powerbank-set": {
+        "file": "fx13-unboxing-benefit-powerbank-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain matte power bank and cable are arranged beside an open package.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-stage-open-package": {
+        "file": "fx13-unboxing-stage-open-package",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a kraft box around a matte blue insulated bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-stage-lift-tissue": {
+        "file": "fx13-unboxing-stage-lift-tissue",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift tissue to reveal a plain hard-cover notebook in a box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-stage-main-item": {
+        "file": "fx13-unboxing-stage-main-item",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain olive pet harness from an open cardboard box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-stage-accessory-layout": {
+        "file": "fx13-unboxing-stage-accessory-layout",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lay a plain compact mirror and pouch beside an open box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-stage-centered-product": {
+        "file": "fx13-unboxing-stage-centered-product",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands pause with a plain woven weekender tote centered in an open box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fx13-unboxing-stage-vertical-frame": {
+        "file": "fx13-unboxing-stage-vertical-frame",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands reveal a plain matte travel mug from tissue in an open box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

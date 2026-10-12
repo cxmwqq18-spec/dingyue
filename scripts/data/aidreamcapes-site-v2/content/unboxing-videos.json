@@ -16,17 +16,23 @@
     {
       "t": "Show the package path clearly",
       "d": "Open on the parcel, move through tissue and finish on the product so shoppers can follow the reveal from first frame to last.",
-      "icon": "play"
+      "icon": "play",
+      "img": "n:guide:fx13-unboxing-benefit-box-product",
+      "alt": "Adult hands peel tissue back around a plain matte skincare jar in a package."
     },
     {
       "t": "Test another opening from one photo",
       "d": "Change the box, tissue or hand position to try another hook without shipping another sample or booking another shoot.",
-      "icon": "target"
+      "icon": "target",
+      "img": "n:guide:fx13-unboxing-benefit-sweater-lift",
+      "alt": "Adult hands lift a folded plain oatmeal sweater from an open parcel."
     },
     {
       "t": "Explain what the set includes",
       "d": "Place the main item first, then lay out its accessories so product pages and paid ads answer what arrives before checkout.",
-      "icon": "layers"
+      "icon": "layers",
+      "img": "n:guide:fx13-unboxing-benefit-powerbank-set",
+      "alt": "A plain matte power bank and cable are arranged beside an open package."
     }
   ],
   "steps_h2": "How to Make Unboxing Videos in 3 Simple Steps",
@@ -101,27 +107,39 @@
       "items": [
         {
           "t": "Open the package",
-          "d": "Start with the sealed mailer or box, then make the opening action easy to see."
+          "d": "Start with the sealed mailer or box, then make the opening action easy to see.",
+          "img": "n:guide:fx13-unboxing-stage-open-package",
+          "alt": "Adult hands open a kraft box around a matte blue insulated bottle."
         },
         {
           "t": "Keep the path visible",
-          "d": "Keep the flap, hands and product path in frame as tissue moves aside."
+          "d": "Keep the flap, hands and product path in frame as tissue moves aside.",
+          "img": "n:guide:fx13-unboxing-stage-lift-tissue",
+          "alt": "Adult hands lift tissue to reveal a plain hard-cover notebook in a box."
         },
         {
           "t": "Show the main item first",
-          "d": "Bring the product into view before smaller extras so shoppers know what they are considering."
+          "d": "Bring the product into view before smaller extras so shoppers know what they are considering.",
+          "img": "n:guide:fx13-unboxing-stage-main-item",
+          "alt": "Adult hands lift a plain olive pet harness from an open cardboard box."
         },
         {
           "t": "Lay out accessories",
-          "d": "Place each included piece beside the main item so the set is easy to understand."
+          "d": "Place each included piece beside the main item so the set is easy to understand.",
+          "img": "n:guide:fx13-unboxing-stage-accessory-layout",
+          "alt": "Adult hands lay a plain compact mirror and pouch beside an open box."
         },
         {
           "t": "Pause on the product",
-          "d": "End with the product centered and unobstructed so shoppers can inspect its shape and finish."
+          "d": "End with the product centered and unobstructed so shoppers can inspect its shape and finish.",
+          "img": "n:guide:fx13-unboxing-stage-centered-product",
+          "alt": "Adult hands pause with a plain woven weekender tote centered in an open box."
         },
         {
           "t": "Frame for 9:16",
-          "d": "Keep the box and product centered when the reveal is intended for a vertical social feed."
+          "d": "Keep the box and product centered when the reveal is intended for a vertical social feed.",
+          "img": "n:guide:fx13-unboxing-stage-vertical-frame",
+          "alt": "Adult hands reveal a plain matte travel mug from tissue in an open box."
         }
       ]
     }
@@ -185,5 +203,11 @@
     },
     "overview": "",
     "after": null
-  }
+  },
+  "relatedLinks": [
+    "blog-unboxing-videos-for-launches",
+    "guide-first-tiktok-video-ad",
+    "guide-ad-sizes-by-platform",
+    "guide-testing-ad-versions"
+  ]
 }
