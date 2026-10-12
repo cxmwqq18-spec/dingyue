@@ -555,12 +555,7 @@
   "blockOrder": [
     "hero",
     "picker",
-    "definition",
-    "steps",
-    "features",
-    "platforms",
     "faq",
-    "related",
     "cta"
   ],
   "reviews": {

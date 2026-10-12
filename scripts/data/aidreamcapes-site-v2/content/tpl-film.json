@@ -585,11 +585,6 @@
   "blockOrder": [
     "hero",
     "picker",
-    "definition",
-    "reasons",
-    "features",
-    "steps",
-    "related",
     "faq",
     "cta"
   ],

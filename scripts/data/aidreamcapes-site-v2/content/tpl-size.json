@@ -555,12 +555,7 @@
   "steps_lead": "Add the full tote, name one familiar object, and download a file you can post.",
   "blockOrder": [
     "hero",
-    "features",
-    "definition",
-    "reasons",
     "steps",
-    "trust",
-    "related",
     "faq",
     "cta"
   ],

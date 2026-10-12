@@ -558,8 +558,6 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
-    "related",
     "faq",
     "cta"
   ],

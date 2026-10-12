@@ -545,9 +545,6 @@
   "blockOrder": [
     "hero",
     "picker",
-    "steps",
-    "features",
-    "related",
     "faq",
     "cta"
   ],

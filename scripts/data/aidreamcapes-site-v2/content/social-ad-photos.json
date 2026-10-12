@@ -434,13 +434,12 @@
     "hero",
     "picker",
     "benefits",
-    "definition",
     "uses",
     "features",
     "steps",
     "reasons",
-    "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
     "h2": "How Stores Test AI Images for Paid Social Ads",

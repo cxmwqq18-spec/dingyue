@@ -3,7 +3,7 @@ import type { AidreamcapesV2Navigation, ThemeNavLink } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
 import { BRAND_ICON, BRAND_NAME, CompanyDetails, withStartLinks } from "./parts";
-import { AIDREAMCAPES_V2_CARD_CSS, AIDREAMCAPES_V2_CSS } from "./styles";
+import { AIDREAMCAPES_V2_CARD_CSS, AIDREAMCAPES_V2_CSS, AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type { V2Resolvers } from "./types";
 
 const Chevron = () => (
@@ -147,7 +147,7 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
 export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean; company?: V2Company }) {
   return (
     <div className="adc2">
-      <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS + AIDREAMCAPES_V2_CARD_CSS }} />
+      <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS + AIDREAMCAPES_V2_CARD_CSS + AIDREAMCAPES_V2_VISUAL_CSS + AIDREAMCAPES_V2_VISUAL_CSS_POLISH }} />
       <AidreamcapesV2Header navigation={navigation} r={r} />
       <main
         className={legacyPublicPage ? "bg-[#06070b] text-white" : undefined}

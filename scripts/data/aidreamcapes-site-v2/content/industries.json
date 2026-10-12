@@ -222,13 +222,6 @@
   "blockOrder": [
     "hero",
     "directory",
-    "steps",
-    "features",
-    "reasons",
-    "trust",
-    "closing",
-    "related",
-    "benefits",
     "faq",
     "cta"
   ],

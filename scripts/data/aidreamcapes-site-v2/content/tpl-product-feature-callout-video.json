@@ -593,12 +593,6 @@
   "blockOrder": [
     "hero",
     "picker",
-    "definition",
-    "reasons",
-    "features",
-    "steps",
-    "trust",
-    "related",
     "faq",
     "cta"
   ],

@@ -256,6 +256,7 @@
   },
   "blockOrder": [
     "hero",
+    "definition",
     "directory",
     "features",
     "sizes",

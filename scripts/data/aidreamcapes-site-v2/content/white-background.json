@@ -373,14 +373,14 @@
   ],
   "blockOrder": [
     "hero",
-    "picker",
     "reasons",
     "definition",
     "benefits",
     "steps",
     "features",
     "faq",
-    "related"
+    "related",
+    "cta"
   ],
   "definition": {
     "title": "Why Listings Use a Plain Main Image",

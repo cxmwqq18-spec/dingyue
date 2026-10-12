@@ -750,13 +750,10 @@
   "blockOrder": [
     "hero",
     "picker",
-    "definition",
     "reasons",
     "benefits",
-    "features",
     "steps",
     "related",
-    "compare",
     "faq",
     "cta"
   ],

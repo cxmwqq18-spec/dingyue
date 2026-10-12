@@ -115,5 +115,8 @@
         "d": "Run the same product video again in another language, with a voice and captions. The product photo stays the one you uploaded."
       }
     ]
-  }
+  },
+  "blockOrder": [
+    "reasons"
+  ]
 }

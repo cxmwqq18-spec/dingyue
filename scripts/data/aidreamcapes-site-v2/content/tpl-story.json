@@ -672,10 +672,7 @@
   "blockOrder": [
     "hero",
     "picker",
-    "features",
-    "steps",
     "faq",
-    "related",
     "cta"
   ],
   "more_sections": [
