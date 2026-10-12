@@ -768,18 +768,10 @@
       "og": "n:t33-platforms-og-r2"
     },
     "guides": {
-      "og": "g:ecommerce-main-image/og",
-      "hero": {
-        "kind": "image",
-        "image": "n:guide:fx03-guides-hero-source-to-ad"
-      }
+      "og": "g:ecommerce-main-image/og"
     },
     "blog": {
-      "og": "g:packshot-multi-angle/example-04",
-      "hero": {
-        "kind": "image",
-        "image": "n:guide:fx03-blog-hero-photo-to-ad"
-      }
+      "og": "g:packshot-multi-angle/example-04"
     },
     "tpl-limited-drop-alert-video": {
       "hero": {
