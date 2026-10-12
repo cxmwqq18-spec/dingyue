@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "No creator or shoot to book",
-      "d": "A believable person or pair of hands appears with your product from one photo, so every listing gets social content on its own schedule."
+      "d": "A believable person or pair of hands appears with your product from one photo, so every listing gets social content on its own schedule.",
+      "img": "n:guide:fx25-tpl-ugc-benefit-1",
+      "alt": "Adult hands holding a plain slate-blue running shoe beside a gym bench after a workout."
     },
     {
       "t": "Several scenes from one photo",
-      "d": "Run the product through a routine shot, a delivery unboxing or a demo, and test which moment holds attention without reshooting."
+      "d": "Run the product through a routine shot, a delivery unboxing or a demo, and test which moment holds attention without reshooting.",
+      "img": "n:guide:fx25-tpl-ugc-benefit-2",
+      "alt": "Adult man adjusting a plain folding phone stand at a clean desk in window light."
     },
     {
       "t": "Made for feed and listing spots",
-      "d": "The square image drops into a feed post, carousel or product gallery. Add your caption and price afterwards as editable text."
+      "d": "The square image drops into a feed post, carousel or product gallery. Add your caption and price afterwards as editable text.",
+      "img": "n:guide:fx25-tpl-ugc-benefit-3",
+      "alt": "Adult woman with short bob hair holding a plain coral pump bottle beside her cheek at a bathroom vanity."
     },
     {
       "t": "Yours for commercial use",
-      "d": "Downloads carry no AIVideosUGC watermark and can run in your own ads, pages and posts with no extra licensing."
+      "d": "Downloads carry no AIVideosUGC watermark and can run in your own ads, pages and posts with no extra licensing.",
+      "img": "n:guide:fx25-tpl-ugc-benefit-4",
+      "alt": "Adult man brushing a calm golden dog with a plain wooden grooming brush in a sunlit living room."
     }
   ],
   "secondary_keywords": [
@@ -35,15 +43,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add a clear photo of the whole product with the front label facing the camera."
+      "d": "Add a clear full-product photo with the front label facing the camera. Keep the product in frame so the scene preserves its shape."
     },
     {
       "t": "Pick a Creator Style",
-      "d": "Choose a creator-style scene, then generate it with your product in the frame."
+      "d": "Choose a creator-style scene, then generate it with your product in the frame. Keep the brief focused on one action and setting."
     },
     {
       "t": "Download and Post",
-      "d": "Download the photo and add your caption or offer in your own editor."
+      "d": "Download the photo and add your caption or offer in your own editor. Keep prices and approved claims editable after download."
     }
   ],
   "maker": {

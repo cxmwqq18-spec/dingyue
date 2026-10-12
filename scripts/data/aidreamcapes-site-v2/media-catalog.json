@@ -52036,6 +52036,96 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "fx25-tpl-head-benefit-1": {
+        "file": "fx25-tpl-head-benefit-1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Professional head-and-shoulders portrait of an adult woman with a short silver pixie haircut against a neutral light-gray studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-head-benefit-2": {
+        "file": "fx25-tpl-head-benefit-2",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Professional head-and-shoulders portrait of an adult man with a close-cropped haircut and round glasses against a neutral light-gray studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-head-benefit-3": {
+        "file": "fx25-tpl-head-benefit-3",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Professional head-and-shoulders portrait of an adult woman with a neat tied-back auburn bun against a muted blue-gray studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-head-benefit-4": {
+        "file": "fx25-tpl-head-benefit-4",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Professional head-and-shoulders portrait of an adult man with a shaved head and trimmed beard against a warm off-white studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-ugc-benefit-1": {
+        "file": "fx25-tpl-ugc-benefit-1",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands holding a plain slate-blue running shoe beside a gym bench after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-ugc-benefit-2": {
+        "file": "fx25-tpl-ugc-benefit-2",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult man adjusting a plain folding phone stand at a clean desk in window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-ugc-benefit-3": {
+        "file": "fx25-tpl-ugc-benefit-3",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult woman with short bob hair holding a plain coral pump bottle beside her cheek at a bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-ugc-benefit-4": {
+        "file": "fx25-tpl-ugc-benefit-4",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult man brushing a calm golden dog with a plain wooden grooming brush in a sunlit living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx25-tpl-ugc-strip-phone-stand": {
+        "file": "fx25-tpl-ugc-strip-phone-stand",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult hands holding a plain folding phone stand beside a smiling short-haired adult in a bright home office.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
