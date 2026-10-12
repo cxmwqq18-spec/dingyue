@@ -386,6 +386,10 @@
           "label": "Food & Beverage"
         },
         {
+          "id": "footwear",
+          "label": "Footwear"
+        },
+        {
           "id": "health-fitness",
           "label": "Health & Fitness"
         },
@@ -643,7 +647,7 @@
           "ref": "n:guide:q1-home-picker-runner",
           "label": "Trail Shoe Step Ad",
           "chips": [
-            "sports-gym"
+            "footwear"
           ],
           "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile clearly visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
           "kind": "video",
@@ -651,12 +655,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:b2f4-home-picker-r1",
-          "label": "Mug Color Lineup",
+          "ref": "n:guide:im03-home-picker-shoes-r1",
+          "label": "Running Shoe Color Lineup",
           "chips": [
-            "food-beverage"
+            "footwear"
           ],
-          "prompt": "Show three plain ceramic mug colors lined up for a quick comparison.",
+          "prompt": "Show three running-shoe color options lined up for a quick comparison.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
