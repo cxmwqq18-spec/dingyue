@@ -87,7 +87,7 @@
     },
     {
       "q": "Do I need a paid subscription for a sale post?",
-      "a": "Yes. Photos, batches, and API jobs all draw from one paid-plan balance."
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos, batches, and API jobs all draw from that balance."
     }
   ],
   "examples": {
