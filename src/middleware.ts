@@ -101,8 +101,8 @@ const LEADING_SEO_HEAD_TAG_RE =
 const ESSENTIAL_HEAD_TAG_RE =
   /<meta\b(?=[^>]*(?:charset=|name=["']viewport["']|http-equiv=["']Content-Language["']))[^>]*\/?>/gi;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
-const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-48.png";
-const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-apple-180.png";
+const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-48.png?v=20261011ugc";
+const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-apple-180.png?v=20261011ugc";
 const AIDREAMCAPES_EU_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260920favicon";
 const AIDREAMCAPES_EU_APPLE_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-180.png?v=20260919original";
 const AIDREAMSHOOTS_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260920favicon";

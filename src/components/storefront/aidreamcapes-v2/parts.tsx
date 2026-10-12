@@ -697,7 +697,7 @@ const UploadIcon = () => (
 
 // The storefront's name and icon (the brand was renamed from Aidreamcapes to AIVideosUGC).
 export const BRAND_NAME = "AIVideosUGC";
-export const BRAND_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png";
+export const BRAND_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png?v=20261011ugc";
 
 // The AIVideosUGC v2 shell is rendered only for site_aidreamcapes. Its
 // workspace links are intentionally direct so unsigned visitors can inspect
